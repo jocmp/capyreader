@@ -13,18 +13,22 @@ import com.jocmp.basilreader.ui.theme.BasilReaderTheme
 @Composable
 fun LoginForm() {
     val viewModel = useLoginFormViewModel()
-
+    
     Column {
-        AutofillUsernameField(
-            value = viewModel.emailAddress,
-            onValueChange = viewModel.setEmailAddress
-        )
-        AutofillPasswordField(
-            value = viewModel.password,
-            onValueChange = viewModel.setPassword
-        )
-        Button(onClick = { viewModel.login() }) {
-            Text(stringResource(R.string.login_form_button_text))
+        if (viewModel.isAuthenticated) {
+            Text("No worries, you're good")
+        } else {
+            AutofillUsernameField(
+                value = viewModel.emailAddress,
+                onValueChange = viewModel.setEmailAddress
+            )
+            AutofillPasswordField(
+                value = viewModel.password,
+                onValueChange = viewModel.setPassword
+            )
+            Button(onClick = { viewModel.login() }) {
+                Text(stringResource(R.string.login_form_button_text))
+            }
         }
     }
 }
