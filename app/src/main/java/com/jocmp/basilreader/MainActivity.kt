@@ -6,15 +6,11 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.jocmp.basilreader.ui.Login
+import com.jocmp.basilreader.ui.LoginForm
 import com.jocmp.basilreader.ui.theme.BasilReaderTheme
 
 class MainActivity : ComponentActivity() {
@@ -27,7 +23,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Column(Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
-                        Login()
+                        LoginForm()
                     }
                 }
             }
