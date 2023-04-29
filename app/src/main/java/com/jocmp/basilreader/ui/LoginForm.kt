@@ -13,10 +13,10 @@ import com.jocmp.basilreader.ui.theme.BasilReaderTheme
 @Composable
 fun LoginForm() {
     val viewModel = useLoginFormViewModel()
-    
+
     Column {
         if (viewModel.isAuthenticated) {
-            Text("No worries, you're good")
+            Text("Logged in")
         } else {
             AutofillUsernameField(
                 value = viewModel.emailAddress,

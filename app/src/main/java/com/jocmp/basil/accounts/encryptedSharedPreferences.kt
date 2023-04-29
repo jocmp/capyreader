@@ -1,4 +1,4 @@
-package com.jocmp.basilreader
+package com.jocmp.basil.accounts
 
 import android.content.Context
 import android.content.SharedPreferences

@@ -1,4 +1,4 @@
-package com.jocmp.basilreader
+package com.jocmp.basil.accounts
 
 class Account(
     val id: String,

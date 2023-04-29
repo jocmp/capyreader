@@ -1,8 +1,7 @@
-package com.jocmp.basilreader
+package com.jocmp.basil.accounts
 
 import android.content.Context
 import androidx.core.content.edit
-import com.jocmp.basilreader.buildEncryptedPreferences
 
 // For each account, create an account record
 // ID, username (eventually `type`)

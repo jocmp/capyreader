@@ -3,12 +3,13 @@ package com.jocmp.basilreader.ui
 import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.content.edit
-import com.jocmp.basilreader.*
-import com.jocmp.basilreader.CredentialsManager.Companion.accountID
+import com.jocmp.basil.accounts.Account
+import com.jocmp.basil.accounts.CredentialsManager
+import com.jocmp.basil.accounts.CredentialsManager.Companion.accountID
 import com.jocmp.feedbin.FeedbinClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,7 +31,9 @@ fun useLoginFormViewModel(): LoginFormViewModel {
     val coroutineScope = rememberCoroutineScope()
     val (emailAddress, setEmailAddress) = rememberSaveable { mutableStateOf("") }
     val (password, setPassword) = rememberSaveable { mutableStateOf("") }
-    val isAuthenticated = CredentialsManager.fetchAccount(context) != null
+    val (isAuthenticated, setAuthenticated) = remember {
+        mutableStateOf(CredentialsManager.fetchAccount(context) != null)
+    }
 
     fun loginUser() {
         coroutineScope.launch {
@@ -38,11 +41,13 @@ fun useLoginFormViewModel(): LoginFormViewModel {
                 val isSuccess = feedbinClient.authentication(emailAddress, password)
 
                 if (isSuccess) {
-                    val account = Account(id = accountID, username = emailAddress, password = password)
+                    val account =
+                        Account(id = accountID, username = emailAddress, password = password)
                     CredentialsManager.saveAccount(account = account, context)
 
+
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(context, "Good stuff", Toast.LENGTH_SHORT).show()
+                        setAuthenticated(true)
                     }
                 }
             }
