@@ -1,7 +1,7 @@
 .PHONY: release pre-release
 
 release:
-	bumpver update --verbose
+	bumpver update --verbose --tag=final
 
 pre-release:
 	bumpver update --verbose --tag=beta
