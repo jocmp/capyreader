@@ -1,4 +1,4 @@
-.PHONY: prep-release
+.PHONY: release
 
-prep-release:
+release:
 	bumpver update --verbose
