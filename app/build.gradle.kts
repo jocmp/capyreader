@@ -14,8 +14,8 @@ android {
         applicationId = "com.jocmp.basilreader"
         minSdk = 26
         targetSdk = 33
-        versionCode = 1004
-        versionName = "2023.05.1004"
+        versionCode = 1005
+        versionName = "2023.05.1005"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
