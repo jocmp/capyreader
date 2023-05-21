@@ -20,4 +20,4 @@ jobs:
           git config user.name "github-actions@github.com"
       - name: Update version
         run: |
-          make release
+          make bump-version
