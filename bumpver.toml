@@ -4,7 +4,7 @@ version_pattern = "YYYY.0M.BUILD"
 commit_message = "bump version {old_version} -> {new_version}"
 commit = true
 tag = true
-push = false
+push = true
 
 [bumpver.file_patterns]
 "README.md" = [
