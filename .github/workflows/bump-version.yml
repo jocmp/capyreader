@@ -5,7 +5,7 @@ on:
     inputs:
       prerelease:
         type: boolean
-        description: "Tags version as a beta for testing"
+        description: "Beta"
 
 jobs:
   build:
@@ -25,6 +25,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           if ${{ github.event.inputs.prerelease }}
+          then
             make pre-release
           else
             make release
