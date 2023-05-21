@@ -10,8 +10,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Install bumpver
+        run: pip install bumpver
       - name: Update version
-        run:
-          make
-
-
+        if: github.ref == 'refs/heads/main'
+        run: make release
