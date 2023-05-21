@@ -1,0 +1,19 @@
+[bumpver]
+current_version = "2023.05.1001"
+version_pattern = "YYYY.0M.BUILD"
+commit_message = "bump version {old_version} -> {new_version}"
+commit = true
+tag = true
+push = false
+
+[bumpver.file_patterns]
+"README.md" = [
+    "CalVer {version}",
+]
+"bumpver.toml" = [
+    'current_version = "{version}"',
+]
+"app/build.gradle.kts" = [
+    'versionName = "{version}"',
+    'versionCode = BUILD'
+]
