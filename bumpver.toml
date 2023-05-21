@@ -1,5 +1,5 @@
 [bumpver]
-current_version = "2023.05.1009-beta"
+current_version = "2023.05.1010-beta"
 version_pattern = "YYYY.0M.BUILD[-TAG]"
 commit_message = "bump version {old_version} -> {new_version}"
 commit = true
