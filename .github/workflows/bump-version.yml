@@ -1,11 +1,8 @@
 name: Bump version
 
 on:
-  workflow_dispatch:
-    inputs:
-      prerelease:
-        type: boolean
-        description: "Beta"
+  push:
+    branches: main
 
 jobs:
   build:
@@ -22,11 +19,5 @@ jobs:
           git config user.email "github-actions"
           git config user.name "github-actions@github.com"
       - name: Update version
-        if: github.ref == 'refs/heads/main'
         run: |
-          if ${{ github.event.inputs.prerelease }}
-          then
-            make pre-release
-          else
-            make release
-          fi
+          make release
