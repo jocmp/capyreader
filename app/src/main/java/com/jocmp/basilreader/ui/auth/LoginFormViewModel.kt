@@ -1,6 +1,5 @@
-package com.jocmp.basilreader.ui
+package com.jocmp.basilreader.ui.auth
 
-import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -9,7 +8,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
 import com.jocmp.basil.accounts.Account
 import com.jocmp.basil.accounts.CredentialsManager
-import com.jocmp.basil.accounts.CredentialsManager.Companion.accountID
 import com.jocmp.feedbin.FeedbinClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,7 +24,7 @@ data class LoginFormViewModel(
 
 @Composable
 fun useLoginFormViewModel(): LoginFormViewModel {
-    val feedbinClient = FeedbinClient()
+
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val (emailAddress, setEmailAddress) = rememberSaveable { mutableStateOf("") }
@@ -38,13 +36,12 @@ fun useLoginFormViewModel(): LoginFormViewModel {
     fun loginUser() {
         coroutineScope.launch {
             withContext(Dispatchers.IO) {
-                val isSuccess = feedbinClient.authentication(emailAddress, password)
+                val feedbinClient = FeedbinClient.create(emailAddress, password)
+                val response = feedbinClient.authentication()
 
-                if (isSuccess) {
-                    val account =
-                        Account(id = accountID, username = emailAddress, password = password)
+                if (response.isSuccessful) {
+                    val account = Account(username = emailAddress, password = password)
                     CredentialsManager.saveAccount(account = account, context)
-
 
                     withContext(Dispatchers.Main) {
                         setAuthenticated(true)

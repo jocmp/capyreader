@@ -10,7 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.jocmp.basilreader.ui.LoginForm
+import com.jocmp.basilreader.ui.auth.LoginForm
 import com.jocmp.basilreader.ui.theme.BasilReaderTheme
 
 class MainActivity : ComponentActivity() {

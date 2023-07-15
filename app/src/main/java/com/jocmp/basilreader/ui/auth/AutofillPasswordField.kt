@@ -1,4 +1,4 @@
-package com.jocmp.basilreader.ui
+package com.jocmp.basilreader.ui.auth
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

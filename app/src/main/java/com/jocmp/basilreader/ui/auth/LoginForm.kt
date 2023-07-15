@@ -1,4 +1,4 @@
-package com.jocmp.basilreader.ui
+package com.jocmp.basilreader.ui.auth
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button

@@ -3,17 +3,13 @@ package com.jocmp.basil.accounts
 import android.content.Context
 import androidx.core.content.edit
 
-// For each account, create an account record
-// ID, username (eventually `type`)
-
 class CredentialsManager {
     companion object {
-        const val accountID = "1337"
         private const val USERNAME_KEY = "username"
         private const val PASSWORD_KEY = "password"
 
         fun saveAccount(account: Account, context: Context) {
-            val preferences = buildEncryptedPreferences(account.id, context)
+            val preferences = buildEncryptedPreferences(account.username, context)
 
             preferences.edit {
                 putString(USERNAME_KEY, account.username)
@@ -22,7 +18,7 @@ class CredentialsManager {
         }
 
         fun fetchAccount(context: Context): Account? {
-            val preferences = buildEncryptedPreferences(accountID, context)
+            val preferences = buildEncryptedPreferences("jocmp64@gmail.com", context)
 
             val username = preferences.getString(USERNAME_KEY, "")
             val password = preferences.getString(PASSWORD_KEY, "")
@@ -32,7 +28,6 @@ class CredentialsManager {
             }
 
             return Account(
-                id = accountID,
                 username = username,
                 password = password
             )
