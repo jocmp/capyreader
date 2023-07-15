@@ -1,5 +1,7 @@
 package com.jocmp.feedbin.models
 
+import com.squareup.moshi.JsonClass
+
 /**
  * <https://github.com/feedbin/feedbin-api/blob/master/content/subscriptions.md>
  *
@@ -17,6 +19,7 @@ package com.jocmp.feedbin.models
  * }
  * ```
  */
+@JsonClass(generateAdapter = true)
 data class Subscription(
     val id: String,
     val created_at: String,
