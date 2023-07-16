@@ -13,7 +13,7 @@ import com.jocmp.basilreader.ui.theme.BasilReaderTheme
 // https://issuetracker.google.com/issues/176949051
 @Composable
 fun LoginForm() {
-    val viewModel = useLoginFormViewModel(get(), get())
+    val viewModel = useLoginForm(get(), get())
 
     Column {
         if (viewModel.isAuthenticated) {

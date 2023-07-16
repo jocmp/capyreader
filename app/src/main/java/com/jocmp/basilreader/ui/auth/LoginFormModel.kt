@@ -21,7 +21,7 @@ data class LoginFormViewModel(
 )
 
 @Composable
-fun useLoginFormViewModel(credentialsManager: CredentialsManager, authentication: Authentication): LoginFormViewModel {
+fun useLoginForm(credentialsManager: CredentialsManager, authentication: Authentication): LoginFormViewModel {
     val coroutineScope = rememberCoroutineScope()
     val (emailAddress, setEmailAddress) = rememberSaveable { mutableStateOf("") }
     val (password, setPassword) = rememberSaveable { mutableStateOf("") }
