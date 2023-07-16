@@ -1,9 +1,6 @@
-import com.android.build.api.dsl.Packaging
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.google.devtools.ksp").version("1.8.22-1.0.11")
 }
 
 android {
@@ -12,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.jocmp.basilreader"
-        minSdk = 26
+        minSdk = 30
         targetSdk = 33
         versionCode = 1015
         versionName = "2023.05.1015"
@@ -60,14 +57,12 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3:1.1.1")
     implementation("com.google.android.material:material:1.9.0")
-    implementation("com.squareup.moshi:moshi:1.14.0")
-    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("io.insert-koin:koin-core:3.4.2")
     implementation("io.insert-koin:koin-android:3.4.2")
     implementation("io.insert-koin:koin-androidx-compose:3.4.5")
-    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.14.0")
     implementation("androidx.core:core-ktx:1.10.1")
+    implementation(project(":feedbinclient"))
+    implementation("app.cash.sqldelight:android-driver:2.0.0-rc02")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

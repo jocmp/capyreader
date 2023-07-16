@@ -1,4 +1,4 @@
-package com.jocmp.feedbin.models
+package com.jocmp.feedbinclient.api
 
 import com.squareup.moshi.JsonClass
 
@@ -20,8 +20,8 @@ import com.squareup.moshi.JsonClass
  * ```
  */
 @JsonClass(generateAdapter = true)
-data class Subscription(
-    val id: String,
+data class FeedbinSubscription(
+    val id: Int,
     val created_at: String,
     val feed_id: Int,
     val title: String,

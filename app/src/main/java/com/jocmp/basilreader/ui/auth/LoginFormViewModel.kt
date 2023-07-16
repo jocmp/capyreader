@@ -2,13 +2,11 @@ package com.jocmp.basilreader.ui.auth
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.platform.LocalContext
-import com.jocmp.basil.accounts.Account
-import com.jocmp.basil.accounts.CredentialsManager
-import com.jocmp.feedbin.FeedbinClient
+import com.jocmp.feedbinclient.Account
+import com.jocmp.feedbinclient.Authentication
+import com.jocmp.feedbinclient.CredentialsManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -23,29 +21,18 @@ data class LoginFormViewModel(
 )
 
 @Composable
-fun useLoginFormViewModel(): LoginFormViewModel {
-
-    val context = LocalContext.current
+fun useLoginFormViewModel(credentialsManager: CredentialsManager, authentication: Authentication): LoginFormViewModel {
     val coroutineScope = rememberCoroutineScope()
     val (emailAddress, setEmailAddress) = rememberSaveable { mutableStateOf("") }
     val (password, setPassword) = rememberSaveable { mutableStateOf("") }
-    val (isAuthenticated, setAuthenticated) = remember {
-        mutableStateOf(CredentialsManager.fetchAccount(context) != null)
-    }
+    val isAuthenticated = credentialsManager.hasAccount
 
     fun loginUser() {
         coroutineScope.launch {
             withContext(Dispatchers.IO) {
-                val feedbinClient = FeedbinClient.create(emailAddress, password)
-                val response = feedbinClient.authentication()
-
-                if (response.isSuccessful) {
+                if (authentication.login(username = emailAddress, password = password)) {
                     val account = Account(username = emailAddress, password = password)
-                    CredentialsManager.saveAccount(account = account, context)
-
-                    withContext(Dispatchers.Main) {
-                        setAuthenticated(true)
-                    }
+                    credentialsManager.save(account = account)
                 }
             }
         }

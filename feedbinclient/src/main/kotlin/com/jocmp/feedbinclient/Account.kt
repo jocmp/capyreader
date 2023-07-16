@@ -1,4 +1,4 @@
-package com.jocmp.basil.accounts
+package com.jocmp.feedbinclient
 
 class Account(
     val username: String,

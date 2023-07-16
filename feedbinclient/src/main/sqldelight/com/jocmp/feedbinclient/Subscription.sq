@@ -1,0 +1,28 @@
+CREATE TABLE  IF NOT EXISTS Subscription (
+  id INTEGER NOT NULL,
+  created_at TEXT NOT NULL,
+  feed_id INTEGER NOT NULL,
+  feed_url TEXT NOT NULL,
+  site_url TEXT NOT NULL
+);
+
+all:
+SELECT *
+FROM Subscription
+ORDER BY id;
+
+insert:
+INSERT OR REPLACE INTO Subscription(
+  id,
+  created_at,
+  feed_id,
+  feed_url,
+  site_url
+)
+VALUES (
+  ?,
+  ?,
+  ?,
+  ?,
+  ?
+);

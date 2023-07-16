@@ -7,12 +7,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.jocmp.basilreader.R
+import com.jocmp.basilreader.ui.get
 import com.jocmp.basilreader.ui.theme.BasilReaderTheme
 
 // https://issuetracker.google.com/issues/176949051
 @Composable
 fun LoginForm() {
-    val viewModel = useLoginFormViewModel()
+    val viewModel = useLoginFormViewModel(get(), get())
 
     Column {
         if (viewModel.isAuthenticated) {
