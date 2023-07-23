@@ -31,3 +31,8 @@ Tech
   * 9to5google.com
 blockclubchicago.com
 ```
+
+
+Feed
+id // PK
+feed_id

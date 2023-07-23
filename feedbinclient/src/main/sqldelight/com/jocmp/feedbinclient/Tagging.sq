@@ -6,6 +6,11 @@ CREATE TABLE IF NOT EXISTS Tagging (
 
 CREATE INDEX index_tagging_id ON Tagging(id);
 
+all:
+SELECT *
+FROM Tagging
+ORDER BY id;
+
 insert:
 INSERT OR REPLACE INTO Tagging(
   id,
