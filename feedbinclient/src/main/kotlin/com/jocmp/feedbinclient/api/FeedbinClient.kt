@@ -1,15 +1,17 @@
 package com.jocmp.feedbinclient.api
 
+import android.content.Context
 import com.jocmp.feedbinclient.CredentialsManager
 import com.squareup.moshi.Moshi
+import okhttp3.Cache
+import okhttp3.Credentials
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 import retrofit2.http.GET
-import okhttp3.Credentials
-import okhttp3.Interceptor
 import retrofit2.http.Header
 
 interface FeedbinClient {
@@ -19,16 +21,25 @@ interface FeedbinClient {
     @GET("v2/subscriptions.json")
     suspend fun subscriptions(): Response<List<FeedbinSubscription>>
 
+    @GET("v2/taggings.json")
+    suspend fun taggings(): Response<List<FeedbinTagging>>
+
     companion object {
         private const val DEFAULT_URL = "https://api.feedbin.com/"
+        private const val CACHE_SIZE: Long = 10 * 1024 * 1024 // 10 MB
 
         fun create(
+            context: Context,
             credentialsManager: CredentialsManager,
             baseURL: String = DEFAULT_URL
         ): FeedbinClient {
+            val cache = Cache(context.cacheDir, CACHE_SIZE)
+
             val client = OkHttpClient.Builder()
                 .addInterceptor(BasicAuthInterceptor(credentialsManager = credentialsManager))
+                .cache(cache)
                 .build()
+
             val moshi = Moshi.Builder().build()
 
             return Retrofit.Builder()

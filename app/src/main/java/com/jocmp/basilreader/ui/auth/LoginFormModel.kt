@@ -21,7 +21,11 @@ data class LoginFormViewModel(
 )
 
 @Composable
-fun useLoginForm(credentialsManager: CredentialsManager, authentication: Authentication): LoginFormViewModel {
+fun useLoginForm(
+    credentialsManager: CredentialsManager,
+    authentication: Authentication,
+    onSuccess: () -> Unit
+): LoginFormViewModel {
     val coroutineScope = rememberCoroutineScope()
     val (emailAddress, setEmailAddress) = rememberSaveable { mutableStateOf("") }
     val (password, setPassword) = rememberSaveable { mutableStateOf("") }
@@ -33,6 +37,10 @@ fun useLoginForm(credentialsManager: CredentialsManager, authentication: Authent
                 if (authentication.login(username = emailAddress, password = password)) {
                     val account = Account(username = emailAddress, password = password)
                     credentialsManager.save(account = account)
+
+                    withContext(Dispatchers.Main) {
+                        onSuccess()
+                    }
                 }
             }
         }

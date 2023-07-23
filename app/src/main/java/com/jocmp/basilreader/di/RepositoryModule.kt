@@ -6,7 +6,7 @@ import com.jocmp.feedbinclient.api.FeedbinClient
 import org.koin.dsl.module
 
 internal val repositoryModule = module {
-    single { FeedbinClient.create(get()) }
+    single { FeedbinClient.create(context = get(), credentialsManager = get()) }
     single<Subscriptions> { DefaultSubscriptions(database = get(), client = get()) }
-    single { Authentication(get()) }
+    single { Authentication(client = get()) }
 }

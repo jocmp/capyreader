@@ -6,25 +6,21 @@ import com.jocmp.feedbinclient.common.request
 import com.jocmp.feedbinclient.db.FeedbinDatabase
 import retrofit2.Response
 
-interface Subscriptions {
-    suspend fun all(): Result<List<Subscription>>
+interface Sections {
+    fun tags: List<Tag>
 }
 
-class DefaultSubscriptions(
+class DefaultSections(
     private val database: FeedbinDatabase,
     private val client: FeedbinClient,
-) : Subscriptions {
+) : Sections {
     override suspend fun all(): Result<List<Subscription>> {
         val subscriptions = allSubscriptions()
 
         if (subscriptions.isNotEmpty()) {
             return Result.success(subscriptions)
         }
-//
-//        if (campuses != null && isFreshCache(campuses.created_at)) {
-//            return Result.success(convertFromLocations(moshi, campuses))
-//        }
-//
+
         return request { client.subscriptions() }.fold(
             onSuccess = { cacheAndFind(it) },
             onFailure = { Result.failure(it) }
@@ -39,6 +35,7 @@ class DefaultSubscriptions(
                 table.insert(
                     id = subscription.id.toLong(),
                     created_at = subscription.created_at,
+                    title = subscription.title,
                     feed_id = subscription.feed_id.toLong(),
                     feed_url = subscription.feed_url,
                     site_url = subscription.site_url
@@ -58,13 +55,3 @@ class DefaultSubscriptions(
     private val table: SubscriptionQueries
         get() = database.subscriptionQueries
 }
-
-//private val CampusSearchResult.toDomainModel: List<Location>
-//    get() = locationSearchDetails.map { locationDetail ->
-//        Location(
-//            id = locationDetail.location_id!!.toString(),
-//            name = locationDetail.location_name ?: "",
-//            mediaMediumURL = optionalURL(locationDetail.media_medium_url),
-//            mediaLargeURL = optionalURL(locationDetail.media_large_url),
-//        )
-//    }.sortedBy { it.id }

@@ -1,20 +1,33 @@
 package com.jocmp.basilreader.ui.folders
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.produceState
+import androidx.navigation.NavController
+import com.jocmp.basilreader.Route
 import com.jocmp.basilreader.lib.Async
 import com.jocmp.basilreader.ui.get
+import com.jocmp.feedbinclient.CredentialsManager
 import com.jocmp.feedbinclient.Subscriptions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 @Composable
-fun FoldersLayout() {
+fun FoldersLayout(navController: NavController) {
+    val hasAccount = get<CredentialsManager>().hasAccount
+
+    LaunchedEffect(hasAccount) {
+        if (!hasAccount) {
+            navController.navigate(Route.AuthDialog)
+        }
+    }
+
     when (val data = useFolders()) {
         is Async.Success -> FoldersList(data())
         is Async.Failure -> Text("Failure")
-        else -> Text("Loading")
+        else -> Column {}
     }
 }
 
@@ -26,8 +39,7 @@ fun useFolders(): Async<List<Folder>> {
                 onSuccess = { results ->
                     val folders = results.map { subscription ->
                         Folder(
-                            id = subscription.id.toString(),
-                            name = subscription.feed_id.toString()
+                            name = subscription.title
                         )
                     }
                     Async.Success(folders)

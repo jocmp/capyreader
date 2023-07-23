@@ -1,6 +1,5 @@
 package com.jocmp.basilreader.ui
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -20,10 +19,12 @@ fun AppLayout() {
         startDestination = Route.FeedEntry
     ) {
         composable(Route.FeedEntry) {
-            FoldersLayout()
+            FoldersLayout(navController)
         }
         dialog(Route.AuthDialog) {
-            LoginForm()
+            LoginForm {
+                navController.navigate(Route.FeedEntry)
+            }
         }
     }
 }

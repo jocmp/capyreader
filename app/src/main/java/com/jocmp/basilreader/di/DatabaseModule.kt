@@ -1,5 +1,6 @@
 package com.jocmp.basilreader.di
 
+import androidx.sqlite.db.SupportSQLiteDatabase
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.jocmp.feedbinclient.db.FeedbinDatabase
 import org.koin.dsl.module
