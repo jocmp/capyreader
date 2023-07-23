@@ -1,6 +1,5 @@
 package com.jocmp.feedbinclient
 
-import android.icu.text.CaseMap.Fold
 import com.jocmp.feedbinclient.api.FeedbinClient
 import com.jocmp.feedbinclient.api.FeedbinSubscription
 import com.jocmp.feedbinclient.api.FeedbinTagging
@@ -69,9 +68,7 @@ class DefaultSections(
         val nestedFeeds = mutableMapOf<String, MutableList<Feed>>()
         val topLevelFeeds = mutableListOf<Feed>()
 
-        subscriptions.findTaggedSubscriptions { title,
-                                                feed_id,
-                                                tagging_name ->
+        subscriptions.findTaggedSubscriptions { title, feed_id, tagging_name ->
             val feed = Feed(id = feed_id, title = title)
 
             if (tagging_name.isNullOrBlank()) {

@@ -13,8 +13,12 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Query
 
 interface FeedbinClient {
+    @GET("v2/entries.json")
+    suspend fun entries(@Query("page") page: String? = null): Response<List<FeedbinEntry>>
+
     @GET("v2/authentication.json")
     suspend fun authentication(@Header("Authorization") credentials: String): Response<Void>
 
