@@ -17,14 +17,15 @@ class DefaultSections(
     private val client: FeedbinClient,
 ) : Sections {
     override suspend fun all(): Result<List<Section>> {
-        val sections = allSections()
-
-        if (sections.isNotEmpty()) {
-            return Result.success(sections)
+        val subscriptionResult = request { client.subscriptions() }.getOrElse {
+            return Result.failure(it)
+        }
+        val taggingResult = request { client.taggings() }.getOrElse {
+            return Result.failure(it)
         }
 
-        request { client.subscriptions() }.onSuccess { syncSubscriptions(it) }
-        request { client.taggings() }.onSuccess { syncTaggings(it) }
+        syncSubscriptions(subscriptionResult)
+        syncTaggings(taggingResult)
 
         return Result.success(allSections())
     }
@@ -44,6 +45,8 @@ class DefaultSections(
                 )
             }
         }
+
+        subscriptions.deleteRemoved(feedbinSubscriptions.map { it.id.toLong() })
     }
 
     private fun syncTaggings(response: Response<List<FeedbinTagging>>) {
@@ -58,6 +61,8 @@ class DefaultSections(
                 )
             }
         }
+
+        taggings.deleteRemoved(feedbinTaggings.map { it.id.toLong() })
     }
 
     private fun allSections(): List<Section> {
@@ -86,7 +91,9 @@ class DefaultSections(
             sections.add(Section.FolderSection(Folder(name = name, feeds = feeds)))
         }
 
-        sections.add(Section.FeedSection(feeds = topLevelFeeds.sortedBy { it.title }))
+        if (topLevelFeeds.isNotEmpty()) {
+            sections.add(Section.FeedSection(feeds = topLevelFeeds.sortedBy { it.title }))
+        }
 
         return sections
     }

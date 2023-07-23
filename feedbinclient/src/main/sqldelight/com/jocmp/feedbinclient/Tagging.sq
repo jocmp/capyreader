@@ -22,3 +22,7 @@ VALUES (
   ?,
   ?
 );
+
+deleteRemoved:
+DELETE FROM Tagging
+WHERE id NOT IN ?;

@@ -32,6 +32,10 @@ VALUES (
   ?
 );
 
+deleteRemoved:
+DELETE FROM Subscription
+WHERE id NOT IN ?;
+
 findTaggedSubscriptions:
 SELECT
   Subscription.title,
