@@ -1,6 +1,0 @@
-<resources>
-    <string name="app_name">Basil Reader</string>
-    <string name="autofill_password_field_hint">Password</string>
-    <string name="autofill_username_field_hint">Username</string>
-    <string name="login_form_button_text">Log in</string>
-</resources>
