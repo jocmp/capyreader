@@ -1,4 +1,4 @@
-package com.jocmp.basil
+package com.jocmp.basil.opml
 
 data class Feed(
     val title: String? = null,
