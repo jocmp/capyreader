@@ -31,3 +31,23 @@
 ## Persistence
 
 - <https://developer.android.com/topic/libraries/architecture/datastore>
+- <https://developer.android.com/training/data-storage/app-specific#internal-access-files>
+
+  > The system prevents other apps from accessing these locations, and on Android 10 (API level 29) and higher, these locations are encrypted.
+
+# Packages
+
+## basilreader
+
+- UI
+- Background updates
+
+## basil
+
+- Authentication
+- Persistence
+- Source interface
+
+## feedbin
+
+Vendor specific. Only responsible for communicating with Feedbin.

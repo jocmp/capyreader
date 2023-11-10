@@ -1,7 +1,5 @@
 package com.jocmp.basil.opml
 
-import com.jocmp.basil.Feed
-import com.jocmp.basil.Folder
 import org.xml.sax.Attributes
 import org.xml.sax.SAXException
 import org.xml.sax.helpers.DefaultHandler
@@ -34,7 +32,6 @@ class OPMLHandler : DefaultHandler() {
         attributes: Attributes
     ) {
         when (qName) {
-            TITLE -> currentValue = StringBuilder()
             OUTLINE -> {
                 if (attributes.getValue("type") == "rss") {
                     currentType = OutlineType.FEED
@@ -74,7 +71,6 @@ class OPMLHandler : DefaultHandler() {
     @Throws(SAXException::class)
     override fun endElement(uri: String, localName: String, qName: String) {
         when (qName) {
-            TITLE -> opmlDocument.title = currentValue.toString()
             OUTLINE -> {
                 if (currentType == OutlineType.FOLDER) {
                     currentFolder?.let { folder ->
@@ -92,7 +88,6 @@ class OPMLHandler : DefaultHandler() {
     }
 
     companion object {
-        private const val TITLE = "title"
         private const val OUTLINE = "outline"
     }
 }
