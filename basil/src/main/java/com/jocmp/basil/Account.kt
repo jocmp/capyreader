@@ -1,11 +1,9 @@
 package com.jocmp.basil
 
-import android.content.Context
 import com.jocmp.basil.opml.Folder
 import com.jocmp.basil.opml.Outline
-import java.io.File
 
-class Account(context: Context, id: String) {
+data class Account(val id: String) {
     var folders: MutableSet<Folder> = mutableSetOf()
         private set
 
