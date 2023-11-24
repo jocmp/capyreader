@@ -49,6 +49,7 @@ android {
     }
 }
 
+
 dependencies {
     implementation(project(":basil"))
     implementation("androidx.core:core-ktx:1.12.0")
@@ -60,7 +61,6 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-//    implementation("androidx.compose.material3:material3-adaptive:1.0.0-alpha01")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation(platform("io.insert-koin:koin-bom:3.5.1"))
     implementation("io.insert-koin:koin-core")

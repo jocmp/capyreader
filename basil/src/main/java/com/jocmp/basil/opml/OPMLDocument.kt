@@ -1,5 +1,5 @@
 package com.jocmp.basil.opml
 
-data class OPMLDocument(
+internal data class OPMLDocument(
     val outlines: MutableList<Outline> = mutableListOf()
 )

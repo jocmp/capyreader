@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModel
 import com.jocmp.basil.Account
 import com.jocmp.basil.AccountManager
 
-class AccountsViewModel(private val accountManager: AccountManager) : ViewModel() {
+class AccountIndexViewModel(
+    private val accountManager: AccountManager,
+) : ViewModel() {
     val accounts = accountManager.accounts.toMutableStateList()
 
     fun createAccount() {

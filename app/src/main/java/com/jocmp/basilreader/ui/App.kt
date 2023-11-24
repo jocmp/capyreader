@@ -6,9 +6,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.jocmp.basilreader.ui.accounts.AccountsView
+import com.jocmp.basilreader.ui.accounts.accountIndex
+import com.jocmp.basilreader.ui.articles.articleIndex
+import com.jocmp.basilreader.ui.articles.navigateToArticles
 import com.jocmp.basilreader.ui.theme.BasilReaderTheme
 
 @Composable
@@ -24,12 +25,12 @@ fun App() {
                 navController = navController,
                 startDestination = "accounts"
             ) {
-                composable("accounts?id={id}") { backStackEntry ->
-                    AccountsView(
-                        id = backStackEntry.arguments?.getString("id") ?: "",
-                        navController,
-                    )
-                }
+                accountIndex(
+                    onNavigate = { account ->
+                        navController.navigateToArticles(account.id)
+                    }
+                )
+                articleIndex()
             }
         }
     }

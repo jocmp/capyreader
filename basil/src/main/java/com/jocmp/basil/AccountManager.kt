@@ -1,20 +1,24 @@
 package com.jocmp.basil
 
-import android.content.Context
 import java.io.File
 import java.io.FileFilter
+import java.net.URI
 import java.util.UUID
 
-class AccountManager(context: Context) {
+class AccountManager(rootFolder: URI) {
     var accounts: MutableList<Account> = mutableListOf()
         private set
 
-    private val accountFolder = File(context.filesDir, directoryName)
+    private val accountFolder = File(rootFolder.path, directoryName)
 
     init {
-        accountFolder.list()?.forEach {
-            accounts.add(Account(it))
+        accountFolder.listFiles()?.forEach { file ->
+            accounts.add(Account(id = file.name, path = file.toURI()))
         }
+    }
+
+    fun findByID(id: String): Account {
+        return accounts.find { it.id == id }!!
     }
 
     fun createAccount(): Account {
@@ -24,13 +28,13 @@ class AccountManager(context: Context) {
             accountFolder.mkdir()
         }
 
-        accountFile(accountID).apply {
+        val folder = accountFile(accountID).apply {
             mkdir()
         }
 
-        val account = Account(id = accountID)
-        accounts.add(account)
-        return account
+        return Account(id = accountID, path = folder.toURI()).also { account ->
+            accounts.add(account)
+        }
     }
 
     fun removeAccount(account: Account) {
@@ -43,10 +47,6 @@ class AccountManager(context: Context) {
         }
     }
 
-    fun clearAll() {
-        accountFolder.deleteRecursively()
-    }
-
     private fun accountFile(id: String): File {
         return File(accountFolder, id)
     }
@@ -56,6 +56,6 @@ class AccountManager(context: Context) {
     }
 }
 
-private class AccountFileFilter(private val id: String): FileFilter {
+private class AccountFileFilter(private val id: String) : FileFilter {
     override fun accept(pathname: File?) = pathname?.name == id
 }
