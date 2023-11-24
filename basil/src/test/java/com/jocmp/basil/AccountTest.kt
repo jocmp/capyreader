@@ -16,6 +16,6 @@ class AccountTest {
 
         val account = Account(id = "777", path = accountPath)
 
-        assertContains(account.opmlFile.path.toString(), Regex("subscriptions.opml$"))
+        assertContains(account.opmlFile.path.toString(), Regex("/subscriptions.opml$"))
     }
 }

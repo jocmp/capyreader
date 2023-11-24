@@ -16,6 +16,12 @@ data class Account(
         account = this,
     )
 
+    fun asOPML(): String {
+        return "\n"
+    }
+
+    val displayName = "Test Display Name"
+
     internal fun loadOPMLItems(items: List<Outline>) {
         items.forEach { item ->
             when (item) {
