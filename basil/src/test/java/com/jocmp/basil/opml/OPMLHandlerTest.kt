@@ -1,8 +1,8 @@
 package com.jocmp.basil.opml
 
-import org.junit.Assert.assertEquals
 import org.junit.Test
 import javax.xml.parsers.SAXParserFactory
+import kotlin.test.assertEquals
 
 class OPMLHandlerTest {
     @Test

@@ -4,7 +4,7 @@ import org.xml.sax.Attributes
 import org.xml.sax.SAXException
 import org.xml.sax.helpers.DefaultHandler
 
-class OPMLHandler : DefaultHandler() {
+internal class OPMLHandler : DefaultHandler() {
     lateinit var opmlDocument: OPMLDocument
     private var currentValue: StringBuilder? = null
     private var currentFolder: Folder? = null

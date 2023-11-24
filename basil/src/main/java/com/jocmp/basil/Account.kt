@@ -1,13 +1,22 @@
 package com.jocmp.basil
 
-import com.jocmp.basil.opml.Folder
+import com.jocmp.basil.extensions.asFolder
 import com.jocmp.basil.opml.Outline
+import java.net.URI
 
-data class Account(val id: String) {
-    var folders: MutableSet<Folder> = mutableSetOf()
+data class Account(
+    val id: String,
+    val path: URI,
+) {
+    var folders = mutableSetOf<Folder>()
         private set
 
-    fun loadOPMLItems(items: List<Outline>) {
+    val opmlFile = OPMLFile(
+        path = path.resolve("subscriptions.opml"),
+        account = this,
+    )
+
+    internal fun loadOPMLItems(items: List<Outline>) {
         items.forEach { item ->
             when (item) {
                 is Outline.FolderOutline -> folders.add(item.asFolder)
@@ -16,8 +25,3 @@ data class Account(val id: String) {
         }
     }
 }
-
-private val Outline.FolderOutline.asFolder: Folder
-    get() {
-        return Folder(title = folder.title)
-    }
