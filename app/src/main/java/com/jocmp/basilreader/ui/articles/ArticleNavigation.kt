@@ -13,10 +13,10 @@ internal class ArticleArgs(val accountId: String) {
 }
 
 fun NavController.navigateToArticles(accountId: String) =
-    navigate("articles/${accountId}")
+    navigate("articles?account_id=${accountId}")
 
 fun NavGraphBuilder.articleIndex() {
-    composable("articles/{${ACCOUNT_ID_KEY}}") {
+    composable("articles?account_id=${ACCOUNT_ID_KEY}") {
         ArticlesView()
     }
 }

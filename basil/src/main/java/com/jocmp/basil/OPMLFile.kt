@@ -16,6 +16,7 @@ class OPMLFile(
         |    <title>${escapedTitle}</title>
         |  </head>
         |  <body>
+        |
 		""".trimMargin()
 
         val closingText = """
