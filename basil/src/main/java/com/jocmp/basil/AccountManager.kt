@@ -17,6 +17,10 @@ class AccountManager(rootFolder: URI) {
         }
     }
 
+    fun firstAccountID(): String? {
+        return accounts.firstOrNull()?.id
+    }
+
     fun findByID(id: String): Account {
         return accounts.find { it.id == id }!!
     }

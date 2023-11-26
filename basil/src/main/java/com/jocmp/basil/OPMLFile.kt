@@ -1,11 +1,27 @@
 package com.jocmp.basil
 
+import com.jocmp.basil.opml.OPMLHandler
+import com.jocmp.basil.opml.Outline
+import java.io.File
 import java.net.URI
+import javax.xml.parsers.SAXParserFactory
 
 class OPMLFile(
     val path: URI,
     val account: Account
 ) {
+    internal fun save() {
+        File(path).writeText(opmlDocument())
+    }
+
+    internal fun load(): List<Outline> {
+        if (File(path).exists()) {
+            return OPMLHandler.parse(path.toString())
+        }
+
+        return emptyList()
+    }
+
     fun opmlDocument(): String {
         val escapedTitle = account.displayName
         val openingText = """

@@ -24,7 +24,7 @@ fun AccountIndexView(
         LazyColumn {
             items(viewModel.accounts, key = { it.id }) { account ->
                 Row(modifier = Modifier.clickable { onNavigate(account) }) {
-                    Text(account.id)
+                    Text(account.displayName)
                     Button(onClick = { viewModel.removeAccount(account) }) {
                         Text("x")
                     }
@@ -32,5 +32,4 @@ fun AccountIndexView(
             }
         }
     }
-
 }

@@ -7,10 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.jocmp.basil.AccountManager
 import com.jocmp.basilreader.ui.accounts.accountIndex
-import com.jocmp.basilreader.ui.articles.articleIndex
+import com.jocmp.basilreader.ui.articles.articleGraph
 import com.jocmp.basilreader.ui.articles.navigateToArticles
 import com.jocmp.basilreader.ui.theme.BasilReaderTheme
+import org.koin.compose.koinInject
 
 @Composable
 fun App() {
@@ -21,17 +23,26 @@ fun App() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
+            val defaultAccountID = koinInject<AccountManager>().firstAccountID() ?: ""
+
             NavHost(
                 navController = navController,
-                startDestination = "accounts"
+                startDestination = startDestination(defaultAccountID)
             ) {
                 accountIndex(
                     onNavigate = { account ->
                         navController.navigateToArticles(account.id)
                     }
                 )
-                articleIndex()
+                articleGraph(defaultAccountID = defaultAccountID)
             }
         }
     }
+}
+
+fun startDestination(defaultAccountID: String?): String {
+    if (defaultAccountID.isNullOrEmpty()) {
+        return "accounts"
+    }
+    return "articles?account_id=${defaultAccountID}"
 }
