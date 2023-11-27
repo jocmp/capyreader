@@ -34,7 +34,10 @@ fun App() {
                         navController.navigateToArticles(account.id)
                     }
                 )
-                articleGraph(defaultAccountID = defaultAccountID)
+                articleGraph(
+                    navController = navController,
+                    defaultAccountID = defaultAccountID
+                )
             }
         }
     }

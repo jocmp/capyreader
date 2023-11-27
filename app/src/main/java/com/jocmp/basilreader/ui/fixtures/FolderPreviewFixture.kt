@@ -14,15 +14,15 @@ class FolderPreviewFixture : PreviewParameterProvider<Folder> {
             Folder(
                 title = "Tech",
                 feeds = mutableListOf(
-                    Feed(id = UUID.randomUUID().toString(), name = "The Verge"),
-                    Feed(id = UUID.randomUUID().toString(), name = "Ars Technica")
+                    Feed(id = UUID.randomUUID().toString(), name = "The Verge", feedURL = ""),
+                    Feed(id = UUID.randomUUID().toString(), name = "Ars Technica", feedURL = "")
                 )
             ),
             Folder(
                 title = "Programming",
                 feeds = mutableListOf(
-                    Feed(id = UUID.randomUUID().toString(), name = "Android Weekly"),
-                    Feed(id = UUID.randomUUID().toString(), name = "Ruby Weekly"),
+                    Feed(id = UUID.randomUUID().toString(), name = "Android Weekly", feedURL = ""),
+                    Feed(id = UUID.randomUUID().toString(), name = "Ruby Weekly", feedURL = ""),
                 )
             )
         )

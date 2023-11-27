@@ -3,28 +3,46 @@ package com.jocmp.basilreader.ui.articles
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavType
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.dialog
 import androidx.navigation.navArgument
-import com.jocmp.basil.AccountManager
-import org.koin.compose.koinInject
 
 private const val ACCOUNT_ID_KEY = "account_id"
 
-internal class ArticleArgs(val accountId: String) {
+internal class ArticleArgs(val accountID: String) {
     constructor(savedStateHandle: SavedStateHandle) :
             this(checkNotNull(savedStateHandle[ACCOUNT_ID_KEY]) as String)
 }
 
-fun NavController.navigateToArticles(accountId: String) =
-    navigate("articles?account_id=${accountId}")
+fun NavController.navigateToArticles(accountID: String) =
+    navigate("articles?account_id=${accountID}")
 
-fun NavGraphBuilder.articleGraph(defaultAccountID: String) {
+fun NavController.navigateToAddFeed(accountID: String) =
+    navigate("feeds/new?account_id=${accountID}")
+
+fun NavGraphBuilder.articleGraph(
+    navController: NavController,
+    defaultAccountID: String,
+) {
     composable(
         route = "articles?account_id={${ACCOUNT_ID_KEY}}",
         arguments = listOf(navArgument(ACCOUNT_ID_KEY) { defaultValue = defaultAccountID })
     ) {
-        ArticleScreen()
+        ArticleScreen(
+            onNewFeedNavigate = { accountID ->
+                navController.navigateToAddFeed(accountID)
+            }
+        )
+    }
+    composable(
+        route = "feeds/new?account_id={${ACCOUNT_ID_KEY}}",
+    ) {
+        AddFeedScreen(
+            onCancel = {
+                navController.popBackStack()
+            },
+            onSubmit = { accountID ->
+                navController.navigateToArticles(accountID)
+            }
+        )
     }
 }

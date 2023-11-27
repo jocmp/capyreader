@@ -38,11 +38,28 @@ data class Account(
         return folder
     }
 
-    suspend fun addFeed(url: String = ""): Feed {
-        val randomID = UUID.randomUUID().toString()
-        val feed = Feed(id = randomID, name = randomID)
+    suspend fun addFeed(entry: FeedFormEntry): Feed {
+        val feed = Feed(
+            id = UUID.randomUUID().toString(),
+            name = entry.name,
+            feedURL = entry.url
+        )
 
-        feeds.add(feed)
+        if (entry.folderTitles.isEmpty()) {
+            feeds.add(feed)
+        } else {
+            entry.folderTitles.forEach { folderTitle ->
+                val folder = folders.find { folder -> folder.title == folderTitle } ?: Folder(title = folderTitle)
+
+                folder.feeds.add(feed)
+
+                if (folders.contains(folder)) {
+                    folders.remove(folder)
+                }
+
+                folders.add(folder)
+            }
+        }
 
         saveOPMLFile()
 
@@ -66,11 +83,11 @@ data class Account(
 fun Account.asOPML(): String {
     var opml = ""
 
-    feeds.sorted().forEach { feed ->
+    feeds.sortedBy { it.name }.forEach { feed ->
         opml += feed.asOPML(indentLevel = 2)
     }
 
-    folders.sorted().forEach { folder ->
+    folders.sortedBy { it.title } .forEach { folder ->
         opml += folder.asOPML(indentLevel = 2)
     }
 

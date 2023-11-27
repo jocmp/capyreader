@@ -8,5 +8,6 @@ internal val Outline.FeedOutline.asFeed: Feed
         return Feed(
             id = "",
             name = feed.title ?: "",
+            feedURL = feed.xmlUrl ?: ""
         )
     }
