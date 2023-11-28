@@ -3,6 +3,7 @@ package com.jocmp.basilreader.ui.articles
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 
@@ -13,8 +14,10 @@ internal class ArticleArgs(val accountID: String) {
             this(checkNotNull(savedStateHandle[ACCOUNT_ID_KEY]) as String)
 }
 
-fun NavController.navigateToArticles(accountID: String) =
-    navigate("articles?account_id=${accountID}")
+fun articlesRoute(accountID: String) = "articles?account_id=${accountID}"
+
+fun NavController.navigateToArticles(accountID: String, navOptions: NavOptions? = null) =
+    navigate(articlesRoute(accountID), navOptions)
 
 fun NavController.navigateToAddFeed(accountID: String) =
     navigate("feeds/new?account_id=${accountID}")
@@ -41,7 +44,11 @@ fun NavGraphBuilder.articleGraph(
                 navController.popBackStack()
             },
             onSubmit = { accountID ->
-                navController.navigateToArticles(accountID)
+                navController.navigate(articlesRoute(accountID)) {
+                    popUpTo(articlesRoute(accountID)) {
+                        inclusive = true
+                    }
+                }
             }
         )
     }
