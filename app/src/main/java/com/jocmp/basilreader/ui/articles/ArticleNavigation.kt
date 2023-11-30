@@ -14,20 +14,20 @@ internal class ArticleArgs(val accountID: String) {
             this(checkNotNull(savedStateHandle[ACCOUNT_ID_KEY]) as String)
 }
 
-fun articlesRoute(accountID: String) = "articles?account_id=${accountID}"
+fun articlesRoute(accountID: String) = "accounts/${accountID}/articles"
 
 fun NavController.navigateToArticles(accountID: String, navOptions: NavOptions? = null) =
     navigate(articlesRoute(accountID), navOptions)
 
 fun NavController.navigateToAddFeed(accountID: String) =
-    navigate("feeds/new?account_id=${accountID}")
+    navigate("accounts/${accountID}/feeds/new")
 
 fun NavGraphBuilder.articleGraph(
     navController: NavController,
     defaultAccountID: String,
 ) {
     composable(
-        route = "articles?account_id={${ACCOUNT_ID_KEY}}",
+        route = "accounts/{${ACCOUNT_ID_KEY}}/articles",
         arguments = listOf(navArgument(ACCOUNT_ID_KEY) { defaultValue = defaultAccountID })
     ) {
         ArticleScreen(
@@ -37,7 +37,7 @@ fun NavGraphBuilder.articleGraph(
         )
     }
     composable(
-        route = "feeds/new?account_id={${ACCOUNT_ID_KEY}}",
+        route = "accounts/{${ACCOUNT_ID_KEY}}/feeds/new",
     ) {
         AddFeedScreen(
             onCancel = {

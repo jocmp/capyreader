@@ -47,5 +47,5 @@ fun startDestination(defaultAccountID: String?): String {
     if (defaultAccountID.isNullOrEmpty()) {
         return "accounts"
     }
-    return "articles?account_id=${defaultAccountID}"
+    return "accounts/${defaultAccountID}/articles"
 }
