@@ -17,3 +17,4 @@ rootProject.name = "Basil Reader"
 include(":app")
 include(":feedbinclient")
 include(":basil")
+include(":feedfinder")
