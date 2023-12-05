@@ -1,59 +1,62 @@
 package com.jocmp.feedfinder
 
-import com.jocmp.feedfinder.source.BaseSource
-import com.jocmp.feedfinder.source.MetaLink
-import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
-import java.io.IOException
+import com.jocmp.feedfinder.parser.Feed
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.net.MalformedURLException
 import java.net.URI
-import java.net.URL
 
-class FeedFinder(val url: String) {
+// Parser
+// - XMLFeed
+// - JSONFeed
+// - HTML
+//   - Meta Links
+//   - Body Links
+// - XMLFeedGuess (second pass)
+
+// XML can be parsed directly if XML feed
+// HTML takes response body
+
+class FeedFinder(
+    val url: String,
+    private val request: Request = DefaultRequest()
+) {
     // Convert URL to HTTPS if missing
-    // iterate through sources
-    // return best matching XML
-    suspend fun find(): Result {
+    // 1. Download the request using a Java HTTP connection
+    // 2. If the response is an XML Feed itself, return
+    // 3. If the response is HTML and th
+    internal suspend fun find(): Result = withContext(Dispatchers.IO) {
         try {
-            val parsedURL = URI(url)
+            // TODO:
+            //  normalize URL via
+            //  https://github.com/Ranchero-Software/RSCore/blob/a2f711d64af8f1baefdf0092f57a7f0df7f0e5e8/Sources/RSCore/Shared/String+RSCore.swift#L114
+            val parsedURL = URI(url).toURL()
+//            val response = request.fetch(url = parsedURL).parse()
 
-//            val urls = listOf(parsedURL) + variations.map { variation ->
-//                parsedURL.resolve(variation)
+
+            // XMLFeed.parse()
+//            val rssChannel = RssParser().parse(response.body)
+//            val feeds = XML(source = BaseSource(response)).find()
+
+//            if (feeds.isNotEmpty()) {
+//                return@withContext Result.Success(feeds.first())
 //            }
 //
-//            val documents = coroutineScope {
-//                urls.map { async { fetchDocument(it) } }
-//                    .awaitAll()
-//                    .filterNotNull()
-//            }
-
-//            return find(documents = documents)
-
-            val feeds = MetaLink(BaseSource(url = parsedURL)).find()
-
-            return Result.Success(title = "", feedURL = URL(""))
+            Result.Failure(error = FeedError.IO_FAILURE)
         } catch (e: MalformedURLException) {
-            return Result.Failure(error = FeedError.IO_FAILURE)
+            Result.Failure(error = FeedError.IO_FAILURE)
         }
     }
 
-    private fun fetchDocument(url: URI): Document? {
-        return try {
-            Jsoup.connect(url.toString()).get()
-        } catch (e: IOException) {
-            return null
-        }
+    sealed class Result {
+        class Success(val feed: Feed) : Result()
+
+        class Failure(val error: FeedError) : Result()
     }
 
     companion object {
         suspend fun find(feedURL: String): Result {
             return FeedFinder(url = feedURL).find()
         }
-
-
-        private val variations = listOf(
-            "feed",
-            "rss"
-        )
     }
 }

@@ -1,19 +1,19 @@
-package com.jocmp.feedfinder.source
+package com.jocmp.feedfinder.sources
 
-import com.jocmp.feedfinder.Feed
+import com.jocmp.feedfinder.parser.Feed
 import org.jsoup.nodes.Element
-import java.net.URL
 
 internal class MetaLink(source: Source) : Source by source {
-    override fun find(): List<Feed> {
-        if (document == null) {
-            return emptyList()
-        }
-
-        return document.select("link[rel~=alternate]")
-            .filter { element -> isValidLink(element) }
-            .map { Feed(feedURL = URL(it.attr("href"))) }
-    }
+//    override fun find(): List<Feed> {
+//        if (document == null) {
+//            return emptyList()
+//        }
+//        return emptyList()
+//
+//        return document.select("link[rel~=alternate]")
+//            .filter { element -> isValidLink(element) }
+//            .map { XMLFeed(url = URL(it.attr("href"))) }
+//    }
 
     private fun isValidLink(element: Element): Boolean {
         val type = element.attr("type").lowercase()

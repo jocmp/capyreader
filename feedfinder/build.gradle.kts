@@ -1,6 +1,7 @@
 plugins {
     id("java-library")
     id("org.jetbrains.kotlin.jvm")
+    id("com.google.devtools.ksp") version "1.9.20-1.0.14"
 }
 
 java {
@@ -10,8 +11,11 @@ java {
 
 dependencies {
     implementation("org.jsoup:jsoup:1.17.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    implementation("com.prof18.rssparser:rssparser:6.0.4")
+    implementation(libs.moshi.kotlin)
+    implementation(libs.kotlinx.coroutines.core)
+    ksp(libs.moshi.kotlin.codegen)
     testImplementation(kotlin("test"))
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    testImplementation(libs.kotlinx.coroutines.test)
 }
