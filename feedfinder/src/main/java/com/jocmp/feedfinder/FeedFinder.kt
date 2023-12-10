@@ -1,6 +1,7 @@
 package com.jocmp.feedfinder
 
 import com.jocmp.feedfinder.parser.Feed
+import com.jocmp.feedfinder.sources.XMLSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.MalformedURLException
@@ -17,7 +18,7 @@ import java.net.URI
 // XML can be parsed directly if XML feed
 // HTML takes response body
 
-class FeedFinder(
+class FeedFinder internal constructor(
     val url: String,
     private val request: Request = DefaultRequest()
 ) {
@@ -31,25 +32,23 @@ class FeedFinder(
             //  normalize URL via
             //  https://github.com/Ranchero-Software/RSCore/blob/a2f711d64af8f1baefdf0092f57a7f0df7f0e5e8/Sources/RSCore/Shared/String+RSCore.swift#L114
             val parsedURL = URI(url).toURL()
-//            val response = request.fetch(url = parsedURL).parse()
+            val response = request.fetch(url = parsedURL)
+            val feeds = mutableListOf<Feed>()
 
+            XMLSource(response).find().let {
+                if (it.isNotEmpty()) {
+                    feeds.addAll(it)
+                }
+            }
 
-            // XMLFeed.parse()
-//            val rssChannel = RssParser().parse(response.body)
-//            val feeds = XML(source = BaseSource(response)).find()
-
-//            if (feeds.isNotEmpty()) {
-//                return@withContext Result.Success(feeds.first())
-//            }
-//
-            Result.Failure(error = FeedError.IO_FAILURE)
+            Result.Success(feeds = feeds)
         } catch (e: MalformedURLException) {
             Result.Failure(error = FeedError.IO_FAILURE)
         }
     }
 
     sealed class Result {
-        class Success(val feed: Feed) : Result()
+        class Success(val feeds: List<Feed>) : Result()
 
         class Failure(val error: FeedError) : Result()
     }
