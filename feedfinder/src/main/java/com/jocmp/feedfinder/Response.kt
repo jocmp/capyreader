@@ -1,9 +1,6 @@
 package com.jocmp.feedfinder
 
-import com.jocmp.feedfinder.parser.FakeFeed
-import com.jocmp.feedfinder.parser.Feed
 import com.jocmp.feedfinder.parser.Parser
-import com.jocmp.feedfinder.parser.XMLFeed
 import java.net.URL
 
 internal class Response(val url: URL, val body: String) {

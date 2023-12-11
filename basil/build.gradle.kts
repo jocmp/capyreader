@@ -39,6 +39,8 @@ dependencies {
     implementation(project(":feedbinclient"))
     implementation(project(":feedfinder"))
     testImplementation("junit:junit:4.13.2")
+    testImplementation("io.mockk:mockk-android:1.13.7")
+    testImplementation("io.mockk:mockk-agent:1.13.7")
     testImplementation(kotlin("test"))
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

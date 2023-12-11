@@ -16,6 +16,14 @@ internal class XMLFeed(
                 hasEntries()
     }
 
+    override val name: String
+        get() = channel!!.title!!
+
+    override val siteURL: URL?
+        get() = channel?.link?.let {
+            URL(it)
+        }
+
     private fun hasEntries(): Boolean {
         return channel != null &&
                 channel.items.isNotEmpty()

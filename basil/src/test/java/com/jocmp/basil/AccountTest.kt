@@ -1,10 +1,13 @@
 package com.jocmp.basil
 
+import com.jocmp.feedfinder.FeedFinder
+import io.mockk.coEvery
+import io.mockk.mockkConstructor
 import kotlinx.coroutines.runBlocking
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
-import java.util.UUID
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 
@@ -12,6 +15,15 @@ class AccountTest {
     @JvmField
     @Rule
     val folder = TemporaryFolder()
+
+    @Before
+    fun setup() {
+        mockkConstructor(FeedFinder::class)
+
+        coEvery {
+            anyConstructed<FeedFinder>().find()
+        } returns FeedFinder.Result.Success(listOf(FakeParserFeed()))
+    }
 
     @Test
     fun opmlFile_endsWithSubscriptions() {
@@ -50,7 +62,7 @@ class AccountTest {
         val accountPath = folder.newFile().toURI()
         val account = Account(id = "777", path = accountPath)
         val entry = FeedFormEntry(
-            url = "https://www.theverge.com/rss/index.xml",
+            url = "https://theverge.com/rss/index.xml",
             name = "The Verge",
             folderTitles = listOf(),
         )
@@ -70,7 +82,7 @@ class AccountTest {
         val accountPath = folder.newFile().toURI()
         val account = Account(id = "777", path = accountPath)
         val entry = FeedFormEntry(
-            url = "https://www.theverge.com/rss/index.xml",
+            url = "https://theverge.com/rss/index.xml",
             name = "The Verge",
             folderTitles = listOf("Tech"),
         )
@@ -92,7 +104,7 @@ class AccountTest {
         runBlocking { account.addFolder("Tech") }
 
         val entry = FeedFormEntry(
-            url = "https://www.theverge.com/rss/index.xml",
+            url = "https://theverge.com/rss/index.xml",
             name = "The Verge",
             folderTitles = listOf("Tech"),
         )
@@ -114,7 +126,7 @@ class AccountTest {
         runBlocking { account.addFolder("Tech") }
 
         val entry = FeedFormEntry(
-            url = "https://www.theverge.com/rss/index.xml",
+            url = "https://theverge.com/rss/index.xml",
             name = "The Verge",
             folderTitles = listOf("Tech", "Culture"),
         )

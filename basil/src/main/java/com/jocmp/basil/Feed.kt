@@ -6,7 +6,7 @@ data class Feed(
     val id: String,
     val name: String,
     val feedURL: String,
-    val homepageURL: String = ""
+    val siteURL: String = ""
 ) {
     override fun equals(other: Any?): Boolean {
         if (other is Feed) {
@@ -21,6 +21,6 @@ data class Feed(
 }
 
 fun Feed.asOPML(indentLevel: Int): String {
-    val opml = "<outline text=\"${name}\" title=\"${name}\" description=\"\" type=\"rss\" version=\"RSS\" htmlUrl=\"\" xmlUrl=\"${feedURL}\"/>\n"
+    val opml = "<outline text=\"${name}\" title=\"${name}\" description=\"\" type=\"rss\" version=\"RSS\" htmlUrl=\"${siteURL}\" xmlUrl=\"${feedURL}\"/>\n"
     return opml.prepending(tabCount = indentLevel)
 }

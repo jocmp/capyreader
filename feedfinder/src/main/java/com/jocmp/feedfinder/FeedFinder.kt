@@ -22,14 +22,10 @@ import java.net.URL
 // HTML takes response body
 
 class FeedFinder internal constructor(
-    val url: String,
+    private val url: String,
     private val request: Request = DefaultRequest()
 ) {
-    // Convert URL to HTTPS if missing
-    // 1. Download the request using a Java HTTP connection
-    // 2. If the response is an XML Feed itself, return
-    // 3. If the response is HTML and th
-    internal suspend fun find(): Result = withContext(Dispatchers.IO) {
+    suspend fun find(): Result = withContext(Dispatchers.IO) {
         try {
             val parsedURL = URI(url.withProtocol).toURL()
             val response = request.fetch(url = parsedURL)
@@ -52,6 +48,7 @@ class FeedFinder internal constructor(
 
     private fun sources(response: Response): List<Source> {
         return listOf(
+            XMLSource(response),
             MetaLinkSource(response = response, request = request),
         )
     }

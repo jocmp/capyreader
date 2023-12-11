@@ -7,6 +7,7 @@ import com.jocmp.feedfinder.FeedFinder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.URI
+import java.net.URL
 import java.util.UUID
 
 data class Account(
@@ -49,15 +50,17 @@ data class Account(
 
         val feed = Feed(
             id = UUID.randomUUID().toString(),
-            name = entry.name,
-            feedURL = found.feedURL.toString()
+            name = entryNameOrDefault(entry, found.name),
+            feedURL = found.feedURL.toString(),
+            siteURL = entrySiteURL(found.siteURL)
         )
 
         if (entry.folderTitles.isEmpty()) {
             feeds.add(feed)
         } else {
             entry.folderTitles.forEach { folderTitle ->
-                val folder = folders.find { folder -> folder.title == folderTitle } ?: Folder(title = folderTitle)
+                val folder = folders.find { folder -> folder.title == folderTitle }
+                    ?: Folder(title = folderTitle)
 
                 folder.feeds.add(feed)
 
@@ -72,6 +75,18 @@ data class Account(
         saveOPMLFile()
 
         return feed
+    }
+
+    private fun entrySiteURL(url: URL?): String {
+        return url?.toString() ?: ""
+    }
+
+    private fun entryNameOrDefault(entry: FeedFormEntry, feedName: String): String {
+        if (entry.name.isBlank()) {
+            return feedName
+        }
+
+        return entry.name
     }
 
     private suspend fun saveOPMLFile() = withContext(Dispatchers.IO) {
@@ -95,7 +110,7 @@ fun Account.asOPML(): String {
         opml += feed.asOPML(indentLevel = 2)
     }
 
-    folders.sortedBy { it.title } .forEach { folder ->
+    folders.sortedBy { it.title }.forEach { folder ->
         opml += folder.asOPML(indentLevel = 2)
     }
 

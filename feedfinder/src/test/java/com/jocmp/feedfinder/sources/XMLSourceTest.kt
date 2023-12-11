@@ -8,6 +8,7 @@ import java.net.URL
 import kotlin.math.exp
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class XMLSourceTest {
     @Test
