@@ -8,18 +8,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.MalformedURLException
 import java.net.URI
-import java.net.URL
-
-// Parser
-// - XMLFeed
-// - JSONFeed
-// - HTML
-//   - Meta Links
-//   - Body Links
-// - XMLFeedGuess (second pass)
-
-// XML can be parsed directly if XML feed
-// HTML takes response body
 
 class FeedFinder internal constructor(
     private val url: String,
