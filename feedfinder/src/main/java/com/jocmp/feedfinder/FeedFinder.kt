@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.MalformedURLException
 import java.net.URI
+import java.net.URISyntaxException
 
 class FeedFinder internal constructor(
     private val url: String,
@@ -31,6 +32,8 @@ class FeedFinder internal constructor(
             Result.Success(feeds = feeds)
         } catch (e: MalformedURLException) {
             Result.Failure(error = FeedError.IO_FAILURE)
+        } catch (e: URISyntaxException) {
+            Result.Failure(error = FeedError.INVALID_URL)
         }
     }
 
