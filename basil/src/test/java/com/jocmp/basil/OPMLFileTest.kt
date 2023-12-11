@@ -25,15 +25,15 @@ class OPMLFileTest {
                 Folder(
                     title = "Tech",
                     feeds = mutableListOf(
-                        Feed(id = UUID.randomUUID().toString(), name = "The Verge"),
-                        Feed(id = UUID.randomUUID().toString(), name = "Ars Technica")
+                        Feed(id = UUID.randomUUID().toString(), name = "The Verge", feedURL = "https://www.theverge.com/rss/index.xml"),
+                        Feed(id = UUID.randomUUID().toString(), name = "Ars Technica", feedURL = "https://feeds.arstechnica.com/arstechnica/index")
                     )
                 ),
                 Folder(
                     title = "Programming",
                     feeds = mutableListOf(
-                        Feed(id = UUID.randomUUID().toString(), name = "Android Weekly"),
-                        Feed(id = UUID.randomUUID().toString(), name = "Ruby Weekly"),
+                        Feed(id = UUID.randomUUID().toString(), name = "De Programmatica Ipsum", feedURL = "https://deprogrammaticaipsum.com/feed"),
+                        Feed(id = UUID.randomUUID().toString(), name = "Ruby Weekly", feedURL = "https://cprss.s3.amazonaws.com/rubyweekly.com.xml"),
                     )
                 )
             )
@@ -41,8 +41,8 @@ class OPMLFileTest {
 
         account.feeds.addAll(
             listOf(
-                Feed(id = UUID.randomUUID().toString(), name = "GamersNexus"),
-                Feed(id = UUID.randomUUID().toString(), name = "9to5Google")
+                Feed(id = UUID.randomUUID().toString(), name = "GamersNexus", feedURL = "https://gamersnexus.net/rss.xml"),
+                Feed(id = UUID.randomUUID().toString(), name = "9to5Google", feedURL = "https://9to5google.com/feed")
             )
         )
 
@@ -59,16 +59,16 @@ class OPMLFileTest {
         |    <title>Test Display Name</title>
         |  </head>
         |  <body>
-        |    <outline text="9to5Google" title="9to5Google" description="" type="rss" version="RSS" htmlUrl="" xmlUrl=""/>
-        |    <outline text="GamersNexus" title="GamersNexus" description="" type="rss" version="RSS" htmlUrl="" xmlUrl=""/>
+        |    <outline text="9to5Google" title="9to5Google" description="" type="rss" version="RSS" htmlUrl="" xmlUrl="https://9to5google.com/feed"/>
+        |    <outline text="GamersNexus" title="GamersNexus" description="" type="rss" version="RSS" htmlUrl="" xmlUrl="https://gamersnexus.net/rss.xml"/>
         |    <outline text="Empty Folder" title="Empty Folder"/>
         |    <outline text="Programming" title="Programming">
-        |      <outline text="Android Weekly" title="Android Weekly" description="" type="rss" version="RSS" htmlUrl="" xmlUrl=""/>
-        |      <outline text="Ruby Weekly" title="Ruby Weekly" description="" type="rss" version="RSS" htmlUrl="" xmlUrl=""/>
+        |      <outline text="De Programmatica Ipsum" title="De Programmatica Ipsum" description="" type="rss" version="RSS" htmlUrl="" xmlUrl="https://deprogrammaticaipsum.com/feed"/>
+        |      <outline text="Ruby Weekly" title="Ruby Weekly" description="" type="rss" version="RSS" htmlUrl="" xmlUrl="https://cprss.s3.amazonaws.com/rubyweekly.com.xml"/>
         |    </outline>
         |    <outline text="Tech" title="Tech">
-        |      <outline text="The Verge" title="The Verge" description="" type="rss" version="RSS" htmlUrl="" xmlUrl=""/>
-        |      <outline text="Ars Technica" title="Ars Technica" description="" type="rss" version="RSS" htmlUrl="" xmlUrl=""/>
+        |      <outline text="The Verge" title="The Verge" description="" type="rss" version="RSS" htmlUrl="" xmlUrl="https://www.theverge.com/rss/index.xml"/>
+        |      <outline text="Ars Technica" title="Ars Technica" description="" type="rss" version="RSS" htmlUrl="" xmlUrl="https://feeds.arstechnica.com/arstechnica/index"/>
         |    </outline>
         |  </body>
         |</opml>

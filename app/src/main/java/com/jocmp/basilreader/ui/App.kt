@@ -34,7 +34,10 @@ fun App() {
                         navController.navigateToArticles(account.id)
                     }
                 )
-                articleGraph(defaultAccountID = defaultAccountID)
+                articleGraph(
+                    navController = navController,
+                    defaultAccountID = defaultAccountID
+                )
             }
         }
     }
@@ -44,5 +47,5 @@ fun startDestination(defaultAccountID: String?): String {
     if (defaultAccountID.isNullOrEmpty()) {
         return "accounts"
     }
-    return "articles?account_id=${defaultAccountID}"
+    return "accounts/${defaultAccountID}/articles"
 }

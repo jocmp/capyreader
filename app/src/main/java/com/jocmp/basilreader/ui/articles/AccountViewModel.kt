@@ -1,17 +1,14 @@
 package com.jocmp.basilreader.ui.articles
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.toMutableStateList
+import androidx.compose.runtime.neverEqualPolicy
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jocmp.basil.Account
 import com.jocmp.basil.AccountManager
-import com.jocmp.basil.Feed
-import com.jocmp.basil.Folder
+import com.jocmp.basil.FeedFormEntry
 import kotlinx.coroutines.launch
-import java.util.UUID
 
 class AccountViewModel(
     savedStateHandle: SavedStateHandle,
@@ -19,18 +16,22 @@ class AccountViewModel(
 ) : ViewModel() {
     private val args = ArticleArgs(savedStateHandle)
 
-    private val accountState = mutableStateOf(accountManager.findByID(args.accountId))
-    private val account: Account
+    private val accountState = mutableStateOf(
+        accountManager.findByID(args.accountID),
+        policy = neverEqualPolicy()
+    )
+
+    val account: Account
         get() = accountState.value
 
     val feeds = account.feeds.toList()
     val folders = account.folders.toList()
 
-    fun addFeed(url: String) {
+    fun addFeed(entry: FeedFormEntry, onSuccess: () -> Unit) {
         viewModelScope.launch {
-            val nextAccount = accountState.value.copy()
-            nextAccount.addFeed(url = url)
-            accountState.value = nextAccount
+            account.addFeed(entry)
+            accountState.value = account
+            onSuccess()
         }
     }
 }

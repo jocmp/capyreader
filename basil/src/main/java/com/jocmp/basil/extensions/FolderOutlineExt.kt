@@ -9,7 +9,11 @@ internal val Outline.FolderOutline.asFolder: Folder
         return Folder(
             title = folder.title ?: "",
             feeds = folder.feeds.map { feed ->
-                Feed(id = "", name = feed.title ?: "")
+                Feed(
+                    id = "",
+                    name = feed.title ?: "",
+                    feedURL = feed.xmlUrl ?: ""
+                )
             }.toMutableList()
         )
     }

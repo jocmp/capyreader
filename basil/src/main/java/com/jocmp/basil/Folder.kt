@@ -6,12 +6,17 @@ import com.jocmp.basil.extensions.repeatTab
 data class Folder(
     val title: String,
     val feeds: MutableList<Feed> = mutableListOf()
-) : Comparable<Folder> {
-    override fun compareTo(other: Folder): Int {
-        return when {
-            this.title != other.title -> this.title.compareTo(other.title)
-            else -> 0
+) {
+    override fun equals(other: Any?): Boolean {
+        if (other is Folder) {
+            return title == other.title
         }
+        return super.equals(other)
+    }
+
+    override fun hashCode(): Int {
+        val result = title.hashCode()
+        return 31 * result
     }
 }
 

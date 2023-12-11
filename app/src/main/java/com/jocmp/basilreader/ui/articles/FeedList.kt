@@ -3,11 +3,8 @@ package com.jocmp.basilreader.ui.articles
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
 import com.jocmp.basil.Feed
 import com.jocmp.basil.Folder
@@ -18,31 +15,23 @@ import com.jocmp.basilreader.ui.fixtures.FolderPreviewFixture
 fun FeedList(
     folders: List<Folder> = emptyList(),
     feeds: List<Feed> = emptyList(),
+    onNewFeedNavigate: () -> Unit,
 ) {
-    val (isOpen, setOpen) = remember { mutableStateOf(false) }
-
     Column {
         Row {
-            Button(onClick = { setOpen(true) }) {
+            Button(onClick = onNewFeedNavigate) {
                 Text("+ Feed")
             }
         }
         folders.forEach { folder ->
             Text(folder.title)
             folder.feeds.forEach { feed ->
-                Text("-- ${feed.name}")
+                Text("-- ${feed.name} (${feed.feedURL})")
             }
         }
         feeds.forEach { feed ->
-            Text(feed.name)
+            Text("${feed.name} (${feed.feedURL})")
         }
-    }
-
-    if (isOpen) {
-        AddFeedDialog(
-            folders = folders,
-            onDismissRequest = { setOpen(false) }
-        )
     }
 }
 
@@ -55,5 +44,6 @@ fun FeedListPreview() {
     FeedList(
         folders = folders,
         feeds = feeds,
+        onNewFeedNavigate = {}
     )
 }
