@@ -21,7 +21,7 @@ internal class MetaLinkSource(
         return coroutineScope {
             document.select("link[rel~=alternate]")
                 .filter { element -> isValidLink(element) }
-                .map { async { request.fetch(url = URL(it.attr("href"))) } }
+                .map { async { request.fetch(url = URL(it.absUrl("href"))) } }
                 .awaitAll()
                 .mapNotNull { response ->
                     when (val result = response.parse()) {

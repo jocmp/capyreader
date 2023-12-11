@@ -3,11 +3,11 @@ package com.jocmp.basil
 import com.jocmp.basil.extensions.asFeed
 import com.jocmp.basil.extensions.asFolder
 import com.jocmp.basil.opml.Outline
+import com.jocmp.feedfinder.FeedFinder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.URI
 import java.util.UUID
-
 
 data class Account(
     val id: String,
@@ -39,10 +39,18 @@ data class Account(
     }
 
     suspend fun addFeed(entry: FeedFormEntry): Feed {
+        val result = FeedFinder.find(feedURL = entry.url)
+
+        if (result is FeedFinder.Result.Failure) {
+            throw Exception(result.error.toString())
+        }
+
+        val found = (result as FeedFinder.Result.Success).feeds.first()
+
         val feed = Feed(
             id = UUID.randomUUID().toString(),
             name = entry.name,
-            feedURL = entry.url
+            feedURL = found.feedURL.toString()
         )
 
         if (entry.folderTitles.isEmpty()) {

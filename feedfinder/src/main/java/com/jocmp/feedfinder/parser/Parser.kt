@@ -3,6 +3,7 @@ package com.jocmp.feedfinder.parser
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import java.io.IOException
+import java.net.URL
 
 internal object Parser {
     class NoFeedFoundError : Throwable()
@@ -22,14 +23,14 @@ internal object Parser {
     // - JSONFeed
     // - HTML
     @Throws(NoFeedFoundError::class)
-    suspend fun parse(body: String, validate: Boolean): Result {
-        val xmlFeed = XMLFeed.from(body)
+    suspend fun parse(body: String, url: URL, validate: Boolean): Result {
+        val xmlFeed = XMLFeed.from(url, body)
 
         if (xmlFeed.isValid()) {
             return Result.ParsedFeed(xmlFeed)
         }
 
-        val document = tryHTML(body)
+        val document = tryHTML(url, body)
 
         if (document != null) {
             return Result.HTMLDocument(document)
@@ -42,9 +43,9 @@ internal object Parser {
         return Result.ParsedFeed(xmlFeed)
     }
 
-    private fun tryHTML(body: String): Document? {
+    private fun tryHTML(url: URL, body: String): Document? {
         return try {
-            return Jsoup.parse(body)
+            return Jsoup.parse(body, url.toString())
         } catch (e: IOException) {
             null
         }

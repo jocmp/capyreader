@@ -1,11 +1,14 @@
 package com.jocmp.feedfinder
 
 import com.jocmp.feedfinder.parser.Feed
+import com.jocmp.feedfinder.sources.MetaLinkSource
+import com.jocmp.feedfinder.sources.Source
 import com.jocmp.feedfinder.sources.XMLSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.MalformedURLException
 import java.net.URI
+import java.net.URL
 
 // Parser
 // - XMLFeed
@@ -28,16 +31,16 @@ class FeedFinder internal constructor(
     // 3. If the response is HTML and th
     internal suspend fun find(): Result = withContext(Dispatchers.IO) {
         try {
-            // TODO:
-            //  normalize URL via
-            //  https://github.com/Ranchero-Software/RSCore/blob/a2f711d64af8f1baefdf0092f57a7f0df7f0e5e8/Sources/RSCore/Shared/String+RSCore.swift#L114
-            val parsedURL = URI(url).toURL()
+            val parsedURL = URI(url.withProtocol).toURL()
             val response = request.fetch(url = parsedURL)
             val feeds = mutableListOf<Feed>()
 
-            XMLSource(response).find().let {
-                if (it.isNotEmpty()) {
-                    feeds.addAll(it)
+            sources(response).forEach { source ->
+                val currentFeeds = source.find()
+
+                if (currentFeeds.isNotEmpty()) {
+                    feeds.addAll(currentFeeds)
+                    return@forEach
                 }
             }
 
@@ -45,6 +48,12 @@ class FeedFinder internal constructor(
         } catch (e: MalformedURLException) {
             Result.Failure(error = FeedError.IO_FAILURE)
         }
+    }
+
+    private fun sources(response: Response): List<Source> {
+        return listOf(
+            MetaLinkSource(response = response, request = request),
+        )
     }
 
     sealed class Result {
@@ -59,3 +68,12 @@ class FeedFinder internal constructor(
         }
     }
 }
+
+val String.withProtocol: String
+    get() {
+        return if (!(startsWith("http") || startsWith("https"))) {
+            "https://$this"
+        } else {
+            this
+        }
+    }

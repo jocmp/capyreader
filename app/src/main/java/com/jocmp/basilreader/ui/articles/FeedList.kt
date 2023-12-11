@@ -26,11 +26,11 @@ fun FeedList(
         folders.forEach { folder ->
             Text(folder.title)
             folder.feeds.forEach { feed ->
-                Text("-- ${feed.name}")
+                Text("-- ${feed.name} (${feed.feedURL})")
             }
         }
         feeds.forEach { feed ->
-            Text(feed.name)
+            Text("${feed.name} (${feed.feedURL})")
         }
     }
 }
