@@ -10,12 +10,11 @@ class FolderPreviewFixture : PreviewParameterProvider<Folder> {
 
     private fun folders(): Sequence<Folder> {
         return sequenceOf(
-            Folder(title = "Empty Folder"),
             Folder(
                 title = "Tech",
                 feeds = mutableListOf(
-                    Feed(id = UUID.randomUUID().toString(), name = "The Verge", feedURL = ""),
-                    Feed(id = UUID.randomUUID().toString(), name = "Ars Technica", feedURL = "")
+                    Feed(id = UUID.randomUUID().toString(), name = "The Verge", feedURL = "https://www.theverge.com/rss/index.xml"),
+                    Feed(id = UUID.randomUUID().toString(), name = "Ars Technica", feedURL = "https://arstechnica.com/feed/")
                 )
             ),
             Folder(
