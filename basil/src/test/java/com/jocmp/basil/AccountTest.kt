@@ -8,6 +8,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
+import java.io.File
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 
@@ -25,23 +26,34 @@ class AccountTest {
         } returns FeedFinder.Result.Success(listOf(FakeParserFeed()))
     }
 
+    private fun buildAccount(id: String, path: File): Account {
+        val database = InMemoryDatabaseProvider().forAccount(id)
+
+        return Account(
+            id = id,
+            path = path.toURI(),
+            database = database,
+        )
+    }
+
     @Test
     fun opmlFile_endsWithSubscriptions() {
-        val accountPath = folder.newFile().toURI()
+        val accountPath = folder.newFile()
 
-        val account = Account(id = "777", path = accountPath)
+        val account = buildAccount(id = "777", path = accountPath)
 
         assertContains(account.opmlFile.path.toString(), Regex("/subscriptions.opml$"))
     }
 
     @Test
     fun constructor_loadsExistingFeeds() {
-        val accountPath = folder.newFile().toURI()
+        val accountPath = folder.newFile()
         val accountID = "777"
 
         runBlocking {
-            Account(id = accountID, path = accountPath).addFolder(title = "Test Title")
-            Account(id = accountID, path = accountPath).addFeed(
+            val previousInstance = buildAccount(id = accountID, path = accountPath)
+            previousInstance.addFolder(title = "Test Title")
+            previousInstance.addFeed(
                 FeedFormEntry(
                     url = "https://theverge.com/rss.xml",
                     name = "The Verge",
@@ -50,7 +62,7 @@ class AccountTest {
             )
         }
 
-        val account = Account(id = accountID, path = accountPath)
+        val account = buildAccount(id = accountID, path = accountPath)
         val accountTitle = account.folders.first().title
 
         assertEquals(expected = "Test Title", actual = accountTitle)
@@ -59,8 +71,8 @@ class AccountTest {
 
     @Test
     fun addFeed_singleTopLevelFeed() {
-        val accountPath = folder.newFile().toURI()
-        val account = Account(id = "777", path = accountPath)
+        val accountPath = folder.newFile()
+        val account = buildAccount(id = "777", path = accountPath)
         val entry = FeedFormEntry(
             url = "https://theverge.com/rss/index.xml",
             name = "The Verge",
@@ -79,8 +91,8 @@ class AccountTest {
 
     @Test
     fun addFeed_newFolder() {
-        val accountPath = folder.newFile().toURI()
-        val account = Account(id = "777", path = accountPath)
+        val accountPath = folder.newFile()
+        val account = buildAccount(id = "777", path = accountPath)
         val entry = FeedFormEntry(
             url = "https://theverge.com/rss/index.xml",
             name = "The Verge",
@@ -99,8 +111,8 @@ class AccountTest {
 
     @Test
     fun addFeed_existingFolders() {
-        val accountPath = folder.newFile().toURI()
-        val account = Account(id = "777", path = accountPath)
+        val accountPath = folder.newFile()
+        val account = buildAccount(id = "777", path = accountPath)
         runBlocking { account.addFolder("Tech") }
 
         val entry = FeedFormEntry(
@@ -121,8 +133,8 @@ class AccountTest {
 
     @Test
     fun addFeed_multipleFolders() {
-        val accountPath = folder.newFile().toURI()
-        val account = Account(id = "777", path = accountPath)
+        val accountPath = folder.newFile()
+        val account = buildAccount(id = "777", path = accountPath)
         runBlocking { account.addFolder("Tech") }
 
         val entry = FeedFormEntry(

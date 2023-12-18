@@ -11,7 +11,7 @@ ArticleView: List/detail.
 Feedbin separates these concepts into routes
 
 | Action               | URL                                                                            |
-| -------------------- | ------------------------------------------------------------------------------ |
+|----------------------|--------------------------------------------------------------------------------|
 | Viewing a Folder/Tag | <https://feedbin.com/tags/62?view_mode=view_unread>                            |
 | Viewing a feed       | <https://feedbin.com/feeds/2599689/entries?view_mode=view_unread>              |
 | Viewing all unread   | <https://feedbin.com/entries/unread?view_mode=view_unread>                     |
@@ -22,4 +22,3 @@ Feedbin separates these concepts into routes
 | Viewing a Folder/Tag | /folder/{folder_id} |                                               |
 | Viewing a feed       | /feeds/{feed_id}    |                                               |
 | Viewing all unread   | /articles/{filter}  | Where filter is `read`, `unread` or `starred` |
-

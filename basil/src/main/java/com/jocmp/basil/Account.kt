@@ -1,5 +1,6 @@
 package com.jocmp.basil
 
+import com.jocmp.basil.db.Database
 import com.jocmp.basil.extensions.asFeed
 import com.jocmp.basil.extensions.asFolder
 import com.jocmp.basil.opml.Outline
@@ -13,6 +14,7 @@ import java.util.UUID
 data class Account(
     val id: String,
     val path: URI,
+    val database: Database,
 ) {
     var folders = mutableSetOf<Folder>()
 

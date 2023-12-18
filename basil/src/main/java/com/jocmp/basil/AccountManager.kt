@@ -1,58 +1,87 @@
 package com.jocmp.basil
 
+import kotlinx.coroutines.flow.first
 import java.io.File
 import java.io.FileFilter
 import java.net.URI
 import java.util.UUID
 
-class AccountManager(rootFolder: URI) {
-    var accounts: MutableList<Account> = mutableListOf()
-        private set
+class AccountManager(
+    val rootFolder: URI,
+    private val databaseProvider: DatabaseProvider,
+    private val preferencesProvider: PreferencesProvider,
+) {
+    fun findByID(id: String?): Account? {
+        id ?: return null
 
-    private val accountFolder = File(rootFolder.path, directoryName)
+        val existingAccount = listAccounts().find { file -> file.name == id } ?: return null
 
-    init {
-        accountFolder.listFiles()?.forEach { file ->
-            accounts.add(Account(id = file.name, path = file.toURI()))
+        return buildAccount(id = existingAccount.name, path = existingAccount)
+    }
+
+    suspend fun latestSummaries(): List<AccountSummary> {
+        val ids = listAccounts().map { it.name }
+        return ids.map { id ->
+            val preferences = preferencesProvider
+                .forAccount(id)
+                .data
+                .first()
+
+            AccountSummary(id = id, preferences)
         }
     }
 
-    fun firstAccountID(): String? {
-        return accounts.firstOrNull()?.id
-    }
-
-    fun findByID(id: String): Account {
-        return accounts.find { it.id == id }!!
+    suspend fun accountIDs(): List<String> {
+        return latestSummaries().map { it.id }
     }
 
     fun createAccount(): Account {
         val accountID = UUID.randomUUID().toString()
 
-        if (!accountFolder.exists()) {
-            accountFolder.mkdir()
+        accountFolder().apply {
+            if (!exists()) {
+                mkdir()
+            }
         }
 
         val folder = accountFile(accountID).apply {
             mkdir()
         }
 
-        return Account(id = accountID, path = folder.toURI()).also { account ->
-            accounts.add(account)
-        }
+        return buildAccount(id = accountID, path = folder)
     }
 
-    fun removeAccount(account: Account) {
-        val files = accountFolder.listFiles(AccountFileFilter(account.id))
+    fun removeAccount(accountID: String) {
+        val files = accountFolder().listFiles(AccountFileFilter(accountID))
 
-        val success = files?.first()?.deleteRecursively() ?: false
-
-        if (success) {
-            accounts.removeIf { it.id == account.id }
-        }
+        files?.first()?.deleteRecursively() ?: false
     }
 
     private fun accountFile(id: String): File {
-        return File(accountFolder, id)
+        return File(accountFolder(), id)
+    }
+
+    private fun listAccounts(): List<File> {
+        return accountFolder().listFiles()?.toList() ?: emptyList()
+    }
+
+    private fun accountFolder() = File(rootFolder.path, directoryName)
+
+    private fun buildAccount(id: String, path: File): Account {
+        val pathURI = path.toURI()
+
+        return Account(
+            id = id,
+            path = pathURI,
+            database = databaseProvider.forAccount(id)
+        )
+    }
+
+    class AccountSummary(
+        val id: String,
+        preferences: AccountPreferences,
+    ) {
+        val displayName = preferences.displayName
     }
 
     companion object {

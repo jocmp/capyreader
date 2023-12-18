@@ -5,7 +5,7 @@ import androidx.navigation.compose.composable
 import com.jocmp.basil.Account
 
 fun NavGraphBuilder.accountIndex(
-    onNavigate: (account: Account) -> Unit
+    onNavigate: (accountID: String) -> Unit
 ) {
     composable("accounts") {
         AccountIndexView(onNavigate = onNavigate)

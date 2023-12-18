@@ -1,0 +1,19 @@
+CREATE TABLE articles(
+  id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  external_id TEXT,
+  feed_id TEXT NOT NULL,
+  title TEXT,
+  content_html TEXT,
+  url TEXT,
+  summary TEXT,
+  image_url TEXT,
+  date_published INTEGER
+);
+
+findAll:
+SELECT *
+FROM articles;
+
+create:
+INSERT INTO articles(feed_id)
+VALUES (?);

@@ -11,9 +11,16 @@ class AccountManagerTest {
     @Rule
     var rootFolder = TemporaryFolder()
 
+    private fun buildManager(): AccountManager {
+        return AccountManager(
+            rootFolder = rootFolder.newFolder().toURI(),
+            databaseProvider = InMemoryDatabaseProvider()
+        )
+    }
+
     @Test
     fun addAccount() {
-        val manager = AccountManager(rootFolder.newFolder().toURI())
+        val manager = buildManager()
 
         assertNotNull(manager.createAccount())
         assertEquals(1, manager.accounts.size)
@@ -21,7 +28,7 @@ class AccountManagerTest {
 
     @Test
     fun removeAccount() {
-        val manager = AccountManager(rootFolder.newFolder().toURI())
+        val manager = buildManager()
 
         val account = manager.createAccount()
         manager.createAccount()
@@ -33,7 +40,7 @@ class AccountManagerTest {
 
     @Test
     fun findById() {
-        val manager = AccountManager(rootFolder.newFolder().toURI())
+        val manager = buildManager()
 
         val expectedAccount = manager.createAccount()
 
@@ -44,7 +51,7 @@ class AccountManagerTest {
 
     @Test(expected = NullPointerException::class)
     fun findByIdMissingAccount() {
-        val manager = AccountManager(rootFolder.newFolder().toURI())
+        val manager = buildManager()
 
         manager.findByID("bogus")
     }

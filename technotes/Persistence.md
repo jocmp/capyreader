@@ -18,6 +18,44 @@ Accounts/
 `DB.sqlite`
   - the service's article database
 
+```sql
+-- NNW structure
+CREATE TABLE articles (
+  articleID TEXT NOT NULL PRIMARY KEY, 
+  feedID TEXT NOT NULL,
+  uniqueID TEXT NOT NULL,
+  title TEXT,
+  contentHTML TEXT,
+  contentText TEXT
+  url TEXT, 
+  externalURL TEXT, 
+  summary TEXT, 
+  imageURL TEXT, 
+  bannerImageURL TEXT, 
+  datePublished DATE, 
+  dateModified DATE, 
+  searchRowID INTEGER
+);
+```
+
+Proposed structure
+
+```sql
+CREATE TABLE Articles(
+  id TEXT NOT NULL PRIMARY KEY,
+  external_id TEXT, // Provided by external service
+  feed_id TEXT NOT NULL,
+  title TEXT,
+  content_html TEXT,
+  url TEXT,   
+  summary TEXT, 
+  image_url TEXT, 
+  date_published DATE
+);
+```
+
+- https://developer.android.com/reference/androidx/sqlite/db/SupportSQLiteOpenHelper.Configuration#name()
+
 `FeedMetadata.plist`
   - maps each source to its last sync time, etag, author info, etc
   - Content Hash is also present for feed diffing ([NNW docs](https://github.com/Ranchero-Software/NetNewsWire/blob/e9f26c9adcbb87d0ff0fc8a7e0aacaf3f8ef5960/Technotes/AvoidFeedParsing.markdown))
