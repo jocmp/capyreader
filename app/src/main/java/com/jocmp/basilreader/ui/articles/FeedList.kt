@@ -1,11 +1,16 @@
 package com.jocmp.basilreader.ui.articles
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.jocmp.basil.Feed
 import com.jocmp.basil.Folder
 import com.jocmp.basilreader.ui.fixtures.FeedPreviewFixture
@@ -29,6 +34,9 @@ fun FeedList(
                 folder = it,
                 onFeedSelect = onFeedSelect
             )
+        }
+        Box(modifier = Modifier.padding(horizontal = 8.dp)) {
+            Text("Feeds", fontWeight = FontWeight.Bold)
         }
         feeds.forEach {
             FeedRow(

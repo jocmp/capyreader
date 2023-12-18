@@ -1,5 +1,4 @@
 plugins {
-    kotlin("plugin.serialization") version "1.9.21"
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp") version libs.versions.ksp

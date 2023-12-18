@@ -5,6 +5,7 @@ import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 class AccountManagerTest {
     @JvmField
@@ -14,6 +15,7 @@ class AccountManagerTest {
     private fun buildManager(): AccountManager {
         return AccountManager(
             rootFolder = rootFolder.newFolder().toURI(),
+            preferencesProvider = InMemoryPreferencesProvider(AccountPreferences(displayName = "Local")),
             databaseProvider = InMemoryDatabaseProvider()
         )
     }
@@ -23,7 +25,7 @@ class AccountManagerTest {
         val manager = buildManager()
 
         assertNotNull(manager.createAccount())
-        assertEquals(1, manager.accounts.size)
+        assertEquals(1, manager.accountSize())
     }
 
     @Test
@@ -33,9 +35,9 @@ class AccountManagerTest {
         val account = manager.createAccount()
         manager.createAccount()
 
-        manager.removeAccount(account)
+        manager.removeAccount(account.id)
 
-        assertEquals(1, manager.accounts.size)
+        assertEquals(1, manager.accountSize())
     }
 
     @Test
@@ -46,13 +48,13 @@ class AccountManagerTest {
 
         val account = manager.findByID(expectedAccount.id)
 
-        assertEquals(expectedAccount, account)
+        assertEquals(expectedAccount.id, account!!.id)
     }
 
-    @Test(expected = NullPointerException::class)
+    @Test
     fun findByIdMissingAccount() {
         val manager = buildManager()
 
-        manager.findByID("bogus")
+        assertNull(manager.findByID("bogus"))
     }
 }

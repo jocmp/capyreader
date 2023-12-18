@@ -10,13 +10,14 @@ import org.koin.androidx.compose.koinViewModel
 fun ArticleScreen(
     viewModel: AccountViewModel = koinViewModel(),
     onFeedAdd: () -> Unit,
+    onFeedSelect: (feedID: String) -> Unit
 ) {
     Column {
         FeedList(
             folders = viewModel.folders,
             feeds = viewModel.feeds,
             onFeedAdd = onFeedAdd,
-            onFeedSelect = {}
+            onFeedSelect = onFeedSelect
         )
     }
 }

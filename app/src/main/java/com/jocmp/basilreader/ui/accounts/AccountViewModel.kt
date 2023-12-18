@@ -12,6 +12,7 @@ import com.jocmp.basil.AccountManager
 import com.jocmp.basil.Feed
 import com.jocmp.basil.FeedFormEntry
 import com.jocmp.basil.Folder
+import com.jocmp.basilreader.Async
 import com.jocmp.basilreader.selectAccount
 import com.jocmp.basilreader.selectedAccount
 import kotlinx.coroutines.flow.first
@@ -50,7 +51,7 @@ class AccountViewModel(
     val feeds: List<Feed>
         get() = account?.feeds?.toList() ?: emptyList()
 
-    fun selectAccount(accountID: String) {
+    private fun selectAccount(accountID: String) {
         viewModelScope.launch {
             settings.selectAccount(accountID)
         }

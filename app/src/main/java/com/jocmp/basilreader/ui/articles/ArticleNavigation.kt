@@ -6,15 +6,15 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 
-fun articlesRoute() = "articles"
+const val articlesRoute = "articles"
 
 fun feedRoute(feedID: String) = "feeds/${feedID}"
 
-fun NavController.navigateToFeed(
-    feedID: String,
-    accountID: String,
-    navOptions: NavOptions? = null
-) = navigate(feedRoute(accountID), navOptions)
+fun NavController.navigateToArticles() =
+    navigate(articlesRoute)
+
+fun NavController.navigateToFeed(feedID: String, navOptions: NavOptions? = null) =
+    navigate(feedRoute(feedID), navOptions)
 
 fun NavController.navigateToAddFeed() =
     navigate("feeds/new")
@@ -28,6 +28,9 @@ fun NavGraphBuilder.articleGraph(
         ArticleScreen(
             onFeedAdd = {
                 navController.navigateToAddFeed()
+            },
+            onFeedSelect = {
+                navController.navigateToFeed(feedID = it)
             }
         )
     }
@@ -39,8 +42,8 @@ fun NavGraphBuilder.articleGraph(
                 navController.popBackStack()
             },
             onSubmit = {
-                navController.navigate(articlesRoute()) {
-                    popUpTo(articlesRoute()) {
+                navController.navigate(articlesRoute) {
+                    popUpTo(articlesRoute) {
                         inclusive = true
                     }
                 }

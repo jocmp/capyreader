@@ -8,40 +8,48 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import com.jocmp.basil.Account
+import androidx.compose.ui.platform.LocalContext
 import com.jocmp.basil.AccountManager
 import com.jocmp.basil.AccountManager.AccountSummary
-import kotlinx.coroutines.coroutineScope
+import com.jocmp.basilreader.selectAccount
+import com.jocmp.basilreader.settings
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
 
 @Composable
 fun AccountIndexView(
     accountManager: AccountManager = koinInject(),
-    onNavigate: (accountID: String) -> Unit
+    onSelect: () -> Unit
 ) {
+    val context = LocalContext.current
     val composableScope = rememberCoroutineScope()
-    val accountsState = remember { mutableStateListOf<AccountSummary>() }.also {
+    val accountsState = remember { mutableStateListOf<AccountSummary>() }
+
+    LaunchedEffect(Unit) {
         composableScope.launch {
-            it.addAll(accountManager.latestSummaries())
+            accountsState.addAll(accountManager.latestSummaries())
         }
     }
 
     val accounts = accountsState.toList()
 
     Column {
-        Button(onClick = { accountManager.createAccount() }) {
+        Button(onClick = { accountsState.add(accountManager.createAccount()) }) {
             Text("+")
         }
         LazyColumn {
             items(accounts, key = { it.id }) { account ->
-                Row(modifier = Modifier.clickable { onNavigate(account.id) }) {
+                Row(modifier = Modifier.clickable {
+                    composableScope.launch {
+                        context.settings.selectAccount(account.id)
+                        onSelect()
+                    }
+                }) {
                     Text(account.displayName)
                     Button(onClick = { accountManager.removeAccount(account.id) }) {
                         Text("x")

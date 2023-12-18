@@ -35,7 +35,15 @@ class AccountManager(
         return latestSummaries().map { it.id }
     }
 
-    fun createAccount(): Account {
+    fun isEmpty(): Boolean {
+        return accountSize() == 0
+    }
+
+    fun accountSize(): Int {
+        return listAccounts().size
+    }
+
+    fun createAccount(): AccountSummary {
         val accountID = UUID.randomUUID().toString()
 
         accountFolder().apply {
@@ -44,11 +52,9 @@ class AccountManager(
             }
         }
 
-        val folder = accountFile(accountID).apply {
-            mkdir()
-        }
+        accountFile(accountID).mkdir()
 
-        return buildAccount(id = accountID, path = folder)
+        return AccountSummary(id = accountID, AccountPreferences(displayName = "Feedbin"))
     }
 
     fun removeAccount(accountID: String) {
