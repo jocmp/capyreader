@@ -27,7 +27,10 @@ class AccountPreferencesProvider(
 }
 
 class AccountPreferencesSerializer : Serializer<AccountPreferences> {
-    override val defaultValue = AccountPreferences(displayName = "")
+    override val defaultValue = AccountPreferences(
+        displayName = "",
+        source = ""
+    )
 
     override suspend fun readFrom(input: InputStream): AccountPreferences =
         try {

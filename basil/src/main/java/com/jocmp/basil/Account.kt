@@ -17,11 +17,14 @@ data class Account(
     val id: String,
     val path: URI,
     val database: Database,
+    val source: AccountSource = AccountSource.LOCAL
 ) : AccountDelegate {
     private val delegate: AccountDelegate
 
     init {
-        delegate = LocalAccountDelegate(this)
+        when(source) {
+            AccountSource.LOCAL -> delegate = LocalAccountDelegate(this)
+        }
     }
 
     var folders = mutableSetOf<Folder>()

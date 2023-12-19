@@ -57,7 +57,7 @@ class AccountViewModel(
         }
     }
 
-    private fun updateState(accountID: String) {
+    private suspend fun updateState(accountID: String) {
         accountState.value = accountManager.findByID(accountID)
     }
 

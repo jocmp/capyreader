@@ -12,10 +12,13 @@ class AccountManager(
     private val databaseProvider: DatabaseProvider,
     private val preferencesProvider: PreferencesProvider,
 ) {
-    fun findByID(id: String?): Account? {
+    suspend fun findByID(id: String?): Account? {
         id ?: return null
 
         val existingAccount = listAccounts().find { file -> file.name == id } ?: return null
+
+        val preferences = preferencesProvider.forAccount(existingAccount.name)
+        val source = preferences.data.first().source
 
         return buildAccount(id = existingAccount.name, path = existingAccount)
     }
@@ -55,7 +58,12 @@ class AccountManager(
 
         accountFile(accountID).mkdir()
 
-        return AccountSummary(id = accountID, AccountPreferences(displayName = "Feedbin"))
+        return AccountSummary(id = accountID,
+            AccountPreferences(
+                displayName = "Feedbin",
+                source = AccountSource.LOCAL.value
+            )
+        )
     }
 
     fun removeAccount(accountID: String) {
@@ -80,7 +88,7 @@ class AccountManager(
         return Account(
             id = id,
             path = pathURI,
-            database = databaseProvider.forAccount(id)
+            database = databaseProvider.forAccount(id),
         )
     }
 

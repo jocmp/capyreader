@@ -1,5 +1,6 @@
 package com.jocmp.basil
 
+import kotlinx.coroutines.runBlocking
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
@@ -15,7 +16,12 @@ class AccountManagerTest {
     private fun buildManager(): AccountManager {
         return AccountManager(
             rootFolder = rootFolder.newFolder().toURI(),
-            preferencesProvider = InMemoryPreferencesProvider(AccountPreferences(displayName = "Local")),
+            preferencesProvider = InMemoryPreferencesProvider(
+                AccountPreferences(
+                    displayName = "Local",
+                    source = AccountSource.LOCAL.value
+                )
+            ),
             databaseProvider = InMemoryDatabaseProvider()
         )
     }
@@ -41,7 +47,7 @@ class AccountManagerTest {
     }
 
     @Test
-    fun findById() {
+    fun findById() = runBlocking {
         val manager = buildManager()
 
         val expectedAccount = manager.createAccount()
@@ -52,7 +58,7 @@ class AccountManagerTest {
     }
 
     @Test
-    fun findByIdMissingAccount() {
+    fun findByIdMissingAccount() = runBlocking {
         val manager = buildManager()
 
         assertNull(manager.findByID("bogus"))
