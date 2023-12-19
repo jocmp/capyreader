@@ -1,6 +1,8 @@
 package com.jocmp.basil.extensions
 
 import com.jocmp.basil.Feed
+import java.security.SecureRandom
+import kotlin.random.Random
 import com.jocmp.basil.db.Feeds as DBFeed
 import com.jocmp.basil.opml.Feed as OPMLFeed
 

@@ -1,9 +1,11 @@
 package com.jocmp.basilreader.ui.fixtures
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import com.jocmp.basil.Account
 import com.jocmp.basil.Feed
 import com.jocmp.basil.Folder
 import java.util.UUID
+import kotlin.random.Random
 
 class FolderPreviewFixture : PreviewParameterProvider<Folder> {
     override val values = folders()
@@ -14,12 +16,12 @@ class FolderPreviewFixture : PreviewParameterProvider<Folder> {
                 title = "Tech",
                 feeds = mutableListOf(
                     Feed(
-                        id =  UUID.randomUUID().toString(),
+                        id = UUID.randomUUID().toString(),
                         name = "The Verge",
                         feedURL = "https://www.theverge.com/rss/index.xml"
                     ),
                     Feed(
-                        id =  UUID.randomUUID().toString(),
+                        id = UUID.randomUUID().toString(),
                         name = "Ars Technica",
                         feedURL = "https://arstechnica.com/feed/"
                     )

@@ -61,6 +61,7 @@ dependencies {
     implementation("androidx.datastore:datastore-core:1.0.0")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("com.github.requery:sqlite-android:3.43.0")
+    implementation(libs.rssparser)
     testImplementation("app.cash.sqldelight:sqlite-driver:$sqldelightVersion")
     testImplementation("junit:junit:4.13.2")
     testImplementation(testLibs.mockk.android)

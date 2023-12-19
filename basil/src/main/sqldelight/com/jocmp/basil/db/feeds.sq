@@ -9,8 +9,14 @@ SELECT *
 FROM feeds
 WHERE external_id IN ?;
 
+findByExternalID:
+SELECT *
+FROM feeds
+WHERE external_id = ?
+LIMIT 1;
+
 create {
-REPLACE INTO feeds(external_id, feed_url)
+INSERT INTO feeds(external_id, feed_url)
 VALUES (?, ?);
 
 SELECT *

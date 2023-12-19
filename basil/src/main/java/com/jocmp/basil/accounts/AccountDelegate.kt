@@ -1,7 +1,10 @@
 package com.jocmp.basil.accounts
 
+import com.jocmp.basil.Feed
 import java.net.URL
 
-interface AccountDelegate {
-    fun createFeed(feedURL: URL): ExternalFeed
+internal interface AccountDelegate {
+    suspend fun createFeed(feedURL: URL): ExternalFeed
+
+    suspend fun fetchAll(feed: Feed): List<ParsedItem>
 }

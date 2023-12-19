@@ -1,5 +1,7 @@
 package com.jocmp.basil
 
+import com.jocmp.basil.accounts.AccountDelegate
+import com.jocmp.basil.accounts.LocalAccountDelegate
 import com.jocmp.basil.db.Database
 import com.jocmp.feedfinder.FeedFinder
 import io.mockk.coEvery
@@ -19,14 +21,19 @@ class AccountTest {
     val folder = TemporaryFolder()
 
     private lateinit var database: Database
-    
+
     @Before
     fun setup() {
         mockkConstructor(FeedFinder::class)
+        mockkConstructor(LocalAccountDelegate::class)
 
         coEvery {
             anyConstructed<FeedFinder>().find()
         } returns FeedFinder.Result.Success(listOf(FakeParserFeed()))
+
+        coEvery {
+            anyConstructed<LocalAccountDelegate>().fetchAll(any())
+        } returns emptyList()
 
         database = InMemoryDatabaseProvider().forAccount("777")
     }

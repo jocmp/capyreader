@@ -23,6 +23,7 @@ dependencyResolutionManagement {
             library("kotlinx-coroutines-core", "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
             library("kotlinx-serialization-json", "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
             library("kotlinx-coroutines-test", "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+            library("rssparser", "com.prof18.rssparser:rssparser:6.0.4")
         }
         create("testLibs") {
             library("mockk-mockk", "io.mockk:mockk:1.13.7")

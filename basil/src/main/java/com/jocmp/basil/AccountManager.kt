@@ -12,13 +12,10 @@ class AccountManager(
     private val databaseProvider: DatabaseProvider,
     private val preferencesProvider: PreferencesProvider,
 ) {
-    suspend fun findByID(id: String?): Account? {
+    fun findByID(id: String?): Account? {
         id ?: return null
 
         val existingAccount = listAccounts().find { file -> file.name == id } ?: return null
-
-        val preferences = preferencesProvider.forAccount(existingAccount.name)
-        val source = preferences.data.first().source
 
         return buildAccount(id = existingAccount.name, path = existingAccount)
     }

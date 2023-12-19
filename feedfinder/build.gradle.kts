@@ -11,7 +11,7 @@ java {
 
 dependencies {
     implementation("org.jsoup:jsoup:1.17.1")
-    implementation("com.prof18.rssparser:rssparser:6.0.4")
+    implementation(libs.rssparser)
     implementation(libs.moshi.kotlin)
     implementation(libs.kotlinx.coroutines.core)
     ksp(libs.moshi.kotlin.codegen)

@@ -3,13 +3,17 @@ package com.jocmp.basil
 import com.jocmp.basil.accounts.AccountDelegate
 import com.jocmp.basil.accounts.ExternalFeed
 import com.jocmp.basil.accounts.LocalAccountDelegate
+import com.jocmp.basil.accounts.ParsedItem
 import com.jocmp.basil.db.Database
 import com.jocmp.basil.extensions.asFeed
 import com.jocmp.basil.extensions.asFolder
 import com.jocmp.basil.opml.Outline
 import com.jocmp.feedfinder.FeedFinder
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.jetbrains.annotations.VisibleForTesting
 import java.net.URI
 import java.net.URL
 
@@ -17,12 +21,12 @@ data class Account(
     val id: String,
     val path: URI,
     val database: Database,
-    val source: AccountSource = AccountSource.LOCAL
-) : AccountDelegate {
-    private val delegate: AccountDelegate
+    val source: AccountSource = AccountSource.LOCAL,
+) {
+    private var delegate: AccountDelegate
 
     init {
-        when(source) {
+        when (source) {
             AccountSource.LOCAL -> delegate = LocalAccountDelegate(this)
         }
     }
@@ -36,7 +40,7 @@ data class Account(
         account = this,
     )
 
-    val displayName = "Test Display Name"
+    val displayName = "Local"
 
     init {
         loadOPML(opmlFile.load())
@@ -62,10 +66,11 @@ data class Account(
         val found = (result as FeedFinder.Result.Success).feeds.first()
 
         val externalFeed = delegate.createFeed(feedURL = found.feedURL)
-        database.feedsQueries.create(
-            externalFeed.externalID,
-            found.feedURL.toString()
-        ).executeAsOne()
+
+        val record = database.feeds.findOrCreate(
+            externalFeed = externalFeed,
+            feedURL = found.feedURL
+        )
 
         val feed = Feed(
             id = externalFeed.externalID,
@@ -73,6 +78,24 @@ data class Account(
             feedURL = found.feedURL.toString(),
             siteURL = entrySiteURL(found.siteURL)
         )
+
+        coroutineScope {
+            launch {
+                val items = delegate.fetchAll(feed)
+
+                items.forEach { item ->
+                    database.articlesQueries.create(
+                        feed_id = record.id,
+                        external_id = item.externalID,
+                        title = item.title,
+                        content_html = item.contentHTML,
+                        url = item.url,
+                        summary = item.summary,
+                        image_url = item.imageURL
+                    )
+                }
+            }
+        }
 
         if (entry.folderTitles.isEmpty()) {
             feeds.add(feed)
@@ -133,10 +156,6 @@ data class Account(
                 is Outline.FeedOutline -> item.feed.asFeed(dbFeeds)?.let { feeds.add(it) }
             }
         }
-    }
-
-    override fun createFeed(feedURL: URL): ExternalFeed {
-        return delegate.createFeed(feedURL)
     }
 }
 
