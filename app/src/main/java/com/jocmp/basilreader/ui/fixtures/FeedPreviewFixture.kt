@@ -9,8 +9,16 @@ class FeedPreviewFixture : PreviewParameterProvider<Feed> {
 
     private fun feeds(): Sequence<Feed> {
         return sequenceOf(
-            Feed(id = UUID.randomUUID().toString(), name = "GamersNexus", feedURL = "https://gamersnexus.net/rss.xml"),
-            Feed(id = UUID.randomUUID().toString(), name = "9to5Google", feedURL = "https://9to5google.com/feed/")
+            Feed(
+                id = UUID.randomUUID().toString(),
+                name = "GamersNexus",
+                feedURL = "https://gamersnexus.net/rss.xml"
+            ),
+            Feed(
+                id = UUID.randomUUID().toString(),
+                name = "9to5Google",
+                feedURL = "https://9to5google.com/feed/"
+            )
         )
     }
 }

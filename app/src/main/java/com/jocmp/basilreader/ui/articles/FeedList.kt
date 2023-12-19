@@ -35,14 +35,16 @@ fun FeedList(
                 onFeedSelect = onFeedSelect
             )
         }
-        Box(modifier = Modifier.padding(horizontal = 8.dp)) {
-            Text("Feeds", fontWeight = FontWeight.Bold)
-        }
-        feeds.forEach {
-            FeedRow(
-                feed = it,
-                onSelect = onFeedSelect
-            )
+        if (feeds.isNotEmpty()) {
+            Box(modifier = Modifier.padding(horizontal = 8.dp)) {
+                Text("Feeds", fontWeight = FontWeight.Bold)
+            }
+            feeds.forEach {
+                FeedRow(
+                    feed = it,
+                    onSelect = onFeedSelect
+                )
+            }
         }
     }
 }

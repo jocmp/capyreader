@@ -11,7 +11,7 @@ class OPMLHandlerTest {
         val saxParser = factory.newSAXParser()
         val handler = OPMLHandler()
 
-        saxParser.parse("src/test/resources/onmymac.xml", handler)
+        saxParser.parse("src/test/resources/local.xml", handler)
 
         assertEquals(3, handler.opmlDocument.outlines.size)
     }

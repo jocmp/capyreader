@@ -1,5 +1,8 @@
 package com.jocmp.basil
 
+import com.jocmp.basil.accounts.AccountDelegate
+import com.jocmp.basil.accounts.ExternalFeed
+import com.jocmp.basil.accounts.LocalAccountDelegate
 import com.jocmp.basil.db.Database
 import com.jocmp.basil.extensions.asFeed
 import com.jocmp.basil.extensions.asFolder
@@ -9,13 +12,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.URI
 import java.net.URL
-import java.util.UUID
 
 data class Account(
     val id: String,
     val path: URI,
     val database: Database,
-) {
+) : AccountDelegate {
+    private val delegate: AccountDelegate
+
+    init {
+        delegate = LocalAccountDelegate(this)
+    }
+
     var folders = mutableSetOf<Folder>()
 
     var feeds = mutableSetOf<Feed>()
@@ -50,8 +58,14 @@ data class Account(
 
         val found = (result as FeedFinder.Result.Success).feeds.first()
 
+        val externalFeed = delegate.createFeed(feedURL = found.feedURL)
+        database.feedsQueries.create(
+            externalFeed.externalID,
+            found.feedURL.toString()
+        ).executeAsOne()
+
         val feed = Feed(
-            id = UUID.randomUUID().toString(),
+            id = externalFeed.externalID,
             name = entryNameOrDefault(entry, found.name),
             feedURL = found.feedURL.toString(),
             siteURL = entrySiteURL(found.siteURL)
@@ -96,12 +110,30 @@ data class Account(
     }
 
     private fun loadOPML(items: List<Outline>) {
-        items.forEach { item ->
-            when (item) {
-                is Outline.FolderOutline -> folders.add(item.asFolder)
-                is Outline.FeedOutline -> feeds.add(item.asFeed)
+        val externalIDs = mutableListOf<String>()
+
+        items.forEach {
+            when (it) {
+                is Outline.FeedOutline -> it.feed.externalID?.let { id -> externalIDs.add(id) }
+                is Outline.FolderOutline -> externalIDs.addAll(it.folder.feeds.mapNotNull { feed -> feed.externalID })
             }
         }
+
+        val dbFeeds =
+            database.feedsQueries.allByExternalID(externalIDs).executeAsList().associateBy {
+                it.external_id
+            }
+
+        items.forEach { item ->
+            when (item) {
+                is Outline.FolderOutline -> folders.add(item.asFolder(dbFeeds))
+                is Outline.FeedOutline -> item.feed.asFeed(dbFeeds)?.let { feeds.add(it) }
+            }
+        }
+    }
+
+    override fun createFeed(feedURL: URL): ExternalFeed {
+        return delegate.createFeed(feedURL)
     }
 }
 

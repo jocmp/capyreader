@@ -1,0 +1,19 @@
+CREATE TABLE feeds (
+  id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  external_id TEXT NOT NULL,
+  feed_url TEXT NOT NULL UNIQUE
+);
+
+allByExternalID:
+SELECT *
+FROM feeds
+WHERE external_id IN ?;
+
+create {
+REPLACE INTO feeds(external_id, feed_url)
+VALUES (?, ?);
+
+SELECT *
+FROM feeds
+WHERE id = last_insert_rowid();
+}

@@ -26,15 +26,31 @@ class OPMLFileTest {
                 Folder(
                     title = "Tech",
                     feeds = mutableListOf(
-                        Feed(id = UUID.randomUUID().toString(), name = "The Verge", feedURL = "https://www.theverge.com/rss/index.xml"),
-                        Feed(id = UUID.randomUUID().toString(), name = "Ars Technica", feedURL = "https://feeds.arstechnica.com/arstechnica/index")
+                        Feed(
+                            id = "1",
+                            name = "The Verge",
+                            feedURL = "https://www.theverge.com/rss/index.xml"
+                        ),
+                        Feed(
+                            id = "2",
+                            name = "Ars Technica",
+                            feedURL = "https://feeds.arstechnica.com/arstechnica/index"
+                        )
                     )
                 ),
                 Folder(
                     title = "Programming",
                     feeds = mutableListOf(
-                        Feed(id = UUID.randomUUID().toString(), name = "De Programmatica Ipsum", feedURL = "https://deprogrammaticaipsum.com/feed"),
-                        Feed(id = UUID.randomUUID().toString(), name = "Ruby Weekly", feedURL = "https://cprss.s3.amazonaws.com/rubyweekly.com.xml"),
+                        Feed(
+                            id = "3",
+                            name = "De Programmatica Ipsum",
+                            feedURL = "https://deprogrammaticaipsum.com/feed"
+                        ),
+                        Feed(
+                            id = "4",
+                            name = "Ruby Weekly",
+                            feedURL = "https://cprss.s3.amazonaws.com/rubyweekly.com.xml"
+                        ),
                     )
                 )
             )
@@ -42,8 +58,16 @@ class OPMLFileTest {
 
         account.feeds.addAll(
             listOf(
-                Feed(id = UUID.randomUUID().toString(), name = "GamersNexus", feedURL = "https://gamersnexus.net/rss.xml"),
-                Feed(id = UUID.randomUUID().toString(), name = "9to5Google", feedURL = "https://9to5google.com/feed")
+                Feed(
+                    id = "5",
+                    name = "GamersNexus",
+                    feedURL = "https://gamersnexus.net/rss.xml"
+                ),
+                Feed(
+                    id = "6",
+                    name = "9to5Google",
+                    feedURL = "https://9to5google.com/feed"
+                )
             )
         )
 
@@ -60,16 +84,16 @@ class OPMLFileTest {
         |    <title>Test Display Name</title>
         |  </head>
         |  <body>
-        |    <outline text="9to5Google" title="9to5Google" description="" type="rss" version="RSS" htmlUrl="" xmlUrl="https://9to5google.com/feed"/>
-        |    <outline text="GamersNexus" title="GamersNexus" description="" type="rss" version="RSS" htmlUrl="" xmlUrl="https://gamersnexus.net/rss.xml"/>
+        |    <outline text="9to5Google" title="9to5Google" description="" type="rss" version="RSS" htmlUrl="" xmlUrl="https://9to5google.com/feed" basil_id="6"/>
+        |    <outline text="GamersNexus" title="GamersNexus" description="" type="rss" version="RSS" htmlUrl="" xmlUrl="https://gamersnexus.net/rss.xml" basil_id="5"/>
         |    <outline text="Empty Folder" title="Empty Folder"/>
         |    <outline text="Programming" title="Programming">
-        |      <outline text="De Programmatica Ipsum" title="De Programmatica Ipsum" description="" type="rss" version="RSS" htmlUrl="" xmlUrl="https://deprogrammaticaipsum.com/feed"/>
-        |      <outline text="Ruby Weekly" title="Ruby Weekly" description="" type="rss" version="RSS" htmlUrl="" xmlUrl="https://cprss.s3.amazonaws.com/rubyweekly.com.xml"/>
+        |      <outline text="De Programmatica Ipsum" title="De Programmatica Ipsum" description="" type="rss" version="RSS" htmlUrl="" xmlUrl="https://deprogrammaticaipsum.com/feed" basil_id="3"/>
+        |      <outline text="Ruby Weekly" title="Ruby Weekly" description="" type="rss" version="RSS" htmlUrl="" xmlUrl="https://cprss.s3.amazonaws.com/rubyweekly.com.xml" basil_id="4"/>
         |    </outline>
         |    <outline text="Tech" title="Tech">
-        |      <outline text="The Verge" title="The Verge" description="" type="rss" version="RSS" htmlUrl="" xmlUrl="https://www.theverge.com/rss/index.xml"/>
-        |      <outline text="Ars Technica" title="Ars Technica" description="" type="rss" version="RSS" htmlUrl="" xmlUrl="https://feeds.arstechnica.com/arstechnica/index"/>
+        |      <outline text="The Verge" title="The Verge" description="" type="rss" version="RSS" htmlUrl="" xmlUrl="https://www.theverge.com/rss/index.xml" basil_id="1"/>
+        |      <outline text="Ars Technica" title="Ars Technica" description="" type="rss" version="RSS" htmlUrl="" xmlUrl="https://feeds.arstechnica.com/arstechnica/index" basil_id="2"/>
         |    </outline>
         |  </body>
         |</opml>

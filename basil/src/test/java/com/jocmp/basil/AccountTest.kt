@@ -1,5 +1,6 @@
 package com.jocmp.basil
 
+import com.jocmp.basil.db.Database
 import com.jocmp.feedfinder.FeedFinder
 import io.mockk.coEvery
 import io.mockk.mockkConstructor
@@ -17,6 +18,8 @@ class AccountTest {
     @Rule
     val folder = TemporaryFolder()
 
+    private lateinit var database: Database
+    
     @Before
     fun setup() {
         mockkConstructor(FeedFinder::class)
@@ -24,11 +27,11 @@ class AccountTest {
         coEvery {
             anyConstructed<FeedFinder>().find()
         } returns FeedFinder.Result.Success(listOf(FakeParserFeed()))
+
+        database = InMemoryDatabaseProvider().forAccount("777")
     }
 
     private fun buildAccount(id: String, path: File): Account {
-        val database = InMemoryDatabaseProvider().forAccount(id)
-
         return Account(
             id = id,
             path = path.toURI(),
@@ -66,7 +69,7 @@ class AccountTest {
         val accountTitle = account.folders.first().title
 
         assertEquals(expected = "Test Title", actual = accountTitle)
-        assertEquals(expected = account.feeds.size, actual = 1)
+        assertEquals(expected = 1, actual = account.feeds.size)
     }
 
     @Test

@@ -21,6 +21,6 @@ data class Feed(
 }
 
 fun Feed.asOPML(indentLevel: Int): String {
-    val opml = "<outline text=\"${name}\" title=\"${name}\" description=\"\" type=\"rss\" version=\"RSS\" htmlUrl=\"${siteURL}\" xmlUrl=\"${feedURL}\"/>\n"
+    val opml = "<outline text=\"${name}\" title=\"${name}\" description=\"\" type=\"rss\" version=\"RSS\" htmlUrl=\"${siteURL}\" xmlUrl=\"${feedURL}\" basil_id=\"${id}\"/>\n"
     return opml.prepending(tabCount = indentLevel)
 }

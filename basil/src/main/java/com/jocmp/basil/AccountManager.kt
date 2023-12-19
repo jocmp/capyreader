@@ -1,5 +1,6 @@
 package com.jocmp.basil
 
+import com.jocmp.basil.accounts.LocalAccountDelegate
 import kotlinx.coroutines.flow.first
 import java.io.File
 import java.io.FileFilter

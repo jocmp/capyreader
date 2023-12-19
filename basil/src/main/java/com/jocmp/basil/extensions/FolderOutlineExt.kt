@@ -1,19 +1,14 @@
 package com.jocmp.basil.extensions
 
-import com.jocmp.basil.Feed
 import com.jocmp.basil.Folder
 import com.jocmp.basil.opml.Outline
+import com.jocmp.basil.db.Feeds as DBFeed
 
-internal val Outline.FolderOutline.asFolder: Folder
-    get() {
-        return Folder(
-            title = folder.title ?: "",
-            feeds = folder.feeds.map { feed ->
-                Feed(
-                    id = "",
-                    name = feed.title ?: "",
-                    feedURL = feed.xmlUrl ?: ""
-                )
-            }.toMutableList()
-        )
-    }
+internal fun Outline.FolderOutline.asFolder(feeds: Map<String, DBFeed>): Folder {
+    return Folder(
+        title = folder.title ?: "",
+        feeds = folder.feeds.mapNotNull {
+            it.asFeed(feeds = feeds)
+        }.toMutableList()
+    )
+}
