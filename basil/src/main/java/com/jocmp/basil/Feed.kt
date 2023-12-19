@@ -4,6 +4,7 @@ import com.jocmp.basil.extensions.prepending
 
 data class Feed(
     val id: String,
+    val externalID: String,
     val name: String,
     val feedURL: String,
     val siteURL: String = ""

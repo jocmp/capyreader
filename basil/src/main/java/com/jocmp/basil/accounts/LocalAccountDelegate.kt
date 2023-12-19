@@ -21,10 +21,10 @@ internal class LocalAccountDelegate(private val account: Account) : AccountDeleg
         val existingFeed = allFeeds.find { it.feedURL == feedURL.toString() }
 
         if (existingFeed != null) {
-            return ExternalFeed(externalID = existingFeed.id)
+            return ExternalFeed(externalID = existingFeed.externalID)
         }
 
-        return ExternalFeed(externalID = UUID.randomUUID().toString())
+        return ExternalFeed(externalID = feedURL.toString())
     }
 
     override suspend fun fetchAll(feed: Feed): List<ParsedItem> {

@@ -17,7 +17,7 @@ internal fun FeedsQueries.findOrCreate(externalFeed: ExternalFeed, feedURL: URL)
     }
 
     return create(
-        externalFeed.externalID,
-        feedURL.toString()
+        external_id = externalFeed.externalID,
+        feed_url = feedURL.toString()
     ).executeAsOne()
 }

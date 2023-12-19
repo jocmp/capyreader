@@ -1,9 +1,7 @@
 package com.jocmp.basil
 
 import com.jocmp.basil.accounts.AccountDelegate
-import com.jocmp.basil.accounts.ExternalFeed
 import com.jocmp.basil.accounts.LocalAccountDelegate
-import com.jocmp.basil.accounts.ParsedItem
 import com.jocmp.basil.db.Database
 import com.jocmp.basil.extensions.asFeed
 import com.jocmp.basil.extensions.asFolder
@@ -13,7 +11,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.jetbrains.annotations.VisibleForTesting
 import java.net.URI
 import java.net.URL
 
@@ -73,7 +70,8 @@ data class Account(
         )
 
         val feed = Feed(
-            id = externalFeed.externalID,
+            id = record.id.toString(),
+            externalID = externalFeed.externalID,
             name = entryNameOrDefault(entry, found.name),
             feedURL = found.feedURL.toString(),
             siteURL = entrySiteURL(found.siteURL)
@@ -136,19 +134,20 @@ data class Account(
     }
 
     private fun loadOPML(items: List<Outline>) {
-        val externalIDs = mutableListOf<String>()
+        val ids = mutableListOf<Long>()
 
         items.forEach {
             when (it) {
-                is Outline.FeedOutline -> it.feed.externalID?.let { id -> externalIDs.add(id) }
-                is Outline.FolderOutline -> externalIDs.addAll(it.folder.feeds.mapNotNull { feed -> feed.externalID })
+                is Outline.FeedOutline -> it.feed.id?.toLongOrNull()?.let { id -> ids.add(id) }
+                is Outline.FolderOutline -> ids.addAll(it.folder.feeds.mapNotNull { feed -> feed.id?.toLongOrNull() })
             }
         }
 
-        val dbFeeds =
-            database.feedsQueries.allByExternalID(externalIDs).executeAsList().associateBy {
-                it.external_id
-            }
+        val dbFeeds = database
+            .feeds
+            .allByID(ids)
+            .executeAsList()
+            .associateBy { it.id }
 
         items.forEach { item ->
             when (item) {

@@ -4,10 +4,14 @@ CREATE TABLE feeds (
   feed_url TEXT NOT NULL UNIQUE
 );
 
-allByExternalID:
+all:
+SELECT *
+FROM feeds;
+
+allByID:
 SELECT *
 FROM feeds
-WHERE external_id IN ?;
+WHERE id IN ?;
 
 findByExternalID:
 SELECT *

@@ -39,7 +39,7 @@ internal class OPMLHandler : DefaultHandler() {
                     currentFolder?.also { folder ->
                         folder.feeds.add(
                             Feed(
-                                externalID = attributes.getValue("basil_id"),
+                                id = attributes.getValue("basil_id"),
                                 title = attributes.getValue("title"),
                                 text = attributes.getValue("text"),
                                 htmlUrl = attributes.getValue("htmlUrl"),
@@ -50,7 +50,7 @@ internal class OPMLHandler : DefaultHandler() {
                         opmlDocument.outlines.add(
                             Outline.FeedOutline(
                                 Feed(
-                                    externalID = attributes.getValue("basil_id"),
+                                    id = attributes.getValue("basil_id"),
                                     title = attributes.getValue("title"),
                                     text = attributes.getValue("text"),
                                     htmlUrl = attributes.getValue("htmlUrl"),

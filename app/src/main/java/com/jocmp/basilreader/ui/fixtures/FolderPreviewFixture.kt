@@ -4,6 +4,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.jocmp.basil.Account
 import com.jocmp.basil.Feed
 import com.jocmp.basil.Folder
+import com.jocmp.basil.RandomUUID
 import java.util.UUID
 import kotlin.random.Random
 
@@ -16,12 +17,14 @@ class FolderPreviewFixture : PreviewParameterProvider<Folder> {
                 title = "Tech",
                 feeds = mutableListOf(
                     Feed(
-                        id = UUID.randomUUID().toString(),
+                        id = RandomUUID.generate(),
+                        externalID = RandomUUID.generate(),
                         name = "The Verge",
                         feedURL = "https://www.theverge.com/rss/index.xml"
                     ),
                     Feed(
-                        id = UUID.randomUUID().toString(),
+                        id = RandomUUID.generate(),
+                        externalID = RandomUUID.generate(),
                         name = "Ars Technica",
                         feedURL = "https://arstechnica.com/feed/"
                     )
@@ -31,12 +34,14 @@ class FolderPreviewFixture : PreviewParameterProvider<Folder> {
                 title = "Programming",
                 feeds = mutableListOf(
                     Feed(
-                        id = UUID.randomUUID().toString(),
+                        id = RandomUUID.generate(),
+                        externalID = RandomUUID.generate(),
                         name = "Android Weekly",
                         feedURL = ""
                     ),
                     Feed(
-                        id = UUID.randomUUID().toString(),
+                        id = RandomUUID.generate(),
+                        externalID = RandomUUID.generate(),
                         name = "Ruby Weekly",
                         feedURL = ""
                     ),
