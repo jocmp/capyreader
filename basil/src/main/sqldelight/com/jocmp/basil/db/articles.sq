@@ -1,3 +1,5 @@
+
+
 CREATE TABLE articles(
   id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   external_id TEXT NOT NULL UNIQUE,
@@ -10,9 +12,16 @@ CREATE TABLE articles(
   date_published INTEGER
 );
 
-findAll:
+countByFeed:
+SELECT COUNT(*)
+FROM articles
+WHERE feed_id = :feedID;
+
+allByFeed:
 SELECT *
-FROM articles;
+FROM articles
+WHERE feed_id = :feedID
+LIMIT :limit OFFSET :offset;
 
 create:
 REPLACE INTO articles(

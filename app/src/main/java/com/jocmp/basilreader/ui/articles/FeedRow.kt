@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,19 +24,13 @@ fun FeedRow(
     feed: Feed,
     onSelect: (id: String) -> Unit
 ) {
-    Box(
-        modifier = Modifier
-            .clickable {
-                onSelect(feed.id)
-            }
-    ) {
-        Text(
-            "${feed.name} (${feed.feedURL})",
-            modifier = Modifier
-                .padding(8.dp)
-                .fillMaxWidth()
-        )
-    }
+    NavigationDrawerItem(
+        label = { Text(feed.name) },
+        selected = false,
+        onClick = {
+            onSelect(feed.id)
+        }
+    )
 }
 
 @Preview

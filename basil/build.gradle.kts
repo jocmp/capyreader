@@ -10,7 +10,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 29
+        minSdk = 30
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -53,20 +53,21 @@ android {
 
 dependencies {
     val sqldelightVersion = libs.versions.sqldelight.get()
+    val pagingVersion = libs.versions.androidx.paging.get()
 
+    implementation("androidx.paging:paging-runtime:$pagingVersion")
+    implementation("androidx.datastore:datastore-core:1.0.0")
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.rssparser)
     implementation(project(":feedbinclient"))
     implementation(project(":feedfinder"))
-    implementation("androidx.datastore:datastore-core:1.0.0")
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("com.github.requery:sqlite-android:3.43.0")
-    implementation(libs.rssparser)
+    implementation("app.cash.sqldelight:androidx-paging3-extensions:$sqldelightVersion")
     testImplementation("app.cash.sqldelight:sqlite-driver:$sqldelightVersion")
     testImplementation("junit:junit:4.13.2")
-    testImplementation(testLibs.mockk.android)
-    testImplementation(testLibs.mockk.agent)
     testImplementation(kotlin("test"))
+    testImplementation(testLibs.mockk.agent)
+    testImplementation(testLibs.mockk.android)
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }

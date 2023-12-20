@@ -5,16 +5,15 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.jocmp.basilreader.ui.accounts.AccountViewModel
+import org.koin.androidx.compose.koinViewModel
 
 const val articlesRoute = "articles"
 
-fun feedRoute(feedID: String) = "feeds/${feedID}"
+fun feedRoute(feedID: String) = "articles"
 
 fun NavController.navigateToArticles() =
     navigate(articlesRoute)
-
-fun NavController.navigateToFeed(feedID: String, navOptions: NavOptions? = null) =
-    navigate(feedRoute(feedID), navOptions)
 
 fun NavController.navigateToAddFeed() =
     navigate("feeds/new")
@@ -28,9 +27,6 @@ fun NavGraphBuilder.articleGraph(
         ArticleScreen(
             onFeedAdd = {
                 navController.navigateToAddFeed()
-            },
-            onFeedSelect = {
-                navController.navigateToFeed(feedID = it)
             }
         )
     }
@@ -49,10 +45,5 @@ fun NavGraphBuilder.articleGraph(
                 }
             }
         )
-    }
-    composable(
-        route = "feeds/{feed_id}",
-    ) {
-        Text("Feed for ya")
     }
 }

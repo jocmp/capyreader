@@ -18,6 +18,7 @@ dependencyResolutionManagement {
         create("libs") {
             version("sqldelight", "2.0.1")
             version("ksp", "1.9.20-1.0.14")
+            version("androidx-paging", "3.2.1")
             library("moshi-kotlin", "com.squareup.moshi:moshi-kotlin:1.14.0")
             library("moshi-kotlin-codegen", "com.squareup.moshi:moshi-kotlin-codegen:1.14.0")
             library("kotlinx-coroutines-core", "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")

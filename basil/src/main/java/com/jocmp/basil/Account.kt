@@ -5,6 +5,8 @@ import com.jocmp.basil.accounts.LocalAccountDelegate
 import com.jocmp.basil.db.Database
 import com.jocmp.basil.extensions.asFeed
 import com.jocmp.basil.extensions.asFolder
+import com.jocmp.basil.extensions.feeds
+import com.jocmp.basil.extensions.findOrCreate
 import com.jocmp.basil.opml.Outline
 import com.jocmp.feedfinder.FeedFinder
 import kotlinx.coroutines.Dispatchers

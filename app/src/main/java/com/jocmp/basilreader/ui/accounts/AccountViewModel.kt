@@ -7,16 +7,23 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingData
 import com.jocmp.basil.Account
 import com.jocmp.basil.AccountManager
 import com.jocmp.basil.Feed
 import com.jocmp.basil.FeedFormEntry
 import com.jocmp.basil.Folder
+import com.jocmp.basil.db.Articles
+import com.jocmp.basil.extensions.feedPagingSource
 import com.jocmp.basilreader.Async
 import com.jocmp.basilreader.selectAccount
 import com.jocmp.basilreader.selectedAccount
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class AccountViewModel(
     private val accountManager: AccountManager,
@@ -50,6 +57,20 @@ class AccountViewModel(
 
     val feeds: List<Feed>
         get() = account?.feeds?.toList() ?: emptyList()
+
+    private val feedID = mutableStateOf<String?>(null)
+
+    fun articles(): Pager<Int, Articles>? {
+        val id = feedID.value ?: return null
+
+        return account?.feedPagingSource(id)
+    }
+
+    fun selectFeed(feedID: String, onComplete: () -> Unit) {
+        this.feedID.value = feedID
+
+        onComplete()
+    }
 
     private fun selectAccount(accountID: String) {
         viewModelScope.launch {

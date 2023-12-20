@@ -1,4 +1,4 @@
-package com.jocmp.basil
+package com.jocmp.basil.extensions
 
 import com.jocmp.basil.accounts.ExternalFeed
 import com.jocmp.basil.db.Database

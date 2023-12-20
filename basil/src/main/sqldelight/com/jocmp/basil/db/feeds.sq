@@ -4,10 +4,6 @@ CREATE TABLE feeds (
   feed_url TEXT NOT NULL UNIQUE
 );
 
-all:
-SELECT *
-FROM feeds;
-
 allByID:
 SELECT *
 FROM feeds
