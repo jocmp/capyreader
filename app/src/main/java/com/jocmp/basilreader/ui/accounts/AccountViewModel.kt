@@ -66,7 +66,9 @@ class AccountViewModel(
 
     fun selectFeed(feedID: String, onComplete: () -> Unit) {
         this.feedID.value = feedID
+
         pager.value = account?.feedPagingSource(this.feedID.value)
+        clearArticle()
 
         onComplete()
     }
