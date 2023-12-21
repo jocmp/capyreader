@@ -1,10 +1,8 @@
 package com.jocmp.basilreader.ui.articles
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -24,7 +22,7 @@ fun ArticleScreen(
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
 
-    ArticleLayout(
+    ArticleScaffold(
         drawerState = drawerState,
         list = {
             FeedList(

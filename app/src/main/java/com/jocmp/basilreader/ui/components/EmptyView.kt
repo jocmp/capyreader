@@ -1,4 +1,4 @@
-package com.jocmp.basilreader.ui
+package com.jocmp.basilreader.ui.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

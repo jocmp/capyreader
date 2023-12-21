@@ -10,11 +10,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.ListDetailPaneScaffold
 import androidx.compose.material3.adaptive.ListDetailPaneScaffoldRole
-import androidx.compose.material3.adaptive.ThreePaneScaffoldValue
 import androidx.compose.material3.adaptive.calculateListDetailPaneScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
@@ -23,7 +21,7 @@ import androidx.compose.ui.unit.sp
 import androidx.paging.Pager
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.jocmp.basil.db.Articles
-import com.jocmp.basilreader.ui.EmptyView
+import com.jocmp.basilreader.ui.components.EmptyView
 import kotlinx.coroutines.launch
 
 
@@ -74,7 +72,7 @@ fun ArticleList(
         },
         detailPane = {
             if (article != null) {
-                Text(article.title ?: "")
+                ArticleView(article = article)
             } else {
                 EmptyView(fullWidth = true)
             }

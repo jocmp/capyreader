@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.jocmp.basilreader.ui.theme.BasilReaderTheme
 
 @Composable
-fun ArticleLayout(
+fun ArticleScaffold(
     drawerState: DrawerState = rememberDrawerState(DrawerValue.Closed),
     list: @Composable () -> Unit,
     content: @Composable () -> Unit,
@@ -33,7 +33,7 @@ fun ArticleLayout(
 @Composable
 fun ArticlesLayoutPreview() {
     BasilReaderTheme {
-        ArticleLayout(
+        ArticleScaffold(
             list = {
                 Text("List here!")
             }
