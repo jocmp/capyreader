@@ -64,7 +64,7 @@ import kotlinx.coroutines.withContext
 public fun WebView(
     state: WebViewState,
     modifier: Modifier = Modifier,
-    captureBackPresses: Boolean = true,
+    captureBackPresses: Boolean = false,
     navigator: WebViewNavigator = rememberWebViewNavigator(),
     onCreated: (WebView) -> Unit = {},
     onDispose: (WebView) -> Unit = {},
