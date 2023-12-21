@@ -23,6 +23,12 @@ FROM articles
 WHERE feed_id = :feedID
 LIMIT :limit OFFSET :offset;
 
+findBy:
+SELECT *
+FROM articles
+WHERE feed_id = :feedID AND id = :articleID
+LIMIT 1;
+
 create:
 REPLACE INTO articles(
     feed_id,

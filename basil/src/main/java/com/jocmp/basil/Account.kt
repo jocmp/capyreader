@@ -2,6 +2,7 @@ package com.jocmp.basil
 
 import com.jocmp.basil.accounts.AccountDelegate
 import com.jocmp.basil.accounts.LocalAccountDelegate
+import com.jocmp.basil.db.Articles
 import com.jocmp.basil.db.Database
 import com.jocmp.basil.extensions.asFeed
 import com.jocmp.basil.extensions.asFolder
@@ -117,6 +118,15 @@ data class Account(
         saveOPMLFile()
 
         return feed
+    }
+
+    suspend fun findArticle(articleID: Long?, feedID: Long?): Articles? {
+        articleID ?: return null
+
+        return database.articlesQueries.findBy(
+            articleID = articleID,
+            feedID = feedID
+        ).executeAsOneOrNull()
     }
 
     private fun entrySiteURL(url: URL?): String {

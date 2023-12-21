@@ -8,7 +8,6 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
-import androidx.paging.PagingData
 import com.jocmp.basil.Account
 import com.jocmp.basil.AccountManager
 import com.jocmp.basil.Feed
@@ -16,14 +15,10 @@ import com.jocmp.basil.FeedFormEntry
 import com.jocmp.basil.Folder
 import com.jocmp.basil.db.Articles
 import com.jocmp.basil.extensions.feedPagingSource
-import com.jocmp.basilreader.Async
 import com.jocmp.basilreader.selectAccount
 import com.jocmp.basilreader.selectedAccount
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class AccountViewModel(
     private val accountManager: AccountManager,
@@ -55,21 +50,33 @@ class AccountViewModel(
     val folders: List<Folder>
         get() = account?.folders?.toList() ?: emptyList()
 
+    private val feedID = mutableStateOf<String?>(null)
+
+    private val articleState = mutableStateOf<Articles?>(null)
+
+    private val pager = mutableStateOf<Pager<Int, Articles>?>(null)
+
     val feeds: List<Feed>
         get() = account?.feeds?.toList() ?: emptyList()
 
-    private val feedID = mutableStateOf<String?>(null)
+    val article: Articles?
+        get() = articleState.value
 
-    fun articles(): Pager<Int, Articles>? {
-        val id = feedID.value ?: return null
-
-        return account?.feedPagingSource(id)
-    }
+    fun articles(): Pager<Int, Articles>? = pager.value
 
     fun selectFeed(feedID: String, onComplete: () -> Unit) {
         this.feedID.value = feedID
+        pager.value = account?.feedPagingSource(this.feedID.value)
 
         onComplete()
+    }
+
+    suspend fun selectArticle(articleID: Long) {
+        articleState.value = account?.findArticle(articleID, feedID.value?.toLongOrNull())
+    }
+
+    fun clearArticle() {
+        articleState.value = null
     }
 
     private fun selectAccount(accountID: String) {
@@ -78,7 +85,7 @@ class AccountViewModel(
         }
     }
 
-    private suspend fun updateState(accountID: String) {
+    private fun updateState(accountID: String) {
         accountState.value = accountManager.findByID(accountID)
     }
 
