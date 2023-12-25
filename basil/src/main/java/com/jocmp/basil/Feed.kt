@@ -9,6 +9,9 @@ data class Feed(
     val feedURL: String,
     val siteURL: String = ""
 ) {
+    internal val primaryKey: Long
+        get() = id.toLong()
+
     override fun equals(other: Any?): Boolean {
         if (other is Feed) {
             return id == other.id

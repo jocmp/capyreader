@@ -1,5 +1,7 @@
 package com.jocmp.basil.accounts
 
+import java.time.OffsetDateTime
+
 internal data class ParsedItem(
     val externalID: String,
     val title: String? = null,
@@ -7,4 +9,5 @@ internal data class ParsedItem(
     val url: String? = null,
     val summary: String? = null,
     val imageURL: String? = null,
+    val publishedAt: OffsetDateTime?
 )

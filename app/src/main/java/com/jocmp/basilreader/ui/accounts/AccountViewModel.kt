@@ -73,7 +73,13 @@ class AccountViewModel(
         onComplete()
     }
 
-    suspend fun selectArticle(articleID: String) {
+    suspend fun refreshFeed() {
+        val id = feedID.value ?: return
+
+        account?.refreshFeed(id)
+    }
+
+    fun selectArticle(articleID: String) {
         articleState.value = account?.findArticle(articleID.toLong(), feedID.value?.toLongOrNull())
     }
 

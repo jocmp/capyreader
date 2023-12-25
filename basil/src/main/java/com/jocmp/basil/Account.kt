@@ -86,17 +86,17 @@ data class Account(
         coroutineScope {
             launch {
                 val items = delegate.fetchAll(feed)
-                val feedID = feed.id.toLong()
 
                 items.forEach { item ->
                     database.articlesQueries.create(
-                        feed_id = feedID,
+                        feed_id = feed.primaryKey,
                         external_id = item.externalID,
                         title = item.title,
                         content_html = item.contentHTML,
                         url = item.url,
                         summary = item.summary,
-                        image_url = item.imageURL
+                        image_url = item.imageURL,
+                        published_at = item.publishedAt?.toEpochSecond()
                     )
                 }
             }
@@ -124,7 +124,26 @@ data class Account(
         return feed
     }
 
-    suspend fun findArticle(articleID: Long?, feedID: Long?): Article? {
+    suspend fun refreshFeed(feedID: String) {
+        val feed = flattenedFeeds.find { it.id == feedID } ?: return
+
+        val items = delegate.fetchAll(feed)
+
+        items.forEach { item ->
+            database.articlesQueries.create(
+                feed_id = feed.primaryKey,
+                external_id = item.externalID,
+                title = item.title,
+                content_html = item.contentHTML,
+                url = item.url,
+                summary = item.summary,
+                image_url = item.imageURL,
+                published_at = item.publishedAt?.toEpochSecond()
+            )
+        }
+    }
+
+    fun findArticle(articleID: Long?, feedID: Long?): Article? {
         articleID ?: return null
 
         return database.articlesQueries.findBy(

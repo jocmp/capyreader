@@ -12,7 +12,7 @@ internal fun articleMapper(
     url: String?,
     summary: String?,
     imageURL: String?,
-    datePublished: Long?
+    publishedAt: Long?
 ): Article {
     return Article(
         id = id.toString(),
