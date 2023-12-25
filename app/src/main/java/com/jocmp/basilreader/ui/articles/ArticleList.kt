@@ -13,13 +13,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.Pager
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.jocmp.basil.db.Articles
+import com.jocmp.basil.Article
 import kotlinx.coroutines.launch
 
 @Composable
 fun ArticleList(
-    pager: Pager<Int, Articles>,
-    onSelect: suspend (articleID: Long) -> Unit,
+    pager: Pager<Int, Article>,
+    onSelect: suspend (articleID: String) -> Unit,
 ) {
     val composableScope = rememberCoroutineScope()
     val lazyPagingItems = pager.flow.collectAsLazyPagingItems()

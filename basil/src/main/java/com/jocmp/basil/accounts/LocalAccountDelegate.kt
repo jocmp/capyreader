@@ -2,29 +2,26 @@ package com.jocmp.basil.accounts
 
 import com.jocmp.basil.Account
 import com.jocmp.basil.Feed
+import com.jocmp.basil.feeds.ExternalFeed
 import com.prof18.rssparser.RssParser
 import com.prof18.rssparser.model.RssItem
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.withContext
 import java.net.URL
-import java.util.UUID
 
 internal class LocalAccountDelegate(private val account: Account) : AccountDelegate {
     override suspend fun createFeed(feedURL: URL): ExternalFeed {
-        val allFeeds = mutableSetOf<Feed>().apply {
-            addAll(account.feeds)
-            addAll(account.folders.flatMap { it.feeds })
-        }
-
-        val existingFeed = allFeeds.find { it.feedURL == feedURL.toString() }
+        val existingFeed = account.flattenedFeeds.find { it.feedURL == feedURL.toString() }
 
         if (existingFeed != null) {
-            return ExternalFeed(externalID = existingFeed.externalID)
+            return ExternalFeed(
+                externalID = existingFeed.externalID,
+                feedURL = feedURL.toString()
+            )
         }
 
-        return ExternalFeed(externalID = feedURL.toString())
+        return ExternalFeed(
+            externalID = feedURL.toString(),
+            feedURL = feedURL.toString()
+        )
     }
 
     override suspend fun fetchAll(feed: Feed): List<ParsedItem> {

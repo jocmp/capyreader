@@ -1,4 +1,4 @@
-package com.jocmp.basil.extensions
+package com.jocmp.basil.opml
 
 import com.jocmp.basil.Feed
 import com.jocmp.basil.db.Feeds as DBFeed

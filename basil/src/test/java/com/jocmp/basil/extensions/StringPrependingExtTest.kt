@@ -1,7 +1,7 @@
 package com.jocmp.basil.extensions
 
+import com.jocmp.basil.shared.prepending
 import org.junit.Test
-import kotlin.math.exp
 import kotlin.test.assertEquals
 
 class StringPrependingExtTest {
@@ -15,7 +15,7 @@ class StringPrependingExtTest {
 
     @Test
     fun repeatTab() {
-        assertEquals(expected = "  ", actual = repeatTab(tabCount = 1))
-        assertEquals(expected = "    ", actual = repeatTab(tabCount = 2))
+        assertEquals(expected = "  ", actual = com.jocmp.basil.shared.repeatTab(tabCount = 1))
+        assertEquals(expected = "    ", actual = com.jocmp.basil.shared.repeatTab(tabCount = 2))
     }
 }

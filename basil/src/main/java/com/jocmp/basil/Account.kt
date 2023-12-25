@@ -2,13 +2,13 @@ package com.jocmp.basil
 
 import com.jocmp.basil.accounts.AccountDelegate
 import com.jocmp.basil.accounts.LocalAccountDelegate
+import com.jocmp.basil.articles.articleMapper
 import com.jocmp.basil.db.Articles
 import com.jocmp.basil.db.Database
-import com.jocmp.basil.extensions.asFeed
-import com.jocmp.basil.extensions.asFolder
-import com.jocmp.basil.extensions.feeds
-import com.jocmp.basil.extensions.findOrCreate
+import com.jocmp.basil.feeds.FeedRecords
 import com.jocmp.basil.opml.Outline
+import com.jocmp.basil.opml.asFeed
+import com.jocmp.basil.opml.asFolder
 import com.jocmp.feedfinder.FeedFinder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -46,6 +46,12 @@ data class Account(
         loadOPML(opmlFile.load())
     }
 
+    val flattenedFeeds: Set<Feed>
+        get() = mutableSetOf<Feed>().apply {
+            addAll(feeds)
+            addAll(folders.flatMap { it.feeds })
+        }
+
     suspend fun addFolder(title: String): Folder {
         val folder = Folder(title = title)
 
@@ -67,26 +73,24 @@ data class Account(
 
         val externalFeed = delegate.createFeed(feedURL = found.feedURL)
 
-        val record = database.feeds.findOrCreate(
-            externalFeed = externalFeed,
-            feedURL = found.feedURL
-        )
+        val record = FeedRecords(database).findOrCreate(externalFeed)
 
         val feed = Feed(
             id = record.id.toString(),
             externalID = externalFeed.externalID,
             name = entryNameOrDefault(entry, found.name),
-            feedURL = found.feedURL.toString(),
+            feedURL = externalFeed.feedURL,
             siteURL = entrySiteURL(found.siteURL)
         )
 
         coroutineScope {
             launch {
                 val items = delegate.fetchAll(feed)
+                val feedID = feed.id.toLong()
 
                 items.forEach { item ->
                     database.articlesQueries.create(
-                        feed_id = record.id,
+                        feed_id = feedID,
                         external_id = item.externalID,
                         title = item.title,
                         content_html = item.contentHTML,
@@ -120,12 +124,13 @@ data class Account(
         return feed
     }
 
-    suspend fun findArticle(articleID: Long?, feedID: Long?): Articles? {
+    suspend fun findArticle(articleID: Long?, feedID: Long?): Article? {
         articleID ?: return null
 
         return database.articlesQueries.findBy(
             articleID = articleID,
-            feedID = feedID
+            feedID = feedID,
+            mapper = ::articleMapper
         ).executeAsOneOrNull()
     }
 
@@ -156,7 +161,7 @@ data class Account(
         }
 
         val dbFeeds = database
-            .feeds
+            .feedsQueries
             .allByID(ids)
             .executeAsList()
             .associateBy { it.id }

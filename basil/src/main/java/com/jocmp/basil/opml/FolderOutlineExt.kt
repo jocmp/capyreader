@@ -1,7 +1,6 @@
-package com.jocmp.basil.extensions
+package com.jocmp.basil.opml
 
 import com.jocmp.basil.Folder
-import com.jocmp.basil.opml.Outline
 import com.jocmp.basil.db.Feeds as DBFeed
 
 internal fun Outline.FolderOutline.asFolder(feeds: Map<Long, DBFeed>): Folder {

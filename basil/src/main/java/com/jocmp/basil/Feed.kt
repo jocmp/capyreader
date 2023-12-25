@@ -1,6 +1,6 @@
 package com.jocmp.basil
 
-import com.jocmp.basil.extensions.prepending
+import com.jocmp.basil.shared.prepending
 
 data class Feed(
     val id: String,

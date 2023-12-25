@@ -1,7 +1,7 @@
 package com.jocmp.basil
 
-import com.jocmp.basil.extensions.prepending
-import com.jocmp.basil.extensions.repeatTab
+import com.jocmp.basil.shared.prepending
+import com.jocmp.basil.shared.repeatTab
 
 data class Folder(
     val title: String,

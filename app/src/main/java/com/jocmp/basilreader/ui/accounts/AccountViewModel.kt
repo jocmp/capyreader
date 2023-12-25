@@ -10,11 +10,11 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import com.jocmp.basil.Account
 import com.jocmp.basil.AccountManager
+import com.jocmp.basil.Article
 import com.jocmp.basil.Feed
 import com.jocmp.basil.FeedFormEntry
 import com.jocmp.basil.Folder
-import com.jocmp.basil.db.Articles
-import com.jocmp.basil.extensions.feedPagingSource
+import com.jocmp.basil.feedPagingSource
 import com.jocmp.basilreader.selectAccount
 import com.jocmp.basilreader.selectedAccount
 import kotlinx.coroutines.flow.first
@@ -52,17 +52,17 @@ class AccountViewModel(
 
     private val feedID = mutableStateOf<String?>(null)
 
-    private val articleState = mutableStateOf<Articles?>(null)
+    private val articleState = mutableStateOf<Article?>(null)
 
-    private val pager = mutableStateOf<Pager<Int, Articles>?>(null)
+    private val pager = mutableStateOf<Pager<Int, Article>?>(null)
 
     val feeds: List<Feed>
         get() = account?.feeds?.toList() ?: emptyList()
 
-    val article: Articles?
+    val article: Article?
         get() = articleState.value
 
-    fun articles(): Pager<Int, Articles>? = pager.value
+    fun articles(): Pager<Int, Article>? = pager.value
 
     fun selectFeed(feedID: String, onComplete: () -> Unit) {
         this.feedID.value = feedID
@@ -73,8 +73,8 @@ class AccountViewModel(
         onComplete()
     }
 
-    suspend fun selectArticle(articleID: Long) {
-        articleState.value = account?.findArticle(articleID, feedID.value?.toLongOrNull())
+    suspend fun selectArticle(articleID: String) {
+        articleState.value = account?.findArticle(articleID.toLong(), feedID.value?.toLongOrNull())
     }
 
     fun clearArticle() {
