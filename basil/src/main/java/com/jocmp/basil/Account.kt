@@ -5,6 +5,7 @@ import com.jocmp.basil.accounts.LocalAccountDelegate
 import com.jocmp.basil.accounts.ParsedItem
 import com.jocmp.basil.accounts.asOPML
 import com.jocmp.basil.db.Database
+import com.jocmp.basil.db.Feeds
 import com.jocmp.basil.opml.Outline
 import com.jocmp.basil.opml.asFeed
 import com.jocmp.basil.opml.asFolder
@@ -13,6 +14,8 @@ import com.jocmp.basil.persistence.articleMapper
 import com.jocmp.basil.shared.nowUTC
 import com.jocmp.feedfinder.FeedFinder
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -115,12 +118,18 @@ data class Account(
         return Result.success(feed)
     }
 
-    suspend fun refreshFeed(feedID: String) {
-        val feed = flattenedFeeds.find { it.id == feedID } ?: return
+    suspend fun refreshAll() {
+        refreshCompactedFeeds(flattenedFeeds)
+    }
 
-        val items = delegate.fetchAll(feed)
+    suspend fun refreshFeed(feed: Feed) {
+        refreshFeeds(listOf(feed))
+    }
 
-        updateArticles(feed, items)
+    suspend fun refreshFeeds(feeds: List<Feed>) {
+        val ids = feeds.map { it.id }.toSet()
+
+        refreshCompactedFeeds(flattenedFeeds.filter { ids.contains(it.id) })
     }
 
     fun findFeed(feedID: String): Feed? {
@@ -144,19 +153,37 @@ data class Account(
         items.forEach { item ->
             val publishedAt = item.publishedAt?.toEpochSecond()
 
-            database.articlesQueries.create(
-                feed_id = feed.primaryKey,
-                external_id = item.externalID,
-                title = item.title,
-                content_html = item.contentHTML,
-                url = item.url,
-                summary = item.summary,
-                image_url = item.imageURL,
-                published_at = publishedAt,
-                arrived_at = publishedAt ?: nowUTC()
-            )
+            database.transaction {
+                database.articlesQueries.create(
+                    feed_id = feed.primaryKey,
+                    external_id = item.externalID,
+                    title = item.title,
+                    content_html = item.contentHTML,
+                    url = item.url,
+                    summary = item.summary,
+                    image_url = item.imageURL,
+                    published_at = publishedAt,
+                )
+
+                database.articlesQueries.updateStatus(
+                    feed_id = feed.primaryKey,
+                    external_id = item.externalID,
+                    arrived_at = publishedAt ?: nowUTC()
+                )
+            }
+
         }
     }
+
+    private suspend fun refreshCompactedFeeds(feeds: Collection<Feed>) =
+        withContext(Dispatchers.IO) {
+            feeds.map { feed ->
+                async {
+                    val items = delegate.fetchAll(feed)
+                    updateArticles(feed, items)
+                }
+            }.awaitAll()
+        }
 
     private fun entrySiteURL(url: URL?): String {
         return url?.toString() ?: ""

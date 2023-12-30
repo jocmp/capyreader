@@ -65,36 +65,36 @@ JOIN article_statuses ON articles.external_id = article_statuses.external_id AND
 WHERE articles.id = :articleID
 LIMIT 1;
 
-create {
-    REPLACE INTO articles(
-        feed_id,
-        external_id,
-        title,
-        content_html,
-        url,
-        summary,
-        image_url,
-        published_at
-    )
-    VALUES (
-    :feed_id,
-  :external_id,
-    :title,
-    :content_html,
-    :url,
-    :summary,
-    :image_url,
-    :published_at
-    );
+create:
+INSERT OR IGNORE INTO articles(
+    feed_id,
+    external_id,
+    title,
+    content_html,
+    url,
+    summary,
+    image_url,
+    published_at
+)
+VALUES (
+:feed_id,
+:external_id,
+:title,
+:content_html,
+:url,
+:summary,
+:image_url,
+:published_at
+);
 
-    INSERT OR IGNORE INTO article_statuses(
-      feed_id,
-      external_id,
-      arrived_at
-    )
-    VALUES (
-    :feed_id,
-    :external_id,
-    :arrived_at
-    );
-}
+updateStatus:
+INSERT OR IGNORE INTO article_statuses(
+  feed_id,
+  external_id,
+  arrived_at
+)
+VALUES (
+:feed_id,
+:external_id,
+:arrived_at
+);

@@ -82,9 +82,11 @@ class AccountViewModel(
     }
 
     suspend fun refreshFeed() {
-//        val id = feedID.value ?: return
-//
-//        account?.refreshFeed(id)
+        when (val currentFilter = filter.value) {
+            is ArticleFilter.Feeds -> account?.refreshFeed(currentFilter.feed)
+            is ArticleFilter.Folders ->  account?.refreshFeeds(currentFilter.folder.feeds)
+            is ArticleFilter.Articles -> account?.refreshAll()
+        }
     }
 
     fun selectArticle(articleID: String) {
