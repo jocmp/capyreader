@@ -54,10 +54,6 @@ data class Account(
             addAll(folders.flatMap { it.feeds })
         }
 
-    fun findFeed(feedID: String): Feed? {
-        return flattenedFeeds.find { it.id == feedID }
-    }
-
     suspend fun addFolder(title: String): Folder {
         val folder = Folder(title = title)
 
@@ -68,11 +64,11 @@ data class Account(
         return folder
     }
 
-    suspend fun addFeed(entry: FeedFormEntry): Feed {
+    suspend fun addFeed(entry: FeedFormEntry): Result<Feed> {
         val result = FeedFinder.find(feedURL = entry.url)
 
         if (result is FeedFinder.Result.Failure) {
-            throw Exception(result.error.toString())
+            return Result.failure(Throwable(message = result.error.name))
         }
 
         val found = (result as FeedFinder.Result.Success).feeds.first()
@@ -116,7 +112,7 @@ data class Account(
 
         saveOPMLFile()
 
-        return feed
+        return Result.success(feed)
     }
 
     suspend fun refreshFeed(feedID: String) {
@@ -125,6 +121,14 @@ data class Account(
         val items = delegate.fetchAll(feed)
 
         updateArticles(feed, items)
+    }
+
+    fun findFeed(feedID: String): Feed? {
+        return flattenedFeeds.find { it.id == feedID }
+    }
+
+    fun findFolder(title: String): Folder? {
+        return folders.find { it.title == title }
     }
 
     fun findArticle(articleID: Long?): Article? {
@@ -195,7 +199,7 @@ data class Account(
     }
 }
 
-fun Account.asOPML(): String {
+internal fun Account.asOPML(): String {
     var opml = ""
 
     feeds.sortedBy { it.name }.forEach { feed ->

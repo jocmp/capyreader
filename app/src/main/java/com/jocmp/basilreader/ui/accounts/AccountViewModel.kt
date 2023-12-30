@@ -13,7 +13,7 @@ import com.jocmp.basil.AccountManager
 import com.jocmp.basil.Article
 import com.jocmp.basil.Feed
 import com.jocmp.basil.FeedFormEntry
-import com.jocmp.basil.Filter
+import com.jocmp.basil.ArticleFilter
 import com.jocmp.basil.Folder
 import com.jocmp.basil.buildPager
 import com.jocmp.basilreader.selectAccount
@@ -30,6 +30,8 @@ class AccountViewModel(
         policy = neverEqualPolicy()
     )
 
+    private val filter = mutableStateOf<ArticleFilter>(ArticleFilter.default())
+
     private val pager: MutableState<Pager<Int, Article>?> = mutableStateOf(null)
 
     init {
@@ -45,7 +47,7 @@ class AccountViewModel(
                 }
             }
 
-            pager.value = account?.buildPager()
+            pager.value = account?.buildPager(filter.value)
         }
     }
 
@@ -54,8 +56,6 @@ class AccountViewModel(
 
     val folders: List<Folder>
         get() = account?.folders?.toList() ?: emptyList()
-
-    private val feedID = mutableStateOf<String?>(null)
 
     private val articleState = mutableStateOf<Article?>(null)
 
@@ -68,25 +68,23 @@ class AccountViewModel(
     fun articles(): Pager<Int, Article>? = pager.value
 
     fun selectFeed(feedID: String, onComplete: () -> Unit) {
-        val feed = account?.findFeed(feedID)
+        val feed = account?.findFeed(feedID) ?: return
+        val feedFilter = ArticleFilter.Feeds(feed = feed, status = filter.value.status)
 
-        this.feedID.value = feed?.id
+        selectFilter(feedFilter, onComplete)
+    }
 
-        if (feed != null) {
-            pager.value = account?.buildPager(
-                filter = Filter.Feeds(feed = feed, status = Filter.Status.ALL),
-            )
-        }
+    fun selectFolder(title: String, onComplete: () -> Unit) {
+        val folder = account?.findFolder(title) ?: return
+        val feedFilter = ArticleFilter.Folders(folder = folder, status = filter.value.status)
 
-        clearArticle()
-
-        onComplete()
+        selectFilter(feedFilter, onComplete)
     }
 
     suspend fun refreshFeed() {
-        val id = feedID.value ?: return
-
-        account?.refreshFeed(id)
+//        val id = feedID.value ?: return
+//
+//        account?.refreshFeed(id)
     }
 
     fun selectArticle(articleID: String) {
@@ -95,6 +93,16 @@ class AccountViewModel(
 
     fun clearArticle() {
         articleState.value = null
+    }
+
+    private fun selectFilter(nextFilter: ArticleFilter, onComplete: () -> Unit) {
+
+        filter.value = nextFilter
+        pager.value = account?.buildPager(filter = nextFilter)
+
+        clearArticle()
+
+        onComplete()
     }
 
     private fun selectSettingsAccount(accountID: String) {
@@ -109,9 +117,10 @@ class AccountViewModel(
 
     fun addFeed(entry: FeedFormEntry, onSuccess: () -> Unit) {
         viewModelScope.launch {
-            account?.addFeed(entry)
-            accountState.value = account
-            onSuccess()
+            account?.addFeed(entry)?.onSuccess {
+                accountState.value = account
+                onSuccess()
+            }
         }
     }
 }

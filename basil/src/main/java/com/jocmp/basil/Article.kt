@@ -12,5 +12,7 @@ data class Article(
     val url: URL?,
     val summary: String,
     val imageURL: URL?,
-    val arrivedAt: ZonedDateTime
+    val arrivedAt: ZonedDateTime,
+    val read: Boolean,
+    val starred: Boolean
 )

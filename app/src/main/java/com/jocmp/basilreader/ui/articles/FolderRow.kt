@@ -1,5 +1,6 @@
 package com.jocmp.basilreader.ui.articles
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,11 +18,16 @@ import com.jocmp.basilreader.ui.theme.BasilReaderTheme
 @Composable
 fun FolderRow(
     folder: Folder,
+    onFolderSelect: (folderTitle: String) -> Unit,
     onFeedSelect: (feedID: String) -> Unit
 ) {
     Column {
-        Box(modifier = Modifier.padding(horizontal = 8.dp)) {
-            Text(folder.title, fontWeight = FontWeight.Bold)
+        Box(modifier = Modifier.clickable { onFolderSelect(folder.title) }) {
+            Text(
+                folder.title,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(horizontal = 8.dp),
+            )
         }
         folder.feeds.forEach { feed ->
             Row {
@@ -39,6 +45,7 @@ fun FolderRowPreview() {
     BasilReaderTheme {
         FolderRow(
             folder = folder,
+            onFolderSelect = {},
             onFeedSelect = {}
         )
     }
