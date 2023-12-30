@@ -9,6 +9,9 @@ data class Feed(
     val feedURL: String,
     val siteURL: String = ""
 ) {
+    internal val primaryKey: Long
+        get() = id.toLong()
+
     override fun equals(other: Any?): Boolean {
         if (other is Feed) {
             return id == other.id
@@ -19,10 +22,4 @@ data class Feed(
     override fun hashCode(): Int {
         return id.hashCode()
     }
-}
-
-fun Feed.asOPML(indentLevel: Int): String {
-    val opml =
-        "<outline text=\"${name}\" title=\"${name}\" description=\"\" type=\"rss\" version=\"RSS\" htmlUrl=\"${siteURL}\" xmlUrl=\"${feedURL}\" basil_id=\"${id}\"/>\n"
-    return opml.prepending(tabCount = indentLevel)
 }

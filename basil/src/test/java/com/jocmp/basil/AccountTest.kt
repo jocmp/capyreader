@@ -1,6 +1,5 @@
 package com.jocmp.basil
 
-import com.jocmp.basil.accounts.AccountDelegate
 import com.jocmp.basil.accounts.LocalAccountDelegate
 import com.jocmp.basil.db.Database
 import com.jocmp.feedfinder.FeedFinder

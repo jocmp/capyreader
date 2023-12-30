@@ -51,6 +51,9 @@ fun ArticleScreen(
             viewModel.articles()?.let { pager ->
                 ArticleList(
                     pager = pager,
+                    onRefresh = {
+                        viewModel.refreshFeed()
+                    },
                     onSelect = {
                         viewModel.selectArticle(it)
                         navigateToDetail()

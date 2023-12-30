@@ -2,13 +2,15 @@ package com.jocmp.basil
 
 import com.jocmp.basil.accounts.AccountDelegate
 import com.jocmp.basil.accounts.LocalAccountDelegate
-import com.jocmp.basil.articles.articleMapper
-import com.jocmp.basil.db.Articles
+import com.jocmp.basil.accounts.ParsedItem
+import com.jocmp.basil.accounts.asOPML
 import com.jocmp.basil.db.Database
-import com.jocmp.basil.feeds.FeedRecords
 import com.jocmp.basil.opml.Outline
 import com.jocmp.basil.opml.asFeed
 import com.jocmp.basil.opml.asFolder
+import com.jocmp.basil.persistence.FeedRecords
+import com.jocmp.basil.persistence.articleMapper
+import com.jocmp.basil.shared.nowUTC
 import com.jocmp.feedfinder.FeedFinder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -52,6 +54,10 @@ data class Account(
             addAll(folders.flatMap { it.feeds })
         }
 
+    fun findFeed(feedID: String): Feed? {
+        return flattenedFeeds.find { it.id == feedID }
+    }
+
     suspend fun addFolder(title: String): Folder {
         val folder = Folder(title = title)
 
@@ -86,19 +92,8 @@ data class Account(
         coroutineScope {
             launch {
                 val items = delegate.fetchAll(feed)
-                val feedID = feed.id.toLong()
 
-                items.forEach { item ->
-                    database.articlesQueries.create(
-                        feed_id = feedID,
-                        external_id = item.externalID,
-                        title = item.title,
-                        content_html = item.contentHTML,
-                        url = item.url,
-                        summary = item.summary,
-                        image_url = item.imageURL
-                    )
-                }
+                updateArticles(feed, items)
             }
         }
 
@@ -124,14 +119,39 @@ data class Account(
         return feed
     }
 
-    suspend fun findArticle(articleID: Long?, feedID: Long?): Article? {
+    suspend fun refreshFeed(feedID: String) {
+        val feed = flattenedFeeds.find { it.id == feedID } ?: return
+
+        val items = delegate.fetchAll(feed)
+
+        updateArticles(feed, items)
+    }
+
+    fun findArticle(articleID: Long?): Article? {
         articleID ?: return null
 
         return database.articlesQueries.findBy(
             articleID = articleID,
-            feedID = feedID,
             mapper = ::articleMapper
         ).executeAsOneOrNull()
+    }
+
+    private fun updateArticles(feed: Feed, items: List<ParsedItem>) {
+        items.forEach { item ->
+            val publishedAt = item.publishedAt?.toEpochSecond()
+
+            database.articlesQueries.create(
+                feed_id = feed.primaryKey,
+                external_id = item.externalID,
+                title = item.title,
+                content_html = item.contentHTML,
+                url = item.url,
+                summary = item.summary,
+                image_url = item.imageURL,
+                published_at = publishedAt,
+                arrived_at = publishedAt ?: nowUTC()
+            )
+        }
     }
 
     private fun entrySiteURL(url: URL?): String {

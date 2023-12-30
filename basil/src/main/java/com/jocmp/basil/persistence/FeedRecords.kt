@@ -1,7 +1,8 @@
-package com.jocmp.basil.feeds
+package com.jocmp.basil.persistence
 
 import com.jocmp.basil.db.Database
 import com.jocmp.basil.db.Feeds
+import com.jocmp.basil.accounts.ExternalFeed
 
 internal class FeedRecords(val database: Database) {
     internal fun findOrCreate(externalFeed: ExternalFeed): Feeds {

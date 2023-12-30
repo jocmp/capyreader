@@ -1,7 +1,5 @@
-
-
-CREATE TABLE articles(
-  id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+CREATE TABLE IF NOT EXISTS articles(
+  id INTEGER NOT NULL PRIMARY KEY,
   external_id TEXT NOT NULL UNIQUE,
   feed_id INTEGER REFERENCES feeds(id),
   title TEXT,
@@ -9,42 +7,86 @@ CREATE TABLE articles(
   url TEXT,
   summary TEXT,
   image_url TEXT,
-  date_published INTEGER
+  published_at INTEGER
 );
 
-countByFeed:
+CREATE UNIQUE INDEX articles_external_id_index ON articles(external_id);
+
+countByStatus:
 SELECT COUNT(*)
 FROM articles
-WHERE feed_id = :feedID;
+JOIN article_statuses ON articles.id = article_statuses.article_id
+WHERE article_statuses.read IN :read
+AND article_statuses.starred IN :starred;
 
-allByFeed:
-SELECT *
+findByStatus:
+SELECT
+  articles.*,
+  article_statuses.arrived_at,
+  article_statuses.starred,
+  article_statuses.read
 FROM articles
-WHERE feed_id = :feedID
+JOIN article_statuses ON articles.id = article_statuses.article_id
+AND article_statuses.read IN :read
+AND article_statuses.starred IN :starred
+ORDER BY article_statuses.arrived_at DESC
+LIMIT :limit OFFSET :offset;
+
+countByFeeds:
+SELECT COUNT(*)
+FROM articles
+JOIN article_statuses ON articles.id = article_statuses.article_id
+WHERE feed_id IN :feedIDs
+AND article_statuses.read IN :read
+AND article_statuses.starred IN :starred;
+
+findByFeeds:
+SELECT
+  articles.*,
+  article_statuses.arrived_at,
+  article_statuses.starred,
+  article_statuses.read
+FROM articles
+JOIN article_statuses ON articles.id = article_statuses.article_id
+WHERE feed_id IN :feedIDs
+AND article_statuses.read IN :read
+AND article_statuses.starred IN :starred
+ORDER BY article_statuses.arrived_at DESC
 LIMIT :limit OFFSET :offset;
 
 findBy:
-SELECT *
+SELECT
+  articles.*,
+  article_statuses.arrived_at,
+  article_statuses.starred,
+  article_statuses.read
 FROM articles
-WHERE feed_id = :feedID AND id = :articleID
+JOIN article_statuses ON articles.id = article_statuses.article_id
+WHERE articles.id = :articleID
 LIMIT 1;
 
-create:
-REPLACE INTO articles(
-    feed_id,
-    external_id,
-    title,
-    content_html,
-    url,
-    summary,
-    image_url
-)
-VALUES (
-?,
-?,
-?,
-?,
-?,
-?,
-?
-);
+create {
+    REPLACE INTO articles(
+        feed_id,
+        external_id,
+        title,
+        content_html,
+        url,
+        summary,
+        image_url,
+        published_at
+    )
+    VALUES (
+    ?,
+  ?,
+    ?,
+    ?,
+    ?,
+    ?,
+    ?,
+    ?
+    );
+
+    INSERT OR IGNORE INTO article_statuses(article_id, arrived_at)
+    VALUES (last_insert_rowid(), ?);
+}
