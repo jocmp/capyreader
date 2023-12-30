@@ -13,3 +13,7 @@ fun parseISODate(value: String?): OffsetDateTime? {
         null
     }
 }
+
+fun nowUTC(): Long {
+    return OffsetDateTime.now(ZoneOffset.UTC).toEpochSecond()
+}

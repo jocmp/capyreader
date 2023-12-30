@@ -23,6 +23,7 @@ import androidx.paging.Pager
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.jocmp.basil.Article
 import kotlinx.coroutines.launch
+import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -61,7 +62,10 @@ fun ArticleList(
                             }
                         }
                 ) {
-                    Text(item?.title ?: "No title", fontSize = 20.sp)
+                    item?.let { article ->
+                        Text(article.title, fontSize = 20.sp)
+                        Text(article.arrivedAt.format(DateTimeFormatter.BASIC_ISO_DATE))
+                    }
                 }
             }
         }
