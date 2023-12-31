@@ -5,15 +5,12 @@ import androidx.paging.PagingConfig
 import com.jocmp.basil.persistence.ArticlePagerFactory
 
 fun Account.buildPager(
-    filter: ArticleFilter = ArticleFilter.Articles(status = ArticleFilter.Status.ALL)
+    filter: ArticleFilter = ArticleFilter.Articles(status = ArticleStatus.ALL)
 ): Pager<Int, Article> {
-    val pagerFactory = ArticlePagerFactory(
-        database = database,
-        filter = filter
-    )
+    val pagerFactory = ArticlePagerFactory(database = database)
 
     return Pager(
         config = PagingConfig(pageSize = 10),
-        pagingSourceFactory = { pagerFactory.find() }
+        pagingSourceFactory = { pagerFactory.find(filter) }
     )
 }

@@ -14,6 +14,7 @@ import com.jocmp.basil.Article
 import com.jocmp.basil.Feed
 import com.jocmp.basil.FeedFormEntry
 import com.jocmp.basil.ArticleFilter
+import com.jocmp.basil.ArticleStatus
 import com.jocmp.basil.Folder
 import com.jocmp.basil.buildPager
 import com.jocmp.basilreader.selectAccount
@@ -65,13 +66,16 @@ class AccountViewModel(
     val article: Article?
         get() = articleState.value
 
-    val filterStatus: ArticleFilter.Status
+    val filterStatus: ArticleStatus
         get() = filter.value.status
 
     fun articles(): Pager<Int, Article>? = pager.value
 
-    fun selectStatus(status: ArticleFilter.Status) {
-        filter.value = filter.value.withStatus(status = status)
+    fun selectStatus(status: ArticleStatus) {
+        val nextFilter = filter.value.withStatus(status = status)
+        filter.value = nextFilter
+
+        pager.value = account?.buildPager(nextFilter)
     }
 
     fun selectFeed(feedID: String, onComplete: () -> Unit) {

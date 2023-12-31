@@ -70,7 +70,6 @@ dependencies {
     implementation("androidx.paging:paging-compose:3.3.0-alpha02")
     implementation("androidx.navigation:navigation-compose:2.7.6")
     implementation("app.cash.sqldelight:android-driver:$sqldelightVersion")
-    implementation("com.github.requery:sqlite-android:3.43.0")
     implementation("io.insert-koin:koin-android")
     implementation("io.insert-koin:koin-androidx-compose")
     implementation("io.insert-koin:koin-core")

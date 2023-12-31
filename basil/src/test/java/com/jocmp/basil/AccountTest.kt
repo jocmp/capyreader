@@ -36,7 +36,7 @@ class AccountTest {
             anyConstructed<LocalAccountDelegate>().fetchAll(any())
         } returns emptyList()
 
-        database = InMemoryDatabaseProvider().forAccount("777")
+        database = InMemoryDatabaseProvider.forAccount("777")
     }
 
     private fun buildAccount(id: String, path: File): Account {

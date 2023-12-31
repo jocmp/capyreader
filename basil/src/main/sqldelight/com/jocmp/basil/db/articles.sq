@@ -1,23 +1,9 @@
-CREATE TABLE IF NOT EXISTS articles(
-  id INTEGER NOT NULL PRIMARY KEY,
-  external_id TEXT NOT NULL UNIQUE,
-  feed_id INTEGER REFERENCES feeds(id),
-  title TEXT,
-  content_html TEXT,
-  url TEXT,
-  summary TEXT,
-  image_url TEXT,
-  published_at INTEGER
-);
-
-CREATE UNIQUE INDEX articles_external_id_index ON articles(external_id);
-
 countByStatus:
 SELECT COUNT(*)
 FROM articles
 JOIN article_statuses ON articles.external_id = article_statuses.external_id
-WHERE article_statuses.read IN :read
-AND article_statuses.starred IN :starred;
+WHERE (article_statuses.read = :read OR :read IS NULL)
+AND (article_statuses.starred = :starred OR :starred IS NULL);
 
 findByStatus:
 SELECT
@@ -27,8 +13,8 @@ SELECT
   article_statuses.read
 FROM articles
 JOIN article_statuses ON articles.external_id = article_statuses.external_id AND article_statuses.feed_id = articles.feed_id
-AND article_statuses.read IN :read
-AND article_statuses.starred IN :starred
+WHERE (article_statuses.read = :read OR :read IS NULL)
+AND (article_statuses.starred = :starred OR :starred IS NULL)
 ORDER BY article_statuses.arrived_at DESC
 LIMIT :limit OFFSET :offset;
 
@@ -37,8 +23,8 @@ SELECT COUNT(*)
 FROM articles
 JOIN article_statuses ON articles.external_id = article_statuses.external_id AND article_statuses.feed_id = articles.feed_id
 WHERE articles.feed_id IN :feedIDs
-AND article_statuses.read IN :read
-AND article_statuses.starred IN :starred;
+AND (article_statuses.read = :read OR :read IS NULL)
+AND (article_statuses.starred = :starred OR :starred IS NULL);
 
 findByFeeds:
 SELECT
@@ -49,8 +35,8 @@ SELECT
 FROM articles
 JOIN article_statuses ON articles.external_id = article_statuses.external_id AND article_statuses.feed_id = articles.feed_id
 WHERE articles.feed_id IN :feedIDs
-AND article_statuses.read IN :read
-AND article_statuses.starred IN :starred
+AND (article_statuses.read = :read OR :read IS NULL)
+AND (article_statuses.starred = :starred OR :starred IS NULL)
 ORDER BY article_statuses.arrived_at DESC
 LIMIT :limit OFFSET :offset;
 
@@ -63,6 +49,17 @@ SELECT
 FROM articles
 JOIN article_statuses ON articles.external_id = article_statuses.external_id AND article_statuses.feed_id = articles.feed_id
 WHERE articles.id = :articleID
+LIMIT 1;
+
+findByExternalID:
+SELECT
+  articles.*,
+  article_statuses.arrived_at,
+  article_statuses.starred,
+  article_statuses.read
+FROM articles
+JOIN article_statuses ON articles.external_id = article_statuses.external_id AND article_statuses.feed_id = articles.feed_id
+WHERE articles.external_id = :externalID AND articles.feed_id = :feedID
 LIMIT 1;
 
 create:
@@ -97,4 +94,14 @@ VALUES (
 :feed_id,
 :external_id,
 :arrived_at
+);
+
+markRead:
+UPDATE article_statuses SET read = 1
+WHERE EXISTS (
+  SELECT id
+  FROM articles
+  WHERE articles.id = :articleID
+  AND articles.external_id = article_statuses.external_id AND article_statuses.feed_id = articles.feed_id
+  LIMIT 1
 );

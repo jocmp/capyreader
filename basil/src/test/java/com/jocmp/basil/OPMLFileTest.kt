@@ -17,7 +17,7 @@ class OPMLFileTest {
         val account = Account(
             id = "777",
             path = accountPath.resolve("test.opml"),
-            database = InMemoryDatabaseProvider().forAccount("777")
+            database = InMemoryDatabaseProvider.forAccount("777")
         )
 
         account.folders.addAll(

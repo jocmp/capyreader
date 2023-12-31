@@ -1,0 +1,13 @@
+CREATE TABLE articles(
+  id INTEGER NOT NULL PRIMARY KEY,
+  external_id TEXT NOT NULL,
+  feed_id INTEGER REFERENCES feeds(id),
+  title TEXT,
+  content_html TEXT,
+  url TEXT,
+  summary TEXT,
+  image_url TEXT,
+  published_at INTEGER
+);
+
+CREATE UNIQUE INDEX articles_external_id_feed_id_index ON articles(external_id, feed_id);

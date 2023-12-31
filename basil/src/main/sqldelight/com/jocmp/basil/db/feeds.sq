@@ -1,9 +1,3 @@
-CREATE TABLE feeds (
-  id INTEGER NOT NULL PRIMARY KEY,
-  external_id TEXT NOT NULL,
-  feed_url TEXT NOT NULL UNIQUE
-);
-
 allByID:
 SELECT *
 FROM feeds

@@ -30,8 +30,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.Pager
 import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemKey
 import com.jocmp.basil.Article
 import com.jocmp.basil.ArticleFilter
+import com.jocmp.basil.ArticleStatus
 import com.jocmp.basilreader.R
 import kotlinx.coroutines.launch
 import java.time.format.DateTimeFormatter
@@ -42,8 +44,8 @@ fun ArticleList(
     pager: Pager<Int, Article>,
     onRefresh: suspend () -> Unit,
     onSelect: suspend (articleID: String) -> Unit,
-    onStatusSelect: (status: ArticleFilter.Status) -> Unit,
-    selectedStatus: ArticleFilter.Status,
+    onStatusSelect: (status: ArticleStatus) -> Unit,
+    selectedStatus: ArticleStatus,
 ) {
     val composableScope = rememberCoroutineScope()
     val lazyPagingItems = pager.flow.collectAsLazyPagingItems()
@@ -73,23 +75,22 @@ fun ArticleList(
                 .pullRefresh(state)
         ) {
             LazyColumn(Modifier.fillMaxWidth()) {
-                items(count = lazyPagingItems.itemCount) { index ->
-                    val item = lazyPagingItems[index]
+                items(
+                    count = lazyPagingItems.itemCount,
+                    key = lazyPagingItems.itemKey { it.id }
+                ) { index ->
+                    val item = lazyPagingItems[index]!!
                     Box(
                         modifier = Modifier
                             .clickable {
-                                item?.let {
-                                    composableScope.launch {
-                                        onSelect(it.id)
-                                    }
+                                composableScope.launch {
+                                    onSelect(item.id)
                                 }
                             }
                     ) {
                         Column(Modifier.padding(8.dp)) {
-                            item?.let { article ->
-                                Text(article.title, fontSize = 20.sp)
-                                Text(article.arrivedAt.format(DateTimeFormatter.BASIC_ISO_DATE))
-                            }
+                            Text(item.title, fontSize = 20.sp)
+                            Text(item.arrivedAt.format(DateTimeFormatter.BASIC_ISO_DATE))
                         }
                     }
                 }

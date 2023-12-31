@@ -19,7 +19,12 @@ android {
     sqldelight {
         databases {
             create("Database") {
+                val sqldelightVersion = libs.versions.sqldelight.get()
+
                 packageName.set("com.jocmp.basil.db")
+                verifyMigrations.set(true)
+                deriveSchemaFromMigrations.set(true)
+                dialect("app.cash.sqldelight:sqlite-3-30-dialect:$sqldelightVersion")
             }
         }
     }

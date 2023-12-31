@@ -22,7 +22,7 @@ class AccountManagerTest {
                     source = AccountSource.LOCAL.value
                 )
             ),
-            databaseProvider = InMemoryDatabaseProvider()
+            databaseProvider = InMemoryDatabaseProvider
         )
     }
 
