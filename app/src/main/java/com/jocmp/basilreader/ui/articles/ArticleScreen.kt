@@ -53,20 +53,23 @@ fun ArticleScreen(
             )
         },
         listPane = {
-            viewModel.articles()?.let { pager ->
-                ArticleList(
-                    pager = pager,
-                    onRefresh = {
-                        viewModel.refreshFeed()
-                    },
-                    selectedStatus = viewModel.filterStatus,
-                    onStatusSelect = { viewModel.selectStatus(it) },
-                    onSelect = {
-                        viewModel.selectArticle(it)
-                        navigateToDetail()
+            ArticleList(
+                pager = viewModel.pager,
+                onRefresh = {
+                    viewModel.refreshFeed()
+                },
+                onDrawerNavigation = {
+                    coroutineScope.launch {
+                        drawerState.open()
                     }
-                )
-            } ?: EmptyView(fillSize = true)
+                },
+                selectedStatus = viewModel.filterStatus,
+                onStatusSelect = viewModel::selectStatus,
+                onSelect = {
+                    viewModel.selectArticle(it)
+                    navigateToDetail()
+                }
+            )
         },
         detailPane = {
             ArticleView(

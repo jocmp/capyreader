@@ -21,14 +21,8 @@ import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 @Composable
-fun App() {
-    val composableScope = rememberCoroutineScope()
+fun App(startDestination: String) {
     val navController = rememberNavController()
-    val accountManager = koinInject<AccountManager>()
-
-    val (checkedExistingAccounts, setExistingAccountsChecked) = rememberSaveable {
-        mutableStateOf(false)
-    }
 
     BasilReaderTheme {
         Surface(
@@ -37,7 +31,7 @@ fun App() {
         ) {
             NavHost(
                 navController = navController,
-                startDestination = "articles"
+                startDestination = startDestination
             ) {
                 accountIndex(
                     onSelect = {
@@ -46,15 +40,6 @@ fun App() {
                 )
                 articleGraph(navController = navController)
             }
-        }
-    }
-
-    LaunchedEffect(checkedExistingAccounts) {
-        composableScope.launch {
-            if (!checkedExistingAccounts && accountManager.isEmpty()) {
-                navController.navigateToAddAccount()
-            }
-            setExistingAccountsChecked(true)
         }
     }
 }

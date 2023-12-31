@@ -11,57 +11,44 @@ import androidx.paging.Pager
 import com.jocmp.basil.Account
 import com.jocmp.basil.AccountManager
 import com.jocmp.basil.Article
-import com.jocmp.basil.Feed
-import com.jocmp.basil.FeedFormEntry
 import com.jocmp.basil.ArticleFilter
 import com.jocmp.basil.ArticleStatus
+import com.jocmp.basil.Feed
+import com.jocmp.basil.FeedFormEntry
 import com.jocmp.basil.Folder
 import com.jocmp.basil.buildPager
 import com.jocmp.basilreader.selectAccount
 import com.jocmp.basilreader.selectedAccount
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class AccountViewModel(
     private val accountManager: AccountManager,
     private val settings: DataStore<Preferences>,
 ) : ViewModel() {
-    private val accountState: MutableState<Account?> = mutableStateOf(
-        null,
+    private val accountState: MutableState<Account> = mutableStateOf(
+        accountManager.findByID(runBlocking { settings.data.first() }.selectedAccount())!!,
         policy = neverEqualPolicy()
     )
 
     private val filter = mutableStateOf<ArticleFilter>(ArticleFilter.default())
 
-    private val pager: MutableState<Pager<Int, Article>?> = mutableStateOf(null)
+    private val _pager = mutableStateOf(account.buildPager(filter.value))
 
-    init {
-        viewModelScope.launch {
-            val accountID = settings.data.first().selectedAccount()
+    val pager: Pager<Int, Article>
+        get() = _pager.value
 
-            if (accountID != null) {
-                selectAccount(accountID)
-            } else {
-                val firstID = accountManager.accountIDs().firstOrNull()
-                firstID?.let {
-                    selectSettingsAccount(firstID)
-                }
-            }
-
-            pager.value = account?.buildPager(filter.value)
-        }
-    }
-
-    private val account: Account?
+    private val account: Account
         get() = accountState.value
 
     val folders: List<Folder>
-        get() = account?.folders?.toList() ?: emptyList()
+        get() = account.folders.toList()
 
     private val articleState = mutableStateOf<Article?>(null)
 
     val feeds: List<Feed>
-        get() = account?.feeds?.toList() ?: emptyList()
+        get() = account.feeds.toList()
 
     val article: Article?
         get() = articleState.value
@@ -69,24 +56,22 @@ class AccountViewModel(
     val filterStatus: ArticleStatus
         get() = filter.value.status
 
-    fun articles(): Pager<Int, Article>? = pager.value
-
     fun selectStatus(status: ArticleStatus) {
         val nextFilter = filter.value.withStatus(status = status)
         filter.value = nextFilter
 
-        pager.value = account?.buildPager(nextFilter)
+        _pager.value = account.buildPager(nextFilter)
     }
 
     fun selectFeed(feedID: String, onComplete: () -> Unit) {
-        val feed = account?.findFeed(feedID) ?: return
+        val feed = account.findFeed(feedID) ?: return
         val feedFilter = ArticleFilter.Feeds(feed = feed, status = filter.value.status)
 
         selectFilter(feedFilter, onComplete)
     }
 
     fun selectFolder(title: String, onComplete: () -> Unit) {
-        val folder = account?.findFolder(title) ?: return
+        val folder = account.findFolder(title) ?: return
         val feedFilter = ArticleFilter.Folders(folder = folder, status = filter.value.status)
 
         selectFilter(feedFilter, onComplete)
@@ -94,14 +79,14 @@ class AccountViewModel(
 
     suspend fun refreshFeed() {
         when (val currentFilter = filter.value) {
-            is ArticleFilter.Feeds -> account?.refreshFeed(currentFilter.feed)
-            is ArticleFilter.Folders -> account?.refreshFeeds(currentFilter.folder.feeds)
-            is ArticleFilter.Articles -> account?.refreshAll()
+            is ArticleFilter.Feeds -> account.refreshFeed(currentFilter.feed)
+            is ArticleFilter.Folders -> account.refreshFeeds(currentFilter.folder.feeds)
+            is ArticleFilter.Articles -> account.refreshAll()
         }
     }
 
     fun selectArticle(articleID: String) {
-        articleState.value = account?.findArticle(articleID.toLong())
+        articleState.value = account.findArticle(articleID.toLong())
     }
 
     fun clearArticle() {
@@ -109,9 +94,8 @@ class AccountViewModel(
     }
 
     private fun selectFilter(nextFilter: ArticleFilter, onComplete: () -> Unit) {
-
         filter.value = nextFilter
-        pager.value = account?.buildPager(filter = nextFilter)
+        _pager.value = account.buildPager(nextFilter)
 
         clearArticle()
 
@@ -125,12 +109,14 @@ class AccountViewModel(
     }
 
     private fun selectAccount(accountID: String) {
-        accountState.value = accountManager.findByID(accountID)
+        accountManager.findByID(accountID)?.let {
+            accountState.value = it
+        }
     }
 
     fun addFeed(entry: FeedFormEntry, onSuccess: () -> Unit) {
         viewModelScope.launch {
-            account?.addFeed(entry)?.onSuccess {
+            account.addFeed(entry).onSuccess {
                 accountState.value = account
                 onSuccess()
             }
