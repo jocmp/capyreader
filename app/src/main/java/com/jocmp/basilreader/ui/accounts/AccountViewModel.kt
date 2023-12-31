@@ -65,7 +65,14 @@ class AccountViewModel(
     val article: Article?
         get() = articleState.value
 
+    val filterStatus: ArticleFilter.Status
+        get() = filter.value.status
+
     fun articles(): Pager<Int, Article>? = pager.value
+
+    fun selectStatus(status: ArticleFilter.Status) {
+        filter.value = filter.value.withStatus(status = status)
+    }
 
     fun selectFeed(feedID: String, onComplete: () -> Unit) {
         val feed = account?.findFeed(feedID) ?: return
@@ -84,7 +91,7 @@ class AccountViewModel(
     suspend fun refreshFeed() {
         when (val currentFilter = filter.value) {
             is ArticleFilter.Feeds -> account?.refreshFeed(currentFilter.feed)
-            is ArticleFilter.Folders ->  account?.refreshFeeds(currentFilter.folder.feeds)
+            is ArticleFilter.Folders -> account?.refreshFeeds(currentFilter.folder.feeds)
             is ArticleFilter.Articles -> account?.refreshAll()
         }
     }
