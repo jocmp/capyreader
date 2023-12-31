@@ -11,8 +11,10 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import java.io.File
+import kotlin.math.exp
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 class AccountTest {
     @JvmField
@@ -162,5 +164,74 @@ class AccountTest {
         assertEquals(expected = entry.name, actual = techFeed.name)
         assertEquals(expected = entry.url, actual = techFeed.feedURL)
         assertEquals(techFeed, cultureFeed)
+    }
+
+    @Test
+    fun findFeed_topLevelFeed() {
+        val account = buildAccount(id = "777", path = folder.newFile())
+
+        val entry = FeedFormEntry(
+            url = "https://theverge.com/rss/index.xml",
+            name = "The Verge",
+            folderTitles = emptyList()
+        )
+
+        val feedID = runBlocking { account.addFeed(entry) }.getOrNull()!!.id
+
+        val result = account.findFeed(feedID)!!
+
+        assertEquals(expected = feedID, actual = result.id)
+    }
+
+    @Test
+    fun findFeed_nestedFeed() {
+        val account = buildAccount(id = "777", path = folder.newFile())
+
+        val entry = FeedFormEntry(
+            url = "https://theverge.com/rss/index.xml",
+            name = "The Verge",
+            folderTitles = listOf("Tech", "Culture", "Feelings")
+        )
+
+        val feedID = runBlocking { account.addFeed(entry) }.getOrNull()!!.id
+
+        val result = account.findFeed(feedID)!!
+
+        assertEquals(expected = feedID, actual = result.id)
+    }
+
+    @Test
+    fun findFeed_feedDoesNotExist() {
+        val account = buildAccount(id = "777", path = folder.newFile())
+
+        val result = account.findFeed("missing")
+
+        assertNull(result)
+    }
+
+    @Test
+    fun findFolder_existingFolder() {
+        val account = buildAccount(id = "777", path = folder.newFile())
+
+        val entry = FeedFormEntry(
+            url = "https://theverge.com/rss/index.xml",
+            name = "The Verge",
+            folderTitles = listOf("Tech", "Culture")
+        )
+
+        runBlocking { account.addFeed(entry) }
+
+        val result = account.findFolder("Tech")!!
+
+        assertEquals(expected = "Tech", actual = result.title)
+    }
+
+    @Test
+    fun findFolder_folderDoesNotExist() {
+        val account = buildAccount(id = "777", path = folder.newFile())
+
+        val result = account.findFolder("Tech")
+
+        assertNull(result)
     }
 }

@@ -5,6 +5,7 @@ import com.jocmp.basil.accounts.LocalAccountDelegate
 import com.jocmp.basil.accounts.ParsedItem
 import com.jocmp.basil.accounts.asOPML
 import com.jocmp.basil.db.Database
+import com.jocmp.basil.db.Feeds
 import com.jocmp.basil.opml.Outline
 import com.jocmp.basil.opml.asFeed
 import com.jocmp.basil.opml.asFolder
@@ -13,6 +14,8 @@ import com.jocmp.basil.persistence.articleMapper
 import com.jocmp.basil.shared.nowUTC
 import com.jocmp.feedfinder.FeedFinder
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -54,10 +57,6 @@ data class Account(
             addAll(folders.flatMap { it.feeds })
         }
 
-    fun findFeed(feedID: String): Feed? {
-        return flattenedFeeds.find { it.id == feedID }
-    }
-
     suspend fun addFolder(title: String): Folder {
         val folder = Folder(title = title)
 
@@ -68,11 +67,11 @@ data class Account(
         return folder
     }
 
-    suspend fun addFeed(entry: FeedFormEntry): Feed {
+    suspend fun addFeed(entry: FeedFormEntry): Result<Feed> {
         val result = FeedFinder.find(feedURL = entry.url)
 
         if (result is FeedFinder.Result.Failure) {
-            throw Exception(result.error.toString())
+            return Result.failure(Throwable(message = result.error.name))
         }
 
         val found = (result as FeedFinder.Result.Success).feeds.first()
@@ -116,15 +115,29 @@ data class Account(
 
         saveOPMLFile()
 
-        return feed
+        return Result.success(feed)
     }
 
-    suspend fun refreshFeed(feedID: String) {
-        val feed = flattenedFeeds.find { it.id == feedID } ?: return
+    suspend fun refreshAll() {
+        refreshCompactedFeeds(flattenedFeeds)
+    }
 
-        val items = delegate.fetchAll(feed)
+    suspend fun refreshFeed(feed: Feed) {
+        refreshFeeds(listOf(feed))
+    }
 
-        updateArticles(feed, items)
+    suspend fun refreshFeeds(feeds: List<Feed>) {
+        val ids = feeds.map { it.id }.toSet()
+
+        refreshCompactedFeeds(flattenedFeeds.filter { ids.contains(it.id) })
+    }
+
+    fun findFeed(feedID: String): Feed? {
+        return flattenedFeeds.find { it.id == feedID }
+    }
+
+    fun findFolder(title: String): Folder? {
+        return folders.find { it.title == title }
     }
 
     fun findArticle(articleID: Long?): Article? {
@@ -140,19 +153,37 @@ data class Account(
         items.forEach { item ->
             val publishedAt = item.publishedAt?.toEpochSecond()
 
-            database.articlesQueries.create(
-                feed_id = feed.primaryKey,
-                external_id = item.externalID,
-                title = item.title,
-                content_html = item.contentHTML,
-                url = item.url,
-                summary = item.summary,
-                image_url = item.imageURL,
-                published_at = publishedAt,
-                arrived_at = publishedAt ?: nowUTC()
-            )
+            database.transaction {
+                database.articlesQueries.create(
+                    feed_id = feed.primaryKey,
+                    external_id = item.externalID,
+                    title = item.title,
+                    content_html = item.contentHTML,
+                    url = item.url,
+                    summary = item.summary,
+                    image_url = item.imageURL,
+                    published_at = publishedAt,
+                )
+
+                database.articlesQueries.updateStatus(
+                    feed_id = feed.primaryKey,
+                    external_id = item.externalID,
+                    arrived_at = publishedAt ?: nowUTC()
+                )
+            }
+
         }
     }
+
+    private suspend fun refreshCompactedFeeds(feeds: Collection<Feed>) =
+        withContext(Dispatchers.IO) {
+            feeds.map { feed ->
+                async {
+                    val items = delegate.fetchAll(feed)
+                    updateArticles(feed, items)
+                }
+            }.awaitAll()
+        }
 
     private fun entrySiteURL(url: URL?): String {
         return url?.toString() ?: ""
@@ -195,7 +226,7 @@ data class Account(
     }
 }
 
-fun Account.asOPML(): String {
+internal fun Account.asOPML(): String {
     var opml = ""
 
     feeds.sortedBy { it.name }.forEach { feed ->

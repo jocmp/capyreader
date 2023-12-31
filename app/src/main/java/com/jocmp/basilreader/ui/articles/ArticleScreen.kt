@@ -29,6 +29,13 @@ fun ArticleScreen(
         setDestination(ListDetailPaneScaffoldRole.Detail)
     }
 
+    val onComplete = {
+        coroutineScope.launch {
+            setDestination(ListDetailPaneScaffoldRole.List)
+            drawerState.close()
+        }
+    }
+
     ArticleScaffold(
         drawerState = drawerState,
         listDetailState = scaffoldState,
@@ -37,14 +44,8 @@ fun ArticleScreen(
                 folders = viewModel.folders,
                 feeds = viewModel.feeds,
                 onFeedAdd = onFeedAdd,
-                onFeedSelect = {
-                    viewModel.selectFeed(it) {
-                        coroutineScope.launch {
-                            setDestination(ListDetailPaneScaffoldRole.List)
-                            drawerState.close()
-                        }
-                    }
-                }
+                onFolderSelect = { viewModel.selectFolder(it) { onComplete() } },
+                onFeedSelect = { viewModel.selectFeed(it) { onComplete() } }
             )
         },
         listPane = {

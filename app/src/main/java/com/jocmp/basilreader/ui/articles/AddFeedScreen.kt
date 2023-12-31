@@ -18,9 +18,7 @@ fun AddFeedScreen(
     AddFeedView(
         folders = viewModel.folders,
         onSubmit = { entry ->
-            viewModel.addFeed(entry) {
-                onSubmit()
-            }
+            viewModel.addFeed(entry, onSubmit)
         },
         onCancel = onCancel
     )

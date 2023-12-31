@@ -30,6 +30,8 @@ internal fun articleMapper(
         url = optionalURL(url),
         imageURL = optionalURL(imageURL),
         summary = summary ?: "",
-        arrivedAt = ZonedDateTime.ofInstant(Instant.ofEpochSecond(arrivedAt!!), zoneID)
+        arrivedAt = ZonedDateTime.ofInstant(Instant.ofEpochSecond(arrivedAt!!), zoneID),
+        read = read ?: false,
+        starred = starred ?: false
     )
 }
