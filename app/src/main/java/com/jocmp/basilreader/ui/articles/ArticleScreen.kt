@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
+import com.jocmp.basil.ArticleFilter
 import com.jocmp.basilreader.ui.accounts.AccountViewModel
 import com.jocmp.basilreader.ui.components.EmptyView
 import kotlinx.coroutines.launch
@@ -23,7 +24,10 @@ fun ArticleScreen(
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
     val (destination, setDestination) = rememberSaveable { mutableStateOf(ListDetailPaneScaffoldRole.List) }
-    val scaffoldState = calculateListDetailPaneScaffoldState(currentPaneDestination = destination)
+    val scaffoldState = calculateListDetailPaneScaffoldState(
+        currentPaneDestination = destination,
+        scaffoldDirective = calculateArticleDirective()
+    )
 
     val navigateToDetail = {
         setDestination(ListDetailPaneScaffoldRole.Detail)
@@ -55,6 +59,8 @@ fun ArticleScreen(
                     onRefresh = {
                         viewModel.refreshFeed()
                     },
+                    selectedStatus = viewModel.filterStatus,
+                    onStatusSelect = { viewModel.selectStatus(it) },
                     onSelect = {
                         viewModel.selectArticle(it)
                         navigateToDetail()

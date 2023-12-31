@@ -6,8 +6,6 @@ import androidx.navigation.compose.composable
 
 const val articlesRoute = "articles"
 
-fun feedRoute(feedID: String) = "articles"
-
 fun NavController.navigateToArticles() =
     navigate(articlesRoute)
 

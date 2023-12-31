@@ -6,4 +6,7 @@
     <string name="add_feed_submit">Add</string>
     <string name="add_feed_cancel">Cancel</string>
     <string name="required_placeholder">Required</string>
+    <string name="article_filters_starred">Starred</string>
+    <string name="article_filters_unread">Unread</string>
+    <string name="article_filters_all">All</string>
 </resources>
