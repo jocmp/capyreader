@@ -17,8 +17,8 @@ internal fun articleMapper(
     imageURL: String?,
     publishedAt: Long?,
     arrivedAt: Long?,
-    read: Boolean?,
     starred: Boolean?,
+    read: Boolean?,
     zoneID: ZoneId = ZoneId.systemDefault()
 ): Article {
     return Article(

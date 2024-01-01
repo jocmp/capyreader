@@ -2,6 +2,7 @@ package com.jocmp.basil.shared
 
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
+import java.time.ZonedDateTime
 import java.time.format.DateTimeParseException
 
 fun parseISODate(value: String?): OffsetDateTime? {
@@ -14,6 +15,6 @@ fun parseISODate(value: String?): OffsetDateTime? {
     }
 }
 
-fun nowUTC(): Long {
-    return OffsetDateTime.now(ZoneOffset.UTC).toEpochSecond()
+fun nowUTCInSeconds(): Long {
+    return ZonedDateTime.now(ZoneOffset.UTC).toEpochSecond()
 }

@@ -5,13 +5,13 @@ import com.jocmp.basil.accounts.LocalAccountDelegate
 import com.jocmp.basil.accounts.ParsedItem
 import com.jocmp.basil.accounts.asOPML
 import com.jocmp.basil.db.Database
-import com.jocmp.basil.db.Feeds
 import com.jocmp.basil.opml.Outline
 import com.jocmp.basil.opml.asFeed
 import com.jocmp.basil.opml.asFolder
+import com.jocmp.basil.persistence.ArticleRecords
 import com.jocmp.basil.persistence.FeedRecords
 import com.jocmp.basil.persistence.articleMapper
-import com.jocmp.basil.shared.nowUTC
+import com.jocmp.basil.shared.nowUTCInSeconds
 import com.jocmp.feedfinder.FeedFinder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -44,6 +44,8 @@ data class Account(
         path = path.resolve("subscriptions.opml"),
         account = this,
     )
+
+    private val articles: ArticleRecords = ArticleRecords(database)
 
     val displayName = "Local"
 
@@ -149,6 +151,14 @@ data class Account(
         ).executeAsOneOrNull()
     }
 
+    fun markRead(articleID: String) {
+        articles.markRead(articleID)
+    }
+
+    fun markUnread(articleID: String) {
+        articles.markUnread(articleID)
+    }
+
     private fun updateArticles(feed: Feed, items: List<ParsedItem>) {
         items.forEach { item ->
             val publishedAt = item.publishedAt?.toEpochSecond()
@@ -168,7 +178,7 @@ data class Account(
                 database.articlesQueries.updateStatus(
                     feed_id = feed.primaryKey,
                     external_id = item.externalID,
-                    arrived_at = publishedAt ?: nowUTC()
+                    arrived_at = publishedAt ?: nowUTCInSeconds()
                 )
             }
 

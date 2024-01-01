@@ -4,7 +4,7 @@ import com.jocmp.basil.Article
 import com.jocmp.basil.RandomUUID
 import com.jocmp.basil.db.Database
 import com.jocmp.basil.persistence.articleMapper
-import com.jocmp.basil.shared.nowUTC
+import com.jocmp.basil.shared.nowUTCInSeconds
 import com.jocmp.basil.db.Feeds as DBFeed
 
 class ArticleFixture(private val database: Database) {
@@ -14,7 +14,7 @@ class ArticleFixture(private val database: Database) {
         externalID: String = RandomUUID.generate(),
         title: String = "Test Title",
         feed: DBFeed = feedFixture.create(feedURL = "https://example.com/${RandomUUID.generate()}"),
-        publishedAt: Long = nowUTC()
+        publishedAt: Long = nowUTCInSeconds()
     ): Article {
         database.transaction {
             database.articlesQueries.create(

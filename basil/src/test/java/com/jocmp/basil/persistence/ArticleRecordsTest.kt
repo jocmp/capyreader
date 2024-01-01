@@ -31,7 +31,7 @@ class ArticleRecordsTest {
 
         val results = articleRecords
             .byStatus
-            .all(ArticleStatus.ALL, limit = 3, offset = 0)
+            .all(ArticleStatus.ALL, limit = 3, offset = 0, )
             .executeAsList()
 
         val count = articleRecords
@@ -57,9 +57,7 @@ class ArticleRecordsTest {
 
         val readArticle = articles.first()
 
-        articleRecords
-            .forArticle
-            .markRead(readArticle.id)
+        articleRecords.markRead(readArticle.id)
 
         val results = articleRecords
             .byStatus

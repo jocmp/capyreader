@@ -6,5 +6,6 @@ CREATE TABLE article_statuses (
   read INTEGER AS Boolean NOT NULL DEFAULT 0,
   starred INTEGER AS Boolean NOT NULL DEFAULT 0,
   arrived_at INTEGER NOT NULL,
+  last_read_at INTEGER,
   PRIMARY KEY (feed_id, external_id)
 );
