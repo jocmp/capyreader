@@ -7,7 +7,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
+import androidx.paging.PagingData
 import com.jocmp.basil.Account
 import com.jocmp.basil.AccountManager
 import com.jocmp.basil.Article
@@ -19,6 +19,7 @@ import com.jocmp.basil.Folder
 import com.jocmp.basil.buildPager
 import com.jocmp.basilreader.selectAccount
 import com.jocmp.basilreader.selectedAccount
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -34,10 +35,11 @@ class AccountViewModel(
 
     private val filter = mutableStateOf<ArticleFilter>(ArticleFilter.default())
 
-    private val _pager = mutableStateOf(account.buildPager(filter.value))
 
-    val pager: Pager<Int, Article>
-        get() = _pager.value
+    private val pager = mutableStateOf(account.buildPager(filter.value))
+
+    val articles: Flow<PagingData<Article>>
+        get() = pager.value.flow
 
     private val account: Account
         get() = accountState.value
@@ -59,8 +61,7 @@ class AccountViewModel(
     fun selectStatus(status: ArticleStatus) {
         val nextFilter = filter.value.withStatus(status = status)
         filter.value = nextFilter
-
-        _pager.value = account.buildPager(nextFilter)
+        pager.value = account.buildPager(nextFilter)
     }
 
     fun selectFeed(feedID: String, onComplete: () -> Unit) {
@@ -95,7 +96,7 @@ class AccountViewModel(
 
     private fun selectFilter(nextFilter: ArticleFilter, onComplete: () -> Unit) {
         filter.value = nextFilter
-        _pager.value = account.buildPager(nextFilter)
+        pager.value = account.buildPager(nextFilter)
 
         clearArticle()
 
