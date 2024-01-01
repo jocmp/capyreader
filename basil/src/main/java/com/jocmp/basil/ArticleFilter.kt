@@ -9,7 +9,7 @@ sealed class ArticleFilter(open val status: ArticleStatus) {
         }
     }
 
-    data class Articles(override val status: ArticleStatus) : ArticleFilter(status)
+    data class Articles(override val status: ArticleStatus,) : ArticleFilter(status)
 
     data class Feeds(val feed: Feed, override val status: ArticleStatus) : ArticleFilter(status)
 

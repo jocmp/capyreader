@@ -13,6 +13,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.PagingData
@@ -38,6 +40,7 @@ fun ArticleList(
             key = lazyPagingItems.itemKey { it.id }
         ) { index ->
             val item = lazyPagingItems[index]!!
+            val fontWeight = item.fontWeight
 
             Row {
                 Box(
@@ -49,7 +52,7 @@ fun ArticleList(
                         }
                 ) {
                     Column(Modifier.padding(8.dp)) {
-                        Text(item.title, fontSize = 20.sp)
+                        Text(item.title, fontSize = 20.sp, fontWeight = fontWeight)
                         Text(item.arrivedAt.format(DateTimeFormatter.BASIC_ISO_DATE))
                     }
                 }
@@ -57,3 +60,12 @@ fun ArticleList(
         }
     }
 }
+
+private val Article.fontWeight: FontWeight
+    get() {
+        return if (read) {
+            FontWeight.Normal
+        } else {
+            FontWeight.Bold
+        }
+    }

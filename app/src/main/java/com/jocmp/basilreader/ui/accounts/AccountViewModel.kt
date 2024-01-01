@@ -23,6 +23,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.time.ZonedDateTime
+import kotlin.math.sin
 
 class AccountViewModel(
     private val accountManager: AccountManager,
@@ -34,7 +36,6 @@ class AccountViewModel(
     )
 
     private val filter = mutableStateOf<ArticleFilter>(ArticleFilter.default())
-
 
     private val pager = mutableStateOf(account.buildPager(filter.value))
 
@@ -87,7 +88,20 @@ class AccountViewModel(
     }
 
     fun selectArticle(articleID: String) {
+        account.markRead(articleID)
         articleState.value = account.findArticle(articleID.toLong())
+    }
+
+    fun toggleArticleRead() {
+        articleState.value?.let { article ->
+            if (article.read) {
+                account.markUnread(article.id)
+            } else {
+                account.markRead(article.id)
+            }
+
+            articleState.value = article.copy(read = !article.read)
+        }
     }
 
     fun clearArticle() {

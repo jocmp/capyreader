@@ -2,7 +2,7 @@ countByStatus:
 SELECT COUNT(*)
 FROM articles
 JOIN article_statuses ON articles.external_id = article_statuses.external_id
-WHERE (article_statuses.read = :read OR :read IS NULL)
+WHERE ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
 AND (article_statuses.starred = :starred OR :starred IS NULL);
 
 findByStatus:
@@ -13,7 +13,7 @@ SELECT
   article_statuses.read
 FROM articles
 JOIN article_statuses ON articles.external_id = article_statuses.external_id AND article_statuses.feed_id = articles.feed_id
-WHERE (article_statuses.read = :read OR :read IS NULL)
+WHERE ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
 AND (article_statuses.starred = :starred OR :starred IS NULL)
 ORDER BY article_statuses.arrived_at DESC
 LIMIT :limit OFFSET :offset;
@@ -23,7 +23,7 @@ SELECT COUNT(*)
 FROM articles
 JOIN article_statuses ON articles.external_id = article_statuses.external_id AND article_statuses.feed_id = articles.feed_id
 WHERE articles.feed_id IN :feedIDs
-AND (article_statuses.read = :read OR :read IS NULL)
+AND ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
 AND (article_statuses.starred = :starred OR :starred IS NULL);
 
 findByFeeds:
@@ -35,7 +35,7 @@ SELECT
 FROM articles
 JOIN article_statuses ON articles.external_id = article_statuses.external_id AND article_statuses.feed_id = articles.feed_id
 WHERE articles.feed_id IN :feedIDs
-AND (article_statuses.read = :read OR :read IS NULL)
+AND ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
 AND (article_statuses.starred = :starred OR :starred IS NULL)
 ORDER BY article_statuses.arrived_at DESC
 LIMIT :limit OFFSET :offset;
@@ -97,7 +97,7 @@ VALUES (
 );
 
 markRead:
-UPDATE article_statuses SET read = 1
+UPDATE article_statuses SET read = :read, last_read_at = :lastReadAt
 WHERE EXISTS (
   SELECT id
   FROM articles

@@ -31,18 +31,18 @@ import org.koin.androidx.compose.koinViewModel
 @OptIn(ExperimentalMaterial3AdaptiveApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun ArticleScreen(
-        viewModel: AccountViewModel = koinViewModel(),
-        onFeedAdd: () -> Unit,
+    viewModel: AccountViewModel = koinViewModel(),
+    onFeedAdd: () -> Unit,
 ) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
     val (destination, setDestination) =
-            rememberSaveable { mutableStateOf(ListDetailPaneScaffoldRole.List) }
+        rememberSaveable { mutableStateOf(ListDetailPaneScaffoldRole.List) }
     val scaffoldState =
-            calculateListDetailPaneScaffoldState(
-                    currentPaneDestination = destination,
-                    scaffoldDirective = calculateArticleDirective()
-            )
+        calculateListDetailPaneScaffoldState(
+            currentPaneDestination = destination,
+            scaffoldDirective = calculateArticleDirective()
+        )
 
     val navigateToDetail = { setDestination(ListDetailPaneScaffoldRole.Detail) }
 
@@ -57,63 +57,67 @@ fun ArticleScreen(
     val (refreshing, setRefreshing) = remember { mutableStateOf(false) }
 
     fun refresh() =
-            refreshScope.launch {
-                setRefreshing(true)
-                viewModel.refreshFeed()
-                setRefreshing(false)
-            }
+        refreshScope.launch {
+            setRefreshing(true)
+            viewModel.refreshFeed()
+            setRefreshing(false)
+        }
 
     val state = rememberPullRefreshState(refreshing, ::refresh)
 
     ArticleScaffold(
-            drawerState = drawerState,
-            listDetailState = scaffoldState,
-            drawerPane = {
-                FeedList(
-                        folders = viewModel.folders,
-                        feeds = viewModel.feeds,
-                        onFeedAdd = onFeedAdd,
-                        onFolderSelect = { viewModel.selectFolder(it) { onComplete() } },
-                        onFeedSelect = { viewModel.selectFeed(it) { onComplete() } }
-                )
-            },
-            listPane = {
-                Scaffold(
-                        topBar = {
-                            TopAppBar {
-                                Button(onClick = { coroutineScope.launch { drawerState.open() } }) {
-                                    Icon(imageVector = Icons.Filled.Menu, contentDescription = null)
-                                }
-                            }
-                        },
-                        bottomBar = {
-                            ArticleFilterNavigationBar(
-                                    selected = viewModel.filterStatus,
-                                    onSelect = viewModel::selectStatus,
-                            )
+        drawerState = drawerState,
+        listDetailState = scaffoldState,
+        drawerPane = {
+            FeedList(
+                folders = viewModel.folders,
+                feeds = viewModel.feeds,
+                onFeedAdd = onFeedAdd,
+                onFolderSelect = { viewModel.selectFolder(it) { onComplete() } },
+                onFeedSelect = { viewModel.selectFeed(it) { onComplete() } }
+            )
+        },
+        listPane = {
+            Scaffold(
+                topBar = {
+                    TopAppBar {
+                        Button(onClick = { coroutineScope.launch { drawerState.open() } }) {
+                            Icon(imageVector = Icons.Filled.Menu, contentDescription = null)
                         }
-                ) { innerPadding ->
-                    Box(Modifier.padding(innerPadding).pullRefresh(state)) {
-                        ArticleList(
-                                articles = viewModel.articles,
-                                onSelect = {
-                                    viewModel.selectArticle(it)
-                                    navigateToDetail()
-                                }
-                        )
-
-                        PullRefreshIndicator(refreshing, state, Modifier.align(Alignment.TopCenter))
                     }
+                },
+                bottomBar = {
+                    ArticleFilterNavigationBar(
+                        selected = viewModel.filterStatus,
+                        onSelect = viewModel::selectStatus,
+                    )
                 }
-            },
-            detailPane = {
-                ArticleView(
-                        article = viewModel.article,
-                        onBackPressed = {
-                            viewModel.clearArticle()
-                            setDestination(ListDetailPaneScaffoldRole.List)
+            ) { innerPadding ->
+                Box(
+                    Modifier
+                        .padding(innerPadding)
+                        .pullRefresh(state)) {
+                    ArticleList(
+                        articles = viewModel.articles,
+                        onSelect = {
+                            viewModel.selectArticle(it)
+                            navigateToDetail()
                         }
-                )
+                    )
+
+                    PullRefreshIndicator(refreshing, state, Modifier.align(Alignment.TopCenter))
+                }
             }
+        },
+        detailPane = {
+            ArticleView(
+                article = viewModel.article,
+                onToggleRead = viewModel::toggleArticleRead,
+                onBackPressed = {
+                    viewModel.clearArticle()
+                    setDestination(ListDetailPaneScaffoldRole.List)
+                }
+            )
+        }
     )
 }
