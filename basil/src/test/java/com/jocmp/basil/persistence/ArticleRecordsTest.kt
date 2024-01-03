@@ -2,8 +2,10 @@ package com.jocmp.basil.persistence
 
 import com.jocmp.basil.ArticleStatus
 import com.jocmp.basil.InMemoryDatabaseProvider
+import com.jocmp.basil.RandomUUID
 import com.jocmp.basil.db.Database
 import com.jocmp.basil.fixtures.ArticleFixture
+import com.jocmp.basil.fixtures.FeedFixture
 import com.jocmp.basil.repeated
 import org.junit.Before
 import org.junit.Test
@@ -31,7 +33,7 @@ class ArticleRecordsTest {
 
         val results = articleRecords
             .byStatus
-            .all(ArticleStatus.ALL, limit = 3, offset = 0, )
+            .all(ArticleStatus.ALL, limit = 3, offset = 0)
             .executeAsList()
 
         val count = articleRecords
@@ -110,5 +112,19 @@ class ArticleRecordsTest {
         val reloaded = articleRecords.fetch(articleID = article.id)!!
 
         assertFalse(reloaded.starred)
+    }
+
+    @Test
+    fun countUnread() {
+        val firstFeed =
+            FeedFixture(database).create(feedURL = "https://example.com/${RandomUUID.generate()}")
+
+        2.repeated { articleFixture.create(feed = firstFeed) }
+        val secondFeedArticle = articleFixture.create()
+
+        val unread = ArticleRecords(database).countUnread()
+
+        assertEquals(expected = 2, actual = unread[firstFeed.id.toString()]!!.toInt())
+        assertEquals(expected = 1, actual = unread[secondFeedArticle.feedID]!!.toInt())
     }
 }

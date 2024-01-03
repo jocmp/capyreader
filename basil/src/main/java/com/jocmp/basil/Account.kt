@@ -45,7 +45,7 @@ data class Account(
         account = this,
     )
 
-    private val articles: ArticleRecords = ArticleRecords(database)
+    internal val articles: ArticleRecords = ArticleRecords(database)
 
     val displayName = "Local"
 

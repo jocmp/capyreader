@@ -51,6 +51,15 @@ JOIN article_statuses ON articles.external_id = article_statuses.external_id AND
 WHERE articles.id = :articleID
 LIMIT 1;
 
+countUnread:
+SELECT
+ articles.feed_id,
+ COUNT(DISTINCT articles.id)
+FROM articles
+JOIN article_statuses ON articles.external_id = article_statuses.external_id AND article_statuses.feed_id = articles.feed_id
+WHERE article_statuses.read = 0
+GROUP BY articles.feed_id;
+
 findByExternalID:
 SELECT
   articles.*,

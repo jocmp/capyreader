@@ -24,6 +24,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.jocmp.basilreader.ui.accounts.AccountViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
@@ -96,7 +97,8 @@ fun ArticleScreen(
                 Box(
                     Modifier
                         .padding(innerPadding)
-                        .pullRefresh(state)) {
+                        .pullRefresh(state)
+                ) {
                     ArticleList(
                         articles = viewModel.articles,
                         onSelect = {

@@ -5,7 +5,8 @@ import com.jocmp.basil.shared.repeatTab
 
 data class Folder(
     val title: String,
-    val feeds: MutableList<Feed> = mutableListOf()
+    val feeds: MutableList<Feed> = mutableListOf(),
+    val unreadCount: Long = 0
 ) {
     override fun equals(other: Any?): Boolean {
         if (other is Folder) {
