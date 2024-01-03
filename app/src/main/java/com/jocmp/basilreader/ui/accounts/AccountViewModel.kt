@@ -89,7 +89,7 @@ class AccountViewModel(
 
     fun selectArticle(articleID: String) {
         account.markRead(articleID)
-        articleState.value = account.findArticle(articleID.toLong())
+        articleState.value = account.findArticle(articleID = articleID)
     }
 
     fun toggleArticleRead() {
@@ -101,6 +101,18 @@ class AccountViewModel(
             }
 
             articleState.value = article.copy(read = !article.read)
+        }
+    }
+
+    fun toggleArticleStar() {
+        articleState.value?.let { article ->
+            if (article.starred) {
+                account.removeStar(article.id)
+            } else {
+                account.addStar(article.id)
+            }
+
+            articleState.value = article.copy(starred = !article.starred)
         }
     }
 

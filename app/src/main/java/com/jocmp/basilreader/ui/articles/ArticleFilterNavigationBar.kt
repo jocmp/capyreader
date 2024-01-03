@@ -26,7 +26,12 @@ fun ArticleFilterNavigationBar(
 
     NavigationBar {
         NavigationBarItem(
-            icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
+            icon = {
+                Icon(
+                    painterResource(R.drawable.icon_star_filled),
+                    contentDescription = null
+                )
+            },
             label = { Text(stringResource(id = R.string.article_filters_starred)) },
             selected = selected === ArticleStatus.STARRED,
             onClick = { checkedSelect(ArticleStatus.STARRED) },
@@ -35,7 +40,7 @@ fun ArticleFilterNavigationBar(
         NavigationBarItem(
             icon = {
                 Icon(
-                    painter = painterResource(R.drawable.unread),
+                    painterResource(R.drawable.icon_circle_filled),
                     contentDescription = null
                 )
             },
@@ -47,7 +52,7 @@ fun ArticleFilterNavigationBar(
         NavigationBarItem(
             icon = {
                 Icon(
-                    painter = painterResource(R.drawable.notes),
+                    painter = painterResource(R.drawable.icon_notes),
                     contentDescription = null
                 )
             },

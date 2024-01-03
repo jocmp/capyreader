@@ -7,8 +7,8 @@ import com.jocmp.basil.fixtures.ArticleFixture
 import com.jocmp.basil.repeated
 import org.junit.Before
 import org.junit.Test
-import kotlin.math.exp
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class ArticleRecordsTest {
@@ -74,5 +74,41 @@ class ArticleRecordsTest {
 
         assertEquals(expected = 2, actual = count)
         assertEquals(actual = actual, expected = expected)
+    }
+
+    @Test
+    fun markUnread() {
+        val article = articleFixture.create()
+        val articleRecords = ArticleRecords(database)
+
+        articleRecords.markUnread(articleID = article.id)
+
+        val reloaded = articleRecords.fetch(articleID = article.id)!!
+
+        assertFalse(reloaded.read)
+    }
+
+    @Test
+    fun addStar() {
+        val article = articleFixture.create()
+        val articleRecords = ArticleRecords(database)
+
+        articleRecords.addStar(articleID = article.id)
+
+        val reloaded = articleRecords.fetch(articleID = article.id)!!
+
+        assertTrue(reloaded.starred)
+    }
+
+    @Test
+    fun removeStar() {
+        val article = articleFixture.create()
+        val articleRecords = ArticleRecords(database)
+
+        articleRecords.removeStar(articleID = article.id)
+
+        val reloaded = articleRecords.fetch(articleID = article.id)!!
+
+        assertFalse(reloaded.starred)
     }
 }

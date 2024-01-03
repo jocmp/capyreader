@@ -105,3 +105,13 @@ WHERE EXISTS (
   AND articles.external_id = article_statuses.external_id AND article_statuses.feed_id = articles.feed_id
   LIMIT 1
 );
+
+markStarred:
+UPDATE article_statuses SET starred = :starred
+WHERE EXISTS (
+  SELECT id
+  FROM articles
+  WHERE articles.id = :articleID
+  AND articles.external_id = article_statuses.external_id AND article_statuses.feed_id = articles.feed_id
+  LIMIT 1
+);
