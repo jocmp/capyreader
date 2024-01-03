@@ -113,6 +113,7 @@ fun ArticleScreen(
             ArticleView(
                 article = viewModel.article,
                 onToggleRead = viewModel::toggleArticleRead,
+                onToggleStar = viewModel::toggleArticleStar,
                 onBackPressed = {
                     viewModel.clearArticle()
                     setDestination(ListDetailPaneScaffoldRole.List)

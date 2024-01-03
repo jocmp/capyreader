@@ -12,6 +12,17 @@ class ArticleRecords internal constructor(
     val byStatus = ByStatus(database)
     val byFeed = ByFeed(database)
 
+    fun fetch(articleID: String): Article? {
+        val id = articleID.toLongOrNull()
+
+        id ?: return null
+
+        return database.articlesQueries.findBy(
+            articleID = id,
+            mapper = ::articleMapper
+        ).executeAsOneOrNull()
+    }
+
     fun markRead(articleID: String, lastReadAt: ZonedDateTime = ZonedDateTime.now()) {
         database.articlesQueries.markRead(
             articleID = articleID.toLong(),
@@ -25,6 +36,20 @@ class ArticleRecords internal constructor(
             articleID = articleID.toLong(),
             read = false,
             lastReadAt = null
+        )
+    }
+
+    fun addStar(articleID: String) {
+        database.articlesQueries.markStarred(
+            articleID = articleID.toLong(),
+            starred = true
+        )
+    }
+
+    fun removeStar(articleID: String) {
+        database.articlesQueries.markStarred(
+            articleID = articleID.toLong(),
+            starred = false
         )
     }
 

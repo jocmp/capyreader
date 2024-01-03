@@ -142,13 +142,16 @@ data class Account(
         return folders.find { it.title == title }
     }
 
-    fun findArticle(articleID: Long?): Article? {
-        articleID ?: return null
+    fun findArticle(articleID: String): Article? {
+        return articles.fetch(articleID = articleID)
+    }
 
-        return database.articlesQueries.findBy(
-            articleID = articleID,
-            mapper = ::articleMapper
-        ).executeAsOneOrNull()
+    fun addStar(articleID: String) {
+        articles.addStar(articleID = articleID)
+    }
+
+    fun removeStar(articleID: String) {
+        articles.removeStar(articleID = articleID)
     }
 
     fun markRead(articleID: String) {
@@ -156,7 +159,7 @@ data class Account(
     }
 
     fun markUnread(articleID: String) {
-        articles.markUnread(articleID)
+        articles.markUnread(articleID = articleID)
     }
 
     private fun updateArticles(feed: Feed, items: List<ParsedItem>) {
