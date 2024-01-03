@@ -21,8 +21,8 @@ fun FeedList(
     folders: List<Folder> = emptyList(),
     feeds: List<Feed> = emptyList(),
     onFeedAdd: () -> Unit,
-    onFolderSelect: (folderTitle: String) -> Unit,
-    onFeedSelect: (feedID: String) -> Unit
+    onSelectFolder: (folderTitle: String) -> Unit,
+    onSelectFeed: (feedID: String) -> Unit,
 ) {
     Column {
         Row {
@@ -33,8 +33,8 @@ fun FeedList(
         folders.forEach {
             FolderRow(
                 folder = it,
-                onFolderSelect = onFolderSelect,
-                onFeedSelect = onFeedSelect
+                onFolderSelect = onSelectFolder,
+                onFeedSelect = onSelectFeed,
             )
         }
         if (feeds.isNotEmpty()) {
@@ -44,7 +44,7 @@ fun FeedList(
             feeds.forEach {
                 FeedRow(
                     feed = it,
-                    onSelect = onFeedSelect
+                    onSelect = onSelectFeed
                 )
             }
         }
@@ -61,7 +61,7 @@ fun FeedListPreview() {
         folders = folders,
         feeds = feeds,
         onFeedAdd = {},
-        onFolderSelect = {},
-        onFeedSelect = {}
+        onSelectFolder = {},
+        onSelectFeed = {}
     )
 }

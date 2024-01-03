@@ -10,7 +10,6 @@ import com.jocmp.basil.opml.asFeed
 import com.jocmp.basil.opml.asFolder
 import com.jocmp.basil.persistence.ArticleRecords
 import com.jocmp.basil.persistence.FeedRecords
-import com.jocmp.basil.persistence.articleMapper
 import com.jocmp.basil.shared.nowUTCInSeconds
 import com.jocmp.feedfinder.FeedFinder
 import kotlinx.coroutines.Dispatchers
@@ -45,7 +44,8 @@ data class Account(
         account = this,
     )
 
-    internal val articles: ArticleRecords = ArticleRecords(database)
+    internal val articleRecords: ArticleRecords = ArticleRecords(database)
+    private val feedRecords: FeedRecords = FeedRecords(database)
 
     val displayName = "Local"
 
@@ -69,6 +69,20 @@ data class Account(
         return folder
     }
 
+    suspend fun removeFeed(feedID: String) {
+        feedRecords.removeFeed(feedID = feedID)
+
+        feeds.removeIf { it.id == feedID }
+
+        folders.forEach { folder ->
+            folder.feeds.removeIf { it.id == feedID }
+        }
+
+        folders.removeIf { it.feeds.isEmpty() }
+
+        saveOPMLFile()
+    }
+
     suspend fun addFeed(entry: FeedFormEntry): Result<Feed> {
         val result = FeedFinder.find(feedURL = entry.url)
 
@@ -80,7 +94,7 @@ data class Account(
 
         val externalFeed = delegate.createFeed(feedURL = found.feedURL)
 
-        val record = FeedRecords(database).findOrCreate(externalFeed)
+        val record = feedRecords.findOrCreate(externalFeed)
 
         val feed = Feed(
             id = record.id.toString(),
@@ -143,23 +157,23 @@ data class Account(
     }
 
     fun findArticle(articleID: String): Article? {
-        return articles.fetch(articleID = articleID)
+        return articleRecords.fetch(articleID = articleID)
     }
 
     fun addStar(articleID: String) {
-        articles.addStar(articleID = articleID)
+        articleRecords.addStar(articleID = articleID)
     }
 
     fun removeStar(articleID: String) {
-        articles.removeStar(articleID = articleID)
+        articleRecords.removeStar(articleID = articleID)
     }
 
     fun markRead(articleID: String) {
-        articles.markRead(articleID)
+        articleRecords.markRead(articleID)
     }
 
     fun markUnread(articleID: String) {
-        articles.markUnread(articleID = articleID)
+        articleRecords.markUnread(articleID = articleID)
     }
 
     private fun updateArticles(feed: Feed, items: List<ParsedItem>) {

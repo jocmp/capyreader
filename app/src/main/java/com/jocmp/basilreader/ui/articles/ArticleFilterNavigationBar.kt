@@ -33,7 +33,7 @@ fun ArticleFilterNavigationBar(
                 )
             },
             label = { Text(stringResource(id = R.string.article_filters_starred)) },
-            selected = selected === ArticleStatus.STARRED,
+            selected = selected == ArticleStatus.STARRED,
             onClick = { checkedSelect(ArticleStatus.STARRED) },
             alwaysShowLabel = false
         )
@@ -45,7 +45,7 @@ fun ArticleFilterNavigationBar(
                 )
             },
             label = { Text(stringResource(R.string.article_filters_unread)) },
-            selected = selected === ArticleStatus.UNREAD,
+            selected = selected == ArticleStatus.UNREAD,
             onClick = { checkedSelect(ArticleStatus.UNREAD) },
             alwaysShowLabel = false
         )
@@ -57,7 +57,7 @@ fun ArticleFilterNavigationBar(
                 )
             },
             label = { Text(stringResource(R.string.article_filters_all)) },
-            selected = selected === ArticleStatus.ALL,
+            selected = selected == ArticleStatus.ALL,
             onClick = { checkedSelect(ArticleStatus.ALL) },
             alwaysShowLabel = false
         )

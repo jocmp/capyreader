@@ -71,18 +71,30 @@ class AccountViewModel(
         pager.value = account.buildPager(nextFilter)
     }
 
-    fun selectFeed(feedID: String, onComplete: () -> Unit) {
+    fun selectFeed(feedID: String) {
         val feed = account.findFeed(feedID) ?: return
         val feedFilter = ArticleFilter.Feeds(feed = feed, status = filter.value.status)
 
-        selectFilter(feedFilter, onComplete)
+        selectFilter(feedFilter)
     }
 
-    fun selectFolder(title: String, onComplete: () -> Unit) {
+    fun selectFolder(title: String) {
         val folder = account.findFolder(title) ?: return
         val feedFilter = ArticleFilter.Folders(folder = folder, status = filter.value.status)
 
-        selectFilter(feedFilter, onComplete)
+        selectFilter(feedFilter)
+    }
+
+    fun removeFeed() {
+        viewModelScope.launch {
+            val currentFilter = filter.value
+
+            if (currentFilter is ArticleFilter.Feeds) {
+                account.removeFeed(feedID = currentFilter.feed.id)
+                selectFilter(ArticleFilter.default().copy(currentFilter.status))
+                accountState.value = account
+            }
+        }
     }
 
     suspend fun refreshFeed() {
@@ -130,13 +142,11 @@ class AccountViewModel(
         articleState.value = null
     }
 
-    private fun selectFilter(nextFilter: ArticleFilter, onComplete: () -> Unit) {
+    private fun selectFilter(nextFilter: ArticleFilter) {
         filter.value = nextFilter
         pager.value = account.buildPager(nextFilter)
 
         clearArticle()
-
-        onComplete()
     }
 
 //    private fun selectSettingsAccount(accountID: String) {

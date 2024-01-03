@@ -81,7 +81,7 @@ internal class OPMLHandler : DefaultHandler() {
                     }
                     currentFolder = null
                     currentType = null
-                } else if (currentType === OutlineType.FEED && currentFolder != null) {
+                } else if (currentType == OutlineType.FEED && currentFolder != null) {
                     currentType = OutlineType.FOLDER
                 } else {
                     currentType = null

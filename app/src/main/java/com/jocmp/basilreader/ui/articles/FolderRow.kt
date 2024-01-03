@@ -21,7 +21,7 @@ import com.jocmp.basilreader.ui.theme.BasilReaderTheme
 fun FolderRow(
     folder: Folder,
     onFolderSelect: (folderTitle: String) -> Unit,
-    onFeedSelect: (feedID: String) -> Unit
+    onFeedSelect: (feedID: String) -> Unit,
 ) {
     Column {
         Row(
@@ -39,7 +39,10 @@ fun FolderRow(
         }
         folder.feeds.forEach { feed ->
             Row {
-                FeedRow(feed = feed, onSelect = onFeedSelect)
+                FeedRow(
+                    feed = feed,
+                    onSelect = onFeedSelect,
+                )
             }
         }
     }
@@ -54,7 +57,7 @@ fun FolderRowPreview() {
         FolderRow(
             folder = folder,
             onFolderSelect = {},
-            onFeedSelect = {}
+            onFeedSelect = {},
         )
     }
 }

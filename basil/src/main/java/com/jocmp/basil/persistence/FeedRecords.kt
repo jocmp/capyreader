@@ -20,4 +20,8 @@ internal class FeedRecords(val database: Database) {
             feed_url = externalFeed.feedURL
         ).executeAsOne()
     }
+
+    internal fun removeFeed(feedID: String) {
+        database.feedsQueries.delete(feedID = feedID.toLong())
+    }
 }
