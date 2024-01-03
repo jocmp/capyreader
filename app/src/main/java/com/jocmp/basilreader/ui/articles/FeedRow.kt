@@ -2,8 +2,11 @@ package com.jocmp.basilreader.ui.articles
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -25,7 +28,15 @@ fun FeedRow(
     onSelect: (id: String) -> Unit
 ) {
     NavigationDrawerItem(
-        label = { Text(feed.name) },
+        label = {
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(feed.name)
+                Text(feed.unreadCount.toString())
+            }
+        },
         selected = false,
         onClick = {
             onSelect(feed.id)

@@ -17,14 +17,14 @@ import com.jocmp.basil.Feed
 import com.jocmp.basil.FeedFormEntry
 import com.jocmp.basil.Folder
 import com.jocmp.basil.buildPager
-import com.jocmp.basilreader.selectAccount
+import com.jocmp.basil.unreadCounts
 import com.jocmp.basilreader.selectedAccount
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import java.time.ZonedDateTime
-import kotlin.math.sin
+
+private const val TAG = "AccountViewModel"
 
 class AccountViewModel(
     private val accountManager: AccountManager,
@@ -34,6 +34,12 @@ class AccountViewModel(
         accountManager.findByID(runBlocking { settings.data.first() }.selectedAccount())!!,
         policy = neverEqualPolicy()
     )
+
+    private val _unreadCounts = mutableStateOf<Map<String, Long>>(mapOf())
+
+    init {
+        refreshUnreadCounts()
+    }
 
     private val filter = mutableStateOf<ArticleFilter>(ArticleFilter.default())
 
@@ -46,12 +52,12 @@ class AccountViewModel(
         get() = accountState.value
 
     val folders: List<Folder>
-        get() = account.folders.toList()
+        get() = account.folders.map(::copyFolderUnreadCounts)
 
     private val articleState = mutableStateOf<Article?>(null)
 
     val feeds: List<Feed>
-        get() = account.feeds.toList()
+        get() = account.feeds.map(::copyFeedUnreadCounts)
 
     val article: Article?
         get() = articleState.value
@@ -90,6 +96,8 @@ class AccountViewModel(
     fun selectArticle(articleID: String) {
         account.markRead(articleID)
         articleState.value = account.findArticle(articleID = articleID)
+
+        refreshUnreadCounts()
     }
 
     fun toggleArticleRead() {
@@ -101,6 +109,8 @@ class AccountViewModel(
             }
 
             articleState.value = article.copy(read = !article.read)
+
+            refreshUnreadCounts()
         }
     }
 
@@ -129,15 +139,34 @@ class AccountViewModel(
         onComplete()
     }
 
-    private fun selectSettingsAccount(accountID: String) {
-        viewModelScope.launch {
-            settings.selectAccount(accountID)
-        }
+//    private fun selectSettingsAccount(accountID: String) {
+//        viewModelScope.launch {
+//            settings.selectAccount(accountID)
+//        }
+//    }
+//
+//    private fun selectAccount(accountID: String) {
+//        accountManager.findByID(accountID)?.let {
+//            accountState.value = it
+//        }
+//    }
+
+    private fun copyFolderUnreadCounts(folder: Folder): Folder {
+        val folderFeeds = folder.feeds.map(::copyFeedUnreadCounts).toMutableList()
+
+        return folder.copy(
+            feeds = folderFeeds,
+            unreadCount = folderFeeds.sumOf { it.unreadCount }
+        )
     }
 
-    private fun selectAccount(accountID: String) {
-        accountManager.findByID(accountID)?.let {
-            accountState.value = it
+    private fun copyFeedUnreadCounts(feed: Feed): Feed {
+        return feed.copy(unreadCount = _unreadCounts.value.getOrDefault(feed.id, 0))
+    }
+
+    private fun refreshUnreadCounts() {
+        viewModelScope.launch {
+            _unreadCounts.value = accountState.value.unreadCounts
         }
     }
 

@@ -1,6 +1,7 @@
 package com.jocmp.basil.persistence
 
 import app.cash.sqldelight.Query
+import app.cash.sqldelight.db.QueryResult
 import com.jocmp.basil.Article
 import com.jocmp.basil.ArticleStatus
 import com.jocmp.basil.db.Database
@@ -51,6 +52,20 @@ class ArticleRecords internal constructor(
             articleID = articleID.toLong(),
             starred = false
         )
+    }
+
+    fun countUnread(): Map<String, Long> {
+        return database.articlesQueries.countUnread().execute {
+            val result = mutableMapOf<String, Long>()
+            while (it.next().value) {
+                val feedID = it.getLong(0)!!.toString()
+                val unreadCount = it.getLong(1) ?: 0
+
+                result[feedID] = unreadCount
+            }
+
+            QueryResult.Value(result)
+        }.value
     }
 
     class ByFeed(private val database: Database) {
