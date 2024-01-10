@@ -2,10 +2,11 @@ package com.jocmp.basilreader.ui.articles
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.IconButton
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -24,7 +25,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.jocmp.basilreader.ui.accounts.AccountViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
@@ -74,18 +74,38 @@ fun ArticleScreen(
                 folders = viewModel.folders,
                 feeds = viewModel.feeds,
                 onFeedAdd = onFeedAdd,
-                onFolderSelect = { viewModel.selectFolder(it) { onComplete() } },
-                onFeedSelect = { viewModel.selectFeed(it) { onComplete() } }
+                onSelectFolder = {
+                    viewModel.selectFolder(it)
+                    onComplete()
+                },
+                onSelectFeed = {
+                    viewModel.selectFeed(it)
+                    onComplete()
+                },
             )
         },
         listPane = {
             Scaffold(
                 topBar = {
-                    TopAppBar {
-                        Button(onClick = { coroutineScope.launch { drawerState.open() } }) {
-                            Icon(imageVector = Icons.Filled.Menu, contentDescription = null)
+                    TopAppBar(
+                        title = {},
+                        navigationIcon = {
+                            IconButton(onClick = { coroutineScope.launch { drawerState.open() } }) {
+                                Icon(
+                                    imageVector = Icons.Filled.Menu,
+                                    contentDescription = null
+                                )
+                            }
+                        },
+                        actions = {
+                            IconButton(onClick = { viewModel.removeFeed() }) {
+                                Icon(
+                                    imageVector = Icons.Filled.Delete,
+                                    contentDescription = null
+                                )
+                            }
                         }
-                    }
+                    )
                 },
                 bottomBar = {
                     ArticleFilterNavigationBar(

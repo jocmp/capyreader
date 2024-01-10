@@ -39,7 +39,7 @@ class AccountTest {
         database = InMemoryDatabaseProvider.forAccount("777")
     }
 
-    private fun buildAccount(id: String, path: File): Account {
+    private fun buildAccount(id: String = "777", path: File = folder.newFile()): Account {
         return Account(
             id = id,
             path = path.toURI(),
@@ -164,6 +164,28 @@ class AccountTest {
         assertEquals(expected = entry.name, actual = techFeed.name)
         assertEquals(expected = entry.url, actual = techFeed.feedURL)
         assertEquals(techFeed, cultureFeed)
+    }
+
+    @Test
+    fun removeFeed_topLevelFeed() {
+        val account = buildAccount()
+        runBlocking {
+            account.addFeed(
+                FeedFormEntry(
+                    url = "https://theverge.com/rss/index.xml",
+                    name = "The Verge",
+                    folderTitles = listOf(),
+                )
+            )
+        }
+
+        val feed = account.feeds.find { it.name == "The Verge" }!!
+
+        assertEquals(expected = 1, account.feeds.size)
+
+        runBlocking { account.removeFeed(feedID = feed.id) }
+
+        assertEquals(expected = 0, account.feeds.size)
     }
 
     @Test

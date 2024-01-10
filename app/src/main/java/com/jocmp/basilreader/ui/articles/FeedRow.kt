@@ -2,6 +2,7 @@ package com.jocmp.basilreader.ui.articles
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,13 +26,14 @@ import com.jocmp.basilreader.ui.theme.BasilReaderTheme
 @Composable
 fun FeedRow(
     feed: Feed,
-    onSelect: (id: String) -> Unit
+    onSelect: (id: String) -> Unit,
 ) {
     NavigationDrawerItem(
         label = {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
             ) {
                 Text(feed.name)
                 Text(feed.unreadCount.toString())

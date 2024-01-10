@@ -17,3 +17,11 @@ SELECT *
 FROM feeds
 WHERE id = last_insert_rowid();
 }
+
+delete {
+  DELETE FROM article_statuses WHERE article_statuses.feed_id = :feedID;
+
+  DELETE FROM articles WHERE articles.feed_id = :feedID;
+
+  DELETE FROM feeds WHERE id = :feedID;
+}
