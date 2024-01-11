@@ -1,7 +1,8 @@
 package com.jocmp.basil
 
-import com.jocmp.basil.shared.prepending
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Feed(
     val id: String,
     val externalID: String,

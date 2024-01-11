@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp") version libs.versions.ksp
     id("app.cash.sqldelight") version libs.versions.sqldelight
+    kotlin("plugin.serialization") version libs.versions.kotlin
 }
 
 android {
@@ -60,7 +61,7 @@ dependencies {
     val sqldelightVersion = libs.versions.sqldelight.get()
     val pagingVersion = libs.versions.androidx.paging.get()
 
-    implementation("androidx.paging:paging-runtime:$pagingVersion")
+    implementation("androidx.paging:paging-runtime-ktx:$pagingVersion")
     implementation("androidx.datastore:datastore-core:1.0.0")
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.serialization.json)
@@ -68,6 +69,7 @@ dependencies {
     implementation(project(":feedbinclient"))
     implementation(project(":feedfinder"))
     implementation("app.cash.sqldelight:androidx-paging3-extensions:$sqldelightVersion")
+    implementation(libs.kotlinx.serialization.json)
     testImplementation("app.cash.sqldelight:sqlite-driver:$sqldelightVersion")
     testImplementation("junit:junit:4.13.2")
     testImplementation(kotlin("test"))
