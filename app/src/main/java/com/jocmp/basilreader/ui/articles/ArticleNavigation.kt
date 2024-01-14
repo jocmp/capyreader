@@ -1,8 +1,10 @@
 package com.jocmp.basilreader.ui.articles
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.dialog
 
 const val articlesRoute = "articles"
 
@@ -12,6 +14,9 @@ fun NavController.navigateToArticles() =
 fun NavController.navigateToAddFeed() =
     navigate("feeds/new")
 
+fun NavController.navigateToEditFeed(feedID: String) =
+    navigate("feeds/${feedID}/edit")
+
 fun NavGraphBuilder.articleGraph(
     navController: NavController,
 ) {
@@ -19,12 +24,31 @@ fun NavGraphBuilder.articleGraph(
         route = "articles",
     ) {
         ArticleScreen(
-            onFeedAdd = {
+            onAddFeed = {
                 navController.navigateToAddFeed()
+            },
+            onEditFeed = { feedID ->
+                navController.navigateToEditFeed(feedID = feedID)
             }
         )
     }
-    composable(
+    dialog(
+        route = "feeds/{id}/edit",
+    ) {
+        EditFeedScreen(
+            onCancel = {
+                navController.popBackStack()
+            },
+            onSubmit = {
+                navController.navigate(articlesRoute) {
+                    popUpTo(articlesRoute) {
+                        inclusive = true
+                    }
+                }
+            }
+        )
+    }
+    dialog(
         route = "feeds/new",
     ) {
         AddFeedScreen(
@@ -40,4 +64,9 @@ fun NavGraphBuilder.articleGraph(
             }
         )
     }
+}
+
+internal class EditFeedArgs(val feedID: String) {
+    constructor(savedStateHandle: SavedStateHandle) :
+            this(checkNotNull(savedStateHandle["id"]) as String)
 }

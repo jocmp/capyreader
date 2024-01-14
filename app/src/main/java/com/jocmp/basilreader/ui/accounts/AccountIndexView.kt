@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.jocmp.basil.AccountManager
 import com.jocmp.basil.AccountManager.AccountSummary
-import com.jocmp.basilreader.selectAccount
+import com.jocmp.basilreader.putAccountID
 import com.jocmp.basilreader.settings
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
@@ -46,7 +46,7 @@ fun AccountIndexView(
             items(accounts, key = { it.id }) { account ->
                 Row(modifier = Modifier.clickable {
                     composableScope.launch {
-                        context.settings.selectAccount(account.id)
+                        context.settings.putAccountID(account.id)
                         onSelect()
                     }
                 }) {

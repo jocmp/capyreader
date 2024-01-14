@@ -1,5 +1,6 @@
 package com.jocmp.basil
 
+import EditFeedForm
 import com.jocmp.basil.accounts.AccountDelegate
 import com.jocmp.basil.accounts.LocalAccountDelegate
 import com.jocmp.basil.accounts.ParsedItem
@@ -11,6 +12,8 @@ import com.jocmp.basil.opml.asFolder
 import com.jocmp.basil.persistence.ArticleRecords
 import com.jocmp.basil.persistence.FeedRecords
 import com.jocmp.basil.shared.nowUTCInSeconds
+import com.jocmp.basil.shared.replace
+import com.jocmp.basil.shared.upsert
 import com.jocmp.feedfinder.FeedFinder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -83,8 +86,8 @@ data class Account(
         saveOPMLFile()
     }
 
-    suspend fun addFeed(entry: FeedFormEntry): Result<Feed> {
-        val result = FeedFinder.find(feedURL = entry.url)
+    suspend fun addFeed(form: AddFeedForm): Result<Feed> {
+        val result = FeedFinder.find(feedURL = form.url)
 
         if (result is FeedFinder.Result.Failure) {
             return Result.failure(Throwable(message = result.error.name))
@@ -99,7 +102,7 @@ data class Account(
         val feed = Feed(
             id = record.id.toString(),
             externalID = externalFeed.externalID,
-            name = entryNameOrDefault(entry, found.name),
+            name = entryNameOrDefault(form, found.name),
             feedURL = externalFeed.feedURL,
             siteURL = entrySiteURL(found.siteURL)
         )
@@ -112,12 +115,11 @@ data class Account(
             }
         }
 
-        if (entry.folderTitles.isEmpty()) {
+        if (form.folderTitles.isEmpty()) {
             feeds.add(feed)
         } else {
-            entry.folderTitles.forEach { folderTitle ->
-                val folder = folders.find { folder -> folder.title == folderTitle }
-                    ?: Folder(title = folderTitle)
+            form.folderTitles.forEach { folderTitle ->
+                val folder = findOrBuildFolder(title = folderTitle)
 
                 folder.feeds.add(feed)
 
@@ -132,6 +134,40 @@ data class Account(
         saveOPMLFile()
 
         return Result.success(feed)
+    }
+
+    suspend fun editFeed(form: EditFeedForm): Result<Feed> {
+        val feed = findFeed(form.feedID) ?: return Result.failure(Throwable("Not found"))
+
+        val editedFeed = feed.copy(name = form.name)
+
+        if (form.folderTitles.isEmpty()) {
+            feeds.upsert(editedFeed)
+        } else {
+            feeds.remove(editedFeed)
+        }
+
+        val removedFolders = folders
+            .filter { it.feeds.contains(feed) && !form.folderTitles.contains(it.title) }
+            .toSet()
+
+        removedFolders.forEach { folder ->
+            folder.feeds.remove(feed)
+        }
+
+        val emptyFolders = folders.filter { folder -> folder.feeds.isEmpty() }.toSet()
+
+        folders.removeAll(emptyFolders)
+
+        form.folderTitles.forEach { folderTitle ->
+            val folder = findOrBuildFolder(title = folderTitle)
+            folder.feeds.upsert(editedFeed)
+            folders.upsert(folder)
+        }
+
+        saveOPMLFile()
+
+        return Result.success(editedFeed)
     }
 
     suspend fun refreshAll() {
@@ -202,6 +238,10 @@ data class Account(
         }
     }
 
+    private fun findOrBuildFolder(title: String): Folder {
+        return folders.find { folder -> folder.title == title } ?: Folder(title = title)
+    }
+
     private suspend fun refreshCompactedFeeds(feeds: Collection<Feed>) =
         withContext(Dispatchers.IO) {
             feeds.map { feed ->
@@ -216,7 +256,7 @@ data class Account(
         return url?.toString() ?: ""
     }
 
-    private fun entryNameOrDefault(entry: FeedFormEntry, feedName: String): String {
+    private fun entryNameOrDefault(entry: AddFeedForm, feedName: String): String {
         if (entry.name.isBlank()) {
             return feedName
         }

@@ -1,6 +1,6 @@
 package com.jocmp.basilreader.ui.articles
 
-import androidx.compose.ui.Alignment
+import EditFeedForm
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,26 +16,29 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.toMutableStateMap
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.jocmp.basil.AddFeedForm
+import com.jocmp.basil.Feed
 import com.jocmp.basil.Folder
 import com.jocmp.basilreader.R
 import com.jocmp.basilreader.ui.components.TextField
+import com.jocmp.basilreader.ui.fixtures.FeedPreviewFixture
 
 @Composable
-fun AddFeedView(
+fun EditFeedView(
+    feed: Feed,
+    feedFoldersTitles: List<String>,
     folders: List<Folder>,
-    onSubmit: (feed: AddFeedForm) -> Unit,
+    onSubmit: (feed: EditFeedForm) -> Unit,
     onCancel: () -> Unit
 ) {
-    val (url, setURL) = remember { mutableStateOf("") }
-    val (name, setName) = remember { mutableStateOf("") }
+    val (name, setName) = remember { mutableStateOf(feed.name) }
     val (addedFolder, setAddedFolder) = remember { mutableStateOf("") }
     val switchFolders = remember {
-        folders.map { it.title to false }.toMutableStateMap()
+        folders.map { it.title to feedFoldersTitles.contains(it.title) }.toMutableStateMap()
     }
 
     fun submitFeed() {
@@ -43,8 +46,8 @@ fun AddFeedView(
         val folderNames = collectFolders(existingFolderNames, addedFolder)
 
         onSubmit(
-            AddFeedForm(
-                url = url,
+            EditFeedForm(
+                feedID = feed.id,
                 name = name,
                 folderTitles = folderNames
             )
@@ -56,18 +59,9 @@ fun AddFeedView(
     ) {
         Column(Modifier.padding(16.dp)) {
             TextField(
-                value = url,
-                onValueChange = setURL,
-                label = {
-                    Text(stringResource(id = R.string.add_feed_url_title))
-                },
-                supportingText = {
-                    Text(stringResource(R.string.required_placeholder))
-                }
-            )
-            TextField(
                 value = name,
                 onValueChange = setName,
+                placeholder = { Text(feed.name) },
                 label = {
                     Text(stringResource(id = R.string.add_feed_name_title))
                 }
@@ -102,7 +96,7 @@ fun AddFeedView(
                     Text(stringResource(R.string.feed_form_cancel))
                 }
                 Button(onClick = { submitFeed() }) {
-                    Text(stringResource(R.string.add_feed_submit))
+                    Text(stringResource(R.string.edit_feed_submit))
                 }
             }
         }
@@ -124,9 +118,11 @@ private fun collectFolders(
 
 @Preview
 @Composable
-fun AddFeedViewPreview() {
-    AddFeedView(
-        folders = listOf(Folder(title = "Tech")),
+fun EditFeedViewPreview() {
+    EditFeedView(
+        feed = FeedPreviewFixture().values.first(),
+        feedFoldersTitles = listOf("Gaming"),
+        folders = listOf(Folder("Tech"), Folder("Gaming")),
         onSubmit = {},
         onCancel = {}
     )

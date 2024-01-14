@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun startDestination(): String {
-        val accountID = runBlocking { baseContext.settings.data.first().selectedAccount() }
+        val accountID = runBlocking { baseContext.settings.data.first().selectedAccountID }
 
         return if (accountID.isNullOrBlank()) {
             "accounts"

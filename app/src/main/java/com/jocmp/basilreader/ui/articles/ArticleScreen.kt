@@ -6,7 +6,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.IconButton
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -33,8 +32,10 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun ArticleScreen(
     viewModel: AccountViewModel = koinViewModel(),
-    onFeedAdd: () -> Unit,
+    onAddFeed: () -> Unit,
+    onEditFeed: (feedID: String) -> Unit,
 ) {
+    val isFeedSelected = viewModel.isFeedSelected
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
     val (destination, setDestination) =
@@ -73,7 +74,7 @@ fun ArticleScreen(
             FeedList(
                 folders = viewModel.folders,
                 feeds = viewModel.feeds,
-                onFeedAdd = onFeedAdd,
+                onFeedAdd = onAddFeed,
                 onSelectFolder = {
                     viewModel.selectFolder(it)
                     onComplete()
@@ -98,10 +99,10 @@ fun ArticleScreen(
                             }
                         },
                         actions = {
-                            IconButton(onClick = { viewModel.removeFeed() }) {
-                                Icon(
-                                    imageVector = Icons.Filled.Delete,
-                                    contentDescription = null
+                            if (isFeedSelected) {
+                                FeedActionMenu(
+                                    onRemove = viewModel::removeFeed,
+                                    onEdit = { viewModel.feed?.let { onEditFeed(it.id) } },
                                 )
                             }
                         }

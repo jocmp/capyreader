@@ -4,9 +4,16 @@
     <string name="add_feed_name_title">Name</string>
     <string name="add_feed_new_folder_title">New Folder</string>
     <string name="add_feed_submit">Add</string>
-    <string name="add_feed_cancel">Cancel</string>
+    <string name="feed_form_cancel">Cancel</string>
     <string name="required_placeholder">Required</string>
     <string name="article_filters_starred">Starred</string>
     <string name="article_filters_unread">Unread</string>
     <string name="article_filters_all">All</string>
+    <string name="feed_action_unsubscribe">Unsubscribe</string>
+    <string name="feed_action_manage_button">Manage Feed</string>
+    <string name="feed_action_edit">Edit Feed</string>
+    <string name="feed_action_unsubscribe_message">Are you sure you want to unsubscribe?</string>
+    <string name="feed_action_unsubscribe_confirm">Confirm</string>
+    <string name="feed_action_unsubscribe_cancel">Cancel</string>
+    <string name="edit_feed_submit">Save</string>
 </resources>

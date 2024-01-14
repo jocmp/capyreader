@@ -1,8 +1,8 @@
 package com.jocmp.basil
 
-import com.jocmp.basil.shared.prepending
-import com.jocmp.basil.shared.repeatTab
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Folder(
     val title: String,
     val feeds: MutableList<Feed> = mutableListOf(),
