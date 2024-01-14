@@ -32,7 +32,8 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun ArticleScreen(
     viewModel: AccountViewModel = koinViewModel(),
-    onFeedAdd: () -> Unit,
+    onAddFeed: () -> Unit,
+    onEditFeed: (feedID: String) -> Unit,
 ) {
     val isFeedSelected = viewModel.isFeedSelected
     val drawerState = rememberDrawerState(DrawerValue.Closed)
@@ -73,7 +74,7 @@ fun ArticleScreen(
             FeedList(
                 folders = viewModel.folders,
                 feeds = viewModel.feeds,
-                onFeedAdd = onFeedAdd,
+                onFeedAdd = onAddFeed,
                 onSelectFolder = {
                     viewModel.selectFolder(it)
                     onComplete()
@@ -101,7 +102,7 @@ fun ArticleScreen(
                             if (isFeedSelected) {
                                 FeedActionMenu(
                                     onRemove = viewModel::removeFeed,
-                                    onRename = viewModel::renameFeed,
+                                    onEdit = { viewModel.feed?.let { onEditFeed(it.id) } },
                                 )
                             }
                         }

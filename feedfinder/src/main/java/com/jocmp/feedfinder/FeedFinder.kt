@@ -12,8 +12,10 @@ import java.net.URISyntaxException
 
 class FeedFinder internal constructor(
     private val url: String,
-    private val request: Request = DefaultRequest()
+    private val request: Request
 ) {
+    constructor(url: String): this(url, DefaultRequest())
+
     suspend fun find(): Result = withContext(Dispatchers.IO) {
         try {
             val parsedURL = URI(url.withProtocol).toURL()

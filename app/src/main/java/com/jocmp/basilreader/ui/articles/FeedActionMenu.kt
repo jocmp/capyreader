@@ -20,7 +20,7 @@ import com.jocmp.basilreader.R
 @Composable
 fun FeedActionMenu(
     onRemove: () -> Unit,
-    onRename: () -> Unit = {},
+    onEdit: () -> Unit,
 ) {
     val (expanded, setExpanded) = remember { mutableStateOf(false) }
 
@@ -39,7 +39,7 @@ fun FeedActionMenu(
         IconButton(onClick = { setExpanded(true) }) {
             Icon(
                 imageVector = Icons.Filled.MoreVert,
-                contentDescription = stringResource(R.string.feed_action_edit_button)
+                contentDescription = stringResource(R.string.feed_action_manage_button)
             )
         }
         DropdownMenu(
@@ -53,6 +53,15 @@ fun FeedActionMenu(
                 onClick = {
                     setExpanded(false)
                     setRemoveDialogOpen(true)
+                }
+            )
+            DropdownMenuItem(
+                text = {
+                    Text(stringResource(R.string.feed_action_edit))
+                },
+                onClick = {
+                    setExpanded(false)
+                    onEdit()
                 }
             )
         }
@@ -82,7 +91,7 @@ fun FeedActionMenu(
 @Composable
 fun FeedActionMenuPreview() {
     FeedActionMenu(
-        onRename = {},
+        onEdit = {},
         onRemove = {}
     )
 }

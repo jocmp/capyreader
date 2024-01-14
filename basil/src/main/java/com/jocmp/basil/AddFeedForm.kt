@@ -1,6 +1,6 @@
 package com.jocmp.basil
 
-data class FeedFormEntry(
+data class AddFeedForm(
     val url: String,
     val name: String,
     val folderTitles: List<String>

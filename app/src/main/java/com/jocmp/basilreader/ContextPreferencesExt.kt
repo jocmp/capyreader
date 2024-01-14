@@ -7,6 +7,8 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.jocmp.basil.ArticleFilter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
@@ -27,7 +29,7 @@ suspend fun DataStore<Preferences>.putAccountID(id: String) {
     }
 }
 
-suspend fun DataStore<Preferences>.putArticleID(id: String?) {
+suspend fun DataStore<Preferences>.putArticleID(id: String?) = withContext(Dispatchers.IO) {
     val key = stringPreferencesKey("article_id")
 
     edit { preferences ->

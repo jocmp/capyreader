@@ -1,5 +1,6 @@
 package com.jocmp.basilreader.ui.accounts
 
+import EditFeedForm
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.neverEqualPolicy
@@ -14,7 +15,7 @@ import com.jocmp.basil.Article
 import com.jocmp.basil.ArticleFilter
 import com.jocmp.basil.ArticleStatus
 import com.jocmp.basil.Feed
-import com.jocmp.basil.FeedFormEntry
+import com.jocmp.basil.AddFeedForm
 import com.jocmp.basil.Folder
 import com.jocmp.basil.buildPager
 import com.jocmp.basil.unreadCounts
@@ -23,7 +24,6 @@ import com.jocmp.basilreader.filter
 import com.jocmp.basilreader.putArticleID
 import com.jocmp.basilreader.putFilter
 import com.jocmp.basilreader.selectedAccountID
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -70,6 +70,9 @@ class AccountViewModel(
     val filterStatus: ArticleStatus
         get() = filter.value.status
 
+    val feed: Feed?
+        get() = (filter.value as? ArticleFilter.Feeds)?.feed
+
     val isFeedSelected: Boolean
         get() = filter.value is ArticleFilter.Feeds
 
@@ -105,9 +108,6 @@ class AccountViewModel(
         }
     }
 
-    fun renameFeed() {
-    }
-
     suspend fun refreshFeed() {
         when (val currentFilter = filter.value) {
             is ArticleFilter.Feeds -> account.refreshFeed(currentFilter.feed)
@@ -120,7 +120,7 @@ class AccountViewModel(
         account.markRead(articleID)
         articleState.value = account.findArticle(articleID = articleID)
 
-        viewModelScope.launch(context = Dispatchers.IO) {
+        viewModelScope.launch {
             settings.putArticleID(articleID)
         }
 
@@ -156,12 +156,12 @@ class AccountViewModel(
     fun clearArticle() {
         articleState.value = null
 
-        viewModelScope.launch(context = Dispatchers.IO) {
+        viewModelScope.launch {
             settings.putArticleID(null)
         }
     }
 
-    fun addFeed(entry: FeedFormEntry, onSuccess: () -> Unit) {
+    fun addFeed(entry: AddFeedForm, onSuccess: () -> Unit) {
         viewModelScope.launch {
             val result = account.addFeed(entry)
 
@@ -176,7 +176,7 @@ class AccountViewModel(
         filter.value = nextFilter
         pager.value = account.buildPager(nextFilter)
 
-        viewModelScope.launch(context = Dispatchers.IO) {
+        viewModelScope.launch {
             settings.putFilter(nextFilter)
         }
     }

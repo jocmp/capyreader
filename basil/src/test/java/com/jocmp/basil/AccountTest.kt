@@ -1,8 +1,10 @@
 package com.jocmp.basil
 
+import EditFeedForm
 import com.jocmp.basil.accounts.LocalAccountDelegate
 import com.jocmp.basil.db.Database
 import com.jocmp.feedfinder.FeedFinder
+import io.mockk.EqMatcher
 import io.mockk.coEvery
 import io.mockk.mockkConstructor
 import kotlinx.coroutines.runBlocking
@@ -11,10 +13,10 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import java.io.File
-import kotlin.math.exp
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 class AccountTest {
     @JvmField
@@ -23,14 +25,24 @@ class AccountTest {
 
     private lateinit var database: Database
 
+    private val defaultEntry = AddFeedForm(
+        url = THE_VERGE_URL,
+        name = "The Verge",
+        folderTitles = listOf()
+    )
+
     @Before
     fun setup() {
         mockkConstructor(FeedFinder::class)
         mockkConstructor(LocalAccountDelegate::class)
 
         coEvery {
-            anyConstructed<FeedFinder>().find()
-        } returns FeedFinder.Result.Success(listOf(FakeParserFeed()))
+            constructedWith<FeedFinder>(EqMatcher(THE_VERGE_URL)).find()
+        } returns FeedFinder.Result.Success(listOf(TheVergeFeed()))
+
+        coEvery {
+            constructedWith<FeedFinder>(EqMatcher(ARS_TECHNICA_URL)).find()
+        } returns FeedFinder.Result.Success(listOf(ArsTechnicaFeed()))
 
         coEvery {
             anyConstructed<LocalAccountDelegate>().fetchAll(any())
@@ -65,8 +77,8 @@ class AccountTest {
             val previousInstance = buildAccount(id = accountID, path = accountPath)
             previousInstance.addFolder(title = "Test Title")
             previousInstance.addFeed(
-                FeedFormEntry(
-                    url = "https://theverge.com/rss.xml",
+                AddFeedForm(
+                    url = THE_VERGE_URL,
                     name = "The Verge",
                     folderTitles = listOf(),
                 )
@@ -84,7 +96,7 @@ class AccountTest {
     fun addFeed_singleTopLevelFeed() {
         val accountPath = folder.newFile()
         val account = buildAccount(id = "777", path = accountPath)
-        val entry = FeedFormEntry(
+        val entry = AddFeedForm(
             url = "https://theverge.com/rss/index.xml",
             name = "The Verge",
             folderTitles = listOf(),
@@ -104,7 +116,7 @@ class AccountTest {
     fun addFeed_newFolder() {
         val accountPath = folder.newFile()
         val account = buildAccount(id = "777", path = accountPath)
-        val entry = FeedFormEntry(
+        val entry = AddFeedForm(
             url = "https://theverge.com/rss/index.xml",
             name = "The Verge",
             folderTitles = listOf("Tech"),
@@ -126,7 +138,7 @@ class AccountTest {
         val account = buildAccount(id = "777", path = accountPath)
         runBlocking { account.addFolder("Tech") }
 
-        val entry = FeedFormEntry(
+        val entry = AddFeedForm(
             url = "https://theverge.com/rss/index.xml",
             name = "The Verge",
             folderTitles = listOf("Tech"),
@@ -148,7 +160,7 @@ class AccountTest {
         val account = buildAccount(id = "777", path = accountPath)
         runBlocking { account.addFolder("Tech") }
 
-        val entry = FeedFormEntry(
+        val entry = AddFeedForm(
             url = "https://theverge.com/rss/index.xml",
             name = "The Verge",
             folderTitles = listOf("Tech", "Culture"),
@@ -171,7 +183,7 @@ class AccountTest {
         val account = buildAccount()
         runBlocking {
             account.addFeed(
-                FeedFormEntry(
+                AddFeedForm(
                     url = "https://theverge.com/rss/index.xml",
                     name = "The Verge",
                     folderTitles = listOf(),
@@ -189,10 +201,118 @@ class AccountTest {
     }
 
     @Test
+    fun editFeed_topLevelFeed() {
+        val account = buildAccount()
+        val feed = runBlocking { account.addFeed(defaultEntry) }.getOrNull()!!
+
+        val feedName = "The Verge Mobile"
+
+        val editedFeed = runBlocking {
+            account.editFeed(EditFeedForm(feedID = feed.id, name = feedName))
+        }.getOrNull()!!
+
+        assertEquals(expected = feedName, actual = editedFeed.name)
+    }
+
+    @Test
+    fun editFeed_nestedFeed() {
+        val account = buildAccount()
+        val feed = runBlocking {
+            account.addFeed(defaultEntry.copy(folderTitles = listOf("Tech")))
+        }.getOrNull()!!
+
+        val feedName = "The Verge Mobile"
+
+        runBlocking {
+            account.editFeed(EditFeedForm(feedID = feed.id, name = feedName, folderTitles = listOf("Tech")))
+        }
+
+        val renamedFeed = account.folders.first().feeds.first()
+
+        assertEquals(expected = feedName, actual = renamedFeed.name)
+    }
+
+    @Test
+    fun editFeed_movedFeedFromTopLevelToFolder() {
+        val account = buildAccount()
+        val feed = runBlocking {
+            account.addFeed(defaultEntry)
+        }.getOrNull()!!
+
+        val feedName = "The Verge Mobile"
+
+        runBlocking {
+            account.editFeed(EditFeedForm(feedID = feed.id, name = feedName, folderTitles = listOf("Tech")))
+        }
+
+        assertTrue(account.feeds.isEmpty())
+        assertEquals(expected = 1, actual = account.folders.size)
+
+        val renamedFeed = account.folders.first().feeds.first()
+
+        assertEquals(expected = feedName, actual = renamedFeed.name)
+    }
+
+    @Test
+    fun editFeed_movedFeedFromFolderToTopLevel() {
+        val account = buildAccount()
+
+        val feed = runBlocking {
+            account.addFeed(defaultEntry)
+        }.getOrNull()!!
+
+        val otherFeed = runBlocking {
+            account.addFeed(
+                AddFeedForm(
+                    url = ARS_TECHNICA_URL,
+                    name = "Ars Technica",
+                    folderTitles = listOf("Tech")
+                )
+            )
+        }.getOrNull()!!
+
+        val feedName = "The Verge"
+
+        runBlocking {
+            account.editFeed(EditFeedForm(feedID = feed.id, name = feedName, folderTitles = listOf()))
+        }
+
+        assertEquals(expected = 1, actual = account.feeds.size)
+        assertEquals(expected = 1, actual = account.folders.size)
+
+        val movedFeed = account.feeds.first()
+        val existingFeed = account.folders.first().feeds.first()
+
+        assertEquals(expected = feedName, actual = movedFeed.name)
+        assertEquals(expected = otherFeed.name, actual = existingFeed.name)
+    }
+
+    @Test
+    fun editFeed_movedFeedFromFolderToTopLevelWithOtherFeeds() {
+        val account = buildAccount()
+        val feed = runBlocking {
+            account.addFeed(defaultEntry)
+        }.getOrNull()!!
+
+        val feedName = "The Verge Mobile"
+
+        runBlocking {
+            account.editFeed(EditFeedForm(feedID = feed.id, name = feedName, folderTitles = listOf("Tech")))
+        }
+
+        assertTrue(account.feeds.isEmpty())
+        assertEquals(expected = 1, actual = account.folders.size)
+
+        val renamedFeed = account.folders.first().feeds.first()
+
+        assertEquals(expected = feedName, actual = renamedFeed.name)
+    }
+
+    @Test
     fun findFeed_topLevelFeed() {
         val account = buildAccount(id = "777", path = folder.newFile())
 
-        val entry = FeedFormEntry(
+        val entry = AddFeedForm(
             url = "https://theverge.com/rss/index.xml",
             name = "The Verge",
             folderTitles = emptyList()
@@ -209,11 +329,7 @@ class AccountTest {
     fun findFeed_nestedFeed() {
         val account = buildAccount(id = "777", path = folder.newFile())
 
-        val entry = FeedFormEntry(
-            url = "https://theverge.com/rss/index.xml",
-            name = "The Verge",
-            folderTitles = listOf("Tech", "Culture", "Feelings")
-        )
+        val entry = defaultEntry.copy(folderTitles = listOf("Tech", "Culture"))
 
         val feedID = runBlocking { account.addFeed(entry) }.getOrNull()!!.id
 
@@ -235,7 +351,7 @@ class AccountTest {
     fun findFolder_existingFolder() {
         val account = buildAccount(id = "777", path = folder.newFile())
 
-        val entry = FeedFormEntry(
+        val entry = AddFeedForm(
             url = "https://theverge.com/rss/index.xml",
             name = "The Verge",
             folderTitles = listOf("Tech", "Culture")
