@@ -17,10 +17,9 @@ import kotlinx.coroutines.runBlocking
 class EditFeedViewModel(
     savedStateHandle: SavedStateHandle,
     accountManager: AccountManager,
-    private val settings: DataStore<Preferences>,
+    settings: DataStore<Preferences>,
 ) : ViewModel() {
-    private val initialPreferences = runBlocking { settings.data.first() }
-    private val account = accountManager.findByID(initialPreferences.selectedAccountID)!!
+    private val account = accountManager.findByID(settings.selectedAccountID)!!
     private val args = EditFeedArgs(savedStateHandle)
 
     val feed: Feed?

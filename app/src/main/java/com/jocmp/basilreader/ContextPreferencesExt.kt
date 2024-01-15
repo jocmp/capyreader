@@ -8,11 +8,18 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.jocmp.basil.ArticleFilter
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 val Context.settings by preferencesDataStore("settings")
+
+
+/** Blocking getter to fetch the current account ID */
+val DataStore<Preferences>.selectedAccountID: String
+    get() = runBlocking { data.first() }.selectedAccountID!!
 
 val Preferences.selectedAccountID: String?
     get() = get(stringPreferencesKey("account_id"))
