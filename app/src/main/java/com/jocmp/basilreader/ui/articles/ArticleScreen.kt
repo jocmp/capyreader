@@ -105,7 +105,7 @@ fun ArticleScreen(
                                 onFeedEdit = onFeedEdit,
                                 onFolderEdit = onFolderEdit,
                                 onRemoveFeed = viewModel::removeFeed,
-                                onRemoveFolder = {}
+                                onRemoveFolder = viewModel::removeFolder
                             )
                         }
                     )

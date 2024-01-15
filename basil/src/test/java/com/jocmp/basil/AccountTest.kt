@@ -1,6 +1,5 @@
 package com.jocmp.basil
 
-import EditFeedForm
 import com.jocmp.basil.accounts.LocalAccountDelegate
 import com.jocmp.basil.db.Database
 import com.jocmp.feedfinder.FeedFinder
@@ -13,6 +12,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import java.io.File
+import kotlin.math.exp
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
@@ -224,7 +224,13 @@ class AccountTest {
         val feedName = "The Verge Mobile"
 
         runBlocking {
-            account.editFeed(EditFeedForm(feedID = feed.id, name = feedName, folderTitles = listOf("Tech")))
+            account.editFeed(
+                EditFeedForm(
+                    feedID = feed.id,
+                    name = feedName,
+                    folderTitles = listOf("Tech")
+                )
+            )
         }
 
         val renamedFeed = account.folders.first().feeds.first()
@@ -242,7 +248,13 @@ class AccountTest {
         val feedName = "The Verge Mobile"
 
         runBlocking {
-            account.editFeed(EditFeedForm(feedID = feed.id, name = feedName, folderTitles = listOf("Tech")))
+            account.editFeed(
+                EditFeedForm(
+                    feedID = feed.id,
+                    name = feedName,
+                    folderTitles = listOf("Tech")
+                )
+            )
         }
 
         assertTrue(account.feeds.isEmpty())
@@ -274,7 +286,13 @@ class AccountTest {
         val feedName = "The Verge"
 
         runBlocking {
-            account.editFeed(EditFeedForm(feedID = feed.id, name = feedName, folderTitles = listOf()))
+            account.editFeed(
+                EditFeedForm(
+                    feedID = feed.id,
+                    name = feedName,
+                    folderTitles = listOf()
+                )
+            )
         }
 
         assertEquals(expected = 1, actual = account.feeds.size)
@@ -297,7 +315,13 @@ class AccountTest {
         val feedName = "The Verge Mobile"
 
         runBlocking {
-            account.editFeed(EditFeedForm(feedID = feed.id, name = feedName, folderTitles = listOf("Tech")))
+            account.editFeed(
+                EditFeedForm(
+                    feedID = feed.id,
+                    name = feedName,
+                    folderTitles = listOf("Tech")
+                )
+            )
         }
 
         assertTrue(account.feeds.isEmpty())
@@ -306,6 +330,69 @@ class AccountTest {
         val renamedFeed = account.folders.first().feeds.first()
 
         assertEquals(expected = feedName, actual = renamedFeed.name)
+    }
+
+    @Test
+    fun editFolder() {
+        val account = buildAccount()
+
+        runBlocking {
+            account.addFeed(defaultEntry.copy(folderTitles = listOf("Tech")))
+        }
+
+        val folderTitle = "Tech & Culture"
+
+        runBlocking {
+            account.editFolder(form = EditFolderForm(existingTitle = "Tech", title = folderTitle))
+        }
+
+        assertEquals(expected = 1, actual = account.folders.size)
+
+        val renamedFolder = account.folders.first()
+
+        assertEquals(expected = folderTitle, actual = renamedFolder.title)
+    }
+
+    @Test
+    fun removeFolder() {
+        val account = buildAccount()
+
+        val feed = runBlocking {
+            account.addFeed(defaultEntry.copy(folderTitles = listOf("Tech")))
+        }.getOrNull()!!
+
+        runBlocking {
+            account.removeFolder(title = "Tech")
+        }
+
+        assertEquals(expected = 0, actual = account.folders.size)
+        assertEquals(expected = 1, actual = account.feeds.size)
+
+        val movedFeed = account.feeds.first()
+
+        assertEquals(expected = movedFeed.id, actual = feed.id)
+    }
+
+    @Test
+    fun removeFolder_feedInMultipleFolders() {
+        val account = buildAccount()
+
+        val feed = runBlocking {
+            account.addFeed(defaultEntry.copy(folderTitles = listOf("Tech", "Culture")))
+        }.getOrNull()!!
+
+        runBlocking {
+            account.removeFolder(title = "Tech")
+        }
+
+        assertEquals(expected = 1, actual = account.folders.size)
+        assertEquals(expected = 0, actual = account.feeds.size)
+
+        val otherFolder = account.folders.first()
+        val movedFeed = otherFolder.feeds.first()
+
+        assertEquals(expected = "Culture", otherFolder.title)
+        assertEquals(expected = movedFeed.id, actual = feed.id)
     }
 
     @Test

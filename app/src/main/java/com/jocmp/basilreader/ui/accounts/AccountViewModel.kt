@@ -103,6 +103,14 @@ class AccountViewModel(
         }
     }
 
+    fun removeFolder(folderTitle: String) {
+        viewModelScope.launch {
+            account.removeFolder(title = folderTitle)
+            resetToDefaultFilter()
+            accountState.value = account
+        }
+    }
+
     suspend fun refreshFeed() {
         when (val currentFilter = filter) {
             is ArticleFilter.Feeds -> account.refreshFeed(currentFilter.feed)

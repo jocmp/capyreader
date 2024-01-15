@@ -1,6 +1,5 @@
 package com.jocmp.basil
 
-import EditFeedForm
 import com.jocmp.basil.accounts.AccountDelegate
 import com.jocmp.basil.accounts.LocalAccountDelegate
 import com.jocmp.basil.accounts.ParsedItem
@@ -12,7 +11,6 @@ import com.jocmp.basil.opml.asFolder
 import com.jocmp.basil.persistence.ArticleRecords
 import com.jocmp.basil.persistence.FeedRecords
 import com.jocmp.basil.shared.nowUTCInSeconds
-import com.jocmp.basil.shared.replace
 import com.jocmp.basil.shared.upsert
 import com.jocmp.feedfinder.FeedFinder
 import kotlinx.coroutines.Dispatchers
@@ -70,6 +68,24 @@ data class Account(
         saveOPMLFile()
 
         return folder
+    }
+
+    suspend fun removeFolder(title: String) {
+        val folder = findFolder(title) ?: return
+
+        val folderFeeds = folder.feeds
+
+        folders.remove(folder)
+
+        val allFeeds = flattenedFeeds
+
+        val orphanedFeeds = folderFeeds.filter { feed ->
+            !allFeeds.contains(feed)
+        }
+
+        feeds.addAll(orphanedFeeds)
+
+        saveOPMLFile()
     }
 
     suspend fun removeFeed(feedID: String) {
@@ -137,7 +153,7 @@ data class Account(
     }
 
     suspend fun editFeed(form: EditFeedForm): Result<Feed> {
-        val feed = findFeed(form.feedID) ?: return Result.failure(Throwable("Not found"))
+        val feed = findFeed(form.feedID) ?: return Result.failure(Throwable("Feed not found"))
 
         val editedFeed = feed.copy(name = form.name)
 
@@ -168,6 +184,19 @@ data class Account(
         saveOPMLFile()
 
         return Result.success(editedFeed)
+    }
+
+    suspend fun editFolder(form: EditFolderForm): Result<Folder> {
+        val folder = findFolder(form.existingTitle) ?: return Result.failure(Throwable("Folder not found"))
+
+        val updatedFolder = folder.copy(title = form.title)
+
+        folders.remove(folder)
+        folders.add(updatedFolder)
+
+        saveOPMLFile()
+
+        return Result.success(updatedFolder)
     }
 
     suspend fun refreshAll() {
