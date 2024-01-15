@@ -8,6 +8,8 @@ import com.jocmp.basilreader.AccountPreferencesProvider
 import com.jocmp.basil.PreferencesProvider
 import com.jocmp.basilreader.settings
 import com.jocmp.basilreader.ui.articles.EditFeedViewModel
+import com.jocmp.basilreader.ui.articles.EditFolderScreen
+import com.jocmp.basilreader.ui.articles.EditFolderViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -36,6 +38,13 @@ internal val accountModule = module {
     }
     viewModel {
         EditFeedViewModel(
+            savedStateHandle = get(),
+            accountManager = get(),
+            settings = androidContext().settings
+        )
+    }
+    viewModel {
+        EditFolderViewModel(
             savedStateHandle = get(),
             accountManager = get(),
             settings = androidContext().settings

@@ -10,15 +10,13 @@ fun EditFeedScreen(
     onSubmit: () -> Unit,
     onCancel: () -> Unit
 ) {
-    viewModel.feed?.let { feed ->
-        EditFeedView(
-            feed = feed,
-            folders = viewModel.folders,
-            feedFoldersTitles = viewModel.feedFolderTitles,
-            onSubmit = { entry ->
-                viewModel.submit(entry, onSubmit)
-            },
-            onCancel = onCancel
-        )
-    }
+    EditFeedView(
+        feed = viewModel.feed,
+        folders = viewModel.folders,
+        feedFoldersTitles = viewModel.feedFolderTitles,
+        onSubmit = { entry ->
+            viewModel.submit(entry, onSubmit)
+        },
+        onCancel = onCancel
+    )
 }

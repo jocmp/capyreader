@@ -11,9 +11,17 @@
     <string name="article_filters_all">All</string>
     <string name="feed_action_unsubscribe">Unsubscribe</string>
     <string name="feed_action_manage_button">Manage Feed</string>
+    <string name="filter_action_menu_description">Edit</string>
     <string name="feed_action_edit">Edit Feed</string>
-    <string name="feed_action_unsubscribe_message">Are you sure you want to unsubscribe?</string>
-    <string name="feed_action_unsubscribe_confirm">Confirm</string>
+    <string name="feed_action_unsubscribe_message">Are you sure you want to unsubscribe from \"%1$s\"?</string>
+    <string name="feed_action_unsubscribe_confirm">Unsubscribe</string>
     <string name="feed_action_unsubscribe_cancel">Cancel</string>
     <string name="edit_feed_submit">Save</string>
+    <string name="folder_action_manage_button">Edit Folder</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="folder_action_delete_confirm">Delete</string>
+    <string name="folder_action_delete_message">Are you sure you want to delete the \"%1$s\" folder?</string>
+    <string name="folder_action_delete_title">Delete Folder</string>
+    <string name="folder_action_edit">Rename</string>
+    <string name="feed_action_unsubscribe_title">Unsubscribe</string>
 </resources>

@@ -17,6 +17,9 @@ fun NavController.navigateToAddFeed() =
 fun NavController.navigateToEditFeed(feedID: String) =
     navigate("feeds/${feedID}/edit")
 
+fun NavController.navigateToEditFolder(folderTitle: String) =
+    navigate("folders/${folderTitle}/edit")
+
 fun NavGraphBuilder.articleGraph(
     navController: NavController,
 ) {
@@ -24,27 +27,14 @@ fun NavGraphBuilder.articleGraph(
         route = "articles",
     ) {
         ArticleScreen(
-            onAddFeed = {
+            onFeedAdd = {
                 navController.navigateToAddFeed()
             },
-            onEditFeed = { feedID ->
+            onFeedEdit = { feedID ->
                 navController.navigateToEditFeed(feedID = feedID)
-            }
-        )
-    }
-    dialog(
-        route = "feeds/{id}/edit",
-    ) {
-        EditFeedScreen(
-            onCancel = {
-                navController.popBackStack()
             },
-            onSubmit = {
-                navController.navigate(articlesRoute) {
-                    popUpTo(articlesRoute) {
-                        inclusive = true
-                    }
-                }
+            onFolderEdit = { folderTitle ->
+                navController.navigateToEditFolder(folderTitle = folderTitle)
             }
         )
     }
@@ -64,9 +54,46 @@ fun NavGraphBuilder.articleGraph(
             }
         )
     }
+    dialog(
+        route = "feeds/{id}/edit",
+    ) {
+        EditFeedScreen(
+            onSubmit = {
+                navController.navigate(articlesRoute) {
+                    popUpTo(articlesRoute) {
+                        inclusive = true
+                    }
+                }
+            },
+            onCancel = {
+                navController.popBackStack()
+            },
+        )
+    }
+    dialog(
+        route = "folders/{title}/edit",
+    ) {
+        EditFolderScreen(
+            onSubmit = {
+                navController.navigate(articlesRoute) {
+                    popUpTo(articlesRoute) {
+                        inclusive = true
+                    }
+                }
+            },
+            onCancel = {
+                navController.popBackStack()
+            },
+        )
+    }
 }
 
 internal class EditFeedArgs(val feedID: String) {
     constructor(savedStateHandle: SavedStateHandle) :
             this(checkNotNull(savedStateHandle["id"]) as String)
+}
+
+internal class EditFolderArgs(val folderTitle: String) {
+    constructor(savedStateHandle: SavedStateHandle) :
+            this(checkNotNull(savedStateHandle["title"]) as String)
 }

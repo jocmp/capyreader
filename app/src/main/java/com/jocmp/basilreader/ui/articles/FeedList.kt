@@ -20,13 +20,13 @@ import com.jocmp.basilreader.ui.fixtures.FolderPreviewFixture
 fun FeedList(
     folders: List<Folder> = emptyList(),
     feeds: List<Feed> = emptyList(),
-    onFeedAdd: () -> Unit,
+    onAddFeed: () -> Unit,
     onSelectFolder: (folderTitle: String) -> Unit,
     onSelectFeed: (feedID: String) -> Unit,
 ) {
     Column {
         Row {
-            Button(onClick = onFeedAdd) {
+            Button(onClick = onAddFeed) {
                 Text("+ Feed")
             }
         }
@@ -60,7 +60,7 @@ fun FeedListPreview() {
     FeedList(
         folders = folders,
         feeds = feeds,
-        onFeedAdd = {},
+        onAddFeed = {},
         onSelectFolder = {},
         onSelectFeed = {}
     )
