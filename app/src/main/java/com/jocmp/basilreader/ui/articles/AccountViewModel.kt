@@ -1,4 +1,4 @@
-package com.jocmp.basilreader.ui.accounts
+package com.jocmp.basilreader.ui.articles
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -10,11 +10,11 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import com.jocmp.basil.Account
 import com.jocmp.basil.AccountManager
+import com.jocmp.basil.AddFeedForm
 import com.jocmp.basil.Article
 import com.jocmp.basil.ArticleFilter
 import com.jocmp.basil.ArticleStatus
 import com.jocmp.basil.Feed
-import com.jocmp.basil.AddFeedForm
 import com.jocmp.basil.Folder
 import com.jocmp.basil.buildPager
 import com.jocmp.basil.unreadCounts

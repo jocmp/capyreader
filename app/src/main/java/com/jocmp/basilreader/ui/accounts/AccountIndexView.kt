@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 @Composable
-fun AccountIndexView(
+fun AccountIndexScreen(
     accountManager: AccountManager = koinInject(),
     onSelect: () -> Unit
 ) {

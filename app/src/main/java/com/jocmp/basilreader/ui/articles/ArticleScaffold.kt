@@ -37,7 +37,7 @@ import com.jocmp.basilreader.ui.theme.BasilReaderTheme
 fun ArticleScaffold(
     drawerState: DrawerState = rememberDrawerState(DrawerValue.Closed),
     listDetailState: ThreePaneScaffoldState = calculateListDetailPaneScaffoldState(
-        currentPaneDestination = ListDetailPaneScaffoldRole.List,
+        currentPaneDestination = ListDetailPaneScaffoldRole.Extra,
         scaffoldDirective = calculateArticleDirective()
     ),
     drawerPane: @Composable () -> Unit,
@@ -78,7 +78,6 @@ fun calculateArticleDirective(): PaneScaffoldDirective {
 }
 
 
-
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 private fun copyDirectiveWithoutPadding(directive: PaneScaffoldDirective): PaneScaffoldDirective {
     return PaneScaffoldDirective(
@@ -92,7 +91,7 @@ private fun copyDirectiveWithoutPadding(directive: PaneScaffoldDirective): PaneS
 }
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
-@Preview(device = Devices.FOLDABLE)
+@Preview(device = Devices.TABLET)
 @Composable
 fun ArticlesLayoutPreview() {
     BasilReaderTheme {

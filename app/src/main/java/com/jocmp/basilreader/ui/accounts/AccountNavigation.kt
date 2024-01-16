@@ -4,11 +4,14 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 
-fun NavGraphBuilder.accountIndex(
+fun NavGraphBuilder.accountsGraph(
     onSelect: () -> Unit
 ) {
     composable("accounts") {
-        AccountIndexView(onSelect = onSelect)
+        AccountIndexScreen(onSelect = onSelect)
+    }
+    composable("account/{id}/edit") {
+        AccountSettingsScreen()
     }
 }
 
