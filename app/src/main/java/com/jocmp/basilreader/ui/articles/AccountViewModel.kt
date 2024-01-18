@@ -6,7 +6,6 @@ import androidx.compose.runtime.neverEqualPolicy
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.jocmp.basil.Account
 import com.jocmp.basil.AccountManager
 import com.jocmp.basil.AddFeedForm
@@ -19,9 +18,7 @@ import com.jocmp.basil.buildPager
 import com.jocmp.basil.unreadCounts
 import com.jocmp.basilreader.AppPreferences
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class AccountViewModel(
     accountManager: AccountManager,
@@ -53,6 +50,9 @@ class AccountViewModel(
 
     private val articleState = mutableStateOf(account.findArticle(appPreferences.articleID.get()))
 
+    val allUnreadCount: Long
+        get() = _unreadCounts.value.values.sum()
+
     val feeds: List<Feed>
         get() = account.feeds.map(::copyFeedUnreadCounts)
 
@@ -68,6 +68,12 @@ class AccountViewModel(
     val filter: ArticleFilter
         get() = _filter.value
 
+    fun selectArticleFilter() {
+        val nextFilter = ArticleFilter.default()
+
+        updateFilterValue(nextFilter)
+    }
+
     fun selectStatus(status: ArticleStatus) {
         val nextFilter = _filter.value.withStatus(status = status)
 
@@ -78,14 +84,14 @@ class AccountViewModel(
         val feed = account.findFeed(feedID) ?: return
         val feedFilter = ArticleFilter.Feeds(feed = feed, feedStatus = _filter.value.status)
 
-        selectFilter(feedFilter)
+        selectArticleFilter(feedFilter)
     }
 
     fun selectFolder(title: String) {
         val folder = account.findFolder(title) ?: return
         val feedFilter = ArticleFilter.Folders(folder = folder, folderStatus = _filter.value.status)
 
-        selectFilter(feedFilter)
+        selectArticleFilter(feedFilter)
     }
 
     fun removeFeed(feedID: String) {
@@ -169,7 +175,7 @@ class AccountViewModel(
     }
 
     private fun resetToDefaultFilter() {
-        selectFilter(ArticleFilter.default().copy(filter.status))
+        selectArticleFilter(ArticleFilter.default().copy(filter.status))
     }
 
     private fun updateFilterValue(nextFilter: ArticleFilter) {
@@ -181,7 +187,7 @@ class AccountViewModel(
         }
     }
 
-    private fun selectFilter(nextFilter: ArticleFilter) {
+    private fun selectArticleFilter(nextFilter: ArticleFilter) {
         updateFilterValue(nextFilter)
 
         clearArticle()

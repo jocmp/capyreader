@@ -1,9 +1,16 @@
 package com.jocmp.basilreader.ui.articles
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
@@ -16,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jocmp.basil.ArticleStatus
 import com.jocmp.basil.Feed
 import com.jocmp.basil.Folder
 import com.jocmp.basilreader.R
@@ -27,11 +35,14 @@ fun FeedList(
     folders: List<Folder> = emptyList(),
     feeds: List<Feed> = emptyList(),
     onAddFeed: () -> Unit,
+    onFilterSelect: () -> Unit,
     onSelectFolder: (folderTitle: String) -> Unit,
     onSelectFeed: (feedID: String) -> Unit,
     onNavigateToAccounts: () -> Unit,
 ) {
-    Column {
+    val scrollState = rememberScrollState()
+
+    Column(Modifier.verticalScroll(scrollState)) {
         Row {
             Button(onClick = onAddFeed) {
                 Text("+ Feed")
@@ -47,6 +58,18 @@ fun FeedList(
                 )
             }
         }
+
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    onFilterSelect()
+                }
+        ) {
+            Text(stringResource(R.string.filter_all))
+        }
+
         folders.forEach {
             FolderRow(
                 folder = it,
@@ -80,6 +103,7 @@ fun FeedListPreview() {
         onAddFeed = {},
         onSelectFolder = {},
         onSelectFeed = {},
-        onNavigateToAccounts = {}
+        onNavigateToAccounts = {},
+        onFilterSelect = {}
     )
 }

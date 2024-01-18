@@ -53,10 +53,10 @@ data class Account(
     private val feedRecords: FeedRecords = FeedRecords(database)
 
     private val source: AccountSource
-        get() = preferences.source
+        get() = preferences.source.get()
 
-    val displayName: String
-        get() = "Local"
+    val displayName: Preference<String>
+        get() = preferences.displayName
 
     init {
         loadOPML(opmlFile.load())

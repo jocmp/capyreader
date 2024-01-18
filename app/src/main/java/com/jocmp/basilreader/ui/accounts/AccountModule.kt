@@ -15,7 +15,6 @@ internal val accountModule = module {
         AccountSettingsViewModel(
             savedStateHandle = get(),
             accountManager = get(),
-            appPreferences = get()
         )
     }
 }

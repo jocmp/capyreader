@@ -84,7 +84,8 @@ fun ArticleScreen(
                     viewModel.selectFeed(it)
                     onComplete()
                 },
-                onNavigateToAccounts = onNavigateToAccounts
+                onNavigateToAccounts = onNavigateToAccounts,
+                onFilterSelect = viewModel::selectArticleFilter,
             )
         },
         listPane = {

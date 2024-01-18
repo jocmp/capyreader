@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.jocmp.basilreader.ui.accounts.accountsGraph
+import com.jocmp.basilreader.ui.accounts.navigateToAccountSettings
 import com.jocmp.basilreader.ui.articles.articleGraph
 import com.jocmp.basilreader.ui.articles.navigateToArticles
 import com.jocmp.basilreader.ui.theme.BasilReaderTheme
@@ -28,7 +29,8 @@ fun App(startDestination: String) {
                 accountsGraph(
                     onSelect = {
                         navController.navigateToArticles()
-                    }
+                    },
+                    onSettingSelect = navController::navigateToAccountSettings,
                 )
                 articleGraph(navController = navController)
             }
