@@ -4,7 +4,7 @@ import androidx.datastore.core.DataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class InMemoryPreferencesProvider(preferences: AccountPreferences) : PreferencesProvider {
+class InMemoryPreferencesProvider(preferences: AccountPreferences) : PreferenceStoreProvider {
     private val dataStore = InMemoryDataStore(preferences)
 
     override fun forAccount(accountID: String): DataStore<AccountPreferences> {

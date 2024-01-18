@@ -1,7 +1,5 @@
 package com.jocmp.basil
 
-import com.jocmp.basil.accounts.LocalAccountDelegate
-import kotlinx.coroutines.flow.first
 import java.io.File
 import java.io.FileFilter
 import java.net.URI
@@ -10,41 +8,26 @@ import java.util.UUID
 class AccountManager(
     val rootFolder: URI,
     private val databaseProvider: DatabaseProvider,
-    private val preferencesProvider: PreferencesProvider,
+    private val preferenceStoreProvider: PreferenceStoreProvider,
 ) {
     fun findByID(id: String?): Account? {
         id ?: return null
 
-        val existingAccount = listAccounts().find { file -> file.name == id } ?: return null
+        val existingAccount = findAccountFile(id) ?: return null
 
         return buildAccount(id = existingAccount.name, path = existingAccount)
     }
 
-    suspend fun latestSummaries(): List<AccountSummary> {
-        val ids = listAccounts().map { it.name }
-        return ids.map { id ->
-            val preferences = preferencesProvider
-                .forAccount(id)
-                .data
-                .first()
-
-            AccountSummary(id = id, preferences)
+    val accounts: List<Account>
+        get() = listAccounts().map {
+            buildAccount(id = it.name, path = it)
         }
-    }
-
-    suspend fun accountIDs(): List<String> {
-        return latestSummaries().map { it.id }
-    }
-
-    fun isEmpty(): Boolean {
-        return accountSize() == 0
-    }
 
     fun accountSize(): Int {
         return listAccounts().size
     }
 
-    fun createAccount(): AccountSummary {
+    fun createAccount(): Account {
         val accountID = UUID.randomUUID().toString()
 
         accountFolder().apply {
@@ -53,20 +36,17 @@ class AccountManager(
             }
         }
 
-        accountFile(accountID).mkdir()
+        val file = accountFile(accountID).apply { mkdir() }
 
-        return AccountSummary(id = accountID,
-            AccountPreferences(
-                displayName = "Feedbin",
-                source = AccountSource.LOCAL.value
-            )
-        )
+        return buildAccount(id = accountID, path = file)
     }
 
     fun removeAccount(accountID: String) {
-        val files = accountFolder().listFiles(AccountFileFilter(accountID))
+        val accountFile = findAccountFile(accountID)
 
-        files?.first()?.deleteRecursively() ?: false
+        accountFile?.deleteRecursively()
+        databaseProvider.delete(accountID)
+        preferenceStoreProvider.delete(accountID)
     }
 
     private fun accountFile(id: String): File {
@@ -85,15 +65,13 @@ class AccountManager(
         return Account(
             id = id,
             path = pathURI,
-            database = databaseProvider.forAccount(id),
+            database = databaseProvider.build(id),
+            preferenceStore = preferenceStoreProvider.build(id)
         )
     }
 
-    class AccountSummary(
-        val id: String,
-        preferences: AccountPreferences,
-    ) {
-        val displayName = preferences.displayName
+    private fun findAccountFile(id: String): File? {
+        return accountFolder().listFiles(AccountFileFilter(id))?.first()
     }
 
     companion object {

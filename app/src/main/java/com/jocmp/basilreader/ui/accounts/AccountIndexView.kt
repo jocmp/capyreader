@@ -1,6 +1,7 @@
 package com.jocmp.basilreader.ui.accounts
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.lazy.LazyColumn
@@ -8,52 +9,48 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
-import com.jocmp.basil.AccountManager
-import com.jocmp.basil.AccountManager.AccountSummary
-import com.jocmp.basilreader.putAccountID
-import com.jocmp.basilreader.settings
+import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.res.stringResource
+import com.jocmp.basilreader.R
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun AccountIndexScreen(
-    accountManager: AccountManager = koinInject(),
+    viewModel: AccountIndexViewModel = koinInject(),
     onSelect: () -> Unit
 ) {
     val context = LocalContext.current
     val composableScope = rememberCoroutineScope()
-    val accountsState = remember { mutableStateListOf<AccountSummary>() }
-
-    LaunchedEffect(Unit) {
-        composableScope.launch {
-            accountsState.addAll(accountManager.latestSummaries())
-        }
-    }
-
-    val accounts = accountsState.toList()
+    val accounts = viewModel.accounts
+    val haptics = LocalHapticFeedback.current
 
     Column {
-        Button(onClick = { accountsState.add(accountManager.createAccount()) }) {
+        Button(onClick = { viewModel.createAccount() }) {
             Text("+")
         }
         LazyColumn {
             items(accounts, key = { it.id }) { account ->
-                Row(modifier = Modifier.clickable {
-                    composableScope.launch {
-                        context.settings.putAccountID(account.id)
-                        onSelect()
-                    }
-                }) {
+                Row(modifier = Modifier
+                    .combinedClickable(
+                        onClick = {
+                            composableScope.launch {
+                                viewModel.selectAccount(account.id)
+                                onSelect()
+                            }
+                        },
+                        onLongClick = {
+                            haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+                        },
+                        onLongClickLabel = stringResource(R.string.account_index_settings_options)
+                    )
+                ) {
                     Text(account.displayName)
-                    Button(onClick = { accountManager.removeAccount(account.id) }) {
-                        Text("x")
-                    }
                 }
             }
         }

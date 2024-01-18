@@ -5,7 +5,7 @@ import com.jocmp.basilreader.ui.articles.articlesModule
 import org.koin.core.KoinApplication
 
 fun KoinApplication.setupModules() {
-    modules(commonModule)
+    modules(common)
     modules(accountModule)
     modules(articlesModule)
 }

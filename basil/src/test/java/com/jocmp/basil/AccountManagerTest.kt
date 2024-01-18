@@ -16,7 +16,7 @@ class AccountManagerTest {
     private fun buildManager(): AccountManager {
         return AccountManager(
             rootFolder = rootFolder.newFolder().toURI(),
-            preferencesProvider = InMemoryPreferencesProvider(
+            preferenceStoreProvider = InMemoryPreferencesProvider(
                 AccountPreferences(
                     displayName = "Local",
                     source = AccountSource.LOCAL.value

@@ -18,8 +18,8 @@ val Context.settings by preferencesDataStore("settings")
 
 
 /** Blocking getter to fetch the current account ID */
-val DataStore<Preferences>.selectedAccountID: String
-    get() = runBlocking { data.first() }.selectedAccountID!!
+val DataStore<Preferences>.selectedAccountID: String?
+    get() = runBlocking { data.first() }.selectedAccountID
 
 val Preferences.selectedAccountID: String?
     get() = get(stringPreferencesKey("account_id"))
@@ -33,6 +33,12 @@ val Preferences.articleID: String?
 suspend fun DataStore<Preferences>.putAccountID(id: String) {
     edit { preferences ->
         preferences[stringPreferencesKey("account_id")] = id
+    }
+}
+
+suspend fun DataStore<Preferences>.clearAccountID() {
+    edit { preferences ->
+        preferences.remove(stringPreferencesKey("account_id"))
     }
 }
 

@@ -34,6 +34,7 @@ fun ArticleScreen(
     onFeedAdd: () -> Unit,
     onFeedEdit: (feedID: String) -> Unit,
     onFolderEdit: (folderTitle: String) -> Unit,
+    onNavigateToAccounts: () -> Unit,
 ) {
     val filter = viewModel.filter
     val drawerState = rememberDrawerState(DrawerValue.Closed)
@@ -83,6 +84,7 @@ fun ArticleScreen(
                     viewModel.selectFeed(it)
                     onComplete()
                 },
+                onNavigateToAccounts = onNavigateToAccounts
             )
         },
         listPane = {

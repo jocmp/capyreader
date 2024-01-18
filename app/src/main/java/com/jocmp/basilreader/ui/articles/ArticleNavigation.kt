@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
+import com.jocmp.basilreader.ui.accounts.navigateToAccounts
 
 const val articlesRoute = "articles"
 
@@ -35,6 +36,9 @@ fun NavGraphBuilder.articleGraph(
             },
             onFolderEdit = { folderTitle ->
                 navController.navigateToEditFolder(folderTitle = folderTitle)
+            },
+            onNavigateToAccounts = {
+                navController.navigateToAccounts()
             }
         )
     }

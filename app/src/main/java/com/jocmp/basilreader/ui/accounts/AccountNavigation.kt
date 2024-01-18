@@ -15,6 +15,6 @@ fun NavGraphBuilder.accountsGraph(
     }
 }
 
-fun NavController.navigateToAddAccount() {
+fun NavController.navigateToAccounts() {
     navigate("accounts")
 }
