@@ -1,7 +1,5 @@
 package com.jocmp.basilreader.ui.articles
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,15 +7,15 @@ import com.jocmp.basil.AccountManager
 import com.jocmp.basil.EditFeedForm
 import com.jocmp.basil.Feed
 import com.jocmp.basil.Folder
-import com.jocmp.basilreader.selectedAccountID
+import com.jocmp.basilreader.AppPreferences
 import kotlinx.coroutines.launch
 
 class EditFeedViewModel(
     savedStateHandle: SavedStateHandle,
     accountManager: AccountManager,
-    settings: DataStore<Preferences>,
+    appPreferences: AppPreferences
 ) : ViewModel() {
-    private val account = accountManager.findByID(settings.selectedAccountID)!!
+    private val account = accountManager.findByID(appPreferences.accountID.get())!!
     private val args = EditFeedArgs(savedStateHandle)
 
     val feed: Feed

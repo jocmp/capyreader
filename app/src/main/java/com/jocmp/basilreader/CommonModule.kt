@@ -9,7 +9,7 @@ import org.koin.dsl.module
 internal val common = module {
     single<DatabaseProvider> { AndroidDatabaseProvider(get()) }
     single<PreferenceStoreProvider> { AndroidPreferenceStoreProvider(get()) }
-
+    single { AppPreferences(get()) }
     single {
         AccountManager(
             rootFolder = androidContext().filesDir.toURI(),

@@ -66,7 +66,7 @@ class AccountManager(
             id = id,
             path = pathURI,
             database = databaseProvider.build(id),
-            preferenceStore = preferenceStoreProvider.build(id)
+            preferences = preferenceStoreProvider.build(id)
         )
     }
 

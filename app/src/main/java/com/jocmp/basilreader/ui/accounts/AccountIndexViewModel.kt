@@ -1,18 +1,16 @@
 package com.jocmp.basilreader.ui.accounts
 
 import androidx.compose.runtime.mutableStateListOf
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jocmp.basil.Account
 import com.jocmp.basil.AccountManager
-import com.jocmp.basilreader.putAccountID
+import com.jocmp.basilreader.AppPreferences
 import kotlinx.coroutines.launch
 
 class AccountIndexViewModel(
     private val accountManager: AccountManager,
-    private val settings: DataStore<Preferences>,
+    private val appPreferences: AppPreferences,
 ) : ViewModel() {
     private val _accounts = mutableStateListOf<Account>().apply {
         addAll(accountManager.accounts)
@@ -27,8 +25,10 @@ class AccountIndexViewModel(
         }
     }
 
-    suspend fun selectAccount(id: String) {
-        settings.putAccountID(id)
+    fun selectAccount(id: String) {
+        appPreferences.articleID.delete()
+        appPreferences.filter.delete()
+        appPreferences.accountID.set(id)
     }
 //
 //    fun removeAccount(id: String) {

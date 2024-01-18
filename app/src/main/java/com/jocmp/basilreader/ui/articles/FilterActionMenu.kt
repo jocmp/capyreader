@@ -41,6 +41,10 @@ fun FilterActionMenu(
         }
     }
 
+    if (filter is ArticleFilter.Articles) {
+        return
+    }
+
     Box {
         IconButton(onClick = { setMenuExpanded(true) }) {
             Icon(
