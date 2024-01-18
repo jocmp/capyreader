@@ -19,7 +19,7 @@ class ArticleRecordsTest {
 
     @Before
     fun setup() {
-        database = InMemoryDatabaseProvider.build()
+        database = InMemoryDatabaseProvider.build("777")
         articleFixture = ArticleFixture(database)
     }
 

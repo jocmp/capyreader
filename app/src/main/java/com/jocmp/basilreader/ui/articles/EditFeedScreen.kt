@@ -1,7 +1,6 @@
 package com.jocmp.basilreader.ui.articles
 
 import androidx.compose.runtime.Composable
-import com.jocmp.basilreader.ui.accounts.AccountViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

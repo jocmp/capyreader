@@ -8,3 +8,4 @@ On start up
 On log out, do nothing. Will reprompt via startup
 
 
+- https://developer.android.com/reference/androidx/security/crypto/EncryptedSharedPreferences

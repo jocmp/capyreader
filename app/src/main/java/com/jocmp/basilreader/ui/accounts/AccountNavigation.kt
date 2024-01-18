@@ -1,17 +1,34 @@
 package com.jocmp.basilreader.ui.accounts
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 
-fun NavGraphBuilder.accountIndex(
-    onSelect: () -> Unit
+fun NavController.navigateToAccounts() {
+    navigate("accounts")
+}
+
+fun NavController.navigateToAccountSettings(accountID: String) {
+    navigate("accounts/${accountID}/edit")
+}
+
+fun NavGraphBuilder.accountsGraph(
+    onSelect: () -> Unit,
+    onSettingSelect: (accountID: String) -> Unit,
 ) {
     composable("accounts") {
-        AccountIndexView(onSelect = onSelect)
+        AccountIndexScreen(
+            onSelect = onSelect,
+            onSettingsSelect = onSettingSelect,
+        )
+    }
+    composable("accounts/{id}/edit") {
+        AccountSettingsScreen()
     }
 }
 
-fun NavController.navigateToAddAccount() {
-    navigate("accounts")
+internal class AccountSettingsArgs(val accountID: String) {
+    constructor(savedStateHandle: SavedStateHandle) :
+            this(checkNotNull(savedStateHandle["id"]) as String)
 }

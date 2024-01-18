@@ -1,41 +1,31 @@
-package com.jocmp.basilreader.ui.accounts
+package com.jocmp.basilreader.ui.articles
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.neverEqualPolicy
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import com.jocmp.basil.Account
 import com.jocmp.basil.AccountManager
+import com.jocmp.basil.AddFeedForm
 import com.jocmp.basil.Article
 import com.jocmp.basil.ArticleFilter
 import com.jocmp.basil.ArticleStatus
 import com.jocmp.basil.Feed
-import com.jocmp.basil.AddFeedForm
 import com.jocmp.basil.Folder
 import com.jocmp.basil.buildPager
 import com.jocmp.basil.unreadCounts
-import com.jocmp.basilreader.articleID
-import com.jocmp.basilreader.filter
-import com.jocmp.basilreader.putArticleID
-import com.jocmp.basilreader.putFilter
-import com.jocmp.basilreader.selectedAccountID
+import com.jocmp.basilreader.AppPreferences
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class AccountViewModel(
     accountManager: AccountManager,
-    private val settings: DataStore<Preferences>,
+    private val appPreferences: AppPreferences,
 ) : ViewModel() {
-    private val initialPreferences = runBlocking { settings.data.first() }
-
     private val accountState: MutableState<Account> = mutableStateOf(
-        accountManager.findByID(initialPreferences.selectedAccountID)!!,
+        accountManager.findByID(appPreferences.accountID.get())!!,
         policy = neverEqualPolicy()
     )
 
@@ -45,7 +35,7 @@ class AccountViewModel(
         refreshUnreadCounts()
     }
 
-    private val _filter = mutableStateOf(ArticleFilter.findOrDefault(initialPreferences))
+    private val _filter = mutableStateOf(appPreferences.filter.get())
 
     private val pager = mutableStateOf(account.buildPager(_filter.value))
 
@@ -58,7 +48,10 @@ class AccountViewModel(
     val folders: List<Folder>
         get() = account.folders.map(::copyFolderUnreadCounts)
 
-    private val articleState = mutableStateOf(account.findArticleOrNull(initialPreferences))
+    private val articleState = mutableStateOf(account.findArticle(appPreferences.articleID.get()))
+
+    val allUnreadCount: Long
+        get() = _unreadCounts.value.values.sum()
 
     val feeds: List<Feed>
         get() = account.feeds.map(::copyFeedUnreadCounts)
@@ -75,6 +68,12 @@ class AccountViewModel(
     val filter: ArticleFilter
         get() = _filter.value
 
+    fun selectArticleFilter() {
+        val nextFilter = ArticleFilter.default()
+
+        updateFilterValue(nextFilter)
+    }
+
     fun selectStatus(status: ArticleStatus) {
         val nextFilter = _filter.value.withStatus(status = status)
 
@@ -85,14 +84,14 @@ class AccountViewModel(
         val feed = account.findFeed(feedID) ?: return
         val feedFilter = ArticleFilter.Feeds(feed = feed, feedStatus = _filter.value.status)
 
-        selectFilter(feedFilter)
+        selectArticleFilter(feedFilter)
     }
 
     fun selectFolder(title: String) {
         val folder = account.findFolder(title) ?: return
         val feedFilter = ArticleFilter.Folders(folder = folder, folderStatus = _filter.value.status)
 
-        selectFilter(feedFilter)
+        selectArticleFilter(feedFilter)
     }
 
     fun removeFeed(feedID: String) {
@@ -124,7 +123,7 @@ class AccountViewModel(
         articleState.value = account.findArticle(articleID = articleID)
 
         viewModelScope.launch {
-            settings.putArticleID(articleID)
+            appPreferences.articleID.set(articleID)
         }
 
         refreshUnreadCounts()
@@ -160,7 +159,7 @@ class AccountViewModel(
         articleState.value = null
 
         viewModelScope.launch {
-            settings.putArticleID(null)
+            appPreferences.articleID.delete()
         }
     }
 
@@ -176,7 +175,7 @@ class AccountViewModel(
     }
 
     private fun resetToDefaultFilter() {
-        selectFilter(ArticleFilter.default().copy(filter.status))
+        selectArticleFilter(ArticleFilter.default().copy(filter.status))
     }
 
     private fun updateFilterValue(nextFilter: ArticleFilter) {
@@ -184,11 +183,11 @@ class AccountViewModel(
         pager.value = account.buildPager(nextFilter)
 
         viewModelScope.launch {
-            settings.putFilter(nextFilter)
+            appPreferences.filter.set(nextFilter)
         }
     }
 
-    private fun selectFilter(nextFilter: ArticleFilter) {
+    private fun selectArticleFilter(nextFilter: ArticleFilter) {
         updateFilterValue(nextFilter)
 
         clearArticle()
@@ -224,12 +223,4 @@ class AccountViewModel(
             _unreadCounts.value = accountState.value.unreadCounts
         }
     }
-}
-
-private fun ArticleFilter.Companion.findOrDefault(preferences: Preferences): ArticleFilter {
-    return preferences.filter ?: default()
-}
-
-private fun Account.findArticleOrNull(preferences: Preferences): Article? {
-    return preferences.articleID?.let { findArticle(it) }
 }

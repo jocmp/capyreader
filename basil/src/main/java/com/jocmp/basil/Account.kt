@@ -10,6 +10,9 @@ import com.jocmp.basil.opml.asFeed
 import com.jocmp.basil.opml.asFolder
 import com.jocmp.basil.persistence.ArticleRecords
 import com.jocmp.basil.persistence.FeedRecords
+import com.jocmp.basil.preferences.Preference
+import com.jocmp.basil.preferences.PreferenceStore
+import com.jocmp.basil.preferences.getEnum
 import com.jocmp.basil.shared.nowUTCInSeconds
 import com.jocmp.basil.shared.upsert
 import com.jocmp.feedfinder.FeedFinder
@@ -26,7 +29,7 @@ data class Account(
     val id: String,
     val path: URI,
     val database: Database,
-    val source: AccountSource = AccountSource.LOCAL,
+    val preferences: AccountPreferences,
 ) {
     private var delegate: AccountDelegate
 
@@ -46,9 +49,14 @@ data class Account(
     )
 
     internal val articleRecords: ArticleRecords = ArticleRecords(database)
+
     private val feedRecords: FeedRecords = FeedRecords(database)
 
-    val displayName = "Local"
+    private val source: AccountSource
+        get() = preferences.source.get()
+
+    val displayName: Preference<String>
+        get() = preferences.displayName
 
     init {
         loadOPML(opmlFile.load())
@@ -222,6 +230,10 @@ data class Account(
     }
 
     fun findArticle(articleID: String): Article? {
+        if (articleID.isBlank()) {
+            return null
+        }
+
         return articleRecords.fetch(articleID = articleID)
     }
 

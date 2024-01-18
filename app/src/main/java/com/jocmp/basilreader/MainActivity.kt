@@ -10,6 +10,7 @@ import com.jocmp.basilreader.ui.App
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
 import org.koin.compose.koinInject
 
@@ -23,9 +24,11 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun startDestination(): String {
-        val accountID = runBlocking { baseContext.settings.data.first().selectedAccountID }
+        val appPreferences = get<AppPreferences>()
 
-        return if (accountID.isNullOrBlank()) {
+        val accountID = appPreferences.accountID.get()
+
+        return if (accountID.isBlank()) {
             "accounts"
         } else {
             "articles"

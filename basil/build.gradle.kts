@@ -58,13 +58,14 @@ android {
 }
 
 dependencies {
+    val coreVersion = "1.12.0"
     val sqldelightVersion = libs.versions.sqldelight.get()
     val pagingVersion = libs.versions.androidx.paging.get()
 
+    implementation("androidx.core:core-ktx:$coreVersion")
+    implementation(libs.androidx.preferences)
     implementation("androidx.paging:paging-runtime-ktx:$pagingVersion")
-    implementation("androidx.datastore:datastore-core:1.0.0")
     implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.serialization.json)
     implementation(libs.rssparser)
     implementation(project(":feedbinclient"))
     implementation(project(":feedfinder"))

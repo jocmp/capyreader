@@ -24,7 +24,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.jocmp.basilreader.ui.accounts.AccountViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -35,6 +34,7 @@ fun ArticleScreen(
     onFeedAdd: () -> Unit,
     onFeedEdit: (feedID: String) -> Unit,
     onFolderEdit: (folderTitle: String) -> Unit,
+    onNavigateToAccounts: () -> Unit,
 ) {
     val filter = viewModel.filter
     val drawerState = rememberDrawerState(DrawerValue.Closed)
@@ -84,6 +84,8 @@ fun ArticleScreen(
                     viewModel.selectFeed(it)
                     onComplete()
                 },
+                onNavigateToAccounts = onNavigateToAccounts,
+                onFilterSelect = viewModel::selectArticleFilter,
             )
         },
         listPane = {

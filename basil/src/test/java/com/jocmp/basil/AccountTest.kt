@@ -48,7 +48,7 @@ class AccountTest {
             anyConstructed<LocalAccountDelegate>().fetchAll(any())
         } returns emptyList()
 
-        database = InMemoryDatabaseProvider.forAccount("777")
+        database = InMemoryDatabaseProvider.build("777")
     }
 
     private fun buildAccount(id: String = "777", path: File = folder.newFile()): Account {
@@ -56,6 +56,7 @@ class AccountTest {
             id = id,
             path = path.toURI(),
             database = database,
+            preferences = AccountPreferences(InMemoryDataStore())
         )
     }
 

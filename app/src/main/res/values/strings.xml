@@ -24,4 +24,9 @@
     <string name="folder_action_delete_title">Delete Folder</string>
     <string name="folder_action_edit">Rename</string>
     <string name="feed_action_unsubscribe_title">Unsubscribe</string>
+    <string name="settings_action">Settings</string>
+    <string name="account_index_settings_options">Account Options</string>
+    <string name="filter_all">All</string>
+    <string name="account_index_menu_settings">Account Settings</string>
+    <string name="account_settings_submit">Save</string>
 </resources>
