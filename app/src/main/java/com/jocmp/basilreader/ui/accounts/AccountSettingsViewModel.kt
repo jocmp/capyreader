@@ -9,13 +9,20 @@ import kotlinx.coroutines.flow.Flow
 
 class AccountSettingsViewModel(
     savedStateHandle: SavedStateHandle,
-    accountManager: AccountManager
+    private val accountManager: AccountManager
 ): ViewModel() {
     private val args = AccountSettingsArgs(savedStateHandle)
 
-    val account = accountManager.findByID(args.accountID)!!
+    private val account = accountManager.findByID(args.accountID)!!
+
+    val displayName: String
+        get() = account.displayName
 
     fun submitName(displayName: String) {
-        account.displayName.set(displayName)
+        account.displayName = displayName
+    }
+
+    fun removeAccount() {
+        accountManager.removeAccount(accountID = account.id)
     }
 }

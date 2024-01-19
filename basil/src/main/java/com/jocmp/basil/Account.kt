@@ -55,8 +55,9 @@ data class Account(
     private val source: AccountSource
         get() = preferences.source.get()
 
-    val displayName: Preference<String>
-        get() = preferences.displayName
+    var displayName: String
+        get() = preferences.displayName.get()
+        set(value) = preferences.displayName.set(value)
 
     init {
         loadOPML(opmlFile.load())
@@ -195,7 +196,8 @@ data class Account(
     }
 
     suspend fun editFolder(form: EditFolderForm): Result<Folder> {
-        val folder = findFolder(form.existingTitle) ?: return Result.failure(Throwable("Folder not found"))
+        val folder =
+            findFolder(form.existingTitle) ?: return Result.failure(Throwable("Folder not found"))
 
         val updatedFolder = folder.copy(title = form.title)
 

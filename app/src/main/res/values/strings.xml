@@ -29,4 +29,8 @@
     <string name="filter_all">All</string>
     <string name="account_index_menu_settings">Account Settings</string>
     <string name="account_settings_submit">Save</string>
+    <string name="account_settings_delete_account_button">Delete Account</string>
+    <string name="account_settings_delete_account_title">Delete Account</string>
+    <string name="account_settings_delete_account_message">Are you sure you want to delete the account \"%1$s\"? This cannot be undone.</string>
+    <string name="account_settings_delete_account_submit">Delete</string>
 </resources>
