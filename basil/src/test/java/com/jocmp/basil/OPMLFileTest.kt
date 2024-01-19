@@ -21,7 +21,7 @@ class OPMLFileTest {
             preferences = AccountPreferences(InMemoryDataStore())
         )
 
-        account.displayName.set("Local")
+        account.displayName = "Local"
 
         account.folders.addAll(
             listOf(
