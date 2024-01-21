@@ -61,7 +61,7 @@ fun AccountIndexScreen(
                             onLongClickLabel = stringResource(R.string.account_index_settings_options)
                         )
                 ) {
-                    Text(account.displayName.get())
+                    Text(account.displayName)
                     DropdownMenu(
                         expanded = menuAccountID == account.id,
                         onDismissRequest = { resetMenu() }

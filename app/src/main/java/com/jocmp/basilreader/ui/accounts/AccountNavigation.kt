@@ -1,30 +1,25 @@
 package com.jocmp.basilreader.ui.accounts
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-
-fun NavController.navigateToAccounts() {
-    navigate("accounts")
-}
-
-fun NavController.navigateToAccountSettings(accountID: String) {
-    navigate("accounts/${accountID}/edit")
-}
+import com.jocmp.basilreader.ui.Route
 
 fun NavGraphBuilder.accountsGraph(
     onSelect: () -> Unit,
     onSettingSelect: (accountID: String) -> Unit,
+    goBackToAccountIndex: () -> Unit,
 ) {
-    composable("accounts") {
+    composable(Route.AccountIndex.path) {
         AccountIndexScreen(
             onSelect = onSelect,
             onSettingsSelect = onSettingSelect,
         )
     }
-    composable("accounts/{id}/edit") {
-        AccountSettingsScreen()
+    composable(Route.AccountSettings.path) {
+        AccountSettingsScreen(
+            goBack = goBackToAccountIndex
+        )
     }
 }
 

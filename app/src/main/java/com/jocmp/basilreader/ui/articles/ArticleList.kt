@@ -39,7 +39,8 @@ fun ArticleList(
             count = lazyPagingItems.itemCount,
             key = lazyPagingItems.itemKey { it.id }
         ) { index ->
-            val item = lazyPagingItems[index]!!
+            val item = lazyPagingItems[index] ?: return@items
+
             val fontWeight = item.fontWeight
 
             Row {

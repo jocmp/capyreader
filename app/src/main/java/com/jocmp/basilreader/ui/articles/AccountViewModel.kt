@@ -116,6 +116,8 @@ class AccountViewModel(
             is ArticleFilter.Folders -> account.refreshFeeds(currentFilter.folder.feeds)
             is ArticleFilter.Articles -> account.refreshAll()
         }
+
+        refreshUnreadCounts()
     }
 
     fun selectArticle(articleID: String) {
