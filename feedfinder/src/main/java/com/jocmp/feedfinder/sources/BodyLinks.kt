@@ -5,13 +5,13 @@ import com.jocmp.feedfinder.Request
 import com.jocmp.feedfinder.Response
 import com.jocmp.feedfinder.parser.Feed
 import com.jocmp.feedfinder.parser.Parser
-import org.jsoup.nodes.Element
-import java.net.URL
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import org.jsoup.nodes.Element
+import java.net.URL
 
-internal class MetaLinkSource(
+internal class BodyLinks(
     private val response: Response,
     private val request: Request = DefaultRequest()
 ) : Source {
@@ -19,32 +19,23 @@ internal class MetaLinkSource(
         val document = response.findDocument() ?: return emptyList()
 
         return coroutineScope {
-            document.select("link[rel~=alternate]")
-                .filter { element -> isValidLink(element) }
+            document.select("a")
+                .filter { element -> isCandidate(element) }
                 .map { async { request.fetch(url = URL(it.absUrl("href"))) } }
                 .awaitAll()
                 .mapNotNull { response ->
-                    when (val result = response.parse()) {
-                        is Parser.Result.ParsedFeed -> result.feed
-                        is Parser.Result.HTMLDocument -> null
-                    }
+                    (response.parse() as? Parser.Result.ParsedFeed)?.feed
                 }
         }
     }
 
-    private fun isValidLink(element: Element): Boolean {
-        val type = element.attr("type").lowercase()
-        val href = element.attr("href")
-
-        return href.isNotBlank() && linkTypes.contains(type)
+    private fun isCandidate(anchor: Element): Boolean {
+        val href = anchor.attr("href")
+        return href.isNotBlank() &&
+                TYPES.any { type -> href.contains(type) }
     }
 
     companion object {
-        private val linkTypes = setOf(
-            "application/rss+xml",
-            "application/atom+xml",
-            "application/feed+json",
-            "application/json"
-        )
+        private val TYPES = listOf("feed", "xml", "rss", "atom")
     }
 }

@@ -1,9 +1,10 @@
 package com.jocmp.feedfinder
 
 import com.jocmp.feedfinder.parser.Feed
-import com.jocmp.feedfinder.sources.MetaLinkSource
+import com.jocmp.feedfinder.sources.BodyLinks
+import com.jocmp.feedfinder.sources.MetaLinks
 import com.jocmp.feedfinder.sources.Source
-import com.jocmp.feedfinder.sources.XMLSource
+import com.jocmp.feedfinder.sources.XML
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.MalformedURLException
@@ -41,8 +42,9 @@ class FeedFinder internal constructor(
 
     private fun sources(response: Response): List<Source> {
         return listOf(
-            XMLSource(response),
-            MetaLinkSource(response = response, request = request),
+            XML(response),
+            MetaLinks(response = response, request = request),
+            BodyLinks(response = response, request = request),
         )
     }
 
