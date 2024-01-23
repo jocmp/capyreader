@@ -38,11 +38,11 @@ class AccountTest {
 
         coEvery {
             constructedWith<FeedFinder>(EqMatcher(THE_VERGE_URL)).find()
-        } returns FeedFinder.Result.Success(listOf(TheVergeFeed()))
+        } returns Result.success(listOf(TheVergeFeed()))
 
         coEvery {
             constructedWith<FeedFinder>(EqMatcher(ARS_TECHNICA_URL)).find()
-        } returns FeedFinder.Result.Success(listOf(ArsTechnicaFeed()))
+        } returns Result.success(listOf(ArsTechnicaFeed()))
 
         coEvery {
             anyConstructed<LocalAccountDelegate>().fetchAll(any())

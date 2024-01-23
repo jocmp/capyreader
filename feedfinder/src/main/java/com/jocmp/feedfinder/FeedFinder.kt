@@ -7,6 +7,7 @@ import com.jocmp.feedfinder.sources.Source
 import com.jocmp.feedfinder.sources.XML
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.io.FileNotFoundException
 import java.net.MalformedURLException
 import java.net.URI
 import java.net.URISyntaxException
@@ -15,9 +16,9 @@ class FeedFinder internal constructor(
     private val url: String,
     private val request: Request
 ) {
-    constructor(url: String): this(url, DefaultRequest())
+    constructor(url: String) : this(url, DefaultRequest())
 
-    suspend fun find(): Result = withContext(Dispatchers.IO) {
+    suspend fun find(): Result<List<Feed>> = withContext(Dispatchers.IO) {
         try {
             val parsedURL = URI(url.withProtocol).toURL()
             val response = request.fetch(url = parsedURL)
@@ -32,11 +33,19 @@ class FeedFinder internal constructor(
                 }
             }
 
-            Result.Success(feeds = feeds)
+            if (feeds.isEmpty()) {
+                Result.failure(FeedError.NO_FEEDS_FOUND.asException)
+            } else {
+                Result.success(feeds)
+            }
         } catch (e: MalformedURLException) {
-            Result.Failure(error = FeedError.IO_FAILURE)
+            Result.failure(e)
         } catch (e: URISyntaxException) {
-            Result.Failure(error = FeedError.INVALID_URL)
+            Result.failure(FeedError.INVALID_URL.asException)
+        } catch (e: FileNotFoundException) {
+            Result.failure(FeedError.INVALID_URL.asException)
+        } catch (e: Throwable) {
+            Result.failure(e)
         }
     }
 
@@ -48,14 +57,8 @@ class FeedFinder internal constructor(
         )
     }
 
-    sealed class Result {
-        class Success(val feeds: List<Feed>) : Result()
-
-        class Failure(val error: FeedError) : Result()
-    }
-
     companion object {
-        suspend fun find(feedURL: String): Result {
+        suspend fun find(feedURL: String): Result<List<Feed>> {
             return FeedFinder(url = feedURL).find()
         }
     }

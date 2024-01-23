@@ -114,11 +114,18 @@ data class Account(
     suspend fun addFeed(form: AddFeedForm): Result<Feed> {
         val result = FeedFinder.find(feedURL = form.url)
 
-        if (result is FeedFinder.Result.Failure) {
-            return Result.failure(Throwable(message = result.error.name))
+        return if (result.isSuccess) {
+            saveNewFeed(form, result.getOrNull()!!)
+        } else {
+            Result.failure(result.exceptionOrNull()!!)
         }
+    }
 
-        val found = (result as FeedFinder.Result.Success).feeds.first()
+    private suspend fun saveNewFeed(
+        form: AddFeedForm,
+        foundFeeds: List<com.jocmp.feedfinder.parser.Feed>
+    ): Result<Feed> {
+        val found = foundFeeds.first()
 
         val externalFeed = delegate.createFeed(feedURL = found.feedURL)
 

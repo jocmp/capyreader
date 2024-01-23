@@ -165,14 +165,21 @@ class AccountViewModel(
         }
     }
 
-    fun addFeed(entry: AddFeedForm, onSuccess: () -> Unit) {
+    fun addFeed(
+        entry: AddFeedForm,
+        onSuccess: () -> Unit,
+        onFailure: (message: String) -> Unit
+    ) {
         viewModelScope.launch {
-            val result = account.addFeed(entry)
-
-            result.onSuccess { feed ->
-                selectFeed(feed.id)
-                onSuccess()
-            }
+            return@launch account.addFeed(entry).fold(
+                onSuccess = { feed ->
+                    selectFeed(feed.id)
+                    onSuccess()
+                },
+                onFailure = {
+                    onFailure(it.message ?: "")
+                }
+            )
         }
     }
 
