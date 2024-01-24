@@ -8,20 +8,6 @@ import java.net.URL
 internal object Parser {
     class NoFeedFoundError : Throwable()
 
-    // Parse as XML
-    //   return result if feed is valid
-    // if result is not valid, attempt to detect encoding
-    // if encoding is present and encoding detection confidence is high,
-    //   reparse XML
-    //   return result if feed is valid
-    // if result is not present, parse as JSON
-    //   return result if feed is valid
-    // if no result, raise a NotFeed error
-
-    // Parser
-    // - XMLFeed
-    // - JSONFeed
-    // - HTML
     @Throws(NoFeedFoundError::class)
     suspend fun parse(body: String, url: URL, validate: Boolean): Result {
         val xmlFeed = XMLFeed.from(url, body)
