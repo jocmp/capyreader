@@ -26,11 +26,14 @@ class FeedFinder internal constructor(
             val feeds = mutableListOf<Feed>()
 
             sources(response).forEach { source ->
+                if (feeds.isNotEmpty()) {
+                    return@forEach
+                }
+
                 val currentFeeds = source.find()
 
                 if (currentFeeds.isNotEmpty()) {
                     feeds.addAll(currentFeeds)
-                    return@forEach
                 }
             }
 
