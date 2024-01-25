@@ -1,4 +1,4 @@
-package com.jocmp.basil
+package com.jocmp.basil.fixtures
 
 import com.jocmp.feedfinder.parser.Feed
 import java.net.URL

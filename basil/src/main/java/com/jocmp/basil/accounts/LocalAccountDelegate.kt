@@ -1,27 +1,14 @@
 package com.jocmp.basil.accounts
 
-import com.jocmp.basil.Account
 import com.jocmp.basil.Feed
 import com.jocmp.basil.shared.parseISODate
 import com.prof18.rssparser.RssParser
 import com.prof18.rssparser.model.RssItem
 import java.net.URL
 
-internal class LocalAccountDelegate(private val account: Account) : AccountDelegate {
-    override suspend fun createFeed(feedURL: URL): ExternalFeed {
-        val existingFeed = account.flattenedFeeds.find { it.feedURL == feedURL.toString() }
-
-        if (existingFeed != null) {
-            return ExternalFeed(
-                externalID = existingFeed.externalID,
-                feedURL = feedURL.toString()
-            )
-        }
-
-        return ExternalFeed(
-            externalID = feedURL.toString(),
-            feedURL = feedURL.toString()
-        )
+internal class LocalAccountDelegate : AccountDelegate {
+    override suspend fun createFeed(feedURL: URL): Result<String> {
+        return Result.success(feedURL.toString())
     }
 
     override suspend fun fetchAll(feed: Feed): List<ParsedItem> {

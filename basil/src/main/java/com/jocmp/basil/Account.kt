@@ -5,16 +5,15 @@ import com.jocmp.basil.accounts.LocalAccountDelegate
 import com.jocmp.basil.accounts.ParsedItem
 import com.jocmp.basil.accounts.asOPML
 import com.jocmp.basil.db.Database
+import com.jocmp.basil.opml.OPMLImporter
 import com.jocmp.basil.opml.Outline
 import com.jocmp.basil.opml.asFeed
 import com.jocmp.basil.opml.asFolder
 import com.jocmp.basil.persistence.ArticleRecords
 import com.jocmp.basil.persistence.FeedRecords
-import com.jocmp.basil.preferences.Preference
-import com.jocmp.basil.preferences.PreferenceStore
-import com.jocmp.basil.preferences.getEnum
 import com.jocmp.basil.shared.nowUTCInSeconds
 import com.jocmp.basil.shared.upsert
+import com.jocmp.feedfinder.DefaultFeedFinder
 import com.jocmp.feedfinder.FeedFinder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -22,6 +21,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.InputStream
 import java.net.URI
 import java.net.URL
 
@@ -30,12 +30,13 @@ data class Account(
     val path: URI,
     val database: Database,
     val preferences: AccountPreferences,
+    val feedFinder: FeedFinder = DefaultFeedFinder()
 ) {
     private var delegate: AccountDelegate
 
     init {
         when (source) {
-            AccountSource.LOCAL -> delegate = LocalAccountDelegate(this)
+            AccountSource.LOCAL -> delegate = LocalAccountDelegate()
         }
     }
 
@@ -112,7 +113,7 @@ data class Account(
     }
 
     suspend fun addFeed(form: AddFeedForm): Result<Feed> {
-        val result = FeedFinder.find(feedURL = form.url)
+        val result = feedFinder.find(url = form.url)
 
         return if (result.isSuccess) {
             saveNewFeed(form, result.getOrNull()!!)
@@ -127,25 +128,22 @@ data class Account(
     ): Result<Feed> {
         val found = foundFeeds.first()
 
-        val externalFeed = delegate.createFeed(feedURL = found.feedURL)
+        val externalID = delegate
+            .createFeed(feedURL = found.feedURL)
+            .getOrNull() ?: return Result.failure(Throwable("Could not create external feed"))
 
-        val record = feedRecords.findOrCreate(externalFeed)
+        val record = feedRecords.findOrCreate(
+            feedURL = found.feedURL.toString(),
+            externalID = externalID
+        )
 
         val feed = Feed(
             id = record.id.toString(),
-            externalID = externalFeed.externalID,
-            name = entryNameOrDefault(form, found.name),
-            feedURL = externalFeed.feedURL,
+            externalID = externalID,
+            name = entryNameOrDefault(form.name, found.name),
+            feedURL = found.feedURL.toString(),
             siteURL = entrySiteURL(found.siteURL)
         )
-
-        coroutineScope {
-            launch {
-                val items = delegate.fetchAll(feed)
-
-                updateArticles(feed, items)
-            }
-        }
 
         if (form.folderTitles.isEmpty()) {
             feeds.add(feed)
@@ -163,6 +161,14 @@ data class Account(
             }
         }
 
+        coroutineScope {
+            launch {
+                val items = delegate.fetchAll(feed)
+
+                updateArticles(feed, items)
+            }
+        }
+
         saveOPMLFile()
 
         return Result.success(feed)
@@ -171,7 +177,7 @@ data class Account(
     suspend fun editFeed(form: EditFeedForm): Result<Feed> {
         val feed = findFeed(form.feedID) ?: return Result.failure(Throwable("Feed not found"))
 
-        val editedFeed = feed.copy(name = form.name)
+        val editedFeed = feed.copy(name = entryNameOrDefault(form.name))
 
         if (form.folderTitles.isEmpty()) {
             feeds.upsert(editedFeed)
@@ -262,6 +268,10 @@ data class Account(
         articleRecords.markUnread(articleID = articleID)
     }
 
+    suspend fun import(inputStream: InputStream) {
+        OPMLImporter(this).import(inputStream)
+    }
+
     private fun updateArticles(feed: Feed, items: List<ParsedItem>) {
         items.forEach { item ->
             val publishedAt = item.publishedAt?.toEpochSecond()
@@ -306,12 +316,16 @@ data class Account(
         return url?.toString() ?: ""
     }
 
-    private fun entryNameOrDefault(entry: AddFeedForm, feedName: String): String {
-        if (entry.name.isBlank()) {
+    private fun entryNameOrDefault(entryName: String, feedName: String = ""): String {
+        if (entryName.isNotBlank()) {
+            return entryName
+        }
+
+        if (feedName.isNotBlank()) {
             return feedName
         }
 
-        return entry.name
+        return DEFAULT_TITLE
     }
 
     private suspend fun saveOPMLFile() = withContext(Dispatchers.IO) {
@@ -323,8 +337,8 @@ data class Account(
 
         items.forEach {
             when (it) {
-                is Outline.FeedOutline -> it.feed.id?.toLongOrNull()?.let { id -> ids.add(id) }
                 is Outline.FolderOutline -> ids.addAll(it.folder.feeds.mapNotNull { feed -> feed.id?.toLongOrNull() })
+                is Outline.FeedOutline -> it.feed.id?.toLongOrNull()?.let { id -> ids.add(id) }
             }
         }
 
@@ -356,3 +370,5 @@ internal fun Account.asOPML(): String {
 
     return opml
 }
+
+private const val DEFAULT_TITLE = "(No title)"

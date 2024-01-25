@@ -12,12 +12,11 @@ internal class XMLFeed(
     override fun isValid(): Boolean {
         return channel != null &&
                 !channel.link.isNullOrBlank() &&
-                !channel.title.isNullOrBlank() &&
                 hasEntries()
     }
 
     override val name: String
-        get() = channel!!.title!!
+        get() = channel!!.title ?: ""
 
     override val siteURL: URL?
         get() = channel?.link?.let {

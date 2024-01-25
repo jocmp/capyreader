@@ -1,11 +1,15 @@
 package com.jocmp.basilreader.ui.accounts
 
-import android.content.Context
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
-import com.jocmp.basil.Account
-import com.jocmp.basilreader.OPMLExporter
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
+
+private const val TAG = "AccountSettingsScreen"
 
 @Composable
 fun AccountSettingsScreen(
@@ -13,6 +17,17 @@ fun AccountSettingsScreen(
     goBack: () -> Unit,
 ) {
     val context = LocalContext.current
+    val picker = rememberLauncherForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri ->
+        Log.d(TAG, "importOPML: start $uri")
+
+        if (uri != null) {
+            viewModel.importOPML(context.contentResolver.openInputStream(uri)) {
+                Log.d(TAG, "importOPML: success $uri")
+            }
+        }
+    }
 
     AccountSettingsView(
         defaultDisplayName = viewModel.displayName,
@@ -23,6 +38,9 @@ fun AccountSettingsScreen(
         submit = viewModel::submitName,
         exportOPML = {
             context.exportOPML(account = viewModel.account)
+        },
+        importOPML = {
+            picker.launch("text/xml")
         }
     )
 }

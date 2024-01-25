@@ -2,6 +2,10 @@ package com.jocmp.basil
 
 import com.jocmp.basil.accounts.LocalAccountDelegate
 import com.jocmp.basil.db.Database
+import com.jocmp.basil.fixtures.ARS_TECHNICA_URL
+import com.jocmp.basil.fixtures.ArsTechnicaFeed
+import com.jocmp.basil.fixtures.THE_VERGE_URL
+import com.jocmp.basil.fixtures.TheVergeFeed
 import com.jocmp.feedfinder.FeedFinder
 import io.mockk.EqMatcher
 import io.mockk.coEvery
@@ -12,7 +16,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import java.io.File
-import kotlin.math.exp
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
@@ -31,18 +34,16 @@ class AccountTest {
         folderTitles = listOf()
     )
 
+    private val feedFinder = TestFeedFinder(
+        mapOf(
+            THE_VERGE_URL to TheVergeFeed(),
+            ARS_TECHNICA_URL to ArsTechnicaFeed()
+        )
+    )
+
     @Before
     fun setup() {
-        mockkConstructor(FeedFinder::class)
         mockkConstructor(LocalAccountDelegate::class)
-
-        coEvery {
-            constructedWith<FeedFinder>(EqMatcher(THE_VERGE_URL)).find()
-        } returns Result.success(listOf(TheVergeFeed()))
-
-        coEvery {
-            constructedWith<FeedFinder>(EqMatcher(ARS_TECHNICA_URL)).find()
-        } returns Result.success(listOf(ArsTechnicaFeed()))
 
         coEvery {
             anyConstructed<LocalAccountDelegate>().fetchAll(any())
@@ -56,7 +57,8 @@ class AccountTest {
             id = id,
             path = path.toURI(),
             database = database,
-            preferences = AccountPreferences(InMemoryDataStore())
+            preferences = AccountPreferences(InMemoryDataStore()),
+            feedFinder = feedFinder
         )
     }
 
