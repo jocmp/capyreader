@@ -8,6 +8,7 @@ import com.jocmp.basil.Account
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
+import kotlin.io.path.exists
 
 class OPMLExporter(
     private val context: Context,
@@ -19,6 +20,10 @@ class OPMLExporter(
 
         val source = File(account.opmlFile.path).toPath()
         val target = export.toPath()
+
+        if (!source.exists()) {
+            return
+        }
 
         val result = Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING)
 
