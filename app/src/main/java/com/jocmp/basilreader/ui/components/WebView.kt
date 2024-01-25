@@ -29,6 +29,8 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
+import com.jocmp.basilreader.ui.components.LoadingState.Finished
+import com.jocmp.basilreader.ui.components.LoadingState.Loading
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -61,7 +63,7 @@ import kotlinx.coroutines.withContext
  * @sample com.google.accompanist.sample.webview.BasicWebViewSample
  */
 @Composable
-public fun WebView(
+fun WebView(
     state: WebViewState,
     modifier: Modifier = Modifier,
     captureBackPresses: Boolean = false,
@@ -297,13 +299,13 @@ public open class AccompanistWebChromeClient : WebChromeClient() {
     }
 }
 
-public sealed class WebContent {
-    public data class Url(
+sealed class WebContent {
+    data class Url(
         val url: String,
         val additionalHttpHeaders: Map<String, String> = emptyMap(),
     ) : WebContent()
 
-    public data class Data(
+    data class Data(
         val data: String,
         val baseUrl: String? = null,
         val encoding: String = "utf-8",
@@ -311,7 +313,7 @@ public sealed class WebContent {
         val historyUrl: String? = null
     ) : WebContent()
 
-    public data class Post(
+    data class Post(
         val url: String,
         val postData: ByteArray
     ) : WebContent() {
@@ -322,9 +324,8 @@ public sealed class WebContent {
             other as Post
 
             if (url != other.url) return false
-            if (!postData.contentEquals(other.postData)) return false
 
-            return true
+            return postData.contentEquals(other.postData)
         }
 
         override fun hashCode(): Int {
@@ -334,17 +335,7 @@ public sealed class WebContent {
         }
     }
 
-    @Deprecated("Use state.lastLoadedUrl instead")
-    public fun getCurrentUrl(): String? {
-        return when (this) {
-            is Url -> url
-            is Data -> baseUrl
-            is Post -> url
-            is NavigatorOnly -> throw IllegalStateException("Unsupported")
-        }
-    }
-
-    public object NavigatorOnly : WebContent()
+    data object NavigatorOnly : WebContent()
 }
 
 internal fun WebContent.withUrl(url: String) = when (this) {
@@ -356,22 +347,22 @@ internal fun WebContent.withUrl(url: String) = when (this) {
  * Sealed class for constraining possible loading states.
  * See [Loading] and [Finished].
  */
-public sealed class LoadingState {
+sealed class LoadingState {
     /**
      * Describes a WebView that has not yet loaded for the first time.
      */
-    public object Initializing : LoadingState()
+    data object Initializing : LoadingState()
 
     /**
      * Describes a webview between `onPageStarted` and `onPageFinished` events, contains a
      * [progress] property which is updated by the webview.
      */
-    public data class Loading(val progress: Float) : LoadingState()
+    data class Loading(val progress: Float) : LoadingState()
 
     /**
      * Describes a webview that has finished loading content.
      */
-    public object Finished : LoadingState()
+    data object Finished : LoadingState()
 }
 
 /**
