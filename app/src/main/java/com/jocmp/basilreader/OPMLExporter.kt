@@ -13,7 +13,7 @@ class OPMLExporter(
     private val context: Context,
 ) {
     fun export(account: Account) {
-        val exports = File(context.filesDir, "exports")
+        val exports = File(context.filesDir, "transfers")
         exports.mkdirs()
         val export = File(exports, "${account.displayName}.xml")
 

@@ -15,6 +15,7 @@ import com.jocmp.basil.preferences.PreferenceStore
 import com.jocmp.basil.preferences.getEnum
 import com.jocmp.basil.shared.nowUTCInSeconds
 import com.jocmp.basil.shared.upsert
+import com.jocmp.feedfinder.DefaultFeedFinder
 import com.jocmp.feedfinder.FeedFinder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -30,6 +31,7 @@ data class Account(
     val path: URI,
     val database: Database,
     val preferences: AccountPreferences,
+    val feedFinder: FeedFinder = DefaultFeedFinder()
 ) {
     private var delegate: AccountDelegate
 
@@ -112,7 +114,7 @@ data class Account(
     }
 
     suspend fun addFeed(form: AddFeedForm): Result<Feed> {
-        val result = FeedFinder.find(feedURL = form.url)
+        val result = feedFinder.find(url = form.url)
 
         return if (result.isSuccess) {
             saveNewFeed(form, result.getOrNull()!!)
@@ -127,25 +129,22 @@ data class Account(
     ): Result<Feed> {
         val found = foundFeeds.first()
 
-        val externalFeed = delegate.createFeed(feedURL = found.feedURL)
+        val externalID = delegate
+            .createFeed(feedURL = found.feedURL)
+            .getOrNull() ?: return Result.failure(Throwable("Could not create external feed"))
 
-        val record = feedRecords.findOrCreate(externalFeed)
+        val record = feedRecords.findOrCreate(
+            feedURL = found.feedURL.toString(),
+            externalID = externalID
+        )
 
         val feed = Feed(
             id = record.id.toString(),
-            externalID = externalFeed.externalID,
+            externalID = externalID,
             name = entryNameOrDefault(form, found.name),
-            feedURL = externalFeed.feedURL,
+            feedURL = found.feedURL.toString(),
             siteURL = entrySiteURL(found.siteURL)
         )
-
-        coroutineScope {
-            launch {
-                val items = delegate.fetchAll(feed)
-
-                updateArticles(feed, items)
-            }
-        }
 
         if (form.folderTitles.isEmpty()) {
             feeds.add(feed)
@@ -160,6 +159,14 @@ data class Account(
                 }
 
                 folders.add(folder)
+            }
+        }
+
+        coroutineScope {
+            launch {
+                val items = delegate.fetchAll(feed)
+
+                updateArticles(feed, items)
             }
         }
 

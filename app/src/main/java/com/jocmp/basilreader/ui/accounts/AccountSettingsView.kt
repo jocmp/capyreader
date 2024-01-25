@@ -72,9 +72,14 @@ fun AccountSettingsView(
                 Text(stringResource(R.string.account_settings_submit))
             }
             Button(
+                onClick = {}
+            ) {
+                Text(stringResource(R.string.account_settings_import))
+            }
+            Button(
                 onClick = exportOPML
             ) {
-                Text("Export")
+                Text(stringResource(R.string.account_settings_export))
             }
             Button(onClick = { setRemoveDialogOpen(true) }) {
                 Text(stringResource(R.string.account_settings_delete_account_button))

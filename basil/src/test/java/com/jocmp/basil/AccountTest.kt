@@ -34,18 +34,16 @@ class AccountTest {
         folderTitles = listOf()
     )
 
+    private val feedFinder = TestFeedFinder(
+        mapOf(
+            THE_VERGE_URL to TheVergeFeed(),
+            ARS_TECHNICA_URL to ArsTechnicaFeed()
+        )
+    )
+
     @Before
     fun setup() {
-        mockkConstructor(FeedFinder::class)
         mockkConstructor(LocalAccountDelegate::class)
-
-        coEvery {
-            constructedWith<FeedFinder>(EqMatcher(THE_VERGE_URL)).find()
-        } returns Result.success(listOf(TheVergeFeed()))
-
-        coEvery {
-            constructedWith<FeedFinder>(EqMatcher(ARS_TECHNICA_URL)).find()
-        } returns Result.success(listOf(ArsTechnicaFeed()))
 
         coEvery {
             anyConstructed<LocalAccountDelegate>().fetchAll(any())
@@ -59,7 +57,8 @@ class AccountTest {
             id = id,
             path = path.toURI(),
             database = database,
-            preferences = AccountPreferences(InMemoryDataStore())
+            preferences = AccountPreferences(InMemoryDataStore()),
+            feedFinder = feedFinder
         )
     }
 

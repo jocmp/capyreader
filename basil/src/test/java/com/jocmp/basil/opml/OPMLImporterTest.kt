@@ -2,6 +2,7 @@ package com.jocmp.basil.opml
 
 import com.jocmp.basil.fixtures.ARS_TECHNICA_URL
 import com.jocmp.basil.Account
+import com.jocmp.basil.TestFeedFinder
 import com.jocmp.basil.fixtures.ArsTechnicaFeed
 import com.jocmp.basil.fixtures.THE_VERGE_URL
 import com.jocmp.basil.fixtures.TheVergeFeed
@@ -20,6 +21,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import java.io.File
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class OPMLImporterTest {
@@ -29,28 +31,28 @@ class OPMLImporterTest {
 
     private lateinit var account: Account
 
+    private val sites = listOf<Feed>(
+        GenericFeed(name = "Daring Fireball", url = "https://daringfireball.net/feeds/main"),
+        GenericFeed(
+            name = "BBC News - World",
+            url = "https://feeds.bbci.co.uk/news/world/rss.xml"
+        ),
+        GenericFeed(name = "NetNewsWire", url = "https://netnewswire.blog/feed.xml"),
+        GenericFeed(name = "Block Club Chicago", url = "https://blockclubchicago.org/feed/"),
+        GenericFeed(name = "Julia Evans", url = "https://jvns.ca/atom.xml")
+    ).associateBy { it.feedURL.toString() }
+
+    private val finder = TestFeedFinder(sites)
+
     @Before
     fun setup() {
-        account = AccountFixture.create(parentFolder = folder)
-
-        mockkConstructor(FeedFinder::class)
         mockkConstructor(LocalAccountDelegate::class)
 
         coEvery {
             anyConstructed<LocalAccountDelegate>().fetchAll(any())
         } returns emptyList()
 
-        listOf<Feed>(
-            GenericFeed(name = "Daring Fireball", url = "https://daringfireball.net/feeds/main"),
-            GenericFeed(name = "BBC News - World", url = "https://feeds.bbci.co.uk/news/world/rss.xml"),
-            GenericFeed(name = "NetNewsWire", url = "https://netnewswire.blog/feed.xml"),
-            GenericFeed(name = "Block Club Chicago", url = "https://blockclubchicago.org/feed/"),
-            GenericFeed(name = "Julia Evans", url = "https://jvns.ca/atom.xml")
-        ).forEach { feed ->
-            coEvery {
-                constructedWith<FeedFinder>(EqMatcher(feed.feedURL)).find()
-            } returns Result.success(listOf(feed))
-        }
+        account = AccountFixture.create(parentFolder = folder, feedFinder = finder)
     }
 
     @Test
@@ -59,11 +61,13 @@ class OPMLImporterTest {
 
         OPMLImporter(account).import(uri)
 
-        assertTrue(File(uri).exists())
-    }
+        val topLevelFeeds = account.feeds.map { it.name }
+        val newsFeeds = account.folders.first().feeds.map { it.name }
 
-    @Test
-    fun `it compacts nested folders`() {
-
+        assertEquals(expected = listOf("Daring Fireball", "Julia Evans"), actual = topLevelFeeds)
+        assertEquals(
+            expected = listOf("BBC News - World", "NetNewsWire", "Block Club Chicago"),
+            actual = newsFeeds
+        )
     }
 }

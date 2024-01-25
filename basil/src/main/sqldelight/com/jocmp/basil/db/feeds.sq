@@ -3,10 +3,10 @@ SELECT *
 FROM feeds
 WHERE id IN ?;
 
-findByExternalID:
+findByURL:
 SELECT *
 FROM feeds
-WHERE external_id = ?
+WHERE feed_url = ?
 LIMIT 1;
 
 create {

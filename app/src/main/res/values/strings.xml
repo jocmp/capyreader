@@ -34,5 +34,7 @@
     <string name="account_settings_delete_account_message">Are you sure you want to delete the account \"%1$s\"? This cannot be undone.</string>
     <string name="account_settings_delete_account_submit">Delete</string>
     <string name="account_settings_save_success_message">Settings saved</string>
+    <string name="account_settings_export">Export</string>
+    <string name="account_settings_import">Import</string>
     <string name="opml_exporter_chooser_title">Export %1$s Feeds</string>
 </resources>
