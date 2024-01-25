@@ -3,6 +3,8 @@ package com.jocmp.basil.opml
 import com.jocmp.basil.Account
 import com.jocmp.basil.AddFeedForm
 import com.jocmp.basil.OPMLFile
+import java.io.BufferedReader
+import java.io.InputStream
 import java.net.URI
 
 /**
@@ -11,8 +13,8 @@ import java.net.URI
  * 3. When normalized, iterate through each feed and call `createFeed` on account
  */
 internal class OPMLImporter(private val account: Account) {
-    suspend fun import(uri: URI) {
-        val outlines = OPMLFile(path = uri, account = account).load()
+    internal suspend fun import(inputStream: InputStream) {
+        val outlines = OPMLHandler.parse(inputStream)
 
         val entries = findEntries(outlines)
 

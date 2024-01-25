@@ -5,6 +5,7 @@ import com.jocmp.basil.accounts.LocalAccountDelegate
 import com.jocmp.basil.accounts.ParsedItem
 import com.jocmp.basil.accounts.asOPML
 import com.jocmp.basil.db.Database
+import com.jocmp.basil.opml.OPMLImporter
 import com.jocmp.basil.opml.Outline
 import com.jocmp.basil.opml.asFeed
 import com.jocmp.basil.opml.asFolder
@@ -23,6 +24,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.InputStream
 import java.net.URI
 import java.net.URL
 
@@ -269,7 +271,8 @@ data class Account(
         articleRecords.markUnread(articleID = articleID)
     }
 
-    fun addOPMLItems() {
+    suspend fun import(inputStream: InputStream) {
+        OPMLImporter(this).import(inputStream)
     }
 
     private fun updateArticles(feed: Feed, items: List<ParsedItem>) {

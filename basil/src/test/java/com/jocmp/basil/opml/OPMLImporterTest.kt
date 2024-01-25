@@ -9,6 +9,7 @@ import com.jocmp.basil.fixtures.TheVergeFeed
 import com.jocmp.basil.accounts.LocalAccountDelegate
 import com.jocmp.basil.fixtures.AccountFixture
 import com.jocmp.basil.fixtures.GenericFeed
+import com.jocmp.basil.testFile
 import com.jocmp.basil.testURI
 import com.jocmp.feedfinder.FeedFinder
 import com.jocmp.feedfinder.parser.Feed
@@ -57,7 +58,7 @@ class OPMLImporterTest {
 
     @Test
     fun `it imports feeds and folders`() = runBlocking {
-        val uri = testURI("nested_import.xml")
+        val uri = testFile("nested_import.xml").inputStream()
 
         OPMLImporter(account).import(uri)
 

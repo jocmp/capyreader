@@ -3,6 +3,7 @@ package com.jocmp.basil.opml
 import org.xml.sax.Attributes
 import org.xml.sax.SAXException
 import org.xml.sax.helpers.DefaultHandler
+import java.io.InputStream
 import javax.xml.parsers.SAXParserFactory
 
 internal class OPMLHandler : DefaultHandler() {
@@ -86,6 +87,17 @@ internal class OPMLHandler : DefaultHandler() {
                 .newInstance()
                 .newSAXParser()
                 .parse(filePath, handler)
+
+            return handler.opmlDocument.outlines
+        }
+
+        fun parse(inputStream: InputStream): List<Outline> {
+            val handler = OPMLHandler()
+
+            SAXParserFactory
+                .newInstance()
+                .newSAXParser()
+                .parse(inputStream, handler)
 
             return handler.opmlDocument.outlines
         }

@@ -28,6 +28,7 @@ fun AccountSettingsView(
     removeAccount: () -> Unit,
     submit: (displayName: String) -> Unit,
     exportOPML: () -> Unit,
+    importOPML: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -72,7 +73,7 @@ fun AccountSettingsView(
                 Text(stringResource(R.string.account_settings_submit))
             }
             Button(
-                onClick = {}
+                onClick = importOPML,
             ) {
                 Text(stringResource(R.string.account_settings_import))
             }
@@ -121,6 +122,7 @@ fun AccountSettingsViewPreview() {
         defaultDisplayName = "Feedbin",
         removeAccount = {},
         submit = {},
-        exportOPML = {}
+        exportOPML = {},
+        importOPML = {}
     )
 }
