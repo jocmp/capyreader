@@ -11,9 +11,6 @@ import com.jocmp.basil.opml.asFeed
 import com.jocmp.basil.opml.asFolder
 import com.jocmp.basil.persistence.ArticleRecords
 import com.jocmp.basil.persistence.FeedRecords
-import com.jocmp.basil.preferences.Preference
-import com.jocmp.basil.preferences.PreferenceStore
-import com.jocmp.basil.preferences.getEnum
 import com.jocmp.basil.shared.nowUTCInSeconds
 import com.jocmp.basil.shared.upsert
 import com.jocmp.feedfinder.DefaultFeedFinder
@@ -39,7 +36,7 @@ data class Account(
 
     init {
         when (source) {
-            AccountSource.LOCAL -> delegate = LocalAccountDelegate(this)
+            AccountSource.LOCAL -> delegate = LocalAccountDelegate()
         }
     }
 
@@ -143,7 +140,7 @@ data class Account(
         val feed = Feed(
             id = record.id.toString(),
             externalID = externalID,
-            name = entryNameOrDefault(form, found.name),
+            name = entryNameOrDefault(form.name, found.name),
             feedURL = found.feedURL.toString(),
             siteURL = entrySiteURL(found.siteURL)
         )
@@ -180,7 +177,7 @@ data class Account(
     suspend fun editFeed(form: EditFeedForm): Result<Feed> {
         val feed = findFeed(form.feedID) ?: return Result.failure(Throwable("Feed not found"))
 
-        val editedFeed = feed.copy(name = form.name)
+        val editedFeed = feed.copy(name = entryNameOrDefault(form.name))
 
         if (form.folderTitles.isEmpty()) {
             feeds.upsert(editedFeed)
@@ -319,12 +316,16 @@ data class Account(
         return url?.toString() ?: ""
     }
 
-    private fun entryNameOrDefault(entry: AddFeedForm, feedName: String): String {
-        if (entry.name.isBlank()) {
+    private fun entryNameOrDefault(entryName: String, feedName: String = ""): String {
+        if (entryName.isNotBlank()) {
+            return entryName
+        }
+
+        if (feedName.isNotBlank()) {
             return feedName
         }
 
-        return entry.name
+        return DEFAULT_TITLE
     }
 
     private suspend fun saveOPMLFile() = withContext(Dispatchers.IO) {
@@ -369,3 +370,5 @@ internal fun Account.asOPML(): String {
 
     return opml
 }
+
+private const val DEFAULT_TITLE = "(No title)"

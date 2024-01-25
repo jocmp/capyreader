@@ -1,13 +1,12 @@
 package com.jocmp.basil.accounts
 
-import com.jocmp.basil.Account
 import com.jocmp.basil.Feed
 import com.jocmp.basil.shared.parseISODate
 import com.prof18.rssparser.RssParser
 import com.prof18.rssparser.model.RssItem
 import java.net.URL
 
-internal class LocalAccountDelegate(private val account: Account) : AccountDelegate {
+internal class LocalAccountDelegate : AccountDelegate {
     override suspend fun createFeed(feedURL: URL): Result<String> {
         return Result.success(feedURL.toString())
     }
