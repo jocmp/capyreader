@@ -262,6 +262,9 @@ data class Account(
         articleRecords.markUnread(articleID = articleID)
     }
 
+    fun addOPMLItems() {
+    }
+
     private fun updateArticles(feed: Feed, items: List<ParsedItem>) {
         items.forEach { item ->
             val publishedAt = item.publishedAt?.toEpochSecond()
@@ -323,8 +326,8 @@ data class Account(
 
         items.forEach {
             when (it) {
-                is Outline.FeedOutline -> it.feed.id?.toLongOrNull()?.let { id -> ids.add(id) }
                 is Outline.FolderOutline -> ids.addAll(it.folder.feeds.mapNotNull { feed -> feed.id?.toLongOrNull() })
+                is Outline.FeedOutline -> it.feed.id?.toLongOrNull()?.let { id -> ids.add(id) }
             }
         }
 

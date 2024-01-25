@@ -8,8 +8,7 @@ import javax.xml.parsers.SAXParserFactory
 internal class OPMLHandler : DefaultHandler() {
     lateinit var opmlDocument: OPMLDocument
     private var currentValue: StringBuilder? = null
-    private var currentFolder: Folder? = null
-    private var currentType: OutlineType? = null
+    private var outlines = ArrayDeque<Outline>()
 
     @Throws(SAXException::class)
     override fun characters(ch: CharArray, start: Int, length: Int) {
@@ -32,61 +31,48 @@ internal class OPMLHandler : DefaultHandler() {
         qName: String,
         attributes: Attributes
     ) {
-        when (qName) {
-            OUTLINE -> {
-                if (attributes.getValue("type") == "rss") {
-                    currentType = OutlineType.FEED
-                    currentFolder?.also { folder ->
-                        folder.feeds.add(
-                            Feed(
-                                id = attributes.getValue("basil_id"),
-                                title = attributes.getValue("title"),
-                                text = attributes.getValue("text"),
-                                htmlUrl = attributes.getValue("htmlUrl"),
-                                xmlUrl = attributes.getValue("xmlUrl"),
-                            )
-                        )
-                    } ?: run {
-                        opmlDocument.outlines.add(
-                            Outline.FeedOutline(
-                                Feed(
-                                    id = attributes.getValue("basil_id"),
-                                    title = attributes.getValue("title"),
-                                    text = attributes.getValue("text"),
-                                    htmlUrl = attributes.getValue("htmlUrl"),
-                                    xmlUrl = attributes.getValue("xmlUrl"),
-                                )
-                            )
-                        )
-                    }
-                } else {
-                    currentType = OutlineType.FOLDER
-                    currentFolder = Folder(
-                        title = attributes.getValue("title"),
-                        text = attributes.getValue("text")
-                    )
-                    currentValue = StringBuilder()
-                }
-            }
+        if (qName != OUTLINE) {
+            return
+        }
+
+        if (attributes.getValue("type") == "rss") {
+            val feed = Feed(
+                id = attributes.getValue("basil_id"),
+                title = attributes.getValue("title"),
+                text = attributes.getValue("text"),
+                htmlUrl = attributes.getValue("htmlUrl"),
+                xmlUrl = attributes.getValue("xmlUrl"),
+            )
+
+            outlines.add(Outline.FeedOutline(feed))
+        } else {
+            val folder = Folder(
+                title = attributes.getValue("title"),
+                text = attributes.getValue("text")
+            )
+
+            outlines.add(Outline.FolderOutline(folder))
         }
     }
 
     @Throws(SAXException::class)
     override fun endElement(uri: String, localName: String, qName: String) {
-        when (qName) {
-            OUTLINE -> {
-                if (currentType == OutlineType.FOLDER) {
-                    currentFolder?.let { folder ->
-                        opmlDocument.outlines.add(Outline.FolderOutline(folder))
-                    }
-                    currentFolder = null
-                    currentType = null
-                } else if (currentType == OutlineType.FEED && currentFolder != null) {
-                    currentType = OutlineType.FOLDER
-                } else {
-                    currentType = null
-                }
-            }
+        if (qName != OUTLINE) {
+            return
+        }
+
+        val outline = outlines.removeLastOrNull() ?: return
+
+        if (outlines.isEmpty()) {
+            opmlDocument.outlines.add(outline)
+        }
+
+        val parentFolder = (outlines.lastOrNull() as? Outline.FolderOutline)?.folder ?: return
+
+        if (outline is Outline.FeedOutline) {
+            parentFolder.feeds.add(outline.feed)
+        } else if (outline is Outline.FolderOutline) {
+            parentFolder.folders.add(outline.folder)
         }
     }
 
@@ -104,9 +90,4 @@ internal class OPMLHandler : DefaultHandler() {
             return handler.opmlDocument.outlines
         }
     }
-}
-
-private enum class OutlineType {
-    FOLDER,
-    FEED,
 }
