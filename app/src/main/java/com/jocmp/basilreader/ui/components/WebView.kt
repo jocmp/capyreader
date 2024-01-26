@@ -653,7 +653,7 @@ fun rememberWebViewStateWithHTMLData(
     mimeType: String? = null,
     historyUrl: String? = null
 ): WebViewState =
-    rememberSaveable(data, saver = WebStateSaver) {
+    rememberSaveable(saver = WebStateSaver) {
         WebViewState(WebContent.Data(data, baseUrl, encoding, mimeType, historyUrl))
     }
 

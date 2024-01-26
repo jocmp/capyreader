@@ -120,9 +120,10 @@ class AccountViewModel(
         refreshUnreadCounts()
     }
 
-    fun selectArticle(articleID: String) {
+    fun selectArticle(articleID: String, onSuccess: (article: Article) -> Unit) {
         account.markRead(articleID)
         articleState.value = account.findArticle(articleID = articleID)
+        articleState.value?.let(onSuccess)
 
         viewModelScope.launch {
             appPreferences.articleID.set(articleID)
@@ -202,18 +203,6 @@ class AccountViewModel(
         clearArticle()
     }
 
-//    private fun selectSettingsAccount(accountID: String) {
-//        viewModelScope.launch {
-//            settings.selectAccount(accountID)
-//        }
-//    }
-//
-//    private fun selectAccount(accountID: String) {
-//        accountManager.findByID(accountID)?.let {
-//            accountState.value = it
-//        }
-//    }
-
     private fun copyFolderUnreadCounts(folder: Folder): Folder {
         val folderFeeds = folder.feeds.map(::copyFeedUnreadCounts).toMutableList()
 
@@ -228,8 +217,6 @@ class AccountViewModel(
     }
 
     private fun refreshUnreadCounts() {
-        viewModelScope.launch {
-            _unreadCounts.value = accountState.value.unreadCounts
-        }
+        _unreadCounts.value = accountState.value.unreadCounts
     }
 }

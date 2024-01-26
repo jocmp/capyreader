@@ -18,12 +18,16 @@ import androidx.compose.material3.adaptive.ListDetailPaneScaffoldRole
 import androidx.compose.material3.adaptive.calculateListDetailPaneScaffoldState
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import com.jocmp.basilreader.ui.components.rememberSaveableWebViewState
+import com.jocmp.basilreader.ui.components.rememberWebViewNavigator
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -47,7 +51,13 @@ fun ArticleScreen(
             scaffoldDirective = calculateArticleDirective()
         )
 
-    val navigateToDetail = { setDestination(ListDetailPaneScaffoldRole.Detail) }
+    val context = LocalContext.current
+    val webViewNavigator = rememberWebViewNavigator()
+    val webViewState = rememberSaveableWebViewState()
+
+    val navigateToDetail = {
+        setDestination(ListDetailPaneScaffoldRole.Detail)
+    }
 
     val onComplete = {
         coroutineScope.launch {
@@ -127,8 +137,13 @@ fun ArticleScreen(
                     ArticleList(
                         articles = viewModel.articles,
                         onSelect = {
-                            viewModel.selectArticle(it)
-                            navigateToDetail()
+                            viewModel.selectArticle(it) {
+                                coroutineScope.launch {
+                                    val html = ArticleRenderer.render(it, context)
+                                    webViewNavigator.loadHtml(html)
+                                    navigateToDetail()
+                                }
+                            }
                         }
                     )
 
@@ -141,6 +156,8 @@ fun ArticleScreen(
                 article = viewModel.article,
                 onToggleRead = viewModel::toggleArticleRead,
                 onToggleStar = viewModel::toggleArticleStar,
+                webViewState = webViewState,
+                webViewNavigator = webViewNavigator,
                 onBackPressed = {
                     viewModel.clearArticle()
                     setDestination(ListDetailPaneScaffoldRole.List)
@@ -148,4 +165,12 @@ fun ArticleScreen(
             )
         }
     )
+
+    LaunchedEffect(webViewNavigator) {
+        val html = ArticleRenderer.render(viewModel.article, context)
+
+        if (webViewState.viewState == null) {
+            webViewNavigator.loadHtml(html)
+        }
+    }
 }
