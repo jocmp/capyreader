@@ -1,38 +1,26 @@
 package com.jocmp.basilreader.ui.articles
 
-import android.graphics.drawable.Drawable
-import android.text.Editable
-import android.text.Html
-import android.text.Html.FROM_HTML_MODE_COMPACT
-import android.text.Html.ImageGetter
-import android.text.Html.TagHandler
-import android.util.Log
-import android.widget.TextView
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.outlined.CheckCircle
-import androidx.compose.material.icons.outlined.Star
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.viewinterop.AndroidView
 import com.jocmp.basil.Article
 import com.jocmp.basilreader.R
 import com.jocmp.basilreader.ui.components.EmptyView
+import com.jocmp.basilreader.ui.components.WebContent
 import com.jocmp.basilreader.ui.components.WebView
+import com.jocmp.basilreader.ui.components.WebViewState
 import com.jocmp.basilreader.ui.components.rememberWebViewStateWithHTMLData
-import org.xml.sax.XMLReader
 
 private const val TAG = "ArticleView"
 
@@ -64,7 +52,8 @@ fun ArticleLoadedView(
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit
 ) {
-    val state = rememberWebViewStateWithHTMLData(ArticleRenderer(article).render())
+    val context = LocalContext.current
+    val state = rememberWebViewStateWithHTMLData()
 
     val readIcon = if (article.read) {
         R.drawable.icon_circle_outline
@@ -91,7 +80,19 @@ fun ArticleLoadedView(
         }
     ) { innerPadding ->
         Column(Modifier.padding(innerPadding)) {
-            WebView(state)
+            WebView(
+                state = state,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+    }
+    
+    LaunchedEffect(article.compositeKey) {
+        val html = ArticleRenderer.render(article, context)
+        val content = state.content
+
+        if (state.viewState == null || content is WebContent.Data && content.data != html) {
+            state.content = WebContent.Data(html)
         }
     }
 }

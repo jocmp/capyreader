@@ -19,8 +19,6 @@ private fun MacroProcessor.process(): String {
     var result = ""
 
     template.forEach { token ->
-        println("result='$result' token=$token queue=$queue")
-
         if (openTag.contains(token)) {
             queue.add(token)
         } else if (queue.isNotEmpty() && closeTag.contains(token)) {

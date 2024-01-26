@@ -23,8 +23,10 @@ fun AccountSettingsScreen(
         Log.d(TAG, "importOPML: start $uri")
 
         if (uri != null) {
-            viewModel.importOPML(context.contentResolver.openInputStream(uri)) {
-                Log.d(TAG, "importOPML: success $uri")
+            context.contentResolver.openInputStream(uri).use { inputStream ->
+                viewModel.importOPML(inputStream) {
+                    Log.d(TAG, "importOPML: success $uri")
+                }
             }
         }
     }

@@ -52,6 +52,7 @@ android {
 
 
 dependencies {
+    implementation("androidx.webkit:webkit:1.9.0")
     val sqldelightVersion = libs.versions.sqldelight.get()
     val pagingVersion = libs.versions.androidx.paging.get()
 
@@ -63,7 +64,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation(libs.androidx.preferences)
-    implementation("androidx.compose.material3:material3-adaptive:1.0.0-alpha03")
+    implementation("androidx.compose.material3:material3-adaptive:1.0.0-alpha05")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.paging:paging-runtime-ktx:$pagingVersion")

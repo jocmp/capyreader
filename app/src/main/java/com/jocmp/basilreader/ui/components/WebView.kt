@@ -229,7 +229,7 @@ public fun WebView(
  * As Accompanist Web needs to set its own web client to function, it provides this intermediary
  * class that can be overriden if further custom behaviour is required.
  */
-public open class AccompanistWebViewClient : WebViewClient() {
+open class AccompanistWebViewClient : WebViewClient() {
     public open lateinit var state: WebViewState
         internal set
     public open lateinit var navigator: WebViewNavigator
@@ -370,14 +370,14 @@ sealed class LoadingState {
  * using the rememberWebViewState(uri) function.
  */
 @Stable
-public class WebViewState(webContent: WebContent) {
-    public var lastLoadedUrl: String? by mutableStateOf(null)
+class WebViewState(webContent: WebContent) {
+    var lastLoadedUrl: String? by mutableStateOf(null)
         internal set
 
     /**
      *  The content being loaded by the WebView
      */
-    public var content: WebContent by mutableStateOf(webContent)
+    var content: WebContent by mutableStateOf(webContent)
 
     /**
      * Whether the WebView is currently [LoadingState.Loading] data in its main frame (along with
@@ -416,7 +416,7 @@ public class WebViewState(webContent: WebContent) {
      * use the navigator and only call loadUrl if the bundle is null.
      * See WebViewSaveStateSample.
      */
-    public var viewState: Bundle? = null
+    var viewState: Bundle? = null
         internal set
 
     // We need access to this in the state saver. An internal DisposableEffect or AndroidView
@@ -646,19 +646,15 @@ public fun rememberWebViewState(
  * @param data The uri to load in the WebView
  */
 @Composable
-public fun rememberWebViewStateWithHTMLData(
-    data: String,
+fun rememberWebViewStateWithHTMLData(
+    data: String = "",
     baseUrl: String? = null,
     encoding: String = "utf-8",
     mimeType: String? = null,
     historyUrl: String? = null
 ): WebViewState =
-    remember {
+    rememberSaveable(data, saver = WebStateSaver) {
         WebViewState(WebContent.Data(data, baseUrl, encoding, mimeType, historyUrl))
-    }.apply {
-        this.content = WebContent.Data(
-            data, baseUrl, encoding, mimeType, historyUrl
-        )
     }
 
 /**
@@ -703,7 +699,7 @@ public fun rememberSaveableWebViewState(): WebViewState =
         WebViewState(WebContent.NavigatorOnly)
     }
 
-public val WebStateSaver: Saver<WebViewState, Any> = run {
+val WebStateSaver: Saver<WebViewState, Any> = run {
     val pageTitleKey = "pagetitle"
     val lastLoadedUrlKey = "lastloaded"
     val stateBundle = "bundle"
@@ -714,7 +710,7 @@ public val WebStateSaver: Saver<WebViewState, Any> = run {
             mapOf(
                 pageTitleKey to it.pageTitle,
                 lastLoadedUrlKey to it.lastLoadedUrl,
-                stateBundle to viewState
+                stateBundle to viewState,
             )
         },
         restore = {
