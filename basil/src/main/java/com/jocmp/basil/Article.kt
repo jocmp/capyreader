@@ -15,4 +15,7 @@ data class Article(
     val arrivedAt: ZonedDateTime,
     val read: Boolean,
     val starred: Boolean
-)
+) {
+    val compositeKey: String
+        get() = "${id}-${feedID}"
+}

@@ -3,28 +3,32 @@ package com.jocmp.basilreader.ui.articles
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.outlined.CheckCircle
-import androidx.compose.material.icons.outlined.Star
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import com.jocmp.basil.Article
 import com.jocmp.basilreader.R
 import com.jocmp.basilreader.ui.components.EmptyView
 import com.jocmp.basilreader.ui.components.WebView
-import com.jocmp.basilreader.ui.components.rememberWebViewStateWithHTMLData
+import com.jocmp.basilreader.ui.components.WebViewNavigator
+import com.jocmp.basilreader.ui.components.WebViewState
+import com.jocmp.basilreader.ui.components.rememberSaveableWebViewState
+import com.jocmp.basilreader.ui.components.rememberWebViewNavigator
+
+private const val TAG = "ArticleView"
 
 @Composable
 fun ArticleView(
     article: Article?,
+    webViewState: WebViewState,
+    webViewNavigator: WebViewNavigator,
     onBackPressed: () -> Unit,
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit
@@ -33,7 +37,9 @@ fun ArticleView(
         ArticleLoadedView(
             article = article,
             onToggleRead = onToggleRead,
-            onToggleStar = onToggleStar
+            onToggleStar = onToggleStar,
+            webViewState = webViewState,
+            navigator = webViewNavigator
         )
     } else {
         EmptyView()
@@ -47,11 +53,11 @@ fun ArticleView(
 @Composable
 fun ArticleLoadedView(
     article: Article,
+    webViewState: WebViewState,
+    navigator: WebViewNavigator,
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit
 ) {
-    val state = rememberWebViewStateWithHTMLData(article.contentHTML)
-
     val readIcon = if (article.read) {
         R.drawable.icon_circle_outline
     } else {
@@ -77,7 +83,11 @@ fun ArticleLoadedView(
         }
     ) { innerPadding ->
         Column(Modifier.padding(innerPadding)) {
-            WebView(state)
+            WebView(
+                state = webViewState,
+                navigator = navigator,
+                modifier = Modifier.fillMaxSize()
+            )
         }
     }
 }
