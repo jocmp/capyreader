@@ -7,13 +7,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -21,7 +18,6 @@ import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 import com.jocmp.basil.Article
-import com.jocmp.basil.ArticleStatus
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import java.time.format.DateTimeFormatter
@@ -34,10 +30,12 @@ fun ArticleList(
     val composableScope = rememberCoroutineScope()
     val lazyPagingItems = articles.collectAsLazyPagingItems()
 
-    LazyColumn(Modifier.fillMaxSize()) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize()
+    ) {
         items(
             count = lazyPagingItems.itemCount,
-            key = lazyPagingItems.itemKey { it.id }
+            key = lazyPagingItems.itemKey { it.key }
         ) { index ->
             val item = lazyPagingItems[index] ?: return@items
 

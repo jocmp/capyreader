@@ -16,6 +16,6 @@ data class Article(
     val read: Boolean,
     val starred: Boolean
 ) {
-    val compositeKey: String
+    val key: String
         get() = "${id}-${feedID}"
 }

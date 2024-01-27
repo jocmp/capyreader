@@ -1,11 +1,13 @@
 package com.jocmp.basilreader.ui.articles
 
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.neverEqualPolicy
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.jocmp.basil.Account
 import com.jocmp.basil.AccountManager
 import com.jocmp.basil.AddFeedForm
@@ -39,8 +41,10 @@ class AccountViewModel(
 
     private val pager = mutableStateOf(account.buildPager(_filter.value))
 
+    private val _articles = derivedStateOf { pager.value.flow.cachedIn(viewModelScope) }
+
     val articles: Flow<PagingData<Article>>
-        get() = pager.value.flow
+        get() = _articles.value
 
     private val account: Account
         get() = accountState.value
