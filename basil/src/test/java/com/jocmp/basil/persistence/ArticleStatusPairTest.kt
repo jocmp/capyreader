@@ -25,7 +25,7 @@ class ArticleStatusPairTest {
 
     @Test
     fun toStatusPair_starredStatus() {
-        val (read, starred) = ArticleStatus.STARRED.toStatusPair
+        val (read, starred) = ArticleStatus.BOOKMARKED.toStatusPair
 
         assertNull(read)
         assertTrue(starred!!)
