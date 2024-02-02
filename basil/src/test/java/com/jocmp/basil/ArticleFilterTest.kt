@@ -9,9 +9,9 @@ class ArticleFilterTest {
     fun withStatus_copiesExistingFilter() {
         val articles = ArticleFilter.default()
 
-        val nextFilter = articles.withStatus(status = ArticleStatus.BOOKMARKED)
+        val nextFilter = articles.withStatus(status = ArticleStatus.STARRED)
 
         assertNotEquals(articles.status, nextFilter.status)
-        assertEquals(expected = ArticleStatus.BOOKMARKED, actual = nextFilter.status)
+        assertEquals(expected = ArticleStatus.STARRED, actual = nextFilter.status)
     }
 }

@@ -153,7 +153,7 @@ fun ArticleScreen(
                             }
                         )
                     }
-                    
+
                     PullRefreshIndicator(refreshing, state, Modifier.align(Alignment.TopCenter))
                 }
             }

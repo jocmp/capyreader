@@ -3,8 +3,8 @@ package com.jocmp.basil
 import kotlinx.serialization.Serializable
 
 @Serializable
-enum class ArticleStatus(value: String) {
-    ALL("all"),
-    UNREAD("unread"),
-    BOOKMARKED("bookmarked")
+enum class ArticleStatus {
+    ALL,
+    UNREAD,
+    STARRED
 }

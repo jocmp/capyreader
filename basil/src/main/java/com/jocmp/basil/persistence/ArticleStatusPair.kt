@@ -11,5 +11,5 @@ internal val ArticleStatus.toStatusPair: ArticleStatusPair
     get() = when(this) {
         ArticleStatus.ALL -> ArticleStatusPair(read = null, starred = null)
         ArticleStatus.UNREAD -> ArticleStatusPair(read = false, starred = null)
-        ArticleStatus.BOOKMARKED -> ArticleStatusPair(read = null, starred = true)
+        ArticleStatus.STARRED -> ArticleStatusPair(read = null, starred = true)
     }

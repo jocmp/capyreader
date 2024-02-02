@@ -9,18 +9,15 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import com.jocmp.basil.Article
 import com.jocmp.basilreader.R
 import com.jocmp.basilreader.ui.components.EmptyView
 import com.jocmp.basilreader.ui.components.WebView
 import com.jocmp.basilreader.ui.components.WebViewNavigator
 import com.jocmp.basilreader.ui.components.WebViewState
-import com.jocmp.basilreader.ui.components.rememberSaveableWebViewState
-import com.jocmp.basilreader.ui.components.rememberWebViewNavigator
 
 private const val TAG = "ArticleView"
 
@@ -74,10 +71,10 @@ fun ArticleLoadedView(
         topBar = {
             Row {
                 IconButton(onClick = { onToggleRead() }) {
-                    Icon(painterResource(id = readIcon), contentDescription = null)
+                    Icon(painterResource(id = readIcon), contentDescription = stringResource(R.string.article_view_mark_as_read))
                 }
                 IconButton(onClick = { onToggleStar() }) {
-                    Icon(painterResource(id = starIcon), contentDescription = null)
+                    Icon(painterResource(id = starIcon), contentDescription = stringResource(R.string.article_view_bookmark))
                 }
             }
         }

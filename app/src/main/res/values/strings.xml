@@ -6,7 +6,7 @@
     <string name="add_feed_submit">Add</string>
     <string name="feed_form_cancel">Cancel</string>
     <string name="required_placeholder">Required</string>
-    <string name="filter_bookmarks">Bookmarks</string>
+    <string name="filter_starred">Starred</string>
     <string name="filter_unread">Unread</string>
     <string name="filter_all">All</string>
     <string name="feed_action_unsubscribe">Unsubscribe</string>
@@ -36,4 +36,6 @@
     <string name="account_settings_export">Export</string>
     <string name="account_settings_import">Import</string>
     <string name="opml_exporter_chooser_title">Export %1$s Feeds</string>
+    <string name="article_view_mark_as_read">Mark as read</string>
+    <string name="article_view_bookmark">Bookmark</string>
 </resources>

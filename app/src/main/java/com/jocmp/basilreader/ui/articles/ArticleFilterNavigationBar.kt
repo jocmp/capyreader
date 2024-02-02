@@ -30,9 +30,9 @@ fun ArticleFilterNavigationBar(
                     contentDescription = null
                 )
             },
-            label = { Text(stringResource(id = R.string.filter_bookmarks)) },
-            selected = selected == ArticleStatus.BOOKMARKED,
-            onClick = { checkedSelect(ArticleStatus.BOOKMARKED) },
+            label = { Text(stringResource(id = R.string.filter_starred)) },
+            selected = selected == ArticleStatus.STARRED,
+            onClick = { checkedSelect(ArticleStatus.STARRED) },
             alwaysShowLabel = false
         )
         NavigationBarItem(
