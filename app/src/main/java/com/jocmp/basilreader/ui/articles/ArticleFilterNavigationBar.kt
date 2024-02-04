@@ -2,8 +2,6 @@ package com.jocmp.basilreader.ui.articles
 
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.Composable
@@ -32,7 +30,7 @@ fun ArticleFilterNavigationBar(
                     contentDescription = null
                 )
             },
-            label = { Text(stringResource(id = R.string.article_filters_starred)) },
+            label = { Text(stringResource(id = R.string.filter_starred)) },
             selected = selected == ArticleStatus.STARRED,
             onClick = { checkedSelect(ArticleStatus.STARRED) },
             alwaysShowLabel = false
@@ -44,7 +42,7 @@ fun ArticleFilterNavigationBar(
                     contentDescription = null
                 )
             },
-            label = { Text(stringResource(R.string.article_filters_unread)) },
+            label = { Text(stringResource(R.string.filter_unread)) },
             selected = selected == ArticleStatus.UNREAD,
             onClick = { checkedSelect(ArticleStatus.UNREAD) },
             alwaysShowLabel = false
@@ -56,7 +54,7 @@ fun ArticleFilterNavigationBar(
                     contentDescription = null
                 )
             },
-            label = { Text(stringResource(R.string.article_filters_all)) },
+            label = { Text(stringResource(R.string.filter_all)) },
             selected = selected == ArticleStatus.ALL,
             onClick = { checkedSelect(ArticleStatus.ALL) },
             alwaysShowLabel = false

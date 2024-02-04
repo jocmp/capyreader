@@ -1,5 +1,6 @@
 package com.jocmp.basilreader.ui.articles
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
@@ -96,6 +97,7 @@ fun ArticleScreen(
                 },
                 onNavigateToAccounts = onNavigateToAccounts,
                 onFilterSelect = viewModel::selectArticleFilter,
+                articleStatus = viewModel.filterStatus
             )
         },
         listPane = {
@@ -134,18 +136,23 @@ fun ArticleScreen(
                         .padding(innerPadding)
                         .pullRefresh(state)
                 ) {
-                    ArticleList(
-                        articles = viewModel.articles,
-                        onSelect = {
-                            viewModel.selectArticle(it) {
-                                coroutineScope.launch {
-                                    val html = ArticleRenderer.render(it, context)
-                                    webViewNavigator.loadHtml(html)
-                                    navigateToDetail()
+                    Crossfade(
+                        viewModel.articles,
+                        label = ""
+                    ) {
+                        ArticleList(
+                            articles = it,
+                            onSelect = { articleID ->
+                                viewModel.selectArticle(articleID) {
+                                    coroutineScope.launch {
+                                        val html = ArticleRenderer.render(it, context)
+                                        webViewNavigator.loadHtml(html)
+                                        navigateToDetail()
+                                    }
                                 }
                             }
-                        }
-                    )
+                        )
+                    }
 
                     PullRefreshIndicator(refreshing, state, Modifier.align(Alignment.TopCenter))
                 }

@@ -73,7 +73,7 @@ class AccountViewModel(
         get() = _filter.value
 
     fun selectArticleFilter() {
-        val nextFilter = ArticleFilter.default()
+        val nextFilter = ArticleFilter.default().withStatus(status = filterStatus)
 
         updateFilterValue(nextFilter)
     }

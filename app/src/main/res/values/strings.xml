@@ -6,9 +6,9 @@
     <string name="add_feed_submit">Add</string>
     <string name="feed_form_cancel">Cancel</string>
     <string name="required_placeholder">Required</string>
-    <string name="article_filters_starred">Starred</string>
-    <string name="article_filters_unread">Unread</string>
-    <string name="article_filters_all">All</string>
+    <string name="filter_starred">Starred</string>
+    <string name="filter_unread">Unread</string>
+    <string name="filter_all">All</string>
     <string name="feed_action_unsubscribe">Unsubscribe</string>
     <string name="feed_action_manage_button">Manage Feed</string>
     <string name="filter_action_menu_description">Edit</string>
@@ -26,7 +26,6 @@
     <string name="feed_action_unsubscribe_title">Unsubscribe</string>
     <string name="settings_action">Settings</string>
     <string name="account_index_settings_options">Account Options</string>
-    <string name="filter_all">All</string>
     <string name="account_index_menu_settings">Account Settings</string>
     <string name="account_settings_submit">Save</string>
     <string name="account_settings_delete_account_button">Delete Account</string>
@@ -37,4 +36,6 @@
     <string name="account_settings_export">Export</string>
     <string name="account_settings_import">Import</string>
     <string name="opml_exporter_chooser_title">Export %1$s Feeds</string>
+    <string name="article_view_mark_as_read">Mark as read</string>
+    <string name="article_view_bookmark">Bookmark</string>
 </resources>
