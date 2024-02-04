@@ -15,6 +15,7 @@ import com.jocmp.basil.Article
 import com.jocmp.basil.ArticleFilter
 import com.jocmp.basil.ArticleStatus
 import com.jocmp.basil.Feed
+import com.jocmp.basil.FeedSearch
 import com.jocmp.basil.Folder
 import com.jocmp.basil.buildPager
 import com.jocmp.basil.unreadCounts
@@ -176,7 +177,7 @@ class AccountViewModel(
         onFailure: (message: String) -> Unit
     ) {
         viewModelScope.launch {
-            return@launch account.addFeed(entry).fold(
+            account.addFeed(entry).fold(
                 onSuccess = { feed ->
                     selectFeed(feed.id)
                     onSuccess()

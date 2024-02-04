@@ -14,3 +14,6 @@ fun optionalURL(string: String?): URL? {
         null
     }
 }
+
+val URL?.orEmpty: String
+    get() = this?.toString() ?: ""

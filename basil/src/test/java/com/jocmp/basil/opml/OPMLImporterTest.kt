@@ -22,6 +22,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import java.io.File
+import kotlin.math.exp
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -66,6 +67,26 @@ class OPMLImporterTest {
         val newsFeeds = account.folders.first().feeds.map { it.name }
 
         assertEquals(expected = listOf("Daring Fireball", "Julia Evans"), actual = topLevelFeeds)
+        assertEquals(
+            expected = listOf("BBC News - World", "NetNewsWire", "Block Club Chicago"),
+            actual = newsFeeds
+        )
+    }
+
+    @Test
+    fun `it handles feeds nested in multiple folders`() = runBlocking {
+        val uri = testFile("multiple_matching_feeds.xml").inputStream()
+
+        OPMLImporter(account).import(uri)
+
+        val topLevelFeeds = account.feeds.map { it.name }
+        val appleFeeds = account.folders.find { it.title == "Apple" }!!.feeds.map { it.name }
+        val blogFeeds = account.folders.find { it.title == "Blogs" }!!.feeds.map { it.name }
+        val newsFeeds = account.folders.find { it.title == "News" }!!.feeds.map { it.name }
+
+        assertEquals(expected = listOf("Julia Evans"), actual = topLevelFeeds)
+        assertEquals(expected = listOf("Daring Fireball"), actual = blogFeeds)
+        assertEquals(expected = listOf("Daring Fireball"), actual = appleFeeds)
         assertEquals(
             expected = listOf("BBC News - World", "NetNewsWire", "Block Club Chicago"),
             actual = newsFeeds

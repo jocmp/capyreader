@@ -71,7 +71,7 @@ class AccountManager(
     }
 
     private fun findAccountFile(id: String): File? {
-        return accountFolder().listFiles(AccountFileFilter(id))?.first()
+        return accountFolder().listFiles(AccountFileFilter(id))?.firstOrNull()
     }
 
     companion object {
