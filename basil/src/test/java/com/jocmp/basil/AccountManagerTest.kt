@@ -1,6 +1,7 @@
 package com.jocmp.basil
 
 import kotlinx.coroutines.runBlocking
+import okhttp3.OkHttpClient
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
@@ -17,7 +18,8 @@ class AccountManagerTest {
         return AccountManager(
             rootFolder = rootFolder.newFolder().toURI(),
             preferenceStoreProvider = InMemoryPreferencesProvider(),
-            databaseProvider = InMemoryDatabaseProvider
+            databaseProvider = InMemoryDatabaseProvider,
+            httpClient = OkHttpClient(),
         )
     }
 

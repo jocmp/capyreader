@@ -7,6 +7,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 internal val common = module {
+    single { buildOkHttpClient(get()) }
     single<DatabaseProvider> { AndroidDatabaseProvider(get()) }
     single<PreferenceStoreProvider> { AndroidPreferenceStoreProvider(get()) }
     single { AppPreferences(get()) }
@@ -14,7 +15,8 @@ internal val common = module {
         AccountManager(
             rootFolder = androidContext().filesDir.toURI(),
             databaseProvider = get(),
-            preferenceStoreProvider = get()
+            preferenceStoreProvider = get(),
+            httpClient = get(),
         )
     }
 }

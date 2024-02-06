@@ -21,6 +21,7 @@ dependencyResolutionManagement {
             version("ksp", "1.9.22-1.0.16")
             version("androidx-paging", "3.2.1")
             library("moshi-kotlin", "com.squareup.moshi:moshi-kotlin:1.14.0")
+            library("okhttp-client", "com.squareup.okhttp3:okhttp:4.12.0")
             library("moshi-kotlin-codegen", "com.squareup.moshi:moshi-kotlin-codegen:1.14.0")
             library("androidx-preferences", "androidx.preference:preference-ktx:1.2.1")
             library("kotlinx-coroutines-core", "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")

@@ -22,6 +22,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.OkHttpClient
 import java.io.InputStream
 import java.net.URI
 
@@ -30,13 +31,14 @@ data class Account(
     val path: URI,
     val database: Database,
     val preferences: AccountPreferences,
-    val feedFinder: FeedFinder = DefaultFeedFinder()
+    val feedFinder: FeedFinder = DefaultFeedFinder(),
+    val httpClient: OkHttpClient = OkHttpClient(),
 ) {
     private var delegate: AccountDelegate
 
     init {
         when (source) {
-            AccountSource.LOCAL -> delegate = LocalAccountDelegate()
+            AccountSource.LOCAL -> delegate = LocalAccountDelegate(httpClient)
         }
     }
 
