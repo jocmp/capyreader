@@ -53,6 +53,7 @@ android {
 
 dependencies {
     implementation("androidx.webkit:webkit:1.10.0")
+    implementation(project(":feedfinder"))
     val sqldelightVersion = libs.versions.sqldelight.get()
     val pagingVersion = libs.versions.androidx.paging.get()
 

@@ -16,6 +16,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import java.io.File
+import java.net.URL
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
@@ -29,7 +30,7 @@ class AccountTest {
     private lateinit var database: Database
 
     private val defaultEntry = AddFeedForm(
-        url = THE_VERGE_URL,
+        url = URL(THE_VERGE_URL),
         name = "The Verge",
         folderTitles = listOf()
     )
@@ -78,12 +79,11 @@ class AccountTest {
 
         runBlocking {
             val previousInstance = buildAccount(id = accountID, path = accountPath)
-            previousInstance.addFolder(title = "Test Title")
             previousInstance.addFeed(
                 AddFeedForm(
-                    url = THE_VERGE_URL,
+                    url = URL(THE_VERGE_URL),
                     name = "The Verge",
-                    folderTitles = listOf(),
+                    folderTitles = listOf("Test Title"),
                 )
             )
         }
@@ -92,7 +92,7 @@ class AccountTest {
         val accountTitle = account.folders.first().title
 
         assertEquals(expected = "Test Title", actual = accountTitle)
-        assertEquals(expected = 1, actual = account.feeds.size)
+        assertEquals(expected = 1, actual = account.flattenedFeeds.size)
     }
 
     @Test
@@ -100,7 +100,7 @@ class AccountTest {
         val accountPath = folder.newFile()
         val account = buildAccount(id = "777", path = accountPath)
         val entry = AddFeedForm(
-            url = "https://theverge.com/rss/index.xml",
+            url = URL("https://theverge.com/rss/index.xml"),
             name = "The Verge",
             folderTitles = listOf(),
         )
@@ -112,7 +112,7 @@ class AccountTest {
 
         val feed = account.feeds.first()
         assertEquals(expected = entry.name, actual = entry.name)
-        assertEquals(expected = entry.url, actual = feed.feedURL)
+        assertEquals(expected = entry.url.toString(), actual = feed.feedURL)
     }
 
     @Test
@@ -120,7 +120,7 @@ class AccountTest {
         val accountPath = folder.newFile()
         val account = buildAccount(id = "777", path = accountPath)
         val entry = AddFeedForm(
-            url = "https://theverge.com/rss/index.xml",
+            url = URL("https://theverge.com/rss/index.xml"),
             name = "The Verge",
             folderTitles = listOf("Tech"),
         )
@@ -132,7 +132,7 @@ class AccountTest {
 
         val feed = account.folders.first().feeds.first()
         assertEquals(expected = entry.name, actual = entry.name)
-        assertEquals(expected = entry.url, actual = feed.feedURL)
+        assertEquals(expected = entry.url.toString(), actual = feed.feedURL)
     }
 
     @Test
@@ -142,7 +142,7 @@ class AccountTest {
         runBlocking { account.addFolder("Tech") }
 
         val entry = AddFeedForm(
-            url = "https://theverge.com/rss/index.xml",
+            url = URL("https://theverge.com/rss/index.xml"),
             name = "The Verge",
             folderTitles = listOf("Tech"),
         )
@@ -154,7 +154,7 @@ class AccountTest {
 
         val feed = account.folders.first().feeds.first()
         assertEquals(expected = entry.name, actual = feed.name)
-        assertEquals(expected = entry.url, actual = feed.feedURL)
+        assertEquals(expected = entry.url.toString(), actual = feed.feedURL)
     }
 
     @Test
@@ -164,7 +164,7 @@ class AccountTest {
         runBlocking { account.addFolder("Tech") }
 
         val entry = AddFeedForm(
-            url = "https://theverge.com/rss/index.xml",
+            url = URL("https://theverge.com/rss/index.xml"),
             name = "The Verge",
             folderTitles = listOf("Tech", "Culture"),
         )
@@ -177,7 +177,7 @@ class AccountTest {
         val techFeed = account.folders.first().feeds.first()
         val cultureFeed = account.folders.first().feeds.first()
         assertEquals(expected = entry.name, actual = techFeed.name)
-        assertEquals(expected = entry.url, actual = techFeed.feedURL)
+        assertEquals(expected = entry.url.toString(), actual = techFeed.feedURL)
         assertEquals(techFeed, cultureFeed)
     }
 
@@ -187,7 +187,7 @@ class AccountTest {
         runBlocking {
             account.addFeed(
                 AddFeedForm(
-                    url = "https://theverge.com/rss/index.xml",
+                    url = URL("https://theverge.com/rss/index.xml"),
                     name = "The Verge",
                     folderTitles = listOf(),
                 )
@@ -279,7 +279,7 @@ class AccountTest {
         val otherFeed = runBlocking {
             account.addFeed(
                 AddFeedForm(
-                    url = ARS_TECHNICA_URL,
+                    url = URL(ARS_TECHNICA_URL),
                     name = "Ars Technica",
                     folderTitles = listOf("Tech")
                 )
@@ -403,7 +403,7 @@ class AccountTest {
         val account = buildAccount(id = "777", path = folder.newFile())
 
         val entry = AddFeedForm(
-            url = "https://theverge.com/rss/index.xml",
+            url = URL("https://theverge.com/rss/index.xml"),
             name = "The Verge",
             folderTitles = emptyList()
         )
@@ -442,7 +442,7 @@ class AccountTest {
         val account = buildAccount(id = "777", path = folder.newFile())
 
         val entry = AddFeedForm(
-            url = "https://theverge.com/rss/index.xml",
+            url = URL("https://theverge.com/rss/index.xml"),
             name = "The Verge",
             folderTitles = listOf("Tech", "Culture")
         )

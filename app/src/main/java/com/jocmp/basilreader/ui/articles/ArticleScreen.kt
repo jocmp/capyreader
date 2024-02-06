@@ -49,7 +49,7 @@ fun ArticleScreen(
     val scaffoldState =
         calculateListDetailPaneScaffoldState(
             currentPaneDestination = destination,
-            scaffoldDirective = calculateArticleDirective()
+            scaffoldDirective = calculateArticleDirective(),
         )
 
     val context = LocalContext.current

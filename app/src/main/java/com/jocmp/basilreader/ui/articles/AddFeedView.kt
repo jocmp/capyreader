@@ -15,40 +15,64 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.toMutableStateMap
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jocmp.basil.AddFeedForm
+import com.jocmp.basil.FeedSearch.SearchResult
 import com.jocmp.basil.Folder
+import com.jocmp.basil.shared.orEmpty
 import com.jocmp.basilreader.R
 import com.jocmp.basilreader.ui.components.TextField
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
 fun AddFeedView(
     folders: List<Folder>,
     onSubmit: (feed: AddFeedForm) -> Unit,
-    onCancel: () -> Unit
+    onCancel: () -> Unit,
+    searchFeeds: suspend (url: String) -> SearchResult?,
 ) {
-    val (url, setURL) = remember { mutableStateOf("") }
+    val scope = rememberCoroutineScope()
+    val (queryURL, setQueryURL) = remember { mutableStateOf("") }
+    val (searchResult, setSearchResult) = remember { mutableStateOf<SearchResult?>(null) }
     val (name, setName) = remember { mutableStateOf("") }
     val (addedFolder, setAddedFolder) = remember { mutableStateOf("") }
     val switchFolders = remember {
         folders.map { it.title to false }.toMutableStateMap()
     }
+    val url = searchResult?.url.orEmpty
 
-    fun submitFeed() {
+    val search = {
+        scope.launch(Dispatchers.IO) {
+            val result = searchFeeds(queryURL)
+            if (result != null) {
+                if (result.name.isNotBlank()) {
+                    setName(result.name)
+                }
+                setSearchResult(result)
+            }
+        }
+    }
+
+    val submitFeed = {
         val existingFolderNames = switchFolders.filter { it.value }.keys
         val folderNames = collectFolders(existingFolderNames, addedFolder)
 
-        onSubmit(
-            AddFeedForm(
-                url = url,
-                name = name,
-                folderTitles = folderNames
+        if (searchResult != null) {
+            onSubmit(
+                AddFeedForm(
+                    url = searchResult.url,
+                    siteURL = searchResult.siteURL,
+                    name = name,
+                    folderTitles = folderNames
+                )
             )
-        )
+        }
     }
 
     Card(
@@ -56,53 +80,60 @@ fun AddFeedView(
     ) {
         Column(Modifier.padding(16.dp)) {
             TextField(
-                value = url,
-                onValueChange = setURL,
+                value = queryURL,
+                onValueChange = setQueryURL,
+                readOnly = searchResult != null,
                 label = {
                     Text(stringResource(id = R.string.add_feed_url_title))
                 },
-                supportingText = {
-                    Text(stringResource(R.string.required_placeholder))
-                }
             )
-            TextField(
-                value = name,
-                onValueChange = setName,
-                label = {
-                    Text(stringResource(id = R.string.add_feed_name_title))
+            if (url.isBlank()) {
+                Button(onClick = { search() }) {
+                    Text("Search")
                 }
-            )
-            TextField(
-                value = addedFolder,
-                onValueChange = setAddedFolder,
-                placeholder = {
-                    Text(stringResource(id = R.string.add_feed_new_folder_title))
-                }
-            )
-            Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-                switchFolders.forEach { (folderTitle, checked) ->
-                    Row(
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(folderTitle)
-                        Switch(
-                            checked = checked,
-                            onCheckedChange = { value -> switchFolders[folderTitle] = value }
-                        )
+            } else {
+                TextField(
+                    value = name,
+                    onValueChange = setName,
+                    label = {
+                        Text(stringResource(id = R.string.add_feed_name_title))
+                    },
+                    supportingText = {
+                        Text(url)
+                    }
+                )
+                TextField(
+                    value = addedFolder,
+                    onValueChange = setAddedFolder,
+                    placeholder = {
+                        Text(stringResource(id = R.string.add_feed_new_folder_title))
+                    }
+                )
+                Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+                    switchFolders.forEach { (folderTitle, checked) ->
+                        Row(
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(folderTitle)
+                            Switch(
+                                checked = checked,
+                                onCheckedChange = { value -> switchFolders[folderTitle] = value }
+                            )
+                        }
                     }
                 }
-            }
-            Row(
-                horizontalArrangement = Arrangement.End,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                TextButton(onClick = onCancel) {
-                    Text(stringResource(R.string.feed_form_cancel))
-                }
-                Button(onClick = { submitFeed() }) {
-                    Text(stringResource(R.string.add_feed_submit))
+                Row(
+                    horizontalArrangement = Arrangement.End,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    TextButton(onClick = onCancel) {
+                        Text(stringResource(R.string.feed_form_cancel))
+                    }
+                    Button(onClick = { submitFeed() }) {
+                        Text(stringResource(R.string.add_feed_submit))
+                    }
                 }
             }
         }
@@ -128,6 +159,7 @@ fun AddFeedViewPreview() {
     AddFeedView(
         folders = listOf(Folder(title = "Tech")),
         onSubmit = {},
-        onCancel = {}
+        onCancel = {},
+        searchFeeds = { null }
     )
 }

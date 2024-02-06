@@ -12,6 +12,7 @@ import com.jocmp.basil.opml.asFolder
 import com.jocmp.basil.persistence.ArticleRecords
 import com.jocmp.basil.persistence.FeedRecords
 import com.jocmp.basil.shared.nowUTCInSeconds
+import com.jocmp.basil.shared.orEmpty
 import com.jocmp.basil.shared.upsert
 import com.jocmp.feedfinder.DefaultFeedFinder
 import com.jocmp.feedfinder.FeedFinder
@@ -23,7 +24,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.InputStream
 import java.net.URI
-import java.net.URL
 
 data class Account(
     val id: String,
@@ -100,49 +100,30 @@ data class Account(
 
     suspend fun removeFeed(feedID: String) {
         feedRecords.removeFeed(feedID = feedID)
-
-        feeds.removeIf { it.id == feedID }
-
-        folders.forEach { folder ->
-            folder.feeds.removeIf { it.id == feedID }
-        }
-
-        folders.removeIf { it.feeds.isEmpty() }
+        removeFeedFromOPML(feedID)
 
         saveOPMLFile()
     }
 
     suspend fun addFeed(form: AddFeedForm): Result<Feed> {
-        val result = feedFinder.find(url = form.url)
-
-        return if (result.isSuccess) {
-            saveNewFeed(form, result.getOrNull()!!)
-        } else {
-            Result.failure(result.exceptionOrNull()!!)
-        }
+        return saveNewFeed(form)
     }
 
-    private suspend fun saveNewFeed(
-        form: AddFeedForm,
-        foundFeeds: List<com.jocmp.feedfinder.parser.Feed>
-    ): Result<Feed> {
-        val found = foundFeeds.first()
-
+    private suspend fun saveNewFeed(form: AddFeedForm): Result<Feed> {
         val externalID = delegate
-            .createFeed(feedURL = found.feedURL)
+            .createFeed(feedURL = form.url)
             .getOrNull() ?: return Result.failure(Throwable("Could not create external feed"))
 
-        val record = feedRecords.findOrCreate(
-            feedURL = found.feedURL.toString(),
-            externalID = externalID
-        )
+        val record = feedRecords.findOrCreate(feedURL = form.url.toString())
+
+        removeFeedFromOPML(record.id.toString())
 
         val feed = Feed(
             id = record.id.toString(),
             externalID = externalID,
-            name = entryNameOrDefault(form.name, found.name),
-            feedURL = found.feedURL.toString(),
-            siteURL = entrySiteURL(found.siteURL)
+            name = entryNameOrDefault(form.name),
+            feedURL = form.url.toString(),
+            siteURL = form.siteURL.orEmpty,
         )
 
         if (form.folderTitles.isEmpty()) {
@@ -272,6 +253,16 @@ data class Account(
         OPMLImporter(this).import(inputStream)
     }
 
+    private fun removeFeedFromOPML(feedID: String) {
+        feeds.removeIf { it.id == feedID }
+
+        folders.forEach { folder ->
+            folder.feeds.removeIf { it.id == feedID }
+        }
+
+        folders.removeIf { it.feeds.isEmpty() }
+    }
+
     private fun updateArticles(feed: Feed, items: List<ParsedItem>) {
         items.forEach { item ->
             val publishedAt = item.publishedAt?.toEpochSecond()
@@ -312,17 +303,9 @@ data class Account(
             }.awaitAll()
         }
 
-    private fun entrySiteURL(url: URL?): String {
-        return url?.toString() ?: ""
-    }
-
-    private fun entryNameOrDefault(entryName: String, feedName: String = ""): String {
+    private fun entryNameOrDefault(entryName: String): String {
         if (entryName.isNotBlank()) {
             return entryName
-        }
-
-        if (feedName.isNotBlank()) {
-            return feedName
         }
 
         return DEFAULT_TITLE

@@ -6,6 +6,7 @@ import com.jocmp.basil.OPMLFile
 import java.io.BufferedReader
 import java.io.InputStream
 import java.net.URI
+import java.net.URL
 
 /**
  * 1. Load file via `OPMLFile`
@@ -18,8 +19,15 @@ internal class OPMLImporter(private val account: Account) {
 
         val entries = findEntries(outlines)
 
-        entries.forEach {
-            account.addFeed(it)
+        val groupedForms = entries.groupBy { it.url }.toMap()
+
+        groupedForms.forEach { (feedURL, forms) ->
+            val folderTitles = forms.flatMap { it.folderTitles }.distinct()
+            val name = forms.first().name
+
+            val form = AddFeedForm(url = feedURL, name = name, folderTitles = folderTitles)
+
+            account.addFeed(form)
         }
     }
 
@@ -31,7 +39,7 @@ internal class OPMLImporter(private val account: Account) {
                 val feed = outline.feed
 
                 if (!feed.xmlUrl.isNullOrBlank()) {
-                    feedEntries.add(AddFeedForm(url = feed.xmlUrl, name = feed.title ?: ""))
+                    feedEntries.add(AddFeedForm(url = URL(feed.xmlUrl), name = feed.title ?: ""))
                 }
             } else if (outline is Outline.FolderOutline) {
                 val feeds = flattenFolder(outline.folder)
@@ -40,7 +48,7 @@ internal class OPMLImporter(private val account: Account) {
                     if (!it.xmlUrl.isNullOrBlank()) {
                         feedEntries.add(
                             AddFeedForm(
-                                url = it.xmlUrl,
+                                url = URL(it.xmlUrl),
                                 name = it.title ?: "",
                                 folderTitles = folderTitle(outline.title)
                             )

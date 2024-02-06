@@ -30,6 +30,7 @@ fun ArticleView(
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit
 ) {
+
     if (article != null) {
         ArticleLoadedView(
             article = article,
@@ -41,6 +42,7 @@ fun ArticleView(
     } else {
         EmptyView()
     }
+
 
     BackHandler(article != null) {
         onBackPressed()
@@ -71,10 +73,16 @@ fun ArticleLoadedView(
         topBar = {
             Row {
                 IconButton(onClick = { onToggleRead() }) {
-                    Icon(painterResource(id = readIcon), contentDescription = stringResource(R.string.article_view_mark_as_read))
+                    Icon(
+                        painterResource(id = readIcon),
+                        contentDescription = stringResource(R.string.article_view_mark_as_read)
+                    )
                 }
                 IconButton(onClick = { onToggleStar() }) {
-                    Icon(painterResource(id = starIcon), contentDescription = stringResource(R.string.article_view_bookmark))
+                    Icon(
+                        painterResource(id = starIcon),
+                        contentDescription = stringResource(R.string.article_view_bookmark)
+                    )
                 }
             }
         }

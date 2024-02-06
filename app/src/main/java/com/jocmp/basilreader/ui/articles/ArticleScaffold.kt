@@ -11,6 +11,7 @@ import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.AnimatedPane
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.ListDetailPaneScaffold
 import androidx.compose.material3.adaptive.ListDetailPaneScaffoldRole
@@ -57,10 +58,14 @@ fun ArticleScaffold(
             ListDetailPaneScaffold(
                 scaffoldState = listDetailState,
                 listPane = {
-                    listPane()
+                    AnimatedPane(Modifier) {
+                        listPane()
+                    }
                 },
                 detailPane = {
-                    detailPane()
+                    AnimatedPane(Modifier) {
+                        detailPane()
+                    }
                 }
             )
         }

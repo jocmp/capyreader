@@ -5,7 +5,7 @@ import com.jocmp.basil.db.Feeds
 import com.jocmp.basil.accounts.ExternalFeed
 
 internal class FeedRecords(val database: Database) {
-    internal fun findOrCreate(feedURL: String, externalID: String = feedURL): Feeds {
+    internal fun findOrCreate(feedURL: String): Feeds {
         val existingFeed = database
             .feedsQueries
             .findByURL(feed_url = feedURL)
