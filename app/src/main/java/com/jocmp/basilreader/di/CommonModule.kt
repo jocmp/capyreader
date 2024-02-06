@@ -1,8 +1,12 @@
-package com.jocmp.basilreader
+package com.jocmp.basilreader.di
 
 import com.jocmp.basil.AccountManager
 import com.jocmp.basil.DatabaseProvider
 import com.jocmp.basil.PreferenceStoreProvider
+import com.jocmp.basilreader.common.AppPreferences
+import com.jocmp.basilreader.common.buildOkHttpClient
+import com.jocmp.basilreader.common.AndroidDatabaseProvider
+import com.jocmp.basilreader.common.AndroidPreferenceStoreProvider
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 

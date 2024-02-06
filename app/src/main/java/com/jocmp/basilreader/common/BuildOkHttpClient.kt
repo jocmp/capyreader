@@ -1,4 +1,4 @@
-package com.jocmp.basilreader
+package com.jocmp.basilreader.common
 
 import android.content.Context
 import okhttp3.Cache

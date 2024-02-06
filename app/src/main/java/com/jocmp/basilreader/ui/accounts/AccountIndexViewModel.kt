@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jocmp.basil.Account
 import com.jocmp.basil.AccountManager
-import com.jocmp.basilreader.AppPreferences
+import com.jocmp.basilreader.common.AppPreferences
 import kotlinx.coroutines.launch
 
 class AccountIndexViewModel(

@@ -11,9 +11,9 @@ import com.jocmp.basil.opml.asFeed
 import com.jocmp.basil.opml.asFolder
 import com.jocmp.basil.persistence.ArticleRecords
 import com.jocmp.basil.persistence.FeedRecords
-import com.jocmp.basil.shared.nowUTCInSeconds
-import com.jocmp.basil.shared.orEmpty
-import com.jocmp.basil.shared.upsert
+import com.jocmp.basil.common.nowUTCInSeconds
+import com.jocmp.basil.common.orEmpty
+import com.jocmp.basil.common.upsert
 import com.jocmp.feedfinder.DefaultFeedFinder
 import com.jocmp.feedfinder.FeedFinder
 import kotlinx.coroutines.Dispatchers

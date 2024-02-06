@@ -1,4 +1,4 @@
-package com.jocmp.basilreader
+package com.jocmp.basilreader.di
 
 import com.jocmp.basilreader.ui.accounts.accountModule
 import com.jocmp.basilreader.ui.articles.articlesModule

@@ -1,7 +1,7 @@
 package com.jocmp.basil.accounts
 
 import com.jocmp.basil.Feed
-import com.jocmp.basil.shared.prepending
+import com.jocmp.basil.common.prepending
 
 internal fun Feed.asOPML(indentLevel: Int): String {
     val opml =

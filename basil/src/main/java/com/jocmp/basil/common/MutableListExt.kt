@@ -1,4 +1,4 @@
-package com.jocmp.basil.shared
+package com.jocmp.basil.common
 
 fun <T> MutableList<T>.replace(element: T) {
     val index = indexOf(element)

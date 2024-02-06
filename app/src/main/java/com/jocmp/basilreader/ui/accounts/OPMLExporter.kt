@@ -1,10 +1,10 @@
-package com.jocmp.basilreader
+package com.jocmp.basilreader.ui.accounts
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import androidx.core.content.FileProvider
 import com.jocmp.basil.Account
+import com.jocmp.basilreader.R
+import com.jocmp.basilreader.common.fileURI
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
@@ -46,6 +46,3 @@ class OPMLExporter(
         }
     }
 }
-
-private fun Context.fileURI(file: File) =
-    FileProvider.getUriForFile(this, "${packageName}.fileprovider", file)

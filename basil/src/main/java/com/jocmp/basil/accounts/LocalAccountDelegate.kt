@@ -1,7 +1,7 @@
 package com.jocmp.basil.accounts
 
 import com.jocmp.basil.Feed
-import com.jocmp.basil.shared.parseISODate
+import com.jocmp.basil.common.parseISODate
 import com.prof18.rssparser.RssParserBuilder
 import com.prof18.rssparser.model.RssItem
 import okhttp3.OkHttpClient

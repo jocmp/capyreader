@@ -7,7 +7,7 @@ import com.jocmp.basil.AccountManager
 import com.jocmp.basil.EditFeedForm
 import com.jocmp.basil.Feed
 import com.jocmp.basil.Folder
-import com.jocmp.basilreader.AppPreferences
+import com.jocmp.basilreader.common.AppPreferences
 import kotlinx.coroutines.launch
 
 class EditFeedViewModel(

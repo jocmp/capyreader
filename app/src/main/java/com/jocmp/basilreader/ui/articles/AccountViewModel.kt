@@ -15,11 +15,10 @@ import com.jocmp.basil.Article
 import com.jocmp.basil.ArticleFilter
 import com.jocmp.basil.ArticleStatus
 import com.jocmp.basil.Feed
-import com.jocmp.basil.FeedSearch
 import com.jocmp.basil.Folder
 import com.jocmp.basil.buildPager
 import com.jocmp.basil.unreadCounts
-import com.jocmp.basilreader.AppPreferences
+import com.jocmp.basilreader.common.AppPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
