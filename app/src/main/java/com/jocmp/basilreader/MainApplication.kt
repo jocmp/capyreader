@@ -14,5 +14,4 @@ class MainApplication: Application() {
             setupModules()
         }
     }
-
 }
