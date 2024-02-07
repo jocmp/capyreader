@@ -54,8 +54,13 @@ class ArticleRecords internal constructor(
         )
     }
 
-    fun countUnread(): Map<String, Long> {
-        return database.articlesQueries.countUnread().execute {
+    fun countAll(status: ArticleStatus): Map<String, Long> {
+        val (read, starred) = status.forCounts
+
+        return database.articlesQueries.countAll(
+            read = read,
+            starred = starred,
+        ).execute {
             val result = mutableMapOf<String, Long>()
             while (it.next().value) {
                 val feedID = it.getLong(0)!!.toString()

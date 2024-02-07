@@ -1,4 +1,4 @@
-package com.jocmp.basilreader.di
+package com.jocmp.basilreader
 
 import com.jocmp.basil.AccountManager
 import com.jocmp.basil.DatabaseProvider

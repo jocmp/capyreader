@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.targets.js.npm.importedPackageDir
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -73,6 +75,7 @@ dependencies {
     implementation("androidx.paging:paging-runtime-ktx:$pagingVersion")
     implementation("androidx.paging:paging-compose:3.2.1")
     implementation("androidx.navigation:navigation-compose:2.7.6")
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
     implementation("app.cash.sqldelight:android-driver:$sqldelightVersion")
     implementation("io.insert-koin:koin-android")
     implementation("io.insert-koin:koin-androidx-compose")

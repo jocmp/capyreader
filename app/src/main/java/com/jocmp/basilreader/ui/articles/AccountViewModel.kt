@@ -14,10 +14,11 @@ import com.jocmp.basil.AddFeedForm
 import com.jocmp.basil.Article
 import com.jocmp.basil.ArticleFilter
 import com.jocmp.basil.ArticleStatus
+import com.jocmp.basil.Countable
 import com.jocmp.basil.Feed
 import com.jocmp.basil.Folder
 import com.jocmp.basil.buildPager
-import com.jocmp.basil.unreadCounts
+import com.jocmp.basil.countAll
 import com.jocmp.basilreader.common.AppPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -31,17 +32,17 @@ class AccountViewModel(
         policy = neverEqualPolicy()
     )
 
-    private val _unreadCounts = mutableStateOf<Map<String, Long>>(mapOf())
-
-    init {
-        refreshUnreadCounts()
-    }
+    private val _counts = mutableStateOf<Map<String, Long>>(mapOf())
 
     private val _filter = mutableStateOf(appPreferences.filter.get())
 
     private val pager = mutableStateOf(account.buildPager(_filter.value))
 
     private val _articles = derivedStateOf { pager.value.flow.cachedIn(viewModelScope) }
+
+    init {
+        refreshCounts()
+    }
 
     val articles: Flow<PagingData<Article>>
         get() = _articles.value
@@ -50,15 +51,15 @@ class AccountViewModel(
         get() = accountState.value
 
     val folders: List<Folder>
-        get() = account.folders.map(::copyFolderUnreadCounts)
+        get() = account.folders.map(::copyFolderUnreadCounts).withPositiveCount(filterStatus)
 
     private val articleState = mutableStateOf(account.findArticle(appPreferences.articleID.get()))
 
-    val allUnreadCount: Long
-        get() = _unreadCounts.value.values.sum()
+    val statusCount: Long
+        get() = _counts.value.values.sum()
 
     val feeds: List<Feed>
-        get() = account.feeds.map(::copyFeedUnreadCounts)
+        get() = account.feeds.map(::copyFeedUnreadCounts).withPositiveCount(filterStatus)
 
     val article: Article?
         get() = articleState.value
@@ -121,7 +122,7 @@ class AccountViewModel(
             is ArticleFilter.Articles -> account.refreshAll()
         }
 
-        refreshUnreadCounts()
+        refreshCounts()
     }
 
     fun selectArticle(articleID: String, onSuccess: (article: Article) -> Unit) {
@@ -133,7 +134,7 @@ class AccountViewModel(
             appPreferences.articleID.set(articleID)
         }
 
-        refreshUnreadCounts()
+        refreshCounts()
     }
 
     fun toggleArticleRead() {
@@ -146,7 +147,7 @@ class AccountViewModel(
 
             articleState.value = article.copy(read = !article.read)
 
-            refreshUnreadCounts()
+            refreshCounts()
         }
     }
 
@@ -159,6 +160,8 @@ class AccountViewModel(
             }
 
             articleState.value = article.copy(starred = !article.starred)
+
+            refreshCounts()
         }
     }
 
@@ -198,6 +201,7 @@ class AccountViewModel(
 
         viewModelScope.launch {
             appPreferences.filter.set(nextFilter)
+            refreshCounts()
         }
     }
 
@@ -208,19 +212,23 @@ class AccountViewModel(
     }
 
     private fun copyFolderUnreadCounts(folder: Folder): Folder {
-        val folderFeeds = folder.feeds.map(::copyFeedUnreadCounts).toMutableList()
+        val folderFeeds = folder.feeds.map(::copyFeedUnreadCounts)
 
         return folder.copy(
-            feeds = folderFeeds,
-            unreadCount = folderFeeds.sumOf { it.unreadCount }
+            feeds = folderFeeds.withPositiveCount(filterStatus).toMutableList(),
+            count = folderFeeds.sumOf { it.count }
         )
     }
 
     private fun copyFeedUnreadCounts(feed: Feed): Feed {
-        return feed.copy(unreadCount = _unreadCounts.value.getOrDefault(feed.id, 0))
+        return feed.copy(count = _counts.value.getOrDefault(feed.id, 0))
     }
 
-    private fun refreshUnreadCounts() {
-        _unreadCounts.value = accountState.value.unreadCounts
+    private fun refreshCounts() {
+        _counts.value = accountState.value.countAll(status = filterStatus)
     }
+}
+
+private fun <T : Countable> List<T>.withPositiveCount(status: ArticleStatus): List<T> {
+    return filter { status == ArticleStatus.ALL || it.count > 0 }
 }
