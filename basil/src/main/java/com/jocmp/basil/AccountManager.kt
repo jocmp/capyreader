@@ -17,13 +17,11 @@ class AccountManager(
 
         val existingAccount = findAccountFile(id) ?: return null
 
-        return buildAccount(id = existingAccount.name, path = existingAccount)
+        return buildAccount(existingAccount)
     }
 
     val accounts: List<Account>
-        get() = listAccounts().map {
-            buildAccount(id = it.name, path = it)
-        }
+        get() = listAccounts().map { buildAccount(it) }
 
     fun accountSize(): Int {
         return listAccounts().size
@@ -40,7 +38,7 @@ class AccountManager(
 
         val file = accountFile(accountID).apply { mkdir() }
 
-        return buildAccount(id = accountID, path = file)
+        return buildAccount(file)
     }
 
     fun removeAccount(accountID: String) {
@@ -61,7 +59,8 @@ class AccountManager(
 
     private fun accountFolder() = File(rootFolder.path, directoryName)
 
-    private fun buildAccount(id: String, path: File): Account {
+    private fun buildAccount(path: File): Account {
+        val id = path.name
         val pathURI = path.toURI()
 
         return Account(

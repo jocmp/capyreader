@@ -7,6 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.jocmp.basil.AccountManager
 import com.jocmp.basilreader.common.AppPreferences
+import com.jocmp.basilreader.refresher.RefreshScheduler
 import com.jocmp.basilreader.ui.App
 import org.koin.android.ext.android.get
 
