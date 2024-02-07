@@ -9,10 +9,11 @@ class RefreshScheduler(
     private val context: Context,
     private val appPreferences: AppPreferences,
 ) {
-    fun update(interval: RefreshInterval) {
-        val previousInterval = appPreferences.refreshInterval.get()
+    val refreshInterval
+        get() = appPreferences.refreshInterval.get()
 
-        if (interval == previousInterval) {
+    fun update(interval: RefreshInterval) {
+        if (interval == refreshInterval) {
             return
         }
 

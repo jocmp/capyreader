@@ -7,19 +7,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jocmp.basil.Account
 import com.jocmp.basil.AccountManager
+import com.jocmp.basilreader.refresher.RefreshInterval
+import com.jocmp.basilreader.refresher.RefreshScheduler
 import kotlinx.coroutines.launch
 import java.io.InputStream
 
 class AccountSettingsViewModel(
     savedStateHandle: SavedStateHandle,
-    private val accountManager: AccountManager
-): ViewModel() {
+    private val accountManager: AccountManager,
+    private val refreshScheduler: RefreshScheduler,
+) : ViewModel() {
     private val args = AccountSettingsArgs(savedStateHandle)
 
-   private val _account = mutableStateOf(
-       accountManager.findByID(args.accountID)!!,
-       policy = neverEqualPolicy()
-   )
+    private val _account = mutableStateOf(
+        accountManager.findByID(args.accountID)!!,
+        policy = neverEqualPolicy()
+    )
+
+    private val _refreshInterval = mutableStateOf(refreshScheduler.refreshInterval)
 
     val account: Account
         get() = _account.value
@@ -27,9 +32,20 @@ class AccountSettingsViewModel(
     val displayName: String
         get() = account.displayName
 
-    fun submitName(displayName: String) {
-        account.displayName = displayName
-        _account.value = account
+    val refreshInterval: RefreshInterval
+        get() = _refreshInterval.value
+
+    fun updateRefreshInterval(interval: RefreshInterval) {
+        refreshScheduler.update(interval)
+
+        _refreshInterval.value = interval
+    }
+
+    fun updateName(displayName: String) {
+        if (displayName.isNotBlank()) {
+            account.displayName = displayName
+            _account.value = account
+        }
     }
 
     fun removeAccount() {

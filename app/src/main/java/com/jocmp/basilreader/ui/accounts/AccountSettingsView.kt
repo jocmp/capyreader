@@ -2,6 +2,8 @@ package com.jocmp.basilreader.ui.accounts
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
@@ -18,21 +20,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import com.jocmp.basilreader.R
+import com.jocmp.basilreader.refresher.RefreshInterval
 import kotlinx.coroutines.launch
 
 @Composable
 fun AccountSettingsView(
     defaultDisplayName: String,
+    refreshInterval: RefreshInterval,
+    updateRefreshInterval: (interval: RefreshInterval) -> Unit,
     removeAccount: () -> Unit,
-    submit: (displayName: String) -> Unit,
+    updateName: (displayName: String) -> Unit,
     exportOPML: () -> Unit,
     importOPML: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
-    val saveMessage = stringResource(id = R.string.account_settings_save_success_message)
+    val saveMessage = stringResource(id = R.string.account_settings_save_name)
     val focus = LocalFocusManager.current
     val keyboard = LocalSoftwareKeyboardController.current
 
@@ -48,6 +54,15 @@ fun AccountSettingsView(
         removeAccount()
     }
 
+    val submitName = {
+        updateName(displayName)
+        focus.clearFocus()
+        keyboard?.hide()
+        scope.launch {
+            snackbarHostState.showSnackbar(saveMessage)
+        }
+    }
+
     Scaffold(
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
@@ -57,21 +72,27 @@ fun AccountSettingsView(
             TextField(
                 value = displayName,
                 onValueChange = setDisplayName,
-                placeholder = { Text(defaultDisplayName) }
+                placeholder = { Text(defaultDisplayName) },
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Done
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = { submitName() }
+                )
             )
 
             Button(
-                onClick = {
-                    submit(displayName)
-                    focus.clearFocus()
-                    keyboard?.hide()
-                    scope.launch {
-                        snackbarHostState.showSnackbar(saveMessage)
-                    }
-                }
+                onClick = { submitName() }
             ) {
                 Text(stringResource(R.string.account_settings_submit))
             }
+
+            RefreshIntervalMenu(
+                refreshInterval = refreshInterval,
+                updateRefreshInterval = updateRefreshInterval,
+            )
+
             Button(
                 onClick = importOPML,
             ) {
@@ -87,7 +108,6 @@ fun AccountSettingsView(
             }
         }
     }
-
 
     if (isRemoveDialogOpen) {
         AlertDialog(
@@ -121,8 +141,10 @@ fun AccountSettingsViewPreview() {
     AccountSettingsView(
         defaultDisplayName = "Feedbin",
         removeAccount = {},
-        submit = {},
+        updateName = {},
         exportOPML = {},
-        importOPML = {}
+        importOPML = {},
+        refreshInterval = RefreshInterval.EVERY_HOUR,
+        updateRefreshInterval = {}
     )
 }

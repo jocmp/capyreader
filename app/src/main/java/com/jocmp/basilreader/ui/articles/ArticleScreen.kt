@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.jocmp.basilreader.ui.components.rememberSaveableWebViewState
 import com.jocmp.basilreader.ui.components.rememberWebViewNavigator
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -63,6 +64,7 @@ fun ArticleScreen(
     val onComplete = {
         coroutineScope.launch {
             setDestination(ListDetailPaneScaffoldRole.List)
+            delay(200)
             drawerState.close()
         }
     }
