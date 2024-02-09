@@ -122,7 +122,7 @@ class ArticleRecordsTest {
         2.repeated { articleFixture.create(feed = firstFeed) }
         val secondFeedArticle = articleFixture.create()
 
-        val unread = ArticleRecords(database).countUnread()
+        val unread = ArticleRecords(database).countAll(status = ArticleStatus.UNREAD)
 
         assertEquals(expected = 2, actual = unread[firstFeed.id.toString()]!!.toInt())
         assertEquals(expected = 1, actual = unread[secondFeedArticle.feedID]!!.toInt())

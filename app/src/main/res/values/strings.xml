@@ -32,10 +32,17 @@
     <string name="account_settings_delete_account_title">Delete Account</string>
     <string name="account_settings_delete_account_message">Are you sure you want to delete the account \"%1$s\"? This cannot be undone.</string>
     <string name="account_settings_delete_account_submit">Delete</string>
-    <string name="account_settings_save_success_message">Settings saved</string>
+    <string name="account_settings_save_name">Name saved</string>
     <string name="account_settings_export">Export</string>
     <string name="account_settings_import">Import</string>
     <string name="opml_exporter_chooser_title">Export %1$s Feeds</string>
     <string name="article_view_mark_as_read">Mark as read</string>
     <string name="article_view_bookmark">Bookmark</string>
+    <string name="refresh_manually_only">Manually only</string>
+    <string name="refresh_minutes">Every %1$d minutes</string>
+    <string name="refresh_feeds_menu_label">Refresh Feeds</string>
+    <plurals name="refresh_hours">
+        <item quantity="one">Every hour</item>
+        <item quantity="other">Every %d hours</item>
+    </plurals>
 </resources>

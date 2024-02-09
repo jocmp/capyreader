@@ -11,9 +11,9 @@ import com.jocmp.basil.opml.asFeed
 import com.jocmp.basil.opml.asFolder
 import com.jocmp.basil.persistence.ArticleRecords
 import com.jocmp.basil.persistence.FeedRecords
-import com.jocmp.basil.shared.nowUTCInSeconds
-import com.jocmp.basil.shared.orEmpty
-import com.jocmp.basil.shared.upsert
+import com.jocmp.basil.common.nowUTCInSeconds
+import com.jocmp.basil.common.orEmpty
+import com.jocmp.basil.common.upsert
 import com.jocmp.feedfinder.DefaultFeedFinder
 import com.jocmp.feedfinder.FeedFinder
 import kotlinx.coroutines.Dispatchers
@@ -22,6 +22,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.OkHttpClient
 import java.io.InputStream
 import java.net.URI
 
@@ -30,13 +31,14 @@ data class Account(
     val path: URI,
     val database: Database,
     val preferences: AccountPreferences,
-    val feedFinder: FeedFinder = DefaultFeedFinder()
+    val feedFinder: FeedFinder = DefaultFeedFinder(),
+    val httpClient: OkHttpClient = OkHttpClient(),
 ) {
     private var delegate: AccountDelegate
 
     init {
         when (source) {
-            AccountSource.LOCAL -> delegate = LocalAccountDelegate()
+            AccountSource.LOCAL -> delegate = LocalAccountDelegate(httpClient)
         }
     }
 

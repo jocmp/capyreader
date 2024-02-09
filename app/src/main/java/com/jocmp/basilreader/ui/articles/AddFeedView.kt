@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.jocmp.basil.AddFeedForm
 import com.jocmp.basil.FeedSearch.SearchResult
 import com.jocmp.basil.Folder
-import com.jocmp.basil.shared.orEmpty
+import com.jocmp.basil.common.orEmpty
 import com.jocmp.basilreader.R
 import com.jocmp.basilreader.ui.components.TextField
 import kotlinx.coroutines.Dispatchers

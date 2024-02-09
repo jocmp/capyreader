@@ -18,6 +18,7 @@ internal val accountModule = module {
         AccountSettingsViewModel(
             savedStateHandle = get(),
             accountManager = get(),
+            refreshScheduler = get(),
         )
     }
 }

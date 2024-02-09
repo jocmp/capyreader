@@ -1,4 +1,4 @@
-package com.jocmp.basil.shared
+package com.jocmp.basil.common
 
 import java.net.MalformedURLException
 import java.net.URL

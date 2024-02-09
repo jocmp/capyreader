@@ -1,5 +1,6 @@
 package com.jocmp.basil
 
+import okhttp3.OkHttpClient
 import java.io.File
 import java.io.FileFilter
 import java.net.URI
@@ -9,19 +10,18 @@ class AccountManager(
     val rootFolder: URI,
     private val databaseProvider: DatabaseProvider,
     private val preferenceStoreProvider: PreferenceStoreProvider,
+    private val httpClient: OkHttpClient,
 ) {
     fun findByID(id: String?): Account? {
         id ?: return null
 
         val existingAccount = findAccountFile(id) ?: return null
 
-        return buildAccount(id = existingAccount.name, path = existingAccount)
+        return buildAccount(existingAccount)
     }
 
     val accounts: List<Account>
-        get() = listAccounts().map {
-            buildAccount(id = it.name, path = it)
-        }
+        get() = listAccounts().map { buildAccount(it) }
 
     fun accountSize(): Int {
         return listAccounts().size
@@ -38,7 +38,7 @@ class AccountManager(
 
         val file = accountFile(accountID).apply { mkdir() }
 
-        return buildAccount(id = accountID, path = file)
+        return buildAccount(file)
     }
 
     fun removeAccount(accountID: String) {
@@ -59,14 +59,16 @@ class AccountManager(
 
     private fun accountFolder() = File(rootFolder.path, directoryName)
 
-    private fun buildAccount(id: String, path: File): Account {
+    private fun buildAccount(path: File): Account {
+        val id = path.name
         val pathURI = path.toURI()
 
         return Account(
             id = id,
             path = pathURI,
             database = databaseProvider.build(id),
-            preferences = preferenceStoreProvider.build(id)
+            preferences = preferenceStoreProvider.build(id),
+            httpClient = httpClient,
         )
     }
 

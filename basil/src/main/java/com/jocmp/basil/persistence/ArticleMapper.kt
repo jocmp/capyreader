@@ -1,7 +1,7 @@
 package com.jocmp.basil.persistence
 
 import com.jocmp.basil.Article
-import com.jocmp.basil.shared.optionalURL
+import com.jocmp.basil.common.optionalURL
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime

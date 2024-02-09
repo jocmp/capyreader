@@ -1,18 +1,21 @@
 package com.jocmp.basil.accounts
 
 import com.jocmp.basil.Feed
-import com.jocmp.basil.shared.parseISODate
-import com.prof18.rssparser.RssParser
+import com.jocmp.basil.common.parseISODate
+import com.prof18.rssparser.RssParserBuilder
 import com.prof18.rssparser.model.RssItem
+import okhttp3.OkHttpClient
 import java.net.URL
 
-internal class LocalAccountDelegate : AccountDelegate {
+internal class LocalAccountDelegate(httpClient: OkHttpClient) : AccountDelegate {
+    val rssParser = RssParserBuilder(callFactory = httpClient).build()
+
     override suspend fun createFeed(feedURL: URL): Result<String> {
         return Result.success(feedURL.toString())
     }
 
     override suspend fun fetchAll(feed: Feed): List<ParsedItem> {
-        val result = RssParser().getRssChannel(feed.feedURL)
+        val result = rssParser.getRssChannel(feed.feedURL)
 
         return result.items
             .filter { it.isIdentifiable }

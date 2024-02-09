@@ -1,4 +1,4 @@
-package com.jocmp.basilreader
+package com.jocmp.basilreader.common
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
@@ -6,7 +6,6 @@ import androidx.core.content.edit
 import com.jocmp.basil.AccountPreferences
 import com.jocmp.basil.PreferenceStoreProvider
 import com.jocmp.basil.preferences.AndroidPreferenceStore
-import com.jocmp.basil.preferences.PreferenceStore
 
 class AndroidPreferenceStoreProvider(
     private val context: Context

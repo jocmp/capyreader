@@ -1,8 +1,8 @@
 package com.jocmp.basil.accounts
 
 import com.jocmp.basil.Folder
-import com.jocmp.basil.shared.prepending
-import com.jocmp.basil.shared.repeatTab
+import com.jocmp.basil.common.prepending
+import com.jocmp.basil.common.repeatTab
 
 internal fun Folder.asOPML(indentLevel: Int = 0): String {
     if (feeds.isEmpty()) {

@@ -13,3 +13,9 @@ internal val ArticleStatus.toStatusPair: ArticleStatusPair
         ArticleStatus.UNREAD -> ArticleStatusPair(read = false, starred = null)
         ArticleStatus.STARRED -> ArticleStatusPair(read = null, starred = true)
     }
+
+internal val ArticleStatus.forCounts: ArticleStatusPair
+    get() = when(this) {
+        ArticleStatus.STARRED -> ArticleStatusPair(read = null, starred = true)
+        else -> ArticleStatusPair(read = false, starred = null)
+    }

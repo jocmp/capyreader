@@ -1,4 +1,4 @@
-package com.jocmp.basil.shared
+package com.jocmp.basil.common
 
 fun <T> MutableSet<T>.replace(element: T) {
     if (remove(element)) {

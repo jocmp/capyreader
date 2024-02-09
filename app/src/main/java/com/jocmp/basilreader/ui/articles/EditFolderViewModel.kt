@@ -7,7 +7,7 @@ import com.jocmp.basil.AccountManager
 import com.jocmp.basil.ArticleFilter
 import com.jocmp.basil.EditFolderForm
 import com.jocmp.basil.Folder
-import com.jocmp.basilreader.AppPreferences
+import com.jocmp.basilreader.common.AppPreferences
 import kotlinx.coroutines.launch
 
 class EditFolderViewModel(

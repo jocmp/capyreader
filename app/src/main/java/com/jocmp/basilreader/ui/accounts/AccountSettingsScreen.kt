@@ -4,9 +4,7 @@ import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
-import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 private const val TAG = "AccountSettingsScreen"
@@ -33,11 +31,13 @@ fun AccountSettingsScreen(
 
     AccountSettingsView(
         defaultDisplayName = viewModel.displayName,
+        refreshInterval = viewModel.refreshInterval,
+        updateRefreshInterval = viewModel::updateRefreshInterval,
         removeAccount = {
             viewModel.removeAccount()
             goBack()
         },
-        submit = viewModel::submitName,
+        updateName = viewModel::updateName,
         exportOPML = {
             context.exportOPML(account = viewModel.account)
         },

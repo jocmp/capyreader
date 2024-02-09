@@ -1,4 +1,4 @@
-package com.jocmp.basil.shared
+package com.jocmp.basil.common
 
 internal fun String.prepending(tabCount: Int): String {
     if (tabCount < 1) {

@@ -1,4 +1,4 @@
-package com.jocmp.basilreader
+package com.jocmp.basilreader.common
 
 import android.content.Context
 import androidx.preference.PreferenceManager
@@ -6,6 +6,8 @@ import com.jocmp.basil.ArticleFilter
 import com.jocmp.basil.preferences.AndroidPreferenceStore
 import com.jocmp.basil.preferences.Preference
 import com.jocmp.basil.preferences.PreferenceStore
+import com.jocmp.basil.preferences.getEnum
+import com.jocmp.basilreader.refresher.RefreshInterval
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
@@ -24,6 +26,9 @@ class AppPreferences(context: Context) {
             serializer = { Json.encodeToString(it) },
             deserializer = { Json.decodeFromString(it) }
         )
+
+    val refreshInterval: Preference<RefreshInterval>
+        get() = preferenceStore.getEnum("refresh_interval", RefreshInterval.default)
 
     val articleID: Preference<String>
         get() = preferenceStore.getString("article_id")

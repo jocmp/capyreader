@@ -9,8 +9,8 @@ data class Feed(
     val name: String,
     val feedURL: String,
     val siteURL: String = "",
-    val unreadCount: Long = 0
-) {
+    override val count: Long = 0
+): Countable {
     internal val primaryKey: Long
         get() = id.toLong()
 

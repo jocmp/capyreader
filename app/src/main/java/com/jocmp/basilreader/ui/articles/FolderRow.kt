@@ -2,7 +2,6 @@ package com.jocmp.basilreader.ui.articles
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -35,7 +34,7 @@ fun FolderRow(
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(horizontal = 8.dp),
             )
-            Text(folder.unreadCount.toString())
+            Text(folder.count.toString())
         }
         folder.feeds.forEach { feed ->
             Row {

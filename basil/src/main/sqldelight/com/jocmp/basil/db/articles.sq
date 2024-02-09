@@ -51,13 +51,14 @@ JOIN article_statuses ON articles.external_id = article_statuses.external_id AND
 WHERE articles.id = :articleID
 LIMIT 1;
 
-countUnread:
+countAll:
 SELECT
  articles.feed_id,
  COUNT(DISTINCT articles.id)
 FROM articles
 JOIN article_statuses ON articles.external_id = article_statuses.external_id AND article_statuses.feed_id = articles.feed_id
-WHERE article_statuses.read = 0
+WHERE (article_statuses.read = :read OR :read IS NULL)
+AND (article_statuses.starred = :starred OR :starred IS NULL)
 GROUP BY articles.feed_id;
 
 findByExternalID:
