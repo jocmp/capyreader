@@ -14,6 +14,7 @@ class FeedPreviewFixture : PreviewParameterProvider<Feed> {
             Feed(
                 id = RandomUUID.generate(),
                 externalID = RandomUUID.generate(),
+                count = 10,
                 name = "GamersNexus",
                 feedURL = "https://gamersnexus.net/rss.xml"
             ),

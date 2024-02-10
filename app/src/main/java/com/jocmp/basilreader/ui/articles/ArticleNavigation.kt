@@ -29,13 +29,13 @@ fun NavGraphBuilder.articleGraph(
         route = "articles",
     ) {
         ArticleScreen(
-            onFeedAdd = {
+            onAddFeed = {
                 navController.navigateToAddFeed()
             },
-            onFeedEdit = { feedID ->
+            onEditFeed = { feedID ->
                 navController.navigateToEditFeed(feedID = feedID)
             },
-            onFolderEdit = { folderTitle ->
+            onEditFolder = { folderTitle ->
                 navController.navigateToEditFolder(folderTitle = folderTitle)
             },
             onNavigateToAccounts = {

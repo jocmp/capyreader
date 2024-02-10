@@ -4,16 +4,18 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jocmp.basil.AccountManager
+import com.jocmp.basil.ArticleFilter
 import com.jocmp.basil.EditFeedForm
 import com.jocmp.basil.Feed
 import com.jocmp.basil.Folder
+import com.jocmp.basil.preferences.getAndSet
 import com.jocmp.basilreader.common.AppPreferences
 import kotlinx.coroutines.launch
 
 class EditFeedViewModel(
     savedStateHandle: SavedStateHandle,
     accountManager: AccountManager,
-    appPreferences: AppPreferences
+    private val appPreferences: AppPreferences
 ) : ViewModel() {
     private val account = accountManager.findByID(appPreferences.accountID.get())!!
     private val args = EditFeedArgs(savedStateHandle)
@@ -31,7 +33,14 @@ class EditFeedViewModel(
         viewModelScope.launch {
             account
                 .editFeed(form = form)
-                .onSuccess {
+                .onSuccess { feed ->
+                    appPreferences.filter.getAndSet { filter ->
+                        if (filter.isFeedSelected(feed)) {
+                            ArticleFilter.Feeds(feed, filter.status)
+                        } else {
+                            filter
+                        }
+                    }
                     onSuccess()
                 }
         }
