@@ -4,6 +4,18 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 sealed class ArticleFilter(open val status: ArticleStatus) {
+    fun isFolderSelect(folder: Folder): Boolean {
+        return this is Folders && this.folder.title == folder.title
+    }
+
+    fun isFeedSelected(feed: Feed): Boolean {
+        return this is Feeds && this.feed.id == feed.id
+    }
+
+    fun areArticlesSelected(): Boolean {
+        return this is Articles
+    }
+
     fun withStatus(status: ArticleStatus): ArticleFilter {
         return when (this) {
             is Articles -> copy(articleStatus = status)

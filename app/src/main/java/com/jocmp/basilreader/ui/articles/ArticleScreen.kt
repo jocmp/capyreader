@@ -1,5 +1,6 @@
 package com.jocmp.basilreader.ui.articles
 
+import android.util.Log
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -32,6 +33,8 @@ import com.jocmp.basilreader.ui.components.rememberWebViewNavigator
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
+
+private const val TAG = "ArticleScreen"
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class, ExperimentalMaterialApi::class)
 @Composable
@@ -98,8 +101,12 @@ fun ArticleScreen(
                     onComplete()
                 },
                 onNavigateToAccounts = onNavigateToAccounts,
-                onFilterSelect = viewModel::selectArticleFilter,
-                articleStatus = viewModel.filterStatus
+                onFilterSelect = {
+                    viewModel.selectArticleFilter()
+                    onComplete()
+                },
+                articleStatus = viewModel.filterStatus,
+                filter = filter,
             )
         },
         listPane = {
@@ -174,6 +181,11 @@ fun ArticleScreen(
             )
         }
     )
+
+    LaunchedEffect(Unit) {
+        Log.d(TAG, "ArticleScreen: refreshed")
+        viewModel.reload()
+    }
 
     LaunchedEffect(webViewNavigator) {
         val html = ArticleRenderer.render(viewModel.article, context)

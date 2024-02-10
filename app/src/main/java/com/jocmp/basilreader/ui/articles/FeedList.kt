@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -21,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jocmp.basil.ArticleFilter
 import com.jocmp.basil.ArticleStatus
 import com.jocmp.basil.Feed
 import com.jocmp.basil.Folder
@@ -30,6 +32,7 @@ import com.jocmp.basilreader.ui.fixtures.FolderPreviewFixture
 
 @Composable
 fun FeedList(
+    filter: ArticleFilter,
     folders: List<Folder> = emptyList(),
     feeds: List<Feed> = emptyList(),
     onAddFeed: () -> Unit,
@@ -58,22 +61,27 @@ fun FeedList(
             }
         }
 
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable {
-                    onFilterSelect()
+        NavigationDrawerItem(
+            label = {
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(stringResource(articleStatus.navigationTitle))
                 }
-        ) {
-            Text(stringResource(articleStatus.navigationTitle))
-        }
+            },
+            selected = filter.areArticlesSelected(),
+            onClick = {
+                onFilterSelect()
+            }
+        )
 
         folders.forEach {
             FolderRow(
                 folder = it,
                 onFolderSelect = onSelectFolder,
                 onFeedSelect = onSelectFeed,
+                filter = filter
             )
         }
         if (feeds.isNotEmpty()) {
@@ -83,7 +91,8 @@ fun FeedList(
             feeds.forEach {
                 FeedRow(
                     feed = it,
-                    onSelect = onSelectFeed
+                    onSelect = onSelectFeed,
+                    selected = filter.isFeedSelected(it),
                 )
             }
         }
@@ -91,7 +100,7 @@ fun FeedList(
 }
 
 val ArticleStatus.navigationTitle: Int
-    get() = when(this) {
+    get() = when (this) {
         ArticleStatus.ALL -> R.string.filter_all
         ArticleStatus.UNREAD -> R.string.filter_unread
         ArticleStatus.STARRED -> R.string.filter_starred
@@ -112,5 +121,6 @@ fun FeedListPreview() {
         onNavigateToAccounts = {},
         onFilterSelect = {},
         articleStatus = ArticleStatus.ALL,
+        filter = ArticleFilter.default(),
     )
 }

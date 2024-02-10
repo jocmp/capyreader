@@ -1,5 +1,6 @@
 package com.jocmp.basilreader.ui.articles
 
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -23,11 +24,13 @@ import com.jocmp.basilreader.common.AppPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
+private const val TAG = "AccountViewModel"
+
 class AccountViewModel(
-    accountManager: AccountManager,
+    private val accountManager: AccountManager,
     private val appPreferences: AppPreferences,
 ) : ViewModel() {
-    private val accountState: MutableState<Account> = mutableStateOf(
+    private val _account: MutableState<Account> = mutableStateOf(
         accountManager.findByID(appPreferences.accountID.get())!!,
         policy = neverEqualPolicy()
     )
@@ -40,15 +43,11 @@ class AccountViewModel(
 
     private val _articles = derivedStateOf { pager.value.flow.cachedIn(viewModelScope) }
 
-    init {
-        refreshCounts()
-    }
-
     val articles: Flow<PagingData<Article>>
         get() = _articles.value
 
     private val account: Account
-        get() = accountState.value
+        get() = _account.value
 
     val folders: List<Folder>
         get() = account.folders.map(::copyFolderUnreadCounts).withPositiveCount(filterStatus)
@@ -103,7 +102,7 @@ class AccountViewModel(
         viewModelScope.launch {
             account.removeFeed(feedID = feedID)
             resetToDefaultFilter()
-            accountState.value = account
+            _account.value = account
         }
     }
 
@@ -111,7 +110,7 @@ class AccountViewModel(
         viewModelScope.launch {
             account.removeFolder(title = folderTitle)
             resetToDefaultFilter()
-            accountState.value = account
+            _account.value = account
         }
     }
 
@@ -191,6 +190,12 @@ class AccountViewModel(
         }
     }
 
+    fun reload() {
+        _account.value = accountManager.findByID(appPreferences.accountID.get())!!
+        refreshCounts()
+        Log.d(TAG, "ArticleScreen: folders=${folders.size}; feeds=${feeds.size}")
+    }
+
     private fun resetToDefaultFilter() {
         selectArticleFilter(ArticleFilter.default().copy(filter.status))
     }
@@ -225,7 +230,7 @@ class AccountViewModel(
     }
 
     private fun refreshCounts() {
-        _counts.value = accountState.value.countAll(status = filterStatus)
+        _counts.value = _account.value.countAll(status = filterStatus)
     }
 }
 

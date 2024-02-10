@@ -14,6 +14,7 @@ import com.jocmp.basilreader.ui.theme.BasilReaderTheme
 
 @Composable
 fun FeedRow(
+    selected: Boolean,
     feed: Feed,
     onSelect: (id: String) -> Unit,
 ) {
@@ -28,7 +29,7 @@ fun FeedRow(
                 Text(feed.count.toString())
             }
         },
-        selected = false,
+        selected = selected,
         onClick = {
             onSelect(feed.id)
         }
@@ -43,7 +44,8 @@ fun FeedRowPreview() {
     BasilReaderTheme {
         FeedRow(
             feed = feed,
-            onSelect = {}
+            onSelect = {},
+            selected = false
         )
     }
 }
