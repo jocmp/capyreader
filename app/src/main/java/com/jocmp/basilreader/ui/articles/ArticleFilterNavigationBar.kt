@@ -25,10 +25,7 @@ fun ArticleFilterNavigationBar(
     NavigationBar {
         NavigationBarItem(
             icon = {
-                Icon(
-                    painterResource(R.drawable.icon_star_filled),
-                    contentDescription = null
-                )
+                ArticleStatusIcon(status = ArticleStatus.STARRED)
             },
             label = { Text(stringResource(id = R.string.filter_starred)) },
             selected = selected == ArticleStatus.STARRED,
@@ -37,10 +34,7 @@ fun ArticleFilterNavigationBar(
         )
         NavigationBarItem(
             icon = {
-                Icon(
-                    painterResource(R.drawable.icon_circle_filled),
-                    contentDescription = null
-                )
+                ArticleStatusIcon(status = ArticleStatus.UNREAD)
             },
             label = { Text(stringResource(R.string.filter_unread)) },
             selected = selected == ArticleStatus.UNREAD,
@@ -49,10 +43,7 @@ fun ArticleFilterNavigationBar(
         )
         NavigationBarItem(
             icon = {
-                Icon(
-                    painter = painterResource(R.drawable.icon_notes),
-                    contentDescription = null
-                )
+                ArticleStatusIcon(status = ArticleStatus.ALL)
             },
             label = { Text(stringResource(R.string.filter_all)) },
             selected = selected == ArticleStatus.ALL,

@@ -15,16 +15,19 @@ class FolderPreviewFixture : PreviewParameterProvider<Folder> {
         return sequenceOf(
             Folder(
                 title = "Tech",
+                count = 3,
                 feeds = mutableListOf(
                     Feed(
                         id = RandomUUID.generate(),
                         externalID = RandomUUID.generate(),
+                        count = 3,
                         name = "The Verge",
                         feedURL = "https://www.theverge.com/rss/index.xml"
                     ),
                     Feed(
                         id = RandomUUID.generate(),
                         externalID = RandomUUID.generate(),
+                        count = 0,
                         name = "Ars Technica",
                         feedURL = "https://arstechnica.com/feed/"
                     )

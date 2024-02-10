@@ -6,7 +6,7 @@
     <string name="add_feed_submit">Add</string>
     <string name="feed_form_cancel">Cancel</string>
     <string name="required_placeholder">Required</string>
-    <string name="filter_starred">Starred</string>
+    <string name="filter_starred">Bookmarks</string>
     <string name="filter_unread">Unread</string>
     <string name="filter_all">All</string>
     <string name="feed_action_unsubscribe">Unsubscribe</string>
@@ -24,7 +24,7 @@
     <string name="folder_action_delete_title">Delete Folder</string>
     <string name="folder_action_edit">Rename</string>
     <string name="feed_action_unsubscribe_title">Unsubscribe</string>
-    <string name="settings_action">Settings</string>
+    <string name="accounts_action">Accounts</string>
     <string name="account_index_settings_options">Account Options</string>
     <string name="account_index_menu_settings">Account Settings</string>
     <string name="account_settings_submit">Save</string>
@@ -41,6 +41,8 @@
     <string name="refresh_manually_only">Manually only</string>
     <string name="refresh_minutes">Every %1$d minutes</string>
     <string name="refresh_feeds_menu_label">Refresh Feeds</string>
+    <string name="nav_headline_feeds">Feeds</string>
+    <string name="nav_add_feed">Add Feed</string>
     <plurals name="refresh_hours">
         <item quantity="one">Every hour</item>
         <item quantity="other">Every %d hours</item>
