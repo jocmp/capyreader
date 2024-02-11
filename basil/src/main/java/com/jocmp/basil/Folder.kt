@@ -12,9 +12,6 @@ data class Folder(
     val feeds: MutableList<Feed> = mutableListOf(),
     override val count: Long = 0,
 ): Countable {
-    val encodedTitle: String
-        get() = TextUtils.htmlEncode(title)
-
     override fun equals(other: Any?): Boolean {
         if (other is Folder) {
             return title == other.title

@@ -22,9 +22,6 @@ data class Feed(
         return super.equals(other)
     }
 
-    val encodedName: String
-        get() = URLEncoder.encode(name, Charsets.UTF_8.name())
-
     override fun hashCode(): Int {
         return id.hashCode()
     }
