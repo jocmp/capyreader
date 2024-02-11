@@ -13,10 +13,12 @@ internal class OPMLHandler : DefaultHandler() {
 
     @Throws(SAXException::class)
     override fun characters(ch: CharArray, start: Int, length: Int) {
-        if (currentValue == null) {
+        val value = currentValue
+
+        if (value == null) {
             currentValue = StringBuilder()
         } else {
-            currentValue!!.appendRange(ch, start, start + length)
+            currentValue = value.appendRange(ch, start, start + length)
         }
     }
 

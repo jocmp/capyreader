@@ -3,7 +3,6 @@ package com.jocmp.basil
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
-import java.util.UUID
 import kotlin.test.assertEquals
 
 class OPMLFileTest {
@@ -58,6 +57,12 @@ class OPMLFileTest {
                             name = "Ruby Weekly",
                             feedURL = "https://cprss.s3.amazonaws.com/rubyweekly.com.xml"
                         ),
+                        Feed(
+                            id = "10",
+                            externalID = RandomUUID.generate(),
+                            name = "R&A Enterprise Architecture",
+                            feedURL = "https://ea.rna.nl/feed/"
+                        ),
                     )
                 )
             )
@@ -99,6 +104,7 @@ class OPMLFileTest {
         |    <outline text="Programming" title="Programming">
         |      <outline text="De Programmatica Ipsum" title="De Programmatica Ipsum" description="" type="rss" version="RSS" htmlUrl="" xmlUrl="https://deprogrammaticaipsum.com/feed" basil_id="3"/>
         |      <outline text="Ruby Weekly" title="Ruby Weekly" description="" type="rss" version="RSS" htmlUrl="" xmlUrl="https://cprss.s3.amazonaws.com/rubyweekly.com.xml" basil_id="4"/>
+        |      <outline text="R&amp;A Enterprise Architecture" title="R&amp;A Enterprise Architecture" description="" type="rss" version="RSS" htmlUrl="" xmlUrl="https://ea.rna.nl/feed/" basil_id="10"/>
         |    </outline>
         |    <outline text="Tech" title="Tech">
         |      <outline text="The Verge" title="The Verge" description="" type="rss" version="RSS" htmlUrl="" xmlUrl="https://www.theverge.com/rss/index.xml" basil_id="1"/>

@@ -14,12 +14,14 @@ import java.net.URL
  * 3. When normalized, iterate through each feed and call `createFeed` on account
  */
 internal class OPMLImporter(private val account: Account) {
-    internal suspend fun import(inputStream: InputStream) {
+    internal suspend fun import(inputStream: InputStream, onProgress: (percent: Float) -> Unit = {}) {
+        var counter = 0f
         val outlines = OPMLHandler.parse(inputStream)
 
         val entries = findEntries(outlines)
 
         val groupedForms = entries.groupBy { it.url }.toMap()
+        val size = groupedForms.size.toFloat()
 
         groupedForms.forEach { (feedURL, forms) ->
             val folderTitles = forms.flatMap { it.folderTitles }.distinct()
@@ -28,6 +30,9 @@ internal class OPMLImporter(private val account: Account) {
             val form = AddFeedForm(url = feedURL, name = name, folderTitles = folderTitles)
 
             account.addFeed(form)
+            counter += 1
+
+            onProgress(counter / size)
         }
     }
 

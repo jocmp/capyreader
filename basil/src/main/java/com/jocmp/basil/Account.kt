@@ -1,5 +1,6 @@
 package com.jocmp.basil
 
+import android.util.Log
 import com.jocmp.basil.accounts.AccountDelegate
 import com.jocmp.basil.accounts.LocalAccountDelegate
 import com.jocmp.basil.accounts.ParsedItem
@@ -25,6 +26,8 @@ import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import java.io.InputStream
 import java.net.URI
+
+private const val TAG = "Account"
 
 data class Account(
     val id: String,
@@ -252,7 +255,9 @@ data class Account(
     }
 
     suspend fun import(inputStream: InputStream) {
-        OPMLImporter(this).import(inputStream)
+        OPMLImporter(this).import(inputStream) {
+            Log.d(TAG, "import: progress=$it")
+        }
     }
 
     private fun removeFeedFromOPML(feedID: String) {

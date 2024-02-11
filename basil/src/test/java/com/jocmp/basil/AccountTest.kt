@@ -6,8 +6,6 @@ import com.jocmp.basil.fixtures.ARS_TECHNICA_URL
 import com.jocmp.basil.fixtures.ArsTechnicaFeed
 import com.jocmp.basil.fixtures.THE_VERGE_URL
 import com.jocmp.basil.fixtures.TheVergeFeed
-import com.jocmp.feedfinder.FeedFinder
-import io.mockk.EqMatcher
 import io.mockk.coEvery
 import io.mockk.mockkConstructor
 import kotlinx.coroutines.runBlocking

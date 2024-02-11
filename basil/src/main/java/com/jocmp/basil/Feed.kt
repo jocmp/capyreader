@@ -1,6 +1,7 @@
 package com.jocmp.basil
 
 import kotlinx.serialization.Serializable
+import java.net.URLEncoder
 
 @Serializable
 data class Feed(
@@ -20,6 +21,9 @@ data class Feed(
         }
         return super.equals(other)
     }
+
+    val encodedName: String
+        get() = URLEncoder.encode(name, Charsets.UTF_8.name())
 
     override fun hashCode(): Int {
         return id.hashCode()

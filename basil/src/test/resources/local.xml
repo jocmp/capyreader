@@ -10,6 +10,6 @@
             <outline text="BBC News - World" title="BBC News - World" description="" type="rss"  basil_id="2" version="RSS" htmlUrl="https://www.bbc.co.uk/news/" xmlUrl="https://feeds.bbci.co.uk/news/world/rss.xml"/>
             <outline text="NetNewsWire" title="NetNewsWire" description="" type="rss" basil_id="3" version="RSS" htmlUrl="https://netnewswire.blog/" xmlUrl="https://netnewswire.blog/feed.json"/>
         </outline>
-        <outline text="Julia Evans" title="Julia Evans" description="" type="rss" basil_id="4" version="RSS" htmlUrl="" xmlUrl="https://jvns.ca/atom.xml"/>
+        <outline text="R&amp;A Enterprise Architecture" title="R&amp;A Enterprise Architecture" description="" type="rss" version="RSS" htmlUrl="" xmlUrl="https://ea.rna.nl/feed/" />
     </body>
 </opml>
