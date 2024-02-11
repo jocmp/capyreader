@@ -18,10 +18,12 @@ import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.ListDetailPaneScaffold
 import androidx.compose.material3.adaptive.ListDetailPaneScaffoldRole
 import androidx.compose.material3.adaptive.PaneScaffoldDirective
+import androidx.compose.material3.adaptive.ThreePaneScaffoldDestinationItem
 import androidx.compose.material3.adaptive.ThreePaneScaffoldState
 import androidx.compose.material3.adaptive.calculateListDetailPaneScaffoldState
 import androidx.compose.material3.adaptive.calculateStandardPaneScaffoldDirective
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
+import androidx.compose.material3.adaptive.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -36,10 +38,7 @@ import com.jocmp.basilreader.ui.theme.BasilReaderTheme
 @Composable
 fun ArticleScaffold(
     drawerState: DrawerState = rememberDrawerState(DrawerValue.Closed),
-    listDetailState: ThreePaneScaffoldState = calculateListDetailPaneScaffoldState(
-        currentPaneDestination = ListDetailPaneScaffoldRole.Extra,
-        scaffoldDirective = calculateArticleDirective()
-    ),
+    listDetailState: ThreePaneScaffoldState,
     drawerPane: @Composable () -> Unit,
     listPane: @Composable () -> Unit,
     detailPane: @Composable () -> Unit,
@@ -101,8 +100,13 @@ private fun copyDirectiveWithoutPadding(directive: PaneScaffoldDirective): PaneS
 @Preview(device = Devices.TABLET)
 @Composable
 fun ArticlesLayoutPreview() {
+    val navigator = rememberListDetailPaneScaffoldNavigator<ListDetailPaneScaffoldRole>(
+        scaffoldDirective = calculateArticleDirective()
+    )
+
     BasilReaderTheme {
         ArticleScaffold(
+            listDetailState = navigator.scaffoldState,
             drawerPane = {
                 Text("List here!")
             },

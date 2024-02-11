@@ -2,7 +2,6 @@ package com.jocmp.basilreader.ui.articles
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
@@ -15,15 +14,15 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.ListDetailPaneScaffoldRole
+import androidx.compose.material3.adaptive.ThreePaneScaffoldDestinationItem
 import androidx.compose.material3.adaptive.calculateListDetailPaneScaffoldState
+import androidx.compose.material3.adaptive.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -76,25 +75,21 @@ fun ArticleLayout(
     val filterStatus = filter.status
     val drawerState = rememberDrawerState(drawerValue)
     val coroutineScope = rememberCoroutineScope()
-    val (destination, setDestination) =
-        rememberSaveable { mutableStateOf(ListDetailPaneScaffoldRole.List) }
-    val scaffoldState =
-        calculateListDetailPaneScaffoldState(
-            currentPaneDestination = destination,
-            scaffoldDirective = calculateArticleDirective(),
-        )
+    val navigator = rememberListDetailPaneScaffoldNavigator<ListDetailPaneScaffoldRole>(
+        scaffoldDirective = calculateArticleDirective()
+    )
 
     val context = LocalContext.current
     val webViewNavigator = rememberWebViewNavigator()
     val webViewState = rememberSaveableWebViewState()
 
     val navigateToDetail = {
-        setDestination(ListDetailPaneScaffoldRole.Detail)
+        navigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
     }
 
     val onComplete = {
         coroutineScope.launch {
-            setDestination(ListDetailPaneScaffoldRole.List)
+            navigator.navigateTo(ListDetailPaneScaffoldRole.List)
             delay(200)
             drawerState.close()
         }
@@ -112,7 +107,7 @@ fun ArticleLayout(
 
     ArticleScaffold(
         drawerState = drawerState,
-        listDetailState = scaffoldState,
+        listDetailState = navigator.scaffoldState,
         drawerPane = {
             FeedList(
                 folders = folders,
@@ -205,7 +200,7 @@ fun ArticleLayout(
                 webViewNavigator = webViewNavigator,
                 onBackPressed = {
                     onClearArticle()
-                    setDestination(ListDetailPaneScaffoldRole.List)
+                    navigator.navigateTo(ListDetailPaneScaffoldRole.List)
                 }
             )
         }

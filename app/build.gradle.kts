@@ -55,14 +55,13 @@ android {
 
 
 dependencies {
-    implementation("androidx.webkit:webkit:1.10.0")
-    implementation(project(":feedfinder"))
+
     val sqldelightVersion = libs.versions.sqldelight.get()
     val pagingVersion = libs.versions.androidx.paging.get()
 
     implementation("androidx.activity:activity-compose:1.8.2")
     implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.material3:material3-adaptive:1.0.0-alpha05")
+    implementation("androidx.compose.material3:material3-adaptive:1.0.0-alpha06")
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
@@ -72,6 +71,7 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.7")
     implementation("androidx.paging:paging-compose:3.2.1")
     implementation("androidx.paging:paging-runtime-ktx:$pagingVersion")
+    implementation("androidx.webkit:webkit:1.10.0")
     implementation("androidx.work:work-runtime-ktx:2.9.0")
     implementation("app.cash.sqldelight:android-driver:$sqldelightVersion")
     implementation("io.coil-kt:coil:2.5.0")
@@ -87,6 +87,7 @@ dependencies {
     implementation(platform("androidx.compose:compose-bom:2023.10.01"))
     implementation(platform("io.insert-koin:koin-bom:3.5.1"))
     implementation(project(":basil"))
+    implementation(project(":feedfinder"))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
