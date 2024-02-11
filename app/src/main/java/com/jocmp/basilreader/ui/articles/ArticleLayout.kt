@@ -2,14 +2,10 @@ package com.jocmp.basilreader.ui.articles
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.pullRefresh
-import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -20,17 +16,18 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.ListDetailPaneScaffoldRole
 import androidx.compose.material3.adaptive.calculateListDetailPaneScaffoldState
+import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.paging.PagingData
 import com.jocmp.basil.Article
@@ -38,7 +35,6 @@ import com.jocmp.basil.ArticleFilter
 import com.jocmp.basil.ArticleStatus
 import com.jocmp.basil.Feed
 import com.jocmp.basil.Folder
-import com.jocmp.basilreader.R
 import com.jocmp.basilreader.ui.components.rememberSaveableWebViewState
 import com.jocmp.basilreader.ui.components.rememberWebViewNavigator
 import com.jocmp.basilreader.ui.fixtures.FeedPreviewFixture
@@ -50,7 +46,6 @@ import kotlinx.coroutines.launch
 
 @OptIn(
     ExperimentalMaterial3AdaptiveApi::class,
-    ExperimentalMaterialApi::class,
     ExperimentalMaterial3Api::class
 )
 @Composable
@@ -105,16 +100,15 @@ fun ArticleLayout(
         }
     }
 
-    val (refreshing, setRefreshing) = remember { mutableStateOf(false) }
+    val state = rememberPullToRefreshState()
 
-    val refresh = {
-        setRefreshing(true)
-        onFeedRefresh {
-            setRefreshing(false)
+    if (state.isRefreshing) {
+        LaunchedEffect(true) {
+            onFeedRefresh {
+                state.endRefresh()
+            }
         }
     }
-
-    val state = rememberPullRefreshState(refreshing, refresh)
 
     ArticleScaffold(
         drawerState = drawerState,
@@ -175,7 +169,7 @@ fun ArticleLayout(
                 Box(
                     Modifier
                         .padding(innerPadding)
-                        .pullRefresh(state)
+                        .nestedScroll(state.nestedScrollConnection)
                 ) {
                     Crossfade(
                         articles,
@@ -195,7 +189,10 @@ fun ArticleLayout(
                         )
                     }
 
-                    PullRefreshIndicator(refreshing, state, Modifier.align(Alignment.TopCenter))
+                    PullToRefreshContainer(
+                        modifier = Modifier.align(Alignment.TopCenter),
+                        state = state,
+                    )
                 }
             }
         },
