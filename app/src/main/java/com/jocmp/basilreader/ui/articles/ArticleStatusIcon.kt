@@ -20,7 +20,7 @@ fun ArticleStatusIcon(status: ArticleStatus) {
         )
 
         ArticleStatus.STARRED -> Icon(
-            painterResource(R.drawable.icon_bookmarks_filled),
+            painterResource(R.drawable.icon_star_filled),
             contentDescription = null
         )
     }

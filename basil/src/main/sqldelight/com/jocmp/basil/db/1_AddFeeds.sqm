@@ -1,5 +1,7 @@
 CREATE TABLE feeds (
   id INTEGER NOT NULL PRIMARY KEY,
   external_id TEXT NOT NULL,
-  feed_url TEXT NOT NULL UNIQUE
+  feed_url TEXT NOT NULL UNIQUE,
+  homepage_url TEXT,
+  favicon_url TEXT
 );

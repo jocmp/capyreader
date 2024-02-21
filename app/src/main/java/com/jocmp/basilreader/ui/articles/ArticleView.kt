@@ -81,7 +81,7 @@ fun ArticleLoadedView(
                 IconButton(onClick = { onToggleStar() }) {
                     Icon(
                         painterResource(id = starIcon),
-                        contentDescription = stringResource(R.string.article_view_bookmark)
+                        contentDescription = stringResource(R.string.article_view_star)
                     )
                 }
             }
