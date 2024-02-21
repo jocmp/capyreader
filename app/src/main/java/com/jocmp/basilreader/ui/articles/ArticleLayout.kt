@@ -172,6 +172,7 @@ fun ArticleLayout(
                     ) {
                         ArticleList(
                             articles = it,
+                            selectedArticleKey = article?.key,
                             onSelect = { articleID ->
                                 onSelectArticle(articleID) {
                                     coroutineScope.launch {
@@ -244,7 +245,7 @@ fun ArticleLayoutPreview() {
             onNavigateToAccounts = { },
             onClearArticle = { },
             onToggleArticleRead = { },
-            onToggleArticleStar = {}
+            onToggleArticleStar = {},
         )
     }
 }

@@ -26,9 +26,16 @@ import java.time.format.DateTimeFormatter
 fun ArticleList(
     articles: Flow<PagingData<Article>>,
     onSelect: suspend (articleID: String) -> Unit,
+    selectedArticleKey: String?,
 ) {
     val composableScope = rememberCoroutineScope()
     val lazyPagingItems = articles.collectAsLazyPagingItems()
+
+    val selectArticle = { articleID: String ->
+        composableScope.launch {
+            onSelect(articleID)
+        }
+    }
 
     LazyColumn(
         modifier = Modifier.fillMaxSize()
@@ -39,32 +46,11 @@ fun ArticleList(
         ) { index ->
             val item = lazyPagingItems[index] ?: return@items
 
-            val fontWeight = item.fontWeight
-
-            Row {
-                Box(
-                    modifier = Modifier
-                        .clickable {
-                            composableScope.launch {
-                                onSelect(item.id)
-                            }
-                        }
-                ) {
-                    Column(Modifier.padding(8.dp)) {
-                        Text(item.title, fontSize = 20.sp, fontWeight = fontWeight)
-                        Text(item.arrivedAt.format(DateTimeFormatter.BASIC_ISO_DATE))
-                    }
-                }
-            }
+            ArticleRow(
+                article = item,
+                selected = selectedArticleKey == item.key,
+                onSelect = { selectArticle(it) },
+            )
         }
     }
 }
-
-private val Article.fontWeight: FontWeight
-    get() {
-        return if (read) {
-            FontWeight.Normal
-        } else {
-            FontWeight.Bold
-        }
-    }
