@@ -26,11 +26,8 @@ fun App(startDestination: String) {
                 startDestination = startDestination
             ) {
                 accountsGraph(
-                    onSelect = {
+                    onLoginSuccess = {
                         navController.navigateToArticles()
-                    },
-                    onSettingSelect = { id ->
-                        navController.navigate(Route.AccountSettings(id))
                     },
                     goBackToAccountIndex = {
                         navController.navigate(Route.AccountIndex.path) {

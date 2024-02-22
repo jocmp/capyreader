@@ -16,7 +16,7 @@ class OPMLExporter(
     fun export(account: Account) {
         val exports = File(context.filesDir, "transfers")
         exports.mkdirs()
-        val export = File(exports, "${account.displayName}.xml")
+        val export = File(exports, "Export.xml")
 
         val source = File(account.opmlFile.path).toPath()
         val target = export.toPath()
@@ -38,7 +38,7 @@ class OPMLExporter(
             context.startActivity(
                 Intent.createChooser(
                     shareIntent,
-                    context.getString(R.string.opml_exporter_chooser_title, account.displayName)
+                    context.getString(R.string.opml_exporter_chooser_title)
                 )
             )
         } catch (e: IllegalArgumentException) {

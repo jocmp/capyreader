@@ -2,9 +2,12 @@ package com.jocmp.basil
 
 import android.util.Log
 import com.jocmp.basil.accounts.AccountDelegate
-import com.jocmp.basil.accounts.LocalAccountDelegate
+import com.jocmp.basil.accounts.FeedbinAccountDelegate
 import com.jocmp.basil.accounts.ParsedItem
 import com.jocmp.basil.accounts.asOPML
+import com.jocmp.basil.common.nowUTCInSeconds
+import com.jocmp.basil.common.orEmpty
+import com.jocmp.basil.common.upsert
 import com.jocmp.basil.db.Database
 import com.jocmp.basil.opml.OPMLImporter
 import com.jocmp.basil.opml.Outline
@@ -12,9 +15,6 @@ import com.jocmp.basil.opml.asFeed
 import com.jocmp.basil.opml.asFolder
 import com.jocmp.basil.persistence.ArticleRecords
 import com.jocmp.basil.persistence.FeedRecords
-import com.jocmp.basil.common.nowUTCInSeconds
-import com.jocmp.basil.common.orEmpty
-import com.jocmp.basil.common.upsert
 import com.jocmp.feedfinder.DefaultFeedFinder
 import com.jocmp.feedfinder.FeedFinder
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +23,6 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
 import java.io.InputStream
 import java.net.URI
 
@@ -35,15 +34,8 @@ data class Account(
     val database: Database,
     val preferences: AccountPreferences,
     val feedFinder: FeedFinder = DefaultFeedFinder(),
-    val httpClient: OkHttpClient = OkHttpClient(),
 ) {
-    private var delegate: AccountDelegate
-
-    init {
-        when (source) {
-            AccountSource.LOCAL -> delegate = LocalAccountDelegate(httpClient)
-        }
-    }
+    private val delegate: AccountDelegate = FeedbinAccountDelegate(this)
 
     var folders = mutableSetOf<Folder>()
 
@@ -57,13 +49,6 @@ data class Account(
     internal val articleRecords: ArticleRecords = ArticleRecords(database)
 
     private val feedRecords: FeedRecords = FeedRecords(database)
-
-    private val source: AccountSource
-        get() = preferences.source.get()
-
-    var displayName: String
-        get() = preferences.displayName.get()
-        set(value) = preferences.displayName.set(value)
 
     init {
         loadOPML(opmlFile.load())

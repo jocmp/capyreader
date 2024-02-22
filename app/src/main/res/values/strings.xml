@@ -35,7 +35,7 @@
     <string name="account_settings_save_name">Name saved</string>
     <string name="account_settings_export">Export</string>
     <string name="account_settings_import">Import</string>
-    <string name="opml_exporter_chooser_title">Export %1$s Feeds</string>
+    <string name="opml_exporter_chooser_title">Export Feeds</string>
     <string name="article_view_mark_as_read">Mark as read</string>
     <string name="article_view_star">Star</string>
     <string name="refresh_manually_only">Manually only</string>
