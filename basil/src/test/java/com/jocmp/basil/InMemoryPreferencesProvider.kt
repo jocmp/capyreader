@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 class InMemoryPreferencesProvider() : PreferenceStoreProvider {
     override fun build(accountID: String): AccountPreferences {
-        return AccountPreferences(preferenceStore = InMemoryDataStore())
+        return AccountPreferences(encryptedStore = InMemoryDataStore())
     }
 
     override fun delete(accountID: String) {

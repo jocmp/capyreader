@@ -30,7 +30,7 @@ class AccountSettingsViewModel(
         get() = _account.value
 
     val displayName: String
-        get() = account.displayName
+        get() = "Feedbin"
 
     val refreshInterval: RefreshInterval
         get() = _refreshInterval.value
@@ -39,13 +39,6 @@ class AccountSettingsViewModel(
         refreshScheduler.update(interval)
 
         _refreshInterval.value = interval
-    }
-
-    fun updateName(displayName: String) {
-        if (displayName.isNotBlank()) {
-            account.displayName = displayName
-            _account.value = account
-        }
     }
 
     fun removeAccount() {

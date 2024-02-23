@@ -37,7 +37,6 @@ fun AccountSettingsScreen(
             viewModel.removeAccount()
             goBack()
         },
-        updateName = viewModel::updateName,
         exportOPML = {
             context.exportOPML(account = viewModel.account)
         },

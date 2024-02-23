@@ -32,7 +32,6 @@ fun AccountSettingsView(
     refreshInterval: RefreshInterval,
     updateRefreshInterval: (interval: RefreshInterval) -> Unit,
     removeAccount: () -> Unit,
-    updateName: (displayName: String) -> Unit,
     exportOPML: () -> Unit,
     importOPML: () -> Unit,
 ) {
@@ -54,40 +53,12 @@ fun AccountSettingsView(
         removeAccount()
     }
 
-    val submitName = {
-        updateName(displayName)
-        focus.clearFocus()
-        keyboard?.hide()
-        scope.launch {
-            snackbarHostState.showSnackbar(saveMessage)
-        }
-    }
-
     Scaffold(
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
         },
     ) { contentPadding ->
         Column(Modifier.padding(contentPadding)) {
-            TextField(
-                value = displayName,
-                onValueChange = setDisplayName,
-                placeholder = { Text(defaultDisplayName) },
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Done
-                ),
-                keyboardActions = KeyboardActions(
-                    onDone = { submitName() }
-                )
-            )
-
-            Button(
-                onClick = { submitName() }
-            ) {
-                Text(stringResource(R.string.account_settings_submit))
-            }
-
             RefreshIntervalMenu(
                 refreshInterval = refreshInterval,
                 updateRefreshInterval = updateRefreshInterval,
@@ -141,7 +112,6 @@ fun AccountSettingsViewPreview() {
     AccountSettingsView(
         defaultDisplayName = "Feedbin",
         removeAccount = {},
-        updateName = {},
         exportOPML = {},
         importOPML = {},
         refreshInterval = RefreshInterval.EVERY_HOUR,

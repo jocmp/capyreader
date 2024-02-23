@@ -10,7 +10,6 @@ class AccountManager(
     val rootFolder: URI,
     private val databaseProvider: DatabaseProvider,
     private val preferenceStoreProvider: PreferenceStoreProvider,
-    private val httpClient: OkHttpClient,
 ) {
     fun findByID(id: String?): Account? {
         id ?: return null
@@ -27,7 +26,7 @@ class AccountManager(
         return listAccounts().size
     }
 
-    fun createAccount(): Account {
+    fun createAccount(username: String, password: String): Account {
         val accountID = UUID.randomUUID().toString()
 
         accountFolder().apply {
@@ -38,7 +37,11 @@ class AccountManager(
 
         val file = accountFile(accountID).apply { mkdir() }
 
-        return buildAccount(file)
+        val preferences = preferenceStoreProvider.build(accountID)
+        preferences.username.set(username)
+        preferences.password.set(password)
+
+        return buildAccount(file, preferences)
     }
 
     fun removeAccount(accountID: String) {
@@ -59,7 +62,10 @@ class AccountManager(
 
     private fun accountFolder() = File(rootFolder.path, directoryName)
 
-    private fun buildAccount(path: File): Account {
+    private fun buildAccount(
+        path: File,
+        preferences: AccountPreferences = preferenceStoreProvider.build(path.name)
+    ): Account {
         val id = path.name
         val pathURI = path.toURI()
 
@@ -67,8 +73,7 @@ class AccountManager(
             id = id,
             path = pathURI,
             database = databaseProvider.build(id),
-            preferences = preferenceStoreProvider.build(id),
-            httpClient = httpClient,
+            preferences = preferences,
         )
     }
 

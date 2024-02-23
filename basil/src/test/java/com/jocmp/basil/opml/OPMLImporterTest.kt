@@ -2,7 +2,7 @@ package com.jocmp.basil.opml
 
 import com.jocmp.basil.Account
 import com.jocmp.basil.TestFeedFinder
-import com.jocmp.basil.accounts.LocalAccountDelegate
+import com.jocmp.basil.accounts.FeedbinAccountDelegate
 import com.jocmp.basil.fixtures.AccountFixture
 import com.jocmp.basil.fixtures.GenericFeed
 import com.jocmp.basil.testFile
@@ -38,10 +38,10 @@ class OPMLImporterTest {
 
     @Before
     fun setup() {
-        mockkConstructor(LocalAccountDelegate::class)
+        mockkConstructor(FeedbinAccountDelegate::class)
 
         coEvery {
-            anyConstructed<LocalAccountDelegate>().fetchAll(any())
+            anyConstructed<FeedbinAccountDelegate>().fetchAll(any())
         } returns emptyList()
 
         account = AccountFixture.create(parentFolder = folder, feedFinder = finder)

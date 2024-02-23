@@ -6,14 +6,12 @@ import androidx.navigation.compose.composable
 import com.jocmp.basilreader.ui.Route
 
 fun NavGraphBuilder.accountsGraph(
-    onSelect: () -> Unit,
-    onSettingSelect: (accountID: String) -> Unit,
+    onLoginSuccess: () -> Unit,
     goBackToAccountIndex: () -> Unit,
 ) {
     composable(Route.AccountIndex.path) {
-        AccountIndexScreen(
-            onSelect = onSelect,
-            onSettingsSelect = onSettingSelect,
+        LoginScreen(
+            onSuccess = onLoginSuccess,
         )
     }
     composable(Route.AccountSettings.path) {

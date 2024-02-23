@@ -1,47 +1,42 @@
 package com.jocmp.basilreader.ui.accounts
 
-import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jocmp.basil.Account
 import com.jocmp.basil.AccountManager
 import com.jocmp.basilreader.common.AppPreferences
+import com.jocmp.feedbinclient.Feedbin
 import kotlinx.coroutines.launch
 
 class AccountIndexViewModel(
     private val accountManager: AccountManager,
     private val appPreferences: AppPreferences,
 ) : ViewModel() {
-    private val _accounts = mutableStateListOf<Account>().apply {
-        addAll(accountManager.accounts)
-    }
-
-    val accounts: List<Account>
-        get() = _accounts.toList()
-
-    fun createAccount() {
+    fun login(
+        username: String,
+        password: String,
+        onSuccess: () -> Unit,
+        onFailure: () -> Unit,
+    ) {
         viewModelScope.launch {
-            _accounts.add(accountManager.createAccount())
+            val result = Feedbin.verifyCredentials(username = username, password = password)
+
+            if (result) {
+                val account = accountManager.createAccount(
+                    username = username,
+                    password = password,
+                )
+
+                selectAccount(account.id)
+                onSuccess()
+            } else {
+                onFailure()
+            }
         }
     }
 
-    fun selectAccount(id: String) {
+    private fun selectAccount(id: String) {
         appPreferences.articleID.delete()
         appPreferences.filter.delete()
         appPreferences.accountID.set(id)
     }
-//
-//    fun removeAccount(id: String) {
-//        if (!accountManager.removeAccount(id)) {
-//            return
-//        }
-//
-//        _accounts.removeIf { it.id == id }
-//
-//        viewModelScope.launch {
-//            if (id == settings.selectedAccountID) {
-//                settings.clearAccountID()
-//            }
-//        }
-//    }
 }
