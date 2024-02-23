@@ -1,6 +1,7 @@
 package com.jocmp.basil
 
 import android.util.Log
+import androidx.annotation.OpenForTesting
 import com.jocmp.basil.accounts.AccountDelegate
 import com.jocmp.basil.accounts.FeedbinAccountDelegate
 import com.jocmp.basil.accounts.ParsedItem

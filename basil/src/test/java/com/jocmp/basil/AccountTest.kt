@@ -1,6 +1,6 @@
 package com.jocmp.basil
 
-import com.jocmp.basil.accounts.LocalAccountDelegate
+import com.jocmp.basil.accounts.FeedbinAccountDelegate
 import com.jocmp.basil.db.Database
 import com.jocmp.basil.fixtures.ARS_TECHNICA_URL
 import com.jocmp.basil.fixtures.ArsTechnicaFeed
@@ -42,10 +42,10 @@ class AccountTest {
 
     @Before
     fun setup() {
-        mockkConstructor(LocalAccountDelegate::class)
+        mockkConstructor(FeedbinAccountDelegate::class)
 
         coEvery {
-            anyConstructed<LocalAccountDelegate>().fetchAll(any())
+            anyConstructed<FeedbinAccountDelegate>().fetchAll(any())
         } returns emptyList()
 
         database = InMemoryDatabaseProvider.build("777")

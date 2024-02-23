@@ -16,11 +16,11 @@ internal class FeedbinAccountDelegate(
     private val feedbin = buildFeedbin(account)
 
     override suspend fun createFeed(feedURL: URL): Result<String> {
-        TODO("Not yet implemented")
+        return Result.success("")
     }
 
     override suspend fun fetchAll(feed: Feed): List<ParsedItem> {
-        TODO("Not yet implemented")
+        return emptyList()
     }
 
     companion object {
