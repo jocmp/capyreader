@@ -42,13 +42,13 @@ fun ArticleList(
     ) {
         items(
             count = lazyPagingItems.itemCount,
-            key = lazyPagingItems.itemKey { it.key }
+            key = lazyPagingItems.itemKey { it.id }
         ) { index ->
             val item = lazyPagingItems[index] ?: return@items
 
             ArticleRow(
                 article = item,
-                selected = selectedArticleKey == item.key,
+                selected = selectedArticleKey == item.id,
                 onSelect = { selectArticle(it) },
             )
         }

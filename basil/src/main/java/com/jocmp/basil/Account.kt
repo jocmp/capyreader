@@ -1,8 +1,6 @@
 package com.jocmp.basil
 
 import android.util.Log
-import androidx.annotation.OpenForTesting
-import com.jocmp.basil.accounts.AccountDelegate
 import com.jocmp.basil.accounts.FeedbinAccountDelegate
 import com.jocmp.basil.accounts.ParsedItem
 import com.jocmp.basil.accounts.asOPML
@@ -16,6 +14,7 @@ import com.jocmp.basil.opml.asFeed
 import com.jocmp.basil.opml.asFolder
 import com.jocmp.basil.persistence.ArticleRecords
 import com.jocmp.basil.persistence.FeedRecords
+import com.jocmp.feedbinclient.Feedbin
 import com.jocmp.feedfinder.DefaultFeedFinder
 import com.jocmp.feedfinder.FeedFinder
 import kotlinx.coroutines.Dispatchers
@@ -36,24 +35,18 @@ data class Account(
     val preferences: AccountPreferences,
     val feedFinder: FeedFinder = DefaultFeedFinder(),
 ) {
-    private val delegate: AccountDelegate = FeedbinAccountDelegate(this)
+    private val delegate = FeedbinAccountDelegate(
+        database = database,
+        feedbin = Feedbin.forAccount(this)
+    )
 
     var folders = mutableSetOf<Folder>()
 
     var feeds = mutableSetOf<Feed>()
 
-    val opmlFile = OPMLFile(
-        path = path.resolve("subscriptions.opml"),
-        account = this,
-    )
-
     internal val articleRecords: ArticleRecords = ArticleRecords(database)
 
     private val feedRecords: FeedRecords = FeedRecords(database)
-
-    init {
-        loadOPML(opmlFile.load())
-    }
 
     val flattenedFeeds: Set<Feed>
         get() = mutableSetOf<Feed>().apply {
@@ -65,8 +58,6 @@ data class Account(
         val folder = Folder(title = title)
 
         folders.add(folder)
-
-        saveOPMLFile()
 
         return folder
     }
@@ -85,15 +76,11 @@ data class Account(
         }
 
         feeds.addAll(orphanedFeeds)
-
-        saveOPMLFile()
     }
 
     suspend fun removeFeed(feedID: String) {
         feedRecords.removeFeed(feedID = feedID)
         removeFeedFromOPML(feedID)
-
-        saveOPMLFile()
     }
 
     suspend fun addFeed(form: AddFeedForm): Result<Feed> {
@@ -101,49 +88,7 @@ data class Account(
     }
 
     private suspend fun saveNewFeed(form: AddFeedForm): Result<Feed> {
-        val externalID = delegate
-            .createFeed(feedURL = form.url)
-            .getOrNull() ?: return Result.failure(Throwable("Could not create external feed"))
-
-        val record = feedRecords.findOrCreate(feedURL = form.url.toString())
-
-        removeFeedFromOPML(record.id.toString())
-
-        val feed = Feed(
-            id = record.id.toString(),
-            externalID = externalID,
-            name = entryNameOrDefault(form.name),
-            feedURL = form.url.toString(),
-            siteURL = form.siteURL.orEmpty,
-        )
-
-        if (form.folderTitles.isEmpty()) {
-            feeds.add(feed)
-        } else {
-            form.folderTitles.forEach { folderTitle ->
-                val folder = findOrBuildFolder(title = folderTitle)
-
-                folder.feeds.add(feed)
-
-                if (folders.contains(folder)) {
-                    folders.remove(folder)
-                }
-
-                folders.add(folder)
-            }
-        }
-
-        coroutineScope {
-            launch {
-                val items = delegate.fetchAll(feed)
-
-                updateArticles(feed, items)
-            }
-        }
-
-        saveOPMLFile()
-
-        return Result.success(feed)
+        return Result.failure(Throwable("Sorry charlie"))
     }
 
     suspend fun editFeed(form: EditFeedForm): Result<Feed> {
@@ -175,8 +120,6 @@ data class Account(
             folders.upsert(folder)
         }
 
-        saveOPMLFile()
-
         return Result.success(editedFeed)
     }
 
@@ -189,13 +132,11 @@ data class Account(
         folders.remove(folder)
         folders.add(updatedFolder)
 
-        saveOPMLFile()
-
         return Result.success(updatedFolder)
     }
 
     suspend fun refreshAll() {
-        refreshCompactedFeeds(flattenedFeeds)
+        delegate.refreshAll()
     }
 
     suspend fun refreshFeed(feed: Feed) {
@@ -209,7 +150,8 @@ data class Account(
     }
 
     fun findFeed(feedID: String): Feed? {
-        return flattenedFeeds.find { it.id == feedID }
+//        return flattenedFeeds.find { it.id == feedID }
+        return null
     }
 
     fun findFolder(title: String): Folder? {
@@ -247,40 +189,8 @@ data class Account(
     }
 
     private fun removeFeedFromOPML(feedID: String) {
-        feeds.removeIf { it.id == feedID }
-
-        folders.forEach { folder ->
-            folder.feeds.removeIf { it.id == feedID }
-        }
-
-        folders.removeIf { it.feeds.isEmpty() }
     }
 
-    private fun updateArticles(feed: Feed, items: List<ParsedItem>) {
-        items.forEach { item ->
-            val publishedAt = item.publishedAt?.toEpochSecond()
-
-            database.transaction {
-                database.articlesQueries.create(
-                    feed_id = feed.primaryKey,
-                    external_id = item.externalID,
-                    title = item.title,
-                    content_html = item.contentHTML,
-                    url = item.url,
-                    summary = item.summary,
-                    image_url = item.imageURL,
-                    published_at = publishedAt,
-                )
-
-                database.articlesQueries.updateStatus(
-                    feed_id = feed.primaryKey,
-                    external_id = item.externalID,
-                    arrived_at = publishedAt ?: nowUTCInSeconds()
-                )
-            }
-
-        }
-    }
 
     private fun findOrBuildFolder(title: String): Folder {
         return folders.find { folder -> folder.title == title } ?: Folder(title = title)
@@ -291,7 +201,7 @@ data class Account(
             feeds.map { feed ->
                 async {
                     val items = delegate.fetchAll(feed)
-                    updateArticles(feed, items)
+//                    updateArticles(feed, items)
                 }
             }.awaitAll()
         }
@@ -302,34 +212,6 @@ data class Account(
         }
 
         return DEFAULT_TITLE
-    }
-
-    private suspend fun saveOPMLFile() = withContext(Dispatchers.IO) {
-        opmlFile.save()
-    }
-
-    private fun loadOPML(items: List<Outline>) {
-        val ids = mutableListOf<Long>()
-
-        items.forEach {
-            when (it) {
-                is Outline.FolderOutline -> ids.addAll(it.folder.feeds.mapNotNull { feed -> feed.id?.toLongOrNull() })
-                is Outline.FeedOutline -> it.feed.id?.toLongOrNull()?.let { id -> ids.add(id) }
-            }
-        }
-
-        val dbFeeds = database
-            .feedsQueries
-            .allByID(ids)
-            .executeAsList()
-            .associateBy { it.id }
-
-        items.forEach { item ->
-            when (item) {
-                is Outline.FolderOutline -> folders.add(item.asFolder(dbFeeds))
-                is Outline.FeedOutline -> item.feed.asFeed(dbFeeds)?.let { feeds.add(it) }
-            }
-        }
     }
 }
 

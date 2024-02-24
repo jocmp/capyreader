@@ -172,7 +172,7 @@ fun ArticleLayout(
                     ) {
                         ArticleList(
                             articles = it,
-                            selectedArticleKey = article?.key,
+                            selectedArticleKey = article?.id,
                             onSelect = { articleID ->
                                 onSelectArticle(articleID) {
                                     coroutineScope.launch {

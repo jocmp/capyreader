@@ -17,5 +17,5 @@ dependencies {
     ksp(libs.moshi.kotlin.codegen)
     testImplementation(kotlin("test"))
     testImplementation("junit:junit:4.13.2")
-    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(testLibs.kotlinx.coroutines.test)
 }

@@ -1,10 +1,10 @@
-package com.jocmp.feedbinclient.api
+package com.jocmp.feedbinclient
 
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class Tagging(
-    val id: Int,
-    val feed_id: Int,
+    val id: Long,
+    val feed_id: Long,
     val name: String
 )

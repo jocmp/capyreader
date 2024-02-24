@@ -6,12 +6,16 @@ import com.jocmp.basil.db.Feeds as DBFeed
 
 class FeedFixture(private val database: Database) {
     fun create(
-        externalID: String = RandomUUID.generate(),
-        feedURL: String
+        feedID: String = RandomUUID.generate(),
+        feedURL: String = "https://example.com"
     ): DBFeed {
-        return database.feedsQueries.create(
-            external_id = externalID,
-            feed_url = feedURL
-        ).executeAsOne()
+        database.feedsQueries.upsert(
+            id = feedID,
+            subscription_id = RandomUUID.generate(),
+            feed_url = feedURL,
+            site_url = feedURL
+        )
+
+        return database.feedsQueries.findBy(id = feedID).executeAsOne()
     }
 }

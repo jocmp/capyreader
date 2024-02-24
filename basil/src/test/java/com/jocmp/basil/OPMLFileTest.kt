@@ -28,13 +28,13 @@ class OPMLFileTest {
                     feeds = mutableListOf(
                         Feed(
                             id = "1",
-                            externalID = RandomUUID.generate(),
+                            subscriptionID = RandomUUID.generate(),
                             name = "The Verge",
                             feedURL = "https://www.theverge.com/rss/index.xml"
                         ),
                         Feed(
                             id = "2",
-                            externalID = RandomUUID.generate(),
+                            subscriptionID = RandomUUID.generate(),
                             name = "Ars Technica",
                             feedURL = "https://feeds.arstechnica.com/arstechnica/index"
                         )
@@ -45,19 +45,19 @@ class OPMLFileTest {
                     feeds = mutableListOf(
                         Feed(
                             id = "3",
-                            externalID = RandomUUID.generate(),
+                            subscriptionID = RandomUUID.generate(),
                             name = "De Programmatica Ipsum",
                             feedURL = "https://deprogrammaticaipsum.com/feed"
                         ),
                         Feed(
                             id = "4",
-                            externalID = RandomUUID.generate(),
+                            subscriptionID = RandomUUID.generate(),
                             name = "Ruby Weekly",
                             feedURL = "https://cprss.s3.amazonaws.com/rubyweekly.com.xml"
                         ),
                         Feed(
                             id = "10",
-                            externalID = RandomUUID.generate(),
+                            subscriptionID = RandomUUID.generate(),
                             name = "R&A Enterprise Architecture",
                             feedURL = "https://ea.rna.nl/feed/"
                         ),
@@ -70,13 +70,13 @@ class OPMLFileTest {
             listOf(
                 Feed(
                     id = "5",
-                    externalID = RandomUUID.generate(),
+                    subscriptionID = RandomUUID.generate(),
                     name = "GamersNexus",
                     feedURL = "https://gamersnexus.net/rss.xml"
                 ),
                 Feed(
                     id = "6",
-                    externalID = RandomUUID.generate(),
+                    subscriptionID = RandomUUID.generate(),
                     name = "9to5Google",
                     feedURL = "https://9to5google.com/feed"
                 )

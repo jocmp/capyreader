@@ -5,7 +5,7 @@ SELECT
   article_statuses.starred,
   article_statuses.read
 FROM articles
-JOIN article_statuses ON articles.external_id = article_statuses.external_id AND article_statuses.feed_id = articles.feed_id
+JOIN article_statuses ON articles.id = article_statuses.article_id
 WHERE ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
 AND (article_statuses.starred = :starred OR :starred IS NULL)
 GROUP BY articles.id
@@ -19,7 +19,7 @@ SELECT
   article_statuses.starred,
   article_statuses.read
 FROM articles
-JOIN article_statuses ON articles.external_id = article_statuses.external_id AND article_statuses.feed_id = articles.feed_id
+JOIN article_statuses ON articles.id = article_statuses.article_id
 WHERE articles.feed_id IN :feedIDs
 AND ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
 AND (article_statuses.starred = :starred OR :starred IS NULL)
@@ -30,7 +30,7 @@ LIMIT :limit OFFSET :offset;
 countByFeeds:
 SELECT COUNT(*)
 FROM articles
-JOIN article_statuses ON articles.external_id = article_statuses.external_id AND article_statuses.feed_id = articles.feed_id
+JOIN article_statuses ON articles.id = article_statuses.article_id
 WHERE articles.feed_id IN :feedIDs
 AND ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
 AND (article_statuses.starred = :starred OR :starred IS NULL);
@@ -38,7 +38,7 @@ AND (article_statuses.starred = :starred OR :starred IS NULL);
 countByStatus:
 SELECT COUNT(*)
 FROM articles
-JOIN article_statuses ON articles.external_id = article_statuses.external_id
+JOIN article_statuses ON articles.id = article_statuses.article_id
 WHERE ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
 AND (article_statuses.starred = :starred OR :starred IS NULL);
 
@@ -49,7 +49,7 @@ SELECT
   article_statuses.starred,
   article_statuses.read
 FROM articles
-JOIN article_statuses ON articles.external_id = article_statuses.external_id AND article_statuses.feed_id = articles.feed_id
+JOIN article_statuses ON articles.id = article_statuses.article_id
 WHERE articles.id = :articleID
 LIMIT 1;
 
@@ -58,26 +58,19 @@ SELECT
  articles.feed_id,
  COUNT(DISTINCT articles.id)
 FROM articles
-JOIN article_statuses ON articles.external_id = article_statuses.external_id AND article_statuses.feed_id = articles.feed_id
-WHERE (article_statuses.read = :read OR :read IS NULL)
+JOIN article_statuses ON articles.id = article_statuses.article_id
+WHERE article_statuses.read = :read OR :read IS NULL
 AND (article_statuses.starred = :starred OR :starred IS NULL)
 GROUP BY articles.feed_id;
 
-findByExternalID:
-SELECT
-  articles.*,
-  article_statuses.arrived_at,
-  article_statuses.starred,
-  article_statuses.read
-FROM articles
-JOIN article_statuses ON articles.external_id = article_statuses.external_id AND article_statuses.feed_id = articles.feed_id
-WHERE articles.external_id = :externalID AND articles.feed_id = :feedID
-LIMIT 1;
+lastArrivalTime:
+SELECT MAX(article_statuses.arrived_at)
+FROM article_statuses;
 
 create:
-INSERT OR IGNORE INTO articles(
+INSERT OR REPLACE INTO articles(
+    id,
     feed_id,
-    external_id,
     title,
     content_html,
     url,
@@ -86,8 +79,8 @@ INSERT OR IGNORE INTO articles(
     published_at
 )
 VALUES (
+:id,
 :feed_id,
-:external_id,
 :title,
 :content_html,
 :url,
@@ -98,32 +91,18 @@ VALUES (
 
 updateStatus:
 INSERT OR IGNORE INTO article_statuses(
-  feed_id,
-  external_id,
+  article_id,
   arrived_at
 )
 VALUES (
-:feed_id,
-:external_id,
+:article_id,
 :arrived_at
 );
 
 markRead:
 UPDATE article_statuses SET read = :read, last_read_at = :lastReadAt
-WHERE EXISTS (
-  SELECT id
-  FROM articles
-  WHERE articles.id = :articleID
-  AND articles.external_id = article_statuses.external_id AND article_statuses.feed_id = articles.feed_id
-  LIMIT 1
-);
+WHERE article_statuses.article_id = :articleID;
 
 markStarred:
 UPDATE article_statuses SET starred = :starred
-WHERE EXISTS (
-  SELECT id
-  FROM articles
-  WHERE articles.id = :articleID
-  AND articles.external_id = article_statuses.external_id AND article_statuses.feed_id = articles.feed_id
-  LIMIT 1
-);
+WHERE article_statuses.article_id = :articleID;

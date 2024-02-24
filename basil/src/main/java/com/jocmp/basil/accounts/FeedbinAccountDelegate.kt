@@ -1,48 +1,96 @@
 package com.jocmp.basil.accounts
 
-import com.jocmp.basil.Account
 import com.jocmp.basil.Feed
-import com.jocmp.feedbinclient.BasicAuthInterceptor
+import com.jocmp.basil.common.nowUTCInSeconds
+import com.jocmp.basil.common.toDateTime
+import com.jocmp.basil.db.Database
 import com.jocmp.feedbinclient.Feedbin
-import okhttp3.Cache
-import okhttp3.Credentials
-import okhttp3.OkHttpClient
-import java.io.File
-import java.net.URL
+import retrofit2.Response
+import java.util.Date
+import java.util.GregorianCalendar
 
 internal class FeedbinAccountDelegate(
-    val account: Account,
-) : AccountDelegate {
-    private val feedbin = buildFeedbin(account)
-
-    override suspend fun createFeed(feedURL: URL): Result<String> {
-        return Result.success("")
-    }
-
-    override suspend fun fetchAll(feed: Feed): List<ParsedItem> {
+    val database: Database,
+    private val feedbin: Feedbin,
+) {
+    fun fetchAll(feed: Feed): List<ParsedItem> {
         return emptyList()
     }
 
-    companion object {
-        fun buildFeedbin(account: Account): Feedbin {
-            val basicAuthInterceptor = BasicAuthInterceptor {
-                val username = account.preferences.username.get()
-                val password = account.preferences.password.get()
+    suspend fun refreshAll() {
+        refreshFeeds()
+        refreshTaggings()
+        refreshArticles()
+    }
 
-                Credentials.basic(username, password)
+    private suspend fun refreshFeeds() {
+        withResult(feedbin.subscriptions()) { subscriptions ->
+            subscriptions.forEach { subscription ->
+                database.feedsQueries.upsert(
+                    id = subscription.feed_id.toString(),
+                    subscription_id = subscription.id.toString(),
+                    feed_url = subscription.feed_url,
+                    site_url = subscription.site_url,
+                )
             }
 
-            val client = OkHttpClient.Builder()
-                .addInterceptor(basicAuthInterceptor)
-                .cache(
-                    Cache(
-                        directory = File(File(account.path), "http_cache"),
-                        maxSize = 50L * 1024L * 1024L // 50 MiB
-                    )
-                )
-                .build()
+            val feedsToRemove = subscriptions.map { it.feed_id.toString() }
 
-            return Feedbin.create(client = client)
+            database.feedsQueries.deleteAllExcept(feedsToRemove)
         }
     }
+
+    private suspend fun refreshTaggings() {
+        withResult(feedbin.taggings()) { taggings ->
+            taggings.forEach { tagging ->
+                database.taggingsQueries.upsert(
+                    id = tagging.id,
+                    feed_id = tagging.feed_id.toString(),
+                    name = tagging.name,
+                )
+            }
+        }
+    }
+
+    private suspend fun refreshArticles() {
+        withResult(feedbin.entries(since = maxArrivedAt())) { entries ->
+            val arrivedAt = nowUTCInSeconds()
+
+            entries.forEach { entry ->
+                database.transaction {
+                    database.articlesQueries.create(
+                        id = entry.id.toString(),
+                        feed_id = entry.id.toString(),
+                        title = entry.title,
+                        content_html = entry.content,
+                        url = entry.url,
+                        summary = entry.summary,
+                        image_url = entry.images?.original_url,
+                        published_at = entry.published.toDateTime?.toEpochSecond(),
+                    )
+
+                    database.articlesQueries.updateStatus(
+                        article_id = entry.id.toString(),
+                        arrived_at = arrivedAt
+                    )
+                }
+            }
+        }
+    }
+
+    private fun maxArrivedAt(): String? {
+        val result = database.articlesQueries.lastArrivalTime().executeAsOne()
+
+        return result.MAX?.toDateTime?.toString()
+    }
+}
+
+fun <T> withResult(response: Response<T>, handler: (result: T) -> Unit) {
+    val result = response.body()
+
+    if (!response.isSuccessful || result == null) {
+        return
+    }
+
+    handler(result)
 }

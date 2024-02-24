@@ -1,0 +1,11 @@
+upsert:
+INSERT OR REPLACE INTO taggings(
+    id,
+    feed_id,
+    name
+)
+VALUES (
+  :id,
+  :feed_id,
+  :name
+);

@@ -3,7 +3,7 @@ package com.jocmp.basil.accounts
 import java.time.OffsetDateTime
 
 internal data class ParsedItem(
-    val externalID: String,
+    val id: String,
     val title: String? = null,
     val contentHTML: String? = null,
     val url: String? = null,

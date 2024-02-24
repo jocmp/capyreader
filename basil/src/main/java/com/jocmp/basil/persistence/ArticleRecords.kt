@@ -14,19 +14,15 @@ class ArticleRecords internal constructor(
     val byFeed = ByFeed(database)
 
     fun fetch(articleID: String): Article? {
-        val id = articleID.toLongOrNull()
-
-        id ?: return null
-
         return database.articlesQueries.findBy(
-            articleID = id,
+            articleID = articleID,
             mapper = ::articleMapper
         ).executeAsOneOrNull()
     }
 
     fun markRead(articleID: String, lastReadAt: ZonedDateTime = ZonedDateTime.now()) {
         database.articlesQueries.markRead(
-            articleID = articleID.toLong(),
+            articleID = articleID,
             read = true,
             lastReadAt = lastReadAt.toEpochSecond()
         )
@@ -34,7 +30,7 @@ class ArticleRecords internal constructor(
 
     fun markUnread(articleID: String) {
         database.articlesQueries.markRead(
-            articleID = articleID.toLong(),
+            articleID = articleID,
             read = false,
             lastReadAt = null
         )
@@ -42,14 +38,14 @@ class ArticleRecords internal constructor(
 
     fun addStar(articleID: String) {
         database.articlesQueries.markStarred(
-            articleID = articleID.toLong(),
+            articleID = articleID,
             starred = true
         )
     }
 
     fun removeStar(articleID: String) {
         database.articlesQueries.markStarred(
-            articleID = articleID.toLong(),
+            articleID = articleID,
             starred = false
         )
     }
@@ -75,7 +71,7 @@ class ArticleRecords internal constructor(
 
     class ByFeed(private val database: Database) {
         fun all(
-            feedIDs: List<Long>,
+            feedIDs: List<String>,
             status: ArticleStatus,
             limit: Long,
             offset: Long,
@@ -90,12 +86,12 @@ class ArticleRecords internal constructor(
                 limit = limit,
                 offset = offset,
                 lastReadAt = mapLastRead(read, since),
-                mapper = ::articleMapper
+                mapper = ::listMapper
             )
         }
 
         fun count(
-            feedIDs: List<Long>,
+            feedIDs: List<String>,
             status: ArticleStatus,
             since: ZonedDateTime
         ): Query<Long> {
@@ -125,7 +121,7 @@ class ArticleRecords internal constructor(
                 limit = limit,
                 offset = offset,
                 lastReadAt = mapLastRead(read, since),
-                mapper = ::articleMapper
+                mapper = ::listMapper
             )
         }
 

@@ -1,6 +1,7 @@
 package com.jocmp.feedbinclient
 
 import com.squareup.moshi.JsonClass
+
 @JsonClass(generateAdapter = true)
 data class Entry(
     val id: Long,
@@ -12,5 +13,11 @@ data class Entry(
     val content: String?,
     val summary: String?,
     val published: String,
-    val created_at: String
+    val created_at: String,
+    val images: EntryImages? = null,
+)
+
+@JsonClass(generateAdapter = true)
+data class EntryImages(
+    val original_url: String? = null
 )

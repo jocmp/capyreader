@@ -37,11 +37,5 @@ fun AccountSettingsScreen(
             viewModel.removeAccount()
             goBack()
         },
-        exportOPML = {
-            context.exportOPML(account = viewModel.account)
-        },
-        importOPML = {
-            picker.launch("text/xml")
-        }
     )
 }

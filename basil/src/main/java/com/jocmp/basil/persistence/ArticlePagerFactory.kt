@@ -49,7 +49,7 @@ class ArticlePagerFactory(private val database: Database) {
         filter: ArticleFilter.Feeds,
         since: ZonedDateTime
     ): PagingSource<Int, Article> {
-        val feedIDs = listOf(filter.feed.id.toLong())
+        val feedIDs = listOf(filter.feed.id)
 
         return feedsSource(feedIDs, filter, since)
     }
@@ -58,13 +58,13 @@ class ArticlePagerFactory(private val database: Database) {
         filter: ArticleFilter.Folders,
         since: ZonedDateTime
     ): PagingSource<Int, Article> {
-        val feedIDs = filter.folder.feeds.mapNotNull { it.id.toLongOrNull() }
+//        val feedIDs = filter.folder.feeds.mapNotNull { it.id.toLongOrNull() }
 
-        return feedsSource(feedIDs, filter, since)
+        return feedsSource(emptyList(), filter, since)
     }
 
     private fun feedsSource(
-        feedIDs: List<Long>,
+        feedIDs: List<String>,
         filter: ArticleFilter,
         since: ZonedDateTime
     ): PagingSource<Int, Article> {

@@ -62,15 +62,6 @@ class AccountTest {
     }
 
     @Test
-    fun opmlFile_endsWithSubscriptions() {
-        val accountPath = folder.newFile()
-
-        val account = buildAccount(id = "777", path = accountPath)
-
-        assertContains(account.opmlFile.path.toString(), Regex("/subscriptions.opml$"))
-    }
-
-    @Test
     fun constructor_loadsExistingFeeds() {
         val accountPath = folder.newFile()
         val accountID = "777"
