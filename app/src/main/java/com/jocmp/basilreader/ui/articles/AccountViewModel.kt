@@ -127,7 +127,6 @@ class AccountViewModel(
                 is ArticleFilter.Articles -> account.refreshAll()
             }
 
-            refreshCounts()
             onSuccess()
         }
     }
@@ -139,8 +138,6 @@ class AccountViewModel(
             appPreferences.articleID.set(articleID)
             account.markRead(articleID)
         }
-
-        refreshCounts()
     }
 
     fun toggleArticleRead() {
@@ -154,22 +151,20 @@ class AccountViewModel(
             }
 
             articleState.value = article.copy(read = !article.read)
-
-            refreshCounts()
         }
     }
 
     fun toggleArticleStar() {
         articleState.value?.let { article ->
-            if (article.starred) {
-                account.removeStar(article.id)
-            } else {
-                account.addStar(article.id)
+            viewModelScope.launch {
+                if (article.starred) {
+                    account.removeStar(article.id)
+                } else {
+                    account.addStar(article.id)
+                }
+
+                articleState.value = article.copy(starred = !article.starred)
             }
-
-            articleState.value = article.copy(starred = !article.starred)
-
-            refreshCounts()
         }
     }
 
@@ -200,7 +195,7 @@ class AccountViewModel(
     }
 
     fun reload() {
-        refreshCounts()
+
     }
 
     private fun resetToDefaultFilter() {
@@ -208,12 +203,10 @@ class AccountViewModel(
     }
 
     private fun updateFilterValue(nextFilter: ArticleFilter) {
-        _filter.value = nextFilter
-        pager.value = account.buildPager(nextFilter)
-
         viewModelScope.launch {
+            _filter.value = nextFilter
+            pager.value = account.buildPager(nextFilter)
             appPreferences.filter.set(nextFilter)
-            refreshCounts()
         }
     }
 
@@ -234,10 +227,6 @@ class AccountViewModel(
 
     private fun copyFeedCounts(feed: Feed): Feed {
         return feed.copy(count = _counts.value.getOrDefault(feed.id, 0))
-    }
-
-    private fun refreshCounts() {
-        _counts.value = _account.countAll(status = filterStatus)
     }
 }
 
