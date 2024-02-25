@@ -1,5 +1,6 @@
 package com.jocmp.basilreader.ui.articles
 
+import android.app.DownloadManager.Query
 import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
@@ -20,8 +21,15 @@ import com.jocmp.basil.Feed
 import com.jocmp.basil.Folder
 import com.jocmp.basil.buildPager
 import com.jocmp.basil.countAll
+import com.jocmp.basil.persistence.AllFeeds
 import com.jocmp.basilreader.common.AppPreferences
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 
 private const val TAG = "AccountViewModel"
@@ -49,16 +57,14 @@ class AccountViewModel(
     private val account: Account
         get() = _account.value
 
-    val folders: List<Folder>
-        get() = account.folders.map(::copyFolderCounts).withPositiveCount(filterStatus)
-
     private val articleState = mutableStateOf(account.findArticle(appPreferences.articleID.get()))
 
     val statusCount: Long
         get() = _counts.value.values.sum()
 
-    val feeds: List<Feed>
-        get() = account.feeds.map(::copyFeedCounts).withPositiveCount(filterStatus)
+    val folders = account.folders
+
+    val feeds = account.feeds
 
     val article: Article?
         get() = articleState.value
@@ -193,7 +199,7 @@ class AccountViewModel(
     fun reload() {
         _account.value = accountManager.findByID(appPreferences.accountID.get())!!
         refreshCounts()
-        Log.d(TAG, "ArticleScreen: folders=${folders.size}; feeds=${feeds.size}")
+//        Log.d(TAG, "ArticleScreen: folders=${folders.size}; feeds=${feeds.size}")
     }
 
     private fun resetToDefaultFilter() {

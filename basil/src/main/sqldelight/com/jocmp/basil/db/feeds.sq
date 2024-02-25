@@ -5,8 +5,8 @@ FROM feeds;
 tagged:
 SELECT feeds.*, taggings.name
 FROM feeds
-JOIN taggings ON taggings.feed_id = feeds.id
-GROUP BY taggings.name;
+LEFT JOIN taggings ON taggings.feed_id = feeds.id
+GROUP BY feeds.id, taggings.name;
 
 findBy:
 SELECT *
@@ -18,12 +18,14 @@ upsert:
 INSERT OR REPLACE INTO feeds(
     id,
     subscription_id,
+    title,
     feed_url,
     site_url
 )
 VALUES (
   :id,
   :subscription_id,
+    :title,
   :feed_url,
   :site_url
 );

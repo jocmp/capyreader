@@ -15,7 +15,6 @@ import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import java.io.File
 import java.net.URL
-import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
@@ -96,10 +95,10 @@ class AccountTest {
 
         runBlocking { account.addFeed(entry) }
 
-        assertEquals(expected = account.feeds.size, actual = 1)
+        assertEquals(expected = account.topLevelFeeds.size, actual = 1)
         assertEquals(expected = account.folders.size, actual = 0)
 
-        val feed = account.feeds.first()
+        val feed = account.topLevelFeeds.first()
         assertEquals(expected = entry.name, actual = entry.name)
         assertEquals(expected = entry.url.toString(), actual = feed.feedURL)
     }
@@ -116,7 +115,7 @@ class AccountTest {
 
         runBlocking { account.addFeed(entry) }
 
-        assertEquals(expected = account.feeds.size, actual = 0)
+        assertEquals(expected = account.topLevelFeeds.size, actual = 0)
         assertEquals(expected = account.folders.size, actual = 1)
 
         val feed = account.folders.first().feeds.first()
@@ -138,7 +137,7 @@ class AccountTest {
 
         runBlocking { account.addFeed(entry) }
 
-        assertEquals(expected = account.feeds.size, actual = 0)
+        assertEquals(expected = account.topLevelFeeds.size, actual = 0)
         assertEquals(expected = account.folders.size, actual = 1)
 
         val feed = account.folders.first().feeds.first()
@@ -160,7 +159,7 @@ class AccountTest {
 
         runBlocking { account.addFeed(entry) }
 
-        assertEquals(expected = account.feeds.size, actual = 0)
+        assertEquals(expected = account.topLevelFeeds.size, actual = 0)
         assertEquals(expected = account.folders.size, actual = 2)
 
         val techFeed = account.folders.first().feeds.first()
@@ -183,13 +182,13 @@ class AccountTest {
             )
         }
 
-        val feed = account.feeds.find { it.name == "The Verge" }!!
+        val feed = account.topLevelFeeds.find { it.name == "The Verge" }!!
 
-        assertEquals(expected = 1, account.feeds.size)
+        assertEquals(expected = 1, account.topLevelFeeds.size)
 
         runBlocking { account.removeFeed(feedID = feed.id) }
 
-        assertEquals(expected = 0, account.feeds.size)
+        assertEquals(expected = 0, account.topLevelFeeds.size)
     }
 
     @Test
@@ -249,7 +248,7 @@ class AccountTest {
             )
         }
 
-        assertTrue(account.feeds.isEmpty())
+        assertTrue(account.topLevelFeeds.isEmpty())
         assertEquals(expected = 1, actual = account.folders.size)
 
         val renamedFeed = account.folders.first().feeds.first()
@@ -287,10 +286,10 @@ class AccountTest {
             )
         }
 
-        assertEquals(expected = 1, actual = account.feeds.size)
+        assertEquals(expected = 1, actual = account.topLevelFeeds.size)
         assertEquals(expected = 1, actual = account.folders.size)
 
-        val movedFeed = account.feeds.first()
+        val movedFeed = account.topLevelFeeds.first()
         val existingFeed = account.folders.first().feeds.first()
 
         assertEquals(expected = feedName, actual = movedFeed.name)
@@ -316,7 +315,7 @@ class AccountTest {
             )
         }
 
-        assertTrue(account.feeds.isEmpty())
+        assertTrue(account.topLevelFeeds.isEmpty())
         assertEquals(expected = 1, actual = account.folders.size)
 
         val renamedFeed = account.folders.first().feeds.first()
@@ -358,9 +357,9 @@ class AccountTest {
         }
 
         assertEquals(expected = 0, actual = account.folders.size)
-        assertEquals(expected = 1, actual = account.feeds.size)
+        assertEquals(expected = 1, actual = account.topLevelFeeds.size)
 
-        val movedFeed = account.feeds.first()
+        val movedFeed = account.topLevelFeeds.first()
 
         assertEquals(expected = movedFeed.id, actual = feed.id)
     }
@@ -378,7 +377,7 @@ class AccountTest {
         }
 
         assertEquals(expected = 1, actual = account.folders.size)
-        assertEquals(expected = 0, actual = account.feeds.size)
+        assertEquals(expected = 0, actual = account.topLevelFeeds.size)
 
         val otherFolder = account.folders.first()
         val movedFeed = otherFolder.feeds.first()

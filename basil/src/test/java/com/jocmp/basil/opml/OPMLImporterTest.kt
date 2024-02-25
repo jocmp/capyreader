@@ -53,7 +53,7 @@ class OPMLImporterTest {
 
         OPMLImporter(account).import(uri) {}
 
-        val topLevelFeeds = account.feeds.map { it.name }
+        val topLevelFeeds = account.topLevelFeeds.map { it.name }
         val newsFeeds = account.folders.first().feeds.map { it.name }
 
         assertEquals(expected = listOf("Daring Fireball", "Julia Evans"), actual = topLevelFeeds)
@@ -69,7 +69,7 @@ class OPMLImporterTest {
 
         OPMLImporter(account).import(uri)
 
-        val topLevelFeeds = account.feeds.map { it.name }
+        val topLevelFeeds = account.topLevelFeeds.map { it.name }
         val appleFeeds = account.folders.find { it.title == "Apple" }!!.feeds.map { it.name }
         val blogFeeds = account.folders.find { it.title == "Blogs" }!!.feeds.map { it.name }
         val newsFeeds = account.folders.find { it.title == "News" }!!.feeds.map { it.name }

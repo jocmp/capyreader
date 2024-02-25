@@ -66,7 +66,7 @@ class OPMLFileTest {
             )
         )
 
-        account.feeds.addAll(
+        account.topLevelFeeds.addAll(
             listOf(
                 Feed(
                     id = "5",

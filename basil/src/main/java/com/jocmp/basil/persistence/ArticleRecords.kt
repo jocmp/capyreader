@@ -51,22 +51,23 @@ class ArticleRecords internal constructor(
     }
 
     fun countAll(status: ArticleStatus): Map<String, Long> {
-        val (read, starred) = status.forCounts
-
-        return database.articlesQueries.countAll(
-            read = read,
-            starred = starred,
-        ).execute {
-            val result = mutableMapOf<String, Long>()
-            while (it.next().value) {
-                val feedID = it.getLong(0)!!.toString()
-                val unreadCount = it.getLong(1) ?: 0
-
-                result[feedID] = unreadCount
-            }
-
-            QueryResult.Value(result)
-        }.value
+//        val (read, starred) = status.forCounts
+//
+//        return database.articlesQueries.countAll(
+//            read = read,
+//            starred = starred,
+//        ).execute {
+//            val result = mutableMapOf<String, Long>()
+//            while (it.next().value) {
+//                val feedID = it.getLong(0)!!.toString()
+//                val unreadCount = it.getLong(1) ?: 0
+//
+//                result[feedID] = unreadCount
+//            }
+//
+//            QueryResult.Value(result)
+//        }.value
+        return emptyMap()
     }
 
     class ByFeed(private val database: Database) {

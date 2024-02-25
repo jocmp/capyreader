@@ -2,16 +2,10 @@ package com.jocmp.basil
 
 import android.util.Log
 import com.jocmp.basil.accounts.FeedbinAccountDelegate
-import com.jocmp.basil.accounts.ParsedItem
 import com.jocmp.basil.accounts.asOPML
-import com.jocmp.basil.common.nowUTCInSeconds
-import com.jocmp.basil.common.orEmpty
 import com.jocmp.basil.common.upsert
 import com.jocmp.basil.db.Database
 import com.jocmp.basil.opml.OPMLImporter
-import com.jocmp.basil.opml.Outline
-import com.jocmp.basil.opml.asFeed
-import com.jocmp.basil.opml.asFolder
 import com.jocmp.basil.persistence.ArticleRecords
 import com.jocmp.basil.persistence.FeedRecords
 import com.jocmp.feedbinclient.Feedbin
@@ -20,8 +14,8 @@ import com.jocmp.feedfinder.FeedFinder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import java.io.InputStream
 import java.net.URI
@@ -40,24 +34,33 @@ data class Account(
         feedbin = Feedbin.forAccount(this)
     )
 
-    var folders = mutableSetOf<Folder>()
-
-    var feeds = mutableSetOf<Feed>()
-
     internal val articleRecords: ArticleRecords = ArticleRecords(database)
 
     private val feedRecords: FeedRecords = FeedRecords(database)
 
+    private val allFeeds = feedRecords.feeds()
+
+    val feeds: Flow<List<Feed>> = allFeeds.map {
+        it.filter { it.folderName.isBlank() }
+    }
+
+    val folders: Flow<List<Folder>> = allFeeds.map { ungrouped ->
+        ungrouped
+            .filter { it.folderName.isNotBlank() }
+            .groupBy { it.folderName }
+            .map { Folder(title = it.key, feeds = it.value) }
+    }
+
     val flattenedFeeds: Set<Feed>
         get() = mutableSetOf<Feed>().apply {
-            addAll(feeds)
-            addAll(folders.flatMap { it.feeds })
+//            addAll(topLevelFeeds)
+//            addAll(folders.flatMap { it.feeds })
         }
 
     suspend fun addFolder(title: String): Folder {
         val folder = Folder(title = title)
 
-        folders.add(folder)
+//        folders.add(folder)
 
         return folder
     }
@@ -67,7 +70,7 @@ data class Account(
 
         val folderFeeds = folder.feeds
 
-        folders.remove(folder)
+//        folders.remove(folder)
 
         val allFeeds = flattenedFeeds
 
@@ -75,7 +78,7 @@ data class Account(
             !allFeeds.contains(feed)
         }
 
-        feeds.addAll(orphanedFeeds)
+//        topLevelFeeds.addAll(orphanedFeeds)
     }
 
     suspend fun removeFeed(feedID: String) {
@@ -96,29 +99,29 @@ data class Account(
 
         val editedFeed = feed.copy(name = entryNameOrDefault(form.name))
 
-        if (form.folderTitles.isEmpty()) {
-            feeds.upsert(editedFeed)
-        } else {
-            feeds.remove(editedFeed)
-        }
-
-        val removedFolders = folders
-            .filter { it.feeds.contains(feed) && !form.folderTitles.contains(it.title) }
-            .toSet()
-
-        removedFolders.forEach { folder ->
-            folder.feeds.remove(feed)
-        }
-
-        val emptyFolders = folders.filter { folder -> folder.feeds.isEmpty() }.toSet()
-
-        folders.removeAll(emptyFolders)
-
-        form.folderTitles.forEach { folderTitle ->
-            val folder = findOrBuildFolder(title = folderTitle)
-            folder.feeds.upsert(editedFeed)
-            folders.upsert(folder)
-        }
+//        if (form.folderTitles.isEmpty()) {
+//            topLevelFeeds.upsert(editedFeed)
+//        } else {
+//            topLevelFeeds.remove(editedFeed)
+//        }
+//
+//        val removedFolders = folders
+//            .filter { it.feeds.contains(feed) && !form.folderTitles.contains(it.title) }
+//            .toSet()
+//
+//        removedFolders.forEach { folder ->
+////            folder.feeds.remove(feed)
+//        }
+//
+//        val emptyFolders = folders.filter { folder -> folder.feeds.isEmpty() }.toSet()
+//
+//        folders.removeAll(emptyFolders)
+//
+//        form.folderTitles.forEach { folderTitle ->
+//            val folder = findOrBuildFolder(title = folderTitle)
+////            folder.feeds.upsert(editedFeed)
+//            folders.upsert(folder)
+//        }
 
         return Result.success(editedFeed)
     }
@@ -129,9 +132,9 @@ data class Account(
 
         val updatedFolder = folder.copy(title = form.title)
 
-        folders.remove(folder)
-        folders.add(updatedFolder)
-
+//        folders.remove(folder)
+//        folders.add(updatedFolder)
+//
         return Result.success(updatedFolder)
     }
 
@@ -155,7 +158,8 @@ data class Account(
     }
 
     fun findFolder(title: String): Folder? {
-        return folders.find { it.title == title }
+//        return folders.find { it.title == title }
+        return null
     }
 
     fun findArticle(articleID: String): Article? {
@@ -191,10 +195,10 @@ data class Account(
     private fun removeFeedFromOPML(feedID: String) {
     }
 
-
-    private fun findOrBuildFolder(title: String): Folder {
-        return folders.find { folder -> folder.title == title } ?: Folder(title = title)
-    }
+//
+//    private fun findOrBuildFolder(title: String): Folder {
+////        return folders.find { folder -> folder.title == title } ?: Folder(title = title)
+//    }
 
     private suspend fun refreshCompactedFeeds(feeds: Collection<Feed>) =
         withContext(Dispatchers.IO) {
@@ -218,13 +222,13 @@ data class Account(
 internal fun Account.asOPML(): String {
     var opml = ""
 
-    feeds.sortedBy { it.name }.forEach { feed ->
-        opml += feed.asOPML(indentLevel = 2)
-    }
+//    topLevelFeeds.sortedBy { it.name }.forEach { feed ->
+//        opml += feed.asOPML(indentLevel = 2)
+//    }
 
-    folders.sortedBy { it.title }.forEach { folder ->
-        opml += folder.asOPML(indentLevel = 2)
-    }
+//    folders.sortedBy { it.title }.forEach { folder ->
+//        opml += folder.asOPML(indentLevel = 2)
+//    }
 
     return opml
 }

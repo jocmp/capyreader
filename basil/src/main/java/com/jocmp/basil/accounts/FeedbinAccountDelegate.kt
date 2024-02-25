@@ -29,6 +29,7 @@ internal class FeedbinAccountDelegate(
                 database.feedsQueries.upsert(
                     id = subscription.feed_id.toString(),
                     subscription_id = subscription.id.toString(),
+                    title = subscription.title,
                     feed_url = subscription.feed_url,
                     site_url = subscription.site_url,
                 )
@@ -60,7 +61,7 @@ internal class FeedbinAccountDelegate(
                 database.transaction {
                     database.articlesQueries.create(
                         id = entry.id.toString(),
-                        feed_id = entry.id.toString(),
+                        feed_id = entry.feed_id.toString(),
                         title = entry.title,
                         content_html = entry.content,
                         url = entry.url,

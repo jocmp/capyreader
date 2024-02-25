@@ -23,7 +23,7 @@ fun AddFeedScreen(
 
     Column {
         AddFeedView(
-            folders = viewModel.folders,
+            folders = emptyList(),// viewModel.folders,
             onSubmit = { entry ->
                 viewModel.addFeed(
                     entry,

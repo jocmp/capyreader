@@ -8,17 +8,13 @@ import com.jocmp.feedbinclient.Entry
 import com.jocmp.feedbinclient.EntryImages
 import com.jocmp.feedbinclient.Feedbin
 import com.jocmp.feedbinclient.Tagging
-import com.jocmp.feedbinclient.api.Subscription
+import com.jocmp.feedbinclient.Subscription
 import io.mockk.coEvery
-import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import retrofit2.Response
-import kotlin.math.exp
-import kotlin.math.sin
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 

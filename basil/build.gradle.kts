@@ -73,6 +73,7 @@ dependencies {
     implementation(project(":feedbinclient"))
     implementation(project(":feedfinder"))
     testImplementation("app.cash.sqldelight:sqlite-driver:$sqldelightVersion")
+    implementation("app.cash.sqldelight:coroutines-extensions:$sqldelightVersion")
     testImplementation("junit:junit:4.13.2")
     testImplementation(kotlin("test"))
     testImplementation(testLibs.mockk.agent)

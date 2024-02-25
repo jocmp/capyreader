@@ -1,6 +1,5 @@
 package com.jocmp.feedbinclient
 
-import com.jocmp.feedbinclient.api.Subscription
 import com.squareup.moshi.Moshi
 import okhttp3.Credentials
 import okhttp3.OkHttpClient

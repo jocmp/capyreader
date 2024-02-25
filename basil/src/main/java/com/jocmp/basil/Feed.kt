@@ -10,5 +10,6 @@ data class Feed(
     val name: String,
     val feedURL: String,
     val siteURL: String = "",
+    val folderName: String = "",
     override val count: Long = 0
 ): Countable

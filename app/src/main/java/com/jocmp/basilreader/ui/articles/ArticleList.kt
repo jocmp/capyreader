@@ -1,27 +1,27 @@
 package com.jocmp.basilreader.ui.articles
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import android.graphics.drawable.Drawable
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
+import com.bumptech.glide.RequestBuilder
+import com.bumptech.glide.integration.compose.rememberGlidePreloadingData
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.jocmp.basil.Article
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import java.time.format.DateTimeFormatter
+import kotlin.math.roundToInt
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ArticleList(
     articles: Flow<PagingData<Article>>,
@@ -52,5 +52,11 @@ fun ArticleList(
                 onSelect = { selectArticle(it) },
             )
         }
+    }
+}
+
+private fun String.orNullIfBlank(): String? {
+    return ifBlank {
+        null
     }
 }
