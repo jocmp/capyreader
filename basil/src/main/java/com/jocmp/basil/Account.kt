@@ -178,8 +178,10 @@ data class Account(
         articleRecords.removeStar(articleID = articleID)
     }
 
-    fun markRead(articleID: String) {
+    suspend fun markRead(articleID: String) {
         articleRecords.markRead(articleID)
+
+        delegate.markRead(listOf(articleID))
     }
 
     fun markUnread(articleID: String) {

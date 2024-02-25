@@ -7,8 +7,12 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
+import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.HTTP
 import retrofit2.http.Header
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface Feedbin {
@@ -27,6 +31,9 @@ interface Feedbin {
 
     @GET("v2/taggings.json")
     suspend fun taggings(): Response<List<Tagging>>
+    
+    @HTTP(method = "DELETE", path = "v2/unread_entries.json", hasBody = true)
+    suspend fun deleteUnreadEntries(@Body body: UnreadEntriesRequest): Response<List<Long>>
 
     companion object {
         private const val DEFAULT_URL = "https://api.feedbin.com/"

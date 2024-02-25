@@ -5,9 +5,8 @@ import com.jocmp.basil.common.nowUTCInSeconds
 import com.jocmp.basil.common.toDateTime
 import com.jocmp.basil.db.Database
 import com.jocmp.feedbinclient.Feedbin
+import com.jocmp.feedbinclient.UnreadEntriesRequest
 import retrofit2.Response
-import java.util.Date
-import java.util.GregorianCalendar
 
 internal class FeedbinAccountDelegate(
     val database: Database,
@@ -15,6 +14,12 @@ internal class FeedbinAccountDelegate(
 ) {
     fun fetchAll(feed: Feed): List<ParsedItem> {
         return emptyList()
+    }
+
+    suspend fun markRead(articleIDs: List<String>) {
+        val entryIDs = articleIDs.map { it.toLong() }
+
+        feedbin.deleteUnreadEntries(UnreadEntriesRequest(unread_entries = entryIDs))
     }
 
     suspend fun refreshAll() {

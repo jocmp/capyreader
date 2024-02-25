@@ -126,12 +126,11 @@ class AccountViewModel(
     }
 
     fun selectArticle(articleID: String, completion: (article: Article) -> Unit) {
-        account.markRead(articleID)
-        articleState.value = account.findArticle(articleID = articleID)
-        articleState.value?.let(completion)
-
         viewModelScope.launch {
+            articleState.value = account.findArticle(articleID = articleID)
+            articleState.value?.let(completion)
             appPreferences.articleID.set(articleID)
+            account.markRead(articleID)
         }
 
         refreshCounts()
@@ -139,10 +138,12 @@ class AccountViewModel(
 
     fun toggleArticleRead() {
         articleState.value?.let { article ->
-            if (article.read) {
-                account.markUnread(article.id)
-            } else {
-                account.markRead(article.id)
+            viewModelScope.launch {
+                if (article.read) {
+                    account.markUnread(article.id)
+                } else {
+                    account.markRead(article.id)
+                }
             }
 
             articleState.value = article.copy(read = !article.read)
