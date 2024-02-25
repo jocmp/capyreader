@@ -12,8 +12,9 @@ class FeedFixture(private val database: Database) {
         database.feedsQueries.upsert(
             id = feedID,
             subscription_id = RandomUUID.generate(),
+            title = "My Feed",
             feed_url = feedURL,
-            site_url = feedURL
+            site_url = feedURL,
         )
 
         return database.feedsQueries.findBy(id = feedID).executeAsOne()

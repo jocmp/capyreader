@@ -88,6 +88,8 @@ class FeedbinAccountDelegateTest {
         3.repeated { feedFixture.create() }
 
         coEvery { feedbin.subscriptions() }.returns(Response.success(subscriptions))
+        coEvery { feedbin.taggings() }.returns(Response.success(taggings))
+        coEvery { feedbin.entries(since = any()) }.returns(Response.success(entries))
 
         val delegate = FeedbinAccountDelegate(database, feedbin)
 
@@ -105,6 +107,7 @@ class FeedbinAccountDelegateTest {
     fun refreshAll_updatesTaggings() = runTest {
         coEvery { feedbin.subscriptions() }.returns(Response.success(subscriptions))
         coEvery { feedbin.taggings() }.returns(Response.success(taggings))
+        coEvery { feedbin.entries(since = any()) }.returns(Response.success(entries))
 
         val delegate = FeedbinAccountDelegate(database, feedbin)
 
@@ -116,7 +119,7 @@ class FeedbinAccountDelegateTest {
             .executeAsList()
             .map { it.name }
 
-        assertEquals(expected = listOf("Gadgets"), actual = taggedNames)
+        assertEquals(expected = listOf(null, "Gadgets"), actual = taggedNames)
     }
 
     @Test

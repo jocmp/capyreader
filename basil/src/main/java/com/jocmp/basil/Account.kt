@@ -40,8 +40,8 @@ data class Account(
 
     private val allFeeds = feedRecords.feeds()
 
-    val feeds: Flow<List<Feed>> = allFeeds.map {
-        it.filter { it.folderName.isBlank() }
+    val feeds: Flow<List<Feed>> = allFeeds.map { all ->
+        all.filter { it.folderName.isBlank() }
     }
 
     val folders: Flow<List<Folder>> = allFeeds.map { ungrouped ->

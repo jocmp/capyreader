@@ -1,7 +1,6 @@
 package com.jocmp.basilreader.ui.articles
 
 import android.content.res.Configuration
-import android.graphics.drawable.Drawable
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,28 +20,27 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
-import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
 import com.jocmp.basil.Article
 import com.jocmp.basilreader.ui.theme.BasilReaderTheme
-import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import java.net.URL
 import java.time.ZoneId
 import java.time.ZonedDateTime
+
+private val THUMBNAIL_SIZE = 56.dp
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun ArticleRow(
     article: Article,
     selected: Boolean,
-    onSelect: (articleID: String) -> Unit
+    onSelect: (articleID: String) -> Unit,
 ) {
-    val thumbnailSize = with(LocalDensity.current) { 56.dp.roundToPx()}
-    val imageURL = article.imageURL?.toHttpUrlOrNull()?.toString()
+    val thumbnailSize = with(LocalDensity.current) { THUMBNAIL_SIZE.roundToPx()}
+    val imageURL = article.imageURL?.toString()
     val colors = listItemColors(
         selected = selected,
         read = article.read
@@ -63,7 +61,7 @@ fun ArticleRow(
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
-                            .width(56.dp)
+                            .width(THUMBNAIL_SIZE)
                             .aspectRatio(1f),
                         loading = placeholder(background),
                         failure = placeholder(background),

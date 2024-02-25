@@ -38,10 +38,7 @@ class AccountViewModel(
     private val accountManager: AccountManager,
     private val appPreferences: AppPreferences,
 ) : ViewModel() {
-    private val _account: MutableState<Account> = mutableStateOf(
-        accountManager.findByID(appPreferences.accountID.get())!!,
-        policy = neverEqualPolicy()
-    )
+    private val _account = accountManager.findByID(appPreferences.accountID.get())!!
 
     private val _counts = mutableStateOf<Map<String, Long>>(mapOf())
 
@@ -55,7 +52,7 @@ class AccountViewModel(
         get() = _articles.value
 
     private val account: Account
-        get() = _account.value
+        get() = _account
 
     private val articleState = mutableStateOf(account.findArticle(appPreferences.articleID.get()))
 
@@ -105,7 +102,6 @@ class AccountViewModel(
         viewModelScope.launch {
             account.removeFeed(feedID = feedID)
             resetToDefaultFilter()
-            _account.value = account
         }
     }
 
@@ -113,7 +109,6 @@ class AccountViewModel(
         viewModelScope.launch {
             account.removeFolder(title = folderTitle)
             resetToDefaultFilter()
-            _account.value = account
         }
     }
 
@@ -197,9 +192,7 @@ class AccountViewModel(
     }
 
     fun reload() {
-        _account.value = accountManager.findByID(appPreferences.accountID.get())!!
         refreshCounts()
-//        Log.d(TAG, "ArticleScreen: folders=${folders.size}; feeds=${feeds.size}")
     }
 
     private fun resetToDefaultFilter() {
@@ -236,7 +229,7 @@ class AccountViewModel(
     }
 
     private fun refreshCounts() {
-        _counts.value = _account.value.countAll(status = filterStatus)
+        _counts.value = _account.countAll(status = filterStatus)
     }
 }
 

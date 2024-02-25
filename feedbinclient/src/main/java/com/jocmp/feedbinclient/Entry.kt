@@ -20,10 +20,4 @@ data class Entry(
 @JsonClass(generateAdapter = true)
 data class EntryImages(
     val original_url: String,
-    val size_1: EntryImageSizeOne
-)
-
-@JsonClass(generateAdapter = true)
-data class EntryImageSizeOne(
-    val cdn_url: String,
 )

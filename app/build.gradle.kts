@@ -75,7 +75,6 @@ dependencies {
     implementation("androidx.webkit:webkit:1.10.0")
     implementation("androidx.work:work-runtime-ktx:2.9.0")
     implementation("app.cash.sqldelight:android-driver:$sqldelightVersion")
-    implementation("com.github.bumptech.glide:glide:4.14.2")
     implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
     implementation("io.insert-koin:koin-android")
     implementation("io.insert-koin:koin-androidx-compose")
