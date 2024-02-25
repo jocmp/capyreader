@@ -19,5 +19,5 @@ dependencies {
     testImplementation(kotlin("test"))
     testImplementation("junit:junit:4.13.2")
     testImplementation(testLibs.mockk.mockk)
-    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(testLibs.kotlinx.coroutines.test)
 }

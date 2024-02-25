@@ -27,7 +27,7 @@ class FeedRecordsTest {
 
         val result = database
             .articlesQueries
-            .findBy(articleID = article.id.toLong())
+            .findBy(articleID = article.id)
             .executeAsOneOrNull()
 
         assertNull(result)

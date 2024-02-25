@@ -11,8 +11,8 @@ internal fun OPMLFeed.asFeed(feeds: Map<Long, DBFeed> = mapOf()): Feed? {
     feed ?: return null
 
     return Feed(
-        id = feed.id.toString(),
-        externalID = feed.external_id,
+        id = feed.id,
+        subscriptionID = feed.subscription_id,
         name = title ?: "",
         feedURL = xmlUrl ?: ""
     )

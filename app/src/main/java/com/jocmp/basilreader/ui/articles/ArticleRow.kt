@@ -1,8 +1,6 @@
 package com.jocmp.basilreader.ui.articles
 
 import android.content.res.Configuration
-import android.text.Html
-import android.text.Html.FROM_HTML_MODE_COMPACT
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,29 +15,32 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.text.parseAsHtml
-import androidx.core.text.toHtml
-import coil.compose.AsyncImage
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
+import com.bumptech.glide.integration.compose.placeholder
 import com.jocmp.basil.Article
 import com.jocmp.basilreader.ui.theme.BasilReaderTheme
-import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import java.net.URL
 import java.time.ZoneId
 import java.time.ZonedDateTime
 
+private val THUMBNAIL_SIZE = 56.dp
+
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun ArticleRow(
     article: Article,
     selected: Boolean,
-    onSelect: (articleID: String) -> Unit
+    onSelect: (articleID: String) -> Unit,
 ) {
-    val imageURL = article.imageURL?.toHttpUrlOrNull()
+    val thumbnailSize = with(LocalDensity.current) { THUMBNAIL_SIZE.roundToPx()}
+    val imageURL = article.imageURL?.toString()
     val colors = listItemColors(
         selected = selected,
         read = article.read
@@ -53,15 +54,20 @@ fun ArticleRow(
         ListItem(
             leadingContent = if (imageURL != null) {
                 {
-                    AsyncImage(
-                        imageURL,
+                    val background = ColorPainter(colorScheme.surfaceContainer)
+
+                    GlideImage(
+                        model = imageURL,
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
-                        placeholder = ColorPainter(colorScheme.surfaceContainer),
                         modifier = Modifier
-                            .width(56.dp)
-                            .aspectRatio(1f)
-                    )
+                            .width(THUMBNAIL_SIZE)
+                            .aspectRatio(1f),
+                        loading = placeholder(background),
+                        failure = placeholder(background),
+                    ) {
+                        it.override(thumbnailSize)
+                    }
                 }
             } else {
                 null
@@ -110,7 +116,6 @@ fun ArticleRowPreview_Selected_DarkMode() {
         title = "How to use the Galaxy S24's AI photo editing tool",
         contentHTML = "<div>Test</div>",
         imageURL = URL("https://example.com"),
-        externalID = "https://9to5google.com/?p=605559",
         summary = "Test article here",
         url = URL("https://9to5google.com/?p=605559"),
         arrivedAt = ZonedDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneId.systemDefault()),
@@ -143,7 +148,6 @@ fun ArticleRowPreview_Selected() {
         title = "How to use the Galaxy S24's AI photo editing tool",
         contentHTML = "<div>Test</div>",
         imageURL = null,
-        externalID = "https://9to5google.com/?p=605559",
         summary = "Test article here",
         url = URL("https://9to5google.com/?p=605559"),
         arrivedAt = ZonedDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneId.systemDefault()),
@@ -169,7 +173,6 @@ fun ArticleRowPreview_Unread() {
         title = "How to use the Galaxy S24's AI photo editing tool",
         contentHTML = "<div>Test</div>",
         imageURL = URL("http://example.com"),
-        externalID = "https://9to5google.com/?p=605559",
         summary = "Test article here",
         url = URL("https://9to5google.com/?p=605559"),
         arrivedAt = ZonedDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneId.systemDefault()),

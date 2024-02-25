@@ -24,10 +24,10 @@ class EditFeedViewModel(
         get() = account.findFeed(args.feedID)!!
 
     val feedFolderTitles: List<String>
-        get() = account.folders.filter { it.feeds.contains(feed) }.map { it.title }
+        get() = emptyList()  // account.folders.filter { it.feeds.contains(feed) }.map { it.title }
 
     val folders: List<Folder>
-        get() = account.folders.toList()
+        get() = emptyList() // account.folders.toList()
 
     fun submit(form: EditFeedForm, onSuccess: () -> Unit) {
         viewModelScope.launch {

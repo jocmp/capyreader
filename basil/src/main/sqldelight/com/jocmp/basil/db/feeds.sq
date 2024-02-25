@@ -1,27 +1,57 @@
-allByID:
+all:
 SELECT *
-FROM feeds
-WHERE id IN ?;
+FROM feeds;
 
-findByURL:
+tagged:
+SELECT feeds.*, taggings.name
+FROM feeds
+LEFT JOIN taggings ON taggings.feed_id = feeds.id
+GROUP BY feeds.id, taggings.name;
+
+findBy:
 SELECT *
 FROM feeds
-WHERE feed_url = ?
+WHERE id = :id
 LIMIT 1;
 
-create {
-INSERT INTO feeds(external_id, feed_url)
-VALUES (?, ?);
-
-SELECT *
-FROM feeds
-WHERE id = last_insert_rowid();
-}
+upsert:
+INSERT OR REPLACE INTO feeds(
+    id,
+    subscription_id,
+    title,
+    feed_url,
+    site_url
+)
+VALUES (
+  :id,
+  :subscription_id,
+    :title,
+  :feed_url,
+  :site_url
+);
 
 delete {
-  DELETE FROM article_statuses WHERE article_statuses.feed_id = :feedID;
+  DELETE FROM article_statuses WHERE article_statuses.article_id IN (
+      SELECT id
+      FROM articles
+      WHERE feed_id IN :feedIDs
+  );
 
-  DELETE FROM articles WHERE articles.feed_id = :feedID;
+  DELETE FROM articles WHERE articles.feed_id IN :feedIDs;
 
-  DELETE FROM feeds WHERE id = :feedID;
+  DELETE FROM feeds WHERE id IN :feedIDs;
+}
+
+deleteAllExcept {
+  DELETE FROM article_statuses WHERE article_statuses.article_id IN (
+      SELECT id
+      FROM articles
+      WHERE feed_id NOT IN :feedIDs
+  );
+
+  DELETE FROM articles WHERE articles.feed_id NOT IN :feedIDs;
+
+  DELETE FROM taggings WHERE feed_id NOT IN :feedIDs;
+
+  DELETE FROM feeds WHERE id NOT IN :feedIDs;
 }

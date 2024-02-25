@@ -9,18 +9,6 @@ import java.net.URLEncoder
 @Serializable
 data class Folder(
     val title: String,
-    val feeds: MutableList<Feed> = mutableListOf(),
+    val feeds: List<Feed> = emptyList(),
     override val count: Long = 0,
-): Countable {
-    override fun equals(other: Any?): Boolean {
-        if (other is Folder) {
-            return title == other.title
-        }
-        return super.equals(other)
-    }
-
-    override fun hashCode(): Int {
-        val result = title.hashCode()
-        return 31 * result
-    }
-}
+) : Countable

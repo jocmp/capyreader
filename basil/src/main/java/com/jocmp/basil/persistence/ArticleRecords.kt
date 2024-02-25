@@ -14,19 +14,15 @@ class ArticleRecords internal constructor(
     val byFeed = ByFeed(database)
 
     fun fetch(articleID: String): Article? {
-        val id = articleID.toLongOrNull()
-
-        id ?: return null
-
         return database.articlesQueries.findBy(
-            articleID = id,
+            articleID = articleID,
             mapper = ::articleMapper
         ).executeAsOneOrNull()
     }
 
     fun markRead(articleID: String, lastReadAt: ZonedDateTime = ZonedDateTime.now()) {
         database.articlesQueries.markRead(
-            articleID = articleID.toLong(),
+            articleID = articleID,
             read = true,
             lastReadAt = lastReadAt.toEpochSecond()
         )
@@ -34,7 +30,7 @@ class ArticleRecords internal constructor(
 
     fun markUnread(articleID: String) {
         database.articlesQueries.markRead(
-            articleID = articleID.toLong(),
+            articleID = articleID,
             read = false,
             lastReadAt = null
         )
@@ -42,40 +38,41 @@ class ArticleRecords internal constructor(
 
     fun addStar(articleID: String) {
         database.articlesQueries.markStarred(
-            articleID = articleID.toLong(),
+            articleID = articleID,
             starred = true
         )
     }
 
     fun removeStar(articleID: String) {
         database.articlesQueries.markStarred(
-            articleID = articleID.toLong(),
+            articleID = articleID,
             starred = false
         )
     }
 
     fun countAll(status: ArticleStatus): Map<String, Long> {
-        val (read, starred) = status.forCounts
-
-        return database.articlesQueries.countAll(
-            read = read,
-            starred = starred,
-        ).execute {
-            val result = mutableMapOf<String, Long>()
-            while (it.next().value) {
-                val feedID = it.getLong(0)!!.toString()
-                val unreadCount = it.getLong(1) ?: 0
-
-                result[feedID] = unreadCount
-            }
-
-            QueryResult.Value(result)
-        }.value
+//        val (read, starred) = status.forCounts
+//
+//        return database.articlesQueries.countAll(
+//            read = read,
+//            starred = starred,
+//        ).execute {
+//            val result = mutableMapOf<String, Long>()
+//            while (it.next().value) {
+//                val feedID = it.getLong(0)!!.toString()
+//                val unreadCount = it.getLong(1) ?: 0
+//
+//                result[feedID] = unreadCount
+//            }
+//
+//            QueryResult.Value(result)
+//        }.value
+        return emptyMap()
     }
 
     class ByFeed(private val database: Database) {
         fun all(
-            feedIDs: List<Long>,
+            feedIDs: List<String>,
             status: ArticleStatus,
             limit: Long,
             offset: Long,
@@ -90,12 +87,12 @@ class ArticleRecords internal constructor(
                 limit = limit,
                 offset = offset,
                 lastReadAt = mapLastRead(read, since),
-                mapper = ::articleMapper
+                mapper = ::listMapper
             )
         }
 
         fun count(
-            feedIDs: List<Long>,
+            feedIDs: List<String>,
             status: ArticleStatus,
             since: ZonedDateTime
         ): Query<Long> {
@@ -125,7 +122,7 @@ class ArticleRecords internal constructor(
                 limit = limit,
                 offset = offset,
                 lastReadAt = mapLastRead(read, since),
-                mapper = ::articleMapper
+                mapper = ::listMapper
             )
         }
 

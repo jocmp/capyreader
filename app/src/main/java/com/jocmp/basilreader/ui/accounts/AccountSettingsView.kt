@@ -32,8 +32,6 @@ fun AccountSettingsView(
     refreshInterval: RefreshInterval,
     updateRefreshInterval: (interval: RefreshInterval) -> Unit,
     removeAccount: () -> Unit,
-    exportOPML: () -> Unit,
-    importOPML: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -64,16 +62,6 @@ fun AccountSettingsView(
                 updateRefreshInterval = updateRefreshInterval,
             )
 
-            Button(
-                onClick = importOPML,
-            ) {
-                Text(stringResource(R.string.account_settings_import))
-            }
-            Button(
-                onClick = exportOPML
-            ) {
-                Text(stringResource(R.string.account_settings_export))
-            }
             Button(onClick = { setRemoveDialogOpen(true) }) {
                 Text(stringResource(R.string.account_settings_delete_account_button))
             }
@@ -112,8 +100,6 @@ fun AccountSettingsViewPreview() {
     AccountSettingsView(
         defaultDisplayName = "Feedbin",
         removeAccount = {},
-        exportOPML = {},
-        importOPML = {},
         refreshInterval = RefreshInterval.EVERY_HOUR,
         updateRefreshInterval = {}
     )

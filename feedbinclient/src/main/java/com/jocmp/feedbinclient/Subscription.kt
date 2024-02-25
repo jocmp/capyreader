@@ -1,4 +1,4 @@
-package com.jocmp.feedbinclient.api
+package com.jocmp.feedbinclient
 
 import com.squareup.moshi.JsonClass
 

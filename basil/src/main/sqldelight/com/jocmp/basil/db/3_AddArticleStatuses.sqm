@@ -1,11 +1,9 @@
 import kotlin.Boolean;
 
 CREATE TABLE article_statuses (
-  feed_id INTEGER NOT NULL REFERENCES feeds(id),
-  external_id TEXT NOT NULL,
+  article_id TEXT NOT NULL PRIMARY KEY REFERENCES articles(id),
   read INTEGER AS Boolean NOT NULL DEFAULT 0,
   starred INTEGER AS Boolean NOT NULL DEFAULT 0,
   arrived_at INTEGER NOT NULL,
-  last_read_at INTEGER,
-  PRIMARY KEY (feed_id, external_id)
+  last_read_at INTEGER
 );

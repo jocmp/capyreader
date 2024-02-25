@@ -5,7 +5,6 @@ import java.time.ZonedDateTime
 
 data class Article(
     val id: String,
-    val externalID: String,
     val feedID: String,
     val title: String,
     val contentHTML: String,
@@ -15,7 +14,4 @@ data class Article(
     val arrivedAt: ZonedDateTime,
     val read: Boolean,
     val starred: Boolean
-) {
-    val key: String
-        get() = "${id}-${feedID}"
-}
+)
