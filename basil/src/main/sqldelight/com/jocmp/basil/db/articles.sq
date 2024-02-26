@@ -1,30 +1,34 @@
 findByStatus:
 SELECT
   articles.*,
-  article_statuses.arrived_at,
+  feeds.title AS feed_title,
+  article_statuses.updated_at,
   article_statuses.starred,
   article_statuses.read
 FROM articles
+JOIN feeds ON articles.feed_id = feeds.id
 JOIN article_statuses ON articles.id = article_statuses.article_id
 WHERE ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
 AND (article_statuses.starred = :starred OR :starred IS NULL)
 GROUP BY articles.id
-ORDER BY article_statuses.arrived_at DESC
+ORDER BY articles.published_at DESC
 LIMIT :limit OFFSET :offset;
 
 findByFeeds:
 SELECT
   articles.*,
-  article_statuses.arrived_at,
+  feeds.title AS feed_title,
+  article_statuses.updated_at,
   article_statuses.starred,
   article_statuses.read
 FROM articles
 JOIN article_statuses ON articles.id = article_statuses.article_id
+JOIN feeds ON articles.feed_id = feeds.id
 WHERE articles.feed_id IN :feedIDs
 AND ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
 AND (article_statuses.starred = :starred OR :starred IS NULL)
 GROUP BY articles.id
-ORDER BY article_statuses.arrived_at DESC
+ORDER BY articles.published_at DESC
 LIMIT :limit OFFSET :offset;
 
 countByFeeds:
@@ -45,10 +49,12 @@ AND (article_statuses.starred = :starred OR :starred IS NULL);
 findBy:
 SELECT
   articles.*,
-  article_statuses.arrived_at,
+  feeds.title AS feed_title,
+  article_statuses.updated_at,
   article_statuses.starred,
   article_statuses.read
 FROM articles
+JOIN feeds ON articles.feed_id = feeds.id
 JOIN article_statuses ON articles.id = article_statuses.article_id
 WHERE articles.id = :articleID
 LIMIT 1;
@@ -63,8 +69,8 @@ WHERE article_statuses.read = :read OR :read IS NULL
 AND (article_statuses.starred = :starred OR :starred IS NULL)
 GROUP BY articles.feed_id;
 
-lastArrivalTime:
-SELECT MAX(article_statuses.arrived_at)
+lastUpdatedAt:
+SELECT MAX(article_statuses.updated_at)
 FROM article_statuses;
 
 create:
@@ -92,17 +98,17 @@ VALUES (
 updateStatus:
 INSERT OR IGNORE INTO article_statuses(
   article_id,
-  arrived_at
+  updated_at
 )
 VALUES (
 :article_id,
-:arrived_at
+:updated_at
 );
 
 markRead:
-UPDATE article_statuses SET read = :read, last_read_at = :lastReadAt
+UPDATE article_statuses SET read = :read, last_read_at = :lastReadAt, updated_at = :updatedAt
 WHERE article_statuses.article_id = :articleID;
 
 markStarred:
-UPDATE article_statuses SET starred = :starred
+UPDATE article_statuses SET starred = :starred, updated_at = :updatedAt
 WHERE article_statuses.article_id = :articleID;

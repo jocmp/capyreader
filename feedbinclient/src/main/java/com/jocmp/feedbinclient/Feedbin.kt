@@ -31,7 +31,10 @@ interface Feedbin {
 
     @GET("v2/taggings.json")
     suspend fun taggings(): Response<List<Tagging>>
-    
+
+    @POST("v2/unread_entries.json")
+    suspend fun postUnreadEntries(@Body body: UnreadEntriesRequest): Response<List<Long>>
+
     @HTTP(method = "DELETE", path = "v2/unread_entries.json", hasBody = true)
     suspend fun deleteUnreadEntries(@Body body: UnreadEntriesRequest): Response<List<Long>>
 

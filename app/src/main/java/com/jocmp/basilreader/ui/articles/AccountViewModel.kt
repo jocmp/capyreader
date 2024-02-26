@@ -27,6 +27,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.conflate
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
@@ -85,17 +88,21 @@ class AccountViewModel(
     }
 
     fun selectFeed(feedID: String) {
-        val feed = account.findFeed(feedID) ?: return
-        val feedFilter = ArticleFilter.Feeds(feed = feed, feedStatus = _filter.value.status)
+        viewModelScope.launch {
+            val feed = account.findFeed(feedID) ?: return@launch
+            val feedFilter = ArticleFilter.Feeds(feed = feed, feedStatus = _filter.value.status)
 
-        selectArticleFilter(feedFilter)
+            selectArticleFilter(feedFilter)
+        }
     }
 
     fun selectFolder(title: String) {
-        val folder = account.findFolder(title) ?: return
-        val feedFilter = ArticleFilter.Folders(folder = folder, folderStatus = _filter.value.status)
+        viewModelScope.launch {
+            val folder = account.findFolder(title) ?: return@launch
+            val feedFilter = ArticleFilter.Folders(folder = folder, folderStatus = _filter.value.status)
 
-        selectArticleFilter(feedFilter)
+            selectArticleFilter(feedFilter)
+        }
     }
 
     fun removeFeed(feedID: String) {
@@ -127,7 +134,7 @@ class AccountViewModel(
 
     fun selectArticle(articleID: String, completion: (article: Article) -> Unit) {
         viewModelScope.launch {
-            articleState.value = account.findArticle(articleID = articleID)
+            articleState.value = account.findArticle(articleID = articleID)?.copy(read = true)
             articleState.value?.let(completion)
             appPreferences.articleID.set(articleID)
             account.markRead(articleID)

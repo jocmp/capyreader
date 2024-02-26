@@ -113,12 +113,25 @@ class FeedbinAccountDelegateTest {
     fun markRead() = runTest {
         val id = 777L
 
-        coEvery { feedbin.deleteUnreadEntries(body = any<UnreadEntriesRequest>()) } returns Response.success(listOf(id))
+        coEvery { feedbin.deleteUnreadEntries(body = any<UnreadEntriesRequest>()) } returns Response.success(null)
 
         val delegate = FeedbinAccountDelegate(database, feedbin)
 
         delegate.markRead(listOf(id.toString()))
 
         coVerify { feedbin.deleteUnreadEntries(body = UnreadEntriesRequest(listOf(id))) }
+    }
+
+    @Test
+    fun markUnread() = runTest {
+        val id = 777L
+
+        coEvery { feedbin.postUnreadEntries(body = any<UnreadEntriesRequest>()) } returns Response.success(listOf(id))
+
+        val delegate = FeedbinAccountDelegate(database, feedbin)
+
+        delegate.markUnread(listOf(id.toString()))
+
+        coVerify { feedbin.postUnreadEntries(body = UnreadEntriesRequest(listOf(id))) }
     }
 }

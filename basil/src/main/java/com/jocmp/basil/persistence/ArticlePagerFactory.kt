@@ -58,9 +58,9 @@ class ArticlePagerFactory(private val database: Database) {
         filter: ArticleFilter.Folders,
         since: ZonedDateTime
     ): PagingSource<Int, Article> {
-//        val feedIDs = filter.folder.feeds.mapNotNull { it.id.toLongOrNull() }
+        val feedIDs = filter.folder.feeds.map { it.id }
 
-        return feedsSource(emptyList(), filter, since)
+        return feedsSource(feedIDs, filter, since)
     }
 
     private fun feedsSource(

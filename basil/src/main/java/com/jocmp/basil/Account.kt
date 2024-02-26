@@ -2,8 +2,6 @@ package com.jocmp.basil
 
 import android.util.Log
 import com.jocmp.basil.accounts.FeedbinAccountDelegate
-import com.jocmp.basil.accounts.asOPML
-import com.jocmp.basil.common.upsert
 import com.jocmp.basil.db.Database
 import com.jocmp.basil.opml.OPMLImporter
 import com.jocmp.basil.persistence.ArticleRecords
@@ -152,14 +150,12 @@ data class Account(
         refreshCompactedFeeds(flattenedFeeds.filter { ids.contains(it.id) })
     }
 
-    fun findFeed(feedID: String): Feed? {
-//        return flattenedFeeds.find { it.id == feedID }
-        return null
+    suspend fun findFeed(feedID: String): Feed? {
+        return feedRecords.findBy(feedID)
     }
 
-    fun findFolder(title: String): Folder? {
-//        return folders.find { it.title == title }
-        return null
+    suspend fun findFolder(title: String): Folder? {
+        return feedRecords.findFolder(title = title)
     }
 
     fun findArticle(articleID: String): Article? {
@@ -184,8 +180,10 @@ data class Account(
         delegate.markRead(listOf(articleID))
     }
 
-    fun markUnread(articleID: String) {
+    suspend fun markUnread(articleID: String) {
         articleRecords.markUnread(articleID = articleID)
+
+        delegate.markUnread(listOf(articleID))
     }
 
     suspend fun import(inputStream: InputStream) {
