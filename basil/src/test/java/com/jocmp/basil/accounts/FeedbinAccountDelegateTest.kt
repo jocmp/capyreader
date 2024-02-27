@@ -6,6 +6,7 @@ import com.jocmp.basil.fixtures.FeedFixture
 import com.jocmp.feedbinclient.Entry
 import com.jocmp.feedbinclient.EntryImages
 import com.jocmp.feedbinclient.Feedbin
+import com.jocmp.feedbinclient.StarredEntriesRequest
 import com.jocmp.feedbinclient.Tagging
 import com.jocmp.feedbinclient.Subscription
 import com.jocmp.feedbinclient.UnreadEntriesRequest
@@ -133,5 +134,31 @@ class FeedbinAccountDelegateTest {
         delegate.markUnread(listOf(id.toString()))
 
         coVerify { feedbin.postUnreadEntries(body = UnreadEntriesRequest(listOf(id))) }
+    }
+
+    @Test
+    fun addStar() = runTest {
+        val id = 777L
+
+        coEvery { feedbin.postStarredEntries(body = any<StarredEntriesRequest>()) } returns Response.success(listOf(id))
+
+        val delegate = FeedbinAccountDelegate(database, feedbin)
+
+        delegate.addStar(listOf(id.toString()))
+
+        coVerify { feedbin.postStarredEntries(body = StarredEntriesRequest(listOf(id))) }
+    }
+
+    @Test
+    fun removeStar() = runTest {
+        val id = 777L
+
+        coEvery { feedbin.deleteStarredEntries(body = any<StarredEntriesRequest>()) } returns Response.success(null)
+
+        val delegate = FeedbinAccountDelegate(database, feedbin)
+
+        delegate.removeStar(listOf(id.toString()))
+
+        coVerify { feedbin.deleteStarredEntries(body = StarredEntriesRequest(listOf(id))) }
     }
 }

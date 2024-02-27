@@ -166,12 +166,16 @@ data class Account(
         return articleRecords.fetch(articleID = articleID)
     }
 
-    fun addStar(articleID: String) {
+    suspend fun addStar(articleID: String) {
         articleRecords.addStar(articleID = articleID)
+
+        delegate.addStar(listOf(articleID))
     }
 
-    fun removeStar(articleID: String) {
+    suspend fun removeStar(articleID: String) {
         articleRecords.removeStar(articleID = articleID)
+
+        delegate.removeStar(listOf(articleID))
     }
 
     suspend fun markRead(articleID: String) {

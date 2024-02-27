@@ -6,6 +6,7 @@ import com.jocmp.basil.common.toDateTime
 import com.jocmp.basil.common.toDateTimeFromSeconds
 import com.jocmp.basil.db.Database
 import com.jocmp.feedbinclient.Feedbin
+import com.jocmp.feedbinclient.StarredEntriesRequest
 import com.jocmp.feedbinclient.UnreadEntriesRequest
 import retrofit2.Response
 
@@ -27,6 +28,18 @@ internal class FeedbinAccountDelegate(
         val entryIDs = articleIDs.map { it.toLong() }
 
         feedbin.postUnreadEntries(UnreadEntriesRequest(unread_entries = entryIDs))
+    }
+
+    suspend fun addStar(articleIDs: List<String>) {
+        val entryIDs = articleIDs.map { it.toLong() }
+
+        feedbin.postStarredEntries(StarredEntriesRequest(starred_entries = entryIDs))
+    }
+
+    suspend fun removeStar(articleIDs: List<String>) {
+        val entryIDs = articleIDs.map { it.toLong() }
+
+        feedbin.deleteStarredEntries(StarredEntriesRequest(starred_entries = entryIDs))
     }
 
     suspend fun refreshAll() {
