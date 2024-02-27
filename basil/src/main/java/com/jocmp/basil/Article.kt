@@ -1,7 +1,7 @@
 package com.jocmp.basil
 
 import java.net.URL
-import java.time.ZonedDateTime
+import java.time.OffsetDateTime
 
 data class Article(
     val id: String,
@@ -11,7 +11,8 @@ data class Article(
     val url: URL?,
     val summary: String,
     val imageURL: URL?,
-    val arrivedAt: ZonedDateTime,
+    val updatedAt: OffsetDateTime,
     val read: Boolean,
-    val starred: Boolean
+    val starred: Boolean,
+    val feedName: String = "",
 )

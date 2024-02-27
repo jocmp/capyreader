@@ -4,7 +4,9 @@ import app.cash.sqldelight.Query
 import app.cash.sqldelight.db.QueryResult
 import com.jocmp.basil.Article
 import com.jocmp.basil.ArticleStatus
+import com.jocmp.basil.common.nowUTC
 import com.jocmp.basil.db.Database
+import java.time.OffsetDateTime
 import java.time.ZonedDateTime
 
 class ArticleRecords internal constructor(
@@ -20,33 +22,39 @@ class ArticleRecords internal constructor(
         ).executeAsOneOrNull()
     }
 
-    fun markRead(articleID: String, lastReadAt: ZonedDateTime = ZonedDateTime.now()) {
+    fun markRead(articleID: String, lastReadAt: OffsetDateTime = nowUTC()) {
+        val updated = lastReadAt.toEpochSecond()
+
         database.articlesQueries.markRead(
             articleID = articleID,
             read = true,
-            lastReadAt = lastReadAt.toEpochSecond()
+            lastReadAt = updated,
+            updatedAt = updated
         )
     }
 
-    fun markUnread(articleID: String) {
+    fun markUnread(articleID: String, updatedAt: OffsetDateTime = nowUTC()) {
         database.articlesQueries.markRead(
             articleID = articleID,
             read = false,
-            lastReadAt = null
+            lastReadAt = null,
+            updatedAt = nowUTC().toEpochSecond()
         )
     }
 
-    fun addStar(articleID: String) {
+    fun addStar(articleID: String, updatedAt: OffsetDateTime = nowUTC()) {
         database.articlesQueries.markStarred(
             articleID = articleID,
-            starred = true
+            starred = true,
+            updatedAt = updatedAt.toEpochSecond()
         )
     }
 
-    fun removeStar(articleID: String) {
+    fun removeStar(articleID: String, updatedAt: OffsetDateTime = nowUTC()) {
         database.articlesQueries.markStarred(
             articleID = articleID,
-            starred = false
+            starred = false,
+            updatedAt = updatedAt.toEpochSecond()
         )
     }
 

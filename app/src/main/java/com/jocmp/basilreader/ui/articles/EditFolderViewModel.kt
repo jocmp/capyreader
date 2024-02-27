@@ -9,6 +9,7 @@ import com.jocmp.basil.EditFolderForm
 import com.jocmp.basil.Folder
 import com.jocmp.basilreader.common.AppPreferences
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class EditFolderViewModel(
     savedStateHandle: SavedStateHandle,
@@ -19,7 +20,7 @@ class EditFolderViewModel(
     private val args = EditFolderArgs(savedStateHandle)
 
     val folder: Folder
-        get() = account.findFolder(args.folderTitle)!!
+        get() = runBlocking { account.findFolder(args.folderTitle)!! }
 
     fun submit(form: EditFolderForm, onSubmit: () -> Unit) {
         viewModelScope.launch {

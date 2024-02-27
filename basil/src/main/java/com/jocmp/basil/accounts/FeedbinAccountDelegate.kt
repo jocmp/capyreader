@@ -3,11 +3,11 @@ package com.jocmp.basil.accounts
 import com.jocmp.basil.Feed
 import com.jocmp.basil.common.nowUTCInSeconds
 import com.jocmp.basil.common.toDateTime
+import com.jocmp.basil.common.toDateTimeFromSeconds
 import com.jocmp.basil.db.Database
 import com.jocmp.feedbinclient.Feedbin
+import com.jocmp.feedbinclient.UnreadEntriesRequest
 import retrofit2.Response
-import java.util.Date
-import java.util.GregorianCalendar
 
 internal class FeedbinAccountDelegate(
     val database: Database,
@@ -15,6 +15,18 @@ internal class FeedbinAccountDelegate(
 ) {
     fun fetchAll(feed: Feed): List<ParsedItem> {
         return emptyList()
+    }
+
+    suspend fun markRead(articleIDs: List<String>) {
+        val entryIDs = articleIDs.map { it.toLong() }
+
+        feedbin.deleteUnreadEntries(UnreadEntriesRequest(unread_entries = entryIDs))
+    }
+
+    suspend fun markUnread(articleIDs: List<String>) {
+        val entryIDs = articleIDs.map { it.toLong() }
+
+        feedbin.postUnreadEntries(UnreadEntriesRequest(unread_entries = entryIDs))
     }
 
     suspend fun refreshAll() {
@@ -54,8 +66,8 @@ internal class FeedbinAccountDelegate(
     }
 
     private suspend fun refreshArticles() {
-        withResult(feedbin.entries(since = maxArrivedAt())) { entries ->
-            val arrivedAt = nowUTCInSeconds()
+        withResult(feedbin.entries(since = maxUpdatedAt())) { entries ->
+            val updatedAt = nowUTCInSeconds()
 
             entries.forEach { entry ->
                 database.transaction {
@@ -72,17 +84,18 @@ internal class FeedbinAccountDelegate(
 
                     database.articlesQueries.updateStatus(
                         article_id = entry.id.toString(),
-                        arrived_at = arrivedAt
+                        updated_at = updatedAt
                     )
                 }
             }
         }
     }
 
-    private fun maxArrivedAt(): String? {
-        val result = database.articlesQueries.lastArrivalTime().executeAsOne()
+    private fun maxUpdatedAt(): String? {
+        val max = database.articlesQueries.lastUpdatedAt().executeAsOne().MAX
+        max ?: return null
 
-        return result.MAX?.toDateTime?.toString()
+        return max.toDateTimeFromSeconds.toString()
     }
 }
 

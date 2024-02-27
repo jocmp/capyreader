@@ -1,9 +1,9 @@
 package com.jocmp.basilreader.ui.articles
 
 import androidx.compose.animation.Crossfade
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.DrawerValue
@@ -21,21 +21,19 @@ import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.PagingData
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.jocmp.basil.Article
 import com.jocmp.basil.ArticleFilter
 import com.jocmp.basil.ArticleStatus
 import com.jocmp.basil.Feed
 import com.jocmp.basil.Folder
-import com.jocmp.basil.persistence.AllFeeds
 import com.jocmp.basilreader.ui.components.rememberSaveableWebViewState
 import com.jocmp.basilreader.ui.components.rememberWebViewNavigator
 import com.jocmp.basilreader.ui.fixtures.FeedPreviewFixture
@@ -43,8 +41,9 @@ import com.jocmp.basilreader.ui.fixtures.FolderPreviewFixture
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
+
+private const val TAG = "ArticleLayout"
 
 @OptIn(
     ExperimentalMaterial3AdaptiveApi::class,
@@ -85,6 +84,8 @@ fun ArticleLayout(
     val context = LocalContext.current
     val webViewNavigator = rememberWebViewNavigator()
     val webViewState = rememberSaveableWebViewState()
+    val listState = rememberLazyListState()
+    val pagingArticles = articles.collectAsLazyPagingItems()
 
     val navigateToDetail = {
         navigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
@@ -104,6 +105,11 @@ fun ArticleLayout(
         LaunchedEffect(true) {
             onFeedRefresh {
                 state.endRefresh()
+                pagingArticles.refresh()
+                coroutineScope.launch {
+                    delay(200)
+                    listState.scrollToItem(0)
+                }
             }
         }
     }
@@ -170,12 +176,13 @@ fun ArticleLayout(
                         .nestedScroll(state.nestedScrollConnection)
                 ) {
                     Crossfade(
-                        articles,
+                        pagingArticles,
                         label = ""
                     ) {
                         ArticleList(
                             articles = it,
                             selectedArticleKey = article?.id,
+                            listState = listState,
                             onSelect = { articleID ->
                                 onSelectArticle(articleID) {
                                     coroutineScope.launch {
@@ -204,7 +211,7 @@ fun ArticleLayout(
                 webViewNavigator = webViewNavigator,
                 onBackPressed = {
                     onClearArticle()
-                    navigator.navigateTo(ListDetailPaneScaffoldRole.List)
+                    navigator.navigateBack()
                 }
             )
         }

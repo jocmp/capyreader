@@ -1,10 +1,8 @@
 package com.jocmp.basil.common
 
 import java.time.Instant
-import java.time.LocalTime
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
-import java.time.ZonedDateTime
 import java.time.format.DateTimeParseException
 
 val String.toDateTime: OffsetDateTime?
@@ -16,13 +14,15 @@ val String.toDateTime: OffsetDateTime?
         }
     }
 
-val Long.toDateTime: OffsetDateTime
+val Long.toDateTimeFromSeconds: OffsetDateTime
     get() {
-        val instant = Instant.ofEpochMilli(this)
+        val instant = Instant.ofEpochMilli(this * 1000)
 
         return OffsetDateTime.ofInstant(instant, ZoneOffset.UTC)
     }
 
 fun nowUTCInSeconds(): Long {
-    return OffsetDateTime.now(ZoneOffset.UTC).toEpochSecond()
+    return nowUTC().toEpochSecond()
 }
+
+fun nowUTC(): OffsetDateTime = OffsetDateTime.now(ZoneOffset.UTC)

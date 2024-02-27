@@ -24,10 +24,13 @@ import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
+import com.bumptech.glide.load.resource.bitmap.DownsampleStrategy
 import com.jocmp.basil.Article
 import com.jocmp.basilreader.ui.theme.BasilReaderTheme
 import java.net.URL
+import java.time.OffsetDateTime
 import java.time.ZoneId
+import java.time.ZoneOffset
 import java.time.ZonedDateTime
 
 private val THUMBNAIL_SIZE = 56.dp
@@ -39,7 +42,7 @@ fun ArticleRow(
     selected: Boolean,
     onSelect: (articleID: String) -> Unit,
 ) {
-    val thumbnailSize = with(LocalDensity.current) { THUMBNAIL_SIZE.roundToPx()}
+    val thumbnailSize = with(LocalDensity.current) { THUMBNAIL_SIZE.roundToPx() }
     val imageURL = article.imageURL?.toString()
     val colors = listItemColors(
         selected = selected,
@@ -67,6 +70,7 @@ fun ArticleRow(
                         failure = placeholder(background),
                     ) {
                         it.override(thumbnailSize)
+                            .downsample(DownsampleStrategy.CENTER_INSIDE)
                     }
                 }
             } else {
@@ -78,11 +82,16 @@ fun ArticleRow(
                 )
             },
             supportingContent = {
-                Text(
-                    text = article.summary,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                )
+                Column {
+                    Text(
+                        article.feedName,
+                    )
+                    Text(
+                        text = article.summary,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
             },
             colors = colors
         )
@@ -118,9 +127,10 @@ fun ArticleRowPreview_Selected_DarkMode() {
         imageURL = URL("https://example.com"),
         summary = "Test article here",
         url = URL("https://9to5google.com/?p=605559"),
-        arrivedAt = ZonedDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneId.systemDefault()),
+        updatedAt = OffsetDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneOffset.UTC),
         read = true,
         starred = false,
+        feedName = "9to5Google"
     )
 
     BasilReaderTheme(dynamicColor = false) {
@@ -150,9 +160,10 @@ fun ArticleRowPreview_Selected() {
         imageURL = null,
         summary = "Test article here",
         url = URL("https://9to5google.com/?p=605559"),
-        arrivedAt = ZonedDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneId.systemDefault()),
+        updatedAt = OffsetDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneOffset.UTC),
         read = true,
         starred = false,
+        feedName = "9to5Google"
     )
 
     BasilReaderTheme(dynamicColor = false) {
@@ -175,9 +186,10 @@ fun ArticleRowPreview_Unread() {
         imageURL = URL("http://example.com"),
         summary = "Test article here",
         url = URL("https://9to5google.com/?p=605559"),
-        arrivedAt = ZonedDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneId.systemDefault()),
+        updatedAt = OffsetDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneOffset.UTC),
         read = false,
         starred = false,
+        feedName = "9to5Google"
     )
 
     ArticleRow(

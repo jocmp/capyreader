@@ -3,20 +3,20 @@ package com.jocmp.basil.accounts
 import com.jocmp.basil.InMemoryDatabaseProvider
 import com.jocmp.basil.db.Database
 import com.jocmp.basil.fixtures.FeedFixture
-import com.jocmp.basil.repeated
 import com.jocmp.feedbinclient.Entry
 import com.jocmp.feedbinclient.EntryImages
 import com.jocmp.feedbinclient.Feedbin
 import com.jocmp.feedbinclient.Tagging
 import com.jocmp.feedbinclient.Subscription
+import com.jocmp.feedbinclient.UnreadEntriesRequest
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import retrofit2.Response
 import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
 
 class FeedbinAccountDelegateTest {
     private val accountID = "777"
@@ -77,52 +77,6 @@ class FeedbinAccountDelegateTest {
     }
 
     @Test
-    fun initialization() {
-        val delegate = FeedbinAccountDelegate(database, feedbin)
-
-        assertNotNull(delegate)
-    }
-
-    @Test
-    fun refreshAll_updatesFeeds() = runTest {
-        3.repeated { feedFixture.create() }
-
-        coEvery { feedbin.subscriptions() }.returns(Response.success(subscriptions))
-        coEvery { feedbin.taggings() }.returns(Response.success(taggings))
-        coEvery { feedbin.entries(since = any()) }.returns(Response.success(entries))
-
-        val delegate = FeedbinAccountDelegate(database, feedbin)
-
-        delegate.refreshAll()
-
-        val feeds = database
-            .feedsQueries
-            .all()
-            .executeAsList()
-
-        assertEquals(expected = 2, actual = feeds.size)
-    }
-
-    @Test
-    fun refreshAll_updatesTaggings() = runTest {
-        coEvery { feedbin.subscriptions() }.returns(Response.success(subscriptions))
-        coEvery { feedbin.taggings() }.returns(Response.success(taggings))
-        coEvery { feedbin.entries(since = any()) }.returns(Response.success(entries))
-
-        val delegate = FeedbinAccountDelegate(database, feedbin)
-
-        delegate.refreshAll()
-
-        val taggedNames = database
-            .feedsQueries
-            .tagged()
-            .executeAsList()
-            .map { it.name }
-
-        assertEquals(expected = listOf(null, "Gadgets"), actual = taggedNames)
-    }
-
-    @Test
     fun refreshAll_updatesEntries() = runTest {
         coEvery { feedbin.subscriptions() }.returns(Response.success(subscriptions))
         coEvery { feedbin.taggings() }.returns(Response.success(taggings))
@@ -137,6 +91,47 @@ class FeedbinAccountDelegateTest {
             .countAll(read = false, starred = false)
             .executeAsList()
 
+        val taggedNames = database
+            .feedsQueries
+            .tagged()
+            .executeAsList()
+            .map { it.name }
+
+        val feeds = database
+            .feedsQueries
+            .all()
+            .executeAsList()
+
+        assertEquals(expected = 2, actual = feeds.size)
+
+        assertEquals(expected = listOf(null, "Gadgets"), actual = taggedNames)
+
         assertEquals(expected = 1, actual = articles.size)
+    }
+
+    @Test
+    fun markRead() = runTest {
+        val id = 777L
+
+        coEvery { feedbin.deleteUnreadEntries(body = any<UnreadEntriesRequest>()) } returns Response.success(null)
+
+        val delegate = FeedbinAccountDelegate(database, feedbin)
+
+        delegate.markRead(listOf(id.toString()))
+
+        coVerify { feedbin.deleteUnreadEntries(body = UnreadEntriesRequest(listOf(id))) }
+    }
+
+    @Test
+    fun markUnread() = runTest {
+        val id = 777L
+
+        coEvery { feedbin.postUnreadEntries(body = any<UnreadEntriesRequest>()) } returns Response.success(listOf(id))
+
+        val delegate = FeedbinAccountDelegate(database, feedbin)
+
+        delegate.markUnread(listOf(id.toString()))
+
+        coVerify { feedbin.postUnreadEntries(body = UnreadEntriesRequest(listOf(id))) }
     }
 }

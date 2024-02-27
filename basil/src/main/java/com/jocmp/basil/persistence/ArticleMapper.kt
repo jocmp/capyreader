@@ -2,6 +2,7 @@ package com.jocmp.basil.persistence
 
 import com.jocmp.basil.Article
 import com.jocmp.basil.common.optionalURL
+import com.jocmp.basil.common.toDateTimeFromSeconds
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -15,10 +16,10 @@ internal fun articleMapper(
     summary: String?,
     imageURL: String?,
     publishedAt: Long?,
-    arrivedAt: Long?,
+    feedTitle: String?,
+    updatedAt: Long?,
     starred: Boolean?,
     read: Boolean?,
-    zoneID: ZoneId = ZoneId.systemDefault()
 ): Article {
     return Article(
         id = id,
@@ -28,9 +29,10 @@ internal fun articleMapper(
         url = optionalURL(url),
         imageURL = optionalURL(imageURL),
         summary = summary ?: "",
-        arrivedAt = ZonedDateTime.ofInstant(Instant.ofEpochSecond(arrivedAt!!), zoneID),
+        updatedAt = updatedAt!!.toDateTimeFromSeconds,
         read = read ?: false,
-        starred = starred ?: false
+        starred = starred ?: false,
+        feedName = feedTitle ?: ""
     )
 }
 
@@ -43,21 +45,23 @@ internal fun listMapper(
     summary: String?,
     imageURL: String?,
     publishedAt: Long?,
-    arrivedAt: Long?,
+    feedTitle: String?,
+    updatedAt: Long?,
     starred: Boolean?,
     read: Boolean?,
-    zoneID: ZoneId = ZoneId.systemDefault()
 ): Article {
-    return Article(
+    return articleMapper(
         id = id,
         feedID = feedID.toString(),
         title = title ?: "",
-        contentHTML = "",
-        url = optionalURL(url),
-        imageURL = optionalURL(imageURL),
+        contentHtml = "",
+        url = url,
+        feedTitle = feedTitle,
+        imageURL = imageURL,
         summary = summary ?: "",
-        arrivedAt = ZonedDateTime.ofInstant(Instant.ofEpochSecond(arrivedAt!!), zoneID),
+        updatedAt = updatedAt,
         read = read ?: false,
-        starred = starred ?: false
+        starred = starred ?: false,
+        publishedAt = publishedAt
     )
 }

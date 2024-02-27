@@ -2,10 +2,14 @@ package com.jocmp.basilreader.ui.articles
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 import com.jocmp.basil.Article
@@ -14,12 +18,12 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun ArticleList(
-    articles: Flow<PagingData<Article>>,
+    articles: LazyPagingItems<Article>,
     onSelect: suspend (articleID: String) -> Unit,
     selectedArticleKey: String?,
+    listState: LazyListState
 ) {
     val composableScope = rememberCoroutineScope()
-    val lazyPagingItems = articles.collectAsLazyPagingItems()
 
     val selectArticle = { articleID: String ->
         composableScope.launch {
@@ -28,13 +32,14 @@ fun ArticleList(
     }
 
     LazyColumn(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
+        state = listState,
     ) {
         items(
-            count = lazyPagingItems.itemCount,
-            key = lazyPagingItems.itemKey { it.id },
+            count = articles.itemCount,
+            key = articles.itemKey { it.id },
         ) { index ->
-            val item = lazyPagingItems[index] ?: return@items
+            val item = articles[index] ?: return@items
 
             ArticleRow(
                 article = item,
@@ -42,11 +47,5 @@ fun ArticleList(
                 onSelect = { selectArticle(it) },
             )
         }
-    }
-}
-
-private fun String.orNullIfBlank(): String? {
-    return ifBlank {
-        null
     }
 }

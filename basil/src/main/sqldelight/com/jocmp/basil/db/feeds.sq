@@ -6,13 +6,20 @@ tagged:
 SELECT feeds.*, taggings.name
 FROM feeds
 LEFT JOIN taggings ON taggings.feed_id = feeds.id
-GROUP BY feeds.id, taggings.name;
+GROUP BY feeds.id, taggings.name
+ORDER BY taggings.name;
 
 findBy:
 SELECT *
 FROM feeds
 WHERE id = :id
 LIMIT 1;
+
+findByFolder:
+SELECT feeds.*
+FROM feeds
+LEFT JOIN taggings ON taggings.feed_id = feeds.id
+WHERE taggings.name = :name;
 
 upsert:
 INSERT OR REPLACE INTO feeds(

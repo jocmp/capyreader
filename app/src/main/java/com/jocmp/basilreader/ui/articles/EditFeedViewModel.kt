@@ -11,6 +11,7 @@ import com.jocmp.basil.Folder
 import com.jocmp.basil.preferences.getAndSet
 import com.jocmp.basilreader.common.AppPreferences
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class EditFeedViewModel(
     savedStateHandle: SavedStateHandle,
@@ -21,7 +22,7 @@ class EditFeedViewModel(
     private val args = EditFeedArgs(savedStateHandle)
 
     val feed: Feed
-        get() = account.findFeed(args.feedID)!!
+        get() = runBlocking { account.findFeed(args.feedID)!! }
 
     val feedFolderTitles: List<String>
         get() = emptyList()  // account.folders.filter { it.feeds.contains(feed) }.map { it.title }

@@ -29,7 +29,7 @@ class ArticleFixture(private val database: Database) {
             )
             database.articlesQueries.updateStatus(
                 article_id = id,
-                arrived_at = publishedAt
+                updated_at = publishedAt
             )
         }
 
