@@ -84,7 +84,7 @@ class ArticleRecords internal constructor(
             status: ArticleStatus,
             limit: Long,
             offset: Long,
-            since: ZonedDateTime
+            since: OffsetDateTime
         ): Query<Article> {
             val (read, starred) = status.toStatusPair
 
@@ -102,7 +102,7 @@ class ArticleRecords internal constructor(
         fun count(
             feedIDs: List<String>,
             status: ArticleStatus,
-            since: ZonedDateTime
+            since: OffsetDateTime
         ): Query<Long> {
             val (read, starred) = status.toStatusPair
 
@@ -120,7 +120,7 @@ class ArticleRecords internal constructor(
             status: ArticleStatus,
             limit: Long,
             offset: Long,
-            since: ZonedDateTime? = null
+            since: OffsetDateTime? = null
         ): Query<Article> {
             val (read, starred) = status.toStatusPair
 
@@ -134,7 +134,7 @@ class ArticleRecords internal constructor(
             )
         }
 
-        fun count(status: ArticleStatus, since: ZonedDateTime? = null): Query<Long> {
+        fun count(status: ArticleStatus, since: OffsetDateTime? = null): Query<Long> {
             val (read, starred) = status.toStatusPair
 
             return database.articlesQueries.countByStatus(
@@ -146,7 +146,7 @@ class ArticleRecords internal constructor(
     }
 }
 
-private fun mapLastRead(read: Boolean?, value: ZonedDateTime?): Long? {
+private fun mapLastRead(read: Boolean?, value: OffsetDateTime?): Long? {
     if (read != null) {
         return value?.toEpochSecond()
     }

@@ -6,6 +6,7 @@ import com.jocmp.basil.Article
 import com.jocmp.basil.ArticleFilter
 import com.jocmp.basil.db.Database
 import kotlinx.coroutines.Dispatchers
+import java.time.OffsetDateTime
 import java.time.ZonedDateTime
 import kotlin.math.sin
 
@@ -14,7 +15,7 @@ class ArticlePagerFactory(private val database: Database) {
 
     fun find(
         filter: ArticleFilter,
-        since: ZonedDateTime
+        since: OffsetDateTime
     ): PagingSource<Int, Article> {
         return when (filter) {
             is ArticleFilter.Articles -> articleSource(filter, since)
@@ -25,7 +26,7 @@ class ArticlePagerFactory(private val database: Database) {
 
     private fun articleSource(
         filter: ArticleFilter.Articles,
-        since: ZonedDateTime
+        since: OffsetDateTime
     ): PagingSource<Int, Article> {
         return QueryPagingSource(
             countQuery = articles.byStatus.count(
@@ -47,7 +48,7 @@ class ArticlePagerFactory(private val database: Database) {
 
     private fun feedSource(
         filter: ArticleFilter.Feeds,
-        since: ZonedDateTime
+        since: OffsetDateTime
     ): PagingSource<Int, Article> {
         val feedIDs = listOf(filter.feed.id)
 
@@ -56,7 +57,7 @@ class ArticlePagerFactory(private val database: Database) {
 
     private fun folderSource(
         filter: ArticleFilter.Folders,
-        since: ZonedDateTime
+        since: OffsetDateTime
     ): PagingSource<Int, Article> {
         val feedIDs = filter.folder.feeds.map { it.id }
 
@@ -66,7 +67,7 @@ class ArticlePagerFactory(private val database: Database) {
     private fun feedsSource(
         feedIDs: List<String>,
         filter: ArticleFilter,
-        since: ZonedDateTime
+        since: OffsetDateTime
     ): PagingSource<Int, Article> {
         return QueryPagingSource(
             countQuery = articles.byFeed.count(

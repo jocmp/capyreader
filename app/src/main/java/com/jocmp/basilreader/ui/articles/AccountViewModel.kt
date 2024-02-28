@@ -19,10 +19,8 @@ import com.jocmp.basilreader.common.AppPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-private const val TAG = "AccountViewModel"
-
 class AccountViewModel(
-    private val accountManager: AccountManager,
+    accountManager: AccountManager,
     private val appPreferences: AppPreferences,
 ) : ViewModel() {
     private val _account = accountManager.findByID(appPreferences.accountID.get())!!
@@ -83,7 +81,8 @@ class AccountViewModel(
     fun selectFolder(title: String) {
         viewModelScope.launch {
             val folder = account.findFolder(title) ?: return@launch
-            val feedFilter = ArticleFilter.Folders(folder = folder, folderStatus = _filter.value.status)
+            val feedFilter =
+                ArticleFilter.Folders(folder = folder, folderStatus = _filter.value.status)
 
             selectArticleFilter(feedFilter)
         }
@@ -164,6 +163,13 @@ class AccountViewModel(
         url: String,
         onComplete: () -> Unit,
     ) {
+        viewModelScope.launch {
+            val result = account.addFeed(url)
+
+            if (result.isSuccess) {
+                onComplete()
+            }
+        }
     }
 
     fun reload() {
@@ -175,11 +181,9 @@ class AccountViewModel(
     }
 
     private fun updateFilterValue(nextFilter: ArticleFilter) {
-        viewModelScope.launch {
-            _filter.value = nextFilter
-            pager.value = account.buildPager(nextFilter)
-            appPreferences.filter.set(nextFilter)
-        }
+        _filter.value = nextFilter
+        pager.value = account.buildPager(nextFilter)
+        appPreferences.filter.set(nextFilter)
     }
 
     private fun selectArticleFilter(nextFilter: ArticleFilter) {

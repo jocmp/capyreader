@@ -13,15 +13,20 @@ import org.koin.compose.koinInject
 @Composable
 fun AddFeedScreen(
     viewModel: AccountViewModel = koinViewModel(),
+    onComplete: () -> Unit,
 ) {
     Column {
         AddFeedView(
-            onAddFeed = {url ->
+            onAddFeed = { url ->
                 viewModel.addFeed(
                     url = url,
-                    onComplete = {},
+                    onComplete = onComplete,
                 )
             }
         )
     }
 }
+
+// 1. Add separate view model
+// 2. Store result if present
+// 3. Provide result back to feed view if it changes
