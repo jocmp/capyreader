@@ -125,7 +125,7 @@ internal class FeedbinAccountDelegate(
                         content_html = entry.content,
                         url = entry.url,
                         summary = entry.summary,
-                        image_url = entry.images?.original_url,
+                        image_url = entry.images?.size_1?.cdn_url,
                         published_at = entry.published.toDateTime?.toEpochSecond(),
                     )
 
