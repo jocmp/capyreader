@@ -3,21 +3,29 @@ package com.jocmp.basil.accounts
 import com.jocmp.basil.InMemoryDatabaseProvider
 import com.jocmp.basil.db.Database
 import com.jocmp.basil.fixtures.FeedFixture
+import com.jocmp.feedbinclient.CreateSubscriptionRequest
+import com.jocmp.feedbinclient.CreateSubscriptionResponse
 import com.jocmp.feedbinclient.Entry
 import com.jocmp.feedbinclient.EntryImages
 import com.jocmp.feedbinclient.Feedbin
 import com.jocmp.feedbinclient.StarredEntriesRequest
 import com.jocmp.feedbinclient.Tagging
 import com.jocmp.feedbinclient.Subscription
+import com.jocmp.feedbinclient.SubscriptionChoice
 import com.jocmp.feedbinclient.UnreadEntriesRequest
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Before
 import org.junit.Test
 import retrofit2.Response
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class FeedbinAccountDelegateTest {
     private val accountID = "777"
@@ -114,7 +122,9 @@ class FeedbinAccountDelegateTest {
     fun markRead() = runTest {
         val id = 777L
 
-        coEvery { feedbin.deleteUnreadEntries(body = any<UnreadEntriesRequest>()) } returns Response.success(null)
+        coEvery { feedbin.deleteUnreadEntries(body = any<UnreadEntriesRequest>()) } returns Response.success(
+            null
+        )
 
         val delegate = FeedbinAccountDelegate(database, feedbin)
 
@@ -127,7 +137,9 @@ class FeedbinAccountDelegateTest {
     fun markUnread() = runTest {
         val id = 777L
 
-        coEvery { feedbin.createUnreadEntries(body = any<UnreadEntriesRequest>()) } returns Response.success(listOf(id))
+        coEvery { feedbin.createUnreadEntries(body = any<UnreadEntriesRequest>()) } returns Response.success(
+            listOf(id)
+        )
 
         val delegate = FeedbinAccountDelegate(database, feedbin)
 
@@ -140,7 +152,9 @@ class FeedbinAccountDelegateTest {
     fun addStar() = runTest {
         val id = 777L
 
-        coEvery { feedbin.createStarredEntries(body = any<StarredEntriesRequest>()) } returns Response.success(listOf(id))
+        coEvery { feedbin.createStarredEntries(body = any<StarredEntriesRequest>()) } returns Response.success(
+            listOf(id)
+        )
 
         val delegate = FeedbinAccountDelegate(database, feedbin)
 
@@ -153,12 +167,99 @@ class FeedbinAccountDelegateTest {
     fun removeStar() = runTest {
         val id = 777L
 
-        coEvery { feedbin.deleteStarredEntries(body = any<StarredEntriesRequest>()) } returns Response.success(null)
+        coEvery { feedbin.deleteStarredEntries(body = any<StarredEntriesRequest>()) } returns Response.success(
+            null
+        )
 
         val delegate = FeedbinAccountDelegate(database, feedbin)
 
         delegate.removeStar(listOf(id.toString()))
 
         coVerify { feedbin.deleteStarredEntries(body = StarredEntriesRequest(listOf(id))) }
+    }
+
+    @Test
+    fun addFeed() = runTest {
+        val delegate = FeedbinAccountDelegate(database, feedbin)
+        val url = "wheresyoured.at"
+        val successResponse = Response.success<CreateSubscriptionResponse>(
+            CreateSubscriptionResponse.Created(
+                Subscription(
+                    id = 1330,
+                    created_at = "2024-01-30T19:42:44.851265Z",
+                    feed_id = 2819820,
+                    title = "Ed Zitron",
+                    feed_url = "http://wheresyoured.at",
+                    site_url = "http://wheresyoured.at",
+                )
+            )
+        )
+
+        coEvery {
+            feedbin.createSubscription(body = CreateSubscriptionRequest(feed_url = url))
+        } returns successResponse
+
+        val result = delegate.addFeed(url = url)
+
+        assertEquals(
+            expected = AddFeedResult.Success(feedTitle = "Ed Zitron"),
+            actual = result.getOrNull()
+        )
+    }
+
+    @Test
+    fun addFeed_multipleChoice() = runTest {
+        val delegate = FeedbinAccountDelegate(database, feedbin)
+        val url = "9to5google.com"
+        val choices = listOf(
+            SubscriptionChoice(
+                feed_url = "9to5google.com/feed",
+                title = "9to5Google"
+            ),
+            SubscriptionChoice(
+                feed_url = "9to5google.com/comments/feed",
+                title = "Comments for 9to5Google"
+            ),
+            SubscriptionChoice(
+                feed_url = "9to5google.com/web-stories/feed",
+                title = "Stories Archive - 9to5Google"
+            )
+        )
+        val multipleChoiceResponse = Response.success<CreateSubscriptionResponse>(
+            CreateSubscriptionResponse.MultipleChoices(choices)
+        )
+
+        coEvery {
+            feedbin.createSubscription(body = CreateSubscriptionRequest(feed_url = url))
+        } returns multipleChoiceResponse
+
+        val result = delegate.addFeed(url = url)
+
+        val actualTitles =
+            (result.getOrNull() as AddFeedResult.MultipleChoices).choices.map { it.title }
+
+        assertEquals(expected = choices.map { it.title }, actual = actualTitles)
+    }
+
+    @Test
+    fun addFeed_Failure() = runTest {
+        val delegate = FeedbinAccountDelegate(database, feedbin)
+        val url = "example.com"
+
+        val responseBody = """
+            {
+              "status": 404,
+              "message": null,
+              "errors": []
+            }
+        """.toResponseBody(contentType = "application/json".toMediaType())
+
+        coEvery {
+            feedbin.createSubscription(body = CreateSubscriptionRequest(feed_url = url))
+        } returns Response.error(404, responseBody)
+
+        val result = delegate.addFeed(url = url)
+
+        assertTrue(result.isFailure)
     }
 }
