@@ -51,7 +51,9 @@ interface Feedbin {
             client: OkHttpClient,
             baseURL: String = DEFAULT_URL
         ): Feedbin {
-            val moshi = Moshi.Builder().build()
+            val moshi = Moshi.Builder()
+                .add(CreateSubscriptionResponseAdapter())
+                .build()
 
             return Retrofit.Builder()
                 .client(client)
