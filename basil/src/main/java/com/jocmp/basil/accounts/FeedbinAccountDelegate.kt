@@ -5,14 +5,17 @@ import com.jocmp.basil.common.nowUTCInSeconds
 import com.jocmp.basil.common.toDateTime
 import com.jocmp.basil.common.toDateTimeFromSeconds
 import com.jocmp.basil.db.Database
+import com.jocmp.feedbinclient.CreateSubscriptionRequest
+import com.jocmp.feedbinclient.CreateSubscriptionResponse
 import com.jocmp.feedbinclient.Feedbin
 import com.jocmp.feedbinclient.StarredEntriesRequest
+import com.jocmp.feedbinclient.Subscription
 import com.jocmp.feedbinclient.UnreadEntriesRequest
 import retrofit2.Response
 
 internal class FeedbinAccountDelegate(
-    val database: Database,
-    private val feedbin: Feedbin,
+    private val database: Database,
+    private val feedbin: Feedbin
 ) {
     fun fetchAll(feed: Feed): List<ParsedItem> {
         return emptyList()
@@ -27,19 +30,46 @@ internal class FeedbinAccountDelegate(
     suspend fun markUnread(articleIDs: List<String>) {
         val entryIDs = articleIDs.map { it.toLong() }
 
-        feedbin.postUnreadEntries(UnreadEntriesRequest(unread_entries = entryIDs))
+        feedbin.createUnreadEntries(UnreadEntriesRequest(unread_entries = entryIDs))
     }
 
     suspend fun addStar(articleIDs: List<String>) {
         val entryIDs = articleIDs.map { it.toLong() }
 
-        feedbin.postStarredEntries(StarredEntriesRequest(starred_entries = entryIDs))
+        feedbin.createStarredEntries(StarredEntriesRequest(starred_entries = entryIDs))
     }
 
     suspend fun removeStar(articleIDs: List<String>) {
         val entryIDs = articleIDs.map { it.toLong() }
 
         feedbin.deleteStarredEntries(StarredEntriesRequest(starred_entries = entryIDs))
+    }
+
+    suspend fun addFeed(url: String): Result<AddFeedResult> {
+        val response = feedbin.createSubscription(CreateSubscriptionRequest(feed_url = url))
+        val body = response.body()
+
+        if (!response.isSuccessful || body == null) {
+            return Result.failure(Throwable(response.code().toString()))
+        }
+
+        val addResult = when (body) {
+            is CreateSubscriptionResponse.Created -> {
+                val subscription = body.subscription
+                upsertFeed(subscription)
+
+                AddFeedResult.Success(subscription.title)
+            }
+            is CreateSubscriptionResponse.MultipleChoices -> {
+                val choices = body.choices.map {
+                    FeedChoice(feedURL = it.feed_url, title = it.title)
+                }
+
+                AddFeedResult.MultipleChoices(choices)
+            }
+        }
+
+        return Result.success(addResult)
     }
 
     suspend fun refreshAll() {
@@ -51,19 +81,23 @@ internal class FeedbinAccountDelegate(
     private suspend fun refreshFeeds() {
         withResult(feedbin.subscriptions()) { subscriptions ->
             subscriptions.forEach { subscription ->
-                database.feedsQueries.upsert(
-                    id = subscription.feed_id.toString(),
-                    subscription_id = subscription.id.toString(),
-                    title = subscription.title,
-                    feed_url = subscription.feed_url,
-                    site_url = subscription.site_url,
-                )
+                upsertFeed(subscription)
             }
 
             val feedsToRemove = subscriptions.map { it.feed_id.toString() }
 
             database.feedsQueries.deleteAllExcept(feedsToRemove)
         }
+    }
+
+    private fun upsertFeed(subscription: Subscription) {
+        database.feedsQueries.upsert(
+            id = subscription.feed_id.toString(),
+            subscription_id = subscription.id.toString(),
+            title = subscription.title,
+            feed_url = subscription.feed_url,
+            site_url = subscription.site_url,
+        )
     }
 
     private suspend fun refreshTaggings() {

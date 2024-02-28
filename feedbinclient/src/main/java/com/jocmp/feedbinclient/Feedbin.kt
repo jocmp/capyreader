@@ -8,7 +8,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 import retrofit2.http.Body
-import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.HTTP
 import retrofit2.http.Header
@@ -29,17 +28,20 @@ interface Feedbin {
     @GET("v2/subscriptions.json")
     suspend fun subscriptions(): Response<List<Subscription>>
 
+    @POST("v2/subscriptions.json")
+    suspend fun createSubscription(@Body body: CreateSubscriptionRequest): Response<CreateSubscriptionResponse>
+
     @GET("v2/taggings.json")
     suspend fun taggings(): Response<List<Tagging>>
 
     @POST("v2/starred_entries.json")
-    suspend fun postStarredEntries(@Body body: StarredEntriesRequest): Response<List<Long>>
+    suspend fun createStarredEntries(@Body body: StarredEntriesRequest): Response<List<Long>>
 
     @HTTP(method = "DELETE", path = "v2/starred_entries.json", hasBody = true)
     suspend fun deleteStarredEntries(@Body body: StarredEntriesRequest): Response<List<Long>>
 
     @POST("v2/unread_entries.json")
-    suspend fun postUnreadEntries(@Body body: UnreadEntriesRequest): Response<List<Long>>
+    suspend fun createUnreadEntries(@Body body: UnreadEntriesRequest): Response<List<Long>>
 
     @HTTP(method = "DELETE", path = "v2/unread_entries.json", hasBody = true)
     suspend fun deleteUnreadEntries(@Body body: UnreadEntriesRequest): Response<List<Long>>

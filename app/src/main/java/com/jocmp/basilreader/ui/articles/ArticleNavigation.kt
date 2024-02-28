@@ -47,16 +47,16 @@ fun NavGraphBuilder.articleGraph(
         route = "feeds/new",
     ) {
         AddFeedScreen(
-            onCancel = {
-                navController.popBackStack()
-            },
-            onSubmit = {
-                navController.navigate(articlesRoute) {
-                    popUpTo(articlesRoute) {
-                        inclusive = true
-                    }
-                }
-            }
+//            onCancel = {
+//                navController.popBackStack()
+//            },
+//            onSubmit = {
+//                navController.navigate(articlesRoute) {
+//                    popUpTo(articlesRoute) {
+//                        inclusive = true
+//                    }
+//                }
+//            }
         )
     }
     dialog(

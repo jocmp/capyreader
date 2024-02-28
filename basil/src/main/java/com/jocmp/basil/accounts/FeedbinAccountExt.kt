@@ -1,5 +1,6 @@
-package com.jocmp.basil
+package com.jocmp.basil.accounts
 
+import com.jocmp.basil.Account
 import com.jocmp.feedbinclient.BasicAuthInterceptor
 import com.jocmp.feedbinclient.Feedbin
 import okhttp3.Cache

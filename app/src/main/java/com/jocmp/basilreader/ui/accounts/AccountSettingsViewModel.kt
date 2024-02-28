@@ -44,13 +44,4 @@ class AccountSettingsViewModel(
     fun removeAccount() {
         accountManager.removeAccount(accountID = account.id)
     }
-
-    fun importOPML(inputStream: InputStream?, onSuccess: () -> Unit = {}) {
-        inputStream ?: return
-
-        viewModelScope.launch {
-            account.import(inputStream)
-            onSuccess()
-        }
-    }
 }

@@ -127,26 +127,26 @@ class FeedbinAccountDelegateTest {
     fun markUnread() = runTest {
         val id = 777L
 
-        coEvery { feedbin.postUnreadEntries(body = any<UnreadEntriesRequest>()) } returns Response.success(listOf(id))
+        coEvery { feedbin.createUnreadEntries(body = any<UnreadEntriesRequest>()) } returns Response.success(listOf(id))
 
         val delegate = FeedbinAccountDelegate(database, feedbin)
 
         delegate.markUnread(listOf(id.toString()))
 
-        coVerify { feedbin.postUnreadEntries(body = UnreadEntriesRequest(listOf(id))) }
+        coVerify { feedbin.createUnreadEntries(body = UnreadEntriesRequest(listOf(id))) }
     }
 
     @Test
     fun addStar() = runTest {
         val id = 777L
 
-        coEvery { feedbin.postStarredEntries(body = any<StarredEntriesRequest>()) } returns Response.success(listOf(id))
+        coEvery { feedbin.createStarredEntries(body = any<StarredEntriesRequest>()) } returns Response.success(listOf(id))
 
         val delegate = FeedbinAccountDelegate(database, feedbin)
 
         delegate.addStar(listOf(id.toString()))
 
-        coVerify { feedbin.postStarredEntries(body = StarredEntriesRequest(listOf(id))) }
+        coVerify { feedbin.createStarredEntries(body = StarredEntriesRequest(listOf(id))) }
     }
 
     @Test

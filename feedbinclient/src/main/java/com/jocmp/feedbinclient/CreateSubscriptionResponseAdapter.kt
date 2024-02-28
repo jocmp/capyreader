@@ -30,5 +30,6 @@ internal class CreateSubscriptionResponseAdapter {
 
     @ToJson
     fun toJson(writer: JsonWriter, value: CreateSubscriptionResponse) {
+        throw NotImplementedError()
     }
 }
