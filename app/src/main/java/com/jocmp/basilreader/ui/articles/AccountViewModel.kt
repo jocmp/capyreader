@@ -159,19 +159,6 @@ class AccountViewModel(
         }
     }
 
-    fun addFeed(
-        url: String,
-        onComplete: () -> Unit,
-    ) {
-        viewModelScope.launch {
-            val result = account.addFeed(url)
-
-            if (result.isSuccess) {
-                onComplete()
-            }
-        }
-    }
-
     fun reload() {
 
     }

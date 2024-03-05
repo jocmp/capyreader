@@ -3,6 +3,7 @@ package com.jocmp.feedbinclient
 import com.squareup.moshi.Moshi
 import okhttp3.Credentials
 import okhttp3.OkHttpClient
+import retrofit2.CallAdapter
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -29,7 +30,7 @@ interface Feedbin {
     suspend fun subscriptions(): Response<List<Subscription>>
 
     @POST("v2/subscriptions.json")
-    suspend fun createSubscription(@Body body: CreateSubscriptionRequest): Response<CreateSubscriptionResponse>
+    suspend fun createSubscription(@Body body: CreateSubscriptionRequest): Response<Subscription>
 
     @GET("v2/taggings.json")
     suspend fun taggings(): Response<List<Tagging>>
@@ -53,14 +54,15 @@ interface Feedbin {
             client: OkHttpClient,
             baseURL: String = DEFAULT_URL
         ): Feedbin {
-            val moshi = Moshi.Builder()
-                .add(CreateSubscriptionResponseAdapter())
-                .build()
+            val moshi = Moshi.Builder().build()
 
             return Retrofit.Builder()
                 .client(client)
                 .baseUrl(baseURL)
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
+                .addCallAdapterFactory(object : CallAdapter.Factory {
+
+                })
                 .build()
                 .create()
         }

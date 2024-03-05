@@ -12,17 +12,20 @@ import org.koin.compose.koinInject
 
 @Composable
 fun AddFeedScreen(
-    viewModel: AccountViewModel = koinViewModel(),
+    viewModel: AddFeedViewModel = koinViewModel(),
     onComplete: () -> Unit,
+    onCancel: () -> Unit,
 ) {
     Column {
         AddFeedView(
+            feedChoices = viewModel.feedChoices,
             onAddFeed = { url ->
                 viewModel.addFeed(
                     url = url,
                     onComplete = onComplete,
                 )
-            }
+            },
+            onCancel = onCancel,
         )
     }
 }

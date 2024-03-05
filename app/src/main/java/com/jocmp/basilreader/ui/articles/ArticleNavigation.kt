@@ -49,6 +49,9 @@ fun NavGraphBuilder.articleGraph(
         AddFeedScreen(
             onComplete = {
                 navController.popBackStack()
+            },
+            onCancel = {
+                navController.popBackStack()
             }
         )
     }

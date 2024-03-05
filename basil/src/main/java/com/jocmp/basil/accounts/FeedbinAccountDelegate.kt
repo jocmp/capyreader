@@ -6,7 +6,6 @@ import com.jocmp.basil.common.toDateTime
 import com.jocmp.basil.common.toDateTimeFromSeconds
 import com.jocmp.basil.db.Database
 import com.jocmp.feedbinclient.CreateSubscriptionRequest
-import com.jocmp.feedbinclient.CreateSubscriptionResponse
 import com.jocmp.feedbinclient.Feedbin
 import com.jocmp.feedbinclient.StarredEntriesRequest
 import com.jocmp.feedbinclient.Subscription
@@ -47,29 +46,24 @@ internal class FeedbinAccountDelegate(
 
     suspend fun addFeed(url: String): Result<AddFeedResult> {
         val response = feedbin.createSubscription(CreateSubscriptionRequest(feed_url = url))
-        val body = response.body()
+        val subscription = response.body()
+        val errorBody = response.errorBody()
 
-        if (!response.isSuccessful || body == null) {
+        if (response.code() > 300) {
             return Result.failure(Throwable(response.code().toString()))
         }
 
-        val addResult = when (body) {
-            is CreateSubscriptionResponse.Created -> {
-                val subscription = body.subscription
-                upsertFeed(subscription)
+        val result = if (subscription != null) {
+            upsertFeed(subscription)
 
-                AddFeedResult.Success(subscription.title)
-            }
-            is CreateSubscriptionResponse.MultipleChoices -> {
-                val choices = body.choices.map {
-                    FeedChoice(feedURL = it.feed_url, title = it.title)
-                }
+            AddFeedResult.Success(subscription.title)
+        } else {
+//            val choices = body.choices.map {
+//                FeedOption(feedURL = it.feed_url, title = it.title)
+//            }
 
-                AddFeedResult.MultipleChoices(choices)
-            }
+//            AddFeedResult.MultipleChoices(choices)
         }
-
-        return Result.success(addResult)
     }
 
     suspend fun refreshAll() {

@@ -4,7 +4,6 @@ import com.jocmp.basil.InMemoryDatabaseProvider
 import com.jocmp.basil.db.Database
 import com.jocmp.basil.fixtures.FeedFixture
 import com.jocmp.feedbinclient.CreateSubscriptionRequest
-import com.jocmp.feedbinclient.CreateSubscriptionResponse
 import com.jocmp.feedbinclient.Entry
 import com.jocmp.feedbinclient.EntryImages
 import com.jocmp.feedbinclient.Feedbin
@@ -17,9 +16,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Before
 import org.junit.Test
