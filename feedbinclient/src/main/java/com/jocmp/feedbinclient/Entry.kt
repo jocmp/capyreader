@@ -19,7 +19,6 @@ data class Entry(
 
 @JsonClass(generateAdapter = true)
 data class EntryImages(
-    val original_url: String,
     val size_1: EntryImagesSizeOne,
 )
 

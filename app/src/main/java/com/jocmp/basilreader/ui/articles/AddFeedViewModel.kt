@@ -15,6 +15,10 @@ class AddFeedViewModel(
 ) : ViewModel() {
     private val account = accountManager.findByID(appPreferences.accountID.get())!!
     private val _result = mutableStateOf<AddFeedResult?>(null)
+    private val _loading = mutableStateOf(false)
+
+    val loading: Boolean
+        get() = _loading.value
 
     val feedChoices: List<FeedOption>
         get() {
@@ -31,10 +35,15 @@ class AddFeedViewModel(
         onComplete: () -> Unit,
     ) {
         viewModelScope.launch {
+            _loading.value = true
             val result = account.addFeed(url).getOrNull() ?: return@launch
 
+
             when (result) {
-                is AddFeedResult.MultipleChoices -> _result.value = result
+                is AddFeedResult.MultipleChoices -> {
+                    _loading.value = false
+                    _result.value = result
+                }
                 is AddFeedResult.Success -> onComplete()
             }
         }

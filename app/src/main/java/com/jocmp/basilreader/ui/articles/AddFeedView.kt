@@ -6,11 +6,15 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
@@ -35,9 +39,10 @@ fun AddFeedView(
     feedChoices: List<FeedOption>,
     onAddFeed: (url: String) -> Unit,
     onCancel: () -> Unit,
+    loading: Boolean,
 ) {
     val (queryURL, setQueryURL) = remember { mutableStateOf("") }
-    val (selectedOption, selectOption) = remember { mutableStateOf(feedChoices.firstOrNull()) }
+    val (selectedOption, selectOption) = remember { mutableStateOf<FeedOption?>(null) }
 
     val addFeed = {
         if (selectedOption != null) {
@@ -50,7 +55,7 @@ fun AddFeedView(
     Card(
         shape = RoundedCornerShape(16.dp)
     ) {
-        Column(Modifier.padding(16.dp)) {
+        Column(Modifier.padding(top = 16.dp)) {
             TextField(
                 value = queryURL,
                 onValueChange = setQueryURL,
@@ -58,19 +63,26 @@ fun AddFeedView(
                     Text(stringResource(id = R.string.add_feed_url_title))
                 },
                 maxLines = 1,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
                 keyboardOptions = KeyboardOptions(
                     autoCorrect = false,
                     keyboardType = KeyboardType.Uri,
                     imeAction = ImeAction.Done,
                 ),
+                keyboardActions = KeyboardActions {
+                    addFeed()
+                }
             )
             if (feedChoices.isNotEmpty()) {
-                FeedOptions(
-                    options = feedChoices,
-                    selectedOption = selectedOption,
-                    onOptionSelect = selectOption
-                )
+                Row(Modifier.padding(top = 8.dp)) {
+                    FeedOptions(
+                        options = feedChoices,
+                        selectedOption = selectedOption,
+                        onOptionSelect = selectOption
+                    )
+                }
             }
             Row(
                 horizontalArrangement = Arrangement.End,
@@ -84,7 +96,8 @@ fun AddFeedView(
                 }
                 TextButton(
                     onClick = { addFeed() },
-                    modifier = Modifier.padding(8.dp)
+                    modifier = Modifier.padding(8.dp),
+                    enabled = !loading
                 ) {
                     Text(stringResource(R.string.add_feed_submit))
                 }
@@ -101,12 +114,13 @@ fun FeedOptions(
 ) {
     Column(Modifier.selectableGroup()) {
         options.forEach { option ->
+            val selected = option == selectedOption
             Row(
                 Modifier
                     .fillMaxWidth()
                     .height(56.dp)
                     .selectable(
-                        selected = option == selectedOption,
+                        selected = selected,
                         onClick = {
                             onOptionSelect(option)
                         },
@@ -115,12 +129,17 @@ fun FeedOptions(
                     .padding(horizontal = 16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                RadioButton(selected = false, onClick = null)
-                Text(
-                    text = option.title,
-                    style = typography.bodyLarge,
-                    modifier = Modifier.padding(start = 16.dp)
-                )
+                RadioButton(selected = selected, onClick = null)
+                Column(modifier = Modifier.padding(start = 16.dp)) {
+                    Text(
+                        text = option.title,
+                        style = typography.bodyLarge,
+                    )
+                    Text(
+                        text = option.feedURL,
+                        style = typography.bodySmall,
+                    )
+                }
             }
         }
     }
@@ -141,6 +160,7 @@ fun AddFeedViewPreview() {
             ),
         ),
         onAddFeed = {},
-        onCancel = {}
+        onCancel = {},
+        loading = false
     )
 }

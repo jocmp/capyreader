@@ -22,7 +22,7 @@ class AccountTest {
 //
 //    @Before
 //    fun setup() {
-//        mockkConstructor(FeedbinAccountDelegate::class)
+//        mockkConstructor(aFeedbinAccountDelegate::class)
 //
 //        coEvery {
 //            anyConstructed<FeedbinAccountDelegate>().fetchAll(any())

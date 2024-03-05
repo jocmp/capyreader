@@ -10,6 +10,8 @@ import com.jocmp.feedbinclient.Feedbin
 import com.jocmp.feedbinclient.StarredEntriesRequest
 import com.jocmp.feedbinclient.Subscription
 import com.jocmp.feedbinclient.UnreadEntriesRequest
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.internal.readJson
 import retrofit2.Response
 
 internal class FeedbinAccountDelegate(
@@ -47,7 +49,7 @@ internal class FeedbinAccountDelegate(
     suspend fun addFeed(url: String): Result<AddFeedResult> {
         val response = feedbin.createSubscription(CreateSubscriptionRequest(feed_url = url))
         val subscription = response.body()
-        val errorBody = response.errorBody()
+        val errorBody = response.errorBody()?.string()
 
         if (response.code() > 300) {
             return Result.failure(Throwable(response.code().toString()))
@@ -58,12 +60,16 @@ internal class FeedbinAccountDelegate(
 
             AddFeedResult.Success(subscription.title)
         } else {
-//            val choices = body.choices.map {
-//                FeedOption(feedURL = it.feed_url, title = it.title)
-//            }
+            val decodedChoices = Json.decodeFromString<List<SubscriptionChoice>>(errorBody!!)
 
-//            AddFeedResult.MultipleChoices(choices)
+            val choices = decodedChoices.map {
+                FeedOption(feedURL = it.feed_url, title = it.title)
+            }
+
+            AddFeedResult.MultipleChoices(choices)
         }
+
+        return Result.success(result)
     }
 
     suspend fun refreshAll() {

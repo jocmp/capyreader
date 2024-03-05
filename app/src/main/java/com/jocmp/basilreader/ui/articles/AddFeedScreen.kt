@@ -26,10 +26,7 @@ fun AddFeedScreen(
                 )
             },
             onCancel = onCancel,
+            loading = viewModel.loading,
         )
     }
 }
-
-// 1. Add separate view model
-// 2. Store result if present
-// 3. Provide result back to feed view if it changes

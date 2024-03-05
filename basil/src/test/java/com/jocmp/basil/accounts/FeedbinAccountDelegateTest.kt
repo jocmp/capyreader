@@ -6,17 +6,24 @@ import com.jocmp.basil.fixtures.FeedFixture
 import com.jocmp.feedbinclient.CreateSubscriptionRequest
 import com.jocmp.feedbinclient.Entry
 import com.jocmp.feedbinclient.EntryImages
+import com.jocmp.feedbinclient.EntryImagesSizeOne
 import com.jocmp.feedbinclient.Feedbin
 import com.jocmp.feedbinclient.StarredEntriesRequest
-import com.jocmp.feedbinclient.Tagging
 import com.jocmp.feedbinclient.Subscription
-import com.jocmp.feedbinclient.SubscriptionChoice
+import com.jocmp.feedbinclient.Tagging
 import com.jocmp.feedbinclient.UnreadEntriesRequest
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.encodeToJsonElement
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttp
+import okhttp3.Protocol
+import okhttp3.Request
+import okhttp3.RequestBody
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Before
 import org.junit.Test
@@ -70,7 +77,9 @@ class FeedbinAccountDelegateTest {
             extracted_content_url = "https://extract.feedbin.com/parser/feedbin/fa2d8d34c403421a766dbec46c58738c36ff359e?base64_url=aHR0cHM6Ly9hcnN0ZWNobmljYS5jb20vP3A9MjAwNTUyNg==",
             author = "Scharon Harding",
             images = EntryImages(
-                original_url = "https://cdn.arstechnica.net/wp-content/uploads/2024/02/GettyImages-2023785321-800x534.jpg"
+                size_1 = EntryImagesSizeOne(
+                    cdn_url = "https://cdn.arstechnica.net/wp-content/uploads/2024/02/GettyImages-2023785321-800x534.jpg"
+                ),
             ),
         )
     )
@@ -179,16 +188,14 @@ class FeedbinAccountDelegateTest {
     fun addFeed() = runTest {
         val delegate = FeedbinAccountDelegate(database, feedbin)
         val url = "wheresyoured.at"
-        val successResponse = Response.success<CreateSubscriptionResponse>(
-            CreateSubscriptionResponse.Created(
-                Subscription(
-                    id = 1330,
-                    created_at = "2024-01-30T19:42:44.851265Z",
-                    feed_id = 2819820,
-                    title = "Ed Zitron",
-                    feed_url = "http://wheresyoured.at",
-                    site_url = "http://wheresyoured.at",
-                )
+        val successResponse = Response.success<Subscription>(
+            Subscription(
+                id = 1330,
+                created_at = "2024-01-30T19:42:44.851265Z",
+                feed_id = 2819820,
+                title = "Ed Zitron",
+                feed_url = "http://wheresyoured.at",
+                site_url = "http://wheresyoured.at",
             )
         )
 
@@ -222,8 +229,20 @@ class FeedbinAccountDelegateTest {
                 title = "Stories Archive - 9to5Google"
             )
         )
-        val multipleChoiceResponse = Response.success<CreateSubscriptionResponse>(
-            CreateSubscriptionResponse.MultipleChoices(choices)
+
+        val choicesBody = Json
+            .encodeToJsonElement(choices)
+            .toString()
+            .toResponseBody("application/json".toMediaType())
+
+        val multipleChoiceResponse = Response.error<Subscription>(
+            choicesBody,
+            okhttp3.Response.Builder().body(choicesBody)
+                .code(300)
+                .message("Response.error()")
+                .protocol(Protocol.HTTP_1_1)
+                .request(Request.Builder().url("http://localhost/").build())
+                .build()
         )
 
         coEvery {

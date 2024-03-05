@@ -60,9 +60,6 @@ interface Feedbin {
                 .client(client)
                 .baseUrl(baseURL)
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .addCallAdapterFactory(object : CallAdapter.Factory {
-
-                })
                 .build()
                 .create()
         }
