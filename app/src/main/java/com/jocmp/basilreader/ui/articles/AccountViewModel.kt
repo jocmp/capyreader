@@ -4,6 +4,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.jocmp.basil.Account
@@ -15,19 +16,28 @@ import com.jocmp.basil.Countable
 import com.jocmp.basil.Feed
 import com.jocmp.basil.Folder
 import com.jocmp.basil.buildPager
+import com.jocmp.basil.countAll
 import com.jocmp.basilreader.common.AppPreferences
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class AccountViewModel(
     private val account: Account,
     private val appPreferences: AppPreferences,
 ) : ViewModel() {
-    private val _counts = mutableStateOf<Map<String, Long>>(mapOf())
-
-    private val _filter = mutableStateOf(appPreferences.filter.get())
+    private val _filter = MutableStateFlow(appPreferences.filter.get())
 
     private val pager = mutableStateOf(account.buildPager(_filter.value))
 
@@ -38,20 +48,23 @@ class AccountViewModel(
 
     private val articleState = mutableStateOf(account.findArticle(appPreferences.articleID.get()))
 
-    val statusCount: Long
-        get() = _counts.value.values.sum()
+    private val _counts = _filter.flatMapLatest { latestFilter ->
+        account.countAll(latestFilter.status)
+    }
 
-    val folders = account.folders.stateIn(
-        viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = emptyList()
-    )
+    val folders: Flow<List<Folder>> = account.folders.combine(_counts) { folders, latestCounts ->
+        folders.map { copyFolderCounts(it, latestCounts) }
+            .withPositiveCount(filterStatus)
+    }
 
-    val feeds = account.feeds.stateIn(
-        viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = emptyList()
-    )
+    val feeds = account.feeds.combine(_counts) { feeds, latestCounts ->
+        feeds.map { copyFeedCounts(it, latestCounts) }
+            .withPositiveCount(filterStatus)
+    }
+
+    val statusCount: Flow<Long> = _counts.map {
+        it.values.sum()
+    }
 
     val article: Article?
         get() = articleState.value
@@ -165,7 +178,6 @@ class AccountViewModel(
     }
 
     fun reload() {
-
     }
 
     private fun resetToDefaultFilter() {
@@ -184,8 +196,8 @@ class AccountViewModel(
         clearArticle()
     }
 
-    private fun copyFolderCounts(folder: Folder): Folder {
-        val folderFeeds = folder.feeds.map(::copyFeedCounts)
+    private fun copyFolderCounts(folder: Folder, counts: Map<String, Long>): Folder {
+        val folderFeeds = folder.feeds.map { copyFeedCounts(it, counts) }
 
         return folder.copy(
             feeds = folderFeeds.withPositiveCount(filterStatus).toMutableList(),
@@ -193,8 +205,8 @@ class AccountViewModel(
         )
     }
 
-    private fun copyFeedCounts(feed: Feed): Feed {
-        return feed.copy(count = _counts.value.getOrDefault(feed.id, 0))
+    private fun copyFeedCounts(feed: Feed, counts: Map<String, Long>): Feed {
+        return feed.copy(count = counts.getOrDefault(feed.id, 0))
     }
 }
 

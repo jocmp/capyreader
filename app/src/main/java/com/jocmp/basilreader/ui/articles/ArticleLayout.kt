@@ -1,6 +1,9 @@
 package com.jocmp.basilreader.ui.articles
 
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -38,6 +41,7 @@ import com.jocmp.basilreader.ui.components.rememberSaveableWebViewState
 import com.jocmp.basilreader.ui.components.rememberWebViewNavigator
 import com.jocmp.basilreader.ui.fixtures.FeedPreviewFixture
 import com.jocmp.basilreader.ui.fixtures.FolderPreviewFixture
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
@@ -83,7 +87,7 @@ fun ArticleLayout(
     val webViewNavigator = rememberWebViewNavigator()
     val webViewState = rememberSaveableWebViewState()
     val listState = rememberLazyListState()
-    val pagingArticles = articles.collectAsLazyPagingItems()
+    val pagingArticles = articles.collectAsLazyPagingItems(Dispatchers.IO)
 
     val navigateToDetail = {
         navigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
@@ -175,6 +179,7 @@ fun ArticleLayout(
                 ) {
                     Crossfade(
                         pagingArticles,
+                        animationSpec = spring(),
                         label = ""
                     ) {
                         ArticleList(

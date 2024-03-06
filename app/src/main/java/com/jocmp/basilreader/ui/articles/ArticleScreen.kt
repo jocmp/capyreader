@@ -19,13 +19,14 @@ fun ArticleScreen(
 ) {
     val feeds by viewModel.feeds.collectAsStateWithLifecycle(initialValue = emptyList())
     val folders by viewModel.folders.collectAsStateWithLifecycle(initialValue = emptyList())
+    val statusCount by viewModel.statusCount.collectAsStateWithLifecycle(initialValue = 0)
 
     ArticleLayout(
         filter = viewModel.filter,
         folders = folders,
         feeds = feeds,
         article = viewModel.article,
-        statusCount = viewModel.statusCount,
+        statusCount = statusCount,
         onFeedRefresh = { completion ->
             viewModel.refreshFeed(completion)
         },

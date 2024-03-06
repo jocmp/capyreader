@@ -35,13 +35,19 @@ class AddFeedViewModel(
     ) {
         viewModelScope.launch {
             _loading.value = true
-            val result = account.addFeed(url).getOrNull() ?: return@launch
+            val result = account.addFeed(url).getOrNull()
+            _loading.value = false
+
+            if (result == null) {
+                return@launch
+            }
 
             when (result) {
                 is AddFeedResult.MultipleChoices -> {
                     _loading.value = false
                     _result.value = result
                 }
+
                 is AddFeedResult.Success -> onComplete(result.feedTitle)
             }
         }

@@ -6,6 +6,7 @@ tagged:
 SELECT feeds.*, taggings.name
 FROM feeds
 LEFT JOIN taggings ON taggings.feed_id = feeds.id
+LEFT JOIN articles ON articles.feed_id = feeds.id
 GROUP BY feeds.id, taggings.name
 ORDER BY taggings.name;
 

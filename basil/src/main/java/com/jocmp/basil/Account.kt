@@ -15,6 +15,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import java.net.URI
 
+private const val TAG = "Account"
+
 data class Account(
     val id: String,
     val path: URI,
@@ -40,7 +42,12 @@ data class Account(
         ungrouped
             .filter { it.folderName.isNotBlank() }
             .groupBy { it.folderName }
-            .map { Folder(title = it.key, feeds = it.value) }
+            .map {
+                Folder(
+                    title = it.key,
+                    feeds = it.value,
+                )
+            }
     }
 
     suspend fun removeFolder(title: String) {

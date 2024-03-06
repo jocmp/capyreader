@@ -3,6 +3,7 @@ package com.jocmp.basil.persistence
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOneNotNull
+import com.jocmp.basil.ArticleStatus
 import com.jocmp.basil.Feed
 import com.jocmp.basil.Folder
 import com.jocmp.basil.db.Database
@@ -68,6 +69,7 @@ internal class FeedRecords(val database: Database) {
         siteURL: String?,
         faviconURL: String?,
         folderName: String? = "",
+        articleCount: Long = 0
     ): Feed {
         return Feed(
             id = id,
@@ -76,6 +78,7 @@ internal class FeedRecords(val database: Database) {
             feedURL = feedURL,
             siteURL = siteURL ?: "",
             folderName = folderName ?: "",
+            count = articleCount
         )
     }
 }

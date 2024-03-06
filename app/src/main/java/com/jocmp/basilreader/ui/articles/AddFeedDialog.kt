@@ -5,6 +5,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.window.Dialog
 import org.koin.androidx.compose.koinViewModel
 
+// TODO
+// on complete:
+// 1. Choose feed (close drawer)
+// 2. Show success snackbar
+// On error
+// 1. Show error toast
 @Composable
 fun AddFeedDialog(
     viewModel: AddFeedViewModel = koinViewModel(),

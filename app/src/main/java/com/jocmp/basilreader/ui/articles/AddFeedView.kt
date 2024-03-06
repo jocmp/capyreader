@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,7 +14,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
@@ -26,6 +25,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.ImeAction
@@ -44,8 +45,13 @@ fun AddFeedView(
 ) {
     val (queryURL, setQueryURL) = rememberSaveable { mutableStateOf("") }
     val (selectedOption, selectOption) = remember { mutableStateOf<FeedOption?>(null) }
+    val focusManager = LocalFocusManager.current
+    val keyboard = LocalSoftwareKeyboardController.current
 
     val addFeed = {
+        focusManager.clearFocus()
+        keyboard?.hide()
+
         if (selectedOption != null) {
             onAddFeed(selectedOption.feedURL)
         } else {
@@ -72,8 +78,15 @@ fun AddFeedView(
                     keyboardType = KeyboardType.Uri,
                     imeAction = ImeAction.Done,
                 ),
-                keyboardActions = KeyboardActions {
-                    addFeed()
+                keyboardActions = KeyboardActions(
+                    onDone = { addFeed() }
+                ),
+                trailingIcon = {
+                    if (loading) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
                 }
             )
             if (feedChoices.isNotEmpty()) {
@@ -87,6 +100,7 @@ fun AddFeedView(
             }
             Row(
                 horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 TextButton(
