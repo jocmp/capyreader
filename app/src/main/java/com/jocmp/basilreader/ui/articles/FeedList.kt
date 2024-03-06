@@ -39,10 +39,10 @@ fun FeedList(
     statusCount: Long,
     folders: List<Folder> = emptyList(),
     feeds: List<Feed> = emptyList(),
-    onAddFeed: () -> Unit,
     onFilterSelect: () -> Unit,
     onSelectFolder: (folderTitle: String) -> Unit,
     onSelectFeed: (feedID: String) -> Unit,
+    onNavigateToAddFeed: () -> Unit,
     onNavigateToAccounts: () -> Unit,
 ) {
     val scrollState = rememberScrollState()
@@ -54,18 +54,9 @@ fun FeedList(
                 .fillMaxWidth()
                 .padding(vertical = 8.dp),
         ) {
-            OutlinedButton(
-                onClick = { onAddFeed() },
-            ) {
-                Box(Modifier.padding(end = 8.dp)) {
-                    Icon(
-                        imageVector = Icons.Filled.Add,
-                        contentDescription = null,
-                        modifier = Modifier.size(18.dp)
-                    )
-                }
-                Text(stringResource(R.string.nav_add_feed))
-            }
+            AddFeedButton(
+                onClick = { onNavigateToAddFeed() }
+            )
             IconButton(onClick = { onNavigateToAccounts() }) {
                 Icon(
                     imageVector = Icons.Filled.AccountCircle,
@@ -124,12 +115,12 @@ fun FeedListPreview() {
     FeedList(
         folders = folders,
         feeds = feeds,
-        onAddFeed = {},
         onSelectFolder = {},
         onSelectFeed = {},
         onNavigateToAccounts = {},
         onFilterSelect = {},
         filter = ArticleFilter.default(),
         statusCount = 10,
+        onNavigateToAddFeed = {}
     )
 }

@@ -12,7 +12,7 @@ private const val TAG = "ArticleScreen"
 @Composable
 fun ArticleScreen(
     viewModel: AccountViewModel = koinViewModel(),
-    onAddFeed: () -> Unit,
+    onNavigateToAddFeed: () -> Unit,
     onEditFeed: (feedID: String) -> Unit,
     onEditFolder: (folderTitle: String) -> Unit,
     onNavigateToAccounts: () -> Unit,
@@ -29,10 +29,10 @@ fun ArticleScreen(
         onFeedRefresh = { completion ->
             viewModel.refreshFeed(completion)
         },
-        onAddFeed = onAddFeed,
         onClearArticle = viewModel::clearArticle,
         onEditFeed = onEditFeed,
         onEditFolder = onEditFolder,
+        onNavigateToAddFeed = onNavigateToAddFeed,
         onNavigateToAccounts = onNavigateToAccounts,
         onSelectArticleFilter = viewModel::selectArticleFilter,
         onSelectFeed = viewModel::selectFeed,
@@ -47,7 +47,6 @@ fun ArticleScreen(
     )
 
     LaunchedEffect(Unit) {
-        Log.d(TAG, "ArticleScreen: refreshed")
         viewModel.reload()
     }
 }

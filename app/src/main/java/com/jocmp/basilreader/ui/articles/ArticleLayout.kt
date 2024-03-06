@@ -43,8 +43,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 
-private const val TAG = "ArticleLayout"
-
 @OptIn(
     ExperimentalMaterial3AdaptiveApi::class,
     ExperimentalMaterial3Api::class
@@ -57,7 +55,6 @@ fun ArticleLayout(
     articles: Flow<PagingData<Article>>,
     article: Article?,
     statusCount: Long,
-    onAddFeed: () -> Unit,
     onFeedRefresh: (completion: () -> Unit) -> Unit,
     onSelectFolder: (folderTitle: String) -> Unit,
     onSelectFeed: (feedID: String) -> Unit,
@@ -68,6 +65,7 @@ fun ArticleLayout(
     onEditFeed: (feedID: String) -> Unit,
     onRemoveFeed: (feedID: String) -> Unit,
     onRemoveFolder: (folderTitle: String) -> Unit,
+    onNavigateToAddFeed: () -> Unit,
     onNavigateToAccounts: () -> Unit,
     onClearArticle: () -> Unit,
     onToggleArticleRead: () -> Unit,
@@ -121,7 +119,6 @@ fun ArticleLayout(
             FeedList(
                 folders = folders,
                 feeds = feeds,
-                onAddFeed = onAddFeed,
                 onSelectFolder = {
                     onSelectFolder(it)
                     onComplete()
@@ -136,7 +133,8 @@ fun ArticleLayout(
                     onComplete()
                 },
                 filter = filter,
-                statusCount = statusCount
+                statusCount = statusCount,
+                onNavigateToAddFeed = onNavigateToAddFeed,
             )
         },
         listPane = {
@@ -241,7 +239,6 @@ fun ArticleLayoutPreview() {
             article = null,
             statusCount = 30,
             drawerValue = DrawerValue.Open,
-            onAddFeed = { },
             onFeedRefresh = {},
             onSelectFolder = {},
             onSelectFeed = {},
@@ -252,6 +249,7 @@ fun ArticleLayoutPreview() {
             onEditFeed = {},
             onRemoveFeed = {},
             onRemoveFolder = {},
+            onNavigateToAddFeed = {},
             onNavigateToAccounts = { },
             onClearArticle = { },
             onToggleArticleRead = { },

@@ -15,8 +15,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import java.net.URI
 
-private const val TAG = "Account"
-
 data class Account(
     val id: String,
     val path: URI,
@@ -133,6 +131,4 @@ data class Account(
                 }
             }.awaitAll()
         }
-
-    companion object
 }

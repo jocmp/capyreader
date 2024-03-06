@@ -1,6 +1,6 @@
 package com.jocmp.basil
 
-import okhttp3.OkHttpClient
+import com.jocmp.basil.db.Database
 import java.io.File
 import java.io.FileFilter
 import java.net.URI
@@ -11,22 +11,16 @@ class AccountManager(
     private val databaseProvider: DatabaseProvider,
     private val preferenceStoreProvider: PreferenceStoreProvider,
 ) {
-    fun findByID(id: String?): Account? {
-        id ?: return null
-
+    fun findByID(
+        id: String,
+        database: Database = databaseProvider.build(id)
+    ): Account? {
         val existingAccount = findAccountFile(id) ?: return null
 
-        return buildAccount(existingAccount)
+        return buildAccount(existingAccount, database)
     }
 
-    val accounts: List<Account>
-        get() = listAccounts().map { buildAccount(it) }
-
-    fun accountSize(): Int {
-        return listAccounts().size
-    }
-
-    fun createAccount(username: String, password: String): Account {
+    fun createAccount(username: String, password: String): String {
         val accountID = UUID.randomUUID().toString()
 
         accountFolder().apply {
@@ -35,13 +29,13 @@ class AccountManager(
             }
         }
 
-        val file = accountFile(accountID).apply { mkdir() }
+        accountFile(accountID).apply { mkdir() }
 
         val preferences = preferenceStoreProvider.build(accountID)
         preferences.username.set(username)
         preferences.password.set(password)
 
-        return buildAccount(file, preferences)
+        return accountID
     }
 
     fun removeAccount(accountID: String) {
@@ -56,14 +50,11 @@ class AccountManager(
         return File(accountFolder(), id)
     }
 
-    private fun listAccounts(): List<File> {
-        return accountFolder().listFiles()?.toList() ?: emptyList()
-    }
-
     private fun accountFolder() = File(rootFolder.path, directoryName)
 
     private fun buildAccount(
         path: File,
+        database: Database,
         preferences: AccountPreferences = preferenceStoreProvider.build(path.name)
     ): Account {
         val id = path.name
@@ -72,7 +63,7 @@ class AccountManager(
         return Account(
             id = id,
             path = pathURI,
-            database = databaseProvider.build(id),
+            database = database,
             preferences = preferences,
         )
     }

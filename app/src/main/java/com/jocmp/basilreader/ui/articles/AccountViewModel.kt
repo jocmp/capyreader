@@ -17,14 +17,14 @@ import com.jocmp.basil.Folder
 import com.jocmp.basil.buildPager
 import com.jocmp.basilreader.common.AppPreferences
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class AccountViewModel(
-    accountManager: AccountManager,
+    private val account: Account,
     private val appPreferences: AppPreferences,
 ) : ViewModel() {
-    private val _account = accountManager.findByID(appPreferences.accountID.get())!!
-
     private val _counts = mutableStateOf<Map<String, Long>>(mapOf())
 
     private val _filter = mutableStateOf(appPreferences.filter.get())
@@ -36,17 +36,22 @@ class AccountViewModel(
     val articles: Flow<PagingData<Article>>
         get() = _articles.value
 
-    private val account: Account
-        get() = _account
-
     private val articleState = mutableStateOf(account.findArticle(appPreferences.articleID.get()))
 
     val statusCount: Long
         get() = _counts.value.values.sum()
 
-    val folders = account.folders
+    val folders = account.folders.stateIn(
+        viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = emptyList()
+    )
 
-    val feeds = account.feeds
+    val feeds = account.feeds.stateIn(
+        viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = emptyList()
+    )
 
     val article: Article?
         get() = articleState.value

@@ -3,6 +3,7 @@ package com.jocmp.basilreader.ui.articles
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jocmp.basil.Account
 import com.jocmp.basil.AccountManager
 import com.jocmp.basil.accounts.AddFeedResult
 import com.jocmp.basil.accounts.FeedOption
@@ -10,10 +11,8 @@ import com.jocmp.basilreader.common.AppPreferences
 import kotlinx.coroutines.launch
 
 class AddFeedViewModel(
-    accountManager: AccountManager,
-    private val appPreferences: AppPreferences,
+    val account: Account
 ) : ViewModel() {
-    private val account = accountManager.findByID(appPreferences.accountID.get())!!
     private val _result = mutableStateOf<AddFeedResult?>(null)
     private val _loading = mutableStateOf(false)
 
@@ -32,19 +31,18 @@ class AddFeedViewModel(
 
     fun addFeed(
         url: String,
-        onComplete: () -> Unit,
+        onComplete: (feedTitle: String) -> Unit,
     ) {
         viewModelScope.launch {
             _loading.value = true
             val result = account.addFeed(url).getOrNull() ?: return@launch
-
 
             when (result) {
                 is AddFeedResult.MultipleChoices -> {
                     _loading.value = false
                     _result.value = result
                 }
-                is AddFeedResult.Success -> onComplete()
+                is AddFeedResult.Success -> onComplete(result.feedTitle)
             }
         }
     }

@@ -29,7 +29,7 @@ fun NavGraphBuilder.articleGraph(
         route = "articles",
     ) {
         ArticleScreen(
-            onAddFeed = {
+            onNavigateToAddFeed = {
                 navController.navigateToAddFeed()
             },
             onEditFeed = { feedID ->
@@ -46,7 +46,7 @@ fun NavGraphBuilder.articleGraph(
     dialog(
         route = "feeds/new",
     ) {
-        AddFeedScreen(
+        AddFeedDialog(
             onComplete = {
                 navController.popBackStack()
             },
