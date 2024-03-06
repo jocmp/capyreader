@@ -14,22 +14,6 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlin.coroutines.coroutineContext
 
 internal class FeedRecords(val database: Database) {
-//    internal fun findOrCreate(id: String): Feeds {
-//        val existingFeed = database
-//            .feedsQueries
-//            .findByURL(feed_url = feedURL)
-//            .executeAsOneOrNull()
-//
-//        if (existingFeed != null) {
-//            return existingFeed
-//        }
-//
-//        return database.feedsQueries.create(
-//            id = "DELETEME",
-//            feed_url = feedURL
-//        ).executeAsOne()
-//    }
-
     suspend fun findBy(id: String): Feed? {
         return database.feedsQueries.findBy(id, mapper = ::feedMapper)
             .asFlow()

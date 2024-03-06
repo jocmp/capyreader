@@ -39,18 +39,15 @@ class AccountViewModel(
 ) : ViewModel() {
     private val _filter = MutableStateFlow(appPreferences.filter.get())
 
-    private val pager = mutableStateOf(account.buildPager(_filter.value))
-
-    private val _articles = derivedStateOf { pager.value.flow.cachedIn(viewModelScope) }
-
-    val articles: Flow<PagingData<Article>>
-        get() = _articles.value
-
     private val articleState = mutableStateOf(account.findArticle(appPreferences.articleID.get()))
 
     private val _counts = _filter.flatMapLatest { latestFilter ->
         account.countAll(latestFilter.status)
     }
+
+    val articles: Flow<PagingData<Article>> = _filter
+        .flatMapLatest { account.buildPager(it).flow }
+        .cachedIn(viewModelScope)
 
     val folders: Flow<List<Folder>> = account.folders.combine(_counts) { folders, latestCounts ->
         folders.map { copyFolderCounts(it, latestCounts) }
@@ -186,7 +183,6 @@ class AccountViewModel(
 
     private fun updateFilterValue(nextFilter: ArticleFilter) {
         _filter.value = nextFilter
-        pager.value = account.buildPager(nextFilter)
         appPreferences.filter.set(nextFilter)
     }
 

@@ -3,18 +3,13 @@ package com.jocmp.basilreader.ui.articles
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.window.Dialog
+import com.jocmp.basil.Feed
 import org.koin.androidx.compose.koinViewModel
 
-// TODO
-// on complete:
-// 1. Choose feed (close drawer)
-// 2. Show success snackbar
-// On error
-// 1. Show error toast
 @Composable
 fun AddFeedDialog(
     viewModel: AddFeedViewModel = koinViewModel(),
-    onComplete: (feedTitle: String) -> Unit,
+    onComplete: (feed: Feed) -> Unit,
     onCancel: () -> Unit,
 ) {
     Dialog(onDismissRequest = onCancel) {
@@ -29,6 +24,7 @@ fun AddFeedDialog(
                 },
                 onCancel = onCancel,
                 loading = viewModel.loading,
+                isError = viewModel.hasError
             )
         }
     }

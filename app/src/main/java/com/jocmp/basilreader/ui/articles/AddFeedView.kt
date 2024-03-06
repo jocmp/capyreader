@@ -42,6 +42,7 @@ fun AddFeedView(
     onAddFeed: (url: String) -> Unit,
     onCancel: () -> Unit,
     loading: Boolean,
+    isError: Boolean,
 ) {
     val (queryURL, setQueryURL) = rememberSaveable { mutableStateOf("") }
     val (selectedOption, selectOption) = remember { mutableStateOf<FeedOption?>(null) }
@@ -68,6 +69,12 @@ fun AddFeedView(
                 onValueChange = setQueryURL,
                 label = {
                     Text(stringResource(id = R.string.add_feed_url_title))
+                },
+                isError = isError,
+                supportingText = {
+                    if (isError) {
+                        Text(stringResource(R.string.add_feed_error))
+                    }
                 },
                 maxLines = 1,
                 modifier = Modifier
@@ -176,6 +183,7 @@ fun AddFeedViewPreview() {
         ),
         onAddFeed = {},
         onCancel = {},
-        loading = false
+        loading = false,
+        isError = true,
     )
 }

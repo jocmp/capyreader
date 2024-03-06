@@ -5,19 +5,25 @@ import com.jocmp.basil.common.nowUTCInSeconds
 import com.jocmp.basil.common.toDateTime
 import com.jocmp.basil.common.toDateTimeFromSeconds
 import com.jocmp.basil.db.Database
+import com.jocmp.basil.persistence.FeedRecords
 import com.jocmp.feedbinclient.CreateSubscriptionRequest
 import com.jocmp.feedbinclient.Feedbin
 import com.jocmp.feedbinclient.StarredEntriesRequest
 import com.jocmp.feedbinclient.Subscription
 import com.jocmp.feedbinclient.UnreadEntriesRequest
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.internal.readJson
 import retrofit2.Response
+import java.lang.Exception
 
 internal class FeedbinAccountDelegate(
     private val database: Database,
     private val feedbin: Feedbin
 ) {
+    class FeedNotFound: Exception()
+    class SaveFeedFailure: Exception()
+
+    private val feedRecords = FeedRecords(database)
+
     fun fetchAll(feed: Feed): List<ParsedItem> {
         return emptyList()
     }
@@ -52,13 +58,19 @@ internal class FeedbinAccountDelegate(
         val errorBody = response.errorBody()?.string()
 
         if (response.code() > 300) {
-            return Result.failure(Throwable(response.code().toString()))
+            return Result.failure(FeedNotFound())
         }
 
-        val result = if (subscription != null) {
+        return if (subscription != null) {
             upsertFeed(subscription)
 
-            AddFeedResult.Success(subscription.title)
+            val feed = feedRecords.findBy(subscription.feed_id.toString())
+
+            if (feed != null) {
+                Result.success(AddFeedResult.Success(feed))
+            } else {
+                Result.failure(SaveFeedFailure())
+            }
         } else {
             val decodedChoices = Json.decodeFromString<List<SubscriptionChoice>>(errorBody!!)
 
@@ -66,10 +78,8 @@ internal class FeedbinAccountDelegate(
                 FeedOption(feedURL = it.feed_url, title = it.title)
             }
 
-            AddFeedResult.MultipleChoices(choices)
+            Result.success(AddFeedResult.MultipleChoices(choices))
         }
-
-        return Result.success(result)
     }
 
     suspend fun refreshAll() {
