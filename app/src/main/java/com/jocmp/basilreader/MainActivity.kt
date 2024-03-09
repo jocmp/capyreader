@@ -11,7 +11,7 @@ import org.koin.android.ext.android.get
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        enableStrictMode()
+        enableStrictModeOnDebug()
         super.onCreate(savedInstanceState)
 
         setContent {
@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-private fun enableStrictMode() {
+private fun enableStrictModeOnDebug() {
     if (BuildConfig.DEBUG) {
         setThreadPolicy(
             ThreadPolicy.Builder()

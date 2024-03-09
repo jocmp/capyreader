@@ -10,13 +10,13 @@ import androidx.navigation.compose.rememberNavController
 import com.jocmp.basilreader.ui.accounts.accountsGraph
 import com.jocmp.basilreader.ui.articles.articleGraph
 import com.jocmp.basilreader.ui.articles.navigateToArticles
-import com.jocmp.basilreader.ui.theme.BasilReaderTheme
+import com.jocmp.basilreader.ui.theme.CapyTheme
 
 @Composable
 fun App(startDestination: String) {
     val navController = rememberNavController()
 
-    BasilReaderTheme {
+    CapyTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background

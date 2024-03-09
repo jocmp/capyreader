@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.jocmp.basil.Article
-import com.jocmp.basilreader.ui.theme.BasilReaderTheme
+import com.jocmp.basilreader.ui.theme.CapyTheme
 import java.net.URL
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
@@ -134,7 +134,7 @@ fun ArticleRowPreview_Selected_DarkMode() {
         feedName = "9to5Google"
     )
 
-    BasilReaderTheme(dynamicColor = false) {
+    CapyTheme(dynamicColor = false) {
         Column {
             ArticleRow(
                 article = article,
@@ -167,7 +167,7 @@ fun ArticleRowPreview_Selected() {
         feedName = "9to5Google"
     )
 
-    BasilReaderTheme(dynamicColor = false) {
+    CapyTheme(dynamicColor = false) {
         ArticleRow(
             article = article,
             selected = true,
