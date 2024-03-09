@@ -1,11 +1,16 @@
 package com.jocmp.basil.persistence
 
 import app.cash.sqldelight.Query
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.db.QueryResult
 import com.jocmp.basil.Article
 import com.jocmp.basil.ArticleStatus
 import com.jocmp.basil.common.nowUTC
 import com.jocmp.basil.db.Database
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import java.time.OffsetDateTime
 import java.time.ZonedDateTime
 
@@ -58,24 +63,22 @@ class ArticleRecords internal constructor(
         )
     }
 
-    fun countAll(status: ArticleStatus): Map<String, Long> {
-//        val (read, starred) = status.forCounts
-//
-//        return database.articlesQueries.countAll(
-//            read = read,
-//            starred = starred,
-//        ).execute {
-//            val result = mutableMapOf<String, Long>()
-//            while (it.next().value) {
-//                val feedID = it.getLong(0)!!.toString()
-//                val unreadCount = it.getLong(1) ?: 0
-//
-//                result[feedID] = unreadCount
-//            }
-//
-//            QueryResult.Value(result)
-//        }.value
-        return emptyMap()
+    fun countAll(status: ArticleStatus): Flow<Map<String, Long>> {
+        val (read, starred) = status.forCounts
+
+        return database.articlesQueries.countAll(
+            read = read,
+            starred = starred,
+        )
+            .asFlow()
+            .mapToList(Dispatchers.IO)
+            .map { list ->
+                list.associate {
+                    val feedID = it.feed_id ?: ""
+
+                    feedID to it.COUNT
+                }
+            }
     }
 
     class ByFeed(private val database: Database) {
@@ -84,7 +87,7 @@ class ArticleRecords internal constructor(
             status: ArticleStatus,
             limit: Long,
             offset: Long,
-            since: ZonedDateTime
+            since: OffsetDateTime
         ): Query<Article> {
             val (read, starred) = status.toStatusPair
 
@@ -102,7 +105,7 @@ class ArticleRecords internal constructor(
         fun count(
             feedIDs: List<String>,
             status: ArticleStatus,
-            since: ZonedDateTime
+            since: OffsetDateTime
         ): Query<Long> {
             val (read, starred) = status.toStatusPair
 
@@ -120,7 +123,7 @@ class ArticleRecords internal constructor(
             status: ArticleStatus,
             limit: Long,
             offset: Long,
-            since: ZonedDateTime? = null
+            since: OffsetDateTime? = null
         ): Query<Article> {
             val (read, starred) = status.toStatusPair
 
@@ -134,7 +137,7 @@ class ArticleRecords internal constructor(
             )
         }
 
-        fun count(status: ArticleStatus, since: ZonedDateTime? = null): Query<Long> {
+        fun count(status: ArticleStatus, since: OffsetDateTime? = null): Query<Long> {
             val (read, starred) = status.toStatusPair
 
             return database.articlesQueries.countByStatus(
@@ -146,7 +149,7 @@ class ArticleRecords internal constructor(
     }
 }
 
-private fun mapLastRead(read: Boolean?, value: ZonedDateTime?): Long? {
+private fun mapLastRead(read: Boolean?, value: OffsetDateTime?): Long? {
     if (read != null) {
         return value?.toEpochSecond()
     }

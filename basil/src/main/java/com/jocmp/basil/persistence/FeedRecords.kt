@@ -3,6 +3,7 @@ package com.jocmp.basil.persistence
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOneNotNull
+import com.jocmp.basil.ArticleStatus
 import com.jocmp.basil.Feed
 import com.jocmp.basil.Folder
 import com.jocmp.basil.db.Database
@@ -13,22 +14,6 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlin.coroutines.coroutineContext
 
 internal class FeedRecords(val database: Database) {
-//    internal fun findOrCreate(id: String): Feeds {
-//        val existingFeed = database
-//            .feedsQueries
-//            .findByURL(feed_url = feedURL)
-//            .executeAsOneOrNull()
-//
-//        if (existingFeed != null) {
-//            return existingFeed
-//        }
-//
-//        return database.feedsQueries.create(
-//            id = "DELETEME",
-//            feed_url = feedURL
-//        ).executeAsOne()
-//    }
-
     suspend fun findBy(id: String): Feed? {
         return database.feedsQueries.findBy(id, mapper = ::feedMapper)
             .asFlow()
@@ -68,6 +53,7 @@ internal class FeedRecords(val database: Database) {
         siteURL: String?,
         faviconURL: String?,
         folderName: String? = "",
+        articleCount: Long = 0
     ): Feed {
         return Feed(
             id = id,
@@ -76,6 +62,7 @@ internal class FeedRecords(val database: Database) {
             feedURL = feedURL,
             siteURL = siteURL ?: "",
             folderName = folderName ?: "",
+            count = articleCount
         )
     }
 }

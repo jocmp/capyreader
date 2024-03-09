@@ -22,12 +22,11 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun startDestination(): String {
-        val accountManager = get<AccountManager>()
         val appPreferences = get<AppPreferences>()
 
-        val account = accountManager.findByID(appPreferences.accountID.get())
+        val accountID = appPreferences.accountID.get()
 
-        return if (account == null) {
+        return if (accountID.isBlank()) {
             "accounts"
         } else {
             "articles"

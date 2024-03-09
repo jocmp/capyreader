@@ -1,20 +1,23 @@
 package com.jocmp.basilreader.ui.articles
 
-import com.jocmp.basil.FeedSearch
-import com.jocmp.feedfinder.DefaultFeedFinder
-import com.jocmp.feedfinder.FeedFinder
-import org.koin.android.ext.koin.androidContext
+import com.jocmp.basil.Account
+import com.jocmp.basilreader.common.AppPreferences
 import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.core.scope.get
+import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
 
 internal val articlesModule = module {
-    single<FeedFinder> { DefaultFeedFinder() }
-    single { FeedSearch(get()) }
+    factory {
+        AddFeedStateHolder(
+            account = get<Account>(parameters = { parametersOf(get<AppPreferences>().accountID.get()) }),
+        )
+    }
     viewModel {
+        val appPreferences = get<AppPreferences>()
+
         AccountViewModel(
-            accountManager = get(),
-            appPreferences = get(),
+            account = get<Account>(parameters = { parametersOf(appPreferences.accountID.get()) }),
+            appPreferences = appPreferences
         )
     }
     viewModel {

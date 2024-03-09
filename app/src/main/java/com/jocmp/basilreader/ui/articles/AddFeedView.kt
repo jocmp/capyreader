@@ -1,165 +1,189 @@
 package com.jocmp.basilreader.ui.articles
 
-import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Card
-import androidx.compose.material3.Switch
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme.typography
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.toMutableStateMap
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.jocmp.basil.AddFeedForm
-import com.jocmp.basil.FeedSearch.SearchResult
-import com.jocmp.basil.Folder
-import com.jocmp.basil.common.orEmpty
+import com.jocmp.basil.accounts.FeedOption
 import com.jocmp.basilreader.R
-import com.jocmp.basilreader.ui.components.TextField
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @Composable
 fun AddFeedView(
-    folders: List<Folder>,
-    onSubmit: (feed: AddFeedForm) -> Unit,
+    feedChoices: List<FeedOption>,
+    onAddFeed: (url: String) -> Unit,
     onCancel: () -> Unit,
-    searchFeeds: suspend (url: String) -> SearchResult?,
+    loading: Boolean,
+    isError: Boolean,
 ) {
-    val scope = rememberCoroutineScope()
-    val (queryURL, setQueryURL) = remember { mutableStateOf("") }
-    val (searchResult, setSearchResult) = remember { mutableStateOf<SearchResult?>(null) }
-    val (name, setName) = remember { mutableStateOf("") }
-    val (addedFolder, setAddedFolder) = remember { mutableStateOf("") }
-    val switchFolders = remember {
-        folders.map { it.title to false }.toMutableStateMap()
-    }
-    val url = searchResult?.url.orEmpty
+    val (queryURL, setQueryURL) = rememberSaveable { mutableStateOf("") }
+    val (selectedOption, selectOption) = remember { mutableStateOf<FeedOption?>(null) }
+    val focusManager = LocalFocusManager.current
+    val keyboard = LocalSoftwareKeyboardController.current
 
-    val search = {
-        scope.launch(Dispatchers.IO) {
-            val result = searchFeeds(queryURL)
-            if (result != null) {
-                if (result.name.isNotBlank()) {
-                    setName(result.name)
-                }
-                setSearchResult(result)
-            }
-        }
-    }
+    val addFeed = {
+        focusManager.clearFocus()
+        keyboard?.hide()
 
-    val submitFeed = {
-        val existingFolderNames = switchFolders.filter { it.value }.keys
-        val folderNames = collectFolders(existingFolderNames, addedFolder)
-
-        if (searchResult != null) {
-            onSubmit(
-                AddFeedForm(
-                    url = searchResult.url,
-                    siteURL = searchResult.siteURL,
-                    name = name,
-                    folderTitles = folderNames
-                )
-            )
+        if (selectedOption != null) {
+            onAddFeed(selectedOption.feedURL)
+        } else {
+            onAddFeed(queryURL)
         }
     }
 
     Card(
         shape = RoundedCornerShape(16.dp)
     ) {
-        Column(Modifier.padding(16.dp)) {
+        Column(Modifier.padding(top = 16.dp)) {
             TextField(
                 value = queryURL,
                 onValueChange = setQueryURL,
-                readOnly = searchResult != null,
                 label = {
                     Text(stringResource(id = R.string.add_feed_url_title))
                 },
+                isError = isError,
+                supportingText = {
+                    if (isError) {
+                        Text(stringResource(R.string.add_feed_error))
+                    }
+                },
+                maxLines = 1,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                keyboardOptions = KeyboardOptions(
+                    autoCorrect = false,
+                    keyboardType = KeyboardType.Uri,
+                    imeAction = ImeAction.Done,
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = { addFeed() }
+                ),
+                trailingIcon = {
+                    if (loading) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
+                }
             )
-            if (url.isBlank()) {
-                Button(onClick = { search() }) {
-                    Text("Search")
+            if (feedChoices.isNotEmpty()) {
+                Row(Modifier.padding(top = 8.dp)) {
+                    FeedOptions(
+                        options = feedChoices,
+                        selectedOption = selectedOption,
+                        onOptionSelect = selectOption
+                    )
                 }
-            } else {
-                TextField(
-                    value = name,
-                    onValueChange = setName,
-                    label = {
-                        Text(stringResource(id = R.string.add_feed_name_title))
-                    },
-                    supportingText = {
-                        Text(url)
-                    }
-                )
-                TextField(
-                    value = addedFolder,
-                    onValueChange = setAddedFolder,
-                    placeholder = {
-                        Text(stringResource(id = R.string.add_feed_new_folder_title))
-                    }
-                )
-                Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-                    switchFolders.forEach { (folderTitle, checked) ->
-                        Row(
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(folderTitle)
-                            Switch(
-                                checked = checked,
-                                onCheckedChange = { value -> switchFolders[folderTitle] = value }
-                            )
-                        }
-                    }
-                }
-                Row(
-                    horizontalArrangement = Arrangement.End,
-                    modifier = Modifier.fillMaxWidth()
+            }
+            Row(
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                TextButton(
+                    onClick = { onCancel() },
+                    modifier = Modifier.padding(8.dp)
                 ) {
-                    TextButton(onClick = onCancel) {
-                        Text(stringResource(R.string.feed_form_cancel))
-                    }
-                    Button(onClick = { submitFeed() }) {
-                        Text(stringResource(R.string.add_feed_submit))
-                    }
+                    Text(stringResource(R.string.feed_form_cancel))
+                }
+                TextButton(
+                    onClick = { addFeed() },
+                    modifier = Modifier.padding(8.dp),
+                    enabled = !loading
+                ) {
+                    Text(stringResource(R.string.add_feed_submit))
                 }
             }
         }
     }
 }
 
-private fun collectFolders(
-    existingFolders: Set<String>,
-    addedFolder: String
-): List<String> {
-    val folderNames = existingFolders.toMutableList()
-
-    if (addedFolder.isNotBlank()) {
-        folderNames.add(addedFolder)
+@Composable
+fun FeedOptions(
+    options: List<FeedOption>,
+    selectedOption: FeedOption?,
+    onOptionSelect: (option: FeedOption) -> Unit,
+) {
+    Column(Modifier.selectableGroup()) {
+        options.forEach { option ->
+            val selected = option == selectedOption
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .height(56.dp)
+                    .selectable(
+                        selected = selected,
+                        onClick = {
+                            onOptionSelect(option)
+                        },
+                        role = Role.RadioButton
+                    )
+                    .padding(horizontal = 16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                RadioButton(selected = selected, onClick = null)
+                Column(modifier = Modifier.padding(start = 16.dp)) {
+                    Text(
+                        text = option.title,
+                        style = typography.bodyLarge,
+                    )
+                    Text(
+                        text = option.feedURL,
+                        style = typography.bodySmall,
+                    )
+                }
+            }
+        }
     }
-
-    return folderNames
 }
 
 @Preview
 @Composable
 fun AddFeedViewPreview() {
     AddFeedView(
-        folders = listOf(Folder(title = "Tech")),
-        onSubmit = {},
+        feedChoices = listOf(
+            FeedOption(
+                feedURL = "9to5google.com/feed/index",
+                title = "The Verge - All Feeds"
+            ),
+            FeedOption(
+                feedURL = "9to5google.com/feed/comments",
+                title = "9to5Google - Comments"
+            ),
+        ),
+        onAddFeed = {},
         onCancel = {},
-        searchFeeds = { null }
+        loading = false,
+        isError = true,
     )
 }

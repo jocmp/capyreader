@@ -1,5 +1,6 @@
-package com.jocmp.basil
+package com.jocmp.basil.accounts
 
+import com.jocmp.basil.Account
 import com.jocmp.feedbinclient.BasicAuthInterceptor
 import com.jocmp.feedbinclient.Feedbin
 import okhttp3.Cache
@@ -8,7 +9,7 @@ import okhttp3.OkHttpClient
 import java.io.File
 
 internal fun Feedbin.Companion.forAccount(
-    account: Account
+    account: Account,
 ): Feedbin {
     val basicAuthInterceptor = BasicAuthInterceptor {
         val username = account.preferences.username.get()

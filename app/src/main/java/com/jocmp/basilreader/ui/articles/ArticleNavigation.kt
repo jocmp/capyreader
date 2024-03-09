@@ -29,9 +29,6 @@ fun NavGraphBuilder.articleGraph(
         route = "articles",
     ) {
         ArticleScreen(
-            onAddFeed = {
-                navController.navigateToAddFeed()
-            },
             onEditFeed = { feedID ->
                 navController.navigateToEditFeed(feedID = feedID)
             },
@@ -40,22 +37,6 @@ fun NavGraphBuilder.articleGraph(
             },
             onNavigateToAccounts = {
                 navController.navigate(Route.AccountIndex)
-            }
-        )
-    }
-    dialog(
-        route = "feeds/new",
-    ) {
-        AddFeedScreen(
-            onCancel = {
-                navController.popBackStack()
-            },
-            onSubmit = {
-                navController.navigate(articlesRoute) {
-                    popUpTo(articlesRoute) {
-                        inclusive = true
-                    }
-                }
             }
         )
     }

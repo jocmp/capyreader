@@ -1,7 +1,6 @@
 package com.jocmp.basil
 
 import kotlinx.coroutines.runBlocking
-import okhttp3.OkHttpClient
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
@@ -27,30 +26,17 @@ class AccountManagerTest {
         val manager = buildManager()
 
         assertNotNull(manager.createAccount("foo", "bar"))
-        assertEquals(1, manager.accountSize())
-    }
-
-    @Test
-    fun removeAccount() {
-        val manager = buildManager()
-
-        val account = manager.createAccount("foo", "bar")
-        manager.createAccount("foo", "bar")
-
-        manager.removeAccount(account.id)
-
-        assertEquals(1, manager.accountSize())
     }
 
     @Test
     fun findById() = runBlocking {
         val manager = buildManager()
 
-        val expectedAccount = manager.createAccount("foo", "bar")
+        val accountID = manager.createAccount("foo", "bar")
 
-        val account = manager.findByID(expectedAccount.id)
+        val account = manager.findByID(accountID)
 
-        assertEquals(expectedAccount.id, account!!.id)
+        assertEquals(accountID, account!!.id)
     }
 
     @Test

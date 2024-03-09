@@ -71,7 +71,6 @@ dependencies {
     implementation(libs.retrofit2.retrofit)
     implementation(libs.rssparser)
     implementation(project(":feedbinclient"))
-    implementation(project(":feedfinder"))
     testImplementation("app.cash.sqldelight:sqlite-driver:$sqldelightVersion")
     implementation("app.cash.sqldelight:coroutines-extensions:$sqldelightVersion")
     testImplementation("junit:junit:4.13.2")

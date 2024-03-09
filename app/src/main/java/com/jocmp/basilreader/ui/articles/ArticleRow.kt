@@ -1,11 +1,11 @@
 package com.jocmp.basilreader.ui.articles
 
 import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemColors
 import androidx.compose.material3.ListItemDefaults
@@ -15,34 +15,26 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
-import com.bumptech.glide.integration.compose.placeholder
-import com.bumptech.glide.load.resource.bitmap.DownsampleStrategy
+import coil.compose.AsyncImage
 import com.jocmp.basil.Article
 import com.jocmp.basilreader.ui.theme.BasilReaderTheme
 import java.net.URL
 import java.time.OffsetDateTime
-import java.time.ZoneId
 import java.time.ZoneOffset
-import java.time.ZonedDateTime
 
 private val THUMBNAIL_SIZE = 56.dp
 
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun ArticleRow(
     article: Article,
     selected: Boolean,
     onSelect: (articleID: String) -> Unit,
 ) {
-    val thumbnailSize = with(LocalDensity.current) { THUMBNAIL_SIZE.roundToPx() }
     val imageURL = article.imageURL?.toString()
     val colors = listItemColors(
         selected = selected,
@@ -57,21 +49,14 @@ fun ArticleRow(
         ListItem(
             leadingContent = if (imageURL != null) {
                 {
-                    val background = ColorPainter(colorScheme.surfaceContainer)
-
-                    GlideImage(
+                    AsyncImage(
                         model = imageURL,
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
-                            .width(THUMBNAIL_SIZE)
-                            .aspectRatio(1f),
-                        loading = placeholder(background),
-                        failure = placeholder(background),
-                    ) {
-                        it.override(thumbnailSize)
-                            .downsample(DownsampleStrategy.CENTER_INSIDE)
-                    }
+                            .size(THUMBNAIL_SIZE)
+                            .background(colorScheme.surfaceContainer)
+                    )
                 }
             } else {
                 null
@@ -85,6 +70,7 @@ fun ArticleRow(
                 Column {
                     Text(
                         article.feedName,
+                        fontWeight = FontWeight.Bold
                     )
                     Text(
                         text = article.summary,
@@ -97,6 +83,21 @@ fun ArticleRow(
         )
     }
 }
+
+@Composable
+fun PlaceholderArticleRow() {
+    ListItem(
+        leadingContent = {
+            Box(
+                Modifier
+                    .size(THUMBNAIL_SIZE)
+                    .background(colorScheme.surfaceContainer)
+            )
+        },
+        headlineContent = {}
+    )
+}
+
 
 @Composable
 @Stable
