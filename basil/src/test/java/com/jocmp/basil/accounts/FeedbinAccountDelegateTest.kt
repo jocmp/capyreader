@@ -203,11 +203,12 @@ class FeedbinAccountDelegateTest {
             feedbin.createSubscription(body = CreateSubscriptionRequest(feed_url = url))
         } returns successResponse
 
-        val result = delegate.addFeed(url = url)
+        val result = delegate.addFeed(url = url).getOrNull() as AddFeedResult.Success
+        val feed = result.feed
 
         assertEquals(
-            expected = AddFeedResult.Success(feedTitle = "Ed Zitron"),
-            actual = result.getOrNull()
+            expected = "Ed Zitron",
+            actual = feed.name
         )
     }
 

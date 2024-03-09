@@ -1,14 +1,11 @@
 package com.jocmp.basilreader.ui.articles
 
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.jocmp.basil.Account
-import com.jocmp.basil.AccountManager
 import com.jocmp.basil.Article
 import com.jocmp.basil.ArticleFilter
 import com.jocmp.basil.ArticleStatus
@@ -21,15 +18,9 @@ import com.jocmp.basilreader.common.AppPreferences
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapLatest
-import kotlinx.coroutines.flow.shareIn
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -37,15 +28,15 @@ class AccountViewModel(
     private val account: Account,
     private val appPreferences: AppPreferences,
 ) : ViewModel() {
-    private val _filter = MutableStateFlow(appPreferences.filter.get())
+    val filter = MutableStateFlow(appPreferences.filter.get())
 
     private val articleState = mutableStateOf(account.findArticle(appPreferences.articleID.get()))
 
-    private val _counts = _filter.flatMapLatest { latestFilter ->
+    private val _counts = filter.flatMapLatest { latestFilter ->
         account.countAll(latestFilter.status)
     }
 
-    val articles: Flow<PagingData<Article>> = _filter
+    val articles: Flow<PagingData<Article>> = filter
         .flatMapLatest { account.buildPager(it).flow }
         .cachedIn(viewModelScope)
 
@@ -67,10 +58,7 @@ class AccountViewModel(
         get() = articleState.value
 
     private val filterStatus: ArticleStatus
-        get() = _filter.value.status
-
-    val filter: ArticleFilter
-        get() = _filter.value
+        get() = filter.value.status
 
     fun selectArticleFilter() {
         val nextFilter = ArticleFilter.default().withStatus(status = filterStatus)
@@ -79,25 +67,23 @@ class AccountViewModel(
     }
 
     fun selectStatus(status: ArticleStatus) {
-        val nextFilter = _filter.value.withStatus(status = status)
+        val nextFilter = filter.value.withStatus(status = status)
 
         updateFilterValue(nextFilter)
     }
 
-    fun selectFeed(feedID: String) {
-        viewModelScope.launch {
-            val feed = account.findFeed(feedID) ?: return@launch
-            val feedFilter = ArticleFilter.Feeds(feed = feed, feedStatus = _filter.value.status)
+    suspend fun selectFeed(feedID: String) {
+        val feed = account.findFeed(feedID) ?: return
+        val feedFilter = ArticleFilter.Feeds(feed = feed, feedStatus = filter.value.status)
 
-            selectArticleFilter(feedFilter)
-        }
+        selectArticleFilter(feedFilter)
     }
 
     fun selectFolder(title: String) {
         viewModelScope.launch {
             val folder = account.findFolder(title) ?: return@launch
             val feedFilter =
-                ArticleFilter.Folders(folder = folder, folderStatus = _filter.value.status)
+                ArticleFilter.Folders(folder = folder, folderStatus = filter.value.status)
 
             selectArticleFilter(feedFilter)
         }
@@ -119,7 +105,7 @@ class AccountViewModel(
 
     fun refreshFeed(onSuccess: () -> Unit) {
         viewModelScope.launch {
-            when (val currentFilter = filter) {
+            when (val currentFilter = filter.value) {
                 is ArticleFilter.Feeds -> account.refreshFeed(currentFilter.feed)
                 is ArticleFilter.Folders -> account.refreshFeeds(currentFilter.folder.feeds)
                 is ArticleFilter.Articles -> account.refreshAll()
@@ -178,11 +164,11 @@ class AccountViewModel(
     }
 
     private fun resetToDefaultFilter() {
-        selectArticleFilter(ArticleFilter.default().copy(filter.status))
+        selectArticleFilter(ArticleFilter.default().copy(filterStatus))
     }
 
     private fun updateFilterValue(nextFilter: ArticleFilter) {
-        _filter.value = nextFilter
+        filter.value = nextFilter
         appPreferences.filter.set(nextFilter)
     }
 

@@ -1,6 +1,5 @@
 package com.jocmp.basilreader.ui.articles
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -12,7 +11,6 @@ private const val TAG = "ArticleScreen"
 @Composable
 fun ArticleScreen(
     viewModel: AccountViewModel = koinViewModel(),
-    onNavigateToAddFeed: () -> Unit,
     onEditFeed: (feedID: String) -> Unit,
     onEditFolder: (folderTitle: String) -> Unit,
     onNavigateToAccounts: () -> Unit,
@@ -20,9 +18,10 @@ fun ArticleScreen(
     val feeds by viewModel.feeds.collectAsStateWithLifecycle(initialValue = emptyList())
     val folders by viewModel.folders.collectAsStateWithLifecycle(initialValue = emptyList())
     val statusCount by viewModel.statusCount.collectAsStateWithLifecycle(initialValue = 0)
+    val filter by viewModel.filter.collectAsStateWithLifecycle()
 
     ArticleLayout(
-        filter = viewModel.filter,
+        filter = filter,
         folders = folders,
         feeds = feeds,
         article = viewModel.article,
@@ -33,7 +32,6 @@ fun ArticleScreen(
         onClearArticle = viewModel::clearArticle,
         onEditFeed = onEditFeed,
         onEditFolder = onEditFolder,
-        onNavigateToAddFeed = onNavigateToAddFeed,
         onNavigateToAccounts = onNavigateToAccounts,
         onSelectArticleFilter = viewModel::selectArticleFilter,
         onSelectFeed = viewModel::selectFeed,

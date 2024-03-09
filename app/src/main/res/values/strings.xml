@@ -4,6 +4,7 @@
     <string name="add_feed_name_title">Name</string>
     <string name="add_feed_new_folder_title">New Folder</string>
     <string name="add_feed_submit">Add</string>
+    <string name="add_feed_success">Successfully added feed</string>
     <string name="feed_form_cancel">Cancel</string>
     <string name="required_placeholder">Required</string>
     <string name="filter_starred">Starred</string>

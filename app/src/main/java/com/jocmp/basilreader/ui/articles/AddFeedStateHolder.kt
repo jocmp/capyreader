@@ -1,19 +1,16 @@
 package com.jocmp.basilreader.ui.articles
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.jocmp.basil.Account
-import com.jocmp.basil.AccountManager
 import com.jocmp.basil.Feed
 import com.jocmp.basil.accounts.AddFeedResult
 import com.jocmp.basil.accounts.FeedOption
-import com.jocmp.basilreader.common.AppPreferences
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-class AddFeedViewModel(
+class AddFeedStateHolder(
     val account: Account
-) : ViewModel() {
+) {
     private val _result = mutableStateOf<AddFeedResult?>(null)
     private val _loading = mutableStateOf(false)
     private val _hasError = mutableStateOf(false)
@@ -34,11 +31,11 @@ class AddFeedViewModel(
             } ?: emptyList()
         }
 
-    fun addFeed(
+    suspend fun addFeed(
         url: String,
         onComplete: (feed: Feed) -> Unit,
     ) {
-        viewModelScope.launch {
+        withContext(Dispatchers.IO) {
             _loading.value = true
             _hasError.value = false
 
@@ -47,7 +44,7 @@ class AddFeedViewModel(
 
             if (result == null) {
                 _hasError.value = true
-                return@launch
+                return@withContext
             }
 
             when (result) {

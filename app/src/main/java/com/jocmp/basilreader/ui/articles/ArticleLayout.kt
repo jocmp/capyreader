@@ -1,9 +1,5 @@
 package com.jocmp.basilreader.ui.articles
 
-import androidx.compose.animation.Crossfade
-import androidx.compose.animation.core.LinearOutSlowInEasing
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -15,6 +11,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.ListDetailPaneScaffoldRole
@@ -24,11 +22,13 @@ import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -37,6 +37,7 @@ import com.jocmp.basil.ArticleFilter
 import com.jocmp.basil.ArticleStatus
 import com.jocmp.basil.Feed
 import com.jocmp.basil.Folder
+import com.jocmp.basilreader.R
 import com.jocmp.basilreader.ui.components.rememberSaveableWebViewState
 import com.jocmp.basilreader.ui.components.rememberWebViewNavigator
 import com.jocmp.basilreader.ui.fixtures.FeedPreviewFixture
@@ -61,7 +62,7 @@ fun ArticleLayout(
     statusCount: Long,
     onFeedRefresh: (completion: () -> Unit) -> Unit,
     onSelectFolder: (folderTitle: String) -> Unit,
-    onSelectFeed: (feedID: String) -> Unit,
+    onSelectFeed: suspend (feedID: String) -> Unit,
     onSelectArticleFilter: () -> Unit,
     onSelectStatus: (status: ArticleStatus) -> Unit,
     onSelectArticle: (articleID: String, completion: (article: Article) -> Unit) -> Unit,
@@ -69,7 +70,6 @@ fun ArticleLayout(
     onEditFeed: (feedID: String) -> Unit,
     onRemoveFeed: (feedID: String) -> Unit,
     onRemoveFolder: (folderTitle: String) -> Unit,
-    onNavigateToAddFeed: () -> Unit,
     onNavigateToAccounts: () -> Unit,
     onClearArticle: () -> Unit,
     onToggleArticleRead: () -> Unit,
@@ -88,20 +88,19 @@ fun ArticleLayout(
     val webViewState = rememberSaveableWebViewState()
     val listState = rememberLazyListState()
     val pagingArticles = articles.collectAsLazyPagingItems(Dispatchers.IO)
+    val state = rememberPullToRefreshState()
+    val snackbarHost = remember { SnackbarHostState() }
+    val addFeedSuccessMessage = stringResource(R.string.add_feed_success)
 
     val navigateToDetail = {
         navigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
     }
 
-    val onComplete = {
-        coroutineScope.launch {
-            navigator.navigateTo(ListDetailPaneScaffoldRole.List)
-            delay(200)
-            drawerState.close()
-        }
+    val navigateToList = suspend {
+        navigator.navigateTo(ListDetailPaneScaffoldRole.List)
+        delay(200)
+        drawerState.close()
     }
-
-    val state = rememberPullToRefreshState()
 
     if (state.isRefreshing) {
         LaunchedEffect(true) {
@@ -125,20 +124,33 @@ fun ArticleLayout(
                 feeds = feeds,
                 onSelectFolder = {
                     onSelectFolder(it)
-                    onComplete()
+                    coroutineScope.launch {
+                        navigateToList()
+                    }
                 },
                 onSelectFeed = {
-                    onSelectFeed(it)
-                    onComplete()
+                    coroutineScope.launch {
+                        onSelectFeed(it)
+                        navigateToList()
+                    }
+                },
+                onFeedAdded = { feedID ->
+                    coroutineScope.launch {
+                        onSelectFeed(feedID)
+                        navigateToList()
+                        snackbarHost.showSnackbar(addFeedSuccessMessage)
+                    }
                 },
                 onNavigateToAccounts = onNavigateToAccounts,
                 onFilterSelect = {
                     onSelectArticleFilter()
-                    onComplete()
+                    coroutineScope.launch {
+                        listState.scrollToItem(0)
+                        navigateToList()
+                    }
                 },
                 filter = filter,
                 statusCount = statusCount,
-                onNavigateToAddFeed = onNavigateToAddFeed,
             )
         },
         listPane = {
@@ -165,6 +177,9 @@ fun ArticleLayout(
                         }
                     )
                 },
+                snackbarHost = {
+                    SnackbarHost(hostState = snackbarHost)
+                },
                 bottomBar = {
                     ArticleFilterNavigationBar(
                         selected = filterStatus,
@@ -177,26 +192,20 @@ fun ArticleLayout(
                         .padding(innerPadding)
                         .nestedScroll(state.nestedScrollConnection)
                 ) {
-                    Crossfade(
-                        pagingArticles,
-                        animationSpec = spring(),
-                        label = ""
-                    ) {
-                        ArticleList(
-                            articles = it,
-                            selectedArticleKey = article?.id,
-                            listState = listState,
-                            onSelect = { articleID ->
-                                onSelectArticle(articleID) {
-                                    coroutineScope.launch {
-                                        val html = ArticleRenderer.render(it, context)
-                                        webViewNavigator.loadHtml(html)
-                                        navigateToDetail()
-                                    }
+                    ArticleList(
+                        articles = pagingArticles,
+                        selectedArticleKey = article?.id,
+                        listState = listState,
+                        onSelect = { articleID ->
+                            onSelectArticle(articleID) {
+                                coroutineScope.launch {
+                                    val html = ArticleRenderer.render(it, context)
+                                    webViewNavigator.loadHtml(html)
+                                    navigateToDetail()
                                 }
                             }
-                        )
-                    }
+                        }
+                    )
 
                     PullToRefreshContainer(
                         modifier = Modifier.align(Alignment.TopCenter),
@@ -254,7 +263,6 @@ fun ArticleLayoutPreview() {
             onEditFeed = {},
             onRemoveFeed = {},
             onRemoveFolder = {},
-            onNavigateToAddFeed = {},
             onNavigateToAccounts = { },
             onClearArticle = { },
             onToggleArticleRead = { },

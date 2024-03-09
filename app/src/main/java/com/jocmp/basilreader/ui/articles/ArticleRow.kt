@@ -85,6 +85,21 @@ fun ArticleRow(
 }
 
 @Composable
+fun PlaceholderArticleRow() {
+    ListItem(
+        leadingContent = {
+            Box(
+                Modifier
+                    .size(THUMBNAIL_SIZE)
+                    .background(colorScheme.surfaceContainer)
+            )
+        },
+        headlineContent = {}
+    )
+}
+
+
+@Composable
 @Stable
 private fun listItemColors(
     selected: Boolean,

@@ -7,8 +7,8 @@ import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
 
 internal val articlesModule = module {
-    viewModel {
-        AddFeedViewModel(
+    factory {
+        AddFeedStateHolder(
             account = get<Account>(parameters = { parametersOf(get<AppPreferences>().accountID.get()) }),
         )
     }

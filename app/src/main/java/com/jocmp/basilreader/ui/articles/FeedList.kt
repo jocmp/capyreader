@@ -42,7 +42,7 @@ fun FeedList(
     onFilterSelect: () -> Unit,
     onSelectFolder: (folderTitle: String) -> Unit,
     onSelectFeed: (feedID: String) -> Unit,
-    onNavigateToAddFeed: () -> Unit,
+    onFeedAdded: (feedID: String) -> Unit,
     onNavigateToAccounts: () -> Unit,
 ) {
     val scrollState = rememberScrollState()
@@ -55,7 +55,9 @@ fun FeedList(
                 .padding(vertical = 8.dp),
         ) {
             AddFeedButton(
-                onClick = { onNavigateToAddFeed() }
+                onComplete = {
+                    onFeedAdded(it)
+                }
             )
             IconButton(onClick = { onNavigateToAccounts() }) {
                 Icon(
@@ -121,6 +123,6 @@ fun FeedListPreview() {
         onFilterSelect = {},
         filter = ArticleFilter.default(),
         statusCount = 10,
-        onNavigateToAddFeed = {}
+        onFeedAdded = {}
     )
 }
