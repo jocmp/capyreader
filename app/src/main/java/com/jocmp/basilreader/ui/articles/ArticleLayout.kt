@@ -151,6 +151,7 @@ fun ArticleLayout(
                 },
                 filter = filter,
                 statusCount = statusCount,
+                onStatusSelect = onSelectStatus,
             )
         },
         listPane = {
@@ -180,12 +181,6 @@ fun ArticleLayout(
                 snackbarHost = {
                     SnackbarHost(hostState = snackbarHost)
                 },
-                bottomBar = {
-                    ArticleFilterNavigationBar(
-                        selected = filterStatus,
-                        onSelect = onSelectStatus,
-                    )
-                }
             ) { innerPadding ->
                 Box(
                     Modifier

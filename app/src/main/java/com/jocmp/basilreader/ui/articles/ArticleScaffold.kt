@@ -48,9 +48,7 @@ fun ArticleScaffold(
         gesturesEnabled = drawerState.isOpen,
         drawerContent = {
             ModalDrawerSheet {
-                Box(Modifier.padding(horizontal = 12.dp)) {
-                    drawerPane()
-                }
+                drawerPane()
             }
         },
     ) {
