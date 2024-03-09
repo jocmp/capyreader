@@ -1,12 +1,10 @@
 package com.jocmp.basilreader.ui.articles
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalDrawerSheet
@@ -18,9 +16,7 @@ import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.ListDetailPaneScaffold
 import androidx.compose.material3.adaptive.ListDetailPaneScaffoldRole
 import androidx.compose.material3.adaptive.PaneScaffoldDirective
-import androidx.compose.material3.adaptive.ThreePaneScaffoldDestinationItem
 import androidx.compose.material3.adaptive.ThreePaneScaffoldState
-import androidx.compose.material3.adaptive.calculateListDetailPaneScaffoldState
 import androidx.compose.material3.adaptive.calculateStandardPaneScaffoldDirective
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.rememberListDetailPaneScaffoldNavigator

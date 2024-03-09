@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.targets.js.npm.importedPackageDir
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")

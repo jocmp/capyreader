@@ -3,8 +3,6 @@ package com.jocmp.basilreader.ui.fixtures
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.jocmp.basil.Feed
 import com.jocmp.basil.RandomUUID
-import java.util.UUID
-import kotlin.random.Random
 
 class FeedPreviewFixture : PreviewParameterProvider<Feed> {
     override val values = feeds()

@@ -1,24 +1,17 @@
 package com.jocmp.basilreader.ui.articles
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 import com.jocmp.basil.Article
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ArticleList(
     articles: LazyPagingItems<Article>,
@@ -44,9 +37,7 @@ fun ArticleList(
         ) { index ->
             val item = articles[index]
 
-            Box(
-                Modifier.animateItemPlacement()
-            ) {
+            Box {
                 if (item == null) {
                     PlaceholderArticleRow()
                 } else {

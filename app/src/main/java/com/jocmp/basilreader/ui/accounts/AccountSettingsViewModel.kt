@@ -4,13 +4,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.neverEqualPolicy
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.jocmp.basil.Account
 import com.jocmp.basil.AccountManager
 import com.jocmp.basilreader.refresher.RefreshInterval
 import com.jocmp.basilreader.refresher.RefreshScheduler
-import kotlinx.coroutines.launch
-import java.io.InputStream
 
 class AccountSettingsViewModel(
     savedStateHandle: SavedStateHandle,

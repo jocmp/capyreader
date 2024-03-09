@@ -1,6 +1,12 @@
 package com.jocmp.basilreader.refresher
 
-import com.jocmp.basilreader.refresher.RefreshInterval.*
+import com.jocmp.basilreader.refresher.RefreshInterval.EVERY_EIGHT_HOURS
+import com.jocmp.basilreader.refresher.RefreshInterval.EVERY_FIFTEEN_MINUTES
+import com.jocmp.basilreader.refresher.RefreshInterval.EVERY_FOUR_HOURS
+import com.jocmp.basilreader.refresher.RefreshInterval.EVERY_HOUR
+import com.jocmp.basilreader.refresher.RefreshInterval.EVERY_THIRTY_MINUTES
+import com.jocmp.basilreader.refresher.RefreshInterval.EVERY_TWO_HOURS
+import com.jocmp.basilreader.refresher.RefreshInterval.MANUALLY_ONLY
 import java.util.concurrent.TimeUnit
 
 val RefreshInterval.toTime: Pair<Long, TimeUnit>?

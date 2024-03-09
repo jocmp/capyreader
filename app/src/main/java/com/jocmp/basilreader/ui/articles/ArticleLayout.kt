@@ -98,6 +98,7 @@ fun ArticleLayout(
 
     val navigateToList = suspend {
         navigator.navigateTo(ListDetailPaneScaffoldRole.List)
+        listState.scrollToItem(0)
         delay(200)
         drawerState.close()
     }
@@ -145,7 +146,6 @@ fun ArticleLayout(
                 onFilterSelect = {
                     onSelectArticleFilter()
                     coroutineScope.launch {
-                        listState.scrollToItem(0)
                         navigateToList()
                     }
                 },

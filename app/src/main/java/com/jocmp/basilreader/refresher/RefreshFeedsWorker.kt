@@ -5,7 +5,6 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.lang.Exception
 
 class RefreshFeedsWorker(
     appContext: Context,
