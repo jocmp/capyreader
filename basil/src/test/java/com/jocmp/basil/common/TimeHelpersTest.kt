@@ -4,6 +4,7 @@ package com.jocmp.basil.common
 import org.junit.Test
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
+import java.time.ZonedDateTime
 import kotlin.test.assertEquals
 
 class TimeHelpersTest {
@@ -11,7 +12,7 @@ class TimeHelpersTest {
     fun `parseISODate parses an offset ISO timestamp to UTC`() {
         val result = "2023-12-25T09:00:00-05:00".toDateTime
 
-        val expected = OffsetDateTime.of(
+        val expected = ZonedDateTime.of(
             2023,
             12,
             25,

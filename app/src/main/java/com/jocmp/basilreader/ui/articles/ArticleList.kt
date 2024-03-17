@@ -5,12 +5,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
 import com.jocmp.basil.Article
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 
 @Composable
 fun ArticleList(
@@ -20,6 +22,7 @@ fun ArticleList(
     listState: LazyListState
 ) {
     val composableScope = rememberCoroutineScope()
+    val currentTime = remember { LocalDateTime.now() }
 
     val selectArticle = { articleID: String ->
         composableScope.launch {
@@ -45,6 +48,7 @@ fun ArticleList(
                         article = item,
                         selected = selectedArticleKey == item.id,
                         onSelect = { selectArticle(it) },
+                        currentTime = currentTime
                     )
                 }
             }

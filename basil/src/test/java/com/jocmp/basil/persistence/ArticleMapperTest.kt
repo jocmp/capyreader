@@ -25,7 +25,7 @@ class ArticleMapperTest {
             feedTitle = ""
         )
 
-        val expectedTime = OffsetDateTime.of(
+        val expectedTime = ZonedDateTime.of(
             2023,
             12,
             30,

@@ -27,7 +27,7 @@ class ArticleRecords internal constructor(
         ).executeAsOneOrNull()
     }
 
-    fun markRead(articleID: String, lastReadAt: OffsetDateTime = nowUTC()) {
+    fun markRead(articleID: String, lastReadAt: ZonedDateTime = nowUTC()) {
         val updated = lastReadAt.toEpochSecond()
 
         database.articlesQueries.markRead(
@@ -38,7 +38,7 @@ class ArticleRecords internal constructor(
         )
     }
 
-    fun markUnread(articleID: String, updatedAt: OffsetDateTime = nowUTC()) {
+    fun markUnread(articleID: String, updatedAt: ZonedDateTime = nowUTC()) {
         database.articlesQueries.markRead(
             articleID = articleID,
             read = false,
@@ -47,7 +47,7 @@ class ArticleRecords internal constructor(
         )
     }
 
-    fun addStar(articleID: String, updatedAt: OffsetDateTime = nowUTC()) {
+    fun addStar(articleID: String, updatedAt: ZonedDateTime = nowUTC()) {
         database.articlesQueries.markStarred(
             articleID = articleID,
             starred = true,
@@ -55,7 +55,7 @@ class ArticleRecords internal constructor(
         )
     }
 
-    fun removeStar(articleID: String, updatedAt: OffsetDateTime = nowUTC()) {
+    fun removeStar(articleID: String, updatedAt: ZonedDateTime = nowUTC()) {
         database.articlesQueries.markStarred(
             articleID = articleID,
             starred = false,

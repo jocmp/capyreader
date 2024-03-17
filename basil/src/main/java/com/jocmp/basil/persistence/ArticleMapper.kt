@@ -30,6 +30,7 @@ internal fun articleMapper(
         imageURL = optionalURL(imageURL),
         summary = summary ?: "",
         updatedAt = updatedAt!!.toDateTimeFromSeconds,
+        publishedAt = publishedAt!!.toDateTimeFromSeconds,
         read = read ?: false,
         starred = starred ?: false,
         feedName = feedTitle ?: ""
