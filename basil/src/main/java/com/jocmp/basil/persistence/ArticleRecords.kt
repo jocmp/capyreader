@@ -3,7 +3,6 @@ package com.jocmp.basil.persistence
 import app.cash.sqldelight.Query
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
-import app.cash.sqldelight.db.QueryResult
 import com.jocmp.basil.Article
 import com.jocmp.basil.ArticleStatus
 import com.jocmp.basil.common.nowUTC
@@ -13,6 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.time.OffsetDateTime
 import java.time.ZonedDateTime
+import java.util.Objects
 
 class ArticleRecords internal constructor(
     internal val database: Database

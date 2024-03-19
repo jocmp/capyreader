@@ -22,7 +22,8 @@ class ArticleMapperTest {
             updatedAt = 1703960809,
             read = false,
             starred = false,
-            feedTitle = ""
+            feedTitle = "",
+            faviconURL = null
         )
 
         val expectedTime = ZonedDateTime.of(

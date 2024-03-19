@@ -5,7 +5,6 @@ import com.jocmp.basil.db.Database
 import com.jocmp.basil.fixtures.ArticleFixture
 import org.junit.Before
 import org.junit.Test
-import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
 class FeedRecordsTest {

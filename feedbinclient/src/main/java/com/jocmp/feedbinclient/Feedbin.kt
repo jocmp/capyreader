@@ -26,6 +26,9 @@ interface Feedbin {
     @GET("v2/authentication.json")
     suspend fun authentication(@Header("Authorization") authentication: String): Response<Void>
 
+    @GET("v2/icons.json")
+    suspend fun icons(): Response<List<Icon>>
+
     @GET("v2/subscriptions.json")
     suspend fun subscriptions(): Response<List<Subscription>>
 

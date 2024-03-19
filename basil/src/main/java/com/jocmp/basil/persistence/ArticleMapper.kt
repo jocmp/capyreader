@@ -17,6 +17,7 @@ internal fun articleMapper(
     imageURL: String?,
     publishedAt: Long?,
     feedTitle: String?,
+    faviconURL: String?,
     updatedAt: Long?,
     starred: Boolean?,
     read: Boolean?,
@@ -24,6 +25,7 @@ internal fun articleMapper(
     return Article(
         id = id,
         feedID = feedID.toString(),
+        faviconURL = faviconURL,
         title = title ?: "",
         contentHTML = contentHtml ?: "",
         url = optionalURL(url),
@@ -47,6 +49,7 @@ internal fun listMapper(
     imageURL: String?,
     publishedAt: Long?,
     feedTitle: String?,
+    faviconURL: String?,
     updatedAt: Long?,
     starred: Boolean?,
     read: Boolean?,
@@ -54,6 +57,7 @@ internal fun listMapper(
     return articleMapper(
         id = id,
         feedID = feedID.toString(),
+        faviconURL = faviconURL,
         title = title ?: "",
         contentHtml = "",
         url = url,

@@ -28,14 +28,16 @@ INSERT OR REPLACE INTO feeds(
     subscription_id,
     title,
     feed_url,
-    site_url
+    site_url,
+    favicon_url
 )
 VALUES (
   :id,
   :subscription_id,
     :title,
   :feed_url,
-  :site_url
+  :site_url,
+  :favicon_url
 );
 
 delete {

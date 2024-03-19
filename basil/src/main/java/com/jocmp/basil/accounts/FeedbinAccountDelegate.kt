@@ -8,19 +8,22 @@ import com.jocmp.basil.db.Database
 import com.jocmp.basil.persistence.FeedRecords
 import com.jocmp.feedbinclient.CreateSubscriptionRequest
 import com.jocmp.feedbinclient.Feedbin
+import com.jocmp.feedbinclient.Icon
 import com.jocmp.feedbinclient.StarredEntriesRequest
 import com.jocmp.feedbinclient.Subscription
 import com.jocmp.feedbinclient.UnreadEntriesRequest
 import kotlinx.serialization.json.Json
 import retrofit2.Response
 import java.lang.Exception
+import java.net.MalformedURLException
+import java.net.URL
 
 internal class FeedbinAccountDelegate(
     private val database: Database,
     private val feedbin: Feedbin
 ) {
-    class FeedNotFound: Exception()
-    class SaveFeedFailure: Exception()
+    class FeedNotFound : Exception()
+    class SaveFeedFailure : Exception()
 
     private val feedRecords = FeedRecords(database)
 
@@ -62,7 +65,8 @@ internal class FeedbinAccountDelegate(
         }
 
         return if (subscription != null) {
-            upsertFeed(subscription)
+            val icons = fetchIcons()
+            upsertFeed(subscription, icons)
 
             val feed = feedRecords.findBy(subscription.feed_id.toString())
 
@@ -89,9 +93,11 @@ internal class FeedbinAccountDelegate(
     }
 
     private suspend fun refreshFeeds() {
+        val icons = fetchIcons()
+
         withResult(feedbin.subscriptions()) { subscriptions ->
             subscriptions.forEach { subscription ->
-                upsertFeed(subscription)
+                upsertFeed(subscription, icons)
             }
 
             val feedsToRemove = subscriptions.map { it.feed_id.toString() }
@@ -100,13 +106,16 @@ internal class FeedbinAccountDelegate(
         }
     }
 
-    private fun upsertFeed(subscription: Subscription) {
+    private fun upsertFeed(subscription: Subscription, icons: List<Icon>) {
+        val icon = icons.find { it.host == host(subscription) }
+
         database.feedsQueries.upsert(
             id = subscription.feed_id.toString(),
             subscription_id = subscription.id.toString(),
             title = subscription.title,
             feed_url = subscription.feed_url,
             site_url = subscription.site_url,
+            favicon_url = icon?.url
         )
     }
 
@@ -148,6 +157,17 @@ internal class FeedbinAccountDelegate(
         }
     }
 
+    private suspend fun fetchIcons(): List<Icon> {
+        val response = feedbin.icons()
+        val result = response.body()
+
+        if (!response.isSuccessful || result == null) {
+            return listOf()
+        }
+
+        return result
+    }
+
     private fun maxUpdatedAt(): String? {
         val max = database.articlesQueries.lastUpdatedAt().executeAsOne().MAX
         max ?: return null
@@ -156,7 +176,15 @@ internal class FeedbinAccountDelegate(
     }
 }
 
-fun <T> withResult(response: Response<T>, handler: (result: T) -> Unit) {
+private fun host(subscription: Subscription): String? {
+    return try {
+        URL(subscription.site_url).host
+    } catch (e: MalformedURLException) {
+        null
+    }
+}
+
+private fun <T> withResult(response: Response<T>, handler: (result: T) -> Unit) {
     val result = response.body()
 
     if (!response.isSuccessful || result == null) {

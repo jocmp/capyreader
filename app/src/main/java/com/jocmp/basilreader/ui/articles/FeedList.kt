@@ -109,6 +109,11 @@ fun FeedList(
                 }
             )
 
+            if (folders.isNotEmpty()) {
+                FeedListDivider()
+                ListHeadline(text = stringResource(R.string.nav_headline_tags))
+            }
+
             folders.forEach {
                 FolderRow(
                     folder = it,
@@ -118,46 +123,55 @@ fun FeedList(
                 )
             }
 
-            if (feeds.isNotEmpty()) {
-                HorizontalDivider(
-                    Modifier
-                        .padding(horizontal = 16.dp)
-                        .padding(top = 8.dp)
-                )
-                ListHeadline(text = stringResource(R.string.nav_headline_feeds))
-                feeds.forEach {
-                    FeedRow(
-                        feed = it,
-                        onSelect = onSelectFeed,
-                        selected = filter.isFeedSelected(it),
-                    )
-                }
+            if (folders.isNotEmpty() && feeds.isNotEmpty()) {
+                FeedListDivider()
             }
-        }
 
-        Surface(
-            shadowElevation = 2.dp,
-            tonalElevation = 2.dp,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
-            ) {
-                IconButton(onClick = { onNavigateToAccounts() }) {
-                    Icon(
-                        imageVector = Icons.Filled.Settings,
-                        contentDescription = stringResource(R.string.accounts_action)
-                    )
-                }
-                AddFeedButton(
-                    onComplete = {
-                        onFeedAdded(it)
-                    }
+            if (feeds.isNotEmpty()) {
+                ListHeadline(text = stringResource(R.string.nav_headline_feeds))
+            }
+
+            feeds.forEach {
+                FeedRow(
+                    feed = it,
+                    onSelect = onSelectFeed,
+                    selected = filter.isFeedSelected(it),
                 )
             }
         }
     }
+
+    Surface(
+        shadowElevation = 2.dp,
+        tonalElevation = 2.dp,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+        ) {
+            IconButton(onClick = { onNavigateToAccounts() }) {
+                Icon(
+                    imageVector = Icons.Filled.Settings,
+                    contentDescription = stringResource(R.string.accounts_action)
+                )
+            }
+            AddFeedButton(
+                onComplete = {
+                    onFeedAdded(it)
+                }
+            )
+        }
+    }
+}
+
+@Composable
+private fun FeedListDivider() {
+    HorizontalDivider(
+        Modifier
+            .padding(horizontal = 16.dp)
+            .padding(top = 8.dp)
+    )
 }
 
 @Preview

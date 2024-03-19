@@ -2,10 +2,8 @@ package com.jocmp.basil.persistence
 
 import com.jocmp.basil.ArticleStatus
 import com.jocmp.basil.InMemoryDatabaseProvider
-import com.jocmp.basil.RandomUUID
 import com.jocmp.basil.db.Database
 import com.jocmp.basil.fixtures.ArticleFixture
-import com.jocmp.basil.fixtures.FeedFixture
 import com.jocmp.basil.repeated
 import org.junit.Before
 import org.junit.Test

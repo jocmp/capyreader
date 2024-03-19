@@ -2,6 +2,7 @@ findByStatus:
 SELECT
   articles.*,
   feeds.title AS feed_title,
+  feeds.favicon_url,
   article_statuses.updated_at,
   article_statuses.starred,
   article_statuses.read
@@ -18,6 +19,7 @@ findByFeeds:
 SELECT
   articles.*,
   feeds.title AS feed_title,
+  feeds.favicon_url,
   article_statuses.updated_at,
   article_statuses.starred,
   article_statuses.read
@@ -50,6 +52,7 @@ findBy:
 SELECT
   articles.*,
   feeds.title AS feed_title,
+  feeds.favicon_url,
   article_statuses.updated_at,
   article_statuses.starred,
   article_statuses.read

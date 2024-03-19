@@ -14,15 +14,15 @@ data class Entry(
     val summary: String?,
     val published: String,
     val created_at: String,
-    val images: EntryImages? = null,
-)
-
-@JsonClass(generateAdapter = true)
-data class EntryImages(
-    val size_1: EntryImagesSizeOne,
-)
-
-@JsonClass(generateAdapter = true)
-data class EntryImagesSizeOne(
-    val cdn_url: String,
-)
+    val images: Images? = null,
+) {
+    @JsonClass(generateAdapter = true)
+    class Images(
+        val size_1: SizeOne,
+    ) {
+        @JsonClass(generateAdapter = true)
+        class SizeOne(
+            val cdn_url: String,
+        )
+    }
+}

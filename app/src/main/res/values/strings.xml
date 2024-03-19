@@ -42,6 +42,7 @@
     <string name="refresh_manually_only">Manually only</string>
     <string name="refresh_minutes">Every %1$d minutes</string>
     <string name="refresh_feeds_menu_label">Refresh Feeds</string>
+    <string name="nav_headline_tags">Tags</string>
     <string name="nav_headline_feeds">Feeds</string>
     <string name="nav_add_feed">Add Feed</string>
     <string name="add_feed_error">Couldn\'t find feed</string>
