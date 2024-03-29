@@ -11,7 +11,7 @@ java {
 
 dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation(libs.moshi.kotlin)
+    implementation(libs.moshi)
     implementation(libs.kotlinx.coroutines.core)
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
     implementation(libs.retrofit2.retrofit)
