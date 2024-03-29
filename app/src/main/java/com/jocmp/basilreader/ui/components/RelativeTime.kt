@@ -21,7 +21,7 @@ fun relativeTime(
     val duration = Duration.between(local, currentTime)
 
     return when {
-        duration.toMinutes() < 60 -> stringResource(R.string.relative_time_hours, duration.toMinutes())
+        duration.toMinutes() < 60 -> stringResource(R.string.relative_time_minutes, duration.toMinutes())
         duration.toHours() < 24 -> stringResource(R.string.relative_time_hours, duration.toHours())
         duration.toDays() < 7 -> stringResource(R.string.relative_time_days, duration.toDays())
         else -> format.format(local)
