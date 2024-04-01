@@ -55,14 +55,10 @@ fun ArticleRow(
         }
     ) {
         ListItem(
-            leadingContent = if (article.faviconURL != null) {
-                {
-                    Box(Modifier.padding(top = 6.dp)) {
-                        FaviconBadge(article.faviconURL)
-                    }
+            leadingContent = {
+                Box(Modifier.padding(top = 6.dp)) {
+                    FaviconBadge(article.faviconURL)
                 }
-            } else {
-                null
             },
             headlineContent = {
                 Text(
