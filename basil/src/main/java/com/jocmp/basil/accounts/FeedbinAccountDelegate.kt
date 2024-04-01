@@ -148,8 +148,6 @@ internal class FeedbinAccountDelegate(
     }
 
     private suspend fun refreshAllArticles(since: String) {
-        Log.d("FETCH INITIAL", "Since $since")
-
         fetchPaginatedEntries(since = since)
     }
 
@@ -162,11 +160,6 @@ internal class FeedbinAccountDelegate(
         if (entries != null) {
             saveEntries(entries)
         }
-
-        Log.d(
-            "FETCH",
-            "Page ${response.pagingInfo?.nextPage}/${response.pagingInfo?.lastPage}"
-        )
 
         fetchPaginatedEntries(since = since, nextPage = response.pagingInfo?.nextPage)
     }

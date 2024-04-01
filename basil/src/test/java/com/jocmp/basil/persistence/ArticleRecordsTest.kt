@@ -57,9 +57,11 @@ class ArticleRecordsTest {
 
         val articleRecords = ArticleRecords(database)
 
-        val readArticle = articles.first()
+        val readArticleIDs = articles.take(2).map { it.id }.toSet()
 
-        articleRecords.markRead(readArticle.id)
+        readArticleIDs.forEach {
+            articleRecords.markUnread(it)
+        }
 
         val results = articleRecords
             .byStatus
@@ -71,7 +73,7 @@ class ArticleRecordsTest {
             .count(ArticleStatus.UNREAD)
             .executeAsOne()
 
-        val expected = articles.filter { it.id != readArticle.id }.map { it.id }.toSet()
+        val expected = readArticleIDs
         val actual = results.map { it.id }.toSet()
 
         assertEquals(expected = 2, actual = count)

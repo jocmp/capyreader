@@ -93,8 +93,9 @@ class FeedbinAccountDelegateTest {
     @Test
     fun refreshAll_updatesEntries() = runTest {
         coEvery { feedbin.subscriptions() }.returns(Response.success(subscriptions))
+        coEvery { feedbin.unreadEntries() }.returns(Response.success(entries.map { it.id }))
         coEvery { feedbin.taggings() }.returns(Response.success(taggings))
-        coEvery { feedbin.entries(since = any()) }.returns(Response.success(entries))
+        coEvery { feedbin.entries(since = any(), per_page = any(), page = any()) }.returns(Response.success(entries))
 
         val delegate = FeedbinAccountDelegate(database, feedbin)
 
