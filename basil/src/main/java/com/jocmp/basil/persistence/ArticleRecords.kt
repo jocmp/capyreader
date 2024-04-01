@@ -6,16 +6,17 @@ import app.cash.sqldelight.coroutines.mapToList
 import com.jocmp.basil.Article
 import com.jocmp.basil.ArticleStatus
 import com.jocmp.basil.common.nowUTC
+import com.jocmp.basil.common.toDateTime
 import com.jocmp.basil.db.Database
+import com.jocmp.feedbinclient.Entry
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.time.OffsetDateTime
 import java.time.ZonedDateTime
-import java.util.Objects
 
 class ArticleRecords internal constructor(
-    internal val database: Database
+    private val database: Database
 ) {
     val byStatus = ByStatus(database)
     val byFeed = ByFeed(database)
@@ -25,6 +26,32 @@ class ArticleRecords internal constructor(
             articleID = articleID,
             mapper = ::articleMapper
         ).executeAsOneOrNull()
+    }
+
+    fun markAllUnread(articleIDs: List<String>, updatedAt: ZonedDateTime = nowUTC()) {
+        val updated = updatedAt.toEpochSecond()
+
+        database.transaction {
+            articleIDs.forEach { articleID ->
+                database.articlesQueries.upsertUnread(
+                    articleID = articleID,
+                    updatedAt = updated
+                )
+            }
+        }
+    }
+
+    fun markAllStarred(articleIDs: List<String>, updatedAt: ZonedDateTime = nowUTC()) {
+        val updated = updatedAt.toEpochSecond()
+
+        database.transaction {
+            articleIDs.forEach { articleID ->
+                database.articlesQueries.upsertStarred(
+                    articleID = articleID,
+                    updatedAt = updated
+                )
+            }
+        }
     }
 
     fun markRead(articleID: String, lastReadAt: ZonedDateTime = nowUTC()) {

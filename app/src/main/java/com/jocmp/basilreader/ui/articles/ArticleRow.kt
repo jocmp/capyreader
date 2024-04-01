@@ -111,7 +111,7 @@ fun ArticleRow(
 @Composable
 fun PlaceholderArticleRow() {
     ListItem(
-        leadingContent = {
+        trailingContent = {
             Box(
                 Modifier
                     .size(THUMBNAIL_SIZE)

@@ -17,6 +17,7 @@ internal val articlesModule = module {
 
         AccountViewModel(
             account = get<Account>(parameters = { parametersOf(appPreferences.accountID.get()) }),
+            refreshScheduler = get(),
             appPreferences = appPreferences
         )
     }

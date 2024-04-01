@@ -50,6 +50,7 @@
         <item quantity="one">Every hour</item>
         <item quantity="other">Every %d hours</item>
     </plurals>
+    <string name="relative_time_just_now">Just now</string>
     <string name="relative_time_minutes">%1$dm</string>
     <string name="relative_time_hours">%1$dh</string>
     <string name="relative_time_days">%1$dd</string>

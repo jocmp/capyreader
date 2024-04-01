@@ -278,4 +278,9 @@ class FeedbinAccountDelegateTest {
 
         assertTrue(result.isFailure)
     }
+
+    @Test
+    fun fetchWithPagination() {
+
+    }
 }

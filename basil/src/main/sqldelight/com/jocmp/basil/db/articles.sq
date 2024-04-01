@@ -99,14 +99,56 @@ VALUES (
 );
 
 updateStatus:
-INSERT OR IGNORE INTO article_statuses(
+INSERT INTO article_statuses(
   article_id,
-  updated_at
+  updated_at,
+  read
 )
 VALUES (
 :article_id,
-:updated_at
-);
+:updated_at,
+1
+)
+ON CONFLICT(article_id) DO UPDATE
+SET updated_at = excluded.updated_at, read = read, last_read_at = last_read_at;
+
+upsertUnread:
+INSERT INTO article_statuses(
+  article_id,
+  updated_at,
+  read,
+  last_read_at
+)
+VALUES (
+  :articleID,
+  :updatedAt,
+  0,
+  NULL
+)
+ON CONFLICT(article_id) DO UPDATE
+SET
+updated_at = excluded.updated_at,
+last_read_at = excluded.last_read_at,
+read = excluded.read,
+starred = starred;
+
+upsertStarred:
+INSERT INTO article_statuses(
+  article_id,
+  updated_at,
+  starred
+)
+VALUES (
+  :articleID,
+  :updatedAt,
+  1
+)
+ON CONFLICT(article_id) DO UPDATE
+SET
+updated_at = excluded.updated_at,
+last_read_at = last_read_at,
+read = read,
+starred = excluded.starred;
 
 markRead:
 UPDATE article_statuses SET read = :read, last_read_at = :lastReadAt, updated_at = :updatedAt

@@ -1,5 +1,6 @@
 package com.jocmp.basilreader.ui.articles
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -44,8 +45,4 @@ fun ArticleScreen(
         onToggleArticleRead = viewModel::toggleArticleRead,
         onToggleArticleStar = viewModel::toggleArticleStar,
     )
-
-    LaunchedEffect(Unit) {
-        viewModel.reload()
-    }
 }

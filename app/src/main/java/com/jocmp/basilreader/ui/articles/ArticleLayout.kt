@@ -22,8 +22,10 @@ import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -76,7 +78,7 @@ fun ArticleLayout(
     onToggleArticleStar: () -> Unit,
     drawerValue: DrawerValue = DrawerValue.Closed
 ) {
-    val filterStatus = filter.status
+    val (isInitialized, setInitialized) = rememberSaveable { mutableStateOf(false) }
     val drawerState = rememberDrawerState(drawerValue)
     val coroutineScope = rememberCoroutineScope()
     val navigator = rememberListDetailPaneScaffoldNavigator<ListDetailPaneScaffoldRole>(
@@ -223,6 +225,14 @@ fun ArticleLayout(
             )
         }
     )
+
+    LaunchedEffect(Unit) {
+        if (!isInitialized) {
+            state.startRefresh()
+
+            setInitialized(true)
+        }
+    }
 
     LaunchedEffect(webViewNavigator) {
         val html = ArticleRenderer.render(article, context)

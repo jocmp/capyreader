@@ -20,7 +20,8 @@ interface Feedbin {
     suspend fun entries(
         @Query("page") page: String? = null,
         @Query("since") since: String? = null,
-        @Query("mode") mode: String? = "extended"
+        @Query("mode") mode: String? = "extended",
+        @Query("per_page") per_page: Int? = 100
     ): Response<List<Entry>>
 
     @GET("v2/authentication.json")
@@ -38,11 +39,17 @@ interface Feedbin {
     @GET("v2/taggings.json")
     suspend fun taggings(): Response<List<Tagging>>
 
+    @GET("v2/starred_entries.json")
+    suspend fun starredEntries(): Response<List<Long>>
+
     @POST("v2/starred_entries.json")
     suspend fun createStarredEntries(@Body body: StarredEntriesRequest): Response<List<Long>>
 
     @HTTP(method = "DELETE", path = "v2/starred_entries.json", hasBody = true)
     suspend fun deleteStarredEntries(@Body body: StarredEntriesRequest): Response<List<Long>>
+
+    @GET("v2/unread_entries.json")
+    suspend fun unreadEntries(): Response<List<Long>>
 
     @POST("v2/unread_entries.json")
     suspend fun createUnreadEntries(@Body body: UnreadEntriesRequest): Response<List<Long>>
