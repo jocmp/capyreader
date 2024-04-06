@@ -68,8 +68,8 @@ SELECT
  COUNT(DISTINCT articles.id)
 FROM articles
 JOIN article_statuses ON articles.id = article_statuses.article_id
-WHERE article_statuses.read = :read OR :read IS NULL
-AND article_statuses.starred = :starred OR :starred IS NULL
+WHERE (article_statuses.read = :read OR :read IS NULL)
+AND (article_statuses.starred = :starred OR :starred IS NULL)
 GROUP BY articles.feed_id;
 
 lastUpdatedAt:
@@ -82,10 +82,6 @@ FROM article_statuses
 LEFT JOIN articles ON article_statuses.article_id = articles.id
 WHERE articles.id IS NULL
 AND article_statuses.read = 0 OR article_statuses.starred = 1;
-
-debugStatuses:
-SELECT *
-FROM article_statuses;
 
 create:
 INSERT OR REPLACE INTO articles(
@@ -142,6 +138,12 @@ updated_at = excluded.updated_at,
 last_read_at = excluded.last_read_at,
 read = excluded.read,
 starred = starred;
+
+updateStaleUnreads:
+UPDATE article_statuses SET read = 1 WHERE article_id NOT IN :excludedIDs;
+
+updateStaleStars:
+UPDATE article_statuses SET starred = 0 WHERE article_id NOT IN :excludedIDs;
 
 upsertStarred:
 INSERT INTO article_statuses(

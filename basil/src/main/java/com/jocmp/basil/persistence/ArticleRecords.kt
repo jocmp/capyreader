@@ -1,5 +1,6 @@
 package com.jocmp.basil.persistence
 
+import android.util.Log
 import app.cash.sqldelight.Query
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
@@ -31,14 +32,25 @@ class ArticleRecords internal constructor(
             .articlesQueries
             .findMissingArticles()
             .executeAsList()
-            .map { it.toLong() }
+            .map {
+                if (it == "4324136646") {
+                    Log.d("ArticleRecords", "findMissingArticles: $it")
+                }
+                it.toLong()
+            }
     }
 
     fun markAllUnread(articleIDs: List<String>, updatedAt: ZonedDateTime = nowUTC()) {
         val updated = updatedAt.toEpochSecond()
 
         database.transaction {
+            database.articlesQueries.updateStaleUnreads(excludedIDs = articleIDs)
+
             articleIDs.forEach { articleID ->
+                if (articleID == "4324136646") {
+                    Log.d("ArticleRecords", "markAllUnread: $articleID")
+                }
+
                 database.articlesQueries.upsertUnread(
                     articleID = articleID,
                     updatedAt = updated
@@ -51,6 +63,8 @@ class ArticleRecords internal constructor(
         val updated = updatedAt.toEpochSecond()
 
         database.transaction {
+            database.articlesQueries.updateStaleStars(excludedIDs = articleIDs)
+
             articleIDs.forEach { articleID ->
                 database.articlesQueries.upsertStarred(
                     articleID = articleID,

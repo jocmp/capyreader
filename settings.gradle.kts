@@ -40,7 +40,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Basil Reader"
+rootProject.name = "Capy Reader"
 include(":app")
 include(":feedbinclient")
 include(":basil")

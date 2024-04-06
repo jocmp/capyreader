@@ -138,29 +138,31 @@ fun FeedList(
                     selected = filter.isFeedSelected(it),
                 )
             }
-        }
-    }
 
-    Surface(
-        shadowElevation = 2.dp,
-        tonalElevation = 2.dp,
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+            Box(Modifier.padding(vertical = 16.dp))
+        }
+
+        Surface(
+            shadowElevation = 2.dp,
+            tonalElevation = 2.dp,
+            modifier = Modifier.fillMaxWidth()
         ) {
-            IconButton(onClick = { onNavigateToAccounts() }) {
-                Icon(
-                    imageVector = Icons.Filled.Settings,
-                    contentDescription = stringResource(R.string.accounts_action)
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+            ) {
+                IconButton(onClick = { onNavigateToAccounts() }) {
+                    Icon(
+                        imageVector = Icons.Filled.Settings,
+                        contentDescription = stringResource(R.string.accounts_action)
+                    )
+                }
+                AddFeedButton(
+                    onComplete = {
+                        onFeedAdded(it)
+                    }
                 )
             }
-            AddFeedButton(
-                onComplete = {
-                    onFeedAdded(it)
-                }
-            )
         }
     }
 }

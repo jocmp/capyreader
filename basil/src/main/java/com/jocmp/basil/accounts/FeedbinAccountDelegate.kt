@@ -179,7 +179,7 @@ internal class FeedbinAccountDelegate(
         val response = feedbin.entries(
             since = since,
             page = nextPage.toString(),
-            ids = ids
+            ids = ids?.joinToString(",")
         )
         val entries = response.body()
 
