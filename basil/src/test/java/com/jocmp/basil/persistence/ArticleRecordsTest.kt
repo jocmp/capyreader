@@ -6,7 +6,6 @@ import com.jocmp.basil.RandomUUID
 import com.jocmp.basil.db.Database
 import com.jocmp.basil.fixtures.ArticleFixture
 import com.jocmp.basil.repeated
-import com.jocmp.feedbinclient.Entry
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -87,7 +86,7 @@ class ArticleRecordsTest {
 
         articleRecords.markUnread(articleID = article.id)
 
-        val reloaded = articleRecords.fetch(articleID = article.id)!!
+        val reloaded = articleRecords.find(articleID = article.id)!!
 
         assertFalse(reloaded.read)
     }
@@ -99,7 +98,7 @@ class ArticleRecordsTest {
 
         articleRecords.addStar(articleID = article.id)
 
-        val reloaded = articleRecords.fetch(articleID = article.id)!!
+        val reloaded = articleRecords.find(articleID = article.id)!!
 
         assertTrue(reloaded.starred)
     }
@@ -111,7 +110,7 @@ class ArticleRecordsTest {
 
         articleRecords.removeStar(articleID = article.id)
 
-        val reloaded = articleRecords.fetch(articleID = article.id)!!
+        val reloaded = articleRecords.find(articleID = article.id)!!
 
         assertFalse(reloaded.starred)
     }

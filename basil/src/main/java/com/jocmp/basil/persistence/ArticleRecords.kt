@@ -6,9 +6,7 @@ import app.cash.sqldelight.coroutines.mapToList
 import com.jocmp.basil.Article
 import com.jocmp.basil.ArticleStatus
 import com.jocmp.basil.common.nowUTC
-import com.jocmp.basil.common.toDateTime
 import com.jocmp.basil.db.Database
-import com.jocmp.feedbinclient.Entry
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -21,11 +19,19 @@ class ArticleRecords internal constructor(
     val byStatus = ByStatus(database)
     val byFeed = ByFeed(database)
 
-    fun fetch(articleID: String): Article? {
+    fun find(articleID: String): Article? {
         return database.articlesQueries.findBy(
             articleID = articleID,
             mapper = ::articleMapper
         ).executeAsOneOrNull()
+    }
+
+    fun findMissingArticles(): List<Long> {
+        return database
+            .articlesQueries
+            .findMissingArticles()
+            .executeAsList()
+            .map { it.toLong() }
     }
 
     fun markAllUnread(articleIDs: List<String>, updatedAt: ZonedDateTime = nowUTC()) {

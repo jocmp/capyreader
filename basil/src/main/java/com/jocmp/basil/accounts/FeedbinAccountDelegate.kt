@@ -16,11 +16,15 @@ import com.jocmp.feedbinclient.StarredEntriesRequest
 import com.jocmp.feedbinclient.Subscription
 import com.jocmp.feedbinclient.UnreadEntriesRequest
 import com.jocmp.feedbinclient.pagingInfo
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import retrofit2.Response
 import java.net.MalformedURLException
 import java.net.URL
 import java.time.ZonedDateTime
+import kotlin.coroutines.coroutineContext
 
 internal class FeedbinAccountDelegate(
     private val database: Database,
@@ -97,9 +101,9 @@ internal class FeedbinAccountDelegate(
         refreshFeeds()
         refreshTaggings()
         refreshUnreadEntries()
-        // refresh starred
+        refreshStarredEntries()
         refreshAllArticles(since = since)
-        // fetch missing (starred, unread) within 3mo's
+        fetchMissingArticles()
     }
 
     private suspend fun refreshFeeds() {
@@ -119,6 +123,12 @@ internal class FeedbinAccountDelegate(
     private suspend fun refreshUnreadEntries() {
         withResult(feedbin.unreadEntries()) { ids ->
             articleRecords.markAllUnread(articleIDs = ids.map { it.toString() })
+        }
+    }
+
+    private suspend fun refreshStarredEntries() {
+        withResult(feedbin.starredEntries()) { ids ->
+            articleRecords.markAllStarred(articleIDs = ids.map { it.toString() })
         }
     }
 
@@ -151,17 +161,37 @@ internal class FeedbinAccountDelegate(
         fetchPaginatedEntries(since = since)
     }
 
-    private suspend fun fetchPaginatedEntries(since: String, nextPage: Int? = 1) {
+    private suspend fun fetchMissingArticles() {
+        val ids = articleRecords.findMissingArticles()
+
+        ids.chunked(MAX_ENTRY_LIMIT).map { chunkedIDs ->
+            fetchPaginatedEntries(ids = chunkedIDs)
+        }
+    }
+
+    private suspend fun fetchPaginatedEntries(
+        since: String? = null,
+        nextPage: Int? = 1,
+        ids: List<Long>? = null
+    ) {
         nextPage ?: return
 
-        val response = feedbin.entries(since = since, page = nextPage.toString())
+        val response = feedbin.entries(
+            since = since,
+            page = nextPage.toString(),
+            ids = ids
+        )
         val entries = response.body()
 
         if (entries != null) {
             saveEntries(entries)
         }
 
-        fetchPaginatedEntries(since = since, nextPage = response.pagingInfo?.nextPage)
+        fetchPaginatedEntries(
+            since = since,
+            nextPage = response.pagingInfo?.nextPage,
+            ids = ids
+        )
     }
 
     private fun saveEntries(entries: List<Entry>, updatedAt: ZonedDateTime = nowUTC()) {
@@ -202,10 +232,19 @@ internal class FeedbinAccountDelegate(
     /** Date in UTC */
     private fun maxUpdatedAt(): String {
         val max = database.articlesQueries.lastUpdatedAt().executeAsOne().MAX
-        max ?: return nowUTC().minusMonths(3).toString()
+
+        max ?: return cutoffDate().toString()
 
         return max.toDateTimeFromSeconds.toString()
     }
+
+    companion object {
+        const val MAX_ENTRY_LIMIT = 100
+    }
+}
+
+private fun cutoffDate(): ZonedDateTime {
+    return nowUTC().minusMonths(3)
 }
 
 private fun host(subscription: Subscription): String? {

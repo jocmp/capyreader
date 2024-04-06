@@ -102,7 +102,7 @@ data class Account(
             return null
         }
 
-        return articleRecords.fetch(articleID = articleID)
+        return articleRecords.find(articleID = articleID)
     }
 
     suspend fun addStar(articleID: String) {

@@ -21,7 +21,8 @@ interface Feedbin {
         @Query("page") page: String? = null,
         @Query("since") since: String? = null,
         @Query("mode") mode: String? = "extended",
-        @Query("per_page") per_page: Int? = 100
+        @Query("per_page") perPage: Int? = 100,
+        @Query("ids") ids: List<Long>? = null
     ): Response<List<Entry>>
 
     @GET("v2/authentication.json")
