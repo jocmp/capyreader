@@ -15,7 +15,10 @@ import com.jocmp.basil.Folder
 import com.jocmp.basil.buildPager
 import com.jocmp.basil.countAll
 import com.jocmp.basilreader.common.AppPreferences
+import com.jocmp.basilreader.refresher.RefreshScheduler
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
@@ -26,8 +29,11 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalCoroutinesApi::class)
 class AccountViewModel(
     private val account: Account,
+    private val refreshScheduler: RefreshScheduler,
     private val appPreferences: AppPreferences,
 ) : ViewModel() {
+    private var refreshJob: Job? = null
+
     val filter = MutableStateFlow(appPreferences.filter.get())
 
     private val articleState = mutableStateOf(account.findArticle(appPreferences.articleID.get()))
@@ -103,15 +109,13 @@ class AccountViewModel(
         }
     }
 
-    fun refreshFeed(onSuccess: () -> Unit) {
-        viewModelScope.launch {
-            when (val currentFilter = filter.value) {
-                is ArticleFilter.Feeds -> account.refreshFeed(currentFilter.feed)
-                is ArticleFilter.Folders -> account.refreshFeeds(currentFilter.folder.feeds)
-                is ArticleFilter.Articles -> account.refreshAll()
-            }
+    fun refreshFeed(onComplete: () -> Unit) {
+        refreshJob?.cancel()
 
-            onSuccess()
+        refreshJob = viewModelScope.launch(Dispatchers.IO) {
+            account.refresh()
+            
+            onComplete()
         }
     }
 
@@ -158,9 +162,6 @@ class AccountViewModel(
         viewModelScope.launch {
             appPreferences.articleID.delete()
         }
-    }
-
-    fun reload() {
     }
 
     private fun resetToDefaultFilter() {

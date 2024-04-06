@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemColors
@@ -16,16 +17,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.jocmp.basil.Article
+import com.jocmp.basilreader.ui.components.relativeTime
 import com.jocmp.basilreader.ui.theme.CapyTheme
 import java.net.URL
-import java.time.OffsetDateTime
+import java.time.Duration
+import java.time.LocalDateTime
 import java.time.ZoneOffset
+import java.time.ZonedDateTime
+import java.util.TimeZone
+
 
 private val THUMBNAIL_SIZE = 56.dp
 
@@ -34,6 +41,7 @@ fun ArticleRow(
     article: Article,
     selected: Boolean,
     onSelect: (articleID: String) -> Unit,
+    currentTime: LocalDateTime,
 ) {
     val imageURL = article.imageURL?.toString()
     val colors = listItemColors(
@@ -47,19 +55,10 @@ fun ArticleRow(
         }
     ) {
         ListItem(
-            leadingContent = if (imageURL != null) {
-                {
-                    AsyncImage(
-                        model = imageURL,
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .size(THUMBNAIL_SIZE)
-                            .background(colorScheme.surfaceContainer)
-                    )
+            leadingContent = {
+                Box(Modifier.padding(top = 6.dp)) {
+                    FaviconBadge(article.faviconURL)
                 }
-            } else {
-                null
             },
             headlineContent = {
                 Text(
@@ -77,7 +76,28 @@ fun ArticleRow(
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis,
                     )
+                    Text(
+                        text = relativeTime(
+                            time = article.publishedAt,
+                            currentTime = currentTime,
+                        ),
+                        maxLines = 1,
+                    )
                 }
+            },
+            trailingContent = if (imageURL != null) {
+                {
+                    AsyncImage(
+                        model = imageURL,
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .size(THUMBNAIL_SIZE)
+                            .background(colorScheme.surfaceContainer)
+                    )
+                }
+            } else {
+                null
             },
             colors = colors
         )
@@ -87,7 +107,7 @@ fun ArticleRow(
 @Composable
 fun PlaceholderArticleRow() {
     ListItem(
-        leadingContent = {
+        trailingContent = {
             Box(
                 Modifier
                     .size(THUMBNAIL_SIZE)
@@ -128,7 +148,8 @@ fun ArticleRowPreview_Selected_DarkMode() {
         imageURL = URL("https://example.com"),
         summary = "Test article here",
         url = URL("https://9to5google.com/?p=605559"),
-        updatedAt = OffsetDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneOffset.UTC),
+        updatedAt = ZonedDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneOffset.UTC),
+        publishedAt = ZonedDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneOffset.UTC),
         read = true,
         starred = false,
         feedName = "9to5Google"
@@ -139,12 +160,14 @@ fun ArticleRowPreview_Selected_DarkMode() {
             ArticleRow(
                 article = article,
                 selected = true,
-                onSelect = {}
+                onSelect = {},
+                currentTime = LocalDateTime.now(),
             )
             ArticleRow(
                 article = article.copy(read = false),
                 selected = false,
-                onSelect = {}
+                onSelect = {},
+                currentTime = LocalDateTime.now(),
             )
         }
     }
@@ -161,7 +184,8 @@ fun ArticleRowPreview_Selected() {
         imageURL = null,
         summary = "Test article here",
         url = URL("https://9to5google.com/?p=605559"),
-        updatedAt = OffsetDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneOffset.UTC),
+        updatedAt = ZonedDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneOffset.UTC),
+        publishedAt = ZonedDateTime.of(2024, 3, 17, 8, 33, 0, 0, ZoneOffset.UTC),
         read = true,
         starred = false,
         feedName = "9to5Google"
@@ -171,7 +195,8 @@ fun ArticleRowPreview_Selected() {
         ArticleRow(
             article = article,
             selected = true,
-            onSelect = {}
+            onSelect = {},
+            currentTime = LocalDateTime.now(),
         )
     }
 }
@@ -187,7 +212,8 @@ fun ArticleRowPreview_Unread() {
         imageURL = URL("http://example.com"),
         summary = "Test article here",
         url = URL("https://9to5google.com/?p=605559"),
-        updatedAt = OffsetDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneOffset.UTC),
+        updatedAt = ZonedDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneOffset.UTC),
+        publishedAt = ZonedDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneOffset.UTC),
         read = false,
         starred = false,
         feedName = "9to5Google"
@@ -196,6 +222,7 @@ fun ArticleRowPreview_Unread() {
     ArticleRow(
         article = article,
         selected = false,
-        onSelect = {}
+        onSelect = {},
+        currentTime = LocalDateTime.now(),
     )
 }

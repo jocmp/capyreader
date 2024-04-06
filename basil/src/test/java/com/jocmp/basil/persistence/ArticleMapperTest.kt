@@ -22,10 +22,11 @@ class ArticleMapperTest {
             updatedAt = 1703960809,
             read = false,
             starred = false,
-            feedTitle = ""
+            feedTitle = "",
+            faviconURL = null
         )
 
-        val expectedTime = OffsetDateTime.of(
+        val expectedTime = ZonedDateTime.of(
             2023,
             12,
             30,

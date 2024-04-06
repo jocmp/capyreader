@@ -7,12 +7,8 @@ import com.jocmp.basil.db.Database
 import com.jocmp.basil.persistence.ArticleRecords
 import com.jocmp.basil.persistence.FeedRecords
 import com.jocmp.feedbinclient.Feedbin
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 import java.net.URI
 
 private const val TAG = "Account"
@@ -78,15 +74,8 @@ data class Account(
         return Result.success(updatedFolder)
     }
 
-    suspend fun refreshAll() {
-        delegate.refreshAll()
-    }
-
-    suspend fun refreshFeed(feed: Feed) {
-        refreshFeeds(listOf(feed))
-    }
-
-    suspend fun refreshFeeds(feeds: List<Feed>) {
+    suspend fun refresh() {
+        delegate.refresh()
     }
 
     suspend fun findFeed(feedID: String): Feed? {
@@ -102,7 +91,7 @@ data class Account(
             return null
         }
 
-        return articleRecords.fetch(articleID = articleID)
+        return articleRecords.find(articleID = articleID)
     }
 
     suspend fun addStar(articleID: String) {
@@ -128,14 +117,4 @@ data class Account(
 
         delegate.markUnread(listOf(articleID))
     }
-
-    private suspend fun refreshCompactedFeeds(feeds: Collection<Feed>) =
-        withContext(Dispatchers.IO) {
-            feeds.map { feed ->
-                async {
-                    val items = delegate.fetchAll(feed)
-//                    updateArticles(feed, items)
-                }
-            }.awaitAll()
-        }
 }

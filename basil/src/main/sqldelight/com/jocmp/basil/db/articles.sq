@@ -2,6 +2,7 @@ findByStatus:
 SELECT
   articles.*,
   feeds.title AS feed_title,
+  feeds.favicon_url,
   article_statuses.updated_at,
   article_statuses.starred,
   article_statuses.read
@@ -18,6 +19,7 @@ findByFeeds:
 SELECT
   articles.*,
   feeds.title AS feed_title,
+  feeds.favicon_url,
   article_statuses.updated_at,
   article_statuses.starred,
   article_statuses.read
@@ -50,6 +52,7 @@ findBy:
 SELECT
   articles.*,
   feeds.title AS feed_title,
+  feeds.favicon_url,
   article_statuses.updated_at,
   article_statuses.starred,
   article_statuses.read
@@ -65,13 +68,20 @@ SELECT
  COUNT(DISTINCT articles.id)
 FROM articles
 JOIN article_statuses ON articles.id = article_statuses.article_id
-WHERE article_statuses.read = :read OR :read IS NULL
+WHERE (article_statuses.read = :read OR :read IS NULL)
 AND (article_statuses.starred = :starred OR :starred IS NULL)
 GROUP BY articles.feed_id;
 
 lastUpdatedAt:
 SELECT MAX(article_statuses.updated_at)
 FROM article_statuses;
+
+findMissingArticles:
+SELECT article_id
+FROM article_statuses
+LEFT JOIN articles ON article_statuses.article_id = articles.id
+WHERE articles.id IS NULL
+AND article_statuses.read = 0 OR article_statuses.starred = 1;
 
 create:
 INSERT OR REPLACE INTO articles(
@@ -96,14 +106,62 @@ VALUES (
 );
 
 updateStatus:
-INSERT OR IGNORE INTO article_statuses(
+INSERT INTO article_statuses(
   article_id,
-  updated_at
+  updated_at,
+  read
 )
 VALUES (
 :article_id,
-:updated_at
-);
+:updated_at,
+1
+)
+ON CONFLICT(article_id) DO UPDATE
+SET updated_at = excluded.updated_at, read = read, last_read_at = last_read_at;
+
+upsertUnread:
+INSERT INTO article_statuses(
+  article_id,
+  updated_at,
+  read,
+  last_read_at
+)
+VALUES (
+  :articleID,
+  :updatedAt,
+  0,
+  NULL
+)
+ON CONFLICT(article_id) DO UPDATE
+SET
+updated_at = excluded.updated_at,
+last_read_at = excluded.last_read_at,
+read = excluded.read,
+starred = starred;
+
+updateStaleUnreads:
+UPDATE article_statuses SET read = 1 WHERE article_id NOT IN :excludedIDs;
+
+updateStaleStars:
+UPDATE article_statuses SET starred = 0 WHERE article_id NOT IN :excludedIDs;
+
+upsertStarred:
+INSERT INTO article_statuses(
+  article_id,
+  updated_at,
+  starred
+)
+VALUES (
+  :articleID,
+  :updatedAt,
+  1
+)
+ON CONFLICT(article_id) DO UPDATE
+SET
+updated_at = excluded.updated_at,
+last_read_at = last_read_at,
+read = read,
+starred = excluded.starred;
 
 markRead:
 UPDATE article_statuses SET read = :read, last_read_at = :lastReadAt, updated_at = :updatedAt

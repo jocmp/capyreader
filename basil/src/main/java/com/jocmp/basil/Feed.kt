@@ -11,5 +11,6 @@ data class Feed(
     val feedURL: String,
     val siteURL: String = "",
     val folderName: String = "",
+    val faviconURL: String? = null,
     override val count: Long = 0
 ): Countable

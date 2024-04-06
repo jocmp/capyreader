@@ -14,6 +14,7 @@ fun FeedRow(
     onSelect: (id: String) -> Unit,
 ) {
     NavigationDrawerItem(
+        icon = { FaviconBadge(url = feed.faviconURL) },
         label = { ListTitle(feed.name) },
         badge = { CountBadge(count = feed.count) },
         selected = selected,

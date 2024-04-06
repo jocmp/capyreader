@@ -1,27 +1,36 @@
 package com.jocmp.basil.accounts
 
 import com.jocmp.basil.Feed
-import com.jocmp.basil.common.nowUTCInSeconds
+import com.jocmp.basil.common.nowUTC
 import com.jocmp.basil.common.toDateTime
 import com.jocmp.basil.common.toDateTimeFromSeconds
 import com.jocmp.basil.db.Database
+import com.jocmp.basil.persistence.ArticleRecords
 import com.jocmp.basil.persistence.FeedRecords
 import com.jocmp.feedbinclient.CreateSubscriptionRequest
+import com.jocmp.feedbinclient.Entry
 import com.jocmp.feedbinclient.Feedbin
+import com.jocmp.feedbinclient.Icon
 import com.jocmp.feedbinclient.StarredEntriesRequest
 import com.jocmp.feedbinclient.Subscription
 import com.jocmp.feedbinclient.UnreadEntriesRequest
+import com.jocmp.feedbinclient.pagingInfo
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import retrofit2.Response
-import java.lang.Exception
+import java.net.MalformedURLException
+import java.net.URL
+import java.time.ZonedDateTime
 
 internal class FeedbinAccountDelegate(
     private val database: Database,
     private val feedbin: Feedbin
 ) {
-    class FeedNotFound: Exception()
-    class SaveFeedFailure: Exception()
+    class FeedNotFound : Exception()
+    class SaveFeedFailure : Exception()
 
+    private val articleRecords = ArticleRecords(database)
     private val feedRecords = FeedRecords(database)
 
     fun fetchAll(feed: Feed): List<ParsedItem> {
@@ -62,7 +71,8 @@ internal class FeedbinAccountDelegate(
         }
 
         return if (subscription != null) {
-            upsertFeed(subscription)
+            val icons = fetchIcons()
+            upsertFeed(subscription, icons)
 
             val feed = feedRecords.findBy(subscription.feed_id.toString())
 
@@ -82,16 +92,23 @@ internal class FeedbinAccountDelegate(
         }
     }
 
-    suspend fun refreshAll() {
+    suspend fun refresh() {
+        val since = maxUpdatedAt()
+
         refreshFeeds()
         refreshTaggings()
-        refreshArticles()
+        refreshUnreadEntries()
+        refreshStarredEntries()
+        refreshAllArticles(since = since)
+        fetchMissingArticles()
     }
 
     private suspend fun refreshFeeds() {
+        val icons = fetchIcons()
+
         withResult(feedbin.subscriptions()) { subscriptions ->
             subscriptions.forEach { subscription ->
-                upsertFeed(subscription)
+                upsertFeed(subscription, icons)
             }
 
             val feedsToRemove = subscriptions.map { it.feed_id.toString() }
@@ -100,13 +117,28 @@ internal class FeedbinAccountDelegate(
         }
     }
 
-    private fun upsertFeed(subscription: Subscription) {
+    private suspend fun refreshUnreadEntries() {
+        withResult(feedbin.unreadEntries()) { ids ->
+            articleRecords.markAllUnread(articleIDs = ids.map { it.toString() })
+        }
+    }
+
+    private suspend fun refreshStarredEntries() {
+        withResult(feedbin.starredEntries()) { ids ->
+            articleRecords.markAllStarred(articleIDs = ids.map { it.toString() })
+        }
+    }
+
+    private fun upsertFeed(subscription: Subscription, icons: List<Icon>) {
+        val icon = icons.find { it.host == host(subscription) }
+
         database.feedsQueries.upsert(
             id = subscription.feed_id.toString(),
             subscription_id = subscription.id.toString(),
             title = subscription.title,
             feed_url = subscription.feed_url,
             site_url = subscription.site_url,
+            favicon_url = icon?.url
         )
     }
 
@@ -122,41 +154,109 @@ internal class FeedbinAccountDelegate(
         }
     }
 
-    private suspend fun refreshArticles() {
-        withResult(feedbin.entries(since = maxUpdatedAt())) { entries ->
-            val updatedAt = nowUTCInSeconds()
+    private suspend fun refreshAllArticles(since: String) {
+        fetchPaginatedEntries(since = since)
+    }
 
-            entries.forEach { entry ->
-                database.transaction {
-                    database.articlesQueries.create(
-                        id = entry.id.toString(),
-                        feed_id = entry.feed_id.toString(),
-                        title = entry.title,
-                        content_html = entry.content,
-                        url = entry.url,
-                        summary = entry.summary,
-                        image_url = entry.images?.size_1?.cdn_url,
-                        published_at = entry.published.toDateTime?.toEpochSecond(),
-                    )
+    private suspend fun fetchMissingArticles() {
+        val ids = articleRecords.findMissingArticles()
 
-                    database.articlesQueries.updateStatus(
-                        article_id = entry.id.toString(),
-                        updated_at = updatedAt
-                    )
+        ids.chunked(MAX_ENTRY_LIMIT).map { chunkedIDs ->
+            coroutineScope {
+                launch {
+                    fetchPaginatedEntries(ids = chunkedIDs)
                 }
             }
         }
     }
 
-    private fun maxUpdatedAt(): String? {
+    private suspend fun fetchPaginatedEntries(
+        since: String? = null,
+        nextPage: Int? = 1,
+        ids: List<Long>? = null
+    ) {
+        nextPage ?: return
+
+        val response = feedbin.entries(
+            since = since,
+            page = nextPage.toString(),
+            ids = ids?.joinToString(",")
+        )
+        val entries = response.body()
+
+        if (entries != null) {
+            saveEntries(entries)
+        }
+
+        fetchPaginatedEntries(
+            since = since,
+            nextPage = response.pagingInfo?.nextPage,
+            ids = ids
+        )
+    }
+
+    private fun saveEntries(entries: List<Entry>, updatedAt: ZonedDateTime = nowUTC()) {
+        database.transaction {
+            entries.forEach { entry ->
+                val updated = updatedAt.toEpochSecond()
+
+                database.articlesQueries.create(
+                    id = entry.id.toString(),
+                    feed_id = entry.feed_id.toString(),
+                    title = entry.title,
+                    content_html = entry.content,
+                    url = entry.url,
+                    summary = entry.summary,
+                    image_url = entry.images?.size_1?.cdn_url,
+                    published_at = entry.published.toDateTime?.toEpochSecond(),
+                )
+
+                database.articlesQueries.updateStatus(
+                    article_id = entry.id.toString(),
+                    updated_at = updated
+                )
+            }
+        }
+    }
+
+    private suspend fun fetchIcons(): List<Icon> {
+        val response = feedbin.icons()
+        val result = response.body()
+
+        if (!response.isSuccessful || result == null) {
+            return listOf()
+        }
+
+        return result
+    }
+
+    /** Date in UTC */
+    private fun maxUpdatedAt(): String {
         val max = database.articlesQueries.lastUpdatedAt().executeAsOne().MAX
-        max ?: return null
+
+        max ?: return cutoffDate().toString()
 
         return max.toDateTimeFromSeconds.toString()
     }
+
+    companion object {
+        const val MAX_ENTRY_LIMIT = 100
+    }
 }
 
-fun <T> withResult(response: Response<T>, handler: (result: T) -> Unit) {
+private fun cutoffDate(): ZonedDateTime {
+    return nowUTC().minusMonths(3)
+}
+
+private fun host(subscription: Subscription): String? {
+    return try {
+        URL(subscription.site_url).host
+    } catch (e: MalformedURLException) {
+        null
+    }
+}
+
+private fun <T> withResult(response: Response<T>, handler: (result: T) -> Unit) {
     val result = response.body()
 
     if (!response.isSuccessful || result == null) {

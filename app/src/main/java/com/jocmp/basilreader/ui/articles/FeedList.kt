@@ -109,6 +109,11 @@ fun FeedList(
                 }
             )
 
+            if (folders.isNotEmpty()) {
+                FeedListDivider()
+                ListHeadline(text = stringResource(R.string.nav_headline_tags))
+            }
+
             folders.forEach {
                 FolderRow(
                     folder = it,
@@ -118,21 +123,23 @@ fun FeedList(
                 )
             }
 
-            if (feeds.isNotEmpty()) {
-                HorizontalDivider(
-                    Modifier
-                        .padding(horizontal = 16.dp)
-                        .padding(top = 8.dp)
-                )
-                ListHeadline(text = stringResource(R.string.nav_headline_feeds))
-                feeds.forEach {
-                    FeedRow(
-                        feed = it,
-                        onSelect = onSelectFeed,
-                        selected = filter.isFeedSelected(it),
-                    )
-                }
+            if (folders.isNotEmpty() && feeds.isNotEmpty()) {
+                FeedListDivider()
             }
+
+            if (feeds.isNotEmpty()) {
+                ListHeadline(text = stringResource(R.string.nav_headline_feeds))
+            }
+
+            feeds.forEach {
+                FeedRow(
+                    feed = it,
+                    onSelect = onSelectFeed,
+                    selected = filter.isFeedSelected(it),
+                )
+            }
+
+            Box(Modifier.padding(vertical = 16.dp))
         }
 
         Surface(
@@ -158,6 +165,15 @@ fun FeedList(
             }
         }
     }
+}
+
+@Composable
+private fun FeedListDivider() {
+    HorizontalDivider(
+        Modifier
+            .padding(horizontal = 16.dp)
+            .padding(top = 8.dp)
+    )
 }
 
 @Preview

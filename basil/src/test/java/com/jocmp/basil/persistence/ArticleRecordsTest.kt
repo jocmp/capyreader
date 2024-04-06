@@ -5,7 +5,6 @@ import com.jocmp.basil.InMemoryDatabaseProvider
 import com.jocmp.basil.RandomUUID
 import com.jocmp.basil.db.Database
 import com.jocmp.basil.fixtures.ArticleFixture
-import com.jocmp.basil.fixtures.FeedFixture
 import com.jocmp.basil.repeated
 import org.junit.Before
 import org.junit.Test
@@ -57,9 +56,11 @@ class ArticleRecordsTest {
 
         val articleRecords = ArticleRecords(database)
 
-        val readArticle = articles.first()
+        val readArticleIDs = articles.take(2).map { it.id }.toSet()
 
-        articleRecords.markRead(readArticle.id)
+        readArticleIDs.forEach {
+            articleRecords.markUnread(it)
+        }
 
         val results = articleRecords
             .byStatus
@@ -71,7 +72,7 @@ class ArticleRecordsTest {
             .count(ArticleStatus.UNREAD)
             .executeAsOne()
 
-        val expected = articles.filter { it.id != readArticle.id }.map { it.id }.toSet()
+        val expected = readArticleIDs
         val actual = results.map { it.id }.toSet()
 
         assertEquals(expected = 2, actual = count)
@@ -85,7 +86,7 @@ class ArticleRecordsTest {
 
         articleRecords.markUnread(articleID = article.id)
 
-        val reloaded = articleRecords.fetch(articleID = article.id)!!
+        val reloaded = articleRecords.find(articleID = article.id)!!
 
         assertFalse(reloaded.read)
     }
@@ -97,7 +98,7 @@ class ArticleRecordsTest {
 
         articleRecords.addStar(articleID = article.id)
 
-        val reloaded = articleRecords.fetch(articleID = article.id)!!
+        val reloaded = articleRecords.find(articleID = article.id)!!
 
         assertTrue(reloaded.starred)
     }
@@ -109,22 +110,22 @@ class ArticleRecordsTest {
 
         articleRecords.removeStar(articleID = article.id)
 
-        val reloaded = articleRecords.fetch(articleID = article.id)!!
+        val reloaded = articleRecords.find(articleID = article.id)!!
 
         assertFalse(reloaded.starred)
     }
 
     @Test
-    fun countUnread() {
-//        val firstFeed =
-//            FeedFixture(database).create(feedURL = "https://example.com/${RandomUUID.generate()}")
-//
-//        2.repeated { articleFixture.create(feed = firstFeed) }
-//        val secondFeedArticle = articleFixture.create()
-//
-//        val unread = ArticleRecords(database).countAll(status = ArticleStatus.UNREAD)
-//
-//        assertEquals(expected = 2, actual = unread[firstFeed.id]!!.toInt())
-//        assertEquals(expected = 1, actual = unread[secondFeedArticle.feedID]!!.toInt())
+    fun markAllUnread() {
+        val articleIDs = 3.repeated { RandomUUID.generate() }
+        val articleRecords = ArticleRecords(database)
+
+        articleRecords.markAllUnread(articleIDs)
+
+        val articles = articleIDs.map { id ->
+            articleFixture.create(id = id)
+        }
+
+        assertTrue(articles.none { it.read })
     }
 }

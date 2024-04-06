@@ -2,9 +2,9 @@ package com.jocmp.basil.fixtures
 
 import com.jocmp.basil.Article
 import com.jocmp.basil.RandomUUID
-import com.jocmp.basil.db.Database
 import com.jocmp.basil.persistence.articleMapper
 import com.jocmp.basil.common.nowUTCInSeconds
+import com.jocmp.basil.db.Database
 import com.jocmp.basil.db.Feeds as DBFeed
 
 class ArticleFixture(private val database: Database) {

@@ -1,9 +1,9 @@
 package com.jocmp.basil.persistence
 
+import android.util.Log
 import app.cash.sqldelight.Query
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
-import app.cash.sqldelight.db.QueryResult
 import com.jocmp.basil.Article
 import com.jocmp.basil.ArticleStatus
 import com.jocmp.basil.common.nowUTC
@@ -15,19 +15,57 @@ import java.time.OffsetDateTime
 import java.time.ZonedDateTime
 
 class ArticleRecords internal constructor(
-    internal val database: Database
+    private val database: Database
 ) {
     val byStatus = ByStatus(database)
     val byFeed = ByFeed(database)
 
-    fun fetch(articleID: String): Article? {
+    fun find(articleID: String): Article? {
         return database.articlesQueries.findBy(
             articleID = articleID,
             mapper = ::articleMapper
         ).executeAsOneOrNull()
     }
 
-    fun markRead(articleID: String, lastReadAt: OffsetDateTime = nowUTC()) {
+    fun findMissingArticles(): List<Long> {
+        return database
+            .articlesQueries
+            .findMissingArticles()
+            .executeAsList()
+            .map { it.toLong() }
+    }
+
+    fun markAllUnread(articleIDs: List<String>, updatedAt: ZonedDateTime = nowUTC()) {
+        val updated = updatedAt.toEpochSecond()
+
+        database.transaction {
+            database.articlesQueries.updateStaleUnreads(excludedIDs = articleIDs)
+
+            articleIDs.forEach { articleID ->
+                database.articlesQueries.upsertUnread(
+                    articleID = articleID,
+                    updatedAt = updated
+                )
+            }
+        }
+    }
+
+    fun markAllStarred(articleIDs: List<String>, updatedAt: ZonedDateTime = nowUTC()) {
+        val updated = updatedAt.toEpochSecond()
+
+        database.transaction {
+            database.articlesQueries.updateStaleStars(excludedIDs = articleIDs)
+
+            articleIDs.forEach { articleID ->
+                database.articlesQueries.upsertStarred(
+                    articleID = articleID,
+                    updatedAt = updated
+                )
+            }
+        }
+    }
+
+    fun markRead(articleID: String, lastReadAt: ZonedDateTime = nowUTC()) {
         val updated = lastReadAt.toEpochSecond()
 
         database.articlesQueries.markRead(
@@ -38,7 +76,7 @@ class ArticleRecords internal constructor(
         )
     }
 
-    fun markUnread(articleID: String, updatedAt: OffsetDateTime = nowUTC()) {
+    fun markUnread(articleID: String, updatedAt: ZonedDateTime = nowUTC()) {
         database.articlesQueries.markRead(
             articleID = articleID,
             read = false,
@@ -47,7 +85,7 @@ class ArticleRecords internal constructor(
         )
     }
 
-    fun addStar(articleID: String, updatedAt: OffsetDateTime = nowUTC()) {
+    fun addStar(articleID: String, updatedAt: ZonedDateTime = nowUTC()) {
         database.articlesQueries.markStarred(
             articleID = articleID,
             starred = true,
@@ -55,7 +93,7 @@ class ArticleRecords internal constructor(
         )
     }
 
-    fun removeStar(articleID: String, updatedAt: OffsetDateTime = nowUTC()) {
+    fun removeStar(articleID: String, updatedAt: ZonedDateTime = nowUTC()) {
         database.articlesQueries.markStarred(
             articleID = articleID,
             starred = false,

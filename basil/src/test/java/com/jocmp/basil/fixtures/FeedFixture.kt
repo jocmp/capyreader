@@ -15,6 +15,7 @@ class FeedFixture(private val database: Database) {
             title = "My Feed",
             feed_url = feedURL,
             site_url = feedURL,
+            favicon_url = null
         )
 
         return database.feedsQueries.findBy(id = feedID).executeAsOne()

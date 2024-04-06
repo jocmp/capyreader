@@ -7,8 +7,6 @@ import com.jocmp.basil.ArticleFilter
 import com.jocmp.basil.db.Database
 import kotlinx.coroutines.Dispatchers
 import java.time.OffsetDateTime
-import java.time.ZonedDateTime
-import kotlin.math.sin
 
 class ArticlePagerFactory(private val database: Database) {
     private val articles = ArticleRecords(database)

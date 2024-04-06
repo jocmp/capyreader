@@ -22,8 +22,10 @@ import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -43,6 +45,7 @@ import com.jocmp.basilreader.ui.components.rememberWebViewNavigator
 import com.jocmp.basilreader.ui.fixtures.FeedPreviewFixture
 import com.jocmp.basilreader.ui.fixtures.FolderPreviewFixture
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
@@ -76,7 +79,7 @@ fun ArticleLayout(
     onToggleArticleStar: () -> Unit,
     drawerValue: DrawerValue = DrawerValue.Closed
 ) {
-    val filterStatus = filter.status
+    val (isInitialized, setInitialized) = rememberSaveable { mutableStateOf(false) }
     val drawerState = rememberDrawerState(drawerValue)
     val coroutineScope = rememberCoroutineScope()
     val navigator = rememberListDetailPaneScaffoldNavigator<ListDetailPaneScaffoldRole>(
@@ -139,7 +142,14 @@ fun ArticleLayout(
                     coroutineScope.launch {
                         onSelectFeed(feedID)
                         navigateToList()
-                        snackbarHost.showSnackbar(addFeedSuccessMessage)
+
+                        launch {
+                            snackbarHost.showSnackbar(addFeedSuccessMessage)
+                        }
+
+                        launch {
+                            state.startRefresh()
+                        }
                     }
                 },
                 onNavigateToAccounts = onNavigateToAccounts,
@@ -223,6 +233,14 @@ fun ArticleLayout(
             )
         }
     )
+
+    LaunchedEffect(Unit) {
+        if (!isInitialized) {
+            state.startRefresh()
+
+            setInitialized(true)
+        }
+    }
 
     LaunchedEffect(webViewNavigator) {
         val html = ArticleRenderer.render(article, context)

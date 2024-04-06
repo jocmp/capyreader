@@ -5,8 +5,8 @@ import com.jocmp.basil.db.Database
 import com.jocmp.basil.fixtures.FeedFixture
 import com.jocmp.feedbinclient.CreateSubscriptionRequest
 import com.jocmp.feedbinclient.Entry
-import com.jocmp.feedbinclient.EntryImages
-import com.jocmp.feedbinclient.EntryImagesSizeOne
+import com.jocmp.feedbinclient.Entry.Images
+import com.jocmp.feedbinclient.Entry.Images.SizeOne
 import com.jocmp.feedbinclient.Feedbin
 import com.jocmp.feedbinclient.StarredEntriesRequest
 import com.jocmp.feedbinclient.Subscription
@@ -14,16 +14,13 @@ import com.jocmp.feedbinclient.Tagging
 import com.jocmp.feedbinclient.UnreadEntriesRequest
 import io.mockk.coEvery
 import io.mockk.coVerify
-import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.encodeToJsonElement
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttp
 import okhttp3.Protocol
 import okhttp3.Request
-import okhttp3.RequestBody
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Before
 import org.junit.Test
@@ -76,8 +73,8 @@ class FeedbinAccountDelegateTest {
             created_at = "2024-02-23T17:47:45.708056Z",
             extracted_content_url = "https://extract.feedbin.com/parser/feedbin/fa2d8d34c403421a766dbec46c58738c36ff359e?base64_url=aHR0cHM6Ly9hcnN0ZWNobmljYS5jb20vP3A9MjAwNTUyNg==",
             author = "Scharon Harding",
-            images = EntryImages(
-                size_1 = EntryImagesSizeOne(
+            images = Images(
+                size_1 = SizeOne(
                     cdn_url = "https://cdn.arstechnica.net/wp-content/uploads/2024/02/GettyImages-2023785321-800x534.jpg"
                 ),
             ),
@@ -89,17 +86,28 @@ class FeedbinAccountDelegateTest {
         database = InMemoryDatabaseProvider.build(accountID)
         feedFixture = FeedFixture(database)
         feedbin = mockk<Feedbin>()
+
+        coEvery { feedbin.icons() }.returns(Response.success(listOf()))
     }
 
     @Test
     fun refreshAll_updatesEntries() = runTest {
         coEvery { feedbin.subscriptions() }.returns(Response.success(subscriptions))
+        coEvery { feedbin.unreadEntries() }.returns(Response.success(entries.map { it.id }))
+        coEvery { feedbin.starredEntries() }.returns(Response.success(emptyList()))
         coEvery { feedbin.taggings() }.returns(Response.success(taggings))
-        coEvery { feedbin.entries(since = any()) }.returns(Response.success(entries))
+        coEvery {
+            feedbin.entries(
+                since = any(),
+                perPage = any(),
+                page = any(),
+                ids = any(),
+            )
+        }.returns(Response.success(entries))
 
         val delegate = FeedbinAccountDelegate(database, feedbin)
 
-        delegate.refreshAll()
+        delegate.refresh()
 
         val articles = database
             .articlesQueries
@@ -120,6 +128,41 @@ class FeedbinAccountDelegateTest {
         assertEquals(expected = 2, actual = feeds.size)
 
         assertEquals(expected = listOf(null, "Gadgets"), actual = taggedNames)
+
+        assertEquals(expected = 1, actual = articles.size)
+    }
+
+    @Test
+    fun refreshAll_findsMissingArticles() = runTest {
+        coEvery { feedbin.subscriptions() }.returns(Response.success(subscriptions))
+        coEvery { feedbin.unreadEntries() }.returns(Response.success(emptyList()))
+        coEvery { feedbin.starredEntries() }.returns(Response.success(entries.map { it.id }))
+        coEvery { feedbin.taggings() }.returns(Response.success(taggings))
+        coEvery {
+            feedbin.entries(
+                since = null,
+                perPage = 100,
+                page = "1",
+                ids = entries.map { it.id }.joinToString(","),
+            )
+        }.returns(Response.success(entries))
+        coEvery {
+            feedbin.entries(
+                since = any(),
+                perPage = 100,
+                page = "1",
+                ids = null,
+            )
+        }.returns(Response.success(emptyList()))
+
+        val delegate = FeedbinAccountDelegate(database, feedbin)
+
+        delegate.refresh()
+
+        val articles = database
+            .articlesQueries
+            .countAll(read = false, starred = true)
+            .executeAsList()
 
         assertEquals(expected = 1, actual = articles.size)
     }
@@ -278,5 +321,10 @@ class FeedbinAccountDelegateTest {
         val result = delegate.addFeed(url = url)
 
         assertTrue(result.isFailure)
+    }
+
+    @Test
+    fun fetchWithPagination() {
+
     }
 }
