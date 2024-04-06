@@ -107,7 +107,7 @@ class FeedbinAccountDelegateTest {
 
         val delegate = FeedbinAccountDelegate(database, feedbin)
 
-        delegate.refreshAll()
+        delegate.refresh()
 
         val articles = database
             .articlesQueries
@@ -143,7 +143,7 @@ class FeedbinAccountDelegateTest {
                 since = null,
                 perPage = 100,
                 page = "1",
-                ids = entries.map { it.id },
+                ids = entries.map { it.id }.joinToString(","),
             )
         }.returns(Response.success(entries))
         coEvery {
@@ -157,7 +157,7 @@ class FeedbinAccountDelegateTest {
 
         val delegate = FeedbinAccountDelegate(database, feedbin)
 
-        delegate.refreshAll()
+        delegate.refresh()
 
         val articles = database
             .articlesQueries

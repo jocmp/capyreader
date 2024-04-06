@@ -32,12 +32,7 @@ class ArticleRecords internal constructor(
             .articlesQueries
             .findMissingArticles()
             .executeAsList()
-            .map {
-                if (it == "4324136646") {
-                    Log.d("ArticleRecords", "findMissingArticles: $it")
-                }
-                it.toLong()
-            }
+            .map { it.toLong() }
     }
 
     fun markAllUnread(articleIDs: List<String>, updatedAt: ZonedDateTime = nowUTC()) {
@@ -47,10 +42,6 @@ class ArticleRecords internal constructor(
             database.articlesQueries.updateStaleUnreads(excludedIDs = articleIDs)
 
             articleIDs.forEach { articleID ->
-                if (articleID == "4324136646") {
-                    Log.d("ArticleRecords", "markAllUnread: $articleID")
-                }
-
                 database.articlesQueries.upsertUnread(
                     articleID = articleID,
                     updatedAt = updated

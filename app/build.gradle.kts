@@ -91,7 +91,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.okhttp.client)
-    implementation(platform("androidx.compose:compose-bom:2023.10.01"))
+    implementation(platform("androidx.compose:compose-bom:2024.04.00"))
     implementation(platform("io.insert-koin:koin-bom:3.5.1"))
     implementation(project(":basil"))
     testImplementation("junit:junit:4.13.2")

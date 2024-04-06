@@ -45,6 +45,7 @@ import com.jocmp.basilreader.ui.components.rememberWebViewNavigator
 import com.jocmp.basilreader.ui.fixtures.FeedPreviewFixture
 import com.jocmp.basilreader.ui.fixtures.FolderPreviewFixture
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
@@ -141,7 +142,14 @@ fun ArticleLayout(
                     coroutineScope.launch {
                         onSelectFeed(feedID)
                         navigateToList()
-                        snackbarHost.showSnackbar(addFeedSuccessMessage)
+
+                        launch {
+                            snackbarHost.showSnackbar(addFeedSuccessMessage)
+                        }
+
+                        launch {
+                            state.startRefresh()
+                        }
                     }
                 },
                 onNavigateToAccounts = onNavigateToAccounts,

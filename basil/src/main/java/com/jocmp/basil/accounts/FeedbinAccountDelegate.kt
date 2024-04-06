@@ -1,6 +1,5 @@
 package com.jocmp.basil.accounts
 
-import android.util.Log
 import com.jocmp.basil.Feed
 import com.jocmp.basil.common.nowUTC
 import com.jocmp.basil.common.toDateTime
@@ -16,15 +15,13 @@ import com.jocmp.feedbinclient.StarredEntriesRequest
 import com.jocmp.feedbinclient.Subscription
 import com.jocmp.feedbinclient.UnreadEntriesRequest
 import com.jocmp.feedbinclient.pagingInfo
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import retrofit2.Response
 import java.net.MalformedURLException
 import java.net.URL
 import java.time.ZonedDateTime
-import kotlin.coroutines.coroutineContext
 
 internal class FeedbinAccountDelegate(
     private val database: Database,
@@ -95,7 +92,7 @@ internal class FeedbinAccountDelegate(
         }
     }
 
-    suspend fun refreshAll() {
+    suspend fun refresh() {
         val since = maxUpdatedAt()
 
         refreshFeeds()
@@ -165,7 +162,11 @@ internal class FeedbinAccountDelegate(
         val ids = articleRecords.findMissingArticles()
 
         ids.chunked(MAX_ENTRY_LIMIT).map { chunkedIDs ->
-            fetchPaginatedEntries(ids = chunkedIDs)
+            coroutineScope {
+                launch {
+                    fetchPaginatedEntries(ids = chunkedIDs)
+                }
+            }
         }
     }
 

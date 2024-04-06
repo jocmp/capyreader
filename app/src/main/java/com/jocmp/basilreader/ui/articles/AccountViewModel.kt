@@ -19,7 +19,6 @@ import com.jocmp.basilreader.refresher.RefreshScheduler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
@@ -114,12 +113,8 @@ class AccountViewModel(
         refreshJob?.cancel()
 
         refreshJob = viewModelScope.launch(Dispatchers.IO) {
-            when (val currentFilter = filter.value) {
-                is ArticleFilter.Feeds -> account.refreshFeed(currentFilter.feed)
-                is ArticleFilter.Folders -> account.refreshFeeds(currentFilter.folder.feeds)
-                is ArticleFilter.Articles -> account.refreshAll()
-            }
-
+            account.refresh()
+            
             onComplete()
         }
     }
