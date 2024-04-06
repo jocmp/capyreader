@@ -72,7 +72,6 @@ fun ArticleLayout(
     onEditFolder: (folderTitle: String) -> Unit,
     onEditFeed: (feedID: String) -> Unit,
     onRemoveFeed: (feedID: String) -> Unit,
-    onRemoveFolder: (folderTitle: String) -> Unit,
     onNavigateToAccounts: () -> Unit,
     onClearArticle: () -> Unit,
     onToggleArticleRead: () -> Unit,
@@ -178,13 +177,13 @@ fun ArticleLayout(
                             }
                         },
                         actions = {
-                            FilterActionMenu(
-                                filter = filter,
-                                onFeedEdit = onEditFeed,
-                                onFolderEdit = onEditFolder,
-                                onRemoveFeed = onRemoveFeed,
-                                onRemoveFolder = onRemoveFolder,
-                            )
+                            if (filter is ArticleFilter.Feeds) {
+                                FilterActionMenu(
+                                    filter = filter,
+                                    onFeedEdit = onEditFeed,
+                                    onRemoveFeed = onRemoveFeed,
+                                )
+                            }
                         }
                     )
                 },
@@ -275,7 +274,6 @@ fun ArticleLayoutPreview() {
             onEditFolder = {},
             onEditFeed = {},
             onRemoveFeed = {},
-            onRemoveFolder = {},
             onNavigateToAccounts = { },
             onClearArticle = { },
             onToggleArticleRead = { },

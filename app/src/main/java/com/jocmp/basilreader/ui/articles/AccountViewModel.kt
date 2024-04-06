@@ -102,19 +102,12 @@ class AccountViewModel(
         }
     }
 
-    fun removeFolder(folderTitle: String) {
-        viewModelScope.launch {
-            account.removeFolder(title = folderTitle)
-            resetToDefaultFilter()
-        }
-    }
-
     fun refreshFeed(onComplete: () -> Unit) {
         refreshJob?.cancel()
 
         refreshJob = viewModelScope.launch(Dispatchers.IO) {
             account.refresh()
-            
+
             onComplete()
         }
     }

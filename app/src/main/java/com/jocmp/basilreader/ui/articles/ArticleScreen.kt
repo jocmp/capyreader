@@ -39,7 +39,6 @@ fun ArticleScreen(
         onSelectFolder = viewModel::selectFolder,
         onSelectStatus = viewModel::selectStatus,
         onRemoveFeed = viewModel::removeFeed,
-        onRemoveFolder = viewModel::removeFolder,
         articles = viewModel.articles,
         onSelectArticle = viewModel::selectArticle,
         onToggleArticleRead = viewModel::toggleArticleRead,

@@ -56,22 +56,6 @@ fun NavGraphBuilder.articleGraph(
             },
         )
     }
-    dialog(
-        route = "folders/{title}/edit",
-    ) {
-        EditFolderScreen(
-            onSubmit = {
-                navController.navigate(articlesRoute) {
-                    popUpTo(articlesRoute) {
-                        inclusive = true
-                    }
-                }
-            },
-            onCancel = {
-                navController.popBackStack()
-            },
-        )
-    }
 }
 
 internal class EditFeedArgs(val feedID: String) {

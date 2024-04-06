@@ -33,10 +33,6 @@ internal class FeedbinAccountDelegate(
     private val articleRecords = ArticleRecords(database)
     private val feedRecords = FeedRecords(database)
 
-    fun fetchAll(feed: Feed): List<ParsedItem> {
-        return emptyList()
-    }
-
     suspend fun markRead(articleIDs: List<String>) {
         val entryIDs = articleIDs.map { it.toLong() }
 

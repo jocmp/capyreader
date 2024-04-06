@@ -46,9 +46,6 @@ data class Account(
             }
     }
 
-    suspend fun removeFolder(title: String) {
-    }
-
     suspend fun removeFeed(feedID: String) {
         feedRecords.removeFeed(feedID = feedID)
     }

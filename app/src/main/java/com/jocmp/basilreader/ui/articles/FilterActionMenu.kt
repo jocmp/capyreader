@@ -18,11 +18,9 @@ import com.jocmp.basilreader.ui.fixtures.FeedPreviewFixture
 
 @Composable
 fun FilterActionMenu(
-    filter: ArticleFilter,
+    filter: ArticleFilter.Feeds,
     onFeedEdit: (feedID: String) -> Unit,
-    onFolderEdit: (folderTitle: String) -> Unit,
     onRemoveFeed: (feedID: String) -> Unit,
-    onRemoveFolder: (folderTitle: String) -> Unit,
 ) {
     val (expanded, setMenuExpanded) = remember { mutableStateOf(false) }
     val (showRemoveDialog, setRemoveDialogOpen) = remember { mutableStateOf(false) }
@@ -34,15 +32,7 @@ fun FilterActionMenu(
     val onRemove = {
         setRemoveDialogOpen(false)
 
-        if (filter is ArticleFilter.Feeds) {
-            onRemoveFeed(filter.feed.id)
-        } else if (filter is ArticleFilter.Folders) {
-            onRemoveFolder(filter.folder.title)
-        }
-    }
-
-    if (filter is ArticleFilter.Articles) {
-        return
+        onRemoveFeed(filter.feed.id)
     }
 
     Box {
@@ -57,23 +47,12 @@ fun FilterActionMenu(
             expanded = expanded,
             onDismissRequest = { setMenuExpanded(false) },
         ) {
-            if (filter is ArticleFilter.Feeds) {
-                FeedActionMenuItems(
-                    feed = filter.feed,
-                    onMenuClose = { setMenuExpanded(false) },
-                    onRequestRemove = onRequestRemove,
-                    onEdit = onFeedEdit,
-                )
-            }
-
-            if (filter is ArticleFilter.Folders) {
-                FolderActionMenuItems(
-                    folder = filter.folder,
-                    onMenuClose = { setMenuExpanded(false) },
-                    onRequestRemove = onRequestRemove,
-                    onEdit = onFolderEdit,
-                )
-            }
+            FeedActionMenuItems(
+                feed = filter.feed,
+                onMenuClose = { setMenuExpanded(false) },
+                onRequestRemove = onRequestRemove,
+                onEdit = onFeedEdit,
+            )
         }
 
         if (showRemoveDialog) {
@@ -94,8 +73,6 @@ fun FilterActionMenuPreview() {
     FilterActionMenu(
         filter = ArticleFilter.Feeds(feed = feed, feedStatus = ArticleStatus.ALL),
         onFeedEdit = {},
-        onFolderEdit = {},
         onRemoveFeed = {},
-        onRemoveFolder = {}
     )
 }
