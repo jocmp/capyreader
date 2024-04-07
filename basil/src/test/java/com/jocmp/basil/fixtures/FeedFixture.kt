@@ -1,23 +1,30 @@
 package com.jocmp.basil.fixtures
 
+import com.jocmp.basil.Feed
 import com.jocmp.basil.RandomUUID
 import com.jocmp.basil.db.Database
+import com.jocmp.basil.persistence.FeedRecords
+import com.jocmp.basil.persistence.listMapper
+import kotlinx.coroutines.runBlocking
+import java.security.SecureRandom
 import com.jocmp.basil.db.Feeds as DBFeed
 
 class FeedFixture(private val database: Database) {
-    fun create(
-        feedID: String = RandomUUID.generate(),
-        feedURL: String = "https://example.com"
-    ): DBFeed {
-        database.feedsQueries.upsert(
-            id = feedID,
-            subscription_id = RandomUUID.generate(),
-            title = "My Feed",
-            feed_url = feedURL,
-            site_url = feedURL,
-            favicon_url = null
-        )
+    private val records = FeedRecords(database)
 
-        return database.feedsQueries.findBy(id = feedID).executeAsOne()
+    fun create(
+        feedID: String = randomID(),
+        feedURL: String = "https://example.com"
+    ): Feed = runBlocking {
+        records.upsert(
+            feedID = feedID,
+            subscriptionID = randomID(),
+            title = "My Feed",
+            feedURL = feedURL,
+            siteURL = feedURL,
+            faviconURL = null,
+        )!!
     }
+
+    private fun randomID() = SecureRandom.getInstanceStrong().nextInt().toString()
 }

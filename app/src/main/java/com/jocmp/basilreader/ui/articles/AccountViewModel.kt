@@ -15,7 +15,6 @@ import com.jocmp.basil.Folder
 import com.jocmp.basil.buildPager
 import com.jocmp.basil.countAll
 import com.jocmp.basilreader.common.AppPreferences
-import com.jocmp.basilreader.refresher.RefreshScheduler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
@@ -29,7 +28,6 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalCoroutinesApi::class)
 class AccountViewModel(
     private val account: Account,
-    private val refreshScheduler: RefreshScheduler,
     private val appPreferences: AppPreferences,
 ) : ViewModel() {
     private var refreshJob: Job? = null
@@ -50,6 +48,8 @@ class AccountViewModel(
         folders.map { copyFolderCounts(it, latestCounts) }
             .withPositiveCount(filterStatus)
     }
+
+    val allFeeds = account.allFeeds
 
     val feeds = account.feeds.combine(_counts) { feeds, latestCounts ->
         feeds.map { copyFeedCounts(it, latestCounts) }
@@ -80,7 +80,7 @@ class AccountViewModel(
 
     suspend fun selectFeed(feedID: String) {
         val feed = account.findFeed(feedID) ?: return
-        val feedFilter = ArticleFilter.Feeds(feed = feed, feedStatus = filter.value.status)
+        val feedFilter = ArticleFilter.Feeds(feedID = feed.id, feedStatus = filter.value.status)
 
         selectArticleFilter(feedFilter)
     }
@@ -89,7 +89,7 @@ class AccountViewModel(
         viewModelScope.launch {
             val folder = account.findFolder(title) ?: return@launch
             val feedFilter =
-                ArticleFilter.Folders(folder = folder, folderStatus = filter.value.status)
+                ArticleFilter.Folders(folderTitle = folder.title, folderStatus = filter.value.status)
 
             selectArticleFilter(feedFilter)
         }

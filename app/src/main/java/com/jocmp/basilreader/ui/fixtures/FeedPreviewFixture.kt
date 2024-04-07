@@ -13,13 +13,13 @@ class FeedPreviewFixture : PreviewParameterProvider<Feed> {
                 id = RandomUUID.generate(),
                 subscriptionID = RandomUUID.generate(),
                 count = 10,
-                name = "GamersNexus",
+                title = "GamersNexus",
                 feedURL = "https://gamersnexus.net/rss.xml"
             ),
             Feed(
                 id = RandomUUID.generate(),
                 subscriptionID = RandomUUID.generate(),
-                name = "9to5Google",
+                title = "9to5Google",
                 feedURL = "https://9to5google.com/feed/"
             )
         )

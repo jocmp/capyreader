@@ -9,3 +9,20 @@ VALUES (
   :feed_id,
   :name
 );
+
+deleteOrphanedTags:
+DELETE FROM taggings WHERE id NOT IN :excludedIDs;
+
+deleteTagging:
+DELETE FROM taggings WHERE id = :id;
+
+findFeedTaggingsToDelete:
+SELECT id
+FROM taggings
+WHERE taggings.feed_id = :feedID
+AND taggings.name NOT IN :excludedNames;
+
+findFeedIDs:
+SELECT feed_id
+FROM taggings
+WHERE taggings.name = :folderTitle;

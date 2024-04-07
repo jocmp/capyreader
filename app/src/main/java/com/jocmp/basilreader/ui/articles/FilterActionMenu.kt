@@ -13,12 +13,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.jocmp.basil.ArticleFilter
 import com.jocmp.basil.ArticleStatus
+import com.jocmp.basil.Feed
 import com.jocmp.basilreader.R
 import com.jocmp.basilreader.ui.fixtures.FeedPreviewFixture
 
 @Composable
 fun FilterActionMenu(
-    filter: ArticleFilter.Feeds,
+    feed: Feed,
     onFeedEdit: (feedID: String) -> Unit,
     onRemoveFeed: (feedID: String) -> Unit,
 ) {
@@ -32,7 +33,7 @@ fun FilterActionMenu(
     val onRemove = {
         setRemoveDialogOpen(false)
 
-        onRemoveFeed(filter.feed.id)
+        onRemoveFeed(feed.id)
     }
 
     Box {
@@ -48,7 +49,7 @@ fun FilterActionMenu(
             onDismissRequest = { setMenuExpanded(false) },
         ) {
             FeedActionMenuItems(
-                feed = filter.feed,
+                feedID = feed.id,
                 onMenuClose = { setMenuExpanded(false) },
                 onRequestRemove = onRequestRemove,
                 onEdit = onFeedEdit,
@@ -57,7 +58,7 @@ fun FilterActionMenu(
 
         if (showRemoveDialog) {
             RemoveDialog(
-                filter = filter,
+                feed = feed,
                 onRemove = onRemove,
                 onDismiss = { setRemoveDialogOpen(false) }
             )
@@ -71,7 +72,7 @@ fun FilterActionMenuPreview() {
     val feed = FeedPreviewFixture().values.first()
 
     FilterActionMenu(
-        filter = ArticleFilter.Feeds(feed = feed, feedStatus = ArticleStatus.ALL),
+        feed = feed,
         onFeedEdit = {},
         onRemoveFeed = {},
     )

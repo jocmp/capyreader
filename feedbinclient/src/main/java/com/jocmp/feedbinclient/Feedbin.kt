@@ -9,10 +9,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.HTTP
 import retrofit2.http.Header
+import retrofit2.http.Headers
+import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface Feedbin {
@@ -32,14 +36,27 @@ interface Feedbin {
     @GET("v2/icons.json")
     suspend fun icons(): Response<List<Icon>>
 
+    @Headers("Cache-Control: no-cache")
     @GET("v2/subscriptions.json")
     suspend fun subscriptions(): Response<List<Subscription>>
 
     @POST("v2/subscriptions.json")
     suspend fun createSubscription(@Body body: CreateSubscriptionRequest): Response<Subscription>
 
+    @PATCH("v2/subscriptions/{subscriptionID}.json")
+    suspend fun updateSubscription(
+        @Path("subscriptionID") subscriptionID: String,
+        @Body body: UpdateSubscriptionRequest
+    ): Response<Subscription>
+
     @GET("v2/taggings.json")
     suspend fun taggings(): Response<List<Tagging>>
+
+    @POST("v2/taggings.json")
+    suspend fun createTagging(@Body body: CreateTaggingRequest): Response<Tagging>
+
+    @DELETE("v2/taggings/{taggingID}.json")
+    suspend fun deleteTagging(@Path("taggingID") taggingID: String): Response<Void>
 
     @GET("v2/starred_entries.json")
     suspend fun starredEntries(): Response<List<Long>>

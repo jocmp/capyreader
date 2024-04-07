@@ -1,5 +1,7 @@
 package com.jocmp.basil.accounts
 
+import android.util.Log
+import com.jocmp.basil.AccountDelegate
 import com.jocmp.basil.Feed
 import com.jocmp.basil.common.nowUTC
 import com.jocmp.basil.common.toDateTime
@@ -8,12 +10,14 @@ import com.jocmp.basil.db.Database
 import com.jocmp.basil.persistence.ArticleRecords
 import com.jocmp.basil.persistence.FeedRecords
 import com.jocmp.feedbinclient.CreateSubscriptionRequest
+import com.jocmp.feedbinclient.CreateTaggingRequest
 import com.jocmp.feedbinclient.Entry
 import com.jocmp.feedbinclient.Feedbin
 import com.jocmp.feedbinclient.Icon
 import com.jocmp.feedbinclient.StarredEntriesRequest
 import com.jocmp.feedbinclient.Subscription
 import com.jocmp.feedbinclient.UnreadEntriesRequest
+import com.jocmp.feedbinclient.UpdateSubscriptionRequest
 import com.jocmp.feedbinclient.pagingInfo
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
@@ -26,38 +30,90 @@ import java.time.ZonedDateTime
 internal class FeedbinAccountDelegate(
     private val database: Database,
     private val feedbin: Feedbin
-) {
+) : AccountDelegate {
     class FeedNotFound : Exception()
     class SaveFeedFailure : Exception()
 
     private val articleRecords = ArticleRecords(database)
     private val feedRecords = FeedRecords(database)
 
-    suspend fun markRead(articleIDs: List<String>) {
+    override suspend fun markRead(articleIDs: List<String>) {
         val entryIDs = articleIDs.map { it.toLong() }
 
         feedbin.deleteUnreadEntries(UnreadEntriesRequest(unread_entries = entryIDs))
     }
 
-    suspend fun markUnread(articleIDs: List<String>) {
+    override suspend fun markUnread(articleIDs: List<String>) {
         val entryIDs = articleIDs.map { it.toLong() }
 
         feedbin.createUnreadEntries(UnreadEntriesRequest(unread_entries = entryIDs))
     }
 
-    suspend fun addStar(articleIDs: List<String>) {
+    override suspend fun updateFeed(
+        feed: Feed,
+        title: String,
+        folderTitles: List<String>
+    ): Result<Feed> {
+        if (title != feed.title) {
+            feedRecords.updateTitle(feed = feed, title = title)
+
+            feedbin.updateSubscription(
+                subscriptionID = feed.subscriptionID,
+                body = UpdateSubscriptionRequest(title = title)
+            )
+        }
+
+        val taggingIDsToDelete = database
+            .taggingsQueries
+            .findFeedTaggingsToDelete(
+                feedID = feed.id,
+                excludedNames = folderTitles
+            )
+            .executeAsList()
+
+        folderTitles.forEach { folderTitle ->
+            val request = CreateTaggingRequest(feed_id = feed.id, name = folderTitle)
+
+            withResult(feedbin.createTagging(request)) { tagging ->
+                Log.d("FeedbinAccountDelegate", "updateFeed: $tagging")
+                database.taggingsQueries.upsert(
+                    id = tagging.id,
+                    feed_id = tagging.feed_id.toString(),
+                    name = tagging.name
+                )
+            }
+        }
+
+        taggingIDsToDelete.forEach { taggingID ->
+            val result = feedbin.deleteTagging(taggingID = taggingID.toString())
+
+            if (result.isSuccessful) {
+                database.taggingsQueries.deleteTagging(taggingID)
+            }
+        }
+
+        val updatedFeed = feedRecords.findBy(feed.id)
+
+        return if (updatedFeed != null) {
+            Result.success(updatedFeed)
+        } else {
+            Result.failure(Throwable("Feed not found"))
+        }
+    }
+
+    override suspend fun addStar(articleIDs: List<String>) {
         val entryIDs = articleIDs.map { it.toLong() }
 
         feedbin.createStarredEntries(StarredEntriesRequest(starred_entries = entryIDs))
     }
 
-    suspend fun removeStar(articleIDs: List<String>) {
+    override suspend fun removeStar(articleIDs: List<String>) {
         val entryIDs = articleIDs.map { it.toLong() }
 
         feedbin.deleteStarredEntries(StarredEntriesRequest(starred_entries = entryIDs))
     }
 
-    suspend fun addFeed(url: String): Result<AddFeedResult> {
+    override suspend fun addFeed(url: String): Result<AddFeedResult> {
         val response = feedbin.createSubscription(CreateSubscriptionRequest(feed_url = url))
         val subscription = response.body()
         val errorBody = response.errorBody()?.string()
@@ -88,7 +144,7 @@ internal class FeedbinAccountDelegate(
         }
     }
 
-    suspend fun refresh() {
+    override suspend fun refresh() {
         val since = maxUpdatedAt()
 
         refreshFeeds()
@@ -140,12 +196,16 @@ internal class FeedbinAccountDelegate(
 
     private suspend fun refreshTaggings() {
         withResult(feedbin.taggings()) { taggings ->
-            taggings.forEach { tagging ->
-                database.taggingsQueries.upsert(
-                    id = tagging.id,
-                    feed_id = tagging.feed_id.toString(),
-                    name = tagging.name,
-                )
+            database.transaction {
+                taggings.forEach { tagging ->
+                    database.taggingsQueries.upsert(
+                        id = tagging.id,
+                        feed_id = tagging.feed_id.toString(),
+                        name = tagging.name,
+                    )
+                }
+
+                database.taggingsQueries.deleteOrphanedTags(excludedIDs = taggings.map { it.id })
             }
         }
     }
