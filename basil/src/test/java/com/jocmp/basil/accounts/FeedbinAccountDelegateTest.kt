@@ -12,6 +12,7 @@ import com.jocmp.feedbinclient.StarredEntriesRequest
 import com.jocmp.feedbinclient.Subscription
 import com.jocmp.feedbinclient.Tagging
 import com.jocmp.feedbinclient.UnreadEntriesRequest
+import com.jocmp.feedbinclient.UpdateSubscriptionRequest
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -251,7 +252,7 @@ class FeedbinAccountDelegateTest {
 
         assertEquals(
             expected = "Ed Zitron",
-            actual = feed.name
+            actual = feed.title
         )
     }
 
@@ -324,7 +325,34 @@ class FeedbinAccountDelegateTest {
     }
 
     @Test
-    fun fetchWithPagination() {
+    fun updateFeed_modifyTitle() = runTest {
+        val delegate = FeedbinAccountDelegate(database, feedbin)
+        val feed = feedFixture.create()
 
+        val subscription = Subscription(
+            id = feed.subscriptionID.toLong(),
+            created_at = "2024-01-30T19:42:44.851265Z",
+            feed_id = feed.id.toLong(),
+            title = feed.title,
+            feed_url = feed.feedURL,
+            site_url = feed.siteURL
+        )
+
+        val feedTitle = "The Verge Mobile Podcast"
+
+        coEvery {
+            feedbin.updateSubscription(
+                subscriptionID = feed.subscriptionID,
+                body = UpdateSubscriptionRequest(title = feedTitle)
+            )
+        }.returns(Response.success(subscription))
+
+        val updated = delegate.updateFeed(
+            feed = feed,
+            title = feedTitle,
+            folderTitles = emptyList()
+        ).getOrThrow()
+
+        assertEquals(expected = feedTitle, actual = updated.title)
     }
 }

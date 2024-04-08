@@ -133,7 +133,7 @@ fun FolderIconButton(
 fun FolderRowPreview() {
     val folder = FolderPreviewFixture().values.take(1).first()
     val filter = ArticleFilter.Folders(
-        folder = folder,
+        folderTitle = folder.title,
         folderStatus = ArticleStatus.ALL
     )
 

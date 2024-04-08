@@ -5,11 +5,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed class ArticleFilter(open val status: ArticleStatus) {
     fun isFolderSelect(folder: Folder): Boolean {
-        return this is Folders && this.folder.title == folder.title
+        return this is Folders && this.folderTitle == folder.title
     }
 
     fun isFeedSelected(feed: Feed): Boolean {
-        return this is Feeds && this.feed.id == feed.id
+        return this is Feeds && this.feedID == feed.id
     }
 
     fun areArticlesSelected(): Boolean {
@@ -31,13 +31,13 @@ sealed class ArticleFilter(open val status: ArticleStatus) {
     }
 
     @Serializable
-    data class Feeds(val feed: Feed, val feedStatus: ArticleStatus) : ArticleFilter(feedStatus) {
+    data class Feeds(val feedID: String, val feedStatus: ArticleStatus) : ArticleFilter(feedStatus) {
         override val status: ArticleStatus
             get() = feedStatus
     }
 
     @Serializable
-    data class Folders(val folder: Folder, val folderStatus: ArticleStatus) :
+    data class Folders(val folderTitle: String, val folderStatus: ArticleStatus) :
         ArticleFilter(folderStatus) {
         override val status: ArticleStatus
             get() = folderStatus

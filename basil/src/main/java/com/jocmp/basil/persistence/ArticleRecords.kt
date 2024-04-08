@@ -1,12 +1,12 @@
 package com.jocmp.basil.persistence
 
-import android.util.Log
 import app.cash.sqldelight.Query
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.jocmp.basil.Article
 import com.jocmp.basil.ArticleStatus
 import com.jocmp.basil.common.nowUTC
+import com.jocmp.basil.common.toDateTimeFromSeconds
 import com.jocmp.basil.db.Database
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.map
 import java.time.OffsetDateTime
 import java.time.ZonedDateTime
 
-class ArticleRecords internal constructor(
+internal class ArticleRecords internal constructor(
     private val database: Database
 ) {
     val byStatus = ByStatus(database)
@@ -119,6 +119,15 @@ class ArticleRecords internal constructor(
             }
     }
 
+    /** Date in UTC */
+    fun maxUpdatedAt(): String {
+        val max = database.articlesQueries.lastUpdatedAt().executeAsOne().MAX
+
+        max ?: return cutoffDate().toString()
+
+        return max.toDateTimeFromSeconds.toString()
+    }
+
     class ByFeed(private val database: Database) {
         fun all(
             feedIDs: List<String>,
@@ -193,4 +202,8 @@ private fun mapLastRead(read: Boolean?, value: OffsetDateTime?): Long? {
     }
 
     return null
+}
+
+private fun cutoffDate(): ZonedDateTime {
+    return nowUTC().minusMonths(3)
 }

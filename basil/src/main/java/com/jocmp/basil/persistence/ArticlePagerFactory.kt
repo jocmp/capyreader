@@ -1,11 +1,14 @@
 package com.jocmp.basil.persistence
 
 import androidx.paging.PagingSource
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.paging3.QueryPagingSource
 import com.jocmp.basil.Article
 import com.jocmp.basil.ArticleFilter
 import com.jocmp.basil.db.Database
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import java.time.OffsetDateTime
 
 class ArticlePagerFactory(private val database: Database) {
@@ -48,7 +51,7 @@ class ArticlePagerFactory(private val database: Database) {
         filter: ArticleFilter.Feeds,
         since: OffsetDateTime
     ): PagingSource<Int, Article> {
-        val feedIDs = listOf(filter.feed.id)
+        val feedIDs = listOf(filter.feedID)
 
         return feedsSource(feedIDs, filter, since)
     }
@@ -57,7 +60,10 @@ class ArticlePagerFactory(private val database: Database) {
         filter: ArticleFilter.Folders,
         since: OffsetDateTime
     ): PagingSource<Int, Article> {
-        val feedIDs = filter.folder.feeds.map { it.id }
+        val feedIDs =  database
+            .taggingsQueries
+            .findFeedIDs(folderTitle = filter.folderTitle)
+            .executeAsList()
 
         return feedsSource(feedIDs, filter, since)
     }

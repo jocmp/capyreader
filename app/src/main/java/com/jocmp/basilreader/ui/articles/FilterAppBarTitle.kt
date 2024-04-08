@@ -7,14 +7,25 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.jocmp.basil.ArticleFilter
+import com.jocmp.basil.Feed
+import com.jocmp.basil.Folder
 import com.jocmp.basilreader.ui.navigationTitle
 
 @Composable
-fun FilterAppBarTitle(filter: ArticleFilter) {
+fun FilterAppBarTitle(
+    filter: ArticleFilter,
+    allFeeds: List<Feed>,
+    folders: List<Folder>,
+) {
     val text = when (filter) {
         is ArticleFilter.Articles -> stringResource(filter.articleStatus.navigationTitle)
-        is ArticleFilter.Feeds -> filter.feed.name
-        is ArticleFilter.Folders -> filter.folder.title
+        is ArticleFilter.Feeds -> {
+            allFeeds.find { it.id == filter.feedID }?.title.orEmpty()
+        }
+
+        is ArticleFilter.Folders -> {
+            folders.find { it.title == filter.folderTitle }?.title.orEmpty()
+        }
     }
 
     Text(
@@ -28,6 +39,10 @@ fun FilterAppBarTitle(filter: ArticleFilter) {
 @Composable
 fun FilterAppBarTitlePreview() {
     MaterialTheme {
-        FilterAppBarTitle(ArticleFilter.default())
+        FilterAppBarTitle(
+            filter = ArticleFilter.default(),
+            allFeeds = emptyList(),
+            folders = emptyList(),
+        )
     }
 }

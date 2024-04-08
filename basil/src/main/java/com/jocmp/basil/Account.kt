@@ -11,24 +11,33 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.net.URI
 
-private const val TAG = "Account"
+interface AccountDelegate {
+    suspend fun addFeed(url: String): Result<AddFeedResult>
+    suspend fun addStar(articleIDs: List<String>)
+    suspend fun refresh()
+    suspend fun removeStar(articleIDs: List<String>)
+    suspend fun markRead(articleIDs: List<String>)
+    suspend fun markUnread(articleIDs: List<String>)
+    suspend fun updateFeed(feed: Feed, title: String, folderTitles: List<String>): Result<Feed>
+
+    suspend fun removeFeed(feedID: String)
+}
 
 data class Account(
     val id: String,
     val path: URI,
     val database: Database,
     val preferences: AccountPreferences,
-) {
-    private val delegate = FeedbinAccountDelegate(
+    val delegate: AccountDelegate = FeedbinAccountDelegate(
         database = database,
-        feedbin = Feedbin.forAccount(this)
+        feedbin = Feedbin.forAccount(path, preferences)
     )
-
+) {
     internal val articleRecords: ArticleRecords = ArticleRecords(database)
 
     private val feedRecords: FeedRecords = FeedRecords(database)
 
-    private val allFeeds = feedRecords.feeds()
+    val allFeeds = feedRecords.feeds()
 
     val feeds: Flow<List<Feed>> = allFeeds.map { all ->
         all.filter { it.folderName.isBlank() }
@@ -46,13 +55,6 @@ data class Account(
             }
     }
 
-    suspend fun removeFolder(title: String) {
-    }
-
-    suspend fun removeFeed(feedID: String) {
-        feedRecords.removeFeed(feedID = feedID)
-    }
-
     suspend fun addFeed(url: String): Result<AddFeedResult> {
         return delegate.addFeed(url)
     }
@@ -60,18 +62,15 @@ data class Account(
     suspend fun editFeed(form: EditFeedForm): Result<Feed> {
         val feed = findFeed(form.feedID) ?: return Result.failure(Throwable("Feed not found"))
 
-        val editedFeed = feed.copy(name = form.name)
-
-        return Result.success(editedFeed)
+        return delegate.updateFeed(
+            feed = feed,
+            title = form.title,
+            folderTitles = form.folderTitles
+        )
     }
 
-    suspend fun editFolder(form: EditFolderForm): Result<Folder> {
-        val folder =
-            findFolder(form.existingTitle) ?: return Result.failure(Throwable("Folder not found"))
-
-        val updatedFolder = folder.copy(title = form.title)
-
-        return Result.success(updatedFolder)
+    suspend fun removeFeed(feedID: String) {
+        delegate.removeFeed(feedID = feedID)
     }
 
     suspend fun refresh() {

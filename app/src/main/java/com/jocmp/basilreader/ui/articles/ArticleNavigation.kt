@@ -31,41 +31,17 @@ fun NavGraphBuilder.articleGraph(
         ArticleScreen(
             onEditFeed = { feedID ->
                 navController.navigateToEditFeed(feedID = feedID)
-            },
-            onEditFolder = { folderTitle ->
-                navController.navigateToEditFolder(folderTitle = folderTitle)
-            },
-            onNavigateToAccounts = {
-                navController.navigate(Route.AccountIndex)
             }
-        )
+        ) {
+            navController.navigate(Route.AccountIndex)
+        }
     }
     dialog(
         route = "feeds/{id}/edit",
     ) {
         EditFeedScreen(
             onSubmit = {
-                navController.navigate(articlesRoute) {
-                    popUpTo(articlesRoute) {
-                        inclusive = true
-                    }
-                }
-            },
-            onCancel = {
                 navController.popBackStack()
-            },
-        )
-    }
-    dialog(
-        route = "folders/{title}/edit",
-    ) {
-        EditFolderScreen(
-            onSubmit = {
-                navController.navigate(articlesRoute) {
-                    popUpTo(articlesRoute) {
-                        inclusive = true
-                    }
-                }
             },
             onCancel = {
                 navController.popBackStack()

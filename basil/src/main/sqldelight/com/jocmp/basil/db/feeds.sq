@@ -40,6 +40,9 @@ VALUES (
   :favicon_url
 );
 
+updateName:
+UPDATE feeds SET title = :title WHERE feeds.id = :feedID;
+
 delete {
   DELETE FROM article_statuses WHERE article_statuses.article_id IN (
       SELECT id

@@ -7,15 +7,16 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.jocmp.basil.ArticleFilter
+import com.jocmp.basil.Feed
 import com.jocmp.basilreader.R
 
 @Composable
 fun RemoveDialog(
-    filter: ArticleFilter,
+    feed: Feed,
     onRemove: () -> Unit,
     onDismiss: () -> Unit
 ) {
-    val state = removeDialogState(filter) ?: return
+    val state = removeDialogState(feed = feed)
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -35,22 +36,12 @@ fun RemoveDialog(
 }
 
 @Composable
-private fun removeDialogState(filter: ArticleFilter): RemoveDialogState? {
-    return when (filter) {
-        is ArticleFilter.Feeds -> RemoveDialogState(
-            title = stringResource(R.string.feed_action_unsubscribe_title),
-            message = stringResource(R.string.feed_action_unsubscribe_message, filter.feed.name),
-            confirmText = stringResource(R.string.feed_action_unsubscribe_confirm)
-        )
-
-        is ArticleFilter.Folders -> RemoveDialogState(
-            title = stringResource(R.string.folder_action_delete_title),
-            message = stringResource(R.string.folder_action_delete_message, filter.folder.title),
-            confirmText = stringResource(R.string.folder_action_delete_confirm)
-        )
-
-        else -> null
-    }
+private fun removeDialogState(feed: Feed): RemoveDialogState {
+    return  RemoveDialogState(
+        title = stringResource(R.string.feed_action_unsubscribe_title),
+        message = stringResource(R.string.feed_action_unsubscribe_message, feed.title),
+        confirmText = stringResource(R.string.feed_action_unsubscribe_confirm)
+    )
 }
 
 data class RemoveDialogState(

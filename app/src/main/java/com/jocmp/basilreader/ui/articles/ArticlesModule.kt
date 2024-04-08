@@ -17,21 +17,13 @@ internal val articlesModule = module {
 
         AccountViewModel(
             account = get<Account>(parameters = { parametersOf(appPreferences.accountID.get()) }),
-            refreshScheduler = get(),
             appPreferences = appPreferences
         )
     }
     viewModel {
         EditFeedViewModel(
             savedStateHandle = get(),
-            accountManager = get(),
-            appPreferences = get()
-        )
-    }
-    viewModel {
-        EditFolderViewModel(
-            savedStateHandle = get(),
-            accountManager = get(),
+            account = get(),
             appPreferences = get()
         )
     }

@@ -12,7 +12,7 @@ import com.jocmp.basilreader.ui.fixtures.FeedPreviewFixture
 
 @Composable
 fun FeedActionMenuItems(
-    feed: Feed,
+    feedID: String,
     onMenuClose: () -> Unit,
     onRequestRemove: () -> Unit,
     onEdit: (feedID: String) -> Unit,
@@ -23,7 +23,7 @@ fun FeedActionMenuItems(
         },
         onClick = {
             onMenuClose()
-            onEdit(feed.id)
+            onEdit(feedID)
         }
     )
     DropdownMenuItem(
@@ -42,7 +42,7 @@ fun FeedActionMenuItems(
 fun FeedActionMenuPreview() {
     DropdownMenu(expanded = true, onDismissRequest = {}) {
         FeedActionMenuItems(
-            feed = FeedPreviewFixture().values.first(),
+            feedID = FeedPreviewFixture().values.first().id,
             onMenuClose = {},
             onEdit = {},
             onRequestRemove = {}

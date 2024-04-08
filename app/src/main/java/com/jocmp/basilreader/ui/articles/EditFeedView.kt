@@ -5,9 +5,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -35,7 +35,8 @@ fun EditFeedView(
     onSubmit: (feed: EditFeedForm) -> Unit,
     onCancel: () -> Unit
 ) {
-    val (name, setName) = remember { mutableStateOf(feed.name) }
+    val scrollState = rememberScrollState()
+    val (name, setName) = remember { mutableStateOf(feed.title) }
     val (addedFolder, setAddedFolder) = remember { mutableStateOf("") }
     val switchFolders = remember {
         folders.map { it.title to feedFoldersTitles.contains(it.title) }.toMutableStateMap()
@@ -48,56 +49,56 @@ fun EditFeedView(
         onSubmit(
             EditFeedForm(
                 feedID = feed.id,
-                name = name,
+                title = name,
                 folderTitles = folderNames
             )
         )
     }
 
-    Card(
-        shape = RoundedCornerShape(16.dp)
+    Column(
+        Modifier
+            .padding(16.dp)
+            .verticalScroll(scrollState)
     ) {
-        Column(Modifier.padding(16.dp)) {
-            TextField(
-                value = name,
-                onValueChange = setName,
-                placeholder = { Text(feed.name) },
-                label = {
-                    Text(stringResource(id = R.string.add_feed_name_title))
-                }
-            )
-            TextField(
-                value = addedFolder,
-                onValueChange = setAddedFolder,
-                placeholder = {
-                    Text(stringResource(id = R.string.add_feed_new_folder_title))
-                }
-            )
-            Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-                switchFolders.forEach { (folderTitle, checked) ->
-                    Row(
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(folderTitle)
-                        Switch(
-                            checked = checked,
-                            onCheckedChange = { value -> switchFolders[folderTitle] = value }
-                        )
-                    }
+        TextField(
+            value = name,
+            onValueChange = setName,
+            placeholder = { Text(feed.title) },
+            label = {
+                Text(stringResource(id = R.string.add_feed_name_title))
+            }
+        )
+        TextField(
+            value = addedFolder,
+            onValueChange = setAddedFolder,
+            placeholder = {
+                Text(stringResource(id = R.string.add_feed_new_folder_title))
+            }
+        )
+        Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+            switchFolders.forEach { (folderTitle, checked) ->
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(folderTitle)
+                    Switch(
+                        checked = checked,
+                        onCheckedChange = { value -> switchFolders[folderTitle] = value }
+                    )
                 }
             }
-            Row(
-                horizontalArrangement = Arrangement.End,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                TextButton(onClick = onCancel) {
-                    Text(stringResource(R.string.feed_form_cancel))
-                }
-                Button(onClick = { submitFeed() }) {
-                    Text(stringResource(R.string.edit_feed_submit))
-                }
+        }
+        Row(
+            horizontalArrangement = Arrangement.End,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            TextButton(onClick = onCancel) {
+                Text(stringResource(R.string.feed_form_cancel))
+            }
+            Button(onClick = { submitFeed() }) {
+                Text(stringResource(R.string.edit_feed_submit))
             }
         }
     }

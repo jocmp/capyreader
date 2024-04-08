@@ -1,11 +1,11 @@
 package com.jocmp.basil.fixtures
 
 import com.jocmp.basil.Article
+import com.jocmp.basil.Feed
 import com.jocmp.basil.RandomUUID
-import com.jocmp.basil.persistence.articleMapper
 import com.jocmp.basil.common.nowUTCInSeconds
 import com.jocmp.basil.db.Database
-import com.jocmp.basil.db.Feeds as DBFeed
+import com.jocmp.basil.persistence.articleMapper
 
 class ArticleFixture(private val database: Database) {
     private val feedFixture = FeedFixture(database)
@@ -13,7 +13,7 @@ class ArticleFixture(private val database: Database) {
     fun create(
         id: String = RandomUUID.generate(),
         title: String = "Test Title",
-        feed: DBFeed = feedFixture.create(feedURL = "https://example.com/${RandomUUID.generate()}"),
+        feed: Feed = feedFixture.create(feedURL = "https://example.com/${RandomUUID.generate()}"),
         publishedAt: Long = nowUTCInSeconds()
     ): Article {
         database.transaction {

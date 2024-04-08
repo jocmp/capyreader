@@ -12,12 +12,39 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlin.coroutines.coroutineContext
 
-internal class FeedRecords(val database: Database) {
+internal class FeedRecords(private val database: Database) {
     suspend fun findBy(id: String): Feed? {
         return database.feedsQueries.findBy(id, mapper = ::feedMapper)
             .asFlow()
             .mapToOneNotNull(coroutineContext)
             .firstOrNull()
+    }
+
+    suspend fun upsert(
+        feedID: String,
+        subscriptionID: String,
+        title: String,
+        feedURL: String,
+        siteURL: String?,
+        faviconURL: String?
+    ): Feed? {
+        database.feedsQueries.upsert(
+            id = feedID,
+            subscription_id = subscriptionID,
+            title = title,
+            feed_url = feedURL,
+            site_url = siteURL,
+            favicon_url = faviconURL,
+        )
+
+        return findBy(feedID)
+    }
+
+    fun updateTitle(feed: Feed, title: String) {
+        database.feedsQueries.updateName(
+            title = title,
+            feedID = feed.id,
+        )
     }
 
     suspend fun findFolder(title: String): Folder? {
@@ -57,7 +84,7 @@ internal class FeedRecords(val database: Database) {
         return Feed(
             id = id,
             subscriptionID = subscriptionID,
-            name = title,
+            title = title,
             feedURL = feedURL,
             siteURL = siteURL ?: "",
             faviconURL = faviconURL,
@@ -66,10 +93,3 @@ internal class FeedRecords(val database: Database) {
         )
     }
 }
-
-private const val TOP_LEVEL_KEY = "top-level"
-
-data class AllFeeds(
-    val topLevelFeeds: List<Feed> = emptyList(),
-    val folders: List<Folder> = emptyList(),
-)

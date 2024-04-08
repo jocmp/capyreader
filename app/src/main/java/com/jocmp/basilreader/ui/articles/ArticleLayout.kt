@@ -45,7 +45,6 @@ import com.jocmp.basilreader.ui.components.rememberWebViewNavigator
 import com.jocmp.basilreader.ui.fixtures.FeedPreviewFixture
 import com.jocmp.basilreader.ui.fixtures.FolderPreviewFixture
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
@@ -60,6 +59,7 @@ fun ArticleLayout(
     filter: ArticleFilter,
     folders: List<Folder>,
     feeds: List<Feed>,
+    allFeeds: List<Feed>,
     articles: Flow<PagingData<Article>>,
     article: Article?,
     statusCount: Long,
@@ -69,10 +69,8 @@ fun ArticleLayout(
     onSelectArticleFilter: () -> Unit,
     onSelectStatus: (status: ArticleStatus) -> Unit,
     onSelectArticle: (articleID: String, completion: (article: Article) -> Unit) -> Unit,
-    onEditFolder: (folderTitle: String) -> Unit,
     onEditFeed: (feedID: String) -> Unit,
     onRemoveFeed: (feedID: String) -> Unit,
-    onRemoveFolder: (folderTitle: String) -> Unit,
     onNavigateToAccounts: () -> Unit,
     onClearArticle: () -> Unit,
     onToggleArticleRead: () -> Unit,
@@ -94,6 +92,7 @@ fun ArticleLayout(
     val state = rememberPullToRefreshState()
     val snackbarHost = remember { SnackbarHostState() }
     val addFeedSuccessMessage = stringResource(R.string.add_feed_success)
+    val currentFeed = findCurrentFeed(filter, allFeeds)
 
     val navigateToDetail = {
         navigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
@@ -168,7 +167,13 @@ fun ArticleLayout(
             Scaffold(
                 topBar = {
                     TopAppBar(
-                        title = { FilterAppBarTitle(filter) },
+                        title = {
+                            FilterAppBarTitle(
+                                filter = filter,
+                                allFeeds = allFeeds,
+                                folders = folders,
+                            )
+                        },
                         navigationIcon = {
                             IconButton(onClick = { coroutineScope.launch { drawerState.open() } }) {
                                 Icon(
@@ -178,13 +183,13 @@ fun ArticleLayout(
                             }
                         },
                         actions = {
-                            FilterActionMenu(
-                                filter = filter,
-                                onFeedEdit = onEditFeed,
-                                onFolderEdit = onEditFolder,
-                                onRemoveFeed = onRemoveFeed,
-                                onRemoveFolder = onRemoveFolder,
-                            )
+                            if (currentFeed != null) {
+                                FilterActionMenu(
+                                    feed = currentFeed,
+                                    onFeedEdit = onEditFeed,
+                                    onRemoveFeed = onRemoveFeed,
+                                )
+                            }
                         }
                     )
                 },
@@ -251,6 +256,14 @@ fun ArticleLayout(
     }
 }
 
+fun findCurrentFeed(filter: ArticleFilter, feeds: List<Feed>): Feed? {
+    if (filter is ArticleFilter.Feeds) {
+        return feeds.find { it.id == filter.feedID }
+    }
+
+    return null
+}
+
 @Preview
 @Composable
 fun ArticleLayoutPreview() {
@@ -260,26 +273,25 @@ fun ArticleLayoutPreview() {
     MaterialTheme {
         ArticleLayout(
             filter = ArticleFilter.default(),
+            allFeeds = emptyList(),
             folders = folders,
             feeds = feeds,
             articles = emptyFlow(),
             article = null,
             statusCount = 30,
-            drawerValue = DrawerValue.Open,
             onFeedRefresh = {},
             onSelectFolder = {},
             onSelectFeed = {},
             onSelectArticleFilter = { },
             onSelectStatus = {},
             onSelectArticle = { _, _ -> },
-            onEditFolder = {},
             onEditFeed = {},
             onRemoveFeed = {},
-            onRemoveFolder = {},
             onNavigateToAccounts = { },
             onClearArticle = { },
             onToggleArticleRead = { },
             onToggleArticleStar = {},
+            drawerValue = DrawerValue.Open,
         )
     }
 }

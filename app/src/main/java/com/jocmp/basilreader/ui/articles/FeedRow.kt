@@ -15,7 +15,7 @@ fun FeedRow(
 ) {
     NavigationDrawerItem(
         icon = { FaviconBadge(url = feed.faviconURL) },
-        label = { ListTitle(feed.name) },
+        label = { ListTitle(feed.title) },
         badge = { CountBadge(count = feed.count) },
         selected = selected,
         onClick = {

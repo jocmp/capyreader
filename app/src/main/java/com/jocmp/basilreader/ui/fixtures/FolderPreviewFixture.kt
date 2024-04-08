@@ -18,14 +18,14 @@ class FolderPreviewFixture : PreviewParameterProvider<Folder> {
                         id = RandomUUID.generate(),
                         subscriptionID = RandomUUID.generate(),
                         count = 3,
-                        name = "The Verge",
+                        title = "The Verge",
                         feedURL = "https://www.theverge.com/rss/index.xml"
                     ),
                     Feed(
                         id = RandomUUID.generate(),
                         subscriptionID = RandomUUID.generate(),
                         count = 0,
-                        name = "Ars Technica",
+                        title = "Ars Technica",
                         feedURL = "https://arstechnica.com/feed/"
                     )
                 )
@@ -36,13 +36,13 @@ class FolderPreviewFixture : PreviewParameterProvider<Folder> {
                     Feed(
                         id = RandomUUID.generate(),
                         subscriptionID = RandomUUID.generate(),
-                        name = "Android Weekly",
+                        title = "Android Weekly",
                         feedURL = ""
                     ),
                     Feed(
                         id = RandomUUID.generate(),
                         subscriptionID = RandomUUID.generate(),
-                        name = "Ruby Weekly",
+                        title = "Ruby Weekly",
                         feedURL = ""
                     ),
                 )
