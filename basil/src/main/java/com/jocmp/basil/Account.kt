@@ -19,6 +19,8 @@ interface AccountDelegate {
     suspend fun markRead(articleIDs: List<String>)
     suspend fun markUnread(articleIDs: List<String>)
     suspend fun updateFeed(feed: Feed, title: String, folderTitles: List<String>): Result<Feed>
+
+    suspend fun removeFeed(feedID: String)
 }
 
 data class Account(
@@ -67,8 +69,8 @@ data class Account(
         )
     }
 
-    fun removeFeed(feedID: String) {
-        feedRecords.removeFeed(feedID = feedID)
+    suspend fun removeFeed(feedID: String) {
+        delegate.removeFeed(feedID = feedID)
     }
 
     suspend fun refresh() {

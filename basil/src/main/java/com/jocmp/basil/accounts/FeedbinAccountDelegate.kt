@@ -1,14 +1,15 @@
 package com.jocmp.basil.accounts
 
-import android.util.Log
 import com.jocmp.basil.AccountDelegate
 import com.jocmp.basil.Feed
+import com.jocmp.basil.common.host
 import com.jocmp.basil.common.nowUTC
 import com.jocmp.basil.common.toDateTime
-import com.jocmp.basil.common.toDateTimeFromSeconds
+import com.jocmp.basil.common.withResult
 import com.jocmp.basil.db.Database
 import com.jocmp.basil.persistence.ArticleRecords
 import com.jocmp.basil.persistence.FeedRecords
+import com.jocmp.basil.persistence.TaggingRecords
 import com.jocmp.feedbinclient.CreateSubscriptionRequest
 import com.jocmp.feedbinclient.CreateTaggingRequest
 import com.jocmp.feedbinclient.Entry
@@ -22,9 +23,6 @@ import com.jocmp.feedbinclient.pagingInfo
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
-import retrofit2.Response
-import java.net.MalformedURLException
-import java.net.URL
 import java.time.ZonedDateTime
 
 internal class FeedbinAccountDelegate(
@@ -36,6 +34,7 @@ internal class FeedbinAccountDelegate(
 
     private val articleRecords = ArticleRecords(database)
     private val feedRecords = FeedRecords(database)
+    private val taggingRecords = TaggingRecords(database)
 
     override suspend fun markRead(articleIDs: List<String>) {
         val entryIDs = articleIDs.map { it.toLong() }
@@ -63,22 +62,18 @@ internal class FeedbinAccountDelegate(
             )
         }
 
-        val taggingIDsToDelete = database
-            .taggingsQueries
-            .findFeedTaggingsToDelete(
-                feedID = feed.id,
-                excludedNames = folderTitles
-            )
-            .executeAsList()
+        val taggingIDsToDelete = taggingRecords.findFeedTaggingsToDelete(
+            feed = feed,
+            excludedTaggingNames = folderTitles
+        )
 
         folderTitles.forEach { folderTitle ->
             val request = CreateTaggingRequest(feed_id = feed.id, name = folderTitle)
 
             withResult(feedbin.createTagging(request)) { tagging ->
-                Log.d("FeedbinAccountDelegate", "updateFeed: $tagging")
-                database.taggingsQueries.upsert(
+                taggingRecords.upsert(
                     id = tagging.id,
-                    feed_id = tagging.feed_id.toString(),
+                    feedID = tagging.feed_id.toString(),
                     name = tagging.name
                 )
             }
@@ -98,6 +93,16 @@ internal class FeedbinAccountDelegate(
             Result.success(updatedFeed)
         } else {
             Result.failure(Throwable("Feed not found"))
+        }
+    }
+
+    override suspend fun removeFeed(feedID: String) {
+        val feed = feedRecords.findBy(feedID) ?: return
+
+        val result = feedbin.deleteSubscription(subscriptionID = feed.subscriptionID)
+
+        if (result.isSuccessful) {
+            feedRecords.removeFeed(feedID = feedID)
         }
     }
 
@@ -145,7 +150,7 @@ internal class FeedbinAccountDelegate(
     }
 
     override suspend fun refresh() {
-        val since = maxUpdatedAt()
+        val since = articleRecords.maxUpdatedAt()
 
         refreshFeeds()
         refreshTaggings()
@@ -182,7 +187,7 @@ internal class FeedbinAccountDelegate(
     }
 
     private fun upsertFeed(subscription: Subscription, icons: List<Icon>) {
-        val icon = icons.find { it.host == host(subscription) }
+        val icon = icons.find { it.host == subscription.host }
 
         database.feedsQueries.upsert(
             id = subscription.feed_id.toString(),
@@ -286,38 +291,7 @@ internal class FeedbinAccountDelegate(
         return result
     }
 
-    /** Date in UTC */
-    private fun maxUpdatedAt(): String {
-        val max = database.articlesQueries.lastUpdatedAt().executeAsOne().MAX
-
-        max ?: return cutoffDate().toString()
-
-        return max.toDateTimeFromSeconds.toString()
-    }
-
     companion object {
         const val MAX_ENTRY_LIMIT = 100
     }
-}
-
-private fun cutoffDate(): ZonedDateTime {
-    return nowUTC().minusMonths(3)
-}
-
-private fun host(subscription: Subscription): String? {
-    return try {
-        URL(subscription.site_url).host
-    } catch (e: MalformedURLException) {
-        null
-    }
-}
-
-private fun <T> withResult(response: Response<T>, handler: (result: T) -> Unit) {
-    val result = response.body()
-
-    if (!response.isSuccessful || result == null) {
-        return
-    }
-
-    handler(result)
 }

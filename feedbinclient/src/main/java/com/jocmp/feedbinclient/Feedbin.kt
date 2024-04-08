@@ -3,7 +3,6 @@ package com.jocmp.feedbinclient
 import com.squareup.moshi.Moshi
 import okhttp3.Credentials
 import okhttp3.OkHttpClient
-import retrofit2.CallAdapter
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -42,6 +41,9 @@ interface Feedbin {
 
     @POST("v2/subscriptions.json")
     suspend fun createSubscription(@Body body: CreateSubscriptionRequest): Response<Subscription>
+
+    @DELETE("v2/subscriptions/{subscriptionID}.json")
+    suspend fun deleteSubscription(@Path("subscriptionID") subscriptionID: String): Response<Void>
 
     @PATCH("v2/subscriptions/{subscriptionID}.json")
     suspend fun updateSubscription(
