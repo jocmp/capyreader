@@ -92,6 +92,7 @@ fun ArticleLayout(
     val state = rememberPullToRefreshState()
     val snackbarHost = remember { SnackbarHostState() }
     val addFeedSuccessMessage = stringResource(R.string.add_feed_success)
+    val unsubscribeSuccessMessage = stringResource(R.string.feed_action_unsubscribe_success)
     val currentFeed = findCurrentFeed(filter, allFeeds)
 
     val navigateToDetail = {
@@ -187,7 +188,13 @@ fun ArticleLayout(
                                 FilterActionMenu(
                                     feed = currentFeed,
                                     onFeedEdit = onEditFeed,
-                                    onRemoveFeed = onRemoveFeed,
+                                    onRemoveFeed = { feedID ->
+                                        onRemoveFeed(feedID)
+
+                                        coroutineScope.launch {
+                                            snackbarHost.showSnackbar(unsubscribeSuccessMessage)
+                                        }
+                                    }
                                 )
                             }
                         }

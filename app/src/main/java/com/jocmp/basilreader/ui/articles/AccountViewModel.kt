@@ -96,10 +96,10 @@ class AccountViewModel(
     }
 
     fun removeFeed(feedID: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             account.removeFeed(feedID = feedID)
-            resetToDefaultFilter()
         }
+        resetToDefaultFilter()
     }
 
     fun refreshFeed(onComplete: () -> Unit) {
