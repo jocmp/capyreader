@@ -13,15 +13,6 @@ const val articlesRoute = "articles"
 fun NavController.navigateToArticles() =
     navigate(articlesRoute)
 
-fun NavController.navigateToAddFeed() =
-    navigate("feeds/new")
-
-fun NavController.navigateToEditFeed(feedID: String) =
-    navigate("feeds/${feedID}/edit")
-
-fun NavController.navigateToEditFolder(folderTitle: String) =
-    navigate("folders/${folderTitle}/edit")
-
 fun NavGraphBuilder.articleGraph(
     navController: NavController,
 ) {
@@ -29,23 +20,9 @@ fun NavGraphBuilder.articleGraph(
         route = "articles",
     ) {
         ArticleScreen(
-            onEditFeed = { feedID ->
-                navController.navigateToEditFeed(feedID = feedID)
+            onNavigateToAccounts = {
+                navController.navigate(Route.AccountIndex)
             }
-        ) {
-            navController.navigate(Route.AccountIndex)
-        }
-    }
-    dialog(
-        route = "feeds/{id}/edit",
-    ) {
-        EditFeedScreen(
-            onSubmit = {
-                navController.popBackStack()
-            },
-            onCancel = {
-                navController.popBackStack()
-            },
         )
     }
 }

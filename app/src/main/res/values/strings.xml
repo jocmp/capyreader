@@ -4,7 +4,7 @@
     <string name="add_feed_name_title">Name</string>
     <string name="add_feed_new_folder_title">New Folder</string>
     <string name="add_feed_submit">Add</string>
-    <string name="add_feed_success">Successfully added feed</string>
+    <string name="add_feed_success">Feed added</string>
     <string name="feed_form_cancel">Cancel</string>
     <string name="filter_starred">Starred</string>
     <string name="filter_unread">Unread</string>
@@ -19,6 +19,7 @@
     <string name="folder_action_delete_title">Delete Folder</string>
     <string name="folder_action_edit">Rename</string>
     <string name="feed_action_unsubscribe_title">Unsubscribe</string>
+    <string name="feed_action_edit_success">Feed updated</string>
     <string name="feed_action_unsubscribe_success">Unsubscribed</string>
     <string name="accounts_action">Accounts</string>
     <string name="account_settings_delete_account_button">Delete Account</string>

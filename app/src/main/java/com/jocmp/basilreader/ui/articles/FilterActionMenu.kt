@@ -9,22 +9,26 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.jocmp.basil.ArticleFilter
 import com.jocmp.basil.ArticleStatus
 import com.jocmp.basil.Feed
+import com.jocmp.basil.Folder
 import com.jocmp.basilreader.R
 import com.jocmp.basilreader.ui.fixtures.FeedPreviewFixture
 
 @Composable
 fun FilterActionMenu(
     feed: Feed,
-    onFeedEdit: (feedID: String) -> Unit,
+    folders: List<Folder>,
+    onFeedEdited: () -> Unit,
     onRemoveFeed: (feedID: String) -> Unit,
 ) {
     val (expanded, setMenuExpanded) = remember { mutableStateOf(false) }
     val (showRemoveDialog, setRemoveDialogOpen) = remember { mutableStateOf(false) }
+    val (showEditDialog, setEditDialogOpen) = rememberSaveable { mutableStateOf(false) }
 
     val onRequestRemove = {
         setRemoveDialogOpen(true)
@@ -52,7 +56,7 @@ fun FilterActionMenu(
                 feedID = feed.id,
                 onMenuClose = { setMenuExpanded(false) },
                 onRequestRemove = onRequestRemove,
-                onEdit = onFeedEdit,
+                onEdit = { setEditDialogOpen(true) },
             )
         }
 
@@ -61,6 +65,20 @@ fun FilterActionMenu(
                 feed = feed,
                 onRemove = onRemove,
                 onDismiss = { setRemoveDialogOpen(false) }
+            )
+        }
+
+        if (showEditDialog) {
+            EditFeedDialog(
+                feed = feed,
+                folders = folders,
+                onSubmit = {
+                    setEditDialogOpen(false)
+                    onFeedEdited()
+                },
+                onCancel = {
+                    setEditDialogOpen(false)
+                }
             )
         }
     }
@@ -73,7 +91,8 @@ fun FilterActionMenuPreview() {
 
     FilterActionMenu(
         feed = feed,
-        onFeedEdit = {},
+        folders = emptyList(),
+        onFeedEdited = {},
         onRemoveFeed = {},
     )
 }

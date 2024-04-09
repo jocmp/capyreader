@@ -22,7 +22,6 @@ internal val articlesModule = module {
     }
     viewModel {
         EditFeedViewModel(
-            savedStateHandle = get(),
             account = get(),
             appPreferences = get()
         )

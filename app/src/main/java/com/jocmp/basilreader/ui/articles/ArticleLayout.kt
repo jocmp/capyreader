@@ -69,7 +69,6 @@ fun ArticleLayout(
     onSelectArticleFilter: () -> Unit,
     onSelectStatus: (status: ArticleStatus) -> Unit,
     onSelectArticle: (articleID: String, completion: (article: Article) -> Unit) -> Unit,
-    onEditFeed: (feedID: String) -> Unit,
     onRemoveFeed: (feedID: String) -> Unit,
     onNavigateToAccounts: () -> Unit,
     onClearArticle: () -> Unit,
@@ -92,7 +91,8 @@ fun ArticleLayout(
     val state = rememberPullToRefreshState()
     val snackbarHost = remember { SnackbarHostState() }
     val addFeedSuccessMessage = stringResource(R.string.add_feed_success)
-    val unsubscribeSuccessMessage = stringResource(R.string.feed_action_unsubscribe_success)
+    val editSuccessMessage = stringResource(R.string.feed_action_edit_success)
+    val unsubscribeMessage = stringResource(R.string.feed_action_unsubscribe_success)
     val currentFeed = findCurrentFeed(filter, allFeeds)
 
     val navigateToDetail = {
@@ -104,6 +104,12 @@ fun ArticleLayout(
         listState.scrollToItem(0)
         delay(200)
         drawerState.close()
+    }
+
+    val showSnackbar = { message: String ->
+        coroutineScope.launch {
+            snackbarHost.showSnackbar(message)
+        }
     }
 
     if (state.isRefreshing) {
@@ -143,9 +149,7 @@ fun ArticleLayout(
                         onSelectFeed(feedID)
                         navigateToList()
 
-                        launch {
-                            snackbarHost.showSnackbar(addFeedSuccessMessage)
-                        }
+                        showSnackbar(addFeedSuccessMessage)
 
                         launch {
                             state.startRefresh()
@@ -176,7 +180,13 @@ fun ArticleLayout(
                             )
                         },
                         navigationIcon = {
-                            IconButton(onClick = { coroutineScope.launch { drawerState.open() } }) {
+                            IconButton(
+                                onClick = {
+                                    coroutineScope.launch {
+                                        drawerState.open()
+                                    }
+                                }
+                            ) {
                                 Icon(
                                     imageVector = Icons.Filled.Menu,
                                     contentDescription = null
@@ -187,13 +197,13 @@ fun ArticleLayout(
                             if (currentFeed != null) {
                                 FilterActionMenu(
                                     feed = currentFeed,
-                                    onFeedEdit = onEditFeed,
+                                    folders = folders,
+                                    onFeedEdited = {
+                                       showSnackbar(editSuccessMessage)
+                                    },
                                     onRemoveFeed = { feedID ->
                                         onRemoveFeed(feedID)
-
-                                        coroutineScope.launch {
-                                            snackbarHost.showSnackbar(unsubscribeSuccessMessage)
-                                        }
+                                        showSnackbar(unsubscribeMessage)
                                     }
                                 )
                             }
@@ -292,7 +302,6 @@ fun ArticleLayoutPreview() {
             onSelectArticleFilter = { },
             onSelectStatus = {},
             onSelectArticle = { _, _ -> },
-            onEditFeed = {},
             onRemoveFeed = {},
             onNavigateToAccounts = { },
             onClearArticle = { },

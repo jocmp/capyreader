@@ -2,6 +2,7 @@ package com.jocmp.basilreader.ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -15,7 +16,8 @@ fun TextField(
     readOnly: Boolean = false,
     label: @Composable (() -> Unit)? = null,
     placeholder: @Composable (() -> Unit)? = null,
-    supportingText: @Composable (() -> Unit)? = null
+    supportingText: @Composable (() -> Unit)? = null,
+    keyboardOptions: KeyboardOptions = KeyboardOptions(),
 ) {
     MaterialTextField(
         value = value,
@@ -27,7 +29,8 @@ fun TextField(
         readOnly = readOnly,
         label = label,
         placeholder = placeholder,
-        supportingText = supportingText
+        supportingText = supportingText,
+        keyboardOptions = keyboardOptions
     )
 }
 

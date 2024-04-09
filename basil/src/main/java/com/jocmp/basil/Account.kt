@@ -3,6 +3,7 @@ package com.jocmp.basil
 import com.jocmp.basil.accounts.AddFeedResult
 import com.jocmp.basil.accounts.FeedbinAccountDelegate
 import com.jocmp.basil.accounts.forAccount
+import com.jocmp.basil.common.sortedByTitle
 import com.jocmp.basil.db.Database
 import com.jocmp.basil.persistence.ArticleRecords
 import com.jocmp.basil.persistence.FeedRecords
@@ -10,18 +11,6 @@ import com.jocmp.feedbinclient.Feedbin
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.net.URI
-
-interface AccountDelegate {
-    suspend fun addFeed(url: String): Result<AddFeedResult>
-    suspend fun addStar(articleIDs: List<String>)
-    suspend fun refresh()
-    suspend fun removeStar(articleIDs: List<String>)
-    suspend fun markRead(articleIDs: List<String>)
-    suspend fun markUnread(articleIDs: List<String>)
-    suspend fun updateFeed(feed: Feed, title: String, folderTitles: List<String>): Result<Feed>
-
-    suspend fun removeFeed(feedID: String)
-}
 
 data class Account(
     val id: String,
@@ -41,6 +30,7 @@ data class Account(
 
     val feeds: Flow<List<Feed>> = allFeeds.map { all ->
         all.filter { it.folderName.isBlank() }
+            .sortedByTitle()
     }
 
     val folders: Flow<List<Folder>> = allFeeds.map { ungrouped ->
@@ -50,16 +40,17 @@ data class Account(
             .map {
                 Folder(
                     title = it.key,
-                    feeds = it.value,
+                    feeds = it.value.sortedByTitle(),
                 )
             }
+            .sortedByTitle()
     }
 
     suspend fun addFeed(url: String): Result<AddFeedResult> {
         return delegate.addFeed(url)
     }
 
-    suspend fun editFeed(form: EditFeedForm): Result<Feed> {
+    suspend fun editFeed(form: EditFeedFormEntry): Result<Feed> {
         val feed = findFeed(form.feedID) ?: return Result.failure(Throwable("Feed not found"))
 
         return delegate.updateFeed(
