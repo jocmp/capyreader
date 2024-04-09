@@ -1,3 +1,3 @@
-# Basil Reader
+# Capy Reader
 
-_A small, evergreen reader_
+_A smallish RSS reader for Feedbin_

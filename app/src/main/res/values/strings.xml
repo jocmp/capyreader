@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Basil Reader</string>
+    <string name="app_name">Capy Reader</string>
     <string name="add_feed_url_title">Feed or Website URL</string>
     <string name="add_feed_name_title">Name</string>
     <string name="add_feed_new_folder_title">New Folder</string>
