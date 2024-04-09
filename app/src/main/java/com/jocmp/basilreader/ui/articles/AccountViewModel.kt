@@ -1,7 +1,9 @@
 package com.jocmp.basilreader.ui.articles
 
+import android.app.Application
+import android.content.Context
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -15,6 +17,10 @@ import com.jocmp.basil.Folder
 import com.jocmp.basil.buildPager
 import com.jocmp.basil.countAll
 import com.jocmp.basilreader.common.AppPreferences
+import com.jocmp.basilreader.sync.addStarAsync
+import com.jocmp.basilreader.sync.markReadAsync
+import com.jocmp.basilreader.sync.markUnreadAsync
+import com.jocmp.basilreader.sync.removeStarAsync
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
@@ -29,7 +35,8 @@ import kotlinx.coroutines.launch
 class AccountViewModel(
     private val account: Account,
     private val appPreferences: AppPreferences,
-) : ViewModel() {
+    private val application: Application,
+) : AndroidViewModel(application) {
     private var refreshJob: Job? = null
 
     val filter = MutableStateFlow(appPreferences.filter.get())
@@ -89,7 +96,10 @@ class AccountViewModel(
         viewModelScope.launch {
             val folder = account.findFolder(title) ?: return@launch
             val feedFilter =
-                ArticleFilter.Folders(folderTitle = folder.title, folderStatus = filter.value.status)
+                ArticleFilter.Folders(
+                    folderTitle = folder.title,
+                    folderStatus = filter.value.status
+                )
 
             selectArticleFilter(feedFilter)
         }
@@ -117,7 +127,7 @@ class AccountViewModel(
             articleState.value = account.findArticle(articleID = articleID)?.copy(read = true)
             articleState.value?.let(completion)
             appPreferences.articleID.set(articleID)
-            account.markRead(articleID)
+            markRead(articleID)
         }
     }
 
@@ -125,9 +135,9 @@ class AccountViewModel(
         articleState.value?.let { article ->
             viewModelScope.launch {
                 if (article.read) {
-                    account.markUnread(article.id)
+                    markUnread(article.id)
                 } else {
-                    account.markRead(article.id)
+                    markRead(article.id)
                 }
             }
 
@@ -139,9 +149,9 @@ class AccountViewModel(
         articleState.value?.let { article ->
             viewModelScope.launch {
                 if (article.starred) {
-                    account.removeStar(article.id)
+                    removeStar(article.id)
                 } else {
-                    account.addStar(article.id)
+                    addStar(article.id)
                 }
 
                 articleState.value = article.copy(starred = !article.starred)
@@ -155,6 +165,34 @@ class AccountViewModel(
         viewModelScope.launch {
             appPreferences.articleID.delete()
         }
+    }
+
+    private suspend fun addStar(articleID: String) {
+        account.addStar(articleID)
+            .onFailure {
+                addStarAsync(articleID, context)
+            }
+    }
+
+    private suspend fun removeStar(articleID: String) {
+        account.removeStar(articleID)
+            .onFailure {
+                removeStarAsync(articleID, context)
+            }
+    }
+
+    private suspend fun markRead(articleID: String) {
+        account.markRead(articleID)
+            .onFailure {
+                markReadAsync(articleID, context)
+            }
+    }
+
+    private suspend fun markUnread(articleID: String) {
+        account.markUnread(articleID)
+            .onFailure {
+                markUnreadAsync(articleID, context)
+            }
     }
 
     private fun resetToDefaultFilter() {
@@ -184,6 +222,9 @@ class AccountViewModel(
     private fun copyFeedCounts(feed: Feed, counts: Map<String, Long>): Feed {
         return feed.copy(count = counts.getOrDefault(feed.id, 0))
     }
+
+    private val context: Context
+        get() = application.applicationContext
 }
 
 private fun <T : Countable> List<T>.withPositiveCount(status: ArticleStatus): List<T> {

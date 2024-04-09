@@ -84,27 +84,27 @@ data class Account(
         return articleRecords.find(articleID = articleID)
     }
 
-    suspend fun addStar(articleID: String) {
+    suspend fun addStar(articleID: String): Result<Unit> {
         articleRecords.addStar(articleID = articleID)
 
-        delegate.addStar(listOf(articleID))
+        return delegate.addStar(listOf(articleID))
     }
 
-    suspend fun removeStar(articleID: String) {
+    suspend fun removeStar(articleID: String): Result<Unit> {
         articleRecords.removeStar(articleID = articleID)
 
-        delegate.removeStar(listOf(articleID))
+        return delegate.removeStar(listOf(articleID))
     }
 
-    suspend fun markRead(articleID: String) {
+    suspend fun markRead(articleID: String): Result<Unit> {
         articleRecords.markRead(articleID)
 
-        delegate.markRead(listOf(articleID))
+        return delegate.markRead(listOf(articleID))
     }
 
-    suspend fun markUnread(articleID: String) {
+    suspend fun markUnread(articleID: String): Result<Unit> {
         articleRecords.markUnread(articleID = articleID)
 
-        delegate.markUnread(listOf(articleID))
+        return delegate.markUnread(listOf(articleID))
     }
 }

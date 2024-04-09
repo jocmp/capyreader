@@ -2,8 +2,8 @@ package com.jocmp.basilreader.refresher
 
 import android.content.Context
 import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
-import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.jocmp.basilreader.common.AppPreferences
@@ -24,16 +24,17 @@ class RefreshScheduler(
 
         val workManager = WorkManager.getInstance(context)
 
-        workManager.cancelAllWorkByTag(WORK_TAG)
-
         val (repeatInterval, timeUnit) = interval.toTime ?: return
 
         val request = PeriodicWorkRequestBuilder<RefreshFeedsWorker>(repeatInterval, timeUnit)
             .setConstraints(constraints)
-            .addTag(WORK_TAG)
             .build()
 
-        workManager.enqueue(request)
+        workManager.enqueueUniquePeriodicWork(
+            WORK_NAME,
+            ExistingPeriodicWorkPolicy.UPDATE,
+            request
+        )
     }
 
     private val constraints
@@ -43,6 +44,6 @@ class RefreshScheduler(
 
 
     companion object {
-        const val WORK_TAG = "refresher"
+        const val WORK_NAME = "refresher"
     }
 }

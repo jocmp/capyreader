@@ -23,6 +23,7 @@ import com.jocmp.feedbinclient.pagingInfo
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
+import java.net.UnknownHostException
 import java.time.ZonedDateTime
 
 internal class FeedbinAccountDelegate(
@@ -36,16 +37,20 @@ internal class FeedbinAccountDelegate(
     private val feedRecords = FeedRecords(database)
     private val taggingRecords = TaggingRecords(database)
 
-    override suspend fun markRead(articleIDs: List<String>) {
+    override suspend fun markRead(articleIDs: List<String>): Result<Unit> {
         val entryIDs = articleIDs.map { it.toLong() }
 
-        feedbin.deleteUnreadEntries(UnreadEntriesRequest(unread_entries = entryIDs))
+        return withErrorHandling {
+            feedbin.deleteUnreadEntries(UnreadEntriesRequest(unread_entries = entryIDs))
+        }
     }
 
-    override suspend fun markUnread(articleIDs: List<String>) {
+    override suspend fun markUnread(articleIDs: List<String>): Result<Unit> {
         val entryIDs = articleIDs.map { it.toLong() }
 
-        feedbin.createUnreadEntries(UnreadEntriesRequest(unread_entries = entryIDs))
+        return withErrorHandling {
+            feedbin.createUnreadEntries(UnreadEntriesRequest(unread_entries = entryIDs))
+        }
     }
 
     override suspend fun updateFeed(
@@ -106,16 +111,20 @@ internal class FeedbinAccountDelegate(
         }
     }
 
-    override suspend fun addStar(articleIDs: List<String>) {
+    override suspend fun addStar(articleIDs: List<String>): Result<Unit> {
         val entryIDs = articleIDs.map { it.toLong() }
 
-        feedbin.createStarredEntries(StarredEntriesRequest(starred_entries = entryIDs))
+        return withErrorHandling {
+            feedbin.createStarredEntries(StarredEntriesRequest(starred_entries = entryIDs))
+        }
     }
 
-    override suspend fun removeStar(articleIDs: List<String>) {
+    override suspend fun removeStar(articleIDs: List<String>): Result<Unit> {
         val entryIDs = articleIDs.map { it.toLong() }
 
-        feedbin.deleteStarredEntries(StarredEntriesRequest(starred_entries = entryIDs))
+        return withErrorHandling {
+            feedbin.deleteStarredEntries(StarredEntriesRequest(starred_entries = entryIDs))
+        }
     }
 
     override suspend fun addFeed(url: String): Result<AddFeedResult> {
@@ -149,15 +158,21 @@ internal class FeedbinAccountDelegate(
         }
     }
 
-    override suspend fun refresh() {
+    override suspend fun refresh(): Result<Unit> {
         val since = articleRecords.maxUpdatedAt()
 
-        refreshFeeds()
-        refreshTaggings()
-        refreshUnreadEntries()
-        refreshStarredEntries()
-        refreshAllArticles(since = since)
-        fetchMissingArticles()
+        return try {
+            refreshFeeds()
+            refreshTaggings()
+            refreshUnreadEntries()
+            refreshStarredEntries()
+            refreshAllArticles(since = since)
+            fetchMissingArticles()
+
+            Result.success(Unit)
+        } catch (exception: UnknownHostException) {
+            Result.failure(exception)
+        }
     }
 
     private suspend fun refreshFeeds() {
@@ -293,5 +308,14 @@ internal class FeedbinAccountDelegate(
 
     companion object {
         const val MAX_ENTRY_LIMIT = 100
+    }
+}
+
+private suspend fun withErrorHandling(func: suspend () -> Unit): Result<Unit> {
+    return try {
+        func()
+        Result.success(Unit)
+    } catch (e: UnknownHostException) {
+        return Result.failure(e)
     }
 }
