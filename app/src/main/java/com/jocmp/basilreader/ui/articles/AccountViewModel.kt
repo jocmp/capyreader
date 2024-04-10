@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class AccountViewModel(
@@ -105,11 +106,23 @@ class AccountViewModel(
         }
     }
 
-    fun removeFeed(feedID: String) {
+    fun removeFeed(
+        feedID: String,
+        onSuccess: () -> Unit,
+        onFailure: () -> Unit
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
-            account.removeFeed(feedID = feedID)
+            account.removeFeed(feedID = feedID).fold(
+                onSuccess = {
+                    resetToDefaultFilter()
+                    onSuccess()
+                },
+                onFailure = {
+                    onFailure()
+                }
+            )
         }
-        resetToDefaultFilter()
+
     }
 
     fun refreshFeed(onComplete: () -> Unit) {

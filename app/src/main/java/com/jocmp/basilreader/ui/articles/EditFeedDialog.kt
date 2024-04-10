@@ -16,10 +16,11 @@ fun EditFeedDialog(
     folders: List<Folder>,
     form: EditFeedViewModel = koinViewModel(),
     onSubmit: () -> Unit,
+    onFailure: () -> Unit,
     onCancel: () -> Unit
 ) {
     val submit = { entry: EditFeedFormEntry ->
-        form.submit(entry, onSubmit)
+        form.submit(entry, onSubmit, onFailure)
     }
 
     Dialog(onDismissRequest = onCancel) {

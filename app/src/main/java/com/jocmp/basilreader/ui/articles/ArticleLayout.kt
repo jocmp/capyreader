@@ -69,11 +69,11 @@ fun ArticleLayout(
     onSelectArticleFilter: () -> Unit,
     onSelectStatus: (status: ArticleStatus) -> Unit,
     onSelectArticle: (articleID: String, completion: (article: Article) -> Unit) -> Unit,
-    onRemoveFeed: (feedID: String) -> Unit,
     onNavigateToAccounts: () -> Unit,
     onClearArticle: () -> Unit,
     onToggleArticleRead: () -> Unit,
     onToggleArticleStar: () -> Unit,
+    onRemoveFeed: (feedID: String, onSuccess: () -> Unit, onFailure: () -> Unit) -> Unit,
     drawerValue: DrawerValue = DrawerValue.Closed
 ) {
     val (isInitialized, setInitialized) = rememberSaveable { mutableStateOf(false) }
@@ -93,6 +93,7 @@ fun ArticleLayout(
     val addFeedSuccessMessage = stringResource(R.string.add_feed_success)
     val editSuccessMessage = stringResource(R.string.feed_action_edit_success)
     val unsubscribeMessage = stringResource(R.string.feed_action_unsubscribe_success)
+    val unsubscribeErrorMessage = stringResource(R.string.unsubscribe_error)
     val currentFeed = findCurrentFeed(filter, allFeeds)
 
     val navigateToDetail = {
@@ -199,11 +200,21 @@ fun ArticleLayout(
                                     feed = currentFeed,
                                     folders = folders,
                                     onFeedEdited = {
-                                       showSnackbar(editSuccessMessage)
+                                        showSnackbar(editSuccessMessage)
                                     },
-                                    onRemoveFeed = { feedID ->
-                                        onRemoveFeed(feedID)
-                                        showSnackbar(unsubscribeMessage)
+                                    onRequestRemoveFeed = { feedID ->
+                                        onRemoveFeed(
+                                            feedID,
+                                            {
+                                                showSnackbar(unsubscribeMessage)
+                                            },
+                                            {
+                                                showSnackbar(unsubscribeErrorMessage)
+                                            }
+                                        )
+                                    },
+                                    onEditFailure = { message ->
+                                        showSnackbar(message)
                                     }
                                 )
                             }
@@ -302,7 +313,7 @@ fun ArticleLayoutPreview() {
             onSelectArticleFilter = { },
             onSelectStatus = {},
             onSelectArticle = { _, _ -> },
-            onRemoveFeed = {},
+            onRemoveFeed = { _, _, _ -> },
             onNavigateToAccounts = { },
             onClearArticle = { },
             onToggleArticleRead = { },

@@ -60,8 +60,8 @@ data class Account(
         )
     }
 
-    suspend fun removeFeed(feedID: String) {
-        delegate.removeFeed(feedID = feedID)
+    suspend fun removeFeed(feedID: String): Result<Unit> {
+        return delegate.removeFeed(feedID = feedID)
     }
 
     suspend fun refresh() {

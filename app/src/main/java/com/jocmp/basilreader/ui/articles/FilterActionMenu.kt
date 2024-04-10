@@ -12,8 +12,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.jocmp.basil.ArticleFilter
-import com.jocmp.basil.ArticleStatus
 import com.jocmp.basil.Feed
 import com.jocmp.basil.Folder
 import com.jocmp.basilreader.R
@@ -24,11 +22,14 @@ fun FilterActionMenu(
     feed: Feed,
     folders: List<Folder>,
     onFeedEdited: () -> Unit,
-    onRemoveFeed: (feedID: String) -> Unit,
+    onRequestRemoveFeed: (feedID: String) -> Unit,
+    onEditFailure: (message: String) -> Unit,
 ) {
     val (expanded, setMenuExpanded) = remember { mutableStateOf(false) }
     val (showRemoveDialog, setRemoveDialogOpen) = remember { mutableStateOf(false) }
     val (showEditDialog, setEditDialogOpen) = rememberSaveable { mutableStateOf(false) }
+
+    val editErrorMessage = stringResource(R.string.edit_feed_error)
 
     val onRequestRemove = {
         setRemoveDialogOpen(true)
@@ -37,7 +38,7 @@ fun FilterActionMenu(
     val onRemove = {
         setRemoveDialogOpen(false)
 
-        onRemoveFeed(feed.id)
+        onRequestRemoveFeed(feed.id)
     }
 
     Box {
@@ -78,6 +79,10 @@ fun FilterActionMenu(
                 },
                 onCancel = {
                     setEditDialogOpen(false)
+                },
+                onFailure = {
+                    setEditDialogOpen(false)
+                    onEditFailure(editErrorMessage)
                 }
             )
         }
@@ -93,6 +98,7 @@ fun FilterActionMenuPreview() {
         feed = feed,
         folders = emptyList(),
         onFeedEdited = {},
-        onRemoveFeed = {},
+        onRequestRemoveFeed = {},
+        onEditFailure = {}
     )
 }
