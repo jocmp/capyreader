@@ -46,7 +46,7 @@ data class Account(
             .sortedByTitle()
     }
 
-    suspend fun addFeed(url: String): Result<AddFeedResult> {
+    suspend fun addFeed(url: String): AddFeedResult {
         return delegate.addFeed(url)
     }
 

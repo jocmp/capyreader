@@ -33,6 +33,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jocmp.basil.accounts.AddFeedResult.ErrorType
 import com.jocmp.basil.accounts.FeedOption
 import com.jocmp.basilreader.R
 
@@ -42,12 +43,13 @@ fun AddFeedView(
     onAddFeed: (url: String) -> Unit,
     onCancel: () -> Unit,
     loading: Boolean,
-    isError: Boolean,
+    error: ErrorType?,
 ) {
     val (queryURL, setQueryURL) = rememberSaveable { mutableStateOf("") }
     val (selectedOption, selectOption) = remember { mutableStateOf<FeedOption?>(null) }
     val focusManager = LocalFocusManager.current
     val keyboard = LocalSoftwareKeyboardController.current
+    val isError = error != null
 
     val addFeed = {
         focusManager.clearFocus()
@@ -72,8 +74,14 @@ fun AddFeedView(
                 },
                 isError = isError,
                 supportingText = {
-                    if (isError) {
-                        Text(stringResource(R.string.add_feed_error))
+                    error?.let {
+                        val resource = when(it) {
+                            ErrorType.FEED_NOT_FOUND -> R.string.add_feed_feed_not_error
+                            ErrorType.NETWORK_ERROR -> R.string.add_feed_network_error
+                            ErrorType.SAVE_FAILURE -> R.string.add_feed_save_error
+                        }
+
+                        Text(stringResource(resource))
                     }
                 },
                 maxLines = 1,
@@ -184,6 +192,6 @@ fun AddFeedViewPreview() {
         onAddFeed = {},
         onCancel = {},
         loading = false,
-        isError = true,
+        error = ErrorType.NETWORK_ERROR,
     )
 }

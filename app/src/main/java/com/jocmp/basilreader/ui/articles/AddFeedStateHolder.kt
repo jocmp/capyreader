@@ -13,20 +13,19 @@ class AddFeedStateHolder(
 ) {
     private val _result = mutableStateOf<AddFeedResult?>(null)
     private val _loading = mutableStateOf(false)
-    private val _hasError = mutableStateOf(false)
-
-    val hasError: Boolean
-        get() = _hasError.value
 
     val loading: Boolean
         get() = _loading.value
+
+    val error: AddFeedResult.ErrorType?
+        get() = (_result.value as? AddFeedResult.Failure)?.error
 
     val feedChoices: List<FeedOption>
         get() {
             return _result.value?.let {
                 when (it) {
                     is AddFeedResult.MultipleChoices -> it.choices
-                    is AddFeedResult.Success -> emptyList()
+                    else -> emptyList()
                 }
             } ?: emptyList()
         }
@@ -37,23 +36,13 @@ class AddFeedStateHolder(
     ) {
         withContext(Dispatchers.IO) {
             _loading.value = true
-            _hasError.value = false
 
-            val result = account.addFeed(url).getOrNull()
+            val result = account.addFeed(url)
             _loading.value = false
 
-            if (result == null) {
-                _hasError.value = true
-                return@withContext
-            }
-
             when (result) {
-                is AddFeedResult.MultipleChoices -> {
-                    _loading.value = false
-                    _result.value = result
-                }
-
                 is AddFeedResult.Success -> onComplete(result.feed)
+                else -> _result.value = result
             }
         }
     }

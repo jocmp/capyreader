@@ -29,7 +29,7 @@ fun AddFeedDialog(
                 },
                 onCancel = onCancel,
                 loading = viewModel.loading,
-                isError = viewModel.hasError
+                error = viewModel.error
             )
         }
     }

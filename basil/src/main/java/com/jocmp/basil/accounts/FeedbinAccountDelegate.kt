@@ -127,34 +127,38 @@ internal class FeedbinAccountDelegate(
         }
     }
 
-    override suspend fun addFeed(url: String): Result<AddFeedResult> {
-        val response = feedbin.createSubscription(CreateSubscriptionRequest(feed_url = url))
-        val subscription = response.body()
-        val errorBody = response.errorBody()?.string()
+    override suspend fun addFeed(url: String): AddFeedResult {
+        return try {
+            val response = feedbin.createSubscription(CreateSubscriptionRequest(feed_url = url))
+            val subscription = response.body()
+            val errorBody = response.errorBody()?.string()
 
-        if (response.code() > 300) {
-            return Result.failure(FeedNotFound())
-        }
+            if (response.code() > 300) {
+                return AddFeedResult.Failure(AddFeedResult.ErrorType.FEED_NOT_FOUND)
+            }
 
-        return if (subscription != null) {
-            val icons = fetchIcons()
-            upsertFeed(subscription, icons)
+            return if (subscription != null) {
+                val icons = fetchIcons()
+                upsertFeed(subscription, icons)
 
-            val feed = feedRecords.findBy(subscription.feed_id.toString())
+                val feed = feedRecords.findBy(subscription.feed_id.toString())
 
-            if (feed != null) {
-                Result.success(AddFeedResult.Success(feed))
+                if (feed != null) {
+                    AddFeedResult.Success(feed)
+                } else {
+                    AddFeedResult.Failure(AddFeedResult.ErrorType.SAVE_FAILURE)
+                }
             } else {
-                Result.failure(SaveFeedFailure())
-            }
-        } else {
-            val decodedChoices = Json.decodeFromString<List<SubscriptionChoice>>(errorBody!!)
+                val decodedChoices = Json.decodeFromString<List<SubscriptionChoice>>(errorBody!!)
 
-            val choices = decodedChoices.map {
-                FeedOption(feedURL = it.feed_url, title = it.title)
-            }
+                val choices = decodedChoices.map {
+                    FeedOption(feedURL = it.feed_url, title = it.title)
+                }
 
-            Result.success(AddFeedResult.MultipleChoices(choices))
+                AddFeedResult.MultipleChoices(choices)
+            }
+        } catch (e: UnknownHostException) {
+            AddFeedResult.Failure(AddFeedResult.ErrorType.NETWORK_ERROR)
         }
     }
 
