@@ -79,7 +79,7 @@ FROM article_statuses;
 findMissingArticles:
 SELECT article_id
 FROM article_statuses
-LEFT JOIN articles ON article_statuses.article_id = articles.id
+LEFT OUTER JOIN articles ON article_statuses.article_id = articles.id
 WHERE articles.id IS NULL
 AND article_statuses.read = 0 OR article_statuses.starred = 1;
 
@@ -89,6 +89,7 @@ INSERT OR REPLACE INTO articles(
     feed_id,
     title,
     content_html,
+    extracted_content_url,
     url,
     summary,
     image_url,
@@ -99,6 +100,7 @@ VALUES (
 :feed_id,
 :title,
 :content_html,
+:extracted_content_url,
 :url,
 :summary,
 :image_url,

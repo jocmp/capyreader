@@ -282,6 +282,7 @@ internal class FeedbinAccountDelegate(
                     feed_id = entry.feed_id.toString(),
                     title = entry.title,
                     content_html = entry.content,
+                    extracted_content_url = entry.extracted_content_url,
                     url = entry.url,
                     summary = entry.summary,
                     image_url = entry.images?.size_1?.cdn_url,

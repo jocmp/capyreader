@@ -25,7 +25,7 @@ android {
                 packageName.set("com.jocmp.basil.db")
                 verifyMigrations.set(true)
                 deriveSchemaFromMigrations.set(true)
-                dialect("app.cash.sqldelight:sqlite-3-30-dialect:$sqldelightVersion")
+                dialect("app.cash.sqldelight:sqlite-3-38-dialect:$sqldelightVersion")
             }
         }
     }

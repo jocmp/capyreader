@@ -8,6 +8,7 @@ data class Article(
     val feedID: String,
     val title: String,
     val contentHTML: String,
+    val extractedContentURL: URL?,
     val url: URL?,
     val summary: String,
     val imageURL: URL?,

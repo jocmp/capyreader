@@ -3,6 +3,7 @@ CREATE TABLE articles(
   feed_id TEXT REFERENCES feeds(id),
   title TEXT,
   content_html TEXT,
+  extracted_content_url TEXT,
   url TEXT,
   summary TEXT,
   image_url TEXT,
