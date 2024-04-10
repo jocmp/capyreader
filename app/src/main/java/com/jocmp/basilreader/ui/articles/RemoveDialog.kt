@@ -16,7 +16,11 @@ fun RemoveDialog(
     onRemove: () -> Unit,
     onDismiss: () -> Unit
 ) {
-    val state = removeDialogState(feed = feed)
+    val state = RemoveDialogState(
+        title = stringResource(R.string.feed_action_unsubscribe_title),
+        message = stringResource(R.string.feed_action_unsubscribe_message, feed.title),
+        confirmText = stringResource(R.string.feed_action_unsubscribe_confirm)
+    )
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -35,14 +39,6 @@ fun RemoveDialog(
     )
 }
 
-@Composable
-private fun removeDialogState(feed: Feed): RemoveDialogState {
-    return  RemoveDialogState(
-        title = stringResource(R.string.feed_action_unsubscribe_title),
-        message = stringResource(R.string.feed_action_unsubscribe_message, feed.title),
-        confirmText = stringResource(R.string.feed_action_unsubscribe_confirm)
-    )
-}
 
 data class RemoveDialogState(
     val title: String,

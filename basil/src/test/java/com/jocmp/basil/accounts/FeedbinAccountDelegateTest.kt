@@ -247,7 +247,7 @@ class FeedbinAccountDelegateTest {
             feedbin.createSubscription(body = CreateSubscriptionRequest(feed_url = url))
         } returns successResponse
 
-        val result = delegate.addFeed(url = url).getOrNull() as AddFeedResult.Success
+        val result = delegate.addFeed(url = url) as AddFeedResult.Success
         val feed = result.feed
 
         assertEquals(
@@ -297,7 +297,7 @@ class FeedbinAccountDelegateTest {
         val result = delegate.addFeed(url = url)
 
         val actualTitles =
-            (result.getOrNull() as AddFeedResult.MultipleChoices).choices.map { it.title }
+            (result as AddFeedResult.MultipleChoices).choices.map { it.title }
 
         assertEquals(expected = choices.map { it.title }, actual = actualTitles)
     }
@@ -321,7 +321,7 @@ class FeedbinAccountDelegateTest {
 
         val result = delegate.addFeed(url = url)
 
-        assertTrue(result.isFailure)
+        assertTrue(result is AddFeedResult.Failure)
     }
 
     @Test

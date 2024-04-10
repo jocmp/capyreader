@@ -35,7 +35,11 @@
     <string name="nav_headline_tags">Tags</string>
     <string name="nav_headline_feeds">Feeds</string>
     <string name="nav_add_feed">Add Feed</string>
-    <string name="add_feed_error">Couldn\'t find feed</string>
+    <string name="add_feed_feed_not_error">Couldn\'t find feed</string>
+    <string name="add_feed_save_error">Couldn\'t save feed</string>
+    <string name="add_feed_network_error">Couldn\'t find feed. Check your connection.</string>
+    <string name="edit_feed_error">Error saving feed</string>
+    <string name="unsubscribe_error">Error unsubscribing from feed</string>
     <plurals name="refresh_hours">
         <item quantity="one">Every hour</item>
         <item quantity="other">Every %d hours</item>

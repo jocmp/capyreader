@@ -30,9 +30,6 @@ internal class FeedbinAccountDelegate(
     private val database: Database,
     private val feedbin: Feedbin
 ) : AccountDelegate {
-    class FeedNotFound : Exception()
-    class SaveFeedFailure : Exception()
-
     private val articleRecords = ArticleRecords(database)
     private val feedRecords = FeedRecords(database)
     private val taggingRecords = TaggingRecords(database)
@@ -42,6 +39,7 @@ internal class FeedbinAccountDelegate(
 
         return withErrorHandling {
             feedbin.deleteUnreadEntries(UnreadEntriesRequest(unread_entries = entryIDs))
+            Unit
         }
     }
 
@@ -50,6 +48,7 @@ internal class FeedbinAccountDelegate(
 
         return withErrorHandling {
             feedbin.createUnreadEntries(UnreadEntriesRequest(unread_entries = entryIDs))
+            Unit
         }
     }
 
@@ -57,14 +56,14 @@ internal class FeedbinAccountDelegate(
         feed: Feed,
         title: String,
         folderTitles: List<String>
-    ): Result<Feed> {
+    ): Result<Feed> = withErrorHandling {
         if (title != feed.title) {
-            feedRecords.updateTitle(feed = feed, title = title)
-
             feedbin.updateSubscription(
                 subscriptionID = feed.subscriptionID,
                 body = UpdateSubscriptionRequest(title = title)
             )
+
+            feedRecords.updateTitle(feed = feed, title = title)
         }
 
         val taggingIDsToDelete = taggingRecords.findFeedTaggingsToDelete(
@@ -92,23 +91,19 @@ internal class FeedbinAccountDelegate(
             }
         }
 
-        val updatedFeed = feedRecords.findBy(feed.id)
-
-        return if (updatedFeed != null) {
-            Result.success(updatedFeed)
-        } else {
-            Result.failure(Throwable("Feed not found"))
-        }
+        feedRecords.findBy(feed.id)
     }
 
-    override suspend fun removeFeed(feedID: String) {
-        val feed = feedRecords.findBy(feedID) ?: return
+    override suspend fun removeFeed(feedID: String): Result<Unit> = withErrorHandling {
+        val feed = feedRecords.findBy(feedID) ?: return@withErrorHandling null
 
         val result = feedbin.deleteSubscription(subscriptionID = feed.subscriptionID)
 
         if (result.isSuccessful) {
             feedRecords.removeFeed(feedID = feedID)
         }
+
+        Unit
     }
 
     override suspend fun addStar(articleIDs: List<String>): Result<Unit> {
@@ -116,6 +111,7 @@ internal class FeedbinAccountDelegate(
 
         return withErrorHandling {
             feedbin.createStarredEntries(StarredEntriesRequest(starred_entries = entryIDs))
+            Unit
         }
     }
 
@@ -124,37 +120,42 @@ internal class FeedbinAccountDelegate(
 
         return withErrorHandling {
             feedbin.deleteStarredEntries(StarredEntriesRequest(starred_entries = entryIDs))
+            Unit
         }
     }
 
-    override suspend fun addFeed(url: String): Result<AddFeedResult> {
-        val response = feedbin.createSubscription(CreateSubscriptionRequest(feed_url = url))
-        val subscription = response.body()
-        val errorBody = response.errorBody()?.string()
+    override suspend fun addFeed(url: String): AddFeedResult {
+        return try {
+            val response = feedbin.createSubscription(CreateSubscriptionRequest(feed_url = url))
+            val subscription = response.body()
+            val errorBody = response.errorBody()?.string()
 
-        if (response.code() > 300) {
-            return Result.failure(FeedNotFound())
-        }
+            if (response.code() > 300) {
+                return AddFeedResult.Failure(AddFeedResult.ErrorType.FEED_NOT_FOUND)
+            }
 
-        return if (subscription != null) {
-            val icons = fetchIcons()
-            upsertFeed(subscription, icons)
+            return if (subscription != null) {
+                val icons = fetchIcons()
+                upsertFeed(subscription, icons)
 
-            val feed = feedRecords.findBy(subscription.feed_id.toString())
+                val feed = feedRecords.findBy(subscription.feed_id.toString())
 
-            if (feed != null) {
-                Result.success(AddFeedResult.Success(feed))
+                if (feed != null) {
+                    AddFeedResult.Success(feed)
+                } else {
+                    AddFeedResult.Failure(AddFeedResult.ErrorType.SAVE_FAILURE)
+                }
             } else {
-                Result.failure(SaveFeedFailure())
-            }
-        } else {
-            val decodedChoices = Json.decodeFromString<List<SubscriptionChoice>>(errorBody!!)
+                val decodedChoices = Json.decodeFromString<List<SubscriptionChoice>>(errorBody!!)
 
-            val choices = decodedChoices.map {
-                FeedOption(feedURL = it.feed_url, title = it.title)
-            }
+                val choices = decodedChoices.map {
+                    FeedOption(feedURL = it.feed_url, title = it.title)
+                }
 
-            Result.success(AddFeedResult.MultipleChoices(choices))
+                AddFeedResult.MultipleChoices(choices)
+            }
+        } catch (e: UnknownHostException) {
+            AddFeedResult.Failure(AddFeedResult.ErrorType.NETWORK_ERROR)
         }
     }
 
@@ -311,10 +312,15 @@ internal class FeedbinAccountDelegate(
     }
 }
 
-private suspend fun withErrorHandling(func: suspend () -> Unit): Result<Unit> {
+private suspend fun <T> withErrorHandling(func: suspend () -> T?): Result<T> {
     return try {
-        func()
-        Result.success(Unit)
+        val result = func()
+
+        if (result != null) {
+            Result.success(result)
+        } else {
+            Result.failure(Throwable("Unexpected error"))
+        }
     } catch (e: UnknownHostException) {
         return Result.failure(e)
     }

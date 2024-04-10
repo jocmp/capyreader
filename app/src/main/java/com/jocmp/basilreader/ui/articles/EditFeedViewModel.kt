@@ -15,7 +15,11 @@ class EditFeedViewModel(
     private val account: Account,
     private val appPreferences: AppPreferences
 ) : ViewModel() {
-    fun submit(form: EditFeedFormEntry, onSuccess: () -> Unit) {
+    fun submit(
+        form: EditFeedFormEntry,
+        onSuccess: () -> Unit,
+        onFailure: () -> Unit
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
             account
                 .editFeed(form = form)
@@ -32,6 +36,7 @@ class EditFeedViewModel(
                         onSuccess()
                     }
                 }
+                .onFailure { onFailure() }
         }
     }
 }
