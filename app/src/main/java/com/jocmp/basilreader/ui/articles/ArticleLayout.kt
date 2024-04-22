@@ -40,6 +40,9 @@ import com.jocmp.basil.ArticleStatus
 import com.jocmp.basil.Feed
 import com.jocmp.basil.Folder
 import com.jocmp.basilreader.R
+import com.jocmp.basilreader.ui.articles.detail.ArticleRenderer
+import com.jocmp.basilreader.ui.articles.detail.ArticleView
+import com.jocmp.basilreader.ui.articles.detail.articleTemplateColors
 import com.jocmp.basilreader.ui.components.rememberSaveableWebViewState
 import com.jocmp.basilreader.ui.components.rememberWebViewNavigator
 import com.jocmp.basilreader.ui.fixtures.FeedPreviewFixture
@@ -74,8 +77,9 @@ fun ArticleLayout(
     onToggleArticleRead: () -> Unit,
     onToggleArticleStar: () -> Unit,
     onRemoveFeed: (feedID: String, onSuccess: () -> Unit, onFailure: () -> Unit) -> Unit,
-    drawerValue: DrawerValue = DrawerValue.Closed
+    drawerValue: DrawerValue = DrawerValue.Closed,
 ) {
+    val articleColors = articleTemplateColors()
     val (isInitialized, setInitialized) = rememberSaveable { mutableStateOf(false) }
     val drawerState = rememberDrawerState(drawerValue)
     val coroutineScope = rememberCoroutineScope()
@@ -237,7 +241,12 @@ fun ArticleLayout(
                         onSelect = { articleID ->
                             onSelectArticle(articleID) {
                                 coroutineScope.launch {
-                                    val html = ArticleRenderer.render(it, context)
+                                    val html =
+                                        ArticleRenderer.render(
+                                            it,
+                                            colors = articleColors,
+                                            context = context
+                                        )
                                     webViewNavigator.loadHtml(html)
                                     navigateToDetail()
                                 }
@@ -276,11 +285,17 @@ fun ArticleLayout(
     }
 
     LaunchedEffect(webViewNavigator) {
-        val html = ArticleRenderer.render(article, context)
+        val html = ArticleRenderer.render(article, articleColors, context)
 
         if (webViewState.viewState == null) {
             webViewNavigator.loadHtml(html)
         }
+    }
+
+    LaunchedEffect(articleColors) {
+        val html = ArticleRenderer.render(article, articleColors, context)
+
+        webViewNavigator.loadHtml(html)
     }
 }
 

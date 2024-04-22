@@ -1,4 +1,4 @@
-package com.jocmp.basilreader.ui.articles
+package com.jocmp.basilreader.ui.articles.detail
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column

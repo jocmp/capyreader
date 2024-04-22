@@ -2,6 +2,7 @@ package com.jocmp.basilreader.ui.components
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.os.Bundle
 import android.view.ViewGroup.LayoutParams
 import android.webkit.WebChromeClient
@@ -12,6 +13,7 @@ import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
@@ -147,6 +149,7 @@ public fun WebView(
     chromeClient: AccompanistWebChromeClient = remember { AccompanistWebChromeClient() },
     factory: ((Context) -> WebView)? = null,
 ) {
+    val backgroundColor = MaterialTheme.colorScheme.surface
     val webView = state.webView
 
     BackHandler(captureBackPresses && navigator.canGoBack) {
@@ -203,6 +206,14 @@ public fun WebView(
         factory = { context ->
             (factory?.invoke(context) ?: WebView(context)).apply {
                 onCreated(this)
+
+                val argbBackground = Color.argb(
+                    backgroundColor.alpha,
+                    backgroundColor.red,
+                    backgroundColor.green,
+                    backgroundColor.blue,
+                )
+                setBackgroundColor(argbBackground)
 
                 this.layoutParams = layoutParams
 

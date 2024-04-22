@@ -1,6 +1,7 @@
-package com.jocmp.basilreader.ui.articles
+package com.jocmp.basilreader.ui.articles.detail
 
 import android.content.Context
+import androidx.compose.runtime.Composable
 import com.jocmp.basil.Article
 import com.jocmp.basil.MacroProcessor
 import com.jocmp.basil.R
@@ -9,13 +10,17 @@ class ArticleRenderer(
     private val article: Article,
     private val template: String,
     private val styles: String,
+    private val colors: Map<String, String>
 ) {
     private val body = article.contentHTML.ifBlank {
         article.summary
     }
 
     fun render(): String {
-        val substitutions = mapOf(
+        val substitutions = colors + mapOf(
+            "external_link" to article.url.toString(),
+            "title" to article.title,
+            "byline" to (article.author ?: ""),
             "body" to body,
             "style" to styles
         )
@@ -27,7 +32,7 @@ class ArticleRenderer(
     }
 
     companion object {
-        fun render(article: Article?, context: Context): String {
+        fun render(article: Article?, colors: Map<String, String>, context: Context): String {
             if (article == null) {
                 return ""
             }
@@ -41,6 +46,7 @@ class ArticleRenderer(
                         article = article,
                         template = template,
                         styles = style,
+                        colors = colors
                     ).render()
                 }
             }
