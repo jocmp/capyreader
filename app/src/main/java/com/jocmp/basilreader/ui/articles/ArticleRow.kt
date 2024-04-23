@@ -17,21 +17,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.jocmp.basil.Article
 import com.jocmp.basilreader.ui.components.relativeTime
+import com.jocmp.basilreader.ui.fixtures.ArticleSample
 import com.jocmp.basilreader.ui.theme.CapyTheme
 import java.net.URL
-import java.time.Duration
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
-import java.util.TimeZone
 
 
 private val THUMBNAIL_SIZE = 56.dp
@@ -177,24 +176,7 @@ fun ArticleRowPreview_Selected_DarkMode() {
 
 @Preview
 @Composable
-fun ArticleRowPreview_Selected() {
-    val article = Article(
-        id = "288",
-        feedID = "123",
-        title = "How to use the Galaxy S24's AI photo editing tool",
-        author = "Andrew Romero",
-        contentHTML = "<div>Test</div>",
-        extractedContentURL = null,
-        imageURL = null,
-        summary = "Test article here",
-        url = URL("https://9to5google.com/?p=605559"),
-        updatedAt = ZonedDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneOffset.UTC),
-        publishedAt = ZonedDateTime.of(2024, 3, 17, 8, 33, 0, 0, ZoneOffset.UTC),
-        read = true,
-        starred = false,
-        feedName = "9to5Google"
-    )
-
+fun ArticleRowPreview_Selected(@PreviewParameter(ArticleSample::class) article: Article) {
     CapyTheme(dynamicColor = false) {
         ArticleRow(
             article = article,

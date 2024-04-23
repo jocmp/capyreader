@@ -3,7 +3,9 @@ package com.jocmp.basilreader.ui
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
@@ -14,32 +16,37 @@ import com.jocmp.basilreader.ui.articles.navigateToArticles
 import com.jocmp.basilreader.ui.theme.CapyTheme
 
 @Composable
-fun App(startDestination: String) {
+fun App(
+    startDestination: String,
+    windowSizeClass: WindowSizeClass
+) {
     val navController = rememberNavController()
 
     CapyTheme {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
-        ) {
-            NavHost(
-                navController = navController,
-                startDestination = startDestination
+        CompositionLocalProvider(LocalWindowWidth provides windowSizeClass.widthSizeClass) {
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                color = MaterialTheme.colorScheme.background
             ) {
-                accountsGraph(
-                    onLoginSuccess = {
-                        navController.navigateToArticles()
-                    },
-                    goBackToAccountIndex = {
-                        navController.navigate(Route.AccountIndex.path) {
-                            launchSingleTop = true
-                            popUpTo(Route.AccountIndex.path) {
-                                inclusive = true
+                NavHost(
+                    navController = navController,
+                    startDestination = startDestination
+                ) {
+                    accountsGraph(
+                        onLoginSuccess = {
+                            navController.navigateToArticles()
+                        },
+                        goBackToAccountIndex = {
+                            navController.navigate(Route.AccountIndex.path) {
+                                launchSingleTop = true
+                                popUpTo(Route.AccountIndex.path) {
+                                    inclusive = true
+                                }
                             }
                         }
-                    }
-                )
-                articleGraph(navController = navController)
+                    )
+                    articleGraph(navController = navController)
+                }
             }
         }
     }

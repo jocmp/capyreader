@@ -1,5 +1,6 @@
 package com.jocmp.basilreader.ui.articles.detail
 
+import android.os.ParcelFileDescriptor.OnCloseListener
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -37,7 +38,8 @@ fun ArticleView(
             onToggleRead = onToggleRead,
             onToggleStar = onToggleStar,
             webViewState = webViewState,
-            navigator = webViewNavigator
+            navigator = webViewNavigator,
+            onClose = onBackPressed
         )
     } else {
         EmptyView()
@@ -55,36 +57,17 @@ fun ArticleLoadedView(
     webViewState: WebViewState,
     navigator: WebViewNavigator,
     onToggleRead: () -> Unit,
-    onToggleStar: () -> Unit
+    onToggleStar: () -> Unit,
+    onClose: () -> Unit
 ) {
-    val readIcon = if (article.read) {
-        R.drawable.icon_circle_outline
-    } else {
-        R.drawable.icon_circle_filled
-    }
-
-    val starIcon = if (article.starred) {
-        R.drawable.icon_star_filled
-    } else {
-        R.drawable.icon_star_outline
-    }
-
     Scaffold(
         topBar = {
-            Row {
-                IconButton(onClick = { onToggleRead() }) {
-                    Icon(
-                        painterResource(id = readIcon),
-                        contentDescription = stringResource(R.string.article_view_mark_as_read)
-                    )
-                }
-                IconButton(onClick = { onToggleStar() }) {
-                    Icon(
-                        painterResource(id = starIcon),
-                        contentDescription = stringResource(R.string.article_view_star)
-                    )
-                }
-            }
+            ArticleTopBar(
+                article = article,
+                onToggleRead = onToggleRead,
+                onToggleStar = onToggleStar,
+                onClose = onClose
+            )
         }
     ) { innerPadding ->
         Column(Modifier.padding(innerPadding)) {

@@ -1,5 +1,6 @@
 package com.jocmp.basilreader.ui.components
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -136,6 +137,7 @@ fun WebView(
  * @param chromeClient Provides access to WebChromeClient via subclassing
  * @param factory An optional WebView factory for using a custom subclass of WebView
  */
+@SuppressLint("SetJavaScriptEnabled")
 @Composable
 public fun WebView(
     state: WebViewState,
@@ -215,6 +217,7 @@ public fun WebView(
                 )
                 setBackgroundColor(argbBackground)
 
+                this.settings.javaScriptEnabled = true
                 this.layoutParams = layoutParams
 
                 state.viewState?.let {

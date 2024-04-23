@@ -17,10 +17,13 @@
   </head>
   <body>
     <article>
-      <div class="article__title">
-        <h1><a href="{{external_link}}">{{title}}</a></h1>
-      </div>
-      <div class="article__byline">{{byline}}</div>
+      <a class="article__header" href="{{external_link}}">
+        <div class="article__title">
+          <h1>{{title}}</h1>
+        </div>
+        <div>{{byline}}</div>
+        <div>{{feed_name}}</div>
+      </a>
       <div class="article__body article__body--text-size-{{text_size}}">{{body}}</div>
     </article>
   </body>

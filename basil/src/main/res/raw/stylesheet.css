@@ -61,17 +61,18 @@ th {
 
 /* #region BEM */
 
-.article__title a:link,
-.article__title a:visited {
+.article__header {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.article__header:link,
+.article__header:visited {
   text-decoration: none;
 }
 
 .article__title h1 {
   margin: 0;
-}
-
-.article__byline {
-  padding-bottom: 1rem;
 }
 
 .article__body {

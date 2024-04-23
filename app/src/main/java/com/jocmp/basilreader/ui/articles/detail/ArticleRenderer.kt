@@ -20,6 +20,7 @@ class ArticleRenderer(
         val substitutions = colors + mapOf(
             "external_link" to article.url.toString(),
             "title" to article.title,
+            "feed_name" to article.feedName,
             "byline" to (article.author ?: ""),
             "body" to body,
             "style" to styles
