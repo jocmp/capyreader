@@ -29,6 +29,8 @@
     <string name="account_settings_save_name">Name saved</string>
     <string name="article_view_mark_as_read">Mark as read</string>
     <string name="article_view_star">Star</string>
+    <string name="article_byline">%1$s at %2$s by %3$s</string>
+    <string name="article_byline_date_only">%1$s at %2$s</string>
     <string name="refresh_manually_only">Manually only</string>
     <string name="refresh_minutes">Every %1$d minutes</string>
     <string name="refresh_feeds_menu_label">Refresh Feeds</string>
