@@ -43,6 +43,7 @@ import com.jocmp.basilreader.R
 import com.jocmp.basilreader.ui.articles.detail.ArticleRenderer
 import com.jocmp.basilreader.ui.articles.detail.ArticleView
 import com.jocmp.basilreader.ui.articles.detail.articleTemplateColors
+import com.jocmp.basilreader.ui.articles.detail.updateStyleVariables
 import com.jocmp.basilreader.ui.components.rememberSaveableWebViewState
 import com.jocmp.basilreader.ui.components.rememberWebViewNavigator
 import com.jocmp.basilreader.ui.fixtures.FeedPreviewFixture
@@ -79,7 +80,7 @@ fun ArticleLayout(
     onRemoveFeed: (feedID: String, onSuccess: () -> Unit, onFailure: () -> Unit) -> Unit,
     drawerValue: DrawerValue = DrawerValue.Closed,
 ) {
-    val articleColors = articleTemplateColors()
+    val templateColors = articleTemplateColors()
     val (isInitialized, setInitialized) = rememberSaveable { mutableStateOf(false) }
     val drawerState = rememberDrawerState(drawerValue)
     val coroutineScope = rememberCoroutineScope()
@@ -244,7 +245,7 @@ fun ArticleLayout(
                                     val html =
                                         ArticleRenderer.render(
                                             it,
-                                            colors = articleColors,
+                                            templateColors,
                                             context = context
                                         )
                                     webViewNavigator.loadHtml(html)
@@ -288,17 +289,17 @@ fun ArticleLayout(
     }
 
     LaunchedEffect(webViewNavigator) {
-        val html = ArticleRenderer.render(article, articleColors, context)
+        val html = ArticleRenderer.render(article, templateColors, context)
 
         if (webViewState.viewState == null) {
             webViewNavigator.loadHtml(html)
         }
     }
 
-    LaunchedEffect(articleColors) {
-        val html = ArticleRenderer.render(article, articleColors, context)
-
-        webViewNavigator.loadHtml(html)
+    LaunchedEffect(templateColors) {
+        webViewState.webView?.let { webView ->
+            updateStyleVariables(webView, templateColors)
+        }
     }
 }
 

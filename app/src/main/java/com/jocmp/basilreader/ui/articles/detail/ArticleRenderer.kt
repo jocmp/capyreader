@@ -1,6 +1,8 @@
 package com.jocmp.basilreader.ui.articles.detail
 
 import android.content.Context
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.darkColorScheme
 import com.jocmp.basil.Article
 import com.jocmp.basil.MacroProcessor
 import com.jocmp.basil.R as BasilResource
@@ -51,7 +53,7 @@ class ArticleRenderer(
         }
 
     companion object {
-        fun render(article: Article?, colors: Map<String, String>, context: Context): String {
+        fun render(article: Article?, templateColors: TemplateColors, context: Context): String {
             if (article == null) {
                 return ""
             }
@@ -65,7 +67,7 @@ class ArticleRenderer(
                         article = article,
                         template = template,
                         styles = style,
-                        colors = colors,
+                        colors = templateColors.asMap(),
                         context = context
                     ).render()
                 }

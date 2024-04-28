@@ -3,7 +3,6 @@ package com.jocmp.basilreader.ui.components
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.os.Bundle
 import android.view.ViewGroup.LayoutParams
 import android.webkit.WebChromeClient
@@ -14,7 +13,6 @@ import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
@@ -139,7 +137,7 @@ fun WebView(
  */
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
-public fun WebView(
+fun WebView(
     state: WebViewState,
     layoutParams: FrameLayout.LayoutParams,
     modifier: Modifier = Modifier,
@@ -151,7 +149,6 @@ public fun WebView(
     chromeClient: AccompanistWebChromeClient = remember { AccompanistWebChromeClient() },
     factory: ((Context) -> WebView)? = null,
 ) {
-    val backgroundColor = MaterialTheme.colorScheme.surface
     val webView = state.webView
 
     BackHandler(captureBackPresses && navigator.canGoBack) {
@@ -209,16 +206,10 @@ public fun WebView(
             (factory?.invoke(context) ?: WebView(context)).apply {
                 onCreated(this)
 
-                val argbBackground = Color.argb(
-                    backgroundColor.alpha,
-                    backgroundColor.red,
-                    backgroundColor.green,
-                    backgroundColor.blue,
-                )
-                setBackgroundColor(argbBackground)
-
                 this.settings.javaScriptEnabled = true
                 this.layoutParams = layoutParams
+
+                setBackgroundColor(context.getColor(android.R.color.transparent))
 
                 state.viewState?.let {
                     this.restoreState(it)
@@ -251,7 +242,7 @@ open class AccompanistWebViewClient : WebViewClient() {
 
     override fun onPageStarted(view: WebView, url: String?, favicon: Bitmap?) {
         super.onPageStarted(view, url, favicon)
-        state.loadingState = LoadingState.Loading(0.0f)
+        state.loadingState = Loading(0.0f)
         state.errorsForCurrentRequest.clear()
         state.pageTitle = null
         state.pageIcon = null
@@ -309,7 +300,7 @@ public open class AccompanistWebChromeClient : WebChromeClient() {
     override fun onProgressChanged(view: WebView, newProgress: Int) {
         super.onProgressChanged(view, newProgress)
         if (state.loadingState is LoadingState.Finished) return
-        state.loadingState = LoadingState.Loading(newProgress / 100.0f)
+        state.loadingState = Loading(newProgress / 100.0f)
     }
 }
 
@@ -708,7 +699,7 @@ public fun rememberWebViewState(
  * @sample com.google.accompanist.sample.webview.WebViewSaveStateSample
  */
 @Composable
-public fun rememberSaveableWebViewState(): WebViewState =
+fun rememberSaveableWebViewState(): WebViewState =
     rememberSaveable(saver = WebStateSaver) {
         WebViewState(WebContent.NavigatorOnly)
     }
