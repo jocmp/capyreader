@@ -141,7 +141,7 @@ fun WebView(
     state: WebViewState,
     layoutParams: FrameLayout.LayoutParams,
     modifier: Modifier = Modifier,
-    captureBackPresses: Boolean = true,
+    captureBackPresses: Boolean = false,
     navigator: WebViewNavigator = rememberWebViewNavigator(),
     onCreated: (WebView) -> Unit = {},
     onDispose: (WebView) -> Unit = {},
@@ -443,6 +443,8 @@ public class WebViewNavigator(private val coroutineScope: CoroutineScope) {
         data object Reload : NavigationEvent
         data object StopLoading : NavigationEvent
 
+        data object ClearView: NavigationEvent
+
         data class LoadUrl(
             val url: String,
             val additionalHttpHeaders: Map<String, String> = emptyMap()
@@ -488,13 +490,18 @@ public class WebViewNavigator(private val coroutineScope: CoroutineScope) {
                 is NavigationEvent.Forward -> goForward()
                 is NavigationEvent.Reload -> reload()
                 is NavigationEvent.StopLoading -> stopLoading()
-                is NavigationEvent.LoadHtml -> loadDataWithBaseURL(
-                    event.baseUrl,
-                    event.html,
-                    event.mimeType,
-                    event.encoding,
-                    event.historyUrl
-                )
+                is NavigationEvent.LoadHtml -> {
+                    if (canGoBack()) {
+                        clearHistory()
+                    }
+                    loadDataWithBaseURL(
+                        event.baseUrl,
+                        event.html,
+                        event.mimeType,
+                        event.encoding,
+                        event.historyUrl
+                    )
+                }
 
                 is NavigationEvent.LoadUrl -> {
                     loadUrl(event.url, event.additionalHttpHeaders)
@@ -502,6 +509,10 @@ public class WebViewNavigator(private val coroutineScope: CoroutineScope) {
 
                 is NavigationEvent.PostUrl -> {
                     postUrl(event.url, event.postData)
+                }
+
+                NavigationEvent.ClearView -> {
+                    loadUrl("about:blank")
                 }
             }
         }
@@ -526,6 +537,14 @@ public class WebViewNavigator(private val coroutineScope: CoroutineScope) {
                     url,
                     additionalHttpHeaders
                 )
+            )
+        }
+    }
+
+    fun clearView() {
+        coroutineScope.launch {
+            navigationEvents.emit(
+                NavigationEvent.ClearView
             )
         }
     }

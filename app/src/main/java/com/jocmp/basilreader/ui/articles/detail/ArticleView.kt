@@ -1,26 +1,17 @@
 package com.jocmp.basilreader.ui.articles.detail
 
-import android.os.ParcelFileDescriptor.OnCloseListener
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import com.jocmp.basil.Article
-import com.jocmp.basilreader.R
 import com.jocmp.basilreader.ui.components.EmptyView
 import com.jocmp.basilreader.ui.components.WebView
 import com.jocmp.basilreader.ui.components.WebViewNavigator
 import com.jocmp.basilreader.ui.components.WebViewState
-
-private const val TAG = "ArticleView"
 
 @Composable
 fun ArticleView(
@@ -70,7 +61,7 @@ fun ArticleLoadedView(
             )
         }
     ) { innerPadding ->
-        Column(Modifier.padding(innerPadding)) {
+        Column(Modifier.padding(innerPadding).fillMaxSize()) {
             WebView(
                 state = webViewState,
                 navigator = navigator,
