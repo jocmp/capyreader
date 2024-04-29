@@ -10,13 +10,14 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.jocmp.basil.Article
 import com.jocmp.basilreader.R
+import com.jocmp.basilreader.common.shareArticle
 import com.jocmp.basilreader.ui.LocalWindowWidth
 import com.jocmp.basilreader.ui.fixtures.ArticleSample
 
@@ -28,6 +29,12 @@ fun ArticleTopBar(
     onToggleStar: () -> Unit,
     onClose: () -> Unit
 ) {
+    val context = LocalContext.current
+
+    val shareArticle = {
+        context.shareArticle(article = article)
+    }
+
     val readIcon = if (article.read) {
         R.drawable.icon_circle_outline
     } else {
@@ -48,9 +55,7 @@ fun ArticleTopBar(
         },
         title = {},
         actions = {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+            Row {
                 IconButton(onClick = { onToggleRead() }) {
                     Icon(
                         painterResource(id = readIcon),
@@ -61,6 +66,12 @@ fun ArticleTopBar(
                     Icon(
                         painterResource(id = starIcon),
                         contentDescription = stringResource(R.string.article_view_star)
+                    )
+                }
+                IconButton(onClick = { shareArticle() }) {
+                    Icon(
+                        painterResource(id = R.drawable.ic_share),
+                        contentDescription = stringResource(R.string.article_share)
                     )
                 }
             }

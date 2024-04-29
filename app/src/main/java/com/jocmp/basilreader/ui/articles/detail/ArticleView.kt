@@ -36,7 +36,6 @@ fun ArticleView(
         EmptyView()
     }
 
-
     BackHandler(article != null) {
         onBackPressed()
     }
