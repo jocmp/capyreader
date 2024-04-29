@@ -11,7 +11,6 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
-import androidx.activity.compose.BackHandler
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.runtime.Composable
@@ -35,6 +34,7 @@ import com.jocmp.basilreader.ui.components.LoadingState.Finished
 import com.jocmp.basilreader.ui.components.LoadingState.Loading
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -406,7 +406,7 @@ class WebViewState(webContent: WebContent) {
     /**
      * The title received from the loaded content of the current page
      */
-    public var pageTitle: String? by mutableStateOf(null)
+    var pageTitle: String? by mutableStateOf(null)
         internal set
 
     /**
@@ -449,6 +449,8 @@ public class WebViewNavigator(private val coroutineScope: CoroutineScope) {
         data object Reload : NavigationEvent
         data object StopLoading : NavigationEvent
 
+        data object ClearView : NavigationEvent
+
         data class LoadUrl(
             val url: String,
             val additionalHttpHeaders: Map<String, String> = emptyMap()
@@ -487,18 +489,18 @@ public class WebViewNavigator(private val coroutineScope: CoroutineScope) {
     private val navigationEvents: MutableSharedFlow<NavigationEvent> = MutableSharedFlow(replay = 1)
 
     // Use Dispatchers.Main to ensure that the webview methods are called on UI thread
+    @OptIn(ExperimentalCoroutinesApi::class)
     internal suspend fun WebView.handleNavigationEvents(): Nothing = withContext(Dispatchers.Main) {
         navigationEvents.collect { event ->
             when (event) {
-                is NavigationEvent.Back -> goBack()
+                is NavigationEvent.Back -> {
+                    goBack()
+                }
+
                 is NavigationEvent.Forward -> goForward()
                 is NavigationEvent.Reload -> reload()
                 is NavigationEvent.StopLoading -> stopLoading()
                 is NavigationEvent.LoadHtml -> {
-                    if (canGoBack()) {
-                        clearHistory()
-                        loadUrl("about:blank")
-                    }
                     loadDataWithBaseURL(
                         event.baseUrl,
                         event.html,
@@ -506,6 +508,12 @@ public class WebViewNavigator(private val coroutineScope: CoroutineScope) {
                         event.encoding,
                         event.historyUrl
                     )
+                }
+
+                is NavigationEvent.ClearView -> {
+                    navigationEvents.resetReplayCache()
+                    clearHistory()
+                    loadUrl("about:blank")
                 }
 
                 is NavigationEvent.LoadUrl -> {
@@ -562,6 +570,14 @@ public class WebViewNavigator(private val coroutineScope: CoroutineScope) {
         }
     }
 
+    fun clearView() {
+        coroutineScope.launch {
+            navigationEvents.emit(
+                NavigationEvent.ClearView
+            )
+        }
+    }
+
     fun postUrl(
         url: String,
         postData: ByteArray
@@ -579,7 +595,7 @@ public class WebViewNavigator(private val coroutineScope: CoroutineScope) {
     /**
      * Navigates the webview back to the previous page.
      */
-    public fun navigateBack() {
+    fun navigateBack() {
         coroutineScope.launch { navigationEvents.emit(NavigationEvent.Back) }
     }
 
@@ -639,29 +655,23 @@ public data class WebViewError(
  * @sample com.google.accompanist.sample.webview.WebViewSaveStateSample
  */
 @Composable
-fun rememberSaveableWebViewState(): WebViewState =
-    rememberSaveable(saver = WebStateSaver) {
+fun rememberSaveableWebViewState(key: String?): WebViewState =
+    rememberSaveable(saver = WebStateSaver, key = key) {
         WebViewState(WebContent.NavigatorOnly)
     }
 
 val WebStateSaver: Saver<WebViewState, Any> = run {
-    val pageTitleKey = "pagetitle"
-    val lastLoadedUrlKey = "lastloaded"
     val stateBundle = "bundle"
 
     mapSaver(
         save = {
             val viewState = Bundle().apply { it.webView?.saveState(this) }
             mapOf(
-                pageTitleKey to it.pageTitle,
-                lastLoadedUrlKey to it.lastLoadedUrl,
                 stateBundle to viewState,
             )
         },
         restore = {
             WebViewState(WebContent.NavigatorOnly).apply {
-                this.pageTitle = it[pageTitleKey] as String?
-                this.lastLoadedUrl = it[lastLoadedUrlKey] as String?
                 this.viewState = it[stateBundle] as Bundle?
             }
         }

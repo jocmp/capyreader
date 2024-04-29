@@ -24,28 +24,12 @@ import com.jocmp.basilreader.ui.fixtures.ArticleSample
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArticleTopBar(
-    article: Article,
+    article: Article?,
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
     onClose: () -> Unit
 ) {
     val context = LocalContext.current
-
-    val shareArticle = {
-        context.shareArticle(article = article)
-    }
-
-    val readIcon = if (article.read) {
-        R.drawable.icon_circle_outline
-    } else {
-        R.drawable.icon_circle_filled
-    }
-
-    val starIcon = if (article.starred) {
-        R.drawable.icon_star_filled
-    } else {
-        R.drawable.icon_star_outline
-    }
 
     TopAppBar(
         navigationIcon = {
@@ -56,29 +40,48 @@ fun ArticleTopBar(
         title = {},
         actions = {
             Row {
-                IconButton(onClick = { onToggleRead() }) {
-                    Icon(
-                        painterResource(id = readIcon),
-                        contentDescription = stringResource(R.string.article_view_mark_as_read)
-                    )
-                }
-                IconButton(onClick = { onToggleStar() }) {
-                    Icon(
-                        painterResource(id = starIcon),
-                        contentDescription = stringResource(R.string.article_view_star)
-                    )
-                }
-                IconButton(onClick = { shareArticle() }) {
-                    Icon(
-                        painterResource(id = R.drawable.ic_share),
-                        contentDescription = stringResource(R.string.article_share)
-                    )
+                if (article != null) {
+                    IconButton(onClick = { onToggleRead() }) {
+                        Icon(
+                            painterResource(id = readIcon(article)),
+                            contentDescription = stringResource(R.string.article_view_mark_as_read)
+                        )
+                    }
+
+                    IconButton(onClick = { onToggleStar() }) {
+                        Icon(
+                            painterResource(id = starredIcon(article)),
+                            contentDescription = stringResource(R.string.article_view_star)
+                        )
+                    }
+                    IconButton(onClick = { context.shareArticle(article = article) }) {
+                        Icon(
+                            painterResource(id = R.drawable.ic_share),
+                            contentDescription = stringResource(R.string.article_share)
+                        )
+                    }
                 }
             }
         }
     )
-
 }
+
+@Composable
+fun readIcon(article: Article) =
+    if (article.read) {
+        R.drawable.icon_circle_outline
+    } else {
+        R.drawable.icon_circle_filled
+    }
+
+@Composable
+fun starredIcon(article: Article) =
+    if (article.starred) {
+        R.drawable.icon_star_filled
+    } else {
+        R.drawable.icon_star_outline
+    }
+
 
 @Composable
 fun ArticleNavigationIcon(onClick: () -> Unit) {
@@ -124,4 +127,15 @@ private fun ArticleTopBarPreview_Tablet(@PreviewParameter(ArticleSample::class) 
             onClose = {}
         )
     }
+}
+
+@Preview
+@Composable
+private fun ArticleTopBarPreview_MissingArticle() {
+    ArticleTopBar(
+        article = null,
+        onToggleRead = {},
+        onToggleStar = {},
+        onClose = {}
+    )
 }

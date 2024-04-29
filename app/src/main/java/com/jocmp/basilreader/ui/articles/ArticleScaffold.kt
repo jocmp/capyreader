@@ -2,24 +2,21 @@ package com.jocmp.basilreader.ui.articles
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.adaptive.AnimatedPane
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
-import androidx.compose.material3.adaptive.ListDetailPaneScaffold
-import androidx.compose.material3.adaptive.ListDetailPaneScaffoldRole
-import androidx.compose.material3.adaptive.PaneScaffoldDirective
-import androidx.compose.material3.adaptive.ThreePaneScaffoldState
-import androidx.compose.material3.adaptive.calculateStandardPaneScaffoldDirective
-import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
-import androidx.compose.material3.adaptive.rememberListDetailPaneScaffoldNavigator
+import androidx.compose.material3.adaptive.layout.AnimatedPane
+import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffold
+import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
+import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -34,7 +31,7 @@ import com.jocmp.basilreader.ui.theme.CapyTheme
 @Composable
 fun ArticleScaffold(
     drawerState: DrawerState = rememberDrawerState(DrawerValue.Closed),
-    listDetailState: ThreePaneScaffoldState,
+    scaffoldNavigator: ThreePaneScaffoldNavigator<Nothing> = rememberListDetailPaneScaffoldNavigator(),
     drawerPane: @Composable () -> Unit,
     listPane: @Composable () -> Unit,
     detailPane: @Composable () -> Unit,
@@ -53,14 +50,15 @@ fun ArticleScaffold(
             modifier = Modifier.fillMaxWidth()
         ) {
             ListDetailPaneScaffold(
-                scaffoldState = listDetailState,
+                directive = scaffoldNavigator.scaffoldDirective,
+                value = scaffoldNavigator.scaffoldValue,
                 listPane = {
-                    AnimatedPane(Modifier) {
+                    AnimatedPane {
                         listPane()
                     }
                 },
                 detailPane = {
-                    AnimatedPane(Modifier) {
+                    AnimatedPane {
                         detailPane()
                     }
                 }
@@ -70,37 +68,11 @@ fun ArticleScaffold(
 }
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
-@Composable
-fun calculateArticleDirective(): PaneScaffoldDirective {
-    val calculated = calculateStandardPaneScaffoldDirective(currentWindowAdaptiveInfo())
-
-    return copyDirectiveWithoutPadding(calculated)
-}
-
-
-@OptIn(ExperimentalMaterial3AdaptiveApi::class)
-private fun copyDirectiveWithoutPadding(directive: PaneScaffoldDirective): PaneScaffoldDirective {
-    return PaneScaffoldDirective(
-        contentPadding = PaddingValues(0.dp),
-        maxHorizontalPartitions = directive.maxHorizontalPartitions,
-        horizontalPartitionSpacerSize = 0.dp,
-        maxVerticalPartitions = directive.maxVerticalPartitions,
-        verticalPartitionSpacerSize = directive.verticalPartitionSpacerSize,
-        excludedBounds = directive.excludedBounds
-    )
-}
-
-@OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Preview(device = Devices.TABLET)
 @Composable
 fun ArticlesLayoutPreview() {
-    val navigator = rememberListDetailPaneScaffoldNavigator<ListDetailPaneScaffoldRole>(
-        scaffoldDirective = calculateArticleDirective()
-    )
-
     CapyTheme {
         ArticleScaffold(
-            listDetailState = navigator.scaffoldState,
             drawerPane = {
                 Text("List here!")
             },

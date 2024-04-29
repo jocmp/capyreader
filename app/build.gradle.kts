@@ -68,7 +68,9 @@ dependencies {
 
     implementation("androidx.activity:activity-compose:1.9.0")
     implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.material3:material3-adaptive:1.0.0-alpha06")
+    implementation("androidx.compose.material3.adaptive:adaptive:1.0.0-alpha11")
+    implementation("androidx.compose.material3.adaptive:adaptive-layout:1.0.0-alpha11")
+    implementation("androidx.compose.material3.adaptive:adaptive-navigation:1.0.0-alpha11")
     implementation("androidx.security:security-crypto:1.1.0-alpha06")
     implementation("androidx.browser:browser:1.8.0")
     implementation("androidx.compose.ui:ui")
