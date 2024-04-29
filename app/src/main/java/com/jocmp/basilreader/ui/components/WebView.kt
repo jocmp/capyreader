@@ -12,6 +12,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import androidx.activity.compose.BackHandler
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -232,12 +233,12 @@ fun WebView(
  * A parent class implementation of WebViewClient that can be subclassed to add custom behaviour.
  *
  * As Accompanist Web needs to set its own web client to function, it provides this intermediary
- * class that can be overriden if further custom behaviour is required.
+ * class that can be overridden if further custom behaviour is required.
  */
 open class AccompanistWebViewClient : WebViewClient() {
-    public open lateinit var state: WebViewState
+    open lateinit var state: WebViewState
         internal set
-    public open lateinit var navigator: WebViewNavigator
+    open lateinit var navigator: WebViewNavigator
         internal set
 
     override fun onPageStarted(view: WebView, url: String?, favicon: Bitmap?) {
@@ -252,7 +253,7 @@ open class AccompanistWebViewClient : WebViewClient() {
 
     override fun onPageFinished(view: WebView, url: String?) {
         super.onPageFinished(view, url)
-        state.loadingState = LoadingState.Finished
+        state.loadingState = Finished
     }
 
     override fun doUpdateVisitedHistory(view: WebView, url: String?, isReload: Boolean) {
@@ -260,6 +261,20 @@ open class AccompanistWebViewClient : WebViewClient() {
 
         navigator.canGoBack = view.canGoBack()
         navigator.canGoForward = view.canGoForward()
+    }
+
+    override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+        val url = request?.url
+
+        if (view != null && url != null) {
+            val intent = CustomTabsIntent
+                .Builder()
+                .build()
+
+            intent.launchUrl(view.context, url)
+        }
+
+        return true
     }
 
     override fun onReceivedError(
@@ -283,8 +298,8 @@ open class AccompanistWebViewClient : WebViewClient() {
  * As Accompanist Web needs to set its own web client to function, it provides this intermediary
  * class that can be overridden if further custom behaviour is required.
  */
-public open class AccompanistWebChromeClient : WebChromeClient() {
-    public open lateinit var state: WebViewState
+open class AccompanistWebChromeClient : WebChromeClient() {
+    open lateinit var state: WebViewState
         internal set
 
     override fun onReceivedTitle(view: WebView, title: String?) {
@@ -443,7 +458,7 @@ public class WebViewNavigator(private val coroutineScope: CoroutineScope) {
         data object Reload : NavigationEvent
         data object StopLoading : NavigationEvent
 
-        data object ClearView: NavigationEvent
+        data object ClearView : NavigationEvent
 
         data class LoadUrl(
             val url: String,
@@ -569,7 +584,7 @@ public class WebViewNavigator(private val coroutineScope: CoroutineScope) {
         }
     }
 
-    public fun postUrl(
+    fun postUrl(
         url: String,
         postData: ByteArray
     ) {
@@ -617,7 +632,7 @@ public class WebViewNavigator(private val coroutineScope: CoroutineScope) {
  * override.
  */
 @Composable
-public fun rememberWebViewNavigator(
+fun rememberWebViewNavigator(
     coroutineScope: CoroutineScope = rememberCoroutineScope()
 ): WebViewNavigator = remember(coroutineScope) { WebViewNavigator(coroutineScope) }
 
@@ -635,78 +650,6 @@ public data class WebViewError(
      */
     val error: WebResourceError
 )
-
-/**
- * Creates a WebView state that is remembered across Compositions.
- *
- * @param url The url to load in the WebView
- * @param additionalHttpHeaders Optional, additional HTTP headers that are passed to [WebView.loadUrl].
- *                              Note that these headers are used for all subsequent requests of the WebView.
- */
-@Composable
-public fun rememberWebViewState(
-    url: String,
-    additionalHttpHeaders: Map<String, String> = emptyMap()
-): WebViewState =
-// Rather than using .apply {} here we will recreate the state, this prevents
-    // a recomposition loop when the webview updates the url itself.
-    remember {
-        WebViewState(
-            WebContent.Url(
-                url = url,
-                additionalHttpHeaders = additionalHttpHeaders
-            )
-        )
-    }.apply {
-        this.content = WebContent.Url(
-            url = url,
-            additionalHttpHeaders = additionalHttpHeaders
-        )
-    }
-
-/**
- * Creates a WebView state that is remembered across Compositions.
- *
- * @param data The uri to load in the WebView
- */
-@Composable
-fun rememberWebViewStateWithHTMLData(
-    data: String = "",
-    baseUrl: String? = null,
-    encoding: String = "utf-8",
-    mimeType: String? = null,
-    historyUrl: String? = null
-): WebViewState =
-    rememberSaveable(saver = WebStateSaver) {
-        WebViewState(WebContent.Data(data, baseUrl, encoding, mimeType, historyUrl))
-    }
-
-/**
- * Creates a WebView state that is remembered across Compositions.
- *
- * @param url The url to load in the WebView
- * @param postData The data to be posted to the WebView with the url
- */
-@Composable
-public fun rememberWebViewState(
-    url: String,
-    postData: ByteArray
-): WebViewState =
-// Rather than using .apply {} here we will recreate the state, this prevents
-    // a recomposition loop when the webview updates the url itself.
-    remember {
-        WebViewState(
-            WebContent.Post(
-                url = url,
-                postData = postData
-            )
-        )
-    }.apply {
-        this.content = WebContent.Post(
-            url = url,
-            postData = postData
-        )
-    }
 
 /**
  * Creates a WebView state that is remembered across Compositions and saved
