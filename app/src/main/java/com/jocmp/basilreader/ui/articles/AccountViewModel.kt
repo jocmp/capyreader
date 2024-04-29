@@ -136,6 +136,11 @@ class AccountViewModel(
     }
 
     fun selectArticle(articleID: String, completion: (article: Article) -> Unit) {
+        val currentID = articleState.value?.id
+        if (currentID != null && currentID == articleID) {
+            return
+        }
+
         viewModelScope.launch {
             articleState.value = account.findArticle(articleID = articleID)?.copy(read = true)
             articleState.value?.let(completion)

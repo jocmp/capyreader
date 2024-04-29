@@ -68,7 +68,6 @@ import kotlinx.coroutines.withContext
 fun WebView(
     state: WebViewState,
     modifier: Modifier = Modifier,
-    captureBackPresses: Boolean = false,
     navigator: WebViewNavigator = rememberWebViewNavigator(),
     onCreated: (WebView) -> Unit = {},
     onDispose: (WebView) -> Unit = {},
@@ -100,7 +99,6 @@ fun WebView(
             state,
             layoutParams,
             Modifier,
-            captureBackPresses,
             navigator,
             onCreated,
             onDispose,
@@ -123,8 +121,6 @@ fun WebView(
  * @param state The webview state holder where the Uri to load is defined.
  * @param layoutParams A FrameLayout.LayoutParams object to custom size the underlying WebView.
  * @param modifier A compose modifier
- * @param captureBackPresses Set to true to have this Composable capture back presses and navigate
- * the WebView back.
  * @param navigator An optional navigator object that can be used to control the WebView's
  * navigation from outside the composable.
  * @param onCreated Called when the WebView is first created, this can be used to set additional
@@ -142,7 +138,6 @@ fun WebView(
     state: WebViewState,
     layoutParams: FrameLayout.LayoutParams,
     modifier: Modifier = Modifier,
-    captureBackPresses: Boolean = false,
     navigator: WebViewNavigator = rememberWebViewNavigator(),
     onCreated: (WebView) -> Unit = {},
     onDispose: (WebView) -> Unit = {},
@@ -151,10 +146,6 @@ fun WebView(
     factory: ((Context) -> WebView)? = null,
 ) {
     val webView = state.webView
-
-    BackHandler(captureBackPresses && navigator.canGoBack) {
-        webView?.goBack()
-    }
 
     webView?.let { wv ->
         LaunchedEffect(wv, navigator) {
@@ -458,8 +449,6 @@ public class WebViewNavigator(private val coroutineScope: CoroutineScope) {
         data object Reload : NavigationEvent
         data object StopLoading : NavigationEvent
 
-        data object ClearView : NavigationEvent
-
         data class LoadUrl(
             val url: String,
             val additionalHttpHeaders: Map<String, String> = emptyMap()
@@ -508,6 +497,7 @@ public class WebViewNavigator(private val coroutineScope: CoroutineScope) {
                 is NavigationEvent.LoadHtml -> {
                     if (canGoBack()) {
                         clearHistory()
+                        loadUrl("about:blank")
                     }
                     loadDataWithBaseURL(
                         event.baseUrl,
@@ -524,10 +514,6 @@ public class WebViewNavigator(private val coroutineScope: CoroutineScope) {
 
                 is NavigationEvent.PostUrl -> {
                     postUrl(event.url, event.postData)
-                }
-
-                NavigationEvent.ClearView -> {
-                    loadUrl("about:blank")
                 }
             }
         }
@@ -552,14 +538,6 @@ public class WebViewNavigator(private val coroutineScope: CoroutineScope) {
                     url,
                     additionalHttpHeaders
                 )
-            )
-        }
-    }
-
-    fun clearView() {
-        coroutineScope.launch {
-            navigationEvents.emit(
-                NavigationEvent.ClearView
             )
         }
     }

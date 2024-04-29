@@ -272,7 +272,6 @@ fun ArticleLayout(
                 onBackPressed = {
                     onClearArticle()
                     navigator.navigateBack()
-                    webViewNavigator.clearView()
                 }
             )
         }
