@@ -16,8 +16,8 @@ class MacroProcessorTest {
             "two" to "2"
         )
 
-        val template = "foo [[one]] bar [[two]] baz"
-        val expected = "foo 1 bar 2 baz"
+        val template = "<html>foo {{one}} bar {{two}} baz"
+        val expected = "<html>foo 1 bar 2 baz"
 
         val processor = MacroProcessor(template = template, substitutions = substitutions)
 
@@ -26,7 +26,7 @@ class MacroProcessorTest {
 
     @Test
     fun `it substitutes key-values when the template starts with a macro`() {
-        val template = "[[one]] foo [[two]] bar"
+        val template = "{{one}} foo {{two}} bar"
         val expected = "1 foo 2 bar"
 
         val processor = MacroProcessor(template = template, substitutions = substitutions)
@@ -36,7 +36,7 @@ class MacroProcessorTest {
 
     @Test
     fun `it substitutes key-values when the template ends with a macro`() {
-        val template = "foo [[one]] bar [[two]]"
+        val template = "foo {{one}} bar {{two}}"
         val expected = "foo 1 bar 2"
 
         val processor = MacroProcessor(template = template, substitutions = substitutions)
@@ -45,8 +45,28 @@ class MacroProcessorTest {
     }
 
     @Test
+    fun `it skips uneven delimiters with partial open tag match`() {
+        val template = "foo :root { bar {{two}}"
+        val expected = "foo :root { bar 2"
+
+        val processor = MacroProcessor(template = template, substitutions = substitutions)
+
+        assertEquals(expected = expected, actual = processor.renderedText)
+    }
+
+    @Test
+    fun `it skips uneven delimiters with total open tag match`() {
+        val template = "foo {{one bar {{two}}"
+        val expected = "foo {{one bar 2"
+
+        val processor = MacroProcessor(template = template, substitutions = substitutions)
+
+        assertEquals(expected = expected, actual = processor.renderedText)
+    }
+
+    @Test
     fun `it skips over non-existent keys`() {
-        val template = "foo [[nonexistent]] bar"
+        val template = "foo {{nonexistent}} bar"
 
         val processor = MacroProcessor(template = template, substitutions = substitutions)
 
@@ -71,12 +91,12 @@ class MacroProcessorTest {
     @Test
     fun `macro replacement shouldn't be recursive`() {
         val invalidSubstitutions = mapOf(
-            "one" to "[[two]]",
+            "one" to "{{two}}",
             "two" to "2"
         )
 
-        val template = "foo [[one]] bar"
-        val expected = "foo [[two]] bar"
+        val template = "foo {{one}} bar"
+        val expected = "foo {{two}} bar"
 
         val processor = MacroProcessor(template = template, substitutions = invalidSubstitutions)
 

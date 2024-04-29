@@ -21,6 +21,7 @@ class ArticleFixture(private val database: Database) {
                 id = id,
                 feed_id = feed.id,
                 title = title,
+                author = "John Writer",
                 content_html = "<div>Test</div>",
                 extracted_content_url = null,
                 image_url = null,

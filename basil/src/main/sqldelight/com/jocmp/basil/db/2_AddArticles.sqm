@@ -2,6 +2,7 @@ CREATE TABLE articles(
   id TEXT NOT NULL PRIMARY KEY,
   feed_id TEXT REFERENCES feeds(id),
   title TEXT,
+  author TEXT,
   content_html TEXT,
   extracted_content_url TEXT,
   url TEXT,

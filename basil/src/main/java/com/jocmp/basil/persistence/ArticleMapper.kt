@@ -3,6 +3,7 @@ package com.jocmp.basil.persistence
 import com.jocmp.basil.Article
 import com.jocmp.basil.common.optionalURL
 import com.jocmp.basil.common.toDateTimeFromSeconds
+import java.net.URL
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -11,6 +12,7 @@ internal fun articleMapper(
     id: String,
     feedID: String?,
     title: String?,
+    author: String?,
     contentHtml: String?,
     extractedContentURL: String?,
     url: String?,
@@ -28,9 +30,10 @@ internal fun articleMapper(
         feedID = feedID.toString(),
         faviconURL = faviconURL,
         title = title ?: "",
+        author = author,
         contentHTML = contentHtml ?: "",
         extractedContentURL = optionalURL(extractedContentURL),
-        url = optionalURL(url),
+        url = URL(url),
         imageURL = optionalURL(imageURL),
         summary = summary ?: "",
         updatedAt = updatedAt!!.toDateTimeFromSeconds,
@@ -45,6 +48,7 @@ internal fun listMapper(
     id: String,
     feedID: String?,
     title: String?,
+    author: String?,
     contentHtml: String?,
     extractedContentURL: String?,
     url: String?,
@@ -62,6 +66,7 @@ internal fun listMapper(
         feedID = feedID.toString(),
         faviconURL = faviconURL,
         title = title ?: "",
+        author = author,
         contentHtml = "",
         extractedContentURL = extractedContentURL,
         url = url,

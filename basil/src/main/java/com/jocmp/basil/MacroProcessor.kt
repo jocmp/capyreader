@@ -1,5 +1,8 @@
 package com.jocmp.basil
 
+import android.print.PrintAttributes.Margins
+import javax.crypto.Mac
+
 data class MacroProcessor(
     val template: String,
     val substitutions: Map<String, String>,
@@ -9,8 +12,8 @@ data class MacroProcessor(
     val renderedText: String by lazy { process() }
 
     companion object {
-        const val OPEN_TAG = "[["
-        const val CLOSE_TAG = "]]"
+        const val OPEN_TAG = "{{"
+        const val CLOSE_TAG = "}}"
     }
 }
 
@@ -29,7 +32,7 @@ private fun MacroProcessor.process(): String {
 
         if (queue.isEmpty()) {
             result += token
-        } else if (queue.size > 1 && endsWithTag(queue)) {
+        } else if (hasEvenTags(queue)) {
             var taggedKey = ""
 
             while (queue.isNotEmpty()) {
@@ -39,6 +42,16 @@ private fun MacroProcessor.process(): String {
             val key = extractKey(taggedKey)
 
             result += substitutions.getOrDefault(key, taggedKey)
+        } else if (hasHangingOpenTag(queue, token)) {
+            while (queue.isNotEmpty()) {
+                result += queue.removeFirst()
+            }
+
+            result += token
+        } else if (startedNewOpenTag(queue, token)) {
+            while (queue.size > 1) {
+                result += queue.removeFirst()
+            }
         }
     }
 
@@ -47,8 +60,7 @@ private fun MacroProcessor.process(): String {
 
 private fun MacroProcessor.extractKey(taggedKey: String): String {
     return taggedKey.substring(
-        openTag.length,
-        taggedKey.length - closeTag.length
+        openTag.length, taggedKey.length - closeTag.length
     )
 }
 
@@ -58,4 +70,21 @@ private fun MacroProcessor.startsWithTag(queue: ArrayDeque<Char>): Boolean {
 
 private fun MacroProcessor.endsWithTag(queue: ArrayDeque<Char>): Boolean {
     return queue.takeLast(closeTag.length).joinToString("") == closeTag
+}
+
+private fun MacroProcessor.hasEvenTags(queue: ArrayDeque<Char>): Boolean {
+    val tagSum = openTag.length + closeTag.length
+
+    return queue.size > tagSum && startsWithTag(queue) && endsWithTag(queue)
+}
+
+private fun MacroProcessor.hasHangingOpenTag(queue: ArrayDeque<Char>, currentToken: Char): Boolean {
+    return queue.size >= 1 &&
+            queue.size <= openTag.length &&
+            !openTag.contains(currentToken)
+}
+
+private fun MacroProcessor.startedNewOpenTag(queue: ArrayDeque<Char>, currentToken: Char): Boolean {
+    return queue.size > openTag.length &&
+            openTag.contains(currentToken)
 }

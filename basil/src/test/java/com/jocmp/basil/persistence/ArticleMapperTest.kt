@@ -14,6 +14,7 @@ class ArticleMapperTest {
             id = "1",
             feedID = "1",
             title = "Vizio agrees to pay $3 million for alleged ‘false’ refresh rate claims",
+            author = "Wes Davis",
             contentHtml = "<p>If you bought a Vizio TV in California after April 30th, 2014, Vizio may owe you some money</p>",
             extractedContentURL = null,
             url = "https://www.theverge.com/2023/12/30/24019780/vizio-settlement-effective-refresh-rate-class-action-lawsuit",

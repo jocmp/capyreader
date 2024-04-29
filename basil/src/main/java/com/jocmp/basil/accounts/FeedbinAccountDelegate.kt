@@ -281,6 +281,7 @@ internal class FeedbinAccountDelegate(
                     id = entry.id.toString(),
                     feed_id = entry.feed_id.toString(),
                     title = entry.title,
+                    author = entry.author,
                     content_html = entry.content,
                     extracted_content_url = entry.extracted_content_url,
                     url = entry.url,
