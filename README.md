@@ -1,5 +1,5 @@
 # Capy Reader
 
-<img src="./site/capy.png" width="200px">
+<img src="./site/capy.png" width="100px">
 
 _A smallish RSS reader for Feedbin_

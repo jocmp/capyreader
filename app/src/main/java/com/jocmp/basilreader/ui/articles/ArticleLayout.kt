@@ -15,8 +15,8 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
-import androidx.compose.material3.adaptive.ListDetailPaneScaffoldRole
-import androidx.compose.material3.adaptive.rememberListDetailPaneScaffoldNavigator
+import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
+import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.material3.rememberDrawerState
@@ -84,13 +84,10 @@ fun ArticleLayout(
     val (isInitialized, setInitialized) = rememberSaveable { mutableStateOf(false) }
     val drawerState = rememberDrawerState(drawerValue)
     val coroutineScope = rememberCoroutineScope()
-    val navigator = rememberListDetailPaneScaffoldNavigator<ListDetailPaneScaffoldRole>(
-        scaffoldDirective = calculateArticleDirective()
-    )
+    val scaffoldNavigator = rememberListDetailPaneScaffoldNavigator()
 
     val context = LocalContext.current
     val webViewNavigator = rememberWebViewNavigator()
-    val webViewState = rememberSaveableWebViewState()
     val listState = rememberLazyListState()
     val pagingArticles = articles.collectAsLazyPagingItems(Dispatchers.IO)
     val state = rememberPullToRefreshState()
@@ -102,11 +99,11 @@ fun ArticleLayout(
     val currentFeed = findCurrentFeed(filter, allFeeds)
 
     val navigateToDetail = {
-        navigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
+        scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
     }
 
-    val navigateToList = suspend {
-        navigator.navigateTo(ListDetailPaneScaffoldRole.List)
+    val navigateFromDrawerToList = suspend {
+        scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
         listState.scrollToItem(0)
         delay(200)
         drawerState.close()
@@ -133,7 +130,7 @@ fun ArticleLayout(
 
     ArticleScaffold(
         drawerState = drawerState,
-        listDetailState = navigator.scaffoldState,
+        scaffoldNavigator = scaffoldNavigator,
         drawerPane = {
             FeedList(
                 folders = folders,
@@ -141,19 +138,19 @@ fun ArticleLayout(
                 onSelectFolder = {
                     onSelectFolder(it)
                     coroutineScope.launch {
-                        navigateToList()
+                        navigateFromDrawerToList()
                     }
                 },
                 onSelectFeed = {
                     coroutineScope.launch {
                         onSelectFeed(it)
-                        navigateToList()
+                        navigateFromDrawerToList()
                     }
                 },
                 onFeedAdded = { feedID ->
                     coroutineScope.launch {
                         onSelectFeed(feedID)
-                        navigateToList()
+                        navigateFromDrawerToList()
 
                         showSnackbar(addFeedSuccessMessage)
 
@@ -166,7 +163,7 @@ fun ArticleLayout(
                 onFilterSelect = {
                     onSelectArticleFilter()
                     coroutineScope.launch {
-                        navigateToList()
+                        navigateFromDrawerToList()
                     }
                 },
                 filter = filter,
@@ -267,11 +264,10 @@ fun ArticleLayout(
                 article = article,
                 onToggleRead = onToggleArticleRead,
                 onToggleStar = onToggleArticleStar,
-                webViewState = webViewState,
                 webViewNavigator = webViewNavigator,
                 onBackPressed = {
                     onClearArticle()
-                    navigator.navigateBack()
+                    scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
                 }
             )
         }
@@ -282,20 +278,6 @@ fun ArticleLayout(
             state.startRefresh()
 
             setInitialized(true)
-        }
-    }
-
-    LaunchedEffect(webViewNavigator) {
-        val html = ArticleRenderer.render(article, templateColors, context)
-
-        if (webViewState.viewState == null) {
-            webViewNavigator.loadHtml(html)
-        }
-    }
-
-    LaunchedEffect(templateColors) {
-        webViewState.webView?.let { webView ->
-            updateStyleVariables(webView, templateColors)
         }
     }
 }
