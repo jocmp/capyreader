@@ -16,6 +16,7 @@ import com.jocmp.basil.Article
 import com.jocmp.basilreader.ui.components.WebView
 import com.jocmp.basilreader.ui.components.WebViewNavigator
 import com.jocmp.basilreader.ui.components.rememberSaveableWebViewState
+import okhttp3.OkHttpClient
 
 @Composable
 fun ArticleView(

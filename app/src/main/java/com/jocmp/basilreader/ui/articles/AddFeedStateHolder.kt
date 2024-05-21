@@ -17,7 +17,7 @@ class AddFeedStateHolder(
     val loading: Boolean
         get() = _loading.value
 
-    val error: AddFeedResult.ErrorType?
+    val error: AddFeedResult.AddFeedError?
         get() = (_result.value as? AddFeedResult.Failure)?.error
 
     val feedChoices: List<FeedOption>

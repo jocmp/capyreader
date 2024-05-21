@@ -2,7 +2,7 @@ package com.jocmp.basil
 
 import com.jocmp.basil.accounts.AddFeedResult
 import com.jocmp.basil.accounts.FeedbinAccountDelegate
-import com.jocmp.basil.accounts.forAccount
+import com.jocmp.basil.accounts.FeedbinOkHttpClient
 import com.jocmp.basil.common.sortedByTitle
 import com.jocmp.basil.db.Database
 import com.jocmp.basil.persistence.ArticleRecords
@@ -17,10 +17,15 @@ data class Account(
     val path: URI,
     val database: Database,
     val preferences: AccountPreferences,
-    val delegate: AccountDelegate = FeedbinAccountDelegate(
-        database = database,
-        feedbin = Feedbin.forAccount(path, preferences)
-    )
+    val delegate: AccountDelegate = run {
+        val client = FeedbinOkHttpClient.forAccount(path, preferences)
+
+        FeedbinAccountDelegate(
+            database = database,
+            httpClient = client,
+            feedbin = Feedbin.create(client = client)
+        )
+    }
 ) {
     internal val articleRecords: ArticleRecords = ArticleRecords(database)
 
@@ -106,5 +111,9 @@ data class Account(
         articleRecords.markUnread(articleID = articleID)
 
         return delegate.markUnread(listOf(articleID))
+    }
+
+    suspend fun fetchFullContent(article: Article): Result<Article> {
+        return delegate.fetchFullContent(article)
     }
 }

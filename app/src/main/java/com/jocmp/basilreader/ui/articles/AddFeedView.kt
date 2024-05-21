@@ -33,6 +33,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jocmp.basil.accounts.AddFeedResult
 import com.jocmp.basil.accounts.AddFeedResult.ErrorType
 import com.jocmp.basil.accounts.FeedOption
 import com.jocmp.basilreader.R
@@ -43,7 +44,7 @@ fun AddFeedView(
     onAddFeed: (url: String) -> Unit,
     onCancel: () -> Unit,
     loading: Boolean,
-    error: ErrorType?,
+    error: AddFeedResult.AddFeedError?,
 ) {
     val (queryURL, setQueryURL) = rememberSaveable { mutableStateOf("") }
     val (selectedOption, selectOption) = remember { mutableStateOf<FeedOption?>(null) }
@@ -76,9 +77,9 @@ fun AddFeedView(
                 supportingText = {
                     error?.let {
                         val resource = when(it) {
-                            ErrorType.FEED_NOT_FOUND -> R.string.add_feed_feed_not_error
-                            ErrorType.NETWORK_ERROR -> R.string.add_feed_network_error
-                            ErrorType.SAVE_FAILURE -> R.string.add_feed_save_error
+                            is AddFeedResult.AddFeedError.FeedNotFound -> R.string.add_feed_feed_not_error
+                            is AddFeedResult.AddFeedError.NetworkError -> R.string.add_feed_network_error
+                            is AddFeedResult.AddFeedError.SaveFailure -> R.string.add_feed_save_error
                         }
 
                         Text(stringResource(resource))
@@ -192,6 +193,6 @@ fun AddFeedViewPreview() {
         onAddFeed = {},
         onCancel = {},
         loading = false,
-        error = ErrorType.NETWORK_ERROR,
+        error = null,
     )
 }

@@ -1,7 +1,10 @@
 package com.jocmp.basil.accounts
 
 import com.jocmp.basil.AccountDelegate
+import com.jocmp.basil.Article
 import com.jocmp.basil.Feed
+import com.jocmp.basil.accounts.AddFeedResult.AddFeedError
+import com.jocmp.basil.common.executeAsync
 import com.jocmp.basil.common.host
 import com.jocmp.basil.common.nowUTC
 import com.jocmp.basil.common.toDateTime
@@ -23,11 +26,14 @@ import com.jocmp.feedbinclient.pagingInfo
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import java.net.UnknownHostException
 import java.time.ZonedDateTime
 
 internal class FeedbinAccountDelegate(
     private val database: Database,
+    private val httpClient: OkHttpClient,
     private val feedbin: Feedbin
 ) : AccountDelegate {
     private val articleRecords = ArticleRecords(database)
@@ -106,6 +112,26 @@ internal class FeedbinAccountDelegate(
         Unit
     }
 
+    override suspend fun fetchFullContent(article: Article): Result<Article> {
+        return try {
+            val url = article.extractedContentURL!!
+
+            val request = Request.Builder()
+                .url(url)
+                .build()
+
+            val result = httpClient.newCall(request).executeAsync()
+
+            if (result.isSuccessful) {
+                return Result.success(article.copy(extractedContent = result.body.toString()))
+            } else {
+                return Result.failure(Throwable("Error extracting article"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
     override suspend fun addStar(articleIDs: List<String>): Result<Unit> {
         val entryIDs = articleIDs.map { it.toLong() }
 
@@ -131,7 +157,7 @@ internal class FeedbinAccountDelegate(
             val errorBody = response.errorBody()?.string()
 
             if (response.code() > 300) {
-                return AddFeedResult.Failure(AddFeedResult.ErrorType.FEED_NOT_FOUND)
+                return AddFeedResult.Failure(AddFeedError.FeedNotFound())
             }
 
             return if (subscription != null) {
@@ -143,7 +169,7 @@ internal class FeedbinAccountDelegate(
                 if (feed != null) {
                     AddFeedResult.Success(feed)
                 } else {
-                    AddFeedResult.Failure(AddFeedResult.ErrorType.SAVE_FAILURE)
+                    AddFeedResult.Failure(AddFeedError.SaveFailure())
                 }
             } else {
                 val decodedChoices = Json.decodeFromString<List<SubscriptionChoice>>(errorBody!!)
@@ -155,7 +181,7 @@ internal class FeedbinAccountDelegate(
                 AddFeedResult.MultipleChoices(choices)
             }
         } catch (e: UnknownHostException) {
-            AddFeedResult.Failure(AddFeedResult.ErrorType.NETWORK_ERROR)
+            AddFeedResult.Failure(AddFeedError.NetworkError())
         }
     }
 

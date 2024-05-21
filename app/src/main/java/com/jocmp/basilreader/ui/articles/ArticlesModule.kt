@@ -12,6 +12,11 @@ internal val articlesModule = module {
             account = get<Account>(parameters = { parametersOf(get<AppPreferences>().accountID.get()) }),
         )
     }
+    factory {
+        AddFeedStateHolder(
+            account = get<Account>(parameters = { parametersOf(get<AppPreferences>().accountID.get()) }),
+        )
+    }
     viewModel {
         val appPreferences = get<AppPreferences>()
 
