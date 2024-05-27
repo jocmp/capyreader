@@ -13,5 +13,5 @@ interface AccountDelegate {
 
     suspend fun removeFeed(feedID: String): Result<Unit>
 
-    suspend fun fetchFullContent(article: Article): Result<Article>
+    suspend fun fetchFullContent(article: Article): Result<String>
 }

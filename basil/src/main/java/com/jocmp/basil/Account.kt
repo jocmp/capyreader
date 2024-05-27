@@ -22,7 +22,6 @@ data class Account(
 
         FeedbinAccountDelegate(
             database = database,
-            httpClient = client,
             feedbin = Feedbin.create(client = client)
         )
     }
@@ -113,7 +112,7 @@ data class Account(
         return delegate.markUnread(listOf(articleID))
     }
 
-    suspend fun fetchFullContent(article: Article): Result<Article> {
+    suspend fun fetchFullContent(article: Article): Result<String> {
         return delegate.fetchFullContent(article)
     }
 }

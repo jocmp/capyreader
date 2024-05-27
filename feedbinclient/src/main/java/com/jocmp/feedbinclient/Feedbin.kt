@@ -17,6 +17,7 @@ import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
+import retrofit2.http.Url
 
 interface Feedbin {
     @GET("v2/entries.json")
@@ -77,6 +78,9 @@ interface Feedbin {
 
     @HTTP(method = "DELETE", path = "v2/unread_entries.json", hasBody = true)
     suspend fun deleteUnreadEntries(@Body body: UnreadEntriesRequest): Response<List<Long>>
+
+    @GET
+    suspend fun fetchExtractedContent(@Url url: String): Response<ExtractedContent>
 
     companion object {
         private const val DEFAULT_URL = "https://api.feedbin.com/"

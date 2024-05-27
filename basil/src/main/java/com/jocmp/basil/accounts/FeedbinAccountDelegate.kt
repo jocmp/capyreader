@@ -4,7 +4,6 @@ import com.jocmp.basil.AccountDelegate
 import com.jocmp.basil.Article
 import com.jocmp.basil.Feed
 import com.jocmp.basil.accounts.AddFeedResult.AddFeedError
-import com.jocmp.basil.common.executeAsync
 import com.jocmp.basil.common.host
 import com.jocmp.basil.common.nowUTC
 import com.jocmp.basil.common.toDateTime
@@ -26,14 +25,11 @@ import com.jocmp.feedbinclient.pagingInfo
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import java.net.UnknownHostException
 import java.time.ZonedDateTime
 
 internal class FeedbinAccountDelegate(
     private val database: Database,
-    private val httpClient: OkHttpClient,
     private val feedbin: Feedbin
 ) : AccountDelegate {
     private val articleRecords = ArticleRecords(database)
@@ -112,18 +108,15 @@ internal class FeedbinAccountDelegate(
         Unit
     }
 
-    override suspend fun fetchFullContent(article: Article): Result<Article> {
+    override suspend fun fetchFullContent(article: Article): Result<String> {
         return try {
             val url = article.extractedContentURL!!
 
-            val request = Request.Builder()
-                .url(url)
-                .build()
+            val result = feedbin.fetchExtractedContent(url = url.toString())
+            val responseBody = result.body()
 
-            val result = httpClient.newCall(request).executeAsync()
-
-            if (result.isSuccessful) {
-                return Result.success(article.copy(extractedContent = result.body.toString()))
+            if (result.isSuccessful && responseBody != null) {
+                return Result.success(responseBody.content)
             } else {
                 return Result.failure(Throwable("Error extracting article"))
             }

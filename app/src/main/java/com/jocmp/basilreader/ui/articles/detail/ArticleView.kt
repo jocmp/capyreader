@@ -29,6 +29,7 @@ fun ArticleView(
     val context = LocalContext.current
     val webViewState = rememberSaveableWebViewState(key = article?.id)
     val templateColors = articleTemplateColors()
+    // val extractedContent = articleExtractedContent()
 
     Scaffold(
         topBar = {
