@@ -101,13 +101,6 @@ internal class ArticleRecords internal constructor(
         )
     }
 
-    fun saveExtractedContent(articleID: String, extractedContent: String) {
-        return database.articlesQueries.saveExtractedContent(
-            articleID = articleID,
-            extractedContent = extractedContent
-        )
-    }
-
     fun countAll(status: ArticleStatus): Flow<Map<String, Long>> {
         val (read, starred) = status.forCounts
 

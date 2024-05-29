@@ -174,8 +174,3 @@ WHERE article_statuses.article_id = :articleID;
 markStarred:
 UPDATE article_statuses SET starred = :starred, updated_at = :updatedAt
 WHERE article_statuses.article_id = :articleID;
-
-saveExtractedContent:
-UPDATE articles SET extracted_content = :extractedContent
-WHERE articles.id = :articleID
-LIMIT 1;

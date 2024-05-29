@@ -242,7 +242,7 @@ fun ArticleLayout(
                                     val html =
                                         ArticleRenderer.render(
                                             it,
-                                            templateColors,
+                                            templateColors = templateColors,
                                             context = context
                                         )
                                     webViewNavigator.loadHtml(html)

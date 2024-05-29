@@ -1,5 +1,6 @@
 package com.jocmp.basilreader.ui.articles.detail
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,7 +17,6 @@ import com.jocmp.basil.Article
 import com.jocmp.basilreader.ui.components.WebView
 import com.jocmp.basilreader.ui.components.WebViewNavigator
 import com.jocmp.basilreader.ui.components.rememberSaveableWebViewState
-import okhttp3.OkHttpClient
 
 @Composable
 fun ArticleView(
@@ -29,12 +29,26 @@ fun ArticleView(
     val context = LocalContext.current
     val webViewState = rememberSaveableWebViewState(key = article?.id)
     val templateColors = articleTemplateColors()
-    // val extractedContent = articleExtractedContent()
+    val extractedContentState = rememberExtractedContent(article = article)
+    val extractedContent = extractedContentState.content
+    val isExtractionComplete = extractedContent.isComplete
+
+    fun onToggleExtractContent() {
+        article ?: return
+
+        if (extractedContent.isComplete) {
+            extractedContentState.reset()
+        } else if (!extractedContent.isLoading) {
+            extractedContentState.fetch()
+        }
+    }
 
     Scaffold(
         topBar = {
             ArticleTopBar(
                 article = article,
+                extractedContent = extractedContent,
+                onToggleExtractContent = ::onToggleExtractContent,
                 onToggleRead = onToggleRead,
                 onToggleStar = onToggleStar,
                 onClose = onBackPressed
@@ -74,10 +88,18 @@ fun ArticleView(
         onBackPressed()
     }
 
-    LaunchedEffect(webViewNavigator) {
-        val html = ArticleRenderer.render(article, templateColors, context)
+    LaunchedEffect(webViewNavigator, isExtractionComplete) {
+        article ?: return@LaunchedEffect
+
+        val html = ArticleRenderer.render(
+            article,
+            extractedContent = extractedContentState.content,
+            templateColors = templateColors,
+            context = context
+        )
 
         if (html.isNotBlank() && webViewState.viewState == null) {
+            Log.d("ExtractedContent", "loadHtml")
             webViewNavigator.loadHtml(html)
         }
     }

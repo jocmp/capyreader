@@ -21,7 +21,6 @@ internal fun articleMapper(
     publishedAt: Long?,
     feedTitle: String?,
     faviconURL: String?,
-    extractedContent: String?,
     updatedAt: Long?,
     starred: Boolean?,
     read: Boolean?,
@@ -42,7 +41,6 @@ internal fun articleMapper(
         read = read ?: false,
         starred = starred ?: false,
         feedName = feedTitle ?: "",
-        extractedContent = extractedContent
     )
 }
 
@@ -57,7 +55,6 @@ internal fun listMapper(
     summary: String?,
     imageURL: String?,
     publishedAt: Long?,
-    extractedContent: String?,
     feedTitle: String?,
     faviconURL: String?,
     updatedAt: Long?,
@@ -80,6 +77,5 @@ internal fun listMapper(
         read = read ?: false,
         starred = starred ?: false,
         publishedAt = publishedAt,
-        extractedContent = null
     )
 }
