@@ -1,7 +1,9 @@
 package com.jocmp.basil.accounts
 
 import com.jocmp.basil.AccountDelegate
+import com.jocmp.basil.Article
 import com.jocmp.basil.Feed
+import com.jocmp.basil.accounts.AddFeedResult.AddFeedError
 import com.jocmp.basil.common.host
 import com.jocmp.basil.common.nowUTC
 import com.jocmp.basil.common.toDateTime
@@ -106,6 +108,23 @@ internal class FeedbinAccountDelegate(
         Unit
     }
 
+    override suspend fun fetchFullContent(article: Article): Result<String> {
+        return try {
+            val url = article.extractedContentURL!!
+
+            val result = feedbin.fetchExtractedContent(url = url.toString())
+            val responseBody = result.body()
+
+            if (result.isSuccessful && responseBody != null) {
+                return Result.success(responseBody.content)
+            } else {
+                return Result.failure(Throwable("Error extracting article"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
     override suspend fun addStar(articleIDs: List<String>): Result<Unit> {
         val entryIDs = articleIDs.map { it.toLong() }
 
@@ -131,7 +150,7 @@ internal class FeedbinAccountDelegate(
             val errorBody = response.errorBody()?.string()
 
             if (response.code() > 300) {
-                return AddFeedResult.Failure(AddFeedResult.ErrorType.FEED_NOT_FOUND)
+                return AddFeedResult.Failure(AddFeedError.FeedNotFound())
             }
 
             return if (subscription != null) {
@@ -143,7 +162,7 @@ internal class FeedbinAccountDelegate(
                 if (feed != null) {
                     AddFeedResult.Success(feed)
                 } else {
-                    AddFeedResult.Failure(AddFeedResult.ErrorType.SAVE_FAILURE)
+                    AddFeedResult.Failure(AddFeedError.SaveFailure())
                 }
             } else {
                 val decodedChoices = Json.decodeFromString<List<SubscriptionChoice>>(errorBody!!)
@@ -155,7 +174,7 @@ internal class FeedbinAccountDelegate(
                 AddFeedResult.MultipleChoices(choices)
             }
         } catch (e: UnknownHostException) {
-            AddFeedResult.Failure(AddFeedResult.ErrorType.NETWORK_ERROR)
+            AddFeedResult.Failure(AddFeedError.NetworkError())
         }
     }
 

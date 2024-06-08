@@ -3,9 +3,6 @@ package com.jocmp.basilreader.ui.articles
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.jocmp.basilreader.ui.articles.AccountViewModel
-import com.jocmp.basilreader.ui.articles.ArticleLayout
-import com.jocmp.basilreader.ui.articles.detail.articleTemplateColors
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

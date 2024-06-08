@@ -9,11 +9,18 @@ sealed class AddFeedResult {
         SAVE_FAILURE,
     }
 
+    sealed class AddFeedError: Exception() {
+        class FeedNotFound: AddFeedError()
+        class NetworkError: AddFeedError()
+
+        class SaveFailure: AddFeedError()
+    }
+
     data class Success(val feed: Feed): AddFeedResult()
 
     data class MultipleChoices(val choices: List<FeedOption>): AddFeedResult()
 
-    data class Failure(val error: ErrorType): AddFeedResult()
+    data class Failure(val error: AddFeedError): AddFeedResult()
 }
 
 data class FeedOption(

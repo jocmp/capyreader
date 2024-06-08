@@ -1,5 +1,6 @@
 package com.jocmp.basilreader.ui.articles.detail
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,10 +30,47 @@ fun ArticleView(
     val webViewState = rememberSaveableWebViewState(key = article?.id)
     val templateColors = articleTemplateColors()
 
+    val buildHTML = { content: ExtractedContent ->
+        article?.let {
+            ArticleRenderer.render(
+                article,
+                extractedContent = content,
+                templateColors = templateColors,
+                context = context
+            )
+        }
+    }
+
+    val renderHTML = { content: ExtractedContent ->
+        val html = buildHTML(content)
+        html?.let { webViewNavigator.loadHtml(html) }
+    }
+
+    val extractedContentState = rememberExtractedContent(
+        article = article,
+        onComplete = { content ->
+            renderHTML(content)
+        }
+    )
+    val extractedContent = extractedContentState.content
+
+    fun onToggleExtractContent() {
+        article ?: return
+
+        if (extractedContent.isComplete) {
+            extractedContentState.reset()
+            renderHTML(ExtractedContent())
+        } else if (!extractedContent.isLoading) {
+            extractedContentState.fetch()
+        }
+    }
+
     Scaffold(
         topBar = {
             ArticleTopBar(
                 article = article,
+                extractedContent = extractedContent,
+                onToggleExtractContent = ::onToggleExtractContent,
                 onToggleRead = onToggleRead,
                 onToggleStar = onToggleStar,
                 onClose = onBackPressed
@@ -73,9 +111,10 @@ fun ArticleView(
     }
 
     LaunchedEffect(webViewNavigator) {
-        val html = ArticleRenderer.render(article, templateColors, context)
+        val html = buildHTML(extractedContent)
 
-        if (html.isNotBlank() && webViewState.viewState == null) {
+        if (!html.isNullOrBlank() && webViewState.viewState == null) {
+            Log.d("ArticleView", "loadHtml hasContent=${extractedContentState.content.isComplete}")
             webViewNavigator.loadHtml(html)
         }
     }

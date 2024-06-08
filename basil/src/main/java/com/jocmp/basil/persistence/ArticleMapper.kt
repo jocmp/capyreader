@@ -40,7 +40,7 @@ internal fun articleMapper(
         publishedAt = publishedAt!!.toDateTimeFromSeconds,
         read = read ?: false,
         starred = starred ?: false,
-        feedName = feedTitle ?: ""
+        feedName = feedTitle ?: "",
     )
 }
 
@@ -76,6 +76,6 @@ internal fun listMapper(
         updatedAt = updatedAt,
         read = read ?: false,
         starred = starred ?: false,
-        publishedAt = publishedAt
+        publishedAt = publishedAt,
     )
 }

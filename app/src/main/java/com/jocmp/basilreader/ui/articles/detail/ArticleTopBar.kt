@@ -25,6 +25,8 @@ import com.jocmp.basilreader.ui.fixtures.ArticleSample
 @Composable
 fun ArticleTopBar(
     article: Article?,
+    extractedContent: ExtractedContent,
+    onToggleExtractContent: () -> Unit,
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
     onClose: () -> Unit
@@ -48,6 +50,12 @@ fun ArticleTopBar(
                         )
                     }
 
+                    IconButton(onClick = { onToggleExtractContent() }) {
+                        Icon(
+                            painterResource(id = extractIcon(extractedContent)),
+                            contentDescription = stringResource(R.string.extract_full_content)
+                        )
+                    }
                     IconButton(onClick = { onToggleStar() }) {
                         Icon(
                             painterResource(id = starredIcon(article)),
@@ -82,6 +90,12 @@ fun starredIcon(article: Article) =
         R.drawable.icon_star_outline
     }
 
+@Composable
+fun extractIcon(extractedContent: ExtractedContent) = when {
+    extractedContent.isComplete -> R.drawable.icon_article_filled
+    else -> R.drawable.icon_article_empty
+}
+
 
 @Composable
 fun ArticleNavigationIcon(onClick: () -> Unit) {
@@ -108,6 +122,8 @@ fun ArticleNavigationIcon(onClick: () -> Unit) {
 private fun ArticleTopBarPreview(@PreviewParameter(ArticleSample::class) article: Article) {
     ArticleTopBar(
         article = article,
+        extractedContent = ExtractedContent(),
+        onToggleExtractContent = {},
         onToggleRead = {},
         onToggleStar = {},
         onClose = {},
@@ -122,6 +138,8 @@ private fun ArticleTopBarPreview_Tablet(@PreviewParameter(ArticleSample::class) 
     CompositionLocalProvider(LocalWindowWidth provides width) {
         ArticleTopBar(
             article = article,
+            extractedContent = ExtractedContent(),
+            onToggleExtractContent = {},
             onToggleRead = {},
             onToggleStar = {},
             onClose = {}
@@ -134,6 +152,8 @@ private fun ArticleTopBarPreview_Tablet(@PreviewParameter(ArticleSample::class) 
 private fun ArticleTopBarPreview_MissingArticle() {
     ArticleTopBar(
         article = null,
+        extractedContent = ExtractedContent(),
+        onToggleExtractContent = {},
         onToggleRead = {},
         onToggleStar = {},
         onClose = {}
