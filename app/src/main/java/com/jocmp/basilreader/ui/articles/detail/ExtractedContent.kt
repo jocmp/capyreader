@@ -37,7 +37,8 @@ data class ExtractedContentState(
 @Composable
 fun rememberExtractedContent(
     article: Article?,
-    account: Account = koinInject()
+    account: Account = koinInject(),
+    onComplete: (content: ExtractedContent) -> Unit
 ): ExtractedContentState {
     if (article == null) {
         return ExtractedContentState()
@@ -61,7 +62,9 @@ fun rememberExtractedContent(
                 onFailure = { Async.Failure(it) }
             )
 
-            setExtractedContent(extractedContent.copy(requestShow = true, value = value))
+            val content = extractedContent.copy(requestShow = true, value = value)
+            setExtractedContent(content)
+            onComplete(content)
         }
     }
 

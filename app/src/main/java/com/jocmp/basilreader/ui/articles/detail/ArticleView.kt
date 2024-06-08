@@ -29,15 +29,37 @@ fun ArticleView(
     val context = LocalContext.current
     val webViewState = rememberSaveableWebViewState(key = article?.id)
     val templateColors = articleTemplateColors()
-    val extractedContentState = rememberExtractedContent(article = article)
+
+    val buildHTML = { content: ExtractedContent ->
+        article?.let {
+            ArticleRenderer.render(
+                article,
+                extractedContent = content,
+                templateColors = templateColors,
+                context = context
+            )
+        }
+    }
+
+    val renderHTML = { content: ExtractedContent ->
+        val html = buildHTML(content)
+        html?.let { webViewNavigator.loadHtml(html) }
+    }
+
+    val extractedContentState = rememberExtractedContent(
+        article = article,
+        onComplete = { content ->
+            renderHTML(content)
+        }
+    )
     val extractedContent = extractedContentState.content
-    val isExtractionComplete = extractedContent.isComplete
 
     fun onToggleExtractContent() {
         article ?: return
 
         if (extractedContent.isComplete) {
             extractedContentState.reset()
+            renderHTML(ExtractedContent())
         } else if (!extractedContent.isLoading) {
             extractedContentState.fetch()
         }
@@ -88,18 +110,11 @@ fun ArticleView(
         onBackPressed()
     }
 
-    LaunchedEffect(webViewNavigator, isExtractionComplete) {
-        article ?: return@LaunchedEffect
+    LaunchedEffect(webViewNavigator) {
+        val html = buildHTML(extractedContent)
 
-        val html = ArticleRenderer.render(
-            article,
-            extractedContent = extractedContentState.content,
-            templateColors = templateColors,
-            context = context
-        )
-
-        if (html.isNotBlank() && webViewState.viewState == null) {
-            Log.d("ExtractedContent", "loadHtml")
+        if (!html.isNullOrBlank() && webViewState.viewState == null) {
+            Log.d("ArticleView", "loadHtml hasContent=${extractedContentState.content.isComplete}")
             webViewNavigator.loadHtml(html)
         }
     }
