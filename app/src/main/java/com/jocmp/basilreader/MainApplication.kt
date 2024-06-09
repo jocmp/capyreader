@@ -12,7 +12,7 @@ class MainApplication: Application() {
         startKoin {
             androidContext(this@MainApplication)
             workManagerFactory()
-            setupModules()
+            setupCommon()
         }
     }
 }

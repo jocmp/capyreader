@@ -1,4 +1,4 @@
-package com.jocmp.basilreader.ui.accounts
+package com.jocmp.basilreader.ui.settings
 
 import android.content.Context
 import androidx.compose.material3.DropdownMenuItem

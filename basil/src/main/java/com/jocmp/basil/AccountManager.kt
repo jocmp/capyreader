@@ -50,7 +50,7 @@ class AccountManager(
         return File(accountFolder(), id)
     }
 
-    private fun accountFolder() = File(rootFolder.path, directoryName)
+    private fun accountFolder() = File(rootFolder.path, DIRECTORY_NAME)
 
     private fun buildAccount(
         path: File,
@@ -73,7 +73,7 @@ class AccountManager(
     }
 
     companion object {
-        private const val directoryName = "accounts"
+        private const val DIRECTORY_NAME = "accounts"
     }
 }
 

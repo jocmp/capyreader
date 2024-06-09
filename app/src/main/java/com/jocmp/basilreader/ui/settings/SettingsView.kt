@@ -1,4 +1,4 @@
-package com.jocmp.basilreader.ui.accounts
+package com.jocmp.basilreader.ui.settings
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -22,11 +22,11 @@ import com.jocmp.basilreader.R
 import com.jocmp.basilreader.refresher.RefreshInterval
 
 @Composable
-fun AccountSettingsView(
+fun SettingsView(
     defaultDisplayName: String,
     refreshInterval: RefreshInterval,
     updateRefreshInterval: (interval: RefreshInterval) -> Unit,
-    removeAccount: () -> Unit,
+    logOut: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -43,7 +43,7 @@ fun AccountSettingsView(
 
     val onRemove = {
         setRemoveDialogOpen(false)
-        removeAccount()
+        logOut()
     }
 
     Scaffold(
@@ -58,7 +58,7 @@ fun AccountSettingsView(
             )
 
             Button(onClick = { setRemoveDialogOpen(true) }) {
-                Text(stringResource(R.string.account_settings_delete_account_button))
+                Text(stringResource(R.string.settings_log_out_button))
             }
         }
     }
@@ -66,11 +66,11 @@ fun AccountSettingsView(
     if (isRemoveDialogOpen) {
         AlertDialog(
             onDismissRequest = onRemoveCancel,
-            title = { Text(stringResource(R.string.account_settings_delete_account_title)) },
+            title = { Text(stringResource(R.string.settings_logout_dialog_title)) },
             text = {
                 Text(
                     stringResource(
-                        R.string.account_settings_delete_account_message,
+                        R.string.settings_logout_dialog_message,
                         displayName
                     )
                 )
@@ -82,7 +82,7 @@ fun AccountSettingsView(
             },
             confirmButton = {
                 TextButton(onClick = onRemove) {
-                    Text(stringResource(R.string.account_settings_delete_account_submit))
+                    Text(stringResource(R.string.settings_logout_submit))
                 }
             }
         )
@@ -92,9 +92,9 @@ fun AccountSettingsView(
 @Preview
 @Composable
 fun AccountSettingsViewPreview() {
-    AccountSettingsView(
+    SettingsView(
         defaultDisplayName = "Feedbin",
-        removeAccount = {},
+        logOut = {},
         refreshInterval = RefreshInterval.EVERY_HOUR,
         updateRefreshInterval = {}
     )

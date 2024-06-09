@@ -9,11 +9,10 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-
-import com.jocmp.basilreader.ui.accounts.accountsGraph
 import com.jocmp.basilreader.ui.articles.articleGraph
-import com.jocmp.basilreader.ui.articles.navigateToArticles
+import com.jocmp.basilreader.ui.login.accountsGraph
 import com.jocmp.basilreader.ui.theme.CapyTheme
+import com.jocmp.basilreader.unloadAccountModules
 
 @Composable
 fun App(
@@ -34,15 +33,19 @@ fun App(
                 ) {
                     accountsGraph(
                         onLoginSuccess = {
-                            navController.navigateToArticles()
-                        },
-                        goBackToAccountIndex = {
-                            navController.navigate(Route.AccountIndex.path) {
-                                launchSingleTop = true
-                                popUpTo(Route.AccountIndex.path) {
+                            navController.navigate(Route.Articles.path) {
+                                popUpTo(Route.Login.path) {
                                     inclusive = true
                                 }
                             }
+                        },
+                        onLogout = {
+                            navController.navigate(Route.Login.path) {
+                                popUpTo(navController.graph.startDestinationId) {
+                                    inclusive = true
+                                }
+                            }
+                            unloadAccountModules()
                         }
                     )
                     articleGraph(navController = navController)

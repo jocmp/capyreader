@@ -1,23 +1,22 @@
-package com.jocmp.basilreader.ui.accounts
+package com.jocmp.basilreader.ui.login
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.jocmp.basilreader.ui.Route
+import com.jocmp.basilreader.ui.settings.SettingsScreen
 
 fun NavGraphBuilder.accountsGraph(
     onLoginSuccess: () -> Unit,
-    goBackToAccountIndex: () -> Unit,
+    onLogout: () -> Unit
 ) {
-    composable(Route.AccountIndex.path) {
+    composable(Route.Login.path) {
         LoginScreen(
             onSuccess = onLoginSuccess,
         )
     }
-    composable(Route.AccountSettings.path) {
-        AccountSettingsScreen(
-            goBack = goBackToAccountIndex
-        )
+    composable(Route.Settings.path) {
+        SettingsScreen(onLogout = onLogout)
     }
 }
 

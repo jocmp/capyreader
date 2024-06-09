@@ -9,6 +9,7 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import com.jocmp.basilreader.common.AppPreferences
 import com.jocmp.basilreader.ui.App
+import com.jocmp.basilreader.ui.Route
 import org.koin.android.ext.android.get
 
 class MainActivity : ComponentActivity() {
@@ -17,11 +18,17 @@ class MainActivity : ComponentActivity() {
         enableStrictModeOnDebug()
         super.onCreate(savedInstanceState)
 
+        val destination = startDestination()
+
+        if (destination == Route.Articles.path) {
+            loadAccountModules()
+        }
+
         setContent {
             val windowSizeClass = calculateWindowSizeClass(this)
 
             App(
-                startDestination = startDestination(),
+                startDestination = destination,
                 windowSizeClass = windowSizeClass
             )
         }
@@ -33,9 +40,9 @@ class MainActivity : ComponentActivity() {
         val accountID = appPreferences.accountID.get()
 
         return if (accountID.isBlank()) {
-            "accounts"
+            Route.Login.path
         } else {
-            "articles"
+            Route.Articles.path
         }
     }
 }

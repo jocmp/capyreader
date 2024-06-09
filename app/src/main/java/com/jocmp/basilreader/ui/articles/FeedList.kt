@@ -47,7 +47,7 @@ fun FeedList(
     onSelectFeed: (feedID: String) -> Unit,
     onFeedAdded: (feedID: String) -> Unit,
     onSelectStatus: (status: ArticleStatus) -> Unit,
-    onNavigateToAccounts: () -> Unit,
+    onNavigateToSettings: () -> Unit,
 ) {
     val scrollState = rememberScrollState()
     val (isMenuExpanded, setMenuExpanded) = remember { mutableStateOf(false) }
@@ -151,10 +151,10 @@ fun FeedList(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
             ) {
-                IconButton(onClick = { onNavigateToAccounts() }) {
+                IconButton(onClick = { onNavigateToSettings() }) {
                     Icon(
                         imageVector = Icons.Filled.Settings,
-                        contentDescription = stringResource(R.string.accounts_action)
+                        contentDescription = stringResource(R.string.settings)
                     )
                 }
                 AddFeedButton(
@@ -187,7 +187,7 @@ fun FeedListPreview() {
         feeds = feeds,
         onSelectFolder = {},
         onSelectFeed = {},
-        onNavigateToAccounts = {},
+        onNavigateToSettings = {},
         onFilterSelect = {},
         filter = ArticleFilter.default(),
         statusCount = 10,
