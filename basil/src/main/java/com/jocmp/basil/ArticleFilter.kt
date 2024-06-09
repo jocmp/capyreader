@@ -12,7 +12,7 @@ sealed class ArticleFilter(open val status: ArticleStatus) {
         return this is Feeds && this.feedID == feed.id
     }
 
-    fun areArticlesSelected(): Boolean {
+    fun hasArticlesSelected(): Boolean {
         return this is Articles
     }
 

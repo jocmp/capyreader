@@ -1,5 +1,6 @@
 package com.jocmp.basilreader.ui.articles
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -43,8 +44,6 @@ import com.jocmp.basilreader.R
 import com.jocmp.basilreader.ui.articles.detail.ArticleRenderer
 import com.jocmp.basilreader.ui.articles.detail.ArticleView
 import com.jocmp.basilreader.ui.articles.detail.articleTemplateColors
-import com.jocmp.basilreader.ui.articles.detail.updateStyleVariables
-import com.jocmp.basilreader.ui.components.rememberSaveableWebViewState
 import com.jocmp.basilreader.ui.components.rememberWebViewNavigator
 import com.jocmp.basilreader.ui.fixtures.FeedPreviewFixture
 import com.jocmp.basilreader.ui.fixtures.FolderPreviewFixture
@@ -168,7 +167,7 @@ fun ArticleLayout(
                 },
                 filter = filter,
                 statusCount = statusCount,
-                onStatusSelect = onSelectStatus,
+                onSelectStatus = onSelectStatus,
             )
         },
         listPane = {
@@ -280,6 +279,14 @@ fun ArticleLayout(
             setInitialized(true)
         }
     }
+    
+    BackHandler(canGoBackToAll(filter, article)) {
+        onSelectArticleFilter()
+    }
+}
+
+fun canGoBackToAll(filter: ArticleFilter, article: Article?): Boolean {
+    return article == null && !filter.hasArticlesSelected()
 }
 
 fun findCurrentFeed(filter: ArticleFilter, feeds: List<Feed>): Feed? {

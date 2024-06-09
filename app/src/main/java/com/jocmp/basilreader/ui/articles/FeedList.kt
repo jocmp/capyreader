@@ -46,7 +46,7 @@ fun FeedList(
     onSelectFolder: (folderTitle: String) -> Unit,
     onSelectFeed: (feedID: String) -> Unit,
     onFeedAdded: (feedID: String) -> Unit,
-    onStatusSelect: (status: ArticleStatus) -> Unit,
+    onSelectStatus: (status: ArticleStatus) -> Unit,
     onNavigateToAccounts: () -> Unit,
 ) {
     val scrollState = rememberScrollState()
@@ -55,7 +55,7 @@ fun FeedList(
 
     val onStatusChange = { status: ArticleStatus ->
         setMenuExpanded(false)
-        onStatusSelect(status)
+        onSelectStatus(status)
     }
 
     Column(
@@ -103,7 +103,7 @@ fun FeedList(
                     )
                 },
                 badge = { CountBadge(count = statusCount) },
-                selected = filter.areArticlesSelected(),
+                selected = filter.hasArticlesSelected(),
                 onClick = {
                     onFilterSelect()
                 }
@@ -192,6 +192,6 @@ fun FeedListPreview() {
         filter = ArticleFilter.default(),
         statusCount = 10,
         onFeedAdded = {},
-        onStatusSelect = {}
+        onSelectStatus = {}
     )
 }
