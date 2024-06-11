@@ -7,6 +7,7 @@ import com.jocmp.basil.Article
 import com.jocmp.basil.ArticleStatus
 import com.jocmp.basil.common.nowUTC
 import com.jocmp.basil.common.toDateTimeFromSeconds
+import com.jocmp.basil.common.transactionWithErrorHandling
 import com.jocmp.basil.db.Database
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -38,7 +39,7 @@ internal class ArticleRecords internal constructor(
     fun markAllUnread(articleIDs: List<String>, updatedAt: ZonedDateTime = nowUTC()) {
         val updated = updatedAt.toEpochSecond()
 
-        database.transaction {
+        database.transactionWithErrorHandling {
             database.articlesQueries.updateStaleUnreads(excludedIDs = articleIDs)
 
             articleIDs.forEach { articleID ->
@@ -53,7 +54,7 @@ internal class ArticleRecords internal constructor(
     fun markAllStarred(articleIDs: List<String>, updatedAt: ZonedDateTime = nowUTC()) {
         val updated = updatedAt.toEpochSecond()
 
-        database.transaction {
+        database.transactionWithErrorHandling {
             database.articlesQueries.updateStaleStars(excludedIDs = articleIDs)
 
             articleIDs.forEach { articleID ->

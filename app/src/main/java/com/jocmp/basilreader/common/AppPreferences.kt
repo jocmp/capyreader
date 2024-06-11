@@ -32,4 +32,11 @@ class AppPreferences(context: Context) {
 
     val articleID: Preference<String>
         get() = preferenceStore.getString("article_id")
+
+    fun clearAll() {
+        accountID.delete()
+        articleID.delete()
+        refreshInterval.delete()
+        filter.delete()
+    }
 }

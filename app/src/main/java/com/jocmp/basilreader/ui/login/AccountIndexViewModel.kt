@@ -1,10 +1,11 @@
-package com.jocmp.basilreader.ui.accounts
+package com.jocmp.basilreader.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jocmp.basil.AccountManager
 import com.jocmp.basil.accounts.verifyCredentials
 import com.jocmp.basilreader.common.AppPreferences
+import com.jocmp.basilreader.loadAccountModules
 import kotlinx.coroutines.launch
 
 class AccountIndexViewModel(
@@ -27,6 +28,8 @@ class AccountIndexViewModel(
                 )
 
                 selectAccount(accountID)
+
+                loadAccountModules()
 
                 onSuccess()
             } else {

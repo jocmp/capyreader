@@ -7,6 +7,7 @@ import com.jocmp.basil.accounts.AddFeedResult.AddFeedError
 import com.jocmp.basil.common.host
 import com.jocmp.basil.common.nowUTC
 import com.jocmp.basil.common.toDateTime
+import com.jocmp.basil.common.transactionWithErrorHandling
 import com.jocmp.basil.common.withResult
 import com.jocmp.basil.db.Database
 import com.jocmp.basil.persistence.ArticleRecords
@@ -236,7 +237,7 @@ internal class FeedbinAccountDelegate(
 
     private suspend fun refreshTaggings() {
         withResult(feedbin.taggings()) { taggings ->
-            database.transaction {
+            database.transactionWithErrorHandling {
                 taggings.forEach { tagging ->
                     database.taggingsQueries.upsert(
                         id = tagging.id,
@@ -292,7 +293,7 @@ internal class FeedbinAccountDelegate(
     }
 
     private fun saveEntries(entries: List<Entry>, updatedAt: ZonedDateTime = nowUTC()) {
-        database.transaction {
+        database.transactionWithErrorHandling {
             entries.forEach { entry ->
                 val updated = updatedAt.toEpochSecond()
 

@@ -72,7 +72,7 @@ fun ArticleLayout(
     onSelectArticleFilter: () -> Unit,
     onSelectStatus: (status: ArticleStatus) -> Unit,
     onSelectArticle: (articleID: String, completion: (article: Article) -> Unit) -> Unit,
-    onNavigateToAccounts: () -> Unit,
+    onNavigateToSettings: () -> Unit,
     onClearArticle: () -> Unit,
     onToggleArticleRead: () -> Unit,
     onToggleArticleStar: () -> Unit,
@@ -158,7 +158,7 @@ fun ArticleLayout(
                         }
                     }
                 },
-                onNavigateToAccounts = onNavigateToAccounts,
+                onNavigateToSettings = onNavigateToSettings,
                 onFilterSelect = {
                     onSelectArticleFilter()
                     coroutineScope.launch {
@@ -279,7 +279,7 @@ fun ArticleLayout(
             setInitialized(true)
         }
     }
-    
+
     BackHandler(canGoBackToAll(filter, article)) {
         onSelectArticleFilter()
     }
@@ -319,7 +319,7 @@ fun ArticleLayoutPreview() {
             onSelectStatus = {},
             onSelectArticle = { _, _ -> },
             onRemoveFeed = { _, _, _ -> },
-            onNavigateToAccounts = { },
+            onNavigateToSettings = { },
             onClearArticle = { },
             onToggleArticleRead = { },
             onToggleArticleStar = {},

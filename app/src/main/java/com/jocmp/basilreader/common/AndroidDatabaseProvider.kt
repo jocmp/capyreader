@@ -1,6 +1,7 @@
 package com.jocmp.basilreader.common
 
 import android.content.Context
+import android.util.Log
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.jocmp.basil.DatabaseProvider
 import com.jocmp.basil.db.Database
@@ -13,7 +14,8 @@ class AndroidDatabaseProvider(private val context: Context) : DatabaseProvider {
     }
 
     override fun delete(accountID: String) {
-        context.deleteDatabase(databaseName(accountID))
+        val res = context.deleteDatabase(databaseName(accountID))
+        Log.d("[DEBUG]", "delete: ${res}")
     }
 
     private fun databaseName(accountID: String): String {

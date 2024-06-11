@@ -24,9 +24,8 @@ class EncryptedPreferenceStoreProvider(
     override fun delete(accountID: String) {
         val preferences = buildEncryptedPreferences(context, accountPrefs(accountID))
 
-        preferences.edit {
+        preferences.edit(commit = true) {
             clear()
-            commit()
         }
     }
 

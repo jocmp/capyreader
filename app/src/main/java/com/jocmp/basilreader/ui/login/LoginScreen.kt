@@ -1,4 +1,4 @@
-package com.jocmp.basilreader.ui.accounts
+package com.jocmp.basilreader.ui.login
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
@@ -11,6 +11,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.autofill.AutofillType.EmailAddress
 import androidx.compose.ui.autofill.AutofillType.Password
+import androidx.compose.ui.tooling.preview.Preview
 import com.jocmp.basilreader.ui.autofill
 import org.koin.compose.koinInject
 
@@ -62,4 +63,12 @@ fun LoginScreen(
             Text("Save")
         }
     }
+}
+
+@Preview
+@Composable
+private fun LoginScreenPreview() {
+    LoginScreen(
+        onSuccess = {}
+    )
 }

@@ -8,7 +8,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun ArticleScreen(
     viewModel: AccountViewModel = koinViewModel(),
-    onNavigateToAccounts: () -> Unit,
+    onNavigateToSettings: () -> Unit,
 ) {
     val feeds by viewModel.feeds.collectAsStateWithLifecycle(initialValue = emptyList())
     val allFeeds by viewModel.allFeeds.collectAsStateWithLifecycle(initialValue = emptyList())
@@ -33,7 +33,7 @@ fun ArticleScreen(
         onSelectStatus = viewModel::selectStatus,
         onSelectArticle = viewModel::selectArticle,
         onRemoveFeed = viewModel::removeFeed,
-        onNavigateToAccounts = onNavigateToAccounts,
+        onNavigateToSettings = onNavigateToSettings,
         onClearArticle = viewModel::clearArticle,
         onToggleArticleRead = viewModel::toggleArticleRead,
         onToggleArticleStar = viewModel::toggleArticleStar,

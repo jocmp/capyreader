@@ -7,11 +7,6 @@ import androidx.navigation.compose.composable
 import com.jocmp.basilreader.ui.Route
 import com.jocmp.basilreader.ui.navigate
 
-const val articlesRoute = "articles"
-
-fun NavController.navigateToArticles() =
-    navigate(articlesRoute)
-
 fun NavGraphBuilder.articleGraph(
     navController: NavController,
 ) {
@@ -19,8 +14,8 @@ fun NavGraphBuilder.articleGraph(
         route = "articles",
     ) {
         ArticleScreen(
-            onNavigateToAccounts = {
-                navController.navigate(Route.AccountIndex)
+            onNavigateToSettings = {
+                navController.navigate(Route.Settings)
             }
         )
     }
