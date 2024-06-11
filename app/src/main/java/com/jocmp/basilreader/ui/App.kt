@@ -27,25 +27,31 @@ fun App(
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colorScheme.background
             ) {
+                val isCompactWindow = LocalWindowWidth.current.isCompact
+
                 NavHost(
                     navController = navController,
                     startDestination = startDestination
                 ) {
                     accountsGraph(
+                        isCompactWindow = isCompactWindow,
                         onLoginSuccess = {
-                            navController.navigate(Route.Articles.path) {
+                            navController.navigate(Route.Articles) {
                                 popUpTo(Route.Login.path) {
                                     inclusive = true
                                 }
                             }
                         },
                         onLogout = {
-                            navController.navigate(Route.Login.path) {
+                            navController.navigate(Route.Login) {
                                 popUpTo(navController.graph.startDestinationId) {
                                     inclusive = true
                                 }
                             }
                             unloadAccountModules()
+                        },
+                        onNavigateBackFromSettings = {
+                            navController.navigateUp()
                         }
                     )
                     articleGraph(navController = navController)

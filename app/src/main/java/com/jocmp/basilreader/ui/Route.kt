@@ -1,6 +1,8 @@
 package com.jocmp.basilreader.ui
 
 import androidx.navigation.NavController
+import androidx.navigation.NavOptionsBuilder
+import androidx.navigation.navOptions
 
 sealed class Route(val path: String) {
     data object Login : Route("login")
@@ -11,3 +13,7 @@ sealed class Route(val path: String) {
 }
 
 fun NavController.navigate(route: Route) = navigate(route.path)
+
+fun NavController.navigate(route: Route, builder: NavOptionsBuilder.() -> Unit) {
+    navigate(route.path, navOptions(builder))
+}

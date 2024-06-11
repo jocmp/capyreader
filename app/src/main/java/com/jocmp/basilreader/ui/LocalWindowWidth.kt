@@ -7,3 +7,6 @@ import androidx.compose.runtime.compositionLocalOf
 val LocalWindowWidth = compositionLocalOf {
     WindowWidthSizeClass.Compact
 }
+
+val WindowWidthSizeClass.isCompact
+    get() = this == WindowWidthSizeClass.Compact

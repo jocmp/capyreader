@@ -12,15 +12,15 @@ class SettingsViewModel(
     private val accountManager: AccountManager,
     private val refreshScheduler: RefreshScheduler,
     private val account: Account,
-    private val appPreferences: AppPreferences
+    private val appPreferences: AppPreferences,
 ) : ViewModel() {
     private val _refreshInterval = mutableStateOf(refreshScheduler.refreshInterval)
 
-    val displayName: String
-        get() = "Feedbin"
-
     val refreshInterval: RefreshInterval
         get() = _refreshInterval.value
+
+    val accountName: String
+        get() = account.preferences.username.get()
 
     fun updateRefreshInterval(interval: RefreshInterval) {
         refreshScheduler.update(interval)
