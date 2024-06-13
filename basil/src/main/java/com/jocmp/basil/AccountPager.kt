@@ -11,7 +11,11 @@ fun Account.buildPager(
     since: OffsetDateTime = OffsetDateTime.now()
 ): Pager<Int, Article> {
     return Pager(
-        config = PagingConfig(pageSize = 20, prefetchDistance = 1),
+        config = PagingConfig(
+            pageSize = 20,
+            prefetchDistance = 1,
+            enablePlaceholders = false
+        ),
         pagingSourceFactory = { ArticlePagerFactory(database).find(filter = filter, since = since) }
     )
 }

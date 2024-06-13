@@ -20,7 +20,7 @@ internal val articlesModule = module {
     viewModel {
         val appPreferences = get<AppPreferences>()
 
-        AccountViewModel(
+        ArticleScreenViewModel(
             account = get<Account>(parameters = { parametersOf(appPreferences.accountID.get()) }),
             appPreferences = appPreferences,
             application = get()

@@ -4,6 +4,7 @@ import app.cash.sqldelight.Query
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.jocmp.basil.Article
+import com.jocmp.basil.ArticleFilter
 import com.jocmp.basil.ArticleStatus
 import com.jocmp.basil.common.nowUTC
 import com.jocmp.basil.common.toDateTimeFromSeconds
@@ -66,11 +67,11 @@ internal class ArticleRecords internal constructor(
         }
     }
 
-    fun markRead(articleID: String, lastReadAt: ZonedDateTime = nowUTC()) {
+    fun markAllRead(articleIDs: List<String>, lastReadAt: ZonedDateTime = nowUTC()) {
         val updated = lastReadAt.toEpochSecond()
 
         database.articlesQueries.markRead(
-            articleID = articleID,
+            articleIDs = articleIDs,
             read = true,
             lastReadAt = updated,
             updatedAt = updated
@@ -79,7 +80,7 @@ internal class ArticleRecords internal constructor(
 
     fun markUnread(articleID: String, updatedAt: ZonedDateTime = nowUTC()) {
         database.articlesQueries.markRead(
-            articleID = articleID,
+            articleIDs = listOf(articleID),
             read = false,
             lastReadAt = null,
             updatedAt = nowUTC().toEpochSecond()
@@ -129,6 +130,27 @@ internal class ArticleRecords internal constructor(
         return max.toDateTimeFromSeconds.toString()
     }
 
+    fun unreadArticleIDs(filter: ArticleFilter): List<String> {
+        val ids = when (filter) {
+            is ArticleFilter.Articles -> byStatus.unreadArticleIDs(filter.articleStatus)
+            is ArticleFilter.Feeds -> byFeed.unreadArticleIDs(
+                filter.feedStatus,
+                feedIDs = listOf(filter.feedID)
+            )
+
+            is ArticleFilter.Folders -> {
+                val feedIDs = database
+                    .taggingsQueries
+                    .findFeedIDs(folderTitle = filter.folderTitle)
+                    .executeAsList()
+
+                byFeed.unreadArticleIDs(filter.status, feedIDs)
+            }
+        }
+
+        return ids.executeAsList()
+    }
+
     class ByFeed(private val database: Database) {
         fun all(
             feedIDs: List<String>,
@@ -147,6 +169,15 @@ internal class ArticleRecords internal constructor(
                 offset = offset,
                 lastReadAt = mapLastRead(read, since),
                 mapper = ::listMapper
+            )
+        }
+
+        fun unreadArticleIDs(status: ArticleStatus, feedIDs: List<String>): Query<String> {
+            val (_, starred) = status.toStatusPair
+
+            return database.articlesQueries.findArticleIDsByFeeds(
+                feedIDs = feedIDs,
+                starred = starred
             )
         }
 
@@ -183,6 +214,12 @@ internal class ArticleRecords internal constructor(
                 lastReadAt = mapLastRead(read, since),
                 mapper = ::listMapper
             )
+        }
+
+        fun unreadArticleIDs(status: ArticleStatus): Query<String> {
+            val (_, starred) = status.toStatusPair
+
+            return database.articlesQueries.findArticleIDsByStatus(starred = starred)
         }
 
         fun count(status: ArticleStatus, since: OffsetDateTime? = null): Query<Long> {

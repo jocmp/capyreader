@@ -52,4 +52,5 @@
     <string name="relative_time_days">%1$dd</string>
     <string name="article_share">Share Article</string>
     <string name="extract_full_content">Extract Full Content</string>
+    <string name="action_mark_all_read">Mark All as Read</string>
 </resources>

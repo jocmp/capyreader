@@ -76,6 +76,7 @@ fun ArticleLayout(
     onClearArticle: () -> Unit,
     onToggleArticleRead: () -> Unit,
     onToggleArticleStar: () -> Unit,
+    onMarkAllRead: () -> Unit,
     onRemoveFeed: (feedID: String, onSuccess: () -> Unit, onFailure: () -> Unit) -> Unit,
     drawerValue: DrawerValue = DrawerValue.Closed,
 ) {
@@ -196,29 +197,30 @@ fun ArticleLayout(
                             }
                         },
                         actions = {
-                            if (currentFeed != null) {
-                                FilterActionMenu(
-                                    feed = currentFeed,
-                                    folders = folders,
-                                    onFeedEdited = {
-                                        showSnackbar(editSuccessMessage)
-                                    },
-                                    onRequestRemoveFeed = { feedID ->
-                                        onRemoveFeed(
-                                            feedID,
-                                            {
-                                                showSnackbar(unsubscribeMessage)
-                                            },
-                                            {
-                                                showSnackbar(unsubscribeErrorMessage)
-                                            }
-                                        )
-                                    },
-                                    onEditFailure = { message ->
-                                        showSnackbar(message)
-                                    }
-                                )
-                            }
+                            FeedActions(
+                                feed = currentFeed,
+                                folders = folders,
+                                onFeedEdited = {
+                                    showSnackbar(editSuccessMessage)
+                                },
+                                onRequestRemoveFeed = { feedID ->
+                                    onRemoveFeed(
+                                        feedID,
+                                        {
+                                            showSnackbar(unsubscribeMessage)
+                                        },
+                                        {
+                                            showSnackbar(unsubscribeErrorMessage)
+                                        }
+                                    )
+                                },
+                                onMarkAllRead = {
+                                    onMarkAllRead()
+                                },
+                                onEditFailure = { message ->
+                                    showSnackbar(message)
+                                }
+                            )
                         }
                     )
                 },
@@ -323,6 +325,7 @@ fun ArticleLayoutPreview() {
             onClearArticle = { },
             onToggleArticleRead = { },
             onToggleArticleStar = {},
+            onMarkAllRead = {},
             drawerValue = DrawerValue.Open,
         )
     }

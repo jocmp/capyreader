@@ -60,7 +60,7 @@ class ArticlePagerFactory(private val database: Database) {
         filter: ArticleFilter.Folders,
         since: OffsetDateTime
     ): PagingSource<Int, Article> {
-        val feedIDs =  database
+        val feedIDs = database
             .taggingsQueries
             .findFeedIDs(folderTitle = filter.folderTitle)
             .executeAsList()

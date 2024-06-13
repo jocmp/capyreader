@@ -32,7 +32,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class AccountViewModel(
+class ArticleScreenViewModel(
     private val account: Account,
     private val appPreferences: AppPreferences,
     private val application: Application,
@@ -102,6 +102,12 @@ class AccountViewModel(
                 )
 
             selectArticleFilter(feedFilter)
+        }
+    }
+
+    fun markAllRead() {
+        viewModelScope.launch(Dispatchers.IO) {
+            account.markAllRead(filter = filter.value)
         }
     }
 

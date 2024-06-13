@@ -33,6 +33,21 @@ GROUP BY articles.id
 ORDER BY articles.published_at DESC
 LIMIT :limit OFFSET :offset;
 
+findArticleIDsByStatus:
+SELECT articles.id
+FROM articles
+JOIN article_statuses ON articles.id = article_statuses.article_id
+WHERE read != 1
+AND (article_statuses.starred = :starred OR :starred IS NULL);
+
+findArticleIDsByFeeds:
+SELECT articles.id
+FROM articles
+JOIN article_statuses ON articles.id = article_statuses.article_id
+WHERE articles.feed_id IN :feedIDs
+AND read != 1
+AND (article_statuses.starred = :starred OR :starred IS NULL);
+
 countByFeeds:
 SELECT COUNT(*)
 FROM articles
@@ -169,7 +184,7 @@ starred = excluded.starred;
 
 markRead:
 UPDATE article_statuses SET read = :read, last_read_at = :lastReadAt, updated_at = :updatedAt
-WHERE article_statuses.article_id = :articleID;
+WHERE article_statuses.article_id IN :articleIDs;
 
 markStarred:
 UPDATE article_statuses SET starred = :starred, updated_at = :updatedAt
