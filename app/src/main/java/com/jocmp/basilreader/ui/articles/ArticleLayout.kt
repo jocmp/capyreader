@@ -199,7 +199,9 @@ fun ArticleLayout(
                         actions = {
                             FeedActions(
                                 feed = currentFeed,
-                                folders = folders,
+                                onMarkAllRead = {
+                                    onMarkAllRead()
+                                },
                                 onFeedEdited = {
                                     showSnackbar(editSuccessMessage)
                                 },
@@ -213,9 +215,6 @@ fun ArticleLayout(
                                             showSnackbar(unsubscribeErrorMessage)
                                         }
                                     )
-                                },
-                                onMarkAllRead = {
-                                    onMarkAllRead()
                                 },
                                 onEditFailure = { message ->
                                     showSnackbar(message)

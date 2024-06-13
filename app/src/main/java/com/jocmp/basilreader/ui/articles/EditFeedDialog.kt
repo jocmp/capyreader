@@ -3,22 +3,23 @@ package com.jocmp.basilreader.ui.articles
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.jocmp.basil.EditFeedFormEntry
 import com.jocmp.basil.Feed
-import com.jocmp.basil.Folder
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun EditFeedDialog(
     feed: Feed,
-    folders: List<Folder>,
     form: EditFeedViewModel = koinViewModel(),
     onSubmit: () -> Unit,
     onFailure: () -> Unit,
     onCancel: () -> Unit
 ) {
+    val folders by form.folders.collectAsState(initial = listOf())
     val submit = { entry: EditFeedFormEntry ->
         form.submit(entry, onSubmit, onFailure)
     }

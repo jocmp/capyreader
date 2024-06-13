@@ -15,14 +15,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.jocmp.basil.Feed
-import com.jocmp.basil.Folder
 import com.jocmp.basilreader.R
 import com.jocmp.basilreader.ui.fixtures.FeedPreviewFixture
 
 @Composable
 fun FeedActions(
     feed: Feed?,
-    folders: List<Folder>,
     onMarkAllRead: () -> Unit,
     onFeedEdited: () -> Unit,
     onRequestRemoveFeed: (feedID: String) -> Unit,
@@ -84,7 +82,6 @@ fun FeedActions(
             if (showEditDialog) {
                 EditFeedDialog(
                     feed = feed,
-                    folders = folders,
                     onSubmit = {
                         setEditDialogOpen(false)
                         onFeedEdited()
@@ -109,7 +106,6 @@ fun FeedActionsPreview() {
 
     FeedActions(
         feed = feed,
-        folders = emptyList(),
         onFeedEdited = {},
         onRequestRemoveFeed = {},
         onEditFailure = {},
