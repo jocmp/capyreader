@@ -16,8 +16,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -47,6 +47,7 @@ fun ArticleRow(
         selected = selected,
         read = article.read
     )
+    val feedNameColor = findFeedNameColor(read = article.read)
 
     Box(
         Modifier.clickable {
@@ -68,7 +69,8 @@ fun ArticleRow(
                 Column {
                     Text(
                         article.feedName,
-                        fontWeight = FontWeight.Bold
+                        color = feedNameColor,
+                        modifier = Modifier.padding(vertical = 4.dp)
                     )
                     Text(
                         text = article.summary,
@@ -132,6 +134,18 @@ private fun listItemColors(
         headlineColor = if (read) defaults.disabledHeadlineColor else defaults.headlineColor,
         supportingColor = if (read) defaults.disabledHeadlineColor else defaults.supportingTextColor
     )
+}
+
+@Composable
+fun findFeedNameColor(read: Boolean): Color {
+    val defaults = ListItemDefaults.colors()
+    val colorScheme = MaterialTheme.colorScheme
+
+    return if (read) {
+        defaults.disabledHeadlineColor
+    } else {
+        colorScheme.onSurface
+    }
 }
 
 @Preview(

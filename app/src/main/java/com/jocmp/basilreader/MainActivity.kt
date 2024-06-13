@@ -18,17 +18,11 @@ class MainActivity : ComponentActivity() {
         enableStrictModeOnDebug()
         super.onCreate(savedInstanceState)
 
-        val destination = startDestination()
-
-        if (destination == Route.Articles.path) {
-            loadAccountModules()
-        }
-
         setContent {
             val windowSizeClass = calculateWindowSizeClass(this)
 
             App(
-                startDestination = destination,
+                startDestination = startDestination(),
                 windowSizeClass = windowSizeClass
             )
         }

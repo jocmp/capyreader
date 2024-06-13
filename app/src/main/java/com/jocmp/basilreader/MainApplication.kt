@@ -1,18 +1,24 @@
 package com.jocmp.basilreader
 
 import android.app.Application
+import com.jocmp.basilreader.common.AppPreferences
+import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.workmanager.koin.workManagerFactory
 import org.koin.core.context.startKoin
 
-class MainApplication: Application() {
+class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
         startKoin {
             androidContext(this@MainApplication)
             workManagerFactory()
-            setupCommon()
+            setupCommonModules()
+        }
+
+        if (get<AppPreferences>().accountID.get().isNotBlank()) {
+            loadAccountModules()
         }
     }
 }

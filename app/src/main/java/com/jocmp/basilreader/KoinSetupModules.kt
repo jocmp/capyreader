@@ -9,7 +9,7 @@ import org.koin.core.KoinApplication
 import org.koin.core.context.loadKoinModules
 import org.koin.core.context.unloadKoinModules
 
-fun KoinApplication.setupCommon() {
+fun KoinApplication.setupCommonModules() {
     modules(common, loginModule)
 }
 
