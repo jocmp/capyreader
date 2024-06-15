@@ -43,4 +43,4 @@ dependencyResolutionManagement {
 rootProject.name = "Capy Reader"
 include(":app")
 include(":feedbinclient")
-include(":basil")
+include(":capy")

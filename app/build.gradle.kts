@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.jocmp.basilreader"
+    namespace = "com.jocmp.capyreader"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.jocmp.basilreader"
+        applicationId = "com.jocmp.capyreader"
         minSdk = 30
         targetSdk = 34
         versionCode = 1
@@ -97,7 +97,7 @@ dependencies {
     implementation(libs.okhttp.client)
     implementation(platform("androidx.compose:compose-bom:2024.04.01"))
     implementation(platform("io.insert-koin:koin-bom:3.5.1"))
-    implementation(project(":basil"))
+    implementation(project(":capy"))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
