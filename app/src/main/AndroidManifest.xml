@@ -11,13 +11,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.BasilReader"
+        android:theme="@style/Theme.CapyReader"
         android:enableOnBackInvokedCallback="true"
         tools:targetApi="33">
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.BasilReader">
+            android:theme="@style/Theme.CapyReader">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
