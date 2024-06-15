@@ -10,7 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/basil" />
+            <option value="$PROJECT_DIR$/capy" />
             <option value="$PROJECT_DIR$/feedbinclient" />
           </set>
         </option>

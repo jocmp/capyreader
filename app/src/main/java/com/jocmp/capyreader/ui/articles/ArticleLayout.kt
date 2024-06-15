@@ -205,7 +205,7 @@ fun ArticleLayout(
                                 onFeedEdited = {
                                     showSnackbar(editSuccessMessage)
                                 },
-                                onRequestRemoveFeed = { feedID ->
+                                onRemoveFeed = { feedID ->
                                     onRemoveFeed(
                                         feedID,
                                         {

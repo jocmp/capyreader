@@ -53,4 +53,6 @@
     <string name="article_share">Share Article</string>
     <string name="extract_full_content">Extract Full Content</string>
     <string name="action_mark_all_read">Mark All as Read</string>
+    <string name="mark_all_read_dialog_description">Mark all items as read?</string>
+    <string name="mark_all_read_dialog_submit">Confirm</string>
 </resources>

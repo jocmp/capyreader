@@ -12,8 +12,8 @@ import com.jocmp.capyreader.R
 @Composable
 fun RemoveDialog(
     feed: Feed,
-    onRemove: () -> Unit,
-    onDismiss: () -> Unit
+    onConfirm: () -> Unit,
+    onDismissRequest: () -> Unit
 ) {
     val state = RemoveDialogState(
         title = stringResource(R.string.feed_action_unsubscribe_title),
@@ -22,16 +22,16 @@ fun RemoveDialog(
     )
 
     AlertDialog(
-        onDismissRequest = onDismiss,
+        onDismissRequest = onDismissRequest,
         title = { Text(state.title) },
         text = { Text(state.message) },
         dismissButton = {
-            TextButton(onClick = onDismiss) {
+            TextButton(onClick = onDismissRequest) {
                 Text(stringResource(R.string.dialog_cancel))
             }
         },
         confirmButton = {
-            TextButton(onClick = onRemove) {
+            TextButton(onClick = onConfirm) {
                 Text(state.confirmText)
             }
         }

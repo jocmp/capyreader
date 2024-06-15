@@ -3,7 +3,6 @@ package com.jocmp.capyreader.ui.articles
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.Icon
@@ -16,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.jocmp.capy.Feed
 import com.jocmp.capyreader.R
+import com.jocmp.capyreader.ui.articles.list.MarkAllReadButton
 import com.jocmp.capyreader.ui.fixtures.FeedPreviewFixture
 
 @Composable
@@ -23,26 +23,18 @@ fun FeedActions(
     feed: Feed?,
     onMarkAllRead: () -> Unit,
     onFeedEdited: () -> Unit,
-    onRequestRemoveFeed: (feedID: String) -> Unit,
+    onRemoveFeed: (feedID: String) -> Unit,
     onEditFailure: (message: String) -> Unit,
 ) {
     val (expanded, setMenuExpanded) = remember { mutableStateOf(false) }
-    val (showRemoveDialog, setRemoveDialogOpen) = remember { mutableStateOf(false) }
-    val (showEditDialog, setEditDialogOpen) = rememberSaveable { mutableStateOf(false) }
+    val (isEditDialogOpen, setEditDialogOpen) = rememberSaveable { mutableStateOf(false) }
+    val (isRemoveDialogOpen, setRemoveDialogOpen) = remember { mutableStateOf(false) }
     val editErrorMessage = stringResource(R.string.edit_feed_error)
-
-    val onRequestRemove = {
-        setRemoveDialogOpen(true)
-    }
 
     Box {
         Row {
-            IconButton(onClick = { onMarkAllRead() }) {
-                Icon(
-                    imageVector = Icons.Filled.CheckCircle,
-                    contentDescription = stringResource(R.string.action_mark_all_read)
-                )
-            }
+            MarkAllReadButton(                onMarkAllRead = onMarkAllRead,
+            )
 
             if (feed != null) {
                 IconButton(onClick = { setMenuExpanded(true) }) {
@@ -60,26 +52,24 @@ fun FeedActions(
                 onDismissRequest = { setMenuExpanded(false) },
             ) {
                 FeedActionMenuItems(
-                    feedID = feed.id,
-                    onMenuClose = { setMenuExpanded(false) },
-                    onRequestRemove = onRequestRemove,
                     onEdit = { setEditDialogOpen(true) },
+                    onRemoveRequest = { setRemoveDialogOpen(true) },
+                    onMenuClose = { setMenuExpanded(false) },
                 )
             }
 
-            if (showRemoveDialog) {
+            if (isRemoveDialogOpen) {
                 RemoveDialog(
                     feed = feed,
-                    onRemove = {
+                    onConfirm = {
                         setRemoveDialogOpen(false)
-
-                        onRequestRemoveFeed(feed.id)
+                        onRemoveFeed(feed.id)
                     },
-                    onDismiss = { setRemoveDialogOpen(false) }
+                    onDismissRequest = { setRemoveDialogOpen(false) }
                 )
             }
 
-            if (showEditDialog) {
+            if (isEditDialogOpen) {
                 EditFeedDialog(
                     feed = feed,
                     onSubmit = {
@@ -107,7 +97,7 @@ fun FeedActionsPreview() {
     FeedActions(
         feed = feed,
         onFeedEdited = {},
-        onRequestRemoveFeed = {},
+        onRemoveFeed = {},
         onEditFailure = {},
         onMarkAllRead = {},
     )
