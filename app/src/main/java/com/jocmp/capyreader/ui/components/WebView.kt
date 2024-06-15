@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.ViewGroup.LayoutParams
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
@@ -30,6 +31,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
+import com.jocmp.capyreader.R
 import com.jocmp.capyreader.ui.components.LoadingState.Finished
 import com.jocmp.capyreader.ui.components.LoadingState.Loading
 import kotlinx.coroutines.CoroutineScope
@@ -195,7 +197,7 @@ fun WebView(
 
     AndroidView(
         factory = { context ->
-            (factory?.invoke(context) ?: WebView(context)).apply {
+            (factory?.invoke(context) ?: context.inflateWebView()).apply {
                 onCreated(this)
 
                 this.settings.javaScriptEnabled = true
@@ -676,4 +678,10 @@ val WebStateSaver: Saver<WebViewState, Any> = run {
             }
         }
     )
+}
+
+private fun Context.inflateWebView(): WebView {
+    return LayoutInflater
+        .from(this)
+        .inflate(R.layout.article_webview, null, false) as WebView
 }
