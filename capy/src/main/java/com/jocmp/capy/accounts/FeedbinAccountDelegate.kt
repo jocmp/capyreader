@@ -25,6 +25,7 @@ import com.jocmp.feedbinclient.UpdateSubscriptionRequest
 import com.jocmp.feedbinclient.pagingInfo
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import java.net.UnknownHostException
 import java.time.ZonedDateTime
@@ -41,7 +42,9 @@ internal class FeedbinAccountDelegate(
         val entryIDs = articleIDs.map { it.toLong() }
 
         return withErrorHandling {
-            feedbin.deleteUnreadEntries(UnreadEntriesRequest(unread_entries = entryIDs))
+            entryIDs.chunked(MAX_CREATE_UNREAD_LIMIT).map { batchIDs ->
+                feedbin.deleteUnreadEntries(UnreadEntriesRequest(unread_entries = batchIDs))
+            }
             Unit
         }
     }
@@ -331,6 +334,7 @@ internal class FeedbinAccountDelegate(
 
     companion object {
         const val MAX_ENTRY_LIMIT = 100
+        const val MAX_CREATE_UNREAD_LIMIT = 1_000
     }
 }
 
