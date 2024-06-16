@@ -5,6 +5,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -12,6 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.autofill.AutofillType.EmailAddress
 import androidx.compose.ui.autofill.AutofillType.Password
 import androidx.compose.ui.tooling.preview.Preview
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
 import com.jocmp.capyreader.ui.autofill
 import org.koin.compose.koinInject
 
@@ -62,6 +65,10 @@ fun LoginScreen(
         Button(onClick = { login() }) {
             Text("Save")
         }
+    }
+
+    LaunchedEffect(Unit) {
+        Firebase.crashlytics.setCrashlyticsCollectionEnabled(true)
     }
 }
 
