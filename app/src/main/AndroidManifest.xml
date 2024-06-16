@@ -14,6 +14,9 @@
         android:theme="@style/Theme.CapyReader"
         android:enableOnBackInvokedCallback="true"
         tools:targetApi="33">
+        <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -46,5 +49,4 @@
                 tools:node="remove" />
         </provider>
     </application>
-
 </manifest>
