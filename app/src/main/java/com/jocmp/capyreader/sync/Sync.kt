@@ -7,6 +7,7 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import com.jocmp.capyreader.common.MD5
 
 fun addStarAsync(articleID: String, context: Context) {
     val data = Data
@@ -28,27 +29,29 @@ fun removeStarAsync(articleID: String, context: Context) {
     queueStarWorker(articleID, data, context)
 }
 
-fun markReadAsync(articleID: String, context: Context) {
+fun markReadAsync(articleIDs: List<String>, context: Context) {
     val data = Data
         .Builder()
-        .putString(ReadSyncWorker.ARTICLE_KEY, articleID)
+        .putStringArray(ReadSyncWorker.ARTICLES_KEY, articleIDs.toTypedArray())
         .putBoolean(ReadSyncWorker.MARK_READ_KEY, true)
         .build()
 
-    queueReadWorker(articleID, data, context)
+    queueReadWorker(articleIDs, data, context)
 }
 
 fun markUnreadAsync(articleID: String, context: Context) {
+    val articleIDs = listOf(articleID)
+
     val data = Data
         .Builder()
-        .putString(ReadSyncWorker.ARTICLE_KEY, articleID)
+        .putStringArray(ReadSyncWorker.ARTICLES_KEY, articleIDs.toTypedArray())
         .putBoolean(ReadSyncWorker.MARK_READ_KEY, false)
         .build()
 
-    queueReadWorker(articleID, data, context)
+    queueReadWorker(articleIDs, data, context)
 }
 
-private fun queueReadWorker(articleID: String, data: Data, context: Context) {
+private fun queueReadWorker(articleIDs: List<String>, data: Data, context: Context) {
     val workManager = WorkManager.getInstance(context)
 
     val request = OneTimeWorkRequestBuilder<ReadSyncWorker>()
@@ -56,8 +59,10 @@ private fun queueReadWorker(articleID: String, data: Data, context: Context) {
         .setInputData(data)
         .build()
 
+    val key = MD5.from(articleIDs.joinToString(","))
+
     workManager.enqueueUniqueWork(
-        "article_read:${articleID}",
+        "article_read:$key",
         ExistingWorkPolicy.REPLACE,
         request
     )
