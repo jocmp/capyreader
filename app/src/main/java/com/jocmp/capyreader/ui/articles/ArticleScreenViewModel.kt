@@ -14,6 +14,7 @@ import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Countable
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
+import com.jocmp.capy.MarkRead
 import com.jocmp.capy.buildPager
 import com.jocmp.capy.countAll
 import com.jocmp.capyreader.common.AppPreferences
@@ -105,9 +106,9 @@ class ArticleScreenViewModel(
         }
     }
 
-    fun markAllRead() {
+    fun markAllRead(range: MarkRead) {
         viewModelScope.launch(Dispatchers.IO) {
-            account.markAllRead(filter = filter.value)
+            account.markAllRead(filter = filter.value, range = range)
         }
     }
 

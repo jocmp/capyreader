@@ -3,6 +3,7 @@ package com.jocmp.capyreader.ui.articles
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -17,15 +18,21 @@ fun FilterAppBarTitle(
     allFeeds: List<Feed>,
     folders: List<Folder>,
 ) {
-    val text = when (filter) {
-        is ArticleFilter.Articles -> stringResource(filter.articleStatus.navigationTitle)
-        is ArticleFilter.Feeds -> {
-            allFeeds.find { it.id == filter.feedID }?.title.orEmpty()
-        }
+    val articleStatusTitle = (filter as? ArticleFilter.Articles)?.run {
+        stringResource(articleStatus.navigationTitle)
+    }
 
-        is ArticleFilter.Folders -> {
-            folders.find { it.title == filter.folderTitle }?.title.orEmpty()
-        }
+    val text = remember(filter) {
+        when (filter) {
+            is ArticleFilter.Articles -> articleStatusTitle
+            is ArticleFilter.Feeds -> {
+                allFeeds.find { it.id == filter.feedID }?.title
+            }
+
+            is ArticleFilter.Folders -> {
+                folders.find { it.title == filter.folderTitle }?.title
+            }
+        }.orEmpty()
     }
 
     Text(

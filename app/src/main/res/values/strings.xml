@@ -55,4 +55,7 @@
     <string name="action_mark_all_read">Mark All as Read</string>
     <string name="mark_all_read_dialog_description">Mark all items as read?</string>
     <string name="mark_all_read_dialog_submit">Confirm</string>
+    <string name="article_actions_open_menu">Open article actions</string>
+    <string name="article_actions_mark_below_as_read">Mark below as read</string>
+    <string name="article_actions_mark_after_as_read">Mark above as read</string>
 </resources>

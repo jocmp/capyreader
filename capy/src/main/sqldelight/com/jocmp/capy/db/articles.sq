@@ -38,7 +38,25 @@ SELECT articles.id
 FROM articles
 JOIN article_statuses ON articles.id = article_statuses.article_id
 WHERE read != 1
-AND (article_statuses.starred = :starred OR :starred IS NULL);
+AND (article_statuses.starred = :starred OR :starred IS NULL)
+AND (
+  :afterArticleID IS NULL
+  OR articles.published_at >= (
+      SELECT published_at
+      FROM articles
+      WHERE articles.id = :afterArticleID
+      LIMIT 1
+  )
+)
+AND (:beforeArticleID IS NULL OR
+  :beforeArticleID IS NULL
+  OR articles.published_at <= (
+      SELECT published_at
+      FROM articles
+      WHERE articles.id = :beforeArticleID
+      LIMIT 1
+  )
+);
 
 findArticleIDsByFeeds:
 SELECT articles.id
@@ -46,7 +64,25 @@ FROM articles
 JOIN article_statuses ON articles.id = article_statuses.article_id
 WHERE articles.feed_id IN :feedIDs
 AND read != 1
-AND (article_statuses.starred = :starred OR :starred IS NULL);
+AND (article_statuses.starred = :starred OR :starred IS NULL)
+AND (
+  :afterArticleID IS NULL
+  OR articles.published_at >= (
+      SELECT published_at
+      FROM articles
+      WHERE articles.id = :afterArticleID
+      LIMIT 1
+  )
+)
+AND (:beforeArticleID IS NULL OR
+  :beforeArticleID IS NULL
+  OR articles.published_at <= (
+      SELECT published_at
+      FROM articles
+      WHERE articles.id = :beforeArticleID
+      LIMIT 1
+  )
+);
 
 countByFeeds:
 SELECT COUNT(*)

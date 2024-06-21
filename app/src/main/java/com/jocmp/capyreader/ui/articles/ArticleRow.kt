@@ -1,8 +1,9 @@
 package com.jocmp.capyreader.ui.articles
 
 import android.content.res.Configuration
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -15,15 +16,23 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.jocmp.capy.Article
+import com.jocmp.capy.MarkRead
+import com.jocmp.capyreader.R
+import com.jocmp.capyreader.ui.articles.list.ArticleActionBottomSheet
 import com.jocmp.capyreader.ui.components.relativeTime
 import com.jocmp.capyreader.ui.fixtures.ArticleSample
 import com.jocmp.capyreader.ui.theme.CapyTheme
@@ -35,11 +44,13 @@ import java.time.ZonedDateTime
 
 private val THUMBNAIL_SIZE = 56.dp
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ArticleRow(
     article: Article,
     selected: Boolean,
     onSelect: (articleID: String) -> Unit,
+    onMarkAllRead: (range: MarkRead) -> Unit = {},
     currentTime: LocalDateTime,
 ) {
     val imageURL = article.imageURL?.toString()
@@ -48,11 +59,34 @@ fun ArticleRow(
         read = article.read
     )
     val feedNameColor = findFeedNameColor(read = article.read)
+    val haptics = LocalHapticFeedback.current
+    val (isArticleMenuOpen, setArticleMenuOpen) = remember { mutableStateOf(false) }
+
+    val openArticleMenu = {
+        haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+        setArticleMenuOpen(true)
+    }
+
+    if (isArticleMenuOpen) {
+        ArticleActionBottomSheet(
+            articleID = article.id,
+            onMarkAllRead = {
+                setArticleMenuOpen(false)
+                onMarkAllRead(it)
+            },
+            onDismissRequest = {
+                setArticleMenuOpen(false)
+            }
+        )
+    }
 
     Box(
-        Modifier.clickable {
-            onSelect(article.id)
-        }
+        Modifier
+            .combinedClickable(
+                onClick = { onSelect(article.id) },
+                onLongClick = openArticleMenu,
+                onLongClickLabel = stringResource(R.string.article_actions_open_menu)
+            )
     ) {
         ListItem(
             leadingContent = {
