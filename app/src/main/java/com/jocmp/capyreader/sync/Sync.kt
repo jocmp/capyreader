@@ -29,14 +29,20 @@ fun removeStarAsync(articleID: String, context: Context) {
     queueStarWorker(articleID, data, context)
 }
 
+/**
+ * Batch enqueue IDs to stay under 10KB work manager limit
+ * https://developer.android.com/jetpack/androidx/releases/work#1.0.0-alpha08
+ */
 fun markReadAsync(articleIDs: List<String>, context: Context) {
-    val data = Data
-        .Builder()
-        .putStringArray(ReadSyncWorker.ARTICLES_KEY, articleIDs.toTypedArray())
-        .putBoolean(ReadSyncWorker.MARK_READ_KEY, true)
-        .build()
+    articleIDs.chunked(500) { batch ->
+        val data = Data
+            .Builder()
+            .putStringArray(ReadSyncWorker.ARTICLES_KEY, batch.toTypedArray())
+            .putBoolean(ReadSyncWorker.MARK_READ_KEY, true)
+            .build()
 
-    queueReadWorker(articleIDs, data, context)
+        queueReadWorker(batch, data, context)
+    }
 }
 
 fun markUnreadAsync(articleID: String, context: Context) {
