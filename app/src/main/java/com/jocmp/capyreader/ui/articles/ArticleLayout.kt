@@ -40,6 +40,8 @@ import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
+import com.jocmp.capy.MarkRead
+import com.jocmp.capy.MarkRead.All
 import com.jocmp.capyreader.R
 import com.jocmp.capyreader.ui.articles.detail.ArticleRenderer
 import com.jocmp.capyreader.ui.articles.detail.ArticleView
@@ -76,7 +78,7 @@ fun ArticleLayout(
     onClearArticle: () -> Unit,
     onToggleArticleRead: () -> Unit,
     onToggleArticleStar: () -> Unit,
-    onMarkAllRead: () -> Unit,
+    onMarkAllRead: (range: MarkRead) -> Unit,
     onRemoveFeed: (feedID: String, onSuccess: () -> Unit, onFailure: () -> Unit) -> Unit,
     drawerValue: DrawerValue = DrawerValue.Closed,
 ) {
@@ -200,7 +202,7 @@ fun ArticleLayout(
                             FeedActions(
                                 feed = currentFeed,
                                 onMarkAllRead = {
-                                    onMarkAllRead()
+                                    onMarkAllRead(All)
                                 },
                                 onFeedEdited = {
                                     showSnackbar(editSuccessMessage)
@@ -236,6 +238,7 @@ fun ArticleLayout(
                         articles = pagingArticles,
                         selectedArticleKey = article?.id,
                         listState = listState,
+                        onMarkAllRead = onMarkAllRead,
                         onSelect = { articleID ->
                             onSelectArticle(articleID) {
                                 coroutineScope.launch {

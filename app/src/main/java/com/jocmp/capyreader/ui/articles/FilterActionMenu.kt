@@ -33,7 +33,8 @@ fun FeedActions(
 
     Box {
         Row {
-            MarkAllReadButton(                onMarkAllRead = onMarkAllRead,
+            MarkAllReadButton(
+                onMarkAllRead = onMarkAllRead,
             )
 
             if (feed != null) {

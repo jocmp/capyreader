@@ -100,8 +100,11 @@ data class Account(
         return delegate.removeStar(listOf(articleID))
     }
 
-    suspend fun markAllRead(filter: ArticleFilter): Result<Unit> {
-        val articleIDs = articleRecords.unreadArticleIDs(filter = filter)
+    suspend fun markAllRead(filter: ArticleFilter, range: MarkRead): Result<Unit> {
+        val articleIDs = articleRecords.unreadArticleIDs(
+            filter = filter,
+            range = range
+        )
 
         articleRecords.markAllRead(articleIDs)
 

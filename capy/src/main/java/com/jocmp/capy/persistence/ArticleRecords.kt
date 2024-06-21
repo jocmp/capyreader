@@ -6,6 +6,7 @@ import app.cash.sqldelight.coroutines.mapToList
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
+import com.jocmp.capy.MarkRead
 import com.jocmp.capy.common.nowUTC
 import com.jocmp.capy.common.toDateTimeFromSeconds
 import com.jocmp.capy.common.transactionWithErrorHandling
@@ -130,12 +131,16 @@ internal class ArticleRecords internal constructor(
         return max.toDateTimeFromSeconds.toString()
     }
 
-    fun unreadArticleIDs(filter: ArticleFilter): List<String> {
+    fun unreadArticleIDs(filter: ArticleFilter, range: MarkRead): List<String> {
         val ids = when (filter) {
-            is ArticleFilter.Articles -> byStatus.unreadArticleIDs(filter.articleStatus)
+            is ArticleFilter.Articles -> byStatus.unreadArticleIDs(
+                filter.articleStatus,
+                range = range
+            )
             is ArticleFilter.Feeds -> byFeed.unreadArticleIDs(
                 filter.feedStatus,
-                feedIDs = listOf(filter.feedID)
+                feedIDs = listOf(filter.feedID),
+                range = range
             )
 
             is ArticleFilter.Folders -> {
@@ -144,7 +149,11 @@ internal class ArticleRecords internal constructor(
                     .findFeedIDs(folderTitle = filter.folderTitle)
                     .executeAsList()
 
-                byFeed.unreadArticleIDs(filter.status, feedIDs)
+                byFeed.unreadArticleIDs(
+                    filter.status,
+                    feedIDs = feedIDs,
+                    range = range
+                )
             }
         }
 
@@ -172,12 +181,19 @@ internal class ArticleRecords internal constructor(
             )
         }
 
-        fun unreadArticleIDs(status: ArticleStatus, feedIDs: List<String>): Query<String> {
+        fun unreadArticleIDs(
+            status: ArticleStatus,
+            feedIDs: List<String>,
+            range: MarkRead,
+        ): Query<String> {
             val (_, starred) = status.toStatusPair
+            val (afterArticleID, beforeArticleID) = range.toPair
 
             return database.articlesQueries.findArticleIDsByFeeds(
                 feedIDs = feedIDs,
-                starred = starred
+                starred = starred,
+                afterArticleID = afterArticleID,
+                beforeArticleID = beforeArticleID
             )
         }
 
@@ -216,10 +232,16 @@ internal class ArticleRecords internal constructor(
             )
         }
 
-        fun unreadArticleIDs(status: ArticleStatus): Query<String> {
+        fun unreadArticleIDs(status: ArticleStatus, range: MarkRead): Query<String> {
             val (_, starred) = status.toStatusPair
+            val (afterArticleID, beforeArticleID) = range.toPair
 
-            return database.articlesQueries.findArticleIDsByStatus(starred = starred)
+
+            return database.articlesQueries.findArticleIDsByStatus(
+                starred = starred,
+                afterArticleID = afterArticleID,
+                beforeArticleID = beforeArticleID
+            )
         }
 
         fun count(status: ArticleStatus, since: OffsetDateTime? = null): Query<Long> {

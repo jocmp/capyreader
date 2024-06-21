@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
 import com.jocmp.capy.Article
+import com.jocmp.capy.MarkRead
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
@@ -21,6 +22,7 @@ import java.time.LocalDateTime
 fun ArticleList(
     articles: LazyPagingItems<Article>,
     onSelect: suspend (articleID: String) -> Unit,
+    onMarkAllRead: (range: MarkRead) -> Unit,
     selectedArticleKey: String?,
     listState: LazyListState
 ) {
@@ -51,6 +53,7 @@ fun ArticleList(
                         article = item,
                         selected = selectedArticleKey == item.id,
                         onSelect = { selectArticle(it) },
+                        onMarkAllRead = onMarkAllRead,
                         currentTime = currentTime
                     )
                 }
@@ -66,7 +69,7 @@ fun cachedCurrentTime(): LocalDateTime {
 
     DisposableEffect(Unit) {
         val job = coroutineScope.launch {
-            while(true) {
+            while (true) {
                 delay(30_000)
                 setCurrentTime(LocalDateTime.now())
             }
