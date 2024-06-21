@@ -16,13 +16,18 @@ class ReadSyncWorker(
     private val account by inject<Account>()
 
     override suspend fun doWork(): Result {
-        val articleID = inputData.getString(ARTICLE_KEY) ?: return Result.failure()
+        val articleIDs = inputData
+            .getStringArray(ARTICLES_KEY)?.toList() ?: return Result.failure()
         val markRead = inputData.getBoolean(MARK_READ_KEY, false)
 
+        if (articleIDs.isEmpty()) {
+            return Result.failure()
+        }
+
         val result = if (markRead) {
-            account.markRead(articleID)
+            account.markAllRead(articleIDs)
         } else {
-            account.markUnread(articleID)
+            account.markUnread(articleIDs.first())
         }
 
         return result
@@ -39,7 +44,7 @@ class ReadSyncWorker(
     }
 
     companion object {
-        const val ARTICLE_KEY = "article_id"
+        const val ARTICLES_KEY = "articles_key"
         const val MARK_READ_KEY = "mark_read"
     }
 }

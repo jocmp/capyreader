@@ -108,7 +108,9 @@ class ArticleScreenViewModel(
 
     fun markAllRead(range: MarkRead) {
         viewModelScope.launch(Dispatchers.IO) {
-            account.markAllRead(filter = filter.value, range = range)
+            val articleIDs = account.unreadArticleIDs(filter = filter.value, range = range)
+
+            markReadAsync(articleIDs, context)
         }
     }
 
@@ -203,7 +205,7 @@ class ArticleScreenViewModel(
     private suspend fun markRead(articleID: String) {
         account.markRead(articleID)
             .onFailure {
-                markReadAsync(articleID, context)
+                markReadAsync(listOf(articleID), context)
             }
     }
 
