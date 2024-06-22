@@ -72,4 +72,5 @@
     <string name="auth_error_message">Invalid email or password</string>
     <string name="update_auth_success_message">Successfully logged in</string>
     <string name="login_title">Log in to Feedbin</string>
+    <string name="crash_reporting_checkbox_title">Enable crash reporting</string>
 </resources>
