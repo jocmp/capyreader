@@ -4,14 +4,16 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,7 +28,6 @@ import com.jocmp.capy.EditFeedFormEntry
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capyreader.R
-import com.jocmp.capyreader.ui.components.TextField
 import com.jocmp.capyreader.ui.fixtures.FeedPreviewFixture
 
 @Composable
@@ -65,10 +66,12 @@ fun EditFeedView(
     }
 
     Column(
-        Modifier
-            .padding(16.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = Modifier
             .verticalScroll(scrollState)
+            .padding(16.dp)
     ) {
+
         TextField(
             value = name,
             onValueChange = setName,
@@ -79,7 +82,8 @@ fun EditFeedView(
             keyboardOptions = KeyboardOptions(
                 capitalization = KeyboardCapitalization.Words,
                 autoCorrect = false
-            )
+            ),
+            modifier = Modifier.fillMaxWidth()
         )
         TextField(
             value = addedFolder,
@@ -90,9 +94,13 @@ fun EditFeedView(
             keyboardOptions = KeyboardOptions(
                 capitalization = KeyboardCapitalization.Words,
                 autoCorrect = false
-            )
+            ),
+            modifier = Modifier.fillMaxWidth()
         )
-        Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+        Column(
+            modifier = Modifier
+                .padding(horizontal = 8.dp)
+        ) {
             displaySwitchFolders.forEach { (folderTitle, checked) ->
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -108,13 +116,13 @@ fun EditFeedView(
             }
         }
         Row(
-            horizontalArrangement = Arrangement.End,
+            horizontalArrangement = Arrangement.spacedBy(8.dp, alignment = Alignment.End),
             modifier = Modifier.fillMaxWidth()
         ) {
             TextButton(onClick = onCancel) {
                 Text(stringResource(R.string.feed_form_cancel))
             }
-            Button(onClick = { submitFeed() }) {
+            TextButton(onClick = { submitFeed() }) {
                 Text(stringResource(R.string.edit_feed_submit))
             }
         }

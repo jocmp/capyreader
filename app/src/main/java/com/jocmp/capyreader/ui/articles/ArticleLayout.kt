@@ -81,9 +81,14 @@ fun ArticleLayout(
     onMarkAllRead: (range: MarkRead) -> Unit,
     onRemoveFeed: (feedID: String, onSuccess: () -> Unit, onFailure: () -> Unit) -> Unit,
     drawerValue: DrawerValue = DrawerValue.Closed,
+    showUnauthorizedMessage: Boolean,
+    onUnauthorizedDismissRequest: () -> Unit
 ) {
     val templateColors = articleTemplateColors()
     val (isInitialized, setInitialized) = rememberSaveable { mutableStateOf(false) }
+    val (isUpdatePasswordDialogOpen, setUpdatePasswordDialogOpen) = rememberSaveable {
+        mutableStateOf(false)
+    }
     val drawerState = rememberDrawerState(drawerValue)
     val coroutineScope = rememberCoroutineScope()
     val scaffoldNavigator = rememberListDetailPaneScaffoldNavigator()
@@ -99,6 +104,11 @@ fun ArticleLayout(
     val unsubscribeMessage = stringResource(R.string.feed_action_unsubscribe_success)
     val unsubscribeErrorMessage = stringResource(R.string.unsubscribe_error)
     val currentFeed = findCurrentFeed(filter, allFeeds)
+
+    val openUpdatePasswordDialog = {
+        onUnauthorizedDismissRequest()
+        setUpdatePasswordDialogOpen(true)
+    }
 
     val navigateToDetail = {
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
@@ -276,6 +286,25 @@ fun ArticleLayout(
         }
     )
 
+    if (showUnauthorizedMessage) {
+        UnauthorizedAlertDialog(
+            onConfirm = openUpdatePasswordDialog,
+            onDismissRequest = onUnauthorizedDismissRequest,
+        )
+    }
+
+    if (isUpdatePasswordDialogOpen) {
+        UpdateAuthDialog(
+            onSuccess = { message ->
+                setUpdatePasswordDialogOpen(false)
+                showSnackbar(message)
+            },
+            onDismissRequest = {
+                setUpdatePasswordDialogOpen(false)
+            }
+        )
+    }
+
     LaunchedEffect(Unit) {
         if (!isInitialized) {
             state.startRefresh()
@@ -329,6 +358,8 @@ fun ArticleLayoutPreview() {
             onToggleArticleStar = {},
             onMarkAllRead = {},
             drawerValue = DrawerValue.Open,
+            showUnauthorizedMessage = false,
+            onUnauthorizedDismissRequest = {}
         )
     }
 }

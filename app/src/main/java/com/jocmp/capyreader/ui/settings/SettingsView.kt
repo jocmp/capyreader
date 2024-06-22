@@ -18,8 +18,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -46,8 +44,6 @@ fun SettingsView(
     onRequestLogout: () -> Unit,
     accountName: String
 ) {
-    val snackbarHostState = remember { SnackbarHostState() }
-
     val (isRemoveDialogOpen, setRemoveDialogOpen) = remember { mutableStateOf(false) }
 
     val onRemoveCancel = {
@@ -63,7 +59,7 @@ fun SettingsView(
         topBar = {
             MediumTopAppBar(
                 title = {
-                    Text(text = "Settings")
+                    Text(text = stringResource(R.string.settings_top_bar_title))
                 },
                 navigationIcon = {
                     IconButton(
@@ -76,9 +72,6 @@ fun SettingsView(
                     }
                 },
             )
-        },
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
         },
     ) { contentPadding ->
         Column(

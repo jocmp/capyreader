@@ -8,15 +8,14 @@ import com.jocmp.capyreader.common.AppPreferences
 import com.jocmp.capyreader.loadAccountModules
 import kotlinx.coroutines.launch
 
-class AccountIndexViewModel(
+class LoginViewModel(
     private val accountManager: AccountManager,
     private val appPreferences: AppPreferences,
 ) : ViewModel() {
     fun login(
         username: String,
         password: String,
-        onSuccess: () -> Unit,
-        onFailure: () -> Unit,
+        onComplete: (result: Result<Unit>) -> Unit
     ) {
         viewModelScope.launch {
             val result = verifyCredentials(username = username, password = password)
@@ -31,9 +30,9 @@ class AccountIndexViewModel(
 
                 loadAccountModules()
 
-                onSuccess()
+                Result.success(Unit)
             } else {
-                onFailure()
+                Result.failure(Exception("Couldn't log in"))
             }
         }
     }

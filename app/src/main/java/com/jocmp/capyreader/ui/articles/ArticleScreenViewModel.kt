@@ -2,7 +2,10 @@ package com.jocmp.capyreader.ui.articles
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -16,6 +19,7 @@ import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.buildPager
+import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.countAll
 import com.jocmp.capyreader.common.AppPreferences
 import com.jocmp.capyreader.sync.addStarAsync
@@ -42,7 +46,9 @@ class ArticleScreenViewModel(
 
     val filter = MutableStateFlow(appPreferences.filter.get())
 
-    private val articleState = mutableStateOf(account.findArticle(appPreferences.articleID.get()))
+    private var _article by mutableStateOf(account.findArticle(appPreferences.articleID.get()))
+
+    private var _showUnauthorizedMessage by mutableStateOf(UnauthorizedMessageState.HIDE)
 
     private val _counts = filter.flatMapLatest { latestFilter ->
         account.countAll(latestFilter.status)
@@ -68,8 +74,11 @@ class ArticleScreenViewModel(
         it.values.sum()
     }
 
+    val showUnauthorizedMessage: Boolean
+        get() = _showUnauthorizedMessage == UnauthorizedMessageState.SHOW
+
     val article: Article?
-        get() = articleState.value
+        get() = _article
 
     private val filterStatus: ArticleStatus
         get() = filter.value.status
@@ -130,14 +139,17 @@ class ArticleScreenViewModel(
                 }
             )
         }
-
     }
 
     fun refreshFeed(onComplete: () -> Unit) {
         refreshJob?.cancel()
 
         refreshJob = viewModelScope.launch(Dispatchers.IO) {
-            account.refresh()
+            account.refresh().onFailure { throwable ->
+                if (throwable is UnauthorizedError && _showUnauthorizedMessage == UnauthorizedMessageState.HIDE) {
+                    _showUnauthorizedMessage = UnauthorizedMessageState.SHOW
+                }
+            }
 
             onComplete()
         }
@@ -145,15 +157,15 @@ class ArticleScreenViewModel(
 
     fun selectArticle(articleID: String, completion: (article: Article) -> Unit) {
         viewModelScope.launch {
-            articleState.value = account.findArticle(articleID = articleID)?.copy(read = true)
-            articleState.value?.let(completion)
+            _article = account.findArticle(articleID = articleID)?.copy(read = true)
+            _article?.let(completion)
             appPreferences.articleID.set(articleID)
             markRead(articleID)
         }
     }
 
     fun toggleArticleRead() {
-        articleState.value?.let { article ->
+        _article?.let { article ->
             viewModelScope.launch {
                 if (article.read) {
                     markUnread(article.id)
@@ -162,12 +174,12 @@ class ArticleScreenViewModel(
                 }
             }
 
-            articleState.value = article.copy(read = !article.read)
+            _article = article.copy(read = !article.read)
         }
     }
 
     fun toggleArticleStar() {
-        articleState.value?.let { article ->
+        _article?.let { article ->
             viewModelScope.launch {
                 if (article.starred) {
                     removeStar(article.id)
@@ -175,13 +187,17 @@ class ArticleScreenViewModel(
                     addStar(article.id)
                 }
 
-                articleState.value = article.copy(starred = !article.starred)
+                _article = article.copy(starred = !article.starred)
             }
         }
     }
 
+    fun dismissUnauthorizedMessage() {
+        _showUnauthorizedMessage = UnauthorizedMessageState.LATER
+    }
+
     fun clearArticle() {
-        articleState.value = null
+        _article = null
 
         viewModelScope.launch {
             appPreferences.articleID.delete()
@@ -246,6 +262,12 @@ class ArticleScreenViewModel(
 
     private val context: Context
         get() = application.applicationContext
+
+    enum class UnauthorizedMessageState {
+        HIDE,
+        SHOW,
+        LATER,
+    }
 }
 
 private fun <T : Countable> List<T>.withPositiveCount(status: ArticleStatus): List<T> {

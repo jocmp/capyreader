@@ -18,22 +18,15 @@ fun FilterAppBarTitle(
     allFeeds: List<Feed>,
     folders: List<Folder>,
 ) {
-    val articleStatusTitle = (filter as? ArticleFilter.Articles)?.run {
-        stringResource(articleStatus.navigationTitle)
-    }
-
-    val text = remember(filter) {
-        when (filter) {
-            is ArticleFilter.Articles -> articleStatusTitle
-            is ArticleFilter.Feeds -> {
-                allFeeds.find { it.id == filter.feedID }?.title
-            }
-
-            is ArticleFilter.Folders -> {
-                folders.find { it.title == filter.folderTitle }?.title
-            }
-        }.orEmpty()
-    }
+    val text = when (filter) {
+        is ArticleFilter.Articles -> stringResource(filter.articleStatus.navigationTitle)
+        is ArticleFilter.Feeds -> {
+            allFeeds.find { it.id == filter.feedID }?.title
+        }
+        is ArticleFilter.Folders -> {
+            folders.find { it.title == filter.folderTitle }?.title
+        }
+    }.orEmpty()
 
     Text(
         text,
