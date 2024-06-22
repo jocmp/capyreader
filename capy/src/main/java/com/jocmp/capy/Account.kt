@@ -68,9 +68,7 @@ data class Account(
         return delegate.removeFeed(feedID = feedID)
     }
 
-    suspend fun refresh() {
-        delegate.refresh()
-    }
+    suspend fun refresh(): Result<Unit> = delegate.refresh()
 
     suspend fun findFeed(feedID: String): Feed? {
         return feedRecords.findBy(feedID)

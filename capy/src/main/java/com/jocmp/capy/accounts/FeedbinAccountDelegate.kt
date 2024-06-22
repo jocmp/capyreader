@@ -4,6 +4,7 @@ import com.jocmp.capy.AccountDelegate
 import com.jocmp.capy.Article
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult.AddFeedError
+import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.host
 import com.jocmp.capy.common.nowUTC
 import com.jocmp.capy.common.toDateTime
@@ -196,6 +197,8 @@ internal class FeedbinAccountDelegate(
             Result.success(Unit)
         } catch (exception: UnknownHostException) {
             Result.failure(exception)
+        } catch (e: UnauthorizedError) {
+            return Result.failure(e)
         }
     }
 
@@ -348,6 +351,8 @@ private suspend fun <T> withErrorHandling(func: suspend () -> T?): Result<T> {
             Result.failure(Throwable("Unexpected error"))
         }
     } catch (e: UnknownHostException) {
+        return Result.failure(e)
+    } catch (e: UnauthorizedError) {
         return Result.failure(e)
     }
 }

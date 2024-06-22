@@ -25,9 +25,7 @@ fun EditFeedDialog(
     }
 
     Dialog(onDismissRequest = onCancel) {
-        Card(
-            shape = RoundedCornerShape(16.dp)
-        ) {
+        Card {
             EditFeedView(
                 feed = feed,
                 folders = folders,

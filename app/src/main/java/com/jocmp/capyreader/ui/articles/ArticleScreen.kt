@@ -38,5 +38,7 @@ fun ArticleScreen(
         onToggleArticleRead = viewModel::toggleArticleRead,
         onToggleArticleStar = viewModel::toggleArticleStar,
         onMarkAllRead = viewModel::markAllRead,
+        showUnauthorizedMessage = viewModel.showUnauthorizedMessage,
+        onUnauthorizedDismissRequest = viewModel::dismissUnauthorizedMessage
     )
 }

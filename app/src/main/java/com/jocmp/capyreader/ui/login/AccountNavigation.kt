@@ -1,16 +1,12 @@
 package com.jocmp.capyreader.ui.login
 
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.sizeIn
-import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import com.jocmp.capyreader.ui.Route
+import com.jocmp.capyreader.ui.components.DialogCard
 import com.jocmp.capyreader.ui.settings.SettingsScreen
 
 fun NavGraphBuilder.accountsGraph(
@@ -24,7 +20,7 @@ fun NavGraphBuilder.accountsGraph(
             onSuccess = onLoginSuccess,
         )
     }
-    settingsLayout(isCompactWindow) {
+    dynamicLayout(isCompactWindow) {
         SettingsScreen(
             onLogout = onLogout,
             onNavigateBack = onNavigateBackFromSettings
@@ -32,7 +28,7 @@ fun NavGraphBuilder.accountsGraph(
     }
 }
 
-fun NavGraphBuilder.settingsLayout(isCompactWindow: Boolean, content: @Composable () -> Unit) {
+fun NavGraphBuilder.dynamicLayout(isCompactWindow: Boolean, content: @Composable () -> Unit) {
     val route = Route.Settings.path
 
     if (isCompactWindow) {
@@ -44,14 +40,7 @@ fun NavGraphBuilder.settingsLayout(isCompactWindow: Boolean, content: @Composabl
             route,
             dialogProperties = DialogProperties(usePlatformDefaultWidth = false)
         ) {
-
-            Card(
-                Modifier
-                    .padding(32.dp)
-                    .sizeIn(maxHeight = 600.dp, maxWidth = 400.dp)
-            ) {
-                content()
-            }
+            DialogCard(content = content)
         }
     }
 }
