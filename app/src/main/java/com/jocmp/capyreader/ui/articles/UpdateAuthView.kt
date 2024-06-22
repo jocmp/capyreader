@@ -33,7 +33,7 @@ fun UpdateAuthView(
     showError: Boolean = false,
 ) {
     val errorMessage = if (showError) {
-        stringResource(R.string.update_auth_error_message)
+        stringResource(R.string.auth_error_message)
     } else {
         null
     }

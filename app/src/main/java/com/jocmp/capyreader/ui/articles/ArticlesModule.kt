@@ -32,7 +32,4 @@ internal val articlesModule = module {
             appPreferences = get()
         )
     }
-    viewModel {
-        UpdateAuthViewModel(get())
-    }
 }

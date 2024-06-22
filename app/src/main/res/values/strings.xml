@@ -69,6 +69,7 @@
     <string name="auth_fields_log_in_button">Log In</string>
     <string name="settings_top_bar_title">Settings</string>
     <string name="update_auth_title">Log in to Feedbin</string>
-    <string name="update_auth_error_message">Invalid email or password</string>
+    <string name="auth_error_message">Invalid email or password</string>
     <string name="update_auth_success_message">Successfully logged in</string>
+    <string name="login_title">Log in to Feedbin</string>
 </resources>
