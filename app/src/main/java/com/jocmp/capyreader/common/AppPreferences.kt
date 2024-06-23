@@ -33,6 +33,9 @@ class AppPreferences(context: Context) {
     val articleID: Preference<String>
         get() = preferenceStore.getString("article_id")
 
+    val crashReporting: Preference<Boolean>
+        get() = preferenceStore.getBoolean("enable_crash_reporting", false)
+
     fun clearAll() {
         accountID.delete()
         articleID.delete()

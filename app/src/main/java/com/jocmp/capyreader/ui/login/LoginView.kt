@@ -3,6 +3,7 @@ package com.jocmp.capyreader.ui.login
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
@@ -12,10 +13,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jocmp.capyreader.R
+import com.jocmp.capyreader.common
+import com.jocmp.capyreader.common.AppPreferences
+import com.jocmp.capyreader.setupCommonModules
+import com.jocmp.capyreader.ui.components.CrashReportingCheckbox
+import org.koin.android.ext.koin.androidContext
+import org.koin.compose.KoinApplication
+import org.koin.dsl.module
+import kotlin.math.sin
 
 @Composable
 fun LoginView(
@@ -41,24 +51,30 @@ fun LoginView(
                 .padding(padding)
         ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier
                     .widthIn(max = 400.dp)
-                    .padding(horizontal = 16.dp)
             ) {
-                Text(
-                    text = stringResource(R.string.login_title),
-                    style = typography.headlineMedium,
-                )
-                AuthFields(
-                    username = username,
-                    password = password,
-                    onUsernameChange = onUsernameChange,
-                    onPasswordChange = onPasswordChange,
-                    onSubmit = onSubmit,
-                    loading = loading,
-                    errorMessage = errorMessage
-                )
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                ) {
+                    Text(
+                        text = stringResource(R.string.login_title),
+                        style = typography.headlineMedium,
+                    )
+                    AuthFields(
+                        username = username,
+                        password = password,
+                        onUsernameChange = onUsernameChange,
+                        onPasswordChange = onPasswordChange,
+                        onSubmit = onSubmit,
+                        loading = loading,
+                        errorMessage = errorMessage
+                    )
+                }
+                Row(Modifier.padding(horizontal = 8.dp)) {
+                    CrashReportingCheckbox()
+                }
             }
         }
     }
@@ -67,8 +83,17 @@ fun LoginView(
 @Preview
 @Composable
 private fun LoginViewPreview() {
-    LoginView(
-        username = "test@example.com",
-        password = "",
-    )
+    val context = LocalContext.current
+
+    KoinApplication(
+        application = {
+            androidContext(context)
+            setupCommonModules()
+        }
+    ) {
+        LoginView(
+            username = "test@example.com",
+            password = "",
+        )
+    }
 }
