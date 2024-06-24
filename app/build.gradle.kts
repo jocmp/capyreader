@@ -1,4 +1,5 @@
 import com.android.build.gradle.internal.tasks.factory.dependsOn
+import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -6,6 +7,12 @@ plugins {
     kotlin("plugin.serialization") version libs.versions.kotlin
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
+}
+
+val secrets = Properties()
+
+if (rootProject.file("secrets.properties").exists()) {
+    secrets.load(rootProject.file("secrets.properties").inputStream())
 }
 
 android {
@@ -16,8 +23,8 @@ android {
         applicationId = "com.jocmp.capyreader"
         minSdk = 30
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 1001
+        versionName = "2024.06.1001"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -26,6 +33,13 @@ android {
     }
 
     signingConfigs {
+        create("release") {
+            storeFile = file("${project.rootDir}/release.keystore")
+            storePassword = secrets.getProperty("store_password")
+            keyAlias = secrets.getProperty("key_alias")
+            keyPassword = secrets.getProperty("key_password")
+        }
+
         getByName("debug") {
             storeFile = file("${project.rootDir}/debug.keystore")
         }
@@ -39,7 +53,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {

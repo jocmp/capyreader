@@ -1,0 +1,19 @@
+[bumpver]
+current_version = "2024.06.1001"
+version_pattern = "YYYY.0M.BUILD"
+commit_message = "Bump version {old_version} to {new_version}"
+commit = true
+tag = true
+push = false
+
+[bumpver.file_patterns]
+"README.md" = [
+    "{version}",
+]
+"bumpver.toml" = [
+    'current_version = "{version}"',
+]
+"app/build.gradle" = [
+    'versionName "{version}"',
+    'versionCode BUILD'
+]

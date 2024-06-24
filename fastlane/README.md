@@ -15,6 +15,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## Android
 
+### android validate_key
+
+```sh
+[bundle exec] fastlane android validate_key
+```
+
+Validate Play Store key
+
 ### android test
 
 ```sh
@@ -23,18 +31,10 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Runs all the tests
 
-### android beta
+### android production
 
 ```sh
-[bundle exec] fastlane android beta
-```
-
-Submit a new Beta Build to Crashlytics Beta
-
-### android deploy
-
-```sh
-[bundle exec] fastlane android deploy
+[bundle exec] fastlane android production
 ```
 
 Deploy a new version to the Google Play
