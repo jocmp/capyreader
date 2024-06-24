@@ -23,3 +23,5 @@ google-play-service-account.json
 app/google-services.json
 secrets.properties
 release.keystore
+
+vendor/
