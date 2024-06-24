@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+require 'open3'
+require 'fileutils'
+
+def fetch_config
+  result, _, _ = Open3.capture3("bumpver show -n --environ")
+
+  result
+    .split(' ')
+    .map { |pair| pair.split('=', 2) }
+    .to_h
+end
+
+build = fetch_config["BID"].to_i
+next_build = build + 1
+
+path = "fastlane/metadata/android/en-US/changelogs/#{next_build}.txt"
+FileUtils.touch "./#{path}"
+
+puts "Added changelog for next build (#{next_build})\n./#{path}"

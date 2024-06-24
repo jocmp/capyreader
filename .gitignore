@@ -17,3 +17,9 @@ local.properties
 fastlane/report.xml
 app/release/
 app/google-services.json
+
+# Secrets
+google-play-service-account.json
+app/google-services.json
+secrets.properties
+release.keystore

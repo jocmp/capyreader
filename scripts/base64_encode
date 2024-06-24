@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+# frozen_string_literal: true
+
+require 'base64'
+
+file_body = File.open(ARGV[0]).read
+
+puts Base64.strict_encode64(file_body)

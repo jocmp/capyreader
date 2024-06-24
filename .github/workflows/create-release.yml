@@ -1,0 +1,25 @@
+on:
+  push:
+    tags:
+      - "v*"
+
+name: Create Release
+
+jobs:
+  build:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.7
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1.1.4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body_path: fastlane/metadata/android/en-US/changelogs/${{ github.ref }}.txt
+          draft: false
+          prerelease: false

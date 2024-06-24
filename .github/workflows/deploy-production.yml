@@ -1,0 +1,38 @@
+name: Deploy Production
+
+on: workflow_dispatch
+
+jobs:
+  production:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4.1.7
+        with:
+          ssh-key: ${{ secrets.RELEASE_SSH_KEY }}
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1.180.1
+      - name: Set up Java
+        uses: actions/setup-java@v4.2.1
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+      - name: Setup build dependencies
+        run: make deps
+      - name: Configure Git user
+        run: |
+          git config user.name "jocmp"
+          git config user.email "9521010+jocmp@users.noreply.github.com"
+      - name: Bump version
+        run: bumpver update
+      - name: Deploy App to Production
+        env:
+          ENCODED_GOOGLE_PLAY_CREDENTIALS: ${{ secrets.ENCODED_GOOGLE_PLAY_CREDENTIALS }}
+          ENCODED_GOOGLE_SERVICES: ${{ secrets.ENCODED_GOOGLE_SERVICES }}
+          ENCODED_RELEASE_KEYSTORE: ${{ secrets.ENCODED_RELEASE_KEYSTORE }}
+          ENCODED_SECRETS_PROPERTIES: ${{ secrets.ENCODED_SECRETS_PROPERTIES }}
+        run: make deploy-production
+      - name: Sync versioning to Main
+        run: git push --follow-tags
