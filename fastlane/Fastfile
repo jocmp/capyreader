@@ -19,5 +19,5 @@ platform :android do
 end
 
 def build_release
-  gradle(task: 'clean assembleRelease')
+  gradle(task: 'clean bundleRelease')
 end
