@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Ars Technica</title>
+	<atom:link href="https://arstechnica.com/feed/" rel="self" type="application/rss+xml" />
+	<link>https://arstechnica.com</link>
+	<description>Serving the Technologist for more than a decade. IT news, reviews, and analysis.</description>
+	<lastBuildDate>Mon, 04 Dec 2023 20:27:31 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.0.3</generator>
+
+<image>
+	<url>https://cdn.arstechnica.net/wp-content/uploads/2016/10/cropped-ars-logo-512_480-32x32.png</url>
+	<title>Ars Technica</title>
+	<link>https://arstechnica.com</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>New teaser reminds us that Dragon Age: Dreadwolf still exists</title>
+		<link>https://arstechnica.com/?p=1988420</link>
+		
+		<dc:creator><![CDATA[Kyle Orland]]></dc:creator>
+		<pubDate>Mon, 04 Dec 2023 20:25:54 +0000</pubDate>
+				<category><![CDATA[Gaming]]></category>
+		<category><![CDATA[Bioware]]></category>
+		<category><![CDATA[Dragon Age]]></category>
+		<category><![CDATA[dragon age 4]]></category>
+		<category><![CDATA[dreadwolf]]></category>
+		<category><![CDATA[EA]]></category>
+		<guid isPermaLink="false">https://arstechnica.com/?p=1988420</guid>
+
+					<description><![CDATA[A full trailer and release date announcement are being promised for next summer.]]></description>
+										<content:encoded><![CDATA[<div id="rss-wrap">
+
+
+
+
+
+<div><a name="page-1"></a></div>
+<div class="video"><div class="wrapper" style="display:block" type="text/html" width="640" height="360" src="https://www.youtube.com/embed/tCokMTQ6qKk?start=0&amp;wmode=transparent" frameborder="0" allowfullscreen></div></div>
+<p>Hey, remember <em>Dragon Age: Dreadwolf</em>? It has been over a year now since <a href="https://arstechnica.com/gaming/2022/06/bioware-reveals-dreadwolf-as-the-next-dragon-age-title/">the game's title was first revealed</a> and almost exactly five years since the then-unnamed sequel was <a href="https://www.youtube.com/watch?v=Nw3lrXlti-8">first announced at the 2018 Game Awards</a>. And today, just to make sure you didn't forget about the long-in-development game completely, Bioware and EA are <a href="https://www.youtube.com/watch?v=tCokMTQ6qKk">out with yet another teaser</a> presaging a "full reveal" planned for summer 2024.</p>
+<p>The short "Dragon Age Day" video, titled "Thedas Call," features unseen voiceovers speaking over airborne, still-life shots of three locations that will feature in the new game. An <a href="https://www.ea.com/games/dragon-age/news/da-day-2023">accompanying blog post</a> goes into a bit more detail on the locations, describing "the desolate, beautiful badlands of the Anderfels with curtains of distant mountainous spires. The twisting channels and gleaming towers of Antiva, where Crows may lurk in any shadow. The turquoise seas of Rivain with its rushes of greenery and hardy sea-faring people."</p>
+<p>The short teaser concludes with a statement that seemingly comes from Solas (a.k.a. Fen'harel), the Dread Wolf that will serve as the game's antagonist: "All the world will soon share the peace and comfort of my reign." And EA's blog post expands a bit on Solas' motivation as "not a man who sees himself as evil, but someone who believes he's fighting for a good cause and is willing to get his hands dirty."</p></div><p><a href="https://arstechnica.com/?p=1988420#p3">Read 5 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1988420&comments=1">Comments</a></p>]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Judge: Amazon “cannot claim shock” that bathroom spycams were used as advertised</title>
+		<link>https://arstechnica.com/?p=1988382</link>
+					<comments>https://arstechnica.com/tech-policy/2023/12/amazon-faces-trial-after-selling-bathroom-spycam-used-to-abuse-minor/#comments</comments>
+		
+		<dc:creator><![CDATA[Ashley Belanger]]></dc:creator>
+		<pubDate>Mon, 04 Dec 2023 20:16:55 +0000</pubDate>
+				<category><![CDATA[Policy]]></category>
+		<category><![CDATA[Amazon]]></category>
+		<category><![CDATA[bathroom spy cam]]></category>
+		<category><![CDATA[hidden camera]]></category>
+		<category><![CDATA[privacy]]></category>
+		<category><![CDATA[product safety]]></category>
+		<category><![CDATA[spy cam]]></category>
+		<category><![CDATA[spy camera]]></category>
+		<guid isPermaLink="false">https://arstechnica.com/?p=1988382</guid>
+
+					<description><![CDATA[A West Virginia judge largely denied Amazon's motion to dismiss lawsuit.]]></description>
+										<content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left">
+  <img src="https://cdn.arstechnica.net/wp-content/uploads/2023/12/GettyImages-1417525587-800x533.jpg" alt="Judge: Amazon “cannot claim shock” that bathroom spycams were used as advertised">
+      <p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2023/12/GettyImages-1417525587.jpg" class="enlarge-link" data-height="1414" data-width="2121">Enlarge</a> (credit: <a rel="nofollow" class="caption-link" href="https://www.gettyimages.com/detail/photo/watch-the-toilet-inside-the-door-royalty-free-image/1417525587?phrase=bathroom%20spying">zhihao | Moment</a>)</p>  </figure>
+
+
+
+
+
+
+<div><a name="page-1"></a></div>
+<p>After a spy camera designed to look like a towel hook was purchased on Amazon and illegally used for months to capture photos of a minor in her private bathroom, Amazon was sued.</p>
+<p>The plaintiff—a former Brazilian foreign exchange student then living in West Virginia—argued that Amazon had inspected the camera three times and its safety team had failed to prevent allegedly severe, foreseeable harms still affecting her today.</p>
+<p>Amazon hoped the court would dismiss the suit, <a href="https://law.justia.com/cases/federal/district-courts/west-virginia/wvsdce/3:2023cv00046/235914/24/">arguing</a> that the platform wasn't responsible for the alleged criminal conduct harming the minor. But after nearly eight months deliberating, a judge recently largely denied the tech giant's motion to dismiss.</p></div><p><a href="https://arstechnica.com/?p=1988382#p3">Read 14 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1988382&comments=1">Comments</a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://arstechnica.com/tech-policy/2023/12/amazon-faces-trial-after-selling-bathroom-spycam-used-to-abuse-minor/feed/</wfw:commentRss>
+			<slash:comments>8</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Streaming apps are trying to bundle their way out of customer disenchantment</title>
+		<link>https://arstechnica.com/?p=1988318</link>
+					<comments>https://arstechnica.com/gadgets/2023/12/streaming-apps-are-trying-to-bundle-their-way-out-of-customer-disenchantment/#comments</comments>
+		
+		<dc:creator><![CDATA[Scharon Harding]]></dc:creator>
+		<pubDate>Mon, 04 Dec 2023 19:36:16 +0000</pubDate>
+				<category><![CDATA[Tech]]></category>
+		<category><![CDATA[max]]></category>
+		<category><![CDATA[Netflix]]></category>
+		<category><![CDATA[streaming]]></category>
+		<category><![CDATA[TV]]></category>
+		<category><![CDATA[verizon]]></category>
+		<guid isPermaLink="false">https://arstechnica.com/?p=1988318</guid>
+
+					<description><![CDATA[Reliably good prices, libraries, and features would impress customers more.]]></description>
+										<content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left">
+  <img src="https://cdn.arstechnica.net/wp-content/uploads/2023/04/flash3-800x523.jpg" alt="Michael Keaton's Batman">
+      <p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2023/04/flash3.jpg" class="enlarge-link" data-height="785" data-width="1200">Enlarge</a> <span class="sep">/</span> Michael Keaton in <em>The Flash</em>, which is streaming on Max.  (credit: YouTube/Warner Bros.)</p>  </figure>
+
+
+
+
+
+
+<div><a name="page-1"></a></div>
+<p>Streaming services are on thin ice with many customers. With <a href="https://arstechnica.com/culture/2023/08/the-tv-streaming-apps-broke-their-promises-and-now-theyre-jacking-the-price/">price hikes</a> becoming a norm for streaming services, subscribers are reconsidering the value of streaming apps and whether subscriptions are worth the cost. In a bid to mollify disgruntled customers and make their packages seem more economical and simple, streaming services are bundling up.</p>
+<p>Verizon announced today that its myPlan wireless phone customers will be able to get Netflix and Max, both with ads, for $10 per month total per phone line. Netflix with ads is usually $6.99 per month, while Max's ad tier is $9.99 per month or $99.99 per year. That means Verizon customers can save up to $6.98 per month with the new bundle, which Verizon will begin offering on December 7.</p>
+<p>The new offer joins two other deals that Verizon already offers that bundle its wireless service with TV streaming. One lets customers add ad-free Disney+ and Hulu and ESPN with ads for $10 per month per line. Another lets customers add <a href="https://arstechnica.com/gadgets/2023/10/apple-raises-prices-of-apple-tv-and-other-services/">Apple One</a>, which includes Apple TV+, Apple Music, Apple Arcade, and iCloud+, for $10 per month per line.</p></div><p><a href="https://arstechnica.com/?p=1988318#p3">Read 14 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1988318&comments=1">Comments</a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://arstechnica.com/gadgets/2023/12/streaming-apps-are-trying-to-bundle-their-way-out-of-customer-disenchantment/feed/</wfw:commentRss>
+			<slash:comments>71</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Gmail’s AI-powered spam detection is its biggest security upgrade in years</title>
+		<link>https://arstechnica.com/?p=1988291</link>
+					<comments>https://arstechnica.com/gadgets/2023/12/gmails-ai-powered-spam-detection-is-its-biggest-security-upgrade-in-years/#comments</comments>
+		
+		<dc:creator><![CDATA[Ron Amadeo]]></dc:creator>
+		<pubDate>Mon, 04 Dec 2023 19:04:52 +0000</pubDate>
+				<category><![CDATA[Google]]></category>
+		<category><![CDATA[Tech]]></category>
+		<category><![CDATA[antispam]]></category>
+		<category><![CDATA[gmail]]></category>
+		<category><![CDATA[spam e-mail]]></category>
+		<category><![CDATA[spam filter]]></category>
+		<guid isPermaLink="false">https://arstechnica.com/?p=1988291</guid>
+
+					<description><![CDATA[Gmail's spam filters can now understand "adversarial text manipulations."]]></description>
+										<content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left">
+  <img src="https://cdn.arstechnica.net/wp-content/uploads/2020/07/getty-spam-800x576.jpg" alt="Illustration of a stack of enveloped labeled as " spam.>
+      <p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2020/07/getty-spam.jpg" class="enlarge-link" data-height="1246" data-width="1732">Enlarge</a> (credit: Getty Images | pagadesign)</p>  </figure>
+
+
+
+
+
+
+<div><a name="page-1"></a></div>
+<p>The latest post on the <a href="https://security.googleblog.com/2023/11/improving-text-classification.html">Google Security blog</a> details a new upgrade to Gmail's spam filters that Google is calling "one of the largest defense upgrades in recent years." The upgrade comes in the form of a new text classification system called RETVec (Resilient &amp; Efficient Text Vectorizer). Google says this can help understand "adversarial text manipulations"—these are emails full of special characters, emojis, typos, and other junk characters that previously were legible by humans but not easily understandable by machines. Previously, spam emails full of special characters made it through Gmail's defenses easily.</p>
+<p>If you want an example of what "adversarial text manipulation" looks like, the below message is something from my spam folder. My personal Gmail experience with these emails is that they used to be a major problem during the first half of the year, with emails like this regularly landing in my inbox. It does seem like this RETVec tech upgrade works, though, because emails like this haven't been a problem at all for me in the last few months.</p>
+<div class="image shortcode-img center"><a href="https://cdn.arstechnica.net/wp-content/uploads/2023/12/floorp_69j3MIP2KP.png"><img alt='An example of "adversarial text manipulation" from my spam folder. ' src="https://cdn.arstechnica.net/wp-content/uploads/2023/12/floorp_69j3MIP2KP-980x794.png"></a><p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2023/12/floorp_69j3MIP2KP.png" class="caption-link" rel="nofollow">An example of "adversarial text manipulation" from my spam folder. </a> (credit: Ron Amadeo)</p></div>
+<p>Emails like this have been so difficult to classify becuase, while any spam filter could probably swat down an email that says, "Congratulations! A balance of $1,000 is available for your jackpot account," that's not what this email actually says. A big portion of the letters here are "<a href="https://en.wikipedia.org/wiki/Homoglyph">homoglyphs</a>"—by diving into the endless depths of the Unicode standard, you can find obscure characters that look like they're part of the normal Latin alphabet but actually aren't.</p></div><p><a href="https://arstechnica.com/?p=1988291#p3">Read 5 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1988291&comments=1">Comments</a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://arstechnica.com/gadgets/2023/12/gmails-ai-powered-spam-detection-is-its-biggest-security-upgrade-in-years/feed/</wfw:commentRss>
+			<slash:comments>52</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Two Titans team up to defeat a new foe in Godzilla x Kong: The New Empire trailer</title>
+		<link>https://arstechnica.com/?p=1988215</link>
+					<comments>https://arstechnica.com/culture/2023/12/two-titans-team-up-to-defeat-a-new-foe-in-godzilla-x-kong-the-new-empire-trailer/#comments</comments>
+		
+		<dc:creator><![CDATA[Jennifer Ouellette]]></dc:creator>
+		<pubDate>Mon, 04 Dec 2023 17:10:34 +0000</pubDate>
+				<category><![CDATA[Culture]]></category>
+		<category><![CDATA[entertainment]]></category>
+		<category><![CDATA[film trailers]]></category>
+		<category><![CDATA[films]]></category>
+		<category><![CDATA[Godzilla X Kong]]></category>
+		<category><![CDATA[Legendary Pictures]]></category>
+		<category><![CDATA[Monsterverse]]></category>
+		<category><![CDATA[Warner Bros.]]></category>
+		<guid isPermaLink="false">https://arstechnica.com/?p=1988215</guid>
+
+					<description><![CDATA["This world has more secrets than we could possibly imagine."]]></description>
+										<content:encoded><![CDATA[<div id="rss-wrap">
+
+
+
+
+
+<div><a name="page-1"></a></div>
+<div class="video"><div class="wrapper" style="display:block" type="text/html" width="980" height="550" src="https://www.youtube.com/embed/lV1OOlGwExM?start=0&amp;wmode=transparent" frameborder="0" allowfullscreen></div><p class="caption" style="font-size:0.8em">Warner Bros. debuted the official trailer for the latest film in its Monsterverse saga: <em>Godzilla x Kong: The New Empire</em>. </p></div>
+<p>Legendary Entertainment's <a href="https://en.wikipedia.org/wiki/MonsterVerse" data-uri="d4f861b81c65e1167b0ac2b27d7cceec">MonsterVerse</a> brought Godzilla, King Kong, and various other monsters (<em>kaiju</em>) created by <a href="https://en.wikipedia.org/wiki/Toho" data-uri="18204e9dd7357ee5dd7e7d0ad09fdb1a">Toho Co., Ltd</a> into the same fold. There have been four feature films, plus the animated series <em><a href="https://en.wikipedia.org/wiki/Skull_Island_(TV_series)" data-uri="de643c07d2743bfe63d74f1fedc6fa33">Skull Island</a>, </em>which debuted on Netflix earlier this year, and Apple TV+'s <a href="https://en.wikipedia.org/wiki/Monarch:_Legacy_of_Monsters" data-uri="229da377c186552db7c1144f9f3990b1"><em>Monarch: Legacy of Monsters</em></a>, which debuted last month and picked up where the 2014 film <a href="https://amzn.to/3P9bwaX" target="_blank" rel="noopener" data-orig-url="https://amzn.to/3P9bwaX" data-ml-id="0" data-ml="true" data-xid="fr1701700805606cgj" data-uri="dbc68c1858baff16f8be0be9ad4cf0b2"><em>Godzilla</em></a> left off. (The season finale will air on January 12, 2024.) And now we have the official trailer for the next film installment—<em>Godzilla x Kong: The New Empire</em>—unveiled during CCXP in Sao Paulo, Brazil, over the weekend.</p>
+<p><strong>(Spoilers for <em>Godzilla vs. Kong</em> below.)</strong></p>
+<p>Directed by Adam Wingard, <em>Godzilla x Kong</em> picks up sometime after its 2021 predecessor. <em>Godzilla vs. Kong</em> showcased not only a major showdown between its titular titans—in which Godzilla emerged the victor—but also the two teaming up in the climactic finale to take out Mechagodzilla, a telepathically controlled creature with the severed head of Ghidorah. Ghidorah's consciousness took over when Mechagodzilla was activated, and it took both Kong and Godzilla (plus some timely help from humans) to defeat him. (Kong got the final honors, although Godzilla charged the killing ax—made from one of his dorsal plates—with his atomic breath.)</p></div><p><a href="https://arstechnica.com/?p=1988215#p3">Read 6 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1988215&comments=1">Comments</a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://arstechnica.com/culture/2023/12/two-titans-team-up-to-defeat-a-new-foe-in-godzilla-x-kong-the-new-empire-trailer/feed/</wfw:commentRss>
+			<slash:comments>43</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>What happens in Vega didn’t stay in Vega, as key rocket parts went missing</title>
+		<link>https://arstechnica.com/?p=1988257</link>
+					<comments>https://arstechnica.com/space/2023/12/italian-rocket-maker-has-a-problem-key-parts-of-final-vega-booster-were-trashed/#comments</comments>
+		
+		<dc:creator><![CDATA[Eric Berger]]></dc:creator>
+		<pubDate>Mon, 04 Dec 2023 16:27:34 +0000</pubDate>
+				<category><![CDATA[Science]]></category>
+		<category><![CDATA[Space]]></category>
+		<guid isPermaLink="false">https://arstechnica.com/?p=1988257</guid>
+
+					<description><![CDATA[There's a valuable payload riding on the final Vega rocket launch. ]]></description>
+										<content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left">
+  <img src="https://cdn.arstechnica.net/wp-content/uploads/2023/10/vv23-800x564.jpeg" alt="A Vega rocket rides a column of exhaust from its solid-fueled first stage, kicking off a mission to deliver 12 small satellites into orbit.">
+      <p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2023/10/vv23.jpeg" class="enlarge-link" data-height="1057" data-width="1500">Enlarge</a> <span class="sep">/</span> A Vega rocket rides a column of exhaust from its solid-fueled first stage, kicking off a mission to deliver 12 small satellites into orbit. (credit: <a rel="nofollow" class="caption-link" href="https://twitter.com/EuropeSpacePort/status/1711740278770446625/photo/3">ESA/CNES/Arianespace</a>)</p>  </figure>
+
+
+
+
+
+
+<div><a name="page-1"></a></div>
+<p>The Italy-based aerospace company Avio has not had the best of luck with its Vega rocket, which has always been something of an odd duck in the launch industry. Now, as the rocket nears its final launch, it's missing some critical components.</p>
+<p>The <a href="https://europeanspaceflight.com/the-case-of-the-missing-vega-avum-propellant-tanks/">European Spaceflight newsletter reports</a> that two of the four propellant tanks on the fourth stage of the Vega rocket—the upper stage, which is powered by dimethylhydrazine and nitrogen tetroxide fuel—went missing earlier this year.</p>
+<p>Now, it seems that the propellant tanks have been found. However, the newsletter says, the tanks were recovered in a dismal state, crushed, alongside metal scraps in a landfill. Someone, apparently, had trashed the tanks. This is a rather big problem for Avio, as this was to be the final Vega rocket launched, and the production lines are now closed for this hardware.</p></div><p><a href="https://arstechnica.com/?p=1988257#p3">Read 8 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1988257&comments=1">Comments</a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://arstechnica.com/space/2023/12/italian-rocket-maker-has-a-problem-key-parts-of-final-vega-booster-were-trashed/feed/</wfw:commentRss>
+			<slash:comments>76</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>IBM releases 1,000+ qubit processor, roadmap to error correction</title>
+		<link>https://arstechnica.com/?p=1988221</link>
+					<comments>https://arstechnica.com/science/2023/12/ibm-adds-error-correction-to-updated-quantum-computing-roadmap/#comments</comments>
+		
+		<dc:creator><![CDATA[John Timmer]]></dc:creator>
+		<pubDate>Mon, 04 Dec 2023 15:40:31 +0000</pubDate>
+				<category><![CDATA[Science]]></category>
+		<category><![CDATA[Computer science]]></category>
+		<category><![CDATA[Error correction]]></category>
+		<category><![CDATA[ibm]]></category>
+		<category><![CDATA[quantum computing]]></category>
+		<category><![CDATA[quantum mechanics]]></category>
+		<category><![CDATA[qubit]]></category>
+		<category><![CDATA[transmon]]></category>
+		<guid isPermaLink="false">https://arstechnica.com/?p=1988221</guid>
+
+					<description><![CDATA[Company now expects useful error-corrected qubits by the end of the decade.]]></description>
+										<content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left">
+  <img src="https://cdn.arstechnica.net/wp-content/uploads/2023/12/IBM_Quantum_Family_of_Processors-1-800x533.jpg" alt="Image of a series of silver-covered rectangles, each representing a processing chip.">
+      <p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2023/12/IBM_Quantum_Family_of_Processors-1.jpg" class="enlarge-link" data-height="1333" data-width="2000">Enlarge</a> <span class="sep">/</span> The family portrait of IBM's quantum processors, with the two new arrivals (Heron and Condor) at right. (credit: IBM)</p>  </figure>
+
+
+
+
+
+
+<div><a name="page-1"></a></div>
+<p>On Monday, IBM announced that it has produced the two quantum systems that its roadmap had slated for release in 2023. One of these is based on a chip named Condor, which is the largest transmon-based quantum processor yet released, with 1,121 functioning qubits. The second is based on a combination of three Heron chips, each of which has 133 qubits. Smaller chips like Heron and its successor, Flamingo, will play a critical role in IBM's quantum roadmap—which also got a major update today.</p>
+<p>Based on the update, IBM will have error-corrected qubits working by the end of the decade, enabled by improvements to individual qubits made over several iterations of the Flamingo chip. While these systems probably won't place things like existing encryption schemes at risk, they should be able to reliably execute quantum algorithms that are far more complex than anything we can do today.</p>
+<p>We talked with <a href="https://researcher.draco.res.ibm.com/researcher/view.php?person=us-jay.gambetta">IBM's Jay Gambetta</a> about everything the company is announcing today, including existing processors, future roadmaps, what the machines might be used for over the next few years, and the software that makes it all possible. But to understand what the company is doing, we have to back up a bit to look at where the field as a whole is moving.</p></div><p><a href="https://arstechnica.com/?p=1988221#p3">Read 20 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1988221&comments=1">Comments</a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://arstechnica.com/science/2023/12/ibm-adds-error-correction-to-updated-quantum-computing-roadmap/feed/</wfw:commentRss>
+			<slash:comments>41</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Automakers’ data privacy practices “are unacceptable,” says US senator</title>
+		<link>https://arstechnica.com/?p=1988229</link>
+					<comments>https://arstechnica.com/cars/2023/12/automakers-data-privacy-practices-are-unacceptable-says-us-senator/#comments</comments>
+		
+		<dc:creator><![CDATA[Jonathan M. Gitlin]]></dc:creator>
+		<pubDate>Mon, 04 Dec 2023 15:20:09 +0000</pubDate>
+				<category><![CDATA[Cars]]></category>
+		<category><![CDATA[automakers]]></category>
+		<category><![CDATA[connected car privacy]]></category>
+		<category><![CDATA[data privacy]]></category>
+		<category><![CDATA[Edward Markey]]></category>
+		<category><![CDATA[mozilla foundation]]></category>
+		<guid isPermaLink="false">https://arstechnica.com/?p=1988229</guid>
+
+					<description><![CDATA[OEMs collect too much personal data and share it too freely, says Senator Markey.]]></description>
+										<content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left">
+  <img src="https://cdn.arstechnica.net/wp-content/uploads/2023/12/GettyImages-1327255013-800x533.jpg" alt="A person sits in a car holding a smartphone, the screen reads " data privacy>
+      <p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2023/12/GettyImages-1327255013-scaled.jpg" class="enlarge-link" data-height="1707" data-width="2560">Enlarge</a> (credit: Getty Images)</p>  </figure>
+
+
+
+
+
+
+<div><a name="page-1"></a></div>
+<p>US Senator Edward Markey (D-Mass.) is one of the more technologically engaged of our elected lawmakers. And like many technologically engaged Ars Technica readers, he does not like what he sees in terms of automakers' approach to data privacy. On Friday, Sen. Markey <a href="https://www.markey.senate.gov/imo/media/doc/senator_markey_letter_to_automakers_on_privacy.pdf">wrote to 14 car companies</a> with a variety of questions about data privacy policies, urging them to do better.</p>
+<p><a href="https://arstechnica.com/cars/2023/09/connected-cars-are-a-privacy-nightmare-mozilla-foundation-says/">As Ars reported in September</a>, the Mozilla Foundation published <a href="https://foundation.mozilla.org/en/privacynotincluded/articles/its-official-cars-are-the-worst-product-category-we-have-ever-reviewed-for-privacy/">a scathing report</a> on the subject of data privacy and automakers. The problems were widespread—most automakers collect too much personal data and are too eager to sell or share it with third parties, the foundation found.</p>
+<p>Markey noted the Mozilla Foundation report in his letters, which were sent to BMW, Ford, General Motors, Honda, Hyundai, Kia, Mazda, Mercedes-Benz, Nissan, Stellantis, Subaru, Tesla, Toyota, and Volkswagen. The senator is concerned about the large amounts of data that modern cars can collect, including <a href="https://arstechnica.com/cars/2018/02/the-car-of-the-future-is-taking-shape-and-it-will-know-how-we-feel-about-it/">the troubling potential to use biometric data</a> (like the rate a driver blinks and breathes, as well as their pulse) to infer mood or mental health.</p></div><p><a href="https://arstechnica.com/?p=1988229#p3">Read 3 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1988229&comments=1">Comments</a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://arstechnica.com/cars/2023/12/automakers-data-privacy-practices-are-unacceptable-says-us-senator/feed/</wfw:commentRss>
+			<slash:comments>80</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Why don’t EVs have standard diagnostic ports—and when will that change?</title>
+		<link>https://arstechnica.com/?p=1988198</link>
+					<comments>https://arstechnica.com/cars/2023/12/why-dont-evs-have-standard-diagnostic-ports-and-when-will-that-change/#comments</comments>
+		
+		<dc:creator><![CDATA[Ars Contributors]]></dc:creator>
+		<pubDate>Mon, 04 Dec 2023 15:07:40 +0000</pubDate>
+				<category><![CDATA[Cars]]></category>
+		<category><![CDATA[California air resources board]]></category>
+		<category><![CDATA[car emissions]]></category>
+		<category><![CDATA[CARb]]></category>
+		<category><![CDATA[evergreen]]></category>
+		<category><![CDATA[EVs]]></category>
+		<category><![CDATA[OBD-II]]></category>
+		<category><![CDATA[onboard diagnostics standard]]></category>
+		<guid isPermaLink="false">https://arstechnica.com/?p=1988198</guid>
+
+					<description><![CDATA[OBD-II was implemented to monitor emissions, but EVs don't have tailpipes.]]></description>
+										<content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left">
+  <img src="https://cdn.arstechnica.net/wp-content/uploads/2023/12/GettyImages-1192340004-800x533.jpg" alt="Auto mechanic using car diagnostic scanner tool">
+      <p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2023/12/GettyImages-1192340004-scaled.jpg" class="enlarge-link" data-height="1707" data-width="2560">Enlarge</a> (credit: Getty Images)</p>  </figure>
+
+
+
+
+
+
+<div><a name="page-1"></a></div>
+<p>Its original name is an ALDL, short for Assembly Line Diagnostic Link, or Assembly Line Data Link. But most call an ALDL the OBD-II port because it provides everyone from engineers at proving grounds to dealership technicians to shade tree mechanics a connection to the vehicle's software and diagnostic systems. And soon, battery electric as well as hydrogen fuel cell vehicles will offer similar access.</p>
+<p>Wait… EVs don't already have that? Not all of them, no. And the various manufacturers' systems differ from each other in both connectivity and scope, which makes troubleshooting an errant EV that much more difficult. That, as you can imagine, causes more than a few headaches for the good folks who service EVs.</p>
+<p>Modern onboard diagnostics, or OBD-II, became a standardized and mandatory part of every automobile sold in the United States, starting with the 1996 model year. All vehicles, from a Ford Escape to a Ferrari SF90, needed one. But this mandate exempted EVs and other alternatively powered vehicles.</p></div><p><a href="https://arstechnica.com/?p=1988198#p3">Read 13 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1988198&comments=1">Comments</a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://arstechnica.com/cars/2023/12/why-dont-evs-have-standard-diagnostic-ports-and-when-will-that-change/feed/</wfw:commentRss>
+			<slash:comments>97</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Spotify to lay off 17% of workforce</title>
+		<link>https://arstechnica.com/?p=1988207</link>
+					<comments>https://arstechnica.com/culture/2023/12/spotify-to-lay-off-17-of-workforce/#comments</comments>
+		
+		<dc:creator><![CDATA[Financial Times]]></dc:creator>
+		<pubDate>Mon, 04 Dec 2023 14:27:52 +0000</pubDate>
+				<category><![CDATA[Culture]]></category>
+		<category><![CDATA[podcasts]]></category>
+		<category><![CDATA[spotify]]></category>
+		<category><![CDATA[syndication]]></category>
+		<guid isPermaLink="false">https://arstechnica.com/?p=1988207</guid>
+
+					<description><![CDATA[CEO Daniel Ek says the company's costs remain too high.]]></description>
+										<content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left">
+  <img src="https://cdn.arstechnica.net/wp-content/uploads/2021/09/getty-iphone-spotify-netflix-800x534.jpg" alt="The app icons for Spotify, Netflix, and Podcasts on an iPhone screen.">
+      <p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2021/09/getty-iphone-spotify-netflix.jpg" class="enlarge-link" data-height="1415" data-width="2119">Enlarge</a> (credit: <a rel="nofollow" class="caption-link" href="https://www.gettyimages.com/">Getty Images | stockcam</a>)</p>  </figure>
+
+
+
+
+
+
+<div><a name="page-1"></a></div>
+<p>Spotify will axe almost a fifth of its workforce after warning that economic growth had slowed dramatically and it needed to cut costs as the music streaming giant seeks to turn subscriber growth into consistent profitability.</p>
+<p>In a memo to staff on Monday, chief executive Daniel Ek said Spotify would cut about 17 percent of its global workforce, about 1,500 people. Spotify employs more than 9,000 people worldwide.</p>
+<p>“I recognize this will impact a number of individuals who have made valuable contributions,” Ek said. “To be blunt, many smart, talented, and hard-working people will be departing us.”</p></div><p><a href="https://arstechnica.com/?p=1988207#p3">Read 14 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1988207&comments=1">Comments</a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://arstechnica.com/culture/2023/12/spotify-to-lay-off-17-of-workforce/feed/</wfw:commentRss>
+			<slash:comments>183</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>The surprisingly robust careers of Star Trek stars who became video game voice actors</title>
+		<link>https://arstechnica.com/?p=1986874</link>
+					<comments>https://arstechnica.com/gaming/2023/12/live-long-and-prosper-a-retrospective-of-video-game-roles-played-by-star-trek-actors/#comments</comments>
+		
+		<dc:creator><![CDATA[Ars Contributors]]></dc:creator>
+		<pubDate>Mon, 04 Dec 2023 12:00:12 +0000</pubDate>
+				<category><![CDATA[Culture]]></category>
+		<category><![CDATA[Features]]></category>
+		<category><![CDATA[Gaming]]></category>
+		<category><![CDATA[Armin Shimmerman]]></category>
+		<category><![CDATA[civilization]]></category>
+		<category><![CDATA[Dragon Age]]></category>
+		<category><![CDATA[Fallout]]></category>
+		<category><![CDATA[John De Lancie]]></category>
+		<category><![CDATA[Leonard Nimoy]]></category>
+		<category><![CDATA[Mass Effect]]></category>
+		<category><![CDATA[patrick stewart]]></category>
+		<category><![CDATA[Star Trek]]></category>
+		<category><![CDATA[Star Trek Deep Space Nine]]></category>
+		<category><![CDATA[star trek the next generation]]></category>
+		<category><![CDATA[Star Trek The Original Series]]></category>
+		<category><![CDATA[star trek voyager]]></category>
+		<category><![CDATA[Star Trek: Enterprise]]></category>
+		<category><![CDATA[starfield]]></category>
+		<category><![CDATA[William Shatner]]></category>
+		<guid isPermaLink="false">https://arstechnica.com/?p=1986874</guid>
+
+					<description><![CDATA[Yes, that really is Quark's voice you're hearing.]]></description>
+										<content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left">
+  <img src="https://cdn.arstechnica.net/wp-content/uploads/2023/12/tng_original_costumes-800x533.jpg" alt="Actors in starfleet uniforms pose in a line with Patrick Stewart in the middle">
+      <p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2023/12/tng_original_costumes.jpg" class="enlarge-link" data-height="600" data-width="900">Enlarge</a> <span class="sep">/</span> Cast members from <em>Star Trek: The Next Generation</em>. (credit: CBS)</p>  </figure>
+
+
+
+
+
+
+<div><a name="page-1"></a></div>
+<p>It would be hard to overstate the impact that Star Trek has had on geek culture. So it shouldn’t come as a surprise that when folks who spent years watching the shows pursue careers in game development, they seek out the actors from one of their favorite TV shows to bring their creations to life. From TOS to VOY, many Star Trek actors followed up their star-making screen performances with voiceover work in video games.</p>
+<p>Of course, many of the cast members reprised their roles for licensed Star Trek games or reappearances of their Starfleet personas over the years; studios understandably don’t want to recast iconic parts if they can avoid it.</p>
+<p>But games have also provided many of these talented actors with a chance to create new characters and explore new genres beyond the ones that made them household names. If they’re not so versatile, working in games at least meant a chance for a paycheck after the series finale aired.</p></div><p><a href="https://arstechnica.com/?p=1986874#p3">Read 51 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1986874&comments=1">Comments</a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://arstechnica.com/gaming/2023/12/live-long-and-prosper-a-retrospective-of-video-game-roles-played-by-star-trek-actors/feed/</wfw:commentRss>
+			<slash:comments>115</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Tensions rise between Targaryens in first teaser for House of the Dragon S2</title>
+		<link>https://arstechnica.com/?p=1988151</link>
+					<comments>https://arstechnica.com/culture/2023/12/tensions-rise-between-targaryens-in-first-teaser-for-house-of-the-dragon-s2/#comments</comments>
+		
+		<dc:creator><![CDATA[Jennifer Ouellette]]></dc:creator>
+		<pubDate>Sat, 02 Dec 2023 23:51:36 +0000</pubDate>
+				<category><![CDATA[Culture]]></category>
+		<category><![CDATA[entertainment]]></category>
+		<category><![CDATA[Game of Thrones franchise]]></category>
+		<category><![CDATA[HBO]]></category>
+		<category><![CDATA[house of the dragon]]></category>
+		<category><![CDATA[TV trailers]]></category>
+		<guid isPermaLink="false">https://arstechnica.com/?p=1988151</guid>
+
+					<description><![CDATA["There is no war so hateful to the gods as a war between kin."]]></description>
+										<content:encoded><![CDATA[<div id="rss-wrap">
+
+
+
+
+
+<div><a name="page-1"></a></div>
+<div class="video"><div class="wrapper" style="display:block" type="text/html" width="980" height="550" src="https://www.youtube.com/embed/HQ8H5gqGA34?start=0&amp;wmode=transparent" frameborder="0" allowfullscreen></div><p class="caption" style="font-size:0.8em">It's House Targaryens vs House Hightower in the second season of HBO's <em>House of the Dragon</em>. </p></div>
+<p>HBO dropped the first teaser for the much-anticipated second season of its <em>Game of Thrones</em> prequel spinoff series <a href="https://arstechnica.com/gaming/2022/08/review-house-of-the-dragon-prequel-series-makes-a-solid-debut/" target="_blank" rel="noopener nofollow" data-ml-dynamic="true" data-ml-dynamic-type="sl" data-orig-url="https://www.hbomax.com/series/urn:hbo:series:GYsYeoAxKH8LCwgEAAAOR" data-ml-id="0" data-ml="true" data-skimlinks-tracking="xid:fr1701542414106dhd" data-uri="08a1f7819cdb947f66dcaf9832209e9b" data-xid="fr1701542414106dhd"><em>House of the Dragon</em></a> during CCXP23 in Sao Paulo, Brazil. The eight episodes will cover the onset of civil war within House Targaryen, known as the Dance of Dragons.</p>
+<p><strong>(Spoilers for the first season below.)</strong></p>
+<p>As <a href="https://arstechnica.com/gaming/2022/12/tv-technica-2022-these-were-our-favorite-shows-and-binges-of-the-year/">I've written</a> previously, <a href="https://arstechnica.com/gaming/2022/08/review-house-of-the-dragon-prequel-series-makes-a-solid-debut/" target="_blank" rel="noopener nofollow" data-ml-dynamic="true" data-ml-dynamic-type="sl" data-orig-url="https://www.hbomax.com/series/urn:hbo:series:GYsYeoAxKH8LCwgEAAAOR" data-ml-id="0" data-ml="true" data-skimlinks-tracking="xid:fr1701542414106dhd" data-uri="08a1f7819cdb947f66dcaf9832209e9b" data-xid="fr1701542414106dhd">HBO's <em>House of the Dragon</em></a> debuted last year with a solid, promising pilot episode, and the remainder of the season lived up to that initial promise. The series is set about 200 years before the events of <em>Game of Thrones </em>and chronicles the beginning of the end of House Targaryen's reign. The primary source material is <a href="https://en.wikipedia.org/wiki/Fire_%26_Blood_(novel)" target="_blank" rel="noopener" data-uri="1e4524e735173b30ff50f2f666a28acc"><em>Fire and Blood</em></a>, a fictional history of the Targaryen kings written by George R.R. Martin.</p></div><p><a href="https://arstechnica.com/?p=1988151#p3">Read 8 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1988151&comments=1">Comments</a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://arstechnica.com/culture/2023/12/tensions-rise-between-targaryens-in-first-teaser-for-house-of-the-dragon-s2/feed/</wfw:commentRss>
+			<slash:comments>60</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>No further investments in Virgin Galactic, says Richard Branson</title>
+		<link>https://arstechnica.com/?p=1988153</link>
+					<comments>https://arstechnica.com/space/2023/12/no-further-investments-in-virgin-galactic-says-richard-branson/#comments</comments>
+		
+		<dc:creator><![CDATA[Financial Times]]></dc:creator>
+		<pubDate>Sat, 02 Dec 2023 18:58:26 +0000</pubDate>
+				<category><![CDATA[Space]]></category>
+		<category><![CDATA[Richard Branson]]></category>
+		<category><![CDATA[syndication]]></category>
+		<category><![CDATA[Virgin Galactic]]></category>
+		<guid isPermaLink="false">https://arstechnica.com/?p=1988153</guid>
+
+					<description><![CDATA[Branson's business empire "no longer has the deepest pockets."]]></description>
+										<content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left">
+  <img src="https://cdn.arstechnica.net/wp-content/uploads/2015/12/IMG_02821-640x440.jpg" alt="Virgin Galactic founder Richard Branson.">
+      <p class="caption" style="font-size:0.8em">Virgin Galactic founder Richard Branson. (credit: Eric Berger)</p>  </figure>
+
+
+
+
+
+
+<div><a name="page-1"></a></div>
+<p>Sir Richard Branson has ruled out putting more money into his lossmaking space travel company Virgin Galactic, saying his business empire “does not have the deepest pockets” any more.</p>
+<p>Virgin Galactic, which was founded by Branson in 2004, last month announced it was cutting jobs and suspending commercial flights for 18 months from next year, in a bid to preserve cash for the development of a larger plane that could carry passengers to the edge of space.</p>
+<p>The group has said it has enough funding to carry it through to 2026, when the bigger Delta vehicle is expected to enter service. But some analysts are expecting Galactic to ask investors for more money in about 2025.</p></div><p><a href="https://arstechnica.com/?p=1988153#p3">Read 13 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1988153&comments=1">Comments</a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://arstechnica.com/space/2023/12/no-further-investments-in-virgin-galactic-says-richard-branson/feed/</wfw:commentRss>
+			<slash:comments>138</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>New algorithm finds lots of gene-editing enzymes in environmental DNA</title>
+		<link>https://arstechnica.com/?p=1987932</link>
+					<comments>https://arstechnica.com/science/2023/12/new-algorithm-finds-lots-of-gene-editing-enzymes-in-environmental-dna/#comments</comments>
+		
+		<dc:creator><![CDATA[Diana Gitig]]></dc:creator>
+		<pubDate>Sat, 02 Dec 2023 13:00:34 +0000</pubDate>
+				<category><![CDATA[Science]]></category>
+		<category><![CDATA[Biology]]></category>
+		<category><![CDATA[CRISPR]]></category>
+		<category><![CDATA[Genomics]]></category>
+		<guid isPermaLink="false">https://arstechnica.com/?p=1987932</guid>
+
+					<description><![CDATA[Some are related to DNA-cutting enzymes. Others are a complete mystery.]]></description>
+										<content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left">
+  <img src="https://cdn.arstechnica.net/wp-content/uploads/2023/12/image-800x573.png" alt="A dark blue background with light blue ribbons, and yellow nucleic acids in front.">
+      <p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2023/12/image.png" class="enlarge-link" data-height="913" data-width="1275">Enlarge</a> <span class="sep">/</span> The protein structure of CAS, shown with nucleic acids bound. (credit: <a rel="nofollow" class="caption-link" href="https://directorsblog.nih.gov/2014/03/06/popular-genome-editing-tool-gets-its-close-up/">Bang Wong, Broad Institute</a>)</p>  </figure>
+
+
+
+
+
+
+<div><a name="page-1"></a></div>
+<p>CRISPR—Clustered Regularly Interspaced Short Palindromic Repeats—is the microbial world’s answer to adaptive immunity. Bacteria don’t generate antibodies when they are invaded by a pathogen and then hold those antibodies in abeyance in case they encounter that same pathogen again, the way we do. Instead, they incorporate some of the pathogen’s DNA into their own genome and link it to an enzyme that can use it to recognize that pathogenic DNA sequence and cut it to pieces if the pathogen ever turns up again.</p>
+<p>The enzyme that does the cutting is called Cas, for CRISPR associated. Although the CRISPR-Cas system evolved as a bacterial defense mechanism, it has been harnessed and adapted by researchers as a powerful tool for genetic manipulation in laboratory studies. It also has demonstrated agricultural uses, and the first CRISPR-based therapy was just approved in the UK to treat sickle-cell disease and transfusion-dependent beta-thalassemia.</p>
+<p>Now, researchers have developed a new way to search genomes for CRISPR-Cas-like systems. And they’ve found that we may have a lot of additional tools to work with.</p></div><p><a href="https://arstechnica.com/?p=1987932#p3">Read 12 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1987932&comments=1">Comments</a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://arstechnica.com/science/2023/12/new-algorithm-finds-lots-of-gene-editing-enzymes-in-environmental-dna/feed/</wfw:commentRss>
+			<slash:comments>62</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Porsche summons old-school cool with the 2024 911 Sport Classic</title>
+		<link>https://arstechnica.com/?p=1987979</link>
+					<comments>https://arstechnica.com/cars/2023/12/porsche-summons-old-school-cool-with-the-2024-911-sport-classic/#comments</comments>
+		
+		<dc:creator><![CDATA[Ars Contributors]]></dc:creator>
+		<pubDate>Sat, 02 Dec 2023 12:30:40 +0000</pubDate>
+				<category><![CDATA[Cars]]></category>
+		<category><![CDATA[Features]]></category>
+		<category><![CDATA[car review]]></category>
+		<category><![CDATA[Porsche 911]]></category>
+		<category><![CDATA[Porsche 911 Sport Classic]]></category>
+		<guid isPermaLink="false">https://arstechnica.com/?p=1987979</guid>
+
+					<description><![CDATA[The limited-production model focuses on driver involvement, not performance stats. ]]></description>
+										<content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left">
+  <img src="https://cdn.arstechnica.net/wp-content/uploads/2023/12/01-2024-Porsche-911-Sport-Classic-800x533.jpg" alt="A grey Porsche 911 Sport Classic parked in the Angeles National Forest">
+      <p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2023/12/01-2024-Porsche-911-Sport-Classic-scaled.jpg" class="enlarge-link" data-height="1707" data-width="2560">Enlarge</a> <span class="sep">/</span> We never get tired of seeing the different ways Porsche finds to tweak the venerable 911. It's outdone itself with the Sport Classic, but the car comes with a price tag that means very few will experience it. (credit: Bradley Iger)</p>  </figure>
+
+
+
+
+
+
+<div><a name="page-1"></a></div>
+<p>Sports cars have always been emotionally driven purchases, and perhaps no automaker understands this better than Porsche. There are more than two dozen iterations of the 911 on sale today, and while it can sometimes feel like sussing out the differences in character between one variant and another is an exercise in splitting hairs, the new Sport Classic tugs at enthusiasts' heartstrings in a way that no other modern 911 can.</p>
+<p>Part of the Heritage Design Edition series, which includes a 911 Targa as well as two more as-yet-unnamed models, the new Sport Classic leverages the formidable capability of the latest 911 Turbo while delivering a genuinely unique driving experience and a distinct sense of style.</p>
+<p>While its purposeful stance comes courtesy of the Turbo's widened body, elements like the bespoke carbon fiber hood, the Carrera GT-inspired carbon “double bubble” roof, and the eye-catching carbon fiber ducktail rear spoiler—the latter of which pays homage to the iconic 911 Carrera RS 2.7 of the early 1970s—help to provide the Sport Classic with a look all its own. The bodywork is also further differentiated from its Turbo sibling thanks to the deletion of the side intakes, a change that necessitated new tooling to stamp the unique panels that run from underneath the front of the doors all the way to the rear bumper. New inlets installed under the ducktail spoiler are on hand to channel air into the engine's intake system.</p></div><p><a href="https://arstechnica.com/?p=1987979#p3">Read 11 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1987979&comments=1">Comments</a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://arstechnica.com/cars/2023/12/porsche-summons-old-school-cool-with-the-2024-911-sport-classic/feed/</wfw:commentRss>
+			<slash:comments>127</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Roar of cicadas was so loud, it was picked up by fiber-optic cables</title>
+		<link>https://arstechnica.com/?p=1987931</link>
+					<comments>https://arstechnica.com/science/2023/12/roar-of-cicadas-was-so-loud-it-was-picked-up-by-fiber-optic-cables/#comments</comments>
+		
+		<dc:creator><![CDATA[WIRED]]></dc:creator>
+		<pubDate>Sat, 02 Dec 2023 11:10:00 +0000</pubDate>
+				<category><![CDATA[Science]]></category>
+		<category><![CDATA[cicadas]]></category>
+		<category><![CDATA[entomology]]></category>
+		<category><![CDATA[syndication]]></category>
+		<guid isPermaLink="false">https://arstechnica.com/?p=1987931</guid>
+
+					<description><![CDATA[Brood X made itself known in a way that could change how we monitor insect populations.]]></description>
+										<content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left">
+  <img src="https://cdn.arstechnica.net/wp-content/uploads/2023/12/17yearcicada-800x600.jpg" alt="cicada">
+      <p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2023/12/17yearcicada.jpg" class="enlarge-link" data-height="1500" data-width="2000">Enlarge</a> <span class="sep">/</span> BUZZ BUZZ BUZZ BUZZ (credit: <a rel="nofollow" class="caption-link" href="https://www.gettyimages.com/detail/photo/seventeen-year-cicada-in-staten-island-nyc-royalty-free-image/181859636">astrida via Getty Images</a>)</p>  </figure>
+
+
+
+
+
+
+<div><a name="page-1"></a></div>
+<p>One of the world’s most peculiar test beds stretches above Princeton, New Jersey. It’s a fiber optic cable strung between three utility poles that then runs underground before feeding into an “interrogator.” This device fires a laser through the cable and analyzes the light that bounces back. It can pick up tiny perturbations in that light caused by seismic activity or even loud sounds, like from a passing ambulance. It’s a newfangled technique known as distributed acoustic sensing, or DAS.</p>
+<p>Because DAS can track seismicity, other scientists are <a href="https://www.wired.com/story/how-fiber-optic-cables-could-warn-you-of-an-earthquake/">increasingly using it to monitor earthquakes</a> and <a href="https://www.wired.com/story/scientists-spy-on-mount-etna-with-fiber-optic-cables/">volcanic activity</a>. (A buried system is so sensitive, in fact, that it can <a href="https://www.wired.com/story/how-underground-fiber-optics-spy-on-humans-moving-above/">detect people walking and driving above</a>.) But the scientists in Princeton just stumbled upon a rather … noisier use of the technology. In the spring of 2021, Sarper Ozharar—a physicist at NEC Laboratories, which operates the Princeton test bed—noticed <a href="https://academic.oup.com/jinsectscience/article/23/6/3/7425398">a strange signal in the DAS data</a>. “We realized there were some weird things happening,” says Ozharar. “Something that shouldn’t be there. There was a distinct frequency buzzing everywhere.”</p>
+<p></p></div><p><a href="https://arstechnica.com/?p=1987931#p3">Read 11 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1987931&comments=1">Comments</a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://arstechnica.com/science/2023/12/roar-of-cicadas-was-so-loud-it-was-picked-up-by-fiber-optic-cables/feed/</wfw:commentRss>
+			<slash:comments>80</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Chrome’s next weapon in the War on Ad Blockers: Slower extension updates</title>
+		<link>https://arstechnica.com/?p=1987843</link>
+					<comments>https://arstechnica.com/google/2023/12/chromes-next-weapon-in-the-war-on-ad-blockers-slower-extension-updates/#comments</comments>
+		
+		<dc:creator><![CDATA[Ron Amadeo]]></dc:creator>
+		<pubDate>Fri, 01 Dec 2023 23:30:46 +0000</pubDate>
+				<category><![CDATA[Google]]></category>
+		<category><![CDATA[Tech]]></category>
+		<guid isPermaLink="false">https://arstechnica.com/?p=1987843</guid>
+
+					<description><![CDATA[When ad blocking is a cat-and-mouse game, make the mouse slower.]]></description>
+										<content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left">
+  <img src="https://cdn.arstechnica.net/wp-content/uploads/2021/08/Google-Monopoly-800x450.jpg" alt="The logo for the board game Monopoly, complete with Uncle Pennybags, has been transformed to say Google.">
+      <p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2021/08/Google-Monopoly.jpg" class="enlarge-link" data-height="527" data-width="937">Enlarge</a> <span class="sep">/</span> Let's see, you landed on my "Google Ads" space, and with three houses... that will be $1,400.  (credit: Ron Amadeo / Hasbro)</p>  </figure>
+
+
+
+
+
+
+<div><a name="page-1"></a></div>
+<p>Google's war on ad blockers is just gearing up, with YouTube doing its best to <a href="https://arstechnica.com/google/2023/11/youtube-tries-to-kill-ad-blockers-in-push-for-ad-dollars-premium-subs/">detect and block</a> ad blockers and Chrome aiming to roll out the ad block-limiting <a href="https://arstechnica.com/gadgets/2023/11/google-chrome-will-limit-ad-blockers-starting-june-2024/">Manifest V3 extension platform</a> in June 2024. A new article <a href="https://www.engadget.com/inside-the-arms-race-between-youtube-and-ad-blockers-140031824.html">from Engadget</a> detailing the "arms race" over ad blocking brings up an interesting point regarding the power that YouTube and Chrome have in this battle: a dramatic update advantage over the ad blockers.</p>
+<p>In addition to hamstringing Chrome's extension platform with no real user-centric justifications, Manifest V3 will also put roadblocks up before extension <em>updates</em>, which will delay an extension developer's ability to quickly respond to changes. YouTube can instantly switch up its ad delivery system, but once Manifest V3 becomes mandatory, that won't be true for extension developers. If ad blocking is a cat-and-mouse game of updates and counter-updates, then Google will force the mouse to slow down.</p>
+<p>Chrome's "Manifest V3" makes dramatic changes to the Chrome extension platform. The current platform, Manifest V2, has been around for over ten years and works just fine, but it's also quite powerful and allows extensions to have full filtering control over the traffic your web browser sees. That's great for protecting privacy, speeding up the web, and blocking ads, but it also means you can download a browser from the world's biggest ad company and use it to block ads—and that was only going to last for so long.</p></div><p><a href="https://arstechnica.com/?p=1987843#p3">Read 10 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1987843&comments=1">Comments</a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://arstechnica.com/google/2023/12/chromes-next-weapon-in-the-war-on-ad-blockers-slower-extension-updates/feed/</wfw:commentRss>
+			<slash:comments>434</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>A bitter pill: Amazon calls on rival SpaceX to launch Internet satellites</title>
+		<link>https://arstechnica.com/?p=1987967</link>
+					<comments>https://arstechnica.com/space/2023/12/a-bitter-pill-amazon-calls-on-rival-spacex-to-launch-internet-satellites/#comments</comments>
+		
+		<dc:creator><![CDATA[Stephen Clark]]></dc:creator>
+		<pubDate>Fri, 01 Dec 2023 22:59:09 +0000</pubDate>
+				<category><![CDATA[Space]]></category>
+		<category><![CDATA[Amazon]]></category>
+		<category><![CDATA[Elon Musk]]></category>
+		<category><![CDATA[falcon 9]]></category>
+		<category><![CDATA[Jeff Bezos]]></category>
+		<category><![CDATA[launch]]></category>
+		<category><![CDATA[project kuiper]]></category>
+		<category><![CDATA[spacex]]></category>
+		<guid isPermaLink="false">https://arstechnica.com/?p=1987967</guid>
+
+					<description><![CDATA[Jeff Bezos' rivalry with Elon Musk takes a back seat to Amazon's launch dilemma.]]></description>
+										<content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left">
+  <img src="https://cdn.arstechnica.net/wp-content/uploads/2023/12/f9preflight21-800x533.jpeg" alt="A SpaceX Falcon 9 rocket with a reused booster stage and payload fairing  is seen rolling out to its launch pad in Florida before a mission last month.">
+      <p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2023/12/f9preflight21-scaled.jpeg" class="enlarge-link" data-height="1707" data-width="2560">Enlarge</a> <span class="sep">/</span> A SpaceX Falcon 9 rocket with a reused booster stage and payload fairing  is seen rolling out to its launch pad in Florida before a mission last month. (credit: <a rel="nofollow" class="caption-link" href="https://twitter.com/SES_Satellites/status/1723851810320920670/photo/2">SpaceX</a>)</p>  </figure>
+
+
+
+
+
+
+<div><a name="page-1"></a></div>
+<p>Amazon announced Friday that it has purchased three Falcon 9 rocket launches from SpaceX beginning in mid-2025 to help deploy the retail giant's network of Kuiper Internet satellites.</p>
+<p>In a statement, Amazon said the SpaceX launches will provide "additional capacity" to "supplement existing launch contracts to support Project Kuiper’s satellite deployment schedule." SpaceX has its own broadband satellite fleet, with more than 5,100 Starlink spacecraft currently in orbit, making it a competitor with Amazon.</p>
+<p>Last year, Amazon bought up most of the Western world's excess launch capacity from everyone but SpaceX, securing 68 rocket flights from United Launch Alliance, Arianespace, and Blue Origin to deploy thousands of satellites for the Kuiper broadband network. Amazon previously contracted with ULA for nine Atlas V launches to support the initial series of Kuiper launches, the first of which <a href="https://arstechnica.com/space/2023/10/first-two-satellites-for-amazons-broadband-megaconstellation-launch-today/">lifted off in October</a> with Amazon's first two Kuiper prototype satellites. More Atlas Vs will start launching operational Kuiper satellites next year.</p></div><p><a href="https://arstechnica.com/?p=1987967#p3">Read 20 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1987967&comments=1">Comments</a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://arstechnica.com/space/2023/12/a-bitter-pill-amazon-calls-on-rival-spacex-to-launch-internet-satellites/feed/</wfw:commentRss>
+			<slash:comments>228</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Reminder: Donate to win swag in our annual Charity Drive sweepstakes</title>
+		<link>https://arstechnica.com/?p=1988029</link>
+					<comments>https://arstechnica.com/gaming/2023/12/reminder-donate-to-win-swag-in-our-annual-charity-drive-sweepstakes-10/#comments</comments>
+		
+		<dc:creator><![CDATA[Kyle Orland]]></dc:creator>
+		<pubDate>Fri, 01 Dec 2023 22:23:43 +0000</pubDate>
+				<category><![CDATA[Gaming]]></category>
+		<category><![CDATA[Uncategorized]]></category>
+		<category><![CDATA[charity]]></category>
+		<category><![CDATA[charity drive]]></category>
+		<category><![CDATA[Prizes]]></category>
+		<category><![CDATA[reminder]]></category>
+		<category><![CDATA[sweepstakes]]></category>
+		<guid isPermaLink="false">https://arstechnica.com/?p=1988029</guid>
+
+					<description><![CDATA[Add to a charity haul that's already raised over $8,500 in less than a week.]]></description>
+										<content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left">
+  <img src="https://cdn.arstechnica.net/wp-content/uploads/2023/11/charity2023-800x771.jpg" alt="Just some of the prizes you can win in this year's charity drive sweepstakes.">
+      <p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2023/11/charity2023-scaled.jpg" class="enlarge-link" data-height="2467" data-width="2560">Enlarge</a> <span class="sep">/</span> Just some of the prizes you can win in this year's charity drive sweepstakes. (credit: Kyle Orland)</p>  </figure>
+
+
+
+
+
+
+<div><a name="page-1"></a></div>
+<p>If you've been too busy <a href="https://arstechnica.com/gaming/2023/11/my-long-quest-to-revive-a-90s-windows-gaming-cult-classic/">playing <em>Pendulumania</em></a> to take part in <a href="https://arstechnica.com/gaming/2023/11/win-hardware-collectibles-and-more-in-the-2023-ars-technica-charity-drive/">this year's Ars Technica Charity Drive sweepstakes</a>, don't worry. You still have time to donate to a good cause and get a chance to win your share of over $2,500 worth of swag (no purchase necessary to win).</p>
+<p>So far, in the first three days of the drive, over 100 readers have contributed over $8,500 to either the <a href="https://supporters.eff.org/donate/">Electronic Frontier Foundation</a> or <a href="http://www.childsplaycharity.org/">Child's Play</a> as part of the charity drive (EFF is now leading in the donation totals by about $2,000). That's a long way off from <a href="https://arstechnica.com/gaming/2021/01/ars-readers-gave-a-record-58000-in-2020-charity-drive/">2020's record haul of over $58,000</a>, but there's still plenty of time until the Charity Drive wraps up on Tuesday, January 2, 2024.</p>
+<p>That doesn't mean you should put your donation off, though. Do yourself and the charities involved a favor and give now while you're thinking about it.</p></div><p><a href="https://arstechnica.com/?p=1988029#p3">Read 4 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1988029&comments=1">Comments</a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://arstechnica.com/gaming/2023/12/reminder-donate-to-win-swag-in-our-annual-charity-drive-sweepstakes-10/feed/</wfw:commentRss>
+			<slash:comments>8</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>25M homes will lose broadband discounts if Congress keeps stalling, FCC warns</title>
+		<link>https://arstechnica.com/?p=1988002</link>
+					<comments>https://arstechnica.com/tech-policy/2023/12/25m-homes-will-lose-broadband-discounts-if-congress-keeps-stalling-fcc-warns/#comments</comments>
+		
+		<dc:creator><![CDATA[Jon Brodkin]]></dc:creator>
+		<pubDate>Fri, 01 Dec 2023 21:34:47 +0000</pubDate>
+				<category><![CDATA[Policy]]></category>
+		<category><![CDATA[affordable connectivity program]]></category>
+		<category><![CDATA[broadband]]></category>
+		<category><![CDATA[federal communications commission]]></category>
+		<guid isPermaLink="false">https://arstechnica.com/?p=1988002</guid>
+
+					<description><![CDATA[Funding calls get increasingly urgent as program would run out of money in April.]]></description>
+										<content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left">
+  <img src="https://cdn.arstechnica.net/wp-content/uploads/2022/07/getty-rosenworcel-800x533.jpg" alt="Federal Communications Commission Chairwoman Jessica Rosenworcel sitting at a table while answering questions at a Congressional hearing.">
+      <p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2022/07/getty-rosenworcel.jpg" class="enlarge-link" data-height="1334" data-width="2001">Enlarge</a> <span class="sep">/</span> Federal Communications Commission Chairwoman Jessica Rosenworcel during a House Energy and Commerce Committee Subcommittee hearing on March 31, 2022, in Washington, DC. (credit: Getty Images | Kevin Dietsch )</p>  </figure>
+
+
+
+
+
+
+<div><a name="page-1"></a></div>
+<p>A federal program that provides $30 monthly broadband discounts to people with low incomes is expected to run out of money in April 2024, potentially taking affordable Internet service plans away from well over 20 million households.</p>
+<p>For months, supporters of the <a href="https://www.fcc.gov/acp">Affordable Connectivity Program</a> (ACP) have been pushing Congress to give the Federal Communications Commission more funding for the program. FCC Chairwoman Jessica Rosenworcel urged lawmakers to act yesterday during a House Communications and Technology Subcommittee <a href="https://energycommerce.house.gov/events/communications-and-technology-subcommittee-hearing-oversight-of-president-biden-s-broadband-takeover">hearing</a>.</p>
+<p>In an <a href="https://d1dth6e84htgma.cloudfront.net/11_30_23_Rosenworcel_Testimony_234c52ebe8.pdf">opening statement</a>, Rosenworcel said the ACP is providing discounts for over 22 million households. The FCC expects that number to reach 25 million by April, when the program would run out of money.</p></div><p><a href="https://arstechnica.com/?p=1988002#p3">Read 14 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1988002&comments=1">Comments</a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://arstechnica.com/tech-policy/2023/12/25m-homes-will-lose-broadband-discounts-if-congress-keeps-stalling-fcc-warns/feed/</wfw:commentRss>
+			<slash:comments>99</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

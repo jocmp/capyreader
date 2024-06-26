@@ -3,6 +3,8 @@ package com.jocmp.capy
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.FeedbinAccountDelegate
 import com.jocmp.capy.accounts.FeedbinOkHttpClient
+import com.jocmp.capy.accounts.LocalAccountDelegate
+import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.common.sortedByTitle
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.persistence.ArticleRecords
@@ -17,12 +19,14 @@ data class Account(
     val path: URI,
     val database: Database,
     val preferences: AccountPreferences,
-    val delegate: AccountDelegate = run {
-        val client = FeedbinOkHttpClient.forAccount(path, preferences)
-
-        FeedbinAccountDelegate(
+    val source: Source = Source.LOCAL,
+    val delegate: AccountDelegate = when (source) {
+        Source.LOCAL -> LocalAccountDelegate(
+            database = database
+        )
+        Source.FEEDBIN -> FeedbinAccountDelegate(
             database = database,
-            feedbin = Feedbin.create(client = client)
+            feedbin = Feedbin.forAccount(path = path, preferences = preferences)
         )
     }
 ) {
@@ -65,7 +69,17 @@ data class Account(
     }
 
     suspend fun removeFeed(feedID: String): Result<Unit> {
-        return delegate.removeFeed(feedID = feedID)
+        val feed = feedRecords.findBy(feedID) ?: return Result.failure(Throwable("Feed not found"))
+
+        return delegate.removeFeed(feed = feed).fold(
+            onSuccess = {
+                feedRecords.removeFeed(feedID = feed.id)
+                Result.success(Unit)
+            },
+            onFailure = {
+                Result.failure(it)
+            }
+        )
     }
 
     suspend fun refresh(): Result<Unit> = delegate.refresh()
@@ -127,3 +141,6 @@ data class Account(
         return delegate.fetchFullContent(article)
     }
 }
+
+private fun Feedbin.Companion.forAccount(path: URI, preferences: AccountPreferences) =
+    create(client = FeedbinOkHttpClient.forAccount(path, preferences))

@@ -3,7 +3,7 @@ package com.jocmp.capyreader
 import com.jocmp.capyreader.refresher.refresherModule
 import com.jocmp.capyreader.sync.syncModule
 import com.jocmp.capyreader.ui.articles.articlesModule
-import com.jocmp.capyreader.ui.login.loginModule
+import com.jocmp.capyreader.ui.accounts.loginModule
 import com.jocmp.capyreader.ui.settings.settingsModule
 import org.koin.core.KoinApplication
 import org.koin.core.context.loadKoinModules

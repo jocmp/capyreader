@@ -1,5 +1,6 @@
 package com.jocmp.capy
 
+import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.db.Database
 import java.io.File
 import java.io.FileFilter
@@ -20,7 +21,19 @@ class AccountManager(
         return buildAccount(existingAccount, database)
     }
 
-    fun createAccount(username: String, password: String): String {
+    fun createAccount(username: String, password: String, source: Source): String {
+        val accountID = createAccount(source = source)
+
+        preferenceStoreProvider.build(accountID).let { preferences ->
+            preferences.username.set(username)
+            preferences.password.set(password)
+        }
+
+
+        return accountID
+    }
+
+    fun createAccount(source: Source): String {
         val accountID = UUID.randomUUID().toString()
 
         accountFolder().apply {
@@ -30,10 +43,6 @@ class AccountManager(
         }
 
         accountFile(accountID).apply { mkdir() }
-
-        val preferences = preferenceStoreProvider.build(accountID)
-        preferences.username.set(username)
-        preferences.password.set(password)
 
         return accountID
     }

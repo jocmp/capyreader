@@ -1,7 +1,6 @@
-package com.jocmp.capyreader.ui.login
+package com.jocmp.capyreader.ui.accounts
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 
 @Composable

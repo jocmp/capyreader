@@ -1,4 +1,4 @@
-package com.jocmp.capyreader.ui.login
+package com.jocmp.capyreader.ui.accounts
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jocmp.capy.Account
 import com.jocmp.capy.AccountManager
+import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.verifyCredentials
 import com.jocmp.capyreader.common.AppPreferences
 import com.jocmp.capyreader.common.Async
@@ -70,6 +71,7 @@ class LoginViewModel(
             val accountID = accountManager.createAccount(
                 username = username,
                 password = password,
+                source = Source.FEEDBIN
             )
 
             selectAccount(accountID)

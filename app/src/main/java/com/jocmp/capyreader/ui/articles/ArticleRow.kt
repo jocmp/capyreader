@@ -106,11 +106,13 @@ fun ArticleRow(
                         color = feedNameColor,
                         modifier = Modifier.padding(vertical = 4.dp)
                     )
-                    Text(
-                        text = article.summary,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis,
-                    )
+                    if (article.summary.isNotBlank()) {
+                        Text(
+                            text = article.summary,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    }
                     Text(
                         text = relativeTime(
                             time = article.publishedAt,

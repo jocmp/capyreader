@@ -83,7 +83,7 @@ internal class FeedbinAccountDelegate(
 
             withResult(feedbin.createTagging(request)) { tagging ->
                 taggingRecords.upsert(
-                    id = tagging.id,
+                    id = tagging.id.toString(),
                     feedID = tagging.feed_id.toString(),
                     name = tagging.name
                 )
@@ -91,24 +91,18 @@ internal class FeedbinAccountDelegate(
         }
 
         taggingIDsToDelete.forEach { taggingID ->
-            val result = feedbin.deleteTagging(taggingID = taggingID.toString())
+            val result = feedbin.deleteTagging(taggingID = taggingID)
 
             if (result.isSuccessful) {
-                database.taggingsQueries.deleteTagging(taggingID)
+                taggingRecords.deleteTagging(taggingID = taggingID)
             }
         }
 
         feedRecords.findBy(feed.id)
     }
 
-    override suspend fun removeFeed(feedID: String): Result<Unit> = withErrorHandling {
-        val feed = feedRecords.findBy(feedID) ?: return@withErrorHandling null
-
-        val result = feedbin.deleteSubscription(subscriptionID = feed.subscriptionID)
-
-        if (result.isSuccessful) {
-            feedRecords.removeFeed(feedID = feedID)
-        }
+    override suspend fun removeFeed(feed: Feed): Result<Unit> = withErrorHandling {
+        feedbin.deleteSubscription(subscriptionID = feed.subscriptionID)
 
         Unit
     }
@@ -246,13 +240,15 @@ internal class FeedbinAccountDelegate(
             database.transactionWithErrorHandling {
                 taggings.forEach { tagging ->
                     database.taggingsQueries.upsert(
-                        id = tagging.id,
+                        id = tagging.id.toString(),
                         feed_id = tagging.feed_id.toString(),
                         name = tagging.name,
                     )
                 }
 
-                database.taggingsQueries.deleteOrphanedTags(excludedIDs = taggings.map { it.id })
+                database.taggingsQueries.deleteOrphanedTags(
+                    excludedIDs = taggings.map { it.id.toString() }
+                )
             }
         }
     }
@@ -318,7 +314,8 @@ internal class FeedbinAccountDelegate(
 
                 database.articlesQueries.updateStatus(
                     article_id = entry.id.toString(),
-                    updated_at = updated
+                    updated_at = updated,
+                    read = true
                 )
             }
         }

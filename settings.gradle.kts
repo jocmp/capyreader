@@ -23,13 +23,14 @@ dependencyResolutionManagement {
             version("ksp", "1.9.22-1.0.16")
             version("androidx-paging", "3.3.0")
             library("moshi", "com.squareup.moshi:moshi:1.15.1")
+            library("jsoup", "org.jsoup:jsoup:1.17.1")
             library("okhttp-client", "com.squareup.okhttp3:okhttp:4.12.0")
             library("moshi-kotlin-codegen", "com.squareup.moshi:moshi-kotlin-codegen:1.14.0")
             library("retrofit2-retrofit", "com.squareup.retrofit2:retrofit:2.9.0")
             library("androidx-preferences", "androidx.preference:preference-ktx:1.2.1")
             library("kotlinx-coroutines-core", "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
             library("kotlinx-serialization-json", "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
-            library("rssparser", "com.prof18.rssparser:rssparser:6.0.4")
+            library("rssparser", "com.prof18.rssparser:rssparser:6.0.8")
         }
         create("testLibs") {
             library("kotlinx-coroutines-test", "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion")
@@ -43,4 +44,5 @@ dependencyResolutionManagement {
 rootProject.name = "Capy Reader"
 include(":app")
 include(":feedbinclient")
+include(":feedfinder")
 include(":capy")

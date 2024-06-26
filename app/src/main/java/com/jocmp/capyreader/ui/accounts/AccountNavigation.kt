@@ -1,4 +1,4 @@
-package com.jocmp.capyreader.ui.login
+package com.jocmp.capyreader.ui.accounts
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.window.DialogProperties
@@ -7,17 +7,25 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import com.jocmp.capyreader.ui.Route
 import com.jocmp.capyreader.ui.components.DialogCard
+import com.jocmp.capyreader.ui.components.composable
 import com.jocmp.capyreader.ui.settings.SettingsScreen
 
 fun NavGraphBuilder.accountsGraph(
-    onLoginSuccess: () -> Unit,
+    onAddSuccess: () -> Unit,
+    onNavigateToLogin: () -> Unit,
     onLogout: () -> Unit,
     onNavigateBackFromSettings: () -> Unit,
     isCompactWindow: Boolean,
 ) {
-    composable(Route.Login.path) {
+    composable(Route.AddAccount) {
+        AddAccountScreen(
+            onAddSuccess = onAddSuccess,
+            onNavigateToLogin = onNavigateToLogin
+        )
+    }
+    composable(Route.Login) {
         LoginScreen(
-            onSuccess = onLoginSuccess,
+            onSuccess = onAddSuccess,
         )
     }
     dynamicLayout(isCompactWindow) {

@@ -135,7 +135,7 @@ WHERE articles.id IS NULL
 AND article_statuses.read = 0 OR article_statuses.starred = 1;
 
 create:
-INSERT OR REPLACE INTO articles(
+INSERT INTO articles(
     id,
     feed_id,
     title,
@@ -158,7 +158,19 @@ VALUES (
 :summary,
 :image_url,
 :published_at
-);
+)
+ON CONFLICT(id) DO UPDATE
+SET
+id = id,
+feed_id = excluded.feed_id,
+title = excluded.title,
+author = excluded.author,
+content_html = excluded.content_html,
+extracted_content_url = excluded.extracted_content_url,
+url = excluded.url,
+summary = excluded.summary,
+image_url = excluded.image_url,
+published_at = published_at;
 
 updateStatus:
 INSERT INTO article_statuses(
@@ -169,7 +181,7 @@ INSERT INTO article_statuses(
 VALUES (
 :article_id,
 :updated_at,
-1
+:read
 )
 ON CONFLICT(article_id) DO UPDATE
 SET updated_at = excluded.updated_at, read = read, last_read_at = last_read_at;

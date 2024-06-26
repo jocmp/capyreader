@@ -164,10 +164,12 @@ fun FeedOptions(
                     Text(
                         text = option.title,
                         style = typography.bodyLarge,
+                        maxLines = 1
                     )
                     Text(
                         text = option.feedURL,
                         style = typography.bodySmall,
+                        maxLines = 1
                     )
                 }
             }
