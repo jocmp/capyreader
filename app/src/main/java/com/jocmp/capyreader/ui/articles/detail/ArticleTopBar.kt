@@ -20,6 +20,7 @@ import com.jocmp.capyreader.R
 import com.jocmp.capyreader.common.shareArticle
 import com.jocmp.capyreader.ui.LocalWindowWidth
 import com.jocmp.capyreader.ui.fixtures.ArticleSample
+import java.net.URL
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,12 +51,15 @@ fun ArticleTopBar(
                         )
                     }
 
-                    IconButton(onClick = { onToggleExtractContent() }) {
-                        Icon(
-                            painterResource(id = extractIcon(extractedContent)),
-                            contentDescription = stringResource(R.string.extract_full_content)
-                        )
+                    if (article.extractedContentURL != null) {
+                        IconButton(onClick = { onToggleExtractContent() }) {
+                            Icon(
+                                painterResource(id = extractIcon(extractedContent)),
+                                contentDescription = stringResource(R.string.extract_full_content)
+                            )
+                        }
                     }
+
                     IconButton(onClick = { onToggleStar() }) {
                         Icon(
                             painterResource(id = starredIcon(article)),
@@ -121,7 +125,7 @@ fun ArticleNavigationIcon(onClick: () -> Unit) {
 @Composable
 private fun ArticleTopBarPreview(@PreviewParameter(ArticleSample::class) article: Article) {
     ArticleTopBar(
-        article = article,
+        article = article.copy(extractedContentURL = URL("https://example.com")),
         extractedContent = ExtractedContent(),
         onToggleExtractContent = {},
         onToggleRead = {},

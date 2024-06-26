@@ -31,7 +31,8 @@ class ArticleFixture(private val database: Database) {
             )
             database.articlesQueries.updateStatus(
                 article_id = id,
-                updated_at = publishedAt
+                updated_at = publishedAt,
+                read = true
             )
         }
 

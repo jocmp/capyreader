@@ -6,7 +6,7 @@ import com.jocmp.capy.persistence.FeedRecords
 import kotlinx.coroutines.runBlocking
 import java.security.SecureRandom
 
-class FeedFixture(private val database: Database) {
+class FeedFixture(database: Database) {
     private val records = FeedRecords(database)
 
     fun create(

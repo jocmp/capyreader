@@ -29,7 +29,6 @@ class AccountManager(
             preferences.password.set(password)
         }
 
-
         return accountID
     }
 
@@ -41,6 +40,8 @@ class AccountManager(
                 mkdir()
             }
         }
+
+        preferenceStoreProvider.build(accountID).source.set(source)
 
         accountFile(accountID).apply { mkdir() }
 
@@ -73,6 +74,7 @@ class AccountManager(
             id = id,
             path = pathURI,
             database = database,
+            source = preferences.source.get(),
             preferences = preferences,
         )
     }
