@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.jocmp.capyreader.R
 import com.jocmp.capyreader.setupCommonModules
 import com.jocmp.capyreader.ui.components.CrashReportingCheckbox
+import com.jocmp.capyreader.ui.components.widthMaxSingleColumn
 import org.koin.android.ext.koin.androidContext
 import org.koin.compose.KoinApplication
 
@@ -47,8 +48,7 @@ fun LoginView(
                 .padding(padding)
         ) {
             Column(
-                modifier = Modifier
-                    .widthIn(max = 400.dp)
+                modifier = Modifier.widthMaxSingleColumn()
             ) {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(16.dp),
