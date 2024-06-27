@@ -206,7 +206,8 @@ class LocalAccountDelegateTest {
     private data class TestFeed(
         override val name: String,
         override val feedURL: URL,
-        override val siteURL: URL? = null
+        override val siteURL: URL? = null,
+        override val faviconURL: URL? = null
     ) : Feed {
         override fun isValid() = true
     }

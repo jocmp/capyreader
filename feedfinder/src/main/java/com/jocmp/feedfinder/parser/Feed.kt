@@ -10,4 +10,6 @@ interface Feed {
     val feedURL: URL
 
     val siteURL: URL?
+
+    val faviconURL: URL?
 }
