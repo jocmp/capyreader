@@ -8,4 +8,4 @@
 
 - Re-add `Account#opmlFile` method.
 - Would be nice to memoize but ideally it's used as a one-shot
-- Existing logic applies via [previous implementation](./technotes/DeletedScenes.md)
+- Existing logic applies via [previous implementation](./DeletedScenes.md)
