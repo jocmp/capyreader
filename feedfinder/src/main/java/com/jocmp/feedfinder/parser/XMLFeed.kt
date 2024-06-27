@@ -21,6 +21,8 @@ internal class XMLFeed(
         get() = channel?.link?.let {
             URL(it)
         }
+    override val faviconURL: URL?
+        get() = channel?.image?.url?.let { URL(it) }
 
     private fun hasEntries(): Boolean {
         return channel != null &&

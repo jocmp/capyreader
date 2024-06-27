@@ -172,8 +172,8 @@ class LocalAccountDelegate(
             subscription_id = feedURL,
             title = feed.name,
             feed_url = feedURL,
-            site_url = feed.siteURL.toString(),
-            favicon_url = null
+            site_url = feed.siteURL?.toString(),
+            favicon_url = feed.faviconURL?.toString()
         )
     }
 }
