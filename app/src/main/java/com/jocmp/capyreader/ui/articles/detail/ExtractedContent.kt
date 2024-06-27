@@ -13,8 +13,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
-private const val TAG = "ExtractedContent"
-
 data class ExtractedContent(
     val requestShow: Boolean = false,
     val value: Async<String?> = Async.Uninitialized,

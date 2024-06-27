@@ -6,10 +6,18 @@ import com.jocmp.capy.db.Database
 internal class TaggingRecords(
     private val database: Database
 ) {
+    fun deleteTagging(taggingID: String) {
+        deleteTaggings(listOf(taggingID))
+    }
+
+    fun deleteTaggings(taggingIDs: List<String>) {
+        database.taggingsQueries.deleteTaggings(taggingIDs)
+    }
+
     fun findFeedTaggingsToDelete(
         feed: Feed,
-        excludedTaggingNames: List<String>
-    ): List<Long> {
+        excludedTaggingNames: List<String> = emptyList()
+    ): List<String> {
         return database
             .taggingsQueries
             .findFeedTaggingsToDelete(
@@ -20,7 +28,7 @@ internal class TaggingRecords(
     }
 
     fun upsert(
-        id: Long,
+        id: String,
         feedID: String,
         name: String,
     ) {

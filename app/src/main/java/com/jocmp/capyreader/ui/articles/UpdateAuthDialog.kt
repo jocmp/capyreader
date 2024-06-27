@@ -7,7 +7,7 @@ import androidx.compose.ui.window.DialogProperties
 import com.jocmp.capy.Account
 import com.jocmp.capyreader.R
 import com.jocmp.capyreader.ui.components.DialogCard
-import com.jocmp.capyreader.ui.login.LoginViewModel
+import com.jocmp.capyreader.ui.accounts.LoginViewModel
 import org.koin.compose.koinInject
 import org.koin.core.parameter.parametersOf
 

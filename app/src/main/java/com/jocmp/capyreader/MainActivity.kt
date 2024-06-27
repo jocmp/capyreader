@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
         val accountID = appPreferences.accountID.get()
 
         return if (accountID.isBlank()) {
-            Route.Login.path
+            Route.AddAccount.path
         } else {
             Route.Articles.path
         }

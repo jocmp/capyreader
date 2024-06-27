@@ -8,7 +8,7 @@ import okhttp3.OkHttpClient
 import java.io.File
 import java.net.URI
 
-object FeedbinOkHttpClient {
+internal object FeedbinOkHttpClient {
     fun forAccount(path: URI, preferences: AccountPreferences): OkHttpClient {
         val basicAuthInterceptor = BasicAuthInterceptor {
             val username = preferences.username.get()

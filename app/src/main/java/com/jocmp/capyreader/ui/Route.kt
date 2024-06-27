@@ -5,6 +5,8 @@ import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.navOptions
 
 sealed class Route(val path: String) {
+    data object AddAccount : Route("add-account")
+
     data object Login : Route("login")
 
     data object Settings : Route("settings")

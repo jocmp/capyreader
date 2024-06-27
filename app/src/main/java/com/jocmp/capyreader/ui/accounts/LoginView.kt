@@ -1,4 +1,4 @@
-package com.jocmp.capyreader.ui.login
+package com.jocmp.capyreader.ui.accounts
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,14 +18,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jocmp.capyreader.R
-import com.jocmp.capyreader.common
-import com.jocmp.capyreader.common.AppPreferences
 import com.jocmp.capyreader.setupCommonModules
 import com.jocmp.capyreader.ui.components.CrashReportingCheckbox
 import org.koin.android.ext.koin.androidContext
 import org.koin.compose.KoinApplication
-import org.koin.dsl.module
-import kotlin.math.sin
 
 @Composable
 fun LoginView(

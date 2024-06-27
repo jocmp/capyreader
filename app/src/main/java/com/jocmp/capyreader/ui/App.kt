@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.jocmp.capyreader.ui.articles.articleGraph
-import com.jocmp.capyreader.ui.login.accountsGraph
+import com.jocmp.capyreader.ui.accounts.accountsGraph
 import com.jocmp.capyreader.ui.theme.CapyTheme
 import com.jocmp.capyreader.unloadAccountModules
 
@@ -35,7 +35,10 @@ fun App(
                 ) {
                     accountsGraph(
                         isCompactWindow = isCompactWindow,
-                        onLoginSuccess = {
+                        onNavigateToLogin = {
+                            navController.navigate(Route.Login)
+                        },
+                        onAddSuccess = {
                             navController.navigate(Route.Articles) {
                                 popUpTo(Route.Login.path) {
                                     inclusive = true

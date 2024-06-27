@@ -1,5 +1,6 @@
 package com.jocmp.capy
 
+import com.jocmp.capy.accounts.Source
 import kotlinx.coroutines.runBlocking
 import org.junit.Rule
 import org.junit.Test
@@ -25,14 +26,14 @@ class AccountManagerTest {
     fun addAccount() {
         val manager = buildManager()
 
-        assertNotNull(manager.createAccount("foo", "bar"))
+        assertNotNull(manager.createAccount("foo", "bar", Source.LOCAL))
     }
 
     @Test
     fun findById() = runBlocking {
         val manager = buildManager()
 
-        val accountID = manager.createAccount("foo", "bar")
+        val accountID = manager.createAccount("foo", "bar", Source.LOCAL)
 
         val account = manager.findByID(accountID)
 

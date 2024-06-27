@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jocmp.capyreader.R
 import com.jocmp.capyreader.ui.components.DialogCard
-import com.jocmp.capyreader.ui.login.AuthFields
+import com.jocmp.capyreader.ui.accounts.AuthFields
 import com.jocmp.capyreader.ui.theme.CapyTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
