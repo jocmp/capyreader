@@ -40,7 +40,7 @@ fun App(
                         },
                         onAddSuccess = {
                             navController.navigate(Route.Articles) {
-                                popUpTo(Route.Login.path) {
+                                popUpTo(Route.AddAccount.path) {
                                     inclusive = true
                                 }
                             }
