@@ -7,9 +7,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -18,8 +16,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.jocmp.capy.Article
 import com.jocmp.capyreader.R
 import com.jocmp.capyreader.common.shareArticle
-import com.jocmp.capyreader.ui.LocalWindowWidth
 import com.jocmp.capyreader.ui.fixtures.ArticleSample
+import com.jocmp.capyreader.ui.isCompact
 import java.net.URL
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -66,6 +64,7 @@ fun ArticleTopBar(
                             contentDescription = stringResource(R.string.article_view_star)
                         )
                     }
+
                     IconButton(onClick = { context.shareArticle(article = article) }) {
                         Icon(
                             painterResource(id = R.drawable.ic_share),
@@ -103,7 +102,7 @@ fun extractIcon(extractedContent: ExtractedContent) = when {
 
 @Composable
 fun ArticleNavigationIcon(onClick: () -> Unit) {
-    val showIcon = LocalWindowWidth.current == WindowWidthSizeClass.Compact
+    val showIcon = isCompact()
 
     if (!showIcon) {
         return
@@ -134,21 +133,17 @@ private fun ArticleTopBarPreview(@PreviewParameter(ArticleSample::class) article
     )
 }
 
-@Preview
+@Preview(device = "id:pixel_fold")
 @Composable
 private fun ArticleTopBarPreview_Tablet(@PreviewParameter(ArticleSample::class) article: Article) {
-    val width = WindowWidthSizeClass.Medium
-
-    CompositionLocalProvider(LocalWindowWidth provides width) {
-        ArticleTopBar(
-            article = article,
-            extractedContent = ExtractedContent(),
-            onToggleExtractContent = {},
-            onToggleRead = {},
-            onToggleStar = {},
-            onClose = {}
-        )
-    }
+    ArticleTopBar(
+        article = article,
+        extractedContent = ExtractedContent(),
+        onToggleExtractContent = {},
+        onToggleRead = {},
+        onToggleStar = {},
+        onClose = {}
+    )
 }
 
 @Preview

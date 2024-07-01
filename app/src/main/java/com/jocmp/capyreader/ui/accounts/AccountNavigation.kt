@@ -15,7 +15,7 @@ fun NavGraphBuilder.accountsGraph(
     onNavigateToLogin: () -> Unit,
     onLogout: () -> Unit,
     onNavigateBackFromSettings: () -> Unit,
-    isCompactWindow: Boolean,
+    isCompactWidth: Boolean,
 ) {
     composable(Route.AddAccount) {
         AddAccountScreen(
@@ -28,7 +28,7 @@ fun NavGraphBuilder.accountsGraph(
             onSuccess = onAddSuccess,
         )
     }
-    dynamicLayout(isCompactWindow) {
+    dynamicLayout(isCompactWidth) {
         SettingsScreen(
             onLogout = onLogout,
             onNavigateBack = onNavigateBackFromSettings

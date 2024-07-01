@@ -36,7 +36,6 @@ import androidx.compose.ui.unit.sp
 import com.jocmp.capyreader.R
 import com.jocmp.capyreader.refresher.RefreshInterval
 import com.jocmp.capyreader.setupCommonModules
-import com.jocmp.capyreader.ui.LocalWindowWidth
 import com.jocmp.capyreader.ui.components.CrashReportingCheckbox
 import com.jocmp.capyreader.ui.isCompact
 import org.koin.android.ext.koin.androidContext
@@ -159,7 +158,7 @@ fun SettingsView(
 
 @Composable
 private fun backButton(): ImageVector {
-    val showBackArrow = LocalWindowWidth.current.isCompact
+    val showBackArrow = isCompact()
 
     return if (showBackArrow) {
         Icons.AutoMirrored.Filled.ArrowBack
