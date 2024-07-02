@@ -36,6 +36,9 @@ class AppPreferences(context: Context) {
     val crashReporting: Preference<Boolean>
         get() = preferenceStore.getBoolean("enable_crash_reporting", false)
 
+    val theme: Preference<ThemeOption>
+        get() = preferenceStore.getEnum("theme", ThemeOption.default)
+
     fun clearAll() {
         preferenceStore.clearAll()
     }
