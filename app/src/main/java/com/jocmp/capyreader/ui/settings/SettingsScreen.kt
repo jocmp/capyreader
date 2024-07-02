@@ -6,7 +6,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun SettingsScreen(
     viewModel: SettingsViewModel = koinViewModel(),
-    onLogout: () -> Unit,
+    onRemoveAccount: () -> Unit,
     onNavigateBack: () -> Unit,
 ) {
     SettingsView(
@@ -14,9 +14,10 @@ fun SettingsScreen(
         updateRefreshInterval = viewModel::updateRefreshInterval,
         accountName = viewModel.accountName,
         onNavigateBack = { onNavigateBack() },
-        onRequestLogout = {
-            viewModel.logOut()
-            onLogout()
+        accountSource = viewModel.accountSource,
+        onRequestRemoveAccount = {
+            viewModel.removeAccount()
+            onRemoveAccount()
         },
     )
 }

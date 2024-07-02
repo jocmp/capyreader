@@ -22,10 +22,14 @@
     <string name="feed_action_edit_success">Feed updated</string>
     <string name="feed_action_unsubscribe_success">Unsubscribed</string>
     <string name="settings">Accounts</string>
-    <string name="settings_log_out_button">Log Out</string>
-    <string name="settings_logout_dialog_title">Log Out</string>
-    <string name="settings_logout_dialog_message">Are you sure you want to log out?</string>
-    <string name="settings_logout_submit">Log Out</string>
+    <string name="settings_remove_account_button_feedbin">Log Out</string>
+    <string name="settings_remove_account_title_feedbin">Log Out</string>
+    <string name="settings_remove_account_message_feedbin">Are you sure you want to log out?</string>
+    <string name="settings_remove_account_confirm_feedbin">Log Out</string>
+    <string name="settings_remove_account_button_local">Delete Account</string>
+    <string name="settings_remove_account_title_local">Delete Account</string>
+    <string name="settings_remove_account_message_local">Are you sure you want to remove your account?</string>
+    <string name="settings_remove_account_confirm_local">Confirm</string>
     <string name="account_settings_save_name">Name saved</string>
     <string name="article_view_mark_as_read">Mark as read</string>
     <string name="article_view_star">Star</string>
@@ -77,4 +81,7 @@
     <string name="account_source_local">Local</string>
     <string name="add_account_title">Add Account</string>
     <string name="transfers_export_subscriptions">Export Subscriptions</string>
+    <string name="settings_section_account">Account</string>
+    <string name="settings_section_import">Import</string>
+    <string name="settings_section_export">Export</string>
 </resources>

@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.jocmp.capy.Account
 import com.jocmp.capy.AccountManager
+import com.jocmp.capy.accounts.Source
 import com.jocmp.capyreader.common.AppPreferences
 import com.jocmp.capyreader.refresher.RefreshInterval
 import com.jocmp.capyreader.refresher.RefreshScheduler
@@ -19,6 +20,8 @@ class SettingsViewModel(
     val refreshInterval: RefreshInterval
         get() = _refreshInterval.value
 
+    val accountSource: Source = account.source
+
     val accountName: String
         get() = account.preferences.username.get()
 
@@ -28,8 +31,11 @@ class SettingsViewModel(
         _refreshInterval.value = interval
     }
 
-    fun logOut() {
+    fun removeAccount() {
         appPreferences.clearAll()
         accountManager.removeAccount(accountID = account.id)
+    }
+
+    fun importOPML() {
     }
 }
