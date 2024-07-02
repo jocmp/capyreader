@@ -212,3 +212,6 @@ class LocalAccountDelegateTest {
         override fun isValid() = true
     }
 }
+
+private suspend fun LocalAccountDelegate.addFeed(url: String) =
+    addFeed(url = url, null, null)

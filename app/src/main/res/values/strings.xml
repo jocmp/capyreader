@@ -76,4 +76,5 @@
     <string name="account_source_feedbin">Feedbin</string>
     <string name="account_source_local">Local</string>
     <string name="add_account_title">Add Account</string>
+    <string name="transfers_export_subscriptions">Export Subscriptions</string>
 </resources>

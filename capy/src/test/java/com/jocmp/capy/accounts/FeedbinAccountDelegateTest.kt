@@ -356,3 +356,6 @@ class FeedbinAccountDelegateTest {
         assertEquals(expected = feedTitle, actual = updated.title)
     }
 }
+
+private suspend fun FeedbinAccountDelegate.addFeed(url: String) =
+    addFeed(url = url, null, null)
