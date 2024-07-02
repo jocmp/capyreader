@@ -30,7 +30,7 @@ fun NavGraphBuilder.accountsGraph(
     }
     dynamicLayout(isCompactWidth) {
         SettingsScreen(
-            onLogout = onLogout,
+            onRemoveAccount = onLogout,
             onNavigateBack = onNavigateBackFromSettings
         )
     }
