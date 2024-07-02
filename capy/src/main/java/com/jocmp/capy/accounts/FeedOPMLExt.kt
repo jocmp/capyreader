@@ -10,6 +10,6 @@ internal fun Feed.asOPML(indentLevel: Int): String {
     val parsedName = title.escapingSpecialXMLCharacters
 
     val opml =
-        "<outline text=\"${parsedName}\" title=\"${parsedName}\" description=\"\" type=\"rss\" version=\"RSS\" htmlUrl=\"${parsedSiteURL}\" xmlUrl=\"${parsedFeedURL}\" basil_id=\"${id}\"/>\n"
+        "<outline text=\"${parsedName}\" title=\"${parsedName}\" description=\"\" type=\"rss\" version=\"RSS\" htmlUrl=\"${parsedSiteURL}\" xmlUrl=\"${parsedFeedURL}\"/>\n"
     return opml.prepending(tabCount = indentLevel)
 }

@@ -44,13 +44,11 @@ class OPMLFileTest {
 
         "Tech".also { folderName ->
             feedFixture.create(
-                feedID = "1",
                 title = "The Verge",
                 feedURL = "https://www.theverge.com/rss/index.xml"
             ).let { tagFixture.create(name = folderName, feed = it) }
 
             feedFixture.create(
-                feedID = "2",
                 title = "Ars Technica",
                 feedURL = "https://feeds.arstechnica.com/arstechnica/index"
             ).let { tagFixture.create(name = folderName, feed = it) }
@@ -58,32 +56,27 @@ class OPMLFileTest {
 
         "Programming".also { folderName ->
             feedFixture.create(
-                feedID = "3",
                 title = "De Programmatica Ipsum",
                 feedURL = "https://deprogrammaticaipsum.com/feed"
             ).let { tagFixture.create(name = folderName, feed = it) }
 
             feedFixture.create(
-                feedID = "4",
                 title = "Ruby Weekly",
                 feedURL = "https://cprss.s3.amazonaws.com/rubyweekly.com.xml"
             ).let { tagFixture.create(name = folderName, feed = it) }
 
             feedFixture.create(
-                feedID = "10",
                 title = "R&A Enterprise Architecture",
                 feedURL = "https://ea.rna.nl/feed/"
             ).let { tagFixture.create(name = folderName, feed = it) }
         }
 
         feedFixture.create(
-            feedID = "5",
             feedURL = "https://gamersnexus.net/rss.xml",
             title = "GamersNexus",
         )
 
         feedFixture.create(
-            feedID = "6",
             feedURL = "https://9to5google.com/feed",
             title = "9to5Google",
         )
@@ -98,16 +91,16 @@ class OPMLFileTest {
                 <title>Capy Reader Export</title>
               </head>
               <body>
-                <outline text="9to5Google" title="9to5Google" description="" type="rss" version="RSS" htmlUrl="https://9to5google.com/feed" xmlUrl="https://9to5google.com/feed" basil_id="6"/>
-                <outline text="GamersNexus" title="GamersNexus" description="" type="rss" version="RSS" htmlUrl="https://gamersnexus.net/rss.xml" xmlUrl="https://gamersnexus.net/rss.xml" basil_id="5"/>
+                <outline text="9to5Google" title="9to5Google" description="" type="rss" version="RSS" htmlUrl="https://9to5google.com/feed" xmlUrl="https://9to5google.com/feed"/>
+                <outline text="GamersNexus" title="GamersNexus" description="" type="rss" version="RSS" htmlUrl="https://gamersnexus.net/rss.xml" xmlUrl="https://gamersnexus.net/rss.xml"/>
                 <outline text="Programming" title="Programming">
-                  <outline text="De Programmatica Ipsum" title="De Programmatica Ipsum" description="" type="rss" version="RSS" htmlUrl="https://deprogrammaticaipsum.com/feed" xmlUrl="https://deprogrammaticaipsum.com/feed" basil_id="3"/>
-                  <outline text="R&amp;A Enterprise Architecture" title="R&amp;A Enterprise Architecture" description="" type="rss" version="RSS" htmlUrl="https://ea.rna.nl/feed/" xmlUrl="https://ea.rna.nl/feed/" basil_id="10"/>
-                  <outline text="Ruby Weekly" title="Ruby Weekly" description="" type="rss" version="RSS" htmlUrl="https://cprss.s3.amazonaws.com/rubyweekly.com.xml" xmlUrl="https://cprss.s3.amazonaws.com/rubyweekly.com.xml" basil_id="4"/>
+                  <outline text="De Programmatica Ipsum" title="De Programmatica Ipsum" description="" type="rss" version="RSS" htmlUrl="https://deprogrammaticaipsum.com/feed" xmlUrl="https://deprogrammaticaipsum.com/feed"/>
+                  <outline text="R&amp;A Enterprise Architecture" title="R&amp;A Enterprise Architecture" description="" type="rss" version="RSS" htmlUrl="https://ea.rna.nl/feed/" xmlUrl="https://ea.rna.nl/feed/"/>
+                  <outline text="Ruby Weekly" title="Ruby Weekly" description="" type="rss" version="RSS" htmlUrl="https://cprss.s3.amazonaws.com/rubyweekly.com.xml" xmlUrl="https://cprss.s3.amazonaws.com/rubyweekly.com.xml"/>
                 </outline>
                 <outline text="Tech" title="Tech">
-                  <outline text="Ars Technica" title="Ars Technica" description="" type="rss" version="RSS" htmlUrl="https://feeds.arstechnica.com/arstechnica/index" xmlUrl="https://feeds.arstechnica.com/arstechnica/index" basil_id="2"/>
-                  <outline text="The Verge" title="The Verge" description="" type="rss" version="RSS" htmlUrl="https://www.theverge.com/rss/index.xml" xmlUrl="https://www.theverge.com/rss/index.xml" basil_id="1"/>
+                  <outline text="Ars Technica" title="Ars Technica" description="" type="rss" version="RSS" htmlUrl="https://feeds.arstechnica.com/arstechnica/index" xmlUrl="https://feeds.arstechnica.com/arstechnica/index"/>
+                  <outline text="The Verge" title="The Verge" description="" type="rss" version="RSS" htmlUrl="https://www.theverge.com/rss/index.xml" xmlUrl="https://www.theverge.com/rss/index.xml"/>
                 </outline>
               </body>
             </opml>
