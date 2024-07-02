@@ -1,6 +1,5 @@
-package com.jocmp.capy.extensions
+package com.jocmp.capy.common
 
-import com.jocmp.capy.common.prepending
 import org.junit.Test
 import kotlin.test.assertEquals
 
@@ -15,7 +14,7 @@ class StringPrependingExtTest {
 
     @Test
     fun repeatTab() {
-        assertEquals(expected = "  ", actual = com.jocmp.capy.common.repeatTab(tabCount = 1))
-        assertEquals(expected = "    ", actual = com.jocmp.capy.common.repeatTab(tabCount = 2))
+        assertEquals(expected = "  ", actual = repeatTab(tabCount = 1))
+        assertEquals(expected = "    ", actual = repeatTab(tabCount = 2))
     }
 }
