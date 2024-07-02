@@ -18,12 +18,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.jocmp.capyreader.R
 import com.jocmp.capyreader.refresher.RefreshInterval
-import com.jocmp.capyreader.refresher.RefreshInterval.EVERY_EIGHT_HOURS
 import com.jocmp.capyreader.refresher.RefreshInterval.EVERY_FIFTEEN_MINUTES
-import com.jocmp.capyreader.refresher.RefreshInterval.EVERY_FOUR_HOURS
 import com.jocmp.capyreader.refresher.RefreshInterval.EVERY_HOUR
 import com.jocmp.capyreader.refresher.RefreshInterval.EVERY_THIRTY_MINUTES
-import com.jocmp.capyreader.refresher.RefreshInterval.EVERY_TWO_HOURS
 import com.jocmp.capyreader.refresher.RefreshInterval.MANUALLY_ONLY
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -79,9 +76,6 @@ private fun Context.translationKey(refreshInterval: RefreshInterval): String {
         EVERY_FIFTEEN_MINUTES -> getString(R.string.refresh_minutes, 15)
         EVERY_THIRTY_MINUTES -> getString(R.string.refresh_minutes, 30)
         EVERY_HOUR -> resources.getQuantityString(R.plurals.refresh_hours, 1)
-        EVERY_TWO_HOURS -> resources.getQuantityString(R.plurals.refresh_hours, 2, 2)
-        EVERY_FOUR_HOURS -> resources.getQuantityString(R.plurals.refresh_hours, 4, 4)
-        EVERY_EIGHT_HOURS -> resources.getQuantityString(R.plurals.refresh_hours, 8, 8)
     }
 }
 

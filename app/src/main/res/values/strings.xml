@@ -33,6 +33,10 @@
     <string name="article_byline_date_only">%1$s at %2$s</string>
     <string name="refresh_manually_only">Manually only</string>
     <string name="refresh_minutes">Every %1$d minutes</string>
+    <plurals name="refresh_hours">
+        <item quantity="one">Every hour</item>
+        <item quantity="other">Every %d hours</item>
+    </plurals>
     <string name="refresh_feeds_menu_label">Refresh Feeds</string>
     <string name="nav_headline_tags">Tags</string>
     <string name="nav_headline_feeds">Feeds</string>
@@ -42,10 +46,6 @@
     <string name="add_feed_network_error">Couldn\'t find feed. Check your connection.</string>
     <string name="edit_feed_error">Error saving feed</string>
     <string name="unsubscribe_error">Error unsubscribing from feed</string>
-    <plurals name="refresh_hours">
-        <item quantity="one">Every hour</item>
-        <item quantity="other">Every %d hours</item>
-    </plurals>
     <string name="relative_time_just_now">Just now</string>
     <string name="relative_time_minutes">%1$dm</string>
     <string name="relative_time_hours">%1$dh</string>
