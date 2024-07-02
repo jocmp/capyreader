@@ -142,7 +142,11 @@ internal class FeedbinAccountDelegate(
         }
     }
 
-    override suspend fun addFeed(url: String): AddFeedResult {
+    override suspend fun addFeed(
+        url: String,
+        title: String?,
+        folderTitles: List<String>?
+    ): AddFeedResult {
         return try {
             val response = feedbin.createSubscription(CreateSubscriptionRequest(feed_url = url))
             val subscription = response.body()

@@ -86,9 +86,9 @@ internal class FeedRecords(private val database: Database) {
             subscriptionID = subscriptionID,
             title = title,
             feedURL = feedURL,
-            siteURL = siteURL ?: "",
+            siteURL = siteURL.orEmpty(),
             faviconURL = faviconURL,
-            folderName = folderName ?: "",
+            folderName = folderName.orEmpty(),
             count = articleCount
         )
     }

@@ -33,7 +33,11 @@ class LocalAccountDelegate(
         return Result.success(Unit)
     }
 
-    override suspend fun addFeed(url: String): AddFeedResult {
+    override suspend fun addFeed(
+        url: String,
+        title: String?,
+        folderTitles: List<String>?
+    ): AddFeedResult {
         try {
             val response = feedFinder.find(url = url)
             val feeds = response.getOrDefault(emptyList())
@@ -46,11 +50,13 @@ class LocalAccountDelegate(
                 return AddFeedResult.MultipleChoices(choices)
             } else if (feeds.size == 1) {
                 val resultFeed = feeds.first()
-                upsertFeed(resultFeed)
+                upsertFeed(resultFeed, title = title)
 
                 val feed = feedRecords.findBy(id = resultFeed.feedURL.toString())
 
                 return if (feed != null) {
+                    upsertFolders(feed, folderTitles)
+
                     AddFeedResult.Success(feed)
                 } else {
                     AddFeedResult.Failure(AddFeedResult.AddFeedError.SaveFailure())
@@ -77,13 +83,7 @@ class LocalAccountDelegate(
             excludedTaggingNames = folderTitles
         )
 
-        folderTitles.forEach { folderTitle ->
-            taggingRecords.upsert(
-                id = "${feed.id}:$folderTitle",
-                feedID = feed.id,
-                name = folderTitle
-            )
-        }
+        upsertFolders(feed, folderTitles = folderTitles)
 
         taggingRecords.deleteTaggings(taggingIDsToDelete)
 
@@ -164,17 +164,32 @@ class LocalAccountDelegate(
         }
     }
 
-    private fun upsertFeed(feed: ParserFeed) {
+    private fun upsertFeed(
+        feed: ParserFeed,
+        title: String?,
+    ) {
         val feedURL = feed.feedURL.toString()
 
         database.feedsQueries.upsert(
             id = feedURL,
             subscription_id = feedURL,
-            title = feed.name,
+            title = title ?: feed.name,
             feed_url = feedURL,
             site_url = feed.siteURL?.toString(),
             favicon_url = feed.faviconURL?.toString()
         )
+    }
+
+    private fun upsertFolders(feed: Feed, folderTitles: List<String>?) {
+        folderTitles ?: return
+
+        folderTitles.forEach { folderTitle ->
+            taggingRecords.upsert(
+                id = "${feed.id}:$folderTitle",
+                feedID = feed.id,
+                name = folderTitle
+            )
+        }
     }
 }
 

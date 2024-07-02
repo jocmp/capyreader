@@ -37,7 +37,7 @@ class AddFeedStateHolder(
         withContext(Dispatchers.IO) {
             _loading.value = true
 
-            val result = account.addFeed(url)
+            val result = account.addFeed(url = url)
             _loading.value = false
 
             when (result) {

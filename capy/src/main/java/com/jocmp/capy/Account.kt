@@ -5,13 +5,16 @@ import com.jocmp.capy.accounts.FeedbinAccountDelegate
 import com.jocmp.capy.accounts.FeedbinOkHttpClient
 import com.jocmp.capy.accounts.LocalAccountDelegate
 import com.jocmp.capy.accounts.Source
+import com.jocmp.capy.accounts.asOPML
 import com.jocmp.capy.common.sortedByTitle
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.capy.persistence.FeedRecords
 import com.jocmp.feedbinclient.Feedbin
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import java.io.File
 import java.net.URI
 
 data class Account(
@@ -24,6 +27,7 @@ data class Account(
         Source.LOCAL -> LocalAccountDelegate(
             database = database
         )
+
         Source.FEEDBIN -> FeedbinAccountDelegate(
             database = database,
             feedbin = Feedbin.forAccount(path = path, preferences = preferences)
@@ -54,8 +58,16 @@ data class Account(
             .sortedByTitle()
     }
 
-    suspend fun addFeed(url: String): AddFeedResult {
-        return delegate.addFeed(url)
+    suspend fun addFeed(
+        url: String,
+        title: String? = null,
+        folderTitles: List<String>? = null
+    ): AddFeedResult {
+        return delegate.addFeed(
+            url = url,
+            title = title,
+            folderTitles = folderTitles
+        )
     }
 
     suspend fun editFeed(form: EditFeedFormEntry): Result<Feed> {
@@ -139,6 +151,24 @@ data class Account(
 
     suspend fun fetchFullContent(article: Article): Result<String> {
         return delegate.fetchFullContent(article)
+    }
+
+    suspend fun opmlDocument(): String {
+        return OPMLFile(this).opmlDocument()
+    }
+
+    internal suspend fun asOPML(): String {
+        var opml = ""
+
+        feeds.first().forEach { feed ->
+            opml += feed.asOPML(indentLevel = 2)
+        }
+
+        folders.first().forEach { folder ->
+            opml += folder.asOPML(indentLevel = 2)
+        }
+
+        return opml
     }
 }
 

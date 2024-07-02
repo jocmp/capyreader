@@ -11,12 +11,13 @@ class FeedFixture(database: Database) {
 
     fun create(
         feedID: String = randomID(),
-        feedURL: String = "https://example.com"
+        feedURL: String = "https://example.com",
+        title: String = "My Feed",
     ): Feed = runBlocking {
         records.upsert(
             feedID = feedID,
             subscriptionID = randomID(),
-            title = "My Feed",
+            title = title,
             feedURL = feedURL,
             siteURL = feedURL,
             faviconURL = null,
