@@ -9,7 +9,7 @@ val settingsModule = module {
             account = get(),
             accountManager = get(),
             refreshScheduler = get(),
-            appPreferences = get()
+            appPreferences = get(),
         )
     }
 }

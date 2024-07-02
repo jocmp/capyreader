@@ -49,6 +49,7 @@ fun SettingsView(
     updateRefreshInterval: (interval: RefreshInterval) -> Unit,
     onNavigateBack: () -> Unit,
     onRequestRemoveAccount: () -> Unit,
+    onRequestExport: () -> Unit,
     accountSource: Source,
     accountName: String
 ) {
@@ -115,7 +116,9 @@ fun SettingsView(
                 }
 
                 Section(title = stringResource(R.string.settings_section_export)) {
-                    OPMLExportButton()
+                    OPMLExportButton(
+                        onClick = onRequestExport,
+                    )
                 }
 
                 Section(title = "Privacy") {
@@ -226,6 +229,7 @@ fun AccountSettingsViewPreview() {
             updateRefreshInterval = {},
             onRequestRemoveAccount = {},
             onNavigateBack = {},
+            onRequestExport = {},
             accountSource = Source.FEEDBIN,
             accountName = "hello@example.com"
         )
@@ -248,6 +252,7 @@ fun AccountSettingsView_LocalPreview() {
             updateRefreshInterval = {},
             onRequestRemoveAccount = {},
             onNavigateBack = {},
+            onRequestExport = {},
             accountSource = Source.LOCAL,
             accountName = ""
         )
