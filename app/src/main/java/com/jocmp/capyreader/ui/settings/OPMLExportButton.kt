@@ -9,7 +9,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import com.jocmp.capy.Account
+import com.jocmp.capyreader.R
 import com.jocmp.capyreader.transfers.OPMLExporter
 import org.koin.compose.koinInject
 
@@ -26,7 +28,7 @@ fun OPMLExportButton(
             ),
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Export to OPML")
+            Text(stringResource(R.string.opml_export_button_text))
         }
     }
 }

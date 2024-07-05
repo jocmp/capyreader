@@ -34,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jocmp.capy.accounts.Source
+import com.jocmp.capy.opml.ImportProgress
 import com.jocmp.capyreader.R
 import com.jocmp.capyreader.refresher.RefreshInterval
 import com.jocmp.capyreader.setupCommonModules
@@ -50,9 +51,12 @@ fun SettingsView(
     onNavigateBack: () -> Unit,
     onRequestRemoveAccount: () -> Unit,
     onRequestExport: () -> Unit,
+    onRequestImport: () -> Unit,
     accountSource: Source,
-    accountName: String
+    accountName: String,
+    importProgressPercent: Int?
 ) {
+    val context = LocalContext.current
     val strings = AccountSettingsStrings.find(accountSource)
     val (isRemoveDialogOpen, setRemoveDialogOpen) = remember { mutableStateOf(false) }
 
@@ -102,7 +106,7 @@ fun SettingsView(
                     }
                 }
 
-                Section(title = "Refresh") {
+                Section(title = stringResource(R.string.settings_section_refresh)) {
                     RefreshIntervalMenu(
                         refreshInterval = refreshInterval,
                         updateRefreshInterval = updateRefreshInterval,
@@ -111,7 +115,10 @@ fun SettingsView(
 
                 if (showImportButton(accountSource)) {
                     Section(title = stringResource(R.string.settings_section_import)) {
-                        OPMLImportButton()
+                        importProgressPercent?.let { progress ->
+                            Text("Importing subscriptions... ${progress}%")
+                        }
+                        OPMLImportButton(onClick = onRequestImport)
                     }
                 }
 
@@ -121,7 +128,7 @@ fun SettingsView(
                     )
                 }
 
-                Section(title = "Privacy") {
+                Section(title = stringResource(R.string.settings_section_privacy)) {
                     CrashReportingCheckbox()
                 }
 
@@ -194,11 +201,12 @@ private fun backButton(): ImageVector {
 }
 
 @Composable
-fun removeAccountButtonColors(source: Source) = when(source) {
+fun removeAccountButtonColors(source: Source) = when (source) {
     Source.LOCAL -> ButtonDefaults.buttonColors(
         containerColor = colorScheme.error,
         contentColor = colorScheme.onError
     )
+
     Source.FEEDBIN -> ButtonDefaults.buttonColors(
         containerColor = colorScheme.secondary,
         contentColor = colorScheme.onSecondary
@@ -230,8 +238,10 @@ fun AccountSettingsViewPreview() {
             onRequestRemoveAccount = {},
             onNavigateBack = {},
             onRequestExport = {},
+            onRequestImport = {},
             accountSource = Source.FEEDBIN,
-            accountName = "hello@example.com"
+            accountName = "hello@example.com",
+            importProgressPercent = null,
         )
     }
 }
@@ -253,8 +263,10 @@ fun AccountSettingsView_LocalPreview() {
             onRequestRemoveAccount = {},
             onNavigateBack = {},
             onRequestExport = {},
+            onRequestImport = {},
             accountSource = Source.LOCAL,
-            accountName = ""
+            accountName = "",
+            importProgressPercent = null,
         )
     }
 }
