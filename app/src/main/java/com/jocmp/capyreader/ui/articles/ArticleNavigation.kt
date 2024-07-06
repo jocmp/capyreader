@@ -1,11 +1,9 @@
 package com.jocmp.capyreader.ui.articles
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.jocmp.capyreader.ui.Route
-import com.jocmp.capyreader.ui.navigate
 
 fun NavGraphBuilder.articleGraph(
     navController: NavController,
@@ -15,18 +13,10 @@ fun NavGraphBuilder.articleGraph(
     ) {
         ArticleScreen(
             onNavigateToSettings = {
-                navController.navigate(Route.Settings)
+                navController.navigate(Route.Settings.path) {
+                    launchSingleTop = true
+                }
             }
         )
     }
-}
-
-internal class EditFeedArgs(val feedID: String) {
-    constructor(savedStateHandle: SavedStateHandle) :
-            this(checkNotNull(savedStateHandle["id"]) as String)
-}
-
-internal class EditFolderArgs(val folderTitle: String) {
-    constructor(savedStateHandle: SavedStateHandle) :
-            this(checkNotNull(savedStateHandle["title"]) as String)
 }

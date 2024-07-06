@@ -84,13 +84,13 @@
     <string name="settings_section_account">Account</string>
     <string name="settings_section_import">Import</string>
     <string name="settings_section_export">Export</string>
-    <string name="opml_import_notification_title">Importing subscriptions</string>
+    <string name="opml_import_notification_title">Importing subscriptions…</string>
     <string name="notifications_channel_title">Subscription Imports</string>
     <string name="settings_section_privacy">Privacy</string>
     <string name="settings_section_refresh">Refresh</string>
     <string name="opml_import_button_text">Import from File</string>
     <string name="opml_export_button_text">Export to OPML</string>
     <string name="opml_import_progress_content_text_start">Starting import</string>
-    <string name="opml_import_progress_content_text_progress">Importing subscriptions</string>
-    <string name="settings_import_progress">Importing subscriptions… %d\%</string>
+    <string name="settings_import_progress">Importing subscriptions %1$d of %2$d</string>
+    <string name="opml_import_toast_complete">Import complete</string>
 </resources>

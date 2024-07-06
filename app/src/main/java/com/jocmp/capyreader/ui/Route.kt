@@ -13,9 +13,3 @@ sealed class Route(val path: String) {
 
     data object Articles : Route("articles")
 }
-
-fun NavController.navigate(route: Route) = navigate(route.path)
-
-fun NavController.navigate(route: Route, builder: NavOptionsBuilder.() -> Unit) {
-    navigate(route.path, navOptions(builder))
-}

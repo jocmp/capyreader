@@ -17,7 +17,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
@@ -54,10 +53,9 @@ fun SettingsView(
     onRequestImport: () -> Unit,
     accountSource: Source,
     accountName: String,
-    importProgressPercent: Int?
+    importProgress: ImportProgress?,
 ) {
-    val context = LocalContext.current
-    val strings = AccountSettingsStrings.find(accountSource)
+    val strings = AccountSettingsStrings.build(accountSource)
     val (isRemoveDialogOpen, setRemoveDialogOpen) = remember { mutableStateOf(false) }
 
     val onRemoveCancel = {
@@ -115,10 +113,12 @@ fun SettingsView(
 
                 if (showImportButton(accountSource)) {
                     Section(title = stringResource(R.string.settings_section_import)) {
-                        importProgressPercent?.let { progress ->
-                            Text("Importing subscriptions... ${progress}%")
-                        }
-                        OPMLImportButton(onClick = onRequestImport)
+                        OPMLImportButton(
+                            onClick = {
+                                onRequestImport()
+                            },
+                            importProgress = importProgress
+                        )
                     }
                 }
 
@@ -235,13 +235,13 @@ fun AccountSettingsViewPreview() {
         SettingsView(
             refreshInterval = RefreshInterval.EVERY_HOUR,
             updateRefreshInterval = {},
-            onRequestRemoveAccount = {},
             onNavigateBack = {},
+            onRequestRemoveAccount = {},
             onRequestExport = {},
             onRequestImport = {},
             accountSource = Source.FEEDBIN,
             accountName = "hello@example.com",
-            importProgressPercent = null,
+            importProgress = null
         )
     }
 }
@@ -260,13 +260,13 @@ fun AccountSettingsView_LocalPreview() {
         SettingsView(
             refreshInterval = RefreshInterval.EVERY_HOUR,
             updateRefreshInterval = {},
-            onRequestRemoveAccount = {},
             onNavigateBack = {},
+            onRequestRemoveAccount = {},
             onRequestExport = {},
             onRequestImport = {},
             accountSource = Source.LOCAL,
             accountName = "",
-            importProgressPercent = null,
+            importProgress = null
         )
     }
 }

@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import com.jocmp.capyreader.transfers.OPMLExporter
-import com.jocmp.capyreader.transfers.OPMLImportWorker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
@@ -39,17 +38,17 @@ fun SettingsScreen(
     SettingsView(
         refreshInterval = viewModel.refreshInterval,
         updateRefreshInterval = viewModel::updateRefreshInterval,
-        accountName = viewModel.accountName,
         onNavigateBack = { onNavigateBack() },
-        accountSource = viewModel.accountSource,
-        onRequestExport = { exportOPML() },
-        onRequestImport = {
-            importOPML()
-        },
         onRequestRemoveAccount = {
             viewModel.removeAccount()
             onRemoveAccount()
         },
-        importProgressPercent = viewModel.importProgress
+        onRequestExport = { exportOPML() },
+        onRequestImport = {
+            importOPML()
+        },
+        accountSource = viewModel.accountSource,
+        accountName = viewModel.accountName,
+        importProgress = viewModel.importProgress
     )
 }

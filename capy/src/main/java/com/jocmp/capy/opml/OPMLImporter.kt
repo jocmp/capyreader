@@ -23,6 +23,8 @@ internal class OPMLImporter(private val account: Account) {
         val groupedForms = entries.groupBy { it.url.toString() }.toMap()
         val size = groupedForms.size
 
+        onProgress(ImportProgress(currentCount = 0, total = size))
+
         groupedForms.forEach { (feedURL, forms) ->
             val folderTitles = forms.flatMap { it.folderTitles }.distinct()
             val title = forms.first().title
@@ -34,7 +36,6 @@ internal class OPMLImporter(private val account: Account) {
                 ImportProgress(
                     currentCount = counter,
                     total = size,
-                    percent = (counter.toFloat() / size.toFloat() * 100f).roundToInt()
                 )
             )
         }
@@ -98,5 +99,7 @@ internal class OPMLImporter(private val account: Account) {
 data class ImportProgress(
     val currentCount: Int = 0,
     val total: Int = 0,
-    val percent: Int = 0
-)
+) {
+    val percent: Float
+        get() = (currentCount.toFloat() / total.toFloat()).coerceIn(0f, 1f)
+}

@@ -3,7 +3,6 @@ package com.jocmp.capyreader.ui.settings
 import android.app.Application
 import android.content.Context
 import android.net.Uri
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,7 +16,8 @@ import com.jocmp.capyreader.common.AppPreferences
 import com.jocmp.capyreader.refresher.RefreshInterval
 import com.jocmp.capyreader.refresher.RefreshScheduler
 import com.jocmp.capyreader.transfers.OPMLImportWorker
-import com.jocmp.capyreader.transfers.OPMLImportWorker.Companion.PROGRESS
+import com.jocmp.capyreader.transfers.OPMLImportWorker.Companion.PROGRESS_CURRENT_COUNT
+import com.jocmp.capyreader.transfers.OPMLImportWorker.Companion.PROGRESS_TOTAL
 import kotlinx.coroutines.launch
 
 private const val TAG = "SettingsViewModel"
@@ -31,9 +31,9 @@ class SettingsViewModel(
 ) : AndroidViewModel(application) {
     private val _refreshInterval = mutableStateOf(refreshScheduler.refreshInterval)
 
-    private val _importProgress = mutableStateOf<Int?>(null)
+    private val _importProgress = mutableStateOf<ImportProgress?>(null)
 
-    val importProgress: Int?
+    val importProgress: ImportProgress?
         get() = _importProgress.value
 
     val refreshInterval: RefreshInterval
@@ -64,12 +64,16 @@ class SettingsViewModel(
             WorkManager.getInstance(applicationContext)
                 .getWorkInfoByIdFlow(requestID)
                 .collect { workInfo: WorkInfo? ->
-                    val progress = workInfo?.progress?.getInt(PROGRESS, 0) ?: 0
-
-                    if (progress > 0) {
-                        _importProgress.value = progress
-                    } else {
+                    if (workInfo == null || workInfo.state.isFinished) {
                         _importProgress.value = null
+                    } else {
+                        val currentCount = workInfo.progress.getInt(PROGRESS_CURRENT_COUNT, 0)
+                        val total = workInfo.progress.getInt(PROGRESS_TOTAL, 0)
+
+                        _importProgress.value = ImportProgress(
+                            currentCount = currentCount,
+                            total = total
+                        )
                     }
                 }
         }

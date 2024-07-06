@@ -11,7 +11,7 @@ data class AccountSettingsStrings(
     @StringRes val requestRemoveText: Int
 ) {
     companion object {
-        fun find(source: Source): AccountSettingsStrings {
+        fun build(source: Source): AccountSettingsStrings {
             return when (source) {
                 Source.LOCAL -> AccountSettingsStrings(
                     dialogTitle = R.string.settings_remove_account_title_local,

@@ -32,18 +32,20 @@ fun App(
                 accountsGraph(
                     isCompactWidth = compactWidth,
                     onNavigateToLogin = {
-                        navController.navigate(Route.Login)
+                        navController.navigate(Route.Login.path)
                     },
                     onAddSuccess = {
-                        navController.navigate(Route.Articles) {
+                        navController.navigate(Route.Articles.path) {
+                            launchSingleTop = true
+
                             popUpTo(Route.AddAccount.path) {
                                 inclusive = true
                             }
                         }
                     },
                     onRemoveAccount = {
-                        navController.navigate(Route.AddAccount) {
-                            popUpTo(Route.AddAccount.path) {
+                        navController.navigate(Route.AddAccount.path) {
+                            popUpTo(Route.Articles.path) {
                                 inclusive = true
                             }
                         }
