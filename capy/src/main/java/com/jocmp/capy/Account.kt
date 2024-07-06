@@ -4,6 +4,7 @@ import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.FeedbinAccountDelegate
 import com.jocmp.capy.accounts.FeedbinOkHttpClient
 import com.jocmp.capy.accounts.LocalAccountDelegate
+import com.jocmp.capy.accounts.LocalOkHttpClient
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.asOPML
 import com.jocmp.capy.common.sortedByTitle
@@ -13,6 +14,8 @@ import com.jocmp.capy.opml.OPMLImporter
 import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.capy.persistence.FeedRecords
 import com.jocmp.feedbinclient.Feedbin
+import com.jocmp.feedfinder.DefaultFeedFinder
+import com.jocmp.feedfinder.FeedFinder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -28,7 +31,8 @@ data class Account(
     val source: Source = Source.LOCAL,
     val delegate: AccountDelegate = when (source) {
         Source.LOCAL -> LocalAccountDelegate(
-            database = database
+            database = database,
+            feedFinder = buildFeedFinderForAccount(path = path)
         )
 
         Source.FEEDBIN -> FeedbinAccountDelegate(
@@ -181,3 +185,6 @@ data class Account(
 
 private fun Feedbin.Companion.forAccount(path: URI, preferences: AccountPreferences) =
     create(client = FeedbinOkHttpClient.forAccount(path, preferences))
+
+private fun buildFeedFinderForAccount(path: URI) =
+    DefaultFeedFinder(LocalOkHttpClient.forAccount(path = path))

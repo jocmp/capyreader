@@ -7,6 +7,7 @@ import com.jocmp.feedfinder.sources.MetaLinks
 import com.jocmp.feedfinder.sources.Source
 import com.jocmp.feedfinder.sources.XML
 import com.prof18.rssparser.RssParser
+import com.prof18.rssparser.RssParserBuilder
 import com.prof18.rssparser.model.RssChannel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -17,10 +18,11 @@ import java.net.URI
 import java.net.URISyntaxException
 
 class DefaultFeedFinder internal constructor(
-    private val request: Request,
-    private val rssParser: RssParser = RssParser()
+    httpClient: OkHttpClient,
+    private val request: Request = DefaultRequest(httpClient),
+    private val rssParser: RssParser = RssParserBuilder(callFactory = httpClient).build()
 ) : FeedFinder {
-    constructor() : this(DefaultRequest(OkHttpClient()))
+    constructor(client: OkHttpClient) : this(httpClient = client)
 
     override suspend fun find(url: String): Result<List<Feed>> = withContext(Dispatchers.IO) {
         try {
@@ -58,7 +60,11 @@ class DefaultFeedFinder internal constructor(
 
 
     override suspend fun fetch(url: String): Result<RssChannel> {
-        return Result.success(rssParser.getRssChannel(url))
+        return try {
+            Result.success(rssParser.getRssChannel(url))
+        } catch (e: Throwable) {
+            Result.failure(e)
+        }
     }
 
     private fun sources(response: Response): List<Source> {

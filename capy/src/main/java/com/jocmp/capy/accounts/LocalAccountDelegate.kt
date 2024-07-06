@@ -14,15 +14,20 @@ import com.jocmp.capy.persistence.TaggingRecords
 import com.jocmp.feedfinder.DefaultFeedFinder
 import com.jocmp.feedfinder.FeedFinder
 import com.prof18.rssparser.model.RssItem
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
 import org.jsoup.Jsoup
 import java.net.UnknownHostException
 import java.time.ZonedDateTime
+import kotlin.coroutines.coroutineContext
 import com.jocmp.feedfinder.parser.Feed as ParserFeed
 
 class LocalAccountDelegate(
     private val database: Database,
-    private val feedFinder: FeedFinder = DefaultFeedFinder(),
+    private val feedFinder: FeedFinder,
 ) : AccountDelegate {
     private val feedRecords = FeedRecords(database)
     private val taggingRecords = TaggingRecords(database)
@@ -124,10 +129,14 @@ class LocalAccountDelegate(
         val feeds = feedRecords.feeds().firstOrNull() ?: return
 
         feeds.forEach { feed ->
-            feedFinder.fetch(feed.feedURL).onSuccess { channel ->
-                val saveableArticles = channel.items.filter { !it.link.isNullOrBlank() }
+            coroutineScope {
+                launch {
+                    feedFinder.fetch(feed.feedURL).onSuccess { channel ->
+                        val saveableArticles = channel.items.filter { !it.link.isNullOrBlank() }
 
-                saveArticles(saveableArticles, feed)
+                        saveArticles(saveableArticles, feed)
+                    }
+                }
             }
         }
     }
