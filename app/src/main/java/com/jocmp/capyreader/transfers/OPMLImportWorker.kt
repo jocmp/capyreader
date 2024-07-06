@@ -22,6 +22,8 @@ import com.jocmp.capy.Account
 import com.jocmp.capyreader.Notifications
 import com.jocmp.capyreader.R
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -76,6 +78,12 @@ class OPMLImportWorker(
                     FOREGROUND_SERVICE_TYPE_DATA_SYNC
                 )
             )
+        }
+
+        coroutineScope {
+            launch {
+                account.refresh()
+            }
         }
     }
 
