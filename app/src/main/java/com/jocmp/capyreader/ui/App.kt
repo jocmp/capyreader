@@ -41,9 +41,9 @@ fun App(
                             }
                         }
                     },
-                    onLogout = {
-                        navController.navigate(Route.Login) {
-                            popUpTo(navController.graph.startDestinationId) {
+                    onRemoveAccount = {
+                        navController.navigate(Route.AddAccount) {
+                            popUpTo(Route.AddAccount.path) {
                                 inclusive = true
                             }
                         }
