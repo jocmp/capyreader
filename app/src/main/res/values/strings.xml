@@ -28,7 +28,7 @@
     <string name="settings_remove_account_confirm_feedbin">Log Out</string>
     <string name="settings_remove_account_button_local">Delete Account</string>
     <string name="settings_remove_account_title_local">Delete Account</string>
-    <string name="settings_remove_account_message_local">Are you sure you want to remove your account?</string>
+    <string name="settings_remove_account_message_local">Are you sure you want to delete your account? This cannot be undone.</string>
     <string name="settings_remove_account_confirm_local">Confirm</string>
     <string name="account_settings_save_name">Name saved</string>
     <string name="article_view_mark_as_read">Mark as read</string>
