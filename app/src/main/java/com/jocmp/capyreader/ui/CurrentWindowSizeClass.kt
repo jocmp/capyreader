@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.window.core.layout.WindowWidthSizeClass.Companion.EXPANDED
 
 @Composable
-@OptIn(ExperimentalMaterial3AdaptiveApi::class)
 fun currentWindowSizeClass() = currentWindowAdaptiveInfo().windowSizeClass
 
 @Composable

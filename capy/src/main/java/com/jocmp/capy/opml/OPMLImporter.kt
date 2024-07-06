@@ -3,6 +3,7 @@ package com.jocmp.capy.opml
 import com.jocmp.capy.Account
 import java.io.InputStream
 import java.net.URL
+import kotlin.math.roundToInt
 
 /**
  * 1. Load file via `OPMLFile`
@@ -11,16 +12,18 @@ import java.net.URL
  */
 internal class OPMLImporter(private val account: Account) {
     internal suspend fun import(
-        onProgress: (percent: Float) -> Unit = {},
+        onProgress: (progress: ImportProgress) -> Unit = {},
         inputStream: InputStream,
     ) {
-        var counter = 0f
+        var counter = 0
         val outlines = OPMLHandler.parse(inputStream)
 
         val entries = findEntries(outlines)
 
         val groupedForms = entries.groupBy { it.url.toString() }.toMap()
-        val size = groupedForms.size.toFloat()
+        val size = groupedForms.size
+
+        onProgress(ImportProgress(currentCount = 0, total = size))
 
         groupedForms.forEach { (feedURL, forms) ->
             val folderTitles = forms.flatMap { it.folderTitles }.distinct()
@@ -29,7 +32,12 @@ internal class OPMLImporter(private val account: Account) {
             account.addFeed(url = feedURL, title = title, folderTitles = folderTitles)
             counter += 1
 
-            onProgress(counter / size)
+            onProgress(
+                ImportProgress(
+                    currentCount = counter,
+                    total = size,
+                )
+            )
         }
     }
 
@@ -86,4 +94,12 @@ internal class OPMLImporter(private val account: Account) {
         val siteURL: URL? = null,
         val folderTitles: List<String> = emptyList()
     )
+}
+
+data class ImportProgress(
+    val currentCount: Int = 0,
+    val total: Int = 0,
+) {
+    val percent: Float
+        get() = (currentCount.toFloat() / total.toFloat()).coerceIn(0f, 1f)
 }

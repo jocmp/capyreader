@@ -13,7 +13,7 @@ import com.jocmp.capyreader.ui.settings.SettingsScreen
 fun NavGraphBuilder.accountsGraph(
     onAddSuccess: () -> Unit,
     onNavigateToLogin: () -> Unit,
-    onLogout: () -> Unit,
+    onRemoveAccount: () -> Unit,
     onNavigateBackFromSettings: () -> Unit,
     isCompactWidth: Boolean,
 ) {
@@ -30,7 +30,7 @@ fun NavGraphBuilder.accountsGraph(
     }
     dynamicLayout(isCompactWidth) {
         SettingsScreen(
-            onLogout = onLogout,
+            onRemoveAccount = onRemoveAccount,
             onNavigateBack = onNavigateBackFromSettings
         )
     }

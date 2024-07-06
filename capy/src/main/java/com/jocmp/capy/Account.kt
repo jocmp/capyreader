@@ -8,6 +8,8 @@ import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.asOPML
 import com.jocmp.capy.common.sortedByTitle
 import com.jocmp.capy.db.Database
+import com.jocmp.capy.opml.ImportProgress
+import com.jocmp.capy.opml.OPMLImporter
 import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.capy.persistence.FeedRecords
 import com.jocmp.feedbinclient.Feedbin
@@ -15,6 +17,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import java.io.File
+import java.io.InputStream
 import java.net.URI
 
 data class Account(
@@ -155,6 +158,10 @@ data class Account(
 
     suspend fun opmlDocument(): String {
         return OPMLFile(this).opmlDocument()
+    }
+
+    suspend fun import(inputStream: InputStream, onProgress: (ImportProgress) -> Unit) {
+        OPMLImporter(this).import(onProgress, inputStream)
     }
 
     internal suspend fun asOPML(): String {

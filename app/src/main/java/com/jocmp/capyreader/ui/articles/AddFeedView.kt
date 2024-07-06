@@ -84,7 +84,7 @@ fun AddFeedView(
                         Text(stringResource(resource))
                     }
                 },
-                maxLines = 1,
+                singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
