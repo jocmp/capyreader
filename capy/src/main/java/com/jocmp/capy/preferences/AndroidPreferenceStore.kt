@@ -55,11 +55,16 @@ class AndroidPreferenceStore(
             deserializer = deserializer,
         )
     }
+
+    override fun clearAll() {
+        sharedPreferences.edit().clear().apply()
+    }
 }
 
 private val SharedPreferences.keyFlow
     get() = callbackFlow {
-        val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key: String? -> trySend(key) }
+        val listener =
+            SharedPreferences.OnSharedPreferenceChangeListener { _, key: String? -> trySend(key) }
         registerOnSharedPreferenceChangeListener(listener)
         awaitClose {
             unregisterOnSharedPreferenceChangeListener(listener)

@@ -50,6 +50,10 @@ class InMemoryDataStore : PreferenceStore {
     ): Preference<T> {
         return InMemoryPreference(key, defaultValue, store)
     }
+
+    override fun clearAll() {
+        store.clear()
+    }
 }
 
 
@@ -59,7 +63,7 @@ class InMemoryPreference<T>(
     var store: MutableMap<String, Any>
 ) : Preference<T> {
     override fun key(): String {
-        return key;
+        return key
     }
 
     override fun get(): T {

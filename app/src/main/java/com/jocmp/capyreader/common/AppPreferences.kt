@@ -37,9 +37,6 @@ class AppPreferences(context: Context) {
         get() = preferenceStore.getBoolean("enable_crash_reporting", false)
 
     fun clearAll() {
-        accountID.delete()
-        articleID.delete()
-        refreshInterval.delete()
-        filter.delete()
+        preferenceStore.clearAll()
     }
 }

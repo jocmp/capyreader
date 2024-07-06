@@ -20,6 +20,8 @@ interface PreferenceStore {
         serializer: (T) -> String,
         deserializer: (String) -> T,
     ): Preference<T>
+
+    fun clearAll()
 }
 
 inline fun <reified T : Enum<T>> PreferenceStore.getEnum(
