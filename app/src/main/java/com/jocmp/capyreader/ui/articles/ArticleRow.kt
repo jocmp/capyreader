@@ -32,7 +32,7 @@ import coil.compose.AsyncImage
 import com.jocmp.capy.Article
 import com.jocmp.capy.MarkRead
 import com.jocmp.capyreader.R
-import com.jocmp.capyreader.ui.articles.list.ArticleActionBottomSheet
+import com.jocmp.capyreader.ui.articles.list.ArticleActionMenu
 import com.jocmp.capyreader.ui.components.relativeTime
 import com.jocmp.capyreader.ui.fixtures.ArticleSample
 import com.jocmp.capyreader.ui.theme.CapyTheme
@@ -65,19 +65,6 @@ fun ArticleRow(
     val openArticleMenu = {
         haptics.performHapticFeedback(HapticFeedbackType.LongPress)
         setArticleMenuOpen(true)
-    }
-
-    if (isArticleMenuOpen) {
-        ArticleActionBottomSheet(
-            articleID = article.id,
-            onMarkAllRead = {
-                setArticleMenuOpen(false)
-                onMarkAllRead(it)
-            },
-            onDismissRequest = {
-                setArticleMenuOpen(false)
-            }
-        )
     }
 
     Box(
@@ -137,6 +124,18 @@ fun ArticleRow(
                 null
             },
             colors = colors
+        )
+
+        ArticleActionMenu(
+            expanded = isArticleMenuOpen,
+            articleID = article.id,
+            onMarkAllRead = {
+                setArticleMenuOpen(false)
+                onMarkAllRead(it)
+            },
+            onDismissRequest = {
+                setArticleMenuOpen(false)
+            }
         )
     }
 }
