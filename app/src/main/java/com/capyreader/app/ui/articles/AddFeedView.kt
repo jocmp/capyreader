@@ -12,9 +12,13 @@ import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.typography
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -66,16 +70,19 @@ fun AddFeedView(
         shape = RoundedCornerShape(16.dp)
     ) {
         Column(Modifier.padding(top = 16.dp)) {
-            TextField(
+            OutlinedTextField(
                 value = queryURL,
                 onValueChange = setQueryURL,
+                leadingIcon = {
+                    Icon(Icons.Filled.Add, contentDescription = null)
+                },
                 label = {
                     Text(stringResource(id = R.string.add_feed_url_title))
                 },
                 isError = isError,
                 supportingText = {
                     error?.let {
-                        val resource = when(it) {
+                        val resource = when (it) {
                             is AddFeedResult.AddFeedError.FeedNotFound -> R.string.add_feed_feed_not_error
                             is AddFeedResult.AddFeedError.NetworkError -> R.string.add_feed_network_error
                             is AddFeedResult.AddFeedError.SaveFailure -> R.string.add_feed_save_error

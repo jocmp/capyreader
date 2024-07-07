@@ -3,13 +3,22 @@ package com.capyreader.app.ui.articles
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -21,14 +30,18 @@ import androidx.compose.runtime.toMutableStateMap
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
+import androidx.compose.ui.unit.sp
 import com.jocmp.capy.EditFeedFormEntry
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.capyreader.app.R
 import com.capyreader.app.ui.fixtures.FeedPreviewFixture
+import com.capyreader.app.ui.theme.CapyTheme
 
 @Composable
 fun EditFeedView(
@@ -65,14 +78,8 @@ fun EditFeedView(
         )
     }
 
-    Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = Modifier
-            .verticalScroll(scrollState)
-            .padding(16.dp)
-    ) {
-
-        TextField(
+    Column {
+        OutlinedTextField(
             value = name,
             onValueChange = setName,
             placeholder = { Text(feed.title) },
@@ -83,29 +90,40 @@ fun EditFeedView(
                 capitalization = KeyboardCapitalization.Words,
                 autoCorrect = false
             ),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+                .padding(top = 16.dp, bottom = 16.dp)
         )
-        TextField(
-            value = addedFolder,
-            onValueChange = setAddedFolder,
-            placeholder = {
-                Text(stringResource(id = R.string.add_feed_new_folder_title))
-            },
-            keyboardOptions = KeyboardOptions(
-                capitalization = KeyboardCapitalization.Words,
-                autoCorrect = false
-            ),
-            modifier = Modifier.fillMaxWidth()
-        )
+        HorizontalDivider(color = colorScheme.onSurfaceVariant)
         Column(
             modifier = Modifier
-                .padding(horizontal = 8.dp)
+                .weight(0.1f, fill = false)
+                .heightIn(max = 300.dp)
+                .verticalScroll(scrollState)
+                .padding(16.dp)
         ) {
+            OutlinedTextField(
+                value = addedFolder,
+                onValueChange = setAddedFolder,
+                label = {
+                    Text(stringResource(id = R.string.add_feed_new_folder_title))
+                },
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Words,
+                    autoCorrect = false
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 8.dp)
+            )
             displaySwitchFolders.forEach { (folderTitle, checked) ->
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp)
                 ) {
                     Text(folderTitle)
                     Switch(
@@ -115,9 +133,12 @@ fun EditFeedView(
                 }
             }
         }
+        HorizontalDivider(color = colorScheme.onSurfaceVariant)
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp, alignment = Alignment.End),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
         ) {
             TextButton(onClick = onCancel) {
                 Text(stringResource(R.string.feed_form_cancel))
@@ -145,10 +166,23 @@ private fun collectFolders(
 @Preview
 @Composable
 fun EditFeedViewPreview() {
-    EditFeedView(
-        feed = FeedPreviewFixture().values.first(),
-        folders = listOf(Folder("Tech"), Folder("Gaming")),
-        onSubmit = {},
-        onCancel = {}
-    )
+    val folders = listOf(
+        "Tech",
+        "Gaming",
+        "News",
+        "Local News",
+    ).map {
+        Folder(it)
+    }
+
+    CapyTheme {
+        Column(Modifier.height(400.dp)) {
+            EditFeedView(
+                feed = FeedPreviewFixture().values.first(),
+                folders = folders,
+                onSubmit = {},
+                onCancel = {}
+            )
+        }
+    }
 }

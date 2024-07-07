@@ -2,7 +2,7 @@
     <string name="app_name">Capy Reader</string>
     <string name="add_feed_url_title">Feed or Website URL</string>
     <string name="add_feed_name_title">Name</string>
-    <string name="add_feed_new_folder_title">New Folder</string>
+    <string name="add_feed_new_folder_title">New Tag</string>
     <string name="add_feed_submit">Add</string>
     <string name="add_feed_success">Feed added</string>
     <string name="feed_form_cancel">Cancel</string>
@@ -16,7 +16,7 @@
     <string name="feed_action_unsubscribe_confirm">Unsubscribe</string>
     <string name="edit_feed_submit">Save</string>
     <string name="dialog_cancel">Cancel</string>
-    <string name="folder_action_delete_title">Delete Folder</string>
+    <string name="folder_action_delete_title">Delete Tag</string>
     <string name="folder_action_edit">Rename</string>
     <string name="feed_action_unsubscribe_title">Unsubscribe</string>
     <string name="feed_action_edit_success">Feed updated</string>
@@ -98,4 +98,5 @@
     <string name="theme_menu_option_light">Light</string>
     <string name="theme_menu_option_dark">Dark</string>
     <string name="theme_menu_option_system_default">System default</string>
+    <string name="edit_feed_tags">Tags</string>
 </resources>
