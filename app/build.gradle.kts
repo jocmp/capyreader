@@ -16,7 +16,7 @@ if (rootProject.file("secrets.properties").exists()) {
 }
 
 android {
-    namespace = "com.capyreader"
+    namespace = "com.capyreader.app"
     compileSdk = 34
 
     defaultConfig {
