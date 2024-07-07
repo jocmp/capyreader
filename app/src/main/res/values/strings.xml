@@ -98,4 +98,5 @@
     <string name="theme_menu_option_light">Light</string>
     <string name="theme_menu_option_dark">Dark</string>
     <string name="theme_menu_option_system_default">System default</string>
+    <string name="edit_feed_tags">Tags</string>
 </resources>
