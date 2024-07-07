@@ -14,15 +14,14 @@ jobs:
           ssh-key: ${{ secrets.RELEASE_SSH_KEY }}
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1.185.0
+        with:
+          bundler-cache: true
       - name: Set up Java
         uses: actions/setup-java@v4.2.1
         with:
           distribution: "zulu"
           java-version: "17"
       - name: Setup build dependencies
-        env:
-          BUNDLE_______DEPLOYMENT: "frozen true"
-          BUNDLE_DEPLOYMENT: "true"
         run: make deps
       - name: Configure Git user
         run: |

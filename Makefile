@@ -6,7 +6,6 @@ FASTLANE ?= bundle exec fastlane
 
 .PHONY: deps
 deps:
-	bundle install
 	pip install bumpver==2023.1129
 
 .PHONY: changelog
