@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
@@ -125,7 +126,14 @@ fun EditFeedView(
                         .fillMaxWidth()
                         .padding(horizontal = 8.dp)
                 ) {
-                    Text(folderTitle)
+                    Text(
+                        text = folderTitle,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier
+                            .weight(0.1f)
+                            .padding(end = 8.dp)
+                    )
                     Switch(
                         checked = checked,
                         onCheckedChange = { value -> switchFolders[folderTitle] = value }
@@ -168,9 +176,9 @@ private fun collectFolders(
 fun EditFeedViewPreview() {
     val folders = listOf(
         "Tech",
-        "Gaming",
+        "Really Long Title With Some Spaces Between Words",
+        "ReallyLongTitleWithoutAnyBreaksInTheWords",
         "News",
-        "Local News",
     ).map {
         Folder(it)
     }
