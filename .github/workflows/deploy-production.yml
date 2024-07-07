@@ -13,7 +13,7 @@ jobs:
         with:
           ssh-key: ${{ secrets.RELEASE_SSH_KEY }}
       - name: Set up Ruby
-        uses: ruby/setup-ruby@v1.180.1
+        uses: ruby/setup-ruby@v1.185.0
       - name: Set up Java
         uses: actions/setup-java@v4.2.1
         with:

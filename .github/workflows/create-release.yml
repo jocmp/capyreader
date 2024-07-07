@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4.1.7
       - name: Set up Ruby
-        uses: ruby/setup-ruby@v1.180.1
+        uses: ruby/setup-ruby@v1.185.0
       - name: Set up Java
         uses: actions/setup-java@v4.2.1
         with:
