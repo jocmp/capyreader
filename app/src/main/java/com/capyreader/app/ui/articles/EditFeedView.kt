@@ -9,7 +9,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -71,8 +75,7 @@ fun EditFeedView(
             .verticalScroll(scrollState)
             .padding(16.dp)
     ) {
-
-        TextField(
+        OutlinedTextField(
             value = name,
             onValueChange = setName,
             placeholder = { Text(feed.title) },
@@ -85,10 +88,10 @@ fun EditFeedView(
             ),
             modifier = Modifier.fillMaxWidth()
         )
-        TextField(
+        OutlinedTextField(
             value = addedFolder,
             onValueChange = setAddedFolder,
-            placeholder = {
+            label = {
                 Text(stringResource(id = R.string.add_feed_new_folder_title))
             },
             keyboardOptions = KeyboardOptions(
