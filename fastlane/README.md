@@ -39,6 +39,14 @@ Runs all the tests
 
 Deploy a new version to the Google Play
 
+### android github_release
+
+```sh
+[bundle exec] fastlane android github_release
+```
+
+
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.

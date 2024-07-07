@@ -1,6 +1,6 @@
 [bumpver]
 current_version = "2024.06.1000"
-version_pattern = "vYYYY.0M.BUILD"
+version_pattern = "YYYY.0M.BUILD"
 commit_message = "Bump version {old_version} to {new_version}"
 commit = true
 tag = true

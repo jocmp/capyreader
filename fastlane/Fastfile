@@ -13,11 +13,19 @@ platform :android do
 
   desc "Deploy a new version to the Google Play"
   lane :production do
-    build_release
+    build_release_bundle
     upload_to_play_store
+  end
+
+  lane :github_release do
+    build_apk_release
   end
 end
 
-def build_release
+def build_release_bundle
   gradle(task: 'clean bundleRelease')
+end
+
+def build_apk_release
+  gradle(task: 'clean assembleRelease')
 end

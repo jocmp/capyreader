@@ -12,14 +12,33 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.1.7
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1.180.1
+      - name: Set up Java
+        uses: actions/setup-java@v4.2.1
+        with:
+          distribution: "zulu"
+          java-version: "17"
+      - name: Setup build dependencies
+        env:
+          BUNDLE_______DEPLOYMENT: "frozen true"
+          BUNDLE_DEPLOYMENT: "true"
+        run: make deps
+      - name: Build APK
+        env:
+          ENCODED_GOOGLE_SERVICES: ${{ secrets.ENCODED_GOOGLE_SERVICES }}
+          ENCODED_RELEASE_KEYSTORE: ${{ secrets.ENCODED_RELEASE_KEYSTORE }}
+          ENCODED_SECRETS_PROPERTIES: ${{ secrets.ENCODED_SECRETS_PROPERTIES }}
+        run: make deploy-github-release
       - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1.1.4
+        uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          name: Release ${{ github.ref }}
           body_path: fastlane/metadata/android/en-US/changelogs/${{ github.ref }}.txt
           draft: false
           prerelease: false
+          files: |
+            app/build/outputs/apk/release/app-release.apk
