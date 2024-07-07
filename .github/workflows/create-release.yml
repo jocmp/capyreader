@@ -14,16 +14,13 @@ jobs:
         uses: actions/checkout@v4.1.7
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1.185.0
+        with:
+          bundler-cache: true
       - name: Set up Java
         uses: actions/setup-java@v4.2.1
         with:
           distribution: "zulu"
           java-version: "17"
-      - name: Setup build dependencies
-        env:
-          BUNDLE_______DEPLOYMENT: "frozen true"
-          BUNDLE_DEPLOYMENT: "true"
-        run: make deps
       - name: Build APK
         env:
           ENCODED_GOOGLE_SERVICES: ${{ secrets.ENCODED_GOOGLE_SERVICES }}

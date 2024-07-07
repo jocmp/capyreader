@@ -14,7 +14,7 @@ jobs:
           java-version: '17'
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1.185.0
-      - name: Setup Fastlane
-        run: bundle install
+        with:
+          bundler-cache: true
       - name: Run tests
         run: make test
