@@ -49,6 +49,8 @@ fun SettingsScreen(
         },
         accountSource = viewModel.accountSource,
         accountName = viewModel.accountName,
-        importProgress = viewModel.importProgress
+        importProgress = viewModel.importProgress,
+        updateTheme = viewModel::updateTheme,
+        theme = viewModel.theme
     )
 }

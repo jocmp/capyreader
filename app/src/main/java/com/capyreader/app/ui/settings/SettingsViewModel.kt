@@ -13,6 +13,7 @@ import com.jocmp.capy.AccountManager
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.opml.ImportProgress
 import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.common.ThemeOption
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.refresher.RefreshScheduler
 import com.capyreader.app.transfers.OPMLImportWorker
@@ -31,6 +32,8 @@ class SettingsViewModel(
 ) : AndroidViewModel(application) {
     private val _refreshInterval = mutableStateOf(refreshScheduler.refreshInterval)
 
+    private val _theme = mutableStateOf(appPreferences.theme.get())
+
     private val _importProgress = mutableStateOf<ImportProgress?>(null)
 
     val importProgress: ImportProgress?
@@ -38,6 +41,9 @@ class SettingsViewModel(
 
     val refreshInterval: RefreshInterval
         get() = _refreshInterval.value
+
+    val theme: ThemeOption
+        get() = _theme.value
 
     val accountSource: Source = account.source
 
@@ -48,6 +54,12 @@ class SettingsViewModel(
         refreshScheduler.update(interval)
 
         _refreshInterval.value = interval
+    }
+
+    fun updateTheme(theme: ThemeOption) {
+        appPreferences.theme.set(theme)
+
+        _theme.value = theme
     }
 
     fun removeAccount() {

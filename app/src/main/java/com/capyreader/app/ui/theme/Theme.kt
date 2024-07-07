@@ -3,6 +3,7 @@ package com.capyreader.app.ui.theme
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -14,6 +15,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.capyreader.app.common.ThemeOption
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -39,27 +41,27 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun CapyTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    theme: ThemeOption = ThemeOption.SYSTEM_DEFAULT,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
+    val showAppearanceLightStatusBars =
+        !(theme == ThemeOption.DARK ||
+                theme == ThemeOption.SYSTEM_DEFAULT && isSystemInDarkTheme())
 
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+    val colorScheme = when (theme) {
+        ThemeOption.LIGHT -> lightScheme()
+        ThemeOption.DARK -> darkScheme()
+        ThemeOption.SYSTEM_DEFAULT -> systemDefaultScheme()
     }
+
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
             window.statusBarColor = colorScheme.background.toArgb()
             window.navigationBarColor = colorScheme.background.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
+                showAppearanceLightStatusBars
         }
     }
 
@@ -69,3 +71,39 @@ fun CapyTheme(
         content = content
     )
 }
+
+@Composable
+private fun lightScheme(): ColorScheme {
+    val context = LocalContext.current
+
+    return if (supportsDynamicColor()) {
+        dynamicLightColorScheme(context)
+    } else {
+        LightColorScheme
+    }
+}
+
+@Composable
+private fun darkScheme(): ColorScheme {
+    val context = LocalContext.current
+
+    return if (supportsDynamicColor()) {
+        dynamicDarkColorScheme(context)
+    } else {
+        DarkColorScheme
+    }
+}
+
+@Composable
+fun systemDefaultScheme(): ColorScheme {
+    val context = LocalContext.current
+
+    return if (isSystemInDarkTheme()) {
+        darkScheme()
+    } else {
+        lightScheme()
+    }
+}
+
+
+fun supportsDynamicColor() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S

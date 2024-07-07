@@ -29,15 +29,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.opml.ImportProgress
 import com.capyreader.app.R
+import com.capyreader.app.common.ThemeOption
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.setupCommonModules
 import com.capyreader.app.ui.isCompact
+import com.capyreader.app.ui.theme.CapyTheme
 import org.koin.android.ext.koin.androidContext
 import org.koin.compose.KoinApplication
 
@@ -46,6 +50,8 @@ import org.koin.compose.KoinApplication
 fun SettingsView(
     refreshInterval: RefreshInterval,
     updateRefreshInterval: (interval: RefreshInterval) -> Unit,
+    theme: ThemeOption,
+    updateTheme: (theme: ThemeOption) -> Unit,
     onNavigateBack: () -> Unit,
     onRequestRemoveAccount: () -> Unit,
     onRequestExport: () -> Unit,
@@ -108,6 +114,10 @@ fun SettingsView(
                         refreshInterval = refreshInterval,
                         updateRefreshInterval = updateRefreshInterval,
                     )
+                }
+
+                Section(title = stringResource(R.string.settings_section_appearance)) {
+                    ThemeMenu(onUpdateTheme = updateTheme, theme = theme)
                 }
 
                 if (showImportButton(accountSource)) {
@@ -178,6 +188,7 @@ fun Section(
         if (title != null) {
             Text(
                 text = title,
+                fontWeight = FontWeight.SemiBold,
                 fontSize = 12.sp,
                 color = colorScheme.surfaceTint,
                 modifier = Modifier.padding(bottom = 8.dp)
@@ -240,7 +251,9 @@ fun AccountSettingsViewPreview() {
             onRequestImport = {},
             accountSource = Source.FEEDBIN,
             accountName = "hello@example.com",
-            importProgress = null
+            importProgress = null,
+            updateTheme = {},
+            theme = ThemeOption.LIGHT
         )
     }
 }
@@ -256,16 +269,20 @@ fun AccountSettingsView_LocalPreview() {
             setupCommonModules()
         }
     ) {
-        SettingsView(
-            refreshInterval = RefreshInterval.EVERY_HOUR,
-            updateRefreshInterval = {},
-            onNavigateBack = {},
-            onRequestRemoveAccount = {},
-            onRequestExport = {},
-            onRequestImport = {},
-            accountSource = Source.LOCAL,
-            accountName = "",
-            importProgress = null
-        )
+        CapyTheme(theme = ThemeOption.DARK) {
+            SettingsView(
+                refreshInterval = RefreshInterval.EVERY_HOUR,
+                updateRefreshInterval = {},
+                onNavigateBack = {},
+                onRequestRemoveAccount = {},
+                onRequestExport = {},
+                onRequestImport = {},
+                accountSource = Source.LOCAL,
+                accountName = "",
+                importProgress = null,
+                updateTheme = {},
+                theme = ThemeOption.LIGHT
+            )
+        }
     }
 }

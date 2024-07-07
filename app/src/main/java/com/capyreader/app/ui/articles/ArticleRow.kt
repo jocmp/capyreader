@@ -204,7 +204,7 @@ fun ArticleRowPreview_Selected_DarkMode() {
         feedName = "9to5Google"
     )
 
-    CapyTheme(dynamicColor = false) {
+    CapyTheme {
         Column {
             ArticleRow(
                 article = article,
@@ -225,7 +225,7 @@ fun ArticleRowPreview_Selected_DarkMode() {
 @Preview
 @Composable
 fun ArticleRowPreview_Selected(@PreviewParameter(ArticleSample::class) article: Article) {
-    CapyTheme(dynamicColor = false) {
+    CapyTheme {
         ArticleRow(
             article = article,
             selected = true,

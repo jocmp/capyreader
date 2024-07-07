@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.capyreader.app.R
+import com.capyreader.app.common.ThemeOption
 import com.capyreader.app.ui.theme.CapyTheme
 
 @Composable
@@ -60,7 +61,7 @@ private fun FaviconBadgePreview() {
 @Preview
 @Composable
 private fun FaviconBadgePreviewDark() {
-    CapyTheme(darkTheme = true) {
+    CapyTheme(theme = ThemeOption.DARK) {
         FaviconBadge(url = null)
     }
 }
