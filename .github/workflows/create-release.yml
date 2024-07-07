@@ -32,9 +32,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          name: Release ${{ github.ref }}
-          body_path: fastlane/metadata/android/en-US/changelogs/${{ github.ref }}.txt
+          generate_release_notes: true
           draft: false
           prerelease: false
           files: |
