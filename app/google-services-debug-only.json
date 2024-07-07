@@ -7,6 +7,25 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:274059433914:android:43caf5bb03ced76ac52f83",
+        "android_client_info": {
+          "package_name": "com.capyreader.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuMQpqtiSry6g2ecznF7cdCWgkxYN3nW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:274059433914:android:2c1d21f3a0f12546c52f83",
         "android_client_info": {
           "package_name": "com.jocmp.capyreader"

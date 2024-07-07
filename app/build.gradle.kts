@@ -16,11 +16,11 @@ if (rootProject.file("secrets.properties").exists()) {
 }
 
 android {
-    namespace = "com.jocmp.capyreader"
+    namespace = "com.capyreader"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.jocmp.capyreader"
+        applicationId = "com.capyreader.app"
         minSdk = 30
         targetSdk = 34
         versionCode = 1000
