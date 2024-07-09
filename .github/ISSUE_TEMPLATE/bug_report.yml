@@ -1,0 +1,40 @@
+name: Bug report
+description: Report a bug with Capy Reader
+labels: ["bug"]
+body:
+    - type: textarea
+      attributes:
+          label: Steps to Reproduce
+          description: Please write a brief description of the bug, including what you expect to happen and what is currently happening.
+          placeholder: |
+              Steps to reproduce the behavior:
+              1. Go to '...'
+              2. Click on '....'
+              3. Scroll down to '....'
+      validations:
+          required: true
+
+    - type: textarea
+      attributes:
+          label: Expected behavior
+          placeholder: |
+            Feature '...' is not working properly. I expect '...' to happen, but '...' happens instead
+      validations:
+          required: true
+
+    - type: textarea
+      attributes:
+          label: Screenshots or screen recording
+          description: |
+              If possible, please upload a screenshot or screen recording which demonstrates the bug.
+      validations:
+          required: false
+
+    - type: textarea
+      attributes:
+          label: Device, Operating system, and app version
+          placeholder: |
+              Google Pixel 8a, Android 14, Capy Reader 2024.07.1000
+          # description: App version can be found from the settings screen then scroll down to About
+      validations:
+          required: false
