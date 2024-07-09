@@ -12,9 +12,7 @@ import org.koin.compose.KoinApplication
 import org.koin.compose.koinInject
 
 @Composable
-fun CrashReportingCheckbox(
-    appPreferences: AppPreferences = koinInject()
-) {
+fun CrashReportingCheckbox() {
    Text("Stub")
 }
 
