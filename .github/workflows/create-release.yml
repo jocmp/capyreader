@@ -38,4 +38,4 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            app/build/outputs/apk/release/app-release.apk
+            app/build/outputs/apk/free/release/app-free-release.apk
