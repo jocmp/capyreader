@@ -2,8 +2,6 @@
 
 <img src="./site/capy.png" width="100px">
 
-<br/>
-
 [![CalVer 2024.07.1002][img_version]][url_version] ![Continuous Integration](https://github.com/jocmp/capyreader/actions/workflows/ci.yml/badge.svg)
 
 _A smallish RSS reader with support for Feedbin and local feeds._
