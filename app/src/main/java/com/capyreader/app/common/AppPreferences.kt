@@ -39,6 +39,9 @@ class AppPreferences(context: Context) {
     val theme: Preference<ThemeOption>
         get() = preferenceStore.getEnum("theme", ThemeOption.default)
 
+    val openLinksInternally: Preference<Boolean>
+        get() = preferenceStore.getBoolean("open_links_internally", true)
+
     fun clearAll() {
         preferenceStore.clearAll()
     }

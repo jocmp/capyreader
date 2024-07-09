@@ -40,6 +40,7 @@ import com.capyreader.app.R
 import com.capyreader.app.common.ThemeOption
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.setupCommonModules
+import com.capyreader.app.ui.components.TextSwitch
 import com.capyreader.app.ui.isCompact
 import com.capyreader.app.ui.theme.CapyTheme
 import org.koin.android.ext.koin.androidContext
@@ -56,6 +57,8 @@ fun SettingsView(
     onRequestRemoveAccount: () -> Unit,
     onRequestExport: () -> Unit,
     onRequestImport: () -> Unit,
+    canOpenLinksInternally: Boolean,
+    updateOpenLinksInternally: (openLinksInternally: Boolean) -> Unit,
     accountSource: Source,
     accountName: String,
     importProgress: ImportProgress?,
@@ -116,8 +119,18 @@ fun SettingsView(
                     )
                 }
 
-                Section(title = stringResource(R.string.settings_section_appearance)) {
+                Section(
+                    title = stringResource(R.string.settings_section_display_appearance)
+                ) {
                     ThemeMenu(onUpdateTheme = updateTheme, theme = theme)
+
+                    TextSwitch(
+                        checked = canOpenLinksInternally,
+                        onCheckedChange = updateOpenLinksInternally,
+                        text = {
+                            Text(text = stringResource(R.string.settings_option_in_app_browser))
+                        }
+                    )
                 }
 
                 if (showImportButton(accountSource)) {
@@ -183,7 +196,8 @@ fun Section(
     content: @Composable () -> Unit,
 ) {
     Column(
-        Modifier
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = Modifier
             .padding(bottom = 16.dp)
             .padding(horizontal = 16.dp)
     ) {
@@ -193,7 +207,6 @@ fun Section(
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 12.sp,
                 color = colorScheme.surfaceTint,
-                modifier = Modifier.padding(bottom = 8.dp)
             )
         }
 
@@ -257,7 +270,9 @@ fun AccountSettingsViewPreview() {
             accountName = "hello@example.com",
             importProgress = null,
             updateTheme = {},
-            theme = ThemeOption.LIGHT
+            theme = ThemeOption.LIGHT,
+            canOpenLinksInternally = true,
+            updateOpenLinksInternally = {},
         )
     }
 }
@@ -285,7 +300,9 @@ fun AccountSettingsView_LocalPreview() {
                 accountName = "",
                 importProgress = null,
                 updateTheme = {},
-                theme = ThemeOption.LIGHT
+                theme = ThemeOption.LIGHT,
+                canOpenLinksInternally = true,
+                updateOpenLinksInternally = {},
             )
         }
     }

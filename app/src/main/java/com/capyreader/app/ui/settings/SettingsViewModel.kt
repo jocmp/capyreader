@@ -32,6 +32,8 @@ class SettingsViewModel(
 ) : AndroidViewModel(application) {
     private val _refreshInterval = mutableStateOf(refreshScheduler.refreshInterval)
 
+    private val _openLinksInternally = mutableStateOf(appPreferences.openLinksInternally.get())
+
     private val _theme = mutableStateOf(appPreferences.theme.get())
 
     private val _importProgress = mutableStateOf<ImportProgress?>(null)
@@ -44,6 +46,9 @@ class SettingsViewModel(
 
     val theme: ThemeOption
         get() = _theme.value
+
+    val canOpenLinksInternally: Boolean
+        get() = _openLinksInternally.value
 
     val accountSource: Source = account.source
 
@@ -60,6 +65,12 @@ class SettingsViewModel(
         appPreferences.theme.set(theme)
 
         _theme.value = theme
+    }
+
+    fun updateOpenLinksInternally(openLinksInternally: Boolean) {
+        appPreferences.openLinksInternally.set(openLinksInternally)
+
+        _openLinksInternally.value = openLinksInternally
     }
 
     fun removeAccount() {
