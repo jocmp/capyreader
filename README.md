@@ -10,7 +10,7 @@ _A smallish RSS reader with support for Feedbin and local feeds._
 
 ## Reporting a bug
 
-If you run into a bug, let me know by submitting a [bug issue]()
+If you run into a bug, let me know by submitting a [bug report](https://github.com/jocmp/capyreader/issues/new?labels=bug&template=bug_report.yml)
 
 ## Getting Started
 
