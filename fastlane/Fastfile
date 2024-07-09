@@ -23,9 +23,9 @@ platform :android do
 end
 
 def build_release_bundle
-  gradle(task: 'clean bundleRelease')
+  gradle(task: 'clean bundleGplayRelease')
 end
 
 def build_apk_release
-  gradle(task: 'clean assembleRelease')
+  gradle(task: 'clean assembleFreeRelease')
 end

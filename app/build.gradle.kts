@@ -5,8 +5,6 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     kotlin("plugin.serialization") version libs.versions.kotlin
-    id("com.google.gms.google-services")
-    id("com.google.firebase.crashlytics")
 }
 
 val secrets = Properties()
@@ -29,6 +27,29 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
+        }
+    }
+
+    flavorDimensions += listOf("license")
+
+    productFlavors {
+        create("free") {
+            dimension = "license"
+            applicationIdSuffix = ".free"
+            afterEvaluate {
+                tasks
+                    .matching {
+                        !it.name.contains("Gplay") &&
+                                (it.name.contains("GoogleServices") || it.name.contains("Crashlytics"))
+                    }
+                    .forEach { it.enabled = false }
+            }
+        }
+        create("gplay") {
+            dimension = "license"
+            isDefault = true
+            apply(plugin = "com.google.gms.google-services")
+            apply(plugin = "com.google.firebase.crashlytics")
         }
     }
 
@@ -115,7 +136,7 @@ dependencies {
     implementation(platform("androidx.compose:compose-bom:2024.06.00"))
     implementation(platform("io.insert-koin:koin-bom:3.5.1"))
     implementation(project(":capy"))
-    implementation("com.google.firebase:firebase-crashlytics:19.0.2")
+    "gplayImplementation"("com.google.firebase:firebase-crashlytics:19.0.2")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
@@ -125,7 +146,7 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 }
 
-tasks.register("useGoogleServicesDebugFile") {
+tasks.register("useGMSDebugFile") {
     description = "Copies the debug google-services.json file if file is missing."
     doLast {
         val googleServicesFile = "google-services.json"
@@ -141,4 +162,4 @@ tasks.register("useGoogleServicesDebugFile") {
     }
 }
 
-project.tasks.preBuild.dependsOn("useGoogleServicesDebugFile")
+project.tasks.preBuild.dependsOn("useGMSDebugFile")

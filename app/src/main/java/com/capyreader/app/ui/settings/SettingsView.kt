@@ -29,11 +29,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.capyreader.app.BuildConfig
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.opml.ImportProgress
 import com.capyreader.app.R
@@ -137,8 +137,10 @@ fun SettingsView(
                     )
                 }
 
-                Section(title = stringResource(R.string.settings_section_privacy)) {
-                    CrashReportingCheckbox()
+                if (showCrashReporting()) {
+                    Section(title = stringResource(R.string.settings_section_privacy)) {
+                        CrashReportingCheckbox()
+                    }
                 }
 
                 Section {
@@ -230,6 +232,8 @@ fun showImportButton(source: Source): Boolean {
 fun showAccountName(source: Source): Boolean {
     return source == Source.FEEDBIN
 }
+
+fun showCrashReporting() = BuildConfig.FLAVOR == "gplay"
 
 @Preview
 @Composable
