@@ -5,8 +5,6 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     kotlin("plugin.serialization") version libs.versions.kotlin
-    id("com.google.gms.google-services")
-    id("com.google.firebase.crashlytics")
 }
 
 val secrets = Properties()
@@ -29,6 +27,26 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
+        }
+    }
+
+    flavorDimensions += listOf("license")
+
+    productFlavors {
+        create("free") {
+            dimension = "license"
+            applicationIdSuffix = ".free"
+            afterEvaluate {
+                tasks
+                    .matching { it.name.contains("GoogleServices") && !it.name.contains("Gplay") }
+                    .forEach { it.enabled = false }
+            }
+        }
+        create("gplay") {
+            dimension = "license"
+            isDefault = true
+            apply(plugin = "com.google.gms.google-services")
+            apply(plugin = "com.google.firebase.crashlytics")
         }
     }
 
@@ -125,7 +143,7 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 }
 
-tasks.register("useGoogleServicesDebugFile") {
+tasks.register("useGMSDebugFile") {
     description = "Copies the debug google-services.json file if file is missing."
     doLast {
         val googleServicesFile = "google-services.json"
@@ -141,4 +159,4 @@ tasks.register("useGoogleServicesDebugFile") {
     }
 }
 
-project.tasks.preBuild.dependsOn("useGoogleServicesDebugFile")
+project.tasks.preBuild.dependsOn("useGMSDebugFile")
