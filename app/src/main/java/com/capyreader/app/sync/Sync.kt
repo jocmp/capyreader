@@ -33,15 +33,23 @@ fun removeStarAsync(articleID: String, context: Context) {
  * Batch enqueue IDs to stay under 10KB work manager limit
  * https://developer.android.com/jetpack/androidx/releases/work#1.0.0-alpha08
  */
-fun markReadAsync(articleIDs: List<String>, context: Context) {
-    articleIDs.chunked(500) { batch ->
-        val data = Data
-            .Builder()
-            .putStringArray(ReadSyncWorker.ARTICLES_KEY, batch.toTypedArray())
-            .putBoolean(ReadSyncWorker.MARK_READ_KEY, true)
-            .build()
+fun markReadAsync(articleIDs: List<String>, context: Context, batchSize: Int = 100) {
+    if (batchSize < 1) {
+        return
+    }
 
-        queueReadWorker(batch, data, context)
+    articleIDs.chunked(batchSize) { batch ->
+        try {
+            val data = Data
+                .Builder()
+                .putStringArray(ReadSyncWorker.ARTICLES_KEY, batch.toTypedArray())
+                .putBoolean(ReadSyncWorker.MARK_READ_KEY, true)
+                .build()
+
+            queueReadWorker(batch, data, context)
+        } catch (e: IllegalStateException) {
+            markReadAsync(context = context, articleIDs = batch, batchSize = batchSize / 2)
+        }
     }
 }
 
