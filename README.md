@@ -2,7 +2,7 @@
 
 <img src="./site/capy.png" width="100px">
 
-[![CalVer 2024.07.1004][img_version]][url_version] ![Continuous Integration](https://github.com/jocmp/capyreader/actions/workflows/ci.yml/badge.svg)
+[![CalVer 2024.07.1005][img_version]][url_version] ![Continuous Integration](https://github.com/jocmp/capyreader/actions/workflows/ci.yml/badge.svg)
 
 _A smallish RSS reader with support for Feedbin and local feeds._
 
@@ -32,6 +32,6 @@ By default the app will build with a debug keystore. Follow the instructions bel
     ```
 
 
-[img_version]: https://img.shields.io/static/v1.svg?label=CalVer&message=2024.07.1004&color=blue
+[img_version]: https://img.shields.io/static/v1.svg?label=CalVer&message=2024.07.1005&color=blue
 [url_version]: https://github.com/jocmp/capyreader
 [google_play_link]: https://example.com
