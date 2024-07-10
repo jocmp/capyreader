@@ -4,6 +4,7 @@ import android.Manifest
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -50,11 +51,7 @@ fun OPMLImportButton(
 private fun ButtonText(progress: ImportProgress?) {
     if (progress != null) {
         Text(
-            stringResource(
-                R.string.settings_import_progress,
-                progress.currentCount,
-                progress.total
-            ),
+            text(progress),
             fontStyle = FontStyle.Italic
         )
     } else {
@@ -62,14 +59,34 @@ private fun ButtonText(progress: ImportProgress?) {
     }
 }
 
+@Composable
+fun text(progress: ImportProgress): String {
+    return if (progress.total == 0) {
+        stringResource(
+            R.string.settings_import_progress_placeholder
+        )
+    } else {
+        stringResource(
+            R.string.settings_import_progress,
+            progress.currentCount,
+            progress.total
+        )
+    }
+}
 
 @Preview
 @Composable
 private fun OPMLImportButtonPreview() {
     CapyTheme {
-        OPMLImportButton(
-            onClick = {},
-            importProgress = ImportProgress(currentCount = 0, total = 10)
-        )
+        Column {
+            OPMLImportButton(
+                onClick = {},
+                importProgress = ImportProgress(currentCount = 0, total = 10)
+            )
+            OPMLImportButton(
+                onClick = {},
+                importProgress = ImportProgress(currentCount = 0, total = 0)
+            )
+        }
     }
 }

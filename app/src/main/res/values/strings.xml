@@ -91,8 +91,10 @@
     <string name="opml_import_button_text">Import from File</string>
     <string name="opml_export_button_text">Export to OPML</string>
     <string name="opml_import_progress_content_text_start">Starting import</string>
+    <string name="settings_import_progress_placeholder">Importing subscriptions…</string>
     <string name="settings_import_progress">Importing subscriptions %1$d of %2$d</string>
     <string name="opml_import_toast_complete">Import complete</string>
+    <string name="opml_import_toast_failed">Import failed</string>
     <string name="settings_section_display_appearance">Display &amp; Appearance</string>
     <string name="theme_menu_label">Theme</string>
     <string name="theme_menu_option_light">Light</string>

@@ -34,8 +34,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.capyreader.app.BuildConfig
-import com.jocmp.capy.accounts.Source
-import com.jocmp.capy.opml.ImportProgress
 import com.capyreader.app.R
 import com.capyreader.app.common.ThemeOption
 import com.capyreader.app.refresher.RefreshInterval
@@ -43,6 +41,8 @@ import com.capyreader.app.setupCommonModules
 import com.capyreader.app.ui.components.TextSwitch
 import com.capyreader.app.ui.isCompact
 import com.capyreader.app.ui.theme.CapyTheme
+import com.jocmp.capy.accounts.Source
+import com.jocmp.capy.opml.ImportProgress
 import org.koin.android.ext.koin.androidContext
 import org.koin.compose.KoinApplication
 

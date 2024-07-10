@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
 import android.net.Uri
 import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.work.Constraints
 import androidx.work.CoroutineWorker
@@ -28,6 +29,8 @@ import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.util.UUID
+import java.util.concurrent.ExecutionException
+import javax.xml.parsers.ParserConfigurationException
 import kotlin.math.roundToInt
 
 
@@ -49,9 +52,14 @@ class OPMLImportWorker(
         val opmlURI = Uri.parse(uriValue)
 
         setForeground(createForegroundInfo())
-        import(opmlURI)
 
-        showCompleteToast()
+        try {
+            import(opmlURI)
+
+            showToast(R.string.opml_import_toast_complete)
+        } catch (e: Throwable) {
+            showToast(R.string.opml_import_toast_failed)
+        }
 
         return Result.success()
     }
@@ -128,10 +136,10 @@ class OPMLImportWorker(
         notificationManager.createNotificationChannel(channel)
     }
 
-    private suspend fun showCompleteToast() = withContext(Dispatchers.Main) {
+    private suspend fun showToast(@StringRes string: Int) = withContext(Dispatchers.Main) {
         Toast.makeText(
             applicationContext,
-            applicationContext.getString(R.string.opml_import_toast_complete),
+            applicationContext.getString(string),
             Toast.LENGTH_SHORT
         ).show()
     }
