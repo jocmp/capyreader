@@ -103,6 +103,7 @@ class OPMLImportWorker(
         contentText: String? = null
     ): Notification {
         val title = applicationContext.getString(R.string.opml_import_notification_title)
+        val cancelIntent = WorkManager.getInstance(applicationContext).createCancelPendingIntent(id)
 
         return NotificationCompat.Builder(applicationContext, channelID)
             .setContentTitle(title)
@@ -111,6 +112,11 @@ class OPMLImportWorker(
             .setProgress(100, percentProgress, false)
             .setSmallIcon(R.drawable.ic_rounded_sync)
             .setTicker(title)
+            .addAction(
+                R.drawable.ic_rounded_close,
+                applicationContext.getString(R.string.opml_import_notification_cancel),
+                cancelIntent
+            )
             .setOngoing(true)
             .build()
     }

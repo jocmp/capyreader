@@ -100,4 +100,5 @@
     <string name="theme_menu_option_system_default">System default</string>
     <string name="edit_feed_tags">Tags</string>
     <string name="settings_option_in_app_browser">Use in-app browser</string>
+    <string name="opml_import_notification_cancel">Stop</string>
 </resources>
