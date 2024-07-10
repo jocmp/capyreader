@@ -35,7 +35,6 @@ android {
     productFlavors {
         create("free") {
             dimension = "license"
-            applicationIdSuffix = ".free"
             afterEvaluate {
                 tasks
                     .matching {
