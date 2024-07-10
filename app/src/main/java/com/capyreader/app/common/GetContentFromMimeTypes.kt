@@ -7,18 +7,18 @@ import android.net.Uri
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.annotation.CallSuper
 
-open class GetOPMLContent : ActivityResultContract<Unit, Uri?>() {
+open class GetOPMLContent : ActivityResultContract<List<String>, Uri?>() {
     @CallSuper
-    override fun createIntent(context: Context, input: Unit): Intent {
+    override fun createIntent(context: Context, input: List<String>): Intent {
         return Intent(Intent.ACTION_GET_CONTENT)
             .addCategory(Intent.CATEGORY_OPENABLE)
-            .setType("text/xml,text/x-opml,application/*")
-            .putExtra(Intent.EXTRA_MIME_TYPES, listOf("text/xml", "text/x-opml", "application/*").toTypedArray())
+            .setType(input.joinToString(","))
+            .putExtra(Intent.EXTRA_MIME_TYPES, input.toTypedArray())
     }
 
     final override fun getSynchronousResult(
         context: Context,
-        input: Unit
+        input: List<String>
     ): SynchronousResult<Uri?>? = null
 
     final override fun parseResult(resultCode: Int, intent: Intent?): Uri? {

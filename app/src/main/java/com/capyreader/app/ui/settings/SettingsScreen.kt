@@ -27,7 +27,7 @@ fun SettingsScreen(
     }
 
     val importOPML = {
-        picker.launch(Unit)
+        picker.launch(listOf("text/xml", "text/x-opml", "application/*"))
     }
 
     val exportOPML = {
