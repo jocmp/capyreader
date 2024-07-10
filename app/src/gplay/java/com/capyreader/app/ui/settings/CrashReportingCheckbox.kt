@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.capyreader.app.R
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.setupCommonModules
+import com.capyreader.app.ui.components.TextSwitch
 import com.capyreader.app.ui.theme.CapyTheme
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
@@ -37,14 +38,13 @@ fun CrashReportingCheckbox(
         appPreferences.crashReporting.set(enabled)
     }
 
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Text(text = stringResource(R.string.crash_reporting_checkbox_title))
-        Switch(checked = enableCrashReporting, onCheckedChange = updateCrashReporting)
-    }
+    TextSwitch(
+        checked = enableCrashReporting,
+        onCheckedChange = updateCrashReporting,
+        text = {
+            Text(text = stringResource(R.string.crash_reporting_checkbox_title))
+        }
+    )
 }
 
 @Preview

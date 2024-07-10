@@ -47,6 +47,8 @@ fun SettingsScreen(
         onRequestImport = {
             importOPML()
         },
+        canOpenLinksInternally = viewModel.canOpenLinksInternally,
+        updateOpenLinksInternally = viewModel::updateOpenLinksInternally,
         accountSource = viewModel.accountSource,
         accountName = viewModel.accountName,
         importProgress = viewModel.importProgress,

@@ -3,6 +3,7 @@ package com.capyreader.app.ui.components
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup.LayoutParams
@@ -32,6 +33,8 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import com.capyreader.app.R
+import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.common.openLink
 import com.capyreader.app.ui.components.LoadingState.Finished
 import com.capyreader.app.ui.components.LoadingState.Loading
 import kotlinx.coroutines.CoroutineScope
@@ -40,6 +43,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 /**
  * A wrapper around the Android View WebView to provide a basic WebView composable.
@@ -228,11 +233,13 @@ fun WebView(
  * As Accompanist Web needs to set its own web client to function, it provides this intermediary
  * class that can be overridden if further custom behaviour is required.
  */
-open class AccompanistWebViewClient : WebViewClient() {
+open class AccompanistWebViewClient : WebViewClient(), KoinComponent {
     open lateinit var state: WebViewState
         internal set
     open lateinit var navigator: WebViewNavigator
         internal set
+
+    private val appPreferences by inject<AppPreferences>()
 
     override fun onPageStarted(view: WebView, url: String?, favicon: Bitmap?) {
         super.onPageStarted(view, url, favicon)
@@ -260,11 +267,7 @@ open class AccompanistWebViewClient : WebViewClient() {
         val url = request?.url
 
         if (view != null && url != null) {
-            val intent = CustomTabsIntent
-                .Builder()
-                .build()
-
-            intent.launchUrl(view.context, url)
+            view.context.openLink(url, appPreferences)
         }
 
         return true
