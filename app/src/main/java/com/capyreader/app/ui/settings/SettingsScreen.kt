@@ -5,6 +5,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
+import com.capyreader.app.common.GetOPMLContent
 import com.capyreader.app.transfers.OPMLExporter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,13 +21,13 @@ fun SettingsScreen(
     val coroutineScope = rememberCoroutineScope()
 
     val picker = rememberLauncherForActivityResult(
-        ActivityResultContracts.GetContent()
+        GetOPMLContent()
     ) { uri ->
         viewModel.startOPMLImport(uri = uri)
     }
 
     val importOPML = {
-        picker.launch("text/xml")
+        picker.launch(Unit)
     }
 
     val exportOPML = {
