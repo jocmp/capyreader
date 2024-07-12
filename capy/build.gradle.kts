@@ -81,6 +81,7 @@ dependencies {
     testImplementation(testLibs.mockk.agent)
     testImplementation(testLibs.mockk.android)
     testImplementation(testLibs.kotlinx.coroutines.test)
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    testImplementation("com.github.gmazzo.okhttp.mock:mock-client:2.0.0")
+    androidTestImplementation("androidx.test.ext:junit:1.2.1")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
 }

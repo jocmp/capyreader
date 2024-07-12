@@ -49,13 +49,11 @@ fun ArticleTopBar(
                         )
                     }
 
-                    if (article.extractedContentURL != null) {
-                        IconButton(onClick = { onToggleExtractContent() }) {
-                            Icon(
-                                painterResource(id = extractIcon(extractedContent)),
-                                contentDescription = stringResource(R.string.extract_full_content)
-                            )
-                        }
+                    IconButton(onClick = { onToggleExtractContent() }) {
+                        Icon(
+                            painterResource(id = extractIcon(extractedContent)),
+                            contentDescription = stringResource(R.string.extract_full_content)
+                        )
                     }
 
                     IconButton(onClick = { onToggleStar() }) {

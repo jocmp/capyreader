@@ -1,13 +1,14 @@
 package com.capyreader.app.ui.articles.detail
 
 import android.content.Context
-import com.jocmp.capy.Article
-import com.jocmp.capy.MacroProcessor
 import com.capyreader.app.R
 import com.capyreader.app.common.toDeviceDateTime
+import com.jocmp.capy.Article
+import com.jocmp.capy.MacroProcessor
+import org.json.JSONObject
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
-import com.jocmp.capy.R as BasilResource
+import com.jocmp.capy.R as CapyRes
 
 class ArticleRenderer(
     private val context: Context,
@@ -37,7 +38,7 @@ class ArticleRenderer(
         val content = extractedContent.value()
 
         if (extractedContent.requestShow && content != null) {
-            return content
+            return decoratedContent(content)
         }
 
         return article.contentHTML.ifBlank {
@@ -59,6 +60,29 @@ class ArticleRenderer(
             }
         }
 
+    private fun decoratedContent(content: String): String {
+        if (article.extractedContentURL?.toString() == null) {
+            val mercury = context.resources.openRawResource(CapyRes.raw.mercury)
+                .bufferedReader()
+                .readText()
+
+            return """
+              <script>
+              $mercury
+              </script>
+              <script>
+                var html = ${JSONObject(mapOf("value" to content))};
+
+                Mercury.parse("${article.url}", { html: html.value }).then(({ content }) => {
+                  document.getElementById("article-body").insertAdjacentHTML("beforeend", content);
+                });
+              </script>
+            """.trimIndent()
+        } else {
+            return content
+        }
+    }
+
     companion object {
         fun render(
             article: Article,
@@ -66,23 +90,22 @@ class ArticleRenderer(
             context: Context,
             extractedContent: ExtractedContent = ExtractedContent(),
         ): String {
-            return context.resources.openRawResource(BasilResource.raw.stylesheet)
-                .use { styleStream ->
-                    context.resources.openRawResource(BasilResource.raw.template)
-                        .use { templateStream ->
-                            val template = templateStream.bufferedReader().readText()
-                            val style = styleStream.bufferedReader().readText()
+            val style = context.resources.openRawResource(CapyRes.raw.stylesheet)
+                .bufferedReader()
+                .readText()
 
-                            ArticleRenderer(
-                                article = article,
-                                extractedContent = extractedContent,
-                                template = template,
-                                styles = style,
-                                colors = templateColors.asMap(),
-                                context = context
-                            ).render()
-                        }
-                }
+            val template = context.resources.openRawResource(CapyRes.raw.template)
+                .bufferedReader()
+                .readText()
+
+            return ArticleRenderer(
+                article = article,
+                extractedContent = extractedContent,
+                template = template,
+                styles = style,
+                colors = templateColors.asMap(),
+                context = context
+            ).render()
         }
     }
 }

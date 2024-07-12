@@ -5,7 +5,9 @@ import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.AccountFixture
 import com.jocmp.capy.fixtures.FeedFixture
 import com.jocmp.capy.fixtures.TagFixture
+import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
+import okhttp3.OkHttpClient
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -18,6 +20,7 @@ class OPMLFileTest {
     val folder = TemporaryFolder()
 
     private val accountID = "777"
+    private val httpClient = mockk<OkHttpClient>()
     private lateinit var account: Account
     private lateinit var database: Database
     private lateinit var feedFixture: FeedFixture
@@ -29,7 +32,11 @@ class OPMLFileTest {
         feedFixture = FeedFixture(database)
         tagFixture = TagFixture(database)
 
-        val delegate = LocalAccountDelegate(database = database, feedFinder = MockFeedFinder())
+        val delegate = LocalAccountDelegate(
+            database = database,
+            httpClient = httpClient,
+            feedFinder = MockFeedFinder()
+        )
 
         account = AccountFixture.create(
             id = accountID,

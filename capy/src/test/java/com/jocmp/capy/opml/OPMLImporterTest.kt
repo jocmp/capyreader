@@ -9,8 +9,10 @@ import com.jocmp.capy.fixtures.AccountFixture
 import com.jocmp.capy.fixtures.GenericFeed
 import com.jocmp.capy.testFile
 import com.jocmp.feedfinder.parser.Feed
+import io.mockk.mockk
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
+import okhttp3.OkHttpClient
 import org.junit.Before
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
@@ -25,6 +27,8 @@ class OPMLImporterTest {
     private val accountID = "777"
     private lateinit var account: Account
     private lateinit var database: Database
+
+    private val httpClient = mockk<OkHttpClient>()
 
     private val sites = listOf<Feed>(
         GenericFeed(name = "Daring Fireball", url = "https://daringfireball.net/feeds/main"),
@@ -42,7 +46,11 @@ class OPMLImporterTest {
     @Before
     fun setup() {
         database = InMemoryDatabaseProvider.build(accountID)
-        val delegate = LocalAccountDelegate(database = database, feedFinder = finder)
+        val delegate = LocalAccountDelegate(
+            database = database,
+            httpClient = httpClient,
+            feedFinder = finder
+        )
 
         account = AccountFixture.create(
             id = accountID,
