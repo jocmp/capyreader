@@ -1,11 +1,9 @@
-package com.capyreader.app.ui.articles.detail
+package com.jocmp.capy.articles
 
 import android.content.Context
-import com.capyreader.app.R
-import com.capyreader.app.common.toDeviceDateTime
 import com.jocmp.capy.Article
 import com.jocmp.capy.MacroProcessor
-import org.json.JSONObject
+import com.jocmp.capy.common.toDeviceDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import com.jocmp.capy.R as CapyRes
@@ -25,7 +23,8 @@ class ArticleRenderer(
             "byline" to byline,
             "feed_name" to article.feedName,
             "body" to body(),
-            "style" to styles
+            "style" to styles,
+            "script" to script()
         )
 
         return MacroProcessor(
@@ -34,13 +33,17 @@ class ArticleRenderer(
         ).renderedText
     }
 
-    private fun body(): String {
+    private fun script(): String {
         val content = extractedContent.value()
 
         if (extractedContent.requestShow && content != null) {
-            return decoratedContent(content)
+            return context.extractedTemplate(article, content)
         }
 
+        return ""
+    }
+
+    private fun body(): String {
         return article.contentHTML.ifBlank {
             article.summary
         }
@@ -54,34 +57,11 @@ class ArticleRenderer(
             val articleAuthor = article.author
 
             return if (!articleAuthor.isNullOrBlank()) {
-                context.getString(R.string.article_byline, date, time, articleAuthor)
+                context.getString(CapyRes.string.article_byline, date, time, articleAuthor)
             } else {
-                context.getString(R.string.article_byline_date_only, date, time)
+                context.getString(CapyRes.string.article_byline_date_only, date, time)
             }
         }
-
-    private fun decoratedContent(content: String): String {
-        if (article.extractedContentURL?.toString() == null) {
-            val mercury = context.resources.openRawResource(CapyRes.raw.mercury)
-                .bufferedReader()
-                .readText()
-
-            return """
-              <script>
-              $mercury
-              </script>
-              <script>
-                var html = ${JSONObject(mapOf("value" to content))};
-
-                Mercury.parse("${article.url}", { html: html.value }).then(({ content }) => {
-                  document.getElementById("article-body").insertAdjacentHTML("beforeend", content);
-                });
-              </script>
-            """.trimIndent()
-        } else {
-            return content
-        }
-    }
 
     companion object {
         fun render(

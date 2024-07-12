@@ -1,5 +1,6 @@
 package com.jocmp.capy.accounts
 
+import com.jocmp.capy.articles.ArticleContent
 import kotlinx.coroutines.test.runTest
 import okhttp3.OkHttpClient
 import okhttp3.mock.ClasspathResources.resource

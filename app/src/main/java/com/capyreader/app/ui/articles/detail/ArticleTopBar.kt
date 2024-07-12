@@ -18,6 +18,7 @@ import com.capyreader.app.R
 import com.capyreader.app.common.shareArticle
 import com.capyreader.app.ui.fixtures.ArticleSample
 import com.capyreader.app.ui.isCompact
+import com.jocmp.capy.articles.ExtractedContent
 import java.net.URL
 
 @OptIn(ExperimentalMaterial3Api::class)

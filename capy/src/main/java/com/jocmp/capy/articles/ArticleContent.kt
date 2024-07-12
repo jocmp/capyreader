@@ -1,9 +1,6 @@
-package com.jocmp.capy.accounts
+package com.jocmp.capy.articles
 
-import android.text.Html
 import com.jocmp.capy.common.await
-import com.jocmp.capy.common.escapingSpecialXMLCharacters
-import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response

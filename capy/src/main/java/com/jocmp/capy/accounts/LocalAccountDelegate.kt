@@ -3,6 +3,7 @@ package com.jocmp.capy.accounts
 import com.jocmp.capy.AccountDelegate
 import com.jocmp.capy.Article
 import com.jocmp.capy.Feed
+import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.common.nowUTC
 import com.jocmp.capy.common.toDateTime
 import com.jocmp.capy.common.transactionWithErrorHandling
