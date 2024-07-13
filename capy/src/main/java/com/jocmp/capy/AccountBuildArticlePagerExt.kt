@@ -5,7 +5,7 @@ import androidx.paging.PagingConfig
 import com.jocmp.capy.persistence.ArticlePagerFactory
 import java.time.OffsetDateTime
 
-fun Account.buildPager(
+fun Account.buildArticlePager(
     filter: ArticleFilter,
     since: OffsetDateTime = OffsetDateTime.now()
 ): Pager<Int, Article> {
@@ -13,7 +13,6 @@ fun Account.buildPager(
         config = PagingConfig(
             pageSize = 50,
             prefetchDistance = 10,
-            enablePlaceholders = false
         ),
         pagingSourceFactory = { ArticlePagerFactory(database).find(filter = filter, since = since) }
     )

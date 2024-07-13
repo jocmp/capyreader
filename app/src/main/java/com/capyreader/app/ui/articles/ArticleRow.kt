@@ -13,6 +13,7 @@ import androidx.compose.material3.ListItemColors
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -24,6 +25,10 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -83,6 +88,7 @@ fun ArticleRow(
             headlineContent = {
                 Text(
                     article.title,
+                    fontWeight = titleFontWeight(read = article.read),
                 )
             },
             supportingContent = {
@@ -104,6 +110,8 @@ fun ArticleRow(
                             time = article.publishedAt,
                             currentTime = currentTime,
                         ),
+                        style = typography.labelSmall,
+                        modifier = Modifier.padding(vertical = 4.dp),
                         maxLines = 1,
                     )
                 }
@@ -153,6 +161,14 @@ fun PlaceholderArticleRow() {
     )
 }
 
+@Composable
+fun titleFontWeight(read: Boolean): FontWeight {
+    return if (read) {
+        FontWeight.Normal
+    } else {
+        FontWeight.Bold
+    }
+}
 
 @Composable
 @Stable
@@ -173,12 +189,11 @@ private fun listItemColors(
 @Composable
 fun findFeedNameColor(read: Boolean): Color {
     val defaults = ListItemDefaults.colors()
-    val colorScheme = MaterialTheme.colorScheme
 
     return if (read) {
         defaults.disabledHeadlineColor
     } else {
-        colorScheme.onSurface
+        Color.Unspecified
     }
 }
 
@@ -195,7 +210,7 @@ fun ArticleRowPreview_Selected_DarkMode() {
         contentHTML = "<div>Test</div>",
         extractedContentURL = null,
         imageURL = URL("https://example.com"),
-        summary = "Test article here",
+        summary = "The Galaxy S24 series, while bringing little physical change, packs a lot of AI narrative. One of the biggest Galaxy S24 features is the AI Generative Edit",
         url = URL("https://9to5google.com/?p=605559"),
         updatedAt = ZonedDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneOffset.UTC),
         publishedAt = ZonedDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneOffset.UTC),
@@ -249,7 +264,7 @@ fun ArticleRowPreview_Unread() {
         summary = "Test article here",
         url = URL("https://9to5google.com/?p=605559"),
         updatedAt = ZonedDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneOffset.UTC),
-        publishedAt = ZonedDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneOffset.UTC),
+        publishedAt = ZonedDateTime.of(LocalDateTime.now().minusHours(1), ZoneOffset.UTC),
         read = false,
         starred = false,
         feedName = "9to5Google"
