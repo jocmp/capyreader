@@ -25,4 +25,6 @@ app/google-services.json
 secrets.properties
 release.keystore
 
+# Build
 vendor/
+app/gplay/release/
