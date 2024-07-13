@@ -1,0 +1,1 @@
+Small tweaks to the article card and bugfixes
