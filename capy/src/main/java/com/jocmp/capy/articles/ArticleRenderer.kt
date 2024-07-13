@@ -1,13 +1,12 @@
-package com.capyreader.app.ui.articles.detail
+package com.jocmp.capy.articles
 
 import android.content.Context
 import com.jocmp.capy.Article
 import com.jocmp.capy.MacroProcessor
-import com.capyreader.app.R
-import com.capyreader.app.common.toDeviceDateTime
+import com.jocmp.capy.common.toDeviceDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
-import com.jocmp.capy.R as BasilResource
+import com.jocmp.capy.R as CapyRes
 
 class ArticleRenderer(
     private val context: Context,
@@ -24,7 +23,8 @@ class ArticleRenderer(
             "byline" to byline,
             "feed_name" to article.feedName,
             "body" to body(),
-            "style" to styles
+            "style" to styles,
+            "script" to script()
         )
 
         return MacroProcessor(
@@ -33,13 +33,17 @@ class ArticleRenderer(
         ).renderedText
     }
 
-    private fun body(): String {
+    private fun script(): String {
         val content = extractedContent.value()
 
         if (extractedContent.requestShow && content != null) {
-            return content
+            return context.extractedTemplate(article, content)
         }
 
+        return ""
+    }
+
+    private fun body(): String {
         return article.contentHTML.ifBlank {
             article.summary
         }
@@ -53,9 +57,9 @@ class ArticleRenderer(
             val articleAuthor = article.author
 
             return if (!articleAuthor.isNullOrBlank()) {
-                context.getString(R.string.article_byline, date, time, articleAuthor)
+                context.getString(CapyRes.string.article_byline, date, time, articleAuthor)
             } else {
-                context.getString(R.string.article_byline_date_only, date, time)
+                context.getString(CapyRes.string.article_byline_date_only, date, time)
             }
         }
 
@@ -66,23 +70,22 @@ class ArticleRenderer(
             context: Context,
             extractedContent: ExtractedContent = ExtractedContent(),
         ): String {
-            return context.resources.openRawResource(BasilResource.raw.stylesheet)
-                .use { styleStream ->
-                    context.resources.openRawResource(BasilResource.raw.template)
-                        .use { templateStream ->
-                            val template = templateStream.bufferedReader().readText()
-                            val style = styleStream.bufferedReader().readText()
+            val style = context.resources.openRawResource(CapyRes.raw.stylesheet)
+                .bufferedReader()
+                .readText()
 
-                            ArticleRenderer(
-                                article = article,
-                                extractedContent = extractedContent,
-                                template = template,
-                                styles = style,
-                                colors = templateColors.asMap(),
-                                context = context
-                            ).render()
-                        }
-                }
+            val template = context.resources.openRawResource(CapyRes.raw.template)
+                .bufferedReader()
+                .readText()
+
+            return ArticleRenderer(
+                article = article,
+                extractedContent = extractedContent,
+                template = template,
+                styles = style,
+                colors = templateColors.asMap(),
+                context = context
+            ).render()
         }
     }
 }

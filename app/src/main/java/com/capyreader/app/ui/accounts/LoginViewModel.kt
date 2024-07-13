@@ -10,7 +10,7 @@ import com.jocmp.capy.AccountManager
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.verifyCredentials
 import com.capyreader.app.common.AppPreferences
-import com.capyreader.app.common.Async
+import com.jocmp.capy.common.Async
 import com.capyreader.app.loadAccountModules
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

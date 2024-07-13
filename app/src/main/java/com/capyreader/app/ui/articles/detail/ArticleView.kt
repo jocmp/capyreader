@@ -1,6 +1,5 @@
 package com.capyreader.app.ui.articles.detail
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,10 +12,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.jocmp.capy.Article
 import com.capyreader.app.ui.components.WebView
 import com.capyreader.app.ui.components.WebViewNavigator
 import com.capyreader.app.ui.components.rememberSaveableWebViewState
+import com.jocmp.capy.Article
+import com.jocmp.capy.articles.ArticleRenderer
+import com.jocmp.capy.articles.ExtractedContent
 
 @Composable
 fun ArticleView(
@@ -114,7 +115,6 @@ fun ArticleView(
         val html = buildHTML(extractedContent)
 
         if (!html.isNullOrBlank() && webViewState.viewState == null) {
-            Log.d("ArticleView", "loadHtml hasContent=${extractedContentState.content.isComplete}")
             webViewNavigator.loadHtml(html)
         }
     }

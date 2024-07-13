@@ -1,6 +1,7 @@
 package com.capyreader.app.ui.articles.detail
 
 import android.webkit.WebView
+import com.jocmp.capy.articles.TemplateColors
 
 /**
  * Update CSS variables dynamically to avoid a full-page reload.

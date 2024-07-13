@@ -24,7 +24,12 @@
         <div>{{byline}}</div>
         <div>{{feed_name}}</div>
       </a>
-      <div class="article__body article__body--text-size-{{text_size}}">{{body}}</div>
+      <div class="article__body article__body--text-size-{{text_size}}">
+        <div id="article-body-content">
+          {{body}}
+        </div>
+        {{script}}
+      </div>
     </article>
   </body>
 </html>

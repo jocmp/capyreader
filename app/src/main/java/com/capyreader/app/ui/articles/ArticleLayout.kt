@@ -43,7 +43,7 @@ import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.MarkRead.All
 import com.capyreader.app.R
-import com.capyreader.app.ui.articles.detail.ArticleRenderer
+import com.jocmp.capy.articles.ArticleRenderer
 import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.components.rememberWebViewNavigator

@@ -8,21 +8,11 @@ import androidx.compose.runtime.saveable.mapSaver
 import androidx.compose.runtime.saveable.rememberSaveable
 import com.jocmp.capy.Account
 import com.jocmp.capy.Article
-import com.capyreader.app.common.Async
+import com.jocmp.capy.articles.ExtractedContent
+import com.jocmp.capy.common.Async
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
-
-data class ExtractedContent(
-    val requestShow: Boolean = false,
-    val value: Async<String?> = Async.Uninitialized,
-) {
-    val isLoading: Boolean
-        get() = requestShow && value is Async.Loading
-
-    val isComplete: Boolean
-        get() = requestShow && value is Async.Success
-}
 
 data class ExtractedContentState(
     val content: ExtractedContent = ExtractedContent(),

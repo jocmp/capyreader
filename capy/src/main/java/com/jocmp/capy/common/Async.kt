@@ -1,4 +1,4 @@
-package com.capyreader.app.common
+package com.jocmp.capy.common
 
 sealed class Async<out T>(private val value: T?) {
     open operator fun invoke(): T? = value

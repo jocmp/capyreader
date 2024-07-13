@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="article_byline">%1$s at %2$s by %3$s</string>
+    <string name="article_byline_date_only">%1$s at %2$s</string>
+</resources>

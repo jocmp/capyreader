@@ -1,4 +1,4 @@
-package com.capyreader.app.common
+package com.jocmp.capy.common
 
 import java.time.ZonedDateTime
 import java.util.TimeZone

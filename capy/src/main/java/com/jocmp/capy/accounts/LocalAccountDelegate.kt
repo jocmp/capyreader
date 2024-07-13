@@ -1,10 +1,9 @@
 package com.jocmp.capy.accounts
 
-import android.text.Html
-import android.text.Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE
 import com.jocmp.capy.AccountDelegate
 import com.jocmp.capy.Article
 import com.jocmp.capy.Feed
+import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.common.nowUTC
 import com.jocmp.capy.common.toDateTime
 import com.jocmp.capy.common.transactionWithErrorHandling
@@ -14,7 +13,6 @@ import com.jocmp.capy.persistence.TaggingRecords
 import com.jocmp.feedfinder.DefaultFeedFinder
 import com.jocmp.feedfinder.FeedFinder
 import com.prof18.rssparser.model.RssItem
-import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
@@ -22,13 +20,14 @@ import okhttp3.OkHttpClient
 import org.jsoup.Jsoup
 import java.net.UnknownHostException
 import java.time.ZonedDateTime
-import kotlin.coroutines.coroutineContext
 import com.jocmp.feedfinder.parser.Feed as ParserFeed
 
 class LocalAccountDelegate(
     private val database: Database,
-    private val feedFinder: FeedFinder,
+    private val httpClient: OkHttpClient,
+    private val feedFinder: FeedFinder = DefaultFeedFinder(httpClient),
 ) : AccountDelegate {
+    private val articleContent = ArticleContent(httpClient)
     private val feedRecords = FeedRecords(database)
     private val taggingRecords = TaggingRecords(database)
 
@@ -122,7 +121,7 @@ class LocalAccountDelegate(
     }
 
     override suspend fun fetchFullContent(article: Article): Result<String> {
-        return Result.failure(Throwable("Not implemented"))
+        return articleContent.fetch(article.url)
     }
 
     private suspend fun refreshFeeds() {
