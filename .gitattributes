@@ -1,4 +1,5 @@
 capy/src/main/res/raw/*.html linguist-generated=true
 capy/src/main/res/raw/*.js linguist-generated=true
+capy/src/test/resources/*.html linguist-generated=true
 feedfinder/src/test/resources/*.html linguist-generated=true
 feedfinder/src/test/resources/*.xml linguist-generated=true
