@@ -13,7 +13,8 @@ internal fun Context.extractedTemplate(
         return """
           <script>
             (() => {
-              let html = $html;
+              let downloaded = ${JSONObject(mapOf("value" to html))};
+              let html = downloaded.value;
 
               $swapContentScript
             })();
