@@ -17,7 +17,7 @@ import com.jocmp.capy.Countable
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
-import com.jocmp.capy.buildPager
+import com.jocmp.capy.buildArticlePager
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.countAll
 import com.capyreader.app.common.AppPreferences
@@ -54,7 +54,7 @@ class ArticleScreenViewModel(
     }
 
     val articles: Flow<PagingData<Article>> = filter
-        .flatMapLatest { account.buildPager(it).flow }
+        .flatMapLatest { account.buildArticlePager(it).flow }
         .cachedIn(viewModelScope)
 
     val folders: Flow<List<Folder>> = account.folders.combine(_counts) { folders, latestCounts ->
