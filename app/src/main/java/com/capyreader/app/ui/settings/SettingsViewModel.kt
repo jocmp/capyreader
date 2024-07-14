@@ -3,7 +3,9 @@ package com.capyreader.app.ui.settings
 import android.app.Application
 import android.content.Context
 import android.net.Uri
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.WorkInfo
@@ -13,6 +15,7 @@ import com.jocmp.capy.AccountManager
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.opml.ImportProgress
 import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.common.ThemeOption
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.refresher.RefreshScheduler
@@ -38,6 +41,14 @@ class SettingsViewModel(
 
     private val _importProgress = mutableStateOf<ImportProgress?>(null)
 
+    private val _imagePreview = mutableStateOf(appPreferences.articleDisplay.imagePreview.get())
+
+    private val _showSummary = mutableStateOf(appPreferences.articleDisplay.showSummary.get())
+
+    private val _showFeedName = mutableStateOf(appPreferences.articleDisplay.showFeedName.get())
+
+    private val _showFeedIcons = mutableStateOf(appPreferences.articleDisplay.showFeedIcons.get())
+
     val importProgress: ImportProgress?
         get() = _importProgress.value
 
@@ -55,6 +66,18 @@ class SettingsViewModel(
     val accountName: String
         get() = account.preferences.username.get()
 
+    val imagePreview: ImagePreview
+        get() = _imagePreview.value
+
+    val showSummary: Boolean
+        get() = _showSummary.value
+
+    val showFeedName: Boolean
+        get() = _showFeedName.value
+
+    val showFeedIcons: Boolean
+        get() = _showFeedIcons.value
+
     fun updateRefreshInterval(interval: RefreshInterval) {
         refreshScheduler.update(interval)
 
@@ -71,6 +94,30 @@ class SettingsViewModel(
         appPreferences.openLinksInternally.set(openLinksInternally)
 
         _openLinksInternally.value = openLinksInternally
+    }
+
+    fun updateImagePreview(imagePreview: ImagePreview) {
+        appPreferences.articleDisplay.imagePreview.set(imagePreview)
+
+        _imagePreview.value = imagePreview
+    }
+
+    fun updateSummary(show: Boolean) {
+        appPreferences.articleDisplay.showSummary.set(show)
+
+        _showSummary.value = show
+    }
+
+    fun updateFeedIcons(show: Boolean) {
+        appPreferences.articleDisplay.showFeedIcons.set(show)
+
+        _showFeedIcons.value = show
+    }
+
+    fun updateFeedName(show: Boolean) {
+        appPreferences.articleDisplay.showFeedName.set(show)
+
+        _showFeedName.value = show
     }
 
     fun removeAccount() {

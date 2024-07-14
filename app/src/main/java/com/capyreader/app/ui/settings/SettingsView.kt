@@ -1,7 +1,9 @@
 package com.capyreader.app.ui.settings
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -9,7 +11,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowRight
+import androidx.compose.material.icons.filled.ArrowRight
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -17,14 +22,18 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -33,11 +42,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.capyreader.app.BuildConfig
 import com.capyreader.app.R
+import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.common.ThemeOption
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.setupCommonModules
+import com.capyreader.app.ui.components.DialogCard
 import com.capyreader.app.ui.components.TextSwitch
 import com.capyreader.app.ui.isCompact
 import com.capyreader.app.ui.theme.CapyTheme
@@ -46,25 +59,34 @@ import com.jocmp.capy.opml.ImportProgress
 import org.koin.android.ext.koin.androidContext
 import org.koin.compose.KoinApplication
 
+@Immutable
+data class SettingsOptions(
+    val canOpenLinksInternally: Boolean,
+    val refreshInterval: RefreshInterval,
+    val theme: ThemeOption,
+    val updateOpenLinksInternally: (openLinksInternally: Boolean) -> Unit,
+    val updateRefreshInterval: (interval: RefreshInterval) -> Unit,
+    val updateTheme: (theme: ThemeOption) -> Unit,
+    val articleList: ArticleListOptions,
+)
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsView(
-    refreshInterval: RefreshInterval,
-    updateRefreshInterval: (interval: RefreshInterval) -> Unit,
-    theme: ThemeOption,
-    updateTheme: (theme: ThemeOption) -> Unit,
     onNavigateBack: () -> Unit,
     onRequestRemoveAccount: () -> Unit,
     onRequestExport: () -> Unit,
     onRequestImport: () -> Unit,
-    canOpenLinksInternally: Boolean,
-    updateOpenLinksInternally: (openLinksInternally: Boolean) -> Unit,
     accountSource: Source,
     accountName: String,
     importProgress: ImportProgress?,
+    settings: SettingsOptions,
 ) {
     val strings = AccountSettingsStrings.build(accountSource)
     val (isRemoveDialogOpen, setRemoveDialogOpen) = remember { mutableStateOf(false) }
+    val (isAdvancedDisplayDialogOpen, setAdvancedDisplayDialogOpen) = remember {
+        mutableStateOf(false)
+    }
 
     val onRemoveCancel = {
         setRemoveDialogOpen(false)
@@ -73,6 +95,10 @@ fun SettingsView(
     val onRemove = {
         setRemoveDialogOpen(false)
         onRequestRemoveAccount()
+    }
+
+    val showAdvancedDisplaySettings = {
+        setAdvancedDisplayDialogOpen(true)
     }
 
     Scaffold(
@@ -108,63 +134,98 @@ fun SettingsView(
                     Section(
                         title = stringResource(R.string.settings_section_account),
                     ) {
-                        Text(text = accountName)
+                        RowItem {
+                            Text(text = accountName)
+                        }
                     }
                 }
 
                 Section(title = stringResource(R.string.settings_section_refresh)) {
-                    RefreshIntervalMenu(
-                        refreshInterval = refreshInterval,
-                        updateRefreshInterval = updateRefreshInterval,
-                    )
+                    RowItem {
+                        RefreshIntervalMenu(
+                            refreshInterval = settings.refreshInterval,
+                            updateRefreshInterval = settings.updateRefreshInterval,
+                        )
+                    }
                 }
 
                 Section(
                     title = stringResource(R.string.settings_section_display_appearance)
                 ) {
-                    ThemeMenu(onUpdateTheme = updateTheme, theme = theme)
+                    RowItem {
+                        ThemeMenu(onUpdateTheme = settings.updateTheme, theme = settings.theme)
+                    }
 
-                    TextSwitch(
-                        checked = canOpenLinksInternally,
-                        onCheckedChange = updateOpenLinksInternally,
-                        text = {
-                            Text(text = stringResource(R.string.settings_option_in_app_browser))
-                        }
-                    )
-                }
+                    RowItem {
+                        TextSwitch(
+                            checked = settings.canOpenLinksInternally,
+                            onCheckedChange = settings.updateOpenLinksInternally,
+                            text = {
+                                Text(text = stringResource(R.string.settings_option_in_app_browser))
+                            }
+                        )
+                    }
 
-                if (showImportButton(accountSource)) {
-                    Section(title = stringResource(R.string.settings_section_import)) {
-                        OPMLImportButton(
-                            onClick = {
-                                onRequestImport()
-                            },
-                            importProgress = importProgress
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                showAdvancedDisplaySettings()
+                            }
+                    ) {
+                        Text(
+                            text = stringResource(R.string.settings_more_display_options_button),
+                            modifier = Modifier.padding(16.dp)
+                        )
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowRight,
+                            contentDescription = null,
+                            modifier = Modifier.padding(end = 16.dp)
                         )
                     }
                 }
 
+                if (showImportButton(accountSource)) {
+                    Section(title = stringResource(R.string.settings_section_import)) {
+                        RowItem {
+                            OPMLImportButton(
+                                onClick = {
+                                    onRequestImport()
+                                },
+                                importProgress = importProgress
+                            )
+                        }
+                    }
+                }
+
                 Section(title = stringResource(R.string.settings_section_export)) {
-                    OPMLExportButton(
-                        onClick = onRequestExport,
-                    )
+                    RowItem {
+                        OPMLExportButton(
+                            onClick = onRequestExport,
+                        )
+                    }
                 }
 
                 if (showCrashReporting()) {
                     Section(title = stringResource(R.string.settings_section_privacy)) {
-                        CrashReportingCheckbox()
+                        RowItem {
+                            CrashReportingCheckbox()
+                        }
                     }
                 }
 
                 Section {
-                    HorizontalDivider(modifier = Modifier.padding(bottom = 8.dp))
-
-                    Button(
-                        onClick = { setRemoveDialogOpen(true) },
-                        colors = removeAccountButtonColors(accountSource),
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(stringResource(strings.requestRemoveText))
+                    RowItem {
+                        HorizontalDivider(modifier = Modifier.padding(bottom = 8.dp))
+                        Button(
+                            onClick = { setRemoveDialogOpen(true) },
+                            colors = removeAccountButtonColors(accountSource),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(stringResource(strings.requestRemoveText))
+                        }
                     }
                 }
             }
@@ -188,6 +249,18 @@ fun SettingsView(
             }
         )
     }
+
+    if (isAdvancedDisplayDialogOpen) {
+        Dialog(
+            onDismissRequest = { setAdvancedDisplayDialogOpen(false) },
+            properties = DialogProperties(usePlatformDefaultWidth = isCompact())
+        ) {
+            ArticleListSettings(
+                onRequestClose = { setAdvancedDisplayDialogOpen(false) },
+                options = settings.articleList
+            )
+        }
+    }
 }
 
 @Composable
@@ -197,9 +270,7 @@ fun Section(
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = Modifier
-            .padding(bottom = 16.dp)
-            .padding(horizontal = 16.dp)
+        modifier = Modifier.padding(bottom = 16.dp)
     ) {
         if (title != null) {
             Text(
@@ -207,10 +278,25 @@ fun Section(
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 12.sp,
                 color = colorScheme.surfaceTint,
+                modifier = Modifier.padding(horizontal = 16.dp)
             )
         }
 
         content()
+    }
+}
+
+@Composable
+private fun RowItem(
+    skipPadding: Boolean = false,
+    content: @Composable () -> Unit
+) {
+    if (skipPadding) {
+        content()
+    } else {
+        Column(Modifier.padding(horizontal = 16.dp)) {
+            content()
+        }
     }
 }
 
@@ -260,8 +346,6 @@ fun AccountSettingsViewPreview() {
         }
     ) {
         SettingsView(
-            refreshInterval = RefreshInterval.EVERY_HOUR,
-            updateRefreshInterval = {},
             onNavigateBack = {},
             onRequestRemoveAccount = {},
             onRequestExport = {},
@@ -269,10 +353,24 @@ fun AccountSettingsViewPreview() {
             accountSource = Source.FEEDBIN,
             accountName = "hello@example.com",
             importProgress = null,
-            updateTheme = {},
-            theme = ThemeOption.LIGHT,
-            canOpenLinksInternally = true,
-            updateOpenLinksInternally = {},
+            settings = SettingsOptions(
+                refreshInterval = RefreshInterval.EVERY_HOUR,
+                updateRefreshInterval = {},
+                updateTheme = {},
+                theme = ThemeOption.LIGHT,
+                canOpenLinksInternally = true,
+                updateOpenLinksInternally = {},
+                articleList = ArticleListOptions(
+                    imagePreview = ImagePreview.default,
+                    showSummary = false,
+                    showFeedName = false,
+                    showFeedIcons = false,
+                    updateSummary = {},
+                    updateFeedIcons = {},
+                    updateImagePreview = {},
+                    updateFeedName = {}
+                )
+            )
         )
     }
 }
@@ -290,8 +388,6 @@ fun AccountSettingsView_LocalPreview() {
     ) {
         CapyTheme(theme = ThemeOption.DARK) {
             SettingsView(
-                refreshInterval = RefreshInterval.EVERY_HOUR,
-                updateRefreshInterval = {},
                 onNavigateBack = {},
                 onRequestRemoveAccount = {},
                 onRequestExport = {},
@@ -299,10 +395,24 @@ fun AccountSettingsView_LocalPreview() {
                 accountSource = Source.LOCAL,
                 accountName = "",
                 importProgress = null,
-                updateTheme = {},
-                theme = ThemeOption.LIGHT,
-                canOpenLinksInternally = true,
-                updateOpenLinksInternally = {},
+                settings = SettingsOptions(
+                    refreshInterval = RefreshInterval.EVERY_HOUR,
+                    updateRefreshInterval = {},
+                    updateTheme = {},
+                    theme = ThemeOption.LIGHT,
+                    canOpenLinksInternally = true,
+                    updateOpenLinksInternally = {},
+                    articleList = ArticleListOptions(
+                        imagePreview = ImagePreview.default,
+                        showSummary = false,
+                        showFeedName = false,
+                        showFeedIcons = false,
+                        updateSummary = {},
+                        updateFeedIcons = {},
+                        updateImagePreview = {},
+                        updateFeedName = {}
+                    )
+                )
             )
         }
     }

@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import com.capyreader.app.common.GetOPMLContent
+import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.transfers.OPMLExporter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,8 +38,6 @@ fun SettingsScreen(
     }
 
     SettingsView(
-        refreshInterval = viewModel.refreshInterval,
-        updateRefreshInterval = viewModel::updateRefreshInterval,
         onNavigateBack = { onNavigateBack() },
         onRequestRemoveAccount = {
             viewModel.removeAccount()
@@ -48,12 +47,27 @@ fun SettingsScreen(
         onRequestImport = {
             importOPML()
         },
-        canOpenLinksInternally = viewModel.canOpenLinksInternally,
-        updateOpenLinksInternally = viewModel::updateOpenLinksInternally,
+
         accountSource = viewModel.accountSource,
         accountName = viewModel.accountName,
         importProgress = viewModel.importProgress,
-        updateTheme = viewModel::updateTheme,
-        theme = viewModel.theme
+        settings = SettingsOptions(
+            canOpenLinksInternally = viewModel.canOpenLinksInternally,
+            updateOpenLinksInternally = viewModel::updateOpenLinksInternally,
+            refreshInterval = viewModel.refreshInterval,
+            updateRefreshInterval = viewModel::updateRefreshInterval,
+            updateTheme = viewModel::updateTheme,
+            theme = viewModel.theme,
+            articleList = ArticleListOptions(
+                imagePreview = viewModel.imagePreview,
+                showSummary = viewModel.showSummary,
+                showFeedName = viewModel.showFeedName,
+                showFeedIcons = viewModel.showFeedIcons,
+                updateSummary = viewModel::updateSummary,
+                updateFeedIcons = viewModel::updateFeedIcons,
+                updateImagePreview = viewModel::updateImagePreview,
+                updateFeedName = viewModel::updateFeedName,
+            )
+        )
     )
 }

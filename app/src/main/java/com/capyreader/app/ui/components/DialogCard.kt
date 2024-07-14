@@ -1,5 +1,6 @@
 package com.capyreader.app.ui.components
 
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable

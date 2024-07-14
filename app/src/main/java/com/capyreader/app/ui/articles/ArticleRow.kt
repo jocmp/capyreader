@@ -25,26 +25,22 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.jocmp.capy.Article
-import com.jocmp.capy.MarkRead
 import com.capyreader.app.R
 import com.capyreader.app.ui.articles.list.ArticleActionMenu
 import com.capyreader.app.ui.fixtures.ArticleSample
 import com.capyreader.app.ui.theme.CapyTheme
+import com.jocmp.capy.Article
+import com.jocmp.capy.MarkRead
 import java.net.URL
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
-
 
 private val THUMBNAIL_SIZE = 56.dp
 
@@ -110,7 +106,7 @@ fun ArticleRow(
                             time = article.publishedAt,
                             currentTime = currentTime,
                         ),
-                        style = typography.labelSmall,
+                        style = typography.labelMedium,
                         modifier = Modifier.padding(vertical = 4.dp),
                         maxLines = 1,
                     )

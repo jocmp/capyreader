@@ -16,7 +16,7 @@ class AppPreferences(context: Context) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
     )
 
-    private val articleDisplay = ArticleDisplayOptions(preferenceStore)
+    val articleDisplay = ArticleDisplayOptions(preferenceStore)
 
     val accountID: Preference<String>
         get() = preferenceStore.getString("account_id")

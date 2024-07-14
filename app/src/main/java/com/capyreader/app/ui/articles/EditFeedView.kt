@@ -3,26 +3,19 @@ package com.capyreader.app.ui.articles
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,19 +23,17 @@ import androidx.compose.runtime.toMutableStateMap
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
-import androidx.compose.ui.unit.sp
+import com.capyreader.app.R
+import com.capyreader.app.ui.components.DialogHorizontalDivider
+import com.capyreader.app.ui.fixtures.FeedPreviewFixture
+import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.EditFeedFormEntry
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
-import com.capyreader.app.R
-import com.capyreader.app.ui.fixtures.FeedPreviewFixture
-import com.capyreader.app.ui.theme.CapyTheme
 
 @Composable
 fun EditFeedView(
@@ -141,7 +132,7 @@ fun EditFeedView(
                 }
             }
         }
-        HorizontalDivider(color = colorScheme.onSurfaceVariant)
+        DialogHorizontalDivider()
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp, alignment = Alignment.End),
             modifier = Modifier

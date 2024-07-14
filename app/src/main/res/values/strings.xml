@@ -101,4 +101,12 @@
     <string name="edit_feed_tags">Tags</string>
     <string name="settings_option_in_app_browser">Use in-app browser</string>
     <string name="opml_import_notification_cancel">Stop</string>
+    <string name="image_preview_menu_option_none">None</string>
+    <string name="image_preview_menu_option_small">Small</string>
+    <string name="image_preview_menu_option_large">Large</string>
+    <string name="image_preview_label">Image Preview</string>
+    <string name="settings_article_list_feed_name">Feed Name</string>
+    <string name="settings_article_list_feed_icons">Feed Icons</string>
+    <string name="settings_article_list_summary">Summary</string>
+    <string name="settings_more_display_options_button">More Display Options</string>
 </resources>
