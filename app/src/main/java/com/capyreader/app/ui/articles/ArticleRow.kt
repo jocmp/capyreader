@@ -4,10 +4,14 @@ import android.content.res.Configuration
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemColors
 import androidx.compose.material3.ListItemDefaults
@@ -20,6 +24,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
@@ -32,6 +37,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.capyreader.app.R
+import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.ui.articles.list.ArticleActionMenu
 import com.capyreader.app.ui.fixtures.ArticleSample
 import com.capyreader.app.ui.theme.CapyTheme
@@ -44,6 +51,13 @@ import java.time.ZonedDateTime
 
 private val THUMBNAIL_SIZE = 56.dp
 
+data class ArticleRowOptions(
+    val showIcon: Boolean = true,
+    val showSummary: Boolean = true,
+    val showFeedName: Boolean = true,
+    val imagePreview: ImagePreview = ImagePreview.default,
+)
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ArticleRow(
@@ -52,6 +66,7 @@ fun ArticleRow(
     onSelect: (articleID: String) -> Unit,
     onMarkAllRead: (range: MarkRead) -> Unit = {},
     currentTime: LocalDateTime,
+    options: ArticleRowOptions = ArticleRowOptions(),
 ) {
     val imageURL = article.imageURL?.toString()
     val colors = listItemColors(
@@ -77,8 +92,10 @@ fun ArticleRow(
     ) {
         ListItem(
             leadingContent = {
-                Box(Modifier.padding(top = 6.dp)) {
-                    FaviconBadge(article.faviconURL)
+                if (options.showIcon) {
+                    Box(Modifier.padding(top = 6.dp)) {
+                        FaviconBadge(article.faviconURL)
+                    }
                 }
             },
             headlineContent = {
@@ -88,18 +105,25 @@ fun ArticleRow(
                 )
             },
             supportingContent = {
-                Column {
-                    Text(
-                        article.feedName,
-                        color = feedNameColor,
-                        modifier = Modifier.padding(vertical = 4.dp)
-                    )
-                    if (article.summary.isNotBlank()) {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                    modifier = Modifier.padding(vertical = 4.dp)
+                ) {
+                    if (options.showFeedName) {
+                        Text(
+                            article.feedName,
+                            color = feedNameColor,
+                        )
+                    }
+                    if (article.summary.isNotBlank() && options.showSummary) {
                         Text(
                             text = article.summary,
                             maxLines = 2,
                             overflow = TextOverflow.Ellipsis,
                         )
+                    }
+                    if (imageURL != null && options.imagePreview == ImagePreview.LARGE) {
+                        ArticleImage(imageURL = imageURL, imagePreview = options.imagePreview)
                     }
                     Text(
                         text = relativeTime(
@@ -107,20 +131,15 @@ fun ArticleRow(
                             currentTime = currentTime,
                         ),
                         style = typography.labelMedium,
-                        modifier = Modifier.padding(vertical = 4.dp),
                         maxLines = 1,
                     )
                 }
             },
-            trailingContent = if (imageURL != null) {
+            trailingContent = if (imageURL != null && options.imagePreview == ImagePreview.SMALL) {
                 {
-                    AsyncImage(
-                        model = imageURL,
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .size(THUMBNAIL_SIZE)
-                            .background(colorScheme.surfaceContainer)
+                    ArticleImage(
+                        imageURL = imageURL,
+                        imagePreview = options.imagePreview
                     )
                 }
             } else {
@@ -144,14 +163,39 @@ fun ArticleRow(
 }
 
 @Composable
-fun PlaceholderArticleRow() {
+private fun ArticleImage(
+    imageURL: String,
+    imagePreview: ImagePreview
+) {
+    val sizeModifier = if (imagePreview == ImagePreview.SMALL) {
+        Modifier.size(THUMBNAIL_SIZE)
+    } else {
+        Modifier
+            .fillMaxWidth()
+            .aspectRatio(3 / 2f)
+            .clip(RoundedCornerShape(8.dp))
+    }
+
+    AsyncImage(
+        model = imageURL,
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = sizeModifier
+            .background(colorScheme.surfaceContainer)
+    )
+}
+
+@Composable
+fun PlaceholderArticleRow(imagePreview: ImagePreview) {
     ListItem(
         trailingContent = {
-            Box(
-                Modifier
-                    .size(THUMBNAIL_SIZE)
-                    .background(colorScheme.surfaceContainer)
-            )
+            if (imagePreview == ImagePreview.SMALL) {
+                Box(
+                    Modifier
+                        .size(THUMBNAIL_SIZE)
+                        .background(colorScheme.surfaceContainer)
+                )
+            }
         },
         headlineContent = {}
     )
@@ -242,6 +286,22 @@ fun ArticleRowPreview_Selected(@PreviewParameter(ArticleSample::class) article: 
             selected = true,
             onSelect = {},
             currentTime = LocalDateTime.now(),
+        )
+    }
+}
+
+@Preview
+@Composable
+fun ArticleRowPreview_Large(@PreviewParameter(ArticleSample::class) article: Article) {
+    CapyTheme {
+        ArticleRow(
+            article = article.copy(imageURL = URL("http://example.com")),
+            selected = true,
+            onSelect = {},
+            currentTime = LocalDateTime.now(),
+            options = ArticleRowOptions(
+                imagePreview = ImagePreview.LARGE
+            )
         )
     }
 }
