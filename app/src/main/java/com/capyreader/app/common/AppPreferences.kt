@@ -16,6 +16,8 @@ class AppPreferences(context: Context) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
     )
 
+    val articleDisplay = ArticleDisplayOptions(preferenceStore)
+
     val accountID: Preference<String>
         get() = preferenceStore.getString("account_id")
 
@@ -44,5 +46,19 @@ class AppPreferences(context: Context) {
 
     fun clearAll() {
         preferenceStore.clearAll()
+    }
+
+    class ArticleDisplayOptions(private val preferenceStore: PreferenceStore) {
+        val showFeedName: Preference<Boolean>
+            get() = preferenceStore.getBoolean("article_display_feed_name", true)
+
+        val showFeedIcons: Preference<Boolean>
+            get() = preferenceStore.getBoolean("article_display_feed_icons", true)
+
+        val showSummary: Preference<Boolean>
+            get() = preferenceStore.getBoolean("article_display_show_summary", true)
+
+        val imagePreview: Preference<ImagePreview>
+            get() = preferenceStore.getEnum("article_display_image_preview", ImagePreview.default)
     }
 }

@@ -6,6 +6,8 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -16,18 +18,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.capyreader.app.R
-import com.capyreader.app.common.ThemeOption
-import com.capyreader.app.refresher.RefreshInterval.MANUALLY_ONLY
+import com.capyreader.app.common.ImagePreview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ThemeMenu(
-    onUpdateTheme: (theme: ThemeOption) -> Unit,
-    theme: ThemeOption,
+fun ImagePreviewMenu(
+    onUpdateImagePreview: (preview: ImagePreview) -> Unit,
+    imagePreview: ImagePreview,
 ) {
     val context = LocalContext.current
     val (expanded, setExpanded) = remember { mutableStateOf(false) }
-    val options = ThemeOption.sorted.map {
+    val options = ImagePreview.sorted.map {
         it to context.translationKey(it)
     }
 
@@ -35,16 +36,16 @@ fun ThemeMenu(
         expanded = expanded,
         onExpandedChange = { setExpanded(it) },
     ) {
-        TextField(
+        OutlinedTextField(
             modifier = Modifier
                 .menuAnchor()
                 .fillMaxWidth(),
             readOnly = true,
-            value = context.translationKey(theme),
+            value = context.translationKey(imagePreview),
             onValueChange = {},
-            label = { Text(stringResource(R.string.theme_menu_label)) },
+            label = { Text(stringResource(R.string.image_preview_label)) },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-            colors = ExposedDropdownMenuDefaults.textFieldColors(),
+            colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(),
         )
         ExposedDropdownMenu(
             expanded = expanded,
@@ -54,28 +55,35 @@ fun ThemeMenu(
                 DropdownMenuItem(
                     text = { Text(text) },
                     onClick = {
-                        onUpdateTheme(option)
+                        onUpdateImagePreview(option)
                         setExpanded(false)
                     }
                 )
+                if (option == ImagePreview.NONE) {
+                    HorizontalDivider()
+                }
             }
         }
     }
 }
 
-private fun Context.translationKey(option: ThemeOption): String {
+private fun Context.translationKey(option: ImagePreview): String {
     return when (option) {
-        ThemeOption.LIGHT -> getString(R.string.theme_menu_option_light)
-        ThemeOption.DARK -> getString(R.string.theme_menu_option_dark)
-        ThemeOption.SYSTEM_DEFAULT -> getString(R.string.theme_menu_option_system_default)
+        ImagePreview.NONE -> getString(R.string.image_preview_menu_option_none)
+        ImagePreview.SMALL -> getString(R.string.image_preview_menu_option_small)
+        ImagePreview.LARGE -> getString(R.string.image_preview_menu_option_large)
     }
 }
 
 @Preview
 @Composable
-fun ThemeMenuPreview() {
-    ThemeMenu(
-        onUpdateTheme = {},
-        theme = ThemeOption.SYSTEM_DEFAULT,
+fun ImagePreviewMenuPreview() {
+    val (preview, setPreview) = remember {
+        mutableStateOf(ImagePreview.SMALL)
+    }
+
+    ImagePreviewMenu(
+        onUpdateImagePreview = setPreview,
+        imagePreview = preview
     )
 }
