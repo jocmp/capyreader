@@ -30,6 +30,11 @@ android {
         }
     }
 
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
+    }
+
     flavorDimensions += listOf("license")
 
     productFlavors {
