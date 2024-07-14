@@ -74,8 +74,8 @@ private fun Context.translationKey(option: ThemeOption): String {
 @Preview
 @Composable
 fun ThemeMenuPreview() {
-    RefreshIntervalMenu(
-        refreshInterval = MANUALLY_ONLY,
-        updateRefreshInterval = {}
+    ThemeMenu(
+        onUpdateTheme = {},
+        theme = ThemeOption.SYSTEM_DEFAULT,
     )
 }
