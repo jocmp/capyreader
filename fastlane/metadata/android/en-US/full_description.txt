@@ -4,7 +4,8 @@ Some features include:
 
 • Sync with Feedbin or keep feeds on device
 • Track read and starred articles
-• Import and export subscriptionsBackground refresh
+• Import and export subscriptions
+• Background refresh
 • Dark mode
 • Tablet and foldable support
 • Free and Open Source code
