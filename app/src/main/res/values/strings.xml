@@ -109,4 +109,6 @@
     <string name="settings_article_list_feed_icons">Feed Icons</string>
     <string name="settings_article_list_summary">Summary</string>
     <string name="settings_more_display_options_button">More Display Options</string>
+    <string name="settings_section_version">Version</string>
+    <string name="settings_option_copy_version">Copy version</string>
 </resources>
