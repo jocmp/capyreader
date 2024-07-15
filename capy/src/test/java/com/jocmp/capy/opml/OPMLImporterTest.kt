@@ -11,13 +11,17 @@ import com.jocmp.capy.testFile
 import com.jocmp.feedfinder.parser.Feed
 import io.mockk.mockk
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.last
+import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import okhttp3.OkHttpClient
 import org.junit.Before
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class OPMLImporterTest {
     @JvmField
@@ -61,7 +65,7 @@ class OPMLImporterTest {
     }
 
     @Test
-    fun `it imports feeds and folders`() = runBlocking {
+    fun `it imports feeds and folders`() = runTest {
         val inputStream = testFile("nested_import.xml").inputStream()
 
         OPMLImporter(account).import(inputStream = inputStream)
@@ -77,7 +81,7 @@ class OPMLImporterTest {
     }
 
     @Test
-    fun `it handles feeds nested in multiple folders`() = runBlocking {
+    fun `it handles feeds nested in multiple folders`() = runTest {
         val inputStream = testFile("multiple_matching_feeds.xml").inputStream()
 
         OPMLImporter(account).import(inputStream = inputStream)

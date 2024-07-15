@@ -5,11 +5,6 @@ import java.io.InputStream
 import java.net.URL
 import kotlin.math.roundToInt
 
-/**
- * 1. Load file via `OPMLFile`
- * 2. Normalize feeds
- * 3. When normalized, iterate through each feed and call `createFeed` on account
- */
 internal class OPMLImporter(private val account: Account) {
     internal suspend fun import(
         onProgress: (progress: ImportProgress) -> Unit = {},
