@@ -19,14 +19,20 @@ Bug reports are always welcome and are my top priority.
 
 If you run into an issue, let me know by submitting a [bug report](https://github.com/jocmp/capyreader/issues/new?labels=bug&template=bug_report.yml).
 
-## Getting Started
+## Feature Requests
+
+If you have questions or feature requests, please submit them to [Discussions](https://github.com/jocmp/capyreader/discussions).
+
+## Building the app
+
+### Getting Started
 
 1. Clone this repository
 2. Install [Android Studio](https://developer.android.com/studio) if you don't have it already
 3. Sync Gradle
 4. In the toolbar, go to Run > Run 'app'
 
-### Build a signed release (Optional)
+#### Build a signed release (Optional)
 
 By default the app will build with a debug keystore. Follow the instructions below to build a signed release.
 
