@@ -7,9 +7,6 @@ tag = true
 push = false
 
 [bumpver.file_patterns]
-"README.md" = [
-    "{version}",
-]
 "bumpver.toml" = [
     'current_version = "{version}"',
 ]

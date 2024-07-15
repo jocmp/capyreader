@@ -2,15 +2,22 @@
 
 <img src="./site/capy.png" width="100px">
 
-[![CalVer 2024.07.1008][img_version]][url_version] ![Continuous Integration](https://github.com/jocmp/capyreader/actions/workflows/ci.yml/badge.svg)
-
 _A smallish RSS reader with support for Feedbin and local feeds._
 
-<!-- [Download on Google Play][google_play_link] -->
+## Download
+
+| Source                   | Status                           |
+| ------------------------ | -------------------------------- |
+| [IzzyOnDroid][izzy_link] | ![IzzyOnDroid Version][izzy_img] |
+| [GitHub][github_link]    | ![GitHub Release][github_img]    |
+
+Capy Reader is free across all sources.
 
 ## Reporting a bug
 
-If you run into a bug, let me know by submitting a [bug report](https://github.com/jocmp/capyreader/issues/new?labels=bug&template=bug_report.yml)
+Bug reports are always welcome and are my top priority.
+
+If you run into an issue, let me know by submitting a [bug report](https://github.com/jocmp/capyreader/issues/new?labels=bug&template=bug_report.yml).
 
 ## Getting Started
 
@@ -25,6 +32,7 @@ By default the app will build with a debug keystore. Follow the instructions bel
 
 1. Ensure you have a keystore with the name `release.keystore` in the root directory.
 2. Next, create a file called `secrets.properties`, also in the root directory, with the following values
+
     ```properties
     key_alias=
     store_password=
@@ -32,6 +40,7 @@ By default the app will build with a debug keystore. Follow the instructions bel
     ```
 
 
-[img_version]: https://img.shields.io/static/v1.svg?label=CalVer&message=2024.07.1008&color=blue
-[url_version]: https://github.com/jocmp/capyreader
-[google_play_link]: https://example.com
+[izzy_link]: https://apt.izzysoft.de/fdroid/index/apk/com.capyreader.app
+[izzy_img]: https://img.shields.io/endpoint?url=https://apt.izzysoft.de/fdroid/api/v1/shield/com.capyreader.app&label=IzzyOnDroid
+[github_link]: https://github.com/jocmp/capyreader/releases
+[github_img]: https://img.shields.io/github/v/release/jocmp/capyreader?logo=GitHub
