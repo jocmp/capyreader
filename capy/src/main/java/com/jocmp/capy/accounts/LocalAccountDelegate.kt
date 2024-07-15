@@ -178,10 +178,16 @@ class LocalAccountDelegate(
     ) {
         val feedURL = feed.feedURL.toString()
 
+        val feedTitle = if (title.isNullOrBlank()) {
+            feed.name
+        } else {
+            title
+        }
+
         database.feedsQueries.upsert(
             id = feedURL,
             subscription_id = feedURL,
-            title = title ?: feed.name,
+            title = feedTitle,
             feed_url = feedURL,
             site_url = feed.siteURL?.toString(),
             favicon_url = feed.faviconURL?.toString()

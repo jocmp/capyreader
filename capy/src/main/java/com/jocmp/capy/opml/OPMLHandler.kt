@@ -57,4 +57,4 @@ private val Element.toFolder: Folder
     }
 
 private val Element.isFeed
-    get() = attr("type").lowercase() == "rss"
+    get() = attr("xmlUrl").isNotBlank()

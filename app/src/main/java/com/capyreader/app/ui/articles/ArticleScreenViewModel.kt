@@ -8,7 +8,11 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import androidx.paging.cachedIn
+import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.sync.addStarAsync
+import com.capyreader.app.sync.markReadAsync
+import com.capyreader.app.sync.markUnreadAsync
+import com.capyreader.app.sync.removeStarAsync
 import com.jocmp.capy.Account
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
@@ -20,11 +24,6 @@ import com.jocmp.capy.MarkRead
 import com.jocmp.capy.buildArticlePager
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.countAll
-import com.capyreader.app.common.AppPreferences
-import com.capyreader.app.sync.addStarAsync
-import com.capyreader.app.sync.markReadAsync
-import com.capyreader.app.sync.markUnreadAsync
-import com.capyreader.app.sync.removeStarAsync
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
@@ -55,7 +54,6 @@ class ArticleScreenViewModel(
 
     val articles: Flow<PagingData<Article>> = filter
         .flatMapLatest { account.buildArticlePager(it).flow }
-        .cachedIn(viewModelScope)
 
     val folders: Flow<List<Folder>> = account.folders.combine(_counts) { folders, latestCounts ->
         folders.map { copyFolderCounts(it, latestCounts) }
