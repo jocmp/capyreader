@@ -91,7 +91,7 @@ fun SettingsView(
     }
 
     val copyVersionToClipboard = {
-        clipboardManager.setText(AnnotatedString("Capy Reader: $VERSION_NAME"))
+        clipboardManager.setText(AnnotatedString("Capy Reader $VERSION_NAME"))
     }
 
     val onRemoveCancel = {
