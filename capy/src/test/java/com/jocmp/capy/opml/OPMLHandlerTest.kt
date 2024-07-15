@@ -2,7 +2,6 @@ package com.jocmp.capy.opml
 
 import com.jocmp.capy.testFile
 import org.junit.Test
-import javax.xml.parsers.SAXParserFactory
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
