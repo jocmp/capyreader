@@ -132,10 +132,6 @@ fun ArticleLayout(
             onFeedRefresh {
                 state.endRefresh()
                 pagingArticles.refresh()
-                coroutineScope.launch {
-                    delay(200)
-                    listState.scrollToItem(0)
-                }
             }
         }
     }
