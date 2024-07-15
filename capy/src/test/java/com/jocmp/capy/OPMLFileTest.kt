@@ -48,7 +48,6 @@ class OPMLFileTest {
 
     @Test
     fun opmlDocument_serializes() = runTest {
-
         "Tech".also { folderName ->
             feedFixture.create(
                 title = "The Verge",
