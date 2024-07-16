@@ -672,7 +672,7 @@ val WebStateSaver: Saver<WebViewState, Any> = run {
         save = {
             val viewState = Bundle().apply { it.webView?.saveState(this) }
             mapOf(
-                stateBundle to viewState,
+                stateBundle to viewState
             )
         },
         restore = {

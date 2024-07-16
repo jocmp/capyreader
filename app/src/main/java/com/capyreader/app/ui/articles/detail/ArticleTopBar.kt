@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.jocmp.capy.Article
 import com.capyreader.app.R
 import com.capyreader.app.common.shareArticle
+import com.capyreader.app.ui.articles.FullContentLoadingIcon
 import com.capyreader.app.ui.fixtures.ArticleSample
 import com.capyreader.app.ui.isCompact
 import com.jocmp.capy.articles.ExtractedContent
@@ -51,10 +52,14 @@ fun ArticleTopBar(
                     }
 
                     IconButton(onClick = { onToggleExtractContent() }) {
-                        Icon(
-                            painterResource(id = extractIcon(extractedContent)),
-                            contentDescription = stringResource(R.string.extract_full_content)
-                        )
+                        if (extractedContent.isLoading) {
+                            FullContentLoadingIcon()
+                        } else {
+                            Icon(
+                                painterResource(id = extractIcon(extractedContent)),
+                                contentDescription = stringResource(R.string.extract_full_content)
+                            )
+                        }
                     }
 
                     IconButton(onClick = { onToggleStar() }) {

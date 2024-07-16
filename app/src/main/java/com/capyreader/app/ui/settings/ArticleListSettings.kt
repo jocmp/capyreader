@@ -76,22 +76,19 @@ fun ArticleListSettings(
                 ) {
                     TextSwitch(
                         onCheckedChange = options.updateFeedName,
-                        checked = options.showFeedName
-                    ) {
-                        Text(stringResource(R.string.settings_article_list_feed_name))
-                    }
+                        checked = options.showFeedName,
+                        title = stringResource(R.string.settings_article_list_feed_name)
+                    )
                     TextSwitch(
                         onCheckedChange = options.updateFeedIcons,
-                        checked = options.showFeedIcons
-                    ) {
-                        Text(stringResource(R.string.settings_article_list_feed_icons))
-                    }
+                        checked = options.showFeedIcons,
+                        title = stringResource(R.string.settings_article_list_feed_icons)
+                    )
                     TextSwitch(
                         onCheckedChange = options.updateSummary,
-                        checked = options.showSummary
-                    ) {
-                        Text(stringResource(R.string.settings_article_list_summary))
-                    }
+                        checked = options.showSummary,
+                        title = stringResource(R.string.settings_article_list_summary)
+                    )
                     ImagePreviewMenu(
                         onUpdateImagePreview = options.updateImagePreview,
                         imagePreview = options.imagePreview

@@ -67,8 +67,10 @@ data class SettingsOptions(
     val theme: ThemeOption,
     val updateOpenLinksInternally: (openLinksInternally: Boolean) -> Unit,
     val updateRefreshInterval: (interval: RefreshInterval) -> Unit,
+    val updateStickFullContent: (enable: Boolean) -> Unit,
     val updateTheme: (theme: ThemeOption) -> Unit,
     val articleList: ArticleListOptions,
+    val enableStickyFullContent: Boolean,
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -166,9 +168,16 @@ fun SettingsView(
                         TextSwitch(
                             checked = settings.canOpenLinksInternally,
                             onCheckedChange = settings.updateOpenLinksInternally,
-                            text = {
-                                Text(text = stringResource(R.string.settings_option_in_app_browser))
-                            }
+                            title = stringResource(R.string.settings_option_in_app_browser)
+                        )
+                    }
+
+                    RowItem {
+                        TextSwitch(
+                            checked = settings.enableStickyFullContent,
+                            onCheckedChange = settings.updateStickFullContent,
+                            title = stringResource(R.string.settings_option_full_content_title),
+                            subtitle = stringResource(R.string.settings_option_full_content_subtitle)
                         )
                     }
 
@@ -393,6 +402,8 @@ fun AccountSettingsViewPreview() {
                 theme = ThemeOption.LIGHT,
                 canOpenLinksInternally = true,
                 updateOpenLinksInternally = {},
+                enableStickyFullContent = false,
+                updateStickFullContent = {},
                 articleList = ArticleListOptions(
                     imagePreview = ImagePreview.default,
                     showSummary = false,
@@ -435,6 +446,8 @@ fun AccountSettingsView_LocalPreview() {
                     theme = ThemeOption.LIGHT,
                     canOpenLinksInternally = true,
                     updateOpenLinksInternally = {},
+                    enableStickyFullContent = false,
+                    updateStickFullContent = {},
                     articleList = ArticleListOptions(
                         imagePreview = ImagePreview.default,
                         showSummary = false,
@@ -443,7 +456,7 @@ fun AccountSettingsView_LocalPreview() {
                         updateSummary = {},
                         updateFeedIcons = {},
                         updateImagePreview = {},
-                        updateFeedName = {}
+                        updateFeedName = {},
                     )
                 )
             )
