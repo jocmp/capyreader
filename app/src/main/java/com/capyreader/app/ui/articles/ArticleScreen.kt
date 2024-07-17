@@ -3,11 +3,14 @@ package com.capyreader.app.ui.articles
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.capyreader.app.common.AppPreferences
 import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.koinInject
 
 @Composable
 fun ArticleScreen(
     viewModel: ArticleScreenViewModel = koinViewModel(),
+    appPreferences: AppPreferences = koinInject(),
     onNavigateToSettings: () -> Unit,
 ) {
     val feeds by viewModel.feeds.collectAsStateWithLifecycle(initialValue = emptyList())
@@ -39,6 +42,7 @@ fun ArticleScreen(
         onToggleArticleStar = viewModel::toggleArticleStar,
         onMarkAllRead = viewModel::markAllRead,
         showUnauthorizedMessage = viewModel.showUnauthorizedMessage,
-        onUnauthorizedDismissRequest = viewModel::dismissUnauthorizedMessage
+        onUnauthorizedDismissRequest = viewModel::dismissUnauthorizedMessage,
+        refreshInterval = appPreferences.refreshInterval.get()
     )
 }
