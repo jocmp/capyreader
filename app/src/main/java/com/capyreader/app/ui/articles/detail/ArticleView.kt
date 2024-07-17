@@ -8,44 +8,43 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.ui.components.WebView
 import com.capyreader.app.ui.components.WebViewNavigator
 import com.capyreader.app.ui.components.rememberSaveableWebViewState
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
+import org.koin.compose.koinInject
 
 @Composable
 fun ArticleView(
     article: Article?,
     webViewNavigator: WebViewNavigator,
+    renderer: ArticleRenderer = koinInject(),
     onBackPressed: () -> Unit,
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit
 ) {
     val articleID = article?.id
-    val context = LocalContext.current
-    val webViewState = rememberSaveableWebViewState(key = articleID)
     val templateColors = articleTemplateColors()
-    val (initialized, setInitialized) = rememberSaveable(articleID) {
-        mutableStateOf(false)
-    }
+    val colors = templateColors.asMap()
 
-    val renderer = ArticleRenderer(context = context, colors = templateColors.asMap())
-
+    val webViewState = rememberSaveableWebViewState(key = articleID)
     val extractedContentState = rememberExtractedContent(
         article = article,
         onComplete = { content ->
             article?.let {
-                webViewNavigator.loadHtml(renderer.render(article, content))
+                webViewNavigator.loadHtml(renderer.render(article, content, colors = colors))
             }
         }
     )
+
+    val clearWebView = {
+        webViewNavigator.clearView()
+        renderer.clear()
+    }
 
     val extractedContent = extractedContentState.content
 
@@ -53,7 +52,7 @@ fun ArticleView(
         article ?: return
 
         if (extractedContent.isComplete) {
-            webViewNavigator.loadHtml(renderer.render(article))
+            webViewNavigator.loadHtml(renderer.render(article, colors = colors))
             extractedContentState.reset()
         } else if (!extractedContent.isLoading) {
             extractedContentState.fetch()
@@ -102,37 +101,28 @@ fun ArticleView(
     }
 
     BackHandler(article != null) {
-        webViewNavigator.clearView()
         onBackPressed()
     }
 
     LaunchedEffect(articleID) {
-        if (articleID == null || initialized) {
+        if (articleID == null) {
+            clearWebView()
             return@LaunchedEffect
         }
 
-        if (extractedContent.showOnLoad) {
+        val html = renderer.fetchCached(article)
 
-            webViewNavigator.clearView()
-            extractedContentState.fetch()
-        } else {
-
-            webViewNavigator.loadHtml(renderer.render(article))
-        }
-
-        setInitialized(true)
-    }
-
-    // https://github.com/google/accompanist/pull/1557
-    LaunchedEffect(webViewNavigator) {
-        if (webViewState.viewState != null || article == null) {
+        if (html.isNotBlank()) {
+            webViewNavigator.loadHtml(html)
             return@LaunchedEffect
         }
 
-        if (extractedContent.showByDefault) {
+        clearWebView()
+
+        if (extractedContent.requestShow) {
             extractedContentState.fetch()
         } else {
-            webViewNavigator.loadHtml(renderer.render(article))
+            webViewNavigator.loadHtml(renderer.render(article, colors = colors))
         }
     }
 

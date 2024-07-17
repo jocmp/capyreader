@@ -83,7 +83,7 @@ class ArticleScreenViewModel(
     fun selectArticleFilter() {
         val nextFilter = ArticleFilter.default().withStatus(status = filterStatus)
 
-        updateFilterValue(nextFilter)
+        selectArticleFilter(nextFilter)
     }
 
     fun selectStatus(status: ArticleStatus) {
