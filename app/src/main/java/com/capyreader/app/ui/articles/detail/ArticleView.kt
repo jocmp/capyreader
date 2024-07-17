@@ -16,7 +16,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.ui.components.WebView
 import com.capyreader.app.ui.components.WebViewNavigator
+import com.capyreader.app.ui.components.WebViewState
 import com.capyreader.app.ui.components.rememberSaveableWebViewState
+import com.capyreader.app.ui.components.rememberWebViewState
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
 
@@ -30,14 +32,13 @@ fun ArticleView(
 ) {
     val articleID = article?.id
     val context = LocalContext.current
-    val webViewState = rememberSaveableWebViewState(key = articleID)
     val templateColors = articleTemplateColors()
     val (initialized, setInitialized) = rememberSaveable(articleID) {
         mutableStateOf(false)
     }
 
     val renderer = ArticleRenderer(context = context, colors = templateColors.asMap())
-
+    val webViewState = rememberSaveableWebViewState(key = articleID)
     val extractedContentState = rememberExtractedContent(
         article = article,
         onComplete = { content ->
@@ -107,33 +108,17 @@ fun ArticleView(
     }
 
     LaunchedEffect(articleID) {
-        if (articleID == null || initialized) {
+        if (articleID == null) {
             return@LaunchedEffect
         }
 
-        if (extractedContent.showOnLoad) {
-
-            webViewNavigator.clearView()
+        if (extractedContent.requestShow) {
             extractedContentState.fetch()
         } else {
-
             webViewNavigator.loadHtml(renderer.render(article))
         }
 
         setInitialized(true)
-    }
-
-    // https://github.com/google/accompanist/pull/1557
-    LaunchedEffect(webViewNavigator) {
-        if (webViewState.viewState != null || article == null) {
-            return@LaunchedEffect
-        }
-
-        if (extractedContent.showByDefault) {
-            extractedContentState.fetch()
-        } else {
-            webViewNavigator.loadHtml(renderer.render(article))
-        }
     }
 
     LaunchedEffect(templateColors) {

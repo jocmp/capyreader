@@ -3,7 +3,6 @@ package com.capyreader.app.ui.components
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup.LayoutParams
@@ -13,7 +12,6 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -210,8 +208,8 @@ fun WebView(
 
                 setBackgroundColor(context.getColor(android.R.color.transparent))
 
-                state.viewState?.let {
-                    this.restoreState(it)
+                state.lastScrollY?.let {
+                    this.scrollTo(0, it)
                 }
 
                 webChromeClient = chromeClient
@@ -405,7 +403,7 @@ class WebViewState(webContent: WebContent) {
     /**
      * Whether the webview is currently loading data in its main frame
      */
-    public val isLoading: Boolean
+    val isLoading: Boolean
         get() = loadingState !is LoadingState.Finished
 
     /**
@@ -434,6 +432,8 @@ class WebViewState(webContent: WebContent) {
      */
     var viewState: Bundle? = null
         internal set
+
+    var lastScrollY: Int? = null
 
     // We need access to this in the state saver. An internal DisposableEffect or AndroidView
     // onDestroy is called after the state saver and so can't be used.
@@ -666,22 +666,30 @@ fun rememberSaveableWebViewState(key: String?): WebViewState =
     }
 
 val WebStateSaver: Saver<WebViewState, Any> = run {
-    val stateBundle = "bundle"
+    val scrollY = "scrollY"
 
     mapSaver(
         save = {
-            val viewState = Bundle().apply { it.webView?.saveState(this) }
+            val y = it.webView?.scrollY ?: 0
             mapOf(
-                stateBundle to viewState
+                scrollY to y
             )
         },
         restore = {
             WebViewState(WebContent.NavigatorOnly).apply {
-                this.viewState = it[stateBundle] as Bundle?
+                val y = it[scrollY] as Int?
+
+                lastScrollY = y
             }
-        }
+        },
     )
 }
+
+@Composable
+fun rememberWebViewState(): WebViewState = remember {
+    WebViewState(WebContent.NavigatorOnly)
+}
+
 
 private fun Context.inflateWebView(): WebView {
     return LayoutInflater
