@@ -10,8 +10,11 @@ import com.jocmp.capy.R as CapyRes
 
 class ArticleRenderer(
     private val context: Context,
-    private val colors: Map<String, String>
 ) {
+    private var articleID: String? = null
+
+    private var html: String = ""
+
     private val styles by lazy {
         context.resources.openRawResource(CapyRes.raw.stylesheet)
             .bufferedReader()
@@ -27,7 +30,10 @@ class ArticleRenderer(
     fun render(
         article: Article,
         extractedContent: ExtractedContent = ExtractedContent(),
+        colors: Map<String, String>,
     ): String {
+        articleID = article.id
+
         val substitutions = colors + mapOf(
             "external_link" to article.url.toString(),
             "title" to article.title,
@@ -38,10 +44,25 @@ class ArticleRenderer(
             "script" to script(article, extractedContent)
         )
 
-        return MacroProcessor(
+        html = MacroProcessor(
             template = template,
             substitutions = substitutions
         ).renderedText
+
+        return html
+    }
+
+    fun fetchCached(article: Article): String {
+        if (article.id != articleID) {
+           return ""
+        }
+
+        return html
+    }
+
+    fun clear() {
+        articleID = null
+        html = ""
     }
 
     private fun script(article: Article, extractedContent: ExtractedContent): String {
