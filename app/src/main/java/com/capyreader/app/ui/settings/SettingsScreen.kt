@@ -58,6 +58,8 @@ fun SettingsScreen(
             updateRefreshInterval = viewModel::updateRefreshInterval,
             updateTheme = viewModel::updateTheme,
             theme = viewModel.theme,
+            updateStickFullContent = viewModel::updateStickyFullContent,
+            enableStickyFullContent = viewModel.enableStickyFullContent,
             articleList = ArticleListOptions(
                 imagePreview = viewModel.imagePreview,
                 showSummary = viewModel.showSummary,

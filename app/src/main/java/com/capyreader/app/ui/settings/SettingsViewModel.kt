@@ -49,6 +49,9 @@ class SettingsViewModel(
 
     private val _showFeedIcons = mutableStateOf(appPreferences.articleDisplay.showFeedIcons.get())
 
+    private val _enableStickyFullContent =
+        mutableStateOf(appPreferences.enableStickyFullContent.get())
+
     val importProgress: ImportProgress?
         get() = _importProgress.value
 
@@ -77,6 +80,9 @@ class SettingsViewModel(
 
     val showFeedIcons: Boolean
         get() = _showFeedIcons.value
+
+    val enableStickyFullContent: Boolean
+        get() = _enableStickyFullContent.value
 
     fun updateRefreshInterval(interval: RefreshInterval) {
         refreshScheduler.update(interval)
@@ -118,6 +124,12 @@ class SettingsViewModel(
         appPreferences.articleDisplay.showFeedName.set(show)
 
         _showFeedName.value = show
+    }
+
+    fun updateStickyFullContent(enable: Boolean) {
+        appPreferences.enableStickyFullContent.set(enable)
+
+        _enableStickyFullContent.value = enable
     }
 
     fun removeAccount() {

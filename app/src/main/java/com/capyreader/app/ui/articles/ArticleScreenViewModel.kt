@@ -93,14 +93,16 @@ class ArticleScreenViewModel(
     }
 
     suspend fun selectFeed(feedID: String) {
-        val feed = account.findFeed(feedID) ?: return
-        val feedFilter = ArticleFilter.Feeds(feedID = feed.id, feedStatus = filter.value.status)
+        viewModelScope.launch(Dispatchers.IO) {
+            val feed = account.findFeed(feedID) ?: return@launch
+            val feedFilter = ArticleFilter.Feeds(feedID = feed.id, feedStatus = filter.value.status)
 
-        selectArticleFilter(feedFilter)
+            selectArticleFilter(feedFilter)
+        }
     }
 
     fun selectFolder(title: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val folder = account.findFolder(title) ?: return@launch
             val feedFilter =
                 ArticleFilter.Folders(

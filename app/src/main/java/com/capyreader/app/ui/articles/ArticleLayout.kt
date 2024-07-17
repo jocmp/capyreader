@@ -30,11 +30,15 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.capyreader.app.R
+import com.capyreader.app.ui.articles.detail.ArticleView
+import com.capyreader.app.ui.components.rememberWebViewNavigator
+import com.capyreader.app.ui.fixtures.FeedPreviewFixture
+import com.capyreader.app.ui.fixtures.FolderPreviewFixture
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
@@ -42,13 +46,6 @@ import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.MarkRead.All
-import com.capyreader.app.R
-import com.jocmp.capy.articles.ArticleRenderer
-import com.capyreader.app.ui.articles.detail.ArticleView
-import com.capyreader.app.ui.articles.detail.articleTemplateColors
-import com.capyreader.app.ui.components.rememberWebViewNavigator
-import com.capyreader.app.ui.fixtures.FeedPreviewFixture
-import com.capyreader.app.ui.fixtures.FolderPreviewFixture
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -84,7 +81,6 @@ fun ArticleLayout(
     showUnauthorizedMessage: Boolean,
     onUnauthorizedDismissRequest: () -> Unit
 ) {
-    val templateColors = articleTemplateColors()
     val (isInitialized, setInitialized) = rememberSaveable { mutableStateOf(false) }
     val (isUpdatePasswordDialogOpen, setUpdatePasswordDialogOpen) = rememberSaveable {
         mutableStateOf(false)
@@ -93,7 +89,6 @@ fun ArticleLayout(
     val coroutineScope = rememberCoroutineScope()
     val scaffoldNavigator = rememberListDetailPaneScaffoldNavigator()
 
-    val context = LocalContext.current
     val webViewNavigator = rememberWebViewNavigator()
     val listState = rememberLazyListState()
     val pagingArticles = articles.collectAsLazyPagingItems(Dispatchers.IO)
@@ -144,12 +139,14 @@ fun ArticleLayout(
                 folders = folders,
                 feeds = feeds,
                 onSelectFolder = {
+                    webViewNavigator.clearView()
                     onSelectFolder(it)
                     coroutineScope.launch {
                         navigateFromDrawerToList()
                     }
                 },
                 onSelectFeed = {
+                    webViewNavigator.clearView()
                     coroutineScope.launch {
                         onSelectFeed(it)
                         navigateFromDrawerToList()
@@ -247,16 +244,7 @@ fun ArticleLayout(
                         onMarkAllRead = onMarkAllRead,
                         onSelect = { articleID ->
                             onSelectArticle(articleID) {
-                                coroutineScope.launch {
-                                    val html =
-                                        ArticleRenderer.render(
-                                            it,
-                                            templateColors = templateColors,
-                                            context = context
-                                        )
-                                    webViewNavigator.loadHtml(html)
-                                    navigateToDetail()
-                                }
+                                navigateToDetail()
                             }
                         }
                     )
@@ -275,8 +263,8 @@ fun ArticleLayout(
                 onToggleStar = onToggleArticleStar,
                 webViewNavigator = webViewNavigator,
                 onBackPressed = {
-                    onClearArticle()
                     scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
+                    onClearArticle()
                 }
             )
         }

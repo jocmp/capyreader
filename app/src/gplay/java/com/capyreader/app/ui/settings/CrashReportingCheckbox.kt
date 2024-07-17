@@ -41,9 +41,7 @@ fun CrashReportingCheckbox(
     TextSwitch(
         checked = enableCrashReporting,
         onCheckedChange = updateCrashReporting,
-        text = {
-            Text(text = stringResource(R.string.crash_reporting_checkbox_title))
-        }
+        title = stringResource(R.string.crash_reporting_checkbox_title)
     )
 }
 

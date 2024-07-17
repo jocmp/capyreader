@@ -44,6 +44,9 @@ class AppPreferences(context: Context) {
     val openLinksInternally: Preference<Boolean>
         get() = preferenceStore.getBoolean("open_links_internally", true)
 
+    val enableStickyFullContent: Preference<Boolean>
+        get() = preferenceStore.getBoolean("enable_sticky_full_content", false)
+
     fun clearAll() {
         preferenceStore.clearAll()
     }

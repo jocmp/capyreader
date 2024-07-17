@@ -1,11 +1,14 @@
 package com.capyreader.app.ui.articles.detail
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.mapSaver
 import androidx.compose.runtime.saveable.rememberSaveable
+import com.capyreader.app.common.AppPreferences
 import com.jocmp.capy.Account
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ExtractedContent
@@ -23,6 +26,7 @@ data class ExtractedContentState(
 @Composable
 fun rememberExtractedContent(
     article: Article?,
+    appPreferences: AppPreferences = koinInject(),
     account: Account = koinInject(),
     onComplete: (content: ExtractedContent) -> Unit
 ): ExtractedContentState {
@@ -30,13 +34,18 @@ fun rememberExtractedContent(
         return ExtractedContentState()
     }
 
+    val showFullContentByDefault by appPreferences
+        .enableStickyFullContent
+        .stateIn(rememberCoroutineScope())
+        .collectAsState()
+
     val scope = rememberCoroutineScope()
 
     val (extractedContent, setExtractedContent) = rememberSaveable(
         article.id,
         stateSaver = ExtractedArticleSaver,
     ) {
-        mutableStateOf(ExtractedContent())
+        mutableStateOf(ExtractedContent(requestShow = showFullContentByDefault))
     }
 
     fun fetch() {
@@ -67,21 +76,21 @@ fun rememberExtractedContent(
 
 val ExtractedArticleSaver: Saver<ExtractedContent, Any> = run {
     val showExtractedContent = "showExtractedContent"
-    val extractedContent = "extractedContent"
+    val complete = "complete"
 
     mapSaver(
         save = {
             mapOf(
                 showExtractedContent to it.requestShow,
-                extractedContent to it.value()
+                complete to (it.value is Async.Success),
             )
         },
         restore = {
             val requestShow = (it[showExtractedContent] as Boolean?) ?: false
-            val content = it[extractedContent] as? String
+            val wasComplete = (it[complete] as Boolean?) ?: false
 
-            val value = if (content != null) {
-                Async.Success(content)
+            val value = if (wasComplete) {
+                Async.Success(value = "")
             } else {
                 Async.Uninitialized
             }

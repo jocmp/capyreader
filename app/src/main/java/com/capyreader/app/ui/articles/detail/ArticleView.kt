@@ -1,5 +1,6 @@
 package com.capyreader.app.ui.articles.detail
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,6 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -17,7 +20,8 @@ import com.capyreader.app.ui.components.WebViewNavigator
 import com.capyreader.app.ui.components.rememberSaveableWebViewState
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
-import com.jocmp.capy.articles.ExtractedContent
+
+private const val TAG = "ArticleView"
 
 @Composable
 fun ArticleView(
@@ -27,40 +31,33 @@ fun ArticleView(
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit
 ) {
+    val articleID = article?.id
     val context = LocalContext.current
-    val webViewState = rememberSaveableWebViewState(key = article?.id)
+    val webViewState = rememberSaveableWebViewState(key = articleID)
     val templateColors = articleTemplateColors()
-
-    val buildHTML = { content: ExtractedContent ->
-        article?.let {
-            ArticleRenderer.render(
-                article,
-                extractedContent = content,
-                templateColors = templateColors,
-                context = context
-            )
-        }
+    val (initialized, setInit) = rememberSaveable(articleID) {
+        mutableStateOf(false)
     }
 
-    val renderHTML = { content: ExtractedContent ->
-        val html = buildHTML(content)
-        html?.let { webViewNavigator.loadHtml(html) }
-    }
+    val renderer = ArticleRenderer(context = context, colors = templateColors.asMap())
 
     val extractedContentState = rememberExtractedContent(
         article = article,
         onComplete = { content ->
-            renderHTML(content)
+            article?.let {
+                webViewNavigator.loadHtml(renderer.render(article, content))
+            }
         }
     )
+
     val extractedContent = extractedContentState.content
 
     fun onToggleExtractContent() {
         article ?: return
 
         if (extractedContent.isComplete) {
+            webViewNavigator.loadHtml(renderer.render(article))
             extractedContentState.reset()
-            renderHTML(ExtractedContent())
         } else if (!extractedContent.isLoading) {
             extractedContentState.fetch()
         }
@@ -88,6 +85,7 @@ fun ArticleView(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier
                         .padding(bottom = 64.dp)
+
                         .fillMaxSize()
                 ) {
                     CapyPlaceholder()
@@ -111,11 +109,38 @@ fun ArticleView(
         onBackPressed()
     }
 
-    LaunchedEffect(webViewNavigator) {
-        val html = buildHTML(extractedContent)
+    LaunchedEffect(articleID) {
+        if (articleID == null || initialized) {
+            Log.d(TAG, "ArticleView: launch1 null articleID or initialized=${initialized}")
+        } else {
+            if (extractedContent.showOnLoad) {
+                Log.d(TAG, "ArticleView: launch1 showOnLoad")
+                webViewNavigator.clearView()
+                extractedContentState.fetch()
+            } else {
+                Log.d(TAG, "ArticleView: launch1 render default")
+                webViewNavigator.loadHtml(renderer.render(article))
+            }
+            setInit(true)
+        }
+    }
 
-        if (!html.isNullOrBlank() && webViewState.viewState == null) {
-            webViewNavigator.loadHtml(html)
+    // https://github.com/google/accompanist/pull/1557
+    LaunchedEffect(webViewNavigator) {
+        if (webViewState.viewState != null || article == null) {
+            Log.d(
+                TAG,
+                "ArticleView: launch2 early return viewStatePresent=${webViewState.viewState != null} article=${article?.id}"
+            )
+            return@LaunchedEffect
+        }
+
+        if (extractedContent.showByDefault) {
+            Log.d(TAG, "ArticleView: launch2 showByDefault")
+            extractedContentState.fetch()
+        } else {
+            Log.d(TAG, "ArticleView: launch2 loadHtml")
+            webViewNavigator.loadHtml(renderer.render(article))
         }
     }
 
