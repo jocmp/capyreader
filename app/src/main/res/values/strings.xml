@@ -113,4 +113,5 @@
     <string name="settings_option_copy_version">Copy version</string>
     <string name="settings_option_full_content_title">Show Full Content</string>
     <string name="settings_option_full_content_subtitle">Load full article content by default</string>
+    <string name="refresh_on_start">On Start</string>
 </resources>

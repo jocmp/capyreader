@@ -18,10 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.capyreader.app.R
 import com.capyreader.app.refresher.RefreshInterval
-import com.capyreader.app.refresher.RefreshInterval.EVERY_FIFTEEN_MINUTES
-import com.capyreader.app.refresher.RefreshInterval.EVERY_HOUR
-import com.capyreader.app.refresher.RefreshInterval.EVERY_THIRTY_MINUTES
-import com.capyreader.app.refresher.RefreshInterval.MANUALLY_ONLY
+import com.capyreader.app.refresher.RefreshInterval.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -76,6 +73,7 @@ private fun Context.translationKey(refreshInterval: RefreshInterval): String {
         EVERY_FIFTEEN_MINUTES -> getString(R.string.refresh_minutes, 15)
         EVERY_THIRTY_MINUTES -> getString(R.string.refresh_minutes, 30)
         EVERY_HOUR -> resources.getQuantityString(R.plurals.refresh_hours, 1)
+        ON_START -> getString(R.string.refresh_on_start)
     }
 }
 

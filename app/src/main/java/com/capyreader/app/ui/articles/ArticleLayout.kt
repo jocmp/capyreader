@@ -35,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.R
+import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.components.rememberWebViewNavigator
 import com.capyreader.app.ui.fixtures.FeedPreviewFixture
@@ -65,6 +66,7 @@ fun ArticleLayout(
     articles: Flow<PagingData<Article>>,
     article: Article?,
     statusCount: Long,
+    refreshInterval: RefreshInterval,
     onFeedRefresh: (completion: () -> Unit) -> Unit,
     onSelectFolder: (folderTitle: String) -> Unit,
     onSelectFeed: suspend (feedID: String) -> Unit,
@@ -81,7 +83,11 @@ fun ArticleLayout(
     showUnauthorizedMessage: Boolean,
     onUnauthorizedDismissRequest: () -> Unit
 ) {
-    val (isInitialized, setInitialized) = rememberSaveable { mutableStateOf(false) }
+    val skipInitialRefresh = refreshInterval == RefreshInterval.MANUALLY_ONLY
+
+    val (isInitialized, setInitialized) = rememberSaveable {
+        mutableStateOf(skipInitialRefresh)
+    }
     val (isUpdatePasswordDialogOpen, setUpdatePasswordDialogOpen) = rememberSaveable {
         mutableStateOf(false)
     }
@@ -327,6 +333,7 @@ fun ArticleLayoutPreview() {
             folders = folders,
             feeds = feeds,
             articles = emptyFlow(),
+            refreshInterval = RefreshInterval.MANUALLY_ONLY,
             article = null,
             statusCount = 30,
             onFeedRefresh = {},
