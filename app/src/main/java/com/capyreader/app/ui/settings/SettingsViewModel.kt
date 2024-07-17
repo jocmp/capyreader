@@ -3,17 +3,11 @@ package com.capyreader.app.ui.settings
 import android.app.Application
 import android.content.Context
 import android.net.Uri
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
-import com.jocmp.capy.Account
-import com.jocmp.capy.AccountManager
-import com.jocmp.capy.accounts.Source
-import com.jocmp.capy.opml.ImportProgress
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.common.ThemeOption
@@ -22,9 +16,11 @@ import com.capyreader.app.refresher.RefreshScheduler
 import com.capyreader.app.transfers.OPMLImportWorker
 import com.capyreader.app.transfers.OPMLImportWorker.Companion.PROGRESS_CURRENT_COUNT
 import com.capyreader.app.transfers.OPMLImportWorker.Companion.PROGRESS_TOTAL
+import com.jocmp.capy.Account
+import com.jocmp.capy.AccountManager
+import com.jocmp.capy.accounts.Source
+import com.jocmp.capy.opml.ImportProgress
 import kotlinx.coroutines.launch
-
-private const val TAG = "SettingsViewModel"
 
 class SettingsViewModel(
     private val accountManager: AccountManager,

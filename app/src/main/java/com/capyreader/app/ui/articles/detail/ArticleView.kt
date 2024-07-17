@@ -1,6 +1,5 @@
 package com.capyreader.app.ui.articles.detail
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,8 +20,6 @@ import com.capyreader.app.ui.components.rememberSaveableWebViewState
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
 
-private const val TAG = "ArticleView"
-
 @Composable
 fun ArticleView(
     article: Article?,
@@ -35,7 +32,7 @@ fun ArticleView(
     val context = LocalContext.current
     val webViewState = rememberSaveableWebViewState(key = articleID)
     val templateColors = articleTemplateColors()
-    val (initialized, setInit) = rememberSaveable(articleID) {
+    val (initialized, setInitialized) = rememberSaveable(articleID) {
         mutableStateOf(false)
     }
 
@@ -111,35 +108,30 @@ fun ArticleView(
 
     LaunchedEffect(articleID) {
         if (articleID == null || initialized) {
-            Log.d(TAG, "ArticleView: launch1 null articleID or initialized=${initialized}")
-        } else {
-            if (extractedContent.showOnLoad) {
-                Log.d(TAG, "ArticleView: launch1 showOnLoad")
-                webViewNavigator.clearView()
-                extractedContentState.fetch()
-            } else {
-                Log.d(TAG, "ArticleView: launch1 render default")
-                webViewNavigator.loadHtml(renderer.render(article))
-            }
-            setInit(true)
+            return@LaunchedEffect
         }
+
+        if (extractedContent.showOnLoad) {
+
+            webViewNavigator.clearView()
+            extractedContentState.fetch()
+        } else {
+
+            webViewNavigator.loadHtml(renderer.render(article))
+        }
+
+        setInitialized(true)
     }
 
     // https://github.com/google/accompanist/pull/1557
     LaunchedEffect(webViewNavigator) {
         if (webViewState.viewState != null || article == null) {
-            Log.d(
-                TAG,
-                "ArticleView: launch2 early return viewStatePresent=${webViewState.viewState != null} article=${article?.id}"
-            )
             return@LaunchedEffect
         }
 
         if (extractedContent.showByDefault) {
-            Log.d(TAG, "ArticleView: launch2 showByDefault")
             extractedContentState.fetch()
         } else {
-            Log.d(TAG, "ArticleView: launch2 loadHtml")
             webViewNavigator.loadHtml(renderer.render(article))
         }
     }

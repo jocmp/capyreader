@@ -15,7 +15,6 @@ class AndroidDatabaseProvider(private val context: Context) : DatabaseProvider {
 
     override fun delete(accountID: String) {
         val res = context.deleteDatabase(databaseName(accountID))
-        Log.d("[DEBUG]", "delete: ${res}")
     }
 
     private fun databaseName(accountID: String): String {
