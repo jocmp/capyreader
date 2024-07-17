@@ -41,6 +41,11 @@ fun ArticleView(
         }
     )
 
+    val clearWebView = {
+        webViewNavigator.clearView()
+        renderer.clear()
+    }
+
     val extractedContent = extractedContentState.content
 
     fun onToggleExtractContent() {
@@ -96,13 +101,12 @@ fun ArticleView(
     }
 
     BackHandler(article != null) {
-        webViewNavigator.clearView()
         onBackPressed()
     }
 
     LaunchedEffect(articleID) {
         if (articleID == null) {
-            renderer.clear()
+            clearWebView()
             return@LaunchedEffect
         }
 
@@ -113,8 +117,7 @@ fun ArticleView(
             return@LaunchedEffect
         }
 
-        webViewNavigator.clearView()
-        renderer.clear()
+        clearWebView()
 
         if (extractedContent.requestShow) {
             extractedContentState.fetch()
