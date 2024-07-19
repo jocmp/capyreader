@@ -22,14 +22,7 @@ internal fun Context.extractedTemplate(
         """.trimIndent()
     }
 
-    val mercury = resources.openRawResource(R.raw.mercury)
-        .bufferedReader()
-        .readText()
-
     return """
-      <script>
-      $mercury
-      </script>
       <script>
         (() => {
           let downloaded = ${JSONObject(mapOf("value" to html))};

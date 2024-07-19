@@ -15,12 +15,6 @@ class ArticleRenderer(
 
     private var html: String = ""
 
-    private val styles by lazy {
-        context.resources.openRawResource(CapyRes.raw.stylesheet)
-            .bufferedReader()
-            .readText()
-    }
-
     private val template by lazy {
         context.resources.openRawResource(CapyRes.raw.template)
             .bufferedReader()
@@ -40,7 +34,6 @@ class ArticleRenderer(
             "byline" to byline(article),
             "feed_name" to article.feedName,
             "body" to body(article, extractedContent),
-            "style" to styles,
             "script" to script(article, extractedContent)
         )
 
