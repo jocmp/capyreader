@@ -152,7 +152,7 @@ class LocalAccountDelegate(
                 database.articlesQueries.create(
                     id = item.link!!,
                     feed_id = feed.id,
-                    title = item.title,
+                    title = Jsoup.parse(item.title.orEmpty()).text(),
                     author = item.author,
                     content_html = item.content,
                     url = item.link,
