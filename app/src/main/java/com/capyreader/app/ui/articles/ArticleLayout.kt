@@ -16,8 +16,6 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
-import androidx.compose.material3.TopAppBarScrollBehavior
-import androidx.compose.material3.TopAppBarState
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
@@ -108,6 +106,7 @@ fun ArticleLayout(
     val unsubscribeMessage = stringResource(R.string.feed_action_unsubscribe_success)
     val unsubscribeErrorMessage = stringResource(R.string.unsubscribe_error)
     val currentFeed = findCurrentFeed(filter, allFeeds)
+    val scrollBehavior = pinnedScrollBehavior()
 
     val openUpdatePasswordDialog = {
         onUnauthorizedDismissRequest()
@@ -118,10 +117,17 @@ fun ArticleLayout(
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
     }
 
+    val scrollToTop = {
+        coroutineScope.launch {
+            listState.scrollToItem(0)
+            scrollBehavior.state.contentOffset = 0f
+        }
+    }
+
     val openNextList = suspend {
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
         delay(200)
-        listState.scrollToItem(0)
+        scrollToTop()
         drawerState.close()
     }
 
@@ -143,12 +149,6 @@ fun ArticleLayout(
                 state.endRefresh()
                 pagingArticles.refresh()
             }
-        }
-    }
-
-    val jumpToTop = {
-        coroutineScope.launch {
-            listState.scrollToItem(0)
         }
     }
 
@@ -210,8 +210,6 @@ fun ArticleLayout(
             )
         },
         listPane = {
-            val scrollBehavior = pinnedBehavior(filter)
-
             Scaffold(
                 modifier = Modifier
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -223,7 +221,7 @@ fun ArticleLayout(
                                 filter = filter,
                                 allFeeds = allFeeds,
                                 folders = folders,
-                                onRequestJumpToTop = { jumpToTop() }
+                                onRequestJumpToTop = { scrollToTop() }
                             )
                         },
                         navigationIcon = {
@@ -351,16 +349,6 @@ fun findCurrentFeed(filter: ArticleFilter, feeds: List<Feed>): Feed? {
     }
 
     return null
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun pinnedBehavior(filter: ArticleFilter): TopAppBarScrollBehavior {
-    val topAppBarState = rememberSaveable(filter, saver = TopAppBarState.Saver) {
-        TopAppBarState(0f, 0f, 0f)
-    }
-
-    return pinnedScrollBehavior(topAppBarState)
 }
 
 @Preview
