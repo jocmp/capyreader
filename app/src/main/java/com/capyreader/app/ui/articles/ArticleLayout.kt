@@ -336,6 +336,7 @@ fun ArticleLayout(
 
     BackHandler(canGoBackToAll(filter, article)) {
         onSelectArticleFilter()
+        scrollToTop()
     }
 }
 
