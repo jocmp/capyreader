@@ -5,6 +5,7 @@ import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.setThreadPolicy
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.capyreader.app.common.AppPreferences
@@ -18,6 +19,8 @@ class MainActivity : ComponentActivity() {
         enableStrictModeOnDebug()
         super.onCreate(savedInstanceState)
         val theme = get<AppPreferences>().theme
+
+        enableEdgeToEdge()
 
         setContent {
             val themeState by theme.changes().collectAsState(initial = theme.get())
