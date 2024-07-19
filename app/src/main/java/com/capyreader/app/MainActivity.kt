@@ -17,6 +17,7 @@ import org.koin.compose.koinInject
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableStrictModeOnDebug()
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         val theme = get<AppPreferences>().theme
 

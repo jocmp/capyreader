@@ -32,6 +32,7 @@ import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.capyreader.app.R
+import com.capyreader.app.ui.components.safeEdgePadding
 import com.capyreader.app.ui.fixtures.FeedPreviewFixture
 import com.capyreader.app.ui.fixtures.FolderPreviewFixture
 import com.capyreader.app.ui.navigationTitle
@@ -43,8 +44,8 @@ fun FeedList(
     folders: List<Folder> = emptyList(),
     feeds: List<Feed> = emptyList(),
     onFilterSelect: () -> Unit,
-    onSelectFolder: (folderTitle: String) -> Unit,
-    onSelectFeed: (feedID: String) -> Unit,
+    onSelectFolder: (folder: Folder) -> Unit,
+    onSelectFeed: (feed: Feed) -> Unit,
     onFeedAdded: (feedID: String) -> Unit,
     onSelectStatus: (status: ArticleStatus) -> Unit,
     onNavigateToSettings: () -> Unit,
@@ -60,6 +61,7 @@ fun FeedList(
 
     Column(
         Modifier
+            .safeEdgePadding()
             .fillMaxSize()
     ) {
         Column(

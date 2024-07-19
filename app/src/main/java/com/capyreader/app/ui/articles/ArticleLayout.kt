@@ -15,6 +15,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
+import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.TopAppBarState
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
@@ -115,11 +118,17 @@ fun ArticleLayout(
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
     }
 
-    val navigateFromDrawerToList = suspend {
+    val openNextList = suspend {
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
-        listState.scrollToItem(0)
         delay(200)
+        listState.scrollToItem(0)
         drawerState.close()
+    }
+
+    val closeDrawer = {
+        coroutineScope.launch {
+            drawerState.close()
+        }
     }
 
     val showSnackbar = { message: String ->
@@ -137,6 +146,12 @@ fun ArticleLayout(
         }
     }
 
+    val jumpToTop = {
+        coroutineScope.launch {
+            listState.scrollToItem(0)
+        }
+    }
+
     ArticleScaffold(
         drawerState = drawerState,
         scaffoldNavigator = scaffoldNavigator,
@@ -145,23 +160,31 @@ fun ArticleLayout(
                 folders = folders,
                 feeds = feeds,
                 onSelectFolder = {
-                    webViewNavigator.clearView()
-                    onSelectFolder(it)
-                    coroutineScope.launch {
-                        navigateFromDrawerToList()
+                    if (!filter.isFolderSelect(it)) {
+                        webViewNavigator.clearView()
+                        onSelectFolder(it.title)
+                        coroutineScope.launch {
+                            openNextList()
+                        }
+                    } else {
+                        closeDrawer()
                     }
                 },
                 onSelectFeed = {
-                    webViewNavigator.clearView()
                     coroutineScope.launch {
-                        onSelectFeed(it)
-                        navigateFromDrawerToList()
+                        if (!filter.isFeedSelected(it)) {
+                            webViewNavigator.clearView()
+                            onSelectFeed(it.id)
+                            openNextList()
+                        } else {
+                            closeDrawer()
+                        }
                     }
                 },
                 onFeedAdded = { feedID ->
                     coroutineScope.launch {
                         onSelectFeed(feedID)
-                        navigateFromDrawerToList()
+                        openNextList()
 
                         showSnackbar(addFeedSuccessMessage)
 
@@ -172,9 +195,13 @@ fun ArticleLayout(
                 },
                 onNavigateToSettings = onNavigateToSettings,
                 onFilterSelect = {
-                    onSelectArticleFilter()
-                    coroutineScope.launch {
-                        navigateFromDrawerToList()
+                    if (!filter.hasArticlesSelected()) {
+                        onSelectArticleFilter()
+                        coroutineScope.launch {
+                            openNextList()
+                        }
+                    } else {
+                        closeDrawer()
                     }
                 },
                 filter = filter,
@@ -183,14 +210,20 @@ fun ArticleLayout(
             )
         },
         listPane = {
+            val scrollBehavior = pinnedBehavior(filter)
+
             Scaffold(
+                modifier = Modifier
+                    .nestedScroll(scrollBehavior.nestedScrollConnection),
                 topBar = {
                     TopAppBar(
+                        scrollBehavior = scrollBehavior,
                         title = {
                             FilterAppBarTitle(
                                 filter = filter,
                                 allFeeds = allFeeds,
                                 folders = folders,
+                                onRequestJumpToTop = { jumpToTop() }
                             )
                         },
                         navigationIcon = {
@@ -318,6 +351,16 @@ fun findCurrentFeed(filter: ArticleFilter, feeds: List<Feed>): Feed? {
     }
 
     return null
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun pinnedBehavior(filter: ArticleFilter): TopAppBarScrollBehavior {
+    val topAppBarState = rememberSaveable(filter, saver = TopAppBarState.Saver) {
+        TopAppBarState(0f, 0f, 0f)
+    }
+
+    return pinnedScrollBehavior(topAppBarState)
 }
 
 @Preview

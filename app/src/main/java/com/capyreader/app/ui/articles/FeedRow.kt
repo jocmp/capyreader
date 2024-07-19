@@ -11,7 +11,7 @@ import com.capyreader.app.ui.fixtures.FeedPreviewFixture
 fun FeedRow(
     selected: Boolean,
     feed: Feed,
-    onSelect: (id: String) -> Unit,
+    onSelect: (feed: Feed) -> Unit,
 ) {
     NavigationDrawerItem(
         icon = { FaviconBadge(url = feed.faviconURL) },
@@ -19,7 +19,7 @@ fun FeedRow(
         badge = { CountBadge(count = feed.count) },
         selected = selected,
         onClick = {
-            onSelect(feed.id)
+            onSelect(feed)
         }
     )
 }
