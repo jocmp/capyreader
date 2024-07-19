@@ -108,7 +108,6 @@ fun ArticleLayout(
     val unsubscribeMessage = stringResource(R.string.feed_action_unsubscribe_success)
     val unsubscribeErrorMessage = stringResource(R.string.unsubscribe_error)
     val currentFeed = findCurrentFeed(filter, allFeeds)
-    val scrollBehavior = pinnedBehavior(filter)
 
     val openUpdatePasswordDialog = {
         onUnauthorizedDismissRequest()
@@ -121,8 +120,8 @@ fun ArticleLayout(
 
     val openNextList = suspend {
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
-        listState.scrollToItem(0)
         delay(200)
+        listState.scrollToItem(0)
         drawerState.close()
     }
 
@@ -144,6 +143,12 @@ fun ArticleLayout(
                 state.endRefresh()
                 pagingArticles.refresh()
             }
+        }
+    }
+
+    val jumpToTop = {
+        coroutineScope.launch {
+            listState.scrollToItem(0)
         }
     }
 
@@ -205,6 +210,8 @@ fun ArticleLayout(
             )
         },
         listPane = {
+            val scrollBehavior = pinnedBehavior(filter)
+
             Scaffold(
                 modifier = Modifier
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -216,6 +223,7 @@ fun ArticleLayout(
                                 filter = filter,
                                 allFeeds = allFeeds,
                                 folders = folders,
+                                onRequestJumpToTop = { jumpToTop() }
                             )
                         },
                         navigationIcon = {
