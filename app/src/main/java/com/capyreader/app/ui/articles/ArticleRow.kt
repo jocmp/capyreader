@@ -7,7 +7,13 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -18,6 +24,7 @@ import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -29,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -188,6 +196,17 @@ private fun ArticleImage(
 @Composable
 fun PlaceholderArticleRow(imagePreview: ImagePreview) {
     ListItem(
+        supportingContent = {
+            if (imagePreview == ImagePreview.LARGE) {
+                Surface(
+                    Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(3 / 2f)
+                        .background(colorScheme.surfaceContainer)
+                        .clip(RoundedCornerShape(8.dp))
+                ) {}
+            }
+        },
         trailingContent = {
             if (imagePreview == ImagePreview.SMALL) {
                 Box(
@@ -332,4 +351,12 @@ fun ArticleRowPreview_Unread() {
         onSelect = {},
         currentTime = LocalDateTime.now(),
     )
+}
+
+@Preview
+@Composable
+fun ArticleRowPreviewPlaceholder() {
+    CapyTheme {
+        PlaceholderArticleRow(ImagePreview.LARGE)
+    }
 }

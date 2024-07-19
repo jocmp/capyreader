@@ -34,13 +34,14 @@ import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Folder
 import com.capyreader.app.ui.fixtures.FolderPreviewFixture
+import com.jocmp.capy.Feed
 
 @Composable
 fun FolderRow(
     filter: ArticleFilter,
     folder: Folder,
-    onFolderSelect: (folderTitle: String) -> Unit,
-    onFeedSelect: (feedID: String) -> Unit,
+    onFolderSelect: (folder: Folder) -> Unit,
+    onFeedSelect: (feed: Feed) -> Unit,
 ) {
     val isFolderSelected = filter.isFolderSelect(folder)
     val (expanded, setExpanded) = rememberSaveable(folder.title) { mutableStateOf(false) }
@@ -48,7 +49,7 @@ fun FolderRow(
     Column {
         NavigationDrawerItem(
             selected = isFolderSelected,
-            onClick = { onFolderSelect(folder.title) },
+            onClick = { onFolderSelect(folder) },
             badge = { CountBadge(count = folder.count) },
             icon = {
                 DropdownButton(
@@ -70,7 +71,7 @@ fun FolderRow(
                     Row(Modifier.padding(start = 16.dp)) {
                         FeedRow(
                             feed = feed,
-                            onSelect = onFeedSelect,
+                            onSelect = { onFeedSelect(feed) },
                             selected = filter.isFeedSelected(feed),
                         )
                     }

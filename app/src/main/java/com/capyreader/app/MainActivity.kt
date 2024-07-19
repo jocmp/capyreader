@@ -5,6 +5,7 @@ import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.setThreadPolicy
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.capyreader.app.common.AppPreferences
@@ -16,6 +17,7 @@ import org.koin.compose.koinInject
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableStrictModeOnDebug()
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         val theme = get<AppPreferences>().theme
 
