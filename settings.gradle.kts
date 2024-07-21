@@ -18,7 +18,7 @@ dependencyResolutionManagement {
 
         create("libs") {
             version("kotlin", "1.9.22")
-            version("sqldelight", "2.0.1")
+            version("sqldelight", "2.0.2")
             version("ksp", "1.9.22-1.0.16")
             version("androidx-paging", "3.3.0")
             library("moshi", "com.squareup.moshi:moshi:1.15.1")

@@ -3,6 +3,7 @@ package com.jocmp.capy.accounts
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.FeedFixture
+import com.jocmp.capy.rssItemFixture
 import com.jocmp.feedbinclient.Tagging
 import com.jocmp.feedfinder.FeedFinder
 import com.jocmp.feedfinder.parser.Feed
@@ -203,6 +204,50 @@ class LocalAccountDelegateTest {
         ).getOrThrow()
 
         assertEquals(expected = feedTitle, actual = updated.title)
+    }
+
+    @Test
+    fun rssContentHTML() {
+        val content = "Some content"
+        val description = "My description"
+
+        val result = rssItemFixture(content = content, description = description).contentHTML
+
+        assertEquals(expected = content, actual = result)
+    }
+
+    @Test
+    fun contentHTML_whenEmpty() {
+        val description = "My description"
+
+        val result = rssItemFixture(content = null, description = description).contentHTML
+
+        assertEquals(expected = description, actual = result)
+    }
+
+    @Test
+    fun summary() {
+        val description = "My description"
+
+        val result = rssItemFixture(description = description).summary
+
+        assertEquals(expected = description, actual = result)
+    }
+
+
+    @Test
+    fun summary_whenBlank() {
+        val result = rssItemFixture(description = "").summary
+
+        assertEquals(expected = null, actual = result)
+    }
+
+
+    @Test
+    fun summary_whenNull() {
+        val result = rssItemFixture(description = null).summary
+
+        assertEquals(expected = null, actual = result)
     }
 
     private data class TestFeed(
