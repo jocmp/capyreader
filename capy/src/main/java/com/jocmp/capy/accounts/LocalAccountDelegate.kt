@@ -154,9 +154,9 @@ class LocalAccountDelegate(
                     feed_id = feed.id,
                     title = Jsoup.parse(item.title.orEmpty()).text(),
                     author = item.author,
-                    content_html = item.content,
+                    content_html = item.contentHTML,
                     url = item.link,
-                    summary = cleanSummary(item.description),
+                    summary = item.summary,
                     extracted_content_url = null,
                     image_url = item.image,
                     published_at = item.pubDate?.toDateTime?.toEpochSecond() ?: updated,
@@ -207,10 +207,24 @@ class LocalAccountDelegate(
     }
 }
 
-private fun cleanSummary(summary: String?): String? {
-    if (summary.isNullOrBlank()) {
-        return null
+internal val RssItem.contentHTML: String?
+    get() {
+        val currentContent = content.orEmpty().ifBlank {
+            description.orEmpty()
+        }
+
+        if (currentContent.isBlank()) {
+            return null
+        }
+
+        return currentContent
     }
 
-    return Jsoup.parse(summary).text()
-}
+internal val RssItem.summary: String?
+    get() = description?.let {
+        if (it.isBlank()) {
+            return null
+        }
+
+        return Jsoup.parse(it).text()
+    }
