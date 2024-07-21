@@ -34,7 +34,9 @@ class ArticleRenderer(
             "byline" to byline(article),
             "feed_name" to article.feedName,
             "body" to body(article, extractedContent),
-            "script" to script(article, extractedContent)
+            "script" to script(article, extractedContent),
+            "text_size" to "medium",
+            "font_family" to "poppins",
         )
 
         html = MacroProcessor(
