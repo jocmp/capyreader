@@ -8,6 +8,8 @@ import com.jocmp.capy.preferences.Preference
 import com.jocmp.capy.preferences.PreferenceStore
 import com.jocmp.capy.preferences.getEnum
 import com.capyreader.app.refresher.RefreshInterval
+import com.jocmp.capy.articles.FontFamily
+import com.jocmp.capy.articles.TextSize
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
@@ -46,6 +48,12 @@ class AppPreferences(context: Context) {
 
     val enableStickyFullContent: Preference<Boolean>
         get() = preferenceStore.getBoolean("enable_sticky_full_content", false)
+
+    val textSize: Preference<TextSize>
+        get() = preferenceStore.getEnum("article_text_size", TextSize.default)
+
+    val fontFamily: Preference<FontFamily>
+        get() = preferenceStore.getEnum("article_font_family", FontFamily.default)
 
     fun clearAll() {
         preferenceStore.clearAll()

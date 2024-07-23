@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -13,6 +15,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.ui.components.WebView
 import com.capyreader.app.ui.components.WebViewNavigator
 import com.capyreader.app.ui.components.rememberSaveableWebViewState
@@ -20,6 +23,7 @@ import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
 import org.koin.compose.koinInject
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArticleView(
     article: Article?,
@@ -102,7 +106,11 @@ fun ArticleView(
 
 
             if (isStyleSheetOpen) {
-                ArticleStyleBottomSheet(onDismissRequest = { setStyleSheetOpen(false) })
+                ModalBottomSheet(onDismissRequest = { setStyleSheetOpen(false) }) {
+                    ArticleStylePicker(onChange = {
+                        renderer.clear()
+                    })
+                }
             }
         }
     }
@@ -133,9 +141,9 @@ fun ArticleView(
         }
     }
 
-    LaunchedEffect(templateColors) {
-        webViewState.webView?.let { webView ->
-            updateStyleVariables(webView, templateColors)
-        }
-    }
+    ArticleTemplateColorListener(webView = webViewState.webView, templateColors = templateColors)
+
+    ArticleTextSizeListener(webView = webViewState.webView)
+
+    ArticleFontFamilyListener(webView = webViewState.webView)
 }

@@ -19,7 +19,11 @@ internal val articlesModule = module {
         )
     }
     single {
-        ArticleRenderer(context = get())
+        ArticleRenderer(
+            context = get(),
+            textSize = get<AppPreferences>().textSize,
+            fontFamily = get<AppPreferences>().fontFamily,
+        )
     }
     viewModel {
         val appPreferences = get<AppPreferences>()
