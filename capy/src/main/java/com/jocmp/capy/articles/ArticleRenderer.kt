@@ -36,7 +36,7 @@ class ArticleRenderer(
             "body" to body(article, extractedContent),
             "script" to script(article, extractedContent),
             "text_size" to "medium",
-            "font_family" to "poppins",
+            "font_family" to "atkinson_hyperlegible",
         )
 
         html = MacroProcessor(

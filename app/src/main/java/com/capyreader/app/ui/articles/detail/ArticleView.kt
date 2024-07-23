@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -30,7 +32,7 @@ fun ArticleView(
     val articleID = article?.id
     val templateColors = articleTemplateColors()
     val colors = templateColors.asMap()
-
+    val (isStyleSheetOpen, setStyleSheetOpen) = rememberSaveable { mutableStateOf(true) }
     val webViewState = rememberSaveableWebViewState(key = articleID)
     val extractedContentState = rememberExtractedContent(
         article = article,
@@ -96,6 +98,11 @@ fun ArticleView(
                     navigator = webViewNavigator,
                     modifier = Modifier.fillMaxSize(),
                 )
+            }
+
+
+            if (isStyleSheetOpen) {
+                ArticleStyleBottomSheet(onDismissRequest = { setStyleSheetOpen(false) })
             }
         }
     }

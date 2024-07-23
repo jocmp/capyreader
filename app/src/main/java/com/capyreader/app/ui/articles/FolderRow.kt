@@ -106,10 +106,8 @@ fun FolderIconButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     colors: IconButtonColors = IconButtonDefaults.iconButtonColors(),
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     content: @Composable () -> Unit
 ) {
-    val size = 40.dp
     Box(
         modifier = modifier
             .background(color = colors.containerColor)
@@ -117,11 +115,6 @@ fun FolderIconButton(
                 onClick = onClick,
                 enabled = enabled,
                 role = Role.Button,
-                interactionSource = interactionSource,
-                indication = androidx.compose.material.ripple.rememberRipple(
-                    bounded = false,
-                    radius = size / 2
-                )
             ),
         contentAlignment = Alignment.Center
     ) {
