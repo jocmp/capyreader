@@ -38,6 +38,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.R
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.detail.ArticleView
+import com.capyreader.app.ui.articles.list.EmptyOnboardingView
 import com.capyreader.app.ui.components.rememberWebViewNavigator
 import com.capyreader.app.ui.fixtures.FeedPreviewFixture
 import com.capyreader.app.ui.fixtures.FolderPreviewFixture
@@ -143,6 +144,19 @@ fun ArticleLayout(
         }
     }
 
+    val onFeedAdded = { feedID: String ->
+        coroutineScope.launch {
+            onSelectFeed(feedID)
+            openNextList()
+
+            showSnackbar(addFeedSuccessMessage)
+
+            launch {
+                state.startRefresh()
+            }
+        }
+    }
+
     if (state.isRefreshing) {
         LaunchedEffect(true) {
             onFeedRefresh {
@@ -181,18 +195,7 @@ fun ArticleLayout(
                         }
                     }
                 },
-                onFeedAdded = { feedID ->
-                    coroutineScope.launch {
-                        onSelectFeed(feedID)
-                        openNextList()
-
-                        showSnackbar(addFeedSuccessMessage)
-
-                        launch {
-                            state.startRefresh()
-                        }
-                    }
-                },
+                onFeedAdded = { onFeedAdded(it) },
                 onNavigateToSettings = onNavigateToSettings,
                 onFilterSelect = {
                     if (!filter.hasArticlesSelected()) {
@@ -274,22 +277,32 @@ fun ArticleLayout(
                         .padding(innerPadding)
                         .nestedScroll(state.nestedScrollConnection)
                 ) {
-                    ArticleList(
-                        articles = pagingArticles,
-                        selectedArticleKey = article?.id,
-                        listState = listState,
-                        onMarkAllRead = onMarkAllRead,
-                        onSelect = { articleID ->
-                            onSelectArticle(articleID) {
-                                navigateToDetail()
-                            }
+                    if (pagingArticles.loadState.isIdle && feeds.isEmpty()) {
+                        EmptyOnboardingView {
+                            AddFeedButton(
+                                onComplete = {
+                                    onFeedAdded(it)
+                                }
+                            )
                         }
-                    )
+                    } else {
+                        ArticleList(
+                            articles = pagingArticles,
+                            selectedArticleKey = article?.id,
+                            listState = listState,
+                            onMarkAllRead = onMarkAllRead,
+                            onSelect = { articleID ->
+                                onSelectArticle(articleID) {
+                                    navigateToDetail()
+                                }
+                            }
+                        )
 
-                    PullToRefreshContainer(
-                        modifier = Modifier.align(Alignment.TopCenter),
-                        state = state,
-                    )
+                        PullToRefreshContainer(
+                            modifier = Modifier.align(Alignment.TopCenter),
+                            state = state,
+                        )
+                    }
                 }
             }
         },
