@@ -31,3 +31,5 @@ release.keystore
 # Build
 vendor/
 app/gplay/release/
+
+technotes/.obsidian

@@ -18,6 +18,8 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import org.jsoup.Jsoup
+import java.net.URI
+import java.net.URL
 import java.net.UnknownHostException
 import java.time.ZonedDateTime
 import com.jocmp.feedfinder.parser.Feed as ParserFeed
@@ -149,24 +151,28 @@ class LocalAccountDelegate(
             items.forEach { item ->
                 val updated = updatedAt.toEpochSecond()
 
-                database.articlesQueries.create(
-                    id = item.link!!,
-                    feed_id = feed.id,
-                    title = Jsoup.parse(item.title.orEmpty()).text(),
-                    author = item.author,
-                    content_html = item.contentHTML,
-                    url = item.link,
-                    summary = item.summary,
-                    extracted_content_url = null,
-                    image_url = item.image,
-                    published_at = item.pubDate?.toDateTime?.toEpochSecond() ?: updated,
-                )
+                val url = cleanedArticleLink(item.link, feed.siteURL)
 
-                database.articlesQueries.updateStatus(
-                    article_id = item.link!!,
-                    updated_at = updated,
-                    read = false
-                )
+                if (url != null) {
+                    database.articlesQueries.create(
+                        id = item.link!!,
+                        feed_id = feed.id,
+                        title = Jsoup.parse(item.title.orEmpty()).text(),
+                        author = item.author,
+                        content_html = item.contentHTML,
+                        url = url.toString(),
+                        summary = item.summary,
+                        extracted_content_url = null,
+                        image_url = item.image,
+                        published_at = item.pubDate?.toDateTime?.toEpochSecond() ?: updated,
+                    )
+
+                    database.articlesQueries.updateStatus(
+                        article_id = item.link!!,
+                        updated_at = updated,
+                        read = false
+                    )
+                }
             }
 
         }
@@ -228,3 +234,23 @@ internal val RssItem.summary: String?
 
         return Jsoup.parse(it).text()
     }
+
+internal fun cleanedArticleLink(articleURL: String?, siteURL: String): URL? {
+    val url = articleURL.orEmpty()
+
+    if (url.isBlank()) {
+        return null
+    }
+
+    return try {
+        val uri = URI(url)
+
+        if (uri.isAbsolute) {
+            uri.toURL()
+        } else {
+            URI(siteURL).resolve(uri).toURL()
+        }
+    } catch (e: Throwable) {
+        null
+    }
+}
