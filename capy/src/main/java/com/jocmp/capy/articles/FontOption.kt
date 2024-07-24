@@ -1,6 +1,6 @@
 package com.jocmp.capy.articles
 
-enum class FontFamily {
+enum class FontOption {
     SYSTEM_DEFAULT,
     POPPINS,
     ATKINSON_HYPERLEGIBLE,
@@ -17,7 +17,7 @@ enum class FontFamily {
     companion object {
         val default = SYSTEM_DEFAULT
 
-        val sorted: List<FontFamily>
+        val sorted: List<FontOption>
             get() = listOf(
                 SYSTEM_DEFAULT,
                 POPPINS,

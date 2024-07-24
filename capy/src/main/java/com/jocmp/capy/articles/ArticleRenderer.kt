@@ -12,7 +12,7 @@ import com.jocmp.capy.R as CapyRes
 class ArticleRenderer(
     private val context: Context,
     private val textSize: Preference<TextSize>,
-    private val fontFamily: Preference<FontFamily>
+    private val fontOption: Preference<FontOption>
 ) {
     private var articleID: String? = null
 
@@ -39,7 +39,7 @@ class ArticleRenderer(
             "body" to body(article, extractedContent),
             "script" to script(article, extractedContent),
             "text_size" to textSize.get().slug,
-            "font_family" to fontFamily.get().slug,
+            "font_family" to fontOption.get().slug,
         )
 
         html = MacroProcessor(

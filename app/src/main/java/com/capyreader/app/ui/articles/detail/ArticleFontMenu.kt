@@ -1,5 +1,6 @@
 package com.capyreader.app.ui.articles.detail
 
+import android.content.Context
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -13,21 +14,24 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.toFontFamily
-import com.jocmp.capy.articles.FontFamily
+import androidx.compose.ui.unit.sp
+import com.capyreader.app.R
+import com.jocmp.capy.articles.FontOption
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArticleFontMenu(
-    updateFontFamily: (fontFamily: FontFamily) -> Unit,
-    fontFamily: FontFamily,
+    updateFontFamily: (fontOption: FontOption) -> Unit,
+    fontOption: FontOption,
 ) {
     val context = LocalContext.current
     val (expanded, setExpanded) = remember { mutableStateOf(false) }
-    val options = FontFamily.sorted.map {
-        it to it.slug // context.translationKey(it)
+    val options = FontOption.sorted.map {
+        it to  context.translationKey(it)
     }
 
     ExposedDropdownMenuBox(
@@ -39,9 +43,9 @@ fun ArticleFontMenu(
                 .menuAnchor(PrimaryNotEditable)
                 .fillMaxWidth(),
             readOnly = true,
-            value = fontFamily.slug, // context.translationKey(theme),
+            value = context.translationKey(fontOption),
             onValueChange = {},
-            label = { Text("Font") },
+            label = { Text(stringResource(R.string.article_font_menu_label)) },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
             colors = ExposedDropdownMenuDefaults.textFieldColors(),
         )
@@ -55,7 +59,8 @@ fun ArticleFontMenu(
                         Text(
                             text = text,
                             fontFamily = findFont(option),
-                            fontWeight = FontWeight.Normal
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 16.sp
                         )
                     },
                     onClick = {
@@ -68,9 +73,18 @@ fun ArticleFontMenu(
     }
 }
 
-private fun findFont(fontFamily: FontFamily) = when (fontFamily) {
-    FontFamily.SYSTEM_DEFAULT -> null
-    FontFamily.POPPINS -> Font(resId = com.jocmp.capy.R.font.poppins)
-    FontFamily.ATKINSON_HYPERLEGIBLE -> Font(resId = com.jocmp.capy.R.font.atkinson_hyperlegible)
-    FontFamily.VOLLKORN -> Font(resId = com.jocmp.capy.R.font.vollkorn)
+private fun Context.translationKey(option: FontOption): String {
+    return when (option) {
+        FontOption.SYSTEM_DEFAULT -> getString(R.string.font_option_system_default)
+        FontOption.POPPINS -> getString(R.string.font_option_poppins)
+        FontOption.ATKINSON_HYPERLEGIBLE -> getString(R.string.font_option_atkinson_hyperlegible)
+        FontOption.VOLLKORN -> getString(R.string.font_option_vollkorn)
+    }
+}
+
+private fun findFont(fontOption: FontOption) = when (fontOption) {
+    FontOption.SYSTEM_DEFAULT -> null
+    FontOption.POPPINS -> Font(resId = com.jocmp.capy.R.font.poppins)
+    FontOption.ATKINSON_HYPERLEGIBLE -> Font(resId = com.jocmp.capy.R.font.atkinson_hyperlegible)
+    FontOption.VOLLKORN -> Font(resId = com.jocmp.capy.R.font.vollkorn)
 }?.toFontFamily()

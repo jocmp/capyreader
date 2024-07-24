@@ -22,7 +22,7 @@ internal val articlesModule = module {
         ArticleRenderer(
             context = get(),
             textSize = get<AppPreferences>().textSize,
-            fontFamily = get<AppPreferences>().fontFamily,
+            fontOption = get<AppPreferences>().fontOption,
         )
     }
     viewModel {

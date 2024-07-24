@@ -6,14 +6,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.capyreader.app.common.AppPreferences
-import com.jocmp.capy.articles.FontFamily
+import com.jocmp.capy.articles.FontOption
 import org.koin.compose.koinInject
 
 @Composable
 fun ArticleFontFamilyListener(webView: WebView?, appPreferences: AppPreferences = koinInject()) {
-    val fontFamily by appPreferences.fontFamily
+    val fontFamily by appPreferences.fontOption
         .changes()
-        .collectAsState(initial = appPreferences.fontFamily.get())
+        .collectAsState(initial = appPreferences.fontOption.get())
 
     LaunchedEffect(fontFamily) {
         if (webView != null) {
@@ -22,11 +22,11 @@ fun ArticleFontFamilyListener(webView: WebView?, appPreferences: AppPreferences 
     }
 }
 
-private fun updateFontFamily(webView: WebView, fontFamily: FontFamily) {
+private fun updateFontFamily(webView: WebView, fontOption: FontOption) {
     webView.evaluateJavascript(
         """
         (function() {         
-          let slug = "${fontFamily.slug}";
+          let slug = "${fontOption.slug}";
           let articleBody = document.getElementsByClassName("article__body")[0];
           const classes = articleBody.className.split(" ").filter(c => !c.startsWith("article__body--font"));
           
