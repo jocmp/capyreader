@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Palette
+import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
@@ -54,7 +54,7 @@ fun ArticleListSettings(
                     .padding(16.dp)
             ) {
                 Icon(
-                    imageVector = Icons.Filled.Palette,
+                    imageVector = Icons.Rounded.Palette,
                     contentDescription = null,
                     tint = colorScheme.secondary,
                     modifier = Modifier.padding(16.dp)

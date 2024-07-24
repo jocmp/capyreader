@@ -14,11 +14,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -106,8 +108,10 @@ fun FolderIconButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     colors: IconButtonColors = IconButtonDefaults.iconButtonColors(),
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     content: @Composable () -> Unit
 ) {
+    val size = 40.dp
     Box(
         modifier = modifier
             .background(color = colors.containerColor)
@@ -115,6 +119,11 @@ fun FolderIconButton(
                 onClick = onClick,
                 enabled = enabled,
                 role = Role.Button,
+                interactionSource = interactionSource,
+                indication = ripple(
+                    bounded = false,
+                    radius = size / 2
+                )
             ),
         contentAlignment = Alignment.Center
     ) {

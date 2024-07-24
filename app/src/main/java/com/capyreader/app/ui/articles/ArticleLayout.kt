@@ -280,7 +280,7 @@ fun ArticleLayout(
                     onRefresh = refreshFeeds,
                     modifier = Modifier.padding(innerPadding)
                 ) {
-                    if (isInitialized && !state.isRefreshing && allFeeds.isEmpty()) {
+                    if (isInitialized && !isRefreshing && allFeeds.isEmpty()) {
                         EmptyOnboardingView {
                             AddFeedButton(
                                 onComplete = {

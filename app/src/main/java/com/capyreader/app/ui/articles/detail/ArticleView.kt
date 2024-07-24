@@ -5,17 +5,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.ui.components.WebView
 import com.capyreader.app.ui.components.WebViewNavigator
 import com.capyreader.app.ui.components.rememberSaveableWebViewState
@@ -23,7 +18,6 @@ import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
 import org.koin.compose.koinInject
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArticleView(
     article: Article?,
@@ -36,7 +30,6 @@ fun ArticleView(
     val articleID = article?.id
     val templateColors = articleTemplateColors()
     val colors = templateColors.asMap()
-    val (isStyleSheetOpen, setStyleSheetOpen) = rememberSaveable { mutableStateOf(true) }
     val webViewState = rememberSaveableWebViewState(key = articleID)
     val extractedContentState = rememberExtractedContent(
         article = article,
@@ -73,7 +66,10 @@ fun ArticleView(
                 onToggleExtractContent = ::onToggleExtractContent,
                 onToggleRead = onToggleRead,
                 onToggleStar = onToggleStar,
-                onClose = onBackPressed
+                onClose = onBackPressed,
+                onStyleUpdate = {
+                    renderer.clear()
+                }
             )
         }
     ) { innerPadding ->
@@ -102,15 +98,6 @@ fun ArticleView(
                     navigator = webViewNavigator,
                     modifier = Modifier.fillMaxSize(),
                 )
-            }
-
-
-            if (isStyleSheetOpen) {
-                ModalBottomSheet(onDismissRequest = { setStyleSheetOpen(false) }) {
-                    ArticleStylePicker(onChange = {
-                        renderer.clear()
-                    })
-                }
             }
         }
     }

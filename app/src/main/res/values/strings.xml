@@ -116,4 +116,5 @@
     <string name="refresh_on_start">On start</string>
     <string name="empty_onboarding_title">No feeds yet.</string>
     <string name="empty_onboarding_prompt">Start by adding a feed</string>
+    <string name="article_style_options">Style options</string>
 </resources>
