@@ -2,7 +2,6 @@ package com.jocmp.capy.articles
 
 import com.jocmp.capy.Article
 import org.json.JSONObject
-import org.jsoup.Jsoup
 
 internal fun extractedTemplate(
     article: Article,
