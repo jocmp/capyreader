@@ -2,10 +2,8 @@ Just like its namesake, Capy Reader is a small RSS reader focused on approachabi
 
 Some features include:
 
-• Sync with Feedbin or keep feeds on device
+• Sync with your Feedbin account or keep feeds local on device
 • Track read and starred articles
-• Import and export subscriptions
-• Background refresh
+• Full content mode
 • Dark mode
-• Tablet and foldable support
-• Free and Open Source code
+• Big screen support

@@ -277,7 +277,7 @@ fun ArticleLayout(
                         .padding(innerPadding)
                         .nestedScroll(state.nestedScrollConnection)
                 ) {
-                    if (pagingArticles.loadState.isIdle && allFeeds.isEmpty()) {
+                    if (isInitialized && !state.isRefreshing && allFeeds.isEmpty()) {
                         EmptyOnboardingView {
                             AddFeedButton(
                                 onComplete = {
