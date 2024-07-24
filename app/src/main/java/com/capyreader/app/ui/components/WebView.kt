@@ -9,6 +9,7 @@ import android.view.ViewGroup.LayoutParams
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
@@ -29,7 +30,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.webkit.WebViewAssetLoader
+import androidx.webkit.WebViewAssetLoader.AssetsPathHandler
+import androidx.webkit.WebViewAssetLoader.ResourcesPathHandler
 import com.capyreader.app.R
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.openLink
@@ -43,6 +48,19 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+
+/**
+ * Doesn't really fetch from androidplatform.net. This is used as a placeholder domain:
+ *
+ * > Using http(s):// URLs to access local resources may conflict
+ * > with a real website. This means that local files should only
+ * > be hosted on domains your organization owns (at paths reserved for this purpose)
+ * > or the default domain reserved for this: appassets.androidplatform.net
+ *
+ * * [How-to docs](https://developer.android.com/develop/ui/views/layout/webapps/load-local-content#mix-content)
+ * * [JavaDoc](https://developer.android.com/reference/androidx/webkit/WebViewAssetLoader)
+ */
+private const val ASSET_BASE_URL = "https://appassets.androidplatform.net"
 
 /**
  * A wrapper around the Android View WebView to provide a basic WebView composable.
@@ -76,8 +94,6 @@ fun WebView(
     navigator: WebViewNavigator = rememberWebViewNavigator(),
     onCreated: (WebView) -> Unit = {},
     onDispose: (WebView) -> Unit = {},
-    client: AccompanistWebViewClient = remember { AccompanistWebViewClient() },
-    chromeClient: AccompanistWebChromeClient = remember { AccompanistWebChromeClient() },
     factory: ((Context) -> WebView)? = null,
 ) {
     BoxWithConstraints(modifier) {
@@ -107,8 +123,6 @@ fun WebView(
             navigator,
             onCreated,
             onDispose,
-            client,
-            chromeClient,
             factory
         )
     }
@@ -146,10 +160,22 @@ fun WebView(
     navigator: WebViewNavigator = rememberWebViewNavigator(),
     onCreated: (WebView) -> Unit = {},
     onDispose: (WebView) -> Unit = {},
-    client: AccompanistWebViewClient = remember { AccompanistWebViewClient() },
-    chromeClient: AccompanistWebChromeClient = remember { AccompanistWebChromeClient() },
     factory: ((Context) -> WebView)? = null,
 ) {
+    val context = LocalContext.current
+
+    val client = remember {
+        AccompanistWebViewClient(
+            assetLoader =
+            WebViewAssetLoader.Builder()
+                .setDomain("appassets.androidplatform.net")
+                .addPathHandler("/assets/", AssetsPathHandler(context))
+                .addPathHandler("/res/", ResourcesPathHandler(context))
+                .build()
+        )
+    }
+    val chromeClient = remember { AccompanistWebChromeClient() }
+
     val webView = state.webView
 
     webView?.let { wv ->
@@ -231,7 +257,8 @@ fun WebView(
  * As Accompanist Web needs to set its own web client to function, it provides this intermediary
  * class that can be overridden if further custom behaviour is required.
  */
-open class AccompanistWebViewClient : WebViewClient(), KoinComponent {
+open class AccompanistWebViewClient(private val assetLoader: WebViewAssetLoader) : WebViewClient(),
+    KoinComponent {
     open lateinit var state: WebViewState
         internal set
     open lateinit var navigator: WebViewNavigator
@@ -259,6 +286,13 @@ open class AccompanistWebViewClient : WebViewClient(), KoinComponent {
 
         navigator.canGoBack = view.canGoBack()
         navigator.canGoForward = view.canGoForward()
+    }
+
+    override fun shouldInterceptRequest(
+        view: WebView,
+        request: WebResourceRequest
+    ): WebResourceResponse? {
+        return assetLoader.shouldInterceptRequest(request.url)
     }
 
     override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
@@ -463,7 +497,6 @@ public class WebViewNavigator(private val coroutineScope: CoroutineScope) {
 
         data class LoadHtml(
             val html: String,
-            val baseUrl: String? = null,
             val mimeType: String? = null,
             val encoding: String? = "utf-8",
             val historyUrl: String? = null
@@ -507,7 +540,7 @@ public class WebViewNavigator(private val coroutineScope: CoroutineScope) {
                 is NavigationEvent.StopLoading -> stopLoading()
                 is NavigationEvent.LoadHtml -> {
                     loadDataWithBaseURL(
-                        event.baseUrl,
+                        ASSET_BASE_URL,
                         event.html,
                         event.mimeType,
                         event.encoding,
@@ -566,7 +599,6 @@ public class WebViewNavigator(private val coroutineScope: CoroutineScope) {
             navigationEvents.emit(
                 NavigationEvent.LoadHtml(
                     html,
-                    baseUrl,
                     mimeType,
                     encoding,
                     historyUrl
