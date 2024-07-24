@@ -62,7 +62,7 @@ class ArticleRenderer(
         val content = extractedContent.value()
 
         if (extractedContent.requestShow && content != null) {
-            return context.extractedTemplate(article, content)
+            return extractedTemplate(article, content)
         }
 
         return ""

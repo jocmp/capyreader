@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -14,8 +13,9 @@
         --color-on-primary-container: {{color_on_primary_container}};
       }
     </style>
-    <link rel="stylesheet" href="file:///android_asset/stylesheet.css">
-    <script type="text/javascript" src="file:///android_asset/mercury.js"></script>
+    <link rel="stylesheet" href="/assets/stylesheet.css">
+    <script type="text/javascript" src="/assets/mercury.js"></script>
+    <script type="text/javascript" src="/assets/custom-extractors.js"></script>
   </head>
   <body>
     <article>
@@ -26,7 +26,7 @@
         <div>{{byline}}</div>
         <div>{{feed_name}}</div>
       </a>
-      <div class="article__body article__body--text-size-{{text_size}}">
+      <div class="article__body article__body--font-{{font_family}} article__body--text-size-{{text_size}}">
         <div id="article-body-content">
           {{body}}
         </div>

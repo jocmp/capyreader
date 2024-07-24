@@ -1,11 +1,10 @@
 package com.jocmp.capy.articles
 
-import android.content.Context
 import com.jocmp.capy.Article
-import com.jocmp.capy.R
 import org.json.JSONObject
+import org.jsoup.Jsoup
 
-internal fun Context.extractedTemplate(
+internal fun extractedTemplate(
     article: Article,
     html: String,
 ): String {
