@@ -277,7 +277,7 @@ fun ArticleLayout(
                         .padding(innerPadding)
                         .nestedScroll(state.nestedScrollConnection)
                 ) {
-                    if (pagingArticles.loadState.isIdle && feeds.isEmpty()) {
+                    if (pagingArticles.loadState.isIdle && allFeeds.isEmpty()) {
                         EmptyOnboardingView {
                             AddFeedButton(
                                 onComplete = {
@@ -297,12 +297,12 @@ fun ArticleLayout(
                                 }
                             }
                         )
-
-                        PullToRefreshContainer(
-                            modifier = Modifier.align(Alignment.TopCenter),
-                            state = state,
-                        )
                     }
+
+                    PullToRefreshContainer(
+                        modifier = Modifier.align(Alignment.TopCenter),
+                        state = state,
+                    )
                 }
             }
         },
