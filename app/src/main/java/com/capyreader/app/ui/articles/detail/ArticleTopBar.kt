@@ -1,10 +1,11 @@
 package com.capyreader.app.ui.articles.detail
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.outlined.Palette
-import androidx.compose.material.icons.rounded.Palette
+import androidx.compose.material.icons.outlined.FormatSize
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -14,11 +15,13 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.common.shareArticle
 import com.capyreader.app.ui.articles.FullContentLoadingIcon
@@ -79,7 +82,7 @@ fun ArticleTopBar(
 
                     IconButton(onClick = { setStyleSheetOpen(true) }) {
                         Icon(
-                            Icons.Outlined.Palette,
+                            Icons.Outlined.FormatSize,
                             stringResource(R.string.article_style_options)
                         )
                     }
@@ -98,7 +101,13 @@ fun ArticleTopBar(
 
     if (isStyleSheetOpen) {
         ModalBottomSheet(onDismissRequest = { setStyleSheetOpen(false) }) {
-            ArticleStylePicker(onChange = onStyleUpdate)
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = 32.dp)
+                    .padding(bottom = 16.dp)
+            ) {
+                ArticleStylePicker(onChange = onStyleUpdate)
+            }
         }
     }
 }
