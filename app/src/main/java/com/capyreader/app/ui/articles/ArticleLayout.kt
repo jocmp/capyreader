@@ -124,6 +124,13 @@ fun ArticleLayout(
     val scrollToTop = {
         coroutineScope.launch {
             listState.scrollToItem(0)
+        }
+    }
+
+    val resetScrollOffset = {
+        coroutineScope.launch {
+            pagingArticles.refresh()
+            delay(500)
             resetScrollBehaviorOffset()
         }
     }
@@ -138,8 +145,7 @@ fun ArticleLayout(
 
     val openNextList = suspend {
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
-        delay(200)
-        scrollToTop()
+        resetScrollOffset()
         drawerState.close()
     }
 
@@ -211,7 +217,7 @@ fun ArticleLayout(
                 statusCount = statusCount,
                 onSelectStatus = {
                     onSelectStatus(it)
-                    scrollToTop()
+                    resetScrollOffset()
                 }
             )
         },
