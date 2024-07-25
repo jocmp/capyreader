@@ -3,22 +3,28 @@ package com.capyreader.app.ui.articles.detail
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.outlined.Palette
+import androidx.compose.material.icons.rounded.Palette
+import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import com.jocmp.capy.Article
 import com.capyreader.app.R
 import com.capyreader.app.common.shareArticle
 import com.capyreader.app.ui.articles.FullContentLoadingIcon
 import com.capyreader.app.ui.fixtures.ArticleSample
 import com.capyreader.app.ui.isCompact
+import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ExtractedContent
 import java.net.URL
 
@@ -30,9 +36,11 @@ fun ArticleTopBar(
     onToggleExtractContent: () -> Unit,
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
-    onClose: () -> Unit
+    onClose: () -> Unit,
+    onStyleUpdate: () -> Unit,
 ) {
     val context = LocalContext.current
+    val (isStyleSheetOpen, setStyleSheetOpen) = rememberSaveable { mutableStateOf(false) }
 
     TopAppBar(
         navigationIcon = {
@@ -69,9 +77,16 @@ fun ArticleTopBar(
                         )
                     }
 
+                    IconButton(onClick = { setStyleSheetOpen(true) }) {
+                        Icon(
+                            Icons.Outlined.Palette,
+                            stringResource(R.string.article_style_options)
+                        )
+                    }
+
                     IconButton(onClick = { context.shareArticle(article = article) }) {
                         Icon(
-                            painterResource(id = R.drawable.ic_share),
+                            Icons.Rounded.Share,
                             contentDescription = stringResource(R.string.article_share)
                         )
                     }
@@ -79,6 +94,13 @@ fun ArticleTopBar(
             }
         }
     )
+
+
+    if (isStyleSheetOpen) {
+        ModalBottomSheet(onDismissRequest = { setStyleSheetOpen(false) }) {
+            ArticleStylePicker(onChange = onStyleUpdate)
+        }
+    }
 }
 
 @Composable
@@ -134,6 +156,7 @@ private fun ArticleTopBarPreview(@PreviewParameter(ArticleSample::class) article
         onToggleRead = {},
         onToggleStar = {},
         onClose = {},
+        onStyleUpdate = {}
     )
 }
 
@@ -146,7 +169,8 @@ private fun ArticleTopBarPreview_Tablet(@PreviewParameter(ArticleSample::class) 
         onToggleExtractContent = {},
         onToggleRead = {},
         onToggleStar = {},
-        onClose = {}
+        onClose = {},
+        onStyleUpdate = {}
     )
 }
 
@@ -159,6 +183,7 @@ private fun ArticleTopBarPreview_MissingArticle() {
         onToggleExtractContent = {},
         onToggleRead = {},
         onToggleStar = {},
-        onClose = {}
+        onClose = {},
+        onStyleUpdate = {}
     )
 }

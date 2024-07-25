@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
 import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.common.ImagePreview
 import com.jocmp.capy.Article
 import com.jocmp.capy.MarkRead
 import kotlinx.coroutines.delay
@@ -28,7 +29,7 @@ fun ArticleList(
     onSelect: suspend (articleID: String) -> Unit,
     onMarkAllRead: (range: MarkRead) -> Unit,
     selectedArticleKey: String?,
-    listState: LazyListState
+    listState: LazyListState,
 ) {
     val composableScope = rememberCoroutineScope()
     val articleOptions = rememberArticleOptions()
@@ -41,8 +42,7 @@ fun ArticleList(
     }
 
     LazyColumn(
-        modifier = Modifier
-            .fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         state = listState,
     ) {
         items(

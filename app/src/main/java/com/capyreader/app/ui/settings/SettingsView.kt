@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -24,6 +25,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -144,6 +146,7 @@ fun SettingsView(
                 Modifier
                     .verticalScroll(rememberScrollState())
             ) {
+                Spacer(modifier = Modifier.padding(8.dp))
                 if (showAccountName(accountSource)) {
                     Section(
                         title = stringResource(R.string.settings_section_account),
@@ -323,8 +326,7 @@ fun Section(
         if (title != null) {
             Text(
                 text = title,
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 12.sp,
+                style = typography.labelMedium,
                 color = colorScheme.surfaceTint,
                 modifier = Modifier.padding(horizontal = 16.dp)
             )

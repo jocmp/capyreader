@@ -1,7 +1,6 @@
 package com.capyreader.app.ui.articles
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
@@ -19,16 +18,16 @@ import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
-import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
-import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
@@ -39,6 +38,7 @@ import com.capyreader.app.R
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.list.EmptyOnboardingView
+import com.capyreader.app.ui.articles.detail.resetScrollBehaviorListener
 import com.capyreader.app.ui.components.rememberWebViewNavigator
 import com.capyreader.app.ui.fixtures.FeedPreviewFixture
 import com.capyreader.app.ui.fixtures.FolderPreviewFixture
@@ -96,11 +96,10 @@ fun ArticleLayout(
     val drawerState = rememberDrawerState(drawerValue)
     val coroutineScope = rememberCoroutineScope()
     val scaffoldNavigator = rememberListDetailPaneScaffoldNavigator()
-
+    var isRefreshing by remember { mutableStateOf(false) }
     val webViewNavigator = rememberWebViewNavigator()
     val listState = rememberLazyListState()
     val pagingArticles = articles.collectAsLazyPagingItems(Dispatchers.IO)
-    val state = rememberPullToRefreshState()
     val snackbarHost = remember { SnackbarHostState() }
     val addFeedSuccessMessage = stringResource(R.string.add_feed_success)
     val editSuccessMessage = stringResource(R.string.feed_action_edit_success)
@@ -108,6 +107,10 @@ fun ArticleLayout(
     val unsubscribeErrorMessage = stringResource(R.string.unsubscribe_error)
     val currentFeed = findCurrentFeed(filter, allFeeds)
     val scrollBehavior = pinnedScrollBehavior()
+    val resetScrollBehaviorOffset = resetScrollBehaviorListener(
+        listState = listState,
+        scrollBehavior = scrollBehavior
+    )
 
     val openUpdatePasswordDialog = {
         onUnauthorizedDismissRequest()
@@ -121,7 +124,15 @@ fun ArticleLayout(
     val scrollToTop = {
         coroutineScope.launch {
             listState.scrollToItem(0)
-            scrollBehavior.state.contentOffset = 0f
+            resetScrollBehaviorOffset()
+        }
+    }
+
+    val refreshFeeds = {
+        isRefreshing = true
+        onFeedRefresh {
+            isRefreshing = false
+            resetScrollBehaviorOffset()
         }
     }
 
@@ -151,18 +162,7 @@ fun ArticleLayout(
 
             showSnackbar(addFeedSuccessMessage)
 
-            launch {
-                state.startRefresh()
-            }
-        }
-    }
-
-    if (state.isRefreshing) {
-        LaunchedEffect(true) {
-            onFeedRefresh {
-                state.endRefresh()
-                pagingArticles.refresh()
-            }
+            isRefreshing = true
         }
     }
 
@@ -209,7 +209,10 @@ fun ArticleLayout(
                 },
                 filter = filter,
                 statusCount = statusCount,
-                onSelectStatus = onSelectStatus,
+                onSelectStatus = {
+                    onSelectStatus(it)
+                    scrollToTop()
+                }
             )
         },
         listPane = {
@@ -272,12 +275,12 @@ fun ArticleLayout(
                     SnackbarHost(hostState = snackbarHost)
                 },
             ) { innerPadding ->
-                Box(
-                    Modifier
-                        .padding(innerPadding)
-                        .nestedScroll(state.nestedScrollConnection)
+                PullToRefreshBox(
+                    isRefreshing = isRefreshing,
+                    onRefresh = refreshFeeds,
+                    modifier = Modifier.padding(innerPadding)
                 ) {
-                    if (isInitialized && !state.isRefreshing && allFeeds.isEmpty()) {
+                    if (isInitialized && !isRefreshing && allFeeds.isEmpty()) {
                         EmptyOnboardingView {
                             AddFeedButton(
                                 onComplete = {
@@ -295,14 +298,9 @@ fun ArticleLayout(
                                 onSelectArticle(articleID) {
                                     navigateToDetail()
                                 }
-                            }
+                            },
                         )
                     }
-
-                    PullToRefreshContainer(
-                        modifier = Modifier.align(Alignment.TopCenter),
-                        state = state,
-                    )
                 }
             }
         },
@@ -341,8 +339,7 @@ fun ArticleLayout(
 
     LaunchedEffect(Unit) {
         if (!isInitialized) {
-            state.startRefresh()
-
+            refreshFeeds()
             setInitialized(true)
         }
     }

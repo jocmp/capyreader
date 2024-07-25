@@ -30,7 +30,6 @@ fun ArticleView(
     val articleID = article?.id
     val templateColors = articleTemplateColors()
     val colors = templateColors.asMap()
-
     val webViewState = rememberSaveableWebViewState(key = articleID)
     val extractedContentState = rememberExtractedContent(
         article = article,
@@ -67,7 +66,10 @@ fun ArticleView(
                 onToggleExtractContent = ::onToggleExtractContent,
                 onToggleRead = onToggleRead,
                 onToggleStar = onToggleStar,
-                onClose = onBackPressed
+                onClose = onBackPressed,
+                onStyleUpdate = {
+                    renderer.clear()
+                }
             )
         }
     ) { innerPadding ->
@@ -126,9 +128,9 @@ fun ArticleView(
         }
     }
 
-    LaunchedEffect(templateColors) {
-        webViewState.webView?.let { webView ->
-            updateStyleVariables(webView, templateColors)
-        }
-    }
+    ArticleTemplateColorListener(webView = webViewState.webView, templateColors = templateColors)
+
+    ArticleTextSizeListener(webView = webViewState.webView)
+
+    ArticleFontFamilyListener(webView = webViewState.webView)
 }

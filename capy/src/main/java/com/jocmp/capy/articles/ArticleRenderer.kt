@@ -4,12 +4,15 @@ import android.content.Context
 import com.jocmp.capy.Article
 import com.jocmp.capy.MacroProcessor
 import com.jocmp.capy.common.toDeviceDateTime
+import com.jocmp.capy.preferences.Preference
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import com.jocmp.capy.R as CapyRes
 
 class ArticleRenderer(
     private val context: Context,
+    private val textSize: Preference<TextSize>,
+    private val fontOption: Preference<FontOption>
 ) {
     private var articleID: String? = null
 
@@ -34,7 +37,9 @@ class ArticleRenderer(
             "byline" to byline(article),
             "feed_name" to article.feedName,
             "body" to body(article, extractedContent),
-            "script" to script(article, extractedContent)
+            "script" to script(article, extractedContent),
+            "text_size" to textSize.get().slug,
+            "font_family" to fontOption.get().slug,
         )
 
         html = MacroProcessor(
@@ -47,7 +52,7 @@ class ArticleRenderer(
 
     fun fetchCached(article: Article): String {
         if (article.id != articleID) {
-           return ""
+            return ""
         }
 
         return html

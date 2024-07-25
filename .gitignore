@@ -32,4 +32,5 @@ release.keystore
 vendor/
 app/gplay/release/
 
-technotes/.obsidian
+# Cruft
+technotes/.obsidian/
