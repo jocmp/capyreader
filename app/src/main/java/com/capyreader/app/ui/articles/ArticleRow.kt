@@ -109,7 +109,7 @@ fun ArticleRow(
             headlineContent = {
                 Text(
                     article.title,
-                    fontWeight = titleFontWeight(read = article.read),
+                    fontWeight = FontWeight.Bold
                 )
             },
             supportingContent = {
@@ -218,15 +218,6 @@ fun PlaceholderArticleRow(imagePreview: ImagePreview) {
         },
         headlineContent = {}
     )
-}
-
-@Composable
-fun titleFontWeight(read: Boolean): FontWeight {
-    return if (read) {
-        FontWeight.Normal
-    } else {
-        FontWeight.Bold
-    }
 }
 
 @Composable
