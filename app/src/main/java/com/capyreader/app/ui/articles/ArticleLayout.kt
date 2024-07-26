@@ -139,14 +139,15 @@ fun ArticleLayout(
         isRefreshing = true
         onFeedRefresh {
             isRefreshing = false
-            resetScrollBehaviorOffset()
+            resetScrollOffset()
         }
     }
 
     val openNextList = suspend {
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
-        resetScrollOffset()
+        delay(200)
         drawerState.close()
+        resetScrollOffset()
     }
 
     val closeDrawer = {
