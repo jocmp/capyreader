@@ -169,7 +169,7 @@ fun ArticleLayout(
 
             showSnackbar(addFeedSuccessMessage)
 
-            isRefreshing = true
+            refreshFeeds()
         }
     }
 
