@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
+    if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v4.1.7
         with:
@@ -27,6 +27,8 @@ jobs:
         run: |
           git config user.name "jocmp"
           git config user.email "9521010+jocmp@users.noreply.github.com"
+      - name: Bump version
+        run: bumpver update
       - name: Deploy App to Production
         env:
           ENCODED_GOOGLE_PLAY_CREDENTIALS: ${{ secrets.ENCODED_GOOGLE_PLAY_CREDENTIALS }}
@@ -34,3 +36,5 @@ jobs:
           ENCODED_RELEASE_KEYSTORE: ${{ secrets.ENCODED_RELEASE_KEYSTORE }}
           ENCODED_SECRETS_PROPERTIES: ${{ secrets.ENCODED_SECRETS_PROPERTIES }}
         run: make deploy-production
+      - name: Sync versioning to Main
+        run: git push --follow-tags
