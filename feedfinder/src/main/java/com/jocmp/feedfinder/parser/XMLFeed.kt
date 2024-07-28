@@ -1,5 +1,6 @@
 package com.jocmp.feedfinder.parser
 
+import com.jocmp.feedfinder.optionalURL
 import com.prof18.rssparser.RssParser
 import com.prof18.rssparser.model.RssChannel
 import java.net.URL
@@ -19,10 +20,10 @@ internal class XMLFeed(
 
     override val siteURL: URL?
         get() = channel?.link?.let {
-            URL(it)
+            optionalURL(it)
         }
     override val faviconURL: URL?
-        get() = channel?.image?.url?.let { URL(it) }
+        get() = channel?.image?.url?.let { optionalURL(it) }
 
     private fun hasEntries(): Boolean {
         return channel != null &&

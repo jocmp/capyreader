@@ -1,4 +1,4 @@
-package com.jocmp.capy.common
+package com.jocmp.feedfinder
 
 import java.net.MalformedURLException
 import java.net.URL
@@ -14,6 +14,3 @@ fun optionalURL(string: String?): URL? {
         null
     }
 }
-
-val URL?.orEmpty: String
-    get() = this?.toString() ?: ""
