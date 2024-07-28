@@ -13,6 +13,14 @@ _A smallish RSS reader with support for Feedbin and local feeds._
 
 Capy Reader is free across all sources.
 
+
+### Releases
+
+Google Play releases happen on a weekly basis give or take Google's time to review.
+
+GitHub releases are marked with a "-dev" suffix and are builds that haven't been submitted
+to Google Play yet. They are always stable builds but are released more frequently.
+
 ## Reporting a bug
 
 Bug reports are always welcome and are my top priority.
