@@ -4,12 +4,12 @@
 
 _A smallish RSS reader with support for Feedbin and local feeds._
 
+![GitHub Release][github_img] ![Tests](https://github.com/jocmp/capyreader/actions/workflows/ci.yml/badge.svg)
+
 ## Download
 
-| Source                   | Status                           |
-| ------------------------ | -------------------------------- |
-| [IzzyOnDroid][izzy_link] | ![IzzyOnDroid Version][izzy_img] |
-| [GitHub][github_link]    | ![GitHub Release][github_img]    |
+- [Google Play][gplay_link]
+- [IzzyOnDroid][izzy_link]
 
 Capy Reader is free across all sources.
 
@@ -21,7 +21,7 @@ If you run into an issue, let me know by submitting a [bug report](https://githu
 
 ## Feature Requests
 
-If you have questions or feature requests, please submit them to [Discussions](https://github.com/jocmp/capyreader/discussions).
+If you have questions or feature requests, please post them to [Discussions](https://github.com/jocmp/capyreader/discussions).
 
 ## Building the app
 
@@ -46,6 +46,7 @@ By default the app will build with a debug keystore. Follow the instructions bel
     ```
 
 
+[gplay_link]: https://play.google.com/store/apps/details?id=com.capyreader.app
 [izzy_link]: https://apt.izzysoft.de/fdroid/index/apk/com.capyreader.app
 [izzy_img]: https://img.shields.io/endpoint?url=https://apt.izzysoft.de/fdroid/api/v1/shield/com.capyreader.app&label=IzzyOnDroid
 [github_link]: https://github.com/jocmp/capyreader/releases
