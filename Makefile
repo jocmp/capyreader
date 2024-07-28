@@ -8,6 +8,14 @@ FASTLANE ?= bundle exec fastlane
 deps:
 	pip install bumpver==2023.1129
 
+.PHONY: prep-github-release
+bump-release-dev:
+	bumpver update --tag=dev
+
+.PHONY: prep-github-release
+bump-release-production:
+	bumpver update --tag=final
+
 .PHONY: changelog
 changelog:
 	./scripts/changelog
