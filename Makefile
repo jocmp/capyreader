@@ -5,22 +5,22 @@ FASTLANE ?= bundle exec fastlane
 .PHONY: test release-secrets deploy-production
 
 .PHONY: deps
-deps:
+deps: ## Install bumpver
 	pip install bumpver==2023.1129
 
 .PHONY: prep-github-release
-bump-release-dev:
+bump-release-dev: ## Bump GitHub version
 	bumpver update --tag=dev
 
 .PHONY: prep-github-release
-bump-release-production:
+bump-release-production: ## Bump Google Play version
 	bumpver update --tag=final
 
 .PHONY: changelog
-changelog:
+changelog: ## Prep next release notes
 	./scripts/changelog
 
-test:
+test: ## Run all tests
 	$(FASTLANE) test
 
 deploy-production: release-secrets
@@ -38,3 +38,7 @@ shared-release-secrets:
 	echo ${ENCODED_GOOGLE_SERVICES} | base64 --decode > ./app/google-services.json
 	echo ${ENCODED_RELEASE_KEYSTORE} | base64 --decode > ./release.keystore
 	echo ${ENCODED_SECRETS_PROPERTIES} | base64 --decode > ./secrets.properties
+
+.PHONY: help
+help:
+	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' Makefile | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
