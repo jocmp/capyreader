@@ -19,6 +19,19 @@ class XMLFeedTest {
     }
 
     @Test
+    fun siteURLIsMissing() = runTest {
+        val responseBody = File("src/test/resources/microsoft_support.xml").readText()
+
+        val feed = XMLFeed.from(
+            url = URL("https://support.microsoft.com/en-us/feed/rss/6ae59d69-36fc-8e4d-23dd-631d98bf74a9"),
+            body = responseBody
+        )
+
+        assertTrue(feed.isValid())
+        assertNull(feed.siteURL)
+    }
+
+    @Test
     fun siteURLIsInvalid() = runTest {
         val responseBody = File("src/test/resources/brasildefato_com_br.xml").readText()
 

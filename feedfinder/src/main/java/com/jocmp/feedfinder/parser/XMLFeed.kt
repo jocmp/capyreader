@@ -11,7 +11,6 @@ internal class XMLFeed(
 ) : Feed {
     override fun isValid(): Boolean {
         return channel != null &&
-                !channel.link.isNullOrBlank() &&
                 hasEntries()
     }
 
