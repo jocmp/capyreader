@@ -1,9 +1,9 @@
-package com.jocmp.feedfinder
+package com.jocmp.capy.common
 
 import java.net.MalformedURLException
 import java.net.URL
 
-internal fun optionalURL(string: String?): URL? {
+fun optionalURL(string: String?): URL? {
     if (string.isNullOrBlank()) {
         return null
     }

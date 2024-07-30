@@ -10,6 +10,7 @@ import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
@@ -37,6 +38,7 @@ import androidx.webkit.WebViewAssetLoader.AssetsPathHandler
 import androidx.webkit.WebViewAssetLoader.ResourcesPathHandler
 import com.capyreader.app.R
 import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.common.WebViewInterface
 import com.capyreader.app.common.openLink
 import com.capyreader.app.ui.components.LoadingState.Finished
 import com.capyreader.app.ui.components.LoadingState.Loading
@@ -231,6 +233,7 @@ fun WebView(
 
                 this.settings.javaScriptEnabled = true
                 this.layoutParams = layoutParams
+                addJavascriptInterface(WebViewInterface(context), WebViewInterface.INTERFACE_NAME)
 
                 setBackgroundColor(context.getColor(android.R.color.transparent))
 

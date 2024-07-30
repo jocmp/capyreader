@@ -40,5 +40,5 @@ const val swapContentScript = """
     extracted.innerHTML = html;
 
     let content = document.getElementById("article-body-content");
-    content.replaceWith(extracted);
+    content.replaceWith(extracted);   
 """

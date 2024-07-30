@@ -114,7 +114,7 @@
     <string name="settings_option_full_content_title">Sticky Full Content</string>
     <string name="settings_option_full_content_subtitle">Remember choice to load full article content</string>
     <string name="refresh_on_start">On start</string>
-    <string name="empty_onboarding_title">No feeds yet.</string>
+    <string name="empty_onboarding_title">No feeds yet</string>
     <string name="empty_onboarding_prompt">Start by adding a feed</string>
     <string name="article_style_options">Font style options</string>
     <string name="font_option_vollkorn">Vollkorn</string>
