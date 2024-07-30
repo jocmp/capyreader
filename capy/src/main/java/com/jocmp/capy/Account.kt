@@ -14,7 +14,6 @@ import com.jocmp.capy.opml.OPMLImporter
 import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.capy.persistence.FeedRecords
 import com.jocmp.feedbinclient.Feedbin
-import com.jocmp.feedfinder.DefaultFeedFinder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -178,6 +177,18 @@ data class Account(
         }
 
         return opml
+    }
+
+    fun enableStickyContent(feedID: String) {
+        feedRecords.updateStickyFullContent(enabled = true, feedID = feedID)
+    }
+
+    fun disableStickyContent(feedID: String) {
+        feedRecords.updateStickyFullContent(enabled = false, feedID = feedID)
+    }
+
+    fun clearStickyFullContent() {
+        feedRecords.clearStickyFullContent()
     }
 }
 

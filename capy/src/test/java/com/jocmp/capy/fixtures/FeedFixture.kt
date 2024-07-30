@@ -6,9 +6,10 @@ import com.jocmp.capy.persistence.FeedRecords
 import kotlinx.coroutines.runBlocking
 import java.security.SecureRandom
 
-class FeedFixture(database: Database) {
-    private val records = FeedRecords(database)
-
+internal class FeedFixture(
+    database: Database,
+    private val records: FeedRecords = FeedRecords(database)
+) {
     fun create(
         feedID: String = randomID(),
         feedURL: String = "https://example.com",

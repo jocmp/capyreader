@@ -34,22 +34,29 @@ fun rememberExtractedContent(
         return ExtractedContentState()
     }
 
-    val showFullContentByDefault by appPreferences
+    val scope = rememberCoroutineScope()
+    val enableStickyFullContent by appPreferences
         .enableStickyFullContent
-        .stateIn(rememberCoroutineScope())
+        .stateIn(scope)
         .collectAsState()
 
-    val scope = rememberCoroutineScope()
+    val requestShow = enableStickyFullContent && article.enableStickyFullContent
 
     val (extractedContent, setExtractedContent) = rememberSaveable(
         article.id,
         stateSaver = ExtractedArticleSaver,
     ) {
-        mutableStateOf(ExtractedContent(requestShow = showFullContentByDefault))
+        mutableStateOf(ExtractedContent(requestShow = requestShow))
     }
 
     fun fetch() {
         setExtractedContent(ExtractedContent(requestShow = true, value = Async.Loading))
+
+        scope.launch {
+            if (enableStickyFullContent && !article.enableStickyFullContent) {
+                account.enableStickyContent(article.feedID)
+            }
+        }
 
         scope.launch(Dispatchers.IO) {
             val value = account.fetchFullContent(article).fold(
@@ -65,6 +72,12 @@ fun rememberExtractedContent(
 
     fun reset() {
         setExtractedContent(ExtractedContent(value = Async.Uninitialized, requestShow = false))
+
+        scope.launch {
+            if (enableStickyFullContent) {
+                account.disableStickyContent(article.feedID)
+            }
+        }
     }
 
     return ExtractedContentState(

@@ -1,6 +1,14 @@
 findByStatus:
 SELECT
-  articles.*,
+  articles.id,
+  articles.feed_id,
+  articles.title,
+  articles.author,
+  articles.extracted_content_url,
+  articles.url,
+  articles.summary,
+  articles.image_url,
+  articles.published_at,
   feeds.title AS feed_title,
   feeds.favicon_url,
   article_statuses.updated_at,
@@ -17,7 +25,15 @@ LIMIT :limit OFFSET :offset;
 
 findByFeeds:
 SELECT
-  articles.*,
+  articles.id,
+  articles.feed_id,
+  articles.title,
+  articles.author,
+  articles.extracted_content_url,
+  articles.url,
+  articles.summary,
+  articles.image_url,
+  articles.published_at,
   feeds.title AS feed_title,
   feeds.favicon_url,
   article_statuses.updated_at,
@@ -104,6 +120,7 @@ SELECT
   articles.*,
   feeds.title AS feed_title,
   feeds.favicon_url,
+  feeds.enable_sticky_full_content,
   article_statuses.updated_at,
   article_statuses.starred,
   article_statuses.read
