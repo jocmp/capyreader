@@ -20,6 +20,7 @@ import com.jocmp.capy.Account
 import com.jocmp.capy.AccountManager
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.opml.ImportProgress
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SettingsViewModel(
@@ -126,6 +127,12 @@ class SettingsViewModel(
         appPreferences.enableStickyFullContent.set(enable)
 
         _enableStickyFullContent.value = enable
+
+        if (!enable) {
+            viewModelScope.launch(Dispatchers.IO) {
+                account.clearStickyFullContent()
+            }
+        }
     }
 
     fun removeAccount() {

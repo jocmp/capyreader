@@ -18,6 +18,7 @@ internal fun articleMapper(
     publishedAt: Long?,
     feedTitle: String?,
     faviconURL: String?,
+    enableStickyContent: Boolean = false,
     updatedAt: Long?,
     starred: Boolean?,
     read: Boolean?,
@@ -38,6 +39,7 @@ internal fun articleMapper(
         read = read ?: false,
         starred = starred ?: false,
         feedName = feedTitle ?: "",
+        enableStickyFullContent = enableStickyContent
     )
 }
 
@@ -46,7 +48,6 @@ internal fun listMapper(
     feedID: String?,
     title: String?,
     author: String?,
-    contentHtml: String?,
     extractedContentURL: String?,
     url: String?,
     summary: String?,

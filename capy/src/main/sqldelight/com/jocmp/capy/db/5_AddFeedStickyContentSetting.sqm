@@ -1,0 +1,4 @@
+import kotlin.Boolean;
+
+ALTER TABLE feeds
+ADD COLUMN enable_sticky_full_content INTEGER AS Boolean NOT NULL DEFAULT 0;

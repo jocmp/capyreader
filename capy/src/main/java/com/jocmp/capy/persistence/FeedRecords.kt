@@ -47,6 +47,17 @@ internal class FeedRecords(private val database: Database) {
         )
     }
 
+    fun updateStickyFullContent(feedID: String, enabled: Boolean) {
+        database.feedsQueries.updateStickyFullContent(
+            enabled = enabled,
+            feedID = feedID
+        )
+    }
+
+    fun clearStickyFullContent() {
+        database.feedsQueries.clearStickyFullContent()
+    }
+
     suspend fun findFolder(title: String): Folder? {
         val feeds = database.feedsQueries.findByFolder(title, mapper = ::feedMapper)
             .asFlow()
@@ -78,18 +89,18 @@ internal class FeedRecords(private val database: Database) {
         feedURL: String,
         siteURL: String?,
         faviconURL: String?,
+        enableStickyFullContent: Boolean = false,
         folderName: String? = "",
-        articleCount: Long = 0
-    ): Feed {
-        return Feed(
-            id = id,
-            subscriptionID = subscriptionID,
-            title = title,
-            feedURL = feedURL,
-            siteURL = siteURL.orEmpty(),
-            faviconURL = faviconURL,
-            folderName = folderName.orEmpty(),
-            count = articleCount
-        )
-    }
+        articleCount: Long = 0,
+    ) = Feed(
+        id = id,
+        subscriptionID = subscriptionID,
+        title = title,
+        feedURL = feedURL,
+        siteURL = siteURL.orEmpty(),
+        faviconURL = faviconURL,
+        folderName = folderName.orEmpty(),
+        count = articleCount,
+        enableStickyFullContent = enableStickyFullContent
+    )
 }
