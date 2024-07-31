@@ -28,7 +28,7 @@ jobs:
           git config user.name "jocmp"
           git config user.email "9521010+jocmp@users.noreply.github.com"
       - name: Bump version
-        run: bumpver update
+        run: make bump-release-production
       - name: Deploy App to Production
         env:
           ENCODED_GOOGLE_PLAY_CREDENTIALS: ${{ secrets.ENCODED_GOOGLE_PLAY_CREDENTIALS }}
