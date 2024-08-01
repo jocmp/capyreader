@@ -23,7 +23,7 @@ LEFT JOIN taggings ON taggings.feed_id = feeds.id
 WHERE taggings.name = :name;
 
 upsert:
-INSERT OR REPLACE INTO feeds(
+INSERT INTO feeds(
     id,
     subscription_id,
     title,
@@ -38,7 +38,15 @@ VALUES (
   :feed_url,
   :site_url,
   :favicon_url
-);
+)
+ON CONFLICT(id) DO UPDATE
+SET id = id,
+subscription_id = excluded.subscription_id,
+title = excluded.title,
+feed_url = excluded.feed_url,
+site_url = excluded.site_url,
+favicon_url = excluded.favicon_url,
+enable_sticky_full_content = enable_sticky_full_content;
 
 updateName:
 UPDATE feeds SET title = :title WHERE feeds.id = :feedID;
