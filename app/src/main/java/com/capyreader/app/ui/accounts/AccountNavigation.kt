@@ -12,9 +12,9 @@ import com.capyreader.app.ui.settings.SettingsScreen
 
 fun NavGraphBuilder.accountsGraph(
     onAddSuccess: () -> Unit,
+    onNavigateBack: () -> Unit,
     onNavigateToLogin: () -> Unit,
     onRemoveAccount: () -> Unit,
-    onNavigateBackFromSettings: () -> Unit,
     isCompactWidth: Boolean,
 ) {
     composable(Route.AddAccount) {
@@ -25,13 +25,14 @@ fun NavGraphBuilder.accountsGraph(
     }
     composable(Route.Login) {
         LoginScreen(
+            onNavigateBack = onNavigateBack,
             onSuccess = onAddSuccess,
         )
     }
     dynamicLayout(isCompactWidth) {
         SettingsScreen(
             onRemoveAccount = onRemoveAccount,
-            onNavigateBack = onNavigateBackFromSettings
+            onNavigateBack = onNavigateBack
         )
     }
 }

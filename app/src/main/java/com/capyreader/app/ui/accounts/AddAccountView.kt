@@ -19,18 +19,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.jocmp.capy.accounts.Source
 import com.capyreader.app.R
+import com.capyreader.app.ui.Spacing
+import com.capyreader.app.ui.components.safeEdgePadding
 import com.capyreader.app.ui.components.widthMaxSingleColumn
 import com.capyreader.app.ui.isCompact
 import com.capyreader.app.ui.theme.CapyTheme
+import com.jocmp.capy.accounts.Source
 
 @Composable
 fun AddAccountView(
     onSelectLocal: () -> Unit,
     onSelectFeedbin: () -> Unit,
 ) {
-    Scaffold { padding ->
+    Scaffold(
+        modifier = Modifier.safeEdgePadding(),
+    ) { padding ->
         Box(
             contentAlignment = contentAlignment(),
             modifier = Modifier
@@ -72,7 +76,7 @@ private fun contentAlignment(): Alignment {
 @Composable
 private fun titlePadding(): PaddingValues {
     return if (isCompact()) {
-        PaddingValues(top = 56.dp, start = 16.dp, end = 16.dp)
+        PaddingValues(top = Spacing.topBarHeight, start = 16.dp, end = 16.dp)
     } else {
         PaddingValues(start = 16.dp, end = 16.dp)
     }

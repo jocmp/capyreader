@@ -4,8 +4,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.outlined.FormatSize
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -26,6 +26,7 @@ import com.capyreader.app.R
 import com.capyreader.app.common.shareArticle
 import com.capyreader.app.ui.articles.FullContentLoadingIcon
 import com.capyreader.app.ui.fixtures.ArticleSample
+import com.capyreader.app.ui.fixtures.InjectedCapyTheme
 import com.capyreader.app.ui.isCompact
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ExtractedContent
@@ -149,7 +150,7 @@ fun ArticleNavigationIcon(onClick: () -> Unit) {
         }
     ) {
         Icon(
-            imageVector = Icons.Filled.Close,
+            imageVector = Icons.Rounded.Close,
             contentDescription = null
         )
     }
@@ -158,41 +159,47 @@ fun ArticleNavigationIcon(onClick: () -> Unit) {
 @Preview
 @Composable
 private fun ArticleTopBarPreview(@PreviewParameter(ArticleSample::class) article: Article) {
-    ArticleTopBar(
-        article = article.copy(extractedContentURL = URL("https://example.com")),
-        extractedContent = ExtractedContent(),
-        onToggleExtractContent = {},
-        onToggleRead = {},
-        onToggleStar = {},
-        onClose = {},
-        onStyleUpdate = {}
-    )
+    InjectedCapyTheme {
+        ArticleTopBar(
+            article = article.copy(extractedContentURL = URL("https://example.com")),
+            extractedContent = ExtractedContent(),
+            onToggleExtractContent = {},
+            onToggleRead = {},
+            onToggleStar = {},
+            onClose = {},
+            onStyleUpdate = {}
+        )
+    }
 }
 
 @Preview(device = "id:pixel_fold")
 @Composable
 private fun ArticleTopBarPreview_Tablet(@PreviewParameter(ArticleSample::class) article: Article) {
-    ArticleTopBar(
-        article = article,
-        extractedContent = ExtractedContent(),
-        onToggleExtractContent = {},
-        onToggleRead = {},
-        onToggleStar = {},
-        onClose = {},
-        onStyleUpdate = {}
-    )
+    InjectedCapyTheme {
+        ArticleTopBar(
+            article = article,
+            extractedContent = ExtractedContent(),
+            onToggleExtractContent = {},
+            onToggleRead = {},
+            onToggleStar = {},
+            onClose = {},
+            onStyleUpdate = {}
+        )
+    }
 }
 
 @Preview
 @Composable
 private fun ArticleTopBarPreview_MissingArticle() {
-    ArticleTopBar(
-        article = null,
-        extractedContent = ExtractedContent(),
-        onToggleExtractContent = {},
-        onToggleRead = {},
-        onToggleStar = {},
-        onClose = {},
-        onStyleUpdate = {}
-    )
+    InjectedCapyTheme {
+        ArticleTopBar(
+            article = null,
+            extractedContent = ExtractedContent(),
+            onToggleExtractContent = {},
+            onToggleRead = {},
+            onToggleStar = {},
+            onClose = {},
+            onStyleUpdate = {}
+        )
+    }
 }

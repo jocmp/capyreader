@@ -5,8 +5,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
@@ -25,7 +27,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.autofill.AutofillType.EmailAddress
 import androidx.compose.ui.autofill.AutofillType.Password
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -47,6 +51,8 @@ fun AuthFields(
     loading: Boolean = false,
     errorMessage: String? = null,
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     val (showPassword, setPasswordVisibility) = rememberSaveable {
         mutableStateOf(false)
     }
@@ -57,8 +63,14 @@ fun AuthFields(
         PasswordVisualTransformation()
     }
 
+    val submit = {
+        keyboardController?.hide()
+        onSubmit()
+    }
+
     Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = Modifier.imePadding()
     ) {
         errorMessage?.let { message ->
             ErrorAlert(message = message)
@@ -72,6 +84,9 @@ fun AuthFields(
             label = {
                 Text(stringResource(R.string.auth_fields_username))
             },
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next,
+            ),
             modifier = Modifier
                 .fillMaxWidth()
                 .autofill(
@@ -85,7 +100,15 @@ fun AuthFields(
             label = {
                 Text(stringResource(R.string.auth_fields_password))
             },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Go,
+                keyboardType = KeyboardType.Password
+            ),
+            keyboardActions = KeyboardActions(
+                onGo = {
+                    submit()
+                }
+            ),
             visualTransformation = passwordTransformation,
             singleLine = true,
             modifier = Modifier
@@ -120,7 +143,7 @@ fun AuthFields(
             Modifier.padding(top = 16.dp)
         ) {
             Button(
-                onClick = onSubmit,
+                onClick = submit,
                 enabled = !loading,
                 modifier = Modifier.fillMaxWidth()
             ) {
