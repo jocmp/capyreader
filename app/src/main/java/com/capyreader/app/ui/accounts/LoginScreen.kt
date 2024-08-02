@@ -6,6 +6,7 @@ import org.koin.compose.koinInject
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel = koinInject(),
+    onNavigateBack: () -> Unit,
     onSuccess: () -> Unit,
 ) {
     LoginView(
@@ -16,6 +17,7 @@ fun LoginScreen(
                 onSuccess()
             }
         },
+        onNavigateBack = onNavigateBack,
         username = viewModel.username,
         password = viewModel.password,
         loading = viewModel.loading,
