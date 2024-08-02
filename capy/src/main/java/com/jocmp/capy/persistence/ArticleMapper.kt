@@ -1,7 +1,7 @@
 package com.jocmp.capy.persistence
 
 import com.jocmp.capy.Article
-import com.jocmp.feedfinder.optionalURL
+import com.jocmp.capy.common.optionalURL
 import com.jocmp.capy.common.toDateTimeFromSeconds
 import java.net.URL
 
