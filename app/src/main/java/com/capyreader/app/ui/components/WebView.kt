@@ -3,14 +3,12 @@ package com.capyreader.app.ui.components
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup.LayoutParams
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
-import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
@@ -227,15 +225,19 @@ fun WebView(
     chromeClient.state = state
 
     AndroidView(
-        factory = { context ->
-            (factory?.invoke(context) ?: context.inflateWebView()).apply {
+        factory = { ctx ->
+            (factory?.invoke(ctx) ?: ctx.inflateWebView()).apply {
                 onCreated(this)
 
                 this.settings.javaScriptEnabled = true
+                this.settings.mediaPlaybackRequiresUserGesture = false
                 this.layoutParams = layoutParams
-                addJavascriptInterface(WebViewInterface(context), WebViewInterface.INTERFACE_NAME)
+                addJavascriptInterface(
+                    WebViewInterface(ctx),
+                    WebViewInterface.INTERFACE_NAME
+                )
 
-                setBackgroundColor(context.getColor(android.R.color.transparent))
+                setBackgroundColor(ctx.getColor(android.R.color.transparent))
 
                 state.lastScrollY?.let {
                     this.scrollTo(0, it)
@@ -345,7 +347,7 @@ open class AccompanistWebChromeClient : WebChromeClient() {
 
     override fun onProgressChanged(view: WebView, newProgress: Int) {
         super.onProgressChanged(view, newProgress)
-        if (state.loadingState is LoadingState.Finished) return
+        if (state.loadingState is Finished) return
         state.loadingState = Loading(newProgress / 100.0f)
     }
 }
@@ -441,7 +443,7 @@ class WebViewState(webContent: WebContent) {
      * Whether the webview is currently loading data in its main frame
      */
     val isLoading: Boolean
-        get() = loadingState !is LoadingState.Finished
+        get() = loadingState !is Finished
 
     /**
      * The title received from the loaded content of the current page
@@ -452,7 +454,7 @@ class WebViewState(webContent: WebContent) {
     /**
      * the favicon received from the loaded content of the current page
      */
-    public var pageIcon: Bitmap? by mutableStateOf(null)
+    var pageIcon: Bitmap? by mutableStateOf(null)
         internal set
 
     /**
@@ -460,15 +462,7 @@ class WebViewState(webContent: WebContent) {
      * Errors could be from any resource (iframe, image, etc.), not just for the main page.
      * For more fine grained control use the OnError callback of the WebView.
      */
-    public val errorsForCurrentRequest: SnapshotStateList<WebViewError> = mutableStateListOf()
-
-    /**
-     * The saved view state from when the view was destroyed last. To restore state,
-     * use the navigator and only call loadUrl if the bundle is null.
-     * See WebViewSaveStateSample.
-     */
-    var viewState: Bundle? = null
-        internal set
+    val errorsForCurrentRequest: SnapshotStateList<WebViewError> = mutableStateListOf()
 
     var lastScrollY: Int? = null
 
@@ -719,12 +713,6 @@ val WebStateSaver: Saver<WebViewState, Any> = run {
         },
     )
 }
-
-@Composable
-fun rememberWebViewState(): WebViewState = remember {
-    WebViewState(WebContent.NavigatorOnly)
-}
-
 
 private fun Context.inflateWebView(): WebView {
     return LayoutInflater
