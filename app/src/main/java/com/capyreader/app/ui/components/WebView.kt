@@ -3,7 +3,6 @@ package com.capyreader.app.ui.components
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup.LayoutParams
 import android.webkit.WebChromeClient
@@ -49,7 +48,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-
 
 /**
  * Doesn't really fetch from androidplatform.net. This is used as a placeholder domain:
@@ -176,9 +174,7 @@ fun WebView(
                 .build()
         )
     }
-    val chromeClient = remember {
-        AccompanistWebChromeClient()
-    }
+    val chromeClient = remember { AccompanistWebChromeClient() }
 
     val webView = state.webView
 
@@ -230,7 +226,6 @@ fun WebView(
 
     AndroidView(
         factory = { ctx ->
-            Log.d("[DEBUG]", "WebView: called factory scrollY=${state.lastScrollY}")
             (factory?.invoke(ctx) ?: ctx.inflateWebView()).apply {
                 onCreated(this)
 
@@ -253,9 +248,6 @@ fun WebView(
             }.also { state.webView = it }
         },
         modifier = modifier,
-        update = {
-            Log.d("[DEBUG]", "WebView: updated")
-        },
         onRelease = {
             onDispose(it)
         }
@@ -472,8 +464,7 @@ class WebViewState(webContent: WebContent) {
      */
     val errorsForCurrentRequest: SnapshotStateList<WebViewError> = mutableStateListOf()
 
-
-    var lastScrollY by mutableStateOf<Int?>(null)
+    var lastScrollY: Int? = null
 
     // We need access to this in the state saver. An internal DisposableEffect or AndroidView
     // onDestroy is called after the state saver and so can't be used.

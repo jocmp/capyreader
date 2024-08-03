@@ -34,6 +34,9 @@ extractors([
           node.attr("class", "article__body--subheading");
           return "span";
         },
+        "video[autoplay][loop]": (node) => {
+          node.attr("class", "article__video-autoplay--looped")
+        },
       },
     },
   },
