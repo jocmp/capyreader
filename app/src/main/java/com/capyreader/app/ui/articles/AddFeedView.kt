@@ -5,13 +5,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
@@ -22,7 +25,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,9 +39,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.capyreader.app.R
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.FeedOption
-import com.capyreader.app.R
 
 @Composable
 fun AddFeedView(
@@ -112,7 +114,12 @@ fun AddFeedView(
                 }
             )
             if (feedChoices.isNotEmpty()) {
-                Row(Modifier.padding(top = 8.dp)) {
+                Row(
+                    Modifier
+                        .weight(0.1f, fill = false)
+                        .heightIn(max = 300.dp)
+                        .padding(top = 8.dp)
+                ) {
                     FeedOptions(
                         options = feedChoices,
                         selectedOption = selectedOption,
@@ -149,7 +156,11 @@ fun FeedOptions(
     selectedOption: FeedOption?,
     onOptionSelect: (option: FeedOption) -> Unit,
 ) {
-    Column(Modifier.selectableGroup()) {
+    Column(
+        Modifier
+            .verticalScroll(rememberScrollState())
+            .selectableGroup()
+    ) {
         options.forEach { option ->
             val selected = option == selectedOption
             Row(
