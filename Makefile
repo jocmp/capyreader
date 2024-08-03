@@ -8,11 +8,11 @@ FASTLANE ?= bundle exec fastlane
 deps: ## Install bumpver
 	pip install bumpver==2023.1129
 
-.PHONY: bump-github-release
+.PHONY: bump-release-dev
 bump-release-dev: ## Bump GitHub version
 	bumpver update --tag=dev --push
 
-.PHONY: bump-github-release
+.PHONY: bump-release-production
 bump-release-production: ## Bump Google Play version
 	bumpver update --tag=final
 
