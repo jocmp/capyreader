@@ -1,14 +1,8 @@
 function addMediaListeners() {
-  [...document.getElementsByTagName('video')].forEach(v => {
-    v.addEventListener('click', () => {
-      const sources = v.getElementsByTagName("source")
-
-      if (!sources.length) {
-        return;
-      }
-
-      Android.openVideo(sources[0].src);
-    })
+  [...document.getElementsByTagName("video")].forEach((v) => {
+    v.setAttribute("preload", "auto");
+    v.setAttribute("controls", true);
+    v.setAttribute("controlslist", "nofullscreen nodownload noremoteplayback");
   });
 }
 
