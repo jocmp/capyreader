@@ -26,9 +26,9 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:274059433914:android:2c1d21f3a0f12546c52f83",
+        "mobilesdk_app_id": "1:274059433914:android:e09bf2c22c689399c52f83",
         "android_client_info": {
-          "package_name": "com.jocmp.capyreader"
+          "package_name": "com.capyreader.app.debug"
         }
       },
       "oauth_client": [],

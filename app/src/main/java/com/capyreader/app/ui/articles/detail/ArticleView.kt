@@ -25,7 +25,9 @@ fun ArticleView(
     renderer: ArticleRenderer = koinInject(),
     onBackPressed: () -> Unit,
     onToggleRead: () -> Unit,
-    onToggleStar: () -> Unit
+    onToggleStar: () -> Unit,
+    onNavigateToMedia: (url: String) -> Unit,
+    enableBackHandler: Boolean = false
 ) {
     val articleID = article?.id
     val templateColors = articleTemplateColors()
@@ -96,13 +98,14 @@ fun ArticleView(
                 WebView(
                     state = webViewState,
                     navigator = webViewNavigator,
+                    onNavigateToMedia = onNavigateToMedia,
                     modifier = Modifier.fillMaxSize(),
                 )
             }
         }
     }
 
-    BackHandler(article != null) {
+    BackHandler(enableBackHandler && article != null) {
         onBackPressed()
     }
 

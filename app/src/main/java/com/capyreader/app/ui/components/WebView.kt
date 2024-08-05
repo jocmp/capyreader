@@ -3,7 +3,6 @@ package com.capyreader.app.ui.components
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup.LayoutParams
 import android.webkit.WebChromeClient
@@ -14,8 +13,6 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,7 +29,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.webkit.WebViewAssetLoader
@@ -98,6 +94,7 @@ fun WebView(
     navigator: WebViewNavigator = rememberWebViewNavigator(),
     onCreated: (WebView) -> Unit = {},
     onDispose: (WebView) -> Unit = {},
+    onNavigateToMedia: (url: String) -> Unit = {},
     factory: ((Context) -> WebView)? = null,
 ) {
     BoxWithConstraints(modifier) {
@@ -127,6 +124,7 @@ fun WebView(
             navigator,
             onCreated,
             onDispose,
+            onNavigateToMedia,
             factory
         )
     }
@@ -164,9 +162,16 @@ fun WebView(
     navigator: WebViewNavigator = rememberWebViewNavigator(),
     onCreated: (WebView) -> Unit = {},
     onDispose: (WebView) -> Unit = {},
+    onNavigateToMedia: (url: String) -> Unit = {},
     factory: ((Context) -> WebView)? = null,
 ) {
     val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    val navigateToMedia = { url: String ->
+        coroutineScope.launch(Dispatchers.Main) {
+            onNavigateToMedia(url)
+        }
+    }
 
     val client = remember {
         AccompanistWebViewClient(
@@ -237,7 +242,9 @@ fun WebView(
                 this.settings.mediaPlaybackRequiresUserGesture = false
                 this.layoutParams = layoutParams
                 addJavascriptInterface(
-                    WebViewInterface(ctx),
+                    WebViewInterface(
+                        navigateToMedia = { navigateToMedia(it) }
+                    ),
                     WebViewInterface.INTERFACE_NAME
                 )
 

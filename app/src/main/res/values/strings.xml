@@ -123,4 +123,5 @@
     <string name="font_option_system_default">System default</string>
     <string name="article_font_menu_label">Font</string>
     <string name="article_text_size_label">Text size</string>
+    <string name="image_error_text">Error loading image</string>
 </resources>
