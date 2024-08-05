@@ -12,7 +12,6 @@ import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.ui.App
 import com.capyreader.app.ui.Route
 import org.koin.android.ext.android.get
-import org.koin.compose.koinInject
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.CapyReader" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <style name="Theme.CapyReader" parent="Theme.Material3.DynamicColors.DayNight.NoActionBar">
         <item name="android:windowLayoutInDisplayCutoutMode">
             shortEdges
         </item>
