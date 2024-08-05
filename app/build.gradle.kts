@@ -105,6 +105,7 @@ android {
 
 dependencies {
     implementation("androidx.compose.material3:material3-window-size-class-android:1.2.1")
+    implementation("com.google.android.material:material:1.12.0")
     val sqldelightVersion = libs.versions.sqldelight.get()
     val pagingVersion = libs.versions.androidx.paging.get()
 
