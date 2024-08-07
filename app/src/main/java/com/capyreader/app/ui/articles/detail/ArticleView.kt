@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.ui.components.WebView
 import com.capyreader.app.ui.components.WebViewNavigator
@@ -33,11 +34,20 @@ fun ArticleView(
     val templateColors = articleTemplateColors()
     val colors = templateColors.asMap()
     val webViewState = rememberSaveableWebViewState(key = articleID)
+    val byline = article?.byline(context = LocalContext.current).orEmpty()
+
     val extractedContentState = rememberExtractedContent(
         article = article,
         onComplete = { content ->
             article?.let {
-                webViewNavigator.loadHtml(renderer.render(article, content, colors = colors))
+                webViewNavigator.loadHtml(
+                    renderer.render(
+                        article,
+                        byline = byline,
+                        extractedContent = content,
+                        colors = colors
+                    )
+                )
             }
         }
     )
@@ -53,7 +63,7 @@ fun ArticleView(
         article ?: return
 
         if (extractedContent.isComplete) {
-            webViewNavigator.loadHtml(renderer.render(article, colors = colors))
+            webViewNavigator.loadHtml(renderer.render(article, byline = byline, colors = colors))
             extractedContentState.reset()
         } else if (!extractedContent.isLoading) {
             extractedContentState.fetch()
@@ -127,7 +137,7 @@ fun ArticleView(
         if (extractedContent.requestShow) {
             extractedContentState.fetch()
         } else {
-            webViewNavigator.loadHtml(renderer.render(article, colors = colors))
+            webViewNavigator.loadHtml(renderer.render(article, byline = byline, colors = colors))
         }
     }
 

@@ -4,7 +4,9 @@
 
 _A smallish RSS reader with support for Feedbin and local feeds._
 
-![GitHub Release][github_img] ![Tests](https://github.com/jocmp/capyreader/actions/workflows/ci.yml/badge.svg)
+![Tests](https://github.com/jocmp/capyreader/actions/workflows/ci.yml/badge.svg) <a href="https://hosted.weblate.org/engage/capy-reader/">
+ <img src="https://hosted.weblate.org/widget/capy-reader/strings/svg-badge.svg" alt="Translation status" />
+</a>
 
 ## Download
 
