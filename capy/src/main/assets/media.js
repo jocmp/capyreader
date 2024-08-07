@@ -14,7 +14,6 @@ function configureVideoTags() {
 
 function cleanAnchorImageTags() {
   [...document.querySelectorAll("a img")].forEach((img) => {
-
     attachImageToAnchorParent(img, img.parentNode);
   });
 }
@@ -22,15 +21,15 @@ function cleanAnchorImageTags() {
 /**
  *
  * @param {HTMLImageElement} img
- * @param {ParentNode} parentNode
+ * @param {ParentNode | null} parentNode
  */
 function attachImageToAnchorParent(img, parentNode) {
-  if (parentNode.tagName === "DOCUMENT") {
+  if (parentNode == null || parentNode.tagName === "DOCUMENT") {
     return;
   } else if (parentNode.tagName === "A") {
     let anchor = parentNode;
-    anchor.parentNode.appendChild(img);
-    anchor.parentNode.removeChild(anchor);
+    anchor.parentNode?.appendChild(img);
+    anchor.parentNode?.removeChild(anchor);
   } else {
     attachImageToAnchorParent(img, parentNode.parentNode);
   }
