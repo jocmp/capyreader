@@ -1,6 +1,9 @@
 package com.capyreader.app.ui.articles
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
@@ -38,8 +41,9 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.R
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.detail.ArticleView
-import com.capyreader.app.ui.articles.list.EmptyOnboardingView
 import com.capyreader.app.ui.articles.detail.resetScrollBehaviorListener
+import com.capyreader.app.ui.articles.list.EmptyOnboardingView
+import com.capyreader.app.ui.articles.media.ArticleMediaView
 import com.capyreader.app.ui.components.rememberWebViewNavigator
 import com.capyreader.app.ui.fixtures.FeedPreviewFixture
 import com.capyreader.app.ui.fixtures.FolderPreviewFixture
@@ -112,6 +116,7 @@ fun ArticleLayout(
         listState = listState,
         scrollBehavior = scrollBehavior
     )
+    var mediaUrl by rememberSaveable { mutableStateOf<String?>(null) }
 
     val openUpdatePasswordDialog = {
         onUnauthorizedDismissRequest()
@@ -322,6 +327,10 @@ fun ArticleLayout(
                 onToggleRead = onToggleArticleRead,
                 onToggleStar = onToggleArticleStar,
                 webViewNavigator = webViewNavigator,
+                onNavigateToMedia = {
+                    mediaUrl = it
+                },
+                enableBackHandler = mediaUrl == null,
                 onBackPressed = {
                     scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
                     onClearArticle()
@@ -329,6 +338,19 @@ fun ArticleLayout(
             )
         }
     )
+
+    AnimatedVisibility(
+        enter = fadeIn(),
+        exit = fadeOut(),
+        visible = mediaUrl != null
+    ) {
+        ArticleMediaView(
+            onDismissRequest = {
+                mediaUrl = null
+            },
+            url = mediaUrl,
+        )
+    }
 
     if (showUnauthorizedMessage) {
         UnauthorizedAlertDialog(
@@ -356,7 +378,11 @@ fun ArticleLayout(
         }
     }
 
-    BackHandler(canGoBackToAll(filter, article)) {
+    BackHandler(mediaUrl != null) {
+        mediaUrl = null
+    }
+
+    BackHandler(mediaUrl == null && canGoBackToAll(filter, article)) {
         onSelectArticleFilter()
         scrollToTop()
     }
@@ -383,28 +409,28 @@ fun ArticleLayoutPreview() {
     MaterialTheme {
         ArticleLayout(
             filter = ArticleFilter.default(),
-            allFeeds = emptyList(),
             folders = folders,
             feeds = feeds,
+            allFeeds = emptyList(),
             articles = emptyFlow(),
-            refreshInterval = RefreshInterval.MANUALLY_ONLY,
             article = null,
             statusCount = 30,
+            refreshInterval = RefreshInterval.MANUALLY_ONLY,
             onFeedRefresh = {},
             onSelectFolder = {},
             onSelectFeed = {},
             onSelectArticleFilter = { },
             onSelectStatus = {},
             onSelectArticle = { _, _ -> },
-            onRemoveFeed = { _, _, _ -> },
             onNavigateToSettings = { },
             onClearArticle = { },
             onToggleArticleRead = { },
             onToggleArticleStar = {},
             onMarkAllRead = {},
+            onRemoveFeed = { _, _, _ -> },
             drawerValue = DrawerValue.Open,
             showUnauthorizedMessage = false,
-            onUnauthorizedDismissRequest = {}
+            onUnauthorizedDismissRequest = {},
         )
     }
 }

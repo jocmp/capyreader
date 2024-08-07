@@ -27,6 +27,7 @@ fun ArticleScreen(
         articles = viewModel.articles,
         article = viewModel.article,
         statusCount = statusCount,
+        refreshInterval = appPreferences.refreshInterval.get(),
         onFeedRefresh = { completion ->
             viewModel.refreshFeed(completion)
         },
@@ -35,14 +36,13 @@ fun ArticleScreen(
         onSelectArticleFilter = viewModel::selectArticleFilter,
         onSelectStatus = viewModel::selectStatus,
         onSelectArticle = viewModel::selectArticle,
-        onRemoveFeed = viewModel::removeFeed,
         onNavigateToSettings = onNavigateToSettings,
         onClearArticle = viewModel::clearArticle,
         onToggleArticleRead = viewModel::toggleArticleRead,
         onToggleArticleStar = viewModel::toggleArticleStar,
         onMarkAllRead = viewModel::markAllRead,
+        onRemoveFeed = viewModel::removeFeed,
         showUnauthorizedMessage = viewModel.showUnauthorizedMessage,
         onUnauthorizedDismissRequest = viewModel::dismissUnauthorizedMessage,
-        refreshInterval = appPreferences.refreshInterval.get()
     )
 }

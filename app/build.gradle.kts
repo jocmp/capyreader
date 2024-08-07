@@ -80,6 +80,9 @@ android {
             )
             signingConfig = signingConfigs.getByName("release")
         }
+        debug {
+            applicationIdSuffix = ".debug"
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -134,6 +137,8 @@ dependencies {
     implementation("io.insert-koin:koin-androidx-workmanager")
     implementation("io.insert-koin:koin-core")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+    implementation("me.saket.telephoto:zoomable:0.12.1")
+    implementation("me.saket.telephoto:zoomable-image-coil:0.12.1")
     implementation(libs.androidx.preferences)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.serialization.json)
