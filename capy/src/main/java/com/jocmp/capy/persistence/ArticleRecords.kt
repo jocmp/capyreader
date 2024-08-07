@@ -38,6 +38,12 @@ internal class ArticleRecords internal constructor(
             .map { it.toLong() }
     }
 
+    fun deleteOldArticles() {
+        val maxDate = cutoffDate().toEpochSecond()
+
+        database.articlesQueries.deleteArticles(publishedBefore = maxDate)
+    }
+
     fun markAllUnread(articleIDs: List<String>, updatedAt: ZonedDateTime = nowUTC()) {
         val updated = updatedAt.toEpochSecond()
 
@@ -137,6 +143,7 @@ internal class ArticleRecords internal constructor(
                 filter.articleStatus,
                 range = range
             )
+
             is ArticleFilter.Feeds -> byFeed.unreadArticleIDs(
                 filter.feedStatus,
                 feedIDs = listOf(filter.feedID),

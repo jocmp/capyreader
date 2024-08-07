@@ -3,6 +3,7 @@ package com.jocmp.capy.persistence
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.RandomUUID
+import com.jocmp.capy.common.nowUTC
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.ArticleFixture
 import com.jocmp.capy.repeated
@@ -10,6 +11,8 @@ import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class ArticleRecordsTest {
@@ -127,5 +130,31 @@ class ArticleRecordsTest {
         }
 
         assertTrue(articles.none { it.read })
+    }
+
+    @Test
+    fun deleteOldArticles() {
+        val oldPublishedAt = nowUTC().minusMonths(4).toEpochSecond()
+        val articleRecords = ArticleRecords(database)
+
+        val oldArticle = articleFixture.create(publishedAt = oldPublishedAt)
+        val oldUnreadArticle = articleFixture.create(publishedAt = oldPublishedAt, read = false)
+        val newArticle = articleFixture.create()
+        val oldStarredArticle = articleFixture.create(publishedAt = oldPublishedAt).run {
+            articleRecords.markAllStarred(listOf(id))
+            articleRecords.find(id)!!
+        }
+
+        assertNotNull(articleRecords.find(newArticle.id))
+        assertNotNull(articleRecords.find(oldUnreadArticle.id))
+        assertNotNull(articleRecords.find(oldStarredArticle.id))
+        assertNotNull(articleRecords.find(oldArticle.id))
+
+        articleRecords.deleteOldArticles()
+
+        assertNotNull(articleRecords.find(newArticle.id))
+        assertNotNull(articleRecords.find(oldUnreadArticle.id))
+        assertNotNull(articleRecords.find(oldStarredArticle.id))
+        assertNull(articleRecords.find(oldArticle.id))
     }
 }
