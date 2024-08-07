@@ -5,6 +5,7 @@ import com.jocmp.capy.Feed
 import com.jocmp.capy.RandomUUID
 import com.jocmp.capy.common.nowUTCInSeconds
 import com.jocmp.capy.db.Database
+import com.jocmp.capy.db.LastUpdatedAt
 import com.jocmp.capy.persistence.articleMapper
 
 class ArticleFixture(private val database: Database) {
@@ -14,7 +15,8 @@ class ArticleFixture(private val database: Database) {
         id: String = RandomUUID.generate(),
         title: String = "Test Title",
         feed: Feed = feedFixture.create(feedURL = "https://example.com/${RandomUUID.generate()}"),
-        publishedAt: Long = nowUTCInSeconds()
+        read: Boolean = true,
+        publishedAt: Long = nowUTCInSeconds(),
     ): Article {
         database.transaction {
             database.articlesQueries.create(
@@ -32,7 +34,7 @@ class ArticleFixture(private val database: Database) {
             database.articlesQueries.updateStatus(
                 article_id = id,
                 updated_at = publishedAt,
-                read = true
+                read = read
             )
         }
 
