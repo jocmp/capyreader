@@ -12,7 +12,7 @@ import com.jocmp.capy.R as CapyRes
 class ArticleRenderer(
     private val context: Context,
     private val textSize: Preference<TextSize>,
-    private val fontOption: Preference<FontOption>
+    private val fontOption: Preference<FontOption>,
 ) {
     private var articleID: String? = null
 
@@ -26,6 +26,7 @@ class ArticleRenderer(
 
     fun render(
         article: Article,
+        byline: String,
         extractedContent: ExtractedContent = ExtractedContent(),
         colors: Map<String, String>,
     ): String {
@@ -34,7 +35,7 @@ class ArticleRenderer(
         val substitutions = colors + mapOf(
             "external_link" to article.url.toString(),
             "title" to article.title,
-            "byline" to byline(article),
+            "byline" to byline,
             "feed_name" to article.feedName,
             "body" to body(article, extractedContent),
             "script" to script(article, extractedContent),
@@ -80,19 +81,6 @@ class ArticleRenderer(
 
         return article.contentHTML.ifBlank {
             article.summary
-        }
-    }
-
-    private fun byline(article: Article): String {
-        val deviceDateTime = article.publishedAt.toDeviceDateTime()
-        val date = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).format(deviceDateTime)
-        val time = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT).format(deviceDateTime)
-        val articleAuthor = article.author
-
-        return if (!articleAuthor.isNullOrBlank()) {
-            context.getString(CapyRes.string.article_byline, date, time, articleAuthor)
-        } else {
-            context.getString(CapyRes.string.article_byline_date_only, date, time)
         }
     }
 }

@@ -124,4 +124,6 @@
     <string name="article_font_menu_label">Font</string>
     <string name="article_text_size_label">Text size</string>
     <string name="image_error_text">Error loading image</string>
+    <string name="article_byline">%1$s at %2$s by %3$s</string>
+    <string name="article_byline_date_only">%1$s at %2$s</string>
 </resources>
