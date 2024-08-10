@@ -21,6 +21,7 @@ dependencyResolutionManagement {
             version("sqldelight", "2.0.2")
             version("ksp", "1.9.22-1.0.16")
             version("androidx-paging", "3.3.0")
+            version("androidx-glance", "1.1.0")
             library("moshi", "com.squareup.moshi:moshi:1.15.1")
             library("jsoup", "org.jsoup:jsoup:1.17.1")
             library("okhttp-client", "com.squareup.okhttp3:okhttp:4.12.0")
