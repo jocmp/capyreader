@@ -191,7 +191,6 @@ internal class FeedbinAccountDelegate(
             refreshStarredEntries()
             refreshAllArticles(since = since)
             fetchMissingArticles()
-            deleteOldArticles()
 
             Result.success(Unit)
         } catch (exception: UnknownHostException) {
@@ -272,10 +271,6 @@ internal class FeedbinAccountDelegate(
                 }
             }
         }
-    }
-
-    private fun deleteOldArticles() {
-        articleRecords.deleteOldArticles()
     }
 
     private suspend fun fetchPaginatedEntries(

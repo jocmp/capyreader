@@ -1,12 +1,10 @@
 package com.capyreader.app.ui.settings
 
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import com.capyreader.app.common.GetOPMLContent
-import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.transfers.OPMLExporter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -56,6 +54,8 @@ fun SettingsScreen(
             updateOpenLinksInternally = viewModel::updateOpenLinksInternally,
             refreshInterval = viewModel.refreshInterval,
             updateRefreshInterval = viewModel::updateRefreshInterval,
+            autoDelete = viewModel.autoDelete,
+            updateAutoDelete = viewModel::updateAutoDelete,
             updateTheme = viewModel::updateTheme,
             theme = viewModel.theme,
             updateStickFullContent = viewModel::updateStickyFullContent,

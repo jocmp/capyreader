@@ -6,6 +6,7 @@ import com.jocmp.capy.RandomUUID
 import com.jocmp.capy.common.nowUTC
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.ArticleFixture
+import com.jocmp.capy.reload
 import com.jocmp.capy.repeated
 import org.junit.Before
 import org.junit.Test
@@ -145,16 +146,16 @@ class ArticleRecordsTest {
             articleRecords.find(id)!!
         }
 
-        assertNotNull(articleRecords.find(newArticle.id))
-        assertNotNull(articleRecords.find(oldUnreadArticle.id))
-        assertNotNull(articleRecords.find(oldStarredArticle.id))
-        assertNotNull(articleRecords.find(oldArticle.id))
+        assertNotNull(articleRecords.reload(newArticle))
+        assertNotNull(articleRecords.reload(oldUnreadArticle))
+        assertNotNull(articleRecords.reload(oldStarredArticle))
+        assertNotNull(articleRecords.reload(oldArticle))
 
         articleRecords.deleteOldArticles()
 
-        assertNotNull(articleRecords.find(newArticle.id))
-        assertNotNull(articleRecords.find(oldUnreadArticle.id))
-        assertNotNull(articleRecords.find(oldStarredArticle.id))
-        assertNull(articleRecords.find(oldArticle.id))
+        assertNotNull(articleRecords.reload(newArticle))
+        assertNotNull(articleRecords.reload(oldUnreadArticle))
+        assertNotNull(articleRecords.reload(oldStarredArticle))
+        assertNull(articleRecords.reload(oldArticle))
     }
 }

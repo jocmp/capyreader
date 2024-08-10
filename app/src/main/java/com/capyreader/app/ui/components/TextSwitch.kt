@@ -27,7 +27,10 @@ fun TextSwitch(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(4.dp),
+            modifier = Modifier.weight(0.1f)
+        ) {
             Text(text = title)
             if (subtitle != null) {
                 Text(

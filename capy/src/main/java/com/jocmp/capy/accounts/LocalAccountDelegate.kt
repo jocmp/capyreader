@@ -8,7 +8,6 @@ import com.jocmp.capy.common.nowUTC
 import com.jocmp.capy.common.toDateTime
 import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.db.Database
-import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.capy.persistence.FeedRecords
 import com.jocmp.capy.persistence.TaggingRecords
 import com.jocmp.feedfinder.DefaultFeedFinder
@@ -31,13 +30,11 @@ class LocalAccountDelegate(
     private val feedFinder: FeedFinder = DefaultFeedFinder(httpClient),
 ) : AccountDelegate {
     private val articleContent = ArticleContent(httpClient)
-    private val articleRecords = ArticleRecords(database)
     private val feedRecords = FeedRecords(database)
     private val taggingRecords = TaggingRecords(database)
 
     override suspend fun refresh(): Result<Unit> {
         refreshFeeds()
-        deleteOldArticles()
 
         return Result.success(Unit)
     }
@@ -143,10 +140,6 @@ class LocalAccountDelegate(
                 }
             }
         }
-    }
-
-    private  fun deleteOldArticles() {
-        articleRecords.deleteOldArticles()
     }
 
     private fun saveArticles(
