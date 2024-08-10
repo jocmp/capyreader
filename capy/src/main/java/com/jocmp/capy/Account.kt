@@ -1,6 +1,7 @@
 package com.jocmp.capy
 
 import com.jocmp.capy.accounts.AddFeedResult
+import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.accounts.FeedbinAccountDelegate
 import com.jocmp.capy.accounts.FeedbinOkHttpClient
 import com.jocmp.capy.accounts.LocalAccountDelegate
@@ -98,7 +99,15 @@ data class Account(
         )
     }
 
-    suspend fun refresh(): Result<Unit> = delegate.refresh()
+    suspend fun refresh(): Result<Unit> {
+        val result = delegate.refresh()
+
+        if (preferences.autoDelete.get() == AutoDelete.ENABLED) {
+            articleRecords.deleteOldArticles()
+        }
+
+        return result
+    }
 
     suspend fun findFeed(feedID: String): Feed? {
         return feedRecords.findBy(feedID)

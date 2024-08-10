@@ -3,7 +3,9 @@ package com.capyreader.app.ui.settings
 import android.app.Application
 import android.content.Context
 import android.net.Uri
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.WorkInfo
@@ -18,6 +20,7 @@ import com.capyreader.app.transfers.OPMLImportWorker.Companion.PROGRESS_CURRENT_
 import com.capyreader.app.transfers.OPMLImportWorker.Companion.PROGRESS_TOTAL
 import com.jocmp.capy.Account
 import com.jocmp.capy.AccountManager
+import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.opml.ImportProgress
 import kotlinx.coroutines.Dispatchers
@@ -30,13 +33,20 @@ class SettingsViewModel(
     private val appPreferences: AppPreferences,
     application: Application
 ) : AndroidViewModel(application) {
-    private val _refreshInterval = mutableStateOf(refreshScheduler.refreshInterval)
+    var refreshInterval by mutableStateOf(refreshScheduler.refreshInterval)
+        private set
 
-    private val _openLinksInternally = mutableStateOf(appPreferences.openLinksInternally.get())
+    var autoDelete by mutableStateOf(account.preferences.autoDelete.get())
+        private set
 
-    private val _theme = mutableStateOf(appPreferences.theme.get())
+    var canOpenLinksInternally by mutableStateOf(appPreferences.openLinksInternally.get())
+        private set
 
-    private val _importProgress = mutableStateOf<ImportProgress?>(null)
+    var theme by mutableStateOf(appPreferences.theme.get())
+        private set
+
+    var importProgress by mutableStateOf<ImportProgress?>(null)
+        private set
 
     private val _imagePreview = mutableStateOf(appPreferences.articleDisplay.imagePreview.get())
 
@@ -46,20 +56,8 @@ class SettingsViewModel(
 
     private val _showFeedIcons = mutableStateOf(appPreferences.articleDisplay.showFeedIcons.get())
 
-    private val _enableStickyFullContent =
-        mutableStateOf(appPreferences.enableStickyFullContent.get())
-
-    val importProgress: ImportProgress?
-        get() = _importProgress.value
-
-    val refreshInterval: RefreshInterval
-        get() = _refreshInterval.value
-
-    val theme: ThemeOption
-        get() = _theme.value
-
-    val canOpenLinksInternally: Boolean
-        get() = _openLinksInternally.value
+    var enableStickyFullContent by mutableStateOf(appPreferences.enableStickyFullContent.get())
+        private set
 
     val accountSource: Source = account.source
 
@@ -78,25 +76,28 @@ class SettingsViewModel(
     val showFeedIcons: Boolean
         get() = _showFeedIcons.value
 
-    val enableStickyFullContent: Boolean
-        get() = _enableStickyFullContent.value
-
     fun updateRefreshInterval(interval: RefreshInterval) {
         refreshScheduler.update(interval)
 
-        _refreshInterval.value = interval
+        this.refreshInterval = interval
+    }
+
+    fun updateAutoDelete(autoDelete: AutoDelete) {
+        account.preferences.autoDelete.set(autoDelete)
+
+        this.autoDelete = autoDelete
     }
 
     fun updateTheme(theme: ThemeOption) {
         appPreferences.theme.set(theme)
 
-        _theme.value = theme
+        this.theme = theme
     }
 
     fun updateOpenLinksInternally(openLinksInternally: Boolean) {
         appPreferences.openLinksInternally.set(openLinksInternally)
 
-        _openLinksInternally.value = openLinksInternally
+        this.canOpenLinksInternally = openLinksInternally
     }
 
     fun updateImagePreview(imagePreview: ImagePreview) {
@@ -126,7 +127,7 @@ class SettingsViewModel(
     fun updateStickyFullContent(enable: Boolean) {
         appPreferences.enableStickyFullContent.set(enable)
 
-        _enableStickyFullContent.value = enable
+        enableStickyFullContent = enable
 
         if (!enable) {
             viewModelScope.launch(Dispatchers.IO) {
@@ -150,12 +151,12 @@ class SettingsViewModel(
                 .getWorkInfoByIdFlow(requestID)
                 .collect { workInfo: WorkInfo? ->
                     if (workInfo == null || workInfo.state.isFinished) {
-                        _importProgress.value = null
+                        importProgress = null
                     } else {
                         val currentCount = workInfo.progress.getInt(PROGRESS_CURRENT_COUNT, 0)
                         val total = workInfo.progress.getInt(PROGRESS_TOTAL, 0)
 
-                        _importProgress.value = ImportProgress(
+                        importProgress = ImportProgress(
                             currentCount = currentCount,
                             total = total
                         )

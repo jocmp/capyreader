@@ -50,6 +50,7 @@ import com.capyreader.app.BuildConfig.VERSION_NAME
 import com.capyreader.app.R
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.common.ThemeOption
+import com.jocmp.capy.accounts.AutoDelete
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.setupCommonModules
 import com.capyreader.app.ui.components.TextSwitch
@@ -64,6 +65,8 @@ import org.koin.compose.KoinApplication
 data class SettingsOptions(
     val canOpenLinksInternally: Boolean,
     val refreshInterval: RefreshInterval,
+    val autoDelete: AutoDelete,
+    val updateAutoDelete: (option: AutoDelete) -> Unit,
     val theme: ThemeOption,
     val updateOpenLinksInternally: (openLinksInternally: Boolean) -> Unit,
     val updateRefreshInterval: (interval: RefreshInterval) -> Unit,
@@ -157,6 +160,19 @@ fun SettingsView(
                         RefreshIntervalMenu(
                             refreshInterval = settings.refreshInterval,
                             updateRefreshInterval = settings.updateRefreshInterval,
+                        )
+                    }
+
+                    RowItem {
+                        TextSwitch(
+                            onCheckedChange = { enabled ->
+                                settings.updateAutoDelete(
+                                    if (enabled) AutoDelete.ENABLED else AutoDelete.DISABLED
+                                )
+                            },
+                            checked = settings.autoDelete == AutoDelete.ENABLED,
+                            title = stringResource(R.string.settings_option_auto_delete_articles_title),
+                            subtitle = stringResource(R.string.settings_option_auto_delete_articles_subtitle)
                         )
                     }
                 }
@@ -401,6 +417,8 @@ fun AccountSettingsViewPreview() {
             settings = SettingsOptions(
                 refreshInterval = RefreshInterval.EVERY_HOUR,
                 updateRefreshInterval = {},
+                updateAutoDelete = {},
+                autoDelete = AutoDelete.ENABLED,
                 updateTheme = {},
                 theme = ThemeOption.LIGHT,
                 canOpenLinksInternally = true,
@@ -445,6 +463,8 @@ fun AccountSettingsView_LocalPreview() {
                 settings = SettingsOptions(
                     refreshInterval = RefreshInterval.EVERY_HOUR,
                     updateRefreshInterval = {},
+                    updateAutoDelete = {},
+                    autoDelete = AutoDelete.ENABLED,
                     updateTheme = {},
                     theme = ThemeOption.LIGHT,
                     canOpenLinksInternally = true,
