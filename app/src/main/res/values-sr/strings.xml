@@ -64,7 +64,7 @@
     <string name="settings_more_display_options_button">Više opcija prikaza</string>
     <string name="settings_section_version">Verzija</string>
     <string name="settings_option_copy_version">Kopiraj verziju</string>
-    <string name="empty_onboarding_prompt">Započnite dodavanjem Izvora</string>
+    <string name="empty_onboarding_prompt">Započnite sa dodavanjem Izvora</string>
     <string name="refresh_on_start">Na startu</string>
     <string name="empty_onboarding_title">Još nema Izvora</string>
     <string name="article_font_menu_label">Font</string>
@@ -74,13 +74,13 @@
     <string name="article_text_size_label">Veličina Teksta</string>
     <string name="article_byline">%1$s u %2$s od %3$s</string>
     <string name="article_byline_date_only">%1$s u %2$s</string>
-    <string name="app_name">Kapi čitač</string>
+    <string name="app_name">Kapi Čitač</string>
     <string name="add_feed_submit">Dodaj</string>
     <string name="filter_all">Sve</string>
     <string name="feed_action_unsubscribe_confirm">Ukloni Izvor</string>
     <string name="feed_action_edit">Uredi Izvor</string>
     <string name="feed_action_unsubscribe_title">Ukloni Izvor</string>
-    <string name="article_view_star">Sačuvano</string>
+    <string name="article_view_star">Sačuvaj</string>
     <string name="settings_remove_account_message_feedbin">Da li ste sigurni da želite da se odjavite?</string>
     <string name="settings_remove_account_confirm_feedbin">Odjavite se</string>
     <string name="settings_remove_account_title_local">Izbriši nalog</string>
@@ -128,4 +128,6 @@
     <string name="edit_feed_tags">Tagovi</string>
     <string name="feed_action_unsubscribe_message">Da li ste sigurni da želite da uklonite Izvor „%1$s“?</string>
     <string name="update_auth_title">Prijavi se na Feedbin</string>
+    <string name="settings_option_auto_delete_articles_subtitle">Izbrišite pročitane nesačuvane članke starije od 3 meseca</string>
+    <string name="settings_option_auto_delete_articles_title">Automatsko brisanje članaka</string>
 </resources>
