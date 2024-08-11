@@ -35,6 +35,8 @@ If you have questions or feature requests, please post them to [Discussions](htt
 
 Translations are hosted on [Crowdin](https://crowdin.com/project/capyreader). Feel free to add or update translations.
 
+If you don't see your language, please [submit a request](https://github.com/jocmp/capyreader/discussions/new?category=feature-requests) in Discussions.
+
 ## Building the app
 
 ### Getting Started
