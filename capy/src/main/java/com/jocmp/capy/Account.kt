@@ -201,5 +201,12 @@ data class Account(
     }
 }
 
+fun Account.latestArticles(): List<Article> {
+    return articleRecords
+        .byStatus
+        .all(status = ArticleStatus.UNREAD, limit = 25, offset = 0)
+        .executeAsList()
+}
+
 private fun Feedbin.Companion.forAccount(path: URI, preferences: AccountPreferences) =
     create(client = FeedbinOkHttpClient.forAccount(path, preferences))
