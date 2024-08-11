@@ -17,6 +17,6 @@ dependencies {
     implementation(libs.okhttp.client)
     ksp(libs.moshi.kotlin.codegen)
     testImplementation(kotlin("test"))
-    testImplementation("junit:junit:4.13.2")
-    testImplementation(testLibs.kotlinx.coroutines.test)
+    testImplementation(libs.tests.junit)
+    testImplementation(libs.tests.kotlinx.coroutines)
 }

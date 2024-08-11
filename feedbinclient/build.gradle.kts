@@ -10,14 +10,14 @@ java {
 }
 
 dependencies {
-    implementation(libs.retrofit2.retrofit)
-    implementation(libs.moshi)
     implementation(libs.kotlinx.coroutines.core)
-    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation(libs.moshi)
+    implementation(libs.moshi.converter)
+    implementation(libs.retrofit2.retrofit)
     implementation(libs.retrofit2.retrofit)
     ksp(libs.moshi.kotlin.codegen)
     testImplementation(kotlin("test"))
-    testImplementation("junit:junit:4.13.2")
-    testImplementation(testLibs.mockk.mockk)
-    testImplementation(testLibs.kotlinx.coroutines.test)
+    testImplementation(libs.tests.junit)
+    testImplementation(libs.tests.kotlinx.coroutines)
+    testImplementation(libs.tests.mockk.mockk)
 }

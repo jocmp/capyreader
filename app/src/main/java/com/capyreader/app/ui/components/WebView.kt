@@ -598,7 +598,6 @@ public class WebViewNavigator(private val coroutineScope: CoroutineScope) {
 
     fun loadHtml(
         html: String,
-        baseUrl: String? = null,
         mimeType: String? = null,
         encoding: String? = "utf-8",
         historyUrl: String? = null
