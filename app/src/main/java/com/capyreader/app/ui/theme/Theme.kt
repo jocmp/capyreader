@@ -97,8 +97,6 @@ private fun darkScheme(): ColorScheme {
 
 @Composable
 fun systemDefaultScheme(): ColorScheme {
-    val context = LocalContext.current
-
     return if (isSystemInDarkTheme()) {
         darkScheme()
     } else {

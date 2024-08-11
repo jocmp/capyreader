@@ -14,7 +14,7 @@ class AndroidDatabaseProvider(private val context: Context) : DatabaseProvider {
     }
 
     override fun delete(accountID: String) {
-        val res = context.deleteDatabase(databaseName(accountID))
+        context.deleteDatabase(databaseName(accountID))
     }
 
     private fun databaseName(accountID: String): String {
