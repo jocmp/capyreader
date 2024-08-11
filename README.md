@@ -4,7 +4,7 @@
 
 _A smallish RSS reader with support for Feedbin and local feeds._
 
-![Tests](https://github.com/jocmp/capyreader/actions/workflows/ci.yml/badge.svg)
+![Tests](https://github.com/jocmp/capyreader/actions/workflows/ci.yml/badge.svg) [![Crowdin](https://badges.crowdin.net/capyreader/localized.svg)](https://crowdin.com/project/capyreader)
 
 ## Download
 
@@ -31,6 +31,10 @@ If you run into an issue, let me know by submitting a [bug report](https://githu
 ## Feature Requests
 
 If you have questions or feature requests, please post them to [Discussions](https://github.com/jocmp/capyreader/discussions).
+
+## Translations
+
+Translations are hosted on [Crowdin](https://crowdin.com/project/capyreader). Feel free to add or update translations.
 
 ## Building the app
 
