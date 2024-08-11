@@ -17,10 +17,9 @@ Capy Reader is free across all sources.
 
 ### Releases
 
-Google Play releases happen on a weekly basis give or take Google's time to review.
+Google Play releases happen every week or so depending on new features, bugfixes and translations.
 
-GitHub releases are marked with a "-dev" suffix and are builds that haven't been submitted
-to Google Play yet. They are always stable builds but are released more frequently.
+GitHub releases are marked with a "-dev" suffix and happen more frequently. They are always stable, tested builds.
 
 ## Reporting a bug
 
