@@ -37,6 +37,7 @@
     <string name="refresh_minutes">Every %1$d minutes</string>
     <plurals name="refresh_hours">
         <item quantity="one">Every hour</item>
+        <item quantity="many">Every %d hours</item>
         <item quantity="other">Every %d hours</item>
     </plurals>
     <string name="refresh_feeds_menu_label">Refresh Feeds</string>
