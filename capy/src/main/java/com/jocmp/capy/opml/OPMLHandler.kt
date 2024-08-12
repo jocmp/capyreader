@@ -3,11 +3,7 @@ package com.jocmp.capy.opml
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.parser.Parser
-import org.xml.sax.Attributes
-import org.xml.sax.SAXException
-import org.xml.sax.helpers.DefaultHandler
 import java.io.InputStream
-import javax.xml.parsers.SAXParserFactory
 
 internal object OPMLHandler {
     fun parse(inputStream: InputStream): List<Outline> {
