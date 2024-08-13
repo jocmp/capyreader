@@ -11,10 +11,10 @@ java {
 
 dependencies {
     implementation(libs.jsoup)
-    implementation(libs.rssparser)
     implementation(libs.moshi)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.okhttp.client)
+    implementation(project(":rssparser"))
     ksp(libs.moshi.kotlin.codegen)
     testImplementation(kotlin("test"))
     testImplementation(libs.tests.junit)

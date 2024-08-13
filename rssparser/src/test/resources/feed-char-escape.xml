@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:nyt="http://www.nytimes.com/namespaces/rss/2.0" version="2.0">
+    <channel>
+        <title>NYT &gt; Health</title>
+        <link>https://www.nytimes.com/section/health</link>
+        <atom:link href="https://rss.nytimes.com/services/xml/rss/nyt/Health.xml" rel="self" type="application/rss+xml"></atom:link>
+        <description></description>
+        <language>en-us</language>
+        <copyright>Copyright 2021 The New York Times Company</copyright>
+        <lastBuildDate>Mon, 14 Jun 2021 15:26:42 +0000</lastBuildDate>
+        <pubDate>Mon, 14 Jun 2021 14:54:23 +0000</pubDate>
+        <image>
+            <title>NYT &gt; Health</title>
+            <url>https://static01.nyt.com/images/misc/NYT_logo_rss_250x40.png</url>
+            <link>https://www.nytimes.com/section/health</link>
+        </image>
+        <item>
+            <title>Where the Grass is Greener, Except When It’s ‘Nonfunctional Turf’</title>
+            <link>https://www.nytimes.com/2021/06/11/science/drought-las-vegas-grass-mars.html</link>
+            <guid isPermaLink="true">https://www.nytimes.com/2021/06/11/science/drought-las-vegas-grass-mars.html</guid>
+            <atom:link href="https://www.nytimes.com/2021/06/11/science/drought-las-vegas-grass-mars.html" rel="standout"></atom:link>
+            <description>Plus, mammoths in Vegas, watermelon snow, Miami’s looming sea wall and more in the Friday edition of the Science Times newsletter.</description>
+            <dc:creator>Alan Burdick</dc:creator>
+            <pubDate>Sun, 13 Jun 2021 16:21:42 +0000</pubDate>
+            <category domain="http://www.nytimes.com/namespaces/keywords/des">Conservation of Resources</category>
+            <category domain="http://www.nytimes.com/namespaces/keywords/des">Grass</category>
+            <category domain="http://www.nytimes.com/namespaces/keywords/des">Water</category>
+            <category domain="http://www.nytimes.com/namespaces/keywords/des">Deserts</category>
+            <category domain="http://www.nytimes.com/namespaces/keywords/des">Shortages</category>
+            <category domain="http://www.nytimes.com/namespaces/keywords/des">Mars (Planet)</category>
+            <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Colorado River</category>
+            <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Hoover Dam</category>
+            <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Lake Mead</category>
+            <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Las Vegas (Nev)</category>
+            <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Mojave Desert (Calif)</category>
+            <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Western States (US)</category>
+            <category domain="http://www.nytimes.com/namespaces/keywords/des">your-feed-science</category>
+        </item>
+    </channel>
+</rss>

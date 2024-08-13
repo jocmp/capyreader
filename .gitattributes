@@ -4,3 +4,5 @@ capy/src/main/assets/*.js linguist-generated=true
 capy/src/test/resources/*.html linguist-generated=true
 feedfinder/src/test/resources/*.html linguist-generated=true
 feedfinder/src/test/resources/*.xml linguist-generated=true
+rssparser/src/test/resources/*.html linguist-generated=true
+rssparser/src/test/resources/*.xml linguist-generated=true

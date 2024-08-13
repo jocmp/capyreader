@@ -1,0 +1,50 @@
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:googleplay="http://www.google.com/schemas/play-podcasts/1.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <atom:link href="https://feeds.megaphone.fm/stuffyoushouldknow/" rel="self" type="application/rss+xml"/>
+        <title>Stuff You Should Know</title>
+        <link>https://www.howstuffworks.com</link>
+        <language>en</language>
+        <copyright>Copyright 2020 iHeartRadio</copyright>
+        <description>If you've ever wanted to know about champagne, satanism, the Stonewall Uprising, chaos theory, LSD, El Nino, true crime and Rosa Parks, then look no further. Josh and Chuck have you covered.</description>
+        <image>
+            <url>https://megaphone-prod.s3.amazonaws.com/podcasts/1e705dd4-2de6-11e8-b55d-9ba6ddb3f75e/image/uploads_2F1546996139536-0o3pw93d8mk-d5f1143c14a746754c55efb478c66988_2FSKSKLogo-FINAL-iHR-3000x3000.png</url>
+            <title>Stuff You Should Know</title>
+            <link>https://www.howstuffworks.com</link>
+        </image>
+        <itunes:explicit>no</itunes:explicit>
+        <itunes:type>episodic</itunes:type>
+        <itunes:subtitle>Stuff You Should Know</itunes:subtitle>
+        <itunes:author>iHeartRadio</itunes:author>
+        <itunes:summary>If you've ever wanted to know about champagne, satanism, the Stonewall Uprising, chaos theory, LSD, El Nino, true crime and Rosa Parks, then look no further. Josh and Chuck have you covered.</itunes:summary>
+        <content:encoded>
+            <![CDATA[If you've ever wanted to know about champagne, satanism, the Stonewall Uprising, chaos theory, LSD, El Nino, true crime and Rosa Parks, then look no further. Josh and Chuck have you covered.]]>
+        </content:encoded>
+        <itunes:owner>
+            <itunes:name>iHeartRadio</itunes:name>
+            <itunes:email>applepodcast@howstuffworks.com</itunes:email>
+        </itunes:owner>
+        <itunes:image href="https://megaphone-prod.s3.amazonaws.com/podcasts/1e705dd4-2de6-11e8-b55d-9ba6ddb3f75e/image/uploads_2F1546996139536-0o3pw93d8mk-d5f1143c14a746754c55efb478c66988_2FSKSKLogo-FINAL-iHR-3000x3000.png"/>
+        <itunes:category text="Society &amp; Culture">
+        </itunes:category>
+        <itunes:new-feed-url>https://feeds.megaphone.fm/stuffyoushouldknow</itunes:new-feed-url>
+        <item>
+            <title>SYSK Selects: How Gold Works</title>
+            <description>As of early 2013, only 161,00 metric tons of gold had been mined in the entire history of the world. Considering about 85 percent of it is recycled, there's a decent chance your jewelry may once have been part of an Incan headdress or Mycenaean face mask. Dive in to gold in this classic episode.
+                Learn more about your ad-choices at https://news.iheart.com/podcast-advertisers</description>
+            <pubDate>Sat, 07 Mar 2020 10:00:00 -0000</pubDate>
+            <itunes:episodeType>full</itunes:episodeType>
+            <itunes:author>iHeartRadio</itunes:author>
+            <itunes:image href="http://megaphone-prod.s3.amazonaws.com/podcasts/c41042ae-5460-11e8-b38c-5f5faf9dd0c5/image/uploads_2F1583260134090-ua5pbey0yx-25644ab8bbd946b90180c8601dbe70c1_2FSKSKLogo-FINAL-iHR-3000x3000.png"/>
+            <itunes:subtitle>As of early 2013, only 161,00 metric tons of gold had been mined in the entire history of the world. Considering about 85 percent of it is recycled, decent chance your jewelry may once have been part of an Incan headdress or Mycenaean face mask. Dive in to gold in this classic episode.</itunes:subtitle>
+            <itunes:summary>As of early 2013, only 161,00 metric tons of gold had been mined in the entire history of the world. Considering about 85 percent of it is recycled, there's a decent chance your jewelry may once have been part of an Incan headdress or Mycenaean face mask. Dive in to gold in this classic episode.
+                Learn more about your ad-choices at https://news.iheart.com/podcast-advertisers</itunes:summary>
+            <content:encoded>
+                <![CDATA[<p>As of early 2013, only 161,00 metric tons of gold had been mined in the entire history of the world. Considering about 85 percent of it is recycled, there's a decent chance your jewelry may once have been part of an Incan headdress or Mycenaean face mask. Dive in to gold in this classic episode.</p><p> </p> Learn more about your ad-choices at <a href="https://news.iheart.com/podcast-advertisers">https://news.iheart.com/podcast-advertisers</a>]]>
+            </content:encoded>
+            <itunes:duration>3122</itunes:duration>
+            <guid>c41042ae-5460-11e8-b38c-5f5faf9dd0c5</guid>
+            <enclosure url="https://www.podtrac.com/pts/redirect.mp3/chtbl.com/track/5899E/traffic.megaphone.fm/HSW3157672398.mp3" length="0" type="audio/mpeg"/>
+        </item>
+
+    </channel>
+</rss>

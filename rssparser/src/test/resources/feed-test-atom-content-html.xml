@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>Jake Wharton</title>
+    <link href="https://jakewharton.com/atom.xml" rel="self"/>
+    <link href="https://jakewharton.com/"/>
+    <updated>2023-04-28T20:00:30+00:00</updated>
+    <id>https://jakewharton.com/</id>
+    <author>
+        <name>Jake Wharton</name>
+    </author>
+
+    <entry>
+        <title>The state of managing state (with Compose)</title>
+        <link href="https://code.cash.app/the-state-of-managing-state-with-compose"/>
+        <updated>2021-11-11T00:00:00+00:00</updated>
+        <id>https://jakewharton.com/the-state-of-managing-state-with-compose</id>
+        <content type="html">This post was published externally on Cash App Code Blog. Read it at <a href="https://code.cash.app/the-state-of-managing-state-with-compose">https://code.cash.app/the-state-of-managing-state-with-compose</a>.</content>
+    </entry>
+
+</feed>

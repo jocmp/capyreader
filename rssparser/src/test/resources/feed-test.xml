@@ -1,0 +1,1882 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="https://search.yahoo.com/mrss/"
+    xmlns:slash="http://purl.org/rss/1.0/modules/slash/" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+    xmlns:webfeeds="http://webfeeds.org/rss/1.0"
+    xmlns:wfw="http://wellformedweb.org/CommentAPI/" version="2.0">
+
+    <channel>
+        <title>Android Authority</title>
+        <atom:link href="https://www.androidauthority.com/feed/" rel="self"
+            type="application/rss+xml" />
+        <link>https://www.androidauthority.com</link>
+        <description>Android News, Reviews, How To</description>
+        <lastBuildDate>
+            Wed, 15 May 2019 20:48:02 +0000
+        </lastBuildDate>
+        <language>en-US</language>
+        <sy:updatePeriod>
+            hourly
+        </sy:updatePeriod>
+        <sy:updateFrequency>
+            1
+        </sy:updateFrequency>
+        <generator>https://wordpress.org/?v=5.1.1</generator>
+        <webfeeds:accentColor>54cc39</webfeeds:accentColor>
+        <webfeeds:related layout="card" target="browser" />
+        <webfeeds:analytics engine="GoogleAnalytics" id="UA-20765087-1" />
+        <webfeeds:icon>
+            https://www.androidauthority.com/wp-content/uploads/feed/aa-mascot-192x192.png?v=1.0.2
+        </webfeeds:icon>
+        <webfeeds:logo>
+            https://www.androidauthority.com/wp-content/uploads/feed/aa_icon_feed.svg?v=1.0.2
+        </webfeeds:logo>
+        <webfeeds:cover
+            image="https://www.androidauthority.com/wp-content/uploads/feed/aboutus_top_imagev2.jpg?v=1.0.2" />
+        <item>
+            <title>Japan&#8217;s plans for 5G include 10 billion 14-digit phone numbers</title>
+            <link>https://www.androidauthority.com/japan-phone-numbers-14-digits-5g-986823/</link>
+            <comments>
+                https://www.androidauthority.com/japan-phone-numbers-14-digits-5g-986823/#respond
+            </comments>
+            <pubDate>Wed, 15 May 2019 20:48:02 +0000</pubDate>
+            <dc:creator><![CDATA[Williams Pelegrin]]></dc:creator>
+            <category><![CDATA[News]]></category>
+            <category><![CDATA[5G]]></category>
+            <category><![CDATA[Japan]]></category>
+
+            <guid isPermaLink="false">https://www.androidauthority.com/?p=986823</guid>
+            <description>
+                <![CDATA[Japan expects a huge surge of 5G-enabled devices to hit the market in the future.]]></description>
+            <media:content name="AndroidAuthority"
+                medium="image"
+                url="https://cdn57.androidauthority.net/wp-content/uploads/2019/02/Whats-next-with-5g--500x260.jpg" />
+            <content:encoded><![CDATA[<p><a href="https://cdn57.androidauthority.net/wp-content/uploads/2019/02/Whats-next-with-5g-.jpg" rel="lightbox[986823]"><img class="aligncenter size-large wp-image-959882" src="https://cdn57.androidauthority.net/wp-content/uploads/2019/02/Whats-next-with-5g--840x473.jpg" alt="" width="840" height="473" srcset="https://cdn57.androidauthority.net/wp-content/uploads/2019/02/Whats-next-with-5g--840x472.jpg 840w, https://cdn57.androidauthority.net/wp-content/uploads/2019/02/Whats-next-with-5g--300x170.jpg 300w, https://cdn57.androidauthority.net/wp-content/uploads/2019/02/Whats-next-with-5g--768x432.jpg 768w, https://cdn57.androidauthority.net/wp-content/uploads/2019/02/Whats-next-with-5g--16x9.jpg 16w, https://cdn57.androidauthority.net/wp-content/uploads/2019/02/Whats-next-with-5g--32x18.jpg 32w, https://cdn57.androidauthority.net/wp-content/uploads/2019/02/Whats-next-with-5g--28x16.jpg 28w, https://cdn57.androidauthority.net/wp-content/uploads/2019/02/Whats-next-with-5g--56x32.jpg 56w, https://cdn57.androidauthority.net/wp-content/uploads/2019/02/Whats-next-with-5g--64x36.jpg 64w, https://cdn57.androidauthority.net/wp-content/uploads/2019/02/Whats-next-with-5g--712x400.jpg 712w, https://cdn57.androidauthority.net/wp-content/uploads/2019/02/Whats-next-with-5g--1000x563.jpg 1000w, https://cdn57.androidauthority.net/wp-content/uploads/2019/02/Whats-next-with-5g--1200x675.jpg 1200w, https://cdn57.androidauthority.net/wp-content/uploads/2019/02/Whats-next-with-5g--792x446.jpg 792w, https://cdn57.androidauthority.net/wp-content/uploads/2019/02/Whats-next-with-5g--1280x720.jpg 1280w, https://cdn57.androidauthority.net/wp-content/uploads/2019/02/Whats-next-with-5g--1340x754.jpg 1340w, https://cdn57.androidauthority.net/wp-content/uploads/2019/02/Whats-next-with-5g--770x433.jpg 770w, https://cdn57.androidauthority.net/wp-content/uploads/2019/02/Whats-next-with-5g--356x200.jpg 356w" sizes="(max-width: 840px) 100vw, 840px" /></a></p>
+<p>With <a href="https://www.androidauthority.com/what-is-5g-explained-944868/">5G</a> promising to bring billions of devices into the fold, Japan hopes to meet that demand by announcing plans to create 10 billion 14-digit phone numbers. As <a href="https://www.japantimes.co.jp/news/2019/05/15/national/japan-plans-create-10-billion-14-digit-phone-numbers-5g-era-approaching/#.XNxWwo7Yo3F"><em>The Japan Times</em></a> reported today, all the new numbers will start with the code &#8220;020.&#8221;</p>
+<p>The plan is to introduce the new numbers by the end of 2021 at the latest. Three of Japan&#8217;s largest mobile operators — <a href="https://fave.co/2HxymX8">NTT Docomo</a>, <a href="https://fave.co/2HlI5AQ">KDDI</a>, and <a href="https://fave.co/2VCVCwI">SoftBank</a> — agreed to the idea and will update their systems to accommodate the 10 billion new numbers. Japan&#8217;s communications ministry plans to reward carriers for ahead-of-schedule support.</p>
+<p>Japan expects to run out of 11-digit numbers as early as fiscal 2022, which starts April 1 of that year for the Japanese government.</p>
+<div class="aa_srma_container shortcodes_wrapper right"><div class="shortcodes-header"><div class="shortcodes-title">Editor's Pick</div></div><div class="related_articles_wrapper"><div class="related_article_item"><a class="overlay-link" href="https://www.androidauthority.com/5g-device-price-959959/" title="Here’s what every 5G phone will cost you"></a><h4 class="ra-title">Here’s what every 5G phone will cost you</h4><div class="ra-excerpt">
+
+If you want to be one of the first consumers to get your hands on a 5G phone, you’ll have to pay up. A lot of manufacturers including Samsung, LG, and Xiaomi have announced 5G …</div></div></div></div>
+<p>The 14 billion new numbers sound excessive, but keep in mind that <a href="https://www.androidauthority.com/what-is-the-internet-of-things-592491/">Internet of Things</a> (IoT) devices have been using 11-digit numbers that start with &#8220;020&#8221; since January 2017. Also, carriers have already taken 32.6 million of the 11-digit 020 numbers that were allocated two years ago.</p>
+<p>14-digit numbers could prove troublesome for the masses, since there will be more numbers to remember. That issue could be exacerbated among Japan&#8217;s aging population. It&#8217;s estimated that people older than 60 <a href="http://www.stat.go.jp/english/data/nenkan/1431-02.htm">make up 33 percent</a> of the Japanese population.</p>
+<p>Even so, we could see similar announcements in other countries that plan to deploy 5G networks and are running low on allocated phone numbers. It&#8217;s not as much of an issue in the U.S., where a <a href="http://www.nationalnanpa.com/pdf/NRUF/April_2014_NANP_Exhaust_Analysis.pdf">North American Numbering Plan exhaust analysis</a> estimates that the country&#8217;s current numbering system is sufficient until 2044.</p>
+<p style="text-align: center;"><strong>NEXT:</strong> <a href="https://www.androidauthority.com/vodafone-5g-launch-986496/">Vodafone issues 5G launch details: Here&#8217;s what you need to know</a></p>
+<div class="container-fluid builder-html"><div class="container-inner"><div class="affiliate-text"><i>Affiliate disclosure: We may receive compensation in connection with your purchase of products via links on this page. The compensation received will never influence the content, topics or posts made in this blog. See our <a href="https://www.androidauthority.com/external-links/">disclosure policy</a> for more details.</i></div></div></div>]]></content:encoded>
+            <wfw:commentRss>
+                https://www.androidauthority.com/japan-phone-numbers-14-digits-5g-986823/feed/
+            </wfw:commentRss>
+            <slash:comments>0</slash:comments>
+        </item>
+        <item>
+            <title>Report details just what Samsung is doing to update the Galaxy Fold</title>
+            <link>https://www.androidauthority.com/samsung-galaxy-fold-updates-986861/</link>
+            <comments>https://www.androidauthority.com/samsung-galaxy-fold-updates-986861/#respond
+            </comments>
+            <pubDate>Wed, 15 May 2019 20:10:12 +0000</pubDate>
+            <dc:creator><![CDATA[C. Scott Brown]]></dc:creator>
+            <category><![CDATA[News]]></category>
+            <category><![CDATA[Samsung]]></category>
+            <category><![CDATA[Samsung Galaxy Fold]]></category>
+
+            <guid isPermaLink="false">https://www.androidauthority.com/?p=986861</guid>
+            <description>
+                <![CDATA[Overall, many of the changes are expected, but it's nice to hear that Samsung could be implementing them.]]></description>
+            <media:content name="AndroidAuthority"
+                medium="image"
+                url="https://cdn57.androidauthority.net/wp-content/uploads/2019/04/Samsung-Galaxy-Fold-tablet-mode-on-chair-500x260.jpg" />
+            <content:encoded><![CDATA[<p><img class="aligncenter size-large wp-image-977086" src="https://cdn57.androidauthority.net/wp-content/uploads/2019/04/Samsung-Galaxy-Fold-tablet-mode-on-chair-840x473.jpg" alt="Samsung Galaxy Fold tablet mode on chair" width="840" height="473" srcset="https://cdn57.androidauthority.net/wp-content/uploads/2019/04/Samsung-Galaxy-Fold-tablet-mode-on-chair-840x472.jpg 840w, https://cdn57.androidauthority.net/wp-content/uploads/2019/04/Samsung-Galaxy-Fold-tablet-mode-on-chair-300x170.jpg 300w, https://cdn57.androidauthority.net/wp-content/uploads/2019/04/Samsung-Galaxy-Fold-tablet-mode-on-chair-768x432.jpg 768w, https://cdn57.androidauthority.net/wp-content/uploads/2019/04/Samsung-Galaxy-Fold-tablet-mode-on-chair-16x9.jpg 16w, https://cdn57.androidauthority.net/wp-content/uploads/2019/04/Samsung-Galaxy-Fold-tablet-mode-on-chair-32x18.jpg 32w, https://cdn57.androidauthority.net/wp-content/uploads/2019/04/Samsung-Galaxy-Fold-tablet-mode-on-chair-28x16.jpg 28w, https://cdn57.androidauthority.net/wp-content/uploads/2019/04/Samsung-Galaxy-Fold-tablet-mode-on-chair-56x32.jpg 56w, https://cdn57.androidauthority.net/wp-content/uploads/2019/04/Samsung-Galaxy-Fold-tablet-mode-on-chair-64x36.jpg 64w, https://cdn57.androidauthority.net/wp-content/uploads/2019/04/Samsung-Galaxy-Fold-tablet-mode-on-chair-712x400.jpg 712w, https://cdn57.androidauthority.net/wp-content/uploads/2019/04/Samsung-Galaxy-Fold-tablet-mode-on-chair-1000x563.jpg 1000w, https://cdn57.androidauthority.net/wp-content/uploads/2019/04/Samsung-Galaxy-Fold-tablet-mode-on-chair-1200x675.jpg 1200w, https://cdn57.androidauthority.net/wp-content/uploads/2019/04/Samsung-Galaxy-Fold-tablet-mode-on-chair-792x446.jpg 792w, https://cdn57.androidauthority.net/wp-content/uploads/2019/04/Samsung-Galaxy-Fold-tablet-mode-on-chair-1280x720.jpg 1280w, https://cdn57.androidauthority.net/wp-content/uploads/2019/04/Samsung-Galaxy-Fold-tablet-mode-on-chair-1340x754.jpg 1340w, https://cdn57.androidauthority.net/wp-content/uploads/2019/04/Samsung-Galaxy-Fold-tablet-mode-on-chair-770x433.jpg 770w, https://cdn57.androidauthority.net/wp-content/uploads/2019/04/Samsung-Galaxy-Fold-tablet-mode-on-chair-355x200.jpg 355w" sizes="(max-width: 840px) 100vw, 840px" /></p>
+<p>After early review units <a href="https://www.androidauthority.com/samsung-galaxy-fold-issues-display-problems-977233/">started breaking</a>, Samsung postponed the release of its first foldable device, the <a href="https://www.androidauthority.com/samsung-galaxy-fold-review-977100/">Samsung Galaxy Fold</a>, and promised to work on addressing the breakage issues. Now we have a report out of South Korea from <a href="https://www.yna.co.kr/view/AKR20190515026700017"><em>Yonhap News</em></a> (via <a href="https://www.sammobile.com/2019/05/15/improvements-samsung-made-galaxy-fold/"><em>SamMobile</em></a>) that gives us our first glimpse into what Samsung could be doing to address these problems.</p>
+<p>The two biggest issues with the Samsung Galaxy Fold were the protective film covering the inner screen and the gap between the display and the device&#8217;s folding hinge. Reviewers mistakenly pulled off the protective layer which caused some devices to malfunction, and the hinge gap allows for dust and other particles to contaminate the very sensitive OLED display.</p>
+<p>For the protective layer problem, Samsung is reportedly integrating the edges of the film into the body of the device itself. If true, this would make it more difficult for consumers to accidentally pull the protective layer off.</p>
+<div class="aa_srma_container shortcodes_wrapper right"><div class="shortcodes-header"><div class="shortcodes-title">Editor's Pick</div></div><div class="related_articles_wrapper"><div class="related_article_item"><a class="overlay-link" href="https://www.androidauthority.com/samsung-galaxy-fold-release-decision-984575/" title="Samsung CEO: Galaxy Fold release decision coming &#8216;in a couple of days&#8217;"></a><h4 class="ra-title">Samsung CEO: Galaxy Fold release decision coming &#8216;in a couple of days&#8217;</h4><div class="ra-excerpt">
+
+According to The Korea Herald, the new United States release date for the Samsung Galaxy Fold will be determined in the next few days.
+
+This information comes directly from Samsung CEO Koh Dong-jin, more commonly known as …</div></div></div></div>
+<p>As far as the hinge goes, the report merely suggests Samsung is working to reduce the size of the gap. This could mean that Samsung is eliminating the gap, or it could mean that it will simply be smaller and thus less prone to collecting debris.</p>
+<p>Finally, there will also likely be more warnings and safety statements with the Samsung Galaxy Fold to educate consumers on how this new type of device needs to be handled.</p>
+<p>We&#8217;ve reached out to <a href="https://www.androidauthority.com/best-samsung-phones-771831/">Samsung</a> about confirming or denying these reports and will update the article if we hear back.</p>
+<p>In the meantime, what do you think about this potential progress? Would these fixes make you more comfortable with buying a Fold? Or has the damage already been done? Let us know in the comments.</p>
+<p style="text-align: center;"><strong>NEXT: <a href="https://www.androidauthority.com/samsung-galaxy-home-release-date-985015/">Samsung Galaxy Home confirmed to launch by the end of June 2019</a></strong></p>
+]]></content:encoded>
+            <wfw:commentRss>
+                https://www.androidauthority.com/samsung-galaxy-fold-updates-986861/feed/
+            </wfw:commentRss>
+            <slash:comments>0</slash:comments>
+        </item>
+        <item>
+            <title>Get certified as a white hat hacker for $29 today</title>
+            <link>https://www.androidauthority.com/white-hat-hacker-certification-deal-984343/
+            </link>
+            <pubDate>Wed, 15 May 2019 19:29:50 +0000</pubDate>
+            <dc:creator><![CDATA[AA Picks]]></dc:creator>
+            <category><![CDATA[Deals]]></category>
+            <category><![CDATA[News]]></category>
+            <category><![CDATA[hacking]]></category>
+
+            <guid isPermaLink="false">https://www.androidauthority.com/?p=984343</guid>
+            <description>
+                <![CDATA[This is your chance to fight the increasing cyber threat as a certified white hat hacker. ]]></description>
+            <media:content name="AndroidAuthority"
+                medium="image"
+                url="https://cdn57.androidauthority.net/wp-content/uploads/2019/02/YfClsvq-500x260.jpg" />
+            <content:encoded><![CDATA[<p><a href="http://andauth.co/CompleteWhiteHat"><img class="aligncenter wp-image-883757 size-large" src="https://cdn57.androidauthority.net/wp-content/uploads/2018/07/Hacker-2-840x500.jpg" alt="White Hat Hacker Bundle" width="840" height="500" srcset="https://cdn57.androidauthority.net/wp-content/uploads/2018/07/Hacker-2-840x500.jpg 840w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/Hacker-2-300x178.jpg 300w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/Hacker-2-768x457.jpg 768w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/Hacker-2-16x10.jpg 16w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/Hacker-2-32x19.jpg 32w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/Hacker-2-28x17.jpg 28w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/Hacker-2-56x33.jpg 56w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/Hacker-2-64x38.jpg 64w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/Hacker-2-336x200.jpg 336w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/Hacker-2.jpg 953w" sizes="(max-width: 840px) 100vw, 840px" /></a></p>
+<p>To <strong>make money from hacking</strong> you don’t need to plug gadgets into bank ATMs like a young John Connor. You can keep it legal and still get well paid as a <a href="http://andauth.co/CompleteWhiteHat">white hat hacker</a>.</p>
+<p>Big corporations have your data and their reputations to protect. That’s why companies such as <a href="https://www.androidauthority.com/facebook-privacy-settings-848172/" target="_blank" rel="noopener noreferrer">Facebook</a> payout millions of dollars as part of their bug bounty programs. A<strong> typical payment</strong> for finding one security flaw is <strong>around $30,000</strong>.</p>
+<p>Big money is on offer. To get in on the action, you can get <strong>extensive online training </strong>as a <strong>white hat hacker</strong> for <a href="http://andauth.co/CompleteWhiteHat">only $29</a>.</p>
+<p>The <a href="http://andauth.co/CompleteWhiteHat">Complete White Hat Hacker Certification Bundle</a> is an <strong>eight-piece learning kit</strong> into the art of ethical hacking. It covers everything from the<strong> latest software</strong> used by hackers, to the <strong>coding</strong> you need, and the most <strong>common hacking techniques</strong>. Once you know how to think like a hacker, you’ll have the skills to beat them.</p>
+<p><a href="http://andauth.co/CompleteWhiteHat"><img class="aligncenter wp-image-915805 size-large" src="https://cdn57.androidauthority.net/wp-content/uploads/2018/10/White-Hat-Hacker-Bundle-840x399.jpg" alt="White Hat Hacker Bundle" width="840" height="399" srcset="https://cdn57.androidauthority.net/wp-content/uploads/2018/10/White-Hat-Hacker-Bundle-840x400.jpg 840w, https://cdn57.androidauthority.net/wp-content/uploads/2018/10/White-Hat-Hacker-Bundle-300x143.jpg 300w, https://cdn57.androidauthority.net/wp-content/uploads/2018/10/White-Hat-Hacker-Bundle-768x365.jpg 768w, https://cdn57.androidauthority.net/wp-content/uploads/2018/10/White-Hat-Hacker-Bundle-16x8.jpg 16w, https://cdn57.androidauthority.net/wp-content/uploads/2018/10/White-Hat-Hacker-Bundle-32x15.jpg 32w, https://cdn57.androidauthority.net/wp-content/uploads/2018/10/White-Hat-Hacker-Bundle-28x13.jpg 28w, https://cdn57.androidauthority.net/wp-content/uploads/2018/10/White-Hat-Hacker-Bundle-56x27.jpg 56w, https://cdn57.androidauthority.net/wp-content/uploads/2018/10/White-Hat-Hacker-Bundle-64x30.jpg 64w, https://cdn57.androidauthority.net/wp-content/uploads/2018/10/White-Hat-Hacker-Bundle-421x200.jpg 421w, https://cdn57.androidauthority.net/wp-content/uploads/2018/10/White-Hat-Hacker-Bundle.jpg 842w" sizes="(max-width: 840px) 100vw, 840px" /></a></p>
+<p>Despite the low price, you even get a<strong> free voucher for the ISA CISS examination</strong> upon completion of the <a href="http://andauth.co/CompleteWhiteHat">Hacking In Practice: Certified Ethical Hacking Mega Course</a>. This <strong>certification</strong> will shine on your resume if you decide to apply for any lucrative cybersecurity roles.</p>
+<h2>The White Hat Hacker Bundle:</h2>
+<ul>
+<li><a href="http://andauth.co/CompleteWhiteHat">Hacking &amp; Penetration Testing With Metasploit</a> <strong>&#8212; $99.99 value</strong></li>
+<li><a href="http://andauth.co/CompleteWhiteHat">Hacking Wireless Networks: Theory &amp; Practice</a> <strong>&#8212; $99.99 value</strong></li>
+<li><a href="http://andauth.co/CompleteWhiteHat">Rootkits &amp; Stealth Apps: Creating &amp; Revealing 2.0</a><strong> &#8212; $99.99 value</strong></li>
+<li><a href="http://andauth.co/CompleteWhiteHat">Website Hacking In Practice: Hands-On</a> <strong>&#8212; $99.99 value</strong></li>
+<li><a href="http://andauth.co/CompleteWhiteHat">IT Surveillance &amp; Computer Forensics From Scratch</a><strong> &#8212; $99.99 value</strong></li>
+<li><a href="http://andauth.co/CompleteWhiteHat">Computer &amp; Network Hacking Mastery: Practical Techniques</a> <strong>&#8212; $99.99 value</strong></li>
+<li><a href="http://andauth.co/CompleteWhiteHat">Hacking In Practice: Certified Ethical Hacking Mega Course</a> <strong>&#8212; $99.99 value</strong></li>
+<li><a href="http://andauth.co/CompleteWhiteHat">Kali Linux Tutorial For Beginners</a> <strong>&#8212; $194.99 value</strong></li>
+</ul>
+<p>Follow the links for more info on each of the courses in this package. Over 1,000 people have already enrolled. If you want to join them and get a <strong>96 percent discount</strong> at the same time, make sure you <strong>sign up before the deal expires</strong>.</p>
+<p>The button below takes you there.</p>
+<div class="aa_custom_button_wrapp center"><a class="aa_button cbs_button add-active fasc-alignment-center center" style="background-color: #0077db;" target="_blank" rel="nofollow noopener noreferrer" href="http://andauth.co/CompleteWhiteHat">Start learning to hack now!</a></div>
+<p><em>The AAPicks team writes about things we think you’ll like, and we may see a share of revenue from any purchases made through affiliate links. To see all our hottest deals, head over to <a href="http://andauth.co/AAPicksHub">the AAPICKS HUB</a>. </em></p>
+]]></content:encoded>
+        </item>
+        <item>
+            <title>Report: Apple&#8217;s in-house 5G modem over 5 years away, Qualcomm truce only
+                way out
+            </title>
+            <link>https://www.androidauthority.com/apple-iphone-5g-modem-qualcomm-986815/</link>
+            <comments>
+                https://www.androidauthority.com/apple-iphone-5g-modem-qualcomm-986815/#respond
+            </comments>
+            <pubDate>Wed, 15 May 2019 19:15:17 +0000</pubDate>
+            <dc:creator><![CDATA[C. Scott Brown]]></dc:creator>
+            <category><![CDATA[News]]></category>
+            <category><![CDATA[Apple]]></category>
+            <category><![CDATA[Apple iPhone]]></category>
+            <category><![CDATA[Intel]]></category>
+            <category><![CDATA[Qualcomm]]></category>
+
+            <guid isPermaLink="false">https://www.androidauthority.com/?p=986815</guid>
+            <description>
+                <![CDATA[The report suggests that Apple was truly stuck between a rock and a hard place.]]></description>
+            <media:content name="AndroidAuthority"
+                medium="image"
+                url="https://cdn57.androidauthority.net/wp-content/uploads/2018/12/pixel-3-xl-vs-iphone-xs-11-500x260.jpg" />
+            <content:encoded><![CDATA[<p><img class="aligncenter size-large wp-image-935451" src="https://cdn57.androidauthority.net/wp-content/uploads/2018/12/pixel-3-xl-vs-iphone-xs-11-840x473.jpg" alt="" width="840" height="473" srcset="https://cdn57.androidauthority.net/wp-content/uploads/2018/12/pixel-3-xl-vs-iphone-xs-11-840x472.jpg 840w, https://cdn57.androidauthority.net/wp-content/uploads/2018/12/pixel-3-xl-vs-iphone-xs-11-300x170.jpg 300w, https://cdn57.androidauthority.net/wp-content/uploads/2018/12/pixel-3-xl-vs-iphone-xs-11-768x432.jpg 768w, https://cdn57.androidauthority.net/wp-content/uploads/2018/12/pixel-3-xl-vs-iphone-xs-11-16x9.jpg 16w, https://cdn57.androidauthority.net/wp-content/uploads/2018/12/pixel-3-xl-vs-iphone-xs-11-32x18.jpg 32w, https://cdn57.androidauthority.net/wp-content/uploads/2018/12/pixel-3-xl-vs-iphone-xs-11-28x16.jpg 28w, https://cdn57.androidauthority.net/wp-content/uploads/2018/12/pixel-3-xl-vs-iphone-xs-11-56x32.jpg 56w, https://cdn57.androidauthority.net/wp-content/uploads/2018/12/pixel-3-xl-vs-iphone-xs-11-64x36.jpg 64w, https://cdn57.androidauthority.net/wp-content/uploads/2018/12/pixel-3-xl-vs-iphone-xs-11-712x400.jpg 712w, https://cdn57.androidauthority.net/wp-content/uploads/2018/12/pixel-3-xl-vs-iphone-xs-11-1000x563.jpg 1000w, https://cdn57.androidauthority.net/wp-content/uploads/2018/12/pixel-3-xl-vs-iphone-xs-11-1200x675.jpg 1200w, https://cdn57.androidauthority.net/wp-content/uploads/2018/12/pixel-3-xl-vs-iphone-xs-11-792x446.jpg 792w, https://cdn57.androidauthority.net/wp-content/uploads/2018/12/pixel-3-xl-vs-iphone-xs-11-1280x720.jpg 1280w, https://cdn57.androidauthority.net/wp-content/uploads/2018/12/pixel-3-xl-vs-iphone-xs-11-1340x754.jpg 1340w, https://cdn57.androidauthority.net/wp-content/uploads/2018/12/pixel-3-xl-vs-iphone-xs-11-770x433.jpg 770w, https://cdn57.androidauthority.net/wp-content/uploads/2018/12/pixel-3-xl-vs-iphone-xs-11-356x200.jpg 356w" sizes="(max-width: 840px) 100vw, 840px" /></p>
+<p>According to a new report from <a href="https://www.theinformation.com/articles/behind-the-intel-apple-modem-divorce"><em>The Information</em></a>, the progress surrounding Apple&#8217;s own <a href="https://www.androidauthority.com/apple-intel-modems-iphone-973303/">in-house 5G modem</a> for upcoming iPhones is further behind than originally anticipated.</p>
+<p>In the new report, <em>The Information&#8217;s</em> sources suggest that the iPhone 5G modem made by Apple might not be done before 2025 &#8212; a far cry from the <a href="https://www.androidauthority.com/5g-iphone-intel-modem-957873/">original rumor of 2021</a>. This slow progress was likely a major factor in Apple&#8217;s recent decision to <a href="https://www.androidauthority.com/apple-qualcomm-end-976634/">cease all litigation against Qualcomm</a> and sign a six-years-long deal with the company to use its modems in future iPhones.</p>
+<p>Granted, it is possible Apple slowed down progress on its own 5G modem design once it knew it was going to sign the deal with Qualcomm. Obviously, there&#8217;s no point continuing to rush out a new product if Qualcomm&#8217;s modems will fill the gap for the time being.</p>
+<div class="aa_srma_container shortcodes_wrapper right"><div class="shortcodes-header"><div class="shortcodes-title">Editor's Pick</div></div><div class="related_articles_wrapper"><div class="related_article_item"><a class="overlay-link" href="https://www.androidauthority.com/intel-5g-modem-exit-976700/" title="Intel to exit 5G smartphone modem business: Is this why Apple settled with Qualcomm?"></a><h4 class="ra-title">Intel to exit 5G smartphone modem business: Is this why Apple settled with Qualcomm?</h4><div class="ra-excerpt"> Intel 
+
+
+
+On the same day that Apple and Qualcomm settled their long-running legal war, Intel has announced it will be leaving the 5G modem business.
+
+The timing of Intel's announcement was rather interesting, as it was …</div></div></div></div>
+<p>The report seems to back up the theory that Apple was trapped between a rock and a hard place and had little choice but to cut its losses and settle its legal fights with Qualcomm. If Apple went with Intel modems for the future iPhone 5G models, the modems would <a href="https://www.androidauthority.com/apple-modems-intel-qualcomm-952069/">likely not meet the high standards</a> Apple holds for its star product. If Apple instead made the modems itself, it would be years late to the 5G game.</p>
+<p>It seems that Apple had no choice but to ask Qualcomm for a truce (a truce that <a href="https://www.androidauthority.com/apple-qualcomm-settlement-estimate-977840/">allegedly cost Apple billions</a>).</p>
+<p>Additionally, the report dives deep into details surrounding the slow relationship deterioration between Apple and Intel. <em>The Information</em> alleges that the relationship is deteriorating even further with Apple reportedly unsatisfied with Intel&#8217;s chip performance in Mac computers. There are <a href="https://9to5mac.com/2018/10/17/apple-custom-chips-macs-apple-car/">already predictions</a> that Apple will begin to transition away from Intel chips entirely very soon, possibly even within the next year. We&#8217;ve reached out to Intel for clarification on this.</p>
+<p>To read the full report from <em>The Information</em>, click <a href="https://www.theinformation.com/articles/behind-the-intel-apple-modem-divorce">here</a>.</p>
+<p style="text-align: center;"><strong>NEXT: <a href="https://www.androidauthority.com/global-smartphone-shipments-decrease-apple-981671/">Apple hit hardest as global smartphone shipments continue to slip</a></strong></p>
+]]></content:encoded>
+            <wfw:commentRss>
+                https://www.androidauthority.com/apple-iphone-5g-modem-qualcomm-986815/feed/
+            </wfw:commentRss>
+            <slash:comments>0</slash:comments>
+        </item>
+        <item>
+            <title>OnePlus 7 Pro might finally make me ditch Google phones</title>
+            <link>https://www.androidauthority.com/oneplus-7-pro-vs-google-pixel-3-xl-986132/</link>
+            <comments>
+                https://www.androidauthority.com/oneplus-7-pro-vs-google-pixel-3-xl-986132/#respond
+            </comments>
+            <pubDate>Wed, 15 May 2019 18:05:39 +0000</pubDate>
+            <dc:creator><![CDATA[Oliver Cragg]]></dc:creator>
+            <category><![CDATA[Features]]></category>
+            <category><![CDATA[Opinions]]></category>
+            <category><![CDATA[VS]]></category>
+            <category><![CDATA[Google]]></category>
+            <category><![CDATA[Google Pixel 3 XL]]></category>
+            <category><![CDATA[OnePlus]]></category>
+            <category><![CDATA[OnePlus 7 Pro]]></category>
+
+            <guid isPermaLink="false">https://www.androidauthority.com/?p=986132</guid>
+            <description>
+                <![CDATA[After seven long years, I may have found the phone that makes me abandon Google.]]></description>
+            <media:content name="AndroidAuthority"
+                medium="image"
+                url="https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-side-in-hand-500x260.jpg" />
+            <content:encoded><![CDATA[<p><img class="alignnone size-large wp-image-986763" src="https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-side-in-hand-840x473.jpg" alt="OnePlus 7 Pro vs Google Pixel 3 XL side view" width="840" height="473" srcset="https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-side-in-hand-840x472.jpg 840w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-side-in-hand-300x170.jpg 300w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-side-in-hand-768x432.jpg 768w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-side-in-hand-16x9.jpg 16w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-side-in-hand-32x18.jpg 32w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-side-in-hand-28x16.jpg 28w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-side-in-hand-56x32.jpg 56w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-side-in-hand-64x36.jpg 64w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-side-in-hand-712x400.jpg 712w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-side-in-hand-1000x563.jpg 1000w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-side-in-hand-1200x675.jpg 1200w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-side-in-hand-792x446.jpg 792w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-side-in-hand-1280x720.jpg 1280w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-side-in-hand-1340x754.jpg 1340w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-side-in-hand-770x433.jpg 770w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-side-in-hand-356x200.jpg 356w" sizes="(max-width: 840px) 100vw, 840px" /></p>
+<div class="aa_opinions_shortcode_wrapper"><a class="overlay-link" href="https://www.androidauthority.com/opinions/"></a><div class="aa_opinions_shortcode_image"><img alt='' src='https://secure.gravatar.com/avatar/34c9b23dacbf2a004219e633bd3c0c00?s=200&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/34c9b23dacbf2a004219e633bd3c0c00?s=400&#038;d=mm&#038;r=g 2x' class='avatar avatar-200 photo' height='200' width='200' /></div><div class="aa_opinions_shortcode_text"><div class="aa_opinion_by">Opinion post by</div><div class="aa_opinion_author">Oliver Cragg</div></div></div>
+<p>The OnePlus 7 Pro is OnePlus’ first attempt at a true ultra-premium flagship and I&#8217;m a little bit in love with it.</p>
+<p>I’ve come to this conclusion after testing a review unit for around a week now and it&#8217;s frankly left me in a pickle. Despite the fact my day job for the past five or so years means I’m chopping and changing phones on an almost monthly basis (it&#8217;s a hard life), I’ve always gone back to a Google phone as my daily driver.</p>
+<p>That could all change with the <a href="http://www.anrdoezrs.net/links/8746582/type/dlg/sid/oliver.cragg/https://www.oneplus.com/">OnePlus 7 Pro</a>.</p>
+<h2>Oodles of Google</h2>
+<p><img class="alignnone size-large wp-image-985805" src="https://cdn57.androidauthority.net/wp-content/uploads/2019/05/google-pixel-3a-purple-ish-google-logo-840x473.jpg" alt="Google Pixel 3a Purple-ish Google Logo" width="840" height="473" srcset="https://cdn57.androidauthority.net/wp-content/uploads/2019/05/google-pixel-3a-purple-ish-google-logo-840x472.jpg 840w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/google-pixel-3a-purple-ish-google-logo-300x170.jpg 300w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/google-pixel-3a-purple-ish-google-logo-768x432.jpg 768w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/google-pixel-3a-purple-ish-google-logo-16x9.jpg 16w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/google-pixel-3a-purple-ish-google-logo-32x18.jpg 32w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/google-pixel-3a-purple-ish-google-logo-28x16.jpg 28w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/google-pixel-3a-purple-ish-google-logo-56x32.jpg 56w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/google-pixel-3a-purple-ish-google-logo-64x36.jpg 64w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/google-pixel-3a-purple-ish-google-logo-712x400.jpg 712w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/google-pixel-3a-purple-ish-google-logo-1000x563.jpg 1000w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/google-pixel-3a-purple-ish-google-logo-1200x675.jpg 1200w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/google-pixel-3a-purple-ish-google-logo-792x446.jpg 792w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/google-pixel-3a-purple-ish-google-logo-1280x720.jpg 1280w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/google-pixel-3a-purple-ish-google-logo-1340x754.jpg 1340w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/google-pixel-3a-purple-ish-google-logo-770x433.jpg 770w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/google-pixel-3a-purple-ish-google-logo-356x200.jpg 356w" sizes="(max-width: 840px) 100vw, 840px" /></p>
+<p>This trend of mine stretches back all the way to the <a href="https://www.youtube.com/watch?v=JV3kvQDf0Do">Google Nexus 4</a>, which became my first Android phone back in 2012 after becoming jaded by incremental iPhone upgrades. The <a href="https://www.androidauthority.com/why-we-love-google-nexus-5-786299/">Nexus 5</a> was my next stop and quickly cemented my love of all things Android and is probably my favorite smartphone of all-time (just behind the <a href="https://www.androidauthority.com/google-pixel-2-xl-review-805069/">Pixel 2 XL</a> and <a href="https://www.youtube.com/watch?v=JPmqWOShbY8">HTC One M8</a>).</p>
+<p>Those times I did waiver from Google mostly led to disappointment (what was I thinking buying an <a href="https://www.androidauthority.com/looking-back-at-the-lg-g4-672482/">LG G4</a>?), but that wasn’t the case with my recent detour with the <a href="https://www.androidauthority.com/oneplus-6t-review-918817/">OnePlus 6T</a>.</p>
+<p style="text-align: center;"><em><strong>Related:</strong> <a href="https://www.androidauthority.com/oneplus-7-pro-vs-oneplus-6t-vs-oneplus-6-981261/">OnePlus 7 Pro vs OnePlus 6T vs OnePlus 6: What are you getting for $120 more?</a></em></p>
+<p>Long story short, I managed to smash my <a href="https://fave.co/2DAC5Tj">Pixel 3 XL</a> (RIP) and needed a replacement. That role was filled by the OnePlus 6T and I was immediately wowed by its rapid speed, not to mention the smaller notch over the Pixel 3 XL&#8217;s hideous bathtub cutout.</p>
+<p>It wasn’t all wonderful, though. The camera processing left a lot to be desired, I still preferred Pixel software to OxygenOS, and I hated the single speaker that I always managed to muffle when playing games and watching Twitch.</p>
+<blockquote class="quote_new left" style="color: #39d266; border-color: #39d266;"><p>After seven years of Google phones, maybe it's time for a change.</p></blockquote>
+<p>I’ve been flitting between the OnePlus 6T and a brand new, not smashed to pieces Google Pixel 3 XL for a few months now, trying to get a balance between the 6T’s hardware and the Pixel 3 XL’s software.</p>
+<p>Then the OnePlus 7 Pro arrived at my doorstep.</p>
+<p>Rather than just go over all the great and not-so-great things about the OnePlus 7 Pro, I&#8217;m going to run through all the things I would and wouldn’t miss from ditching my Pixel in the vain hope it’ll get me out of another “will I, won’t I” dilemma until the <a href="https://www.androidauthority.com/new-upcoming-android-phones-2019-690821/">Pixel 4</a> rolls around.</p>
+<h2>Things I love</h2>
+<div class="video-container">
+<div class="youtube-player"><iframe style="position: absolute;" width="100%" height="100%" src="https://www.youtube.com/embed/DkGOBXo1Mi0?autoplay=0&#038;autohide=2border=0&#038;wmode=opaque&#038;enablejsapi=1rel=0&#038;controls=1&#038;showinfo=1" allowfullscreen frameborder="0"></iframe></div>
+</div>
+<p>If you’ve read or watched (above) our <a href="https://www.androidauthority.com/oneplus-7-pro-review-981004/">OnePlus 7 Pro review</a> you already know this thing is blisteringly fast. The version I’ve got is the ludicrously over-spec’d 12GB RAM model and it’s so quick it feels like it might take off.</p>
+<p>Coming to this from my irritatingly &#8212; and considering the internals inexcusably &#8212; sluggish <a href="https://www.androidauthority.com/google-pixel-3-xl-review-911391/">Pixel 3 XL</a> is a revelation. I can now switch between a seemingly infinite number of apps at any time without having to watch them boot all over again. Thanks to UFS 3.0, bloated games like <a href="https://www.androidauthority.com/pokemon-go-updates-news-events-979446/">Pokémon Go</a> also load in about half the time. It’s blissful.</p>
+<div class="aa_srma_container shortcodes_wrapper right"><div class="shortcodes-header"><div class="shortcodes-title">More on OnePlus 7 Pro</div></div><div class="related_articles_wrapper"><div class="related_article_item"><a class="overlay-link" href="https://www.androidauthority.com/oneplus-7-pro-specs-984416/" title="OnePlus 7 and OnePlus 7 Pro specs: A bleeding-edge OnePlus phone appears"></a><h4 class="ra-title">OnePlus 7 and OnePlus 7 Pro specs: A bleeding-edge OnePlus phone appears</h4><div class="ra-excerpt">https://www.youtube.com/watch?v=DkGOBXo1Mi0
+
+The OnePlus 7 Pro marks a radical shift for the Chinese brand, as it seeks to offer a more premium option than previous devices.
+
+ 	OnePlus 7 and 7 Pro are here: Everything you need to …</div></div></div></div>
+<p>The overall snappy feel and tight animations are helped along by the OnePlus 7 Pro&#8217;s <a href="https://www.androidauthority.com/oneplus-7-pro-battery-life-90hz-display-985616/">90Hz display</a>.</p>
+<p>The display in general is absolutely stunning. I could probably count on one hand the amount of times I use a selfie camera in a single year so the trade off of a mechanized pop-up camera that could one day fail for a massive, almost entirely bezel-free screen is a no brainer.</p>
+<p><img class="alignnone size-large wp-image-986764" src="https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-software-840x473.jpg" alt="OnePlus 7 Pro vs Google Pixel 3 XL software" width="840" height="473" srcset="https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-software-840x472.jpg 840w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-software-300x170.jpg 300w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-software-768x432.jpg 768w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-software-16x9.jpg 16w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-software-32x18.jpg 32w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-software-28x16.jpg 28w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-software-56x32.jpg 56w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-software-64x36.jpg 64w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-software-712x400.jpg 712w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-software-1000x563.jpg 1000w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-software-1200x675.jpg 1200w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-software-792x446.jpg 792w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-software-1280x720.jpg 1280w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-software-1340x754.jpg 1340w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-software-770x433.jpg 770w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-software-356x200.jpg 356w" sizes="(max-width: 840px) 100vw, 840px" /></p>
+<p>The display curves are perhaps a little too extreme compared to the <a href="https://www.androidauthority.com/samsung-galaxy-s10-plus-review-961423/">Samsung Galaxy S10 Plus</a>, but everything else about the phone’s entire design is stunning, especially in Nebula Blue which has a mesmerizing, soft glow in the certain lights. I’ve never disliked the two-tone Pixel aesthetic, but this blows it out of the water.</p>
+<div class="clear"></div><blockquote class="quote_new center" style="color: #39d266; border-color: #39d266;"><p>The OnePlus 7 Pro's 90Hz display is stunning.</p></blockquote><div class="clear"></div>
+<p>Surprisingly, the in-display fingerprint sensor has been another huge upgrade. I say surprisingly because I’ve had nothing but headaches with in-display sensors, but I’ve found the hit rate on the OnePlus 7 Pro to be really high. Meanwhile, the Pixel 3 XL’s rear sensor has always been hit-and-miss for me.</p>
+<p>Another plus for OnePlus (see what I did there?) is battery life. While the OnePlus 7 Pro represents a significant drop in battery endurance compared to the ultra-efficient OnePlus 6T, I can still make it through the day on OnePlus’ latest. That’s more than I get from the Pixel. The lack of <a href="https://www.androidauthority.com/phones-with-wireless-charging-848173/">wireless charging</a> is a shame as I’ll have to retire my <a href="https://www.androidauthority.com/google-pixel-stand-review-912834/">Pixel Stand</a>, but <a href="https://www.androidauthority.com/oneplus-6t-mclaren-edition-warp-charge-30w-938553/">30W Warp Charge</a> support more than makes up for it.</p>
+<p style="text-align: center;"><em><strong>Dive deeper:</strong> <a href="https://www.androidauthority.com/oneplus-7-pro-battery-life-90hz-display-985616/">Here&#8217;s how the 90Hz screen affects battery life on the OnePlus 7 Pro</a></em></p>
+<h2>Things I miss</h2>
+<p><img class="alignnone size-large wp-image-986759" src="https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-in-hand-840x457.jpg" alt="OnePlus 7 Pro vs Google Pixel 3 XL rear in hand" width="840" height="457" srcset="https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-in-hand-840x457.jpg 840w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-in-hand-300x163.jpg 300w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-in-hand-768x418.jpg 768w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-in-hand-16x9.jpg 16w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-in-hand-32x17.jpg 32w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-in-hand-28x15.jpg 28w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-in-hand-56x30.jpg 56w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-in-hand-64x35.jpg 64w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-in-hand-1000x544.jpg 1000w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-in-hand-1200x653.jpg 1200w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-in-hand-367x200.jpg 367w" sizes="(max-width: 840px) 100vw, 840px" /></p>
+<p>As I expected, my main gripes with the OnePlus 7 Pro have very little to do with the hardware &#8212; with two minor exceptions.</p>
+<p>The first is the stereo speaker setup. The 7 Pro’s speakers are a stark improvement over the OnePlus 6T’s stupidly positioned single bottom speaker, but they’re still not quite on par with the Pixel 3 XL’s dual front-facing speakers.</p>
+<p>The other hardware feature I’d miss is <a href="https://www.androidauthority.com/android-q-active-edge-remap-966776/">Active Edge</a>. I use <a href="https://www.androidauthority.com/google-assistant-838138/">Google Assistant</a> a lot (I have five Google Home speakers and counting) so having immediate access on my phone via a quick squeeze has always been a bonus.</p>
+<p style="text-align: center;"><strong><em>Read more:</em></strong><em> <a href="https://dgit.com/google-home-assistant-59577/">Google Home and Assistant – the definitive guide</a></em></p>
+<p>In the grand scheme of things, these are both losses I can live with. I’m not sure I can say the same about my issues with the software, however.</p>
+<p><img class="alignnone size-large wp-image-986757" src="https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-google-discover-840x434.jpg" alt="OnePlus 7 Pro vs Google Pixel 3 XL Google Discover feed" width="840" height="434" srcset="https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-google-discover-840x434.jpg 840w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-google-discover-300x155.jpg 300w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-google-discover-768x397.jpg 768w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-google-discover-16x8.jpg 16w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-google-discover-32x17.jpg 32w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-google-discover-28x14.jpg 28w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-google-discover-56x29.jpg 56w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-google-discover-64x33.jpg 64w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-google-discover-1000x517.jpg 1000w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-google-discover-1200x621.jpg 1200w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-google-discover-387x200.jpg 387w" sizes="(max-width: 840px) 100vw, 840px" /></p>
+<p>Let me be very clear: <a href="https://www.androidauthority.com/oxygenos-features-879547/">OxygenOS</a> is by far my favorite OEM skin. It’s incredibly customizable, clean-looking, has almost zero bloat, and often has extra or tweaked features that are better than stock Android (most notably gestures). But I still prefer the Pixel Launcher.</p>
+<div class="aa_srma_container shortcodes_wrapper right"><div class="shortcodes-header"><div class="shortcodes-title">Best OEM skin?</div></div><div class="related_articles_wrapper"><div class="related_article_item"><a class="overlay-link" href="https://www.androidauthority.com/android-skins-945375/" title="The many flavors of Android: a look at the major Android skins"></a><h4 class="ra-title">The many flavors of Android: a look at the major Android skins</h4><div class="ra-excerpt">
+
+One of the best things about Android is how customizable it is, letting users enjoy a whole host of different flavors. Some prefer their Android clean and stock-like. Others like phone manufacturers to come up …</div></div></div></div>
+<p>There’s just something about the Pixel’s simplicity and purity as part of the wider Google ecosystem &#8212; that I’m perhaps too deeply ingrained in &#8212; that I immediately mourn the absence of that signature Material Design look and feature set.</p>
+<p>I can remedy this a little thanks to a <a href="http://andauth.co/AnotherWidget">helpful widget app</a> that mimics the Pixel clock and <a href="http://andauth.co/RtzXmc">Nova</a> launcher with a <a href="https://help.teslacoilapps.com/nowcompanion">sideloaded Google Discover app</a>, but it’s still not quite the same. There’s also no solution to OnePlus&#8217; continued, inexplicable refusal to add always-on display support &#8212; a very personal potential deal breaker, I admit &#8212; which is outright baffling at this point.</p>
+<p><img class="alignnone size-large wp-image-986756" src="https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-camera-840x472.jpg" alt="OnePlus 7 Pro vs Google Pixel 3 XL camera" width="840" height="472" srcset="https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-camera-840x472.jpg 840w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-camera-300x170.jpg 300w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-camera-768x432.jpg 768w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-camera-16x9.jpg 16w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-camera-32x18.jpg 32w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-camera-28x16.jpg 28w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-camera-56x31.jpg 56w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-camera-64x36.jpg 64w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-camera-712x400.jpg 712w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-camera-1000x562.jpg 1000w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-camera-1200x675.jpg 1200w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-camera-792x446.jpg 792w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-camera-1280x720.jpg 1280w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-camera-1340x754.jpg 1340w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-camera-770x433.jpg 770w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-camera-356x200.jpg 356w" sizes="(max-width: 840px) 100vw, 840px" /></p>
+<p>If there’s one ultimate deal breaker, however, it’s the same thing that led to me resigning the OnePlus 6T back to a drawer: the camera.</p>
+<p>Last year I welcomed my daughter into the world and my photo library went from occasional shots of my cat to literally thousands of snaps of a little person, all uploaded safely to <a href="https://www.androidauthority.com/google-photos-937968/">Google Photos</a> with unlimited original quality cloud storage and synced to my <a href="https://www.androidauthority.com/google-home-hub-review-912398/">Google Home Hub</a> (or <a href="https://www.androidauthority.com/google-nest-hub-camera-983875/">Nest Hub</a>, I should say).</p>
+<p>On paper, the OnePlus 7 Pro camera is great. Its <a href="https://www.androidauthority.com/triple-camera-wish-list-894938/">triple-lens</a> setup is far more versatile than the Pixel 3 series’ single shooter and the image quality is an obvious step up from the OnePlus 6T. The OnePlus Camera app is also simple and intuitive.</p>
+<p><img class="alignnone size-large wp-image-986758" src="https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-pop-up-vs-notch-840x473.jpg" alt="OnePlus 7 Pro vs Google Pixel 3 XL pop-up camera vs notch" width="840" height="473" srcset="https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-pop-up-vs-notch-840x472.jpg 840w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-pop-up-vs-notch-300x170.jpg 300w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-pop-up-vs-notch-768x432.jpg 768w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-pop-up-vs-notch-16x9.jpg 16w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-pop-up-vs-notch-32x18.jpg 32w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-pop-up-vs-notch-28x16.jpg 28w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-pop-up-vs-notch-56x32.jpg 56w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-pop-up-vs-notch-64x36.jpg 64w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-pop-up-vs-notch-712x400.jpg 712w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-pop-up-vs-notch-1000x563.jpg 1000w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-pop-up-vs-notch-1200x675.jpg 1200w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-pop-up-vs-notch-792x446.jpg 792w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-pop-up-vs-notch-1280x720.jpg 1280w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-pop-up-vs-notch-1340x754.jpg 1340w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-pop-up-vs-notch-770x433.jpg 770w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-pop-up-vs-notch-356x200.jpg 356w" sizes="(max-width: 840px) 100vw, 840px" /></p>
+<p>Unfortunately, the actual results still pale in comparison to the Pixel 3 XL, especially in low light. OnePlus’ post-processing still lags way behind Google’s and when you&#8217;re taking photos that you&#8217;ll cherish forever that becomes an overwhelmingly large, emotive factor.</p>
+<p>The fact that the budget <a href="https://www.androidauthority.com/google-pixel-3a-xl-review-982622/">Pixel 3a</a> series, which I&#8217;ve also been playing around with recently, produces better results as a point-and-shoot camera phone shows just how far ahead Google is in this area compared to every Android OEM, not just OnePlus.</p>
+<p style="text-align: center;"><em><strong>Opinion:</strong> <a href="https://www.androidauthority.com/whats-the-point-of-the-google-pixel-3a-983034/">What&#8217;s the point of the Google Pixel 3a?</a></em></p>
+<h2>OnePlus 7 Pro Vs Google Pixel 3: Decision time?</h2>
+<p><img class="alignnone size-large wp-image-986761" src="https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-on-chair-840x473.jpg" alt="OnePlus 7 Pro vs Google Pixel 3 XL rear on chair" width="840" height="473" srcset="https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-on-chair-840x472.jpg 840w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-on-chair-300x170.jpg 300w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-on-chair-768x432.jpg 768w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-on-chair-16x9.jpg 16w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-on-chair-32x18.jpg 32w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-on-chair-28x16.jpg 28w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-on-chair-56x32.jpg 56w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-on-chair-64x36.jpg 64w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-on-chair-712x400.jpg 712w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-on-chair-1000x563.jpg 1000w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-on-chair-1200x675.jpg 1200w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-on-chair-792x446.jpg 792w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-on-chair-1280x720.jpg 1280w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-on-chair-1340x754.jpg 1340w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-on-chair-770x433.jpg 770w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/oneplus-7-pro-vs-google-pixel-3-xl-rear-on-chair-356x200.jpg 356w" sizes="(max-width: 840px) 100vw, 840px" /></p>
+<p>I have a feeling I’ll be going back and forth between the OnePlus 7 Pro and Google Pixel 3 XL for the next few months. The inevitable <a href="https://www.xda-developers.com/google-camera-port-hub/">Pixel Camera port</a> for the OnePlus 7 Pro may throw a curveball at me, though that may make using the telephoto and ultra-wide angle sensors a little more awkward.</p>
+<p>My ideal phone still sits somewhere between the two devices with OnePlus’ hardware and Google’s software. That said, I understand that I’m coming at this dilemma from a point of extreme privilege as most people don&#8217;t have multiple high-calibre phones they can pick and choose on a whim.</p>
+<div class="clear"></div><blockquote class="quote_new center" style="color: #39d266; border-color: #39d266;"><p>I'm still torn.</p></blockquote><div class="clear"></div>
+<p>For most buyers, the OnePlus 7 Pro offers far greater bang for your buck even when considering the price jump compared to OnePlus’ previous flagships. Likewise, if the camera is your deciding factor as it may be for me, the Pixel 3a is a much better value package than its flagship sibling.</p>
+<p>Ultimately, I’m still torn. But it’s not been this close for a while.</p>
+<hr />
+<p>Which phone should I go for? Let me hear your opinion in the comments!</p>
+<div class="container-fluid builder-html"><div class="container-inner"><div class="affiliate-text"><i>Affiliate disclosure: We may receive compensation in connection with your purchase of products via links on this page. The compensation received will never influence the content, topics or posts made in this blog. See our <a href="https://www.androidauthority.com/external-links/">disclosure policy</a> for more details.</i></div></div></div>]]></content:encoded>
+            <wfw:commentRss>
+                https://www.androidauthority.com/oneplus-7-pro-vs-google-pixel-3-xl-986132/feed/
+            </wfw:commentRss>
+            <slash:comments>0</slash:comments>
+        </item>
+        <item>
+            <title>Deal: Try Spotify Premium for 3 months for just 99 cents total (US and UK)
+            </title>
+            <link>https://www.androidauthority.com/spotify-premium-trial-deal-986810/</link>
+            <comments>https://www.androidauthority.com/spotify-premium-trial-deal-986810/#respond
+            </comments>
+            <pubDate>Wed, 15 May 2019 17:33:33 +0000</pubDate>
+            <dc:creator><![CDATA[C. Scott Brown]]></dc:creator>
+            <category><![CDATA[Deals]]></category>
+            <category><![CDATA[News]]></category>
+            <category><![CDATA[Spotify]]></category>
+
+            <guid isPermaLink="false">https://www.androidauthority.com/?p=986810</guid>
+            <description>
+                <![CDATA[The deal also appears to be active in the U.K. for 99 pence.]]></description>
+            <media:content name="AndroidAuthority"
+                medium="image"
+                url="https://cdn57.androidauthority.net/wp-content/uploads/2018/07/Spotify-500x260.jpg" />
+            <content:encoded><![CDATA[<p><img class="aligncenter size-large wp-image-881819" src="https://cdn57.androidauthority.net/wp-content/uploads/2018/07/Spotify-840x472.jpg" alt="Spotify logo." width="840" height="472" srcset="https://cdn57.androidauthority.net/wp-content/uploads/2018/07/Spotify-840x472.jpg 840w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/Spotify-300x170.jpg 300w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/Spotify-768x432.jpg 768w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/Spotify-16x9.jpg 16w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/Spotify-32x18.jpg 32w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/Spotify-28x16.jpg 28w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/Spotify-56x31.jpg 56w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/Spotify-64x36.jpg 64w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/Spotify-712x400.jpg 712w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/Spotify-792x446.jpg 792w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/Spotify-770x433.jpg 770w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/Spotify-356x200.jpg 356w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/Spotify.jpg 920w" sizes="(max-width: 840px) 100vw, 840px" /><span class="source_link_wrap"> <a href="Spotify.com" rel="nofollow">Spotify</a> </span></p>
+<p>The free tier of <a href="https://www.androidauthority.com/spotify-tips-free-premium-978381/">Spotify</a> allows you to access a ton of music &#8212; but with some <a href="https://www.androidauthority.com/spotify-tips-free-premium-978381/">severe limitations</a>, not to mention ad interruptions. Spotify Premium, however, gets you full, ad-free access to nearly everything the service offers.</p>
+<p>Right now, you can give Spotify Premium a shot for three months and <a href="https://www.spotify.com/">pay only $0.99</a>. That&#8217;s not $0.99 per month, that&#8217;s $0.99 total for the entire three-month period.</p>
+<p>When the trial period is over, you&#8217;ll pay the usual rate for Spotify Premium, which is currently set at $9.99 per month.</p>
+<div class="aa_srma_container shortcodes_wrapper right"><div class="shortcodes-header"><div class="shortcodes-title">Editor's Pick</div></div><div class="related_articles_wrapper"><div class="related_article_item"><a class="overlay-link" href="https://www.androidauthority.com/spotify-india-984435/" title="Getting started with Spotify in India"></a><h4 class="ra-title">Getting started with Spotify in India</h4><div class="ra-excerpt">
+Spotify finally launched its music streaming service in India in February 2019, after numerous stops and starts and despite a legal battle with Warner Music Group that rages on even today (more on this later). …</div></div></div></div>
+<p>However, if after the trial you don&#8217;t want to pay the full price for the service, you can simply cancel and drop back down to the free tier. Of course, that will mean going back to ad interruptions, which you might not be able to stomach after three blissful months living ad-free.</p>
+<p>This deal is live right now in both the United States and the United Kingdom. In the U.K., the charge is 99 pence for the three-month trial and then 9.99 pounds per month after the trial ends. Regardless of your location, you have until June 30 to sign up for the deal.</p>
+<p>Keep in mind that you will be ineligible for this trial offer if you&#8217;ve had a Spotify Premium account before or participated in a similar trial offer in the past.</p>
+<p>Click the button below to sign up!</p>
+<div class="aa_custom_button_wrapp center"><a class="aa_button cbs_button add-active ico-fa fasc-ico-before fa-play fasc-alignment-center center" style="background-color: #0be048;" target="_blank" rel="nofollow noopener noreferrer" href="https://www.spotify.com/">Try Spotify Premium</a></div>
+]]></content:encoded>
+            <wfw:commentRss>
+                https://www.androidauthority.com/spotify-premium-trial-deal-986810/feed/
+            </wfw:commentRss>
+            <slash:comments>0</slash:comments>
+        </item>
+        <item>
+            <title>Fortnite updates: Drum Gun nerfs and a new automatic weapon in v9.01</title>
+            <link>https://www.androidauthority.com/fortnite-update-hub-897061/</link>
+            <comments>https://www.androidauthority.com/fortnite-update-hub-897061/#respond
+            </comments>
+            <pubDate>Wed, 15 May 2019 17:03:05 +0000</pubDate>
+            <dc:creator><![CDATA[Team AA]]></dc:creator>
+            <category><![CDATA[News]]></category>
+            <category><![CDATA[Fortnite]]></category>
+
+            <guid isPermaLink="false">https://www.androidauthority.com/?p=897061</guid>
+            <description>
+                <![CDATA[The Drum Gun has finally been nerfed, but it might be replaced by a powerful new assault weapon.]]></description>
+            <media:content name="AndroidAuthority"
+                medium="image"
+                url="https://cdn57.androidauthority.net/wp-content/uploads/2019/05/fortnite-update-tactical-assault-rifle-500x260.jpg" />
+            <content:encoded><![CDATA[<div class="video-container">
+<div class="youtube-player"><iframe style="position: absolute;" width="100%" height="100%" src="https://www.youtube.com/embed/xV5EqWBHkSc?autoplay=0&#038;autohide=2border=0&#038;wmode=opaque&#038;enablejsapi=1rel=0&#038;controls=1&#038;showinfo=1" allowfullscreen frameborder="0"></iframe></div>
+</div>
+<p>Welcome to our <a href="https://www.androidauthority.com/fortnite-review-891282/">Fortnite</a> update tracker! We&#8217;ll be collating all of the official Fortnite Battle Royale update/patch notes and breaking down all the new features added to Epic Games&#8217; phenomenon for Android and iOS phones and tablets, as well as PC, PS4, Xbox One and Nintendo Switch platforms.</p>
+<p class="main-title single-title entry-title" style="text-align: center;"><em><strong>More: </strong><a href="https://www.androidauthority.com/fortnite-season-9-983008/">Fortnite Season 9 guide: Battle Pass, skins, map changes, Fortbytes, and more!</a></em></p>
+<p>If you want to stay up-to-date with all the new skins, map updates, weapon changes, and additions, new modes, and much more then be sure to bookmark this page for future reference!</p>
+<div class="aa_custom_button_wrapp center"><a class="aa_button cbs_button add-active cbs_icon cbs-get_app fasc-alignment-center center" style="background-color: #18e0bd;" target="_blank" rel="nofollow noopener noreferrer" href="http://andauth.co/PqmPFk">Download Fortnite</a></div>
+<p><strong>Victory Royale! Check out the rest of our Fortnite content:</strong></p>
+<ul>
+<li><a href="https://www.androidauthority.com/fortnite-review-891282/"><span class="title-text">Fortnite on Android first look</span></a></li>
+<li><a href="https://www.androidauthority.com/fortnite-release-date-android-892804/">Fortnite on Android: All the info on its unconventional release</a></li>
+<li><span class="title-text"><a href="https://www.androidauthority.com/fortnite-for-android-interview-epic-games-893342/">Fortnite for Android interview – Epic Games CEO Tim Sweeney on breaking away from Google Play</a></span></li>
+<li><a href="https://www.androidauthority.com/fortnite-tips-tricks-893704/"><span class="title-text">Fortnite Mobile tips and tricks: How to build, shoot and win</span></a></li>
+<li><a href="https://www.androidauthority.com/fortnite-cross-platform-guide-893940/">Fortnite cross platform guide: Play with nearly everyone</a></li>
+<li><a href="https://www.androidauthority.com/fortnite-mobile-compatible-android-devices-888466/"><span class="title-text">Fortnite Mobile on Android: Here are the compatible phones</span></a></li>
+<li><a href="https://www.androidauthority.com/fortnite-vs-pubg-mobile-861592/">Fortnite vs PUBG: Ten mobile differences between the two biggest battle royales</a></li>
+</ul>
+<hr>
+<h2>Fortnite update: The latest</h2>
+<hr>
+<h3>Fortnite v9.01 update overview</h3>
+<p><strong>Release date</strong>: May 15, 2019.</p>
+<p>This minor Fortnite update comes just after the start of Season 9, and it finally addresses the elephant in the room: the Drum Gun. Its base damage has been reduced significantly, which should make it easier to deal with on the battlefield.</p>
+<p>Yet another new fully automatic weapon called the Tactical Assault Rifle is dropping in, with rare, epic, and legendary versions. To pare down the number of rapid-fire weapons available, the P90 Compact SMG has been vaulted.</p>
+<p><img class="aligncenter size-large wp-image-986576" src="https://cdn57.androidauthority.net/wp-content/uploads/2019/05/fortnite-update-tactical-assault-rifle-840x473.jpg" alt="fortnite update tactical assault rifle" width="840" height="473" srcset="https://cdn57.androidauthority.net/wp-content/uploads/2019/05/fortnite-update-tactical-assault-rifle-840x472.jpg 840w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/fortnite-update-tactical-assault-rifle-300x170.jpg 300w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/fortnite-update-tactical-assault-rifle-768x432.jpg 768w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/fortnite-update-tactical-assault-rifle-16x9.jpg 16w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/fortnite-update-tactical-assault-rifle-32x18.jpg 32w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/fortnite-update-tactical-assault-rifle-28x16.jpg 28w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/fortnite-update-tactical-assault-rifle-56x32.jpg 56w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/fortnite-update-tactical-assault-rifle-64x36.jpg 64w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/fortnite-update-tactical-assault-rifle-712x400.jpg 712w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/fortnite-update-tactical-assault-rifle-1000x563.jpg 1000w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/fortnite-update-tactical-assault-rifle-1200x675.jpg 1200w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/fortnite-update-tactical-assault-rifle-792x446.jpg 792w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/fortnite-update-tactical-assault-rifle-1280x720.jpg 1280w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/fortnite-update-tactical-assault-rifle-1340x754.jpg 1340w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/fortnite-update-tactical-assault-rifle-770x433.jpg 770w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/fortnite-update-tactical-assault-rifle-356x200.jpg 356w" sizes="(max-width: 840px) 100vw, 840px" /></p>
+<h3>Fortnite v9.01 update patch notes</h3>
+<h3>What&#8217;s New?</h3>
+<p><strong>Tactical Assault Rifle</strong><br />
+Tactics take the day! This robust and precise assault rifle is the ideal option for tight quarters.</p>
+<h3 dir="ltr">Weapons + Items</h3>
+<ul>
+<li>Tactical Assault Rifle
+<ul>
+<li>Available in Rare, Epic, and Legendary variants.</li>
+<li>Available from Floor Loot, Chests, Supply Drops, and Vending Machines
+<ul>
+<li>Fully Automatic</li>
+<li>30 Round Magazine</li>
+<li>Deals 22/23/24 damage</li>
+<li>Headshot Multiplier of 1.75x</li>
+<li>This weapon has a tight spread in close quarters but is less effective at long range when compared to other Assault Rifles.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Reduced Baller health from 200 to 150
+<ul>
+<li><em>The primary goal of the Baller is to provide fun and exciting mobility. We feel that it still has a little too much defensive agency &#8211; this change should reduce the effectiveness there while not impacting its strengths.</em></li>
+</ul>
+</li>
+<li>Drum Gun adjustments
+<ul>
+<li>Reduced base damage from 26/27 to 22/23
+<ul>
+<li><em>Since its unvaulting, the Drum Gun effectiveness has been slightly higher than we wanted. This change should reduce its combat effectiveness while still retaining its flavor.</em></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Vaulted Compact SMG
+<ul>
+<li><em>Due to the recent addition of the Drum Gun and the brand new Tactical Assault Rifle, we wanted to reduce the availability of high rate-of-fire weapons.</em></li>
+</ul>
+</li>
+</ul>
+<h3 dir="ltr">Gameplay</h3>
+<ul>
+<li>Slipstream adjustments
+<ul>
+<li>Slipstreams no longer block building.
+<ul>
+<li><em>Trying to build up to get into a Slipstream should be an easy &amp; intuitive experience. We noticed some cases where players would build up to the Slipstream, but due to build restrictions would take a ‘leap of faith’ and not make the jump. This should make getting into a Slipstream easier.</em></li>
+</ul>
+</li>
+<li>Players flying in a Slipstream will destroy player built objects when they collide.</li>
+<li>Slipstreams are now disabled after storm phase 5.
+<ul>
+<li><em>We’ve seen a number of cases where Slipstreams caused issues during late game circles &#8211; primarily around getting pulled into the storm unexpectedly. Since the value of Slipstream mobility is limited in those scenarios, we felt it’s better to simply disable them.</em></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Performance</h3>
+<ul>
+<li>Improvements made to level streaming performance on all platforms.
+<ul>
+<li>This will reduce cases of buildings not loading in.</li>
+</ul>
+</li>
+<li>Physics optimizations to improve performance in conduits</li>
+</ul>
+<hr>
+<h2>Fortnite update history</h2>
+<hr>
+<h3>Fortnite v9.00 update overview</h3>
+<p><strong>Release date</strong>: May 9, 2019.</p>
+<p>The new season of Fortnite is finally here! With it comes tons of map changes and a new Battle Pass, which you can read all about in our <a href="https://www.androidauthority.com/fortnite-season-9-983008/">Fortnite Season 9 guide</a>.</p>
+<p>There are tons of changes to the map, as well as a new weapon called the combat shotgun. The pump shotgun, balloons, and others have been vaulted, but grenades have been brought back.</p>
+<div class="video-container">
+<div class="youtube-player"><iframe style="position: absolute;" width="100%" height="100%" src="https://www.youtube.com/embed/Y__AysHzUWo?autoplay=0&#038;autohide=2border=0&#038;wmode=opaque&#038;enablejsapi=1rel=0&#038;controls=1&#038;showinfo=1" allowfullscreen frameborder="0"></iframe></div>
+</div>
+<h3>Fortnite v9.00 update patch notes</h3>
+<h3 class="s1w8oh2o-2 gPCSHu">What’s New?</h3>
+<p class="s1w8oh2o-10 bQeEFC"><strong class="s1w8oh2o-14 dSrgZx">Season 9 &#8211; Battle Pass</strong></p>
+<p class="s1w8oh2o-10 bQeEFC">New Season, new Battle Pass. 100 levels, over 100 new rewards. Available in-game right now for 950 V-Bucks.</p>
+<p class="s1w8oh2o-10 bQeEFC"><strong class="s1w8oh2o-14 dSrgZx">Slipstreams</strong></p>
+<p class="s1w8oh2o-10 bQeEFC">Get around locations quickly with the new Slipstream wind transportation system.</p>
+<p><img class="aligncenter wp-image-984437 size-large" src="https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Fortnite-Season-9-map-changes-slipstreams-840x473.jpg" alt="Fortnite update Season 9 map changes slipstreams" width="840" height="473" srcset="https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Fortnite-Season-9-map-changes-slipstreams-840x472.jpg 840w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Fortnite-Season-9-map-changes-slipstreams-300x170.jpg 300w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Fortnite-Season-9-map-changes-slipstreams-768x432.jpg 768w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Fortnite-Season-9-map-changes-slipstreams-16x9.jpg 16w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Fortnite-Season-9-map-changes-slipstreams-32x18.jpg 32w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Fortnite-Season-9-map-changes-slipstreams-28x16.jpg 28w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Fortnite-Season-9-map-changes-slipstreams-56x32.jpg 56w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Fortnite-Season-9-map-changes-slipstreams-64x36.jpg 64w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Fortnite-Season-9-map-changes-slipstreams-712x400.jpg 712w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Fortnite-Season-9-map-changes-slipstreams-1000x563.jpg 1000w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Fortnite-Season-9-map-changes-slipstreams-1200x675.jpg 1200w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Fortnite-Season-9-map-changes-slipstreams-792x446.jpg 792w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Fortnite-Season-9-map-changes-slipstreams-1280x720.jpg 1280w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Fortnite-Season-9-map-changes-slipstreams-1340x754.jpg 1340w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Fortnite-Season-9-map-changes-slipstreams-770x433.jpg 770w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Fortnite-Season-9-map-changes-slipstreams-356x200.jpg 356w" sizes="(max-width: 840px) 100vw, 840px" /></p>
+<p class="s1w8oh2o-10 bQeEFC"><strong class="s1w8oh2o-14 dSrgZx">New Locations</strong></p>
+<p class="s1w8oh2o-10 bQeEFC">Explore new points of interest that emerged from the destruction of the Volcano like Neo Tilted and Mega Mall.</p>
+<h3 class="s1w8oh2o-2 gPCSHu">Weapons + Items</h3>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li class="s1w8oh2o-10 bQeEFC">Added Combat Shotgun
+<ul>
+<li class="s1w8oh2o-10 bQeEFC">Semi-Automatic
+<ul>
+<li class="s1w8oh2o-10 bQeEFC">Holds 10 Shells.</li>
+<li class="s1w8oh2o-10 bQeEFC">Fires 9 pellets per shot for 73 / 77 / 81 base damage.</li>
+<li class="s1w8oh2o-10 bQeEFC">Tight spread and fast fire rate.</li>
+<li class="s1w8oh2o-10 bQeEFC">Headshot multiplier of 1.70x.</li>
+<li class="s1w8oh2o-10 bQeEFC">Reloads 2 shells at a time.</li>
+</ul>
+</li>
+<li class="s1w8oh2o-10 bQeEFC">Available in Rare, Epic, and Legendary variants.</li>
+<li class="s1w8oh2o-10 bQeEFC">Available from Floor, Chests, Supply Drops, and Vending Machines</li>
+</ul>
+</li>
+<li class="s1w8oh2o-10 bQeEFC">Adjusted Tactical Shotgun damage
+<ul>
+<li class="s1w8oh2o-10 bQeEFC">Base damage increased from 66/70/74 to 71/75/79</li>
+</ul>
+</li>
+<li class="s1w8oh2o-10 bQeEFC">Reduced Drum Gun availability from 16.732% to 7.155%</li>
+<li class="s1w8oh2o-10 bQeEFC">Reduced Boom Bow availability from 1.292% to .755%</li>
+<li class="s1w8oh2o-10 bQeEFC">Unvaulted Grenades</li>
+<li class="s1w8oh2o-10 bQeEFC">Vaulted Clingers</li>
+<li class="s1w8oh2o-10 bQeEFC">Vaulted Buried Treasure</li>
+<li class="s1w8oh2o-10 bQeEFC">Vaulted Pump Shotgun</li>
+<li class="s1w8oh2o-10 bQeEFC">Vaulted Poison Dart Trap</li>
+<li class="s1w8oh2o-10 bQeEFC">Vaulted Scoped Revolver</li>
+<li class="s1w8oh2o-10 bQeEFC">Vaulted Suppressed Assault Rifle</li>
+<li class="s1w8oh2o-10 bQeEFC">Vaulted Thermal Assault Rifle</li>
+<li class="s1w8oh2o-10 bQeEFC">Vaulted Balloons</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="s1w8oh2o-10 bQeEFC"><strong class="s1w8oh2o-14 dSrgZx">Bug Fixes &amp; Improvements</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li class="s1w8oh2o-10 bQeEFC">Turbo building after gliding now works correctly.</li>
+<li class="s1w8oh2o-10 bQeEFC">The stink bomb damage audio and effects were not playing if you damaged yourself.</li>
+<li class="s1w8oh2o-10 bQeEFC">Fixed the Shadow bomb occasionally not making the player invisible on the Xbox One the first time it&#8217;s used.</li>
+<li class="s1w8oh2o-10 bQeEFC">Misplacement of Launch Pads in mid-air has been resolved.</li>
+<li class="s1w8oh2o-10 bQeEFC">Pirate Cannon camera issues due to network latency have been resolved.</li>
+<li class="s1w8oh2o-10 bQeEFC">The Reboot Card deposit sound effects no longer play in replay mode while the Van is on Cooldown.</li>
+<li class="s1w8oh2o-10 bQeEFC">The Reboot Van card sound effects will no longer be heard when a squadmate disconnects.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 class="s1w8oh2o-2 gPCSHu">Gameplay</h3>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li class="s1w8oh2o-10 bQeEFC">Slipstreams
+<ul>
+<li class="s1w8oh2o-10 bQeEFC">These tunnels of wind passively carry players down the stream.
+<ul>
+<li class="s1w8oh2o-10 bQeEFC">Players can move faster and change direction when actively trying to move down the Stream.</li>
+<li class="s1w8oh2o-10 bQeEFC">Use directional input to gain extra velocity. Experiment with bobbing up and down for higher speeds.</li>
+</ul>
+</li>
+<li class="s1w8oh2o-10 bQeEFC">Players are launched when exiting the tube based on their movement speed and exit angle.</li>
+<li class="s1w8oh2o-10 bQeEFC">Projectiles and Vehicles can also enter the Slipstream.</li>
+</ul>
+</li>
+<li class="s1w8oh2o-10 bQeEFC">Air Vents
+<ul>
+<li class="s1w8oh2o-10 bQeEFC">The powerful gusts of air from these environmental items can launch players short distances and grant immunity to fall damage.</li>
+</ul>
+</li>
+<li class="s1w8oh2o-10 bQeEFC">Fortbytes
+<ul>
+<li class="s1w8oh2o-10 bQeEFC">Fortbytes are a series of 100 collectible computer chips available to Battle Pass owners. As you collect Fortbytes, you’ll decrypt a mysterious image. Collect them all to unlock rewards and uncover the secrets of Season 9.</li>
+<li class="s1w8oh2o-10 bQeEFC">On the first day of Season 9, there are 18 Fortbytes available to find. At least 1 new Fortbyte will be unlocked each day. Check the Challenges Tab for detailed information on which Fortbytes are currently available and when the others unlock.</li>
+<li class="s1w8oh2o-10 bQeEFC">Fortbytes cannot be collected after Season 9 ends.</li>
+</ul>
+</li>
+<li class="s1w8oh2o-10 bQeEFC">Disconnected players will stay in the world for 60 seconds. They still take damage and count for elimination points.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="s1w8oh2o-10 bQeEFC"><strong class="s1w8oh2o-14 dSrgZx">Bug Fixes &amp; Improvements</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li class="s1w8oh2o-10 bQeEFC">Resolved an issue with the UI showing health gains incorrectly if the player canceled the consumable close to completion time.</li>
+<li class="s1w8oh2o-10 bQeEFC">PS4 controller lighting not always matching your pin color when in Squads.</li>
+<li class="s1w8oh2o-10 bQeEFC">Players not able to use Hold to Swap if they previously picked an item up normally</li>
+<li class="s1w8oh2o-10 bQeEFC">Adjusted turbo building to be more forgiving under poor network conditions</li>
+<li class="s1w8oh2o-10 bQeEFC">Fixed cases of jittery movement under certain conditions.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 class="s1w8oh2o-2 gPCSHu">Limited Time Mode Rotation:</h3>
+<p class="s1w8oh2o-10 bQeEFC"><strong class="s1w8oh2o-14 dSrgZx">Trios</strong></p>
+<p class="s1w8oh2o-10 bQeEFC">Classic Battle Royale with Three-Person Squads.</p>
+<p class="s1w8oh2o-10 bQeEFC"><strong class="s1w8oh2o-14 dSrgZx">Solid Gold</strong></p>
+<p class="s1w8oh2o-10 bQeEFC">Fight to the finish using Legendary weapons!</p>
+<p class="s1w8oh2o-10 bQeEFC"><strong class="s1w8oh2o-14 dSrgZx">One Shot</strong></p>
+<p class="s1w8oh2o-10 bQeEFC">Low Gravity. Every player has 50 health. Sniper weapons are the only weapon, Bandages are the only healing item. Jump high and aim well!</p>
+<h3 class="s1w8oh2o-2 gPCSHu">Events</h3>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li class="s1w8oh2o-10 bQeEFC">Players who have already qualified to be in the World Cup will be marked with a World Cup badge on the event leaderboards</li>
+<li class="s1w8oh2o-10 bQeEFC">Leaderboards now have a button to sort games by the number of top leaderboard players in them. This will help identify the most critical active games from a leaderboard standing view.</li>
+<li class="s1w8oh2o-10 bQeEFC">The in-game HUD now has different icons for points for Arena matches and weekend tournament matches.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 class="s1w8oh2o-2 gPCSHu">Performance</h3>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li class="s1w8oh2o-10 bQeEFC">Improved frame rate on Nintendo Switch, particularly when large numbers of characters are onscreen.</li>
+<li class="s1w8oh2o-10 bQeEFC">Addressed some cases of invisible characters after skydiving.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 class="s1w8oh2o-2 gPCSHu">Audio</h3>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li class="s1w8oh2o-10 bQeEFC">Better tactical audio when inside player-built structures:
+<ul>
+<li class="s1w8oh2o-10 bQeEFC">Enemy Pickaxe impact within ~one building tile radius has new, louder sound.</li>
+<li class="s1w8oh2o-10 bQeEFC">Wallbreak by enemy close/behind player much clearer/louder.</li>
+</ul>
+</li>
+<li class="s1w8oh2o-10 bQeEFC">Explosion audio improvements- shorter, higher dynamic range sounds that will make explosion audio clearer and punchier.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 class="s1w8oh2o-2 gPCSHu">UI</h3>
+<p class="s1w8oh2o-10 bQeEFC"><strong class="s1w8oh2o-14 dSrgZx">Bug Fixes &amp; Improvements</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li class="s1w8oh2o-10 bQeEFC">“Swap&#8221; text appearing in the pickup UI will no longer appear when picking up more resources than the player can carry.</li>
+<li class="s1w8oh2o-10 bQeEFC">The initial storm warning timer was incorrectly showing as 0.</li>
+<li class="s1w8oh2o-10 bQeEFC">Spectators and replay watchers can now report users.</li>
+<li class="s1w8oh2o-10 bQeEFC">Fixed party invites not showing up in the UI if the user logged out and back in again.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 class="s1w8oh2o-2 gPCSHu">Spectating</h3>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul class="s1w8oh2o-12 epDuwo">
+<li class="s1w8oh2o-11 vSpYb">
+<p class="s1w8oh2o-10 bQeEFC">Spectating a player’s match will now automatically follow that player.</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 class="s1w8oh2o-2 gPCSHu">Mobile</h3>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li class="s1w8oh2o-10 bQeEFC">Auto fire will now trigger on vehicles.</li>
+<li class="s1w8oh2o-10 bQeEFC">Added option for increasing elimination feed line count in the HUD Layout Tool.</li>
+<li class="s1w8oh2o-10 bQeEFC">Dragging/Dropping from the quickbar is now allowed while jumping.</li>
+<li class="s1w8oh2o-10 bQeEFC">The location of the boost button on Android for the X-Stormwing has been moved to avoid triggering the Home button.</li>
+<li class="s1w8oh2o-10 bQeEFC">Squad formation is now accessible.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="s1w8oh2o-10 bQeEFC"><strong class="s1w8oh2o-14 dSrgZx">Bug Fixes &amp; Improvements</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li class="s1w8oh2o-10 bQeEFC">The delay with interacting when using the quickbar slots has been resolved.</li>
+<li class="s1w8oh2o-10 bQeEFC">Weapon icons now correctly display icons on the quickbar.</li>
+<li class="s1w8oh2o-10 bQeEFC">Fixed sliders that were broken in the Dead Zone tab of the Controller Options.</li>
+<li class="s1w8oh2o-10 bQeEFC">Auto fire adjustments:
+<ul>
+<li class="s1w8oh2o-10 bQeEFC">Semi-automatic weapons now fire correctly.</li>
+<li class="s1w8oh2o-10 bQeEFC">Increased acquisition delay for shotguns.</li>
+</ul>
+</li>
+<li class="s1w8oh2o-10 bQeEFC">Dynamite trajectory indicator is now correctly displayed during use.</li>
+<li class="s1w8oh2o-10 bQeEFC">Ziplines can no longer be ridden past their endpoints.</li>
+<li class="s1w8oh2o-10 bQeEFC">Autorun no longer takes more than two taps to initiate after jumping from Battle Bus.</li>
+<li class="s1w8oh2o-10 bQeEFC">Cooldown Timer visual for boost buttons on vehicles is now displayed correctly.</li>
+<li class="s1w8oh2o-10 bQeEFC">The camera no longer shakes when entering the X-Stormwing.</li>
+<li class="s1w8oh2o-10 bQeEFC">Left virtual thumbstick no longer becomes invisible when holding left or right and pressing the fire button.</li>
+<li class="s1w8oh2o-10 bQeEFC">The Harvest Tool UI button in HUD layout is no longer invisible.</li>
+<li class="s1w8oh2o-10 bQeEFC">The stair railing in Pleasant Park no longer clips through the door.</li>
+<li class="s1w8oh2o-10 bQeEFC">Variant numbers partially hidden in the preview screen by the &#8220;X&#8221; button.</li>
+<li class="s1w8oh2o-10 bQeEFC">The Dream cosmetic is now correctly displaying:
+<ul>
+<li class="s1w8oh2o-10 bQeEFC">The butterfly</li>
+<li class="s1w8oh2o-10 bQeEFC">Eye glow effect</li>
+</ul>
+</li>
+<li class="s1w8oh2o-10 bQeEFC">Widow&#8217;s Bite pickaxe visual effect issue has been resolved.</li>
+<li class="s1w8oh2o-10 bQeEFC">The Cooldown ring timer showing briefly when switching seats in Cannon.</li>
+<li class="s1w8oh2o-10 bQeEFC">Interact Icon is no longer missing with certain consumables.</li>
+<li class="s1w8oh2o-10 bQeEFC">Input Blocked text will no longer appear when opening the inventory.</li>
+<li class="s1w8oh2o-10 bQeEFC">The Item Shop arrows now display correctly on iPhone XS Max.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 class="s1w8oh2o-2 gPCSHu">General</h3>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul class="s1w8oh2o-12 epDuwo">
+<li class="s1w8oh2o-11 vSpYb">
+<p class="s1w8oh2o-10 bQeEFC">Reworked default button layout to be consistent across vehicles (Enter, Exit, Switch Seat and Boost)</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 class="s1w8oh2o-2 gPCSHu">UI</h3>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul class="s1w8oh2o-12 epDuwo">
+<li class="s1w8oh2o-11 vSpYb">
+<p class="s1w8oh2o-10 bQeEFC">Sub-game select screen has been refreshed.</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="s1w8oh2o-10 bQeEFC"><strong class="s1w8oh2o-14 dSrgZx">Bug Fixes &amp; Improvements</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li class="s1w8oh2o-10 bQeEFC">Improved visibility of squad icons on lobby player pads in large parties</li>
+<li class="s1w8oh2o-10 bQeEFC">Squad icons in large parties can no longer show an empty slot as ready</li>
+<li class="s1w8oh2o-10 bQeEFC">Selecting a highlighted team member in the lobby with a controller can no longer show options for a different member</li>
+<li class="s1w8oh2o-10 bQeEFC">Players will now appear correctly as a hologram, when joining a player currently in match</li>
+<li class="s1w8oh2o-10 bQeEFC">Reworded Squad formation messaging to be more clear</li>
+<li class="s1w8oh2o-10 bQeEFC">Fixed invisible character parts of players who are still loading into the match.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 class="s1w8oh2o-2 gPCSHu">Social</h3>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li class="s1w8oh2o-10 bQeEFC">Players now remain in the Party voice channel by default when entering a match. The Game channel is still available, but the switch is no longer automatic.</li>
+<li class="s1w8oh2o-10 bQeEFC">Added a setting for the display of voice chat indicators.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="s1w8oh2o-10 bQeEFC"><strong class="s1w8oh2o-14 dSrgZx">Bug Fixes &amp; Improvements</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li class="s1w8oh2o-10 bQeEFC">Suggested friends in the social panel match the suggestions in the launcher</li>
+<li class="s1w8oh2o-10 bQeEFC">The “Sit Out/Jump In&#8221; button in Squad Formation is now displayed correctly</li>
+<li class="s1w8oh2o-10 bQeEFC">Sending a friend invite to a suggested friend no longer fails</li>
+<li class="s1w8oh2o-10 bQeEFC">Can now still send party invites after joining and leaving a party while set to “Friend” party privacy</li>
+<li class="s1w8oh2o-10 bQeEFC">Fixed potentially incorrect notification message when joining a channel</li>
+<li class="s1w8oh2o-10 bQeEFC">Voice indicators are no longer stuck on screen when leaving a party while members are speaking</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3>Fortnite v8.51 update overview</h3>
+<p><strong>Release date:</strong> May 2, 2019</p>
+<p>Fortnite V8.51 introduces a new item, the shadow bomb, giving players temporary invisibility, increased movement speed, and double jump and wall jump capabilities.&nbsp;</p>
+<div class="video-container">
+<div class="youtube-player"><iframe style="position: absolute;" width="100%" height="100%" src="https://www.youtube.com/embed/w1J1F9bGsBg?autoplay=0&#038;autohide=2border=0&#038;wmode=opaque&#038;enablejsapi=1rel=0&#038;controls=1&#038;showinfo=1" allowfullscreen frameborder="0"></iframe></div>
+</div>
+<h4>WEAPONS + ITEMS</h4>
+<p><strong>Shadow Bomb</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Shrouds yourself in shadow, briefly becoming invisible to enemies.</li>
+<li>6-second duration</li>
+<li>User becomes more visible to others near the end of the effect.</li>
+<li>Increases your movement speed, provides the ability to double jump, and wall jump.</li>
+<li>Players are unable to attack, build, or loot while under the effects of the Shadow Bomb.</li>
+<li>Rarity: Uncommon</li>
+<li>Can hold a maximum of 6</li>
+<li>Can be found from Floor Loot, Chests, Supply Drops, and Supply Llamas.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>GAMEPLAY</h4>
+<p><strong>Bug Fixes &amp; Improvements</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Sound effects for Jetpacks were occasionally playing much louder than they should be.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>UI</h4>
+<p><strong>Bug Fixes &amp; Improvements</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>The Victory Royale UI animation was displaying for all players in Limited Time Modes with respawning enabled.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>SAVE THE WORLD</h4>
+<h4>WHAT&#8217;S NEW?</h4>
+<p><strong>Duet</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Create a Duet between you… and the Husks!</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>WEAPONS + ITEMS</h4>
+<p><strong>Duet</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>A high damage assault rifle that&#8217;s good for sustained fire due to its large magazine capacity.</li>
+<li>Available in the Weekly Store from May 1 at 8PM ET until May 8 at 8PM ET.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>CREATIVE</h4>
+<h4>WHAT’S NEW?</h4>
+<p><strong>PREFABS</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>New Prefabs and Galleries based on Fortnite Battle Royale’s restaurants and diners.
+<ul>
+<li>Durrr Burger Prefab</li>
+<li>Uncle Pete’s Pizza Pit Prefab</li>
+<li>SofDeez Ice Cream Shop Prefab</li>
+<li>4 Diner Galleries</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>SOCIAL</h4>
+<p><strong>Bug Fixes &amp; Improvements</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Any Suggested Friends could not be added to friends.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3>Fortnite v8.50 update overview</h3>
+<div class="video-container">
+<div class="youtube-player"><iframe style="position: absolute;" width="100%" height="100%" src="https://www.youtube.com/embed/OM_QJkD-Mr8?autoplay=0&#038;autohide=2border=0&#038;wmode=opaque&#038;enablejsapi=1rel=0&#038;controls=1&#038;showinfo=1" allowfullscreen frameborder="0"></iframe></div>
+</div>
+<p><strong>Endgame &#8211; Limited Time Mode</strong></p>
+<p>Join the battle for the Infinity Stones! Fight as Chitauri and Thanos or wield Avengers items in the Endgame LTM.</p>
+<h4>LIMITED TIME MODE: ENDGAME</h4>
+<p><strong>Summary</strong></p>
+<p>Thanos and his Chitauri invade the Battle Royale island, in search of the six Infinity Stones.</p>
+<p><strong>Mode Details</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Endgame features a team of heroes fighting to stop Thanos and his Chitauri from claiming all six Infinity Stones.</li>
+<li>Both teams respawn when eliminated until the other side completes their objective.</li>
+<li>On one side is the Hero team. Heroes respawn when eliminated until the enemy team has found all six Infinity Stones.</li>
+<li>Heroes start with a treasure map that leads directly to a Mythic Avengers item.</li>
+<li>Other Avengers items can be found in Chests throughout the map.</li>
+<li>The goal for the Hero team is to destroy the Chitauri army and defeat Thanos.</li>
+<li>Team Thanos is comprised of Chitauri Invaders and Thanos himself.</li>
+<li>Chitauri Invaders start with a powerful laser rifle, an anti-structure grenade attack, and a jetpack that lets them briefly leap high into the air.</li>
+<li>The first Chitauri to recover an Infinity stone will be transformed into Thanos.</li>
+<li>Thanos has a powerful punch, a destructive beam attack, and the ability to jump high into the air and then smash anything in his way when he comes back down.</li>
+<li>Each time an Infinity Stone is claimed, Thanos&#8217; abilities grow more powerful and the Chitauri gain health.
+<ul>
+<li>Reality Stone (Red) = Heath &amp; Shields doubled (1000-&gt;2000)</li>
+<li>Soul Stone (Orange) = Siphon activated (grants Thanos shields only)</li>
+<li>Mind Stone (Yellow) = Jump height doubled</li>
+<li>Space Stone (Blue) = Ground Pound AOE size tripled, damage x6</li>
+<li>Time Stone (Green) = Big knockback added to each hit, damage x3</li>
+<li>Power Stone (Purple) = Laser damage x6</li>
+</ul>
+</li>
+<li>If Thanos is eliminated from the match, another Chitauri will become him after a short wait (unless Thanos is the last one standing).</li>
+<li>If Thanos &amp; the Chitauri find all six Infinity Stones, Heroes will no longer be able to respawn.</li>
+<li>The goal for Thanos and his army is to find the stones and then eliminate the remaining heroes.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>WEAPONS + ITEMS</h4>
+<p><strong>Bug Fixes &amp; Improvements</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>The Hold to Swap functionality is now confirmed upon releasing the Use button rather than when initially pressing it.
+<ul>
+<li>This should help with the issue of accidentally swapping.</li>
+</ul>
+</li>
+<li>If a player is eliminated by fall damage while inside a vehicle, the player that last damaged that vehicle will receive the credit for that elimination.</li>
+<li>Re-enabled hit markers to be server-side authoritative instead of client-side.
+<ul>
+<li>This will help prevent instances where players see hit markers but no damage.</li>
+</ul>
+</li>
+<li>Players that were Rebooted into Rifts were teleporting into the sky but would not enter skydiving mode.</li>
+<li>Vehicles weren’t getting impulsed away from the Reboot Van.</li>
+<li>Collision for the Reboot Van was not affecting some vehicles, allowing them to hide inside of the Reboot Van.</li>
+<li>The yellow “invulnerability” effect wasn’t appearing on players who were revived by the Reboot Van.</li>
+<li>The Reboot Card was still playing its spawn sound even if the player disconnected.</li>
+<li>Dropping inventory items while in vehicles with weapons is now blocked to prevent various camera issues.</li>
+<li>Traps were occasionally being placed in the middle of a tile rather than against a wall when using Builder Pro.</li>
+<li>When exiting vehicles, the equip animation will now always play before weapons can be fired.
+<ul>
+<li>This will prevent the issue where players would occasionally see themselves fire right after exiting a vehicle before the server had time to register the shot.</li>
+</ul>
+</li>
+<li>The elimination feed text will no longer display the “eliminated by ally” message if an ally interrupts a player reboot animation.</li>
+<li>Fall damage was being taken when using a Jetpack (in supported Limited Time Modes) after being launched from the Pirate Cannon.</li>
+<li>Players were not able to negate fall damage using a Flintlock Pistol while crouching.</li>
+<li>Players couldn’t see the nameplates of party member’s Reboot Cards in the UI.</li>
+<li>Players would not drop a Reboot Card if they were eliminated after confirming a Reboot but before their teammate actually spawned.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>GAMEPLAY</h4>
+<p><strong>Bug Fixes &amp; Improvements</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>We&#8217;ve resolved an issue that was preventing the correct amount of Survival XP from being granted after games and have gifted XP to players as compensation.
+<ul>
+<li>You’ll receive this compensation via the Gifting system.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>COMPETITIVE</h4>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>New Tournament &#8211; April 27 &amp; 28: Fortnite World Cup Online Open Week 3 ($1,000,000 total prize pool!)
+<ul>
+<li>Top performers in each server region will qualify to the Fortnite World Cup Finals in New York City. Full Fortnite World Cup details and official rules can be found here: <a href="https://www.epicgames.com/fortnite/competitive/events/world-cup" target="_blank" rel="noopener noreferrer">https://www.epicgames.com/fortnite/competitive/events/world-cup</a></li>
+</ul>
+</li>
+<li>Solo Game Mode
+<ul>
+<li>Participation in this event requires players to reach Champion League in Arena.</li>
+<li>Region Lock is in effect &#8211; players may only participate in the qualifier for a single server region each week of the Online Opens. The server region of the first match entered for that weekend’s tournament will be the one the player will be locked into for that entire weekend.</li>
+<li>Format:
+<ul>
+<li>April 27 &#8211; Round One: All Eligible Players.</li>
+<li>April 28 &#8211; Round Two: Top 3000 Players from Round One.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Streaming Replays &#8211; Currently only available on PC &amp; Mac.
+<ul>
+<li>Added tournament Match History, which can be viewed by selecting a player on the leaderboards.
+<ul>
+<li>Replays can be viewed from each match that player has played.</li>
+</ul>
+</li>
+<li>Added the ability to spectate live matches during tournaments by selecting a player on the leaderboards.
+<ul>
+<li>Note: Match must have been running for 10 minutes for live replay to be available.</li>
+</ul>
+</li>
+<li>Added the ability to view a specific match by game session ID using the “View Streaming Replay” button in the Replay Browser.</li>
+</ul>
+</li>
+<li>Arena &amp; Tournaments will now record profile stats to Solo/Duo/Squad categories rather than as an LTM.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Bug Fixes &amp; Improvements</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Players in Arena were incorrectly seeing themselves demoted to a lower division after losing Hype.
+<ul>
+<li>This was strictly a visual issue and all Hype values and division unlocks are once again being displayed correctly.</li>
+</ul>
+</li>
+<li>Tournament posters in-game were incorrectly showing certain events as starting in ‘2 Days’.</li>
+<li>Tournament posters and the Arena Panel were not loading properly on mobile devices.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>PERFORMANCE</h4>
+<p><strong>Bug Fixes &amp; Improvements.</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Resolved a cause of significant hitching during skydiving. and during late game combat.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>ART + ANIMATION</h4>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>We’ve added a unique animation for petting the dog and other Pets.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>AUDIO</h4>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Added Sound Visualizer without Spatialization (panning) of sounds in-game.
+<ul>
+<li>By introducing this mode, if you are a hearing-impaired player, then you will now be able to play the game with audio and the visualizer turned on simultaneously!</li>
+<li>Drop in and give us your feedback about these changes either in-game or on our social channels to help us continue to make improvements for the future!​​​​​</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Bug Fixes &amp; Improvements</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Various gameplay sounds (gunshots, walking, reloading) will no longer retrigger at incorrect/random times.
+<ul>
+<li>This was causing “ghost” sounds to be heard when nothing was causing the actual sound effect.</li>
+</ul>
+</li>
+<li>Fixed an issue that would cause certain things to not have looping audio when they should.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>REPLAY</h4>
+<p><strong>Bug Fixes &amp; Improvements</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>When healing with foraged Banana or Apples, the full visual effects weren’t playing when viewed in replays.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>MOBILE</h4>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>The reactive effects were not working properly for the Marshmello Outfit.</li>
+<li>MSAA anti-aliasing enabled on P30 Pro, Mate 20, Mate 20X.</li>
+<li>The interact button now has context-sensitive icons.</li>
+<li>You can now move while the map is open by providing input on the left side of the screen.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Bug Fixes &amp; Improvements</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Made improvements to stability and to resolve some crashes.</li>
+<li>Made performance improvements on the iPad Mini 4 and Air 2.</li>
+<li>The movement joystick wasn’t appearing on the HUD for certain devices.</li>
+<li>Push notifications were not being sent after updates finished downloading.</li>
+<li>Blocked players on player’s friend lists were not appearing as ‘Blocked’.</li>
+<li>The fire button and right fire-stick would not function after anchoring the Baller grapple with tap to fire.</li>
+<li>The right fire-stick was not allowing camera movement while in the Baller.</li>
+<li>The Baller grapple was not releasing on the first tap.</li>
+<li>Players could get stuck in an infinite fire loop after exiting the Baller while it was anchored with the grapple.</li>
+<li>Double tapping was required to detach the Baller’s grapple when using tap to fire.</li>
+<li>There were visual issues on the Back Button in the menus.</li>
+<li>Voice Chat icons from players set to “sit out” were not appearing.</li>
+<li>Ammo boxes weren’t opening.</li>
+<li>The Confirm and Cancel buttons in Squad Management were difficult to touch/interact with.</li>
+<li>The Option menus were closing the unapplied changes was closing the entire menu instead of just the popup prompt.</li>
+<li>Menu icons could be removed from the HUD Layout Tool.</li>
+<li>Vehicle boost icons were appearing different between viewing them in a match vs in the HUD Layout Tool screen.</li>
+<li>The Score Tracking widget can now be removed from the Mobile HUD</li>
+<li>Score Tracking widget can now be removed from Mobile HUD</li>
+<li>It was difficult to see character and weapon animations while using the Boom Bow.</li>
+<li>The Map widget was setting its anchors inappropriately when moved in the HUD layout tool, making some attached game mode UI push the Map widget off the screen.
+<ul>
+<li>You may need to reset the Map widget in the HUD Layout Tool to resolve this issue.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>CREATIVE</h4>
+<h4>WHAT&#8217;S NEW?</h4>
+<p><strong>Game Rounds</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Play a round! New game settings are now available, such as the ability to add rounds! Find out more in the Gameplay section below.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Phase Mode</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Phase mode allows you to toggle collision with objects and the world On &amp; Off. When you’re in Phase mode you can pass freely through all terrain and bring objects with you.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Pirate Ship Prefab</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Avast, ye mateys! Become the captain of your very own Pirate Ship! Imagine and create your own Pirate Cove using this new prefab.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>ISLANDS</h4>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Added two new featured Island portals to the Creative and Playground Hub.</li>
+<li>Reduced player Island portals from 8 to 6 in the Creative Hub.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Bug Fixes &amp; Improvements</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Material resources were not being reset when returning to the Hub.</li>
+<li>Infinite material resources were not being toggled properly when Island permissions changed.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>GAMEPLAY</h4>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>New Rounds game settings
+<ul>
+<li>You can now add rounds to any game.</li>
+<li>Everything will be reset to the original pre-game state when starting a new round.</li>
+<li>Each round uses the end game Score and Winner display settings to announce a winner, and also displays a round scoreboard.</li>
+<li>The number of wins per team or player is displayed on the scoreboard.
+<ul>
+<li>In the future, we will be adding an overall winner for the game display.</li>
+</ul>
+</li>
+<li>The Total Rounds setting sets the number of rounds from 1 to 100.</li>
+</ul>
+</li>
+<li>Updated options for Eliminations, Creature Eliminations, Objectives to Win, and Collect Items to:
+<ul>
+<li>Win to be Off, 1-10, 15, 20, 30, 40, 50, 100, 200, 500, or 1000.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Bug Fixes &amp; Improvements</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Players could cause damage to each other after a game had ended.</li>
+<li>Games were taking unexpectedly long times to start on Islands with Creative Spawners.</li>
+<li>Lobby music would play on a continuous loop after winning a game.</li>
+<li>Players in a party that was set to “Sit Out” would go into the game if the party leader joined a game in progress.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>CREATIVE TOOLS + PHONE</h4>
+<p><strong>Added Phase mode:</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>While flying, you can now activate Phase mode to pass through objects and terrain!
+<ul>
+<li>Phasing can be very useful for quickly navigating your Island while editing.</li>
+<li>To activate or deactivate Phase mode:
+<ul>
+<li>On the keyboard, press the N key(this can be reassigned in Settings).</li>
+<li>On controllers, hold down the Left Thumbstick.</li>
+<li>On mobile devices, you can assign a new Phase button to your HUD which allows you to toggle Phase.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Your Phase setting will be remembered, so you’ll continue to phase after you stop and start flying.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Bug Fixes &amp; Improvements</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Fruit consumable could not be selected by the Phone.</li>
+<li>Some props or tiles could vanish when copying nearby objects after Multi-Selecting them.</li>
+<li>Player build walls could be scaled and rotated if selected alongside another object using Multi-Select.</li>
+<li>Prop orientation would change unexpectedly when Grid Snap was toggled.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>PREFABS</h4>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Added the Pirate Ship Prefab.</li>
+<li>Added the Pirate Ship Gallery.</li>
+<li>Added six Pirate Cove Prefabs.</li>
+<li>Added the Pirate Cove Gallery and Pirate Cove Prop Gallery.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Bug Fixes &amp; Improvements</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>The metal trash can in General Props Gallery B was prevented from being cut or copied.</li>
+<li>The draw distance for the trash bag has been improved, allowing them to be visible from further away.</li>
+<li>Roof pieces from the Military Base Set were turning green after being placed with Multi-Select.</li>
+<li>The pillars in the Ice Castle Set could not be placed after being rotated on a changed axis.</li>
+<li>Canceling a cut of the rings from the Rings Gallery would cause that ring to be unaffected by the Phone.</li>
+<li>The Ice Castle Balcony was unable to be placed correctly.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>DEVICES</h4>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Added new options to Stormwing Spawner to configure whether objects are destroyed when they’re hit:
+<ul>
+<li>Boosted Health Threshold &#8211; While boosting straight into an object with this amount of health or less, it will be destroyed immediately (Default: Everything)</li>
+<li>Direct Hit Health Threshold &#8211; After a head-on collision into an object, if it has this amount of health or less it will be destroyed (Default: 300)</li>
+<li>Breakthrough Health Threshold &#8211; Anything the Stormwing bumps with this amount of health or less will be destroyed. (Default: 0)</li>
+<li>Options (Battle Royale, 0, 150, 300, 450, 600 or Everything)
+<ul>
+<li>Battle Royale &#8211; Use the current balance as defined by Battle Royale (This will change over time based on the Stormwing’s current state in Battle Royale)</li>
+<li>0 &#8211; 600 &#8211; The current health the object must be below for it to be destroyed.</li>
+<li>Everything &#8211; There is no threshold, everything will be destroyed.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>New options for Objective Device
+<ul>
+<li>Updated health bar look with a selectable identifying letter.</li>
+<li>Added option to identify the objective NONE, A, B, C, D, W, X, Y or Z</li>
+<li>Added option to show the objective health in the HUD</li>
+<li>Make sure to select Objective as the HUD Type in the UI Settings.</li>
+</ul>
+</li>
+<li>Added Hide Health Bar At options 10, 15, 20, 25, 30, 35, 40, and 45</li>
+<li>Added option to Objective Devices to set their Beacon Color:
+<ul>
+<li>Red, Blue or Orange: The beacon will always appear with the chosen color.</li>
+<li>Friendly/Enemy: The beacon will be colored either Red or Blue depending on whether it is on the opposing team or not.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Bug Fixes &amp; Improvements</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Spawned Creatures and Sentries were remaining active even after a game had ended.</li>
+<li>The Boom Bow was not causing damage to Sentries.</li>
+<li>Incorrect text was being displayed after a Sentry eliminated a player.</li>
+<li>Two Sentries could spawn on top of each other when starting a game.</li>
+<li>Sounds would not play when scoring in a Capture Area while the Radio was playing.</li>
+<li>Increased the draw distance of coins by 3 times their previous distance.</li>
+<li>Made the Pinball Bumper the same draw distance as the Pinball Flipper.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>UI + SOCIAL</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>You can now display the Scoreboard in game by pressing the Map button while a game is in progress. This option is on by default.
+<ul>
+<li>Use the Map Display Widget option to choose between Scoreboard and Default Map.</li>
+</ul>
+</li>
+<li>Added Objectives to HUD Type that allows for Objectives health to be shown on HUD</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Bug Fixes &amp; Improvements</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>The material resources icons were not showing the “infinite” graphic.</li>
+<li>The UI in Creative Mode was still appearing after switching to Save the World if the game was not restarted.</li>
+<li>Scoreboard Fixes
+<ul>
+<li>Only two players with identical scores could show as tied for the same place.</li>
+<li>The scoreboard was not appearing when choosing a narrow time difference between “Winner Display Time” and “Score Display Time”.</li>
+<li>Sometimes displayed the same player’s name multiple times.</li>
+<li>Player’s row was not consistently being highlighted.</li>
+<li>Placement placards would always show “1st” when on teams.</li>
+<li>Various team settings caused scoreboard columns to be offset.</li>
+<li>The Score Tracking widget was unable to be removed from the HUD on mobile.</li>
+</ul>
+</li>
+<li>The Time setting in the UI Settings was not counting upward.</li>
+<li>The Time setting was appearing in both the UI Settings tab and the Game tab. It now only shows in the UI Settings tab.</li>
+<li>There was a typo in the Radio track “Fortnite Remix”.</li>
+<li>A party leader joining a Creative server would sometimes take Sitting Out players with them into a game.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>MOBILE</h4>
+<p><strong>Bug Fixes &amp; Improvements</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Players could not enter Ghost Mode.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>SAVE THE WORLD</h4>
+<h4>WHAT’S NEW?</h4>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Cottontail Eagle Eye.
+<ul>
+<li>Bounce into battle and drop eggs on the Husks with this new Legendary Outlander.</li>
+</ul>
+</li>
+<li>Bowler
+<ul>
+<li>More cannons? No problem! Launch bouncing cannonballs at those Smashers with this returning launcher.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>MISSIONS + SYSTEMS</h4>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Twine Peaks tweaks!
+<ul>
+<li>Missions have been added to the top end of Twine Peaks with higher difficulties, and better rewards.
+<ul>
+<li>Hero, Schematic, and Survivor XP</li>
+<li>Higher Gold rewards</li>
+<li>Better world loot</li>
+<li>Better materials (Brightcore / Sunbeam)
+<ul>
+<li>These are the first steps we’re taking in adding harder content to Save the World.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Beta Storm Resupply returns!
+<ul>
+<li>New primary goals have been added:
+<ul>
+<li>Harvest enough rocks before the timer runs out!</li>
+<li>Collect 10 Supply Crates!</li>
+</ul>
+</li>
+<li>The Collect Mushrooms and/or Barrels are now bonus objectives rather than main objectives.</li>
+<li>The smallest safe area circle radius has been increased to allow for safer harvesting.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Bug Fixes &amp; Improvements</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Fixed an issue that caused mushrooms in Plankerton to not count towards the Resupply mission objective.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>UI</h4>
+<p><strong>Bug Fixes &amp; Improvements</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Mac players will no longer get kicked back to the map screen when trying to join a lobby.
+<ul>
+<li>We recently fixed this issue for other players prior to the release of v8.50.</li>
+</ul>
+</li>
+<li>Extra loading screens were appearing when leaving the lobby.</li>
+<li>The lobby “manage player” confirmation screen was showing an incorrect banner and power level.</li>
+<li>Descriptions for schematic rewards were not showing when viewed in the mission rewards section on the map.</li>
+<li>Some Schematic/Heroes had text and numbers cut off their descriptions.</li>
+<li>Armory slot items were showing unrelated tabs when previewing it from the shop.</li>
+<li>The Launch button would appear enabled but would be unusable when trying to launch an SSD mission.</li>
+<li>Collection Book Hero rewards were not displaying properly after claiming a random Hero reward.</li>
+<li>Collection Book completion pages were not updating when unslotting items or adding new items to a page.</li>
+<li>The wood harvesting UI was getting stuck on player screens when rejoining a mission or re-enabling the HUD.</li>
+<li>Players joining a game in progress would not appear in the team list HUD.</li>
+<li>Player power levels were appearing as “1” instead of the correct power level.</li>
+<li>Updated tooltip attack speed stats for melee weapon schematics.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>PERFORMANCE</h4>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Made improvements to gameplay modifiers to help with performance issues.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Bug Fixes &amp; Improvements</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Players were hitching while moving through/interacting with the menus.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>HEROES</h4>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Introducing Cottontail Eagle Eye, a new Legendary Outlander!
+<ul>
+<li>Standard Perk: Un-eggs-pected Departure
+<ul>
+<li>Phase Shift leaves 3 egg bombs, which deal 18 base damage to nearby enemies.</li>
+</ul>
+</li>
+<li>Commander Perk: Un-eggs-pected Departure+
+<ul>
+<li>Phase Shift leaves 3 egg bombs, which deal 45 base damage to nearby enemies.</li>
+</ul>
+</li>
+<li>Available in the Event Store on April 25 at 8 PM Eastern Time.</li>
+</ul>
+</li>
+<li>The Legendary Constructor Miss Bunny Penny Returns!
+<ul>
+<li>Standard Perk: Plasma Overdrive
+<ul>
+<li>Decreases Plasma Pulse Energy Cost by 38%.</li>
+</ul>
+</li>
+<li>Commander Perk: Plasma Overdrive+
+<ul>
+<li>Decreases Plasma Pulse Energy Cost by 75%.</li>
+</ul>
+</li>
+<li>Available in the Event Store on April 25 at 8 PM Eastern Time.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Bug Fixes &amp; Improvements</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>The Escape Artist+ tooltip was displaying an incorrect duration.</li>
+<li>The Critical Blast+ and Sure Shot+ tooltips were displaying incorrect values.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>WEAPONS + ITEMS</h4>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>The Bowler returns!
+<ul>
+<li>Fires cannonballs that damage and knockback groups of enemies. The cannonballs can bounce before exploding, damaging nearby enemies with each bounce.</li>
+<li>Available in the Weekly Store from April 25 at 8PM ET until May 2 at 8PM ET.</li>
+</ul>
+</li>
+<li>The Bowler has been added to the Flintlock Weapons page in the Collection Book.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>AUDIO</h4>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Updated the audio for the Noble Launcher charging up.</li>
+<li>Added audio when players are cycling through traps.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Bug Fixes &amp; Improvements</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Sounds were missing on Dashing Hare Ken’s martial arts animations.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>GENERAL</h4>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>We’ve reworked the Ready / Not Ready logic in several places. This should prevent/resolve instances of players involuntarily being marked as Not Ready.
+<ul>
+<li>Only the Party Leader will be marked as Not Ready when the following events occur:
+<ul>
+<li>A party member leaves</li>
+<li>A party member joins</li>
+<li>The selected playlist is changed</li>
+</ul>
+</li>
+<li>Everyone but the Party Leader will remain Ready after returning to the lobby from match.</li>
+</ul>
+</li>
+<li>Added some additional text to the Play Button area to show which party members still need to ready up.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>SOCIAL</h4>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Added an option to view your current voice channel (and toggle between Party / Game channels) in the Escape menu.</li>
+<li>Active Voice Indicators now appear for all party members, not just those that are Sitting Out.</li>
+<li>The Auto-Join Game Voice Channel setting is now limited to cases where your squad has been filled with other non-party-member players.</li>
+<li>The Party Member list in the Social Panel indicates the Party Leader.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Bug Fixes &amp; Improvements</strong></p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Players in the lobby would sometimes have each other’s in-game status text rather than their own.</li>
+<li>Players on Xbox One could experience intermittent failure when accepting a game invite or when joining a game session before the game has been launched.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4>PERFORMANCE</h4>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>Added a UI option to disable the Render Hardware Interface Thread that was added in 8.30.
+<ul>
+<li>RHIT provides performance improvements PC’s with quadcore CPUs and higher but can decrease performance on low-end machines.</li>
+</ul>
+</li>
+<li>Improved performance by reducing the number of audio components created when a weapon drops.</li>
+<li>Improved vehicle performance.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="patch-notes-text section container-fluid section-header">&nbsp;</div>
+<div class="patch-notes-text section container-fluid">
+<div class="row">&nbsp;</div>
+</div>
+<hr>
+<p>What would you like to see in future updates to Fortnite? Let us know in the comments.</p>
+]]></content:encoded>
+            <wfw:commentRss>https://www.androidauthority.com/fortnite-update-hub-897061/feed/
+            </wfw:commentRss>
+            <slash:comments>0</slash:comments>
+        </item>
+        <item>
+            <title>Gorilla Glass maker Corning launches Astra Glass for tablets and TVs</title>
+            <link>https://www.androidauthority.com/corning-astra-glass-986795/</link>
+            <comments>https://www.androidauthority.com/corning-astra-glass-986795/#respond
+            </comments>
+            <pubDate>Wed, 15 May 2019 16:36:17 +0000</pubDate>
+            <dc:creator><![CDATA[C. Scott Brown]]></dc:creator>
+            <category><![CDATA[News]]></category>
+            <category><![CDATA[Corning]]></category>
+
+            <guid isPermaLink="false">https://www.androidauthority.com/?p=986795</guid>
+            <description>
+                <![CDATA[Astra Glass will primarily be used for high-performance tablets, notebooks, and televisions.]]></description>
+            <media:content name="AndroidAuthority"
+                medium="image"
+                url="https://cdn57.androidauthority.net/wp-content/uploads/2018/07/corning-signage-500x260.jpg" />
+            <content:encoded><![CDATA[<p><img class="aligncenter size-large wp-image-887508" src="https://cdn57.androidauthority.net/wp-content/uploads/2018/07/corning-signage-840x472.jpg" alt="Corning" width="840" height="472" srcset="https://cdn57.androidauthority.net/wp-content/uploads/2018/07/corning-signage-840x472.jpg 840w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/corning-signage-300x170.jpg 300w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/corning-signage-768x432.jpg 768w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/corning-signage-16x9.jpg 16w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/corning-signage-32x18.jpg 32w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/corning-signage-28x16.jpg 28w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/corning-signage-56x31.jpg 56w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/corning-signage-64x36.jpg 64w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/corning-signage-712x400.jpg 712w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/corning-signage-1000x562.jpg 1000w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/corning-signage-1200x674.jpg 1200w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/corning-signage-792x446.jpg 792w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/corning-signage-1280x720.jpg 1280w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/corning-signage-1340x754.jpg 1340w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/corning-signage-770x433.jpg 770w, https://cdn57.androidauthority.net/wp-content/uploads/2018/07/corning-signage-356x200.jpg 356w" sizes="(max-width: 840px) 100vw, 840px" /></p>
+<p><a href="https://www.androidauthority.com/corning-foldable-gorilla-glass-962682/">Corning</a> is currently attending Display Week in San Jose, CA. During the three-day event, the company is launching its newest product called Astra Glass, which will be geared towards high-performance tablets, notebooks, and televisions.</p>
+<p>One of Corning&#8217;s star products is <a href="https://www.androidauthority.com/corning-foldable-gorilla-glass-962682/">Gorilla Glass</a> which appears on many smartphones around the world. The <a href="https://www.androidauthority.com/gorilla-glass-6-ink-jet-887571/">sixth iteration of Gorilla Glass</a> will continue to be the glass-of-choice for most 2019 flagships.</p>
+<p>Astra Glass is designed for devices larger than smartphones. It&#8217;s precisely engineered to enable the higher pixel density of high-performance displays to come through. This will create brighter, faster, and more lifelike images on future <a href="https://www.androidauthority.com/best-business-tablets-821905/">tablets</a>, laptops, and 8K TVs.</p>
+<div class="aa_srma_container shortcodes_wrapper right"><div class="shortcodes-header"><div class="shortcodes-title">Editor's Pick</div></div><div class="related_articles_wrapper"><div class="related_article_item"><a class="overlay-link" href="https://www.androidauthority.com/corning-ar-glass-942238/" title="Corning shows us its new specialized glass for AR wearables"></a><h4 class="ra-title">Corning shows us its new specialized glass for AR wearables</h4><div class="ra-excerpt"> YouTube 
+
+At CES 2019, we had the chance to test out a new AR wearable prototype partially developed by Corning. One of the pillars of Corning's business is the development of Gorilla Glass, which …</div></div></div></div>
+<p>Corning is positioning Astra Glass as its most-premium offering when it comes to larger displays. In other words, if in the future you find yourself eyeing a tablet with Astra Glass, that tablet will likely be pretty expensive.</p>
+<p>Han Yim &#8212; business director at Corning &#8212; promises that Astra Glass will provide manufacturers with &#8220;low total pitch variation, low total thickness variation, and low sag,” when it comes to high-end displays.</p>
+<p>With the recent launch of the <a href="https://www.androidauthority.com/oneplus-7-pro-vs-oneplus-7-985187/">OnePlus 7 Pro</a> and its top-of-the-line <a href="https://www.androidauthority.com/oneplus-7-pro-battery-life-90hz-display-985616/">90Hz display</a>, high-end display technologies could be the next big feature manufacturers focus on when releasing new products. Corning is likely trying to come out ahead of that trend with Astra.</p>
+<p style="text-align: center;"><strong>NEXT: <a href="https://www.androidauthority.com/corning-foldable-gorilla-glass-962682/">Corning is developing foldable Gorilla Glass, obviously</a></strong></p>
+]]></content:encoded>
+            <wfw:commentRss>https://www.androidauthority.com/corning-astra-glass-986795/feed/
+            </wfw:commentRss>
+            <slash:comments>0</slash:comments>
+        </item>
+        <item>
+            <title>Arm Mali-D77 solves some of VR&#8217;s performance problems</title>
+            <link>https://www.androidauthority.com/arm-mali-d77-vr-display-985955/</link>
+            <comments>https://www.androidauthority.com/arm-mali-d77-vr-display-985955/#respond
+            </comments>
+            <pubDate>Wed, 15 May 2019 15:29:54 +0000</pubDate>
+            <dc:creator><![CDATA[Robert Triggs]]></dc:creator>
+            <category><![CDATA[News]]></category>
+            <category><![CDATA[ARM]]></category>
+            <category><![CDATA[VR]]></category>
+
+            <guid isPermaLink="false">https://www.androidauthority.com/?p=985955</guid>
+            <description>
+                <![CDATA[Arm's latest Mali-D77 is aimed at the virtual reality market, promising to offload some major processing from the GPU.]]></description>
+            <media:content name="AndroidAuthority"
+                medium="image"
+                url="https://cdn57.androidauthority.net/wp-content/uploads/2018/06/AA-VR-Dummy-Head-500x260.png" />
+            <content:encoded><![CDATA[<p><img class="aligncenter size-large wp-image-878255" src="https://cdn57.androidauthority.net/wp-content/uploads/2018/06/AA-VR-Dummy-Head-840x473.png" alt="" width="840" height="473" srcset="https://cdn57.androidauthority.net/wp-content/uploads/2018/06/AA-VR-Dummy-Head-840x472.png 840w, https://cdn57.androidauthority.net/wp-content/uploads/2018/06/AA-VR-Dummy-Head-300x170.png 300w, https://cdn57.androidauthority.net/wp-content/uploads/2018/06/AA-VR-Dummy-Head-768x433.png 768w, https://cdn57.androidauthority.net/wp-content/uploads/2018/06/AA-VR-Dummy-Head-16x9.png 16w, https://cdn57.androidauthority.net/wp-content/uploads/2018/06/AA-VR-Dummy-Head-32x18.png 32w, https://cdn57.androidauthority.net/wp-content/uploads/2018/06/AA-VR-Dummy-Head-28x16.png 28w, https://cdn57.androidauthority.net/wp-content/uploads/2018/06/AA-VR-Dummy-Head-56x32.png 56w, https://cdn57.androidauthority.net/wp-content/uploads/2018/06/AA-VR-Dummy-Head-64x36.png 64w, https://cdn57.androidauthority.net/wp-content/uploads/2018/06/AA-VR-Dummy-Head-712x400.png 712w, https://cdn57.androidauthority.net/wp-content/uploads/2018/06/AA-VR-Dummy-Head-1000x564.png 1000w, https://cdn57.androidauthority.net/wp-content/uploads/2018/06/AA-VR-Dummy-Head-1200x676.png 1200w, https://cdn57.androidauthority.net/wp-content/uploads/2018/06/AA-VR-Dummy-Head-792x446.png 792w, https://cdn57.androidauthority.net/wp-content/uploads/2018/06/AA-VR-Dummy-Head-1280x720.png 1280w, https://cdn57.androidauthority.net/wp-content/uploads/2018/06/AA-VR-Dummy-Head-1340x754.png 1340w, https://cdn57.androidauthority.net/wp-content/uploads/2018/06/AA-VR-Dummy-Head-770x433.png 770w, https://cdn57.androidauthority.net/wp-content/uploads/2018/06/AA-VR-Dummy-Head-355x200.png 355w" sizes="(max-width: 840px) 100vw, 840px" /></p>
+<p>Hype for <a href="https://www.androidauthority.com/virtual-reality-work-702049/" target="_blank" rel="noopener noreferrer">virtual reality</a> has certainly died down over the past couple of years, owing to a combination of expensive hardware, so-so performance and motion sickness, and a lack of user content. The industry is currently stuck in a bit of a chicken vs. egg scenario, where a lack of consumers deters investment in high-end content. More powerful and cost-effective VR hardware for the masses will be needed to break the deadlock.</p>
+<div class="aa_srma_container shortcodes_wrapper right"><div class="shortcodes-header"><div class="shortcodes-title">Editor's Pick</div></div><div class="related_articles_wrapper"><div class="related_article_item"><a class="overlay-link" href="https://www.androidauthority.com/best-vr-apps-938482/" title="15 best VR apps for Google Cardboard, Google Daydream, and Gear VR! (Updated 2019)"></a><h4 class="ra-title">15 best VR apps for Google Cardboard, Google Daydream, and Gear VR! (Updated 2019)</h4><div class="ra-excerpt">
+Virtual reality is taking off in a big way. However, it is still a very young industry. There are several VR platforms, including three mobile platforms with Google Cardboard, Google Daydream, and Gear VR. Of …</div></div></div></div>
+<p>Arm is looking to overcome some of these technological hurdles with its first ever display processor (DPU) designed specifically for VR: the Mali-D77. In a nutshell, the Mali-D77 offloads common VR processing tasks from the GPU, freeing up resources for higher frame rates while also helping to reduce motion sickness.</p>
+<h2>Inside the Arm Mali-D77</h2>
+<p>Much of the Mali-D77 is based on 2017&#8217;s <a href="https://www.androidauthority.com/arm-releases-trio-of-new-display-related-tech-810987/" target="_blank" rel="noopener noreferrer">Mali-D71</a> for flagship smartphones and other high-end applications. It has the same compression decoder, layer scaling, HDR support, and color management units. However, the new design has been optimized to support 3K resolutions at 120fps, with support for 4K resolutions at up to 90fps.</p>
+<p>The major changes come in the form of two brand new hardware acceleration units for VR applications. The Mali-D77 supports Lens Correction and Asynchronous Timewarp in hardware, rather than running these algorithms on the GPU. Arm estimates this can free up about 15 percent of GPU resources, which can be put towards boosting frame rates. Moving this load over to the DPU also provides a 40 percent bandwidth saving and 180mW of power per VR layer. Nice.</p>
+<p>Lens Correction is required in VR headsets to offset the light curvature of the headset&#8217;s lenses. Barrel Distortion is applied to each rendered frame in order to offset the Pincushion Distortion effect of the lenses. Think of this as overcompensating or &#8220;reverse distortion&#8221; so that the lens distortion actually ends up displaying the correct image. Traditionally this is done on the GPU, taking up extra cycles and time. The Mali-D77 does this all on the DPU.</p>
+<p><img class="aligncenter size-large wp-image-986109" src="https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Arm-Mali-D77-Geometric-Distortion-840x428.jpg" alt="Arm Mali-D77 Geometric Distortion slide examples" width="840" height="428" srcset="https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Arm-Mali-D77-Geometric-Distortion-840x428.jpg 840w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Arm-Mali-D77-Geometric-Distortion-300x153.jpg 300w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Arm-Mali-D77-Geometric-Distortion-768x391.jpg 768w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Arm-Mali-D77-Geometric-Distortion-16x8.jpg 16w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Arm-Mali-D77-Geometric-Distortion-32x16.jpg 32w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Arm-Mali-D77-Geometric-Distortion-28x14.jpg 28w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Arm-Mali-D77-Geometric-Distortion-56x29.jpg 56w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Arm-Mali-D77-Geometric-Distortion-64x33.jpg 64w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Arm-Mali-D77-Geometric-Distortion-1000x509.jpg 1000w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Arm-Mali-D77-Geometric-Distortion-1200x611.jpg 1200w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Arm-Mali-D77-Geometric-Distortion-920x470.jpg 920w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Arm-Mali-D77-Geometric-Distortion-393x200.jpg 393w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Arm-Mali-D77-Geometric-Distortion.jpg 1223w" sizes="(max-width: 840px) 100vw, 840px" /></p>
+<p>In addition, the Mali-D77 performs chromatic aberration correction using a similar reverse distortion method. With this applied, image colors will be displayed correctly across the entire lens, including in the corners where color separation distortion can occur.</p>
+<h2>What is Asynchronous Timewarp?</h2>
+<p>Lens Correction is rather self-explanatory, but Asynchronous Timewarp is a little more involved. Here, Arm is using the display processor to rotate, skew, and warp images to compensate for the wearer&#8217;s movements while mitigating any GPU or other display pipeline latency.</p>
+<p>With current generation hardware, X, Y, Z axis movement tracking is updated in sync with the GPU, because the GPU has to render the change in view each time you move. With Asynchronous Timewarp, the two are no-longer-updated together. You can move your head in between GPU frame updates, and the Mali-D77 can warp the current frame to match your head movement.</p>
+<p><img class="aligncenter size-large wp-image-986116" src="https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Arm-Mali-D77-Asynchronous-Timewarp-Reprojection-840x484.jpg" alt="Arm Mali-D77 Asynchronous Timewarp Reprojection slide example" width="840" height="484" srcset="https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Arm-Mali-D77-Asynchronous-Timewarp-Reprojection-840x484.jpg 840w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Arm-Mali-D77-Asynchronous-Timewarp-Reprojection-300x173.jpg 300w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Arm-Mali-D77-Asynchronous-Timewarp-Reprojection-768x442.jpg 768w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Arm-Mali-D77-Asynchronous-Timewarp-Reprojection-16x9.jpg 16w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Arm-Mali-D77-Asynchronous-Timewarp-Reprojection-32x18.jpg 32w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Arm-Mali-D77-Asynchronous-Timewarp-Reprojection-28x16.jpg 28w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Arm-Mali-D77-Asynchronous-Timewarp-Reprojection-56x32.jpg 56w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Arm-Mali-D77-Asynchronous-Timewarp-Reprojection-64x37.jpg 64w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Arm-Mali-D77-Asynchronous-Timewarp-Reprojection-1000x576.jpg 1000w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Arm-Mali-D77-Asynchronous-Timewarp-Reprojection-347x200.jpg 347w, https://cdn57.androidauthority.net/wp-content/uploads/2019/05/Arm-Mali-D77-Asynchronous-Timewarp-Reprojection.jpg 1092w" sizes="(max-width: 840px) 100vw, 840px" /></p>
+<p>This is a subtle effect, as it only lasts for a fraction of a second in between rendered frames and doesn&#8217;t eradicate the need for fast frame rate rendering. However, it greatly increases the fluidity and smoothness of movement and motion, as updates can occur even more frequently than the GPU frame rate. The disconnect between your body moving and seeing a visual update is the leading cause of motion sickness in VR, so the Mali-D77 can help a lot in this regard.</p>
+<p>X, Y, Z axis movement data is fed directly to the Mali-D77 from the CPU, bypassing the GPU stage entirely. This is a very different way of doing things and as such will require developers to utilize a new set of development tools and techniques. This is arguably the biggest hurdle with the D77. Fortunately, Arm engineers work closely with initiatives like <a href="https://vrsource.com/khronos-announces-openxr-initiative-virtual-reality-9233/" target="_blank" rel="noopener noreferrer">OpenXR</a>, so we could see an API announcement for simplified developer support in the future.</p>
+<hr />
+<p>Overall, the Arm Mali-D77 is an intelligent and logical progression of the heterogeneous computing idea to help solve some of virtual reality&#8217;s biggest hardware issues. There are still other hurdles in the wireless communication, tracking, and cost segments of VR left to solve before mainstream adoption can be reconsidered, but the Mali-D77 helps to crack some of the performance issues.</p>
+]]></content:encoded>
+            <wfw:commentRss>https://www.androidauthority.com/arm-mali-d77-vr-display-985955/feed/
+            </wfw:commentRss>
+            <slash:comments>0</slash:comments>
+        </item>
+        <item>
+            <title>Huawei would sign &#8216;we promise not to spy&#8217; pacts with governments
+            </title>
+            <link>https://www.androidauthority.com/huawei-spy-pacts-986767/</link>
+            <comments>https://www.androidauthority.com/huawei-spy-pacts-986767/#respond</comments>
+            <pubDate>Wed, 15 May 2019 15:26:36 +0000</pubDate>
+            <dc:creator><![CDATA[C. Scott Brown]]></dc:creator>
+            <category><![CDATA[News]]></category>
+            <category><![CDATA[Huawei]]></category>
+
+            <guid isPermaLink="false">https://www.androidauthority.com/?p=986767</guid>
+            <description>
+                <![CDATA[The promise comes directly from a Huawei chairman.]]></description>
+            <media:content name="AndroidAuthority"
+                medium="image"
+                url="https://cdn57.androidauthority.net/wp-content/uploads/2018/03/Huawei-logo-MWC-500x260.jpg" />
+            <content:encoded><![CDATA[<p><img class="aligncenter size-large wp-image-842737" src="https://cdn57.androidauthority.net/wp-content/uploads/2018/03/Huawei-logo-MWC-840x500.jpg" alt="Huawei logo MWC" width="840" height="500" srcset="https://cdn57.androidauthority.net/wp-content/uploads/2018/03/Huawei-logo-MWC.jpg 840w, https://cdn57.androidauthority.net/wp-content/uploads/2018/03/Huawei-logo-MWC-300x179.jpg 300w, https://cdn57.androidauthority.net/wp-content/uploads/2018/03/Huawei-logo-MWC-768x457.jpg 768w, https://cdn57.androidauthority.net/wp-content/uploads/2018/03/Huawei-logo-MWC-16x10.jpg 16w, https://cdn57.androidauthority.net/wp-content/uploads/2018/03/Huawei-logo-MWC-32x19.jpg 32w, https://cdn57.androidauthority.net/wp-content/uploads/2018/03/Huawei-logo-MWC-28x17.jpg 28w, https://cdn57.androidauthority.net/wp-content/uploads/2018/03/Huawei-logo-MWC-56x33.jpg 56w, https://cdn57.androidauthority.net/wp-content/uploads/2018/03/Huawei-logo-MWC-64x38.jpg 64w, https://cdn57.androidauthority.net/wp-content/uploads/2018/03/Huawei-logo-MWC-336x200.jpg 336w" sizes="(max-width: 840px) 100vw, 840px" /></p>
+<p>According to <a href="https://www.androidauthority.com/best-huawei-phones-783870/">Huawei</a> chairman Liang Hua (via <a href="https://www.reuters.com/article/us-huawei-security-britain-chairman/huawei-willing-to-sign-no-spy-agreements-with-governments-chairman-idUSKCN1SK1HL"><em>Reuters</em></a>), the company is willing to sign &#8220;no-spy&#8221; agreements with governments, including the United Kingdom. The pacts would ensure Huawei is legally responsible to prevent backdoor spying on other nations using Huawei equipment.</p>
+<p>“We are willing to sign no-spy agreements with governments, including the U.K. government, to commit ourselves to making our equipment meet the no-spy, no-backdoors standard,” Hua told reporters in London via an interpreter.</p>
+<p>The statement is in response to pressures from the United States on European countries to avoid using Huawei telecommunications gear over fears of the company using that equipment to spy on other nations and report findings to the Chinese government.</p>
+<div class="aa_srma_container shortcodes_wrapper right"><div class="shortcodes-header"><div class="shortcodes-title">Editor's Pick</div></div><div class="related_articles_wrapper"><div class="related_article_item"><a class="overlay-link" href="https://www.androidauthority.com/huawei-foldable-phone-2-930548/" title="Huawei Mate X: Everything we know so far"></a><h4 class="ra-title">Huawei Mate X: Everything we know so far</h4><div class="ra-excerpt">
+
+It looks like 2019 will be the year the first foldable smartphones with flexible displays will be available for sale to the general public. Companies like Samsung, LG, and Oppo have revealed they intend to …</div></div></div></div>
+<p>Huawei is criticized relentlessly for <a href="https://www.androidauthority.com/huawei-poland-spying-arrests-942485/">allegedly participating in espionage activities</a> under direction from the Chinese government, an accusation that is repeatedly denied by both Huawei and China and has never been fully proven.</p>
+<p>The United Kingdom is currently deciding how much Huawei equipment it will use for the deployment of its 5G networks.</p>
+<p>“The security and resilience of the [United Kingdom&#8217;s] telecoms networks is of paramount importance, and we have strict controls for how Huawei equipment is currently deployed in the U.K.,” a British government spokesman said on Tuesday.</p>
+<p>The U.K. will decide soon about Huawei&#8217;s involvement in its telco infrastructure and these promises from the company are likely an attempt to assure the government there is nothing to fear.</p>
+<p>Meanwhile, in the U.S., President Donald Trump is <a href="https://www.reuters.com/article/us-usa-china-huawei-tech-exclusive/exclusive-trump-expected-to-sign-order-paving-way-for-u-s-telecoms-ban-on-huawei-idUSKCN1SK2P1">soon expected</a> to sign an order which would effectively ban all U.S. telecoms from using Huawei equipment.</p>
+<p style="text-align: center;"><strong>NEXT: <a href="https://www.androidauthority.com/best-huawei-phones-783870/">Here are the best Huawei phones you can buy right now</a></strong></p>
+]]></content:encoded>
+            <wfw:commentRss>https://www.androidauthority.com/huawei-spy-pacts-986767/feed/
+            </wfw:commentRss>
+            <slash:comments>0</slash:comments>
+        </item>
+    </channel>
+</rss>

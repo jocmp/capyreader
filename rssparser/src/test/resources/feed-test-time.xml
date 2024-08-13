@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:foaf="http://xmlns.com/foaf/0.1/"
+    xmlns:og="http://ogp.me/ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:schema="http://schema.org/" xmlns:sioc="http://rdfs.org/sioc/ns#"
+    xmlns:sioct="http://rdfs.org/sioc/types#" xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#" version="2.0"
+    xml:base="http://www.fda.gov/about-fda/contact-fda/stay-informed/rss-feeds/drug-recalls/rss.xml">
+    <channel>
+        <title>Drug Recalls</title>
+        <link>
+            http://www.fda.gov/about-fda/contact-fda/stay-informed/rss-feeds/drug-recalls/rss.xml
+        </link>
+        <description />
+        <language>en</language>
+
+        <item>
+            <title>Vivimed Life Sciences Pvt Ltd Issues Voluntary Nationwide Recall of Losartan
+                Potassium 25 mg, 50 mg and 100 mg Tablets, USP Due to the Detection of Trace Amounts
+                of N-Nitroso-N-methyl-4-aminobutyric acid (NMBA) Impurity
+            </title>
+            <link>
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/vivimed-life-sciences-pvt-ltd-issues-voluntary-nationwide-recall-losartan-potassium-25-mg-50-mg-and
+            </link>
+            <description>Vivimed Life Sciences Pvt Ltd (Vivimed) is recalling 19 lots of Losartan
+                Potassium Tablets USP 25 mg, 50 mg, and 100 mg to consumer level. Due to the
+                detection of an impurity – N-Nitroso-N-methyl-4-aminobutyric acid (NMBA) – that is
+                above the US Food &amp; Drug Administration’s interim acceptable exposu
+            </description>
+            <pubDate>
+                <time datetime="2019-05-03T19:21:28Z">Fri, 05/03/2019 - 15:21</time>
+            </pubDate>
+            <dc:creator>FDA</dc:creator>
+            <guid isPermaLink="true">
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/vivimed-life-sciences-pvt-ltd-issues-voluntary-nationwide-recall-losartan-potassium-25-mg-50-mg-and
+            </guid>
+        </item>
+        <item>
+            <title>Torrent Pharmaceuticals Limited Issues Voluntary Nationwide Recall of Losartan
+                Potassium Tablets, USP
+            </title>
+            <link>
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/torrent-pharmaceuticals-limited-issues-voluntary-nationwide-recall-losartan-potassium-tablets-usp
+            </link>
+            <description>Torrent Pharmaceuticals Limited is voluntarily recalling 2 lots of Losartan
+                potassium tablets, USP to the consumer level due to the detection of trace amounts
+                of an unexpected impurity found in an active pharmaceutical ingredient (API)
+                manufactured by Hetero Labs Limited. The impurity detected in th
+            </description>
+            <pubDate>
+                <time datetime="2019-05-03T16:35:07Z">Fri, 05/03/2019 - 12:35</time>
+            </pubDate>
+            <dc:creator>FDA</dc:creator>
+            <guid isPermaLink="true">
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/torrent-pharmaceuticals-limited-issues-voluntary-nationwide-recall-losartan-potassium-tablets-usp
+            </guid>
+        </item>
+        <item>
+            <title>Updated: Torrent Pharmaceuticals Limited Expands Voluntary Nationwide Recall of
+                Losartan Potassium Tablets, USP and Losartan Potassium/Hydrochlorothiazide Tablets,
+                USP
+            </title>
+            <link>
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/updated-torrent-pharmaceuticals-limited-expands-voluntary-nationwide-recall-losartan-potassium
+            </link>
+            <description>Torrent Pharmaceuticals Limited is expanding its recall for Losartan
+                Potassium Tablets USP and Losartan Potassium/hydrochlorothiazide tablets, USP, to
+                the consumer level due to the detection of trace amounts of an unexpected impurity
+            </description>
+            <pubDate>
+                <time datetime="2019-05-03T16:05:17Z">Fri, 05/03/2019 - 12:05</time>
+            </pubDate>
+            <dc:creator>FDA</dc:creator>
+            <guid isPermaLink="true">
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/updated-torrent-pharmaceuticals-limited-expands-voluntary-nationwide-recall-losartan-potassium
+            </guid>
+        </item>
+        <item>
+            <title>Par Pharmaceutical, Inc. Issues Voluntary Nationwide Recall of One Lot of
+                Mycophenolate Mofetil for Injection, USP Due to the Presence of a Glass Fragment
+                Observed in One Vial of Reconstituted Product
+            </title>
+            <link>
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/par-pharmaceutical-inc-issues-voluntary-nationwide-recall-one-lot-mycophenolate-mofetil-injection
+            </link>
+            <description>Par Pharmaceutical, Inc., is voluntarily recalling one lot of Mycophenolate
+                Mofetil for Injection, USP to the hospital and retail pharmacy level. One vial of
+                product was observed containing a glass fragment after reconstitution
+            </description>
+            <pubDate>
+                <time datetime="2019-05-03T15:26:55Z">Fri, 05/03/2019 - 11:26</time>
+            </pubDate>
+            <dc:creator>FDA</dc:creator>
+            <guid isPermaLink="true">
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/par-pharmaceutical-inc-issues-voluntary-nationwide-recall-one-lot-mycophenolate-mofetil-injection
+            </guid>
+        </item>
+        <item>
+            <title>Sagent Pharmaceuticals Issues Voluntary Nationwide Recall of Ketorolac
+                Tromethamine Injection, USP, 60mg/2mL (30mg per mL) Due to Lack of Sterility
+                Assurance
+            </title>
+            <link>
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/sagent-pharmaceuticals-issues-voluntary-nationwide-recall-ketorolac-tromethamine-injection-usp
+            </link>
+            <description>Sagent Pharmaceuticals, Inc. today announced the voluntary nationwide
+                recall of one lot of Ketorolac Tromethamine Injection, USP, 60mg/2mL (30mg per mL).
+                This product was manufactured by Zydus (Cadila Healthcare Limited) and distributed
+                by Sagent Pharmaceuticals, Inc. Sagent has initiated this volun
+            </description>
+            <pubDate>
+                <time datetime="2019-05-03T14:36:07Z">Fri, 05/03/2019 - 10:36</time>
+            </pubDate>
+            <dc:creator>FDA</dc:creator>
+            <guid isPermaLink="true">
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/sagent-pharmaceuticals-issues-voluntary-nationwide-recall-ketorolac-tromethamine-injection-usp
+            </guid>
+        </item>
+        <item>
+            <title>UPDATED: Torrent Pharmaceuticals Limited Issues Voluntary Nationwide Recall of
+                Losartan Potassium Tablets, USP and Losartan Potassium and Hydrochlorothiazide
+                Tablets, USP
+            </title>
+            <link>
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/updated-torrent-pharmaceuticals-limited-issues-voluntary-nationwide-recall-losartan-potassium
+            </link>
+            <description>Torrent Pharmaceuticals Limited is expanding its voluntary recall from 10
+                lots of Losartan potassium tablets USP to include 6 lots of Losartan potassium and
+                hydrochlorothiazide tablets, USP, to the consumer level due to the detection of
+                trace amounts of an unexpected impurity.
+            </description>
+            <pubDate>
+                <time datetime="2019-04-29T22:45:20Z">Mon, 04/29/2019 - 18:45</time>
+            </pubDate>
+            <dc:creator>FDA</dc:creator>
+            <guid isPermaLink="true">
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/updated-torrent-pharmaceuticals-limited-issues-voluntary-nationwide-recall-losartan-potassium
+            </guid>
+        </item>
+        <item>
+            <title>Torrent Pharmaceuticals Limited Expands Voluntary Nationwide Recall of Losartan
+                Potassium Tablets, USP
+            </title>
+            <link>
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/torrent-pharmaceuticals-limited-expands-voluntary-nationwide-recall-losartan-potassium-tablets-usp
+            </link>
+            <description>Torrent Pharmaceuticals Limited is expanding its voluntary recall from 2
+                lots of Losartan potassium tablets USP to a total of 10 lots, to the consumer level
+                due to the detection of trace amounts of an unexpected impurity found in an active
+                pharmaceutical ingredient (API) manufactured by Hetero Labs
+            </description>
+            <pubDate>
+                <time datetime="2019-04-29T22:45:10Z">Mon, 04/29/2019 - 18:45</time>
+            </pubDate>
+            <dc:creator>FDA</dc:creator>
+            <guid isPermaLink="true">
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/torrent-pharmaceuticals-limited-expands-voluntary-nationwide-recall-losartan-potassium-tablets-usp
+            </guid>
+        </item>
+        <item>
+            <title>Updated: Torrent Pharmaceuticals Limited Issues Voluntary Nationwide Recall of
+                Losartan Potassium Tablets, USP and Losartan Potassium /Hydrochlorothiazide Tablets,
+                USP
+            </title>
+            <link>
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/updated-torrent-pharmaceuticals-limited-issues-voluntary-nationwide-recall-losartan-potassium-0
+            </link>
+            <description>Torrent Pharmaceuticals Limited is voluntarily recalling 60 lots of
+                Losartan potassium tablets USP and 54 lots of Losartan potassium/
+                hydrochlorothiazide tablets, USP, to the consumer level due to the detection of
+                trace amounts of an unexpected impurity found in an active pharmaceutical ingredient
+                (
+            </description>
+            <pubDate>
+                <time datetime="2019-04-29T22:43:45Z">Mon, 04/29/2019 - 18:43</time>
+            </pubDate>
+            <dc:creator>FDA</dc:creator>
+            <guid isPermaLink="true">
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/updated-torrent-pharmaceuticals-limited-issues-voluntary-nationwide-recall-losartan-potassium-0
+            </guid>
+        </item>
+        <item>
+            <title>AmEx Pharmacy Issues Voluntary Nationwide Recall for one Lot of Bevacizumab
+                1.25mg/0.05mL 31 G Syringe Due to Reported Defective Delivery System
+            </title>
+            <link>
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/amex-pharmacy-issues-voluntary-nationwide-recall-one-lot-bevacizumab-125mg005ml-31-g-syringe-due
+            </link>
+            <description>AmEx Pharmacy is voluntarily recalling one Lot of Bevacizumab 1.25mg/0.05mL
+                31G Injectable to the consumer/user level. The Monoject Syringe of this product may
+                become difficult to express, and when additional force is applied, while the needle
+                is in the eye, may cause injury to the patient.
+            </description>
+            <pubDate>
+                <time datetime="2019-04-29T21:03:21Z">Mon, 04/29/2019 - 17:03</time>
+            </pubDate>
+            <dc:creator>FDA</dc:creator>
+            <guid isPermaLink="true">
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/amex-pharmacy-issues-voluntary-nationwide-recall-one-lot-bevacizumab-125mg005ml-31-g-syringe-due
+            </guid>
+        </item>
+        <item>
+            <title>Teva Pharmaceuticals USA, Inc. Issues Voluntary Nationwide Recall of Losartan
+                Potassium 25 mg and 100 mg Tablets USP, Sold Exclusively to Golden State Medical
+                Supply
+            </title>
+            <link>
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/teva-pharmaceuticals-usa-inc-issues-voluntary-nationwide-recall-losartan-potassium-25-mg-and-100-mg
+            </link>
+            <description>Teva Pharmaceuticals USA, Inc. has initiated a voluntary recall in the
+                United States, to the patient level, of 35 lots of bulk Losartan Potassium USP
+                Tablets (6 lots of 25 mg strength and 29 lots of 100 mg strength).
+            </description>
+            <pubDate>
+                <time datetime="2019-04-29T18:50:31Z">Mon, 04/29/2019 - 14:50</time>
+            </pubDate>
+            <dc:creator>FDA</dc:creator>
+            <guid isPermaLink="true">
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/teva-pharmaceuticals-usa-inc-issues-voluntary-nationwide-recall-losartan-potassium-25-mg-and-100-mg
+            </guid>
+        </item>
+        <item>
+            <title>Legacy Pharmaceutical Packaging, LLC Issues Voluntary Nationwide Recall of
+                Losartan Potassium Tablets, USP, 25mg, 50mg, and 100mg Due to the Detection of Trace
+                Amounts of N-Nitroso N-Methyl 4-Amino Butyric Acid (NMBA) Impurity Found in the
+                Active Pharmaceutical Ingredient (API)
+            </title>
+            <link>
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/legacy-pharmaceutical-packaging-llc-issues-voluntary-nationwide-recall-losartan-potassium-tablets-0
+            </link>
+            <description>Recalling 40 repackaged lots of Losartan Tablets USP 25mg, 50mg, and 100mg
+                to the consumer level. This recall was prompted due to Camber Pharmaceuticals, Inc.
+                issuing a Voluntary Nationwide Recall of Losartan Tablets, USP, due to the detection
+                of trace amounts of N-Nitroso N-Methyl 4-amino butyric
+            </description>
+            <pubDate>
+                <time datetime="2019-04-27T16:08:32Z">Sat, 04/27/2019 - 12:08</time>
+            </pubDate>
+            <dc:creator>FDA</dc:creator>
+            <guid isPermaLink="true">
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/legacy-pharmaceutical-packaging-llc-issues-voluntary-nationwide-recall-losartan-potassium-tablets-0
+            </guid>
+        </item>
+        <item>
+            <title>Legacy Pharmaceutical Packaging, LLC Expands Voluntary Nationwide Recall of
+                Losartan Potassium Tablets, USP, 50mg Due to the Detection of Trace Amounts of
+                N-Nitroso N-Methyl 4-amino butyric acid (NMBA) Impurity Found in the Active
+                Pharmaceutical Ingredient (API)
+            </title>
+            <link>
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/legacy-pharmaceutical-packaging-llc-expands-voluntary-nationwide-recall-losartan-potassium-tablets
+            </link>
+            <description>Legacy Pharmaceutical Packaging, LLC is expanding its consumer-level recall
+                of 3 repackaged lots Losartan Tablets USP 50mg to include one additional lot.
+            </description>
+            <pubDate>
+                <time datetime="2019-04-27T16:01:56Z">Sat, 04/27/2019 - 12:01</time>
+            </pubDate>
+            <dc:creator>FDA</dc:creator>
+            <guid isPermaLink="true">
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/legacy-pharmaceutical-packaging-llc-expands-voluntary-nationwide-recall-losartan-potassium-tablets
+            </guid>
+        </item>
+        <item>
+            <title>Alvogen Inc. Issues Voluntary Nationwide Recall of Fentanyl Transdermal System
+                Due to Product Mislabeling
+            </title>
+            <link>
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/alvogen-inc-issues-voluntary-nationwide-recall-fentanyl-transdermal-system-due-product-mislabeling
+            </link>
+            <description>Alvogen, Inc. is voluntarily recalling two lots of Fentanyl Transdermal
+                System 12 mcg/h transdermal patches to the consumer level.
+            </description>
+            <pubDate>
+                <time datetime="2019-04-21T18:26:42Z">Sun, 04/21/2019 - 14:26</time>
+            </pubDate>
+            <dc:creator>FDA</dc:creator>
+            <guid isPermaLink="true">
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/alvogen-inc-issues-voluntary-nationwide-recall-fentanyl-transdermal-system-due-product-mislabeling
+            </guid>
+        </item>
+        <item>
+            <title>Voluntary Recall of Morphine Sulfate 0.5 mg/mL Preservative Free in 0.9% Sodium
+                Chloride - Pharmakon Pharmaceuticals
+            </title>
+            <link>
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/voluntary-recall-morphine-sulfate-05-mgml-preservative-free-09-sodium-chloride-pharmakon
+            </link>
+            <description>The U.S. Food and Drug Administration is alerting health care professionals
+                of a voluntary recall of morphine sulfate 0.5 mg/mL preservative free in 0.9% sodium
+                chloride, 1 mL syringe, CII, for intravenous use made and distributed by Pharmakon
+                Pharmaceuticals, in Noblesville, Indiana, because the product is super-potent.
+                Pharmakon initiated the voluntary recall on February 11, 2016, after receiving
+                laboratory results showing the product was super-potent.
+            </description>
+            <pubDate>
+                <time datetime="2019-04-18T14:31:11Z">Thu, 04/18/2019 - 10:31</time>
+            </pubDate>
+            <dc:creator>FDA</dc:creator>
+            <guid isPermaLink="true">
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/voluntary-recall-morphine-sulfate-05-mgml-preservative-free-09-sodium-chloride-pharmakon
+            </guid>
+        </item>
+        <item>
+            <title>SD Import Issues Voluntary Nationwide Recall of Aphrodisiac Capsules Due to
+                Presence of Undeclared Sildenafil
+            </title>
+            <link>
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/sd-import-issues-voluntary-nationwide-recall-aphrodisiac-capsules-due-presence-undeclared-sildenafil
+            </link>
+            <description>The products have been found to be tainted with sildenafil. FDA analysis
+                has found the product to be tainted with sildenafil
+            </description>
+            <pubDate>
+                <time datetime="2019-04-15T20:46:29Z">Mon, 04/15/2019 - 16:46</time>
+            </pubDate>
+            <dc:creator>FDA</dc:creator>
+            <guid isPermaLink="true">
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/sd-import-issues-voluntary-nationwide-recall-aphrodisiac-capsules-due-presence-undeclared-sildenafil
+            </guid>
+        </item>
+        <item>
+            <title>Dr. Reddy's Laboratories Continues its Voluntary Nationwide Recall of
+                Levetiracetam in 0.54% Sodium Chloride Injection 1500mg/100mL Due to Mislabeling
+            </title>
+            <link>
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/dr-reddys-laboratories-continues-its-voluntary-nationwide-recall-levetiracetam-054-sodium-chloride
+            </link>
+            <description>The recall, which began in October 2018, was originally initiated due to a
+                product complaint received for mislabeling
+            </description>
+            <pubDate>
+                <time datetime="2019-04-11T18:07:58Z">Thu, 04/11/2019 - 14:07</time>
+            </pubDate>
+            <dc:creator>FDA</dc:creator>
+            <guid isPermaLink="true">
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/dr-reddys-laboratories-continues-its-voluntary-nationwide-recall-levetiracetam-054-sodium-chloride
+            </guid>
+        </item>
+        <item>
+            <title>Sun Pharmaceutical Industries, Inc. Issues Voluntary Nationwide Recall of
+                Vecuronium Bromide for Injection Due to the Presence of Particulate Matter
+                Identified as Glass
+            </title>
+            <link>
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/sun-pharmaceutical-industries-inc-issues-voluntary-nationwide-recall-vecuronium-bromide-injection
+            </link>
+            <description>recalling three lots of Vecuronium Bromide for Injection, 10 mg
+                (lyophilized powder), and one lot of Vecuronium Bromide for Injection, 20 mg
+                (lyophilized powder) to the hospital level. The Vecuronium Bromide for Injection has
+                been found to contain particulate matter identified as glass.
+            </description>
+            <pubDate>
+                <time datetime="2019-04-11T18:07:57Z">Thu, 04/11/2019 - 14:07</time>
+            </pubDate>
+            <dc:creator>FDA</dc:creator>
+            <guid isPermaLink="true">
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/sun-pharmaceutical-industries-inc-issues-voluntary-nationwide-recall-vecuronium-bromide-injection
+            </guid>
+        </item>
+        <item>
+            <title>Results RNA LLC Issues Voluntary Worldwide/Nationwide Recall of Lubrisine Eye
+                Drops Due to Manufacturing Sterility Concerns and Undeclared Colloidal Silver
+            </title>
+            <link>
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/results-rna-llc-issues-voluntary-worldwidenationwide-recall-lubrisine-eye-drops-due-manufacturing
+            </link>
+            <description>Results RNA LLC is voluntarily recalling Lubrisine Eye Drops to the
+                healthcare practitioner, retail or consumer level. This product, in a recent FDA
+                inspection, was found to be manufactured using practices that do not support its
+                sterility and contained undeclared colloidal silver. &lt;br /&gt;
+            </description>
+            <pubDate>
+                <time datetime="2019-04-11T18:07:55Z">Thu, 04/11/2019 - 14:07</time>
+            </pubDate>
+            <dc:creator>FDA</dc:creator>
+            <guid isPermaLink="true">
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/results-rna-llc-issues-voluntary-worldwidenationwide-recall-lubrisine-eye-drops-due-manufacturing
+            </guid>
+        </item>
+        <item>
+            <title>Fresenius Kabi Issues Voluntary Nationwide Recall of Sodium Chloride Injection,
+                USP, 0.9% Due to Product Labeling Incorrectly Stating Stoppers Do Not Contain Latex
+            </title>
+            <link>
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/fresenius-kabi-issues-voluntary-nationwide-recall-sodium-chloride-injection-usp-09-due-product-0
+            </link>
+            <description>Fresenius Kabi USA is voluntarily recalling 163 lots of Sodium Chloride
+                Injection, USP, 0.9%, 10 mL fill in a 10 mL vial and Sodium Chloride Injection, USP,
+                0.9%, 20 mL fill in a 20 mL vial to the user level. The product is being recalled
+                because the stoppers contain natural rubber latex.
+            </description>
+            <pubDate>
+                <time datetime="2019-04-11T18:07:47Z">Thu, 04/11/2019 - 14:07</time>
+            </pubDate>
+            <dc:creator>FDA</dc:creator>
+            <guid isPermaLink="true">
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/fresenius-kabi-issues-voluntary-nationwide-recall-sodium-chloride-injection-usp-09-due-product-0
+            </guid>
+        </item>
+        <item>
+            <title>Sandoz Inc. Issues Voluntary Nationwide Recall of One Lot of Losartan Potassium
+                and Hydrochlorothiazide Due to the Detection of Trace Amounts of NDEA
+                (N-Nitrosodiethylamine) Impurity Found in the Active Pharmaceutical Ingredient (API)
+            </title>
+            <link>
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/sandoz-inc-issues-voluntary-nationwide-recall-one-lot-losartan-potassium-and-hydrochlorothiazide-due
+            </link>
+            <description>This product is being recalled due to the trace amount of an impurity,
+                N-nitrosodiethylamine (NDEA) contained in the API Losartan
+            </description>
+            <pubDate>
+                <time datetime="2019-04-11T18:07:46Z">Thu, 04/11/2019 - 14:07</time>
+            </pubDate>
+            <dc:creator>FDA</dc:creator>
+            <guid isPermaLink="true">
+                http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/sandoz-inc-issues-voluntary-nationwide-recall-one-lot-losartan-potassium-and-hydrochlorothiazide-due
+            </guid>
+        </item>
+
+    </channel>
+</rss>

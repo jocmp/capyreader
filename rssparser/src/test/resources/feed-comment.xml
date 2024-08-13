@@ -1,0 +1,17 @@
+<rss version="2.0">
+    <channel>
+        <title>Hacker News</title>
+        <link>https://news.ycombinator.com/</link>
+        <description>Links for the intellectually curious, ranked by readers.</description>
+        <item>
+            <title>GPTZero case study discovers it&amp;#x27;s only accurate on less than 50% of text</title>
+            <link>https://gonzoknows.com/posts/GPTZero-Case-Study/</link>
+            <pubDate>Sun, 19 Feb 2023 15:22:39 +0000</pubDate>
+            <comments>https://news.ycombinator.com/item?id=34858307</comments>
+            <description>
+                <![CDATA[<a href="https://news.ycombinator.com/item?id=34858307">Comments</a>]]>
+            </description>
+        </item>
+
+    </channel>
+</rss>

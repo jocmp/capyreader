@@ -1,0 +1,27 @@
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en-US" xmlns:yt="http://www.youtube.com/xml/schemas/2015"
+      xmlns:media="http://search.yahoo.com/mrss/">
+    <title>tonsky.me</title>
+    <subtitle>Nikita Prokopov’s blog</subtitle>
+    <link type="application/atom+xml" href="https://tonsky.me/blog/atom.xml" rel="self"/>
+    <link rel="alternate" type="text/html" href="https://tonsky.me/"/>
+    <id>https://tonsky.me/</id>
+    <updated>2023-12-22T18:46:17Z</updated>
+    <author>
+        <name>Nikita Prokopov</name>
+        <email>niki@tonsky.me</email>
+    </author>
+    <entry>
+        <title>The Absolute Minimum Every Software Developer Must Know About Unicode in 2023 (Still No Excuses!)</title>
+        <link rel="alternate" type="text/html" href="https://tonsky.me/blog/unicode/"/>
+        <id>https://tonsky.me/blog/unicode/</id>
+        <published>2023-10-02T00:00:00Z</published>
+        <updated>2023-12-22T18:46:17Z</updated>
+        <summary type="html"><![CDATA[
+Modern extension to classic 2003 article by Joel Spolsky
+]]></summary>
+        <author>
+            <name>Nikita Prokopov</name>
+            <email>niki@tonsky.me</email>
+        </author>
+    </entry>
+</feed>
