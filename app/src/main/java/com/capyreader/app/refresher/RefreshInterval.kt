@@ -5,7 +5,9 @@ enum class RefreshInterval {
     ON_START,
     EVERY_FIFTEEN_MINUTES,
     EVERY_THIRTY_MINUTES,
-    EVERY_HOUR;
+    EVERY_HOUR,
+    EVERY_12_HOURS,
+    EVERY_DAY;
 
     companion object {
         val default = ON_START
