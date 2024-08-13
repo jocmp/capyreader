@@ -26,7 +26,6 @@ import com.jocmp.feedbinclient.UpdateSubscriptionRequest
 import com.jocmp.feedbinclient.pagingInfo
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import java.net.UnknownHostException
 import java.time.ZonedDateTime
@@ -181,7 +180,7 @@ internal class FeedbinAccountDelegate(
         }
     }
 
-    override suspend fun refresh(): Result<Unit> {
+    override suspend fun refresh(cutoffDate: ZonedDateTime?): Result<Unit> {
         val since = articleRecords.maxUpdatedAt()
 
         return try {

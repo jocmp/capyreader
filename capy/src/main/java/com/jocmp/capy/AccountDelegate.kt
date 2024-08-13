@@ -1,6 +1,7 @@
 package com.jocmp.capy
 
 import com.jocmp.capy.accounts.AddFeedResult
+import java.time.ZonedDateTime
 
 interface AccountDelegate {
     suspend fun addFeed(
@@ -11,7 +12,7 @@ interface AccountDelegate {
 
     suspend fun addStar(articleIDs: List<String>): Result<Unit>
 
-    suspend fun refresh(): Result<Unit>
+    suspend fun refresh(cutoffDate: ZonedDateTime? = null): Result<Unit>
 
     suspend fun removeStar(articleIDs: List<String>): Result<Unit>
 

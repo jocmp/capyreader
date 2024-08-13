@@ -33,8 +33,8 @@ class LocalAccountDelegate(
     private val feedRecords = FeedRecords(database)
     private val taggingRecords = TaggingRecords(database)
 
-    override suspend fun refresh(): Result<Unit> {
-        refreshFeeds()
+    override suspend fun refresh(cutoffDate: ZonedDateTime?): Result<Unit> {
+        refreshFeeds(cutoffDate)
 
         return Result.success(Unit)
     }
@@ -126,16 +126,14 @@ class LocalAccountDelegate(
         return articleContent.fetch(article.url)
     }
 
-    private suspend fun refreshFeeds() {
+    private suspend fun refreshFeeds(cutoffDate: ZonedDateTime?) {
         val feeds = feedRecords.feeds().firstOrNull() ?: return
 
         feeds.forEach { feed ->
             coroutineScope {
                 launch {
                     feedFinder.fetch(feed.feedURL).onSuccess { channel ->
-                        val saveableArticles = channel.items.filter { !it.link.isNullOrBlank() }
-
-                        saveArticles(saveableArticles, feed)
+                        saveArticles(channel.items, cutoffDate = cutoffDate, feed = feed)
                     }
                 }
             }
@@ -145,15 +143,18 @@ class LocalAccountDelegate(
     private fun saveArticles(
         items: List<RssItem>,
         feed: Feed,
+        cutoffDate: ZonedDateTime?,
         updatedAt: ZonedDateTime = nowUTC()
     ) {
         database.transactionWithErrorHandling {
             items.forEach { item ->
                 val updated = updatedAt.toEpochSecond()
 
+                val publishedAt = item.pubDate?.toDateTime?.toEpochSecond() ?: updated
                 val url = cleanedArticleLink(item.link, feed.siteURL)
+                val withinCutoff = cutoffDate == null || publishedAt > cutoffDate.toEpochSecond()
 
-                if (url != null) {
+                if (url != null && withinCutoff) {
                     database.articlesQueries.create(
                         id = item.link!!,
                         feed_id = feed.id,
@@ -164,7 +165,7 @@ class LocalAccountDelegate(
                         summary = item.summary,
                         extracted_content_url = null,
                         image_url = item.image,
-                        published_at = item.pubDate?.toDateTime?.toEpochSecond() ?: updated,
+                        published_at = publishedAt,
                     )
 
                     database.articlesQueries.updateStatus(
