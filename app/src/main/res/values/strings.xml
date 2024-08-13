@@ -130,4 +130,5 @@
     <string name="settings_option_auto_delete_articles_subtitle">Delete read, unstarred articles older than 3 months</string>
     <string name="settings_option_auto_delete_articles_title">Auto Delete Articles</string>
     <string name="refresh_every_day">Every day</string>
+    <string name="feed_form_feed_url_title">Feed URL</string>
 </resources>

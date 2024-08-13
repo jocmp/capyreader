@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.ui.components.DialogHorizontalDivider
+import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.fixtures.FeedPreviewFixture
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.EditFeedFormEntry
@@ -71,22 +72,34 @@ fun EditFeedView(
     }
 
     Column {
-        OutlinedTextField(
-            value = name,
-            onValueChange = setName,
-            placeholder = { Text(feed.title) },
-            label = {
-                Text(stringResource(id = R.string.add_feed_name_title))
-            },
-            keyboardOptions = KeyboardOptions(
-                capitalization = KeyboardCapitalization.Words,
-                autoCorrect = false
-            ),
+        Column(
+            verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .padding(top = 16.dp, bottom = 16.dp)
-        )
+                .padding(vertical = 16.dp)
+        ) {
+            FormSection(
+                title = stringResource(R.string.feed_form_feed_url_title),
+            ) {
+                Text(
+                    feed.feedURL,
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+            }
+            OutlinedTextField(
+                value = name,
+                onValueChange = setName,
+                placeholder = { Text(feed.title) },
+                label = {
+                    Text(stringResource(id = R.string.add_feed_name_title))
+                },
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Words,
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+            )
+        }
         HorizontalDivider(color = colorScheme.onSurfaceVariant)
         Column(
             modifier = Modifier
