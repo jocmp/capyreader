@@ -3,8 +3,8 @@ package com.jocmp.capy.accounts
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.FeedFixture
+import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.capy.rssItemFixture
-import com.jocmp.feedbinclient.Tagging
 import com.jocmp.feedfinder.FeedFinder
 import com.jocmp.feedfinder.parser.Feed
 import com.prof18.rssparser.model.RssChannel
@@ -16,7 +16,10 @@ import okhttp3.OkHttpClient
 import org.junit.Before
 import org.junit.Test
 import java.net.URL
+import java.time.ZoneOffset
+import java.time.ZonedDateTime
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 class LocalAccountDelegateTest {
@@ -26,27 +29,35 @@ class LocalAccountDelegateTest {
     private lateinit var feedFinder: FeedFinder
     private lateinit var feedFixture: FeedFixture
 
+    private val item = RssItem(
+        guid = null,
+        title = "Let Tim Cook",
+        author = "Ed Zitron",
+        link = "https://www.wheresyoured.at/untitled/",
+        pubDate = "Mon, 17 Jun 2024 16:41:38 GMT",
+        description = "Last week, Apple announced “Apple Intelligence,” a suite of features coming to iOS 18 (the next version of the iPhone",
+        content = "Last week, Apple announced “Apple Intelligence,” a suite of features coming to iOS 18 (the next version of the iPhone",
+        image = null,
+        audio = null,
+        video = null,
+        sourceName = null,
+        sourceUrl = null,
+        categories = emptyList(),
+        itunesItemData = null,
+        commentsUrl = null,
+    )
+
+    private val oldItem = item.copy(
+        link = "https://www.wheresyoured.at/untitled2/",
+        pubDate = "Wed, 15 Mar 2023 18:30:00 GMT"
+    )
+
     private val channel = RssChannel(
         title = "Ed Zitron",
         link = "http://wheresyoured.at/feed",
         items = listOf(
-            RssItem(
-                guid = null,
-                title = "Let Tim Cook",
-                author = "Ed Zitron",
-                link = "https://www.wheresyoured.at/untitled/",
-                pubDate = "Mon, 17 Jun 2024 16:41:38 GMT",
-                description = "Last week, Apple announced “Apple Intelligence,” a suite of features coming to iOS 18 (the next version of the iPhone",
-                content = "Last week, Apple announced “Apple Intelligence,” a suite of features coming to iOS 18 (the next version of the iPhone",
-                image = null,
-                audio = null,
-                video = null,
-                sourceName = null,
-                sourceUrl = null,
-                categories = emptyList(),
-                itunesItemData = null,
-                commentsUrl = null,
-            )
+            item,
+            oldItem,
         ),
         description = null,
         image = null,
@@ -54,15 +65,6 @@ class LocalAccountDelegateTest {
         lastBuildDate = null,
         updatePeriod = null
     )
-
-    private val taggings = listOf(
-        Tagging(
-            id = 1,
-            feed_id = 2,
-            name = "Gadgets"
-        )
-    )
-
 
     @Before
     fun setup() {
@@ -81,10 +83,11 @@ class LocalAccountDelegateTest {
 
         delegate.refresh()
 
-        val articles = database
+        val articlesCount = database
             .articlesQueries
             .countAll(read = false, starred = false)
-            .executeAsList()
+            .executeAsOne()
+            .COUNT
 
         val feeds = database
             .feedsQueries
@@ -92,8 +95,36 @@ class LocalAccountDelegateTest {
             .executeAsList()
 
         assertEquals(expected = 1, actual = feeds.size)
-        assertEquals(expected = 1, actual = articles.size)
+        assertEquals(expected = 2, actual = articlesCount)
     }
+
+
+    @Test
+    fun refreshAll_updatesEntriesWithCutoff() = runTest {
+        coEvery { feedFinder.fetch(url = any()) }.returns(Result.success(channel))
+
+        val delegate = LocalAccountDelegate(database, httpClient, feedFinder)
+
+        FeedFixture(database).create(feedID = channel.link!!)
+
+        delegate.refresh(cutoffDate = ZonedDateTime.of(2024, 5, 1, 8, 0, 0, 0, ZoneOffset.UTC))
+
+        val articlesCount = database
+            .articlesQueries
+            .countAll(read = false, starred = false)
+            .executeAsOne()
+            .COUNT
+
+        val feeds = database
+            .feedsQueries
+            .all()
+            .executeAsList()
+
+        assertEquals(expected = 1, actual = feeds.size)
+        assertEquals(expected = 1, actual = articlesCount)
+        assertNotNull(ArticleRecords(database).find(articleID = item.link!!))
+    }
+
 
     @Test
     fun markRead() = runTest {

@@ -261,6 +261,10 @@ internal class ArticleRecords internal constructor(
             )
         }
     }
+
+    internal fun cutoffDate(): ZonedDateTime {
+        return nowUTC().minusMonths(3)
+    }
 }
 
 private fun mapLastRead(read: Boolean?, value: OffsetDateTime?): Long? {
@@ -269,8 +273,4 @@ private fun mapLastRead(read: Boolean?, value: OffsetDateTime?): Long? {
     }
 
     return null
-}
-
-private fun cutoffDate(): ZonedDateTime {
-    return nowUTC().minusMonths(3)
 }

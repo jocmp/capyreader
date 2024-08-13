@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import java.io.InputStream
 import java.net.URI
+import java.time.ZonedDateTime
 
 data class Account(
     val id: String,
@@ -100,13 +101,24 @@ data class Account(
     }
 
     suspend fun refresh(): Result<Unit> {
-        val result = delegate.refresh()
+        val result = delegate.refresh(cutoffDate = optionalCutoffDate())
 
-        if (preferences.autoDelete.get() == AutoDelete.ENABLED) {
+        if (isAutoDeleteEnabled) {
             articleRecords.deleteOldArticles()
         }
 
         return result
+    }
+
+    private val isAutoDeleteEnabled: Boolean
+        get() = preferences.autoDelete.get() == AutoDelete.ENABLED
+
+    private fun optionalCutoffDate(): ZonedDateTime? {
+        return if (isAutoDeleteEnabled) {
+            articleRecords.cutoffDate()
+        } else {
+            null
+        }
     }
 
     suspend fun findFeed(feedID: String): Feed? {
