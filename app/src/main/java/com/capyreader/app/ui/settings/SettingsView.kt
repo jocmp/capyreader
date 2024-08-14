@@ -23,7 +23,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme.colorScheme
-import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -50,12 +49,13 @@ import com.capyreader.app.BuildConfig.VERSION_NAME
 import com.capyreader.app.R
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.common.ThemeOption
-import com.jocmp.capy.accounts.AutoDelete
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.setupCommonModules
+import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.components.TextSwitch
 import com.capyreader.app.ui.isCompact
 import com.capyreader.app.ui.theme.CapyTheme
+import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.opml.ImportProgress
 import org.koin.android.ext.koin.androidContext
@@ -145,148 +145,152 @@ fun SettingsView(
                     .verticalScroll(rememberScrollState())
             ) {
                 Spacer(modifier = Modifier.padding(8.dp))
-                if (showAccountName(accountSource)) {
-                    Section(
-                        title = stringResource(R.string.settings_section_account),
-                    ) {
-                        RowItem {
-                            Text(text = accountName)
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    if (showAccountName(accountSource)) {
+                        FormSection(
+                            title = stringResource(R.string.settings_section_account),
+                        ) {
+                            RowItem {
+                                Text(text = accountName)
+                            }
                         }
                     }
-                }
 
-                Section(title = stringResource(R.string.settings_section_refresh)) {
-                    RowItem {
-                        RefreshIntervalMenu(
-                            refreshInterval = settings.refreshInterval,
-                            updateRefreshInterval = settings.updateRefreshInterval,
-                        )
-                    }
-
-                    RowItem {
-                        TextSwitch(
-                            onCheckedChange = { enabled ->
-                                settings.updateAutoDelete(
-                                    if (enabled) AutoDelete.ENABLED else AutoDelete.DISABLED
-                                )
-                            },
-                            checked = settings.autoDelete == AutoDelete.ENABLED,
-                            title = stringResource(R.string.settings_option_auto_delete_articles_title),
-                            subtitle = stringResource(R.string.settings_option_auto_delete_articles_subtitle)
-                        )
-                    }
-                }
-
-                Section(
-                    title = stringResource(R.string.settings_section_display_appearance)
-                ) {
-                    RowItem {
-                        ThemeMenu(onUpdateTheme = settings.updateTheme, theme = settings.theme)
-                    }
-
-                    RowItem {
-                        TextSwitch(
-                            checked = settings.canOpenLinksInternally,
-                            onCheckedChange = settings.updateOpenLinksInternally,
-                            title = stringResource(R.string.settings_option_in_app_browser)
-                        )
-                    }
-
-                    RowItem {
-                        TextSwitch(
-                            checked = settings.enableStickyFullContent,
-                            onCheckedChange = settings.updateStickFullContent,
-                            title = stringResource(R.string.settings_option_full_content_title),
-                            subtitle = stringResource(R.string.settings_option_full_content_subtitle)
-                        )
-                    }
-
-                    Row(
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                showAdvancedDisplaySettings()
-                            }
-                    ) {
-                        Text(
-                            text = stringResource(R.string.settings_more_display_options_button),
-                            modifier = Modifier.padding(16.dp)
-                        )
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowRight,
-                            contentDescription = null,
-                            modifier = Modifier.padding(end = 16.dp)
-                        )
-                    }
-                }
-
-                if (showImportButton(accountSource)) {
-                    Section(title = stringResource(R.string.settings_section_import)) {
+                    FormSection(title = stringResource(R.string.settings_section_refresh)) {
                         RowItem {
-                            OPMLImportButton(
-                                onClick = {
-                                    onRequestImport()
+                            RefreshIntervalMenu(
+                                refreshInterval = settings.refreshInterval,
+                                updateRefreshInterval = settings.updateRefreshInterval,
+                            )
+                        }
+
+                        RowItem {
+                            TextSwitch(
+                                onCheckedChange = { enabled ->
+                                    settings.updateAutoDelete(
+                                        if (enabled) AutoDelete.ENABLED else AutoDelete.DISABLED
+                                    )
                                 },
-                                importProgress = importProgress
+                                checked = settings.autoDelete == AutoDelete.ENABLED,
+                                title = stringResource(R.string.settings_option_auto_delete_articles_title),
+                                subtitle = stringResource(R.string.settings_option_auto_delete_articles_subtitle)
                             )
                         }
                     }
-                }
 
-                Section(title = stringResource(R.string.settings_section_export)) {
-                    RowItem {
-                        OPMLExportButton(
-                            onClick = onRequestExport,
-                        )
-                    }
-                }
-
-                if (showCrashReporting()) {
-                    Section(title = stringResource(R.string.settings_section_privacy)) {
+                    FormSection(
+                        title = stringResource(R.string.settings_section_display_appearance)
+                    ) {
                         RowItem {
-                            CrashReportingCheckbox()
+                            ThemeMenu(onUpdateTheme = settings.updateTheme, theme = settings.theme)
+                        }
+
+                        RowItem {
+                            TextSwitch(
+                                checked = settings.canOpenLinksInternally,
+                                onCheckedChange = settings.updateOpenLinksInternally,
+                                title = stringResource(R.string.settings_option_in_app_browser)
+                            )
+                        }
+
+                        RowItem {
+                            TextSwitch(
+                                checked = settings.enableStickyFullContent,
+                                onCheckedChange = settings.updateStickFullContent,
+                                title = stringResource(R.string.settings_option_full_content_title),
+                                subtitle = stringResource(R.string.settings_option_full_content_subtitle)
+                            )
+                        }
+
+                        Row(
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    showAdvancedDisplaySettings()
+                                }
+                        ) {
+                            Text(
+                                text = stringResource(R.string.settings_more_display_options_button),
+                                modifier = Modifier.padding(16.dp)
+                            )
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowRight,
+                                contentDescription = null,
+                                modifier = Modifier.padding(end = 16.dp)
+                            )
                         }
                     }
-                }
 
-                Section(stringResource(R.string.settings_section_version)) {
-                    Row(
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                copyVersionToClipboard()
+                    if (showImportButton(accountSource)) {
+                        FormSection(title = stringResource(R.string.settings_section_import)) {
+                            RowItem {
+                                OPMLImportButton(
+                                    onClick = {
+                                        onRequestImport()
+                                    },
+                                    importProgress = importProgress
+                                )
                             }
-                    ) {
-                        Text(
-                            text = VERSION_NAME,
-                            modifier = Modifier
-                                .padding(16.dp)
-                        )
-                        Icon(
-                            imageVector = Icons.Filled.ContentCopy,
-                            tint = colorScheme.secondary,
-                            contentDescription = stringResource(
-                                R.string.settings_option_copy_version
-                            ),
-                            modifier = Modifier
-                                .padding(end = 16.dp)
-                        )
+                        }
                     }
-                }
 
-                Section {
-                    RowItem {
-                        HorizontalDivider(modifier = Modifier.padding(bottom = 8.dp))
-                        Button(
-                            onClick = { setRemoveDialogOpen(true) },
-                            colors = removeAccountButtonColors(accountSource),
-                            modifier = Modifier.fillMaxWidth()
+                    FormSection(title = stringResource(R.string.settings_section_export)) {
+                        RowItem {
+                            OPMLExportButton(
+                                onClick = onRequestExport,
+                            )
+                        }
+                    }
+
+                    if (showCrashReporting()) {
+                        FormSection(title = stringResource(R.string.settings_section_privacy)) {
+                            RowItem {
+                                CrashReportingCheckbox()
+                            }
+                        }
+                    }
+
+                    FormSection(title = stringResource(R.string.settings_section_version)) {
+                        Row(
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    copyVersionToClipboard()
+                                }
                         ) {
-                            Text(stringResource(strings.requestRemoveText))
+                            Text(
+                                text = VERSION_NAME,
+                                modifier = Modifier
+                                    .padding(16.dp)
+                            )
+                            Icon(
+                                imageVector = Icons.Filled.ContentCopy,
+                                tint = colorScheme.secondary,
+                                contentDescription = stringResource(
+                                    R.string.settings_option_copy_version
+                                ),
+                                modifier = Modifier
+                                    .padding(end = 16.dp)
+                            )
+                        }
+                    }
+
+                    FormSection {
+                        RowItem {
+                            HorizontalDivider(modifier = Modifier.padding(bottom = 8.dp))
+                            Button(
+                                onClick = { setRemoveDialogOpen(true) },
+                                colors = removeAccountButtonColors(accountSource),
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(stringResource(strings.requestRemoveText))
+                            }
                         }
                     }
                 }
@@ -322,28 +326,6 @@ fun SettingsView(
                 options = settings.articleList
             )
         }
-    }
-}
-
-@Composable
-fun Section(
-    title: String? = null,
-    content: @Composable () -> Unit,
-) {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = Modifier.padding(bottom = 16.dp)
-    ) {
-        if (title != null) {
-            Text(
-                text = title,
-                style = typography.labelMedium,
-                color = colorScheme.surfaceTint,
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
-        }
-
-        content()
     }
 }
 
