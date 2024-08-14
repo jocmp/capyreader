@@ -15,10 +15,12 @@ import com.capyreader.app.ui.theme.CapyTheme
 
 @Composable
 fun FormSection(
+    modifier: Modifier = Modifier,
     title: String? = null,
     content: @Composable () -> Unit,
 ) {
     Column(
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         if (title != null) {

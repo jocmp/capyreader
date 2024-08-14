@@ -1,6 +1,7 @@
 package com.capyreader.app.ui.articles
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -77,13 +78,8 @@ fun EditFeedView(
             modifier = Modifier
                 .padding(vertical = 16.dp)
         ) {
-            FormSection(
-                title = stringResource(R.string.feed_form_feed_url_title),
-            ) {
-                Text(
-                    feed.feedURL,
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                )
+            Box(Modifier.padding(horizontal = 16.dp)) {
+                EditFeedURLDisplay(feedURL = feed.feedURL)
             }
             OutlinedTextField(
                 value = name,
