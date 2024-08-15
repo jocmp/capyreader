@@ -38,14 +38,13 @@ abstract class BaseXmlParserTest(
     val articleCategories: List<String> = emptyList(),
     val articleCommentsUrl: String? = null,
     val articleItunesData: ItunesItemData? = null,
-): XmlParserTestExecutor() {
-
+) {
     private lateinit var channel: RssChannel
     private lateinit var article: RssItem
 
     @BeforeTest
     fun setUp() = runTest {
-        val input = com.prof18.rssparser.readFileFromResources(feedPath)
+        val input = readFileFromResources(feedPath)
         channel = XmlParserFactory.createXmlParser().parseXML(input)
         article = channel.items[0]
     }

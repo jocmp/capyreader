@@ -1,7 +1,5 @@
 package com.prof18.rssparser.internal
 
-import com.prof18.rssparser.internal.ParserInput
-import com.prof18.rssparser.internal.XmlFetcher
 import com.prof18.rssparser.exception.HttpException
 import kotlinx.coroutines.suspendCancellableCoroutine
 import okhttp3.Call
@@ -16,7 +14,6 @@ import kotlin.coroutines.resumeWithException
 internal class JvmXmlFetcher(
     private val callFactory: Call.Factory,
 ) : XmlFetcher {
-
     override suspend fun fetchXml(url: String): ParserInput {
         val request = createRequest(url)
         return ParserInput(

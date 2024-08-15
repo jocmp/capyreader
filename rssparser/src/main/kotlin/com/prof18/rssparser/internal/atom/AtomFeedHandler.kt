@@ -6,14 +6,13 @@ import com.prof18.rssparser.internal.FeedHandler
 import com.prof18.rssparser.model.RssChannel
 import org.xml.sax.Attributes
 
-internal class AtomFeedHandler : FeedHandler {
-
+internal class AtomFeedHandler  {
     private var isInsideItem = false
     private var isInsideChannel = true
 
     private var channelFactory = ChannelFactory()
 
-    override fun onStartRssElement(qName: String?, attributes: Attributes?) {
+    fun onStartRssElement(qName: String?, attributes: Attributes?) {
         when (qName) {
             AtomKeyword.Atom.value -> isInsideChannel = true
             AtomKeyword.Entry.Item.value -> isInsideItem = true
@@ -38,7 +37,7 @@ internal class AtomFeedHandler : FeedHandler {
         }
     }
 
-    override fun endElement(qName: String?, text: String) {
+    fun endElement(qName: String?, text: String) {
         when {
             isInsideItem -> {
                 when (qName) {
@@ -80,7 +79,4 @@ internal class AtomFeedHandler : FeedHandler {
             }
         }
     }
-
-    override fun buildRssChannel(): RssChannel =
-        channelFactory.build()
 }

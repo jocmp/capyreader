@@ -11,6 +11,7 @@ java {
 dependencies {
     implementation(libs.okhttp.client)
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.jsoup)
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-common"))
     testImplementation(kotlin("test-annotations-common"))
