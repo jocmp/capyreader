@@ -33,6 +33,8 @@ If you run into an issue, let me know by submitting a [bug report](https://githu
 
 If you have questions or feature requests, please post them to [Discussions](https://github.com/jocmp/capyreader/discussions).
 
+Check out the [project roadmap](https://github.com/users/jocmp/projects/3) to see what's currently in progress and on deck.
+
 ## Translations
 
 Translations are hosted on [Weblate](https://hosted.weblate.org/projects/capy-reader). Feel free to add or update translations.
