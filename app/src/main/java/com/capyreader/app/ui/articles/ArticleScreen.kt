@@ -40,7 +40,7 @@ fun ArticleScreen(
         onClearArticle = viewModel::clearArticle,
         onToggleArticleRead = viewModel::toggleArticleRead,
         onToggleArticleStar = viewModel::toggleArticleStar,
-        onMarkAllRead = viewModel::markAllRead,
+        onMarkRead = viewModel::markRead,
         onRemoveFeed = viewModel::removeFeed,
         showUnauthorizedMessage = viewModel.showUnauthorizedMessage,
         onUnauthorizedDismissRequest = viewModel::dismissUnauthorizedMessage,

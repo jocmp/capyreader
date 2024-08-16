@@ -84,7 +84,7 @@ fun ArticleLayout(
     onClearArticle: () -> Unit,
     onToggleArticleRead: () -> Unit,
     onToggleArticleStar: () -> Unit,
-    onMarkAllRead: (range: MarkRead) -> Unit,
+    onMarkRead: (markRead: MarkRead) -> Unit,
     onRemoveFeed: (feedID: String, onSuccess: () -> Unit, onFailure: () -> Unit) -> Unit,
     drawerValue: DrawerValue = DrawerValue.Closed,
     showUnauthorizedMessage: Boolean,
@@ -265,7 +265,7 @@ fun ArticleLayout(
                             FeedActions(
                                 feed = currentFeed,
                                 onMarkAllRead = {
-                                    onMarkAllRead(All)
+                                    onMarkRead(All)
                                 },
                                 onFeedEdited = {
                                     showSnackbar(editSuccessMessage)
@@ -310,7 +310,7 @@ fun ArticleLayout(
                             articles = pagingArticles,
                             selectedArticleKey = article?.id,
                             listState = listState,
-                            onMarkAllRead = onMarkAllRead,
+                            onMarkRead = onMarkRead,
                             onSelect = { articleID ->
                                 onSelectArticle(articleID) {
                                     navigateToDetail()
@@ -426,7 +426,7 @@ fun ArticleLayoutPreview() {
             onClearArticle = { },
             onToggleArticleRead = { },
             onToggleArticleStar = {},
-            onMarkAllRead = {},
+            onMarkRead = {},
             onRemoveFeed = { _, _, _ -> },
             drawerValue = DrawerValue.Open,
             showUnauthorizedMessage = false,

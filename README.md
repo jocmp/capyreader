@@ -9,7 +9,6 @@ _A smallish RSS reader with support for Feedbin and local feeds._
 </a>
 
 ## Download
-
 - [Google Play][gplay_link]
 - [F-Droid][fdroid_link]
 - [IzzyOnDroid][izzy_link]

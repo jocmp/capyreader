@@ -1,26 +1,28 @@
 package com.capyreader.app.ui.articles
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxValue
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
 import com.capyreader.app.common.AppPreferences
-import com.capyreader.app.common.ImagePreview
 import com.jocmp.capy.Article
 import com.jocmp.capy.MarkRead
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 import java.time.LocalDateTime
@@ -29,7 +31,8 @@ import java.time.LocalDateTime
 fun ArticleList(
     articles: LazyPagingItems<Article>,
     onSelect: suspend (articleID: String) -> Unit,
-    onMarkAllRead: (range: MarkRead) -> Unit,
+    onMarkRead: (markRead: MarkRead) -> Unit,
+    onToggleRead: (articleID: String) -> Unit,
     selectedArticleKey: String?,
     listState: LazyListState,
 ) {
@@ -52,8 +55,25 @@ fun ArticleList(
             key = articles.itemKey { it.id },
         ) { index ->
             val item = articles[index]
+            val dismissState = rememberSwipeToDismissBoxState()
 
-            Box {
+            SwipeToDismissBox(
+                state = dismissState,
+                gesturesEnabled = item != null,
+                backgroundContent = {
+                    val color by animateColorAsState(
+                        targetValue =
+                        when (dismissState.targetValue) {
+                            SwipeToDismissBoxValue.Settled -> colorScheme.surfaceContainerLow
+                            SwipeToDismissBoxValue.StartToEnd -> Color.Blue
+                            SwipeToDismissBoxValue.EndToStart -> Color.Blue
+                        },
+                        label = ""
+                    )
+
+                    Box(Modifier.fillMaxSize().background(color))
+                }
+            ) {
                 if (item == null) {
                     PlaceholderArticleRow(articleOptions.imagePreview)
                 } else {
@@ -61,10 +81,17 @@ fun ArticleList(
                         article = item,
                         selected = selectedArticleKey == item.id,
                         onSelect = { selectArticle(it) },
-                        onMarkAllRead = onMarkAllRead,
+                        onMarkAllRead = onMarkRead,
                         currentTime = currentTime,
                         options = articleOptions
                     )
+
+                    if (dismissState.currentValue != SwipeToDismissBoxValue.Settled) {
+                        LaunchedEffect(Unit) {
+                            onToggleRead(item.id)
+                            dismissState.reset()
+                        }
+                    }
                 }
             }
         }

@@ -114,9 +114,12 @@ class ArticleScreenViewModel(
         }
     }
 
-    fun markAllRead(range: MarkRead) {
+    fun markRead(markRead: MarkRead) {
         viewModelScope.launch(Dispatchers.IO) {
-            val articleIDs = account.unreadArticleIDs(filter = filter.value, range = range)
+            val articleIDs = when (markRead) {
+                is MarkRead.CurrentArticle -> listOf(markRead.articleID)
+                else -> account.unreadArticleIDs(filter = filter.value, range = markRead)
+            }
 
             markReadAsync(articleIDs, context)
         }
