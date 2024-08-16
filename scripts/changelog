@@ -19,4 +19,4 @@ FileUtils.touch "./#{path}"
 
 puts "Added changelog for next build (#{next_build})\n./#{path}"
 
-exec("nano", path)
+exec("code", path)
