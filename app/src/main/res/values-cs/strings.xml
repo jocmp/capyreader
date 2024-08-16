@@ -132,4 +132,5 @@
     <string name="article_text_size_label">Velikost textu</string>
     <string name="refresh_every_day">Každý den</string>
     <string name="add_feed_url_title">Adresa kanálu nebo webové stránky</string>
+    <string name="feed_form_copy_feed_url_to_clipboard">Kopírovat adresu kanálu</string>
 </resources>
