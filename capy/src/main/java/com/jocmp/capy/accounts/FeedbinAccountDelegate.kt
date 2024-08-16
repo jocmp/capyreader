@@ -263,8 +263,8 @@ internal class FeedbinAccountDelegate(
     private suspend fun fetchMissingArticles() {
         val ids = articleRecords.findMissingArticles()
 
-        ids.chunked(MAX_ENTRY_LIMIT).map { chunkedIDs ->
-            coroutineScope {
+        coroutineScope {
+            ids.chunked(MAX_ENTRY_LIMIT).map { chunkedIDs ->
                 launch {
                     fetchPaginatedEntries(ids = chunkedIDs)
                 }
