@@ -38,6 +38,7 @@
     <string name="refresh_minutes">Cada %1$d minutos</string>
     <plurals name="refresh_hours">
         <item quantity="one">Cada hora</item>
+        <item quantity="many">Cada %d horas</item>
         <item quantity="other">Cada %d horas</item>
     </plurals>
     <string name="refresh_feeds_menu_label">Recargar los feeds</string>
@@ -129,5 +130,7 @@
     <string name="article_byline_date_only">%1$s en %2$s</string>
     <string name="settings_option_auto_delete_articles_subtitle">Borrar artículos leídos y no marcados como favorito con más de 3 meses de antigüedad</string>
     <string name="settings_option_auto_delete_articles_title">Borrado automático de los artículos</string>
-    <string name="refresh_every_day">Every day</string>
+    <string name="refresh_every_day">Cada día</string>
+    <string name="feed_form_feed_url_title">URL del feed</string>
+    <string name="feed_form_copy_feed_url_to_clipboard">Copiar la URL del feed al portapapeles</string>
 </resources>
