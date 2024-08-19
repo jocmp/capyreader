@@ -20,8 +20,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val theme = get<AppPreferences>().theme
 
-        enableEdgeToEdge()
-
         setContent {
             val themeState by theme.changes().collectAsState(initial = theme.get())
 
