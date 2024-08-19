@@ -30,7 +30,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.ui.components.DialogHorizontalDivider
-import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.fixtures.FeedPreviewFixture
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.EditFeedFormEntry
@@ -112,7 +111,7 @@ fun EditFeedView(
                 },
                 keyboardOptions = KeyboardOptions(
                     capitalization = KeyboardCapitalization.Words,
-                    autoCorrect = false
+                    autoCorrectEnabled = false
                 ),
                 modifier = Modifier
                     .fillMaxWidth()

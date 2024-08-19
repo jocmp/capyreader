@@ -49,7 +49,7 @@ fun EditFeedURLDisplay(feedURL: String) {
         ) {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(start = 16.dp, end = 8.dp)
             ) {
                 Text(
                     feedURL,
