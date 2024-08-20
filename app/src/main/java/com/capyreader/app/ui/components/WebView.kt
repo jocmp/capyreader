@@ -31,9 +31,13 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.graphics.drawable.toBitmap
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewAssetLoader.AssetsPathHandler
 import androidx.webkit.WebViewAssetLoader.ResourcesPathHandler
+import coil.executeBlocking
+import coil.imageLoader
+import coil.request.ImageRequest
 import com.capyreader.app.R
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.WebViewInterface
@@ -48,6 +52,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.io.InputStream
 
 /**
  * Doesn't really fetch from androidplatform.net. This is used as a placeholder domain:
@@ -308,6 +315,24 @@ open class AccompanistWebViewClient(private val assetLoader: WebViewAssetLoader)
         view: WebView,
         request: WebResourceRequest
     ): WebResourceResponse? {
+        val accept = request.requestHeaders.getOrDefault("Accept", null)
+
+        if (accept != null && accept.contains("image")) {
+            val imageRequest = ImageRequest.Builder(view.context)
+                .data(request.url)
+                .build()
+            val bitmap = view.context.imageLoader.executeBlocking(imageRequest).drawable?.toBitmap()
+
+            if (bitmap != null) {
+                return WebResourceResponse(
+                    "image/jpg",
+                    "UTF-8",
+                    bitmapInputStream(bitmap, Bitmap.CompressFormat.JPEG)
+                )
+            }
+        }
+
+
         return assetLoader.shouldInterceptRequest(request.url)
     }
 
@@ -728,4 +753,14 @@ private fun Context.inflateWebView(): WebView {
     return LayoutInflater
         .from(this)
         .inflate(R.layout.article_webview, null, false) as WebView
+}
+
+private fun bitmapInputStream(
+    bitmap: Bitmap,
+    compressFormat: Bitmap.CompressFormat
+): InputStream {
+    val byteArrayOutputStream = ByteArrayOutputStream()
+    bitmap.compress(compressFormat, 100, byteArrayOutputStream)
+    val bitmapData = byteArrayOutputStream.toByteArray()
+    return ByteArrayInputStream(bitmapData)
 }
