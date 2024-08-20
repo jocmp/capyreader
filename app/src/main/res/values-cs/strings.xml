@@ -79,7 +79,7 @@
     <string name="settings_option_auto_delete_articles_subtitle">Mazat přečtené články bez hvězdičky starší než 3 měsíce</string>
     <string name="settings_option_auto_delete_articles_title">Automaticky mazat články</string>
     <string name="feed_form_feed_url_title">Odkaz kanálu</string>
-    <string name="app_name">Capy Raeder</string>
+    <string name="app_name">Capy Reader</string>
     <string name="add_feed_submit">Přidat</string>
     <string name="add_feed_success">Kanál přidán</string>
     <string name="filter_unread">Nepřečtené</string>
