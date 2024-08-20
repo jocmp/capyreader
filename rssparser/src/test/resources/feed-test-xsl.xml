@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet title="XSL_formatting" type="text/xsl" href="/rss/rssRender.xsl"?>
+    <rss version='2.0'>
+    <channel>
+       <title>SkySports | Liverpool</title>
+       <link>http://www.skysports.com</link>
+       <description>Liverpool News</description>
+       <language>en-gb</language>
+       <lastBuildDate>Fri, 17 May 2019 23:21:44 BST</lastBuildDate>
+       <copyright>Copyright 2019, BSKYB. All Rights Reserved.</copyright>   
+       <category>Football</category>                   
+       <image>
+            <title>Sky Sports</title>
+            <url>https://www.skysports.com/images/site/ss-logo-07.gif</url>
+            <link>https://www.skysports.com</link>                       
+       </image>
+       <ttl>120</ttl>
+       	<item>
+           <title><![CDATA[Insight: Who should Liverpool sign?]]></title>
+           <description><![CDATA[Liverpool just missed out on clinching the Premier League title and have a Champions League final to look forward to - so where could they improve? ]]></description>
+           <link>https://www.skysports.com/football/news/11669/11719097/premier-league-transfer-window-who-should-liverpool-sign</link>
+           <pubDate>Fri, 17 May 2019 06:00:00 BST</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e2.365dm.com/19/04/128x67/skysports-jurgen-klopp-liverpool_4654732.jpg?20190430113948" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[De Bruyne: No sympathy for Liverpool]]></title>
+           <description><![CDATA[Kevin De Bruyne feels no sympathy for Liverpool after Manchester City narrowly pipped them to the Premier League title.]]></description>
+           <link>https://www.skysports.com/football/news/11669/11722674/man-citys-kevin-de-bruyne-has-no-sympathy-for-liverpool</link>
+           <pubDate>Fri, 17 May 2019 22:34:00 BST</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e0.365dm.com/19/04/128x67/skysports-kevin-de-bruyne-manchester-city_4643028.jpg?20190417213007" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Liverpool 2018/19 season stats]]></title>
+           <description><![CDATA[Liverpool took Manchester City to the final day in this season's title race, but how did they fare in the stats? Use our range of interactive tools to find out...]]></description>
+           <link>https://www.skysports.com/football/news/11669/11719772/liverpool-team-and-player-season-stats-in-the-premier-league-201819</link>
+           <pubDate>Wed, 15 May 2019 09:49:00 BST</pubDate>
+           <category>Feature Story</category>
+           <enclosure type="image/jpg" url="https://e2.365dm.com/19/05/128x67/skysports-liverpool-graphic_4668828.jpg?20190514163119" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Transfer Centre: Zaha, Sessegnon latest]]></title>
+           <description><![CDATA[All the latest news and rumours as the window opens, including reports of Wilfried Zaha wanting a move back to Man Utd.]]></description>
+           <link>https://www.skysports.com/transfer-centre</link>
+           <pubDate>Fri, 17 May 2019 07:00:00 BST</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e1.365dm.com/19/05/128x67/skysports-transfer-centre-graphic_4670230.jpg?20190516082124" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Fabinho, Lucas not in Brazil squad]]></title>
+           <description><![CDATA[Liverpool midfielder Fabinho and Tottenham forward Lucas Moura have both been left out of Brazil's squad for the Copa America.]]></description>
+           <link>https://www.skysports.com/football/news/11669/11722407/fabinho-and-lucas-moura-left-out-of-brazil-squad-for-copa-america</link>
+           <pubDate>Fri, 17 May 2019 16:04:00 BST</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e2.365dm.com/19/05/128x67/skysports-fabinho-brazil_4671688.jpg?20190517164702" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Pep 'sorry' over Liverpool song]]></title>
+           <description><![CDATA[Pep Guardiola has apologised for any offence Manchester City players and staff caused after a social media clip emerged from their flight back from Brighton on Sunday.]]></description>
+           <link>https://www.skysports.com/football/news/11669/11722280/pep-guardiola-sorry-after-man-city-players-filmed-singing-liverpool-chant</link>
+           <pubDate>Fri, 17 May 2019 14:43:00 BST</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e1.365dm.com/19/05/128x67/skysports-pep-guardiola-manchester-city_4671496.jpg?20190517140635" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Reds could ban fans over rogue tickets]]></title>
+           <description><![CDATA[Liverpool say they could impose Anfield bans on any supporters found to be selling Champions League final tickets for marked up prices online.]]></description>
+           <link>https://www.skysports.com/football/news/11669/11722146/liverpool-could-ban-fans-found-reselling-champions-league-final-tickets-online</link>
+           <pubDate>Fri, 17 May 2019 12:00:00 BST</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e2.365dm.com/19/05/128x67/skysports-anfield-liverpool_4662173.jpg?20190507235356" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[CL final ticket allocation 'outrageous']]></title>
+           <description><![CDATA[The decision to allocate barely 50 per cent of tickets to Liverpool and Tottenham fans for the Champions League final has been described as "outrageous" by the chair of a Liverpool supporters' group.]]></description>
+           <link>https://www.skysports.com/football/news/11669/11721796/champions-league-final-ticket-allocation-outrageous-says-chair-of-liverpool-fan-group</link>
+           <pubDate>Thu, 16 May 2019 21:24:00 BST</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e0.365dm.com/19/04/128x67/skysports-liverpool-porto_4634374.jpg?20190409234810" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Gomez: Watching Liverpool thrive hurt]]></title>
+           <description><![CDATA[Joe Gomez admits it has not been easy watching from the sidelines as Liverpool have thrived this season.]]></description>
+           <link>https://www.skysports.com/football/news/11669/11721364/joe-gomez-admits-watching-liverpool-thrive-during-injury-absence-hurt</link>
+           <pubDate>Thu, 16 May 2019 12:14:00 BST</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e1.365dm.com/19/05/128x67/skysports-joe-gomez-liverpool_4670440.jpg?20190516121721" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[WWE's Ali: Salah is an inspiration]]></title>
+           <description><![CDATA[WWE superstar Ali says Liverpool's Mohamed Salah is a big inspiration to him and an "awesome human being".]]></description>
+           <link>https://www.skysports.com/wwe/news/11669/11721236/wwes-ali-mohamed-salah-is-an-inspiration-to-me</link>
+           <pubDate>Fri, 17 May 2019 06:00:00 BST</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e2.365dm.com/19/03/128x67/skysports-mohamed-salah-salah_4625481.jpg?20190331192350" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Sponsors urged to return CL final tickets]]></title>
+           <description><![CDATA[Liverpool and Tottenham supporters' trusts have urged sponsors to return their Champions League tickets to help fans.]]></description>
+           <link>https://www.skysports.com/football/news/11669/11721144/liverpool-and-tottenham-supporters-trusts-ask-sponsors-to-return-champions-league-tickets</link>
+           <pubDate>Thu, 16 May 2019 08:15:00 BST</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e0.365dm.com/19/05/128x67/skysports-wanda-metroplitano_4668488.jpg?20190514111937" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Wijnaldum: We deserve a trophy]]></title>
+           <description><![CDATA[Georginio Wijnaldum says Liverpool's season deserves to be rewarded with the Champions League trophy.]]></description>
+           <link>https://www.skysports.com/football/news/11669/11720589/georginio-wijnaldum-says-liverpool-deserve-a-trophy</link>
+           <pubDate>Wed, 15 May 2019 13:09:00 BST</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e2.365dm.com/18/12/128x67/skysports-georginio-wijnaldum_4517418.jpg?20181213084029" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Utd-PSG ref to take charge of CL final]]></title>
+           <description><![CDATA[Slovenia&#8217;s Damir Skomina, who refereed Manchester United's comeback over PSG, will take charge of the Champions League final between Tottenham and Liverpool.]]></description>
+           <link>https://www.skysports.com/football/news/11669/11719759/slovenia8217s-damir-skomina-to-referee-champions-league-final-between-tottenham-and-liverpool</link>
+           <pubDate>Tue, 14 May 2019 13:05:00 BST</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e0.365dm.com/19/05/128x67/skysports-damir-skomina-champions-league_4668846.jpg?20190514163737" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Transfer dominos: Hazard > Bale > Pogba?]]></title>
+           <description><![CDATA[Antoine Griezmann is set to become this summer's first big transfer deal, but could his move to Barcelona cause a domino effect in the market?]]></description>
+           <link>https://www.skysports.com/football/news/11669/11720632/how-antoine-griezmann-could-cause-domino-effect-with-eden-hazard-gareth-bale-and-paul-pogba</link>
+           <pubDate>Thu, 16 May 2019 06:00:00 BST</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e0.365dm.com/19/05/128x67/skysports-eden-hazard-gareth-bale_4669605.jpg?20190515132549" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[New Premier League kits]]></title>
+           <description><![CDATA[What does your club's new kit look like for 2019/20 Premier League season?]]></description>
+           <link>https://www.skysports.com/football/news/11669/11709253/new-premier-league-kits-for-the-201920-season</link>
+           <pubDate>Thu, 16 May 2019 10:00:00 BST</pubDate>
+           <category>Feature Story</category>
+           <enclosure type="image/jpg" url="https://e0.365dm.com/19/05/128x67/skysports-chelsea-nike-photoshoot_4656580.jpg?20190502094505" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Who will win the Golden Shoe?]]></title>
+           <description><![CDATA[Leagues around Europe are drawing to a close and the winner of the Golden Shoe will be decided shortly.]]></description>
+           <link>https://www.skysports.com/football/news/11669/11721345/who-will-win-golden-shoe-lionel-messi-and-kylian-mbappe-in-contention</link>
+           <pubDate>Thu, 16 May 2019 13:00:00 BST</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e2.365dm.com/19/05/128x67/skysports-lionel-messi-barcelona_4656338.jpg?20190501224725" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[City deny players' song linked to Cox]]></title>
+           <description><![CDATA[Manchester City have denied accusations their players celebrated winning the Premier League with a chant relating to Liverpool fan Sean Cox or the Hillsborough tragedy.]]></description>
+           <link>https://www.skysports.com/football/news/11669/11720285/manchester-city-deny-accusations-of-inappropriate-chant</link>
+           <pubDate>Wed, 15 May 2019 00:00:00 BST</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e0.365dm.com/19/03/128x67/skysports-manchester-city-etihad-stadium_4595863.jpg?20190303092634" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Fantasy Team of the Year]]></title>
+           <description><![CDATA[The Premier League season is over but who made the Fantasy Football best XI over the course of 2018/19?]]></description>
+           <link>https://www.skysports.com/football/news/11669/11720412/virgil-van-dijk-eden-hazard-pierre-emerick-aubameyang-sky-sports-fantasy-team-of-the-year</link>
+           <pubDate>Thu, 16 May 2019 06:00:00 BST</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e2.365dm.com/19/04/128x67/skysports-virgil-van-dijk-raheem-sterling_4640533.jpg?20190415125136" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Best of the season awards]]></title>
+           <description><![CDATA[What was the best game of the 2018/19 season? Who scored the best goal? Who sent out the best tweet? What was the best celebration?]]></description>
+           <link>https://www.skysports.com/football/news/11669/11707215/best-of-the-season-awards-best-game-best-goal-best-tweet-best-pass-best-celebration-best-interview</link>
+           <pubDate>Thu, 16 May 2019 06:00:00 BST</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e2.365dm.com/19/05/128x67/skysports-best-of-season-awards_4667462.jpg?20190512214421" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Premier League ins and outs]]></title>
+           <description><![CDATA[Who has your team signed? Who's been shipped out?]]></description>
+           <link>https://www.skysports.com/football/news/11669/11713244/premier-league-ins-and-outs-all-the-2019-summer-transfer-window-moves</link>
+           <pubDate>Mon, 06 May 2019 16:51:00 BST</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e0.365dm.com/19/02/128x67/skysports-aaron-ramsey-ramsey_4574981.jpg?20190211204527" length="123456" />
+      </item>
+            </channel>
+      </rss>
+ 

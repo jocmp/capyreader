@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rss xmlns:News="https://www.bing.com:443/news/search?q=madrid&amp;format=rss" version="2.0">
+    <channel>
+        <title>madrid - BingNews</title>
+        <link>https://www.bing.com:443/news/search?q=madrid&amp;format=rss</link>
+        <description>Search results</description>
+        <image>
+            <url>http://www.bing.com/rsslogo.gif</url>
+            <title>madrid</title>
+            <link>https://www.bing.com:443/news/search?q=madrid&amp;format=rss</link>
+        </image>
+        <copyright>Copyright \xc2\xa9 2021 Microsoft. All rights reserved. These XML results may not
+            be used, reproduced or transmitted in any manner or for any purpose other than rendering
+            Bing results within an RSS aggregator for your personal, non-commercial use. Any other
+            use of these results requires express written permission from Microsoft Corporation. By
+            accessing this web page or using these results in any manner whatsoever, you agree to be
+            bound by the foregoing restrictions.
+        </copyright>
+        <item>
+            <title>Real Madrid, Barcelona and Juventus 'threaten clubs withdrawing from Super League
+                with legal action'
+            </title>
+            <link>http://www.bing.com/news/apiclick.aspx?ref=FexRss&amp;aid=&amp;tid=12BE3CE268B0484F92DD9828C685E325&amp;url=https%3a%2f%2fwww.dailymail.co.uk%2fsport%2ffootball%2farticle-9554407%2fReal-Madrid-Barcelona-Juventus-threaten-clubs-withdrawing-Super-League-legal-action.html&amp;c=4438839993362862681&amp;mkt=it-it</link>
+            <description>The three European giants are refusing to let the plans die and have
+                warned their former partners they will extract millions of dollars in penalties if
+                they walk away from the league.
+            </description>
+            <pubDate>Fri, 07 May 2021 12:00:00 GMT</pubDate>
+            <News:Source>Daily Mail</News:Source>
+            <News:Image>http://www.bing.com/th?id=OVFT.SNpH_QAbpZOYgrEHZRyCTi&amp;pid=News
+            </News:Image>
+            <News:ImageSize>w={0}&amp;h={1}&amp;c=14</News:ImageSize>
+            <News:ImageMaxWidth>636</News:ImageMaxWidth>
+            <News:ImageMaxHeight>382</News:ImageMaxHeight>
+        </item>
+    </channel>
+</rss>

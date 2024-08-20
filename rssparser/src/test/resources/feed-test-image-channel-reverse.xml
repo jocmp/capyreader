@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:cc="http://web.resource.org/cc/" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:media="http://search.yahoo.com/mrss/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <channel>
+        <atom:link href="http://joeroganexp.joerogan.libsynpro.com/rss" rel="self" type="application/rss+xml"/>
+        <title>The Joe Rogan Experience</title>
+        <pubDate>Tue, 24 Dec 2019 20:00:00 +0000</pubDate>
+        <lastBuildDate>Sat, 04 Jan 2020 01:06:48 +0000</lastBuildDate>
+        <generator>Libsyn WebEngine 2.0</generator>
+        <link>https://www.joerogan.com</link>
+        <language>en</language>
+        <copyright><![CDATA[Copyright © Talking Monkey Productions ]]></copyright>
+        <docs>https://www.joerogan.com</docs>
+        <managingEditor>joe@joerogan.net (joe@joerogan.net)</managingEditor>
+        <itunes:summary><![CDATA[The podcast of Comedian Joe Rogan..]]></itunes:summary>
+        <image>
+            <url>http://static.libsyn.com/p/assets/7/1/f/3/71f3014e14ef2722/JREiTunesImage2.jpg</url>
+            <title>The Joe Rogan Experience</title>
+            <link><![CDATA[https://www.joerogan.com]]></link>
+        </image>
+        <itunes:author>Joe Rogan</itunes:author>
+        <itunes:keywords>comedian,joe,monkey,redban,rogan,talking,ufc</itunes:keywords>
+        <itunes:category text="Comedy"></itunes:category>
+        <itunes:category text="Society &amp; Culture"></itunes:category>
+        <itunes:category text="Technology">
+            <itunes:category text="Podcasting"/>
+        </itunes:category>
+        <itunes:image href="http://static.libsyn.com/p/assets/7/1/f/3/71f3014e14ef2722/JREiTunesImage2.jpg" />
+        <itunes:explicit>yes</itunes:explicit>
+        <itunes:owner>
+            <itunes:name><![CDATA[Joe Rogan]]></itunes:name>
+            <itunes:email>joe@joerogan.net</itunes:email>
+        </itunes:owner>
+        <description><![CDATA[The podcast of Comedian Joe Rogan..]]></description>
+        <itunes:subtitle><![CDATA[Joe Rogan's Weekly Podcast]]></itunes:subtitle>
+        <itunes:type>episodic</itunes:type>
+        <!-- START CHANNEL EXTRA TAGS -->
+        <itunes:new-feed-url>http://joeroganexp.joerogan.libsynpro.com/rss</itunes:new-feed-url><!-- CLOSE CHANNEL EXTRA TAGS -->
+        <item>
+            <title>#1405 - Sober October 3 Recap</title>
+            <pubDate>Tue, 24 Dec 2019 20:00:00 +0000</pubDate>
+            <guid isPermaLink="false"><![CDATA[0d7147a3-f1c1-4ae6-bbf8-2e0a493639ca]]></guid>
+            <link><![CDATA[http://traffic.libsyn.com/joeroganexp/p1405.mp3]]></link>
+            <itunes:image href="http://static.libsyn.com/p/assets/2/8/7/9/28797cc6f284596e/JRE1405.jpg" />
+            <description><![CDATA[Joe is joined by Ari Shaffir, Bert Kreischer & Tom Segura to recap their 3rd annual Sober October challenge.]]></description>
+            <content:encoded><![CDATA[Joe is joined by Ari Shaffir, Bert Kreischer & Tom Segura to recap their 3rd annual Sober October challenge.]]></content:encoded>
+            <enclosure length="202715961" type="audio/mpeg" url="http://traffic.libsyn.com/joeroganexp/p1405.mp3?dest-id=19997" />
+            <itunes:duration>03:30:48</itunes:duration>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords>podcast,3,joe,party,experience,tom,ari,october,bert,freak,rogan,recap,sober,kreischer,shaffir,segura,deathsquad,jre,1405</itunes:keywords>
+            <itunes:subtitle><![CDATA[Joe is joined by Ari Shaffir, Bert Kreischer & Tom Segura to recap their 3rd annual Sober October challenge.]]></itunes:subtitle>
+            <itunes:episode>1405</itunes:episode>
+            <itunes:episodeType>full</itunes:episodeType>
+        </item>
+        <item>
+            <title>#1404 - Bryan Callen</title>
+            <pubDate>Sat, 21 Dec 2019 05:00:00 +0000</pubDate>
+            <guid isPermaLink="false"><![CDATA[2f23417a-899b-4139-a4fe-11b2180eb816]]></guid>
+            <link><![CDATA[http://traffic.libsyn.com/joeroganexp/p1404a.mp3]]></link>
+            <itunes:image href="http://static.libsyn.com/p/assets/c/1/0/9/c1090117a397e7ba/JRE1404.jpg" />
+            <description><![CDATA[Bryan Callen is an actor and stand-up comedian, and together with Brendan Schaub he also hosts “The Fighter & The Kid” podcast. His stand up special “Complicated Apes” is now available to download on iTunes, Amazon, and various other platforms.]]></description>
+            <content:encoded><![CDATA[Bryan Callen is an actor and stand-up comedian, and together with Brendan Schaub he also hosts “The Fighter & The Kid” podcast. His stand up special “Complicated Apes” is now available to download on iTunes, Amazon, and various other platforms.]]></content:encoded>
+            <enclosure length="181076019" type="audio/mpeg" url="http://traffic.libsyn.com/joeroganexp/p1404a.mp3?dest-id=19997" />
+            <itunes:duration>03:08:16</itunes:duration>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords>podcast,joe,party,experience,bryan,freak,rogan,callen,deathsquad,jre,1404</itunes:keywords>
+            <itunes:subtitle><![CDATA[Bryan Callen is an actor and stand-up comedian, and together with Brendan Schaub he also hosts “The Fighter & The Kid” podcast. His stand up special “Complicated Apes” is now available to download on iTunes, Amazon, and various other...]]></itunes:subtitle>
+            <itunes:episode>1404</itunes:episode>
+            <itunes:episodeType>full</itunes:episodeType>
+        </item>
+        <item>
+            <title>#1403 - Forrest Galante</title>
+            <pubDate>Thu, 19 Dec 2019 20:00:00 +0000</pubDate>
+            <guid isPermaLink="false"><![CDATA[90a055f5-b4a0-4ea3-978b-2fd0d9e52552]]></guid>
+            <link><![CDATA[http://traffic.libsyn.com/joeroganexp/p1403.mp3]]></link>
+            <itunes:image href="http://static.libsyn.com/p/assets/0/1/4/0/0140b2b604a1d88e/JRE1403.jpg" />
+            <description><![CDATA[Forrest Galante is an international wildlife adventurer and conservationist. He’s also the host of “Extinct of Alive” on The Animal Planet. https://www.instagram.com/forrest.galante]]></description>
+            <content:encoded><![CDATA[Forrest Galante is an international wildlife adventurer and conservationist. He’s also the host of “Extinct of Alive” on The Animal Planet. https://www.instagram.com/forrest.galante]]></content:encoded>
+            <enclosure length="169762637" type="audio/mpeg" url="http://traffic.libsyn.com/joeroganexp/p1403.mp3?dest-id=19997" />
+            <itunes:duration>02:56:30</itunes:duration>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords>podcast,joe,forrest,party,experience,freak,rogan,galante,deathsquad,jre,1403</itunes:keywords>
+            <itunes:subtitle><![CDATA[Forrest Galante is an international wildlife adventurer and conservationist. He’s also the host of “Extinct of Alive” on The Animal Planet. https://www.instagram.com/forrest.galante]]></itunes:subtitle>
+            <itunes:episode>1403</itunes:episode>
+            <itunes:episodeType>full</itunes:episodeType>
+        </item>
+        <item>
+            <title>JRE MMA Show #85 with Max Holloway</title>
+            <pubDate>Wed, 18 Dec 2019 20:00:00 +0000</pubDate>
+            <guid isPermaLink="false"><![CDATA[1dbe014b-28a6-4720-8720-a78e151ea280]]></guid>
+            <link><![CDATA[http://traffic.libsyn.com/joeroganexp/mmashow085.mp3]]></link>
+            <itunes:image href="http://static.libsyn.com/p/assets/4/a/f/4/4af4ab05a3324965/JRE1402A.jpg" />
+            <description><![CDATA[Joe sits down with former UFC Featherweight Champion Max Holloway.]]></description>
+            <content:encoded><![CDATA[Joe sits down with former UFC Featherweight Champion Max Holloway.]]></content:encoded>
+            <enclosure length="128655075" type="audio/mpeg" url="http://traffic.libsyn.com/joeroganexp/mmashow085.mp3?dest-id=19997" />
+            <itunes:duration>02:13:41</itunes:duration>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords>podcast,mma,show,joe,party,experience,max,holloway,freak,rogan,85,deathsquad</itunes:keywords>
+            <itunes:subtitle><![CDATA[Joe sits down with former UFC Featherweight Champion Max Holloway.]]></itunes:subtitle>
+            <itunes:episode>1402</itunes:episode>
+            <itunes:episodeType>full</itunes:episodeType>
+        </item>
+        <item>
+            <title>#1402 - Boyan Slat</title>
+            <pubDate>Tue, 17 Dec 2019 20:00:00 +0000</pubDate>
+            <guid isPermaLink="false"><![CDATA[437f2a4f-02dc-4a3e-8922-fe9f90d844fa]]></guid>
+            <link><![CDATA[http://traffic.libsyn.com/joeroganexp/p1402.mp3]]></link>
+            <itunes:image href="http://static.libsyn.com/p/assets/a/4/6/d/a46d82104febdce8/JRE1402.jpg" />
+            <description><![CDATA[Boyan Slat is an inventor, entrepreneur and former aerospace engineering student. He is the founder of The Ocean Cleanup organization: https://www.theoceancleanup.com/]]></description>
+            <content:encoded><![CDATA[Boyan Slat is an inventor, entrepreneur and former aerospace engineering student. He is the founder of The Ocean Cleanup organization: https://www.theoceancleanup.com/]]></content:encoded>
+            <enclosure length="109840767" type="audio/mpeg" url="http://traffic.libsyn.com/joeroganexp/p1402.mp3?dest-id=19997" />
+            <itunes:duration>01:54:00</itunes:duration>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords>podcast,joe,party,experience,freak,rogan,1402,deathsquad,slat,jre,boyan</itunes:keywords>
+            <itunes:subtitle><![CDATA[Boyan Slat is an inventor, entrepreneur and former aerospace engineering student. He is the founder of The Ocean Cleanup organization: https://www.theoceancleanup.com/]]></itunes:subtitle>
+            <itunes:episode>1402</itunes:episode>
+            <itunes:episodeType>full</itunes:episodeType>
+        </item>
+        <item>
+            <title>#1401 - Iliza Shlesinger</title>
+            <pubDate>Tue, 17 Dec 2019 04:00:00 +0000</pubDate>
+            <guid isPermaLink="false"><![CDATA[091d2728-eb2a-4be0-954a-afd7d5e2ff51]]></guid>
+            <link><![CDATA[http://traffic.libsyn.com/joeroganexp/p1401a.mp3]]></link>
+            <itunes:image href="http://static.libsyn.com/p/assets/b/b/b/d/bbbd3baa92a68fcf/JRE1401.jpg" />
+            <description><![CDATA[Iliza Shlesinger is a comedian, host, and writer. Her new special "Unveiled" is now streaming on Netflix.]]></description>
+            <content:encoded><![CDATA[Iliza Shlesinger is a comedian, host, and writer. Her new special "Unveiled" is now streaming on Netflix.]]></content:encoded>
+            <enclosure length="149619971" type="audio/mpeg" url="http://traffic.libsyn.com/joeroganexp/p1401a.mp3?dest-id=19997" />
+            <itunes:duration>02:35:30</itunes:duration>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords>podcast,joe,party,experience,freak,rogan,iliza,deathsquad,jre,shlesinger,1401</itunes:keywords>
+            <itunes:subtitle><![CDATA[Iliza Shlesinger is a comedian, host, and writer. Her new special "Unveiled" is now streaming on Netflix.]]></itunes:subtitle>
+            <itunes:episode>1401</itunes:episode>
+            <itunes:episodeType>full</itunes:episodeType>
+        </item>
+    </channel>
+</rss>

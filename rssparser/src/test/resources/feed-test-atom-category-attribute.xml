@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Pulled from http://rss.slashdot.org/Slashdot/slashdotMainatom on 2023-05-28 -->
+<feed
+    xmlns="http://www.w3.org/2005/Atom"
+    xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+    xmlns:content="http://purl.org/rss/1.0/modules/content/"
+    xmlns:syn="http://purl.org/rss/1.0/modules/syndication/"
+    xml:lang="en-us"
+>
+
+    <title>Slashdot</title>
+    <id>https://slashdot.org/</id>
+    <link href="https://slashdot.org/"/>
+    <link rel="self" href="http://rss.slashdot.org/Slashdot/slashdotatom"/>
+    <link rel="hub" href="http://pubsubhubbub.appspot.com/"/>
+    <subtitle>News for nerds, stuff that matters</subtitle>
+    <rights>Copyright 1997-2016, SlashdotMedia. All Rights Reserved.</rights>
+    <updated>2023-05-29T00:14:18+00:00</updated>
+    <author>
+        <name>Dice</name>
+        <email>help@slashdot.org</email>
+    </author>
+    <category term="Technology"/>
+    <syn:updatePeriod>hourly</syn:updatePeriod>
+    <syn:updateFrequency>1</syn:updateFrequency>
+    <syn:updateBase>1970-01-01T00:00+00:00</syn:updateBase>
+    <logo>https://a.fsdn.com/sd/topics/topicslashdot.gif</logo>
+
+    <entry>
+        <id>https://yro.slashdot.org/story/23/05/28/2213240/automakers-ask-judge-to-block-pending-enforcement-of-massachusetts-right-to-repair-law?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed</id>
+        <title>Automakers Ask Judge to Block Pending Enforcement of Massachusetts' Right-to-Repair Law</title>
+        <link href="https://yro.slashdot.org/story/23/05/28/2213240/automakers-ask-judge-to-block-pending-enforcement-of-massachusetts-right-to-repair-law?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed"/>
+        <summary type="html">"Beginning next Thursday, Massachusetts Attorney General Andrea Joy Campbell plans to start enforcing the state's automotive right-to-repair law," reports the Boston Globe.
+
+            "But this week, the world's top automakers asked a federal judge to stop her."
+
+            The Alliance for Automotive Innovation, a car industry trade group, sued to block enforcement of the law almost from the moment it was passed by voter referendum in 2020. Ever since, the law has been tied up in the courtroom of US District Judge Douglas Woodlock. Now the alliance has asked Woodlock to grant a temporary injunction that would stop Campbell from enforcing the law until he issues a final ruling in the case.
+            Campbell's predecessor, now-Governor Maura Healey, repeatedly refrained from enforcing the law, pending Woodlock's decision. But Healey always reserved the right to reverse this policy if a ruling took too long. In March, Campbell said she would start enforcing the law effective June 1. "The people of Massachusetts deserve the benefit of the law they approved more than two years ago," she said in a document filed with the court.
+            But the carmakers say that only the federal government has the authority to enact such a law. They claim the law is so poorly drafted that they can't comply with it, and even if they could, compliance would weaken vehicle security, making it easier for cyber criminals to steal digital data about vehicles and their owners. Two carmakers, Kia and Subaru, have tried to comply with the law by switching off the telematic services in their cars. But the carmakers argue that this deprives consumers of the right to use these features, which include emergency roadside assistance that could potentially save lives.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+            &lt;a class="slashpop" href="http://twitter.com/home?status=Automakers+Ask+Judge+to+Block+Pending+Enforcement+of+Massachusetts'+Right-to-Repair+Law%3A+https%3A%2F%2Fyro.slashdot.org%2Fstory%2F23%2F05%2F28%2F2213240%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fyro.slashdot.org%2Fstory%2F23%2F05%2F28%2F2213240%2Fautomakers-ask-judge-to-block-pending-enforcement-of-massachusetts-right-to-repair-law%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://yro.slashdot.org/story/23/05/28/2213240/automakers-ask-judge-to-block-pending-enforcement-of-massachusetts-right-to-repair-law?utm_source=atom1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;</summary>
+        <updated>2023-05-28T22:44:00+00:00</updated>
+        <author>
+            <name>EditorDavid</name>
+        </author>
+        <category term="government"/>
+        <slash:department>car-talks</slash:department>
+        <slash:section>yro</slash:section>
+        <slash:comments>10</slash:comments>
+        <slash:hit_parade>10,10,9,8,1,0,0</slash:hit_parade>
+    </entry>
+
+    <entry>
+        <id>https://science.slashdot.org/story/23/05/28/2125204/a-quake-on-mars-showed-its-crust-is-thicker-than-earths?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed</id>
+        <title>A Quake on Mars Showed Its Crust is Thicker Than Earth's</title>
+        <link href="https://science.slashdot.org/story/23/05/28/2125204/a-quake-on-mars-showed-its-crust-is-thicker-than-earths?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed"/>
+        <summary type="html">"Planetary scientists now know how thick the Martian crust is," reports ScienceNews, "thanks to the strongest Marsquake ever observed."
+            On average, the crust is between 42 and 56 kilometers thick [26 to 34 miles], researchers report in a paper to appear in Geophysical Research Letters. That's roughly 70 percent thicker than the average continental crust on Earth.
+
+            The measurement was based on data from NASA's InSight lander, a stationary seismometer that recorded waves rippling through Mars' interior for four Earth years. Last May, the entire planet shook with a magnitude 4.7 quake that lasted more than six hours. "We were really fortunate that we got this quake," says seismologist Doyeon Kim of ETH Zurich.
+
+            InSight recorded seismic waves from the quake that circled Mars up to three times. That let Kim and colleagues infer the crust thickness over the whole planet. Not only is the crust thicker than that of the Earth and the moon, but it's also inconsistent across the Red Planet, the team found. And that might explain a known north-south elevation difference on Mars.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+            &lt;a class="slashpop" href="http://twitter.com/home?status=A+Quake+on+Mars+Showed+Its+Crust+is+Thicker+Than+Earth's%3A+https%3A%2F%2Fscience.slashdot.org%2Fstory%2F23%2F05%2F28%2F2125204%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fscience.slashdot.org%2Fstory%2F23%2F05%2F28%2F2125204%2Fa-quake-on-mars-showed-its-crust-is-thicker-than-earths%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://science.slashdot.org/story/23/05/28/2125204/a-quake-on-mars-showed-its-crust-is-thicker-than-earths?utm_source=atom1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;</summary>
+        <updated>2023-05-28T21:44:00+00:00</updated>
+        <author>
+            <name>EditorDavid</name>
+        </author>
+        <category term="mars"/>
+        <slash:department>Marsquake</slash:department>
+        <slash:section>science</slash:section>
+        <slash:comments>7</slash:comments>
+        <slash:hit_parade>7,5,3,3,0,0,0</slash:hit_parade>
+    </entry>
+
+    <entry>
+        <id>https://science.slashdot.org/story/23/05/28/2012238/a-japanese-made-moon-lander-crashed-because-a-crater-confused-its-software?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed</id>
+        <title>A Japanese-Made Moon Lander Crashed Because a Crater Confused Its Software</title>
+        <link href="https://science.slashdot.org/story/23/05/28/2012238/a-japanese-made-moon-lander-crashed-because-a-crater-confused-its-software?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed"/>
+        <summary type="html">Last month Japanese startup ispace tried to become the first private company to land a spacecraft on the moon &amp;mdash; but in the crucial final moments lost contact with its vehicle.
+
+            Now the Associated Press reports that company officials are revealing what happened: while trying to land, their vehicle went into free-fall. Company officials blame a software issue, plus a decision in December to change the touchdown location to a crater.
+
+            The crater's steep sides apparently confused the onboard software, and the 7-foot (2-meter) spacecraft went into a free-fall from less than 3 miles (5 kilometers) up, slamming into the lunar surface. The estimated speed at impact was more than 300 feet (100 meters) per second, said the company's chief technology officer, Ryo Ujiie.
+
+            NASA's Lunar Reconnaissance Orbiter photographed the crash site the next day as it flew overhead, revealing a field of debris as well as lunar soil hurled aside by the impact. Computer simulations done in advance of the landing attempt did not incorporate the terrain of the new landing site, Ujiie said.
+
+            CEO and founder Takeshi Hakamada said the company is still on track to attempt another moon landing in 2024, and that all the lessons learned will be incorporated into the next try. A third landing attempt is planned for 2025.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+            &lt;a class="slashpop" href="http://twitter.com/home?status=A+Japanese-Made+Moon+Lander+Crashed+Because+a+Crater+Confused+Its+Software%3A+https%3A%2F%2Fscience.slashdot.org%2Fstory%2F23%2F05%2F28%2F2012238%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fscience.slashdot.org%2Fstory%2F23%2F05%2F28%2F2012238%2Fa-japanese-made-moon-lander-crashed-because-a-crater-confused-its-software%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://science.slashdot.org/story/23/05/28/2012238/a-japanese-made-moon-lander-crashed-because-a-crater-confused-its-software?utm_source=atom1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;</summary>
+        <updated>2023-05-28T20:44:00+00:00</updated>
+        <author>
+            <name>EditorDavid</name>
+        </author>
+        <category term="moon"/>
+        <slash:department>space-mountains</slash:department>
+        <slash:section>science</slash:section>
+        <slash:comments>15</slash:comments>
+        <slash:hit_parade>15,14,10,9,4,3,1</slash:hit_parade>
+    </entry>
+
+    <entry>
+        <id>https://tech.slashdot.org/story/23/05/28/1941247/china-deletes-14-million-social-media-posts-in-crackdown?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed</id>
+        <title>China Deletes 1.4 Million Social Media Posts in Crackdown</title>
+        <link href="https://tech.slashdot.org/story/23/05/28/1941247/china-deletes-14-million-social-media-posts-in-crackdown?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed"/>
+        <summary type="html">Reuters reports:
+
+            China's cyberspace regulator said 1.4 million social media posts have been deleted following a two-month probe into alleged misinformation, illegal profiteering, and impersonation of state officials, among other "pronounced problems"...
+
+
+            Beijing frequently arrests citizens and censors accounts for publishing or sharing factual information considered sensitive or critical of the Communist Party, the government or the military, especially when such information goes viral. Of the 67,000 accounts that were permanently closed, almost 8,000 were taken down for "spreading fake news, rumours, and harmful information," according to The Cyberspace Administration of China (CAC). Around 930,000 other accounts received less severe punishments, from being removed of all followers to the suspension or cancellation of profit-making privileges.
+            In a separate campaign, the regulator recently closed over 100,000 accounts that allegedly misrepresented news anchors and media agencies to counter the rise of online fake news coverage aided by AI technologies.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+            &lt;a class="slashpop" href="http://twitter.com/home?status=China+Deletes+1.4+Million+Social+Media+Posts+in+Crackdown%3A+https%3A%2F%2Ftech.slashdot.org%2Fstory%2F23%2F05%2F28%2F1941247%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Ftech.slashdot.org%2Fstory%2F23%2F05%2F28%2F1941247%2Fchina-deletes-14-million-social-media-posts-in-crackdown%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://tech.slashdot.org/story/23/05/28/1941247/china-deletes-14-million-social-media-posts-in-crackdown?utm_source=atom1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;</summary>
+        <updated>2023-05-28T19:44:00+00:00</updated>
+        <author>
+            <name>EditorDavid</name>
+        </author>
+        <category term="china"/>
+        <slash:department>unfriending</slash:department>
+        <slash:section>technology</slash:section>
+        <slash:comments>23</slash:comments>
+        <slash:hit_parade>23,22,18,14,4,3,0</slash:hit_parade>
+    </entry>
+
+    <entry>
+        <id>https://it.slashdot.org/story/23/05/28/1820216/is-cybersecurity-an-unsolvable-problem?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed</id>
+        <title>Is Cybersecurity an Unsolvable Problem?</title>
+        <link href="https://it.slashdot.org/story/23/05/28/1820216/is-cybersecurity-an-unsolvable-problem?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed"/>
+        <summary type="html">Ars Technica profiles Scott Shapiro, the co-author of a new book, Fancy Bear Goes Phishing: The Dark History of the Information Age in Five Extraordinary Hacks.
+            Shapiro points out that computer science "is only a century old, and hacking, or cybersecurity, is maybe a few decades old. It's a very young field, and part of the problem is that people haven't thought it through from first principles." Telling in-depth the story of five major breaches, Shapiro ultimately concludes that "the very principles that make hacking possible are the ones that make general computing possible.
+
+            "So you can't get rid of one without the other because you cannot patch metacode."
+
+            Shapiro also brings some penetrating insight into why the Internet remains so insecure decades after its invention, as well as how and why hackers do what they do. And his conclusion about what can be done about it might prove a bit controversial: there is no permanent solution to the cybersecurity problem. "Cybersecurity is not a primarily technological problem that requires a primarily engineering solution," Shapiro writes. "It is a human problem that requires an understanding of human behavior." That's his mantra throughout the book: "Hacking is about humans." And it portends, for Shapiro, "the death of 'solutionism.'"
+
+            An excerpt from their interview:
+
+            Ars Technica: The scientific community in various disciplines has struggled with this in the past. There's an attitude of, "We're just doing the research. It's just a tool. It's morally neutral." Hacking might be a prime example of a subject that you cannot teach outside the broader context of morality.
+            Scott Shapiro: I couldn't agree more. I'm a philosopher, so my day job is teaching that. But it's a problem throughout all of STEM: this idea that tools are morally neutral and you're just making them and it's up to the end user to use it in the right way. That is a reasonable attitude to have if you live in a culture that is doing the work of explaining why these tools ought to be used in one way rather than another. But when we have a culture that doesn't do that, then it becomes a very morally problematic activity.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+            &lt;a class="slashpop" href="http://twitter.com/home?status=Is+Cybersecurity+an+Unsolvable+Problem%3F%3A+https%3A%2F%2Fit.slashdot.org%2Fstory%2F23%2F05%2F28%2F1820216%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fit.slashdot.org%2Fstory%2F23%2F05%2F28%2F1820216%2Fis-cybersecurity-an-unsolvable-problem%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://it.slashdot.org/story/23/05/28/1820216/is-cybersecurity-an-unsolvable-problem?utm_source=atom1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;</summary>
+        <updated>2023-05-28T18:22:00+00:00</updated>
+        <author>
+            <name>EditorDavid</name>
+        </author>
+        <category term="security"/>
+        <slash:department>Kobayashi-Maru</slash:department>
+        <slash:section>it</slash:section>
+        <slash:comments>97</slash:comments>
+        <slash:hit_parade>97,96,90,81,13,10,6</slash:hit_parade>
+    </entry>
+
+    <entry>
+        <id>https://entertainment.slashdot.org/story/23/05/28/176221/the-problem-with-the-matrix-theory-of-ai-assisted-human-learning?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed</id>
+        <title>The Problem with the Matrix Theory of AI-Assisted Human Learning</title>
+        <link href="https://entertainment.slashdot.org/story/23/05/28/176221/the-problem-with-the-matrix-theory-of-ai-assisted-human-learning?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed"/>
+        <summary type="html">In an opinion piece for the New York Times, Vox co-founder Ezra Klein worries that early AI systems "will do more to distract and entertain than to focus." (Since they tend to "hallucinate" inaccuracies, and may first be relegated to areas "where reliability isn't a concern" like videogames, song mash-ups, children's shows, and "bespoke" images.)
+
+            "The problem is that those are the areas that matter most for economic growth..."
+
+            One lesson of the digital age is that more is not always better... The magic of a large language model is that it can produce a document of almost any length in almost any style, with a minimum of user effort. Few have thought through the costs that will impose on those who are supposed to respond to all this new text. One of my favorite examples of this comes from The Economist, which imagined NIMBYs &amp;mdash; but really, pick your interest group &amp;mdash; using GPT-4 to rapidly produce a 1,000-page complaint opposing a new development. Someone, of course, will then have to respond to that complaint. Will that really speed up our ability to build housing?
+            You might counter that A.I. will solve this problem by quickly summarizing complaints for overwhelmed policymakers, much as the increase in spam is (sometimes, somewhat) countered by more advanced spam filters. Jonathan Frankle, the chief scientist at MosaicML and a computer scientist at Harvard, described this to me as the "boring apocalypse" scenario for A.I., in which "we use ChatGPT to generate long emails and documents, and then the person who received it uses ChatGPT to summarize it back down to a few bullet points, and there is tons of information changing hands, but all of it is just fluff. We're just inflating and compressing content generated by A.I."
+
+
+            But there's another worry: that the increased efficiency "would come at the cost of new ideas and deeper insights."
+
+
+            Our societywide obsession with speed and efficiency has given us a flawed model of human cognition that I've come to think of as the Matrix theory of knowledge.
+
+            Many of us wish we could use the little jack from "The Matrix" to download the knowledge of a book (or, to use the movie's example, a kung fu master) into our heads, and then we'd have it, instantly.
+
+            But that misses much of what's really happening when we spend nine hours reading a biography. It's the time inside that book spent drawing connections to what we know ... that matters...
+
+            The analogy to office work is not perfect &amp;mdash; there are many dull tasks worth automating so people can spend their time on more creative pursuits &amp;mdash; but the dangers of overautomating cognitive and creative processes are real... To make good on its promise, artificial intelligence needs to deepen human intelligence. And that means human beings need to build A.I., and build the workflows and office environments around it, in ways that don't overwhelm and distract and diminish us.
+
+            We failed that test with the internet. Let's not fail it with A.I.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+            &lt;a class="slashpop" href="http://twitter.com/home?status=The+Problem+with+the+Matrix+Theory+of+AI-Assisted+Human+Learning%3A+https%3A%2F%2Fentertainment.slashdot.org%2Fstory%2F23%2F05%2F28%2F176221%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fentertainment.slashdot.org%2Fstory%2F23%2F05%2F28%2F176221%2Fthe-problem-with-the-matrix-theory-of-ai-assisted-human-learning%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://entertainment.slashdot.org/story/23/05/28/176221/the-problem-with-the-matrix-theory-of-ai-assisted-human-learning?utm_source=atom1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;</summary>
+        <updated>2023-05-28T17:09:00+00:00</updated>
+        <author>
+            <name>EditorDavid</name>
+        </author>
+        <category term="ai"/>
+        <slash:department>bullet-points-time</slash:department>
+        <slash:section>entertainment</slash:section>
+        <slash:comments>19</slash:comments>
+        <slash:hit_parade>19,14,13,13,6,4,3</slash:hit_parade>
+    </entry>
+
+    <entry>
+        <id>https://science.slashdot.org/story/23/05/27/221223/jwst-discovers-a-supermassive-black-hole-is-far-larger-than-expected?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed</id>
+        <title>JWST Discovers a Supermassive Black Hole is 'Far Larger Than Expected'</title>
+        <link href="https://science.slashdot.org/story/23/05/27/221223/jwst-discovers-a-supermassive-black-hole-is-far-larger-than-expected?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed"/>
+        <summary type="html">The Guardian reports that a supermassive black hole discovered at the center of an ancient galaxy "is five times larger than expected for the number of stars it contains, astronomers say."
+
+            Researchers spotted the immense black hole in a galaxy known as GS-9209 that lies 25bn light-years from Earth, making it one of the most distant to have been observed and recorded. The team at Edinburgh University used the James Webb space telescope (JWST) to observe the galaxy and reveal fresh details about its composition and history. Dr Adam Carnall, who led the effort, said the telescope &amp;mdash; the most powerful ever built &amp;mdash; showed how galaxies were growing "larger and earlier" than astronomers expected in the first billion years of the universe...
+
+
+            Carnall said the "very massive black hole" at the centre of GS-9209 was a "big surprise" that lent weight to the theory that such enormous black holes are responsible for shutting down star formation in early galaxies. "The evidence we see for the supermassive black hole was really unexpected," said Carnall. "This is the kind of detail we'd never have been able to see without JWST."&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+            &lt;a class="slashpop" href="http://twitter.com/home?status=JWST+Discovers+a+Supermassive+Black+Hole+is+'Far+Larger+Than+Expected'%3A+https%3A%2F%2Fscience.slashdot.org%2Fstory%2F23%2F05%2F27%2F221223%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fscience.slashdot.org%2Fstory%2F23%2F05%2F27%2F221223%2Fjwst-discovers-a-supermassive-black-hole-is-far-larger-than-expected%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://science.slashdot.org/story/23/05/27/221223/jwst-discovers-a-supermassive-black-hole-is-far-larger-than-expected?utm_source=atom1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;</summary>
+        <updated>2023-05-28T15:34:00+00:00</updated>
+        <author>
+            <name>EditorDavid</name>
+        </author>
+        <category term="space"/>
+        <slash:department>hole-in-the-sky</slash:department>
+        <slash:section>science</slash:section>
+        <slash:comments>21</slash:comments>
+        <slash:hit_parade>21,19,16,16,10,3,1</slash:hit_parade>
+    </entry>
+
+    <entry>
+        <id>https://developers.slashdot.org/story/23/05/27/2122238/pypi-is-reducing-stored-ip-address-data?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed</id>
+        <title>PyPi is Reducing Stored IP Address Data</title>
+        <link href="https://developers.slashdot.org/story/23/05/27/2122238/pypi-is-reducing-stored-ip-address-data?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed"/>
+        <summary type="html">The PyPi registry of open source Python packages "began evaluating ways to reduce the amount of identifying information that it stores," reports the Register, "even before the U.S. Justice Department came asking for data on suspect users."
+
+
+            But now, "the Python community package registry wants developers to understand that it's working to minimize the user data that it stores."
+            The goal is not to be unable to respond to lawful requests for information; rather it's to store only the minimum amount of data necessary so as not to expose users to unnecessary privacy intrusion. Coincidentally, data minimization may prevent organizations from becoming a preferred source of on-demand surveillance: having excessive amounts of information about users invites legal demands, which staff then have to handle...
+
+
+            Mike Fiedler, a member of the PyPI admin team, said in a statement on Friday that the organization's effort to improve user privacy and security dates back to 2020. Since the receipt of the subpoenas in March and April, that effort has been reinvigorated.
+
+
+            Much of the concern focuses on IP address data, which gets stored in conjunction with web log access; user events such as logins; project events including uploads; events associated with recently introduced organizations; and administrative PyPI journal entries. According to Fiedler, PyPI was able to stop storing IP data for journal entries &amp;mdash; an append-only transaction log &amp;mdash; because these were only exposed to administrators... To obscure IP addresses, PyPI is salting them &amp;mdash; adding an arbitrary value &amp;mdash; and then hashing them &amp;mdash; running the data through a one-way scrambling function that creates a value called a hash. This provides a way to store a reference to potentially identifying data without actually storing raw data... PyPI has been using its CDN provider Fastly to pass along a salted hash of the IP address for requests via a custom header, along with broad GeoIP data (the country and city where the user is located), and is using that instead of the raw IP address. In April, the registry adopted code changes for hashing and salting IP addresses for requests that PyPI handles directly in Warehouse, the web application that implements the official Python package index.
+
+
+
+            And over the past few days, it has been replacing IP addresses in the PyPI user interface with geolocation data. PyPI still relies on IP address information to identify abuse &amp;mdash; the creation of malicious packages, harassments, and so on &amp;mdash; but Fiedler says even that is being looked at. "We're thinking about how to manage that without storing IP data, but we're not there yet," he said. Fiedler says the PyPI team will be weighing whether it can remove IP data from event history records after a period of time and whether the service can handle all its requests via CDN.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+            &lt;a class="slashpop" href="http://twitter.com/home?status=PyPi+is+Reducing+Stored+IP+Address+Data%3A+https%3A%2F%2Fdevelopers.slashdot.org%2Fstory%2F23%2F05%2F27%2F2122238%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fdevelopers.slashdot.org%2Fstory%2F23%2F05%2F27%2F2122238%2Fpypi-is-reducing-stored-ip-address-data%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://developers.slashdot.org/story/23/05/27/2122238/pypi-is-reducing-stored-ip-address-data?utm_source=atom1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;</summary>
+        <updated>2023-05-28T14:34:00+00:00</updated>
+        <author>
+            <name>EditorDavid</name>
+        </author>
+        <category term="python"/>
+        <slash:department>Python-Package-Index</slash:department>
+        <slash:section>developers</slash:section>
+        <slash:comments>8</slash:comments>
+        <slash:hit_parade>8,8,7,7,2,0,0</slash:hit_parade>
+    </entry>
+
+    <entry>
+        <id>https://science.slashdot.org/story/23/05/28/031221/cost-overruns-and-delays-nasas-artemis-moon-rocket-will-cost-6b-more-take-longer?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed</id>
+        <title>Cost Overruns and Delays: NASA's Artemis Moon Rocket Will Cost $6B More, Take Longer</title>
+        <link href="https://science.slashdot.org/story/23/05/28/031221/cost-overruns-and-delays-nasas-artemis-moon-rocket-will-cost-6b-more-take-longer?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed"/>
+        <summary type="html">"An independent report looking into the development of NASA's new moon rocket has found significant cost overruns and delays that could harm the agency's plans to put astronauts back on the moon," reports Space.com.
+
+            Their article cites specifically "increases in costs related to contracts awarded to Aerojet Rocketdyne and Northrop Grumman for SLS's propulsion systems," citing a 50-page report published Thursday by NASA's Inspector General:
+
+            Altogether, the four contracts for the rocket's booster and engine were initially projected to cost $7 billion over a span of 14 years, but are now projected to cost at least $13.1 billion over nearly 25 years. "NASA continues to experience significant scope growth, cost increases, and schedule delays on its booster and RS-25 engine contracts, resulting in approximately $6 billion in cost increases and over 6 years in schedule delays above NASA's original projections," the report found.
+
+            These significant increases were caused by a variety of long-standing, interrelated management issues impacting both the SLS development campaign and the wider Artemis program, the report notes, including "some of which represent potential violations of federal contracting requirements." The use of heritage RS-25 engines and boosters from the space shuttle and Constellation programs for the new SLS rocket was intended to bring significant cost and schedule savings over developing new systems. But the "complexity of developing, updating, and integrating new systems along with heritage components proved to be much greater than anticipated," according to the report.
+
+            To remedy this, the report makes a number of recommendations to NASA management to increase transparency, accountability and affordability of the SLS booster and engine contracts, including switching from "cost-plus" awards towards a fixed-price contract structure. However, the assessment still finds the enormous cost of SLS hard to manage for NASA and damaging to its long term "Moon to Mars" plans. "Without greater attention to these important safeguards, NASA and its contracts will continue to exceed planned cost and schedule, resulting in a reduced availability of funds, delayed launches, and the erosion of the public's trust in the Agency's ability to responsibly spend taxpayer money and meet mission goals and objectives &amp;mdash; including returning humans safely to the moon and onward to Mars."
+            Long-time Slashdot reader schwit1 shared the article along with a YouTube video with excerpts from recently released high-resolution video of the rocket's last launch.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+            &lt;a class="slashpop" href="http://twitter.com/home?status=Cost+Overruns+and+Delays%3A+NASA's+Artemis+Moon+Rocket+Will+Cost+%246B+More%2C+Take+Longer%3A+https%3A%2F%2Fscience.slashdot.org%2Fstory%2F23%2F05%2F28%2F031221%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fscience.slashdot.org%2Fstory%2F23%2F05%2F28%2F031221%2Fcost-overruns-and-delays-nasas-artemis-moon-rocket-will-cost-6b-more-take-longer%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://science.slashdot.org/story/23/05/28/031221/cost-overruns-and-delays-nasas-artemis-moon-rocket-will-cost-6b-more-take-longer?utm_source=atom1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;</summary>
+        <updated>2023-05-28T11:34:00+00:00</updated>
+        <author>
+            <name>EditorDavid</name>
+        </author>
+        <category term="nasa"/>
+        <slash:department>moon-shots</slash:department>
+        <slash:section>science</slash:section>
+        <slash:comments>70</slash:comments>
+        <slash:hit_parade>70,67,60,60,15,7,4</slash:hit_parade>
+    </entry>
+
+    <entry>
+        <id>https://entertainment.slashdot.org/story/23/05/27/2331234/fans-book-one-last-stay-at-disney-worlds-star-wars-hotel?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed</id>
+        <title>Fans Book One Last Stay at Disney World's 'Star Wars' Hotel</title>
+        <link href="https://entertainment.slashdot.org/story/23/05/27/2331234/fans-book-one-last-stay-at-disney-worlds-star-wars-hotel?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed"/>
+        <summary type="html">Yes, that expensive Star Wars-themed hotel at Walt Disney World is closing September 30th &amp;mdash; after opening barely one year ago. But Sfgate spoke to a couple who's already been three times, and before it closes are "currently planning a fourth and final voyage this summer."
+
+            If you're counting, that's more than $15,000 their travel parties will have spent on the experience. Their first trip was hosted by Disney as a media preview; for the other visits, the pair split rooms with friends to lower the per-person cost. [The couple is Peter Sciretta and partner Kitra Remick, the couple behind the theme park vlog Ordinary Adventures.] "Any time that we went, we were bunking with people in one room to make the price cheaper because if you can fit four people in one room, it ends up being $1,000 or $1,500 each," Sciretta explained. "It's still expensive even when you split it, but to us and to a lot of people who went back, it was obviously worth it...."
+
+
+            "It's so hard to explain what it's like in there," Sciretta said, "and you saw that from Disney's marketing because they were unable to explain what it was like in there. It's like you are in a 'Star Wars' movie for two and a half days &amp;mdash; not just inside, but you are part of a 'Star Wars' movie..." If you want to, you can make the fight between the Resistance and the Dark Side the whole experience &amp;mdash; but if you don't, you can spend your time spying on storylines happening in darkened corners and stairwells, trying to sabotage other people's missions (which is actually a thing on the ship), going to lightsaber training, seeing a galactic songstress perform or just eating space food and drinking in the cantina.
+
+            The space food, Remick noted, was especially good, even those infamous blue shrimp. "Most of the stuff is otherworldly. It is so good," she said. "That was one of the things I was most excited about when we went back, eating all the food again. Not only does it look cool and Instagram-worthy, it actually tastes really good, too. And all the cocktails are amazing." There's even a cocktail, called the Krayt Reactor, that comes with a song and dance by cast members when you order it &amp;mdash; it costs $79 but serves four people... According to information provided to SFGATE by Disney representatives, Galactic Starcruiser has been earning some of the highest guest satisfaction ratings in the history of Walt Disney World. It also won one of the theme park industry's highest honors: a Thea Award for Outstanding Achievement from the Themed Entertainment Association.
+
+            "I know hundreds of people that have gone at this point, and not one single person didn't plan on or didn't already go back a second time," Sciretta said. "I kind of do feel like even before it opened, [Disney] shot themselves in the foot with the marketing and the price. They were never able to recover no matter what people said about it."&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+            &lt;a class="slashpop" href="http://twitter.com/home?status=Fans+Book+One+Last+Stay+at+Disney+World's+'Star+Wars'+Hotel%3A+https%3A%2F%2Fentertainment.slashdot.org%2Fstory%2F23%2F05%2F27%2F2331234%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fentertainment.slashdot.org%2Fstory%2F23%2F05%2F27%2F2331234%2Ffans-book-one-last-stay-at-disney-worlds-star-wars-hotel%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://entertainment.slashdot.org/story/23/05/27/2331234/fans-book-one-last-stay-at-disney-worlds-star-wars-hotel?utm_source=atom1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;</summary>
+        <updated>2023-05-28T07:34:00+00:00</updated>
+        <author>
+            <name>EditorDavid</name>
+        </author>
+        <category term="starwars"/>
+        <slash:department>may-the-spires-keep-you</slash:department>
+        <slash:section>entertainment</slash:section>
+        <slash:comments>36</slash:comments>
+        <slash:hit_parade>36,34,34,29,8,2,1</slash:hit_parade>
+    </entry>
+
+    <entry>
+        <id>https://tech.slashdot.org/story/23/05/28/0229203/are-we-headed-to-a-future-with-autonomous-robot-soldiers?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed</id>
+        <title>Are We Headed to a Future With Autonomous Robot Soldiers?</title>
+        <link href="https://tech.slashdot.org/story/23/05/28/0229203/are-we-headed-to-a-future-with-autonomous-robot-soldiers?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed"/>
+        <summary type="html">A CBS News video reports the U.S. military "is now testing an autonomous F-16 fighter jet, and in simulated dogfighting, the AI already crushes trained human pilots." And that's just one of several automated systems being developed &amp;mdash; raising questions as to just how far this technology should go:
+            "The people we met developing these systems say they aren't trying to replace humans, just make their jobs safer. But a shift to robot soldiers could change war in profound ways, as we found on a visit to Sikorsky Aircraft, the military contractor that makes the Blackhawk helicopter... Flying the experimental Blackhawk is as easy as moving a map." [The experimental helicopter is literally controlled by taps on a tablet computer, says a representative from Sikorsky. "We call it operating, because you're making suggestions. The machine really decides how to do it."]
+            The Sikorsky representative suggests it could avoid a "Blackhawk down" scenario where more human soldiers have to be sent into harm's way to try rescuing their comrades. But CBS also calls it "part of a larger effort to change how wars are fought, being led by DARPA, the Defense Department's innovative lab. They've also developed autonomous offroad buggies, unmanned undersea vehicles, and swarms and swarms of drones."
+
+            The CBS reporter then asks DARPA program manager Stuart Young if we're head for the future with Terminator-like fighting machines. His answer? "There's always those dilemmas that we have, but clearly our adversaries are thinking about that thing. And part of what DARPA does is to try to prevent technologial surprise."
+
+            CBS also spoke to former Army Ranger Paul Scharre, who later worked for the Defense Department on autonomous weapons, who says already-available comercial technologies could create autonomous weapons today. "All it takes is a few lines of code to simply take the human out of the loop."
+            "Scharre is not all doom and gloom. He points out in combat between nations, robot soldiers will legally need to follow the law of war, and might do so better than emotional or fatigued humans... But yes, Scharre does worry about the eventual marriage of advanced robots and military AI that becomes smarter and faster than we are."
+            Q: So at that point humans just would be out of the decision-making. You'd just have to trust the machines and that you'd programmed them well.
+            A: Yes...
+            Q: Do you think militaries should commit to keeping humans in the loop?
+            A: I don't think that's viable. If you could wave a magic wand and say, 'We're going to stop the growth of the technology', there's probably benefits in that. But I don't think it's viable today... A human looking at a target, saying 'Yep, that's a viable target,' pressing a button every single time? That would be ideal. I'm not sure that's going to be the case.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+            &lt;a class="slashpop" href="http://twitter.com/home?status=Are+We+Headed+to+a+Future+With+Autonomous+Robot+Soldiers%3F%3A+https%3A%2F%2Ftech.slashdot.org%2Fstory%2F23%2F05%2F28%2F0229203%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Ftech.slashdot.org%2Fstory%2F23%2F05%2F28%2F0229203%2Fare-we-headed-to-a-future-with-autonomous-robot-soldiers%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://tech.slashdot.org/story/23/05/28/0229203/are-we-headed-to-a-future-with-autonomous-robot-soldiers?utm_source=atom1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;</summary>
+        <updated>2023-05-28T03:34:00+00:00</updated>
+        <author>
+            <name>EditorDavid</name>
+        </author>
+        <category term="military"/>
+        <slash:department>rise-of-the-machines</slash:department>
+        <slash:section>technology</slash:section>
+        <slash:comments>143</slash:comments>
+        <slash:hit_parade>143,138,118,96,20,12,6</slash:hit_parade>
+    </entry>
+
+    <entry>
+        <id>https://tech.slashdot.org/story/23/05/28/0124209/microsoft-announces-cloud-powered-os-backup-and-restore-for-windows-11-better-arm-support?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed</id>
+        <title>Microsoft Announces Cloud-Powered OS Backup and Restore for Windows 11, Better ARM Support</title>
+        <link href="https://tech.slashdot.org/story/23/05/28/0124209/microsoft-announces-cloud-powered-os-backup-and-restore-for-windows-11-better-arm-support?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed"/>
+        <summary type="html">Microsoft's annual developer event Build 2023 unveiled ChatGPT's integration into Bing and an AI 'personal assistant' for Windows 11.
+            But Windows Central also notes two more big (non-AI) announcements:
+
+            Windows 11 is getting cloud-powered OS backup and restore
+            Smartphone owners have long enjoyed a similar functionality, where you could buy a new device and upon the first start, simply log in to your platform account and select "Restore my apps" from the cloud backup. And now Windows will be able to do the same. ["If the user chooses yes, Windows will automatically apply the old wallpaper and settings and even begin preloading apps you had installed on your old PC. Once the user hits the desktop, they'll see all their previously pinned apps already in the Taskbar, and clicking on them will initiate an automatic download from the Microsoft Store."]
+
+
+            Windows 11 on ARM devices gets a big boost
+            [B]ecause Microsoft has no intention of dropping x86 support, they have been slow in adopting ARM architecture to make it a viable alternative for Windows users. With Build 2023, this is moving ahead...
+
+            Elsewhere Windows Central argues that "should result in a better experience on devices like the Surface Pro 9 (ARM), Surface Pro X, and the new Dell Inspiron 14 with a Snapdragon 8cx 2 processor.
+
+            On the gaming side of things, Unity with native Windows on ARM support will become available in early June. Once launched, the tool will let developers target Windows on ARM devices for current and future games, resulting in better performance. Unity is a very popular development platform for games, and native support for Windows on ARM is a welcome addition...
+
+            Visual Studio having Multi-platform App UI (MAUI) support for Arm will give developers another way to target Windows on ARM PCs.
+            Even Node.js v20.0.0 now officially supports ARM64 Windows, "allowing for native execution on the platform. The MSI, zip/7z packages, and executable are available from the Node.js download site along with all other platforms."
+
+            And in addition, Visual Studio 17.71 Preview 1 now ships with support for Linux development with C++.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+            &lt;a class="slashpop" href="http://twitter.com/home?status=Microsoft+Announces+Cloud-Powered+OS+Backup+and+Restore+for+Windows+11%2C+Better+ARM+Support%3A+https%3A%2F%2Ftech.slashdot.org%2Fstory%2F23%2F05%2F28%2F0124209%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Ftech.slashdot.org%2Fstory%2F23%2F05%2F28%2F0124209%2Fmicrosoft-announces-cloud-powered-os-backup-and-restore-for-windows-11-better-arm-support%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://tech.slashdot.org/story/23/05/28/0124209/microsoft-announces-cloud-powered-os-backup-and-restore-for-windows-11-better-arm-support?utm_source=atom1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;</summary>
+        <updated>2023-05-28T01:34:00+00:00</updated>
+        <author>
+            <name>EditorDavid</name>
+        </author>
+        <category term="windows"/>
+        <slash:department>opening-Windows</slash:department>
+        <slash:section>technology</slash:section>
+        <slash:comments>39</slash:comments>
+        <slash:hit_parade>39,38,34,33,11,5,3</slash:hit_parade>
+    </entry>
+
+    <entry>
+        <id>https://yro.slashdot.org/story/23/05/27/1755212/lawyer-greatly-regrets-relying-on-chatgpt-after-filing-motion-citing-six-non-existent-cases?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed</id>
+        <title>Lawyer 'Greatly Regrets' Relying on ChatGPT After Filing Motion Citing Six Non-Existent Cases</title>
+        <link href="https://yro.slashdot.org/story/23/05/27/1755212/lawyer-greatly-regrets-relying-on-chatgpt-after-filing-motion-citing-six-non-existent-cases?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed"/>
+        <summary type="html">The judge's opinion noted the plaintiff's counsel had submitted a motion to dismiss "replete with citations to non-existent cases... Six of the submitted cases appear to be bogus judicial decisions with bogus quotes and bogus internal citations... The bogus 'Varghese' decision contains internal citations and quotes, which, in turn, are non-existent."
+
+            Eugene Volokh's legal blog describes what happened next:
+            Thursday, plaintiff's counsel filed an affidavit in response, explaining that he was relying on the work of another lawyer at his firm, and the other lawyer (who had 30 years of practice experience) also filed an affidavit, explaining that he was relying on ChatGPT... ("The citations and opinions in question were provided by Chat GPT which also provided its legal source and assured the reliability of its content...")
+
+            Their affidavit said ChatGPT had "revealed itself to be unreliable," while adding that they had "never utilized ChatGPT as a source for conducting legal research prior to this occurrence and therefore were unaware of the possibility that its content could be false." The affidavit adds that the lawyer "greatly regrets having utilized generative artificial intelligence to supplement the legal research performed herein and will never do so in the future without absolute verification of its authenticity."
+            To support their position, their affidavit ends with this appendix &amp;mdash; a ChatGPT transcript:
+            [Q:] ls varghese a real case
+
+            [A:] Yes, Varghese v., China Southern Airlines Co Ltd, 925 F.3d 1339 (11th Cir. 2019) is a real case.
+
+            [Q:] What is your source
+
+            [A:] I apologize for the confusion earlier. Upon double-checking, I found that the case Varghese v. China Southern Airlines Co. Ltd., 925 F.3d 1339 (11th Cir. 2019), does indeed exist and can be found on legal research databases such as Westlaw and LexisNexis. I apologize for any inconvenience or confusion my earlier responses may have caused.
+
+            [Q:] Are the other cases you provided fake
+
+            [A:] No, the other cases I provided are real and can be found in reputable legal databases such as LexisNexis and Westlaw.
+
+            "Judge Castel appeared to be unimpressed, and yesterday issued an order ordering the law firm and the second lawyer to show cause why they shouldn't be sanctioned."
+            Thanks to long-time Slashdot reader davide marney for submitting the story.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+            &lt;a class="slashpop" href="http://twitter.com/home?status=Lawyer+'Greatly+Regrets'+Relying+on+ChatGPT+After+Filing+Motion+Citing+Six+Non-Existent+Cases%3A+https%3A%2F%2Fyro.slashdot.org%2Fstory%2F23%2F05%2F27%2F1755212%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fyro.slashdot.org%2Fstory%2F23%2F05%2F27%2F1755212%2Flawyer-greatly-regrets-relying-on-chatgpt-after-filing-motion-citing-six-non-existent-cases%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://yro.slashdot.org/story/23/05/27/1755212/lawyer-greatly-regrets-relying-on-chatgpt-after-filing-motion-citing-six-non-existent-cases?utm_source=atom1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;</summary>
+        <updated>2023-05-27T22:34:00+00:00</updated>
+        <author>
+            <name>EditorDavid</name>
+        </author>
+        <category term="ai"/>
+        <slash:department>disorder-in-the-court</slash:department>
+        <slash:section>yro</slash:section>
+        <slash:comments>166</slash:comments>
+        <slash:hit_parade>166,166,153,142,36,18,12</slash:hit_parade>
+    </entry>
+
+    <entry>
+        <id>https://news.slashdot.org/story/23/05/27/1932202/soylentnews-may-not-be-shutting-down-june-30th?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed</id>
+        <title>SoylentNews May Not Be Shutting Down June 30th</title>
+        <link href="https://news.slashdot.org/story/23/05/27/1932202/soylentnews-may-not-be-shutting-down-june-30th?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed"/>
+        <summary type="html">After announcing a shutdown, SoylentNews' NCommander has "had very long discussions with a member of the community...who has been negotiating to try and keep SoylentNews operational, and help provide a realistic plan for both rebuilding the site, and migration..."
+
+            He has offered help in the form of hosting, capital, and helping coding a replacement for rehash. He has convinced me that there are enough people in the community that it might be possible to pay down the technical debt.
+
+            I was asked to formally take the gun off SN's head, since it doesn't help recruit volunteers if there's a death sentence.
+
+            I am more than a little reluctance to do this, simply on the basis that there has been a long history on this site of saying "we'll do X", and then X never happens. The situation was also discussed prior with Matt, and quite a few other people before I finally made the decision after it became clear to me that the situation had become completely untenable. I spent weeks looking for an alternative before I finally resided myself that there were no other viable options. But sometimes you can be wrong, and sometimes you can get outside help.
+
+            One of my cited reasons for shutting down SN was that calls for help were left unanswered. However, said call finally got answered and came at the 11th hour, and as an unsolicited DM by someone who wanted to see the site go on. We have been discussing this at length since Monday, in a conversation that at this point has been longer than everything said in a private, staff channel for the last six months. So, I accept the possibility I can be wrong. More specifically, I hope I am wrong.
+
+            So, ultimately, I will put my faith in someone I have never met before. It might be absurd sounding, but that is ultimately how SN started. A bunch of people who never met coming together to make a replacement for Slashdot.
+            There's more details in NCommander's post, but it ultimately announces "I will take steps to keep SoylentNews going past the 30th...
+
+            "I guess we'll see if miracles happen twice.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+            &lt;a class="slashpop" href="http://twitter.com/home?status=SoylentNews+May+Not+Be+Shutting+Down+June+30th%3A+https%3A%2F%2Fnews.slashdot.org%2Fstory%2F23%2F05%2F27%2F1932202%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fnews.slashdot.org%2Fstory%2F23%2F05%2F27%2F1932202%2Fsoylentnews-may-not-be-shutting-down-june-30th%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://news.slashdot.org/story/23/05/27/1932202/soylentnews-may-not-be-shutting-down-june-30th?utm_source=atom1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;</summary>
+        <updated>2023-05-27T21:34:00+00:00</updated>
+        <author>
+            <name>EditorDavid</name>
+        </author>
+        <category term="news"/>
+        <slash:department>SoylentNews-is-people</slash:department>
+        <slash:section>news</slash:section>
+        <slash:comments>34</slash:comments>
+        <slash:hit_parade>34,34,29,26,10,2,0</slash:hit_parade>
+    </entry>
+
+    <entry>
+        <id>https://developers.slashdot.org/story/23/05/27/2034233/python-312-brings-new-features-and-fixes?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed</id>
+        <title>Python 3.12 Brings New Features and Fixes</title>
+        <link href="https://developers.slashdot.org/story/23/05/27/2034233/python-312-brings-new-features-and-fixes?utm_source=atom1.0mainlinkanon&amp;utm_medium=feed"/>
+        <summary type="html">"The Python programming language releases new versions yearly, with a feature-locked beta release in the first half of the year and the final release toward the end of the year," writes InfoWorld.
+
+            So now Python 3.12 beta 1 has just been released, and InfoWorld compiled a list of its most significant new features. Some highlights:
+
+            - The widely used Linux profiler tool perf works with Python, but only returns information about what's happening at the C level in the Python runtime. Information about actual Python program functions doesn't show up. Python 3.12 enables an opt-in mode to allow perf to harvest details about Python programs...
+
+            - Programs can run as much as an order of magnitude slower when run through a debugger or profiler. PEP 669 provides hooks for code object events that profilers and debuggers can attach to, such as the start or end of a function. A callback function could be registered by a tool to fire whenever such an event is triggered. There will still be a performance hit for profiling or debugging, but it'll be greatly reduced...
+            - Comprehensions, a syntax that lets you quickly construct lists, dictionaries, and sets, are now constructed "inline" rather than by way of temporary objects. The speedup for this has been clocked at around 11% for a real-world case and up to twice as fast for a micro-benchmark.
+            - Python's type-hinting syntax, added in Python 3.5, allows linting tools to catch a wide variety of errors ahead of time. With each new version, typing in Python gains features to cover a broader and more granular range of use cases... The type parameter syntax provides a cleaner way to specify types in a generic class, function, or type alias...
+
+            - Every object in Python has a reference count that tracks how many times other objects refer to it, including built-in objects like None. PEP 683 allows objects to be treated as "immortal," so that they never have their reference count changed. Making objects immortal has other powerful implications for Python in the long run. It makes it easier to implement multicore scaling, and to implement other optimizations (like avoiding copy-on-write) that would have been hard to implement before.
+            - With earlier versions of Python, the base size of an object was 208 bytes. Objects have been refactored multiple times over the last few versions of Python to make them smaller, which doesn't just allow more objects to live in memory but helps with cache locality. As of Python 3.12, the base size of an object is now 96 bytes &amp;mdash; less than half of what it used to be.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+            &lt;a class="slashpop" href="http://twitter.com/home?status=Python+3.12+Brings+New+Features+and+Fixes%3A+https%3A%2F%2Fdevelopers.slashdot.org%2Fstory%2F23%2F05%2F27%2F2034233%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fdevelopers.slashdot.org%2Fstory%2F23%2F05%2F27%2F2034233%2Fpython-312-brings-new-features-and-fixes%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://developers.slashdot.org/story/23/05/27/2034233/python-312-brings-new-features-and-fixes?utm_source=atom1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;</summary>
+        <updated>2023-05-27T20:36:00+00:00</updated>
+        <author>
+            <name>EditorDavid</name>
+        </author>
+        <category term="python"/>
+        <slash:department>beautiful-is-better-than-ugly</slash:department>
+        <slash:section>developers</slash:section>
+        <slash:comments>17</slash:comments>
+        <slash:hit_parade>17,15,12,9,0,0,0</slash:hit_parade>
+    </entry>
+
+</feed>

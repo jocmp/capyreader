@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:cc="http://web.resource.org/cc/" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:media="http://search.yahoo.com/mrss/" xmlns:content="http://purl.org/rss/1.0/modules/content/"  xmlns:podcast="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/1.0.md"  xmlns:googleplay="http://www.google.com/schemas/play-podcasts/1.0" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <channel>
+        <atom:link href="http://joeroganexp.joerogan.libsynpro.com/rss" rel="self" type="application/rss+xml"/>
+        <title>The Joe Rogan Experience</title>
+        <pubDate>Mon, 15 Feb 2021 20:09:04 +0000</pubDate>
+        <lastBuildDate>Thu, 29 Jul 2021 05:45:54 +0000</lastBuildDate>
+        <generator>Libsyn WebEngine 2.0</generator>
+        <link>https://www.joerogan.com</link>
+        <language>en</language>
+        <copyright><![CDATA[Copyright © Talking Monkey Productions]]></copyright>
+        <docs>https://www.joerogan.com</docs>
+        <managingEditor>joe@joerogan.net (joe@joerogan.net)</managingEditor>
+        <itunes:summary><![CDATA[Conduit to the Gaian Mind]]></itunes:summary>
+        <image>
+            <url>http://static.libsyn.com/p/assets/7/1/f/3/71f3014e14ef2722/JREiTunesImage2.jpg</url>
+            <title>The Joe Rogan Experience</title>
+            <link><![CDATA[https://www.joerogan.com]]></link>
+        </image>
+        <itunes:author>Joe Rogan</itunes:author>
+        <itunes:duration>02:02:35</itunes:duration>
+        <itunes:keywords>Talking,comedian,joe,monkey,redban,rogan,ufc</itunes:keywords>
+        <itunes:category text="Comedy"/>
+        <itunes:category text="Society &amp; Culture"/>
+        <itunes:category text="Technology"/>
+        <itunes:image href="http://static.libsyn.com/p/assets/7/1/f/3/71f3014e14ef2722/JREiTunesImage2.jpg" />
+        <itunes:explicit>yes</itunes:explicit>
+        <itunes:owner>
+            <itunes:name><![CDATA[Joe Rogan]]></itunes:name>
+            <itunes:email>joe@joerogan.net</itunes:email>
+        </itunes:owner>
+        <description><![CDATA[Conduit to the Gaian Mind]]></description>
+        <itunes:subtitle><![CDATA[Joe Rogan's Weekly Podcast]]></itunes:subtitle>
+        <itunes:type>episodic</itunes:type>
+        <!-- START CHANNEL EXTRA TAGS -->
+        <itunes:new-feed-url>https://joeroganexp.libsyn.com/rss</itunes:new-feed-url><!-- CLOSE CHANNEL EXTRA TAGS -->
+
+
+
+
+        <item>
+            <title>#1109 - Matthew Walker</title>
+            <pubDate>Wed, 25 Apr 2018 22:37:10 +0000</pubDate>
+            <guid isPermaLink="false"><![CDATA[00a5d989b6b2cd8267cf8239f3b5585c]]></guid>
+            <link><![CDATA[http://traffic.libsyn.com/joeroganexp/p1109.mp3]]></link>
+            <itunes:image href="http://static.libsyn.com/p/assets/6/f/b/6/6fb68f57fbe00fb1/JRE1109.jpg" />
+            <description><![CDATA[Matthew Walker is Professor of Neuroscience and Psychology at the University of California, Berkeley, and Founder and Director of the Center for Human Sleep Science. Check out his book "" on Amazon.]]></description>
+            <content:encoded><![CDATA[Matthew Walker is Professor of Neuroscience and Psychology at the University of California, Berkeley, and Founder and Director of the Center for Human Sleep Science. Check out his book "" on Amazon.]]></content:encoded>
+            <enclosure length="118001817" type="audio/mpeg" url="http://traffic.libsyn.com/joeroganexp/p1109.mp3?dest-id=19997" />
+            <itunes:duration>02:02:35</itunes:duration>
+            <itunes:explicit>yes</itunes:explicit>
+            <itunes:keywords>podcast,joe,party,Experience,walker,matthew,freak,rogan,deathsquad,jre,1109</itunes:keywords>
+            <itunes:subtitle><![CDATA[#1109 - Matthew Walker]]></itunes:subtitle>
+            <itunes:episode>1109</itunes:episode>
+            <itunes:episodeType>full</itunes:episodeType>
+            <itunes:author>Joe Rogan</itunes:author>
+        </item>
+
+
+    </channel>
+</rss>

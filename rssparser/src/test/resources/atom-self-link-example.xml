@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en-us">
+    <title>Simon Willison's Weblog</title>
+    <link href="http://simonwillison.net/" rel="alternate" />
+    <link href="http://simonwillison.net/atom/everything/" rel="self" />
+    <id>http://simonwillison.net/</id>
+    <updated>2023-07-29T21:23:21+00:00</updated>
+    <author>
+        <name>Simon Willison</name>
+    </author>
+    <entry>
+        <title>A Steering Council notice about PEP 703 (Making the Global Interpreter Lock Optional
+            in CPython)
+        </title>
+        <link
+            href="http://simonwillison.net/2023/Jul/29/a-steering-council-notice-about-pep-703/#atom-everything"
+            rel="alternate" />
+        <published>2023-07-29T21:23:21+00:00</published>
+        <updated>2023-07-29T21:23:21+00:00</updated>
+        <id>
+            http://simonwillison.net/2023/Jul/29/a-steering-council-notice-about-pep-703/#atom-everything
+        </id>
+        <summary type="html">
+            &lt;p&gt;&lt;a
+            href="https://discuss.python.org/t/a-steering-council-notice-about-pep-703-making-the-global-interpreter-lock-optional-in-cpython/30474"&gt;A
+            Steering Council notice about PEP 703 (Making the Global Interpreter Lock Optional in
+            CPython)&lt;/a&gt;&lt;/p&gt; &lt;p&gt;Huge news concerning the nogil research fork of
+            Python: &amp;quot; It’s clear that the overall sentiment is positive, both for the
+            general idea and for PEP 703 specifically. The Steering Council is also largely positive
+            on both. We intend to accept PEP 703, although we’re still working on the acceptance
+            details.&amp;quot;&lt;/p&gt;
+
+            &lt;p&gt;Via &lt;a href="https://twitter.com/charliermarsh/status/1685068890424967168"&gt;@charliermarsh&lt;/a&gt;&lt;/p&gt;
+
+        </summary>
+    </entry>
+</feed>

@@ -1,0 +1,61 @@
+<?xml  version="1.0" encoding="UTF-8" ?>
+<rss version="2.0"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+>
+
+    <channel>
+        <title>HDblog.it</title>
+        <atom:link href="https://www.hdblog.it/feed/" rel="self" type="application/rss+xml"/>
+        <link>https://www.hdblog.it</link>
+        <description>HDblog.it</description>
+        <lastBuildDate>Sat, 02 Sep 2023 11:13:55 +0200</lastBuildDate>
+        <language>it-IT</language>
+        <sy:updatePeriod>hourly</sy:updatePeriod>
+        <sy:updateFrequency>1</sy:updateFrequency>
+        <generator>https://www.hdblog.it/</generator>
+        <image>
+            <title>HDblog.it</title>
+            <url>https://www.hdblog.it/new_files/templates/theme_darklight/img/logos_wt/logohd.png</url>
+            <link>https://www.hdblog.it</link>
+        </image>
+        <item>
+            <title>Fairphone 5 è ufficiale: equo, modulare e aggiornato fino al 2031 | Anteprima IFA</title>
+            <link>https://www.hdblog.it/smartphone/articoli/n573063/fairphone-5-ufficiale-caratteristiche-prezzo/</link>
+            <comments>
+                https://www.hdblog.it/smartphone/articoli/n573063/fairphone-5-ufficiale-caratteristiche-prezzo/#comments
+            </comments>
+            <pubDate>Sat, 02 Sep 2023 11:05:00 +0200</pubDate>
+            <dc:creator>HDblog.it</dc:creator>
+
+            <category><![CDATA[Android]]></category>
+            <category><![CDATA[Fairphone]]></category>
+            <guid isPermaLink="false">http://www.hdblog.it/?p=573063</guid>
+            <description>
+                <![CDATA[Due fotocamere da 50MP sul retro, 5 anni di garanzia e 10 moduli sostituibili.]]></description>
+            <content:encoded><![CDATA[<a href="https://hd2.tudocdn.net/1113460?w=660"><img src="https://hd2.tudocdn.net/1113460?w=660" width="100%" border="0"/></a><div class="textblock"><p><a href="https://www.hdblog.it/fairphone-5/"><strong>Fairphone 5</strong></a> &egrave; ufficiale, <a href="https://www.hdblog.it/smartphone/articoli/n573026/fairphone-5-caratteristiche-immagini-prezzo-quando/">le indiscrezioni di ieri</a> erano dunque corrette: rispetto <a href="https://www.hdblog.it/schede-tecniche/fairphone-4_i5838/">a Fairphone 4 </a>sono stati fatti molti passi avanti, sia nella qualit&agrave; del prodotto, sia nelle caratteristiche tecniche. Resta una soluzione profondamente <strong>modulare</strong> - anzi, ancor pi&ugrave; modulare se confrontata con la generazione precedente - e dunque facilmente aggiornabile e riparabile.</p>
+
+<p>Lo smartphone &egrave; destinato ad avere un <strong>ciclo di vita lungo</strong>:</p>
+
+<ul>
+	<li><strong>i moduli sostituibili sono 10 </strong>e non pi&ugrave; 8 (tra cui batteria, slot SIM)</li>
+	<li><strong>garantiti 5 major update</strong>, supporto software fino al 2031 (ma Fairphone parla anche di un obiettivo 2033)</li>
+</ul>
+
+<p>La lunga vita di Fairphone 5 &egrave; strettamente legata alla scelta fatta dall&#39;azienda olandese per il processore, la soluzione &quot;industriale&quot; di Qualcomm <strong>QCM6490</strong> octa-core. Le prestazioni dovrebbero corrispondere a quelle di <strong>Snapdragon 778G</strong>.<hr/><div class="box_highlight_footer" style="margin-top: 6px;"><div style="padding-bottom: 12px;">Piccolo e super potente? <a href="https://www.hdblog.it/prezzi/Apple-iPhone-14-Pro_i5631/" title="Guarda tutte le offerte per Apple iPhone 14 Pro" style="font-weight: 400;">Apple iPhone 14 Pro</a>, compralo al miglior prezzo da <a href="/clickgo/?id=5631&amp;pid=dreyeb125820940913&amp;nid=869291037&amp;area=4&amp;prz=989&amp;hash=f3c5846469fbdf3cfaca2857fdf2231e" target="_blank" rel="nofollow" style="font-weight: 400;">eBay a <b>989 euro</b></a>. </div></div><h2><a href="https://www.hdblog.it/smartphone/articoli/n573063/fairphone-5-ufficiale-caratteristiche-prezzo/">CLICCA QUI PER CONTINUARE A LEGGERE</a></h2>]]></content:encoded>
+            <wfw:commentRss>
+                https://www.hdblog.it/smartphone/articoli/n573063/fairphone-5-ufficiale-caratteristiche-prezzo/feed/
+            </wfw:commentRss>
+            <slash:comments>240</slash:comments>
+            <disqus>573063 http://www.hdblog.it/?p=573063</disqus>
+            <disqus_shortname>hdbloghome</disqus_shortname>
+            <thumb>https://hd2.tudocdn.net/1113460?w=180&amp;h=180&amp;ext=file.jpg</thumb>
+            <thumb_intermedia>https://hd2.tudocdn.net/1113460?w=480&amp;h=320&amp;ext=file.jpg</thumb_intermedia>
+        </item>
+
+    </channel>
+</rss>

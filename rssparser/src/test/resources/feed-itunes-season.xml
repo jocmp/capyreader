@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/global/feed/rss.xslt" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:googleplay="http://www.google.com/schemas/play-podcasts/1.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:media="http://search.yahoo.com/mrss/" xmlns:podaccess="https://access.acast.com/schema/1.0/" xmlns:acast="https://schema.acast.com/1.0/">
+    <channel>
+        <ttl>60</ttl>
+
+        <generator>acast.com</generator>
+
+        <title>With Gourley And Rust</title>
+
+        <link>https://www.patreon.com/withgourleyandrust</link>
+
+        <atom:link href="https://feeds.acast.com/public/shows/1132daa7-9517-4bb0-89c0-6618f4d67d67" rel="self" type="application/rss+xml"/>
+        <language>en</language>
+
+        <copyright>Matt Gourley and Paul Rust</copyright>
+
+        <itunes:keywords/>
+
+        <itunes:author>Matt Gourley and Paul Rust</itunes:author>
+
+        <itunes:subtitle>Nothing says slasher films and horror franchises more than an easy-listening, cozy-cast by two gentle movie lovers like Matt Gourley and Paul Rust. Join them as they take you through the Jasons, the Michaels, the Freddies, and beyond.</itunes:subtitle>
+
+        <itunes:summary><![CDATA[Nothing says slasher films and horror franchises more than an easy-listening, cozy-cast by two gentle movie lovers like <a href="mattgourley.com" rel="noopener noreferrer" target="_blank">Matt Gourley</a> and <a href="twitter.com/paulrust" rel="noopener noreferrer" target="_blank">Paul Rust</a>. Join them as they take you through the Jasons, the Michaels, the Freddies, and beyond. Get past seasons such as IN MYERS and KRUEGER WE TRUST, lots of bonus content, and regular episodes a week early at patreon.com/withgourleyandrust.<br /><hr><p style='color:grey; font-size:0.75em;'> Hosted on Acast. See <a style='color:grey;' target='_blank' rel='noopener noreferrer' href='https://acast.com/privacy'>acast.com/privacy</a> for more information.</p>]]></itunes:summary>
+
+        <description><![CDATA[Nothing says slasher films and horror franchises more than an easy-listening, cozy-cast by two gentle movie lovers like <a href="mattgourley.com" rel="noopener noreferrer" target="_blank">Matt Gourley</a> and <a href="twitter.com/paulrust" rel="noopener noreferrer" target="_blank">Paul Rust</a>. Join them as they take you through the Jasons, the Michaels, the Freddies, and beyond. Get past seasons such as IN MYERS and KRUEGER WE TRUST, lots of bonus content, and regular episodes a week early at patreon.com/withgourleyandrust.<br /><hr><p style='color:grey; font-size:0.75em;'> Hosted on Acast. See <a style='color:grey;' target='_blank' rel='noopener noreferrer' href='https://acast.com/privacy'>acast.com/privacy</a> for more information.</p>]]></description>
+
+        <itunes:explicit>yes</itunes:explicit>
+
+        <itunes:owner>
+            <itunes:name> Matt Gourley and Paul Rust</itunes:name>
+            <itunes:email>info+1132daa7-9517-4bb0-89c0-6618f4d67d67@mg.pippa.io</itunes:email>
+        </itunes:owner>
+
+        <acast:showId>1132daa7-9517-4bb0-89c0-6618f4d67d67</acast:showId>
+
+        <acast:showUrl>with-gourley-and-rust</acast:showUrl>
+
+        <acast:signature key="EXAMPLE" algorithm="aes-256-cbc"><![CDATA[ZohgJbMmJf1w8yK2jqSQJw==]]></acast:signature>
+        <acast:settings><![CDATA[c/+nvkCZjbQ6L+7jEeH8DRVOYJZPUg0NVuxY4Ci5OytvbiTgaOaCaSJMm19xv7I0TQn/TFHdtQo50Muu49mTDfcyIqUyMkIGMzHtC8HgvrrDfRjbH6twsG1YPd09T6kfVNvJKGgMy553XY6f8VdVJGFYU0QNM9RjHXrWX3eOLROB8dtsKWd7IcdkFiJArwR3se707uqcaFHYcMY8+LL9WPud97VCgjYVHTfkIcFwpr3ewQpMlJy6jc+mtbcvVtl1Z7YRBPkxc69sEIF4kt4ELNLmIdl2XBZ5w3GmXa7RMxFU3mXpgKGk2pEbVLB5o6dC4jhZTM8H8WL2CVrI6JwupQRxkjZv8l0u+Vo6WXw47lbV188lCfZXv3AOPaSnpV+Eg8Y9dZ1CRo2anVv2DbhOz2qquAAyk+gP5k+mj2lyN+NdagwPlQ1nee+Z82PEg7K6dn9MyNu/ck2VhGn3bm+Z/GFeIQsBdYrO4GcgBUAu57MDjcptWkvGrP+LF5td3VPUWCGwn/gRgJzHJcWK9C9mgw+j4rJsremaONQpWZzEtlxooLwjC8WB2BsASZVGE4aXuNjiX9oqXXrxgTRieacOdDm2ueSIE26k3AaNCoMEiZWcZvODzz8r5a5pO0TidAMAtpyqMDcwaXqBfLCAipRGiE7lYT0zEJ2zIMHC0y7cSocPR87ITs7eFHYDZlsO0tmgqNCiXQJUok8GYD/3ZhepWGmW1yT0DZpN7cAYVFpa8v8pk5tj3FsHnWA450lzIKd+ghRck4Hw60Pu2VrC2MiKcQ==]]></acast:settings>
+
+        <acast:network id="93d77a2d-f167-bbb3-d29c-a7926eab7ee1" slug=""><![CDATA[48 Square, Inc.]]></acast:network>
+        <acast:importedFeed>https://rss.acast.com/with-gourley-and-rust</acast:importedFeed>
+
+        <itunes:type>episodic</itunes:type>
+
+        <itunes:image href="https://assets.pippa.io/shows/6217ecbc4b795a924efd3b6f/1661890625869-8906b145080b9b1c29ec0f5a5069ea0c.jpeg"/>
+        <image>
+            <url>https://assets.pippa.io/shows/6217ecbc4b795a924efd3b6f/1661890625869-8906b145080b9b1c29ec0f5a5069ea0c.jpeg</url>
+            <link>https://www.patreon.com/withgourleyandrust</link>
+            <title>With Gourley And Rust</title>
+        </image>
+
+        <itunes:new-feed-url>https://feeds.acast.com/public/shows/1132daa7-9517-4bb0-89c0-6618f4d67d67</itunes:new-feed-url>
+
+        <item>
+            <title>RASING CAIN</title>
+
+            <itunes:title>RASING CAIN</itunes:title>
+
+            <pubDate>Fri, 04 Nov 2022 07:00:46 GMT</pubDate>
+
+            <itunes:duration>2:22:55</itunes:duration>
+
+            <enclosure url="https://sphinx.acast.com/p/acast/s/with-gourley-and-rust/e/635861df5f0a000012334a6f/media.mp3" length="342725492" type="audio/mpeg"/>
+            <guid isPermaLink="false">635861df5f0a000012334a6f</guid>
+            <itunes:explicit>yes</itunes:explicit>
+
+            <link>https://www.patreon.com/withgourleyandrust</link>
+
+            <acast:episodeId>635861df5f0a000012334a6f</acast:episodeId>
+
+            <acast:episodeUrl>rasing-cain</acast:episodeUrl>
+
+            <acast:settings><![CDATA[c/+nvkCZjbQ6L+7jEeH8DWorW17WVgZF/BVs/4bob5ERKvOQxCdU3KqbhRbG2j+pqYWZTT+M+quY1qSxtJ0Hf9FrCBAWNgFDDdi92157oRmiPYvtfjhmDpHzD/1kozOAlEAocmbNc+Nol1JzvlAF00t4R62LpC276A8zXqZlMOKMeXYxSfiGl0iPTfrz3zf+sPzEFWGDQbidWo1l4y/F2oVu2XDhMhfkjtyUZFImDBAhMmKSTyaXru30joQ85eXaF7XB2agUH2OsUn8HUNNitoZnhDKP708N8wBMu9ng8iH9bqQm96JZ2hSOyjN3KBELgmcPo113Y4qckiOjbkCTnHGqjj75giJAiErZPe0DJMW1KwdVw4yqZttdbKjjBXw2sFn3bPaA7mpFxZnQLwf0W/cMuMWU7zteDJjtcWZd5zPEnpy3aGN/ogFadmNLN1AhABZh6Jn15IBfnIDzaQhXAkY444eXMDQ0TrDnbCVGn8SnVwOAmKso+qf2j2VJzwk/rcQDVgQZxA/iT/UO8bX6dcA0TRDuUVOfkrkPNeJ+rTjf1T2E2Sb9MnyNjOY+W7gP3MFWpTcpHDvksdgkAx2iaywOdQR5pYhqgLWsZBh8MW4F5jj5G+8uIpttt2tDPbERLv7vS/ApZDhtlnVJj5TMYOf/rYRIFfx8z3PADNRPyi7RmNot2YZTt9pzQ7rEdCDPWcESuoccJGVoLYBUVVrSHBuNQuiVqT8Dv6MMPoiIkYc=]]></acast:settings>
+
+            <itunes:episodeType>full</itunes:episodeType>
+
+            <itunes:season>11</itunes:season>
+
+            <itunes:episode>5</itunes:episode>
+
+            <itunes:image href="https://assets.pippa.io/shows/6217ecbc4b795a924efd3b6f/1666735987433-0c7f8a23c84a67257190c040b06b4490.jpeg"/>
+            <description><![CDATA[<p>The De Palma Paradox.</p><br><p>With Gourley And Rust bonus content on <a href="https://www.patreon.com/withgourleyandrust" rel="noopener noreferrer" target="_blank">PATREON</a> and merchandise on <a href="https://www.redbubble.com/people/gourleyandrust/shop" rel="noopener noreferrer" target="_blank">REDBUBBLE</a>.</p><br><p>With Gourley and Rust theme song by Matt's band, <a href="https://open.spotify.com/artist/53j7Q32qFKfBIuop1BUmOq" rel="noopener noreferrer" target="_blank">TOWNLAND</a>.</p><br><p>And also check out Paul's band, <a href="https://open.spotify.com/artist/3gc8ddHIjroKBbooNKDcP6?si=Cxojj4VxTquMoQcNTpTRwg&amp;dl_branch=1" rel="noopener noreferrer" target="_blank">DON'T STOP OR WE'LL DIE</a>.</p><br /><hr><p style='color:grey; font-size:0.75em;'> Hosted on Acast. See <a style='color:grey;' target='_blank' rel='noopener noreferrer' href='https://acast.com/privacy'>acast.com/privacy</a> for more information.</p>]]></description>
+
+            <itunes:summary><![CDATA[<p>The De Palma Paradox.</p><br><p>With Gourley And Rust bonus content on <a href="https://www.patreon.com/withgourleyandrust" rel="noopener noreferrer" target="_blank">PATREON</a> and merchandise on <a href="https://www.redbubble.com/people/gourleyandrust/shop" rel="noopener noreferrer" target="_blank">REDBUBBLE</a>.</p><br><p>With Gourley and Rust theme song by Matt's band, <a href="https://open.spotify.com/artist/53j7Q32qFKfBIuop1BUmOq" rel="noopener noreferrer" target="_blank">TOWNLAND</a>.</p><br><p>And also check out Paul's band, <a href="https://open.spotify.com/artist/3gc8ddHIjroKBbooNKDcP6?si=Cxojj4VxTquMoQcNTpTRwg&amp;dl_branch=1" rel="noopener noreferrer" target="_blank">DON'T STOP OR WE'LL DIE</a>.</p><br /><hr><p style='color:grey; font-size:0.75em;'> Hosted on Acast. See <a style='color:grey;' target='_blank' rel='noopener noreferrer' href='https://acast.com/privacy'>acast.com/privacy</a> for more information.</p>]]></itunes:summary>
+
+        </item>
+    </channel>
+</rss>

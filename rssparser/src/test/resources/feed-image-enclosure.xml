@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+    <channel>
+        <title>Centrum dopravního výzkumu, v. v. i. (RSS 2.0)</title>
+        <link>https://www.cdv.cz/</link>
+        <description>Informace o novinkách na webu Centra dopravního výzkumu, pořádaných akcích v oblasti dopravy a odborných článcích z oblasti dopravy.</description>
+        <language>cs</language>
+        <image>
+            <title>Logo Centrum dopravního výzkumu, v. v. i.</title>
+            <url>https://www.cdv.cz/</url>
+            <link>https://www.cdv.cz/image/logo-centrum-dopravniho-vyzkumu/</link>
+            <width>108</width>
+            <height>108</height>
+        </image>
+        <item>
+            <category>event</category>
+            <title>Podpora udržitelné aktivní mobility a nástroje práce s veřejností</title>
+            <pubDate>22.11.2022 12:16:00</pubDate>
+            <link>https://www.cdv.cz/podpora-udrzitelne-aktivni-mobility-a-nastroje-prace-s-verejnosti/</link>
+            <enclosure>https://cdv.cz/image/rss-placeholder-image/</enclosure>
+        </item>
+    </channel>
+</rss>
