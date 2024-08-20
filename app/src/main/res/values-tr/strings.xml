@@ -2,7 +2,7 @@
 <resources>
     <string name="add_feed_url_title">Yayın veya Web Sitesi URL\'si</string>
     <string name="add_feed_submit">Ekle</string>
-    <string name="filter_starred">Yızdızlı</string>
+    <string name="filter_starred">Yıldızlı</string>
     <string name="settings">Hesaplar</string>
     <string name="nav_headline_tags">Etiketler</string>
     <string name="add_feed_network_error">Yayın bulunamadı. Bağlantınızı kontrol edin.</string>
@@ -49,7 +49,7 @@
     <string name="settings_option_auto_delete_articles_title">Makaleleri Otomatik Sil</string>
     <string name="refresh_every_day">Hergün</string>
     <string name="relative_time_hours">%1$dsaat</string>
-    <string name="app_name">Capy Okuyucu</string>
+    <string name="app_name">Capy Reader</string>
     <string name="add_feed_name_title">İsim</string>
     <string name="feed_form_cancel">Vazgeç</string>
     <string name="relative_time_days">%1$dgün</string>
@@ -64,7 +64,7 @@
     <string name="feed_action_unsubscribe_title">Abonelikten çık</string>
     <string name="feed_action_edit_success">Yayın güncellendi</string>
     <string name="unsubscribe_error">Yayın aboneliği iptal etme hatası</string>
-    <string name="relative_time_just_now">Şu anda</string>
+    <string name="relative_time_just_now">Şimdi</string>
     <string name="feed_action_unsubscribe_success">Abonelikten çıkıldı</string>
     <string name="settings_remove_account_button_feedbin">Çıkış Yap</string>
     <string name="article_view_star">Yıldız</string>
@@ -77,7 +77,7 @@
     <string name="action_mark_all_read">Tümünü Okundu Olarak İşaretle</string>
     <string name="article_share">Makaleyi Paylaş</string>
     <string name="article_actions_mark_below_as_read">Aşağıyı okundu olarak işaretleyin</string>
-    <string name="mark_all_read_dialog_submit">Doğrula</string>
+    <string name="mark_all_read_dialog_submit">Onayla</string>
     <string name="article_actions_open_menu">Makale eylemlerini aç</string>
     <string name="article_actions_mark_after_as_read">Yukarıyı okundu olarak işaretle</string>
     <string name="auth_fields_username">E-posta</string>
@@ -113,11 +113,11 @@
     <string name="settings_remove_account_confirm_local">Doğrula</string>
     <string name="refresh_minutes">Her %1$d dakikada bir</string>
     <plurals name="refresh_hours">
-        <item quantity="one">Her saatHer %d saatte bir</item>
-        <item quantity="other">Her saatHer %d saatte bir</item>
+        <item quantity="one">Her saat</item>
+        <item quantity="other">Her %d saatte bir</item>
     </plurals>
     <string name="nav_headline_feeds">Yayınlar</string>
-    <string name="nav_add_feed">Yayınn Ekle</string>
+    <string name="nav_add_feed">Yayın Ekle</string>
     <string name="unauthorized_dialog_description">Hesabınıza bağlanırken bir sorun oluştu. Lütfen tekrar giriş yapın.</string>
     <string name="auth_error_message">Geçersiz e-posta veya şifre</string>
     <string name="opml_import_notification_title">Abonelikler içeri aktarılıyor…</string>
@@ -127,7 +127,7 @@
     <string name="edit_feed_error">Yayın kaydedilirken hata oluştu</string>
     <string name="dialog_cancel">Vazgeç</string>
     <string name="folder_action_edit">Yeniden Adlandır</string>
-    <string name="settings_remove_account_message_local">Hesabınızı silmek istediğinizden emin misiniz? Bu geri alınamaz</string>
+    <string name="settings_remove_account_message_local">Hesabınızı silmek istediğinizden emin misiniz? Bu geri alınamaz.</string>
     <string name="account_settings_save_name">İsim kaydedildi</string>
     <string name="add_feed_feed_not_error">Yayın Bulunamadı</string>
     <string name="crash_reporting_checkbox_title">Çökme raporunu etkinleştir</string>

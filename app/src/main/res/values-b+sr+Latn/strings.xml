@@ -23,23 +23,23 @@
     <string name="feed_action_edit_success">Izvor je ažuriran</string>
     <string name="feed_action_unsubscribe_success">Izvor je uspešno uklonjen</string>
     <string name="settings">Nalozi</string>
-    <string name="settings_remove_account_button_feedbin">Odjavite se</string>
-    <string name="settings_remove_account_title_feedbin">Odjavite se</string>
+    <string name="settings_remove_account_button_feedbin">Odjavi se</string>
+    <string name="settings_remove_account_title_feedbin">Odjavi se</string>
     <string name="settings_remove_account_message_feedbin">Da li ste sigurni da želite da se odjavite?</string>
-    <string name="settings_remove_account_confirm_feedbin">Odjavite se</string>
+    <string name="settings_remove_account_confirm_feedbin">Odjavi se</string>
     <string name="settings_remove_account_button_local">Izbriši nalog</string>
     <string name="settings_remove_account_title_local">Izbriši nalog</string>
     <string name="settings_remove_account_message_local">Da li ste sigurni da želite da izbrišete svoj nalog? Ovo se ne može poništiti.</string>
-    <string name="settings_remove_account_confirm_local">Potvrdite</string>
-    <string name="account_settings_save_name">Ime je sačuvano</string>
+    <string name="settings_remove_account_confirm_local">Potvrdi</string>
+    <string name="account_settings_save_name">Naziv je sačuvan</string>
     <string name="article_view_mark_as_read">Označi kao pročitano</string>
     <string name="article_view_star">Sačuvaj</string>
     <string name="refresh_manually_only">Samo ručno</string>
     <string name="refresh_minutes">Svakih %1$d minuta</string>
     <plurals name="refresh_hours">
-        <item quantity="one">%d sat</item>
-        <item quantity="few">%d sati</item>
-        <item quantity="other">%d sati</item>
+        <item quantity="one">Svako %d sat</item>
+        <item quantity="few">Svako %d sati</item>
+        <item quantity="other">Svako %d sati</item>
     </plurals>
     <string name="refresh_feeds_menu_label">Osveži izvore</string>
     <string name="nav_headline_tags">Tagovi</string>
@@ -52,7 +52,7 @@
     <string name="unsubscribe_error">Greška pri opozivanju prijave Izvora</string>
     <string name="relative_time_just_now">Upravo sada</string>
     <string name="relative_time_minutes">%1$dm</string>
-    <string name="relative_time_hours">%1$dč</string>
+    <string name="relative_time_hours">%1$dh</string>
     <string name="relative_time_days">%1$dd</string>
     <string name="article_share">Podeli članak</string>
     <string name="extract_full_content">Izvuci ceo sadržaj</string>
@@ -68,7 +68,7 @@
     <string name="unauthorized_dialog_confirm_text">Prijavi se</string>
     <string name="auth_fields_password">Lozinka</string>
     <string name="auth_fields_username">Email</string>
-    <string name="auth_fields_hide_password">Sakri Lozinku</string>
+    <string name="auth_fields_hide_password">Sakrij Lozinku</string>
     <string name="auth_fields_show_password">Prikaži lozinku</string>
     <string name="auth_fields_log_in_button">Prijavi se</string>
     <string name="settings_top_bar_title">Podešavanja</string>
@@ -102,8 +102,8 @@
     <string name="theme_menu_option_system_default">Podrazumevana tema sistema</string>
     <string name="edit_feed_tags">Tagovi</string>
     <string name="settings_option_in_app_browser">Koristite pregledač u aplikaciji</string>
-    <string name="opml_import_notification_cancel">Prekini</string>
-    <string name="image_preview_menu_option_none">Nijedan</string>
+    <string name="opml_import_notification_cancel">Odustani</string>
+    <string name="image_preview_menu_option_none">Bez Slike</string>
     <string name="image_preview_menu_option_small">Mala</string>
     <string name="image_preview_menu_option_large">Velika</string>
     <string name="image_preview_label">Pregled slike</string>
@@ -117,8 +117,8 @@
     <string name="settings_option_full_content_subtitle">Zapamtite izbor za učitavanje celog sadržaja članka</string>
     <string name="refresh_on_start">Na startu</string>
     <string name="empty_onboarding_title">Još nema Izvora</string>
-    <string name="empty_onboarding_prompt">Započnite sa dodavanjem Izvora</string>
-    <string name="article_style_options">Opcije stilova fonta</string>
+    <string name="empty_onboarding_prompt">Započni sa dodavanjem Izvora</string>
+    <string name="article_style_options">Font Opcije</string>
     <string name="font_option_vollkorn">Volokorn</string>
     <string name="font_option_atkinson_hyperlegible">Atkinson Hiperčitko</string>
     <string name="font_option_poppins">Popins</string>
@@ -129,6 +129,8 @@
     <string name="article_byline">%1$s u %2$s od %3$s</string>
     <string name="article_byline_date_only">%1$s u %2$s</string>
     <string name="settings_option_auto_delete_articles_subtitle">Izbrišite pročitane nesačuvane članke starije od 3 meseca</string>
-    <string name="settings_option_auto_delete_articles_title">Automatsko brisanje članaka</string>
-    <string name="refresh_every_day">Every day</string>
+    <string name="settings_option_auto_delete_articles_title">Automatsko Brisanje Članaka</string>
+    <string name="refresh_every_day">Svakog dana</string>
+    <string name="feed_form_feed_url_title">Link izvora</string>
+    <string name="feed_form_copy_feed_url_to_clipboard">Kopiraj Link Izvora</string>
 </resources>

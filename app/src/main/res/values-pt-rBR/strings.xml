@@ -3,7 +3,7 @@
     <string name="app_name">Capy Reader</string>
     <string name="add_feed_url_title">URL do feed ou site</string>
     <string name="add_feed_name_title">Nome</string>
-    <string name="add_feed_new_folder_title">New Tag</string>
+    <string name="add_feed_new_folder_title">Nova etiqueta</string>
     <string name="add_feed_submit">Adicionar</string>
     <string name="add_feed_success">Feed adicionado</string>
     <string name="feed_form_cancel">Cancelar</string>
@@ -17,16 +17,16 @@
     <string name="feed_action_unsubscribe_confirm">Desinscrever</string>
     <string name="edit_feed_submit">Salvar</string>
     <string name="dialog_cancel">Cancelar</string>
-    <string name="folder_action_delete_title">Delete Tag</string>
+    <string name="folder_action_delete_title">Deletar etiqueta</string>
     <string name="folder_action_edit">Renomear</string>
     <string name="feed_action_unsubscribe_title">Desinscrever</string>
     <string name="feed_action_edit_success">Feed atualizado</string>
-    <string name="feed_action_unsubscribe_success">Unsubscribed</string>
+    <string name="feed_action_unsubscribe_success">Desinscrito</string>
     <string name="settings">Contas</string>
     <string name="settings_remove_account_button_feedbin">Sair da sessão</string>
     <string name="settings_remove_account_title_feedbin">Sair da sessão</string>
-    <string name="settings_remove_account_message_feedbin">Are you sure you want to log out?</string>
-    <string name="settings_remove_account_confirm_feedbin">Log Out</string>
+    <string name="settings_remove_account_message_feedbin">Você tem certeza que quer deslogar?</string>
+    <string name="settings_remove_account_confirm_feedbin">Deslogar</string>
     <string name="settings_remove_account_button_local">Deletar conta</string>
     <string name="settings_remove_account_title_local">Deletar conta</string>
     <string name="settings_remove_account_message_local">Você tem certeza de que deseja deletar sua conta? Isso não pode ser desfeito.</string>
@@ -44,7 +44,7 @@
     <string name="nav_headline_tags">Etiquetas</string>
     <string name="nav_headline_feeds">Feeds</string>
     <string name="nav_add_feed">Adicionar feed</string>
-    <string name="add_feed_feed_not_error">Couldn\'t find feed</string>
+    <string name="add_feed_feed_not_error">Não foi possível encontrar o feed</string>
     <string name="add_feed_save_error">Não foi possível salvar o feed</string>
     <string name="add_feed_network_error">Feed não encontrado. Verifique sua conexão.</string>
     <string name="edit_feed_error">Erro ao salvar o feed</string>
@@ -57,7 +57,7 @@
     <string name="extract_full_content">Extract Full Content</string>
     <string name="action_mark_all_read">Mark All as Read</string>
     <string name="mark_all_read_dialog_description">Marcar todos os itens como lidos?</string>
-    <string name="mark_all_read_dialog_submit">Confirm</string>
+    <string name="mark_all_read_dialog_submit">Confirmar</string>
     <string name="article_actions_open_menu">Open article actions</string>
     <string name="article_actions_mark_below_as_read">Mark below as read</string>
     <string name="article_actions_mark_after_as_read">Mark above as read</string>
@@ -124,10 +124,12 @@
     <string name="font_option_system_default">System default</string>
     <string name="article_font_menu_label">Fonte</string>
     <string name="article_text_size_label">Tamanho da fonte</string>
-    <string name="image_error_text">Error loading image</string>
+    <string name="image_error_text">Erro ao carregar a imagem</string>
     <string name="article_byline">%1$s at %2$s by %3$s</string>
     <string name="article_byline_date_only">%1$s at %2$s</string>
     <string name="settings_option_auto_delete_articles_subtitle">Delete read, unstarred articles older than 3 months</string>
     <string name="settings_option_auto_delete_articles_title">Excluir artigos automaticamente</string>
     <string name="refresh_every_day">Every day</string>
+    <string name="feed_form_copy_feed_url_to_clipboard">Copiar URL de alimentação para clipboard</string>
+    <string name="feed_form_feed_url_title">URL de alimentação</string>
 </resources>
