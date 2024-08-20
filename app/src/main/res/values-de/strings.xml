@@ -131,4 +131,5 @@
     <string name="unauthorized_dialog_description">Es gab ein Problem mit der Verbindung zu ihrem Benutzerkonto. Bitte nochmals einloggen.</string>
     <string name="auth_fields_username">Email</string>
     <string name="account_source_feedbin">Feedbin</string>
+    <string name="feed_form_copy_feed_url_to_clipboard">Kopie Feed URL zu Clipboard</string>
 </resources>

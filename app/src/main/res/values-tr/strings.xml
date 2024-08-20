@@ -113,8 +113,8 @@
     <string name="settings_remove_account_confirm_local">Doğrula</string>
     <string name="refresh_minutes">Her %1$d dakikada bir</string>
     <plurals name="refresh_hours">
-        <item quantity="one">Her saatHer %d saatte bir</item>
-        <item quantity="other">Her saatHer %d saatte bir</item>
+        <item quantity="one">Her saat</item>
+        <item quantity="other">Her %d saatte bir</item>
     </plurals>
     <string name="nav_headline_feeds">Yayınlar</string>
     <string name="nav_add_feed">Yayınn Ekle</string>
@@ -127,7 +127,7 @@
     <string name="edit_feed_error">Yayın kaydedilirken hata oluştu</string>
     <string name="dialog_cancel">Vazgeç</string>
     <string name="folder_action_edit">Yeniden Adlandır</string>
-    <string name="settings_remove_account_message_local">Hesabınızı silmek istediğinizden emin misiniz? Bu geri alınamaz</string>
+    <string name="settings_remove_account_message_local">Hesabınızı silmek istediğinizden emin misiniz? Bu geri alınamaz.</string>
     <string name="account_settings_save_name">İsim kaydedildi</string>
     <string name="add_feed_feed_not_error">Yayın Bulunamadı</string>
     <string name="crash_reporting_checkbox_title">Çökme raporunu etkinleştir</string>
