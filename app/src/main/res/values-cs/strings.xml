@@ -2,28 +2,28 @@
 <resources>
     <string name="feed_form_cancel">Zrušit</string>
     <string name="font_option_system_default">Výchozí systému</string>
-    <string name="add_feed_name_title">Jméno</string>
+    <string name="add_feed_name_title">Název</string>
     <string name="add_feed_new_folder_title">Nový štítek</string>
     <string name="feed_action_edit">Upravit kanál</string>
-    <string name="feed_action_unsubscribe_message">Jste si jisti že chcete zrušit odběr „%1$s“?</string>
+    <string name="feed_action_unsubscribe_message">Opravdu chcete zrušit odběr „%1$s“?</string>
     <string name="folder_action_delete_title">Smazat štítek</string>
     <string name="folder_action_edit">Přejmenovat</string>
     <string name="settings_remove_account_button_feedbin">Odhlásit</string>
     <string name="settings_remove_account_title_feedbin">Odhlásit</string>
-    <string name="settings_remove_account_message_feedbin">Jste si jisti že se chcete odhlásit?</string>
+    <string name="settings_remove_account_message_feedbin">Opravdu se chcete odhlásit?</string>
     <string name="settings_remove_account_confirm_feedbin">Odhlásit</string>
     <string name="settings_remove_account_button_local">Odstranit účet</string>
-    <string name="settings_remove_account_message_local">Jste si jisti že chcete odstranit účet? Toto nelze vrátit zpět.</string>
+    <string name="settings_remove_account_message_local">Opravdu chcete odstranit účet? Toto nelze vrátit zpět.</string>
     <string name="settings_remove_account_confirm_local">Potvrdit</string>
-    <string name="account_settings_save_name">Jméno uloženo</string>
+    <string name="account_settings_save_name">Název uložen</string>
     <string name="article_view_mark_as_read">Označit jako přečtené</string>
     <string name="article_view_star">Přidat hvězdičku</string>
     <string name="refresh_manually_only">Pouze manuálně</string>
     <string name="refresh_minutes">Každých %1$d minut</string>
     <plurals name="refresh_hours">
-        <item quantity="one">%d hodinu</item>
-        <item quantity="few">%d hodiny</item>
-        <item quantity="other">%d hodin</item>
+        <item quantity="one">Každou %d hodinu</item>
+        <item quantity="few">Každé %d hodiny</item>
+        <item quantity="other">Každých %d hodin</item>
     </plurals>
     <string name="nav_headline_tags">Štítky</string>
     <string name="unsubscribe_error">Chyby při rušení odběru kanálu</string>
@@ -70,7 +70,7 @@
     <string name="settings_section_version">Verze</string>
     <string name="settings_option_copy_version">Kopírovat verzi</string>
     <string name="settings_option_full_content_title">Pamatovat stav načítání úplného obsahu</string>
-    <string name="settings_option_full_content_subtitle">Pamatovat volbu zda načítat úplný obsah článku</string>
+    <string name="settings_option_full_content_subtitle">Zapamatovat si volbu pro načtení celého obsahu článku</string>
     <string name="refresh_on_start">Při otevření</string>
     <string name="empty_onboarding_title">Žádné kanály</string>
     <string name="empty_onboarding_prompt">Začněte přidáním kanálu</string>
@@ -108,7 +108,7 @@
     <string name="auth_fields_username">Email</string>
     <string name="article_actions_mark_after_as_read">Označit všechno nad jako přečtené</string>
     <string name="unauthorized_dialog_confirm_text">Přihlásit</string>
-    <string name="auth_fields_hide_password">Schovat heslo</string>
+    <string name="auth_fields_hide_password">Skrýt heslo</string>
     <string name="auth_fields_log_in_button">Přihlásit</string>
     <string name="auth_error_message">Neplatný email nebo heslo</string>
     <string name="article_actions_mark_below_as_read">Označit všechno pod jako přečtené</string>
