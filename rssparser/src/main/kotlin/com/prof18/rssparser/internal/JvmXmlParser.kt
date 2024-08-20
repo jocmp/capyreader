@@ -1,6 +1,7 @@
 package com.prof18.rssparser.internal
 
 import com.prof18.rssparser.exception.RssParsingException
+import com.prof18.rssparser.internal.atom.AtomFeedHandler
 import com.prof18.rssparser.internal.rss.RssFeedHandler
 import com.prof18.rssparser.model.RssChannel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -19,14 +20,30 @@ internal class JvmXmlParser(
     override suspend fun parseXML(input: ParserInput): RssChannel {
         return withContext(dispatcher) {
             try {
-                val document = Jsoup.parse(input.inputStream,null, "", Parser.xmlParser())
+                val document = Jsoup.parse(input.inputStream, null, "", Parser.xmlParser())
 
-                return@withContext RssFeedHandler(document).build()
-            } catch (exception: SAXParseException) {
-                throw RssParsingException(
-                    message = "Something went wrong during the parsing of the feed. Please double check if the XML is valid",
-                    cause = exception
-                )
+                val handler = document.children().firstNotNullOfOrNull { node ->
+                    when (node.tagName()) {
+                        RssKeyword.Rss.value -> {
+                            RssFeedHandler(document)
+                        }
+
+                        AtomKeyword.Atom.value -> {
+                            AtomFeedHandler(document)
+                        }
+
+                        else -> null
+                    }
+                }
+
+                if (handler == null) {
+                    throw RssParsingException(
+                        message = "Could not find top-level RSS node",
+                        cause = null
+                    )
+                }
+
+                handler.build()
             } finally {
                 input.inputStream.closeQuietly()
             }
@@ -39,43 +56,3 @@ internal class JvmXmlParser(
         return ParserInput(inputStream)
     }
 }
-//
-//private class SaxFeedHandler : DefaultHandler() {
-//    private var feedHandler: FeedHandler? = null
-//    private val textBuilder: StringBuilder = StringBuilder()
-//
-//    fun getChannel(): RssChannel =
-//        requireNotNull(feedHandler).buildRssChannel()
-//
-//    override fun startElement(
-//        uri: String?,
-//        localName: String?,
-//        qName: String?,
-//        attributes: Attributes?,
-//    ) {
-//        textBuilder.setLength(0)
-//
-//        when (qName) {
-//            RssKeyword.Rss.value -> {
-//                feedHandler = RssFeedHandler()
-//            }
-//            AtomKeyword.Atom.value -> {
-//                feedHandler = AtomFeedHandler()
-//            }
-//            else -> feedHandler?.onStartRssElement(qName, attributes)
-//        }
-//    }
-//
-//    override fun endElement(
-//        uri: String?,
-//        localName: String?,
-//        qName: String?,
-//    ) {
-//        val text = textBuilder.toString().trim()
-//        feedHandler?.endElement(qName, text)
-//    }
-//
-//    override fun characters(ch: CharArray, start: Int, length: Int) {
-//        textBuilder.append(String(ch, start, length))
-//    }
-//}

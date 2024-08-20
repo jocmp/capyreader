@@ -4,79 +4,102 @@ import com.prof18.rssparser.internal.AtomKeyword
 import com.prof18.rssparser.internal.ChannelFactory
 import com.prof18.rssparser.internal.FeedHandler
 import com.prof18.rssparser.model.RssChannel
-import org.xml.sax.Attributes
+import org.jsoup.nodes.Document
+import org.jsoup.nodes.Element
 
-internal class AtomFeedHandler  {
-    private var isInsideItem = false
-    private var isInsideChannel = true
-
+internal class AtomFeedHandler(val document: Document) : FeedHandler {
     private var channelFactory = ChannelFactory()
 
-    fun onStartRssElement(qName: String?, attributes: Attributes?) {
-        when (qName) {
-            AtomKeyword.Atom.value -> isInsideChannel = true
-            AtomKeyword.Entry.Item.value -> isInsideItem = true
+    override fun build(): RssChannel {
+        channel()
 
-            AtomKeyword.Entry.Category.value -> {
-                if (isInsideItem) {
-                    val category = attributes?.getValue(AtomKeyword.Entry.Term.value)
-                    channelFactory.articleBuilder.addCategory(category)
+        return channelFactory.build()
+    }
+
+    private fun channel() {
+        withDocument(AtomKeyword.Atom.value) { node ->
+            when (node.tagName()) {
+                AtomKeyword.Icon.value -> channelFactory.channelImageBuilder.url(node.text())
+                AtomKeyword.Updated.value -> channelFactory.channelBuilder.lastBuildDate(node.text())
+                AtomKeyword.Subtitle.value -> channelFactory.channelBuilder.description(
+                    node.text().trim()
+                )
+
+                AtomKeyword.Title.value -> channelFactory.channelBuilder.title(
+                    node.wholeText().trim()
+                )
+
+                AtomKeyword.Link.value -> withLink(node) { href ->
+                    channelFactory.channelBuilder.link(href)
                 }
-            }
 
-            AtomKeyword.Link.value -> {
-                val href = attributes?.getValue(AtomKeyword.Link.Href.value)
-                val rel = attributes?.getValue(AtomKeyword.Link.Rel.value)
-                if (rel != AtomKeyword.Link.Edit.value && rel != AtomKeyword.Link.Self.value) {
-                    when {
-                        isInsideItem -> channelFactory.articleBuilder.link(href)
-                        else -> channelFactory.channelBuilder.link(href)
-                    }
+                AtomKeyword.Entry.Item.value -> {
+                    entry(node)
                 }
             }
         }
     }
 
-    fun endElement(qName: String?, text: String) {
-        when {
-            isInsideItem -> {
-                when (qName) {
-                    AtomKeyword.Entry.Published.value -> channelFactory.articleBuilder.pubDate(text)
-                    AtomKeyword.Updated.value -> channelFactory.articleBuilder.pubDateIfNull(text)
-                    AtomKeyword.Title.value -> channelFactory.articleBuilder.title(text)
-                    AtomKeyword.Entry.Author.value -> channelFactory.articleBuilder.author(text)
-                    AtomKeyword.Entry.Guid.value -> channelFactory.articleBuilder.guid(text)
-                    AtomKeyword.Entry.Content.value -> {
-                        channelFactory.articleBuilder.content(text)
-                        channelFactory.setImageFromContent(text)
-                    }
-                    AtomKeyword.Entry.Description.value -> {
-                        channelFactory.articleBuilder.description(text)
-                        channelFactory.setImageFromContent(text)
-                    }
-                    AtomKeyword.Entry.Category.value -> {
-                        if (isInsideItem) {
-                            if (text.isNotEmpty()) {
-                                channelFactory.articleBuilder.addCategory(text)
-                            }
-                        }
-                    }
-                    AtomKeyword.Entry.Item.value -> {
-                        channelFactory.buildArticle()
-                        isInsideItem = false
+    private fun entry(entry: Element) {
+        entry.children().forEach { node ->
+
+            when (node.tagName()) {
+                AtomKeyword.Link.value -> withLink(node) { href ->
+                    channelFactory.articleBuilder.link(href)
+                }
+
+                AtomKeyword.Entry.Published.value -> {
+                    channelFactory.articleBuilder.pubDate(node.text())
+                }
+
+                AtomKeyword.Updated.value -> channelFactory.articleBuilder.pubDateIfNull(node.text())
+                AtomKeyword.Title.value -> channelFactory.articleBuilder.title(
+                    node.wholeText().trim()
+                )
+
+                AtomKeyword.Entry.Author.Author.value -> {
+                    val name = node.children()
+                        .firstOrNull { it.tagName() == AtomKeyword.Entry.Author.Name.value }
+
+                    if (name != null) {
+                        channelFactory.articleBuilder.author(name.text().trim())
                     }
                 }
-            }
 
-            isInsideChannel -> {
-                when (qName) {
-                    AtomKeyword.Icon.value -> channelFactory.channelImageBuilder.url(text)
-                    AtomKeyword.Updated.value -> channelFactory.channelBuilder.lastBuildDate(text)
-                    AtomKeyword.Subtitle.value -> channelFactory.channelBuilder.description(text)
-                    AtomKeyword.Title.value -> channelFactory.channelBuilder.title(text)
-                    AtomKeyword.Atom.value -> isInsideChannel = false
+                AtomKeyword.Entry.Guid.value -> channelFactory.articleBuilder.guid(node.text())
+                AtomKeyword.Entry.Content.value -> {
+                    val text = node.wholeText()
+
+                    channelFactory.articleBuilder.content(text.trim())
+                    channelFactory.setImageFromContent(text)
+                }
+
+                AtomKeyword.Entry.Description.value -> {
+                    channelFactory.articleBuilder.description(node.wholeText().trim())
+                    channelFactory.setImageFromContent(node.wholeText())
+                }
+
+                AtomKeyword.Entry.Category.value -> {
+                    val text = node.attr(AtomKeyword.Entry.Term.value)
+                    if (text.isNotEmpty()) {
+                        channelFactory.articleBuilder.addCategory(text)
+                    }
                 }
             }
         }
+
+        channelFactory.buildArticle()
+    }
+
+    private fun withLink(element: Element, callback: (href: String) -> Unit) {
+        val href = element.attr(AtomKeyword.Link.Href.value)
+        val rel = element.attr(AtomKeyword.Link.Rel.value)
+        if (rel != AtomKeyword.Link.Edit.value && rel != AtomKeyword.Link.Self.value) {
+            callback(href)
+        }
+    }
+
+    private fun withDocument(selector: String, onElement: (element: Element) -> Unit) {
+        document.select(selector).first()?.children()?.forEach(onElement)
     }
 }
