@@ -1,6 +1,7 @@
 package com.jocmp.capy.accounts
 
 import com.jocmp.capy.AccountPreferences
+import com.jocmp.capy.UserAgentInterceptor
 import com.jocmp.feedbinclient.BasicAuthInterceptor
 import okhttp3.Cache
 import okhttp3.Credentials
@@ -19,6 +20,7 @@ internal object FeedbinOkHttpClient {
 
         return OkHttpClient.Builder()
             .addInterceptor(basicAuthInterceptor)
+            .addInterceptor(UserAgentInterceptor())
             .cache(
                 Cache(
                     directory = File(File(path), "http_cache"),
