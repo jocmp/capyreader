@@ -1,7 +1,9 @@
 package com.jocmp.capy.articles
 
 import com.jocmp.capy.Article
+import net.dankito.readability4j.Readability4J
 import org.json.JSONObject
+
 
 internal fun extractedTemplate(
     article: Article,
@@ -20,14 +22,17 @@ internal fun extractedTemplate(
         """.trimIndent()
     }
 
+    val readability4J = Readability4J(article.url.toString(), html)
+    val content = readability4J.parse().content
+
     return """
       <script>
         (() => {
-          let downloaded = ${JSONObject(mapOf("value" to html))};
+          let {html} = ${JSONObject(mapOf("html" to content))};
 
-          Mercury.parse("${article.url}", { html: downloaded.value }).then(({ content: html }) => {
-            $swapContentScript
-          });
+//          Mercury.parse("${article.url}", { html: downloaded.value }).then(({ content: html }) => {
+              $swapContentScript
+//          });
         })();
       </script>
     """.trimIndent()
@@ -40,5 +45,6 @@ const val swapContentScript = """
     extracted.innerHTML = html;
 
     let content = document.getElementById("article-body-content");
-    content.replaceWith(extracted);   
+    debugger;
+    content.replaceWith(extracted);
 """

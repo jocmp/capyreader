@@ -69,6 +69,7 @@ dependencies {
     implementation(libs.sqldelight.androidx.paging.extensions)
     implementation(libs.sqldelight.coroutines.extensions)
     implementation(project(":feedbinclient"))
+    implementation("net.dankito.readability4j:readability4j:1.0.8")
     implementation(project(":feedfinder"))
     implementation(project(":rssparser"))
     testImplementation(kotlin("test"))
