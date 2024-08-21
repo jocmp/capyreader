@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?><feed
+	xmlns="http://www.w3.org/2005/Atom"
+	xmlns:thr="http://purl.org/syndication/thread/1.0"
+	xml:lang="en-US"
+
+	xmlns:georss="http://www.georss.org/georss"
+	xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+	>
+	<title type="text">9to5Linux</title>
+	<subtitle type="text">Linux news, reviews, tutorials, and more</subtitle>
+
+	<updated>2024-08-21T18:33:48Z</updated>
+
+	<link rel="alternate" type="text/html" href="https://9to5linux.com/" />
+	<id>https://9to5linux.com/feed/atom</id>
+	<link rel="self" type="application/atom+xml" href="https://9to5linux.com/feed/atom" />
+
+
+<icon>https://i0.wp.com/9to5linux.com/wp-content/uploads/2021/04/cropped-9to5linux-logo-mini-copy.png?fit=32%2C32&#038;ssl=1</icon>
+	<entry>
+		<author>
+			<name>Marius Nestor</name>
+							<uri>https://9to5linux.com</uri>
+						</author>
+
+		<title type="html"><![CDATA[Fwupd 1.9.24 Firmware Updater Adds Support for Capsule-on-Disk for Dell Systems]]></title>
+		<link rel="alternate" type="text/html" href="https://9to5linux.com/fwupd-1-9-24-adds-support-for-capsule-on-disk-for-dell-systems" />
+
+		<id>https://9to5linux.com/?p=23839</id>
+		<updated>2024-08-21T18:33:48Z</updated>
+		<published>2024-08-21T18:13:37Z</published>
+		<category scheme="https://9to5linux.com/" term="App" /><category scheme="https://9to5linux.com/" term="News" /><category scheme="https://9to5linux.com/" term="firmware update" /><category scheme="https://9to5linux.com/" term="firmware upgrade" /><category scheme="https://9to5linux.com/" term="fwupd" /><category scheme="https://9to5linux.com/" term="Fwupd 1.9.24" /><category scheme="https://9to5linux.com/" term="Linux firmware" />
+		<summary type="html"><![CDATA[<p>fwupd 1.9.24 Linux firmware updater is now available for download with support for capsule-on-disk for Dell systems, support for more MediaTek scaler devices, support for Parade USB hubs and other changes.</p>
+<p>The post <a href="https://9to5linux.com/fwupd-1-9-24-adds-support-for-capsule-on-disk-for-dell-systems">Fwupd 1.9.24 Firmware Updater Adds Support for Capsule-on-Disk for Dell Systems</a> appeared first on <a href="https://9to5linux.com">9to5Linux</a> - do not reproduce this article without permission. This RSS feed is intended for readers, not scrapers.</p>
+]]></summary>
+
+
+					<link rel="replies" type="text/html" href="https://9to5linux.com/fwupd-1-9-24-adds-support-for-capsule-on-disk-for-dell-systems#comments" thr:count="0" />
+			<link rel="replies" type="application/atom+xml" href="https://9to5linux.com/fwupd-1-9-24-adds-support-for-capsule-on-disk-for-dell-systems/feed/atom" thr:count="0" />
+			<thr:total>0</thr:total>
+			</entry>
+		<entry>
+		<author>
+			<name>Marius Nestor</name>
+							<uri>https://9to5linux.com</uri>
+						</author>
+
+		<title type="html"><![CDATA[NVIDIA 560 Linux Driver Released with Open GPU Kernel Modules by Default]]></title>
+		<link rel="alternate" type="text/html" href="https://9to5linux.com/nvidia-560-linux-driver-released-with-open-gpu-kernel-modules-by-default" />
+
+		<id>https://9to5linux.com/?p=23829</id>
+		<updated>2024-08-21T14:41:48Z</updated>
+		<published>2024-08-21T14:14:37Z</published>
+		<category scheme="https://9to5linux.com/" term="Driver" /><category scheme="https://9to5linux.com/" term="News" /><category scheme="https://9to5linux.com/" term="graphics driver" /><category scheme="https://9to5linux.com/" term="Nvidia" /><category scheme="https://9to5linux.com/" term="NVIDIA 560" /><category scheme="https://9to5linux.com/" term="video driver" />
+		<summary type="html"><![CDATA[<p>NVIDIA 560.35.03 Linux graphics driver is now available with open GPU kernel modules enabled by default, as well as numerous other new features and improvements. Here's what's new!</p>
+<p>The post <a href="https://9to5linux.com/nvidia-560-linux-driver-released-with-open-gpu-kernel-modules-by-default">NVIDIA 560 Linux Driver Released with Open GPU Kernel Modules by Default</a> appeared first on <a href="https://9to5linux.com">9to5Linux</a> - do not reproduce this article without permission. This RSS feed is intended for readers, not scrapers.</p>
+]]></summary>
+
+
+					<link rel="replies" type="text/html" href="https://9to5linux.com/nvidia-560-linux-driver-released-with-open-gpu-kernel-modules-by-default#comments" thr:count="2" />
+			<link rel="replies" type="application/atom+xml" href="https://9to5linux.com/nvidia-560-linux-driver-released-with-open-gpu-kernel-modules-by-default/feed/atom" thr:count="2" />
+			<thr:total>2</thr:total>
+			</entry>
+		<entry>
+		<author>
+			<name>Marius Nestor</name>
+							<uri>https://9to5linux.com</uri>
+						</author>
+
+		<title type="html"><![CDATA[Serpent OS Gears Up for Alpha Release, Enables Framework 13 and Flathub Support]]></title>
+		<link rel="alternate" type="text/html" href="https://9to5linux.com/serpent-os-gears-up-for-alpha-release-enables-framework-13-and-flathub-support" />
+
+		<id>https://9to5linux.com/?p=23820</id>
+		<updated>2024-08-19T10:00:24Z</updated>
+		<published>2024-08-19T10:00:20Z</published>
+		<category scheme="https://9to5linux.com/" term="Distro" /><category scheme="https://9to5linux.com/" term="News" /><category scheme="https://9to5linux.com/" term="Framework 13" /><category scheme="https://9to5linux.com/" term="independent distro" /><category scheme="https://9to5linux.com/" term="Linux distribution" /><category scheme="https://9to5linux.com/" term="Serpent OS" />
+		<summary type="html"><![CDATA[<p>Serpent OS gears up for its first alpha release with Framework 13 laptop, Flathub support by default, GUI installer, improved package manager, and much more.</p>
+<p>The post <a href="https://9to5linux.com/serpent-os-gears-up-for-alpha-release-enables-framework-13-and-flathub-support">Serpent OS Gears Up for Alpha Release, Enables Framework 13 and Flathub Support</a> appeared first on <a href="https://9to5linux.com">9to5Linux</a> - do not reproduce this article without permission. This RSS feed is intended for readers, not scrapers.</p>
+]]></summary>
+
+
+					<link rel="replies" type="text/html" href="https://9to5linux.com/serpent-os-gears-up-for-alpha-release-enables-framework-13-and-flathub-support#comments" thr:count="3" />
+			<link rel="replies" type="application/atom+xml" href="https://9to5linux.com/serpent-os-gears-up-for-alpha-release-enables-framework-13-and-flathub-support/feed/atom" thr:count="3" />
+			<thr:total>3</thr:total>
+			</entry>
+		<entry>
+		<author>
+			<name>Marius Nestor</name>
+							<uri>https://9to5linux.com</uri>
+						</author>
+
+		<title type="html"><![CDATA[9to5Linux Weekly Roundup: August 18th, 2024]]></title>
+		<link rel="alternate" type="text/html" href="https://9to5linux.com/9to5linux-weekly-roundup-august-18th-2024" />
+
+		<id>https://9to5linux.com/?p=23794</id>
+		<updated>2024-08-19T07:45:51Z</updated>
+		<published>2024-08-19T07:45:48Z</published>
+		<category scheme="https://9to5linux.com/" term="Weekly Roundup" /><category scheme="https://9to5linux.com/" term="9to5Linux roundup" /><category scheme="https://9to5linux.com/" term="Linux roundup" /><category scheme="https://9to5linux.com/" term="weekly roundup" />
+		<summary type="html"><![CDATA[<p>The 9to5Linux Weekly Roundup for August 18th, 2024, brings news about a new Arch Linux installer, Tails 6.6, Mesa 24.2, CachyOS adding support for the COSMIC desktop, Gentoo Linux dropping IA-64 (Itanium) support, as well as all the latest distro and software releases.</p>
+<p>The post <a href="https://9to5linux.com/9to5linux-weekly-roundup-august-18th-2024">9to5Linux Weekly Roundup: August 18th, 2024</a> appeared first on <a href="https://9to5linux.com">9to5Linux</a> - do not reproduce this article without permission. This RSS feed is intended for readers, not scrapers.</p>
+]]></summary>
+
+
+					<link rel="replies" type="text/html" href="https://9to5linux.com/9to5linux-weekly-roundup-august-18th-2024#comments" thr:count="0" />
+			<link rel="replies" type="application/atom+xml" href="https://9to5linux.com/9to5linux-weekly-roundup-august-18th-2024/feed/atom" thr:count="0" />
+			<thr:total>0</thr:total>
+			</entry>
+		<entry>
+		<author>
+			<name>Marius Nestor</name>
+							<uri>https://9to5linux.com</uri>
+						</author>
+
+		<title type="html"><![CDATA[CachyOS August 2024 Release Adds Support for the COSMIC Desktop Environment]]></title>
+		<link rel="alternate" type="text/html" href="https://9to5linux.com/cachyos-august-2024-release-adds-support-for-the-cosmic-desktop-environment" />
+
+		<id>https://9to5linux.com/?p=23811</id>
+		<updated>2024-08-18T14:41:49Z</updated>
+		<published>2024-08-18T14:32:11Z</published>
+		<category scheme="https://9to5linux.com/" term="Distro" /><category scheme="https://9to5linux.com/" term="News" /><category scheme="https://9to5linux.com/" term="Arch Linux" /><category scheme="https://9to5linux.com/" term="CachyOS" /><category scheme="https://9to5linux.com/" term="COSMIC desktop" /><category scheme="https://9to5linux.com/" term="Linux distribution" />
+		<summary type="html"><![CDATA[<p>CachyOS August 2024 release is now available for download with support for the COSMIC Alpha desktop environment and NVIDIA 560 video driver. Here's what else is new!</p>
+<p>The post <a href="https://9to5linux.com/cachyos-august-2024-release-adds-support-for-the-cosmic-desktop-environment">CachyOS August 2024 Release Adds Support for the COSMIC Desktop Environment</a> appeared first on <a href="https://9to5linux.com">9to5Linux</a> - do not reproduce this article without permission. This RSS feed is intended for readers, not scrapers.</p>
+]]></summary>
+
+
+					<link rel="replies" type="text/html" href="https://9to5linux.com/cachyos-august-2024-release-adds-support-for-the-cosmic-desktop-environment#comments" thr:count="0" />
+			<link rel="replies" type="application/atom+xml" href="https://9to5linux.com/cachyos-august-2024-release-adds-support-for-the-cosmic-desktop-environment/feed/atom" thr:count="0" />
+			<thr:total>0</thr:total>
+			</entry>
+		<entry>
+		<author>
+			<name>Marius Nestor</name>
+							<uri>https://9to5linux.com</uri>
+						</author>
+
+		<title type="html"><![CDATA[Archinstall 2.8.2 Arch Linux Installer Speeds Up Mirror Loading and Download]]></title>
+		<link rel="alternate" type="text/html" href="https://9to5linux.com/archinstall-2-8-2-arch-linux-installer-speeds-up-mirror-loading-and-download" />
+
+		<id>https://9to5linux.com/?p=23807</id>
+		<updated>2024-08-17T14:33:59Z</updated>
+		<published>2024-08-17T08:47:14Z</published>
+		<category scheme="https://9to5linux.com/" term="App" /><category scheme="https://9to5linux.com/" term="News" /><category scheme="https://9to5linux.com/" term="arch installer" /><category scheme="https://9to5linux.com/" term="Arch Linux" /><category scheme="https://9to5linux.com/" term="Arch Linux installer" /><category scheme="https://9to5linux.com/" term="archinstall" /><category scheme="https://9to5linux.com/" term="Archinstall 2.8.2" />
+		<summary type="html"><![CDATA[<p>Archinstall 2.8.2 menu-based installer for the Arch Linux distribution is now available with various improvements and bug fixes. Work also continues on the new Curses-based implementation.</p>
+<p>The post <a href="https://9to5linux.com/archinstall-2-8-2-arch-linux-installer-speeds-up-mirror-loading-and-download">Archinstall 2.8.2 Arch Linux Installer Speeds Up Mirror Loading and Download</a> appeared first on <a href="https://9to5linux.com">9to5Linux</a> - do not reproduce this article without permission. This RSS feed is intended for readers, not scrapers.</p>
+]]></summary>
+
+
+					<link rel="replies" type="text/html" href="https://9to5linux.com/archinstall-2-8-2-arch-linux-installer-speeds-up-mirror-loading-and-download#comments" thr:count="0" />
+			<link rel="replies" type="application/atom+xml" href="https://9to5linux.com/archinstall-2-8-2-arch-linux-installer-speeds-up-mirror-loading-and-download/feed/atom" thr:count="0" />
+			<thr:total>0</thr:total>
+			</entry>
+		<entry>
+		<author>
+			<name>Marius Nestor</name>
+							<uri>https://9to5linux.com</uri>
+						</author>
+
+		<title type="html"><![CDATA[Mesa 24.2 Open-Source Graphics Stack Defaults to New Shader Cache]]></title>
+		<link rel="alternate" type="text/html" href="https://9to5linux.com/mesa-24-2-open-source-graphics-stack-defaults-to-new-shader-cache" />
+
+		<id>https://9to5linux.com/?p=23803</id>
+		<updated>2024-08-16T18:06:29Z</updated>
+		<published>2024-08-16T18:06:25Z</published>
+		<category scheme="https://9to5linux.com/" term="Driver" /><category scheme="https://9to5linux.com/" term="News" /><category scheme="https://9to5linux.com/" term="graphics driver" /><category scheme="https://9to5linux.com/" term="Mesa" /><category scheme="https://9to5linux.com/" term="Mesa 24.2" /><category scheme="https://9to5linux.com/" term="video driver" />
+		<summary type="html"><![CDATA[<p>Mesa 24.2 open-source graphics stack is now available with support for new Vulkan extensions, a new shader cache implementation, and improvements for several video games. Here's what's new!</p>
+<p>The post <a href="https://9to5linux.com/mesa-24-2-open-source-graphics-stack-defaults-to-new-shader-cache">Mesa 24.2 Open-Source Graphics Stack Defaults to New Shader Cache</a> appeared first on <a href="https://9to5linux.com">9to5Linux</a> - do not reproduce this article without permission. This RSS feed is intended for readers, not scrapers.</p>
+]]></summary>
+
+
+					<link rel="replies" type="text/html" href="https://9to5linux.com/mesa-24-2-open-source-graphics-stack-defaults-to-new-shader-cache#comments" thr:count="0" />
+			<link rel="replies" type="application/atom+xml" href="https://9to5linux.com/mesa-24-2-open-source-graphics-stack-defaults-to-new-shader-cache/feed/atom" thr:count="0" />
+			<thr:total>0</thr:total>
+			</entry>
+		<entry>
+		<author>
+			<name>Marius Nestor</name>
+							<uri>https://9to5linux.com</uri>
+						</author>
+
+		<title type="html"><![CDATA[Tails 6.6 Improves Persistent Storage and Adds Support for Newer Hardware]]></title>
+		<link rel="alternate" type="text/html" href="https://9to5linux.com/tails-6-6-improves-persistent-storage-and-adds-support-for-newer-hardware" />
+
+		<id>https://9to5linux.com/?p=23797</id>
+		<updated>2024-08-16T15:46:25Z</updated>
+		<published>2024-08-16T15:46:20Z</published>
+		<category scheme="https://9to5linux.com/" term="Distro" /><category scheme="https://9to5linux.com/" term="News" /><category scheme="https://9to5linux.com/" term="anonymous" /><category scheme="https://9to5linux.com/" term="incognito" /><category scheme="https://9to5linux.com/" term="Linux distribution" /><category scheme="https://9to5linux.com/" term="Tails" /><category scheme="https://9to5linux.com/" term="Tails 6.6" />
+		<summary type="html"><![CDATA[<p>Tails 6.6 anonymous Linux OS is now available for download with improved support for newer hardware, improved Persistent Storage, and more. Here's what's new!</p>
+<p>The post <a href="https://9to5linux.com/tails-6-6-improves-persistent-storage-and-adds-support-for-newer-hardware">Tails 6.6 Improves Persistent Storage and Adds Support for Newer Hardware</a> appeared first on <a href="https://9to5linux.com">9to5Linux</a> - do not reproduce this article without permission. This RSS feed is intended for readers, not scrapers.</p>
+]]></summary>
+
+
+					<link rel="replies" type="text/html" href="https://9to5linux.com/tails-6-6-improves-persistent-storage-and-adds-support-for-newer-hardware#comments" thr:count="0" />
+			<link rel="replies" type="application/atom+xml" href="https://9to5linux.com/tails-6-6-improves-persistent-storage-and-adds-support-for-newer-hardware/feed/atom" thr:count="0" />
+			<thr:total>0</thr:total>
+			</entry>
+		<entry>
+		<author>
+			<name>Marius Nestor</name>
+							<uri>https://9to5linux.com</uri>
+						</author>
+
+		<title type="html"><![CDATA[9to5Linux Weekly Roundup: August 11th, 2024]]></title>
+		<link rel="alternate" type="text/html" href="https://9to5linux.com/9to5linux-weekly-roundup-august-11th-2024" />
+
+		<id>https://9to5linux.com/?p=23786</id>
+		<updated>2024-08-12T05:53:44Z</updated>
+		<published>2024-08-12T05:53:42Z</published>
+		<category scheme="https://9to5linux.com/" term="News" />
+		<summary type="html"><![CDATA[<p>The 9to5Linux Weekly Roundup for August 11th, 2024, brings news about Firefox 129, COSMIC Alpha, GNOME 46.4, KDE Plasma 6.1.4, 3-in-1 convertible Linux laptop, KDE Frameworks 6.5, Firefox 130 beta, HandBrake 1.8.2, Ubuntu's new kernel policy, as well as all the latest distro and software releases.</p>
+<p>The post <a href="https://9to5linux.com/9to5linux-weekly-roundup-august-11th-2024">9to5Linux Weekly Roundup: August 11th, 2024</a> appeared first on <a href="https://9to5linux.com">9to5Linux</a> - do not reproduce this article without permission. This RSS feed is intended for readers, not scrapers.</p>
+]]></summary>
+
+
+					<link rel="replies" type="text/html" href="https://9to5linux.com/9to5linux-weekly-roundup-august-11th-2024#comments" thr:count="0" />
+			<link rel="replies" type="application/atom+xml" href="https://9to5linux.com/9to5linux-weekly-roundup-august-11th-2024/feed/atom" thr:count="0" />
+			<thr:total>0</thr:total>
+			</entry>
+		<entry>
+		<author>
+			<name>Marius Nestor</name>
+							<uri>https://9to5linux.com</uri>
+						</author>
+
+		<title type="html"><![CDATA[Future Ubuntu Releases Will Ship with the Latest and Greatest Linux Kernel]]></title>
+		<link rel="alternate" type="text/html" href="https://9to5linux.com/future-ubuntu-releases-will-ship-with-the-latest-and-greatest-linux-kernel" />
+
+		<id>https://9to5linux.com/?p=23781</id>
+		<updated>2024-08-12T02:53:37Z</updated>
+		<published>2024-08-12T02:53:35Z</published>
+		<category scheme="https://9to5linux.com/" term="Distro" /><category scheme="https://9to5linux.com/" term="News" /><category scheme="https://9to5linux.com/" term="Linux kernel" /><category scheme="https://9to5linux.com/" term="Linux kernel 6.11" /><category scheme="https://9to5linux.com/" term="Ubuntu" /><category scheme="https://9to5linux.com/" term="Ubuntu 24.10" />
+		<summary type="html"><![CDATA[<p>Canonical announced that future Ubuntu releases will ship with the latest and greatest upstream Linux kernel version. Here's what you need to know!</p>
+<p>The post <a href="https://9to5linux.com/future-ubuntu-releases-will-ship-with-the-latest-and-greatest-linux-kernel">Future Ubuntu Releases Will Ship with the Latest and Greatest Linux Kernel</a> appeared first on <a href="https://9to5linux.com">9to5Linux</a> - do not reproduce this article without permission. This RSS feed is intended for readers, not scrapers.</p>
+]]></summary>
+
+
+					<link rel="replies" type="text/html" href="https://9to5linux.com/future-ubuntu-releases-will-ship-with-the-latest-and-greatest-linux-kernel#comments" thr:count="1" />
+			<link rel="replies" type="application/atom+xml" href="https://9to5linux.com/future-ubuntu-releases-will-ship-with-the-latest-and-greatest-linux-kernel/feed/atom" thr:count="1" />
+			<thr:total>1</thr:total>
+			</entry>
+	</feed>

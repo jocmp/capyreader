@@ -94,12 +94,21 @@ internal class AtomFeedHandler(val document: Document) : FeedHandler {
     private fun withLink(element: Element, callback: (href: String) -> Unit) {
         val href = element.attr(AtomKeyword.Link.Href.value)
         val rel = element.attr(AtomKeyword.Link.Rel.value)
-        if (rel != AtomKeyword.Link.Edit.value && rel != AtomKeyword.Link.Self.value) {
+
+        if (!filteredRelations.contains(rel)) {
             callback(href)
         }
     }
 
     private fun withDocument(selector: String, onElement: (element: Element) -> Unit) {
         document.select(selector).first()?.children()?.forEach(onElement)
+    }
+
+    companion object {
+        val filteredRelations = listOf(
+            AtomKeyword.Link.Edit.value,
+            AtomKeyword.Link.Self.value,
+            AtomKeyword.Link.Replies.value,
+        )
     }
 }

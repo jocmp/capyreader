@@ -9,6 +9,7 @@ internal sealed class AtomKeyword(val value: String) {
         data object Rel : AtomKeyword("rel")
         data object Edit : AtomKeyword("edit")
         data object Self : AtomKeyword("self")
+        data object Replies : AtomKeyword("replies")
     }
 
     data object Subtitle : AtomKeyword("subtitle")
