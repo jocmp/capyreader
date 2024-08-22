@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns="http://purl.org/rss/1.0/"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+xmlns:taxo="http://purl.org/rss/1.0/modules/taxonomy/"
+xmlns:admin="http://webns.net/mvcb/"
+xmlns:syn="http://purl.org/rss/1.0/modules/syndication/"
+>
+
+<channel rdf:about="https://distrowatch.com/">
+<title>DistroWatch.com: DistroWatch Weekly</title>
+<link>https://distrowatch.com/</link>
+<description>Latest news on Linux distributions and BSD projects</description>
+
+<dc:language>EN</dc:language>
+<dc:rights>Copyright 2001-2016, DistroWatch.com. All Rights Reserved.</dc:rights>
+
+<dc:date>2024-08-19T00:03:40-00:00</dc:date>
+<dc:publisher>DistroWatch.com</dc:publisher>
+<dc:creator>distro@distrowatch.com</dc:creator>
+<dc:subject>Linux/BSD</dc:subject>
+<syn:updatePeriod>hourly</syn:updatePeriod>
+<syn:updateFrequency>1</syn:updateFrequency>
+<syn:updateBase>2013-01-01T00:00+00:00</syn:updateBase>
+
+<items>
+ <rdf:Seq>
+<rdf:li rdf:resource="https://distrowatch.com/weekly.php?issue=20240819"></rdf:li>
+<rdf:li rdf:resource="https://distrowatch.com/weekly.php?issue=20240812"></rdf:li>
+<rdf:li rdf:resource="https://distrowatch.com/weekly.php?issue=20240805"></rdf:li>
+<rdf:li rdf:resource="https://distrowatch.com/weekly.php?issue=20240729"></rdf:li>
+<rdf:li rdf:resource="https://distrowatch.com/weekly.php?issue=20240722"></rdf:li>
+<rdf:li rdf:resource="https://distrowatch.com/weekly.php?issue=20240715"></rdf:li>
+<rdf:li rdf:resource="https://distrowatch.com/weekly.php?issue=20240708"></rdf:li>
+<rdf:li rdf:resource="https://distrowatch.com/weekly.php?issue=20240701"></rdf:li>
+<rdf:li rdf:resource="https://distrowatch.com/weekly.php?issue=20240624"></rdf:li>
+<rdf:li rdf:resource="https://distrowatch.com/weekly.php?issue=20240617"></rdf:li>
+ </rdf:Seq>
+</items>
+<image rdf:resource="https://distrowatch.com/images/other/dw.png">
+</image>
+<textinput rdf:resource="https://distrowatch.com/table.php">
+</textinput>
+</channel>
+
+<item rdf:about="https://distrowatch.com/12218">
+<title>DistroWatch Weekly, Issue 1084</title>
+<link>https://distrowatch.com/weekly.php?issue=20240819</link>
+<description>The DistroWatch Weekly news feed is brought to you by &lt;a href="https://www.tuxedocomputers.com/"&gt;TUXEDO COMPUTERS&lt;/a&gt;.  This week in DistroWatch Weekly: &lt;br&gt;
+Review: Liya 2.0&lt;br&gt;
+News: Haiku introduces performance improvements, Redcore merges major upgrade, Gentoo dropping IA-64 support&lt;br&gt;
+Questions and answers: Dual boot with encryption&lt;br&gt;
+Released last week: Tails 6.6, RebeccaBlackOS 2024-08-12, deepin 23&lt;br&gt;
+Torrent corner: deepin, Endless OS, SparkyLinux, Tails&lt;br&gt;
+Upcoming releases: FreeBSD 13.4-RC1&lt;br&gt;
+Opinion poll: Do you encrypt your root filesystem or home directories?&lt;br&gt;
+New distributions: BredOS, Red OS&lt;br&gt;
+Reader comments Read more in this week's issue of DistroWatch Weekly....</description>
+<dc:date>2024-08-19T00:03:40+00:00</dc:date>
+<slash:section>weekly</slash:section>
+</item>
+
+<item rdf:about="https://distrowatch.com/12213">
+<title>DistroWatch Weekly, Issue 1083</title>
+<link>https://distrowatch.com/weekly.php?issue=20240812</link>
+<description>The DistroWatch Weekly news feed is brought to you by &lt;a href="https://www.tuxedocomputers.com/"&gt;TUXEDO COMPUTERS&lt;/a&gt;.  This week in DistroWatch Weekly: &lt;br&gt;
+Review: TrueNAS 24.04.2 "SCALE"&lt;br&gt;
+News: Redox OS introduces a new web server, PipeWire exposes battery drain on Linux, Canonical changes its kernel release policy&lt;br&gt;
+Questions and answers: Linux distributions for smartphones&lt;br&gt;
+Released last week: IPFire 2.29 Core 187&lt;br&gt;
+Torrent corner: GhostBSD&lt;br&gt;
+Upcoming releases: Ubuntu 24.04.1, FreeBSD 13.4-BETA3&lt;br&gt;
+Opinion poll: Type of smartphone&lt;br&gt;
+New distributions: Quieux Linux&lt;br&gt;
+Reader comments Read more in this week's issue of DistroWatch Weekly....</description>
+<dc:date>2024-08-12T00:20:18+00:00</dc:date>
+<slash:section>weekly</slash:section>
+</item>
+
+<item rdf:about="https://distrowatch.com/12210">
+<title>DistroWatch Weekly, Issue 1082</title>
+<link>https://distrowatch.com/weekly.php?issue=20240805</link>
+<description>The DistroWatch Weekly news feed is brought to you by &lt;a href="https://www.tuxedocomputers.com/"&gt;TUXEDO COMPUTERS&lt;/a&gt;.  This week in DistroWatch Weekly: &lt;br&gt;
+Review: Linux Mint 22&lt;br&gt;
+News: openSUSE publishes new Tumbleweed and Aeon Desktop updates, Debian introduces Tiny QA Tasks, Manjaro experimenting with immutable images, Funtoo discontinued&lt;br&gt;
+Tips and tricks: Making snapshots of UFS on FreeBSD&lt;br&gt;
+Released last week: Emmabuntus DE5-1.02, Super Grub2 Disk 2.06s4&lt;br&gt;
+Torrent corner: Emmabuntus, TUXEDO OS&lt;br&gt;
+Upcoming releases: Pop!_OS 24.04 Beta1, FreeBSD 13.4-BETA2&lt;br&gt;
+Opinion poll: The Linux Mint main edition or Linux Mint Debian Edition?&lt;br&gt;
+New distributions: Sleeper OS, Bazzite&lt;br&gt;
+Reader comments Read more in this week's issue of DistroWatch Weekly....</description>
+<dc:date>2024-08-05T00:12:44+00:00</dc:date>
+<slash:section>weekly</slash:section>
+</item>
+
+<item rdf:about="https://distrowatch.com/12207">
+<title>DistroWatch Weekly, Issue 1081</title>
+<link>https://distrowatch.com/weekly.php?issue=20240729</link>
+<description>The DistroWatch Weekly news feed is brought to you by &lt;a href="https://www.tuxedocomputers.com/"&gt;TUXEDO COMPUTERS&lt;/a&gt;.  This week in DistroWatch Weekly: &lt;br&gt;
+Review: SysLinuxOS 12.4&lt;br&gt;
+News: OpenBSD introduces hardware acceleration for video decoding, Slackware changes kernel naming format, Linux Mint publishes upgrade instructions&lt;br&gt;
+Questions and answers: Can problems like CrowdStrike bring down Linux systems?&lt;br&gt;
+Released last week: Linux Mint 22, MidnightBSD 3.2.0, Murena 2.2&lt;br&gt;
+Torrent corner: KDE neon, Linux Mint&lt;br&gt;
+Upcoming releases: FreeBSD 13.4-BETA1&lt;br&gt;
+Opinion poll: Does your computer receive automatic updates?&lt;br&gt;
+Site news: Donations and sponsors&lt;br&gt;
+New distributions: Chimbalix&lt;br&gt;
+Reader comments Read more in this week's issue of DistroWatch Weekly....</description>
+<dc:date>2024-07-29T00:06:42+00:00</dc:date>
+<slash:section>weekly</slash:section>
+</item>
+
+<item rdf:about="https://distrowatch.com/12200">
+<title>DistroWatch Weekly, Issue 1080</title>
+<link>https://distrowatch.com/weekly.php?issue=20240722</link>
+<description>The DistroWatch Weekly news feed is brought to you by &lt;a href="https://www.tuxedocomputers.com/"&gt;TUXEDO COMPUTERS&lt;/a&gt;.  This week in DistroWatch Weekly: &lt;br&gt;
+Review: Andronix - Running Linux distributions on an Android phone&lt;br&gt;
+News: Solus dropping AppArmor and Snap support, openSUSE's Aeon Desktop gaining full disk encryption, SUSE gaining ground in the enterprise market while asking openSUSE to rebrand&lt;br&gt;
+Tips and tricks: Port knocking and other ways to protect OpenSSH&lt;br&gt;
+Released last week: NomadBSD 141R, RELIANOID 7.3, Nobara Project 40, OpenMandriva 24.07 "ROME"&lt;br&gt;
+Torrent corner: KDE neon, SparkyLinux, Tails&lt;br&gt;
+Opinion poll: Running the OpenSSH service&lt;br&gt;
+Reader comments Read more in this week's issue of DistroWatch Weekly....</description>
+<dc:date>2024-07-22T00:10:57+00:00</dc:date>
+<slash:section>weekly</slash:section>
+</item>
+
+<item rdf:about="https://distrowatch.com/12195">
+<title>DistroWatch Weekly, Issue 1079</title>
+<link>https://distrowatch.com/weekly.php?issue=20240715</link>
+<description>The DistroWatch Weekly news feed is brought to you by &lt;a href="https://www.tuxedocomputers.com/"&gt;TUXEDO COMPUTERS&lt;/a&gt;.  This week in DistroWatch Weekly: &lt;br&gt;
+Review: Ubuntu Core 24&lt;br&gt;
+News: Fedora dropping X11 packages for Workstation, Red Hat looking to phase out GRUB, new OpenSSH vulnerability impacts Red Hat systems, UBports introduces new setup utility, FreeBSD speeding up its release cycle&lt;br&gt;
+Questions and answers: Hiding files on Linux&lt;br&gt;
+Released last week: NethSecurity 8.1, Clonezilla Live 3.1.3-11, TrueNAS 24.04.1.1 "SCALE", Qubes OS 4.2.2&lt;br&gt;
+Torrent corner: Qubes OS, TUXEDO OS&lt;br&gt;
+Opinion poll: Which immutable distribution is your favourite?&lt;br&gt;
+New distributions: AlterOS&lt;br&gt;
+Reader comments Read more in this week's issue of DistroWatch Weekly....</description>
+<dc:date>2024-07-15T00:16:28+00:00</dc:date>
+<slash:section>weekly</slash:section>
+</item>
+
+<item rdf:about="https://distrowatch.com/12190">
+<title>DistroWatch Weekly, Issue 1078</title>
+<link>https://distrowatch.com/weekly.php?issue=20240708</link>
+<description>The DistroWatch Weekly news feed is brought to you by &lt;a href="https://www.tuxedocomputers.com/"&gt;TUXEDO COMPUTERS&lt;/a&gt;.  This week in DistroWatch Weekly: &lt;br&gt;
+Tips and tricks: Changing init software after a distribution has been installed&lt;br&gt;
+News: Peppermint OS unveils new Loaded edition, HardenedBSD updates ports, OpenSSH vulnerability patched&lt;br&gt;
+Questions and answers: Server machines running desktop environments&lt;br&gt;
+Released last week: Finnix 126&lt;br&gt;
+Torrent corner: Finnix, KDE neon, Raspberry Pi OS&lt;br&gt;
+Opinion poll: Migrating away from CentOS Linux 7&lt;br&gt;
+New distributions: OmegaLinux&lt;br&gt;
+Reader comments Read more in this week's issue of DistroWatch Weekly....</description>
+<dc:date>2024-07-08T00:06:35+00:00</dc:date>
+<slash:section>weekly</slash:section>
+</item>
+
+<item rdf:about="https://distrowatch.com/12186">
+<title>DistroWatch Weekly, Issue 1077</title>
+<link>https://distrowatch.com/weekly.php?issue=20240701</link>
+<description>The DistroWatch Weekly news feed is brought to you by &lt;a href="https://www.tuxedocomputers.com/"&gt;TUXEDO COMPUTERS&lt;/a&gt;.  This week in DistroWatch Weekly: &lt;br&gt;
+Review: The Unity desktop and Lomiri on Ubuntu Unity 24.04&lt;br&gt;
+News: Ubuntu plans to run Wayland on NVIDIA cards, openSUSE updates Leap Micro, Debian releases refreshed media, UBports gaining contact synchronisation,  FreeDOS celebrates its 30th anniversary&lt;br&gt;
+Questions and answers: Different distributions for different tasks&lt;br&gt;
+Released last week: EndeavourOS 2024.06.25&lt;br&gt;
+Torrent corner: Debian, Debian Edu, EndeavourOS, KDE neon, TUXEDO OS&lt;br&gt;
+Opinion poll: Do you have any uses for FreeDOS?&lt;br&gt;
+Reader comments Read more in this week's issue of DistroWatch Weekly....</description>
+<dc:date>2024-07-01T00:00:27+00:00</dc:date>
+<slash:section>weekly</slash:section>
+</item>
+
+<item rdf:about="https://distrowatch.com/12184">
+<title>DistroWatch Weekly, Issue 1076</title>
+<link>https://distrowatch.com/weekly.php?issue=20240624</link>
+<description>The DistroWatch Weekly news feed is brought to you by &lt;a href="https://www.tuxedocomputers.com/"&gt;TUXEDO COMPUTERS&lt;/a&gt;.  This week in DistroWatch Weekly: &lt;br&gt;
+Review: openSUSE 15.6 Leap&lt;br&gt;
+News: SUSE Liberty program to extend CentOS Linux support, openSUSE testing Leap Micro edition, SUSE Linux Enterprise receives 19 years of support&lt;br&gt;
+Questions and answers: Linux's unique and special features&lt;br&gt;
+Released last week: Tails 6.4, EasyOS 6.0, SUSE Linux Enterprise 15 SP6, SysLinuxOS 12.4, SKUDONET 7.1.0&lt;br&gt;
+Torrent corner: KDE neon, Tails&lt;br&gt;
+Opinion poll: What is your favourite branch of openSUSE?&lt;br&gt;
+Site news: Donations and sponsors&lt;br&gt;
+New distributions: Deblinux&lt;br&gt;
+Reader comments Read more in this week's issue of DistroWatch Weekly....</description>
+<dc:date>2024-06-24T00:25:27+00:00</dc:date>
+<slash:section>weekly</slash:section>
+</item>
+
+<item rdf:about="https://distrowatch.com/12177">
+<title>DistroWatch Weekly, Issue 1075</title>
+<link>https://distrowatch.com/weekly.php?issue=20240617</link>
+<description>The DistroWatch Weekly news feed is brought to you by &lt;a href="https://www.tuxedocomputers.com/"&gt;TUXEDO COMPUTERS&lt;/a&gt;.  This week in DistroWatch Weekly: &lt;br&gt;
+Review: Redox OS in 2024&lt;br&gt;
+News: AlmaLinux releases Raspberry Pi build, Canonical partners with DeepComputing to launch RISC-V laptop running Ubuntu, key new changes in systemd 256, Chromium OS to shift to Android foundation&lt;br&gt;
+Questions and answers: The BSDs, X11, and Wayland&lt;br&gt;
+Released last week: openSUSE 15.6, SELKS 10, postmarketOS 24.06&lt;br&gt;
+Torrent corner: Endless OS, KDE neon, openSUSE, SparkyLinux&lt;br&gt;
+Opinion poll: Have you tried Redox OS?&lt;br&gt;
+New distributions: ATZ Linux, FunOS, UBLinux&lt;br&gt;
+Reader comments Read more in this week's issue of DistroWatch Weekly....</description>
+<dc:date>2024-06-17T00:11:11+00:00</dc:date>
+<slash:section>weekly</slash:section>
+</item>
+
+<textinput rdf:about="https://distrowatch.com/table.php">
+<title>Search Distributions</title>
+<description>Search BSD/Linux distributions</description>
+<name>distribution</name>
+<link>https://distrowatch.com/table.php</link>
+</textinput>
+</rdf:RDF>

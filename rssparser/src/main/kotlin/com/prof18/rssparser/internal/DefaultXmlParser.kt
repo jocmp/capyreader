@@ -2,6 +2,7 @@ package com.prof18.rssparser.internal
 
 import com.prof18.rssparser.exception.RssParsingException
 import com.prof18.rssparser.internal.atom.AtomFeedHandler
+import com.prof18.rssparser.internal.rdf.RdfFeedHandler
 import com.prof18.rssparser.internal.rss.RssFeedHandler
 import com.prof18.rssparser.model.RssChannel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -28,7 +29,11 @@ internal class DefaultXmlParser(
                         }
 
                         AtomKeyword.Atom.value -> {
-                            AtomFeedHandler(document)
+                            AtomFeedHandler(node)
+                        }
+
+                        RdfKeyword.Rdf.value -> {
+                            RdfFeedHandler(node)
                         }
 
                         else -> null

@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<rdf:RDF
+ xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+ xmlns="http://purl.org/rss/1.0/"
+ xmlns:admin="http://webns.net/mvcb/"
+ xmlns:content="http://purl.org/rss/1.0/modules/content/"
+ xmlns:dc="http://purl.org/dc/elements/1.1/"
+ xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+ xmlns:syn="http://purl.org/rss/1.0/modules/syndication/"
+ xmlns:taxo="http://purl.org/rss/1.0/modules/taxonomy/"
+>
+
+<channel rdf:about="https://slashdot.org/">
+<title>Slashdot</title>
+<link>https://slashdot.org/</link>
+<description>News for nerds, stuff that matters</description>
+<dc:language>en-us</dc:language>
+<dc:rights>Copyright Slashdot Media. All Rights Reserved.</dc:rights>
+<dc:date>2024-08-22T21:44:07+00:00</dc:date>
+<dc:publisher>Slashdot Media</dc:publisher>
+<dc:creator>feedback@slashdot.org</dc:creator>
+<dc:subject>Technology</dc:subject>
+<syn:updateBase>1970-01-01T00:00+00:00</syn:updateBase>
+<syn:updateFrequency>1</syn:updateFrequency>
+<syn:updatePeriod>hourly</syn:updatePeriod>
+<items>
+ <rdf:Seq>
+  <rdf:li rdf:resource="https://tech.slashdot.org/story/24/08/22/2042250/google-play-will-no-longer-pay-to-discover-vulnerabilities-in-popular-android-apps?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://yro.slashdot.org/story/24/08/22/2028203/crypto-pig-butchering-scam-wrecks-kansas-bank-sends-ex-ceo-to-prison-for-24-years?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://it.slashdot.org/story/24/08/22/1829253/bug-in-apple-devices-crashes-ui-with-four-character-input?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://news.slashdot.org/story/24/08/22/187237/humans-to-push-further-into-wildlife-habitats-across-more-than-50-of-land-by-2070-study-says?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://apple.slashdot.org/story/24/08/22/1720209/apple-will-allow-eu-users-to-delete-safari-messages-and-app-store-apps?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://tech.slashdot.org/story/24/08/22/1648253/microsoft-will-try-the-data-scraping-windows-recall-feature-again-in-october?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://slashdot.org/story/24/08/22/1539228/agi-is-on-clients-radar-but-far-from-reality-says-gartner?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://slashdot.org/story/24/08/22/1510217/microsoft-engineers-pay-data-leaked-reveals-compensation-details?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://slashdot.org/story/24/08/22/1447234/peloton-to-start-charging-subscribers-with-used-equipment-95-activation-fee?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://apple.slashdot.org/story/24/08/22/148244/apple-is-still-standing-in-the-way-of-epics-app-store?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://slashdot.org/story/24/08/22/0152220/bezos-blue-origin-suffers-fiery-setback-building-new-rocket?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://entertainment.slashdot.org/story/24/08/22/123238/lionsgate-pulls-megalopolis-trailer-offline-due-to-made-up-critic-quotes?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://linux.slashdot.org/story/24/08/21/1958234/ryzen-9-9950x-performs-16-faster-on-intel-optimized-linux-distro?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://science.slashdot.org/story/24/08/22/0136248/second-human-to-receive-neuralink-brain-chip-uses-it-to-play-counter-strike-2?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://it.slashdot.org/story/24/08/21/2250229/top-us-oilfield-firm-halliburton-hit-by-cyberattack-source-says?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+ </rdf:Seq>
+</items>
+<image rdf:resource="https://a.fsdn.com/sd/topics/topicslashdot.gif" />
+<textinput rdf:resource="https://slashdot.org/search.pl" />
+</channel>
+<image rdf:about="https://a.fsdn.com/sd/topics/topicslashdot.gif">
+<title>Slashdot</title>
+<url>https://a.fsdn.com/sd/topics/topicslashdot.gif</url>
+<link>https://slashdot.org/</link>
+</image>
+<item rdf:about="https://tech.slashdot.org/story/24/08/22/2042250/google-play-will-no-longer-pay-to-discover-vulnerabilities-in-popular-android-apps?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Google Play Will No Longer Pay To Discover Vulnerabilities In Popular Android Apps</title>
+<link>https://tech.slashdot.org/story/24/08/22/2042250/google-play-will-no-longer-pay-to-discover-vulnerabilities-in-popular-android-apps?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>Android Authority's Mishaal Rahman reports: Security vulnerabilities are lurking in most of the apps you use on a day-to-day basis; there's just no way for most companies to preemptively fix every possible security issue because of human error, deadlines, lack of resources, and a multitude of other factors. That's why many organizations run bug bounty programs to get external help with fixing these issues. The Google Play Security Reward Program (GPSRP) is an example of a bug bounty program that paid security researchers to find vulnerabilities in popular Android apps, but it's being shut down later this month. Google announced the Google Play Security Reward Program back in October 2017 as a way to incentivize security searchers to find and, most importantly, responsibly disclose vulnerabilities in popular Android apps distributed through the Google Play Store. [...]
+ 
+The purpose of the Google Play Security Reward Program was simple: Google wanted to make the Play Store a more secure destination for Android apps. According to the company, vulnerability data they collected from the program was used to help create automated checks that scanned all apps available in Google Play for similar vulnerabilities. In 2019, Google said these automated checks helped more than 300,000 developers fix more than 1,000,000 apps on Google Play. Thus, the downstream effect of the GPSRP is that fewer vulnerable apps are distributed to Android users.
+ 
+However, Google has now decided to wind down the Google Play Security Reward Program. In an email to participating developers, such as Sean Pesce, the company announced that the GPSRP will end on August 31st. The reason Google gave is that the program has seen a decrease in the number of actionable vulnerabilities reported. The company credits this success to the "overall increase in the Android OS security posture and feature hardening efforts."&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Google+Play+Will+No+Longer+Pay+To+Discover+Vulnerabilities+In+Popular+Android+Apps%3A+https%3A%2F%2Ftech.slashdot.org%2Fstory%2F24%2F08%2F22%2F2042250%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Ftech.slashdot.org%2Fstory%2F24%2F08%2F22%2F2042250%2Fgoogle-play-will-no-longer-pay-to-discover-vulnerabilities-in-popular-android-apps%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://tech.slashdot.org/story/24/08/22/2042250/google-play-will-no-longer-pay-to-discover-vulnerabilities-in-popular-android-apps?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=23430704&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>BeauHD</dc:creator>
+<dc:date>2024-08-22T21:10:00+00:00</dc:date>
+<dc:subject>android</dc:subject>
+<slash:department>another-one-bites-the-dust</slash:department>
+<slash:section>technology</slash:section>
+<slash:comments>4</slash:comments>
+<slash:hit_parade>4,4,4,3,1,0,0</slash:hit_parade>
+</item>
+<item rdf:about="https://yro.slashdot.org/story/24/08/22/2028203/crypto-pig-butchering-scam-wrecks-kansas-bank-sends-ex-ceo-to-prison-for-24-years?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Crypto 'Pig Butchering' Scam Wrecks Kansas Bank, Sends Ex-CEO To Prison For 24 Years</title>
+<link>https://yro.slashdot.org/story/24/08/22/2028203/crypto-pig-butchering-scam-wrecks-kansas-bank-sends-ex-ceo-to-prison-for-24-years?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>An anonymous reader quotes a report from NBC News: The former CEO of a small Kansas bank was sentenced to more than 24 years in prison for looting the bank of $47 million -- which he sent to cryptocurrency wallets controlled by scammers who had duped him in a "pig butchering" scheme that appealed to his greed, federal prosecutors said. The massive embezzlement by ex-CEO Shan Hanes in a series of wire transfers over just eight weeks last year led to the collapse and FDIC takeover of Heartland Tri-State Bank in Elkhart, one of only five U.S. banks that failed in 2023. Hanes, 53, also swindled funds from a local church and investment club -- and a daughter's college savings account -- to transfer money, purportedly to buy cryptocurrency as the scammers insisted they needed more funds to unlock the supposed returns on his investments, according to records from U.S. District Court in Wichita, Kansas. But Hanes never realized any profit and lost all of the money he stole as a result of the scam. Judge John Broomes on Monday sentenced Hanes to 293 months in prison -- 29 months more than what prosecutors requested after he pleaded guilty in May to a single count of embezzlement by a bank officer. [...]
+ 
+[P]rosecutors and bank regulators said that Hanes, who has three daughters with his school teacher wife, began stealing after being targeted in a pig-butchering scheme in late 2022. That scheme was described in a court filing as "a scammer convincing a victim (a pig) to invest in supposedly legitimate virtual currency investment opportunities and then steals the victim's money -- butchering the pig." Hanes, who had served on the board of the American Bankers Association, and been chairman of the Kansas Bankers Association, in December 2022 began making transactions to buy cryptocurrency, which "appeared to be precipitated by communication with an unidentified co-conspirator on the electronic messaging app 'WhatsApp,'" prosecutors wrote in a court filing. "To date, the true identity of the co-conspirator, or conspirators, remain unknown," the filing notes. Hanes initially used personal funds to buy crypto, but in early 2023 he stole $40,000 from Elkhart Church of Christ and $10,000 from the Santa Fe Investment Club, according to prosecutors and a defense filing. He also used $60,000 taken from a daughter's college fund, and nearly $1 million in stock from the Elkhart Financial Corporation, his lawyer said in a filing.
+ 
+In May 2023, he began to make wire transfers from Heartland Tri-State Bank to accounts controlled by scammers, at first with a $5,000 transfer. Two weeks later, on May 30, Hanes wired $1.5 million and a day after that, he sent another transfer of the same amount the following day, filings show. Three days later he directed two wire transfers totaling $6.7 million to be sent by the bank to the crypto wallet, and a whopping $10 million less than two weeks later, and another $3.3 million days afterward. Hanes told bank employees to execute the wire transfers, and "made many misrepresentations to various people" to get access to the funds so they could be transferred, prosecutors wrote. Heartland Tri-State employees circumvented the bank's own wire policy and daily limits to approve Hanes' wire transfers, according to a report by the Office of the Inspector General of the Board of Governors of the Federal Reserve System.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Crypto+'Pig+Butchering'+Scam+Wrecks+Kansas+Bank%2C+Sends+Ex-CEO+To+Prison+For+24+Years%3A+https%3A%2F%2Fyro.slashdot.org%2Fstory%2F24%2F08%2F22%2F2028203%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fyro.slashdot.org%2Fstory%2F24%2F08%2F22%2F2028203%2Fcrypto-pig-butchering-scam-wrecks-kansas-bank-sends-ex-ceo-to-prison-for-24-years%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://yro.slashdot.org/story/24/08/22/2028203/crypto-pig-butchering-scam-wrecks-kansas-bank-sends-ex-ceo-to-prison-for-24-years?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=23430682&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>BeauHD</dc:creator>
+<dc:date>2024-08-22T20:30:00+00:00</dc:date>
+<dc:subject>crime</dc:subject>
+<slash:department>mass-embezzlement</slash:department>
+<slash:section>yro</slash:section>
+<slash:comments>21</slash:comments>
+<slash:hit_parade>21,20,20,19,10,1,0</slash:hit_parade>
+</item>
+<item rdf:about="https://it.slashdot.org/story/24/08/22/1829253/bug-in-apple-devices-crashes-ui-with-four-character-input?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Bug in Apple Devices Crashes UI With Four-Character Input</title>
+<link>https://it.slashdot.org/story/24/08/22/1829253/bug-in-apple-devices-crashes-ui-with-four-character-input?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>A newly discovered bug causes iPhones and iPads to briefly crash. All you need to trigger the bug are just four characters. From a report: On Wednesday, a security researcher found that typing "":: can cause the Apple mobile user interface, called Springboard, to crash. TechCrunch verified those characters do crash Springboard when typed into the Search bar in the Settings app, as well as if you swipe all the way to the right on your home screen and type them into the App Library search bar. 
+
+As others noted, all that's needed is actually "": and any other character. Triggering the bug briefly crashes Springboard, then reloads to your lock screen. In other tests, the bug flashed the screen black for a second. Researchers tell TechCrunch the bug does not appear to be a security issue. "It's not a security bug," said Ryan Stortz, an iOS security researcher who analyzed the bug. Patrick Wardle, who also researches iOS and founded security startup DoubleYou, agreed.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Bug+in+Apple+Devices+Crashes+UI+With+Four-Character+Input%3A+https%3A%2F%2Fit.slashdot.org%2Fstory%2F24%2F08%2F22%2F1829253%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fit.slashdot.org%2Fstory%2F24%2F08%2F22%2F1829253%2Fbug-in-apple-devices-crashes-ui-with-four-character-input%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://it.slashdot.org/story/24/08/22/1829253/bug-in-apple-devices-crashes-ui-with-four-character-input?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=23430572&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>msmash</dc:creator>
+<dc:date>2024-08-22T18:44:00+00:00</dc:date>
+<dc:subject>ios</dc:subject>
+<slash:department>PSA</slash:department>
+<slash:section>it</slash:section>
+<slash:comments>36</slash:comments>
+<slash:hit_parade>36,36,31,26,3,1,0</slash:hit_parade>
+</item>
+<item rdf:about="https://news.slashdot.org/story/24/08/22/187237/humans-to-push-further-into-wildlife-habitats-across-more-than-50-of-land-by-2070-study-says?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Humans To Push Further Into Wildlife Habitats Across More Than 50% of Land by 2070, Study Says</title>
+<link>https://news.slashdot.org/story/24/08/22/187237/humans-to-push-further-into-wildlife-habitats-across-more-than-50-of-land-by-2070-study-says?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>Over the next 50 years, people will push further into wildlife habitats across more than half the land on Earth, scientists have found, threatening biodiversity and increasing the chance of future pandemics. From a report: Humans have already transformed or occupied between 70% and 75% of the world's land. Research published in Science Advances on Wednesday found the overlap between human and wildlife populations is expected to increase across 57% of the Earth's land by 2070, driven by human population growth. 
+
+[...] As humans and animals share increasingly crowded landscapes, the bigger overlap could result in higher potential for disease transmission, biodiversity loss, animals being killed by people and wildlife eating livestock and crops, the researchers said. Biodiversity loss is the leading driver of infectious disease outbreaks. About 75% of emerging diseases in humans are zoonotic, meaning they can be passed from animals to humans, and many diseases concerning global health authorities -- including Covid-19, mpox, avian flu and swine flu -- likely originated in wildlife.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Humans+To+Push+Further+Into+Wildlife+Habitats+Across+More+Than+50%25+of+Land+by+2070%2C+Study+Says%3A+https%3A%2F%2Fnews.slashdot.org%2Fstory%2F24%2F08%2F22%2F187237%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fnews.slashdot.org%2Fstory%2F24%2F08%2F22%2F187237%2Fhumans-to-push-further-into-wildlife-habitats-across-more-than-50-of-land-by-2070-study-says%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://news.slashdot.org/story/24/08/22/187237/humans-to-push-further-into-wildlife-habitats-across-more-than-50-of-land-by-2070-study-says?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=23430556&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>msmash</dc:creator>
+<dc:date>2024-08-22T18:07:00+00:00</dc:date>
+<dc:subject>earth</dc:subject>
+<slash:department>shape-of-things-to-come</slash:department>
+<slash:section>news</slash:section>
+<slash:comments>30</slash:comments>
+<slash:hit_parade>30,30,28,21,7,2,1</slash:hit_parade>
+</item>
+<item rdf:about="https://apple.slashdot.org/story/24/08/22/1720209/apple-will-allow-eu-users-to-delete-safari-messages-and-app-store-apps?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Apple Will Allow EU Users To Delete Safari, Messages and App Store Apps</title>
+<link>https://apple.slashdot.org/story/24/08/22/1720209/apple-will-allow-eu-users-to-delete-safari-messages-and-app-store-apps?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>Apple will change how users choose browser options in the European Union, add a dedicated section for changing default apps, and make more apps deletable, the company said on Thursday. From a report: The iPhone maker came under pressure from regulators to make changes after the EU's sweeping Digital Markets Act took effect on March 7, forcing it to offer mobile users the ability to select from a list of available web browsers on a "choice screen" the first time they open Safari. In an update later this year, Apple users will be able to select a default browser directly from the choice screen after going through a mandatory list of options. 
+
+A randomly ordered list of 12 browsers per EU country will be shown to the user with short descriptions, and the chosen one will be automatically downloaded, Apple said. The choice screen will also be available on iPads through an update later this year. Apple released a previous update in response to the new rules in March, but browser companies criticized the design of its choice screen, and the Commission opened an investigation on March 25 saying it suspected that the measures fell short of effective compliance. [...] Users will also be able to delete certain Apple-made apps such as App Store, Messages, Camera, Photos and Safari.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Apple+Will+Allow+EU+Users+To+Delete+Safari%2C+Messages+and+App+Store+Apps%3A+https%3A%2F%2Fapple.slashdot.org%2Fstory%2F24%2F08%2F22%2F1720209%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fapple.slashdot.org%2Fstory%2F24%2F08%2F22%2F1720209%2Fapple-will-allow-eu-users-to-delete-safari-messages-and-app-store-apps%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://apple.slashdot.org/story/24/08/22/1720209/apple-will-allow-eu-users-to-delete-safari-messages-and-app-store-apps?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=23430518&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>msmash</dc:creator>
+<dc:date>2024-08-22T17:25:00+00:00</dc:date>
+<dc:subject>eu</dc:subject>
+<slash:department>shape-of-things-to-come</slash:department>
+<slash:section>apple</slash:section>
+<slash:comments>26</slash:comments>
+<slash:hit_parade>26,25,19,13,6,5,1</slash:hit_parade>
+</item>
+<item rdf:about="https://tech.slashdot.org/story/24/08/22/1648253/microsoft-will-try-the-data-scraping-windows-recall-feature-again-in-october?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Microsoft Will Try the Data-Scraping Windows Recall Feature Again in October</title>
+<link>https://tech.slashdot.org/story/24/08/22/1648253/microsoft-will-try-the-data-scraping-windows-recall-feature-again-in-october?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>Microsoft will begin sending a revised version of its controversial Recall feature to Windows Insider PCs beginning in October, according to an update published to the company's original blog post about the Recall controversy. From a report: The company didn't elaborate further on specific changes it's making to Recall beyond what it already announced in June. 
+
+For those unfamiliar, Recall is a Windows service that runs in the background on compatible PCs, continuously taking screenshots of user activity, scanning those screenshots with optical character recognition (OCR), and saving the OCR text and the screenshots to a giant searchable database on your PC. The goal, according to Microsoft, is to help users retrace their steps and dig up information about things they had used their PCs to find or do in the past.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Microsoft+Will+Try+the+Data-Scraping+Windows+Recall+Feature+Again+in+October%3A+https%3A%2F%2Ftech.slashdot.org%2Fstory%2F24%2F08%2F22%2F1648253%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Ftech.slashdot.org%2Fstory%2F24%2F08%2F22%2F1648253%2Fmicrosoft-will-try-the-data-scraping-windows-recall-feature-again-in-october%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://tech.slashdot.org/story/24/08/22/1648253/microsoft-will-try-the-data-scraping-windows-recall-feature-again-in-october?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=23430474&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>msmash</dc:creator>
+<dc:date>2024-08-22T16:48:00+00:00</dc:date>
+<dc:subject>microsoft</dc:subject>
+<slash:department>how-about-that</slash:department>
+<slash:section>technology</slash:section>
+<slash:comments>46</slash:comments>
+<slash:hit_parade>46,45,41,41,16,10,8</slash:hit_parade>
+</item>
+<item rdf:about="https://slashdot.org/story/24/08/22/1539228/agi-is-on-clients-radar-but-far-from-reality-says-gartner?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>AGI is On Clients' Radar But Far From Reality, Says Gartner</title>
+<link>https://slashdot.org/story/24/08/22/1539228/agi-is-on-clients-radar-but-far-from-reality-says-gartner?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>Gartner is warning that any prospect of Artificial General Intelligence (AGI) is at least 10 years away and perhaps not certain to ever arrive. It might not even be a worthwhile pursuit, the analyst says. From a report: AGI has become a controversial topic in the last couple of years as builders of large language models (LLMs), such as OpenAI, make bold claims that they've established a near-term path toward human-like intelligence. At the same time, others from the discipline of cognitive science have scorned the idea, arguing that the concept of AGI is poorly understood and the LLM approach is insufficient. 
+
+In its Hype Cycle for Emerging Technologies, 2024, Gartner says it distills "key insights" from more than 2,000 technologies and, using its framework, produces a succinct set of "must-know" emerging technologies that have the potential to deliver benefits over the next two to ten years. The consultancy notes that GenAI -- the subject of volumes of industry hype and billions in investment -- is about to enter the dreaded "trough of disillusionment." Arun Chandrasekaran, Gartner distinguished VP analyst, told The Register: "The expectations and hype around GenAI are enormously high. So it's not that the technology, per se, is bad, but it's unable to keep up with the high expectations that I think enterprises have because of the enormous hype that's been created in the market in the last 12 to 18 months." 
+
+However, GenAI is likely to have a significant impact on investment in the longer term, Chandrasekaran said. "I truly still believe that the long-term impact of GenAI is going to be quite significant, but we may have overestimated, in some sense, what it can do in the near term."&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=AGI+is+On+Clients'+Radar+But+Far+From+Reality%2C+Says+Gartner%3A+https%3A%2F%2Fslashdot.org%2Fstory%2F24%2F08%2F22%2F1539228%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fslashdot.org%2Fstory%2F24%2F08%2F22%2F1539228%2Fagi-is-on-clients-radar-but-far-from-reality-says-gartner%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://slashdot.org/story/24/08/22/1539228/agi-is-on-clients-radar-but-far-from-reality-says-gartner?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=23430424&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>msmash</dc:creator>
+<dc:date>2024-08-22T16:05:00+00:00</dc:date>
+<dc:subject>ai</dc:subject>
+<slash:department>reality-check</slash:department>
+<slash:section>slashdot</slash:section>
+<slash:comments>46</slash:comments>
+<slash:hit_parade>46,45,38,34,9,5,1</slash:hit_parade>
+</item>
+<item rdf:about="https://slashdot.org/story/24/08/22/1510217/microsoft-engineers-pay-data-leaked-reveals-compensation-details?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Microsoft Engineers' Pay Data Leaked, Reveals Compensation Details</title>
+<link>https://slashdot.org/story/24/08/22/1510217/microsoft-engineers-pay-data-leaked-reveals-compensation-details?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>Software engineers at Microsoft earn an average total compensation ranging from $148,436 to $1,230,000 annually, depending on their level, according to a leaked spreadsheet viewed by Business Insider. The data, voluntarily shared by hundreds of U.S.-based Microsoft employees, includes information on salaries, performance-based raises, promotions, and bonuses. The highest-paid engineers work in Microsoft's newly formed AI organization, with average total compensation of $377,611. Engineers in Cloud and AI, Azure, and Experiences and Devices units earn between $242,723 and $255,126 on average.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Microsoft+Engineers'+Pay+Data+Leaked%2C+Reveals+Compensation+Details%3A+https%3A%2F%2Fslashdot.org%2Fstory%2F24%2F08%2F22%2F1510217%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fslashdot.org%2Fstory%2F24%2F08%2F22%2F1510217%2Fmicrosoft-engineers-pay-data-leaked-reveals-compensation-details%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://slashdot.org/story/24/08/22/1510217/microsoft-engineers-pay-data-leaked-reveals-compensation-details?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=23430384&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>msmash</dc:creator>
+<dc:date>2024-08-22T15:26:00+00:00</dc:date>
+<dc:subject>microsoft</dc:subject>
+<slash:department>for-what-it's-worth</slash:department>
+<slash:section>slashdot</slash:section>
+<slash:comments>61</slash:comments>
+<slash:hit_parade>61,60,51,48,13,2,2</slash:hit_parade>
+</item>
+<item rdf:about="https://slashdot.org/story/24/08/22/1447234/peloton-to-start-charging-subscribers-with-used-equipment-95-activation-fee?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Peloton To Start Charging Subscribers With Used Equipment $95 Activation Fee</title>
+<link>https://slashdot.org/story/24/08/22/1447234/peloton-to-start-charging-subscribers-with-used-equipment-95-activation-fee?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>Peloton on Thursday said it will start charging new subscribers a one-time $95 activation fee if they bought their hardware on the secondary market as more consumers snag lightly used equipment for a fraction of the typical retail price. From a report: The used equipment activation fee for subscribers in the U.S. and Canada comes as Peloton starts to see a meaningful increase in new members who bought used Bikes or Treads from peer-to-peer markets such as Facebook Marketplace. During its fiscal fourth quarter, which ended June 30, Peloton said it saw a "steady stream of paid connected fitness subscribers" who bought hardware on the secondary market. The company said the segment grew 16% year over year. 
+
+"We believe a meaningful share of these subscribers are incremental, and they exhibit lower net churn rates than rental subscribers," the company said in a letter to shareholders. "It's also worth highlighting that this activation fee will be a source of incremental revenue and gross profit for us, helping to support our investments in improving the fitness experience for our members," interim co-CEO Christopher Bruzzo later added on a call with analysts.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Peloton+To+Start+Charging+Subscribers+With+Used+Equipment+%2495+Activation+Fee%3A+https%3A%2F%2Fslashdot.org%2Fstory%2F24%2F08%2F22%2F1447234%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fslashdot.org%2Fstory%2F24%2F08%2F22%2F1447234%2Fpeloton-to-start-charging-subscribers-with-used-equipment-95-activation-fee%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://slashdot.org/story/24/08/22/1447234/peloton-to-start-charging-subscribers-with-used-equipment-95-activation-fee?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=23430362&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>msmash</dc:creator>
+<dc:date>2024-08-22T14:47:00+00:00</dc:date>
+<dc:subject>business</dc:subject>
+<slash:department>squeezing-every-last-drop</slash:department>
+<slash:section>slashdot</slash:section>
+<slash:comments>99</slash:comments>
+<slash:hit_parade>99,97,92,87,11,5,3</slash:hit_parade>
+</item>
+<item rdf:about="https://apple.slashdot.org/story/24/08/22/148244/apple-is-still-standing-in-the-way-of-epics-app-store?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Apple is Still Standing in the Way of Epic's App Store</title>
+<link>https://apple.slashdot.org/story/24/08/22/148244/apple-is-still-standing-in-the-way-of-epics-app-store?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>Epic Games launched its alternative app store in the European Union last week, capitalizing on new regulations opening up iOS. The store aims to offer developers lower commissions and greater payment flexibility compared to Apple's App Store. However, Apple's new terms for alternative marketplaces present significant challenges for developers. Apple imposes a 50 euro cent per user per year installation fee, a 10% commission on external sales, and a 5% fee on purchases within a year of installation. 
+
+These fees apply on top of Epic's 12% commission, potentially making the alternative store less attractive for many developers, The Verge writes. While Epic can likely absorb these costs for its hit game Fortnite, smaller developers face a steeper hurdle. Some industry insiders express skepticism about the viability of the new ecosystem for most app creators. Epic plans to offer a curated selection of third-party games on its mobile store by December, but widespread adoption remains uncertain.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Apple+is+Still+Standing+in+the+Way+of+Epic's+App+Store%3A+https%3A%2F%2Fapple.slashdot.org%2Fstory%2F24%2F08%2F22%2F148244%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fapple.slashdot.org%2Fstory%2F24%2F08%2F22%2F148244%2Fapple-is-still-standing-in-the-way-of-epics-app-store%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://apple.slashdot.org/story/24/08/22/148244/apple-is-still-standing-in-the-way-of-epics-app-store?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=23430320&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>msmash</dc:creator>
+<dc:date>2024-08-22T14:08:00+00:00</dc:date>
+<dc:subject>apple</dc:subject>
+<slash:department>closer-look</slash:department>
+<slash:section>apple</slash:section>
+<slash:comments>42</slash:comments>
+<slash:hit_parade>42,42,39,29,7,3,1</slash:hit_parade>
+</item>
+<item rdf:about="https://slashdot.org/story/24/08/22/0152220/bezos-blue-origin-suffers-fiery-setback-building-new-rocket?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Bezos' Blue Origin Suffers Fiery Setback Building New Rocket</title>
+<link>https://slashdot.org/story/24/08/22/0152220/bezos-blue-origin-suffers-fiery-setback-building-new-rocket?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>An anonymous reader quotes a report from Bloomberg: Blue Origin sustained failures in recent weeks of testing including a factory mishap that damaged a portion of a future New Glenn rocket, the long-awaited centerpiece of the Jeff Bezos-backed startup's push to take on SpaceX. The upper portion of one rocket crumpled into itself, in part due to worker error, while it was being moved to a storage hangar, according to people familiar with the situation.
+ 
+In a separate incident, another upper rocket portion failed during stress testing and exploded, the people said. Repairs are underway, another person said, noting there were no injuries during either episode. The previously unreported incidents illustrate the hurdles Blue Origin is grappling with while ramping up production of New Glenn, which is four years overdue. At the same time, new Chief Executive Officer Dave Limp has hired a slate of executives to shake the company out of a years-long R&amp;amp;D slump.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Bezos'+Blue+Origin+Suffers+Fiery+Setback+Building+New+Rocket%3A+https%3A%2F%2Fslashdot.org%2Fstory%2F24%2F08%2F22%2F0152220%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fslashdot.org%2Fstory%2F24%2F08%2F22%2F0152220%2Fbezos-blue-origin-suffers-fiery-setback-building-new-rocket%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://slashdot.org/story/24/08/22/0152220/bezos-blue-origin-suffers-fiery-setback-building-new-rocket?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=23429900&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>BeauHD</dc:creator>
+<dc:date>2024-08-22T13:00:00+00:00</dc:date>
+<dc:subject>business</dc:subject>
+<slash:department>behind-the-scenes</slash:department>
+<slash:section>slashdot</slash:section>
+<slash:comments>50</slash:comments>
+<slash:hit_parade>50,49,47,37,12,4,2</slash:hit_parade>
+</item>
+<item rdf:about="https://entertainment.slashdot.org/story/24/08/22/123238/lionsgate-pulls-megalopolis-trailer-offline-due-to-made-up-critic-quotes?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Lionsgate Pulls 'Megalopolis' Trailer Offline Due To Made-Up Critic Quotes</title>
+<link>https://entertainment.slashdot.org/story/24/08/22/123238/lionsgate-pulls-megalopolis-trailer-offline-due-to-made-up-critic-quotes?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>Lionsgate is recalling its latest trailer for Francis Ford Coppola's epic "Megalopolis," which featured a littany of fabricated quotes from famous film critics. From a report: "Lionsgate is immediately recalling our trailer for 'Megalopolis,'" a Lionsgate spokesperson said in a statement provided to Variety. "We offer our sincere apologies to the critics involved and to Francis Ford Coppola and American Zoetrope for this inexcusable error in our vetting process. We screwed up. We are sorry." 
+
+The trailer, released on Wednesday morning, aimed to position Coppola's latest film as a work of art that would withstand the test of time, much like his previous masterpieces "The Godfather" and "Apocalypse Now." The video included several quotes from critics panning Coppola's previous work -- but none of the phrases, attributed to the likes of Roger Ebert and Pauline Kael, could be found in any of their reviews.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Lionsgate+Pulls+'Megalopolis'+Trailer+Offline+Due+To+Made-Up+Critic+Quotes%3A+https%3A%2F%2Fentertainment.slashdot.org%2Fstory%2F24%2F08%2F22%2F123238%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fentertainment.slashdot.org%2Fstory%2F24%2F08%2F22%2F123238%2Flionsgate-pulls-megalopolis-trailer-offline-due-to-made-up-critic-quotes%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://entertainment.slashdot.org/story/24/08/22/123238/lionsgate-pulls-megalopolis-trailer-offline-due-to-made-up-critic-quotes?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=23430220&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>msmash</dc:creator>
+<dc:date>2024-08-22T12:03:00+00:00</dc:date>
+<dc:subject>scifi</dc:subject>
+<slash:department>stranger-than-fiction</slash:department>
+<slash:section>entertainment</slash:section>
+<slash:comments>30</slash:comments>
+<slash:hit_parade>30,30,25,23,5,3,2</slash:hit_parade>
+</item>
+<item rdf:about="https://linux.slashdot.org/story/24/08/21/1958234/ryzen-9-9950x-performs-16-faster-on-intel-optimized-linux-distro?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Ryzen 9 9950X Performs 16% Faster On Intel-Optimized Linux Distro</title>
+<link>https://linux.slashdot.org/story/24/08/21/1958234/ryzen-9-9950x-performs-16-faster-on-intel-optimized-linux-distro?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>Phoronix's Michael Larabel benchmarked AMD's latest Ryzen 9 9950X in several different Linux distros and found that the Zen 5 chip performs up to 16% faster with the Intel-optimized Clear Linux distro. Here's an excerpt from the report: The Linux distributions for this round of testing on the AMD Ryzen 9 9950X included Arch Linux, CachyOS, Clear Linux, Fedora Workstation 40, Ubuntu 24.04 LTS, and a recent daily snapshot of Ubuntu 24.10 in its current development form. Intel's Clear Linux is the one most interesting for looking at on the new AMD Zen 5 hardware. While there hasn't been so much Clear Linux news in recent times, it remains the most well optimized x86_64 Linux distribution out of the box. Clear Linux makes use of compiler function multi versioning, performance-minded defaults, aggressive compiler CFLAGS/CXXFLAGS defaults, optional AVX-512 usage for more libraries, and many other patches and optimizations in the name of delivering the greatest x86_64 Linux performance. And while not Intel's focus, it works typically on AMD hardware too. [...]
+ 
+Using the same Ryzen 9 9950X system, all of these Linux distributions were tested in their default / out-of-the-box state. [...] When taking the geometric mean of 59 benchmarks run across all of the Linux distributions on this AMD Ryzen 9 9950X system, Intel's Clear Linux easily took the crown. Ubuntu 24.04 LTS -- which was used for all of the Ryzen 9000 series Linux testing so far on Phoronix -- was the slowest. Tapping Intel's Clear Linux netted a 16% improvement on top of the performance offered by Ubuntu 24.04 LTS! Ubuntu 24.04 with the Ryzen 9000 series was already looking great generationally, but as shown today the performance can be even better with further software optimizations.
+ 
+The Arch Linux powered CachyOS that is tuned out-of-the-box with a similar aim to Clear Linux also performed great. CachyOS was 7% faster than Ubuntu 24.04 LTS based on the geo mean and 3% faster than upstream Arch Linux itself. For different workloads though the CachyOS advantage over Arch Linux varied from a minimal difference to quite significant advantages. From the performance of PHP and Python scripts atop Clear Linux to compiling various server and HPC minded software, Intel's Clear Linux -- and a commendable second place for CachyOS -- were showing that even greater performance can be achieved on the AMD Ryzen 9 9950X. Even for devoted Ubuntu Linux users, these results did show some nice advantages of the upcoming Ubuntu 24.10 release over Ubuntu 24.04 LTS thanks to the GCC 14 compiler. Ubuntu 24.10 performance is also still subject to change since the current daily ISOs haven't yet moved past the Linux 6.8 kernel while Ubuntu 24.10 in October will be shipping with Linux 6.11.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Ryzen+9+9950X+Performs+16%25+Faster+On+Intel-Optimized+Linux+Distro%3A+https%3A%2F%2Flinux.slashdot.org%2Fstory%2F24%2F08%2F21%2F1958234%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Flinux.slashdot.org%2Fstory%2F24%2F08%2F21%2F1958234%2Fryzen-9-9950x-performs-16-faster-on-intel-optimized-linux-distro%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://linux.slashdot.org/story/24/08/21/1958234/ryzen-9-9950x-performs-16-faster-on-intel-optimized-linux-distro?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=23429602&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>BeauHD</dc:creator>
+<dc:date>2024-08-22T10:00:00+00:00</dc:date>
+<dc:subject>intel</dc:subject>
+<slash:department>importance-of-software-optimizations</slash:department>
+<slash:section>linux</slash:section>
+<slash:comments>16</slash:comments>
+<slash:hit_parade>16,16,13,11,7,2,1</slash:hit_parade>
+</item>
+<item rdf:about="https://science.slashdot.org/story/24/08/22/0136248/second-human-to-receive-neuralink-brain-chip-uses-it-to-play-counter-strike-2?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Second Human To Receive Neuralink Brain Chip Uses It To Play Counter-Strike 2</title>
+<link>https://science.slashdot.org/story/24/08/22/0136248/second-human-to-receive-neuralink-brain-chip-uses-it-to-play-counter-strike-2?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>In a blog post on Wednesday, Neuralink said its second human recipient is using the brain chip to play Counter-Strike 2 and develop 3D designs in CAD software. "Alex" was given the brain chip last month to help restore his autonomy after a spinal cord injury. PCMag reports: Like the first Neuralink patient, Noland Arbaugh, Alex has also been using the brain chip to play his favorite computer games, such as Counter-Strike 2. Before, Alex had to use a mouth-operated controller, called a QuadStick, to play the first-person shooter. But even then, the controller limited him to only moving or aiming his weapon at a single time, never simultaneously like a normal Counter-Strike player. In other words, Alex had to essentially switch back and forth between the mouse and keyboard functions while playing the game. But thanks to Neuralink, he can now aim with the implant, and simultaneously move while using the QuadStick. [...]
+ 
+In the blog post, Neuralink also addressed a problem the company faced when placing the chip in Arbaugh, the first patient. Despite a successful surgery, about 85% of the thread-based electrodes attached to his brain later became displaced, undermining the full potential of the chip to read neural signals. Although Arbaugh can still use his implant effectively, Neuralink wanted to avoid a repeat with Alex. In response, the company developed several "mitigations," which include reducing the chance of an air pocket forming during surgery and placing the implant deeper into the brain tissue. "Promisingly, we have observed no thread retraction in our second participant," the company said of Alex.
+ 
+Whether Alex's implant outperforms the brain chip in Arbaugh was left unclear. In the meantime, Neuralink says it's working on ways to enhance the controls on the technology "to deliver full mouse and video game controller functionality." "Additionally, we plan to enable the Link [brain chip] to interact with the physical world, allowing users to feed themselves and move more independently by controlling a robotic arm or their wheelchair," the company said. You can watch Alex playing Counter-Strike 2 on YouTube.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Second+Human+To+Receive+Neuralink+Brain+Chip+Uses+It+To+Play+Counter-Strike+2%3A+https%3A%2F%2Fscience.slashdot.org%2Fstory%2F24%2F08%2F22%2F0136248%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fscience.slashdot.org%2Fstory%2F24%2F08%2F22%2F0136248%2Fsecond-human-to-receive-neuralink-brain-chip-uses-it-to-play-counter-strike-2%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://science.slashdot.org/story/24/08/22/0136248/second-human-to-receive-neuralink-brain-chip-uses-it-to-play-counter-strike-2?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=23429894&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>BeauHD</dc:creator>
+<dc:date>2024-08-22T07:00:00+00:00</dc:date>
+<dc:subject>biotech</dc:subject>
+<slash:department>progress-update</slash:department>
+<slash:section>science</slash:section>
+<slash:comments>22</slash:comments>
+<slash:hit_parade>22,22,20,19,9,5,3</slash:hit_parade>
+</item>
+<item rdf:about="https://it.slashdot.org/story/24/08/21/2250229/top-us-oilfield-firm-halliburton-hit-by-cyberattack-source-says?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Top US Oilfield Firm Halliburton Hit By Cyberattack, Source Says</title>
+<link>https://it.slashdot.org/story/24/08/21/2250229/top-us-oilfield-firm-halliburton-hit-by-cyberattack-source-says?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>An anonymous reader quotes a report from Reuters: U.S. oilfield services firm Halliburton on Wednesday was hit by a cyberattack, according to a person familiar with the matter. Halliburton said it was aware of an issue affecting certain systems at the company and was working to determine the cause and impact of the problem. The company was also working with "leading external experts" to fix the issue, a spokesperson said in an emailed statement.
+ 
+The attack appeared to impact business operations at the company's north Houston campus, as well as some global connectivity networks, the person said, who declined to be identified because they were not authorized to speak on the record. The company has asked some staff not to connect to internal networks, the person said. Houston, Texas-based Halliburton is one of the largest oilfield services firms in the world, providing drilling services and equipment to major energy producers around the globe. It had nearly 48,000 employees and operated in more than 70 countries at the end of last year.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Top+US+Oilfield+Firm+Halliburton+Hit+By+Cyberattack%2C+Source+Says%3A+https%3A%2F%2Fit.slashdot.org%2Fstory%2F24%2F08%2F21%2F2250229%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fit.slashdot.org%2Fstory%2F24%2F08%2F21%2F2250229%2Ftop-us-oilfield-firm-halliburton-hit-by-cyberattack-source-says%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://it.slashdot.org/story/24/08/21/2250229/top-us-oilfield-firm-halliburton-hit-by-cyberattack-source-says?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=23429744&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>BeauHD</dc:creator>
+<dc:date>2024-08-22T03:30:00+00:00</dc:date>
+<dc:subject>security</dc:subject>
+<slash:department>modern-warfare</slash:department>
+<slash:section>it</slash:section>
+<slash:comments>14</slash:comments>
+<slash:hit_parade>14,14,13,11,4,4,1</slash:hit_parade>
+</item>
+<textinput rdf:about="https://slashdot.org/search.pl">
+<title>Search Slashdot</title>
+<description>Search Slashdot stories</description>
+<name>query</name>
+<link>https://slashdot.org/search.pl</link>
+</textinput>
+</rdf:RDF>
