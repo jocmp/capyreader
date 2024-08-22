@@ -2,6 +2,7 @@ package com.prof18.rssparser.internal
 
 import com.prof18.rssparser.exception.RssParsingException
 import com.prof18.rssparser.internal.atom.AtomFeedHandler
+import com.prof18.rssparser.internal.rdf.RdfFeedHandler
 import com.prof18.rssparser.internal.rss.RssFeedHandler
 import com.prof18.rssparser.model.RssChannel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -9,11 +10,10 @@ import kotlinx.coroutines.withContext
 import okhttp3.internal.closeQuietly
 import org.jsoup.Jsoup
 import org.jsoup.parser.Parser
-import org.xml.sax.SAXParseException
 import java.io.InputStream
 import java.nio.charset.Charset
 
-internal class JvmXmlParser(
+internal class DefaultXmlParser(
     private val charset: Charset? = null,
     private val dispatcher: CoroutineDispatcher,
 ) : XmlParser {
@@ -29,7 +29,11 @@ internal class JvmXmlParser(
                         }
 
                         AtomKeyword.Atom.value -> {
-                            AtomFeedHandler(document)
+                            AtomFeedHandler(node)
+                        }
+
+                        RdfKeyword.Rdf.value -> {
+                            RdfFeedHandler(node)
                         }
 
                         else -> null

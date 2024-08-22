@@ -1,7 +1,7 @@
 package com.prof18.rssparser
 
-import com.prof18.rssparser.internal.JvmXmlFetcher
-import com.prof18.rssparser.internal.JvmXmlParser
+import com.prof18.rssparser.internal.DefaultXmlFetcher
+import com.prof18.rssparser.internal.DefaultXmlParser
 import kotlinx.coroutines.Dispatchers
 import okhttp3.Call
 import okhttp3.OkHttpClient
@@ -23,10 +23,10 @@ class RssParserBuilder(
     override fun build(): RssParser {
         val client = callFactory
         return RssParser(
-            xmlFetcher = JvmXmlFetcher(
+            xmlFetcher = DefaultXmlFetcher(
                 callFactory = client,
             ),
-            xmlParser = JvmXmlParser(
+            xmlParser = DefaultXmlParser(
                 charset = charset,
                 dispatcher = Dispatchers.IO,
             ),

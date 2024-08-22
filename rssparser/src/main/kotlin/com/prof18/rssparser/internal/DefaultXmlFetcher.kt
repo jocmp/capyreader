@@ -11,7 +11,7 @@ import java.io.InputStream
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
-internal class JvmXmlFetcher(
+internal class DefaultXmlFetcher(
     private val callFactory: Call.Factory,
 ) : XmlFetcher {
     override suspend fun fetchXml(url: String): ParserInput {
