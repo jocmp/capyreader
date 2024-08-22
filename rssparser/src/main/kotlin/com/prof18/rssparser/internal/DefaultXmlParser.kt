@@ -9,11 +9,10 @@ import kotlinx.coroutines.withContext
 import okhttp3.internal.closeQuietly
 import org.jsoup.Jsoup
 import org.jsoup.parser.Parser
-import org.xml.sax.SAXParseException
 import java.io.InputStream
 import java.nio.charset.Charset
 
-internal class JvmXmlParser(
+internal class DefaultXmlParser(
     private val charset: Charset? = null,
     private val dispatcher: CoroutineDispatcher,
 ) : XmlParser {
