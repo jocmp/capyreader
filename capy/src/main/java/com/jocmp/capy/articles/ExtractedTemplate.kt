@@ -3,6 +3,7 @@ package com.jocmp.capy.articles
 import com.jocmp.capy.Article
 import net.dankito.readability4j.Readability4J
 import org.json.JSONObject
+import org.jsoup.Jsoup
 
 
 internal fun extractedTemplate(
@@ -13,8 +14,7 @@ internal fun extractedTemplate(
         return """
           <script>
             (() => {
-              let downloaded = ${JSONObject(mapOf("value" to html))};
-              let html = downloaded.value;
+              let { html } = ${JSONObject(mapOf("html" to html))};            
 
               $swapContentScript
             })();
@@ -22,20 +22,30 @@ internal fun extractedTemplate(
         """.trimIndent()
     }
 
-    val readability4J = Readability4J(article.url.toString(), html)
-    val content = readability4J.parse().content
+    val parsed = parseHtml(article, html)
 
     return """
       <script>
         (() => {
-          let {html} = ${JSONObject(mapOf("html" to content))};
+          let { html } = ${JSONObject(mapOf("html" to parsed))};
 
-//          Mercury.parse("${article.url}", { html: downloaded.value }).then(({ content: html }) => {
-              $swapContentScript
-//          });
+          $swapContentScript
         })();
       </script>
     """.trimIndent()
+}
+
+fun parseHtml(article: Article, html: String): String {
+    val readability4J = Readability4J(article.url.toString(), html)
+    val content = readability4J.parse().content ?: return ""
+
+    val document = Jsoup.parse(content)
+
+    document.getElementsByClass("readability-styled").forEach { element ->
+        element.append("&nbsp;")
+    }
+
+    return document.outerHtml()
 }
 
 // Depends on the presence of a variable named "html"
