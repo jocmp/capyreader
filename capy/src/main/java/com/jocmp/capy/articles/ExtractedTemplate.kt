@@ -36,16 +36,20 @@ internal fun extractedTemplate(
 }
 
 fun parseHtml(article: Article, html: String): String {
-    val readability4J = Readability4J(article.url.toString(), html)
-    val content = readability4J.parse().content ?: return ""
+    try {
+        val readability4J = Readability4J(article.url.toString(), html)
+        val content = readability4J.parse().content ?: return ""
 
-    val document = Jsoup.parse(content)
+        val document = Jsoup.parse(content)
 
-    document.getElementsByClass("readability-styled").forEach { element ->
-        element.append("&nbsp;")
+        document.getElementsByClass("readability-styled").forEach { element ->
+            element.append("&nbsp;")
+        }
+
+        return document.body().html()
+    } catch (ex: Throwable) {
+        return ""
     }
-
-    return document.outerHtml()
 }
 
 // Depends on the presence of a variable named "html"
