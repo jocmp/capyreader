@@ -31,3 +31,6 @@
 
 -keep class retrofit2.** { *; }
 -keep interface retrofit2.** { *; }
+
+# Readability4J
+-dontwarn org.slf4j.impl.StaticLoggerBinder

@@ -1,7 +1,10 @@
 package com.jocmp.capy.articles
 
 import com.jocmp.capy.Article
+import net.dankito.readability4j.Readability4J
 import org.json.JSONObject
+import org.jsoup.Jsoup
+
 
 internal fun extractedTemplate(
     article: Article,
@@ -11,8 +14,7 @@ internal fun extractedTemplate(
         return """
           <script>
             (() => {
-              let downloaded = ${JSONObject(mapOf("value" to html))};
-              let html = downloaded.value;
+              let { html } = ${JSONObject(mapOf("html" to html))};            
 
               $swapContentScript
             })();
@@ -20,17 +22,34 @@ internal fun extractedTemplate(
         """.trimIndent()
     }
 
+    val parsed = parseHtml(article, html)
+
     return """
       <script>
         (() => {
-          let downloaded = ${JSONObject(mapOf("value" to html))};
+          let { html } = ${JSONObject(mapOf("html" to parsed))};
 
-          Mercury.parse("${article.url}", { html: downloaded.value }).then(({ content: html }) => {
-            $swapContentScript
-          });
+          $swapContentScript
         })();
       </script>
     """.trimIndent()
+}
+
+fun parseHtml(article: Article, html: String): String {
+    try {
+        val readability4J = Readability4J(article.url.toString(), html)
+        val content = readability4J.parse().content ?: return ""
+
+        val document = Jsoup.parse(content)
+
+        document.getElementsByClass("readability-styled").forEach { element ->
+            element.append("&nbsp;")
+        }
+
+        return document.body().html()
+    } catch (ex: Throwable) {
+        return ""
+    }
 }
 
 // Depends on the presence of a variable named "html"
@@ -40,5 +59,6 @@ const val swapContentScript = """
     extracted.innerHTML = html;
 
     let content = document.getElementById("article-body-content");
-    content.replaceWith(extracted);   
+    debugger;
+    content.replaceWith(extracted);
 """
