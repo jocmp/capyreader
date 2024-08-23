@@ -17,7 +17,6 @@ import com.jocmp.capy.Account
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
-import com.jocmp.capy.Countable
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
@@ -44,6 +43,8 @@ class ArticleScreenViewModel(
 
     val filter = MutableStateFlow(appPreferences.filter.get())
 
+    private val _searchQuery = MutableStateFlow<String?>(null)
+
     private var _article by mutableStateOf(account.findArticle(appPreferences.articleID.get()))
 
     private var _showUnauthorizedMessage by mutableStateOf(UnauthorizedMessageState.HIDE)
@@ -53,7 +54,10 @@ class ArticleScreenViewModel(
     }
 
     val articles: Flow<PagingData<Article>> = filter
-        .flatMapLatest { account.buildArticlePager(it).flow }
+        .combine(_searchQuery) { latestFilter, query ->
+            account.buildArticlePager(filter = latestFilter, query = query).flow
+        }
+        .flatMapLatest { it }
 
     val folders: Flow<List<Folder>> = account.folders.combine(_counts) { folders, latestCounts ->
         folders.map { copyFolderCounts(it, latestCounts) }
@@ -76,6 +80,9 @@ class ArticleScreenViewModel(
 
     val article: Article?
         get() = _article
+
+    val searchQuery: Flow<String?>
+        get() = _searchQuery
 
     private val filterStatus: ArticleStatus
         get() = filter.value.status
@@ -203,6 +210,14 @@ class ArticleScreenViewModel(
         }
     }
 
+    fun clearSearch() {
+        _searchQuery.value = null
+    }
+
+    fun updateSearch(query: String) {
+        _searchQuery.value = query
+    }
+
     private suspend fun addStar(articleID: String) {
         account.addStar(articleID)
             .onFailure {
@@ -267,8 +282,4 @@ class ArticleScreenViewModel(
         SHOW,
         LATER,
     }
-}
-
-private fun <T : Countable> List<T>.withPositiveCount(status: ArticleStatus): List<T> {
-    return filter { status == ArticleStatus.ALL || it.count > 0 }
 }

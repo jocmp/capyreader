@@ -6,18 +6,13 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
@@ -33,7 +28,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.paging.PagingData
@@ -43,7 +43,9 @@ import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.detail.resetScrollBehaviorListener
 import com.capyreader.app.ui.articles.list.EmptyOnboardingView
+import com.capyreader.app.ui.articles.list.FeedListTopBar
 import com.capyreader.app.ui.articles.media.ArticleMediaView
+import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.rememberWebViewNavigator
 import com.capyreader.app.ui.fixtures.FeedPreviewFixture
 import com.capyreader.app.ui.fixtures.FolderPreviewFixture
@@ -53,7 +55,6 @@ import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
-import com.jocmp.capy.MarkRead.All
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -72,6 +73,7 @@ fun ArticleLayout(
     allFeeds: List<Feed>,
     articles: Flow<PagingData<Article>>,
     article: Article?,
+    search: ArticleSearch,
     statusCount: Long,
     refreshInterval: RefreshInterval,
     onFeedRefresh: (completion: () -> Unit) -> Unit,
@@ -81,7 +83,7 @@ fun ArticleLayout(
     onSelectStatus: (status: ArticleStatus) -> Unit,
     onSelectArticle: (articleID: String, completion: (article: Article) -> Unit) -> Unit,
     onNavigateToSettings: () -> Unit,
-    onClearArticle: () -> Unit,
+    onRequestClearArticle: () -> Unit,
     onToggleArticleRead: () -> Unit,
     onToggleArticleStar: () -> Unit,
     onMarkAllRead: (range: MarkRead) -> Unit,
@@ -107,9 +109,6 @@ fun ArticleLayout(
     val pagingArticles = articles.collectAsLazyPagingItems(Dispatchers.IO)
     val snackbarHost = remember { SnackbarHostState() }
     val addFeedSuccessMessage = stringResource(R.string.add_feed_success)
-    val editSuccessMessage = stringResource(R.string.feed_action_edit_success)
-    val unsubscribeMessage = stringResource(R.string.feed_action_unsubscribe_success)
-    val unsubscribeErrorMessage = stringResource(R.string.unsubscribe_error)
     val currentFeed = findCurrentFeed(filter, allFeeds)
     val scrollBehavior = pinnedScrollBehavior()
     val resetScrollBehaviorOffset = resetScrollBehaviorListener(
@@ -117,6 +116,7 @@ fun ArticleLayout(
         scrollBehavior = scrollBehavior
     )
     var mediaUrl by rememberSaveable { mutableStateOf<String?>(null) }
+    val focusManager = LocalFocusManager.current
 
     val openUpdatePasswordDialog = {
         onUnauthorizedDismissRequest()
@@ -233,58 +233,45 @@ fun ArticleLayout(
             )
         },
         listPane = {
+            val keyboardManager = LocalSoftwareKeyboardController.current
+
             Scaffold(
                 modifier = Modifier
-                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                    .nestedScroll(scrollBehavior.nestedScrollConnection)
+                    .nestedScroll(object : NestedScrollConnection {
+                        override fun onPostScroll(
+                            consumed: Offset,
+                            available: Offset,
+                            source: NestedScrollSource
+                        ): Offset {
+                            if (search.isActive) {
+                                keyboardManager?.hide()
+                            }
+
+                            return Offset.Zero
+                        }
+                    }),
                 topBar = {
-                    TopAppBar(
-                        scrollBehavior = scrollBehavior,
-                        title = {
-                            FilterAppBarTitle(
-                                filter = filter,
-                                allFeeds = allFeeds,
-                                folders = folders,
-                                onRequestJumpToTop = { scrollToTop() }
-                            )
-                        },
-                        navigationIcon = {
-                            IconButton(
-                                onClick = {
-                                    coroutineScope.launch {
-                                        drawerState.open()
-                                    }
-                                }
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Filled.Menu,
-                                    contentDescription = null
-                                )
+                    FeedListTopBar(
+                        onNavigateToDrawer = {
+                            coroutineScope.launch {
+                                drawerState.open()
                             }
                         },
-                        actions = {
-                            FeedActions(
-                                feed = currentFeed,
-                                onMarkAllRead = {
-                                    onMarkAllRead(All)
-                                },
-                                onFeedEdited = {
-                                    showSnackbar(editSuccessMessage)
-                                },
-                                onRemoveFeed = { feedID ->
-                                    onRemoveFeed(
-                                        feedID,
-                                        {
-                                            showSnackbar(unsubscribeMessage)
-                                        },
-                                        {
-                                            showSnackbar(unsubscribeErrorMessage)
-                                        }
-                                    )
-                                },
-                                onEditFailure = { message ->
-                                    showSnackbar(message)
-                                }
-                            )
+                        onRequestJumpToTop = {
+                            scrollToTop()
+                        },
+                        onRemoveFeed = onRemoveFeed,
+                        scrollBehavior = scrollBehavior,
+                        filter = filter,
+                        feeds = allFeeds,
+                        folders = folders,
+                        currentFeed = currentFeed,
+                        onMarkAllRead = onMarkAllRead,
+                        onRequestSnackbar = { showSnackbar(it) },
+                        search = search,
+                        onSearchQueryChange = {
+                            scrollToTop()
                         }
                     )
                 },
@@ -314,6 +301,9 @@ fun ArticleLayout(
                             onSelect = { articleID ->
                                 onSelectArticle(articleID) {
                                     navigateToDetail()
+                                    if (search.isActive) {
+                                        focusManager.clearFocus()
+                                    }
                                 }
                             },
                         )
@@ -333,7 +323,7 @@ fun ArticleLayout(
                 enableBackHandler = mediaUrl == null,
                 onBackPressed = {
                     scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
-                    onClearArticle()
+                    onRequestClearArticle()
                 }
             )
         }
@@ -382,14 +372,20 @@ fun ArticleLayout(
         mediaUrl = null
     }
 
-    BackHandler(mediaUrl == null && canGoBackToAll(filter, article)) {
+    BackHandler(mediaUrl == null && search.isActive && article == null) {
+        search.clear()
+    }
+
+    BackHandler(mediaUrl == null && canGoBackToAll(filter, article, search)) {
         onSelectArticleFilter()
         scrollToTop()
     }
 }
 
-fun canGoBackToAll(filter: ArticleFilter, article: Article?): Boolean {
-    return article == null && !filter.hasArticlesSelected()
+fun canGoBackToAll(filter: ArticleFilter, article: Article?, search: ArticleSearch): Boolean {
+    return article == null &&
+            !filter.hasArticlesSelected() &&
+            !search.isActive
 }
 
 fun findCurrentFeed(filter: ArticleFilter, feeds: List<Feed>): Feed? {
@@ -413,6 +409,7 @@ fun ArticleLayoutPreview() {
             feeds = feeds,
             allFeeds = emptyList(),
             articles = emptyFlow(),
+            search = ArticleSearch(),
             article = null,
             statusCount = 30,
             refreshInterval = RefreshInterval.MANUALLY_ONLY,
@@ -423,7 +420,7 @@ fun ArticleLayoutPreview() {
             onSelectStatus = {},
             onSelectArticle = { _, _ -> },
             onNavigateToSettings = { },
-            onClearArticle = { },
+            onRequestClearArticle = { },
             onToggleArticleRead = { },
             onToggleArticleStar = {},
             onMarkAllRead = {},

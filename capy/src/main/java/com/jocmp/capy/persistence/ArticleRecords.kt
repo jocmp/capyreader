@@ -223,6 +223,7 @@ internal class ArticleRecords internal constructor(
     class ByStatus(private val database: Database) {
         fun all(
             status: ArticleStatus,
+            query: String?,
             limit: Long,
             offset: Long,
             since: OffsetDateTime? = null
@@ -235,6 +236,7 @@ internal class ArticleRecords internal constructor(
                 limit = limit,
                 offset = offset,
                 lastReadAt = mapLastRead(read, since),
+                query = query,
                 mapper = ::listMapper
             )
         }
@@ -251,12 +253,17 @@ internal class ArticleRecords internal constructor(
             )
         }
 
-        fun count(status: ArticleStatus, since: OffsetDateTime? = null): Query<Long> {
+        fun count(
+            status: ArticleStatus,
+            query: String?,
+            since: OffsetDateTime? = null
+        ): Query<Long> {
             val (read, starred) = status.toStatusPair
 
             return database.articlesQueries.countByStatus(
                 read = read,
                 starred = starred,
+                query = query,
                 lastReadAt = mapLastRead(read, since)
             )
         }

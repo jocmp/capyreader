@@ -13,10 +13,11 @@ class ArticlePagerFactory(private val database: Database) {
 
     fun find(
         filter: ArticleFilter,
+        query: String?,
         since: OffsetDateTime
     ): PagingSource<Int, Article> {
         return when (filter) {
-            is ArticleFilter.Articles -> articleSource(filter, since)
+            is ArticleFilter.Articles -> articleSource(filter, query, since)
             is ArticleFilter.Feeds -> feedSource(filter, since)
             is ArticleFilter.Folders -> folderSource(filter, since)
         }
@@ -24,11 +25,13 @@ class ArticlePagerFactory(private val database: Database) {
 
     private fun articleSource(
         filter: ArticleFilter.Articles,
+        query: String?,
         since: OffsetDateTime
     ): PagingSource<Int, Article> {
         return QueryPagingSource(
             countQuery = articles.byStatus.count(
                 status = filter.status,
+                query = query,
                 since = since
             ),
             transacter = database.articlesQueries,
@@ -36,9 +39,10 @@ class ArticlePagerFactory(private val database: Database) {
             queryProvider = { limit, offset ->
                 articles.byStatus.all(
                     status = filter.status,
+                    query = query,
+                    since = since,
                     limit = limit,
                     offset = offset,
-                    since = since
                 )
             }
         )

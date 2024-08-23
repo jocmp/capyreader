@@ -318,17 +318,22 @@ open class AccompanistWebViewClient(private val assetLoader: WebViewAssetLoader)
         val accept = request.requestHeaders.getOrDefault("Accept", null)
 
         if (accept != null && accept.contains("image")) {
-            val imageRequest = ImageRequest.Builder(view.context)
-                .data(request.url)
-                .build()
-            val bitmap = view.context.imageLoader.executeBlocking(imageRequest).drawable?.toBitmap()
+            try {
+                val imageRequest = ImageRequest.Builder(view.context)
+                    .data(request.url)
+                    .build()
+                val bitmap =
+                    view.context.imageLoader.executeBlocking(imageRequest).drawable?.toBitmap()
 
-            if (bitmap != null) {
-                return WebResourceResponse(
-                    "image/jpg",
-                    "UTF-8",
-                    bitmapInputStream(bitmap, Bitmap.CompressFormat.JPEG)
-                )
+                if (bitmap != null) {
+                    return WebResourceResponse(
+                        "image/jpg",
+                        "UTF-8",
+                        bitmapInputStream(bitmap, Bitmap.CompressFormat.JPEG)
+                    )
+                }
+            } catch (exception: Exception) {
+                return null
             }
         }
 
