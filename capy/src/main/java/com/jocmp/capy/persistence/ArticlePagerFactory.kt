@@ -18,8 +18,8 @@ class ArticlePagerFactory(private val database: Database) {
     ): PagingSource<Int, Article> {
         return when (filter) {
             is ArticleFilter.Articles -> articleSource(filter, query, since)
-            is ArticleFilter.Feeds -> feedSource(filter, since)
-            is ArticleFilter.Folders -> folderSource(filter, since)
+            is ArticleFilter.Feeds -> feedSource(filter, query, since)
+            is ArticleFilter.Folders -> folderSource(filter, query, since)
         }
     }
 
@@ -50,15 +50,22 @@ class ArticlePagerFactory(private val database: Database) {
 
     private fun feedSource(
         filter: ArticleFilter.Feeds,
+        query: String?,
         since: OffsetDateTime
     ): PagingSource<Int, Article> {
         val feedIDs = listOf(filter.feedID)
 
-        return feedsSource(feedIDs, filter, since)
+        return feedsSource(
+            feedIDs = feedIDs,
+            filter = filter,
+            query = query,
+            since = since,
+        )
     }
 
     private fun folderSource(
         filter: ArticleFilter.Folders,
+        query: String?,
         since: OffsetDateTime
     ): PagingSource<Int, Article> {
         val feedIDs = database
@@ -66,11 +73,17 @@ class ArticlePagerFactory(private val database: Database) {
             .findFeedIDs(folderTitle = filter.folderTitle)
             .executeAsList()
 
-        return feedsSource(feedIDs, filter, since)
+        return feedsSource(
+            feedIDs = feedIDs,
+            filter = filter,
+            query = query,
+            since = since,
+        )
     }
 
     private fun feedsSource(
         feedIDs: List<String>,
+        query: String?,
         filter: ArticleFilter,
         since: OffsetDateTime
     ): PagingSource<Int, Article> {
@@ -78,6 +91,7 @@ class ArticlePagerFactory(private val database: Database) {
             countQuery = articles.byFeed.count(
                 feedIDs = feedIDs,
                 status = filter.status,
+                query = query,
                 since = since
             ),
             transacter = database.articlesQueries,
@@ -86,9 +100,10 @@ class ArticlePagerFactory(private val database: Database) {
                 articles.byFeed.all(
                     feedIDs = feedIDs,
                     status = filter.status,
+                    query = query,
+                    since = since,
                     limit = limit,
                     offset = offset,
-                    since = since
                 )
             }
         )

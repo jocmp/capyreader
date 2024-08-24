@@ -85,7 +85,7 @@ internal class ArticleRecords internal constructor(
         )
     }
 
-    fun markUnread(articleID: String, updatedAt: ZonedDateTime = nowUTC()) {
+    fun markUnread(articleID: String) {
         database.articlesQueries.markRead(
             articleIDs = listOf(articleID),
             read = false,
@@ -171,14 +171,16 @@ internal class ArticleRecords internal constructor(
         fun all(
             feedIDs: List<String>,
             status: ArticleStatus,
+            query: String? = null,
+            since: OffsetDateTime,
             limit: Long,
             offset: Long,
-            since: OffsetDateTime
         ): Query<Article> {
             val (read, starred) = status.toStatusPair
 
-            return database.articlesQueries.findByFeeds(
+            return database.articlesQueries.allByFeeds(
                 feedIDs = feedIDs,
+                query = query,
                 read = read,
                 starred = starred,
                 limit = limit,
@@ -207,12 +209,14 @@ internal class ArticleRecords internal constructor(
         fun count(
             feedIDs: List<String>,
             status: ArticleStatus,
+            query: String?,
             since: OffsetDateTime
         ): Query<Long> {
             val (read, starred) = status.toStatusPair
 
-            return database.articlesQueries.countByFeeds(
+            return database.articlesQueries.countAllByFeeds(
                 feedIDs = feedIDs,
+                query = query,
                 read = read,
                 starred = starred,
                 lastReadAt = mapLastRead(read, since)
@@ -223,14 +227,14 @@ internal class ArticleRecords internal constructor(
     class ByStatus(private val database: Database) {
         fun all(
             status: ArticleStatus,
-            query: String?,
+            query: String? = null,
             limit: Long,
             offset: Long,
             since: OffsetDateTime? = null
         ): Query<Article> {
             val (read, starred) = status.toStatusPair
 
-            return database.articlesQueries.findByStatus(
+            return database.articlesQueries.allByStatus(
                 read = read,
                 starred = starred,
                 limit = limit,
@@ -245,7 +249,6 @@ internal class ArticleRecords internal constructor(
             val (_, starred) = status.toStatusPair
             val (afterArticleID, beforeArticleID) = range.toPair
 
-
             return database.articlesQueries.findArticleIDsByStatus(
                 starred = starred,
                 afterArticleID = afterArticleID,
@@ -255,12 +258,12 @@ internal class ArticleRecords internal constructor(
 
         fun count(
             status: ArticleStatus,
-            query: String?,
+            query: String? = null,
             since: OffsetDateTime? = null
         ): Query<Long> {
             val (read, starred) = status.toStatusPair
 
-            return database.articlesQueries.countByStatus(
+            return database.articlesQueries.countAllByStatus(
                 read = read,
                 starred = starred,
                 query = query,

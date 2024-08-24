@@ -11,6 +11,7 @@
 .idea/deploymentTargetSelector.xml
 .idea/codeStyles/*
 .idea/other.xml
+.idea/androidTestResultsUserPreferences.xml
 
 .DS_Store
 /build
