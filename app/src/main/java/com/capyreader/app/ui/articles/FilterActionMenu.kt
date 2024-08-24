@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -20,11 +21,13 @@ import com.capyreader.app.ui.fixtures.FeedPreviewFixture
 
 @Composable
 fun FeedActions(
-    feed: Feed?,
     onMarkAllRead: () -> Unit,
     onFeedEdited: () -> Unit,
     onRemoveFeed: (feedID: String) -> Unit,
     onEditFailure: (message: String) -> Unit,
+    onRequestSearch: () -> Unit,
+    hideSearchIcon: Boolean,
+    feed: Feed?,
 ) {
     val (expanded, setMenuExpanded) = remember { mutableStateOf(false) }
     val (isEditDialogOpen, setEditDialogOpen) = rememberSaveable { mutableStateOf(false) }
@@ -33,6 +36,16 @@ fun FeedActions(
 
     Box {
         Row {
+            if (!hideSearchIcon) {
+                IconButton(onClick = onRequestSearch) {
+                    Icon(
+                        imageVector = Icons.Rounded.Search,
+                        contentDescription = stringResource(R.string.filter_action_menu_search_articles)
+                    )
+                }
+            }
+
+
             MarkAllReadButton(
                 onMarkAllRead = onMarkAllRead,
             )
@@ -96,10 +109,12 @@ fun FeedActionsPreview() {
     val feed = FeedPreviewFixture().values.first()
 
     FeedActions(
-        feed = feed,
         onFeedEdited = {},
         onRemoveFeed = {},
         onEditFailure = {},
         onMarkAllRead = {},
+        onRequestSearch = {},
+        feed = feed,
+        hideSearchIcon = false,
     )
 }

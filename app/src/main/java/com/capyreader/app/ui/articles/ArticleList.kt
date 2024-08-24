@@ -5,22 +5,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.itemKey
 import com.capyreader.app.common.AppPreferences
-import com.capyreader.app.common.ImagePreview
 import com.jocmp.capy.Article
 import com.jocmp.capy.MarkRead
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 import java.time.LocalDateTime
@@ -47,10 +40,7 @@ fun ArticleList(
         modifier = Modifier.fillMaxSize(),
         state = listState,
     ) {
-        items(
-            count = articles.itemCount,
-            key = articles.itemKey { it.id },
-        ) { index ->
+        items(count = articles.itemCount) { index ->
             val item = articles[index]
 
             Box {

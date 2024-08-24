@@ -14,6 +14,7 @@ class ArticleFixture(private val database: Database) {
     fun create(
         id: String = RandomUUID.generate(),
         title: String = "Test Title",
+        summary: String = "Test article here",
         feed: Feed = feedFixture.create(feedURL = "https://example.com/${RandomUUID.generate()}"),
         read: Boolean = true,
         publishedAt: Long = nowUTCInSeconds(),
@@ -28,7 +29,7 @@ class ArticleFixture(private val database: Database) {
                 extracted_content_url = null,
                 image_url = null,
                 published_at = publishedAt,
-                summary = "Test article here",
+                summary = summary,
                 url = "https://example.com/test-article"
             )
             database.articlesQueries.updateStatus(
