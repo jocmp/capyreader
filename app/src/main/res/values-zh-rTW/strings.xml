@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="filter_all">全部</string>
+    <string name="feed_action_unsubscribe">取消訂閱</string>
+    <string name="filter_action_menu_description">編輯</string>
+    <string name="settings_remove_account_confirm_feedbin">登出</string>
+    <string name="settings_remove_account_button_local">刪除帳戶</string>
+    <string name="settings_remove_account_title_local">刪除帳戶</string>
+    <string name="settings_remove_account_message_local">您确定要刪除帳戶嗎？此操作不可撤銷。</string>
+    <string name="settings_remove_account_confirm_local">確認</string>
+    <string name="account_settings_save_name">名稱已保存</string>
+    <string name="article_view_mark_as_read">標為已讀</string>
+    <string name="article_view_star">收藏</string>
+    <string name="refresh_manually_only">僅手動</string>
+    <string name="refresh_minutes">每%1$d分鐘</string>
+    <plurals name="refresh_hours">
+        <item quantity="other">每%d小時</item>
+    </plurals>
+    <string name="refresh_feeds_menu_label">重整Feeds</string>
+    <string name="nav_headline_tags">標籤</string>
+    <string name="nav_headline_feeds">Feeds</string>
+    <string name="nav_add_feed">添加Feed</string>
+    <string name="add_feed_feed_not_error">找不到Feed</string>
+    <string name="add_feed_save_error">無法保存feed</string>
+    <string name="add_feed_network_error">找不到feed。檢查您的連接。</string>
+    <string name="edit_feed_error">儲存feed出錯</string>
+    <string name="app_name">Capy Reader</string>
+    <string name="add_feed_url_title">Feed或網頁URL</string>
+    <string name="add_feed_submit">添加</string>
+    <string name="add_feed_name_title">名</string>
+    <string name="add_feed_new_folder_title">新標籤</string>
+    <string name="add_feed_success">已添加Feed</string>
+    <string name="feed_form_cancel">取消</string>
+    <string name="filter_starred">已星標</string>
+    <string name="filter_unread">未讀</string>
+    <string name="feed_action_edit">編輯Feed</string>
+    <string name="feed_action_unsubscribe_message">您确定要取消訂閱%1$s嗎？</string>
+    <string name="folder_action_edit">重命名</string>
+    <string name="edit_feed_submit">保存</string>
+    <string name="feed_action_unsubscribe_title">退訂</string>
+    <string name="feed_action_unsubscribe_confirm">退訂</string>
+    <string name="dialog_cancel">取消</string>
+    <string name="folder_action_delete_title">刪除標籤</string>
+    <string name="feed_action_edit_success">Feed已更新</string>
+    <string name="feed_action_unsubscribe_success">已退訂</string>
+    <string name="settings">帳戶</string>
+    <string name="settings_remove_account_message_feedbin">您确定要登出嗎？</string>
+    <string name="settings_remove_account_button_feedbin">登出</string>
+    <string name="settings_remove_account_title_feedbin">登出</string>
+</resources>
