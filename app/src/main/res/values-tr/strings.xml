@@ -132,4 +132,5 @@
     <string name="add_feed_feed_not_error">Yayın Bulunamadı</string>
     <string name="crash_reporting_checkbox_title">Çökme raporunu etkinleştir</string>
     <string name="add_feed_save_error">Yayın kaydedilemedi</string>
+    <string name="filter_action_menu_search_articles">Arama makaleler</string>
 </resources>
