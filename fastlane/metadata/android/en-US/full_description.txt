@@ -4,6 +4,7 @@ Some features include:
 
 • Sync with your Feedbin account or keep feeds local on device
 • Track read and starred articles
+• Article search
 • Full content mode
 • Dark mode
 • Big screen support
