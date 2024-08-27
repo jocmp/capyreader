@@ -144,7 +144,5 @@ fun ArticleView(
 
     ArticleTemplateColorListener(webView = webViewState.webView, templateColors = templateColors)
 
-    ArticleTextSizeListener(webView = webViewState.webView)
-
-    ArticleFontFamilyListener(webView = webViewState.webView)
+    ArticleStyleListener(webView = webViewState.webView)
 }
