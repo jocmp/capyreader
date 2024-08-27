@@ -186,8 +186,8 @@ internal class FeedbinAccountDelegate(
         return try {
             refreshFeeds()
             refreshTaggings()
-            refreshUnreadEntries()
             refreshStarredEntries()
+            refreshUnreadEntries()
             refreshAllArticles(since = since)
             fetchMissingArticles()
 
