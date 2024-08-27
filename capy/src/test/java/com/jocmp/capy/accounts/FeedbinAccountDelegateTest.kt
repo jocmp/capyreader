@@ -1,8 +1,10 @@
 package com.jocmp.capy.accounts
 
+import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.FeedFixture
+import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.feedbinclient.CreateSubscriptionRequest
 import com.jocmp.feedbinclient.Entry
 import com.jocmp.feedbinclient.Entry.Images
@@ -27,6 +29,7 @@ import org.junit.Before
 import org.junit.Test
 import retrofit2.Response
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class FeedbinAccountDelegateTest {
@@ -135,18 +138,56 @@ class FeedbinAccountDelegateTest {
 
     @Test
     fun refreshAll_findsMissingArticles() = runTest {
+        val unreadEntry = Entry(
+            id = 1,
+            feed_id = 2,
+            title = "Reddit admits more moderator protests could hurt its business",
+            summary = "Enlarge (credit: Jakub Porzycki/NurPhoto via Getty Images) Reddit filed to go public on Thursday (PDF), revealing various details of the social media company's inner workings. Among the revelations, Reddit acknowledged the threat of future user protests",
+            content = "<p>Reddit filed to go public on Thursday (PDF), revealing various details of the social media company's inner workings. Among the revelations, Reddit acknowledged the threat of future user protests</p>",
+            url = "https://arstechnica.com/?p=2005526",
+            published = "2024-02-23T17:42:38.000000Z",
+            created_at = "2024-02-23T17:47:45.708056Z",
+            extracted_content_url = "https://extract.feedbin.com/parser/feedbin/fa2d8d34c403421a766dbec46c58738c36ff359e?base64_url=aHR0cHM6Ly9hcnN0ZWNobmljYS5jb20vP3A9MjAwNTUyNg==",
+            author = "Scharon Harding",
+            images = Images(
+                size_1 = SizeOne(
+                    cdn_url = "https://cdn.arstechnica.net/wp-content/uploads/2024/02/GettyImages-2023785321-800x534.jpg"
+                ),
+            ),
+        )
+
+        val readEntry = Entry(
+            id = 2,
+            feed_id = 2,
+            title = "Apple’s iPhone 16 launch event is set for September",
+            summary = "Apple’s tagline: 'It’s Glowtime.'",
+            content = "<p>More content here</p>",
+            url = "https://www.theverge.com/2024/8/26/24223957/apple-iphone-16-launch-event-date-glowtime",
+            published = "2024-08-24T17:42:38.000000Z",
+            created_at = "2024-08-243T17:47:45.708056Z",
+            extracted_content_url = "https://extract.feedbin.com/parser/feedbin/fa2d8d34c403421a766dbec46c58738c36ff359e?base64_url=aHR0cHM6Ly9hcnN0ZWNobmljYS5jb20vP3A9MjAwNTUyNg==",
+            author = "Jay Peters",
+            images = Images(
+                size_1 = SizeOne(
+                    cdn_url = "https://cdn.arstechnica.net/wp-content/uploads/2024/02/GettyImages-2023785321-800x534.jpg"
+                ),
+            ),
+        )
+
+        val starredEntries = listOf(readEntry, unreadEntry)
+
         coEvery { feedbin.subscriptions() }.returns(Response.success(subscriptions))
-        coEvery { feedbin.unreadEntries() }.returns(Response.success(emptyList()))
-        coEvery { feedbin.starredEntries() }.returns(Response.success(entries.map { it.id }))
+        coEvery { feedbin.unreadEntries() }.returns(Response.success(listOf(unreadEntry.id)))
+        coEvery { feedbin.starredEntries() }.returns(Response.success(starredEntries.map { it.id }))
         coEvery { feedbin.taggings() }.returns(Response.success(taggings))
         coEvery {
             feedbin.entries(
                 since = null,
                 perPage = 100,
                 page = "1",
-                ids = entries.map { it.id }.joinToString(","),
+                ids = starredEntries.map { it.id }.joinToString(","),
             )
-        }.returns(Response.success(entries))
+        }.returns(Response.success(starredEntries))
         coEvery {
             feedbin.entries(
                 since = any(),
@@ -160,12 +201,16 @@ class FeedbinAccountDelegateTest {
 
         delegate.refresh()
 
-        val articles = database
-            .articlesQueries
-            .countAll(read = false, starred = true)
+        val starredArticles = ArticleRecords(database)
+            .byStatus
+            .all(ArticleStatus.STARRED, limit = 2, offset = 0)
             .executeAsList()
 
-        assertEquals(expected = 1, actual = articles.size)
+        val unreadArticle = starredArticles.find { it.id == unreadEntry.id.toString() }!!
+        val readArticle = starredArticles.find { it.id == readEntry.id.toString() }!!
+
+        assertFalse(unreadArticle.read)
+        assertTrue(readArticle.read)
     }
 
     @Test
