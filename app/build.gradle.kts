@@ -21,8 +21,8 @@ android {
         applicationId = "com.capyreader.app"
         minSdk = 30
         targetSdk = 34
-        versionCode = 1036
-        versionName = "2024.08.1036-dev"
+        versionCode = 1037
+        versionName = "2024.08.1037"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
