@@ -134,4 +134,9 @@
     <string name="feed_form_copy_feed_url_to_clipboard">Copy Feed URL to clipboard</string>
     <string name="filter_action_menu_search_articles">Search articles</string>
     <string name="feed_list_top_bar_close_search">Dismiss search</string>
+    <string name="settings_panel_general_title">General</string>
+    <string name="settings_panel_display_title">Display &amp; Appearance</string>
+    <string name="settings_import_export_title">Import &amp; Export</string>
+    <string name="settings_about_title">About</string>
+    <string name="settings_list_top_bar_title">Settings</string>
 </resources>

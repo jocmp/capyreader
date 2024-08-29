@@ -29,27 +29,10 @@ fun NavGraphBuilder.accountsGraph(
             onSuccess = onAddSuccess,
         )
     }
-    dynamicLayout(isCompactWidth) {
+    composable(Route.Settings) {
         SettingsScreen(
             onRemoveAccount = onRemoveAccount,
             onNavigateBack = onNavigateBack
         )
-    }
-}
-
-fun NavGraphBuilder.dynamicLayout(isCompactWindow: Boolean, content: @Composable () -> Unit) {
-    val route = Route.Settings.path
-
-    if (isCompactWindow) {
-        composable(route) {
-            content()
-        }
-    } else {
-        dialog(
-            route,
-            dialogProperties = DialogProperties(usePlatformDefaultWidth = false)
-        ) {
-            DialogCard(content = content)
-        }
     }
 }

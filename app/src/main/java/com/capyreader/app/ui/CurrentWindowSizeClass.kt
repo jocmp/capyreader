@@ -1,6 +1,5 @@
 package com.capyreader.app.ui
 
-import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.window.core.layout.WindowWidthSizeClass.Companion.EXPANDED

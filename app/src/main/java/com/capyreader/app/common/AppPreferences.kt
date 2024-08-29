@@ -18,7 +18,7 @@ class AppPreferences(context: Context) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
     )
 
-    val articleDisplay = ArticleDisplayOptions(preferenceStore)
+    val articleDisplay = ListDisplayOptions(preferenceStore)
 
     val accountID: Preference<String>
         get() = preferenceStore.getString("account_id")
@@ -59,7 +59,7 @@ class AppPreferences(context: Context) {
         preferenceStore.clearAll()
     }
 
-    class ArticleDisplayOptions(private val preferenceStore: PreferenceStore) {
+    class ListDisplayOptions(private val preferenceStore: PreferenceStore) {
         val showFeedName: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_display_feed_name", true)
 
