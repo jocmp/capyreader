@@ -1,6 +1,9 @@
 package com.capyreader.app.ui.settings
 
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
+import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
@@ -36,40 +39,43 @@ fun SettingsScreen(
     }
 
     SettingsView(
-        onNavigateBack = { onNavigateBack() },
-        onRequestRemoveAccount = {
-            viewModel.removeAccount()
-            onRemoveAccount()
-        },
-        onRequestExport = { exportOPML() },
-        onRequestImport = {
-            importOPML()
-        },
-
-        accountSource = viewModel.accountSource,
-        accountName = viewModel.accountName,
-        importProgress = viewModel.importProgress,
-        settings = SettingsOptions(
-            canOpenLinksInternally = viewModel.canOpenLinksInternally,
-            updateOpenLinksInternally = viewModel::updateOpenLinksInternally,
-            refreshInterval = viewModel.refreshInterval,
-            updateRefreshInterval = viewModel::updateRefreshInterval,
-            autoDelete = viewModel.autoDelete,
-            updateAutoDelete = viewModel::updateAutoDelete,
-            updateTheme = viewModel::updateTheme,
-            theme = viewModel.theme,
-            updateStickFullContent = viewModel::updateStickyFullContent,
-            enableStickyFullContent = viewModel.enableStickyFullContent,
-            articleList = ArticleListOptions(
-                imagePreview = viewModel.imagePreview,
-                showSummary = viewModel.showSummary,
-                showFeedName = viewModel.showFeedName,
-                showFeedIcons = viewModel.showFeedIcons,
-                updateSummary = viewModel::updateSummary,
-                updateFeedIcons = viewModel::updateFeedIcons,
-                updateImagePreview = viewModel::updateImagePreview,
-                updateFeedName = viewModel::updateFeedName,
-            )
-        )
+        onNavigateBack = onNavigateBack,
     )
+//    OldSettingsView(
+//        onNavigateBack = { onNavigateBack() },
+//        onRequestRemoveAccount = {
+//            viewModel.removeAccount()
+//            onRemoveAccount()
+//        },
+//        onRequestExport = { exportOPML() },
+//        onRequestImport = {
+//            importOPML()
+//        },
+//
+//        accountSource = viewModel.accountSource,
+//        accountName = viewModel.accountName,
+//        importProgress = viewModel.importProgress,
+//        settings = SettingsOptions(
+//            canOpenLinksInternally = viewModel.canOpenLinksInternally,
+//            updateOpenLinksInternally = viewModel::updateOpenLinksInternally,
+//            refreshInterval = viewModel.refreshInterval,
+//            updateRefreshInterval = viewModel::updateRefreshInterval,
+//            autoDelete = viewModel.autoDelete,
+//            updateAutoDelete = viewModel::updateAutoDelete,
+//            updateTheme = viewModel::updateTheme,
+//            theme = viewModel.theme,
+//            updateStickFullContent = viewModel::updateStickyFullContent,
+//            enableStickyFullContent = viewModel.enableStickyFullContent,
+//            articleList = ArticleListOptions(
+//                imagePreview = viewModel.imagePreview,
+//                showSummary = viewModel.showSummary,
+//                showFeedName = viewModel.showFeedName,
+//                showFeedIcons = viewModel.showFeedIcons,
+//                updateSummary = viewModel::updateSummary,
+//                updateFeedIcons = viewModel::updateFeedIcons,
+//                updateImagePreview = viewModel::updateImagePreview,
+//                updateFeedName = viewModel::updateFeedName,
+//            )
+//        )
+//    )
 }

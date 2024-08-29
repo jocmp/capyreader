@@ -1,7 +1,9 @@
 package com.capyreader.app.ui.settings
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -29,8 +31,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults.enterAlwaysScrollBehavior
+import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
+import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
+import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldDestinationItem
+import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
+import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -48,7 +56,6 @@ import androidx.compose.ui.window.DialogProperties
 import com.capyreader.app.BuildConfig
 import com.capyreader.app.BuildConfig.VERSION_NAME
 import com.capyreader.app.R
-import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.common.ThemeOption
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.setupCommonModules
@@ -77,9 +84,106 @@ data class SettingsOptions(
     val enableStickyFullContent: Boolean,
 )
 
-@OptIn(ExperimentalMaterial3Api::class)
+<<<<<<< Updated upstream
+@OptIn(ExperimentalMaterial3AdaptiveApi::class)
+=======
+<<<<<<< Updated upstream
+=======
+@OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun SettingsView(
+    onNavigateBack: () -> Unit
+) {
+    val navigator = rememberListDetailPaneScaffoldNavigator(
+        initialDestinationHistory = initialDestinationHistory()
+    )
+    val currentPanel = navigator.currentDestination?.content
+
+    SettingsScaffold(
+        scaffoldNavigator = navigator,
+        listPane = {
+            SettingsList(
+                selected = currentPanel,
+                onNavigate = { panel ->
+                    navigator.navigateTo(ThreePaneScaffoldRole.Primary, panel)
+                },
+                onNavigateBack = onNavigateBack
+            )
+        },
+        detailPane = {
+            currentPanel?.let { panel ->
+                SettingsPanelScaffold(
+                    onBack = {
+                        navigator.navigateBack()
+                    },
+                    title = panel.title,
+                ) {
+                    Box(contentAlignment = Alignment.Center) {
+                        when (panel) {
+                            is SettingsPanel.General -> GeneralSettingsPanel()
+                            SettingsPanel.About -> Text("Sorry charlie")
+                            SettingsPanel.Display -> Text("Sorry charlie")
+                            SettingsPanel.ImportExport -> Text("Sorry charlie")
+                        }
+                    }
+                }
+            }
+        }
+    )
+
+    BackHandler(currentPanel == SettingsPanel.General) {
+        onNavigateBack()
+    }
+
+    BackHandler(navigator.canNavigateBack()) {
+        navigator.navigateBack()
+    }
+}
+
+>>>>>>> Stashed changes
+@OptIn(ExperimentalMaterial3Api::class)
+>>>>>>> Stashed changes
+@Composable
+fun SettingsView(
+    onNavigateBack: () -> Unit
+) {
+    val navigator = rememberListDetailPaneScaffoldNavigator<SettingsPanel>(
+        initialDestinationHistory = initialDestinationHistory()
+    )
+    val currentPanel = navigator.currentDestination?.content
+
+    SettingsScaffold(
+        scaffoldNavigator = navigator,
+        listPane = {
+            SettingsList(
+                selected = currentPanel,
+                onNavigate = { panel ->
+                    navigator.navigateTo(ThreePaneScaffoldRole.Primary, panel)
+                },
+                onNavigateBack = onNavigateBack
+            )
+        },
+        detailPane = {
+            currentPanel?.let { panel ->
+                Box(contentAlignment = Alignment.Center) {
+                    Text(stringResource(panel.title))
+                }
+            }
+        }
+    )
+
+    BackHandler(currentPanel == SettingsPanel.General) {
+        onNavigateBack()
+    }
+
+    BackHandler(navigator.canNavigateBack()) {
+        navigator.navigateBack()
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun OldSettingsView(
     onNavigateBack: () -> Unit,
     onRequestRemoveAccount: () -> Unit,
     onRequestExport: () -> Unit,
@@ -380,6 +484,27 @@ fun showAccountName(source: Source): Boolean {
 
 fun showCrashReporting() = BuildConfig.FLAVOR == "gplay"
 
+@OptIn(ExperimentalMaterial3AdaptiveApi::class)
+@Composable
+fun initialDestinationHistory(): List<ThreePaneScaffoldDestinationItem<SettingsPanel>> {
+    return if (isCompact()) {
+        listOf(
+            ThreePaneScaffoldDestinationItem<SettingsPanel>(
+                ListDetailPaneScaffoldRole.List,
+                null
+            )
+        )
+    } else {
+        listOf(
+            ThreePaneScaffoldDestinationItem(
+                pane = ThreePaneScaffoldRole.Secondary,
+                SettingsPanel.General
+            )
+        )
+    }
+}
+
+
 @Preview
 @Composable
 fun AccountSettingsViewPreview() {
@@ -392,35 +517,7 @@ fun AccountSettingsViewPreview() {
         }
     ) {
         SettingsView(
-            onNavigateBack = {},
-            onRequestRemoveAccount = {},
-            onRequestExport = {},
-            onRequestImport = {},
-            accountSource = Source.FEEDBIN,
-            accountName = "hello@example.com",
-            importProgress = null,
-            settings = SettingsOptions(
-                refreshInterval = RefreshInterval.EVERY_HOUR,
-                updateRefreshInterval = {},
-                updateAutoDelete = {},
-                autoDelete = AutoDelete.ENABLED,
-                updateTheme = {},
-                theme = ThemeOption.LIGHT,
-                canOpenLinksInternally = true,
-                updateOpenLinksInternally = {},
-                enableStickyFullContent = false,
-                updateStickFullContent = {},
-                articleList = ArticleListOptions(
-                    imagePreview = ImagePreview.default,
-                    showSummary = false,
-                    showFeedName = false,
-                    showFeedIcons = false,
-                    updateSummary = {},
-                    updateFeedIcons = {},
-                    updateImagePreview = {},
-                    updateFeedName = {}
-                )
-            )
+            onNavigateBack = {}
         )
     }
 }
@@ -438,35 +535,7 @@ fun AccountSettingsView_LocalPreview() {
     ) {
         CapyTheme(theme = ThemeOption.DARK) {
             SettingsView(
-                onNavigateBack = {},
-                onRequestRemoveAccount = {},
-                onRequestExport = {},
-                onRequestImport = {},
-                accountSource = Source.LOCAL,
-                accountName = "",
-                importProgress = null,
-                settings = SettingsOptions(
-                    refreshInterval = RefreshInterval.EVERY_HOUR,
-                    updateRefreshInterval = {},
-                    updateAutoDelete = {},
-                    autoDelete = AutoDelete.ENABLED,
-                    updateTheme = {},
-                    theme = ThemeOption.LIGHT,
-                    canOpenLinksInternally = true,
-                    updateOpenLinksInternally = {},
-                    enableStickyFullContent = false,
-                    updateStickFullContent = {},
-                    articleList = ArticleListOptions(
-                        imagePreview = ImagePreview.default,
-                        showSummary = false,
-                        showFeedName = false,
-                        showFeedIcons = false,
-                        updateSummary = {},
-                        updateFeedIcons = {},
-                        updateImagePreview = {},
-                        updateFeedName = {},
-                    )
-                )
+                onNavigateBack = {}
             )
         }
     }
