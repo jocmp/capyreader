@@ -14,6 +14,7 @@ fun articleTemplateColors() = TemplateColors(
     primary = colorScheme.primary.toHTMLColor(),
     primaryContainer = colorScheme.primaryContainer.toHTMLColor(),
     surface = colorScheme.surface.toHTMLColor(),
+    surfaceContainerHighest = colorScheme.surfaceContainerHighest.toHTMLColor(),
     surfaceVariant = colorScheme.surfaceVariant.toHTMLColor(),
 )
 

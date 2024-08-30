@@ -50,7 +50,7 @@ class ArticleRenderer(
         ).renderedText
 
         val document = Jsoup.parse(html)
-        document.getElementsByTag("img").drop(1).forEach { element ->
+        document.getElementsByTag("img").forEach { element ->
             element.attr("loading", "lazy")
         }
 

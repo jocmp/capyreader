@@ -18,6 +18,7 @@ data class Entry(
 ) {
     @JsonClass(generateAdapter = true)
     class Images(
+        val original_url: String,
         val size_1: SizeOne,
     ) {
         @JsonClass(generateAdapter = true)

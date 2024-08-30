@@ -9,6 +9,7 @@ data class TemplateColors(
     val primary: String,
     val primaryContainer: String,
     val surface: String,
+    val surfaceContainerHighest: String,
     val surfaceVariant: String,
 ) {
     fun asMap() = mapOf(
@@ -18,6 +19,7 @@ data class TemplateColors(
         "color_primary" to primary,
         "color_primary_container" to primaryContainer,
         "color_surface" to surface,
+        "color_surface_container_highest" to surfaceContainerHighest,
         "color_surface_variant" to surfaceVariant,
     )
 
@@ -29,6 +31,7 @@ data class TemplateColors(
             "--color-primary" to primary,
             "--color-primary-container" to primaryContainer,
             "--color-surface" to surface,
+            "--color-surface-container-highest" to surfaceContainerHighest,
             "--color-surface-variant" to surfaceVariant,
         )
     )
