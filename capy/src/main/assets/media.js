@@ -43,8 +43,13 @@ function addImageClickListeners() {
   });
 }
 
+function displayContent() {
+  document.getElementById("article-body-content").classList.add("loaded");
+}
+
 window.onload = () => {
   cleanAnchorImageTags();
   addImageClickListeners();
   configureVideoTags();
+  displayContent();
 };

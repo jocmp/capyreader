@@ -247,6 +247,7 @@ fun WebView(
 
                 this.settings.javaScriptEnabled = true
                 this.settings.mediaPlaybackRequiresUserGesture = false
+                isVerticalScrollBarEnabled = false
                 this.layoutParams = layoutParams
                 addJavascriptInterface(
                     WebViewInterface(
@@ -584,6 +585,7 @@ public class WebViewNavigator(private val coroutineScope: CoroutineScope) {
                         event.encoding,
                         event.historyUrl
                     )
+                    isVerticalScrollBarEnabled = true
                 }
 
                 is NavigationEvent.ClearView -> {

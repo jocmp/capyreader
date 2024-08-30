@@ -135,7 +135,6 @@ fun extractIcon(extractedContent: ExtractedContent) = when {
     else -> R.drawable.icon_article_empty
 }
 
-
 @Composable
 fun ArticleNavigationIcon(onClick: () -> Unit) {
     val showIcon = isCompact()
