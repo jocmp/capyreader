@@ -52,7 +52,7 @@ fun rememberExtractedContent(
     fun fetch() {
         setExtractedContent(ExtractedContent(requestShow = true, value = Async.Loading))
 
-        scope.launch {
+        scope.launch(Dispatchers.IO) {
             if (enableStickyFullContent && !article.enableStickyFullContent) {
                 account.enableStickyContent(article.feedID)
             }

@@ -161,10 +161,9 @@ class ArticleScreenViewModel(
         }
     }
 
-    fun selectArticle(articleID: String, completion: (article: Article) -> Unit) {
-        viewModelScope.launch {
+    fun selectArticle(articleID: String) {
+        viewModelScope.launch(Dispatchers.IO) {
             _article = account.findArticle(articleID = articleID)?.copy(read = true)
-            _article?.let(completion)
             appPreferences.articleID.set(articleID)
             markRead(articleID)
         }

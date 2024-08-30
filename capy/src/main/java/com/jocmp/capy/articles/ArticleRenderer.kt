@@ -5,6 +5,7 @@ import com.jocmp.capy.Article
 import com.jocmp.capy.MacroProcessor
 import com.jocmp.capy.common.toDeviceDateTime
 import com.jocmp.capy.preferences.Preference
+import org.jsoup.Jsoup
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import com.jocmp.capy.R as CapyRes
@@ -48,7 +49,12 @@ class ArticleRenderer(
             substitutions = substitutions
         ).renderedText
 
-        return html
+        val document = Jsoup.parse(html)
+        document.getElementsByTag("img").drop(1).forEach { element ->
+            element.attr("loading", "lazy")
+        }
+
+        return document.html()
     }
 
     fun fetchCached(article: Article): String {

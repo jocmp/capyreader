@@ -17,6 +17,8 @@ import com.capyreader.app.ui.components.WebViewNavigator
 import com.capyreader.app.ui.components.rememberSaveableWebViewState
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 @Composable
@@ -120,24 +122,23 @@ fun ArticleView(
     }
 
     LaunchedEffect(articleID) {
-        if (articleID == null) {
-            clearWebView()
-            return@LaunchedEffect
-        }
+        launch(Dispatchers.IO) {
+            if (article == null) {
+                clearWebView()
+            } else {
+                val html = renderer.fetchCached(article)
 
-        val html = renderer.fetchCached(article)
-
-        if (html.isNotBlank()) {
-            webViewNavigator.loadHtml(html)
-            return@LaunchedEffect
-        }
-
-        clearWebView()
-
-        if (extractedContent.requestShow) {
-            extractedContentState.fetch()
-        } else {
-            webViewNavigator.loadHtml(renderer.render(article, byline = byline, colors = colors))
+                if (html.isNotBlank()) {
+                    webViewNavigator.loadHtml(html)
+                } else {
+                    if (extractedContent.requestShow) {
+                        extractedContentState.fetch()
+                    } else {
+                        val rendered = renderer.render(article, byline = byline, colors = colors)
+                        webViewNavigator.loadHtml(rendered)
+                    }
+                }
+            }
         }
     }
 

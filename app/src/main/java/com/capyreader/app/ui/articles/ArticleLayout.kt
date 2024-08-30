@@ -81,7 +81,7 @@ fun ArticleLayout(
     onSelectFeed: suspend (feedID: String) -> Unit,
     onSelectArticleFilter: () -> Unit,
     onSelectStatus: (status: ArticleStatus) -> Unit,
-    onSelectArticle: (articleID: String, completion: (article: Article) -> Unit) -> Unit,
+    onSelectArticle: (articleID: String) -> Unit,
     onNavigateToSettings: () -> Unit,
     onRequestClearArticle: () -> Unit,
     onToggleArticleRead: () -> Unit,
@@ -299,11 +299,10 @@ fun ArticleLayout(
                             listState = listState,
                             onMarkAllRead = onMarkAllRead,
                             onSelect = { articleID ->
-                                onSelectArticle(articleID) {
-                                    navigateToDetail()
-                                    if (search.isActive) {
-                                        focusManager.clearFocus()
-                                    }
+                                onSelectArticle(articleID)
+                                navigateToDetail()
+                                if (search.isActive) {
+                                    focusManager.clearFocus()
                                 }
                             },
                         )
@@ -418,7 +417,7 @@ fun ArticleLayoutPreview() {
             onSelectFeed = {},
             onSelectArticleFilter = { },
             onSelectStatus = {},
-            onSelectArticle = { _, _ -> },
+            onSelectArticle = {},
             onNavigateToSettings = { },
             onRequestClearArticle = { },
             onToggleArticleRead = { },
