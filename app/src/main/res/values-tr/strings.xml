@@ -98,7 +98,7 @@
     <string name="settings_section_refresh">Yenile</string>
     <string name="opml_import_button_text">Dosyadan içeri aktar</string>
     <string name="opml_export_button_text">OPML\'yi Dışa Aktar</string>
-    <string name="settings_section_display_appearance">Ekran ve Görünüm</string>
+    <string name="settings_panel_display_title">Ekran ve Görünüm</string>
     <string name="theme_menu_label">Tema</string>
     <string name="image_preview_menu_option_large">Büyük</string>
     <string name="image_preview_label">Görüntü önizlemesi</string>

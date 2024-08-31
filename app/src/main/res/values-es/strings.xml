@@ -95,7 +95,7 @@
     <string name="settings_import_progress">Importando suscripciones %1$d de %2$d</string>
     <string name="opml_import_toast_complete">Importación finalizada</string>
     <string name="opml_import_toast_failed">Importación fallida</string>
-    <string name="settings_section_display_appearance">Visualización y aspecto</string>
+    <string name="settings_panel_display_title">Visualización y aspecto</string>
     <string name="theme_menu_label">Tema</string>
     <string name="theme_menu_option_light">Claro</string>
     <string name="theme_menu_option_dark">Oscuro</string>

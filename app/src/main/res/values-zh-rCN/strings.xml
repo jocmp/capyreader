@@ -66,7 +66,7 @@
     <string name="settings_import_progress">正在导入 %1$d 个订阅（共 %2$d 个）</string>
     <string name="opml_import_toast_complete">导入完成</string>
     <string name="opml_import_toast_failed">导入失败</string>
-    <string name="settings_section_display_appearance">显示和外观</string>
+    <string name="settings_panel_display_title">显示和外观</string>
     <string name="theme_menu_label">主题</string>
     <string name="theme_menu_option_dark">深色</string>
     <string name="settings_option_in_app_browser">使用内置浏览器</string>

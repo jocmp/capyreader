@@ -95,7 +95,7 @@
     <string name="settings_import_progress">Uvoz Izvora %1$d od %2$d</string>
     <string name="opml_import_toast_complete">Uvoz je uspešno završen</string>
     <string name="opml_import_toast_failed">Uvoz nije uspeo</string>
-    <string name="settings_section_display_appearance">Prikaz i izgled</string>
+    <string name="settings_panel_display_title">Prikaz i izgled</string>
     <string name="theme_menu_label">Tema</string>
     <string name="theme_menu_option_light">Svetla</string>
     <string name="theme_menu_option_dark">Tamna</string>
