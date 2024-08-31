@@ -53,7 +53,7 @@
     <string name="settings_import_progress_placeholder">Probíhá importování odběrů…</string>
     <string name="settings_import_progress">Importuje se %1$d z %2$d</string>
     <string name="opml_import_toast_failed">Import selhal</string>
-    <string name="settings_section_display_appearance">Zobrazení a vzhled</string>
+    <string name="settings_panel_display_title">Zobrazení a vzhled</string>
     <string name="theme_menu_label">Motiv</string>
     <string name="theme_menu_option_light">Světlý</string>
     <string name="theme_menu_option_dark">Tmavý</string>

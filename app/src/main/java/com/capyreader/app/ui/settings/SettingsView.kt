@@ -111,11 +111,10 @@ fun SettingsView(
                     Box(contentAlignment = Alignment.Center) {
                         when (panel) {
                             SettingsPanel.General -> GeneralSettingsPanel()
-                            SettingsPanel.Display -> Text("Sorry charlie")
+                            SettingsPanel.Display -> DisplaySettingsPanel()
                             SettingsPanel.Account -> AccountSettingsPanel(
                                 onRemoveAccount = onRemoveAccount
                             )
-
                             SettingsPanel.About -> AboutSettingsPanel()
                         }
                     }
@@ -164,9 +163,7 @@ fun OldSettingsView(
     val clipboardManager = LocalClipboardManager.current
     val strings = AccountSettingsStrings.build(accountSource)
     val (isRemoveDialogOpen, setRemoveDialogOpen) = remember { mutableStateOf(false) }
-    val (isAdvancedDisplayDialogOpen, setAdvancedDisplayDialogOpen) = remember {
-        mutableStateOf(false)
-    }
+
 
     val copyVersionToClipboard = {
         clipboardManager.setText(AnnotatedString("Capy Reader $VERSION_NAME"))
@@ -179,10 +176,6 @@ fun OldSettingsView(
     val onRemove = {
         setRemoveDialogOpen(false)
         onRequestRemoveAccount()
-    }
-
-    val showAdvancedDisplaySettings = {
-        setAdvancedDisplayDialogOpen(true)
     }
 
     Scaffold(
@@ -242,60 +235,11 @@ fun OldSettingsView(
                             )
                         }
                     }
-
-                    FormSection(
-                        title = stringResource(R.string.settings_section_display_appearance)
-                    ) {
-                        RowItem {
-                            ThemeMenu(onUpdateTheme = settings.updateTheme, theme = settings.theme)
-                        }
-
-                        RowItem {
-                            TextSwitch(
-                                checked = settings.enableStickyFullContent,
-                                onCheckedChange = settings.updateStickFullContent,
-                                title = stringResource(R.string.settings_option_full_content_title),
-                                subtitle = stringResource(R.string.settings_option_full_content_subtitle)
-                            )
-                        }
-
-                        Row(
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable {
-                                    showAdvancedDisplaySettings()
-                                }
-                        ) {
-                            Text(
-                                text = stringResource(R.string.settings_more_display_options_button),
-                                modifier = Modifier.padding(16.dp)
-                            )
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowRight,
-                                contentDescription = null,
-                                modifier = Modifier.padding(end = 16.dp)
-                            )
-                        }
-                    }
-
                 }
             }
         }
     }
 
-    if (isAdvancedDisplayDialogOpen) {
-        Dialog(
-            onDismissRequest = { setAdvancedDisplayDialogOpen(false) },
-            properties = DialogProperties(usePlatformDefaultWidth = isCompact())
-        ) {
-            ArticleListSettings(
-                onRequestClose = { setAdvancedDisplayDialogOpen(false) },
-                options = settings.articleList
-            )
-        }
-    }
 }
 
 
