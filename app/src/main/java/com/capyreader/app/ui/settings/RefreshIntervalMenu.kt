@@ -7,6 +7,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MenuAnchorType.Companion.PrimaryNotEditable
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -38,7 +39,7 @@ fun RefreshIntervalMenu(
     ) {
         TextField(
             modifier = Modifier
-                .menuAnchor()
+                .menuAnchor(PrimaryNotEditable)
                 .fillMaxWidth(),
             readOnly = true,
             value = context.translationKey(refreshInterval),

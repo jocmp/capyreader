@@ -37,7 +37,8 @@ internal fun extractedTemplate(
 
 fun parseHtml(article: Article, html: String): String {
     try {
-        val readability4J = Readability4J(article.url.toString(), html)
+        val uri = (article.feedURL ?: article.url).toString()
+        val readability4J = Readability4J(uri, html)
         val content = readability4J.parse().content ?: return ""
 
         val document = Jsoup.parse(content)

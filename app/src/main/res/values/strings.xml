@@ -139,4 +139,16 @@
     <string name="settings_import_export_title">Import &amp; Export</string>
     <string name="settings_about_title">About</string>
     <string name="settings_list_top_bar_title">Settings</string>
+    <string name="settings_auto_delete_articles_title">Keep articles</string>
+    <string name="settings_auto_delete_option_keep_forever">Forever</string>
+    <string name="settings_auto_delete_option_keep_for_one_week">1 week</string>
+    <string name="settings_auto_delete_option_keep_for_two_week">2 weeks</string>
+    <string name="settings_auto_delete_option_keep_for_one_month">1 month</string>
+    <string name="settings_auto_delete_option_keep_for_three_month">3 months</string>
+    <string name="settings_auto_delete_disclaimer">Automatically deletes read, unstarred articles based on their publish date. Deleted articles cannot be recovered.</string>
+    <string name="settings_section_advanced">Advanced</string>
+    <string name="settings_clear_all_articles_confirm">Confirm</string>
+    <string name="settings_clear_all_articles_text">Are you sure you want to delete all articles? This cannot be undone.</string>
+    <string name="settings_clear_all_articles_button">Clear all articles</string>
+    <string name="settings_support_button">Support</string>
 </resources>

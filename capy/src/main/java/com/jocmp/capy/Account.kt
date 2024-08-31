@@ -8,6 +8,7 @@ import com.jocmp.capy.accounts.LocalAccountDelegate
 import com.jocmp.capy.accounts.LocalOkHttpClient
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.asOPML
+import com.jocmp.capy.common.nowUTC
 import com.jocmp.capy.common.sortedByTitle
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.opml.ImportProgress
@@ -101,24 +102,15 @@ data class Account(
     }
 
     suspend fun refresh(): Result<Unit> {
-        val result = delegate.refresh(cutoffDate = optionalCutoffDate())
+        val cutoffDate = preferences.autoDelete.get().cutoffDate()
 
-        if (isAutoDeleteEnabled) {
-            articleRecords.deleteOldArticles()
+        val result = delegate.refresh(cutoffDate = cutoffDate)
+
+        if (cutoffDate != null) {
+            articleRecords.deleteOldArticles(before = cutoffDate)
         }
 
         return result
-    }
-
-    private val isAutoDeleteEnabled: Boolean
-        get() = preferences.autoDelete.get() == AutoDelete.ENABLED
-
-    private fun optionalCutoffDate(): ZonedDateTime? {
-        return if (isAutoDeleteEnabled) {
-            articleRecords.cutoffDate()
-        } else {
-            null
-        }
     }
 
     suspend fun findFeed(feedID: String): Feed? {
@@ -208,6 +200,10 @@ data class Account(
         feedRecords.updateStickyFullContent(enabled = false, feedID = feedID)
     }
 
+    fun clearAllArticles() {
+        articleRecords.deleteAllArticles()
+    }
+
     fun clearStickyFullContent() {
         feedRecords.clearStickyFullContent()
     }
@@ -215,3 +211,15 @@ data class Account(
 
 private fun Feedbin.Companion.forAccount(path: URI, preferences: AccountPreferences) =
     create(client = FeedbinOkHttpClient.forAccount(path, preferences))
+
+private fun AutoDelete.cutoffDate(): ZonedDateTime? {
+    val now = nowUTC()
+
+    return when(this) {
+        AutoDelete.DISABLED -> null
+        AutoDelete.WEEKLY -> now.minusWeeks(1)
+        AutoDelete.EVERY_TWO_WEEKS -> now.minusWeeks(2)
+        AutoDelete.EVERY_MONTH -> now.minusMonths(1)
+        AutoDelete.EVERY_THREE_MONTHS -> now.minusMonths(3)
+    }
+}

@@ -38,8 +38,12 @@ internal class ArticleRecords internal constructor(
             .map { it.toLong() }
     }
 
-    fun deleteOldArticles() {
-        val maxDate = cutoffDate().toEpochSecond()
+    fun deleteAllArticles() {
+        database.articlesQueries.deleteAllArticles()
+    }
+
+    fun deleteOldArticles(before: ZonedDateTime) {
+        val maxDate = before.toEpochSecond()
 
         database.articlesQueries.deleteArticles(publishedBefore = maxDate)
     }
