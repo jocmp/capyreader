@@ -5,8 +5,8 @@ import android.content.Intent
 import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
 
-fun Context.openLink(url: Uri, appPreferences: AppPreferences) {
-    if (appPreferences.openLinksInternally.get()) {
+fun Context.openLink(url: Uri, appPreferences: AppPreferences? = null) {
+    if (appPreferences != null && appPreferences.openLinksInternally.get()) {
         val intent = CustomTabsIntent
             .Builder()
             .build()

@@ -84,15 +84,11 @@ data class SettingsOptions(
     val enableStickyFullContent: Boolean,
 )
 
-<<<<<<< Updated upstream
-@OptIn(ExperimentalMaterial3AdaptiveApi::class)
-=======
-<<<<<<< Updated upstream
-=======
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun SettingsView(
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    onRemoveAccount: () -> Unit,
 ) {
     val navigator = rememberListDetailPaneScaffoldNavigator(
         initialDestinationHistory = initialDestinationHistory()
@@ -120,53 +116,14 @@ fun SettingsView(
                 ) {
                     Box(contentAlignment = Alignment.Center) {
                         when (panel) {
-                            is SettingsPanel.General -> GeneralSettingsPanel()
-                            SettingsPanel.About -> Text("Sorry charlie")
+                            is SettingsPanel.General -> GeneralSettingsPanel(
+                                onRemoveAccount = onRemoveAccount
+                            )
+                            SettingsPanel.About -> AboutSettingsPanel()
                             SettingsPanel.Display -> Text("Sorry charlie")
                             SettingsPanel.ImportExport -> Text("Sorry charlie")
                         }
                     }
-                }
-            }
-        }
-    )
-
-    BackHandler(currentPanel == SettingsPanel.General) {
-        onNavigateBack()
-    }
-
-    BackHandler(navigator.canNavigateBack()) {
-        navigator.navigateBack()
-    }
-}
-
->>>>>>> Stashed changes
-@OptIn(ExperimentalMaterial3Api::class)
->>>>>>> Stashed changes
-@Composable
-fun SettingsView(
-    onNavigateBack: () -> Unit
-) {
-    val navigator = rememberListDetailPaneScaffoldNavigator<SettingsPanel>(
-        initialDestinationHistory = initialDestinationHistory()
-    )
-    val currentPanel = navigator.currentDestination?.content
-
-    SettingsScaffold(
-        scaffoldNavigator = navigator,
-        listPane = {
-            SettingsList(
-                selected = currentPanel,
-                onNavigate = { panel ->
-                    navigator.navigateTo(ThreePaneScaffoldRole.Primary, panel)
-                },
-                onNavigateBack = onNavigateBack
-            )
-        },
-        detailPane = {
-            currentPanel?.let { panel ->
-                Box(contentAlignment = Alignment.Center) {
-                    Text(stringResource(panel.title))
                 }
             }
         }
@@ -253,15 +210,6 @@ fun OldSettingsView(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    if (showAccountName(accountSource)) {
-                        FormSection(
-                            title = stringResource(R.string.settings_section_account),
-                        ) {
-                            RowItem {
-                                Text(text = accountName)
-                            }
-                        }
-                    }
 
                     FormSection(title = stringResource(R.string.settings_section_refresh)) {
                         RowItem {
@@ -275,10 +223,10 @@ fun OldSettingsView(
                             TextSwitch(
                                 onCheckedChange = { enabled ->
                                     settings.updateAutoDelete(
-                                        if (enabled) AutoDelete.ENABLED else AutoDelete.DISABLED
+                                        if (enabled) AutoDelete.EVERY_THREE_MONTHS else AutoDelete.DISABLED
                                     )
                                 },
-                                checked = settings.autoDelete == AutoDelete.ENABLED,
+                                checked = settings.autoDelete == AutoDelete.EVERY_THREE_MONTHS,
                                 title = stringResource(R.string.settings_option_auto_delete_articles_title),
                                 subtitle = stringResource(R.string.settings_option_auto_delete_articles_subtitle)
                             )
@@ -290,14 +238,6 @@ fun OldSettingsView(
                     ) {
                         RowItem {
                             ThemeMenu(onUpdateTheme = settings.updateTheme, theme = settings.theme)
-                        }
-
-                        RowItem {
-                            TextSwitch(
-                                checked = settings.canOpenLinksInternally,
-                                onCheckedChange = settings.updateOpenLinksInternally,
-                                title = stringResource(R.string.settings_option_in_app_browser)
-                            )
                         }
 
                         RowItem {
@@ -351,76 +291,10 @@ fun OldSettingsView(
                         }
                     }
 
-                    if (showCrashReporting()) {
-                        FormSection(title = stringResource(R.string.settings_section_privacy)) {
-                            RowItem {
-                                CrashReportingCheckbox()
-                            }
-                        }
-                    }
-
-                    FormSection(title = stringResource(R.string.settings_section_version)) {
-                        Row(
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable {
-                                    copyVersionToClipboard()
-                                }
-                        ) {
-                            Text(
-                                text = VERSION_NAME,
-                                modifier = Modifier
-                                    .padding(16.dp)
-                            )
-                            Icon(
-                                imageVector = Icons.Filled.ContentCopy,
-                                tint = colorScheme.secondary,
-                                contentDescription = stringResource(
-                                    R.string.settings_option_copy_version
-                                ),
-                                modifier = Modifier
-                                    .padding(end = 16.dp)
-                            )
-                        }
-                    }
-
-                    FormSection {
-                        RowItem {
-                            HorizontalDivider(modifier = Modifier.padding(bottom = 8.dp))
-                            Button(
-                                onClick = { setRemoveDialogOpen(true) },
-                                colors = removeAccountButtonColors(accountSource),
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                Text(stringResource(strings.requestRemoveText))
-                            }
-                        }
-                    }
-
                     Spacer(modifier = Modifier.height(16.dp))
                 }
             }
         }
-    }
-
-    if (isRemoveDialogOpen) {
-        AlertDialog(
-            onDismissRequest = onRemoveCancel,
-            title = { Text(stringResource(strings.dialogTitle)) },
-            text = { Text(stringResource(strings.dialogMessage)) },
-            dismissButton = {
-                TextButton(onClick = onRemoveCancel) {
-                    Text(stringResource(R.string.dialog_cancel))
-                }
-            },
-            confirmButton = {
-                TextButton(onClick = onRemove) {
-                    Text(text = stringResource(strings.dialogConfirmText))
-                }
-            }
-        )
     }
 
     if (isAdvancedDisplayDialogOpen) {
@@ -436,19 +310,6 @@ fun OldSettingsView(
     }
 }
 
-@Composable
-private fun RowItem(
-    skipPadding: Boolean = false,
-    content: @Composable () -> Unit
-) {
-    if (skipPadding) {
-        content()
-    } else {
-        Column(Modifier.padding(horizontal = 16.dp)) {
-            content()
-        }
-    }
-}
 
 @Composable
 private fun backButton(): ImageVector {
@@ -461,25 +322,8 @@ private fun backButton(): ImageVector {
     }
 }
 
-@Composable
-fun removeAccountButtonColors(source: Source) = when (source) {
-    Source.LOCAL -> ButtonDefaults.buttonColors(
-        containerColor = colorScheme.error,
-        contentColor = colorScheme.onError
-    )
-
-    Source.FEEDBIN -> ButtonDefaults.buttonColors(
-        containerColor = colorScheme.secondary,
-        contentColor = colorScheme.onSecondary
-    )
-}
-
 fun showImportButton(source: Source): Boolean {
     return source == Source.LOCAL
-}
-
-fun showAccountName(source: Source): Boolean {
-    return source == Source.FEEDBIN
 }
 
 fun showCrashReporting() = BuildConfig.FLAVOR == "gplay"
@@ -517,7 +361,8 @@ fun AccountSettingsViewPreview() {
         }
     ) {
         SettingsView(
-            onNavigateBack = {}
+            onNavigateBack = {},
+            onRemoveAccount = {}
         )
     }
 }
@@ -535,7 +380,8 @@ fun AccountSettingsView_LocalPreview() {
     ) {
         CapyTheme(theme = ThemeOption.DARK) {
             SettingsView(
-                onNavigateBack = {}
+                onNavigateBack = {},
+                onRemoveAccount = {}
             )
         }
     }

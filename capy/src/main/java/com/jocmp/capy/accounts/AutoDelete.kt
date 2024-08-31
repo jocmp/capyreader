@@ -1,10 +1,13 @@
 package com.jocmp.capy.accounts
 
 enum class AutoDelete {
-    ENABLED,
-    DISABLED;
+    DISABLED,
+    WEEKLY,
+    EVERY_TWO_WEEKS,
+    EVERY_MONTH,
+    EVERY_THREE_MONTHS;
 
     companion object {
-        val default = ENABLED
+        val default = EVERY_THREE_MONTHS
     }
 }

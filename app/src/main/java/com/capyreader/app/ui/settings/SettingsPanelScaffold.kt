@@ -2,6 +2,8 @@ package com.capyreader.app.ui.settings
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -14,6 +16,7 @@ import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults.enterAlwaysScrollBehavior
+import androidx.compose.material3.TopAppBarDefaults.exitUntilCollapsedScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -28,7 +31,7 @@ fun SettingsPanelScaffold(
     @StringRes title: Int,
     content: @Composable () -> Unit,
 ) {
-    val scrollBehavior = enterAlwaysScrollBehavior()
+    val scrollBehavior = exitUntilCollapsedScrollBehavior()
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -60,7 +63,9 @@ fun SettingsPanelScaffold(
                 .padding(padding)
                 .verticalScroll(rememberScrollState())
         ) {
+            Spacer(modifier = Modifier.height(16.dp))
             content()
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }

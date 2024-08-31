@@ -136,11 +136,6 @@ class SettingsViewModel(
         }
     }
 
-    fun removeAccount() {
-        appPreferences.clearAll()
-        accountManager.removeAccount(accountID = account.id)
-    }
-
     fun startOPMLImport(uri: Uri?) {
         uri ?: return
 

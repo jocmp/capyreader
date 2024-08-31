@@ -40,6 +40,7 @@ fun SettingsScreen(
 
     SettingsView(
         onNavigateBack = onNavigateBack,
+        onRemoveAccount = onRemoveAccount,
     )
 //    OldSettingsView(
 //        onNavigateBack = { onNavigateBack() },

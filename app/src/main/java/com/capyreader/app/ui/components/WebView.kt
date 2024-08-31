@@ -338,7 +338,6 @@ open class AccompanistWebViewClient(private val assetLoader: WebViewAssetLoader)
             }
         }
 
-
         return assetLoader.shouldInterceptRequest(request.url)
     }
 

@@ -15,5 +15,14 @@ val settingsModule = module {
             application = get()
         )
     }
+    viewModel {
+        GeneralSettingsViewModel(
+            account = get(),
+            accountManager = get(),
+            refreshScheduler = get(),
+            appPreferences = get(),
+            application = get()
+        )
+    }
     worker { OPMLImportWorker(get(), get()) }
 }

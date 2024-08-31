@@ -125,6 +125,7 @@ SELECT
   feeds.title AS feed_title,
   feeds.favicon_url,
   feeds.enable_sticky_full_content,
+  feeds.feed_url,
   article_statuses.updated_at,
   article_statuses.starred,
   article_statuses.read
@@ -258,6 +259,11 @@ WHERE article_statuses.article_id IN :articleIDs;
 markStarred:
 UPDATE article_statuses SET starred = :starred, updated_at = :updatedAt
 WHERE article_statuses.article_id = :articleID;
+
+deleteAllArticles {
+  DELETE FROM article_statuses;
+  DELETE FROM articles;
+}
 
 deleteArticles {
   DELETE FROM article_statuses WHERE starred = 0 AND read = 1 AND article_id IN (
