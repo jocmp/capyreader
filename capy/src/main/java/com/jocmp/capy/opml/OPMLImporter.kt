@@ -1,38 +1,47 @@
 package com.jocmp.capy.opml
 
 import com.jocmp.capy.Account
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import java.io.InputStream
 import java.net.URL
-import kotlin.math.roundToInt
+import java.util.concurrent.atomic.AtomicInteger
 
 internal class OPMLImporter(private val account: Account) {
     internal suspend fun import(
         onProgress: (progress: ImportProgress) -> Unit = {},
         inputStream: InputStream,
     ) {
-        var counter = 0
+        val counter = AtomicInteger()
         val outlines = OPMLHandler.parse(inputStream)
 
         val entries = findEntries(outlines)
 
-        val groupedForms = entries.groupBy { it.url.toString() }.toMap()
+        val groupedForms = entries.groupBy { it.url.toString() }.toList()
         val size = groupedForms.size
 
         onProgress(ImportProgress(currentCount = 0, total = size))
 
-        groupedForms.forEach { (feedURL, forms) ->
-            val folderTitles = forms.flatMap { it.folderTitles }.distinct()
-            val title = forms.first().title
+        coroutineScope {
+            groupedForms.chunked(2).forEach { batch ->
+                batch.map { (feedURL, forms) ->
+                   async {
+                       val folderTitles = forms.flatMap { it.folderTitles }.distinct()
+                       val title = forms.first().title
 
-            account.addFeed(url = feedURL, title = title, folderTitles = folderTitles)
-            counter += 1
+                       account.addFeed(url = feedURL, title = title, folderTitles = folderTitles)
+                       val currentCount = counter.incrementAndGet()
 
-            onProgress(
-                ImportProgress(
-                    currentCount = counter,
-                    total = size,
-                )
-            )
+                       onProgress(
+                           ImportProgress(
+                               currentCount = currentCount,
+                               total = size,
+                           )
+                       )
+                   }
+                }.awaitAll()
+            }
         }
     }
 
