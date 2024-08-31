@@ -19,64 +19,8 @@ fun SettingsScreen(
     onRemoveAccount: () -> Unit,
     onNavigateBack: () -> Unit,
 ) {
-    val context = LocalContext.current
-    val coroutineScope = rememberCoroutineScope()
-
-    val picker = rememberLauncherForActivityResult(
-        GetOPMLContent()
-    ) { uri ->
-        viewModel.startOPMLImport(uri = uri)
-    }
-
-    val importOPML = {
-        picker.launch(listOf("text/xml", "text/x-opml", "application/*"))
-    }
-
-    val exportOPML = {
-        coroutineScope.launch(Dispatchers.IO) {
-            OPMLExporter(context = context).export(viewModel.account)
-        }
-    }
-
     SettingsView(
         onNavigateBack = onNavigateBack,
         onRemoveAccount = onRemoveAccount,
     )
-//    OldSettingsView(
-//        onNavigateBack = { onNavigateBack() },
-//        onRequestRemoveAccount = {
-//            viewModel.removeAccount()
-//            onRemoveAccount()
-//        },
-//        onRequestExport = { exportOPML() },
-//        onRequestImport = {
-//            importOPML()
-//        },
-//
-//        accountSource = viewModel.accountSource,
-//        accountName = viewModel.accountName,
-//        importProgress = viewModel.importProgress,
-//        settings = SettingsOptions(
-//            canOpenLinksInternally = viewModel.canOpenLinksInternally,
-//            updateOpenLinksInternally = viewModel::updateOpenLinksInternally,
-//            refreshInterval = viewModel.refreshInterval,
-//            updateRefreshInterval = viewModel::updateRefreshInterval,
-//            autoDelete = viewModel.autoDelete,
-//            updateAutoDelete = viewModel::updateAutoDelete,
-//            updateTheme = viewModel::updateTheme,
-//            theme = viewModel.theme,
-//            updateStickFullContent = viewModel::updateStickyFullContent,
-//            enableStickyFullContent = viewModel.enableStickyFullContent,
-//            articleList = ArticleListOptions(
-//                imagePreview = viewModel.imagePreview,
-//                showSummary = viewModel.showSummary,
-//                showFeedName = viewModel.showFeedName,
-//                showFeedIcons = viewModel.showFeedIcons,
-//                updateSummary = viewModel::updateSummary,
-//                updateFeedIcons = viewModel::updateFeedIcons,
-//                updateImagePreview = viewModel::updateImagePreview,
-//                updateFeedName = viewModel::updateFeedName,
-//            )
-//        )
-//    )
 }

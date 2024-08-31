@@ -45,9 +45,6 @@ class SettingsViewModel(
     var theme by mutableStateOf(appPreferences.theme.get())
         private set
 
-    var importProgress by mutableStateOf<ImportProgress?>(null)
-        private set
-
     private val _imagePreview = mutableStateOf(appPreferences.articleDisplay.imagePreview.get())
 
     private val _showSummary = mutableStateOf(appPreferences.articleDisplay.showSummary.get())
@@ -133,30 +130,6 @@ class SettingsViewModel(
             viewModelScope.launch(Dispatchers.IO) {
                 account.clearStickyFullContent()
             }
-        }
-    }
-
-    fun startOPMLImport(uri: Uri?) {
-        uri ?: return
-
-        val requestID = OPMLImportWorker.performAsync(applicationContext, uri)
-
-        viewModelScope.launch {
-            WorkManager.getInstance(applicationContext)
-                .getWorkInfoByIdFlow(requestID)
-                .collect { workInfo: WorkInfo? ->
-                    if (workInfo == null || workInfo.state.isFinished) {
-                        importProgress = null
-                    } else {
-                        val currentCount = workInfo.progress.getInt(PROGRESS_CURRENT_COUNT, 0)
-                        val total = workInfo.progress.getInt(PROGRESS_TOTAL, 0)
-
-                        importProgress = ImportProgress(
-                            currentCount = currentCount,
-                            total = total
-                        )
-                    }
-                }
         }
     }
 

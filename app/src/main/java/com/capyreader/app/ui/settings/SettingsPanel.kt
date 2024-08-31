@@ -13,7 +13,7 @@ sealed class SettingsPanel(@StringRes val title: Int) {
     data object Display : SettingsPanel(title = R.string.settings_panel_display_title), Parcelable
 
     @Parcelize
-    data object ImportExport : SettingsPanel(title = R.string.settings_import_export_title), Parcelable
+    data object Account : SettingsPanel(title = R.string.settings_account_title), Parcelable
 
     @Parcelize
     data object About : SettingsPanel(title = R.string.settings_about_title), Parcelable
@@ -23,7 +23,7 @@ sealed class SettingsPanel(@StringRes val title: Int) {
             get() = listOf(
                 General,
                 Display,
-                ImportExport,
+                Account,
                 About,
             )
     }

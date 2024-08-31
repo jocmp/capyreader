@@ -17,9 +17,16 @@ val settingsModule = module {
     }
     viewModel {
         GeneralSettingsViewModel(
+            refreshScheduler = get(),
+            account = get(),
+            appPreferences = get(),
+            application = get()
+        )
+    }
+    viewModel {
+        AccountSettingsViewModel(
             account = get(),
             accountManager = get(),
-            refreshScheduler = get(),
             appPreferences = get(),
             application = get()
         )

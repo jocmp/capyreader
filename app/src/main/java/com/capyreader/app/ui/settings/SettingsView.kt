@@ -16,24 +16,15 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowRight
-import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.rounded.Close
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults.enterAlwaysScrollBehavior
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
-import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
-import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldDestinationItem
 import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
@@ -41,6 +32,7 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -90,10 +82,12 @@ fun SettingsView(
     onNavigateBack: () -> Unit,
     onRemoveAccount: () -> Unit,
 ) {
-    val navigator = rememberListDetailPaneScaffoldNavigator(
-        initialDestinationHistory = initialDestinationHistory()
+    val compact = isCompact()
+    val navigator = rememberListDetailPaneScaffoldNavigator<SettingsPanel>(
+        isDestinationHistoryAware = false
     )
     val currentPanel = navigator.currentDestination?.content
+    val (isInitialized, setInitialized) = rememberSaveable { mutableStateOf(false) }
 
     SettingsScaffold(
         scaffoldNavigator = navigator,
@@ -116,12 +110,13 @@ fun SettingsView(
                 ) {
                     Box(contentAlignment = Alignment.Center) {
                         when (panel) {
-                            is SettingsPanel.General -> GeneralSettingsPanel(
+                            SettingsPanel.General -> GeneralSettingsPanel()
+                            SettingsPanel.Display -> Text("Sorry charlie")
+                            SettingsPanel.Account -> AccountSettingsPanel(
                                 onRemoveAccount = onRemoveAccount
                             )
+
                             SettingsPanel.About -> AboutSettingsPanel()
-                            SettingsPanel.Display -> Text("Sorry charlie")
-                            SettingsPanel.ImportExport -> Text("Sorry charlie")
                         }
                     }
                 }
@@ -135,6 +130,21 @@ fun SettingsView(
 
     BackHandler(navigator.canNavigateBack()) {
         navigator.navigateBack()
+    }
+
+    LaunchedEffect(isInitialized, navigator.canNavigateBack()) {
+        if (isInitialized || navigator.canNavigateBack()) {
+            return@LaunchedEffect
+        }
+
+        if (!compact) {
+            navigator.navigateTo(
+                pane = ThreePaneScaffoldRole.Secondary,
+                SettingsPanel.General
+            )
+        }
+
+        setInitialized(true)
     }
 }
 
@@ -270,28 +280,6 @@ fun OldSettingsView(
                         }
                     }
 
-                    if (showImportButton(accountSource)) {
-                        FormSection(title = stringResource(R.string.settings_section_import)) {
-                            RowItem {
-                                OPMLImportButton(
-                                    onClick = {
-                                        onRequestImport()
-                                    },
-                                    importProgress = importProgress
-                                )
-                            }
-                        }
-                    }
-
-                    FormSection(title = stringResource(R.string.settings_section_export)) {
-                        RowItem {
-                            OPMLExportButton(
-                                onClick = onRequestExport,
-                            )
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.height(16.dp))
                 }
             }
         }
@@ -327,27 +315,6 @@ fun showImportButton(source: Source): Boolean {
 }
 
 fun showCrashReporting() = BuildConfig.FLAVOR == "gplay"
-
-@OptIn(ExperimentalMaterial3AdaptiveApi::class)
-@Composable
-fun initialDestinationHistory(): List<ThreePaneScaffoldDestinationItem<SettingsPanel>> {
-    return if (isCompact()) {
-        listOf(
-            ThreePaneScaffoldDestinationItem<SettingsPanel>(
-                ListDetailPaneScaffoldRole.List,
-                null
-            )
-        )
-    } else {
-        listOf(
-            ThreePaneScaffoldDestinationItem(
-                pane = ThreePaneScaffoldRole.Secondary,
-                SettingsPanel.General
-            )
-        )
-    }
-}
-
 
 @Preview
 @Composable
