@@ -286,7 +286,7 @@ class ArticleRecordsTest {
         assertNotNull(articleRecords.reload(oldStarredArticle))
         assertNotNull(articleRecords.reload(oldArticle))
 
-        articleRecords.deleteOldArticles()
+        articleRecords.deleteOldArticles(before = nowUTC())
 
         assertNotNull(articleRecords.reload(newArticle))
         assertNotNull(articleRecords.reload(oldUnreadArticle))

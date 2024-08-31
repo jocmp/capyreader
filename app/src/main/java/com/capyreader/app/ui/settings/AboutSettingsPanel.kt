@@ -31,9 +31,7 @@ import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.theme.CapyTheme
 
 @Composable
-fun AboutSettingsPanel(
-
-) {
+fun AboutSettingsPanel() {
     val context = LocalContext.current
     val clipboardManager = LocalClipboardManager.current
     val copyVersionToClipboard = {
