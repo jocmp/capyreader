@@ -1,8 +1,11 @@
 package com.jocmp.capy.opml
 
 import com.jocmp.capy.Account
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import java.io.InputStream
 import java.net.URL
+import java.util.concurrent.atomic.AtomicInteger
 import kotlin.math.roundToInt
 
 internal class OPMLImporter(private val account: Account) {
@@ -10,7 +13,7 @@ internal class OPMLImporter(private val account: Account) {
         onProgress: (progress: ImportProgress) -> Unit = {},
         inputStream: InputStream,
     ) {
-        var counter = 0
+        val counter = AtomicInteger()
         val outlines = OPMLHandler.parse(inputStream)
 
         val entries = findEntries(outlines)
@@ -20,19 +23,23 @@ internal class OPMLImporter(private val account: Account) {
 
         onProgress(ImportProgress(currentCount = 0, total = size))
 
-        groupedForms.forEach { (feedURL, forms) ->
-            val folderTitles = forms.flatMap { it.folderTitles }.distinct()
-            val title = forms.first().title
+        coroutineScope {
+            groupedForms.forEach { (feedURL, forms) ->
+                launch {
+                    val folderTitles = forms.flatMap { it.folderTitles }.distinct()
+                    val title = forms.first().title
 
-            account.addFeed(url = feedURL, title = title, folderTitles = folderTitles)
-            counter += 1
+                    account.addFeed(url = feedURL, title = title, folderTitles = folderTitles)
+                    val currentCount = counter.incrementAndGet()
 
-            onProgress(
-                ImportProgress(
-                    currentCount = counter,
-                    total = size,
-                )
-            )
+                    onProgress(
+                        ImportProgress(
+                            currentCount = currentCount,
+                            total = size,
+                        )
+                    )
+                }
+            }
         }
     }
 
