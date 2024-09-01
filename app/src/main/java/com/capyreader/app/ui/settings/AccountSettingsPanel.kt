@@ -3,9 +3,7 @@ package com.capyreader.app.ui.settings
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -175,7 +173,11 @@ fun removeAccountButtonColors(source: Source) = when (source) {
 }
 
 fun showAccountName(source: Source): Boolean {
-    return source == Source.FEEDBIN
+    return source != Source.LOCAL
+}
+
+fun showImportButton(source: Source): Boolean {
+    return source == Source.LOCAL
 }
 
 @Preview

@@ -25,17 +25,11 @@ fun App(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            val compactWidth = isCompact()
-
             NavHost(
                 navController = navController,
                 startDestination = startDestination
             ) {
                 accountsGraph(
-                    isCompactWidth = compactWidth,
-                    onNavigateToLogin = {
-                        navController.navigate(Route.Login.path)
-                    },
                     onAddSuccess = {
                         navController.navigate(Route.Articles.path) {
                             launchSingleTop = true
@@ -45,6 +39,12 @@ fun App(
                             }
                         }
                     },
+                    onNavigateBack = {
+                        navController.navigateUp()
+                    },
+                    onNavigateToLogin = {
+                        navController.navigate(Route.Login.path)
+                    },
                     onRemoveAccount = {
                         navController.navigate(Route.AddAccount.path) {
                             popUpTo(Route.Articles.path) {
@@ -52,9 +52,6 @@ fun App(
                             }
                         }
                         unloadAccountModules()
-                    },
-                    onNavigateBack = {
-                        navController.navigateUp()
                     }
                 )
                 articleGraph(navController = navController)

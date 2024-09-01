@@ -16,8 +16,6 @@ class ArticleRenderer(
     private val textSize: Preference<TextSize>,
     private val fontOption: Preference<FontOption>,
 ) {
-    private var articleID: String? = null
-
     private var html: String = ""
 
     private val template by lazy {
@@ -32,8 +30,6 @@ class ArticleRenderer(
         extractedContent: ExtractedContent = ExtractedContent(),
         colors: Map<String, String>,
     ): String {
-        articleID = article.id
-
         val substitutions = colors + mapOf(
             "external_link" to article.url.toString(),
             "title" to article.title,
@@ -69,16 +65,7 @@ class ArticleRenderer(
         }
     }
 
-    fun fetchCached(article: Article): String {
-        if (article.id != articleID) {
-            return ""
-        }
-
-        return html
-    }
-
     fun clear() {
-        articleID = null
         html = ""
     }
 

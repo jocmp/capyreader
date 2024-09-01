@@ -8,8 +8,8 @@ import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MenuAnchorType.Companion.PrimaryNotEditable
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -19,7 +19,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.capyreader.app.R
 import com.capyreader.app.refresher.RefreshInterval
-import com.capyreader.app.refresher.RefreshInterval.*
+import com.capyreader.app.refresher.RefreshInterval.EVERY_12_HOURS
+import com.capyreader.app.refresher.RefreshInterval.EVERY_DAY
+import com.capyreader.app.refresher.RefreshInterval.EVERY_FIFTEEN_MINUTES
+import com.capyreader.app.refresher.RefreshInterval.EVERY_HOUR
+import com.capyreader.app.refresher.RefreshInterval.EVERY_THIRTY_MINUTES
+import com.capyreader.app.refresher.RefreshInterval.MANUALLY_ONLY
+import com.capyreader.app.refresher.RefreshInterval.ON_START
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,7 +43,7 @@ fun RefreshIntervalMenu(
         expanded = expanded,
         onExpandedChange = { setExpanded(it) },
     ) {
-        TextField(
+        OutlinedTextField(
             modifier = Modifier
                 .menuAnchor(PrimaryNotEditable)
                 .fillMaxWidth(),
@@ -46,7 +52,7 @@ fun RefreshIntervalMenu(
             onValueChange = {},
             label = { Text(stringResource(R.string.refresh_feeds_menu_label)) },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-            colors = ExposedDropdownMenuDefaults.textFieldColors(),
+            colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(),
         )
         ExposedDropdownMenu(
             expanded = expanded,

@@ -1,10 +1,9 @@
 package com.capyreader.app.ui.settings
 
-import android.app.Application
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.refresher.RefreshScheduler
@@ -14,9 +13,8 @@ import com.jocmp.capy.accounts.AutoDelete
 class GeneralSettingsViewModel(
     private val refreshScheduler: RefreshScheduler,
     val account: Account,
-    private val appPreferences: AppPreferences,
-    application: Application
-) : AndroidViewModel(application) {
+    private val appPreferences: AppPreferences
+) : ViewModel() {
     var refreshInterval by mutableStateOf(refreshScheduler.refreshInterval)
         private set
 

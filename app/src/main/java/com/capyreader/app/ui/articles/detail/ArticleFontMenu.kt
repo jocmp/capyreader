@@ -47,7 +47,7 @@ fun ArticleFontMenu(
             onValueChange = {},
             label = { Text(stringResource(R.string.article_font_menu_label)) },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-            colors = ExposedDropdownMenuDefaults.textFieldColors(),
+            colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(),
         )
         ExposedDropdownMenu(
             expanded = expanded,

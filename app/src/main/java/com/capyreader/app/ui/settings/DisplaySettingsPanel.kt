@@ -12,32 +12,33 @@ import com.capyreader.app.common.ThemeOption
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.components.TextSwitch
 import com.capyreader.app.ui.theme.CapyTheme
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun DisplaySettingsPanel(
-
+    viewModel: DisplaySettingsViewModel = koinViewModel(),
 ) {
     DisplaySettingsPanelView(
-        updateStickFullContent = {},
-        enableStickyFullContent = true,
-        onUpdateTheme = {},
-        theme = ThemeOption.SYSTEM_DEFAULT,
+        updateStickyFullContent = viewModel::updateStickyFullContent,
+        enableStickyFullContent = viewModel.enableStickyFullContent,
+        onUpdateTheme = viewModel::updateTheme,
+        theme = viewModel.theme,
         articleListOptions = ArticleListOptions(
-            imagePreview = ImagePreview.default,
-            showSummary = true,
-            showFeedIcons = true,
-            showFeedName = false,
-            updateImagePreview = {},
-            updateSummary = {},
-            updateFeedName = {},
-            updateFeedIcons = {},
+            imagePreview = viewModel.imagePreview,
+            showSummary = viewModel.showSummary,
+            showFeedIcons = viewModel.showFeedIcons,
+            showFeedName = viewModel.showFeedName,
+            updateImagePreview = viewModel::updateImagePreview,
+            updateSummary = viewModel::updateSummary,
+            updateFeedName = viewModel::updateFeedName,
+            updateFeedIcons = viewModel::updateFeedIcons,
         )
     )
 }
 
 @Composable
 fun DisplaySettingsPanelView(
-    updateStickFullContent: (Boolean) -> Unit,
+    updateStickyFullContent: (Boolean) -> Unit,
     enableStickyFullContent: Boolean,
     onUpdateTheme: (theme: ThemeOption) -> Unit,
     theme: ThemeOption,
@@ -46,7 +47,7 @@ fun DisplaySettingsPanelView(
     Column(
         verticalArrangement = Arrangement.spacedBy(32.dp)
     ) {
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
             RowItem {
                 ThemeMenu(onUpdateTheme = onUpdateTheme, theme = theme)
             }
@@ -54,7 +55,7 @@ fun DisplaySettingsPanelView(
             RowItem {
                 TextSwitch(
                     checked = enableStickyFullContent,
-                    onCheckedChange = updateStickFullContent,
+                    onCheckedChange = updateStickyFullContent,
                     title = stringResource(R.string.settings_option_full_content_title),
                     subtitle = stringResource(R.string.settings_option_full_content_subtitle)
                 )
@@ -78,7 +79,7 @@ fun DisplaySettingsPanelView(
 private fun DisplaySettingsPanelViewPreview() {
     CapyTheme {
         DisplaySettingsPanelView(
-            updateStickFullContent = {},
+            updateStickyFullContent = {},
             enableStickyFullContent = true,
             onUpdateTheme = {},
             theme = ThemeOption.SYSTEM_DEFAULT,
