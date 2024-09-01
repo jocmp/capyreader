@@ -66,7 +66,6 @@
     <string name="image_preview_label">Náhled obrázku</string>
     <string name="settings_article_list_feed_name">Název kanálu</string>
     <string name="settings_article_list_feed_icons">Ikona kanálu</string>
-    <string name="settings_more_display_options_button">Více nastavení zobrazení</string>
     <string name="settings_section_version">Verze</string>
     <string name="settings_option_copy_version">Kopírovat verzi</string>
     <string name="settings_option_full_content_title">Pamatovat stav načítání úplného obsahu</string>

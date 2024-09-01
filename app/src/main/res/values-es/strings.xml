@@ -110,7 +110,6 @@
     <string name="settings_article_list_feed_name">Nombre del feed</string>
     <string name="settings_article_list_feed_icons">Iconos del feed</string>
     <string name="settings_article_list_summary">Resumen</string>
-    <string name="settings_more_display_options_button">Más opciones de visualización</string>
     <string name="settings_section_version">Versión</string>
     <string name="settings_option_copy_version">Copiar versión</string>
     <string name="settings_option_full_content_title">Contenido completado fijado</string>

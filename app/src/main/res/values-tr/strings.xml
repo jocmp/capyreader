@@ -32,7 +32,6 @@
     <string name="settings_article_list_feed_icons">Yayın İkonu</string>
     <string name="settings_article_list_summary">Özet</string>
     <string name="settings_option_copy_version">Kopya versiyonu</string>
-    <string name="settings_more_display_options_button">Daha Fazla Görüntüleme Seçeneği</string>
     <string name="settings_option_full_content_title">Yapışkan Tam İçerik</string>
     <string name="settings_option_full_content_subtitle">Tam makale içeriğini yükleme seçeneğini hatırla</string>
     <string name="article_style_options">Yazı tipi stili seçenekleri</string>

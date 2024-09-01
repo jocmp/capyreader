@@ -110,7 +110,6 @@
     <string name="settings_article_list_feed_name">Naziv Izvora</string>
     <string name="settings_article_list_feed_icons">Ikonice Izvora</string>
     <string name="settings_article_list_summary">Rezime</string>
-    <string name="settings_more_display_options_button">Više opcija prikaza</string>
     <string name="settings_section_version">Verzija</string>
     <string name="settings_option_copy_version">Kopiraj verziju</string>
     <string name="settings_option_full_content_title">Lepljivi puni sadržaj</string>

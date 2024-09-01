@@ -71,7 +71,6 @@
     <string name="theme_menu_option_dark">深色</string>
     <string name="settings_option_in_app_browser">使用内置浏览器</string>
     <string name="settings_article_list_summary">概括</string>
-    <string name="settings_more_display_options_button">更多显示选项</string>
     <string name="settings_section_version">版本</string>
     <string name="settings_option_copy_version">复制版本</string>
     <string name="settings_option_full_content_title">置顶全部内容</string>
