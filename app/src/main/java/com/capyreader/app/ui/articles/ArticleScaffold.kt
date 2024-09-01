@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import com.capyreader.app.ui.components.safeEdgePadding
-import com.capyreader.app.ui.isCompact
+import com.capyreader.app.ui.isAtMostMedium
 import com.capyreader.app.ui.theme.CapyTheme
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
@@ -34,7 +34,7 @@ fun ArticleScaffold(
     detailPane: @Composable () -> Unit,
 ) {
     val enableGesture = drawerState.isOpen ||
-            isCompact() && scaffoldNavigator.currentDestination?.pane != ThreePaneScaffoldRole.Primary
+            isAtMostMedium() && scaffoldNavigator.currentDestination?.pane != ThreePaneScaffoldRole.Primary
 
     ModalNavigationDrawer(
         drawerState = drawerState,

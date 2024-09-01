@@ -15,11 +15,11 @@ import androidx.compose.ui.unit.dp
 import com.capyreader.app.ui.components.WebView
 import com.capyreader.app.ui.components.WebViewNavigator
 import com.capyreader.app.ui.components.rememberSaveableWebViewState
+import com.capyreader.app.ui.isCompact
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.koin.compose.koinInject
 
 @Composable
@@ -93,7 +93,7 @@ fun ArticleView(
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            if (article == null) {
+            if (article == null && !isCompact()) {
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier

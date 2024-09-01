@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.capyreader.app.setupCommonModules
-import com.capyreader.app.ui.isCompact
+import com.capyreader.app.ui.isAtMostMedium
 import org.koin.android.ext.koin.androidContext
 import org.koin.compose.KoinApplication
 
@@ -23,7 +23,7 @@ fun SettingsView(
     onNavigateBack: () -> Unit,
     onRemoveAccount: () -> Unit,
 ) {
-    val compact = isCompact()
+    val compact = isAtMostMedium()
     val navigator = rememberListDetailPaneScaffoldNavigator<SettingsPanel>(
         isDestinationHistoryAware = false
     )
@@ -70,19 +70,15 @@ fun SettingsView(
         navigator.navigateBack()
     }
 
-    LaunchedEffect(isInitialized, navigator.canNavigateBack()) {
-        if (isInitialized || navigator.canNavigateBack()) {
+    LaunchedEffect(compact, currentPanel) {
+        if (compact || currentPanel != null && currentPanel != SettingsPanel.General) {
             return@LaunchedEffect
         }
 
-        if (!compact) {
-            navigator.navigateTo(
-                pane = ThreePaneScaffoldRole.Secondary,
-                SettingsPanel.General
-            )
-        }
-
-        setInitialized(true)
+        navigator.navigateTo(
+            pane = ThreePaneScaffoldRole.Secondary,
+            SettingsPanel.General
+        )
     }
 }
 

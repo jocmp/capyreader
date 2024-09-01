@@ -8,6 +8,11 @@ import androidx.window.core.layout.WindowWidthSizeClass.Companion.EXPANDED
 fun currentWindowSizeClass() = currentWindowAdaptiveInfo().windowSizeClass
 
 @Composable
+fun isAtMostMedium(): Boolean {
+    return currentWindowSizeClass().windowWidthSizeClass != EXPANDED
+}
+
+@Composable
 fun isCompact(): Boolean {
     return currentWindowSizeClass().windowWidthSizeClass != EXPANDED
 }

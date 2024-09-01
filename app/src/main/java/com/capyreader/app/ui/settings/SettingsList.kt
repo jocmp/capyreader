@@ -28,7 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
-import com.capyreader.app.ui.isCompact
+import com.capyreader.app.ui.isAtMostMedium
 import com.capyreader.app.ui.theme.CapyTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -82,7 +82,7 @@ fun SettingsList(
                     ) {
                         ListItem(
                             colors = ListItemDefaults.colors(
-                                containerColor = if (!isCompact() && panel == selected) {
+                                containerColor = if (!isAtMostMedium() && panel == selected) {
                                     MaterialTheme.colorScheme.surfaceContainerHigh
                                 } else {
                                     MaterialTheme.colorScheme.surface

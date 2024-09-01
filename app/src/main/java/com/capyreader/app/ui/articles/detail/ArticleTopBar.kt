@@ -27,7 +27,7 @@ import com.capyreader.app.common.shareArticle
 import com.capyreader.app.ui.articles.FullContentLoadingIcon
 import com.capyreader.app.ui.fixtures.ArticleSample
 import com.capyreader.app.ui.fixtures.InjectedCapyTheme
-import com.capyreader.app.ui.isCompact
+import com.capyreader.app.ui.isAtMostMedium
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ExtractedContent
 import java.net.URL
@@ -137,7 +137,7 @@ fun extractIcon(extractedContent: ExtractedContent) = when {
 
 @Composable
 fun ArticleNavigationIcon(onClick: () -> Unit) {
-    val showIcon = isCompact()
+    val showIcon = isAtMostMedium()
 
     if (!showIcon) {
         return

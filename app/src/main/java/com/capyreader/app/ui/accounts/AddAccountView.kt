@@ -23,7 +23,7 @@ import com.capyreader.app.R
 import com.capyreader.app.ui.Spacing
 import com.capyreader.app.ui.components.safeEdgePadding
 import com.capyreader.app.ui.components.widthMaxSingleColumn
-import com.capyreader.app.ui.isCompact
+import com.capyreader.app.ui.isAtMostMedium
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.accounts.Source
 
@@ -66,7 +66,7 @@ fun AddAccountView(
 
 @Composable
 private fun contentAlignment(): Alignment {
-    return if (isCompact()) {
+    return if (isAtMostMedium()) {
         Alignment.TopCenter
     } else {
         Alignment.Center
@@ -75,7 +75,7 @@ private fun contentAlignment(): Alignment {
 
 @Composable
 private fun titlePadding(): PaddingValues {
-    return if (isCompact()) {
+    return if (isAtMostMedium()) {
         PaddingValues(top = Spacing.topBarHeight, start = 16.dp, end = 16.dp)
     } else {
         PaddingValues(start = 16.dp, end = 16.dp)

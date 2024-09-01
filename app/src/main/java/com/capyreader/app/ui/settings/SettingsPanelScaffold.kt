@@ -3,11 +3,8 @@ package com.capyreader.app.ui.settings
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -24,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.capyreader.app.ui.isCompact
+import com.capyreader.app.ui.isAtMostMedium
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,7 +41,7 @@ fun SettingsPanelScaffold(
                     Text(stringResource(title))
                 },
                 navigationIcon = {
-                    if (isCompact()) {
+                    if (isAtMostMedium()) {
                         IconButton(
                             onClick = {
                                 onBack()
