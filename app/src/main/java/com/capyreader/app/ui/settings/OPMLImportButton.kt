@@ -15,9 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
-import com.jocmp.capy.opml.ImportProgress
 import com.capyreader.app.R
 import com.capyreader.app.ui.theme.CapyTheme
+import com.jocmp.capy.opml.ImportProgress
 
 @Composable
 fun OPMLImportButton(

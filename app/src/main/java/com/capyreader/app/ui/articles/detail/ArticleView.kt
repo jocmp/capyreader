@@ -19,6 +19,7 @@ import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.compose.koinInject
 
 @Composable
@@ -126,23 +127,15 @@ fun ArticleView(
             if (article == null) {
                 clearWebView()
             } else {
-                val html = renderer.fetchCached(article)
-
-                if (html.isNotBlank()) {
-                    webViewNavigator.loadHtml(html)
+                if (extractedContent.requestShow) {
+                    extractedContentState.fetch()
                 } else {
-                    if (extractedContent.requestShow) {
-                        extractedContentState.fetch()
-                    } else {
-                        val rendered = renderer.render(article, byline = byline, colors = colors)
-                        webViewNavigator.loadHtml(rendered)
-                    }
+                    val rendered = renderer.render(article, byline = byline, colors = colors)
+                    webViewNavigator.loadHtml(rendered)
                 }
             }
         }
     }
-
-    ArticleTemplateColorListener(webView = webViewState.webView, templateColors = templateColors)
 
     ArticleStyleListener(webView = webViewState.webView)
 }

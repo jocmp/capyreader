@@ -1,8 +1,8 @@
 package com.capyreader.app.ui.settings
 
 import androidx.annotation.StringRes
-import com.jocmp.capy.accounts.Source
 import com.capyreader.app.R
+import com.jocmp.capy.accounts.Source
 
 data class AccountSettingsStrings(
     @StringRes val dialogTitle: Int,

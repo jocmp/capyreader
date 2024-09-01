@@ -7,8 +7,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MenuAnchorType.Companion.PrimaryNotEditable
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,7 +35,7 @@ fun ThemeMenu(
         expanded = expanded,
         onExpandedChange = { setExpanded(it) },
     ) {
-        TextField(
+        OutlinedTextField(
             modifier = Modifier
                 .menuAnchor(PrimaryNotEditable)
                 .fillMaxWidth(),
@@ -44,7 +44,7 @@ fun ThemeMenu(
             onValueChange = {},
             label = { Text(stringResource(R.string.theme_menu_label)) },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-            colors = ExposedDropdownMenuDefaults.textFieldColors(),
+            colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(),
         )
         ExposedDropdownMenu(
             expanded = expanded,

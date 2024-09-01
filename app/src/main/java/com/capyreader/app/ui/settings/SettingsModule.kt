@@ -7,20 +7,10 @@ import org.koin.dsl.module
 
 val settingsModule = module {
     viewModel {
-        SettingsViewModel(
-            account = get(),
-            accountManager = get(),
-            refreshScheduler = get(),
-            appPreferences = get(),
-            application = get()
-        )
-    }
-    viewModel {
         GeneralSettingsViewModel(
             refreshScheduler = get(),
             account = get(),
-            appPreferences = get(),
-            application = get()
+            appPreferences = get()
         )
     }
     viewModel {
@@ -29,6 +19,12 @@ val settingsModule = module {
             accountManager = get(),
             appPreferences = get(),
             application = get()
+        )
+    }
+    viewModel {
+        DisplaySettingsViewModel(
+            account = get(),
+            appPreferences = get(),
         )
     }
     worker { OPMLImportWorker(get(), get()) }
