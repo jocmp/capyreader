@@ -297,8 +297,8 @@ fun ArticleLayout(
                             listState = listState,
                             onMarkAllRead = onMarkAllRead,
                             onSelect = { articleID ->
-                                navigateToDetail()
                                 onSelectArticle(articleID)
+                                navigateToDetail()
                                 if (search.isActive) {
                                     focusManager.clearFocus()
                                 }

@@ -1,5 +1,6 @@
 package com.capyreader.app.ui.articles.detail
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.capyreader.app.ui.articles.LocalArticleTransitionState
 import com.capyreader.app.ui.components.WebView
 import com.capyreader.app.ui.components.WebViewNavigator
 import com.capyreader.app.ui.components.rememberSaveableWebViewState
@@ -118,11 +120,21 @@ fun ArticleView(
         onBackPressed()
     }
 
-    LaunchedEffect(articleID) {
+    val transitionState = LocalArticleTransitionState.current
+
+    LaunchedEffect(articleID, transitionState) {
+        Log.d("ArticleView", "[DEBUG] transitionState=$transitionState")
+
+        if (transitionState.isAnimating) {
+            return@LaunchedEffect
+        }
+
         launch(Dispatchers.IO) {
             if (article == null) {
+                Log.d("ArticleView", "[DEBUG] cleared webview")
                 clearWebView()
             } else {
+                Log.d("ArticleView", "[DEBUG] launched render=${article.id}")
                 if (extractedContent.requestShow) {
                     extractedContentState.fetch()
                 } else {
