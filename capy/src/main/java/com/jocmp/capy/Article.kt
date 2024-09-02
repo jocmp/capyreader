@@ -12,7 +12,7 @@ data class Article(
     val extractedContentURL: URL?,
     val url: URL,
     val summary: String,
-    val imageURL: URL?,
+    val imageURL: String?,
     val updatedAt: ZonedDateTime,
     val publishedAt: ZonedDateTime,
     val read: Boolean,

@@ -33,7 +33,7 @@ internal fun articleMapper(
         contentHTML = contentHtml ?: "",
         extractedContentURL = optionalURL(extractedContentURL),
         url = URL(url),
-        imageURL = optionalURL(imageURL),
+        imageURL = imageURL,
         feedURL = feedURL,
         summary = summary ?: "",
         updatedAt = updatedAt!!.toDateTimeFromSeconds,

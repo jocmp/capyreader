@@ -76,7 +76,7 @@ fun ArticleRow(
     currentTime: LocalDateTime,
     options: ArticleRowOptions = ArticleRowOptions(),
 ) {
-    val imageURL = article.imageURL?.toString()
+    val imageURL = article.imageURL
     val colors = listItemColors(
         selected = selected,
         read = article.read
@@ -259,7 +259,7 @@ fun ArticleRowPreview_Selected_DarkMode() {
         author = "Andrew Romero",
         contentHTML = "<div>Test</div>",
         extractedContentURL = null,
-        imageURL = URL("https://example.com"),
+        imageURL = "https://example.com",
         summary = "The Galaxy S24 series, while bringing little physical change, packs a lot of AI narrative. One of the biggest Galaxy S24 features is the AI Generative Edit",
         url = URL("https://9to5google.com/?p=605559"),
         updatedAt = ZonedDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneOffset.UTC),
@@ -305,7 +305,7 @@ fun ArticleRowPreview_Selected(@PreviewParameter(ArticleSample::class) article: 
 fun ArticleRowPreview_Large(@PreviewParameter(ArticleSample::class) article: Article) {
     CapyTheme {
         ArticleRow(
-            article = article.copy(imageURL = URL("http://example.com")),
+            article = article.copy(imageURL = "http://example.com"),
             selected = true,
             onSelect = {},
             currentTime = LocalDateTime.now(),
@@ -326,7 +326,7 @@ fun ArticleRowPreview_Unread() {
         author = "Andrew Romero",
         contentHTML = "<div>Test</div>",
         extractedContentURL = null,
-        imageURL = URL("http://example.com"),
+        imageURL = "http://example.com",
         summary = "Test article here",
         url = URL("https://9to5google.com/?p=605559"),
         updatedAt = ZonedDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneOffset.UTC),

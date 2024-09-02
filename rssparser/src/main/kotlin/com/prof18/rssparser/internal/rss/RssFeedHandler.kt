@@ -23,7 +23,7 @@ internal class RssFeedHandler(val document: Document) : FeedHandler {
                 RssKeyword.Link.value -> channelFactory.channelBuilder.link(node.text())
                 RssKeyword.Image.value -> channelImage(node)
                 RssKeyword.Description.value -> {
-                    channelFactory.setImageFromContent(node.wholeText())
+                    channelFactory.setImageFromContent(node)
                     channelFactory.channelBuilder.description(node.text())
                 }
 
@@ -135,7 +135,7 @@ internal class RssFeedHandler(val document: Document) : FeedHandler {
                 RssKeyword.Item.Guid.value -> channelFactory.articleBuilder.guid(node.text())
                 RssKeyword.Item.Content.value -> {
                     channelFactory.articleBuilder.content(node.text())
-                    channelFactory.setImageFromContent(node.text())
+                    channelFactory.setImageFromContent(node)
                 }
 
                 RssKeyword.Item.PubDate.value -> {
@@ -186,7 +186,9 @@ internal class RssFeedHandler(val document: Document) : FeedHandler {
                 RssKeyword.Link.value -> channelFactory.articleBuilder.link(node.text())
                 RssKeyword.Description.value -> {
                     val wholeText = node.wholeText()
-                    channelFactory.setImageFromContent(wholeText)
+
+                    channelFactory.setImageFromContent(node)
+
                     channelFactory.articleBuilder.description(wholeText.trim())
                 }
 
