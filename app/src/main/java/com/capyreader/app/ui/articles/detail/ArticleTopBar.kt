@@ -41,7 +41,6 @@ fun ArticleTopBar(
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
     onClose: () -> Unit,
-    onStyleUpdate: () -> Unit,
 ) {
     val context = LocalContext.current
     val (isStyleSheetOpen, setStyleSheetOpen) = rememberSaveable { mutableStateOf(false) }
@@ -107,7 +106,7 @@ fun ArticleTopBar(
                     .padding(horizontal = 32.dp)
                     .padding(bottom = 16.dp)
             ) {
-                ArticleStylePicker(onChange = onStyleUpdate)
+                ArticleStylePicker()
             }
         }
     }
@@ -165,8 +164,7 @@ private fun ArticleTopBarPreview(@PreviewParameter(ArticleSample::class) article
             onToggleExtractContent = {},
             onToggleRead = {},
             onToggleStar = {},
-            onClose = {},
-            onStyleUpdate = {}
+            onClose = {}
         )
     }
 }
@@ -181,8 +179,7 @@ private fun ArticleTopBarPreview_Tablet(@PreviewParameter(ArticleSample::class) 
             onToggleExtractContent = {},
             onToggleRead = {},
             onToggleStar = {},
-            onClose = {},
-            onStyleUpdate = {}
+            onClose = {}
         )
     }
 }
@@ -197,8 +194,7 @@ private fun ArticleTopBarPreview_MissingArticle() {
             onToggleExtractContent = {},
             onToggleRead = {},
             onToggleStar = {},
-            onClose = {},
-            onStyleUpdate = {}
+            onClose = {}
         )
     }
 }

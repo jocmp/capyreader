@@ -192,7 +192,6 @@ fun ArticleLayout(
                 feeds = feeds,
                 onSelectFolder = {
                     if (!filter.isFolderSelect(it)) {
-                        webViewNavigator.clearView()
                         onSelectFolder(it.title)
                         coroutineScope.launch {
                             openNextList()
@@ -204,7 +203,6 @@ fun ArticleLayout(
                 onSelectFeed = {
                     coroutineScope.launch {
                         if (!filter.isFeedSelected(it)) {
-                            webViewNavigator.clearView()
                             onSelectFeed(it.id)
                             openNextList()
                         } else {
@@ -299,8 +297,8 @@ fun ArticleLayout(
                             listState = listState,
                             onMarkAllRead = onMarkAllRead,
                             onSelect = { articleID ->
-                                onSelectArticle(articleID)
                                 navigateToDetail()
+                                onSelectArticle(articleID)
                                 if (search.isActive) {
                                     focusManager.clearFocus()
                                 }

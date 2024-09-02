@@ -57,7 +57,6 @@ fun ArticleView(
 
     val clearWebView = {
         webViewNavigator.clearView()
-        renderer.clear()
     }
 
     val extractedContent = extractedContentState.content
@@ -81,10 +80,7 @@ fun ArticleView(
                 onToggleExtractContent = ::onToggleExtractContent,
                 onToggleRead = onToggleRead,
                 onToggleStar = onToggleStar,
-                onClose = onBackPressed,
-                onStyleUpdate = {
-                    renderer.clear()
-                }
+                onClose = onBackPressed
             )
         }
     ) { innerPadding ->
