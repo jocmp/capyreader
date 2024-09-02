@@ -3,12 +3,9 @@ package com.jocmp.capy.articles
 import android.content.Context
 import com.jocmp.capy.Article
 import com.jocmp.capy.MacroProcessor
-import com.jocmp.capy.common.toDeviceDateTime
 import com.jocmp.capy.preferences.Preference
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 import com.jocmp.capy.R as CapyRes
 
 class ArticleRenderer(
@@ -16,8 +13,6 @@ class ArticleRenderer(
     private val textSize: Preference<TextSize>,
     private val fontOption: Preference<FontOption>,
 ) {
-    private var html: String = ""
-
     private val template by lazy {
         context.resources.openRawResource(CapyRes.raw.template)
             .bufferedReader()
@@ -41,7 +36,7 @@ class ArticleRenderer(
             "font_family" to fontOption.get().slug,
         )
 
-        html = MacroProcessor(
+        val html = MacroProcessor(
             template = template,
             substitutions = substitutions
         ).renderedText
@@ -63,10 +58,6 @@ class ArticleRenderer(
         document.select("img[data-src]").forEach { element ->
             element.attr("src", element.absUrl("data-src"))
         }
-    }
-
-    fun clear() {
-        html = ""
     }
 
     private fun script(article: Article, extractedContent: ExtractedContent): String {

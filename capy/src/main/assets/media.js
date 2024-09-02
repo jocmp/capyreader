@@ -51,5 +51,4 @@ window.onload = () => {
   cleanAnchorImageTags();
   addImageClickListeners();
   configureVideoTags();
-  displayContent();
 };
