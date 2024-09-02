@@ -64,12 +64,12 @@ internal class AtomFeedHandler(val atom: Element) : FeedHandler {
                     val text = node.wholeText()
 
                     channelFactory.articleBuilder.content(text.trim())
-                    channelFactory.setImageFromContent(text)
+                    channelFactory.setImageFromContent(node)
                 }
 
                 Entry.Description.value -> {
                     channelFactory.articleBuilder.description(node.wholeText().trim())
-                    channelFactory.setImageFromContent(node.wholeText())
+                    channelFactory.setImageFromContent(node)
                 }
 
                 Entry.Category.value -> {

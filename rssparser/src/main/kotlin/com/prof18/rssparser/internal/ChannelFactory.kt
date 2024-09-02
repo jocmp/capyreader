@@ -6,6 +6,8 @@ import com.prof18.rssparser.model.ItunesOwner
 import com.prof18.rssparser.model.RssChannel
 import com.prof18.rssparser.model.RssImage
 import com.prof18.rssparser.model.RssItem
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Element
 
 
 internal class ChannelFactory {
@@ -41,20 +43,12 @@ internal class ChannelFactory {
      * @param content The content in which to search for the tag
      * @return The url, if there is one
      */
-    fun setImageFromContent(content: String?) {
-        try {
-            val urlRegex = Regex(pattern = "https?:\\/\\/[^\\s<>\"]+\\.(?:jpg|jpeg|png|gif|bmp|webp)")
-            content
-                ?.let{ urlRegex.find(it) }
-                ?.let {
-                    it.value.trim().let { imgUrl ->
-                        if (!imgUrl.contains(EMOJI_WEBSITE)) {
-                            imageUrlFromContent = imgUrl
-                        }
-                    }
-                }
-        } catch (e: Throwable) {
-            // Do nothing, on iOS it could fail for too much recursion
+    fun setImageFromContent(content: Element) {
+        val image = Jsoup.parse(content.wholeText()).selectFirst("img") ?: return
+        val imageSource = image.attr("src")
+
+        if (!imageSource.isNullOrBlank() && !imageSource.contains(EMOJI_WEBSITE)) {
+            imageUrlFromContent = imageSource
         }
     }
 
