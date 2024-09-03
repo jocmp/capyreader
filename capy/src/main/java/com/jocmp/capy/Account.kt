@@ -19,6 +19,7 @@ import com.jocmp.feedbinclient.Feedbin
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import java.io.File
 import java.io.InputStream
 import java.net.URI
 import java.time.ZonedDateTime
@@ -26,13 +27,14 @@ import java.time.ZonedDateTime
 data class Account(
     val id: String,
     val path: URI,
+    val cacheDirectory: File,
     val database: Database,
     val preferences: AccountPreferences,
     val source: Source = Source.LOCAL,
     val delegate: AccountDelegate = when (source) {
         Source.LOCAL -> LocalAccountDelegate(
             database = database,
-            httpClient = LocalOkHttpClient.forAccount(path = path),
+            httpClient = LocalOkHttpClient.forAccount(path = File(cacheDirectory, id).toURI()),
         )
 
         Source.FEEDBIN -> FeedbinAccountDelegate(
@@ -215,7 +217,7 @@ private fun Feedbin.Companion.forAccount(path: URI, preferences: AccountPreferen
 private fun AutoDelete.cutoffDate(): ZonedDateTime? {
     val now = nowUTC()
 
-    return when(this) {
+    return when (this) {
         AutoDelete.DISABLED -> null
         AutoDelete.WEEKLY -> now.minusWeeks(1)
         AutoDelete.EVERY_TWO_WEEKS -> now.minusWeeks(2)

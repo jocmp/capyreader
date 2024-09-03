@@ -16,6 +16,7 @@ internal val common = module {
         AccountManager(
             rootFolder = androidContext().filesDir.toURI(),
             databaseProvider = get(),
+            cacheDirectory = androidContext().cacheDir,
             preferenceStoreProvider = get()
         )
     }
