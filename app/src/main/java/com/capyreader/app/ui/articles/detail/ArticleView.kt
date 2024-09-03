@@ -123,18 +123,14 @@ fun ArticleView(
     val transitionState = LocalArticleTransitionState.current
 
     LaunchedEffect(articleID, transitionState) {
-        Log.d("ArticleView", "[DEBUG] transitionState=$transitionState")
-
         if (transitionState.isAnimating) {
             return@LaunchedEffect
         }
 
         launch(Dispatchers.IO) {
             if (article == null) {
-                Log.d("ArticleView", "[DEBUG] cleared webview")
                 clearWebView()
             } else {
-                Log.d("ArticleView", "[DEBUG] launched render=${article.id}")
                 if (extractedContent.requestShow) {
                     extractedContentState.fetch()
                 } else {
