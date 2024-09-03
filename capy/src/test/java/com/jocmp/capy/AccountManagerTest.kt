@@ -5,6 +5,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
+import java.io.File
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
@@ -18,6 +19,7 @@ class AccountManagerTest {
         return AccountManager(
             rootFolder = rootFolder.newFolder().toURI(),
             preferenceStoreProvider = InMemoryPreferencesProvider(),
+            cacheDirectory = File(rootFolder.root, "cache"),
             databaseProvider = InMemoryDatabaseProvider,
         )
     }

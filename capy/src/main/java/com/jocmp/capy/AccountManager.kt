@@ -9,6 +9,7 @@ import java.util.UUID
 
 class AccountManager(
     val rootFolder: URI,
+    private val cacheDirectory: File,
     private val databaseProvider: DatabaseProvider,
     private val preferenceStoreProvider: PreferenceStoreProvider,
 ) {
@@ -73,6 +74,7 @@ class AccountManager(
         return Account(
             id = id,
             path = pathURI,
+            cacheDirectory = cacheDirectory,
             database = database,
             source = preferences.source.get(),
             preferences = preferences,

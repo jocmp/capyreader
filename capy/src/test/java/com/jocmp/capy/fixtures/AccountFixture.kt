@@ -9,6 +9,7 @@ import com.jocmp.capy.RandomUUID
 import com.jocmp.capy.db.Database
 import io.mockk.mockk
 import org.junit.rules.TemporaryFolder
+import java.io.File
 
 object AccountFixture {
     fun create(
@@ -21,6 +22,7 @@ object AccountFixture {
             id = id,
             path = parentFolder.newFile().toURI(),
             database = database,
+            cacheDirectory = File(parentFolder.root, "cache"),
             preferences = AccountPreferences(InMemoryDataStore()),
             delegate = accountDelegate
         )
