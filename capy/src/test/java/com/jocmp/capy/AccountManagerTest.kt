@@ -19,7 +19,7 @@ class AccountManagerTest {
         return AccountManager(
             rootFolder = rootFolder.newFolder().toURI(),
             preferenceStoreProvider = InMemoryPreferencesProvider(),
-            cacheDirectory = File(rootFolder.root, "cache"),
+            cacheDirectory = rootFolder.newFolder().toURI(),
             databaseProvider = InMemoryDatabaseProvider,
         )
     }

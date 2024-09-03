@@ -27,19 +27,22 @@ import java.time.ZonedDateTime
 data class Account(
     val id: String,
     val path: URI,
-    val cacheDirectory: File,
+    val cacheDirectory: URI,
     val database: Database,
     val preferences: AccountPreferences,
     val source: Source = Source.LOCAL,
     val delegate: AccountDelegate = when (source) {
         Source.LOCAL -> LocalAccountDelegate(
             database = database,
-            httpClient = LocalOkHttpClient.forAccount(path = File(cacheDirectory, id).toURI()),
+            httpClient = LocalOkHttpClient.forAccount(path = cacheDirectory),
         )
 
         Source.FEEDBIN -> FeedbinAccountDelegate(
             database = database,
-            feedbin = Feedbin.forAccount(path = path, preferences = preferences)
+            feedbin = Feedbin.forAccount(
+                path = cacheDirectory,
+                preferences = preferences
+            )
         )
     }
 ) {

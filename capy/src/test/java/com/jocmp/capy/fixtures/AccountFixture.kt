@@ -22,7 +22,7 @@ object AccountFixture {
             id = id,
             path = parentFolder.newFile().toURI(),
             database = database,
-            cacheDirectory = File(parentFolder.root, "cache"),
+            cacheDirectory = parentFolder.newFile().toURI(),
             preferences = AccountPreferences(InMemoryDataStore()),
             delegate = accountDelegate
         )
