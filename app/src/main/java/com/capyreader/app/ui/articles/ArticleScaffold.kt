@@ -16,7 +16,6 @@ import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Devices
@@ -58,12 +57,7 @@ fun ArticleScaffold(
             },
             detailPane = {
                 AnimatedPane {
-                    val articleTransitionState = ArticleTransitionState(
-                        isAnimating = transition.currentState != transition.targetState
-                    )
-                    CompositionLocalProvider(LocalArticleTransitionState provides articleTransitionState) {
-                        detailPane()
-                    }
+                    detailPane()
                 }
             }
         )
