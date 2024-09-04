@@ -7,13 +7,7 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.calculateEndPadding
-import androidx.compose.foundation.layout.calculateStartPadding
-import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -27,6 +21,7 @@ import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,17 +30,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.capyreader.app.R
-import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.ui.articles.list.ArticleActionMenu
 import com.capyreader.app.ui.fixtures.ArticleSample
@@ -64,6 +60,7 @@ data class ArticleRowOptions(
     val showSummary: Boolean = true,
     val showFeedName: Boolean = true,
     val imagePreview: ImagePreview = ImagePreview.default,
+    val textSize: ArticleListTextSize = ArticleListTextSize.MEDIUM
 )
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -90,83 +87,90 @@ fun ArticleRow(
         setArticleMenuOpen(true)
     }
 
-    Box(
-        Modifier
-            .combinedClickable(
-                onClick = { onSelect(article.id) },
-                onLongClick = openArticleMenu,
-                onLongClickLabel = stringResource(R.string.article_actions_open_menu)
-            )
+    CompositionLocalProvider(
+        LocalDensity provides Density(
+            LocalDensity.current.density,
+            options.textSize.fontScale()
+        )
     ) {
-        ListItem(
-            leadingContent = {
-                if (options.showIcon) {
-                    Box(Modifier.padding(top = 6.dp)) {
-                        FaviconBadge(article.faviconURL)
-                    }
-                }
-            },
-            headlineContent = {
-                Text(
-                    article.title,
-                    fontWeight = FontWeight.Bold
+        Box(
+            Modifier
+                .combinedClickable(
+                    onClick = { onSelect(article.id) },
+                    onLongClick = openArticleMenu,
+                    onLongClickLabel = stringResource(R.string.article_actions_open_menu)
                 )
-            },
-            supportingContent = {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
-                    modifier = Modifier.padding(vertical = 4.dp)
-                ) {
-                    if (options.showFeedName) {
-                        Text(
-                            article.feedName,
-                            color = feedNameColor,
-                        )
+        ) {
+            ListItem(
+                leadingContent = {
+                    if (options.showIcon) {
+                        Box(Modifier.padding(top = 6.dp)) {
+                            FaviconBadge(article.faviconURL)
+                        }
                     }
-                    if (article.summary.isNotBlank() && options.showSummary) {
-                        Text(
-                            text = article.summary,
-                            maxLines = 2,
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                    }
-                    if (imageURL != null && options.imagePreview == ImagePreview.LARGE) {
-                        ArticleImage(imageURL = imageURL, imagePreview = options.imagePreview)
-                    }
+                },
+                headlineContent = {
                     Text(
-                        text = relativeTime(
-                            time = article.publishedAt,
-                            currentTime = currentTime,
-                        ),
-                        style = typography.labelMedium,
-                        maxLines = 1,
+                        article.title,
+                        fontWeight = FontWeight.Bold,
                     )
-                }
-            },
-            trailingContent = if (imageURL != null && options.imagePreview == ImagePreview.SMALL) {
-                {
-                    ArticleImage(
-                        imageURL = imageURL,
-                        imagePreview = options.imagePreview
-                    )
-                }
-            } else {
-                null
-            },
-            colors = colors
-        )
+                },
+                supportingContent = {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                        modifier = Modifier.padding(vertical = 4.dp)
+                    ) {
+                        if (options.showFeedName) {
+                            Text(
+                                article.feedName,
+                                color = feedNameColor,
+                            )
+                        }
+                        if (article.summary.isNotBlank() && options.showSummary) {
+                            Text(
+                                text = article.summary,
+                                maxLines = 2,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                        }
+                        if (imageURL != null && options.imagePreview == ImagePreview.LARGE) {
+                            ArticleImage(imageURL = imageURL, imagePreview = options.imagePreview)
+                        }
+                        Text(
+                            text = relativeTime(
+                                time = article.publishedAt,
+                                currentTime = currentTime,
+                            ),
+                            style = typography.labelMedium,
+                            maxLines = 1,
+                        )
+                    }
+                },
+                trailingContent = if (imageURL != null && options.imagePreview == ImagePreview.SMALL) {
+                    {
+                        ArticleImage(
+                            imageURL = imageURL,
+                            imagePreview = options.imagePreview
+                        )
+                    }
+                } else {
+                    null
+                },
+                colors = colors
+            )
 
-        ArticleActionMenu(
-            expanded = isArticleMenuOpen,
-            articleID = article.id,
-            onMarkAllRead = {
-                setArticleMenuOpen(false)
-                onMarkAllRead(it)
-            },
-            onDismissRequest = {
-                setArticleMenuOpen(false)
-            }
-        )
+            ArticleActionMenu(
+                expanded = isArticleMenuOpen,
+                articleID = article.id,
+                onMarkAllRead = {
+                    setArticleMenuOpen(false)
+                    onMarkAllRead(it)
+                },
+                onDismissRequest = {
+                    setArticleMenuOpen(false)
+                }
+            )
+        }
     }
 }
 
@@ -311,6 +315,23 @@ fun ArticleRowPreview_Large(@PreviewParameter(ArticleSample::class) article: Art
             currentTime = LocalDateTime.now(),
             options = ArticleRowOptions(
                 imagePreview = ImagePreview.LARGE
+            )
+        )
+    }
+}
+
+@Preview
+@Composable
+fun ArticleRowPreview_LargeText(@PreviewParameter(ArticleSample::class) article: Article) {
+    CapyTheme {
+        ArticleRow(
+            article = article.copy(imageURL = "http://example.com"),
+            selected = true,
+            onSelect = {},
+            currentTime = LocalDateTime.now(),
+            options = ArticleRowOptions(
+                imagePreview = ImagePreview.LARGE,
+                textSize = ArticleListTextSize.MEDIUM
             )
         )
     }
