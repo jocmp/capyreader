@@ -133,4 +133,21 @@
     <string name="add_feed_save_error">Yayın kaydedilemedi</string>
     <string name="filter_action_menu_search_articles">Makale ara</string>
     <string name="feed_list_top_bar_close_search">Aramayı kapat</string>
+    <string name="settings_auto_delete_disclaimer">Okunan, yıldızlanmayan makaleleri yayınlanma tarihlerine göre otomatik olarak siler. Silinen makaleler kurtarılamaz.</string>
+    <string name="settings_section_advanced">Gelişmiş</string>
+    <string name="settings_panel_general_title">Genel</string>
+    <string name="settings_account_title">Hesap</string>
+    <string name="settings_about_title">Hakkında</string>
+    <string name="settings_list_top_bar_title">Ayarlar</string>
+    <string name="settings_auto_delete_articles_title">Makaleleri tut</string>
+    <string name="settings_auto_delete_option_keep_forever">Sonsuza kadar</string>
+    <string name="settings_auto_delete_option_keep_for_one_week">1 hafta</string>
+    <string name="settings_auto_delete_option_keep_for_two_week">2 hafta</string>
+    <string name="settings_auto_delete_option_keep_for_one_month">1 ay</string>
+    <string name="settings_auto_delete_option_keep_for_three_month">3 ay</string>
+    <string name="settings_clear_all_articles_confirm">Onayla</string>
+    <string name="settings_clear_all_articles_text">Tüm makaleleri silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.</string>
+    <string name="settings_clear_all_articles_button">Tüm makaleleri temizle</string>
+    <string name="settings_support_button">Destek</string>
+    <string name="settings_article_list_title">Makale Listesi</string>
 </resources>
