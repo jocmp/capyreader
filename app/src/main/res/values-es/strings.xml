@@ -134,4 +134,21 @@
     <string name="feed_form_copy_feed_url_to_clipboard">Copiar la URL del feed al portapapeles</string>
     <string name="filter_action_menu_search_articles">Buscar artículos</string>
     <string name="feed_list_top_bar_close_search">Descartar la búsqueda</string>
+    <string name="settings_account_title">Cuenta</string>
+    <string name="settings_panel_general_title">General</string>
+    <string name="settings_auto_delete_disclaimer">Borra automáticamente los artículos leídos y no marcados en función de su fecha de publicación. Los artículos eliminados no se pueden recuperar.</string>
+    <string name="settings_about_title">Acerca de</string>
+    <string name="settings_list_top_bar_title">Ajustes</string>
+    <string name="settings_auto_delete_articles_title">Conservar artículos</string>
+    <string name="settings_auto_delete_option_keep_forever">Para siempre</string>
+    <string name="settings_auto_delete_option_keep_for_one_week">1 semana</string>
+    <string name="settings_auto_delete_option_keep_for_two_week">2 semanas</string>
+    <string name="settings_auto_delete_option_keep_for_one_month">1 mes</string>
+    <string name="settings_auto_delete_option_keep_for_three_month">3 meses</string>
+    <string name="settings_section_advanced">Avanzado</string>
+    <string name="settings_clear_all_articles_confirm">Confirmar</string>
+    <string name="settings_clear_all_articles_text">¿Estás seguro de que quieres borrar todos los artículos? Esto no se puede deshacer.</string>
+    <string name="settings_clear_all_articles_button">Borrar todos los artículos</string>
+    <string name="settings_support_button">Soporte</string>
+    <string name="settings_article_list_title">Lista de artículos</string>
 </resources>
