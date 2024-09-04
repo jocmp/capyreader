@@ -2,18 +2,18 @@ package com.capyreader.app.ui.settings
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.capyreader.app.setupCommonModules
-import com.capyreader.app.ui.isAtMostMedium
+import com.capyreader.app.ui.articles.detail.CapyPlaceholder
+import com.capyreader.app.ui.isCompact
 import org.koin.android.ext.koin.androidContext
 import org.koin.compose.KoinApplication
 
@@ -23,12 +23,8 @@ fun SettingsView(
     onNavigateBack: () -> Unit,
     onRemoveAccount: () -> Unit,
 ) {
-    val compact = isAtMostMedium()
-    val navigator = rememberListDetailPaneScaffoldNavigator<SettingsPanel>(
-        isDestinationHistoryAware = false
-    )
+    val navigator = rememberListDetailPaneScaffoldNavigator<SettingsPanel>()
     val currentPanel = navigator.currentDestination?.content
-    val (isInitialized, setInitialized) = rememberSaveable { mutableStateOf(false) }
 
     SettingsScaffold(
         scaffoldNavigator = navigator,
@@ -42,15 +38,23 @@ fun SettingsView(
             )
         },
         detailPane = {
-            currentPanel?.let { panel ->
+            if (currentPanel == null && !isCompact()) {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
+                    CapyPlaceholder()
+                }
+            } else if (currentPanel != null) {
                 SettingsPanelScaffold(
                     onBack = {
                         navigator.navigateBack()
                     },
-                    title = panel.title,
+                    title = currentPanel.title,
                 ) {
                     Box(contentAlignment = Alignment.Center) {
-                        when (panel) {
+                        when (currentPanel) {
                             SettingsPanel.General -> GeneralSettingsPanel()
                             SettingsPanel.Display -> DisplaySettingsPanel()
                             SettingsPanel.Account -> AccountSettingsPanel(onRemoveAccount = onRemoveAccount)
@@ -62,23 +66,8 @@ fun SettingsView(
         }
     )
 
-    BackHandler(currentPanel == SettingsPanel.General) {
-        onNavigateBack()
-    }
-
     BackHandler(navigator.canNavigateBack()) {
         navigator.navigateBack()
-    }
-
-    LaunchedEffect(compact, currentPanel) {
-        if (compact || currentPanel != null && currentPanel != SettingsPanel.General) {
-            return@LaunchedEffect
-        }
-
-        navigator.navigateTo(
-            pane = ThreePaneScaffoldRole.Secondary,
-            SettingsPanel.General
-        )
     }
 }
 
