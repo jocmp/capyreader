@@ -114,7 +114,7 @@
     <string name="font_option_poppins">Poppins</string>
     <string name="font_option_system_default">الخط الإفتراضي للنظام</string>
     <string name="article_font_menu_label">الخط</string>
-    <string name="article_text_size_label">حجم النص</string>
+    <string name="article_font_scale_label">حجم النص</string>
     <string name="image_error_text">خطأ في تحميل الصورة</string>
     <string name="article_byline">%1$s في %2$s بواسطة %3$s</string>
     <string name="article_byline_date_only">%1$s في %2$s</string>

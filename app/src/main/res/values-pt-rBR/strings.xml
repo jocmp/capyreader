@@ -122,7 +122,7 @@
     <string name="font_option_poppins">Poppins</string>
     <string name="font_option_system_default">System default</string>
     <string name="article_font_menu_label">Fonte</string>
-    <string name="article_text_size_label">Tamanho da fonte</string>
+    <string name="article_font_scale_label">Tamanho da fonte</string>
     <string name="image_error_text">Erro ao carregar a imagem</string>
     <string name="article_byline">%1$s at %2$s by %3$s</string>
     <string name="article_byline_date_only">%1$s at %2$s</string>

@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.common.ThemeOption
+import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.jocmp.capy.Account
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,17 +16,21 @@ import kotlinx.coroutines.launch
 class DisplaySettingsViewModel(
     val account: Account,
     val appPreferences: AppPreferences,
-): ViewModel() {
+) : ViewModel() {
     var theme by mutableStateOf(appPreferences.theme.get())
         private set
 
-    private val _imagePreview = mutableStateOf(appPreferences.articleDisplay.imagePreview.get())
+    private val _imagePreview = mutableStateOf(appPreferences.articleListOptions.imagePreview.get())
 
-    private val _showSummary = mutableStateOf(appPreferences.articleDisplay.showSummary.get())
+    private val _showSummary = mutableStateOf(appPreferences.articleListOptions.showSummary.get())
 
-    private val _showFeedName = mutableStateOf(appPreferences.articleDisplay.showFeedName.get())
+    private val _showFeedName = mutableStateOf(appPreferences.articleListOptions.showFeedName.get())
 
-    private val _showFeedIcons = mutableStateOf(appPreferences.articleDisplay.showFeedIcons.get())
+    private val _showFeedIcons =
+        mutableStateOf(appPreferences.articleListOptions.showFeedIcons.get())
+
+    var fontScale by mutableStateOf(appPreferences.articleListOptions.fontScale.get())
+        private set
 
     val imagePreview: ImagePreview
         get() = _imagePreview.value
@@ -60,26 +65,32 @@ class DisplaySettingsViewModel(
         }
     }
 
+    fun updateFontScale(fontScale: ArticleListFontScale) {
+        appPreferences.articleListOptions.fontScale.set(fontScale)
+
+        this.fontScale = fontScale
+    }
+
     fun updateImagePreview(imagePreview: ImagePreview) {
-        appPreferences.articleDisplay.imagePreview.set(imagePreview)
+        appPreferences.articleListOptions.imagePreview.set(imagePreview)
 
         _imagePreview.value = imagePreview
     }
 
     fun updateSummary(show: Boolean) {
-        appPreferences.articleDisplay.showSummary.set(show)
+        appPreferences.articleListOptions.showSummary.set(show)
 
         _showSummary.value = show
     }
 
     fun updateFeedIcons(show: Boolean) {
-        appPreferences.articleDisplay.showFeedIcons.set(show)
+        appPreferences.articleListOptions.showFeedIcons.set(show)
 
         _showFeedIcons.value = show
     }
 
     fun updateFeedName(show: Boolean) {
-        appPreferences.articleDisplay.showFeedName.set(show)
+        appPreferences.articleListOptions.showFeedName.set(show)
 
         _showFeedName.value = show
     }
