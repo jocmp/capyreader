@@ -65,15 +65,17 @@ fun ArticleList(
 fun rememberArticleOptions(appPreferences: AppPreferences = koinInject()): ArticleRowOptions {
     val scope = rememberCoroutineScope()
 
-    val showSummary by appPreferences.articleDisplay.showSummary.stateIn(scope).collectAsState()
-    val showIcon by appPreferences.articleDisplay.showFeedIcons.stateIn(scope).collectAsState()
-    val showFeedName by appPreferences.articleDisplay.showFeedName.stateIn(scope).collectAsState()
-    val imagePreview by appPreferences.articleDisplay.imagePreview.stateIn(scope).collectAsState()
+    val showSummary by appPreferences.articleListOptions.showSummary.stateIn(scope).collectAsState()
+    val showIcon by appPreferences.articleListOptions.showFeedIcons.stateIn(scope).collectAsState()
+    val showFeedName by appPreferences.articleListOptions.showFeedName.stateIn(scope).collectAsState()
+    val imagePreview by appPreferences.articleListOptions.imagePreview.stateIn(scope).collectAsState()
+    val fontScale by appPreferences.articleListOptions.fontScale.stateIn(scope).collectAsState()
 
     return ArticleRowOptions(
         showSummary = showSummary,
         showIcon = showIcon,
         showFeedName = showFeedName,
-        imagePreview = imagePreview
+        imagePreview = imagePreview,
+        fontScale = fontScale,
     )
 }

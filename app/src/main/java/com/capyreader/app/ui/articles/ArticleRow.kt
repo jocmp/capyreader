@@ -39,7 +39,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.capyreader.app.R
 import com.capyreader.app.common.ImagePreview
@@ -60,7 +59,7 @@ data class ArticleRowOptions(
     val showSummary: Boolean = true,
     val showFeedName: Boolean = true,
     val imagePreview: ImagePreview = ImagePreview.default,
-    val textSize: ArticleListTextSize = ArticleListTextSize.MEDIUM
+    val fontScale: ArticleListFontScale = ArticleListFontScale.MEDIUM
 )
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -90,7 +89,7 @@ fun ArticleRow(
     CompositionLocalProvider(
         LocalDensity provides Density(
             LocalDensity.current.density,
-            options.textSize.fontScale()
+            options.fontScale.withLocaleDensity()
         )
     ) {
         Box(
@@ -331,7 +330,7 @@ fun ArticleRowPreview_LargeText(@PreviewParameter(ArticleSample::class) article:
             currentTime = LocalDateTime.now(),
             options = ArticleRowOptions(
                 imagePreview = ImagePreview.LARGE,
-                textSize = ArticleListTextSize.MEDIUM
+                fontScale = ArticleListFontScale.MEDIUM
             )
         )
     }

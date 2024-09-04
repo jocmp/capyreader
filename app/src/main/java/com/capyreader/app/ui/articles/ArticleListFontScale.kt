@@ -3,7 +3,7 @@ package com.capyreader.app.ui.articles
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalDensity
 
-enum class ArticleListTextSize {
+enum class ArticleListFontScale {
     SMALL,
     MEDIUM,
     LARGE,
@@ -11,7 +11,7 @@ enum class ArticleListTextSize {
     XX_LARGE;
 
     @Composable
-    fun fontScale(): Float {
+    fun withLocaleDensity(): Float {
         val current = LocalDensity.current.fontScale
 
         val relative = when (this) {
@@ -24,7 +24,6 @@ enum class ArticleListTextSize {
 
         return current * relative
     }
-
 
     companion object {
         val default = MEDIUM

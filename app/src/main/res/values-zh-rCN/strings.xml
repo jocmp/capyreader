@@ -77,7 +77,7 @@
     <string name="font_option_poppins">Poppins</string>
     <string name="font_option_system_default">系统默认</string>
     <string name="article_font_menu_label">字体</string>
-    <string name="article_text_size_label">文本大小</string>
+    <string name="article_font_scale_label">文本大小</string>
     <string name="image_error_text">加载图片错误</string>
     <string name="article_byline">%1$s 于 %2$s %3$s</string>
     <string name="article_byline_date_only">%1$s 于 %2$s</string>

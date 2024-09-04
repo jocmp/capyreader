@@ -20,7 +20,7 @@
     <string name="edit_feed_tags">Etiket</string>
     <string name="settings_option_in_app_browser">Uygulama içi tarayıcıyı kullan</string>
     <string name="opml_import_notification_cancel">Durdur</string>
-    <string name="article_text_size_label">Metin boyutu</string>
+    <string name="article_font_scale_label">Metin boyutu</string>
     <string name="image_error_text">Resim yüklenirken hata oluştu</string>
     <string name="settings_import_progress_placeholder">Abonelikler içe aktarılıyor…</string>
     <string name="opml_import_toast_complete">İçe aktarım tamamlandı</string>

@@ -8,6 +8,7 @@ import com.jocmp.capy.preferences.Preference
 import com.jocmp.capy.preferences.PreferenceStore
 import com.jocmp.capy.preferences.getEnum
 import com.capyreader.app.refresher.RefreshInterval
+import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.jocmp.capy.articles.FontOption
 import com.jocmp.capy.articles.TextSize
 import kotlinx.serialization.encodeToString
@@ -18,7 +19,7 @@ class AppPreferences(context: Context) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
     )
 
-    val articleDisplay = ListDisplayOptions(preferenceStore)
+    val articleListOptions = ArticleListOptions(preferenceStore)
 
     val accountID: Preference<String>
         get() = preferenceStore.getString("account_id")
@@ -59,7 +60,7 @@ class AppPreferences(context: Context) {
         preferenceStore.clearAll()
     }
 
-    class ListDisplayOptions(private val preferenceStore: PreferenceStore) {
+    class ArticleListOptions(private val preferenceStore: PreferenceStore) {
         val showFeedName: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_display_feed_name", true)
 
@@ -71,5 +72,8 @@ class AppPreferences(context: Context) {
 
         val imagePreview: Preference<ImagePreview>
             get() = preferenceStore.getEnum("article_display_image_preview", ImagePreview.default)
+
+        val fontScale: Preference<ArticleListFontScale>
+            get() = preferenceStore.getEnum("article_display_font_scale", ArticleListFontScale.default)
     }
 }

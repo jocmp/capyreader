@@ -9,6 +9,7 @@ import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.common.ThemeOption
+import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.components.TextSwitch
 import com.capyreader.app.ui.theme.CapyTheme
@@ -26,12 +27,14 @@ fun DisplaySettingsPanel(
         articleListOptions = ArticleListOptions(
             imagePreview = viewModel.imagePreview,
             showSummary = viewModel.showSummary,
+            fontScale = viewModel.fontScale,
             showFeedIcons = viewModel.showFeedIcons,
             showFeedName = viewModel.showFeedName,
             updateImagePreview = viewModel::updateImagePreview,
             updateSummary = viewModel::updateSummary,
             updateFeedName = viewModel::updateFeedName,
             updateFeedIcons = viewModel::updateFeedIcons,
+            updateFontScale = viewModel::updateFontScale,
         )
     )
 }
@@ -86,12 +89,14 @@ private fun DisplaySettingsPanelViewPreview() {
             articleListOptions = ArticleListOptions(
                 imagePreview = ImagePreview.default,
                 showSummary = true,
+                fontScale = ArticleListFontScale.MEDIUM,
                 showFeedIcons = true,
                 showFeedName = false,
                 updateImagePreview = {},
                 updateSummary = {},
                 updateFeedName = {},
                 updateFeedIcons = {},
+                updateFontScale = {}
             )
         )
     }

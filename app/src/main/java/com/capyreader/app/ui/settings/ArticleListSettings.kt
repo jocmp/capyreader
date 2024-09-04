@@ -1,13 +1,23 @@
 package com.capyreader.app.ui.settings
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.typography
+import androidx.compose.material3.Slider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.common.ImagePreview
+import com.capyreader.app.ui.articles.ArticleListFontScale
+import com.capyreader.app.ui.components.FormSection
+import com.capyreader.app.ui.components.LabelStyle
 import com.capyreader.app.ui.components.TextSwitch
+import kotlin.math.roundToInt
 
 @Immutable
 data class ArticleListOptions(
@@ -15,16 +25,20 @@ data class ArticleListOptions(
     val showFeedIcons: Boolean,
     val showFeedName: Boolean,
     val showSummary: Boolean,
+    val fontScale: ArticleListFontScale,
     val updateFeedIcons: (show: Boolean) -> Unit,
     val updateFeedName: (show: Boolean) -> Unit,
     val updateImagePreview: (preview: ImagePreview) -> Unit,
     val updateSummary: (show: Boolean) -> Unit,
+    val updateFontScale: (scale: ArticleListFontScale) -> Unit,
 )
 
 @Composable
 fun ArticleListSettings(
     options: ArticleListOptions,
 ) {
+    val fontScales = ArticleListFontScale.entries
+
     Column {
         TextSwitch(
             onCheckedChange = options.updateFeedName,
@@ -45,6 +59,21 @@ fun ArticleListSettings(
             onUpdateImagePreview = options.updateImagePreview,
             imagePreview = options.imagePreview
         )
+
+        FormSection(
+            modifier = Modifier.padding(top = 16.dp),
+            title = stringResource(R.string.article_font_scale_label),
+            labelStyle = LabelStyle.COMPACT,
+        ) {
+            Slider(
+                steps = fontScales.size - 2,
+                valueRange = 0f..(fontScales.size - 1).toFloat(),
+                value = options.fontScale.ordinal.toFloat(),
+                onValueChange = {
+                    options.updateFontScale(fontScales[it.roundToInt()])
+                }
+            )
+        }
     }
 }
 
@@ -56,11 +85,13 @@ private fun ArticleListSettingsPreview() {
             imagePreview = ImagePreview.default,
             showSummary = true,
             showFeedIcons = true,
+            fontScale = ArticleListFontScale.LARGE,
             showFeedName = false,
             updateImagePreview = {},
             updateSummary = {},
             updateFeedName = {},
             updateFeedIcons = {},
+            updateFontScale = {}
         )
     )
 }

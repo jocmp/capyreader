@@ -6,15 +6,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.capyreader.app.ui.components.WebView
 import com.capyreader.app.ui.components.WebViewNavigator
 import com.capyreader.app.ui.components.rememberSaveableWebViewState
@@ -107,19 +104,6 @@ fun ArticleView(
             Column(
                 Modifier.fillMaxSize()
             ) {
-                article?.let {
-                    Column(
-                        Modifier.padding(horizontal = 16.dp)
-                    ) {
-                        Text(
-                            text = article.title,
-                            fontSize = 24.sp,
-                            lineHeight = (28.8).sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
-
                 WebView(
                     state = webViewState,
                     navigator = webViewNavigator,
