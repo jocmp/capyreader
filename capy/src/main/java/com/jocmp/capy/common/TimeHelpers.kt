@@ -1,29 +1,30 @@
 package com.jocmp.capy.common
 
+import com.jocmp.capy.common.DateTimeFormatters.LONG_MONTH_DATE_TIME_FORMATTER
 import java.time.Instant
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 
+val formatters = listOf(
+    DateTimeFormatter.ISO_ZONED_DATE_TIME,
+    DateTimeFormatter.RFC_1123_DATE_TIME,
+    LONG_MONTH_DATE_TIME_FORMATTER,
+)
+
 val String.toDateTime: ZonedDateTime?
     get() {
-        val dateTime = isoFormat(this) ?: rfc1123Format(this)
+        val dateTime = formatters.firstNotNullOfOrNull { formatter ->
+            parseOrNull(this, formatter)
+        }
 
         return dateTime?.withZoneSameInstant(ZoneOffset.UTC)
     }
 
-private fun isoFormat(dateTime: String): ZonedDateTime? {
+private fun parseOrNull(text: CharSequence, formatter: DateTimeFormatter): ZonedDateTime? {
     return try {
-        ZonedDateTime.parse(dateTime)
-    } catch (_: DateTimeParseException) {
-        null
-    }
-}
-
-private fun rfc1123Format(dateTime: String): ZonedDateTime? {
-    return try {
-        ZonedDateTime.parse(dateTime, DateTimeFormatter.RFC_1123_DATE_TIME)
+        ZonedDateTime.parse(text, formatter)
     } catch (_: DateTimeParseException) {
         null
     }

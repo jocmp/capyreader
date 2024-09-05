@@ -27,7 +27,7 @@ class TimeHelpersTest {
     }
 
     @Test
-    fun `parseISODate parses RFC822 timestamps`() {
+    fun `parseISODate parses RFC1123 timestamps`() {
         val result = "Mon, 25 Dec 2023 17:18:03 +0000".toDateTime
 
         val expected = ZonedDateTime.of(
@@ -43,6 +43,25 @@ class TimeHelpersTest {
 
         assertEquals(expected = expected, actual = result)
     }
+
+    @Test
+    fun `RFC1123 with 4 letter dates`(){
+        val result = "Thu, 05 Sept 2024 15:26:54 +0200".toDateTime
+
+        val expected = ZonedDateTime.of(
+            2024,
+            9,
+            5,
+            13,
+            26,
+            54,
+            0,
+            ZoneOffset.UTC
+        )
+
+        assertEquals(expected = expected, actual = result)
+    }
+
 
     @Test
     fun `parseISODate discards null values`() {
