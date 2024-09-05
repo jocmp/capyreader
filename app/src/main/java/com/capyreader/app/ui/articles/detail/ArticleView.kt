@@ -24,7 +24,7 @@ import org.koin.compose.koinInject
 
 @Composable
 fun ArticleView(
-    article: Article?,
+    article: Article,
     webViewNavigator: WebViewNavigator,
     renderer: ArticleRenderer = koinInject(),
     onBackPressed: () -> Unit,
@@ -33,16 +33,16 @@ fun ArticleView(
     onNavigateToMedia: (url: String) -> Unit,
     enableBackHandler: Boolean = false
 ) {
-    val articleID = article?.id
+    val articleID = article.id
     val templateColors = articleTemplateColors()
     val colors = templateColors.asMap()
     val webViewState = rememberSaveableWebViewState(key = articleID)
-    val byline = article?.byline(context = LocalContext.current).orEmpty()
+    val byline = article.byline(context = LocalContext.current).orEmpty()
 
     val extractedContentState = rememberExtractedContent(
         article = article,
         onComplete = { content ->
-            article?.let {
+            article.let {
                 webViewNavigator.loadHtml(
                     renderer.render(
                         article,
@@ -62,8 +62,6 @@ fun ArticleView(
     val extractedContent = extractedContentState.content
 
     fun onToggleExtractContent() {
-        article ?: return
-
         if (extractedContent.isComplete) {
             webViewNavigator.loadHtml(renderer.render(article, byline = byline, colors = colors))
             extractedContentState.reset()
@@ -89,18 +87,6 @@ fun ArticleView(
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            if (article == null && !isCompact()) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .padding(bottom = 64.dp)
-
-                        .fillMaxSize()
-                ) {
-                    CapyPlaceholder()
-                }
-            }
-
             Column(
                 Modifier.fillMaxSize()
             ) {
@@ -114,21 +100,17 @@ fun ArticleView(
         }
     }
 
-    BackHandler(enableBackHandler && article != null) {
+    BackHandler(enableBackHandler) {
         onBackPressed()
     }
 
     LaunchedEffect(articleID) {
         launch(Dispatchers.IO) {
-            if (article == null) {
-                clearWebView()
+            if (extractedContent.requestShow) {
+                extractedContentState.fetch()
             } else {
-                if (extractedContent.requestShow) {
-                    extractedContentState.fetch()
-                } else {
-                    val rendered = renderer.render(article, byline = byline, colors = colors)
-                    webViewNavigator.loadHtml(rendered)
-                }
+                val rendered = renderer.render(article, byline = byline, colors = colors)
+                webViewNavigator.loadHtml(rendered)
             }
         }
     }

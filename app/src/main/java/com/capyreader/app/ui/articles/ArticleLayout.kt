@@ -4,6 +4,8 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.DrawerValue
@@ -27,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
@@ -36,11 +39,13 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.R
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.detail.ArticleView
+import com.capyreader.app.ui.articles.detail.CapyPlaceholder
 import com.capyreader.app.ui.articles.detail.resetScrollBehaviorListener
 import com.capyreader.app.ui.articles.list.EmptyOnboardingView
 import com.capyreader.app.ui.articles.list.FeedListTopBar
@@ -49,6 +54,7 @@ import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.rememberWebViewNavigator
 import com.capyreader.app.ui.fixtures.FeedPreviewFixture
 import com.capyreader.app.ui.fixtures.FolderPreviewFixture
+import com.capyreader.app.ui.isCompact
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
@@ -309,20 +315,30 @@ fun ArticleLayout(
             }
         },
         detailPane = {
-            ArticleView(
-                article = article,
-                onToggleRead = onToggleArticleRead,
-                onToggleStar = onToggleArticleStar,
-                webViewNavigator = webViewNavigator,
-                onNavigateToMedia = {
-                    mediaUrl = it
-                },
-                enableBackHandler = mediaUrl == null,
-                onBackPressed = {
-                    scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
-                    onRequestClearArticle()
+            if (article == null && !isCompact()) {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
+                    CapyPlaceholder()
                 }
-            )
+            } else if (article != null) {
+                ArticleView(
+                    article = article,
+                    onToggleRead = onToggleArticleRead,
+                    onToggleStar = onToggleArticleStar,
+                    webViewNavigator = webViewNavigator,
+                    onNavigateToMedia = {
+                        mediaUrl = it
+                    },
+                    enableBackHandler = mediaUrl == null,
+                    onBackPressed = {
+                        scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
+                        onRequestClearArticle()
+                    }
+                )
+            }
         }
     )
 
@@ -362,6 +378,12 @@ fun ArticleLayout(
         if (!isInitialized) {
             refreshFeeds()
             setInitialized(true)
+        }
+    }
+
+    LaunchedEffect(article?.id) {
+        if (article == null) {
+            webViewNavigator.clearView()
         }
     }
 
