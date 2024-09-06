@@ -24,7 +24,7 @@ fun SettingsView(
     onRemoveAccount: () -> Unit,
 ) {
     val navigator = rememberListDetailPaneScaffoldNavigator<SettingsPanel>()
-    val currentPanel = navigator.currentDestination?.content
+    val currentPanel = navigator.currentDestination?.contentKey
 
     SettingsScaffold(
         scaffoldNavigator = navigator,
