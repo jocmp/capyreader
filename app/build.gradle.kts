@@ -16,12 +16,12 @@ if (rootProject.file("secrets.properties").exists()) {
 
 android {
     namespace = "com.capyreader.app"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.capyreader.app"
         minSdk = 30
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1040
         versionName = "2024.09.1040"
 
