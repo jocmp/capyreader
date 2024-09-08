@@ -1,9 +1,5 @@
 package com.capyreader.app.ui.articles
 
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.DrawerState
@@ -15,11 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.AnimatedPane
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffold
-import androidx.compose.material3.adaptive.layout.PaneMotion
-import androidx.compose.material3.adaptive.layout.PaneScaffoldMotionScope
-import androidx.compose.material3.adaptive.layout.ThreePaneMotion
 import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
-import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldState
 import androidx.compose.material3.adaptive.layout.calculateListDetailPaneScaffoldMotion
 import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
@@ -29,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import com.capyreader.app.ui.FadePaneMotion
 import com.capyreader.app.ui.components.safeEdgePadding
 import com.capyreader.app.ui.isAtMostMedium
 import com.capyreader.app.ui.theme.CapyTheme
@@ -76,14 +69,6 @@ fun ArticleScaffold(
             }
         )
     }
-}
-
-@OptIn(ExperimentalMaterial3AdaptiveApi::class)
-class FadePaneMotion: PaneMotion {
-    override val PaneScaffoldMotionScope.enterTransition: EnterTransition
-        get() = fadeIn()
-    override val PaneScaffoldMotionScope.exitTransition: ExitTransition
-        get() = fadeOut()
 }
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
