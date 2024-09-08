@@ -86,7 +86,6 @@ fun ArticleRow(
     val feedNameColor = findFeedNameColor(read = article.read)
     val haptics = LocalHapticFeedback.current
     val (isArticleMenuOpen, setArticleMenuOpen) = remember { mutableStateOf(false) }
-
     val openArticleMenu = {
         haptics.performHapticFeedback(HapticFeedbackType.LongPress)
         setArticleMenuOpen(true)
@@ -102,9 +101,28 @@ fun ArticleRow(
                 )
         ) {
             ListItem(
+                overlineContent = {
+                    Row {
+                        if (options.showFeedName) {
+                            Text(
+                                text = article.feedName,
+                                color = feedNameColor,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                                modifier = Modifier.weight(1f)
+                            )
+                        }
+                    }
+                },
                 leadingContent = {
+                    val topPadding = if (options.showFeedName) {
+                        18.dp
+                    } else {
+                        2.dp
+                    }
+
                     if (options.showIcon) {
-                        Box(Modifier.padding(top = 6.dp)) {
+                        Box(Modifier.padding(top = topPadding)) {
                             FaviconBadge(article.faviconURL)
                         }
                     }
@@ -120,30 +138,6 @@ fun ArticleRow(
                         verticalArrangement = Arrangement.spacedBy(4.dp),
                         modifier = Modifier.padding(vertical = 4.dp)
                     ) {
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(4.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.fillMaxWidth(),
-                        ) {
-                            if (options.showFeedName) {
-                                Text(
-                                    text = article.feedName,
-                                    color = feedNameColor,
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis,
-                                    modifier = Modifier.weight(1f)
-                                )
-                                Spacer(Modifier.width(8.dp))
-                            }
-                            Text(
-                                text = relativeTime(
-                                    time = article.publishedAt,
-                                    currentTime = currentTime,
-                                ),
-                                style = typography.labelMedium,
-                                maxLines = 1,
-                            )
-                        }
                         if (article.summary.isNotBlank() && options.showSummary) {
                             Text(
                                 text = article.summary,
@@ -156,15 +150,26 @@ fun ArticleRow(
                         }
                     }
                 },
-                trailingContent = if (imageURL != null && options.imagePreview == ImagePreview.SMALL) {
-                    {
-                        ArticleImage(
-                            imageURL = imageURL,
-                            imagePreview = options.imagePreview
+                trailingContent = {
+                    Column(
+                        horizontalAlignment = Alignment.End,
+                        verticalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        Text(
+                            text = relativeTime(
+                                time = article.publishedAt,
+                                currentTime = currentTime,
+                            ),
+                            color = feedNameColor,
+                            maxLines = 1,
                         )
+                        if (imageURL != null && options.imagePreview == ImagePreview.SMALL) {
+                            ArticleImage(
+                                imageURL = imageURL,
+                                imagePreview = options.imagePreview
+                            )
+                        }
                     }
-                } else {
-                    null
                 },
                 colors = colors
             )
@@ -380,12 +385,34 @@ fun ArticleRowPreview_Unread() {
         feedName = "9to5Google"
     )
 
-    ArticleRow(
-        article = article,
-        selected = false,
-        onSelect = {},
-        currentTime = LocalDateTime.now(),
-    )
+    Column {
+        ArticleRow(
+            article = article,
+            selected = false,
+            onSelect = {},
+            currentTime = LocalDateTime.now(),
+        )
+        ArticleRow(
+            article = article.copy(imageURL = null),
+            selected = false,
+            onSelect = {},
+            currentTime = LocalDateTime.now(),
+        )
+        ArticleRow(
+            article = article,
+            selected = false,
+            onSelect = {},
+            currentTime = LocalDateTime.now(),
+            options = ArticleRowOptions(showFeedName = false)
+        )
+        ArticleRow(
+            article = article,
+            selected = false,
+            onSelect = {},
+            currentTime = LocalDateTime.now(),
+            options = ArticleRowOptions(showFeedName = false, imagePreview = ImagePreview.NONE)
+        )
+    }
 }
 
 @Preview
