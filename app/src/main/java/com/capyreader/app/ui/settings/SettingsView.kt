@@ -51,7 +51,7 @@ fun SettingsView(
                     onBack = {
                         navigator.navigateBack()
                     },
-                    title = currentPanel.title,
+                    panel = currentPanel,
                 ) {
                     Box(contentAlignment = Alignment.Center) {
                         when (currentPanel) {

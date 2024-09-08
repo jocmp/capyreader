@@ -1,11 +1,10 @@
 package com.capyreader.app.ui.settings
 
-import androidx.annotation.StringRes
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
@@ -16,7 +15,9 @@ import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults.exitUntilCollapsedScrollBehavior
+import androidx.compose.material3.TopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
@@ -26,11 +27,21 @@ import com.capyreader.app.ui.isAtMostMedium
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsPanelScaffold(
+    panel: SettingsPanel,
     onBack: () -> Unit,
-    @StringRes title: Int,
     content: @Composable () -> Unit,
 ) {
-    val scrollBehavior = exitUntilCollapsedScrollBehavior()
+    val topBarState = rememberSaveable(panel, saver = TopAppBarState.Saver) {
+        TopAppBarState(
+            initialHeightOffsetLimit = 0f,
+            initialHeightOffset = 0f,
+            initialContentOffset = 0f,
+        )
+    }
+    val scrollState = rememberSaveable(panel, saver = ScrollState.Saver) {
+        ScrollState(initial = 0)
+    }
+    val scrollBehavior = exitUntilCollapsedScrollBehavior(state = topBarState)
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -38,7 +49,7 @@ fun SettingsPanelScaffold(
             LargeTopAppBar(
                 scrollBehavior = scrollBehavior,
                 title = {
-                    Text(stringResource(title))
+                    Text(stringResource(panel.title))
                 },
                 navigationIcon = {
                     if (isAtMostMedium()) {
@@ -60,7 +71,7 @@ fun SettingsPanelScaffold(
         Column(
             modifier = Modifier
                 .padding(padding)
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(scrollState)
         ) {
             Spacer(modifier = Modifier.height(16.dp))
             content()
