@@ -7,14 +7,18 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemColors
 import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
@@ -25,6 +29,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -34,6 +39,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -86,12 +92,7 @@ fun ArticleRow(
         setArticleMenuOpen(true)
     }
 
-    CompositionLocalProvider(
-        LocalDensity provides Density(
-            LocalDensity.current.density,
-            options.fontScale.withLocaleDensity()
-        )
-    ) {
+    StyleProviders(options) {
         Box(
             Modifier
                 .combinedClickable(
@@ -119,10 +120,28 @@ fun ArticleRow(
                         verticalArrangement = Arrangement.spacedBy(4.dp),
                         modifier = Modifier.padding(vertical = 4.dp)
                     ) {
-                        if (options.showFeedName) {
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(4.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.fillMaxWidth(),
+                        ) {
+                            if (options.showFeedName) {
+                                Text(
+                                    text = article.feedName,
+                                    color = feedNameColor,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                    modifier = Modifier.weight(1f)
+                                )
+                                Spacer(Modifier.width(8.dp))
+                            }
                             Text(
-                                article.feedName,
-                                color = feedNameColor,
+                                text = relativeTime(
+                                    time = article.publishedAt,
+                                    currentTime = currentTime,
+                                ),
+                                style = typography.labelMedium,
+                                maxLines = 1,
                             )
                         }
                         if (article.summary.isNotBlank() && options.showSummary) {
@@ -135,14 +154,6 @@ fun ArticleRow(
                         if (imageURL != null && options.imagePreview == ImagePreview.LARGE) {
                             ArticleImage(imageURL = imageURL, imagePreview = options.imagePreview)
                         }
-                        Text(
-                            text = relativeTime(
-                                time = article.publishedAt,
-                                currentTime = currentTime,
-                            ),
-                            style = typography.labelMedium,
-                            maxLines = 1,
-                        )
                     }
                 },
                 trailingContent = if (imageURL != null && options.imagePreview == ImagePreview.SMALL) {
@@ -250,6 +261,19 @@ fun findFeedNameColor(read: Boolean): Color {
     }
 }
 
+@Composable
+fun StyleProviders(options: ArticleRowOptions, content: @Composable () -> Unit) {
+    CompositionLocalProvider(
+        LocalTextStyle provides LocalTextStyle.current.copy(textDirection = TextDirection.Content),
+        LocalDensity provides Density(
+            LocalDensity.current.density,
+            options.fontScale.withLocaleDensity()
+        )
+    ) {
+        content()
+    }
+}
+
 @Preview(
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
@@ -269,7 +293,7 @@ fun ArticleRowPreview_Selected_DarkMode() {
         publishedAt = ZonedDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneOffset.UTC),
         read = true,
         starred = false,
-        feedName = "9to5Google"
+        feedName = "9to5Google - Google news, Pixel, Android, Home, Chrome OS, more"
     )
 
     CapyTheme {
@@ -331,7 +355,7 @@ fun ArticleRowPreview_LargeText(@PreviewParameter(ArticleSample::class) article:
             options = ArticleRowOptions(
                 imagePreview = ImagePreview.LARGE,
                 fontScale = ArticleListFontScale.MEDIUM
-            )
+            ),
         )
     }
 }
@@ -354,6 +378,34 @@ fun ArticleRowPreview_Unread() {
         read = false,
         starred = false,
         feedName = "9to5Google"
+    )
+
+    ArticleRow(
+        article = article,
+        selected = false,
+        onSelect = {},
+        currentTime = LocalDateTime.now(),
+    )
+}
+
+@Preview
+@Composable
+fun ArticleRowPreview_Rtl() {
+    val article = Article(
+        id = "288",
+        feedID = "123",
+        title = "شکایت یِلپ (Yelp) از گوگل: نبردی بر سر نتایج جستجوی محلی",
+        author = "Andrew Romero",
+        contentHTML = "",
+        extractedContentURL = null,
+        imageURL = "http://example.com",
+        summary = "یِلپ (Yelp) اخیراً از گوگل شکایت کرده و مدعی شده که این غول فناوری از تسلط خود بر جستجوی عمومی به نفع خود در خدمات جستجوی محلی سوءاستفاده میکند. این پرونده در دادگاه فدرال سان200Cفرانسیسکو ثبت شده و هدف از آن دریافت غرامت مالی و صدور حکمی برای جلوگیری از آنچه یِلپ به عنوان اقداما",
+        url = URL("https://www.1pezeshk.com/feed"),
+        updatedAt = ZonedDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneOffset.UTC),
+        publishedAt = ZonedDateTime.of(LocalDateTime.now().minusHours(1), ZoneOffset.UTC),
+        read = false,
+        starred = false,
+        feedName = "یک پزشک"
     )
 
     ArticleRow(
