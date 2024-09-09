@@ -47,4 +47,5 @@
     <string name="settings_remove_account_message_feedbin">您确定要登出嗎？</string>
     <string name="settings_remove_account_button_feedbin">登出</string>
     <string name="settings_remove_account_title_feedbin">登出</string>
+    <string name="article_font_scale_label">字體縮放</string>
 </resources>
