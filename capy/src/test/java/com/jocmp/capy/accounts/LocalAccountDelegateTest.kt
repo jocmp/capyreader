@@ -285,7 +285,8 @@ class LocalAccountDelegateTest {
         override val name: String,
         override val feedURL: URL,
         override val siteURL: URL? = null,
-        override val faviconURL: URL? = null
+        override val faviconURL: URL? = null,
+        override val items: List<RssItem> = listOf()
     ) : Feed {
         override fun isValid() = true
     }
@@ -294,42 +295,42 @@ class LocalAccountDelegateTest {
     fun cleanedArticleLink_whenPresent() {
         val url = "https://example.com/article"
 
-        val result = cleanedArticleLink(articleURL = url, siteURL = "")
+        val result = cleanedURL(inputURL = url, siteURL = "")
 
         assertEquals(expected = url, actual = result.toString())
     }
 
     @Test
     fun cleanedArticleLink_whenNull() {
-        val result = cleanedArticleLink(articleURL = null, siteURL = "")
+        val result = cleanedURL(inputURL = null, siteURL = "")
 
         assertEquals(expected = null, actual = result)
     }
 
     @Test
     fun cleanedArticleLink_whenBlank() {
-        val result = cleanedArticleLink(articleURL = "", siteURL = "")
+        val result = cleanedURL(inputURL = "", siteURL = "")
 
         assertEquals(expected = null, actual = result)
     }
 
     @Test
     fun cleanedArticleLink_withRelativePathMissingSiteURL() {
-        val result = cleanedArticleLink(articleURL = "/article", siteURL = "")
+        val result = cleanedURL(inputURL = "/article", siteURL = "")
 
         assertEquals(expected = null, actual = result)
     }
 
     @Test
     fun cleanedArticleLink_withRelativePathAndInvalidSiteURL() {
-        val result = cleanedArticleLink(articleURL = "/article", siteURL = "wrong")
+        val result = cleanedURL(inputURL = "/article", siteURL = "wrong")
 
         assertEquals(expected = null, actual = result)
     }
 
     @Test
     fun cleanedArticleLink_withRelativePathAndValidSiteURL() {
-        val result = cleanedArticleLink(articleURL = "/article", siteURL = "https://example.com")
+        val result = cleanedURL(inputURL = "/article", siteURL = "https://example.com")
 
         assertEquals(expected = "https://example.com/article", actual = result.toString())
     }

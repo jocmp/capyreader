@@ -42,7 +42,7 @@ class ArticleRenderer(
         ).renderedText
 
         val document = Jsoup.parse(html).apply {
-            article.feedURL?.let { setBaseUri(it) }
+            article.siteURL?.let { setBaseUri(it) }
         }
 
         cleanLinks(document)
@@ -53,6 +53,7 @@ class ArticleRenderer(
     private fun cleanLinks(document: Document) {
         document.getElementsByTag("img").forEach { element ->
             element.attr("loading", "lazy")
+            element.attr("src", element.absUrl("src"))
         }
 
         document.select("img[data-src]").forEach { element ->

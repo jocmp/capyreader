@@ -55,10 +55,6 @@ fun ArticleView(
         }
     )
 
-    val clearWebView = {
-        webViewNavigator.clearView()
-    }
-
     val extractedContent = extractedContentState.content
 
     fun onToggleExtractContent() {

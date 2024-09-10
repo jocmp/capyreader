@@ -276,7 +276,7 @@ internal class ArticleRecords internal constructor(
         }
     }
 
-    internal fun cutoffDate(): ZonedDateTime {
+    private fun cutoffDate(): ZonedDateTime {
         return nowUTC().minusMonths(3)
     }
 }

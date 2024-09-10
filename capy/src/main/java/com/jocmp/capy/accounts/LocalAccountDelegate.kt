@@ -13,7 +13,6 @@ import com.jocmp.capy.persistence.TaggingRecords
 import com.jocmp.feedfinder.DefaultFeedFinder
 import com.jocmp.feedfinder.FeedFinder
 import com.prof18.rssparser.model.RssItem
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
@@ -153,7 +152,7 @@ class LocalAccountDelegate(
                 val updated = updatedAt.toEpochSecond()
 
                 val publishedAt = item.pubDate?.toDateTime?.toEpochSecond() ?: updated
-                val url = cleanedArticleLink(item.link, feed.siteURL)
+                val url = cleanedURL(item.link, feed.siteURL)
                 val withinCutoff = cutoffDate == null || publishedAt > cutoffDate.toEpochSecond()
 
                 if (url != null && withinCutoff) {
@@ -166,7 +165,7 @@ class LocalAccountDelegate(
                         url = url.toString(),
                         summary = item.summary,
                         extracted_content_url = null,
-                        image_url = item.image,
+                        image_url = cleanedURL(item.image, siteURL = feed.siteURL)?.toString(),
                         published_at = publishedAt,
                     )
 
@@ -238,8 +237,8 @@ internal val RssItem.summary: String?
         return Jsoup.parse(it).text()
     }
 
-internal fun cleanedArticleLink(articleURL: String?, siteURL: String): URL? {
-    val url = articleURL.orEmpty()
+internal fun cleanedURL(inputURL: String?, siteURL: String): URL? {
+    val url = inputURL.orEmpty()
 
     if (url.isBlank()) {
         return null

@@ -295,6 +295,10 @@ class FeedbinAccountDelegateTest {
             feedbin.createSubscription(body = CreateSubscriptionRequest(feed_url = url))
         } returns successResponse
 
+        coEvery {
+            feedbin.subscriptions()
+        } returns Response.success(emptyList())
+
         val result = delegate.addFeed(url = url) as AddFeedResult.Success
         val feed = result.feed
 

@@ -1,6 +1,7 @@
 package com.jocmp.capy.fixtures
 
 import com.jocmp.feedfinder.parser.Feed
+import com.prof18.rssparser.model.RssItem
 import java.net.URL
 
 class GenericFeed(
@@ -9,6 +10,7 @@ class GenericFeed(
     override val siteURL: URL? = null,
     private val valid: Boolean = true,
     override val faviconURL: URL? = null,
+    override val items: List<RssItem> = emptyList(),
 ) : Feed {
     override fun isValid() = valid
 

@@ -24,6 +24,7 @@ class ArticleMapperTest {
             starred = false,
             feedTitle = "",
             feedURL = null,
+            siteURL = null,
             faviconURL = null
         )
 
