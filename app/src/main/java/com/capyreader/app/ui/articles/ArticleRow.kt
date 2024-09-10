@@ -21,7 +21,6 @@ import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
-import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,7 +28,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -49,6 +47,7 @@ import coil.compose.AsyncImage
 import com.capyreader.app.R
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.ui.articles.list.ArticleActionMenu
+import com.capyreader.app.ui.articles.list.ArticleListItem
 import com.capyreader.app.ui.fixtures.ArticleSample
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.Article
@@ -100,9 +99,13 @@ fun ArticleRow(
                     onLongClickLabel = stringResource(R.string.article_actions_open_menu)
                 )
         ) {
-            ListItem(
+            ArticleListItem(
                 overlineContent = {
-                    Row {
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
                         if (options.showFeedName) {
                             Text(
                                 text = article.feedName,
@@ -111,21 +114,24 @@ fun ArticleRow(
                                 overflow = TextOverflow.Ellipsis,
                                 modifier = Modifier.weight(1f)
                             )
+                            Spacer(Modifier.width(16.dp))
                         }
+                        Text(
+                            text = relativeTime(
+                                time = article.publishedAt,
+                                currentTime = currentTime,
+                            ),
+                            color = feedNameColor,
+                            maxLines = 1,
+                        )
                     }
                 },
-                leadingContent = {
-                    val topPadding = if (options.showFeedName) {
-                        18.dp
-                    } else {
-                        2.dp
+                leadingContent = if (options.showIcon) {
+                    {
+                        FaviconBadge(article.faviconURL)
                     }
-
-                    if (options.showIcon) {
-                        Box(Modifier.padding(top = topPadding)) {
-                            FaviconBadge(article.faviconURL)
-                        }
-                    }
+                } else {
+                    null
                 },
                 headlineContent = {
                     Text(
@@ -150,26 +156,16 @@ fun ArticleRow(
                         }
                     }
                 },
-                trailingContent = {
-                    Column(
-                        horizontalAlignment = Alignment.End,
-                        verticalArrangement = Arrangement.spacedBy(4.dp)
-                    ) {
-                        Text(
-                            text = relativeTime(
-                                time = article.publishedAt,
-                                currentTime = currentTime,
-                            ),
-                            color = feedNameColor,
-                            maxLines = 1,
+
+                trailingContent = if (imageURL != null && options.imagePreview == ImagePreview.SMALL) {
+                    {
+                        ArticleImage(
+                            imageURL = imageURL,
+                            imagePreview = options.imagePreview
                         )
-                        if (imageURL != null && options.imagePreview == ImagePreview.SMALL) {
-                            ArticleImage(
-                                imageURL = imageURL,
-                                imagePreview = options.imagePreview
-                            )
-                        }
                     }
+                } else {
+                    null
                 },
                 colors = colors
             )
@@ -412,10 +408,21 @@ fun ArticleRowPreview_Unread() {
             currentTime = LocalDateTime.now(),
             options = ArticleRowOptions(showFeedName = false, imagePreview = ImagePreview.NONE)
         )
+        ArticleRow(
+            article = article,
+            selected = false,
+            onSelect = {},
+            currentTime = LocalDateTime.now(),
+            options = ArticleRowOptions(
+                showFeedName = false,
+                showIcon = false,
+                imagePreview = ImagePreview.NONE
+            )
+        )
     }
 }
 
-@Preview
+@Preview(locale = "ar")
 @Composable
 fun ArticleRowPreview_Rtl() {
     val article = Article(
