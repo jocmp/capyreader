@@ -1,5 +1,6 @@
 package com.jocmp.feedfinder.parser
 
+import com.prof18.rssparser.model.RssItem
 import java.net.URL
 
 interface Feed {
@@ -12,4 +13,6 @@ interface Feed {
     val siteURL: URL?
 
     val faviconURL: URL?
+
+    val items: List<RssItem>
 }

@@ -3,6 +3,7 @@ package com.jocmp.feedfinder.parser
 import com.jocmp.feedfinder.optionalURL
 import com.prof18.rssparser.RssParser
 import com.prof18.rssparser.model.RssChannel
+import com.prof18.rssparser.model.RssItem
 import java.net.URL
 
 internal class XMLFeed(
@@ -23,6 +24,9 @@ internal class XMLFeed(
         }
     override val faviconURL: URL?
         get() = channel?.image?.url?.let { optionalURL(it) }
+
+    override val items: List<RssItem>
+        get() = channel?.items.orEmpty()
 
     private fun hasEntries(): Boolean {
         return channel != null &&
