@@ -105,6 +105,7 @@ fun ArticleRow(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         modifier = Modifier
                             .fillMaxWidth()
+                            .padding(bottom = 4.dp)
                     ) {
                         if (options.showFeedName) {
                             Text(
