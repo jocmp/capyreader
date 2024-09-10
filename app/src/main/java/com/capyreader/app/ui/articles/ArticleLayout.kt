@@ -184,8 +184,6 @@ fun ArticleLayout(
             openNextList()
 
             showSnackbar(addFeedSuccessMessage)
-
-            refreshFeeds()
         }
     }
 

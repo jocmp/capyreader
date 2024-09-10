@@ -13,6 +13,7 @@ import com.jocmp.capy.persistence.TaggingRecords
 import com.jocmp.feedfinder.DefaultFeedFinder
 import com.jocmp.feedfinder.FeedFinder
 import com.prof18.rssparser.model.RssItem
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
@@ -62,6 +63,7 @@ class LocalAccountDelegate(
 
                 return if (feed != null) {
                     upsertFolders(feed, folderTitles)
+                    saveArticles(resultFeed.items, cutoffDate = null, feed = feed)
 
                     AddFeedResult.Success(feed)
                 } else {

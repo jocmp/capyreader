@@ -24,6 +24,7 @@ import com.jocmp.feedbinclient.Subscription
 import com.jocmp.feedbinclient.UnreadEntriesRequest
 import com.jocmp.feedbinclient.UpdateSubscriptionRequest
 import com.jocmp.feedbinclient.pagingInfo
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
@@ -162,6 +163,10 @@ internal class FeedbinAccountDelegate(
                 val feed = feedRecords.findBy(subscription.feed_id.toString())
 
                 if (feed != null) {
+                    coroutineScope {
+                        launch(Dispatchers.IO) { refreshFeeds() }
+                    }
+
                     AddFeedResult.Success(feed)
                 } else {
                     AddFeedResult.Failure(AddFeedError.SaveFailure())
