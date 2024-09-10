@@ -20,5 +20,6 @@ data class Article(
     val feedName: String = "",
     val faviconURL: String? = null,
     val feedURL: String? = null,
+    val siteURL: String? = null,
     val enableStickyFullContent: Boolean = false,
 )

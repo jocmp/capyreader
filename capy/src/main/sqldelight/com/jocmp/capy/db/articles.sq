@@ -126,6 +126,7 @@ SELECT
   feeds.favicon_url,
   feeds.enable_sticky_full_content,
   feeds.feed_url,
+  feeds.site_url,
   article_statuses.updated_at,
   article_statuses.starred,
   article_statuses.read
