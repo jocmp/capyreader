@@ -1,54 +1,44 @@
 package com.capyreader.app.transfers
 
 import android.content.Context
-import android.content.Intent
-import com.jocmp.capy.Account
+import android.net.Uri
+import android.widget.Toast
 import com.capyreader.app.R
-import com.capyreader.app.common.fileURI
+import com.jocmp.capy.Account
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
-import java.nio.file.Files
-import java.nio.file.StandardCopyOption
+import java.io.FileOutputStream
 
 class OPMLExporter(
     private val context: Context,
 ) {
-    suspend fun export(account: Account) = withContext(Dispatchers.IO) {
-        val exports = File(context.filesDir, "transfers")
-        exports.mkdirs()
-        val source = File(exports, "source.xml").apply {
-            writeText(account.opmlDocument())
-        }
-        val export = File(exports, "subscriptions.xml")
-        val target = export.toPath()
+    suspend fun export(account: Account, target: Uri?) {
+        target ?: return
 
-        if (!source.exists()) {
-            return@withContext
-        }
+        val result = runCatching {
+            withContext(Dispatchers.IO) {
+                val exports = File(context.filesDir, "transfers")
+                exports.mkdirs()
+                val source = account.opmlDocument().toByteArray()
 
-        val result = Files.copy(source.toPath(), target, StandardCopyOption.REPLACE_EXISTING)
-
-        source.delete()
-
-        withContext(Dispatchers.Main) {
-            try {
-                val uri = context.fileURI(result.toFile())
-                val shareIntent = Intent(Intent.ACTION_SEND).apply {
-                    type = "text/xml"
-                    putExtra(Intent.EXTRA_STREAM, uri)
-                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                context.contentResolver.openFileDescriptor(target, "w")?.use { descriptor ->
+                    FileOutputStream(descriptor.fileDescriptor).use {
+                        it.write(source)
+                    }
                 }
-
-                context.startActivity(
-                    Intent.createChooser(
-                        shareIntent,
-                        context.getString(R.string.transfers_export_subscriptions)
-                    )
-                )
-            } catch (e: IllegalArgumentException) {
-                // no-op
             }
         }
+
+        val messageRes = result.fold(
+            onSuccess = { R.string.opml_exporter_success },
+            onFailure = { R.string.opml_exporter_failure }
+        )
+
+        Toast.makeText(context, context.getString(messageRes), Toast.LENGTH_SHORT).show()
+    }
+
+    companion object {
+        val DEFAULT_FILE_NAME = "subscriptions.xml"
     }
 }

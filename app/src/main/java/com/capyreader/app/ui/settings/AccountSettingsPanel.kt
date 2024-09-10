@@ -1,6 +1,7 @@
 package com.capyreader.app.ui.settings
 
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,7 +29,6 @@ import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.opml.ImportProgress
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -37,22 +37,20 @@ fun AccountSettingsPanel(
     onRemoveAccount: () -> Unit,
     viewModel: AccountSettingsViewModel = koinViewModel()
 ) {
-    val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
 
-    val picker = rememberLauncherForActivityResult(
+    val importer = rememberLauncherForActivityResult(
         GetOPMLContent()
     ) { uri ->
         viewModel.startOPMLImport(uri = uri)
     }
 
-    val importOPML = {
-        picker.launch(listOf("text/xml", "text/x-opml", "application/*"))
-    }
-
-    val exportOPML = {
-        coroutineScope.launch(Dispatchers.IO) {
-            OPMLExporter(context = context).export(viewModel.account)
+    val exporter = rememberLauncherForActivityResult(
+        ActivityResultContracts.CreateDocument("text/xml")
+    ) { uri ->
+        coroutineScope.launch {
+            OPMLExporter(context).export(viewModel.account, target = uri)
         }
     }
 
@@ -61,9 +59,11 @@ fun AccountSettingsPanel(
             viewModel.removeAccount()
             onRemoveAccount()
         },
-        onRequestImport = importOPML,
+        onRequestImport = {
+            importer.launch(listOf("text/xml", "text/x-opml", "application/*"))
+        },
         onRequestExport = {
-            exportOPML()
+            exporter.launch(OPMLExporter.DEFAULT_FILE_NAME)
         },
         importProgress = viewModel.importProgress,
         accountSource = viewModel.accountSource,
