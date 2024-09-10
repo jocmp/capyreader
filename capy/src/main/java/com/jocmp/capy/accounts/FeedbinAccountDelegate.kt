@@ -164,7 +164,7 @@ internal class FeedbinAccountDelegate(
 
                 if (feed != null) {
                     coroutineScope {
-                        launch(Dispatchers.IO) { refreshFeeds() }
+                        launch { refreshArticles() }
                     }
 
                     AddFeedResult.Success(feed)
@@ -191,10 +191,7 @@ internal class FeedbinAccountDelegate(
         return try {
             refreshFeeds()
             refreshTaggings()
-            refreshStarredEntries()
-            refreshUnreadEntries()
-            refreshAllArticles(since = since)
-            fetchMissingArticles()
+            refreshArticles(since = since)
 
             Result.success(Unit)
         } catch (exception: UnknownHostException) {
@@ -202,6 +199,13 @@ internal class FeedbinAccountDelegate(
         } catch (e: UnauthorizedError) {
             return Result.failure(e)
         }
+    }
+
+    private suspend fun refreshArticles(since: String = articleRecords.maxUpdatedAt()) {
+        refreshStarredEntries()
+        refreshUnreadEntries()
+        refreshAllArticles(since = since)
+        fetchMissingArticles()
     }
 
     private suspend fun refreshFeeds() {
