@@ -150,4 +150,6 @@
     <string name="settings_clear_all_articles_button">Tüm makaleleri temizle</string>
     <string name="settings_support_button">Destek</string>
     <string name="settings_article_list_title">Makale Listesi</string>
+    <string name="opml_exporter_success">Dışa aktarma tamamlandı</string>
+    <string name="opml_exporter_failure">Dışa aktarma başarısız oldu</string>
 </resources>
