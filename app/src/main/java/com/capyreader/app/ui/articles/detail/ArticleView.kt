@@ -1,27 +1,41 @@
 package com.capyreader.app.ui.articles.detail
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.ui.components.WebView
 import com.capyreader.app.ui.components.WebViewNavigator
 import com.capyreader.app.ui.components.rememberSaveableWebViewState
-import com.capyreader.app.ui.isCompact
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import my.nanihadesuka.compose.ColumnScrollbar
+import my.nanihadesuka.compose.ScrollbarSettings
 import org.koin.compose.koinInject
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArticleView(
     article: Article,
@@ -37,13 +51,20 @@ fun ArticleView(
     val templateColors = articleTemplateColors()
     val colors = templateColors.asMap()
     val webViewState = rememberSaveableWebViewState(key = articleID)
-    val byline = article.byline(context = LocalContext.current).orEmpty()
+    val byline = article.byline(context = LocalContext.current)
+    val lastScrollY = rememberSaveable(articleID) {
+        mutableIntStateOf(0)
+    }
+    val scrollState = rememberSaveable(articleID, saver = ScrollState.Saver) {
+        ScrollState(0)
+    }
+    val showTopBar = scrollState.value == 0 || scrollState.lastScrolledBackward
 
     val extractedContentState = rememberExtractedContent(
         article = article,
         onComplete = { content ->
             article.let {
-                webViewNavigator.loadHtml(
+                webViewState.loadHtml(
                     renderer.render(
                         article,
                         byline = byline,
@@ -59,38 +80,53 @@ fun ArticleView(
 
     fun onToggleExtractContent() {
         if (extractedContent.isComplete) {
-            webViewNavigator.loadHtml(renderer.render(article, byline = byline, colors = colors))
+            webViewState.loadHtml(renderer.render(article, byline = byline, colors = colors))
             extractedContentState.reset()
         } else if (!extractedContent.isLoading) {
             extractedContentState.fetch()
         }
     }
 
-    Scaffold(
-        topBar = {
-            ArticleTopBar(
-                article = article,
-                extractedContent = extractedContent,
-                onToggleExtractContent = ::onToggleExtractContent,
-                onToggleRead = onToggleRead,
-                onToggleStar = onToggleStar,
-                onClose = onBackPressed
-            )
-        }
-    ) { innerPadding ->
-        Box(
-            Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
-        ) {
-            Column(
-                Modifier.fillMaxSize()
+    Scaffold { innerPadding ->
+        Box(Modifier.fillMaxSize()) {
+            ColumnScrollbar(
+                state = scrollState,
+                settings = ScrollbarSettings.Default.copy(
+                    thumbThickness = 4.dp,
+                    hideDisplacement = 0.dp,
+                    scrollbarPadding = 2.dp,
+                    thumbSelectedColor = colorScheme.onSurfaceVariant,
+                    thumbUnselectedColor = colorScheme.onSurfaceVariant
+                )
             ) {
-                WebView(
-                    state = webViewState,
-                    navigator = webViewNavigator,
-                    onNavigateToMedia = onNavigateToMedia,
-                    modifier = Modifier.fillMaxSize(),
+                Column(
+                    Modifier
+                        .padding(innerPadding)
+                        .fillMaxSize()
+                        .verticalScroll(scrollState)
+                ) {
+                    Spacer(Modifier.height(TopAppBarDefaults.TopAppBarExpandedHeight))
+                    WebView(
+                        state = webViewState,
+                        onNavigateToMedia = onNavigateToMedia,
+                        onDispose = {
+                            lastScrollY.intValue = scrollState.value
+                        }
+                    )
+                }
+            }
+            AnimatedVisibility(
+                visible = showTopBar,
+                enter = fadeIn() + expandVertically(),
+                exit = shrinkVertically() + fadeOut()
+            ) {
+                ArticleTopBar(
+                    article = article,
+                    extractedContent = extractedContent,
+                    onToggleExtractContent = ::onToggleExtractContent,
+                    onToggleRead = onToggleRead,
+                    onToggleStar = onToggleStar,
+                    onClose = onBackPressed
                 )
             }
         }
@@ -101,15 +137,26 @@ fun ArticleView(
     }
 
     LaunchedEffect(articleID) {
-        launch(Dispatchers.IO) {
-            if (extractedContent.requestShow) {
-                extractedContentState.fetch()
-            } else {
-                val rendered = renderer.render(article, byline = byline, colors = colors)
-                webViewNavigator.loadHtml(rendered)
-            }
+        if (extractedContent.requestShow) {
+            extractedContentState.fetch()
+        } else {
+            val rendered = renderer.render(article, byline = byline, colors = colors)
+            webViewState.loadHtml(rendered)
         }
     }
 
     ArticleStyleListener(webView = webViewState.webView)
+
+    LaunchedEffect(scrollState.maxValue) {
+        if (scrollState.maxValue > 0 && lastScrollY.intValue > 0) {
+            scrollState.scrollTo(lastScrollY.intValue)
+            lastScrollY.intValue = 0
+        }
+    }
+
+    DisposableEffect(articleID) {
+        onDispose {
+            webViewState.clearView()
+        }
+    }
 }

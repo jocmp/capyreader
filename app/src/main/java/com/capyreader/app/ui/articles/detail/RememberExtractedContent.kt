@@ -15,6 +15,7 @@ import com.jocmp.capy.articles.ExtractedContent
 import com.jocmp.capy.common.Async
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.compose.koinInject
 
 data class ExtractedContentState(
@@ -66,7 +67,10 @@ fun rememberExtractedContent(
 
             val content = extractedContent.copy(requestShow = true, value = value)
             setExtractedContent(content)
-            onComplete(content)
+
+            withContext(Dispatchers.Main) {
+                onComplete(content)
+            }
         }
     }
 

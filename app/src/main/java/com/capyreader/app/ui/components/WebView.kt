@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.graphics.drawable.toBitmap
+import androidx.core.view.ViewCompat
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewAssetLoader.AssetsPathHandler
 import androidx.webkit.WebViewAssetLoader.ResourcesPathHandler
@@ -98,11 +99,9 @@ private const val ASSET_BASE_URL = "https://appassets.androidplatform.net"
 fun WebView(
     state: WebViewState,
     modifier: Modifier = Modifier,
-    navigator: WebViewNavigator = rememberWebViewNavigator(),
     onCreated: (WebView) -> Unit = {},
     onDispose: (WebView) -> Unit = {},
     onNavigateToMedia: (url: String) -> Unit = {},
-    factory: ((Context) -> WebView)? = null,
 ) {
     BoxWithConstraints(modifier) {
         // WebView changes it's layout strategy based on
@@ -128,11 +127,9 @@ fun WebView(
             state,
             layoutParams,
             Modifier,
-            navigator,
             onCreated,
             onDispose,
             onNavigateToMedia,
-            factory
         )
     }
 }
@@ -166,11 +163,9 @@ fun WebView(
     state: WebViewState,
     layoutParams: FrameLayout.LayoutParams,
     modifier: Modifier = Modifier,
-    navigator: WebViewNavigator = rememberWebViewNavigator(),
     onCreated: (WebView) -> Unit = {},
     onDispose: (WebView) -> Unit = {},
     onNavigateToMedia: (url: String) -> Unit = {},
-    factory: ((Context) -> WebView)? = null,
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
@@ -192,63 +187,21 @@ fun WebView(
     }
     val chromeClient = remember { AccompanistWebChromeClient() }
 
-    val webView = state.webView
-
-    webView?.let { wv ->
-        LaunchedEffect(wv, navigator) {
-            with(navigator) {
-                wv.handleNavigationEvents()
-            }
-        }
-
-        LaunchedEffect(wv, state) {
-            snapshotFlow { state.content }.collect { content ->
-                when (content) {
-                    is WebContent.Url -> {
-                        wv.loadUrl(content.url, content.additionalHttpHeaders)
-                    }
-
-                    is WebContent.Data -> {
-                        wv.loadDataWithBaseURL(
-                            content.baseUrl,
-                            content.data,
-                            content.mimeType,
-                            content.encoding,
-                            content.historyUrl
-                        )
-                    }
-
-                    is WebContent.Post -> {
-                        wv.postUrl(
-                            content.url,
-                            content.postData
-                        )
-                    }
-
-                    is WebContent.NavigatorOnly -> {
-                        // NO-OP
-                    }
-                }
-            }
-        }
-    }
-
     // Set the state of the client and chrome client
     // This is done internally to ensure they always are the same instance as the
     // parent Web composable
     client.state = state
-    client.navigator = navigator
     chromeClient.state = state
 
     AndroidView(
         factory = { ctx ->
-            (factory?.invoke(ctx) ?: ctx.inflateWebView()).apply {
+            WebView(ctx).apply {
                 onCreated(this)
 
                 this.settings.javaScriptEnabled = true
                 this.settings.mediaPlaybackRequiresUserGesture = false
-                isVerticalScrollBarEnabled = false
                 this.layoutParams = layoutParams
+                isVerticalScrollBarEnabled = false
                 addJavascriptInterface(
                     WebViewInterface(
                         navigateToMedia = { navigateToMedia(it) }
@@ -285,8 +238,6 @@ open class AccompanistWebViewClient(private val assetLoader: WebViewAssetLoader)
     KoinComponent {
     open lateinit var state: WebViewState
         internal set
-    open lateinit var navigator: WebViewNavigator
-        internal set
 
     private val appPreferences by inject<AppPreferences>()
 
@@ -303,13 +254,6 @@ open class AccompanistWebViewClient(private val assetLoader: WebViewAssetLoader)
     override fun onPageFinished(view: WebView, url: String?) {
         super.onPageFinished(view, url)
         state.loadingState = Finished
-    }
-
-    override fun doUpdateVisitedHistory(view: WebView, url: String?, isReload: Boolean) {
-        super.doUpdateVisitedHistory(view, url, isReload)
-
-        navigator.canGoBack = view.canGoBack()
-        navigator.canGoForward = view.canGoForward()
     }
 
     override fun shouldInterceptRequest(
@@ -510,6 +454,29 @@ class WebViewState(webContent: WebContent) {
     // We need access to this in the state saver. An internal DisposableEffect or AndroidView
     // onDestroy is called after the state saver and so can't be used.
     internal var webView by mutableStateOf<WebView?>(null)
+
+    fun loadHtml(
+        html: String,
+        mimeType: String? = null,
+        encoding: String? = "utf-8",
+    ) {
+        webView?.apply {
+            loadDataWithBaseURL(
+                ASSET_BASE_URL,
+                html,
+                mimeType,
+                encoding,
+                null
+            )
+        }
+    }
+
+    fun clearView() {
+        webView?.apply {
+            clearHistory()
+            loadUrl("about:blank")
+        }
+    }
 }
 
 /**
@@ -584,7 +551,6 @@ public class WebViewNavigator(private val coroutineScope: CoroutineScope) {
                         event.encoding,
                         event.historyUrl
                     )
-                    isVerticalScrollBarEnabled = true
                 }
 
                 is NavigationEvent.ClearView -> {
@@ -622,24 +588,6 @@ public class WebViewNavigator(private val coroutineScope: CoroutineScope) {
                 NavigationEvent.LoadUrl(
                     url,
                     additionalHttpHeaders
-                )
-            )
-        }
-    }
-
-    fun loadHtml(
-        html: String,
-        mimeType: String? = null,
-        encoding: String? = "utf-8",
-        historyUrl: String? = null
-    ) {
-        coroutineScope.launch {
-            navigationEvents.emit(
-                NavigationEvent.LoadHtml(
-                    html,
-                    mimeType,
-                    encoding,
-                    historyUrl
                 )
             )
         }
@@ -753,12 +701,6 @@ val WebStateSaver: Saver<WebViewState, Any> = run {
             }
         },
     )
-}
-
-private fun Context.inflateWebView(): WebView {
-    return LayoutInflater
-        .from(this)
-        .inflate(R.layout.article_webview, null, false) as WebView
 }
 
 private fun bitmapInputStream(
