@@ -4,6 +4,7 @@ package com.jocmp.capy.common
 import org.junit.Test
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 import kotlin.math.exp
 import kotlin.test.assertEquals
 
@@ -62,6 +63,23 @@ class TimeHelpersTest {
         assertEquals(expected = expected, actual = result)
     }
 
+    @Test
+    fun `RFC1123 with Z offset`() {
+        val result = "Fri, 30 Aug 2024 05:23:12 Z".toDateTime
+
+        val expected = ZonedDateTime.of(
+            2024,
+            8,
+            30,
+            5,
+            23,
+            12,
+            0,
+            ZoneOffset.UTC
+        )
+
+        assertEquals(expected = expected, actual = result)
+    }
 
     @Test
     fun `parseISODate discards null values`() {
