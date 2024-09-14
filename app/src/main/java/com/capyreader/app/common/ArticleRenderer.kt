@@ -1,8 +1,13 @@
-package com.jocmp.capy.articles
+package com.capyreader.app.common
 
 import android.content.Context
+import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
 import com.jocmp.capy.MacroProcessor
+import com.jocmp.capy.articles.ExtractedContent
+import com.jocmp.capy.articles.FontOption
+import com.jocmp.capy.articles.TextSize
+import com.jocmp.capy.articles.extractedTemplate
 import com.jocmp.capy.preferences.Preference
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -21,14 +26,13 @@ class ArticleRenderer(
 
     fun render(
         article: Article,
-        byline: String,
         extractedContent: ExtractedContent = ExtractedContent(),
         colors: Map<String, String>,
     ): String {
         val substitutions = colors + mapOf(
             "external_link" to article.url.toString(),
             "title" to article.title,
-            "byline" to byline,
+            "byline" to article.byline(context),
             "feed_name" to article.feedName,
             "body" to body(article, extractedContent),
             "script" to script(article, extractedContent),
