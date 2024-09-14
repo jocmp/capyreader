@@ -145,7 +145,7 @@ dependencies {
     implementation(libs.zoomable.image.coil)
     implementation(platform(libs.androidx.compose.bom))
     implementation(project(":capy"))
-    implementation("com.github.nanihadesuka:LazyColumnScrollbar:2.2.0")
+    implementation(libs.lazycolumnscrollbar)
     "gplayImplementation"(libs.firebase.crashlytics)
     testImplementation(libs.tests.junit)
     androidTestImplementation(libs.tests.androidx.test.ext)

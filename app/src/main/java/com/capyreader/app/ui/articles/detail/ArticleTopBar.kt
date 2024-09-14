@@ -154,7 +154,6 @@ fun ArticleNavigationIcon(onClick: () -> Unit) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 private fun ArticleTopBarPreview(@PreviewParameter(ArticleSample::class) article: Article) {
@@ -170,7 +169,6 @@ private fun ArticleTopBarPreview(@PreviewParameter(ArticleSample::class) article
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Preview(device = "id:pixel_fold")
 @Composable
 private fun ArticleTopBarPreview_Tablet(@PreviewParameter(ArticleSample::class) article: Article) {
