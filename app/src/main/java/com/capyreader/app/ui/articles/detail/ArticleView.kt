@@ -1,5 +1,6 @@
 package com.capyreader.app.ui.articles.detail
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
@@ -19,18 +20,19 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.capyreader.app.common.ArticleRenderer
 import com.capyreader.app.ui.components.WebView
-import com.capyreader.app.ui.components.rememberWebViewState
+import com.capyreader.app.ui.components.WebViewState
 import com.jocmp.capy.Article
-import com.jocmp.capy.articles.ArticleRenderer
+import com.jocmp.capy.articles.ExtractedContent
 import my.nanihadesuka.compose.ColumnScrollbar
 import my.nanihadesuka.compose.ScrollbarSettings
 import org.koin.compose.koinInject
@@ -39,45 +41,57 @@ import org.koin.compose.koinInject
 @Composable
 fun ArticleView(
     article: Article,
+    webViewState: WebViewState,
     renderer: ArticleRenderer = koinInject(),
     onBackPressed: () -> Unit,
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
-    onNavigateToMedia: (url: String) -> Unit,
     enableBackHandler: Boolean = false
 ) {
     val articleID = article.id
     val templateColors = articleTemplateColors()
     val colors = templateColors.asMap()
-    val webViewState = rememberWebViewState(key = articleID)
-    val byline = article.byline(context = LocalContext.current)
     val scrollState = rememberSaveable(articleID, saver = ScrollState.Saver) {
         ScrollState(0)
     }
     val lastScrollY = rememberLastScrollY(articleID, scrollState = scrollState)
     val showTopBar = scrollState.value == 0 || scrollState.lastScrolledBackward
+    val (initialized, setInitialized) = remember(articleID) { mutableStateOf(false) }
+
+    fun render(extractedContent: ExtractedContent = ExtractedContent()): String {
+        return renderer.render(
+            article,
+            extractedContent = extractedContent,
+            colors = colors
+        )
+    }
 
     val extractedContentState = rememberExtractedContent(
         article = article,
         onComplete = { content ->
-            article.let {
-                webViewState.loadHtml(
-                    renderer.render(
-                        article,
-                        byline = byline,
-                        extractedContent = content,
-                        colors = colors
-                    )
-                )
-            }
+            webViewState.loadHtml(render(content))
         }
     )
 
     val extractedContent = extractedContentState.content
 
+    fun update() {
+        if (initialized) {
+            return
+        }
+
+        if (extractedContent.requestShow) {
+            extractedContentState.fetch()
+        } else {
+            webViewState.loadHtml(render())
+        }
+
+        setInitialized(true)
+    }
+
     fun onToggleExtractContent() {
         if (extractedContent.isComplete) {
-            webViewState.loadHtml(renderer.render(article, byline = byline, colors = colors))
+            webViewState.loadHtml(render())
             extractedContentState.reset()
         } else if (!extractedContent.isLoading) {
             extractedContentState.fetch()
@@ -105,7 +119,7 @@ fun ArticleView(
                     Spacer(Modifier.height(TopAppBarDefaults.TopAppBarExpandedHeight))
                     WebView(
                         state = webViewState,
-                        onNavigateToMedia = onNavigateToMedia,
+                        onUpdate = { update() },
                         onDispose = {
                             lastScrollY.intValue = scrollState.value
                         }
@@ -133,22 +147,7 @@ fun ArticleView(
         onBackPressed()
     }
 
-    LaunchedEffect(articleID) {
-        if (extractedContent.requestShow) {
-            extractedContentState.fetch()
-        } else {
-            val rendered = renderer.render(article, byline = byline, colors = colors)
-            webViewState.loadHtml(rendered)
-        }
-    }
-
     ArticleStyleListener(webView = webViewState.webView)
-
-    DisposableEffect(articleID) {
-        onDispose {
-            webViewState.clearView()
-        }
-    }
 }
 
 @Composable

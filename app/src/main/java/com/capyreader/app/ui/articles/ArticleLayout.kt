@@ -35,6 +35,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
@@ -50,6 +51,7 @@ import com.capyreader.app.ui.articles.list.EmptyOnboardingView
 import com.capyreader.app.ui.articles.list.FeedListTopBar
 import com.capyreader.app.ui.articles.media.ArticleMediaView
 import com.capyreader.app.ui.components.ArticleSearch
+import com.capyreader.app.ui.components.rememberWebViewState
 import com.capyreader.app.ui.fixtures.FeedPreviewFixture
 import com.capyreader.app.ui.fixtures.FolderPreviewFixture
 import com.capyreader.app.ui.isCompact
@@ -184,6 +186,13 @@ fun ArticleLayout(
         }
     }
 
+    val webViewState = rememberWebViewState(
+        context = LocalContext.current,
+        navigateToMedia = {
+            mediaUrl = it
+        }
+    )
+
     ArticleScaffold(
         drawerState = drawerState,
         scaffoldNavigator = scaffoldNavigator,
@@ -300,6 +309,7 @@ fun ArticleLayout(
                             onSelect = { articleID ->
                                 onSelectArticle(articleID)
                                 navigateToDetail()
+
                                 if (search.isActive) {
                                     focusManager.clearFocus()
                                 }
@@ -321,15 +331,13 @@ fun ArticleLayout(
             } else if (article != null) {
                 ArticleView(
                     article = article,
+                    webViewState = webViewState,
                     onBackPressed = {
                         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
                         onRequestClearArticle()
                     },
                     onToggleRead = onToggleArticleRead,
                     onToggleStar = onToggleArticleStar,
-                    onNavigateToMedia = {
-                        mediaUrl = it
-                    },
                     enableBackHandler = mediaUrl == null
                 )
             }
@@ -366,6 +374,12 @@ fun ArticleLayout(
                 setUpdatePasswordDialogOpen(false)
             }
         )
+    }
+
+    LaunchedEffect(article?.id) {
+        if (article?.id == null) {
+            webViewState.clearView()
+        }
     }
 
     LaunchedEffect(Unit) {
