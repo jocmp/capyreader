@@ -21,13 +21,16 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableIntState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.ui.components.WebView
-import com.capyreader.app.ui.components.WebViewNavigator
 import com.capyreader.app.ui.components.rememberSaveableWebViewState
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
@@ -39,7 +42,6 @@ import org.koin.compose.koinInject
 @Composable
 fun ArticleView(
     article: Article,
-    webViewNavigator: WebViewNavigator,
     renderer: ArticleRenderer = koinInject(),
     onBackPressed: () -> Unit,
     onToggleRead: () -> Unit,
@@ -147,16 +149,21 @@ fun ArticleView(
 
     ArticleStyleListener(webView = webViewState.webView)
 
-    LaunchedEffect(scrollState.maxValue) {
-        if (scrollState.maxValue > 0 && lastScrollY.intValue > 0) {
-            scrollState.scrollTo(lastScrollY.intValue)
-            lastScrollY.intValue = 0
-        }
-    }
+    RestoreScrollState(scrollState = scrollState, lastScrollY = lastScrollY)
 
     DisposableEffect(articleID) {
         onDispose {
             webViewState.clearView()
+        }
+    }
+}
+
+@Composable
+fun RestoreScrollState(scrollState: ScrollState, lastScrollY: MutableIntState) {
+    LaunchedEffect(scrollState.maxValue) {
+        if (scrollState.maxValue > 0 && lastScrollY.intValue > 0) {
+            scrollState.scrollTo(lastScrollY.intValue)
+            lastScrollY.intValue = 0
         }
     }
 }

@@ -39,7 +39,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.R
@@ -51,7 +50,6 @@ import com.capyreader.app.ui.articles.list.EmptyOnboardingView
 import com.capyreader.app.ui.articles.list.FeedListTopBar
 import com.capyreader.app.ui.articles.media.ArticleMediaView
 import com.capyreader.app.ui.components.ArticleSearch
-import com.capyreader.app.ui.components.rememberWebViewNavigator
 import com.capyreader.app.ui.fixtures.FeedPreviewFixture
 import com.capyreader.app.ui.fixtures.FolderPreviewFixture
 import com.capyreader.app.ui.isCompact
@@ -110,7 +108,6 @@ fun ArticleLayout(
     val coroutineScope = rememberCoroutineScope()
     val scaffoldNavigator = rememberListDetailPaneScaffoldNavigator()
     var isRefreshing by remember { mutableStateOf(false) }
-    val webViewNavigator = rememberWebViewNavigator()
     val listState = rememberLazyListState()
     val pagingArticles = articles.collectAsLazyPagingItems(Dispatchers.IO)
     val snackbarHost = remember { SnackbarHostState() }
@@ -324,17 +321,16 @@ fun ArticleLayout(
             } else if (article != null) {
                 ArticleView(
                     article = article,
-                    onToggleRead = onToggleArticleRead,
-                    onToggleStar = onToggleArticleStar,
-                    webViewNavigator = webViewNavigator,
-                    onNavigateToMedia = {
-                        mediaUrl = it
-                    },
-                    enableBackHandler = mediaUrl == null,
                     onBackPressed = {
                         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
                         onRequestClearArticle()
-                    }
+                    },
+                    onToggleRead = onToggleArticleRead,
+                    onToggleStar = onToggleArticleStar,
+                    onNavigateToMedia = {
+                        mediaUrl = it
+                    },
+                    enableBackHandler = mediaUrl == null
                 )
             }
         }
@@ -376,12 +372,6 @@ fun ArticleLayout(
         if (!isInitialized) {
             refreshFeeds()
             setInitialized(true)
-        }
-    }
-
-    LaunchedEffect(article?.id) {
-        if (article == null) {
-            webViewNavigator.clearView()
         }
     }
 
