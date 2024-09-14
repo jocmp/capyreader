@@ -22,16 +22,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableIntState
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.ui.components.WebView
-import com.capyreader.app.ui.components.rememberSaveableWebViewState
+import com.capyreader.app.ui.components.rememberWebViewState
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
 import my.nanihadesuka.compose.ColumnScrollbar
@@ -52,14 +49,12 @@ fun ArticleView(
     val articleID = article.id
     val templateColors = articleTemplateColors()
     val colors = templateColors.asMap()
-    val webViewState = rememberSaveableWebViewState(key = articleID)
+    val webViewState = rememberWebViewState(key = articleID)
     val byline = article.byline(context = LocalContext.current)
-    val lastScrollY = rememberSaveable(articleID) {
-        mutableIntStateOf(0)
-    }
     val scrollState = rememberSaveable(articleID, saver = ScrollState.Saver) {
         ScrollState(0)
     }
+    val lastScrollY = rememberLastScrollY(articleID, scrollState = scrollState)
     val showTopBar = scrollState.value == 0 || scrollState.lastScrolledBackward
 
     val extractedContentState = rememberExtractedContent(
@@ -149,8 +144,6 @@ fun ArticleView(
 
     ArticleStyleListener(webView = webViewState.webView)
 
-    RestoreScrollState(scrollState = scrollState, lastScrollY = lastScrollY)
-
     DisposableEffect(articleID) {
         onDispose {
             webViewState.clearView()
@@ -159,11 +152,17 @@ fun ArticleView(
 }
 
 @Composable
-fun RestoreScrollState(scrollState: ScrollState, lastScrollY: MutableIntState) {
+fun rememberLastScrollY(articleID: String, scrollState: ScrollState): MutableIntState {
+    val lastScrollY = rememberSaveable(articleID) {
+        mutableIntStateOf(0)
+    }
+
     LaunchedEffect(scrollState.maxValue) {
         if (scrollState.maxValue > 0 && lastScrollY.intValue > 0) {
             scrollState.scrollTo(lastScrollY.intValue)
             lastScrollY.intValue = 0
         }
     }
+
+    return lastScrollY
 }
