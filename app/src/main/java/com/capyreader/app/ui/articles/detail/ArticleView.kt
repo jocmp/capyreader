@@ -7,21 +7,21 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
+import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.ui.components.WebView
 import com.capyreader.app.ui.components.WebViewNavigator
+import com.capyreader.app.ui.components.WebViewState
 import com.capyreader.app.ui.components.rememberSaveableWebViewState
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
@@ -47,7 +47,7 @@ fun ArticleView(
     val colors = templateColors.asMap()
     val webViewState = rememberSaveableWebViewState(key = articleID)
     val byline = article.byline(context = LocalContext.current)
-    val showTopBar = webViewState.scrollValue == 0 || webViewState.lastScrolledBackward
+    val showTopBar = canShowTopBar(webViewState)
 
     fun render(extractedContent: ExtractedContent = ExtractedContent()): String {
         return renderer.render(
@@ -122,4 +122,17 @@ fun ArticleView(
     }
 
     ArticleStyleListener(webView = webViewState.webView)
+}
+
+@Composable
+fun canShowTopBar(
+    webViewState: WebViewState,
+    appPreferences: AppPreferences = koinInject(),
+): Boolean {
+    val pinTopBar by appPreferences.pinArticleTopBar
+        .stateIn(rememberCoroutineScope())
+        .collectAsState()
+
+    return pinTopBar ||
+            webViewState.scrollValue == 0 || webViewState.lastScrolledBackward
 }

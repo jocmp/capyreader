@@ -32,6 +32,9 @@ class DisplaySettingsViewModel(
     var fontScale by mutableStateOf(appPreferences.articleListOptions.fontScale.get())
         private set
 
+    var pinArticleTopBar by mutableStateOf(appPreferences.pinArticleTopBar.get())
+        private set
+
     val imagePreview: ImagePreview
         get() = _imagePreview.value
 
@@ -51,6 +54,12 @@ class DisplaySettingsViewModel(
         appPreferences.theme.set(theme)
 
         this.theme = theme
+    }
+
+    fun updatePinTopBar(pinTopBar: Boolean) {
+        appPreferences.pinArticleTopBar.set(pinTopBar)
+
+        this.pinArticleTopBar = pinTopBar
     }
 
     fun updateStickyFullContent(enable: Boolean) {

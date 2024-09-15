@@ -11,7 +11,6 @@ import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.common.ThemeOption
 import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.capyreader.app.ui.components.FormSection
-import com.capyreader.app.ui.components.TextSwitch
 import com.capyreader.app.ui.theme.CapyTheme
 import org.koin.androidx.compose.koinViewModel
 
@@ -20,10 +19,15 @@ fun DisplaySettingsPanel(
     viewModel: DisplaySettingsViewModel = koinViewModel(),
 ) {
     DisplaySettingsPanelView(
-        updateStickyFullContent = viewModel::updateStickyFullContent,
-        enableStickyFullContent = viewModel.enableStickyFullContent,
+
         onUpdateTheme = viewModel::updateTheme,
         theme = viewModel.theme,
+        readerOptions = ReaderOptions(
+            updateStickyFullContent = viewModel::updateStickyFullContent,
+            updatePinTopBar = viewModel::updatePinTopBar,
+            pinTopBar = viewModel.pinArticleTopBar,
+            enableStickyFullContent = viewModel.enableStickyFullContent,
+        ),
         articleListOptions = ArticleListOptions(
             imagePreview = viewModel.imagePreview,
             showSummary = viewModel.showSummary,
@@ -41,10 +45,9 @@ fun DisplaySettingsPanel(
 
 @Composable
 fun DisplaySettingsPanelView(
-    updateStickyFullContent: (Boolean) -> Unit,
-    enableStickyFullContent: Boolean,
     onUpdateTheme: (theme: ThemeOption) -> Unit,
     theme: ThemeOption,
+    readerOptions: ReaderOptions,
     articleListOptions: ArticleListOptions,
 ) {
     Column(
@@ -54,14 +57,11 @@ fun DisplaySettingsPanelView(
             RowItem {
                 ThemeMenu(onUpdateTheme = onUpdateTheme, theme = theme)
             }
+        }
 
+        FormSection(title = stringResource(R.string.settings_reader_title)) {
             RowItem {
-                TextSwitch(
-                    checked = enableStickyFullContent,
-                    onCheckedChange = updateStickyFullContent,
-                    title = stringResource(R.string.settings_option_full_content_title),
-                    subtitle = stringResource(R.string.settings_option_full_content_subtitle)
-                )
+                ReaderSettings(options = readerOptions)
             }
         }
 
@@ -82,10 +82,14 @@ fun DisplaySettingsPanelView(
 private fun DisplaySettingsPanelViewPreview() {
     CapyTheme {
         DisplaySettingsPanelView(
-            updateStickyFullContent = {},
-            enableStickyFullContent = true,
             onUpdateTheme = {},
             theme = ThemeOption.SYSTEM_DEFAULT,
+            readerOptions = ReaderOptions(
+                updateStickyFullContent = {},
+                enableStickyFullContent = true,
+                updatePinTopBar = {},
+                pinTopBar = true,
+            ),
             articleListOptions = ArticleListOptions(
                 imagePreview = ImagePreview.default,
                 showSummary = true,
