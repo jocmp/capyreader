@@ -2,15 +2,15 @@ package com.capyreader.app.common
 
 import android.content.Context
 import androidx.preference.PreferenceManager
+import com.capyreader.app.refresher.RefreshInterval
+import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.jocmp.capy.ArticleFilter
+import com.jocmp.capy.articles.FontOption
+import com.jocmp.capy.articles.TextSize
 import com.jocmp.capy.preferences.AndroidPreferenceStore
 import com.jocmp.capy.preferences.Preference
 import com.jocmp.capy.preferences.PreferenceStore
 import com.jocmp.capy.preferences.getEnum
-import com.capyreader.app.refresher.RefreshInterval
-import com.capyreader.app.ui.articles.ArticleListFontScale
-import com.jocmp.capy.articles.FontOption
-import com.jocmp.capy.articles.TextSize
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
@@ -49,6 +49,9 @@ class AppPreferences(context: Context) {
 
     val enableStickyFullContent: Preference<Boolean>
         get() = preferenceStore.getBoolean("enable_sticky_full_content", false)
+
+    val pinArticleTopBar: Preference<Boolean>
+        get() = preferenceStore.getBoolean("article_pin_top_bar", true)
 
     val textSize: Preference<TextSize>
         get() = preferenceStore.getEnum("article_text_size", TextSize.default)

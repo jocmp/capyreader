@@ -152,4 +152,6 @@
     <string name="settings_article_list_title">Article List</string>
     <string name="opml_exporter_success">Export complete</string>
     <string name="opml_exporter_failure">Export failed</string>
+    <string name="settings_reader_title">Reader</string>
+    <string name="settings_options_reader_pin_top_bar">Pin Top Bar</string>
 </resources>
