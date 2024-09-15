@@ -13,22 +13,25 @@ import com.jocmp.capy.preferences.Preference
 import org.koin.compose.koinInject
 
 @Composable
-fun ArticleStyleListener(webView: WebView, appPreferences: AppPreferences = koinInject()) {
+fun ArticleStyleListener(webView: WebView?, appPreferences: AppPreferences = koinInject()) {
     val textSize by appPreferences.textSize.collectChanges()
     val fontFamily by appPreferences.fontOption.collectChanges()
 
     LaunchedEffect(fontFamily) {
-        updateFontFamily(webView, fontFamily)
+        if (webView != null) {
+            updateFontFamily(webView, fontFamily)
+        }
     }
 
     LaunchedEffect(textSize) {
-        updateTextSize(webView, textSize)
+        if (webView != null) {
+            updateTextSize(webView, textSize)
+        }
     }
 }
 
 @Composable
-fun <T> Preference<T>.collectChanges(): State<T> =
-    changes().collectAsState(initial = defaultValue())
+fun <T> Preference<T>.collectChanges(): State<T> = changes().collectAsState(initial = defaultValue())
 
 private fun updateTextSize(webView: WebView, textSize: TextSize) {
     webView.evaluateJavascript(
@@ -44,7 +47,6 @@ private fun updateTextSize(webView: WebView, textSize: TextSize) {
     ) {
     }
 }
-
 private fun updateFontFamily(webView: WebView, fontOption: FontOption) {
     webView.evaluateJavascript(
         """
