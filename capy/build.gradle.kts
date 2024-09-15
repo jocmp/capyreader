@@ -69,6 +69,7 @@ dependencies {
     implementation(libs.retrofit2.retrofit)
     implementation(libs.sqldelight.androidx.paging.extensions)
     implementation(libs.sqldelight.coroutines.extensions)
+    implementation(libs.okhttp.brotli)
     implementation(project(":feedbinclient"))
     implementation(project(":feedfinder"))
     implementation(project(":rssparser"))
