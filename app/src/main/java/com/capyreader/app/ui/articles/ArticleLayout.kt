@@ -35,11 +35,11 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.R
@@ -51,7 +51,7 @@ import com.capyreader.app.ui.articles.list.EmptyOnboardingView
 import com.capyreader.app.ui.articles.list.FeedListTopBar
 import com.capyreader.app.ui.articles.media.ArticleMediaView
 import com.capyreader.app.ui.components.ArticleSearch
-import com.capyreader.app.ui.components.rememberWebViewState
+import com.capyreader.app.ui.components.rememberWebViewNavigator
 import com.capyreader.app.ui.fixtures.FeedPreviewFixture
 import com.capyreader.app.ui.fixtures.FolderPreviewFixture
 import com.capyreader.app.ui.isCompact
@@ -110,6 +110,7 @@ fun ArticleLayout(
     val coroutineScope = rememberCoroutineScope()
     val scaffoldNavigator = rememberListDetailPaneScaffoldNavigator()
     var isRefreshing by remember { mutableStateOf(false) }
+    val webViewNavigator = rememberWebViewNavigator()
     val listState = rememberLazyListState()
     val pagingArticles = articles.collectAsLazyPagingItems(Dispatchers.IO)
     val snackbarHost = remember { SnackbarHostState() }
@@ -185,13 +186,6 @@ fun ArticleLayout(
             showSnackbar(addFeedSuccessMessage)
         }
     }
-
-    val webViewState = rememberWebViewState(
-        context = LocalContext.current,
-        navigateToMedia = {
-            mediaUrl = it
-        }
-    )
 
     ArticleScaffold(
         drawerState = drawerState,
@@ -309,7 +303,6 @@ fun ArticleLayout(
                             onSelect = { articleID ->
                                 onSelectArticle(articleID)
                                 navigateToDetail()
-
                                 if (search.isActive) {
                                     focusManager.clearFocus()
                                 }
@@ -331,14 +324,17 @@ fun ArticleLayout(
             } else if (article != null) {
                 ArticleView(
                     article = article,
-                    webViewState = webViewState,
+                    onToggleRead = onToggleArticleRead,
+                    onToggleStar = onToggleArticleStar,
+                    webViewNavigator = webViewNavigator,
+                    onNavigateToMedia = {
+                        mediaUrl = it
+                    },
+                    enableBackHandler = mediaUrl == null,
                     onBackPressed = {
                         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
                         onRequestClearArticle()
-                    },
-                    onToggleRead = onToggleArticleRead,
-                    onToggleStar = onToggleArticleStar,
-                    enableBackHandler = mediaUrl == null
+                    }
                 )
             }
         }
@@ -376,16 +372,16 @@ fun ArticleLayout(
         )
     }
 
-    LaunchedEffect(article?.id) {
-        if (article?.id == null) {
-            webViewState.clearView()
-        }
-    }
-
     LaunchedEffect(Unit) {
         if (!isInitialized) {
             refreshFeeds()
             setInitialized(true)
+        }
+    }
+
+    LaunchedEffect(article?.id) {
+        if (article == null) {
+            webViewNavigator.clearView()
         }
     }
 

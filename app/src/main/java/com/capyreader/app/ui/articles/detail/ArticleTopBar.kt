@@ -184,7 +184,6 @@ private fun ArticleTopBarPreview_Tablet(@PreviewParameter(ArticleSample::class) 
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 private fun ArticleTopBarPreview_MissingArticle() {

@@ -6,7 +6,7 @@ import org.json.JSONObject
 import org.jsoup.Jsoup
 
 
-fun extractedTemplate(
+internal fun extractedTemplate(
     article: Article,
     html: String,
 ): String {
@@ -35,7 +35,7 @@ fun extractedTemplate(
     """.trimIndent()
 }
 
-private fun parseHtml(article: Article, html: String): String {
+fun parseHtml(article: Article, html: String): String {
     try {
         val uri = (article.feedURL ?: article.url).toString()
         val readability4J = Readability4J(uri, html)
