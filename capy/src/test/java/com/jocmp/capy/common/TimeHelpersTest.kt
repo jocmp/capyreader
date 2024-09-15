@@ -81,4 +81,22 @@ class TimeHelpersTest {
 
         assertEquals(expected = now, actual = result)
     }
+
+    @Test
+    fun `RFC1123 with Z offset`() {
+        val result = "Fri, 30 Aug 2024 05:23:12 Z".toDateTime
+
+        val expected = ZonedDateTime.of(
+            2024,
+            8,
+            30,
+            5,
+            23,
+            12,
+            0,
+            ZoneOffset.UTC
+        )
+
+        assertEquals(expected = expected, actual = result)
+    }
 }

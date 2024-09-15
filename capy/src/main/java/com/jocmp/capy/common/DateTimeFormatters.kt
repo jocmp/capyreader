@@ -56,4 +56,8 @@ internal object DateTimeFormatters {
             .appendOffset("+HHMM", "GMT")
             .toFormatter()
     }
+
+    val ZULU_DATE_TIME_FORMATTER: DateTimeFormatter by lazy {
+        DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss z")
+    }
 }
