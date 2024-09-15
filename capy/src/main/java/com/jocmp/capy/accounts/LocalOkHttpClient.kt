@@ -5,12 +5,14 @@ import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
+import okhttp3.brotli.BrotliInterceptor
 import java.io.File
 import java.net.URI
 
 internal object LocalOkHttpClient {
     fun forAccount(path: URI): OkHttpClient {
         return OkHttpClient.Builder()
+            .addInterceptor(BrotliInterceptor)
             .addNetworkInterceptor(CacheInterceptor())
             .addInterceptor(UserAgentInterceptor())
             .cache(
