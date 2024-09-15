@@ -266,7 +266,6 @@ fun WebView(
 
                 setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
                     state.scrollValue = scrollY
-                    Log.d("WebView", "[DEBUG] scrollY=$scrollY oldScrollY=$oldScrollY")
                     state.lastScrolledBackward = (scrollY - oldScrollY) < 0
                 }
 
