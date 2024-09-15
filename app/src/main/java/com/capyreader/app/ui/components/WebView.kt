@@ -3,6 +3,7 @@ package com.capyreader.app.ui.components
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup.LayoutParams
 import android.webkit.WebChromeClient
@@ -18,6 +19,7 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -260,6 +262,12 @@ fun WebView(
 
                 state.lastScrollY?.let {
                     this.scrollTo(0, it)
+                }
+
+                setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
+                    state.scrollValue = scrollY
+                    Log.d("WebView", "[DEBUG] scrollY=$scrollY oldScrollY=$oldScrollY")
+                    state.lastScrolledBackward = (scrollY - oldScrollY) < 0
                 }
 
                 webChromeClient = chromeClient
@@ -506,6 +514,10 @@ class WebViewState(webContent: WebContent) {
     val errorsForCurrentRequest: SnapshotStateList<WebViewError> = mutableStateListOf()
 
     var lastScrollY: Int? = null
+
+    var scrollValue by mutableIntStateOf(0)
+
+    var lastScrolledBackward by mutableStateOf(false)
 
     // We need access to this in the state saver. An internal DisposableEffect or AndroidView
     // onDestroy is called after the state saver and so can't be used.

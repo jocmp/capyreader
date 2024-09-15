@@ -1,27 +1,36 @@
 package com.capyreader.app.ui.articles.detail
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.LocalDensity
 import com.capyreader.app.ui.components.WebView
 import com.capyreader.app.ui.components.WebViewNavigator
 import com.capyreader.app.ui.components.rememberSaveableWebViewState
-import com.capyreader.app.ui.isCompact
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
+import com.jocmp.capy.articles.ExtractedContent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArticleView(
     article: Article,
@@ -37,20 +46,23 @@ fun ArticleView(
     val templateColors = articleTemplateColors()
     val colors = templateColors.asMap()
     val webViewState = rememberSaveableWebViewState(key = articleID)
-    val byline = article.byline(context = LocalContext.current).orEmpty()
+    val byline = article.byline(context = LocalContext.current)
+    val showTopBar = webViewState.scrollValue == 0 || webViewState.lastScrolledBackward
+
+    fun render(extractedContent: ExtractedContent = ExtractedContent()): String {
+        return renderer.render(
+            article,
+            byline = byline,
+            extractedContent = extractedContent,
+            colors = colors
+        )
+    }
 
     val extractedContentState = rememberExtractedContent(
         article = article,
         onComplete = { content ->
             article.let {
-                webViewNavigator.loadHtml(
-                    renderer.render(
-                        article,
-                        byline = byline,
-                        extractedContent = content,
-                        colors = colors
-                    )
-                )
+                webViewNavigator.loadHtml(render(content))
             }
         }
     )
@@ -59,38 +71,37 @@ fun ArticleView(
 
     fun onToggleExtractContent() {
         if (extractedContent.isComplete) {
-            webViewNavigator.loadHtml(renderer.render(article, byline = byline, colors = colors))
+            webViewNavigator.loadHtml(render())
             extractedContentState.reset()
         } else if (!extractedContent.isLoading) {
             extractedContentState.fetch()
         }
     }
 
-    Scaffold(
-        topBar = {
-            ArticleTopBar(
-                article = article,
-                extractedContent = extractedContent,
-                onToggleExtractContent = ::onToggleExtractContent,
-                onToggleRead = onToggleRead,
-                onToggleStar = onToggleStar,
-                onClose = onBackPressed
-            )
-        }
-    ) { innerPadding ->
+    Scaffold { innerPadding ->
         Box(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            Column(
-                Modifier.fillMaxSize()
+            WebView(
+                state = webViewState,
+                navigator = webViewNavigator,
+                onNavigateToMedia = onNavigateToMedia,
+                modifier = Modifier.fillMaxSize(),
+            )
+            AnimatedVisibility(
+                visible = showTopBar,
+                enter = fadeIn() + expandVertically(),
+                exit = shrinkVertically() + fadeOut()
             ) {
-                WebView(
-                    state = webViewState,
-                    navigator = webViewNavigator,
-                    onNavigateToMedia = onNavigateToMedia,
-                    modifier = Modifier.fillMaxSize(),
+                ArticleTopBar(
+                    article = article,
+                    extractedContent = extractedContent,
+                    onToggleExtractContent = ::onToggleExtractContent,
+                    onToggleRead = onToggleRead,
+                    onToggleStar = onToggleStar,
+                    onClose = onBackPressed
                 )
             }
         }
@@ -105,8 +116,7 @@ fun ArticleView(
             if (extractedContent.requestShow) {
                 extractedContentState.fetch()
             } else {
-                val rendered = renderer.render(article, byline = byline, colors = colors)
-                webViewNavigator.loadHtml(rendered)
+                webViewNavigator.loadHtml(render())
             }
         }
     }

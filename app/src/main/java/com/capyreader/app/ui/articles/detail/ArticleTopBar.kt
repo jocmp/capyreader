@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.capyreader.app.ui.articles.detail
 
 import androidx.compose.foundation.layout.Box
@@ -12,6 +14,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults.enterAlwaysScrollBehavior
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -32,10 +36,10 @@ import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ExtractedContent
 import java.net.URL
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArticleTopBar(
     article: Article?,
+    scrollBehavior: TopAppBarScrollBehavior = enterAlwaysScrollBehavior(),
     extractedContent: ExtractedContent,
     onToggleExtractContent: () -> Unit,
     onToggleRead: () -> Unit,
@@ -46,6 +50,7 @@ fun ArticleTopBar(
     val (isStyleSheetOpen, setStyleSheetOpen) = rememberSaveable { mutableStateOf(false) }
 
     TopAppBar(
+        scrollBehavior = scrollBehavior,
         navigationIcon = {
             ArticleNavigationIcon(
                 onClick = onClose

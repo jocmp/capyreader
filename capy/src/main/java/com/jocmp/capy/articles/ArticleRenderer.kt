@@ -34,6 +34,7 @@ class ArticleRenderer(
             "script" to script(article, extractedContent),
             "text_size" to textSize.get().slug,
             "font_family" to fontOption.get().slug,
+            "top_margin" to "64px"
         )
 
         val html = MacroProcessor(
