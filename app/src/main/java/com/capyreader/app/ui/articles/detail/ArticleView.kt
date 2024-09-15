@@ -80,15 +80,15 @@ fun ArticleView(
 
     Scaffold { innerPadding ->
         Box(
-            Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
+            Modifier.fillMaxSize()
         ) {
             WebView(
                 state = webViewState,
                 navigator = webViewNavigator,
                 onNavigateToMedia = onNavigateToMedia,
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize(),
             )
             AnimatedVisibility(
                 visible = showTopBar,
