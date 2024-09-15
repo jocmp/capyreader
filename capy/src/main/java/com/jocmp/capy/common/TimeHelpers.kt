@@ -13,6 +13,21 @@ val formatters = listOf(
     LONG_MONTH_DATE_TIME_FORMATTER,
 )
 
+/**
+ * Normalize publish time to avoid recording future times
+ *
+ * https://github.com/feedbin/feedbin/blob/757bce1b63f4c78e9ca700c277a55300b7ef735f/app/models/entry.rb#L345-L351
+ */
+fun published(timestamp: String?, fallback: ZonedDateTime): ZonedDateTime {
+    val parsed = timestamp?.toDateTime
+
+    return if (parsed == null || parsed > nowUTC()) {
+        fallback
+    } else {
+        parsed
+    }
+}
+
 val String.toDateTime: ZonedDateTime?
     get() {
         val dateTime = formatters.firstNotNullOfOrNull { formatter ->

@@ -4,6 +4,7 @@ package com.jocmp.capy.common
 import org.junit.Test
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 import kotlin.math.exp
 import kotlin.test.assertEquals
 
@@ -45,7 +46,7 @@ class TimeHelpersTest {
     }
 
     @Test
-    fun `RFC1123 with 4 letter dates`(){
+    fun `RFC1123 with 4 letter dates`() {
         val result = "Thu, 05 Sept 2024 15:26:54 +0200".toDateTime
 
         val expected = ZonedDateTime.of(
@@ -68,5 +69,16 @@ class TimeHelpersTest {
         val result = "".toDateTime
 
         assertEquals(expected = null, actual = result)
+    }
+
+    @Test
+    fun `published clamps future time`() {
+        val now = nowUTC()
+
+        val futureTime = now.plusHours(1).format(DateTimeFormatter.RFC_1123_DATE_TIME)
+
+        val result = published(futureTime, fallback = now)
+
+        assertEquals(expected = now, actual = result)
     }
 }
