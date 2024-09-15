@@ -5,6 +5,7 @@ import com.jocmp.capy.Article
 import com.jocmp.capy.Feed
 import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.common.nowUTC
+import com.jocmp.capy.common.published
 import com.jocmp.capy.common.toDateTime
 import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.db.Database
@@ -148,10 +149,10 @@ class LocalAccountDelegate(
         updatedAt: ZonedDateTime = nowUTC()
     ) {
         database.transactionWithErrorHandling {
-            items.forEach { item ->
-                val updated = updatedAt.toEpochSecond()
+            val updatedAtSeconds = updatedAt.toEpochSecond()
 
-                val publishedAt = item.pubDate?.toDateTime?.toEpochSecond() ?: updated
+            items.forEach { item ->
+                val publishedAt = published(item.pubDate, fallback = updatedAt).toEpochSecond()
                 val url = cleanedURL(item.link, feed.siteURL)
                 val withinCutoff = cutoffDate == null || publishedAt > cutoffDate.toEpochSecond()
 
@@ -171,7 +172,7 @@ class LocalAccountDelegate(
 
                     database.articlesQueries.updateStatus(
                         article_id = item.link!!,
-                        updated_at = updated,
+                        updated_at = updatedAtSeconds,
                         read = false
                     )
                 }
