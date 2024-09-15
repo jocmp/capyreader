@@ -43,6 +43,12 @@ function addImageClickListeners() {
   });
 }
 
+function displayContent() {
+  setTimeout(() => {
+    document.getElementsByTagName("body")[0].classList.add("loaded");
+  }, 100);
+}
+
 window.onload = () => {
   cleanAnchorImageTags();
   addImageClickListeners();

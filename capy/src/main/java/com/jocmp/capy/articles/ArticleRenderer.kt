@@ -52,9 +52,14 @@ class ArticleRenderer(
     }
 
     private fun cleanLinks(document: Document) {
-        document.getElementsByTag("img").forEach { element ->
-            element.attr("loading", "lazy")
+        document.getElementsByTag("img").forEachIndexed { index, element ->
             element.attr("src", element.absUrl("src"))
+            val hasSizing =
+                element.attr("width").isNotBlank() && element.attr("height").isNotBlank()
+
+            if (index > 0 || hasSizing) {
+                element.attr("loading", "lazy")
+            }
         }
 
         document.select("img[data-src]").forEach { element ->
