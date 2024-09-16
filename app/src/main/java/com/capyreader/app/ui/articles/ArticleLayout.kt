@@ -323,6 +323,7 @@ fun ArticleLayout(
                 }
             } else if (article != null) {
                 ArticleView(
+                    articles = articles,
                     article = article,
                     onToggleRead = onToggleArticleRead,
                     onToggleStar = onToggleArticleStar,
@@ -334,7 +335,8 @@ fun ArticleLayout(
                     onBackPressed = {
                         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
                         onRequestClearArticle()
-                    }
+                    },
+                    selectArticle = { onSelectArticle(it) }
                 )
             }
         }
