@@ -66,6 +66,8 @@ class ArticleScreenViewModel(
 
     val allFeeds = account.allFeeds
 
+    val allFolders = account.folders
+
     val feeds = account.feeds.combine(_counts) { feeds, latestCounts ->
         feeds.map { copyFeedCounts(it, latestCounts) }
             .withPositiveCount(filterStatus)
