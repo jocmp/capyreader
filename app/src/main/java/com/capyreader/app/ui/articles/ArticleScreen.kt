@@ -17,6 +17,7 @@ fun ArticleScreen(
 ) {
     val feeds by viewModel.feeds.collectAsStateWithLifecycle(initialValue = emptyList())
     val allFeeds by viewModel.allFeeds.collectAsStateWithLifecycle(initialValue = emptyList())
+    val allFolders by viewModel.allFolders.collectAsStateWithLifecycle(initialValue = emptyList())
     val folders by viewModel.folders.collectAsStateWithLifecycle(initialValue = emptyList())
     val statusCount by viewModel.statusCount.collectAsStateWithLifecycle(initialValue = 0)
     val filter by viewModel.filter.collectAsStateWithLifecycle()
@@ -26,6 +27,7 @@ fun ArticleScreen(
         filter = filter,
         folders = folders,
         feeds = feeds,
+        allFolders = allFolders,
         allFeeds = allFeeds,
         articles = viewModel.articles,
         article = viewModel.article,

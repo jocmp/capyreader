@@ -50,7 +50,7 @@ fun FeedListTopBar(
     filter: ArticleFilter,
     currentFeed: Feed?,
     feeds: List<Feed>,
-    folders: List<Folder>,
+    allFolders: List<Folder>,
 ) {
     val editSuccessMessage = stringResource(R.string.feed_action_edit_success)
     val unsubscribeMessage = stringResource(R.string.feed_action_unsubscribe_success)
@@ -113,7 +113,7 @@ fun FeedListTopBar(
                 FilterAppBarTitle(
                     filter = filter,
                     allFeeds = feeds,
-                    folders = folders,
+                    allFolders = allFolders,
                     onRequestJumpToTop = onRequestJumpToTop
                 )
             }
@@ -179,13 +179,13 @@ private fun FeedListTopBarPreview() {
         onNavigateToDrawer = { },
         onRequestSnackbar = {},
         onRemoveFeed = { _, _, _ -> },
+        onSearchQueryChange = {},
         scrollBehavior = scrollBehavior,
         onMarkAllRead = {},
+        search = ArticleSearch(),
         filter = ArticleFilter.default(),
         currentFeed = null,
         feeds = listOf(),
-        folders = listOf(),
-        search = ArticleSearch(),
-        onSearchQueryChange = {}
+        allFolders = emptyList()
     )
 }

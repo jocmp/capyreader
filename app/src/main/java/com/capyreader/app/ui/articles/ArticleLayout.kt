@@ -39,7 +39,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.R
@@ -66,7 +65,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @OptIn(
     ExperimentalMaterial3AdaptiveApi::class,
@@ -78,6 +76,7 @@ fun ArticleLayout(
     folders: List<Folder>,
     feeds: List<Feed>,
     allFeeds: List<Feed>,
+    allFolders: List<Folder>,
     articles: Flow<PagingData<Article>>,
     article: Article?,
     search: ArticleSearch,
@@ -262,26 +261,26 @@ fun ArticleLayout(
                     }),
                 topBar = {
                     FeedListTopBar(
+                        onRequestJumpToTop = {
+                            scrollToTop()
+                        },
                         onNavigateToDrawer = {
                             coroutineScope.launch {
                                 drawerState.open()
                             }
                         },
-                        onRequestJumpToTop = {
-                            scrollToTop()
-                        },
-                        onRemoveFeed = onRemoveFeed,
-                        scrollBehavior = scrollBehavior,
-                        filter = filter,
-                        feeds = allFeeds,
-                        folders = folders,
-                        currentFeed = currentFeed,
-                        onMarkAllRead = onMarkAllRead,
                         onRequestSnackbar = { showSnackbar(it) },
-                        search = search,
+                        onRemoveFeed = onRemoveFeed,
                         onSearchQueryChange = {
                             scrollToTop()
-                        }
+                        },
+                        scrollBehavior = scrollBehavior,
+                        onMarkAllRead = onMarkAllRead,
+                        search = search,
+                        filter = filter,
+                        currentFeed = currentFeed,
+                        feeds = allFeeds,
+                        allFolders = allFolders
                     )
                 },
                 snackbarHost = {
@@ -436,6 +435,7 @@ fun ArticleLayoutPreview() {
             filter = ArticleFilter.default(),
             folders = folders,
             feeds = feeds,
+            allFolders = emptyList(),
             allFeeds = emptyList(),
             articles = emptyFlow(),
             search = ArticleSearch(),

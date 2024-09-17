@@ -4,7 +4,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -16,16 +15,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import com.capyreader.app.ui.navigationTitle
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
-import com.capyreader.app.ui.navigationTitle
 
 @Composable
 fun FilterAppBarTitle(
     filter: ArticleFilter,
     allFeeds: List<Feed>,
-    folders: List<Folder>,
+    allFolders: List<Folder>,
     onRequestJumpToTop: () -> Unit
 ) {
     val text = when (filter) {
@@ -35,7 +34,7 @@ fun FilterAppBarTitle(
         }
 
         is ArticleFilter.Folders -> {
-            folders.find { it.title == filter.folderTitle }?.title
+            allFolders.find { it.title == filter.folderTitle }?.title
         }
     }.orEmpty()
 
@@ -68,7 +67,7 @@ fun FilterAppBarTitlePreview() {
             FilterAppBarTitle(
                 filter = ArticleFilter.default(),
                 allFeeds = emptyList(),
-                folders = emptyList(),
+                allFolders = emptyList(),
                 onRequestJumpToTop = {}
             )
         })
