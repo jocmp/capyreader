@@ -6,6 +6,7 @@ import com.jocmp.capy.MacroProcessor
 import com.jocmp.capy.preferences.Preference
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import org.jsoup.nodes.Element
 import com.jocmp.capy.R as CapyRes
 
 class ArticleRenderer(
@@ -49,22 +50,6 @@ class ArticleRenderer(
         cleanLinks(document)
 
         return document.html()
-    }
-
-    private fun cleanLinks(document: Document) {
-        document.getElementsByTag("img").forEachIndexed { index, element ->
-            element.attr("src", element.absUrl("src"))
-            val hasSizing =
-                element.attr("width").isNotBlank() && element.attr("height").isNotBlank()
-
-            if (index > 0 || hasSizing) {
-                element.attr("loading", "lazy")
-            }
-        }
-
-        document.select("img[data-src]").forEach { element ->
-            element.attr("src", element.absUrl("data-src"))
-        }
     }
 
     private fun script(article: Article, extractedContent: ExtractedContent): String {
