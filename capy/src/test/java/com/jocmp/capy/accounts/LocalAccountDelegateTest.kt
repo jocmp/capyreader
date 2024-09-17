@@ -290,50 +290,6 @@ class LocalAccountDelegateTest {
     ) : Feed {
         override fun isValid() = true
     }
-
-    @Test
-    fun cleanedArticleLink_whenPresent() {
-        val url = "https://example.com/article"
-
-        val result = cleanedURL(inputURL = url, siteURL = "")
-
-        assertEquals(expected = url, actual = result.toString())
-    }
-
-    @Test
-    fun cleanedArticleLink_whenNull() {
-        val result = cleanedURL(inputURL = null, siteURL = "")
-
-        assertEquals(expected = null, actual = result)
-    }
-
-    @Test
-    fun cleanedArticleLink_whenBlank() {
-        val result = cleanedURL(inputURL = "", siteURL = "")
-
-        assertEquals(expected = null, actual = result)
-    }
-
-    @Test
-    fun cleanedArticleLink_withRelativePathMissingSiteURL() {
-        val result = cleanedURL(inputURL = "/article", siteURL = "")
-
-        assertEquals(expected = null, actual = result)
-    }
-
-    @Test
-    fun cleanedArticleLink_withRelativePathAndInvalidSiteURL() {
-        val result = cleanedURL(inputURL = "/article", siteURL = "wrong")
-
-        assertEquals(expected = null, actual = result)
-    }
-
-    @Test
-    fun cleanedArticleLink_withRelativePathAndValidSiteURL() {
-        val result = cleanedURL(inputURL = "/article", siteURL = "https://example.com")
-
-        assertEquals(expected = "https://example.com/article", actual = result.toString())
-    }
 }
 
 private suspend fun LocalAccountDelegate.addFeed(url: String) =

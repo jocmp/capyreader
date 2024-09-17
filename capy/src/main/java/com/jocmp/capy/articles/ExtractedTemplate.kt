@@ -39,15 +39,15 @@ fun parseHtml(article: Article, html: String): String {
     try {
         val uri = (article.feedURL ?: article.url).toString()
         val readability4J = Readability4J(uri, html)
-        val content = readability4J.parse().content ?: return ""
+        val content = readability4J.parse().articleContent ?: return ""
 
-        val document = Jsoup.parse(content)
-
-        document.getElementsByClass("readability-styled").forEach { element ->
+        content.getElementsByClass("readability-styled").forEach { element ->
             element.append("&nbsp;")
         }
 
-        return document.body().html()
+        cleanLinks(content)
+
+        return content.html()
     } catch (ex: Throwable) {
         return ""
     }

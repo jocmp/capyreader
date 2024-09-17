@@ -153,20 +153,24 @@ class LocalAccountDelegate(
 
             items.forEach { item ->
                 val publishedAt = published(item.pubDate, fallback = updatedAt).toEpochSecond()
-                val url = cleanedURL(item.link, feed.siteURL)
+                val parsedItem = ParsedItem(
+                    item,
+                    siteURL = feed.siteURL
+                )
+
                 val withinCutoff = cutoffDate == null || publishedAt > cutoffDate.toEpochSecond()
 
-                if (url != null && withinCutoff) {
+                if (parsedItem.url != null && withinCutoff) {
                     database.articlesQueries.create(
                         id = item.link!!,
                         feed_id = feed.id,
-                        title = Jsoup.parse(item.title.orEmpty()).text(),
+                        title = parsedItem.title,
                         author = item.author,
-                        content_html = item.contentHTML,
-                        url = url.toString(),
+                        content_html = parsedItem.contentHTML,
+                        url = parsedItem.url,
                         summary = item.summary,
                         extracted_content_url = null,
-                        image_url = cleanedURL(item.image, siteURL = feed.siteURL)?.toString(),
+                        image_url = parsedItem.imageURL,
                         published_at = publishedAt,
                     )
 
@@ -177,7 +181,6 @@ class LocalAccountDelegate(
                     )
                 }
             }
-
         }
     }
 
@@ -237,23 +240,3 @@ internal val RssItem.summary: String?
 
         return Jsoup.parse(it).text()
     }
-
-internal fun cleanedURL(inputURL: String?, siteURL: String): URL? {
-    val url = inputURL.orEmpty()
-
-    if (url.isBlank()) {
-        return null
-    }
-
-    return try {
-        val uri = URI(url)
-
-        if (uri.isAbsolute) {
-            uri.toURL()
-        } else {
-            URI(siteURL).resolve(uri).toURL()
-        }
-    } catch (e: Throwable) {
-        null
-    }
-}
