@@ -39,7 +39,6 @@ import java.net.URL
 @Composable
 fun ArticleTopBar(
     article: Article?,
-    scrollBehavior: TopAppBarScrollBehavior = enterAlwaysScrollBehavior(),
     extractedContent: ExtractedContent,
     onToggleExtractContent: () -> Unit,
     onToggleRead: () -> Unit,
@@ -50,7 +49,6 @@ fun ArticleTopBar(
     val (isStyleSheetOpen, setStyleSheetOpen) = rememberSaveable { mutableStateOf(false) }
 
     TopAppBar(
-        scrollBehavior = scrollBehavior,
         navigationIcon = {
             ArticleNavigationIcon(
                 onClick = onClose

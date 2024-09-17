@@ -1,6 +1,5 @@
 package com.capyreader.app.ui.articles.detail
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
@@ -10,8 +9,8 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -31,6 +30,7 @@ import com.capyreader.app.ui.components.WebView
 import com.capyreader.app.ui.components.WebViewNavigator
 import com.capyreader.app.ui.components.WebViewState
 import com.capyreader.app.ui.components.rememberSaveableWebViewState
+import com.capyreader.app.ui.isCompact
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
 import com.jocmp.capy.articles.ExtractedContent
@@ -106,35 +106,39 @@ fun ArticleView(
         Box(
             Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
         ) {
             WebView(
                 state = webViewState,
                 navigator = webViewNavigator,
                 onNavigateToMedia = onNavigateToMedia,
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize(),
             )
 
-            Box(
-                Modifier
-                    .align(Alignment.BottomCenter)
-                    .fillMaxWidth()
-            ) {
-                AnimatedVisibility(
-                    visible = showBars,
-                    enter = fadeIn() + expandVertically(),
-                    exit = shrinkVertically() + fadeOut()
+            if (isCompact()) {
+                Box(
+                    Modifier
+                        .align(Alignment.BottomStart)
+                        .navigationBarsPadding()
+                        .fillMaxWidth()
                 ) {
-                    ArticleBottomBar(
-                        showPrevious = relations.hasPrevious(),
-                        showNext = relations.hasNext(),
-                        onRequestPrevious = {
-                            selectPreviousArticle()
-                        },
-                        onRequestNext = {
-                            selectNextArticle()
-                        }
-                    )
+                    AnimatedVisibility(
+                        visible = showBars,
+                        enter = fadeIn() + expandVertically(),
+                        exit = shrinkVertically() + fadeOut()
+                    ) {
+                        ArticleBottomBar(
+                            showPrevious = relations.hasPrevious(),
+                            showNext = relations.hasNext(),
+                            onRequestPrevious = {
+                                selectPreviousArticle()
+                            },
+                            onRequestNext = {
+                                selectNextArticle()
+                            }
+                        )
+                    }
                 }
             }
 

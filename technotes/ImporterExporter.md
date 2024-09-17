@@ -12,12 +12,10 @@ Resurrect the picker code to grab a URI
  val picker = rememberLauncherForActivityResult(
 	ActivityResultContracts.GetContent()
 ) { uri ->
-	Log.d(TAG, "importOPML: start $uri")
-
 	if (uri != null) {
 		context.contentResolver.openInputStream(uri).use { inputStream ->
 			viewModel.importOPML(inputStream) {
-				Log.d(TAG, "importOPML: success $uri")
+				// success
 			}
 		}
 	}
