@@ -3,7 +3,6 @@ package com.capyreader.app.ui.components
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup.LayoutParams
 import android.webkit.WebChromeClient
@@ -57,6 +56,7 @@ import org.koin.core.component.inject
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
+import kotlin.math.roundToInt
 
 /**
  * Doesn't really fetch from androidplatform.net. This is used as a placeholder domain:
@@ -103,6 +103,7 @@ fun WebView(
     navigator: WebViewNavigator = rememberWebViewNavigator(),
     onCreated: (WebView) -> Unit = {},
     onDispose: (WebView) -> Unit = {},
+    onPageFinished: () -> Unit = {},
     onNavigateToMedia: (url: String) -> Unit = {},
     factory: ((Context) -> WebView)? = null,
 ) {
@@ -134,6 +135,7 @@ fun WebView(
             onCreated,
             onDispose,
             onNavigateToMedia,
+            onPageFinished,
             factory
         )
     }
@@ -172,6 +174,7 @@ fun WebView(
     onCreated: (WebView) -> Unit = {},
     onDispose: (WebView) -> Unit = {},
     onNavigateToMedia: (url: String) -> Unit = {},
+    onPageFinished: () -> Unit = {},
     factory: ((Context) -> WebView)? = null,
 ) {
     val context = LocalContext.current
@@ -189,7 +192,8 @@ fun WebView(
                 .setDomain("appassets.androidplatform.net")
                 .addPathHandler("/assets/", AssetsPathHandler(context))
                 .addPathHandler("/res/", ResourcesPathHandler(context))
-                .build()
+                .build(),
+            onPageFinish = onPageFinished,
         )
     }
     val chromeClient = remember { AccompanistWebChromeClient() }
@@ -288,7 +292,10 @@ fun WebView(
  * As Accompanist Web needs to set its own web client to function, it provides this intermediary
  * class that can be overridden if further custom behaviour is required.
  */
-open class AccompanistWebViewClient(private val assetLoader: WebViewAssetLoader) : WebViewClient(),
+open class AccompanistWebViewClient(
+    private val assetLoader: WebViewAssetLoader,
+    private val onPageFinish: () -> Unit,
+) : WebViewClient(),
     KoinComponent {
     open lateinit var state: WebViewState
         internal set
@@ -310,6 +317,7 @@ open class AccompanistWebViewClient(private val assetLoader: WebViewAssetLoader)
     override fun onPageFinished(view: WebView, url: String?) {
         super.onPageFinished(view, url)
         state.loadingState = Finished
+        onPageFinish()
     }
 
     override fun doUpdateVisitedHistory(view: WebView, url: String?, isReload: Boolean) {
