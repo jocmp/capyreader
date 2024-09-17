@@ -43,10 +43,10 @@ function addImageClickListeners() {
   });
 }
 
-function displayContent() {
+function displayContentAsync() {
   setTimeout(() => {
     document.getElementsByTagName("body")[0].classList.add("loaded");
-  }, 100);
+  }, 200);
 }
 
 window.onload = () => {
