@@ -34,7 +34,7 @@ data class RssItem(
     val itunesItemData: ItunesItemData?,
     val commentsUrl: String?,
 ) {
-    internal data class Builder(
+    data class Builder(
         private var guid: String? = null,
         private var title: String? = null,
         private var author: String? = null,
