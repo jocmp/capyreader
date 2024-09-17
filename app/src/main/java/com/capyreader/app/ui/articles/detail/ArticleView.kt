@@ -55,8 +55,7 @@ fun ArticleView(
     val snapshotList = articles.collectAsLazyPagingItems().itemSnapshotList
     val relations = remember(article, snapshotList) { ArticleRelations.from(article, snapshotList) }
     val articleID = article.id
-    val templateColors = articleTemplateColors()
-    val colors = templateColors.asMap()
+    val colors = articleTemplateColors()
     val webViewState = rememberSaveableWebViewState(key = articleID)
     val byline = article.byline(context = LocalContext.current)
     val showBars = canShowTopBar(webViewState)
