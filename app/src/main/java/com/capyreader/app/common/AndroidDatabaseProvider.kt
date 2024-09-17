@@ -8,7 +8,12 @@ import com.jocmp.capy.db.Database
 
 class AndroidDatabaseProvider(private val context: Context) : DatabaseProvider {
     override fun build(accountID: String): Database {
-        val driver = AndroidSqliteDriver(Database.Schema, context, databaseName(accountID))
+        val driver = AndroidSqliteDriver(
+            Database.Schema,
+            context,
+            databaseName(accountID),
+            windowSizeBytes = 100 * 1024 * 1024
+        )
 
         return Database(driver)
     }
