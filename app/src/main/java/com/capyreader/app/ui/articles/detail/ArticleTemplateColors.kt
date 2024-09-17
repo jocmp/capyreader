@@ -7,16 +7,18 @@ import androidx.compose.ui.graphics.toArgb
 import com.jocmp.capy.articles.TemplateColors
 
 @Composable
-fun articleTemplateColors() = TemplateColors(
-    onPrimaryContainer = colorScheme.onPrimaryContainer.toHTMLColor(),
-    onSurface = colorScheme.onSurface.toHTMLColor(),
-    onSurfaceVariant = colorScheme.onSurfaceVariant.toHTMLColor(),
-    primary = colorScheme.primary.toHTMLColor(),
-    primaryContainer = colorScheme.primaryContainer.toHTMLColor(),
-    surface = colorScheme.surface.toHTMLColor(),
-    surfaceContainerHighest = colorScheme.surfaceContainerHighest.toHTMLColor(),
-    surfaceVariant = colorScheme.surfaceVariant.toHTMLColor(),
-)
+fun articleTemplateColors() =
+    TemplateColors(
+        onPrimaryContainer = colorScheme.onPrimaryContainer.toHTMLColor(),
+        onSurface = colorScheme.onSurface.toHTMLColor(),
+        onSurfaceVariant = colorScheme.onSurfaceVariant.toHTMLColor(),
+        primary = colorScheme.primary.toHTMLColor(),
+        primaryContainer = colorScheme.primaryContainer.toHTMLColor(),
+        surface = colorScheme.surface.toHTMLColor(),
+        surfaceContainerHighest = colorScheme.surfaceContainerHighest.toHTMLColor(),
+        surfaceVariant = colorScheme.surfaceVariant.toHTMLColor(),
+        surfaceContainer = colorScheme.surfaceContainer.toHTMLColor()
+    ).asMap()
 
 
 private fun Color.toHTMLColor(): String {
