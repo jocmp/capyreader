@@ -30,7 +30,7 @@ fun ReaderSettings(
         TextSwitch(
             checked = options.pinTopBar,
             onCheckedChange = options.updatePinTopBar,
-            title = stringResource(R.string.settings_options_reader_pin_top_bar),
+            title = stringResource(R.string.settings_options_reader_pin_toolbars),
         )
     }
 }

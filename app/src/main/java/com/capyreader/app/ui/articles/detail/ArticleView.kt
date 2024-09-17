@@ -9,15 +9,16 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,6 +26,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.ui.articles.ArticleRelations
 import com.capyreader.app.ui.components.WebView
 import com.capyreader.app.ui.components.WebViewNavigator
 import com.capyreader.app.ui.components.WebViewState
@@ -40,8 +42,8 @@ import org.koin.compose.koinInject
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArticleView(
-    articles: Flow<PagingData<Article>>,
     article: Article,
+    articles: Flow<PagingData<Article>>,
     webViewNavigator: WebViewNavigator,
     renderer: ArticleRenderer = koinInject(),
     onBackPressed: () -> Unit,
@@ -49,26 +51,16 @@ fun ArticleView(
     onToggleStar: () -> Unit,
     onNavigateToMedia: (url: String) -> Unit,
     enableBackHandler: Boolean = false,
-    selectArticle: (id: String) -> Unit
+    selectArticle: (index: Int, id: String) -> Unit
 ) {
-    val items = articles.collectAsLazyPagingItems().itemSnapshotList
-    val index = items.indexOfFirst {
-        it?.id == article.id
-    }
-
-    val previous = items.getOrNull(index - 1)?.id
-    val next = items.getOrNull(index + 1)?.id
-
-    LaunchedEffect(previous, next) {
-        Log.d("ArticleView", "[DEBUG] previous=$previous\nnext=$next")
-    }
-
+    val snapshotList = articles.collectAsLazyPagingItems().itemSnapshotList
+    val relations = remember(article, snapshotList) { ArticleRelations.from(article, snapshotList) }
     val articleID = article.id
     val templateColors = articleTemplateColors()
     val colors = templateColors.asMap()
     val webViewState = rememberSaveableWebViewState(key = articleID)
     val byline = article.byline(context = LocalContext.current)
-    val showTopBar = canShowTopBar(webViewState)
+    val showBars = canShowTopBar(webViewState)
 
     fun render(extractedContent: ExtractedContent = ExtractedContent()): String {
         return renderer.render(
@@ -87,8 +79,19 @@ fun ArticleView(
             }
         }
     )
-
     val extractedContent = extractedContentState.content
+
+    val selectPreviousArticle = {
+        snapshotList.getOrNull(relations.previous)?.let { related ->
+            selectArticle(relations.previous, related.id)
+        }
+    }
+
+    val selectNextArticle = {
+        snapshotList.getOrNull(relations.next)?.let { related ->
+            selectArticle(relations.next, related.id)
+        }
+    }
 
     fun onToggleExtractContent() {
         if (extractedContent.isComplete) {
@@ -109,22 +112,34 @@ fun ArticleView(
                 state = webViewState,
                 navigator = webViewNavigator,
                 onNavigateToMedia = onNavigateToMedia,
-                modifier = Modifier
-
-                    .fillMaxSize(),
+                modifier = Modifier.fillMaxSize(),
             )
-            next?.let {
-                Box(Modifier.align(Alignment.BottomCenter)) {
-                    Button(onClick = {
-                        selectArticle(next)
-                    }) {
-                        Text("Ok")
-                    }
+
+            Box(
+                Modifier
+                    .align(Alignment.BottomCenter)
+                    .fillMaxWidth()
+            ) {
+                AnimatedVisibility(
+                    visible = showBars,
+                    enter = fadeIn() + expandVertically(),
+                    exit = shrinkVertically() + fadeOut()
+                ) {
+                    ArticleBottomBar(
+                        showPrevious = relations.hasPrevious(),
+                        showNext = relations.hasNext(),
+                        onRequestPrevious = {
+                            selectPreviousArticle()
+                        },
+                        onRequestNext = {
+                            selectNextArticle()
+                        }
+                    )
                 }
             }
 
             AnimatedVisibility(
-                visible = showTopBar,
+                visible = showBars,
                 enter = fadeIn() + expandVertically(),
                 exit = shrinkVertically() + fadeOut()
             ) {

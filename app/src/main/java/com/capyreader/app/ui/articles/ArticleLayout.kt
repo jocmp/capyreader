@@ -66,6 +66,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @OptIn(
     ExperimentalMaterial3AdaptiveApi::class,
@@ -123,14 +124,20 @@ fun ArticleLayout(
     )
     var mediaUrl by rememberSaveable { mutableStateOf<String?>(null) }
     val focusManager = LocalFocusManager.current
-
     val openUpdatePasswordDialog = {
         onUnauthorizedDismissRequest()
         setUpdatePasswordDialogOpen(true)
     }
-
     val navigateToDetail = {
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
+    }
+
+    fun scrollToArticle(index: Int) {
+        if (index > -1) {
+            coroutineScope.launch {
+                listState.animateScrollToItem(index)
+            }
+        }
     }
 
     val scrollToTop = {
@@ -323,8 +330,8 @@ fun ArticleLayout(
                 }
             } else if (article != null) {
                 ArticleView(
-                    articles = articles,
                     article = article,
+                    articles = articles,
                     onToggleRead = onToggleArticleRead,
                     onToggleStar = onToggleArticleStar,
                     webViewNavigator = webViewNavigator,
@@ -336,7 +343,10 @@ fun ArticleLayout(
                         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
                         onRequestClearArticle()
                     },
-                    selectArticle = { onSelectArticle(it) }
+                    selectArticle = { index, id ->
+                        onSelectArticle(id)
+                        scrollToArticle(index)
+                    },
                 )
             }
         }

@@ -153,5 +153,6 @@
     <string name="opml_exporter_success">Export complete</string>
     <string name="opml_exporter_failure">Export failed</string>
     <string name="settings_reader_title">Reader</string>
-    <string name="settings_options_reader_pin_top_bar">Pin Top Bar</string>
+    <string name="settings_options_reader_pin_toolbars">Pin Toolbars</string>
+    <string name="article_bottom_bar_next_article">Go to next article</string>
 </resources>
