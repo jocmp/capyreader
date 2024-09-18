@@ -31,7 +31,6 @@ class ArticleRenderer(
             "title" to article.title,
             "byline" to byline,
             "feed_name" to article.feedName,
-            "body" to body(article, extractedContent),
             "script" to script(article, extractedContent),
             "text_size" to textSize.get().slug,
             "font_family" to fontOption.get().slug,
@@ -46,6 +45,8 @@ class ArticleRenderer(
         val document = Jsoup.parse(html).apply {
             article.siteURL?.let { setBaseUri(it) }
         }
+
+        document.getElementById("article-body-content")?.append(body(article, extractedContent))
 
         cleanLinks(document)
 
