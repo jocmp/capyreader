@@ -18,7 +18,6 @@ fun ArticleReader(
 ) {
     val mediaViewer = LocalMediaViewer.current
     val webViewNavigator = rememberWebViewNavigator()
-    val articleID = article.id
     val colors = articleTemplateColors()
     val webViewState = rememberWebViewState()
     val byline = article.byline(context = LocalContext.current)

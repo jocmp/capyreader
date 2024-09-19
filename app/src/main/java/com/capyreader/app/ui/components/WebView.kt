@@ -1,7 +1,6 @@
 package com.capyreader.app.ui.components
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.graphics.Bitmap
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
@@ -19,8 +18,6 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.Saver
-import androidx.compose.runtime.saveable.mapSaver
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -95,8 +92,6 @@ fun WebView(
     onCreated: (WebView) -> Unit = {},
     onDispose: (WebView) -> Unit = {},
     onNavigateToMedia: (url: String) -> Unit = {},
-    onPageFinished: () -> Unit = {},
-    factory: ((Context) -> WebView)? = null,
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
@@ -114,7 +109,6 @@ fun WebView(
                 .addPathHandler("/assets/", AssetsPathHandler(context))
                 .addPathHandler("/res/", ResourcesPathHandler(context))
                 .build(),
-            onPageFinish = onPageFinished,
         )
     }
     val chromeClient = remember { AccompanistWebChromeClient() }
@@ -214,7 +208,6 @@ fun WebView(
  */
 open class AccompanistWebViewClient(
     private val assetLoader: WebViewAssetLoader,
-    private val onPageFinish: () -> Unit,
 ) : WebViewClient(),
     KoinComponent {
     open lateinit var state: WebViewState
@@ -237,7 +230,6 @@ open class AccompanistWebViewClient(
     override fun onPageFinished(view: WebView, url: String?) {
         super.onPageFinished(view, url)
         state.loadingState = Finished
-        onPageFinish()
     }
 
     override fun doUpdateVisitedHistory(view: WebView, url: String?, isReload: Boolean) {
