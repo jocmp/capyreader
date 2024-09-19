@@ -1,8 +1,10 @@
 package com.capyreader.app.ui.articles
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.ui.components.ArticleSearch
@@ -23,36 +25,45 @@ fun ArticleScreen(
     val filter by viewModel.filter.collectAsStateWithLifecycle()
     val searchQuery by viewModel.searchQuery.collectAsState(initial = null)
 
-    ArticleLayout(
-        filter = filter,
-        folders = folders,
-        feeds = feeds,
-        allFolders = allFolders,
-        allFeeds = allFeeds,
-        articles = viewModel.articles,
-        article = viewModel.article,
-        statusCount = statusCount,
-        refreshInterval = appPreferences.refreshInterval.get(),
-        onFeedRefresh = { completion ->
-            viewModel.refreshFeed(completion)
-        },
-        onSelectFolder = viewModel::selectFolder,
-        onSelectFeed = viewModel::selectFeed,
-        onSelectArticleFilter = viewModel::selectArticleFilter,
-        onSelectStatus = viewModel::selectStatus,
-        onSelectArticle = viewModel::selectArticle,
-        onNavigateToSettings = onNavigateToSettings,
-        onRequestClearArticle = viewModel::clearArticle,
-        onToggleArticleRead = viewModel::toggleArticleRead,
-        onToggleArticleStar = viewModel::toggleArticleStar,
-        onMarkAllRead = viewModel::markAllRead,
-        onRemoveFeed = viewModel::removeFeed,
-        showUnauthorizedMessage = viewModel.showUnauthorizedMessage,
-        onUnauthorizedDismissRequest = viewModel::dismissUnauthorizedMessage,
-        search = ArticleSearch(
-            query = searchQuery,
-            clear = { viewModel.clearSearch() },
-            update = viewModel::updateSearch,
+    val fullContent = remember {
+        FullContentFetcher(
+            fetch = viewModel::fetchFullContentAsync,
+            reset = viewModel::resetFullContent,
         )
-    )
+    }
+
+    CompositionLocalProvider(LocalFullContent provides fullContent) {
+        ArticleLayout(
+            filter = filter,
+            folders = folders,
+            feeds = feeds,
+            allFolders = allFolders,
+            allFeeds = allFeeds,
+            articles = viewModel.articles,
+            article = viewModel.article,
+            statusCount = statusCount,
+            refreshInterval = appPreferences.refreshInterval.get(),
+            onFeedRefresh = { completion ->
+                viewModel.refreshFeed(completion)
+            },
+            onSelectFolder = viewModel::selectFolder,
+            onSelectFeed = viewModel::selectFeed,
+            onSelectArticleFilter = viewModel::selectArticleFilter,
+            onSelectStatus = viewModel::selectStatus,
+            onSelectArticle = viewModel::selectArticle,
+            onNavigateToSettings = onNavigateToSettings,
+            onRequestClearArticle = viewModel::clearArticle,
+            onToggleArticleRead = viewModel::toggleArticleRead,
+            onToggleArticleStar = viewModel::toggleArticleStar,
+            onMarkAllRead = viewModel::markAllRead,
+            onRemoveFeed = viewModel::removeFeed,
+            showUnauthorizedMessage = viewModel.showUnauthorizedMessage,
+            onUnauthorizedDismissRequest = viewModel::dismissUnauthorizedMessage,
+            search = ArticleSearch(
+                query = searchQuery,
+                clear = { viewModel.clearSearch() },
+                update = viewModel::updateSearch,
+            )
+        )
+    }
 }

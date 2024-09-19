@@ -33,13 +33,13 @@ import com.capyreader.app.ui.fixtures.ArticleSample
 import com.capyreader.app.ui.fixtures.InjectedCapyTheme
 import com.capyreader.app.ui.isAtMostMedium
 import com.jocmp.capy.Article
-import com.jocmp.capy.articles.ExtractedContent
+import com.jocmp.capy.Article.FullContentState.LOADED
+import com.jocmp.capy.Article.FullContentState.LOADING
 import java.net.URL
 
 @Composable
 fun ArticleTopBar(
     article: Article?,
-    extractedContent: ExtractedContent,
     onToggleExtractContent: () -> Unit,
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
@@ -66,11 +66,11 @@ fun ArticleTopBar(
                     }
 
                     IconButton(onClick = { onToggleExtractContent() }) {
-                        if (extractedContent.isLoading) {
+                        if (article.fullContent == LOADING) {
                             FullContentLoadingIcon()
                         } else {
                             Icon(
-                                painterResource(id = extractIcon(extractedContent)),
+                                painterResource(id = extractIcon(article.fullContent)),
                                 contentDescription = stringResource(R.string.extract_full_content)
                             )
                         }
@@ -132,8 +132,8 @@ fun starredIcon(article: Article) =
     }
 
 @Composable
-fun extractIcon(extractedContent: ExtractedContent) = when {
-    extractedContent.isComplete -> R.drawable.icon_article_filled
+fun extractIcon(fullContentState: Article.FullContentState) = when(fullContentState) {
+    LOADED -> R.drawable.icon_article_filled
     else -> R.drawable.icon_article_empty
 }
 
@@ -163,7 +163,6 @@ private fun ArticleTopBarPreview(@PreviewParameter(ArticleSample::class) article
     InjectedCapyTheme {
         ArticleTopBar(
             article = article.copy(extractedContentURL = URL("https://example.com")),
-            extractedContent = ExtractedContent(),
             onToggleExtractContent = {},
             onToggleRead = {},
             onToggleStar = {},
@@ -178,7 +177,6 @@ private fun ArticleTopBarPreview_Tablet(@PreviewParameter(ArticleSample::class) 
     InjectedCapyTheme {
         ArticleTopBar(
             article = article,
-            extractedContent = ExtractedContent(),
             onToggleExtractContent = {},
             onToggleRead = {},
             onToggleStar = {},
@@ -193,7 +191,6 @@ private fun ArticleTopBarPreview_MissingArticle() {
     InjectedCapyTheme {
         ArticleTopBar(
             article = null,
-            extractedContent = ExtractedContent(),
             onToggleExtractContent = {},
             onToggleRead = {},
             onToggleStar = {},

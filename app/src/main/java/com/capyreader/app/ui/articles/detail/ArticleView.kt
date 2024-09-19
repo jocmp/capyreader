@@ -8,10 +8,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -19,24 +16,20 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.ui.articles.ArticleRelations
+import com.capyreader.app.ui.articles.LocalFullContent
 import com.capyreader.app.ui.components.WebView
 import com.capyreader.app.ui.components.WebViewNavigator
 import com.capyreader.app.ui.components.WebViewState
 import com.capyreader.app.ui.components.rememberSaveableWebViewState
-import com.capyreader.app.ui.isCompact
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
-import com.jocmp.capy.articles.ExtractedContent
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 @Composable
@@ -59,25 +52,15 @@ fun ArticleView(
     val webViewState = rememberSaveableWebViewState(key = articleID)
     val byline = article.byline(context = LocalContext.current)
     val showBars = canShowTopBar(webViewState)
+    val fullContent = LocalFullContent.current
 
-    fun render(extractedContent: ExtractedContent = ExtractedContent()): String {
+    fun render(): String {
         return renderer.render(
             article,
             byline = byline,
-            extractedContent = extractedContent,
             colors = colors
         )
     }
-
-    val extractedContentState = rememberExtractedContent(
-        article = article,
-        onComplete = { content ->
-            article.let {
-                webViewNavigator.loadHtml(render(content))
-            }
-        }
-    )
-    val extractedContent = extractedContentState.content
 
     val selectPreviousArticle = {
         snapshotList.getOrNull(relations.previous)?.let { related ->
@@ -92,11 +75,11 @@ fun ArticleView(
     }
 
     fun onToggleExtractContent() {
-        if (extractedContent.isComplete) {
+        if (article.fullContent == Article.FullContentState.LOADED) {
             webViewNavigator.loadHtml(render())
-            extractedContentState.reset()
-        } else if (!extractedContent.isLoading) {
-            extractedContentState.fetch()
+            fullContent.reset()
+        } else if (article.fullContent != Article.FullContentState.LOADING) {
+            fullContent.fetch()
         }
     }
 
@@ -114,32 +97,6 @@ fun ArticleView(
                     .fillMaxSize(),
             )
 
-            if (isCompact()) {
-                Box(
-                    Modifier
-                        .align(Alignment.BottomStart)
-                        .navigationBarsPadding()
-                        .fillMaxWidth()
-                ) {
-                    AnimatedVisibility(
-                        visible = showBars,
-                        enter = fadeIn() + expandVertically(),
-                        exit = shrinkVertically() + fadeOut()
-                    ) {
-                        ArticleBottomBar(
-                            showPrevious = relations.hasPrevious(),
-                            showNext = relations.hasNext(),
-                            onRequestPrevious = {
-                                selectPreviousArticle()
-                            },
-                            onRequestNext = {
-                                selectNextArticle()
-                            }
-                        )
-                    }
-                }
-            }
-
             AnimatedVisibility(
                 visible = showBars,
                 enter = fadeIn() + expandVertically(),
@@ -147,7 +104,6 @@ fun ArticleView(
             ) {
                 ArticleTopBar(
                     article = article,
-                    extractedContent = extractedContent,
                     onToggleExtractContent = ::onToggleExtractContent,
                     onToggleRead = onToggleRead,
                     onToggleStar = onToggleStar,
@@ -161,14 +117,8 @@ fun ArticleView(
         onBackPressed()
     }
 
-    LaunchedEffect(articleID) {
-        launch(Dispatchers.IO) {
-            if (extractedContent.requestShow) {
-                extractedContentState.fetch()
-            } else {
-                webViewNavigator.loadHtml(render())
-            }
-        }
+    LaunchedEffect(article.content) {
+        webViewNavigator.loadHtml(render())
     }
 
     ArticleStyleListener(webView = webViewState.webView)

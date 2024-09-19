@@ -5,8 +5,6 @@ import com.jocmp.capy.Article
 import com.jocmp.capy.MacroProcessor
 import com.jocmp.capy.preferences.Preference
 import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
-import org.jsoup.nodes.Element
 import com.jocmp.capy.R as CapyRes
 
 class ArticleRenderer(
@@ -23,7 +21,6 @@ class ArticleRenderer(
     fun render(
         article: Article,
         byline: String,
-        extractedContent: ExtractedContent = ExtractedContent(),
         colors: Map<String, String>,
     ): String {
         val substitutions = colors + mapOf(
@@ -31,7 +28,6 @@ class ArticleRenderer(
             "title" to article.title,
             "byline" to byline,
             "feed_name" to article.feedName,
-            "script" to script(article, extractedContent),
             "text_size" to textSize.get().slug,
             "font_family" to fontOption.get().slug,
             "top_margin" to "64px"
@@ -46,30 +42,10 @@ class ArticleRenderer(
             article.siteURL?.let { setBaseUri(it) }
         }
 
-        document.getElementById("article-body-content")?.append(body(article, extractedContent))
+        document.getElementById("article-body-content")?.append(article.content)
 
         cleanLinks(document)
 
         return document.html()
-    }
-
-    private fun script(article: Article, extractedContent: ExtractedContent): String {
-        val content = extractedContent.value()
-
-        if (extractedContent.requestShow && content != null) {
-            return extractedTemplate(article, content)
-        }
-
-        return ""
-    }
-
-    private fun body(article: Article, extractedContent: ExtractedContent): String {
-        if (extractedContent.showByDefault) {
-            return ""
-        }
-
-        return article.contentHTML.ifBlank {
-            article.summary
-        }
     }
 }

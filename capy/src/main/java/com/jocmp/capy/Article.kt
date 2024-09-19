@@ -22,4 +22,14 @@ data class Article(
     val feedURL: String? = null,
     val siteURL: String? = null,
     val enableStickyFullContent: Boolean = false,
-)
+    val fullContent: FullContentState = FullContentState.NONE,
+    val content: String = contentHTML.ifBlank { summary },
+) {
+    val defaultContent = contentHTML.ifBlank { summary }
+
+    enum class FullContentState {
+        NONE,
+        LOADING,
+        LOADED,
+    }
+}
