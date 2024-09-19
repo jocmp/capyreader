@@ -153,4 +153,7 @@
     <string name="settings_article_list_title">Lista de artículos</string>
     <string name="opml_exporter_success">Exportación completa</string>
     <string name="opml_exporter_failure">Exportación fallida</string>
+    <string name="article_bottom_bar_next_article">Ir al siguiente artículo</string>
+    <string name="settings_reader_title">Lector</string>
+    <string name="settings_options_reader_pin_toolbars">Fijar la barra de herramientas</string>
 </resources>
