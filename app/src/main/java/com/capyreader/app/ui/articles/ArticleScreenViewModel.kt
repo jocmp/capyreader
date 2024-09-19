@@ -20,6 +20,7 @@ import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
+import com.jocmp.capy.articles.parseHtml
 import com.jocmp.capy.buildArticlePager
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.countAll
@@ -45,7 +46,13 @@ class ArticleScreenViewModel(
 
     private val _searchQuery = MutableStateFlow<String?>(null)
 
-    private var _article by mutableStateOf(account.findArticle(appPreferences.articleID.get()))
+    private var _article by mutableStateOf(
+        account.findArticle(appPreferences.articleID.get())?.also {
+            if (it.enableStickyFullContent) {
+                fetchFullContentAsync(it)
+            }
+        }
+    )
 
     private var _showUnauthorizedMessage by mutableStateOf(UnauthorizedMessageState.HIDE)
 
@@ -165,7 +172,13 @@ class ArticleScreenViewModel(
 
     fun selectArticle(articleID: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            _article = account.findArticle(articleID = articleID)?.copy(read = true)
+            val article = buildArticle(articleID) ?: return@launch
+            _article = article
+
+            if (article.fullContent == Article.FullContentState.LOADING) {
+                viewModelScope.launch(Dispatchers.IO) { fetchFullContent(article) }
+            }
+
             appPreferences.articleID.set(articleID)
             markRead(articleID)
         }
@@ -274,6 +287,70 @@ class ArticleScreenViewModel(
     private fun copyFeedCounts(feed: Feed, counts: Map<String, Long>): Feed {
         return feed.copy(count = counts.getOrDefault(feed.id, 0))
     }
+
+    private fun buildArticle(articleID: String): Article? {
+        val article = account.findArticle(articleID = articleID) ?: return null
+
+        val fullContent = if (enableStickyFullContent && article.enableStickyFullContent) {
+            Article.FullContentState.LOADING
+        } else {
+            Article.FullContentState.NONE
+        }
+
+        val content = if (fullContent == Article.FullContentState.LOADING) {
+            ""
+        } else {
+            article.defaultContent
+        }
+
+        return article.copy(
+            read = true,
+            content = content,
+            fullContent = fullContent
+        )
+    }
+
+    fun fetchFullContentAsync(article: Article? = _article) {
+        article ?: return
+
+        viewModelScope.launch(Dispatchers.IO) {
+            if (enableStickyFullContent && !article.enableStickyFullContent) {
+                account.enableStickyContent(article.feedID)
+            }
+
+            _article = article.copy(fullContent = Article.FullContentState.LOADING)
+
+            _article?.let { fetchFullContent(it) }
+        }
+    }
+
+    fun resetFullContent() {
+        val article = _article ?: return
+
+        _article = article.copy(
+            content = article.defaultContent,
+            fullContent = Article.FullContentState.NONE
+        )
+
+        if (enableStickyFullContent) {
+            account.disableStickyContent(article.feedID)
+        }
+    }
+
+    private suspend fun fetchFullContent(article: Article) {
+        account.fetchFullContent(article).fold(
+            onSuccess = { value ->
+                _article = article.copy(
+                    content = parseHtml(article, value),
+                    fullContent = Article.FullContentState.LOADED
+                )
+            },
+            onFailure = { resetFullContent() }
+        )
+    }
+
+    private val enableStickyFullContent: Boolean
+        get() = appPreferences.enableStickyFullContent.get()
 
     private val context: Context
         get() = application.applicationContext
