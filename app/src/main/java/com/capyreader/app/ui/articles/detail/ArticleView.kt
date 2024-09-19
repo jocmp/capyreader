@@ -7,6 +7,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -36,12 +37,10 @@ import org.koin.compose.koinInject
 fun ArticleView(
     article: Article,
     articles: Flow<PagingData<Article>>,
-    webViewNavigator: WebViewNavigator,
     renderer: ArticleRenderer = koinInject(),
     onBackPressed: () -> Unit,
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
-    onNavigateToMedia: (url: String) -> Unit,
     enableBackHandler: Boolean = false,
     selectArticle: (index: Int, id: String) -> Unit
 ) {
@@ -76,7 +75,6 @@ fun ArticleView(
 
     fun onToggleExtractContent() {
         if (article.fullContent == Article.FullContentState.LOADED) {
-            webViewNavigator.loadHtml(render())
             fullContent.reset()
         } else if (article.fullContent != Article.FullContentState.LOADING) {
             fullContent.fetch()
@@ -88,14 +86,16 @@ fun ArticleView(
             Modifier
                 .fillMaxSize()
         ) {
-            WebView(
-                state = webViewState,
-                navigator = webViewNavigator,
-                onNavigateToMedia = onNavigateToMedia,
+            Box(
                 modifier = Modifier
                     .padding(innerPadding)
-                    .fillMaxSize(),
-            )
+                    .fillMaxSize()
+            ) {
+                ArticleReader(
+                    article = article,
+                    selectArticle = { _, _ -> }
+                )
+            }
 
             AnimatedVisibility(
                 visible = showBars,
@@ -116,11 +116,7 @@ fun ArticleView(
     BackHandler(enableBackHandler) {
         onBackPressed()
     }
-
-    LaunchedEffect(article.content) {
-        webViewNavigator.loadHtml(render())
-    }
-
+    
     ArticleStyleListener(webView = webViewState.webView)
 }
 

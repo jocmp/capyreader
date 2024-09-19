@@ -22,6 +22,7 @@ import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaf
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -45,6 +46,8 @@ import com.capyreader.app.R
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
+import com.capyreader.app.ui.articles.detail.LocalMediaViewer
+import com.capyreader.app.ui.articles.detail.MediaViewer
 import com.capyreader.app.ui.articles.detail.resetScrollBehaviorListener
 import com.capyreader.app.ui.articles.list.EmptyOnboardingView
 import com.capyreader.app.ui.articles.list.FeedListTopBar
@@ -110,7 +113,6 @@ fun ArticleLayout(
     val coroutineScope = rememberCoroutineScope()
     val scaffoldNavigator = rememberListDetailPaneScaffoldNavigator()
     var isRefreshing by remember { mutableStateOf(false) }
-    val webViewNavigator = rememberWebViewNavigator()
     val listState = rememberLazyListState()
     val pagingArticles = articles.collectAsLazyPagingItems(Dispatchers.IO)
     val snackbarHost = remember { SnackbarHostState() }
@@ -190,6 +192,12 @@ fun ArticleLayout(
             openNextList()
 
             showSnackbar(addFeedSuccessMessage)
+        }
+    }
+
+    val mediaViewer = remember {
+        MediaViewer {
+            mediaUrl = it
         }
     }
 
@@ -319,34 +327,32 @@ fun ArticleLayout(
             }
         },
         detailPane = {
-            if (article == null && !isCompact()) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .fillMaxSize()
-                ) {
-                    CapyPlaceholder()
+            CompositionLocalProvider(LocalMediaViewer provides mediaViewer) {
+                if (article == null && !isCompact()) {
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
+                        CapyPlaceholder()
+                    }
+                } else if (article != null) {
+                    ArticleView(
+                        article = article,
+                        articles = articles,
+                        onToggleRead = onToggleArticleRead,
+                        onToggleStar = onToggleArticleStar,
+                        enableBackHandler = mediaUrl == null,
+                        onBackPressed = {
+                            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
+                            onRequestClearArticle()
+                        },
+                        selectArticle = { index, id ->
+                            onSelectArticle(id)
+                            scrollToArticle(index)
+                        },
+                    )
                 }
-            } else if (article != null) {
-                ArticleView(
-                    article = article,
-                    articles = articles,
-                    onToggleRead = onToggleArticleRead,
-                    onToggleStar = onToggleArticleStar,
-                    webViewNavigator = webViewNavigator,
-                    onNavigateToMedia = {
-                        mediaUrl = it
-                    },
-                    enableBackHandler = mediaUrl == null,
-                    onBackPressed = {
-                        scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
-                        onRequestClearArticle()
-                    },
-                    selectArticle = { index, id ->
-                        onSelectArticle(id)
-                        scrollToArticle(index)
-                    },
-                )
             }
         }
     )
@@ -387,12 +393,6 @@ fun ArticleLayout(
         if (!isInitialized) {
             refreshFeeds()
             setInitialized(true)
-        }
-    }
-
-    LaunchedEffect(article?.id) {
-        if (article == null) {
-            webViewNavigator.clearView()
         }
     }
 
