@@ -7,12 +7,10 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -24,10 +22,8 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.ui.articles.ArticleRelations
 import com.capyreader.app.ui.articles.LocalFullContent
-import com.capyreader.app.ui.components.WebView
-import com.capyreader.app.ui.components.WebViewNavigator
 import com.capyreader.app.ui.components.WebViewState
-import com.capyreader.app.ui.components.rememberSaveableWebViewState
+import com.capyreader.app.ui.components.rememberWebViewState
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
 import kotlinx.coroutines.flow.Flow
@@ -48,7 +44,7 @@ fun ArticleView(
     val relations = remember(article, snapshotList) { ArticleRelations.from(article, snapshotList) }
     val articleID = article.id
     val colors = articleTemplateColors()
-    val webViewState = rememberSaveableWebViewState(key = articleID)
+    val webViewState = rememberWebViewState()
     val byline = article.byline(context = LocalContext.current)
     val showBars = canShowTopBar(webViewState)
     val fullContent = LocalFullContent.current
@@ -116,7 +112,7 @@ fun ArticleView(
     BackHandler(enableBackHandler) {
         onBackPressed()
     }
-    
+
     ArticleStyleListener(webView = webViewState.webView)
 }
 

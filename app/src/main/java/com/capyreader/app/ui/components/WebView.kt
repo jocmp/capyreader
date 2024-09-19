@@ -3,16 +3,12 @@ package com.capyreader.app.ui.components
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
-import android.view.LayoutInflater
-import android.view.ViewGroup.LayoutParams
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.FrameLayout
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
@@ -25,7 +21,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.mapSaver
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -39,7 +34,6 @@ import androidx.webkit.WebViewAssetLoader.ResourcesPathHandler
 import coil.executeBlocking
 import coil.imageLoader
 import coil.request.ImageRequest
-import com.capyreader.app.R
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.WebViewInterface
 import com.capyreader.app.common.openLink
@@ -56,7 +50,6 @@ import org.koin.core.component.inject
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
-import kotlin.math.roundToInt
 
 /**
  * Doesn't really fetch from androidplatform.net. This is used as a placeholder domain:
@@ -82,77 +75,6 @@ private const val ASSET_BASE_URL = "https://appassets.androidplatform.net"
  *
  * @param state The webview state holder where the Uri to load is defined.
  * @param modifier A compose modifier
- * @param captureBackPresses Set to true to have this Composable capture back presses and navigate
- * the WebView back.
- * @param navigator An optional navigator object that can be used to control the WebView's
- * navigation from outside the composable.
- * @param onCreated Called when the WebView is first created, this can be used to set additional
- * settings on the WebView. WebChromeClient and WebViewClient should not be set here as they will be
- * subsequently overwritten after this lambda is called.
- * @param onDispose Called when the WebView is destroyed. Provides a bundle which can be saved
- * if you need to save and restore state in this WebView.
- * @param client Provides access to WebViewClient via subclassing
- * @param chromeClient Provides access to WebChromeClient via subclassing
- * @param factory An optional WebView factory for using a custom subclass of WebView
- * @sample com.google.accompanist.sample.webview.BasicWebViewSample
- */
-@Composable
-fun WebView(
-    state: WebViewState,
-    modifier: Modifier = Modifier,
-    navigator: WebViewNavigator = rememberWebViewNavigator(),
-    onCreated: (WebView) -> Unit = {},
-    onDispose: (WebView) -> Unit = {},
-    onPageFinished: () -> Unit = {},
-    onNavigateToMedia: (url: String) -> Unit = {},
-    factory: ((Context) -> WebView)? = null,
-) {
-    BoxWithConstraints(modifier) {
-        // WebView changes it's layout strategy based on
-        // it's layoutParams. We convert from Compose Modifier to
-        // layout params here.
-        val width =
-            if (constraints.hasFixedWidth)
-                LayoutParams.MATCH_PARENT
-            else
-                LayoutParams.WRAP_CONTENT
-        val height =
-            if (constraints.hasFixedHeight)
-                LayoutParams.MATCH_PARENT
-            else
-                LayoutParams.WRAP_CONTENT
-
-        val layoutParams = FrameLayout.LayoutParams(
-            width,
-            height
-        )
-
-        WebView(
-            state,
-            layoutParams,
-            Modifier,
-            navigator,
-            onCreated,
-            onDispose,
-            onNavigateToMedia,
-            onPageFinished,
-            factory
-        )
-    }
-}
-
-/**
- * A wrapper around the Android View WebView to provide a basic WebView composable.
- *
- * If you require more customisation you are most likely better rolling your own and using this
- * wrapper as an example.
- *
- * The WebView attempts to set the layoutParams based on the Compose modifier passed in. If it
- * is incorrectly sizing, use the layoutParams composable function instead.
- *
- * @param state The webview state holder where the Uri to load is defined.
- * @param layoutParams A FrameLayout.LayoutParams object to custom size the underlying WebView.
- * @param modifier A compose modifier
  * @param navigator An optional navigator object that can be used to control the WebView's
  * navigation from outside the composable.
  * @param onCreated Called when the WebView is first created, this can be used to set additional
@@ -168,7 +90,6 @@ fun WebView(
 @Composable
 fun WebView(
     state: WebViewState,
-    layoutParams: FrameLayout.LayoutParams,
     modifier: Modifier = Modifier,
     navigator: WebViewNavigator = rememberWebViewNavigator(),
     onCreated: (WebView) -> Unit = {},
@@ -248,13 +169,12 @@ fun WebView(
 
     AndroidView(
         factory = { ctx ->
-            (factory?.invoke(ctx) ?: ctx.inflateWebView()).apply {
+            WebView(ctx).apply {
                 onCreated(this)
 
                 this.settings.javaScriptEnabled = true
                 this.settings.mediaPlaybackRequiresUserGesture = false
                 isVerticalScrollBarEnabled = false
-                this.layoutParams = layoutParams
                 addJavascriptInterface(
                     WebViewInterface(
                         navigateToMedia = { navigateToMedia(it) }
@@ -728,7 +648,7 @@ fun rememberWebViewNavigator(
  * A wrapper class to hold errors from the WebView.
  */
 @Immutable
-public data class WebViewError(
+data class WebViewError(
     /**
      * The request the error came from.
      */
@@ -749,35 +669,8 @@ public data class WebViewError(
  * @sample com.google.accompanist.sample.webview.WebViewSaveStateSample
  */
 @Composable
-fun rememberSaveableWebViewState(key: String?): WebViewState =
-    rememberSaveable(saver = WebStateSaver, key = key) {
-        WebViewState(WebContent.NavigatorOnly)
-    }
-
-val WebStateSaver: Saver<WebViewState, Any> = run {
-    val scrollY = "scrollY"
-
-    mapSaver(
-        save = {
-            val y = it.webView?.scrollY ?: 0
-            mapOf(
-                scrollY to y
-            )
-        },
-        restore = {
-            WebViewState(WebContent.NavigatorOnly).apply {
-                val y = it[scrollY] as Int?
-
-                lastScrollY = y
-            }
-        },
-    )
-}
-
-private fun Context.inflateWebView(): WebView {
-    return LayoutInflater
-        .from(this)
-        .inflate(R.layout.article_webview, null, false) as WebView
+fun rememberWebViewState(): WebViewState = remember {
+    WebViewState(WebContent.NavigatorOnly)
 }
 
 private fun bitmapInputStream(

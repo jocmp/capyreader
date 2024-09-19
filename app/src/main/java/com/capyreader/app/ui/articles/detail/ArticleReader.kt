@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import com.capyreader.app.ui.components.WebView
-import com.capyreader.app.ui.components.rememberSaveableWebViewState
+import com.capyreader.app.ui.components.rememberWebViewState
 import com.capyreader.app.ui.components.rememberWebViewNavigator
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
@@ -20,7 +20,7 @@ fun ArticleReader(
     val webViewNavigator = rememberWebViewNavigator()
     val articleID = article.id
     val colors = articleTemplateColors()
-    val webViewState = rememberSaveableWebViewState(key = articleID)
+    val webViewState = rememberWebViewState()
     val byline = article.byline(context = LocalContext.current)
 
     fun render(): String {
