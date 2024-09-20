@@ -339,13 +339,13 @@ fun ArticleLayout(
                     ArticleView(
                         article = article,
                         articles = articles,
-                        onToggleRead = onToggleArticleRead,
-                        onToggleStar = onToggleArticleStar,
-                        enableBackHandler = mediaUrl == null,
                         onBackPressed = {
                             scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
                             onRequestClearArticle()
                         },
+                        onToggleRead = onToggleArticleRead,
+                        onToggleStar = onToggleArticleStar,
+                        enableBackHandler = mediaUrl == null,
                         selectArticle = { index, id ->
                             onSelectArticle(id)
                             scrollToArticle(index)

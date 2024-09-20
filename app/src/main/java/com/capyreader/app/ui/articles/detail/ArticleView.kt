@@ -9,9 +9,13 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
@@ -25,7 +29,6 @@ import com.capyreader.app.ui.articles.ArticleRelations
 import com.capyreader.app.ui.articles.LocalFullContent
 import com.capyreader.app.ui.components.WebViewState
 import com.jocmp.capy.Article
-import com.jocmp.capy.articles.ArticleRenderer
 import kotlinx.coroutines.flow.Flow
 import org.koin.compose.koinInject
 
@@ -33,7 +36,6 @@ import org.koin.compose.koinInject
 fun ArticleView(
     article: Article,
     articles: Flow<PagingData<Article>>,
-    renderer: ArticleRenderer = koinInject(),
     onBackPressed: () -> Unit,
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
@@ -42,22 +44,26 @@ fun ArticleView(
 ) {
     val snapshotList = articles.collectAsLazyPagingItems().itemSnapshotList
     val relations = remember(article, snapshotList) { ArticleRelations.from(article, snapshotList) }
-    val colors = articleTemplateColors()
-    val byline = article.byline(context = LocalContext.current)
     val showBars = true // canShowTopBar(webViewState)
     val fullContent = LocalFullContent.current
-
-    val selectPreviousArticle = {
-        snapshotList.getOrNull(relations.previous)?.let { related ->
-            selectArticle(relations.previous, related.id)
-        }
+    val articleIndex by remember(article.id) { derivedStateOf { snapshotList.indexOfFirst { it?.id == article.id } } }
+    val pagerState = rememberPagerState(
+        initialPage = articleIndex.coerceAtLeast(0)
+    ) {
+        snapshotList.size
     }
-
-    val selectNextArticle = {
-        snapshotList.getOrNull(relations.next)?.let { related ->
-            selectArticle(relations.next, related.id)
-        }
-    }
+//
+//    val selectArticle = { index: Int ->
+//        snapshotList.getOrNull(index)?.let { related ->
+//            selectArticle(index, related.id)
+//        }
+//    }
+//
+//    val selectNextArticle = {
+//        snapshotList.getOrNull(relations.next)?.let { related ->
+//            selectArticle(relations.next, related.id)
+//        }
+//    }
 
     fun onToggleExtractContent() {
         if (article.fullContent == Article.FullContentState.LOADED) {
@@ -72,31 +78,61 @@ fun ArticleView(
             Modifier
                 .fillMaxSize()
         ) {
-            Box(
-                modifier = Modifier
-                    .padding(innerPadding)
-                    .fillMaxSize()
-            ) {
-                key(article.id) {
-                    ArticleReader(
-                        article = article
-                    )
+            HorizontalPager(state = pagerState) { page ->
+                Box(
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .fillMaxSize()
+                ) {
+                    val pageArticle = snapshotList.getOrNull(page)
+
+                    val current = if (pageArticle?.id == article.id) {
+                        article
+                    } else {
+                        pageArticle
+                    }
+
+                    if (current != null) {
+                        ArticleReader(
+                            article = current
+                        )
+                    } else {
+                        CapyPlaceholder()
+                    }
                 }
             }
+        }
 
-            AnimatedVisibility(
-                visible = showBars,
-                enter = fadeIn() + expandVertically(),
-                exit = shrinkVertically() + fadeOut()
-            ) {
-                ArticleTopBar(
-                    article = article,
-                    onToggleExtractContent = ::onToggleExtractContent,
-                    onToggleRead = onToggleRead,
-                    onToggleStar = onToggleStar,
-                    onClose = onBackPressed
-                )
-            }
+        AnimatedVisibility(
+            visible = showBars,
+            enter = fadeIn() + expandVertically(),
+            exit = shrinkVertically() + fadeOut()
+        ) {
+            ArticleTopBar(
+                article = article,
+                onToggleExtractContent = ::onToggleExtractContent,
+                onToggleRead = onToggleRead,
+                onToggleStar = onToggleStar,
+                onClose = onBackPressed
+            )
+        }
+    }
+
+    LaunchedEffect(pagerState.currentPage, pagerState.isScrollInProgress) {
+        val currentArticle = snapshotList.getOrNull(pagerState.currentPage)
+
+        if (pagerState.isScrollInProgress) {
+            return@LaunchedEffect
+        }
+
+        if (currentArticle != null && currentArticle.id != article.id) {
+            selectArticle(pagerState.currentPage, currentArticle.id)
+        }
+    }
+
+    LaunchedEffect(article.id) {
+        if (articleIndex > -1 && pagerState.currentPage != articleIndex) {
+            pagerState.scrollToPage(articleIndex)
         }
     }
 
