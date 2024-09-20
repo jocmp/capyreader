@@ -1,11 +1,18 @@
 package com.capyreader.app.ui.articles.detail
 
+import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.capyreader.app.ui.components.WebView
 import com.capyreader.app.ui.components.rememberWebViewState
-import com.capyreader.app.ui.components.rememberWebViewNavigator
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
 import org.koin.compose.koinInject
@@ -14,12 +21,15 @@ import org.koin.compose.koinInject
 fun ArticleReader(
     article: Article,
     renderer: ArticleRenderer = koinInject(),
-    selectArticle: (index: Int, id: String) -> Unit,
 ) {
     val mediaViewer = LocalMediaViewer.current
-    val webViewNavigator = rememberWebViewNavigator()
     val colors = articleTemplateColors()
-    val webViewState = rememberWebViewState()
+    var lastScrollY by rememberSaveable { mutableIntStateOf(0) }
+    val scrollState = rememberSaveable(article.id, key = article.id, saver = ScrollState.Saver) {
+        ScrollState(initial = 0)
+    }
+
+    val webViewState = rememberWebViewState(article)
     val byline = article.byline(context = LocalContext.current)
 
     fun render(): String {
@@ -30,14 +40,27 @@ fun ArticleReader(
         )
     }
 
-    WebView(
-        state = webViewState,
-        navigator = webViewNavigator,
-        onNavigateToMedia = { mediaViewer.open(it) },
-    )
+    Column(modifier = Modifier.verticalScroll(scrollState)) {
+        WebView(
+            state = webViewState,
+            onNavigateToMedia = {
+                mediaViewer.open(it)
+            },
+            onDispose = {
+                lastScrollY = scrollState.value
+            }
+        )
+    }
 
     LaunchedEffect(article.content) {
-        webViewNavigator.loadHtml(render())
+        webViewState.loadHtml(render())
+    }
+
+    LaunchedEffect(lastScrollY, scrollState.maxValue) {
+        if (scrollState.maxValue > 0 && lastScrollY > 0) {
+            scrollState.scrollTo(lastScrollY)
+            lastScrollY = 0
+        }
     }
 
     ArticleStyleListener(webView = webViewState.webView)

@@ -13,6 +13,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -23,7 +24,6 @@ import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.ui.articles.ArticleRelations
 import com.capyreader.app.ui.articles.LocalFullContent
 import com.capyreader.app.ui.components.WebViewState
-import com.capyreader.app.ui.components.rememberWebViewState
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
 import kotlinx.coroutines.flow.Flow
@@ -42,20 +42,10 @@ fun ArticleView(
 ) {
     val snapshotList = articles.collectAsLazyPagingItems().itemSnapshotList
     val relations = remember(article, snapshotList) { ArticleRelations.from(article, snapshotList) }
-    val articleID = article.id
     val colors = articleTemplateColors()
-    val webViewState = rememberWebViewState()
     val byline = article.byline(context = LocalContext.current)
-    val showBars = canShowTopBar(webViewState)
+    val showBars = true // canShowTopBar(webViewState)
     val fullContent = LocalFullContent.current
-
-    fun render(): String {
-        return renderer.render(
-            article,
-            byline = byline,
-            colors = colors
-        )
-    }
 
     val selectPreviousArticle = {
         snapshotList.getOrNull(relations.previous)?.let { related ->
@@ -87,10 +77,11 @@ fun ArticleView(
                     .padding(innerPadding)
                     .fillMaxSize()
             ) {
-                ArticleReader(
-                    article = article,
-                    selectArticle = { _, _ -> }
-                )
+                key(article.id) {
+                    ArticleReader(
+                        article = article
+                    )
+                }
             }
 
             AnimatedVisibility(
@@ -112,8 +103,6 @@ fun ArticleView(
     BackHandler(enableBackHandler) {
         onBackPressed()
     }
-
-    ArticleStyleListener(webView = webViewState.webView)
 }
 
 @Composable
@@ -125,6 +114,5 @@ fun canShowTopBar(
         .stateIn(rememberCoroutineScope())
         .collectAsState()
 
-    return pinTopBar ||
-            webViewState.scrollValue == 0 || webViewState.lastScrolledBackward
+    return pinTopBar
 }
