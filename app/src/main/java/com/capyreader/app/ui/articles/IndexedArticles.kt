@@ -3,12 +3,13 @@ package com.capyreader.app.ui.articles
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.jocmp.capy.Article
 import kotlinx.coroutines.flow.Flow
 
 data class IndexedArticles(
-    private val index: Int,
+    val index: Int,
     private val next: Int,
     private val previous: Int,
     private val articles: List<Article?>,
@@ -22,16 +23,18 @@ data class IndexedArticles(
     }
 
     fun hasNext(): Boolean {
-        return next < articles.size
+        return next < size
     }
+
+    val size = articles.size
 }
 
 @Composable
 fun rememberIndexedArticles(
     article: Article,
-    articles: Flow<PagingData<Article>>
+    articles: LazyPagingItems<Article>
 ): IndexedArticles {
-    val snapshot = articles.collectAsLazyPagingItems().itemSnapshotList
+    val snapshot = articles.itemSnapshotList
 
     return remember(article, snapshot.size) {
         val index = snapshot.indexOfFirst { it?.id == article.id }

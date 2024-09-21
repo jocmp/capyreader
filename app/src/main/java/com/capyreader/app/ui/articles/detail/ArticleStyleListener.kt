@@ -14,8 +14,8 @@ import org.koin.compose.koinInject
 
 @Composable
 fun ArticleStyleListener(webView: WebView?, appPreferences: AppPreferences = koinInject()) {
-    val textSize by appPreferences.textSize.collectChanges()
-    val fontFamily by appPreferences.fontOption.collectChanges()
+    val textSize by appPreferences.readerOptions.textSize.collectChanges()
+    val fontFamily by appPreferences.readerOptions.fontFamily.collectChanges()
 
     LaunchedEffect(fontFamily) {
         if (webView != null) {

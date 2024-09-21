@@ -21,8 +21,8 @@ internal val articlesModule = module {
     single {
         ArticleRenderer(
             context = get(),
-            textSize = get<AppPreferences>().textSize,
-            fontOption = get<AppPreferences>().fontOption,
+            textSize = get<AppPreferences>().readerOptions.textSize,
+            fontOption = get<AppPreferences>().readerOptions.fontFamily,
         )
     }
     viewModel {

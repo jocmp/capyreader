@@ -185,7 +185,7 @@ fun canShowBars(
     scrollState: ScrollState,
     appPreferences: AppPreferences = koinInject(),
 ): Boolean {
-    val pinBars by appPreferences.pinArticleTopBar
+    val pinBars by appPreferences.readerOptions.pinToolbars
         .stateIn(rememberCoroutineScope())
         .collectAsState()
 

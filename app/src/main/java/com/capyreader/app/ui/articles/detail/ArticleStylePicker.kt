@@ -29,9 +29,9 @@ fun ArticleStylePicker(
 ) {
     val textSizes = TextSize.sorted
 
-    var fontFamily by remember { mutableStateOf(appPreferences.fontOption.get()) }
+    var fontFamily by remember { mutableStateOf(appPreferences.readerOptions.fontFamily.get()) }
     var sliderPosition by remember {
-        mutableFloatStateOf(textSizes.indexOf(appPreferences.textSize.get()).toFloat())
+        mutableFloatStateOf(textSizes.indexOf(appPreferences.readerOptions.textSize.get()).toFloat())
     }
 
     Column(
@@ -40,7 +40,7 @@ fun ArticleStylePicker(
         ArticleFontMenu(
             updateFontFamily = { font ->
                 fontFamily = font
-                appPreferences.fontOption.set(font)
+                appPreferences.readerOptions.fontFamily.set(font)
                 onChange()
             },
             fontOption = fontFamily
@@ -57,7 +57,7 @@ fun ArticleStylePicker(
                     value = sliderPosition,
                     onValueChange = {
                         sliderPosition = it
-                        appPreferences.textSize.set(TextSize.sorted[it.roundToInt()])
+                        appPreferences.readerOptions.textSize.set(TextSize.sorted[it.roundToInt()])
                         onChange()
                     }
                 )
