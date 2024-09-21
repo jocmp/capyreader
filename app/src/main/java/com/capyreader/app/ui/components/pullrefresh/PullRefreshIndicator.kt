@@ -4,7 +4,6 @@ import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animate
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
@@ -23,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
@@ -72,9 +72,9 @@ private val LargeSizes = SwipeRefreshIndicatorSizes(
 )
 
 /**
- * Indicator composable which is typically used in conjunction with [PullRefresh].
+ * Indicator composable which is typically used in conjunction with [SwipeRefresh].
  *
- * @param state The [SwipeRefreshState] passed into the [PullRefresh] `indicator` block.
+ * @param state The [SwipeRefreshState] passed into the [SwipeRefresh] `indicator` block.
  * @param modifier The modifier to apply to this layout.
  * @param fade Whether the arrow should fade in/out as it is scrolled in. Defaults to true.
  * @param scale Whether the indicator should scale up/down as it is scrolled in. Defaults to false.
@@ -169,7 +169,9 @@ fun SwipeRefreshIndicator(
         }
 
         Box(
-            modifier = Modifier.size(20.dp),
+            modifier = Modifier
+                .size(20.dp)
+                .alpha(alpha),
             contentAlignment = Alignment.Center
         ) {
             Image(

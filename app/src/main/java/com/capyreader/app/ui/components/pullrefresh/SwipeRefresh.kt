@@ -1,5 +1,6 @@
 package com.capyreader.app.ui.components.pullrefresh
 
+import android.util.Log
 import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.MutatePriority
 import androidx.compose.foundation.MutatorMutex
@@ -54,7 +55,7 @@ fun rememberSwipeRefreshState(
 }
 
 /**
- * A state object that can be hoisted to control and observe changes for [PullRefresh].
+ * A state object that can be hoisted to control and observe changes for [SwipeRefresh].
  *
  * In most cases, this will be created via [rememberSwipeRefreshState].
  *
@@ -212,7 +213,7 @@ private class SwipeRefreshNestedScrollConnection(
  *
  * @sample com.google.accompanist.sample.swiperefresh.SwipeRefreshSample
  *
- * @param state the state object to be used to control or observe the [PullRefresh] state.
+ * @param state the state object to be used to control or observe the [SwipeRefresh] state.
  * @param onRefresh Lambda which is invoked when a swipe to refresh gesture is completed.
  * @param modifier the modifier to apply to this layout.
  * @param swipeEnabled Whether the the layout should react to swipe gestures or not.
@@ -226,10 +227,11 @@ private class SwipeRefreshNestedScrollConnection(
  * @param content The content containing a scroll composable.
  */
 @Composable
-fun PullRefresh(
+fun SwipeRefresh(
     modifier: Modifier = Modifier,
     state: SwipeRefreshState = rememberSwipeRefreshState(),
     onRefresh: () -> Unit,
+    onTriggerThreshold: () -> Unit,
     swipeEnabled: Boolean = true,
     refreshTriggerDistance: Dp = 80.dp,
     indicatorAlignment: Alignment = Alignment.TopCenter,
@@ -271,6 +273,14 @@ fun PullRefresh(
     }.apply {
         this.enabled = swipeEnabled
         this.refreshTrigger = refreshTriggerPx
+    }
+
+    val atTrigger = state.indicatorOffset >= refreshTriggerPx
+
+    LaunchedEffect(atTrigger) {
+        if (atTrigger) {
+            onTriggerThreshold()
+        }
     }
 
     Box(modifier.nestedScroll(connection = nestedScrollConnection)) {

@@ -21,11 +21,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.ui.articles.IndexedArticles
 import com.capyreader.app.ui.articles.LocalFullContent
-import com.capyreader.app.ui.components.pullrefresh.PullRefresh
+import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.jocmp.capy.Article
 import org.koin.compose.koinInject
 
@@ -65,7 +67,7 @@ fun ArticleView(
                     .fillMaxSize()
             ) {
                 Column {
-                    SwipeRefresh(
+                    ArticlePullRefresh(
                         article,
                         articles = articles,
                         onRequestArticle = onRequestArticle
@@ -100,25 +102,32 @@ fun ArticleView(
 }
 
 @Composable
-fun SwipeRefresh(
+fun ArticlePullRefresh(
     article: Article,
     onRequestArticle: (id: String) -> Unit,
     articles: IndexedArticles,
     content: @Composable () -> Unit,
 ) {
+    val haptics = LocalHapticFeedback.current
+
+    val triggerThreshold = {
+        haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+    }
     fun selectArticle(relation: () -> Article?) {
         relation()?.let { onRequestArticle(it.id) }
     }
 
-    PullRefresh(
-        swipeEnabled = articles.hasPrevious(),
+    SwipeRefresh(
         onRefresh = { selectArticle { articles.previous() } },
-        indicatorPadding = PaddingValues(top = TopBarContainerHeight)
+        swipeEnabled = articles.hasPrevious(),
+        indicatorPadding = PaddingValues(top = TopBarContainerHeight),
+        onTriggerThreshold = { triggerThreshold() }
     ) {
-        PullRefresh(
-            swipeEnabled = articles.hasNext(),
-            indicatorAlignment = Alignment.BottomCenter,
+        SwipeRefresh(
             onRefresh = { selectArticle { articles.next() } },
+            swipeEnabled = articles.hasNext(),
+            onTriggerThreshold = { triggerThreshold() },
+            indicatorAlignment = Alignment.BottomCenter,
         ) {
             key(article.id) {
                 content()
