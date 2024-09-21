@@ -42,7 +42,7 @@ private const val DragMultiplier = 0.5f
  */
 @Composable
 fun rememberSwipeRefreshState(
-    isRefreshing: Boolean,
+    isRefreshing: Boolean= false,
 ): SwipeRefreshState {
     return remember {
         SwipeRefreshState(

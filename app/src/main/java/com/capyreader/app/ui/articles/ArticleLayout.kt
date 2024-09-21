@@ -346,7 +346,7 @@ fun ArticleLayout(
                         onToggleRead = onToggleArticleRead,
                         onToggleStar = onToggleArticleStar,
                         enableBackHandler = mediaUrl == null,
-                        selectArticle = { index, id ->
+                        onRequestArticle = { index, id ->
                             onSelectArticle(id)
                             scrollToArticle(index)
                         },

@@ -179,7 +179,6 @@ class ArticleScreenViewModel(
                 viewModelScope.launch(Dispatchers.IO) { fetchFullContent(article) }
             }
 
-            appPreferences.articleID.set(articleID)
             markRead(articleID)
         }
     }
