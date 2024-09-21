@@ -2,7 +2,9 @@ package com.capyreader.app.ui.articles.detail
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.Composable
@@ -58,6 +60,7 @@ fun ArticleReader(
                     lastScrollY = scrollState.value
                 },
             )
+            Spacer(modifier = Modifier.height(64.dp))
         }
     }
 

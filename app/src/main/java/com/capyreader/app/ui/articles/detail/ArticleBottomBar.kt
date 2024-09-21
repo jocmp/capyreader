@@ -24,6 +24,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,35 +36,26 @@ import com.capyreader.app.ui.theme.CapyTheme
 @Composable
 fun ArticleBottomBar(
     onRequestNext: () -> Unit = {},
-    onRequestPrevious: () -> Unit = {},
-    showPrevious: Boolean = true,
     showNext: Boolean = true,
 ) {
+    val haptics = LocalHapticFeedback.current
+
+    val onClickFeedback = {
+        haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+    }
+
     BottomBar {
-        Row(
-            verticalAlignment = Alignment.CenterVertically
+        IconButton(
+            onClick = {
+                onClickFeedback()
+                onRequestNext()
+            },
+            enabled = showNext,
         ) {
-            IconButton(
-                onClick = { onRequestPrevious() },
-                enabled = showPrevious,
-            ) {
-                Icon(
-                    Icons.Rounded.KeyboardArrowUp,
-                    contentDescription = stringResource(R.string.article_bottom_bar_next_article)
-                )
-            }
-
-            Spacer(Modifier.width(16.dp))
-
-            IconButton(
-                onClick = { onRequestNext() },
-                enabled = showNext,
-            ) {
-                Icon(
-                    Icons.Rounded.KeyboardArrowDown,
-                    contentDescription = stringResource(R.string.article_bottom_bar_next_article)
-                )
-            }
+            Icon(
+                Icons.Rounded.KeyboardArrowDown,
+                contentDescription = stringResource(R.string.article_bottom_bar_next_article)
+            )
         }
     }
 }
@@ -71,21 +64,9 @@ fun ArticleBottomBar(
 fun BottomBar(
     content: @Composable BoxScope.() -> Unit
 ) {
-    val isAtBottom = false // scrollState.maxValue == scrollState.value
-
-    val color by animateColorAsState(
-        label = "",
-        targetValue = if (isAtBottom) {
-            MaterialTheme.colorScheme.surfaceContainer
-        } else {
-            MaterialTheme.colorScheme.surfaceContainerHighest
-        },
-    )
-
-
     Surface {
         HorizontalDivider(
-            color = color
+            color = MaterialTheme.colorScheme.surfaceContainerHighest
         )
         Box(
             modifier = Modifier

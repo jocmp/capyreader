@@ -8,6 +8,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -46,6 +47,18 @@ fun ArticleView(
         ScrollState(initial = 0)
     }
 
+    fun selectArticle(relation: () -> Article?) {
+        relation()?.let { onRequestArticle(it.id) }
+    }
+
+    val onRequestPrevious = {
+        selectArticle { articles.previous() }
+    }
+
+    val onRequestNext = {
+        selectArticle { articles.next() }
+    }
+
     fun onToggleExtractContent() {
         if (article.fullContent == Article.FullContentState.LOADED) {
             fullContent.reset()
@@ -54,7 +67,7 @@ fun ArticleView(
         }
     }
 
-    val showBars = canShowTopBar(scrollState)
+    val showBars = canShowBars(scrollState)
 
     Scaffold { innerPadding ->
         Box(
@@ -69,8 +82,10 @@ fun ArticleView(
                 Column {
                     ArticlePullRefresh(
                         article,
+                        showBars,
                         articles = articles,
-                        onRequestArticle = onRequestArticle
+                        onRequestPrevious = onRequestPrevious,
+                        onRequestNext = onRequestNext,
                     ) {
                         ArticleReader(
                             article = article,
@@ -78,21 +93,26 @@ fun ArticleView(
                         )
                     }
                 }
-            }
-        }
 
-        AnimatedVisibility(
-            visible = showBars,
-            enter = fadeIn() + expandVertically(),
-            exit = shrinkVertically() + fadeOut()
-        ) {
-            ArticleTopBar(
-                article = article,
-                onToggleExtractContent = ::onToggleExtractContent,
-                onToggleRead = onToggleRead,
-                onToggleStar = onToggleStar,
-                onClose = onBackPressed
-            )
+                BarVisibility(
+                    modifier = Modifier.align(Alignment.BottomCenter),
+                    visible = showBars
+                ) {
+                    ArticleBottomBar(
+                        onRequestNext = onRequestNext
+                    )
+                }
+            }
+
+            BarVisibility(visible = showBars) {
+                ArticleTopBar(
+                    article = article,
+                    onToggleExtractContent = ::onToggleExtractContent,
+                    onToggleRead = onToggleRead,
+                    onToggleStar = onToggleStar,
+                    onClose = onBackPressed
+                )
+            }
         }
     }
 
@@ -104,7 +124,9 @@ fun ArticleView(
 @Composable
 fun ArticlePullRefresh(
     article: Article,
-    onRequestArticle: (id: String) -> Unit,
+    showBars: Boolean,
+    onRequestNext: () -> Unit,
+    onRequestPrevious: () -> Unit,
     articles: IndexedArticles,
     content: @Composable () -> Unit,
 ) {
@@ -113,20 +135,24 @@ fun ArticlePullRefresh(
     val triggerThreshold = {
         haptics.performHapticFeedback(HapticFeedbackType.LongPress)
     }
-    fun selectArticle(relation: () -> Article?) {
-        relation()?.let { onRequestArticle(it.id) }
-    }
 
     SwipeRefresh(
-        onRefresh = { selectArticle { articles.previous() } },
+        onRefresh = { onRequestPrevious() },
         swipeEnabled = articles.hasPrevious(),
         indicatorPadding = PaddingValues(top = TopBarContainerHeight),
         onTriggerThreshold = { triggerThreshold() }
     ) {
         SwipeRefresh(
-            onRefresh = { selectArticle { articles.next() } },
+            onRefresh = { onRequestNext() },
             swipeEnabled = articles.hasNext(),
             onTriggerThreshold = { triggerThreshold() },
+            indicatorPadding = PaddingValues(
+                bottom = if (showBars) {
+                    BottomBarTokens.ContainerHeight
+                } else {
+                    0.dp
+                }
+            ),
             indicatorAlignment = Alignment.BottomCenter,
         ) {
             key(article.id) {
@@ -136,18 +162,34 @@ fun ArticlePullRefresh(
     }
 }
 
-val TopBarContainerHeight = 64.dp
+private val TopBarContainerHeight = 64.dp
 
 @Composable
-fun canShowTopBar(
+fun BoxScope.BarVisibility(
+    modifier: Modifier = Modifier,
+    visible: Boolean,
+    content: @Composable () -> Unit
+) {
+    AnimatedVisibility(
+        visible = visible,
+        enter = fadeIn() + expandVertically(),
+        exit = shrinkVertically() + fadeOut(),
+        modifier = modifier
+    ) {
+        content()
+    }
+}
+
+@Composable
+fun canShowBars(
     scrollState: ScrollState,
     appPreferences: AppPreferences = koinInject(),
 ): Boolean {
-    val pinTopBar by appPreferences.pinArticleTopBar
+    val pinBars by appPreferences.pinArticleTopBar
         .stateIn(rememberCoroutineScope())
         .collectAsState()
 
-    return pinTopBar ||
+    return pinBars ||
             scrollState.lastScrolledBackward ||
             scrollState.value == 0
 }
