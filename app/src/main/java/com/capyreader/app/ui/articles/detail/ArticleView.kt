@@ -78,28 +78,14 @@ fun ArticleView(
             Modifier
                 .fillMaxSize()
         ) {
-            HorizontalPager(state = pagerState) { page ->
-                Box(
-                    modifier = Modifier
-                        .padding(innerPadding)
-                        .fillMaxSize()
-                ) {
-                    val pageArticle = snapshotList.getOrNull(page)
-
-                    val current = if (pageArticle?.id == article.id) {
-                        article
-                    } else {
-                        pageArticle
-                    }
-
-                    if (current != null) {
-                        ArticleReader(
-                            article = current
-                        )
-                    } else {
-                        CapyPlaceholder()
-                    }
-                }
+            Box(
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize()
+            ) {
+                ArticleReader(
+                    article = article
+                )
             }
         }
 
