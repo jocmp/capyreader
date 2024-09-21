@@ -25,7 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -337,9 +336,12 @@ fun ArticleLayout(
                         CapyPlaceholder()
                     }
                 } else if (article != null) {
+                    val indexedArticles =
+                        rememberIndexedArticles(article = article, articles = articles)
+
                     ArticleView(
                         article = article,
-                        articles = articles.collectAsLazyPagingItems().itemSnapshotList,
+                        articles = indexedArticles,
                         onBackPressed = {
                             scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
                             onRequestClearArticle()
@@ -347,9 +349,8 @@ fun ArticleLayout(
                         onToggleRead = onToggleArticleRead,
                         onToggleStar = onToggleArticleStar,
                         enableBackHandler = mediaUrl == null,
-                        onRequestArticle = { index, id ->
+                        onRequestArticle = { id ->
                             onSelectArticle(id)
-                            scrollToArticle(index)
                         },
                     )
                 }

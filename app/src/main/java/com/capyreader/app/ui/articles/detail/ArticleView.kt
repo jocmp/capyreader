@@ -10,25 +10,21 @@ import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.common.AppPreferences
-import com.capyreader.app.ui.articles.ArticleRelations
+import com.capyreader.app.ui.articles.IndexedArticles
 import com.capyreader.app.ui.articles.LocalFullContent
-import com.capyreader.app.ui.components.WebViewState
 import com.capyreader.app.ui.components.pullrefresh.PullRefresh
 import com.jocmp.capy.Article
 import org.koin.compose.koinInject
@@ -36,12 +32,12 @@ import org.koin.compose.koinInject
 @Composable
 fun ArticleView(
     article: Article,
-    articles: List<Article?>,
+    articles: IndexedArticles,
     onBackPressed: () -> Unit,
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
     enableBackHandler: Boolean = false,
-    onRequestArticle: (index: Int, id: String) -> Unit
+    onRequestArticle: (id: String) -> Unit
 ) {
     val fullContent = LocalFullContent.current
     val scrollState = rememberSaveable(article.id, key = article.id, saver = ScrollState.Saver) {
@@ -106,28 +102,23 @@ fun ArticleView(
 @Composable
 fun SwipeRefresh(
     article: Article,
-    onRequestArticle: (index: Int, id: String) -> Unit,
-    articles: List<Article?>,
+    onRequestArticle: (id: String) -> Unit,
+    articles: IndexedArticles,
     content: @Composable () -> Unit,
 ) {
-    val articlePosition =
-        remember(article.id, articles.size) { ArticleRelations.from(article, articles) }
-
-    val selectArticle = { index: Int ->
-        articles.getOrNull(index)?.let { related ->
-            onRequestArticle(index, related.id)
-        }
+    fun selectArticle(relation: () -> Article?) {
+        relation()?.let { onRequestArticle(it.id) }
     }
 
     PullRefresh(
-        swipeEnabled = articlePosition.hasPrevious(),
-        onRefresh = { selectArticle(articlePosition.previous) },
+        swipeEnabled = articles.hasPrevious(),
+        onRefresh = { selectArticle { articles.previous() } },
         indicatorPadding = PaddingValues(top = TopBarContainerHeight)
     ) {
         PullRefresh(
-            swipeEnabled = articlePosition.hasNext(),
+            swipeEnabled = articles.hasNext(),
             indicatorAlignment = Alignment.BottomCenter,
-            onRefresh = { selectArticle(articlePosition.next) }
+            onRefresh = { selectArticle { articles.next() } },
         ) {
             key(article.id) {
                 content()

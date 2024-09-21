@@ -27,8 +27,6 @@ fun ArticleReader(
     val mediaViewer = LocalMediaViewer.current
     val colors = articleTemplateColors()
     var lastScrollY by rememberSaveable { mutableIntStateOf(0) }
-
-
     val webViewState = rememberWebViewState()
     val byline = article.byline(context = LocalContext.current)
 
