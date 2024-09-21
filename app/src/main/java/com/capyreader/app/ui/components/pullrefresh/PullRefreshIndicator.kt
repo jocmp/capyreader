@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.KeyboardArrowUp
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -26,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -163,26 +166,26 @@ fun SwipeRefreshIndicator(
         shape = shape,
         color = backgroundColor,
     ) {
-        val painter = remember {
-            CircularProgressPainter()
-        }
-        painter.arcRadius = sizes.arcRadius
-        painter.strokeWidth = sizes.strokeWidth
-        painter.arrowWidth = sizes.arrowWidth
-        painter.arrowHeight = sizes.arrowHeight
-        painter.arrowEnabled = arrowEnabled && !state.isRefreshing
-        painter.color = contentColor
-        val alpha = if (fade) {
-            (state.indicatorOffset / indicatorRefreshTrigger).coerceIn(0f, 1f)
-        } else {
-            1f
-        }
-        painter.alpha = alpha
-
-        painter.startTrim = slingshot.startTrim
-        painter.endTrim = slingshot.endTrim
-        painter.rotation = slingshot.rotation
-        painter.arrowScale = slingshot.arrowScale
+//        val painter = remember {
+//            CircularProgressPainter()
+//        }
+//        painter.arcRadius = sizes.arcRadius
+//        painter.strokeWidth = sizes.strokeWidth
+//        painter.arrowWidth = sizes.arrowWidth
+//        painter.arrowHeight = sizes.arrowHeight
+//        painter.arrowEnabled = arrowEnabled && !state.isRefreshing
+//        painter.color = contentColor
+//        val alpha = if (fade) {
+//            (state.indicatorOffset / indicatorRefreshTrigger).coerceIn(0f, 1f)
+//        } else {
+//            1f
+//        }
+//        painter.alpha = alpha
+//
+//        painter.startTrim = slingshot.startTrim
+//        painter.endTrim = slingshot.endTrim
+//        painter.rotation = slingshot.rotation
+//        painter.arrowScale = slingshot.arrowScale
 
         // This shows either an Image with CircularProgressPainter or a CircularProgressIndicator,
         // depending on refresh state
@@ -203,10 +206,7 @@ fun SwipeRefreshIndicator(
                         modifier = Modifier.size(circleSize),
                     )
                 } else {
-                    Image(
-                        painter = painter,
-                        contentDescription = "Refreshing"
-                    )
+                    Image(imageVector = Icons.Rounded.KeyboardArrowUp, contentDescription = null)
                 }
             }
         }

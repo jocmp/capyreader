@@ -7,7 +7,7 @@ import java.time.OffsetDateTime
 
 fun Account.buildArticlePager(
     filter: ArticleFilter,
-    query: String?,
+    query: String? = null,
     since: OffsetDateTime = OffsetDateTime.now()
 ): Pager<Int, Article> {
     return Pager(

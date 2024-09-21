@@ -337,23 +337,21 @@ fun ArticleLayout(
                         CapyPlaceholder()
                     }
                 } else if (article != null) {
-                    key(article.id) {
-                        ArticleView(
-                            article = article,
-                            articles = articles,
-                            onBackPressed = {
-                                scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
-                                onRequestClearArticle()
-                            },
-                            onToggleRead = onToggleArticleRead,
-                            onToggleStar = onToggleArticleStar,
-                            enableBackHandler = mediaUrl == null,
-                            onRequestArticle = { index, id ->
-                                onSelectArticle(id)
-                                scrollToArticle(index)
-                            },
-                        )
-                    }
+                    ArticleView(
+                        article = article,
+                        articles = articles.collectAsLazyPagingItems().itemSnapshotList,
+                        onBackPressed = {
+                            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
+                            onRequestClearArticle()
+                        },
+                        onToggleRead = onToggleArticleRead,
+                        onToggleStar = onToggleArticleStar,
+                        enableBackHandler = mediaUrl == null,
+                        onRequestArticle = { index, id ->
+                            onSelectArticle(id)
+                            scrollToArticle(index)
+                        },
+                    )
                 }
             }
         }
