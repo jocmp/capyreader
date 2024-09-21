@@ -2,11 +2,16 @@ package com.capyreader.app.ui.components
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
+import android.view.ViewGroup
+import android.view.ViewGroup.*
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
@@ -16,6 +21,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.graphics.drawable.toBitmap
@@ -105,6 +111,7 @@ fun WebView(
                 this.settings.javaScriptEnabled = true
                 this.settings.mediaPlaybackRequiresUserGesture = false
                 isVerticalScrollBarEnabled = false
+                isHorizontalScrollBarEnabled = false
 
                 addJavascriptInterface(
                     WebViewInterface(
@@ -273,110 +280,6 @@ class WebViewState {
             "UTF-8",
             null,
         )
-    }
-}
-
-@Stable
-class WebViewNavigator(private val coroutineScope: CoroutineScope) {
-    private sealed interface NavigationEvent {
-        data object Back : NavigationEvent
-        data object Forward : NavigationEvent
-        data object Reload : NavigationEvent
-        data object StopLoading : NavigationEvent
-
-        data object ClearView : NavigationEvent
-
-        data class LoadUrl(
-            val url: String,
-            val additionalHttpHeaders: Map<String, String> = emptyMap()
-        ) : NavigationEvent
-
-        data class LoadHtml(
-            val html: String,
-            val mimeType: String? = null,
-            val encoding: String? = "utf-8",
-            val historyUrl: String? = null
-        ) : NavigationEvent
-
-        data class PostUrl(
-            val url: String,
-            val postData: ByteArray
-        ) : NavigationEvent {
-            override fun equals(other: Any?): Boolean {
-                if (this === other) return true
-                if (javaClass != other?.javaClass) return false
-
-                other as PostUrl
-
-                if (url != other.url) return false
-                return postData.contentEquals(other.postData)
-            }
-
-            override fun hashCode(): Int {
-                var result = url.hashCode()
-                result = 31 * result + postData.contentHashCode()
-                return result
-            }
-        }
-    }
-
-    private val navigationEvents: MutableSharedFlow<NavigationEvent> = MutableSharedFlow(replay = 1)
-
-    // Use Dispatchers.Main to ensure that the webview methods are called on UI thread
-    @OptIn(ExperimentalCoroutinesApi::class)
-    internal suspend fun WebView.handleNavigationEvents(): Nothing = withContext(Dispatchers.Main) {
-        navigationEvents.collect { event ->
-            when (event) {
-                is NavigationEvent.Back -> {
-                    goBack()
-                }
-
-                is NavigationEvent.Forward -> goForward()
-                is NavigationEvent.Reload -> reload()
-                is NavigationEvent.StopLoading -> stopLoading()
-                is NavigationEvent.LoadHtml -> {
-                    loadDataWithBaseURL(
-                        ASSET_BASE_URL,
-                        event.html,
-                        event.mimeType,
-                        event.encoding,
-                        event.historyUrl
-                    )
-                }
-
-                is NavigationEvent.ClearView -> {
-                    navigationEvents.resetReplayCache()
-                    clearHistory()
-                    loadUrl("about:blank")
-                }
-
-                is NavigationEvent.LoadUrl -> {
-                    loadUrl(event.url, event.additionalHttpHeaders)
-                }
-
-                is NavigationEvent.PostUrl -> {
-                    postUrl(event.url, event.postData)
-                }
-            }
-        }
-    }
-
-    fun loadHtml(
-        html: String,
-        mimeType: String? = null,
-        encoding: String? = "utf-8",
-        historyUrl: String? = null
-    ) {
-        coroutineScope.launch {
-            navigationEvents.emit(
-                NavigationEvent.LoadHtml(
-                    html,
-                    mimeType,
-                    encoding,
-                    historyUrl
-                )
-            )
-        }
     }
 }
 

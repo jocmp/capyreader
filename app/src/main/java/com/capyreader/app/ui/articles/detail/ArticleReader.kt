@@ -4,6 +4,7 @@ import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -12,10 +13,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import com.capyreader.app.ui.articles.Scrollbar
 import com.capyreader.app.ui.components.WebView
 import com.capyreader.app.ui.components.rememberWebViewState
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
+import my.nanihadesuka.compose.ColumnScrollbar
+import my.nanihadesuka.compose.ScrollbarSettings
 import org.koin.compose.koinInject
 
 @Composable
@@ -38,20 +43,22 @@ fun ArticleReader(
         )
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(scrollState)
-    ) {
-        WebView(
-            state = webViewState,
-            onNavigateToMedia = {
-                mediaViewer.open(it)
-            },
-            onDispose = {
-                lastScrollY = scrollState.value
-            },
-        )
+    Scrollbar(scrollState = scrollState) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(scrollState)
+        ) {
+            WebView(
+                state = webViewState,
+                onNavigateToMedia = {
+                    mediaViewer.open(it)
+                },
+                onDispose = {
+                    lastScrollY = scrollState.value
+                },
+            )
+        }
     }
 
     LaunchedEffect(article.content) {
