@@ -20,15 +20,15 @@ data class ArticleRelations(
     companion object {
         fun from(
             article: Article,
-            articles: ItemSnapshotList<Article>
+            articles: List<Article?>
         ): ArticleRelations {
-            val index = articles.items.indexOfFirst { it.id == article.id }
+            val index = articles.indexOfFirst { it?.id == article.id }
 
             return ArticleRelations(
                 index = index,
                 previous = index - 1,
                 next = index + 1,
-                total = articles.items.size
+                total = articles.size
             )
         }
     }

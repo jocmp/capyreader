@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -336,21 +337,23 @@ fun ArticleLayout(
                         CapyPlaceholder()
                     }
                 } else if (article != null) {
-                    ArticleView(
-                        article = article,
-                        articles = articles,
-                        onBackPressed = {
-                            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
-                            onRequestClearArticle()
-                        },
-                        onToggleRead = onToggleArticleRead,
-                        onToggleStar = onToggleArticleStar,
-                        enableBackHandler = mediaUrl == null,
-                        onRequestArticle = { index, id ->
-                            onSelectArticle(id)
-                            scrollToArticle(index)
-                        },
-                    )
+                    key(article.id) {
+                        ArticleView(
+                            article = article,
+                            articles = articles,
+                            onBackPressed = {
+                                scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
+                                onRequestClearArticle()
+                            },
+                            onToggleRead = onToggleArticleRead,
+                            onToggleStar = onToggleArticleStar,
+                            enableBackHandler = mediaUrl == null,
+                            onRequestArticle = { index, id ->
+                                onSelectArticle(id)
+                                scrollToArticle(index)
+                            },
+                        )
+                    }
                 }
             }
         }

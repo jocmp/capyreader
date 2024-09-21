@@ -2,6 +2,7 @@ package com.capyreader.app.ui.articles.detail
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -29,7 +30,7 @@ fun ArticleReader(
         ScrollState(initial = 0)
     }
 
-    val webViewState = rememberWebViewState(article)
+    val webViewState = rememberWebViewState()
     val byline = article.byline(context = LocalContext.current)
 
     fun render(): String {
@@ -40,7 +41,11 @@ fun ArticleReader(
         )
     }
 
-    Column(modifier = Modifier.verticalScroll(scrollState)) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(scrollState)
+    ) {
         WebView(
             state = webViewState,
             onNavigateToMedia = {
@@ -48,7 +53,7 @@ fun ArticleReader(
             },
             onDispose = {
                 lastScrollY = scrollState.value
-            }
+            },
         )
     }
 

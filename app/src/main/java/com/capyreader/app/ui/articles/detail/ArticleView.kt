@@ -41,16 +41,8 @@ fun ArticleView(
     onRequestArticle: (index: Int, id: String) -> Unit
 ) {
     val snapshotList = articles.collectAsLazyPagingItems().itemSnapshotList
-    val relations = remember(article, snapshotList) { ArticleRelations.from(article, snapshotList) }
     val showBars = true // canShowTopBar(webViewState)
     val fullContent = LocalFullContent.current
-    val articleIndex by remember(article.id) { derivedStateOf { snapshotList.indexOfFirst { it?.id == article.id } } }
-
-    val selectArticle = { index: Int ->
-        snapshotList.getOrNull(index)?.let { related ->
-            onRequestArticle(index, related.id)
-        }
-    }
 
     fun onToggleExtractContent() {
         if (article.fullContent == Article.FullContentState.LOADED) {
@@ -70,19 +62,14 @@ fun ArticleView(
                     .padding(innerPadding)
                     .fillMaxSize()
             ) {
-                PullRefresh(
-                    state = rememberSwipeRefreshState(),
-                    onRefresh = { selectArticle(relations.previous) }
+                SwipeRefresh(
+                    article,
+                    articles = snapshotList,
+                    onRequestArticle = onRequestArticle
                 ) {
-//                    PullRefresh(
-//                        state = rememberSwipeRefreshState(),
-//                        indicatorAlignment = Alignment.BottomCenter,
-//                        onRefresh = { selectArticle(relations.next) }
-//                    ) {
-                        ArticleReader(
-                            article = article
-                        )
-//                    }
+                    ArticleReader(
+                        article = article
+                    )
                 }
             }
         }
@@ -104,6 +91,35 @@ fun ArticleView(
 
     BackHandler(enableBackHandler) {
         onBackPressed()
+    }
+}
+
+@Composable
+fun SwipeRefresh(
+    article: Article,
+    onRequestArticle: (index: Int, id: String) -> Unit,
+    articles: List<Article?>,
+    content: @Composable () -> Unit,
+) {
+    val relations = remember(article, articles) { ArticleRelations.from(article, articles) }
+
+    val selectArticle = { index: Int ->
+        articles.getOrNull(index)?.let { related ->
+            onRequestArticle(index, related.id)
+        }
+    }
+
+    PullRefresh(
+        state = rememberSwipeRefreshState(),
+        onRefresh = { selectArticle(relations.previous) }
+    ) {
+        PullRefresh(
+            state = rememberSwipeRefreshState(),
+            indicatorAlignment = Alignment.BottomCenter,
+            onRefresh = { selectArticle(relations.next) }
+        ) {
+            content()
+        }
     }
 }
 

@@ -396,7 +396,7 @@ data class WebViewError(
 )
 
 @Composable
-fun rememberWebViewState(article: Article) = remember(article.id) {
+fun rememberWebViewState() = remember {
     WebViewState()
 }
 
