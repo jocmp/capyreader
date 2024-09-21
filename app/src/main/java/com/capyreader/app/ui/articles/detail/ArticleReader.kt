@@ -21,14 +21,13 @@ import org.koin.compose.koinInject
 @Composable
 fun ArticleReader(
     article: Article,
+    scrollState: ScrollState,
     renderer: ArticleRenderer = koinInject(),
 ) {
     val mediaViewer = LocalMediaViewer.current
     val colors = articleTemplateColors()
     var lastScrollY by rememberSaveable { mutableIntStateOf(0) }
-    val scrollState = rememberSaveable(article.id, key = article.id, saver = ScrollState.Saver) {
-        ScrollState(initial = 0)
-    }
+
 
     val webViewState = rememberWebViewState()
     val byline = article.byline(context = LocalContext.current)

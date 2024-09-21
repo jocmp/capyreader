@@ -42,7 +42,7 @@ private const val DragMultiplier = 0.5f
  */
 @Composable
 fun rememberSwipeRefreshState(
-    isRefreshing: Boolean= false,
+    isRefreshing: Boolean = false,
 ): SwipeRefreshState {
     return remember {
         SwipeRefreshState(
@@ -118,7 +118,10 @@ private class SwipeRefreshNestedScrollConnection(
         state.isRefreshing -> Offset.Zero
         // If the user is swiping and there's y remaining, handle it
         scrollFromTop && source == NestedScrollSource.Drag && available.y < 0f -> onScroll(available)
-        !scrollFromTop && source == NestedScrollSource.Drag && available.y > 0f -> onScroll(available)
+        !scrollFromTop && source == NestedScrollSource.Drag && available.y > 0f -> onScroll(
+            available
+        )
+
         else -> Offset.Zero
     }
 
@@ -133,7 +136,10 @@ private class SwipeRefreshNestedScrollConnection(
         state.isRefreshing -> Offset.Zero
         // If the user is swiping and there's y remaining, handle it
         scrollFromTop && source == NestedScrollSource.Drag && available.y > 0f -> onScroll(available)
-        !scrollFromTop && source == NestedScrollSource.Drag && available.y < 0f -> onScroll(available)
+        !scrollFromTop && source == NestedScrollSource.Drag && available.y < 0f -> onScroll(
+            available
+        )
+
         else -> Offset.Zero
     }
 
@@ -221,9 +227,9 @@ private class SwipeRefreshNestedScrollConnection(
  */
 @Composable
 fun PullRefresh(
-    state: SwipeRefreshState,
-    onRefresh: () -> Unit,
     modifier: Modifier = Modifier,
+    state: SwipeRefreshState = rememberSwipeRefreshState(),
+    onRefresh: () -> Unit,
     swipeEnabled: Boolean = true,
     refreshTriggerDistance: Dp = 80.dp,
     indicatorAlignment: Alignment = Alignment.TopCenter,

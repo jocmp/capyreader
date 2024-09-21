@@ -1,18 +1,16 @@
 package com.capyreader.app.ui.components.pullrefresh
 
-import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animate
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.contentColorFor
@@ -28,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -81,7 +78,6 @@ private val LargeSizes = SwipeRefreshIndicatorSizes(
  * @param modifier The modifier to apply to this layout.
  * @param fade Whether the arrow should fade in/out as it is scrolled in. Defaults to true.
  * @param scale Whether the indicator should scale up/down as it is scrolled in. Defaults to false.
- * @param arrowEnabled Whether an arrow should be drawn on the indicator. Defaults to true.
  * @param backgroundColor The color of the indicator background surface.
  * @param contentColor The color for the indicator's contents.
  * @param shape The shape of the indicator background surface. Defaults to [CircleShape].
@@ -96,8 +92,7 @@ fun SwipeRefreshIndicator(
     clockwise: Boolean = true,
     fade: Boolean = true,
     scale: Boolean = false,
-    arrowEnabled: Boolean = true,
-    backgroundColor: Color = MaterialTheme.colorScheme.surface,
+    backgroundColor: Color = MaterialTheme.colorScheme.onSurface,
     contentColor: Color = contentColorFor(backgroundColor),
     shape: Shape = MaterialTheme.shapes.small.copy(CornerSize(percent = 50)),
     refreshingOffset: Dp = 16.dp,
@@ -165,52 +160,25 @@ fun SwipeRefreshIndicator(
             },
         shape = shape,
         color = backgroundColor,
+        shadowElevation = elevation
     ) {
-//        val painter = remember {
-//            CircularProgressPainter()
-//        }
-//        painter.arcRadius = sizes.arcRadius
-//        painter.strokeWidth = sizes.strokeWidth
-//        painter.arrowWidth = sizes.arrowWidth
-//        painter.arrowHeight = sizes.arrowHeight
-//        painter.arrowEnabled = arrowEnabled && !state.isRefreshing
-//        painter.color = contentColor
-//        val alpha = if (fade) {
-//            (state.indicatorOffset / indicatorRefreshTrigger).coerceIn(0f, 1f)
-//        } else {
-//            1f
-//        }
-//        painter.alpha = alpha
-//
-//        painter.startTrim = slingshot.startTrim
-//        painter.endTrim = slingshot.endTrim
-//        painter.rotation = slingshot.rotation
-//        painter.arrowScale = slingshot.arrowScale
+        val alpha = if (fade) {
+            (state.indicatorOffset / indicatorRefreshTrigger).coerceIn(0f, 1f)
+        } else {
+            1f
+        }
 
-        // This shows either an Image with CircularProgressPainter or a CircularProgressIndicator,
-        // depending on refresh state
-        Crossfade(
-            targetState = state.isRefreshing,
-            animationSpec = tween(durationMillis = CrossfadeDurationMs),
-            label = ""
-        ) { refreshing ->
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                if (refreshing) {
-                    val circleSize = (sizes.arcRadius + sizes.strokeWidth) * 2
-                    CircularProgressIndicator(
-                        color = contentColor,
-                        strokeWidth = sizes.strokeWidth,
-                        modifier = Modifier.size(circleSize),
-                    )
+        Box(
+            modifier = Modifier.size(20.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                imageVector = if (clockwise) {
+                    Icons.Rounded.KeyboardArrowUp
                 } else {
-                    Image(imageVector = Icons.Rounded.KeyboardArrowUp, contentDescription = null)
-                }
-            }
+                    Icons.Rounded.KeyboardArrowDown
+                }, contentDescription = null
+            )
         }
     }
 }
-
-private const val CrossfadeDurationMs = 100
