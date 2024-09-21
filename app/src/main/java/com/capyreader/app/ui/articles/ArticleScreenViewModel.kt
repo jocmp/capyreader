@@ -33,6 +33,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import java.time.OffsetDateTime
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ArticleScreenViewModel(
@@ -46,13 +47,9 @@ class ArticleScreenViewModel(
 
     private val _searchQuery = MutableStateFlow<String?>(null)
 
-    private var _article by mutableStateOf(
-        account.findArticle(appPreferences.articleID.get())?.also {
-            if (it.enableStickyFullContent) {
-                fetchFullContentAsync(it)
-            }
-        }
-    )
+    private var _article by mutableStateOf<Article?>(null)
+
+    private val articlesSince = MutableStateFlow<OffsetDateTime>(OffsetDateTime.now())
 
     private var _showUnauthorizedMessage by mutableStateOf(UnauthorizedMessageState.HIDE)
 
@@ -60,11 +57,14 @@ class ArticleScreenViewModel(
         account.countAll(latestFilter.status)
     }
 
-    val articles: Flow<PagingData<Article>> = filter
-        .combine(_searchQuery) { latestFilter, query ->
-            account.buildArticlePager(filter = latestFilter, query = query).flow
-        }
-        .flatMapLatest { it }
+    val articles: Flow<PagingData<Article>> =
+        combine(filter, _searchQuery, articlesSince) { latestFilter, query, since ->
+            account.buildArticlePager(
+                filter = latestFilter,
+                query = query,
+                since = since
+            ).flow
+        }.flatMapLatest { it }
 
     val folders: Flow<List<Folder>> = account.folders.combine(_counts) { folders, latestCounts ->
         folders.map { copyFolderCounts(it, latestCounts) }
@@ -106,6 +106,8 @@ class ArticleScreenViewModel(
         val nextFilter = filter.value.withStatus(status = status)
 
         updateFilterValue(nextFilter)
+
+        clearArticle()
     }
 
     suspend fun selectFeed(feedID: String) {
@@ -175,12 +177,13 @@ class ArticleScreenViewModel(
             val article = buildArticle(articleID) ?: return@launch
             _article = article
 
+            updateArticlesSince()
+
+            markRead(articleID)
+
             if (article.fullContent == Article.FullContentState.LOADING) {
                 viewModelScope.launch(Dispatchers.IO) { fetchFullContent(article) }
             }
-
-            appPreferences.articleID.set(articleID)
-            markRead(articleID)
         }
     }
 
@@ -217,11 +220,9 @@ class ArticleScreenViewModel(
     }
 
     fun clearArticle() {
-        _article = null
+        updateArticlesSince()
 
-        viewModelScope.launch {
-            appPreferences.articleID.delete()
-        }
+        _article = null
     }
 
     fun clearSearch() {
@@ -273,6 +274,10 @@ class ArticleScreenViewModel(
         updateFilterValue(nextFilter)
 
         clearArticle()
+    }
+
+    private fun updateArticlesSince() {
+        articlesSince.value = OffsetDateTime.now()
     }
 
     private fun copyFolderCounts(folder: Folder, counts: Map<String, Long>): Folder {

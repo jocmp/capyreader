@@ -1,9 +1,6 @@
 package com.capyreader.app.common
 
-import android.content.Context
 import android.webkit.JavascriptInterface
-import coil.imageLoader
-import coil.request.ImageRequest
 import com.jocmp.capy.common.optionalURL
 
 class WebViewInterface(
