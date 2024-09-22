@@ -153,4 +153,7 @@
     <string name="settings_auto_delete_disclaimer">Elimina automaticamente gli articoli letti e non contrassegnati in base alla loro data di pubblicazione. Gli articoli eliminati non possono essere recuperati.</string>
     <string name="opml_exporter_success">Esportazione completata</string>
     <string name="opml_exporter_failure">Esportazione fallita</string>
+    <string name="settings_reader_title">Lettore</string>
+    <string name="article_bottom_bar_next_article">Vai all\'articolo successivo</string>
+    <string name="settings_options_reader_pin_toolbars">Blocca la barra degli strumenti</string>
 </resources>
