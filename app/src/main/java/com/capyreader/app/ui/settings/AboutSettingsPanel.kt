@@ -80,8 +80,10 @@ fun AboutSettingsPanel() {
         }
         HorizontalDivider()
         FormSection {
-            TextButton(onClick = { context.openLink(Uri.parse(ABOUT_URL)) }) {
-                Text("Made with ♥ in ✶✶✶✶")
+            Box(Modifier.padding(horizontal = 4.dp)) {
+                TextButton(onClick = { context.openLink(Uri.parse(ABOUT_URL)) }) {
+                    Text("Made with ♥ in ✶✶✶✶")
+                }
             }
         }
     }
