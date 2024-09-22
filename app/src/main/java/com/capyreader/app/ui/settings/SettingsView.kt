@@ -57,6 +57,7 @@ fun SettingsView(
                         when (currentPanel) {
                             SettingsPanel.General -> GeneralSettingsPanel()
                             SettingsPanel.Display -> DisplaySettingsPanel()
+                            SettingsPanel.Gestures -> GesturesSettingPanel()
                             SettingsPanel.Account -> AccountSettingsPanel(onRemoveAccount = onRemoveAccount)
                             SettingsPanel.About -> AboutSettingsPanel()
                         }

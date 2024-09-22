@@ -23,9 +23,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -90,6 +92,7 @@ fun SwipeRefreshIndicator(
     refreshTriggerDistance: Dp,
     modifier: Modifier = Modifier,
     clockwise: Boolean = true,
+    icon: ImageVector,
     fade: Boolean = true,
     scale: Boolean = false,
     backgroundColor: Color = MaterialTheme.colorScheme.onSurface,
@@ -175,11 +178,15 @@ fun SwipeRefreshIndicator(
             contentAlignment = Alignment.Center
         ) {
             Image(
-                imageVector = if (clockwise) {
-                    Icons.Rounded.KeyboardArrowUp
-                } else {
-                    Icons.Rounded.KeyboardArrowDown
-                }, contentDescription = null
+                imageVector = icon,
+                contentDescription = null,
+                modifier = Modifier.rotate(
+                    if (clockwise) {
+                        0f
+                    } else {
+                        180f
+                    }
+                )
             )
         }
     }

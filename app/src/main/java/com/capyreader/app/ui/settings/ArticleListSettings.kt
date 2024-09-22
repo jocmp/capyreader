@@ -55,9 +55,13 @@ fun ArticleListSettings(
             checked = options.showSummary,
             title = stringResource(R.string.settings_article_list_summary)
         )
-        ImagePreviewMenu(
-            onUpdateImagePreview = options.updateImagePreview,
-            imagePreview = options.imagePreview
+
+        PreferenceDropdown(
+            selected =  options.imagePreview,
+            update = options.updateImagePreview,
+            options = ImagePreview.sorted,
+            label = R.string.image_preview_label,
+            disabledOption = ImagePreview.NONE
         )
 
         FormSection(

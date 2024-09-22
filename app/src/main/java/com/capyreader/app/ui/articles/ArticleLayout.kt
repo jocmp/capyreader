@@ -133,8 +133,8 @@ fun ArticleLayout(
     }
 
     fun scrollToArticle(index: Int) {
-        if (index > -1) {
-            coroutineScope.launch {
+        coroutineScope.launch {
+            if (index > -1) {
                 listState.animateScrollToItem(index)
             }
         }
@@ -336,8 +336,9 @@ fun ArticleLayout(
                         CapyPlaceholder()
                     }
                 } else if (article != null) {
+                    val compact = isCompact()
                     val indexedArticles =
-                        rememberIndexedArticles(article = article, articles = articles)
+                        rememberIndexedArticles(article = article, articles = pagingArticles)
 
                     ArticleView(
                         article = article,
@@ -353,6 +354,12 @@ fun ArticleLayout(
                             onSelectArticle(id)
                         },
                     )
+
+                    LaunchedEffect(article.id, indexedArticles.index) {
+                        if (!compact) {
+                            scrollToArticle(indexedArticles.index)
+                        }
+                    }
                 }
             }
         }

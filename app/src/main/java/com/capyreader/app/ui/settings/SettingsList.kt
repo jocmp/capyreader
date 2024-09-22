@@ -1,5 +1,6 @@
 package com.capyreader.app.ui.settings
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -81,6 +82,9 @@ fun SettingsList(
                             }
                     ) {
                         ListItem(
+                            leadingContent = {
+                                Icon(panel.icon(), contentDescription = null)
+                            },
                             colors = ListItemDefaults.colors(
                                 containerColor = if (!isAtMostMedium() && panel == selected) {
                                     MaterialTheme.colorScheme.surfaceContainerHigh

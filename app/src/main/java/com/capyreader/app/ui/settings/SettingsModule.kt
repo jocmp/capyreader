@@ -27,5 +27,10 @@ val settingsModule = module {
             appPreferences = get(),
         )
     }
+    viewModel {
+        GesturesSettingsViewModel(
+            appPreferences = get(),
+        )
+    }
     worker { OPMLImportWorker(get(), get()) }
 }

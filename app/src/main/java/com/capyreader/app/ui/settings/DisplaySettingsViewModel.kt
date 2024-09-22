@@ -32,7 +32,7 @@ class DisplaySettingsViewModel(
     var fontScale by mutableStateOf(appPreferences.articleListOptions.fontScale.get())
         private set
 
-    var pinArticleTopBar by mutableStateOf(appPreferences.pinArticleTopBar.get())
+    var pinArticleTopBar by mutableStateOf(appPreferences.readerOptions.pinToolbars.get())
         private set
 
     val imagePreview: ImagePreview
@@ -57,7 +57,7 @@ class DisplaySettingsViewModel(
     }
 
     fun updatePinTopBar(pinTopBar: Boolean) {
-        appPreferences.pinArticleTopBar.set(pinTopBar)
+        appPreferences.readerOptions.pinToolbars.set(pinTopBar)
 
         this.pinArticleTopBar = pinTopBar
     }

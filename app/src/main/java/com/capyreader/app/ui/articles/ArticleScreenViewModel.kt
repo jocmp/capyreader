@@ -162,6 +162,8 @@ class ArticleScreenViewModel(
         refreshJob?.cancel()
 
         refreshJob = viewModelScope.launch(Dispatchers.IO) {
+            updateArticlesSince()
+
             account.refresh().onFailure { throwable ->
                 if (throwable is UnauthorizedError && _showUnauthorizedMessage == UnauthorizedMessageState.HIDE) {
                     _showUnauthorizedMessage = UnauthorizedMessageState.SHOW
@@ -176,8 +178,6 @@ class ArticleScreenViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             val article = buildArticle(articleID) ?: return@launch
             _article = article
-
-            updateArticlesSince()
 
             markRead(articleID)
 
@@ -220,8 +220,6 @@ class ArticleScreenViewModel(
     }
 
     fun clearArticle() {
-        updateArticlesSince()
-
         _article = null
     }
 
@@ -271,6 +269,8 @@ class ArticleScreenViewModel(
     }
 
     private fun selectArticleFilter(nextFilter: ArticleFilter) {
+        updateArticlesSince()
+
         updateFilterValue(nextFilter)
 
         clearArticle()

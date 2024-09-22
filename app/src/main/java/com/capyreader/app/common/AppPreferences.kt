@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.preference.PreferenceManager
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.ArticleListFontScale
+import com.capyreader.app.ui.settings.ArticleVerticalSwipe
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.articles.FontOption
 import com.jocmp.capy.articles.TextSize
@@ -18,6 +19,8 @@ class AppPreferences(context: Context) {
     private val preferenceStore: PreferenceStore = AndroidPreferenceStore(
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
     )
+
+    val readerOptions = ReaderOptions(preferenceStore)
 
     val articleListOptions = ArticleListOptions(preferenceStore)
 
@@ -50,17 +53,25 @@ class AppPreferences(context: Context) {
     val enableStickyFullContent: Preference<Boolean>
         get() = preferenceStore.getBoolean("enable_sticky_full_content", false)
 
-    val pinArticleTopBar: Preference<Boolean>
-        get() = preferenceStore.getBoolean("article_pin_top_bar", true)
-
-    val textSize: Preference<TextSize>
-        get() = preferenceStore.getEnum("article_text_size", TextSize.default)
-
-    val fontOption: Preference<FontOption>
-        get() = preferenceStore.getEnum("article_font_family", FontOption.default)
-
     fun clearAll() {
         preferenceStore.clearAll()
+    }
+
+    class ReaderOptions(private val preferenceStore: PreferenceStore) {
+        val pinToolbars: Preference<Boolean>
+            get() = preferenceStore.getBoolean("article_pin_top_bar", true)
+
+        val textSize: Preference<TextSize>
+            get() = preferenceStore.getEnum("article_text_size", TextSize.default)
+
+        val fontFamily: Preference<FontOption>
+            get() = preferenceStore.getEnum("article_font_family", FontOption.default)
+
+        val topSwipeGesture: Preference<ArticleVerticalSwipe>
+            get() = preferenceStore.getEnum("article_top_swipe_gesture", ArticleVerticalSwipe.PREVIOUS_ARTICLE)
+
+        val bottomSwipeGesture: Preference<ArticleVerticalSwipe>
+            get() = preferenceStore.getEnum("article_bottom_swipe_gesture", ArticleVerticalSwipe.NEXT_ARTICLE)
     }
 
     class ArticleListOptions(private val preferenceStore: PreferenceStore) {

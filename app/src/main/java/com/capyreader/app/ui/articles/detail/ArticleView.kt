@@ -8,13 +8,16 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.Article
+import androidx.compose.material.icons.rounded.KeyboardArrowUp
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
@@ -29,6 +32,8 @@ import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.ui.articles.IndexedArticles
 import com.capyreader.app.ui.articles.LocalFullContent
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
+import com.capyreader.app.ui.settings.ArticleVerticalSwipe
+import com.capyreader.app.ui.settings.ArticleVerticalSwipe.LOAD_FULL_CONTENT
 import com.jocmp.capy.Article
 import org.koin.compose.koinInject
 
@@ -59,7 +64,7 @@ fun ArticleView(
         selectArticle { articles.next() }
     }
 
-    fun onToggleExtractContent() {
+    val onToggleFullContent = {
         if (article.fullContent == Article.FullContentState.LOADED) {
             fullContent.reset()
         } else if (article.fullContent != Article.FullContentState.LOADING) {
@@ -81,16 +86,18 @@ fun ArticleView(
             ) {
                 Column {
                     ArticlePullRefresh(
-                        article,
                         showBars,
-                        articles = articles,
-                        onRequestPrevious = onRequestPrevious,
+                        onToggleFullContent = onToggleFullContent,
                         onRequestNext = onRequestNext,
+                        onRequestPrevious = onRequestPrevious,
+                        articles = articles,
                     ) {
-                        ArticleReader(
-                            article = article,
-                            scrollState = scrollState
-                        )
+                        key(article.id) {
+                            ArticleReader(
+                                article = article,
+                                scrollState = scrollState
+                            )
+                        }
                     }
                 }
 
@@ -99,7 +106,8 @@ fun ArticleView(
                     visible = showBars
                 ) {
                     ArticleBottomBar(
-                        onRequestNext = onRequestNext
+                        onRequestNext = onRequestNext,
+                        showNext = articles.hasNext()
                     )
                 }
             }
@@ -107,7 +115,7 @@ fun ArticleView(
             BarVisibility(visible = showBars) {
                 ArticleTopBar(
                     article = article,
-                    onToggleExtractContent = ::onToggleExtractContent,
+                    onToggleExtractContent = onToggleFullContent,
                     onToggleRead = onToggleRead,
                     onToggleStar = onToggleStar,
                     onClose = onBackPressed
@@ -123,28 +131,45 @@ fun ArticleView(
 
 @Composable
 fun ArticlePullRefresh(
-    article: Article,
     showBars: Boolean,
+    onToggleFullContent: () -> Unit,
     onRequestNext: () -> Unit,
     onRequestPrevious: () -> Unit,
     articles: IndexedArticles,
     content: @Composable () -> Unit,
 ) {
+    val (topSwipe, bottomSwipe) = rememberSwipePreferences()
     val haptics = LocalHapticFeedback.current
 
     val triggerThreshold = {
         haptics.performHapticFeedback(HapticFeedbackType.LongPress)
     }
 
+    val onPullUp = {
+        if (topSwipe == LOAD_FULL_CONTENT) {
+            onToggleFullContent()
+        } else {
+            onRequestPrevious()
+        }
+    }
+
+    val enableTopSwipe = topSwipe.enabled &&
+            (topSwipe == LOAD_FULL_CONTENT || (topSwipe.openArticle && articles.hasPrevious()))
+
     SwipeRefresh(
-        onRefresh = { onRequestPrevious() },
-        swipeEnabled = articles.hasPrevious(),
+        onRefresh = { onPullUp() },
+        swipeEnabled = enableTopSwipe,
+        icon = if (topSwipe == LOAD_FULL_CONTENT) {
+            Icons.AutoMirrored.Rounded.Article
+        } else {
+            Icons.Rounded.KeyboardArrowUp
+        },
         indicatorPadding = PaddingValues(top = TopBarContainerHeight),
         onTriggerThreshold = { triggerThreshold() }
     ) {
         SwipeRefresh(
             onRefresh = { onRequestNext() },
-            swipeEnabled = articles.hasNext(),
+            swipeEnabled = bottomSwipe.enabled && articles.hasNext(),
             onTriggerThreshold = { triggerThreshold() },
             indicatorPadding = PaddingValues(
                 bottom = if (showBars) {
@@ -155,9 +180,7 @@ fun ArticlePullRefresh(
             ),
             indicatorAlignment = Alignment.BottomCenter,
         ) {
-            key(article.id) {
-                content()
-            }
+            content()
         }
     }
 }
@@ -165,7 +188,7 @@ fun ArticlePullRefresh(
 private val TopBarContainerHeight = 64.dp
 
 @Composable
-fun BoxScope.BarVisibility(
+fun BarVisibility(
     modifier: Modifier = Modifier,
     visible: Boolean,
     content: @Composable () -> Unit
@@ -185,7 +208,7 @@ fun canShowBars(
     scrollState: ScrollState,
     appPreferences: AppPreferences = koinInject(),
 ): Boolean {
-    val pinBars by appPreferences.pinArticleTopBar
+    val pinBars by appPreferences.readerOptions.pinToolbars
         .stateIn(rememberCoroutineScope())
         .collectAsState()
 
@@ -193,3 +216,23 @@ fun canShowBars(
             scrollState.lastScrolledBackward ||
             scrollState.value == 0
 }
+
+@Composable
+private fun rememberSwipePreferences(appPreferences: AppPreferences = koinInject()): SwipePreferences {
+    val coroutineScope = rememberCoroutineScope()
+    val topSwipe by appPreferences.readerOptions.topSwipeGesture
+        .stateIn(coroutineScope)
+        .collectAsState()
+
+    val bottomSwipe by appPreferences.readerOptions.bottomSwipeGesture
+        .stateIn(coroutineScope)
+        .collectAsState()
+
+    return SwipePreferences(topSwipe, bottomSwipe)
+}
+
+@Stable
+private data class SwipePreferences(
+    val topSwipe: ArticleVerticalSwipe,
+    val bottomSwipe: ArticleVerticalSwipe,
+)
