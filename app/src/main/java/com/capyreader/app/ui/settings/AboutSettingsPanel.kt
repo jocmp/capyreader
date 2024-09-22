@@ -10,10 +10,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentCopy
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -76,10 +78,18 @@ fun AboutSettingsPanel() {
                 )
             }
         }
+        HorizontalDivider()
+        FormSection {
+            TextButton(onClick = { context.openLink(Uri.parse(ABOUT_URL)) }) {
+                Text("Made with ♥ in ✶✶✶✶")
+            }
+        }
     }
 }
 
 const val SUPPORT_URL = "https://github.com/jocmp/capyreader/issues"
+
+const val ABOUT_URL = "https://jocmp.com"
 
 @Preview
 @Composable
