@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.preference.PreferenceManager
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.ArticleListFontScale
+import com.capyreader.app.ui.settings.ArticleVerticalSwipe
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.articles.FontOption
 import com.jocmp.capy.articles.TextSize
@@ -65,6 +66,12 @@ class AppPreferences(context: Context) {
 
         val fontFamily: Preference<FontOption>
             get() = preferenceStore.getEnum("article_font_family", FontOption.default)
+
+        val topSwipeGesture: Preference<ArticleVerticalSwipe>
+            get() = preferenceStore.getEnum("article_top_swipe_gesture", ArticleVerticalSwipe.PREVIOUS_ARTICLE)
+
+        val bottomSwipeGesture: Preference<ArticleVerticalSwipe>
+            get() = preferenceStore.getEnum("article_bottom_swipe_gesture", ArticleVerticalSwipe.NEXT_ARTICLE)
     }
 
     class ArticleListOptions(private val preferenceStore: PreferenceStore) {

@@ -19,7 +19,6 @@ fun DisplaySettingsPanel(
     viewModel: DisplaySettingsViewModel = koinViewModel(),
 ) {
     DisplaySettingsPanelView(
-
         onUpdateTheme = viewModel::updateTheme,
         theme = viewModel.theme,
         readerOptions = ReaderOptions(
@@ -55,7 +54,12 @@ fun DisplaySettingsPanelView(
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
             RowItem {
-                ThemeMenu(onUpdateTheme = onUpdateTheme, theme = theme)
+                PreferenceDropdown(
+                    selected = theme,
+                    update = onUpdateTheme,
+                    options = ThemeOption.sorted,
+                    label = R.string.theme_menu_label
+                )
             }
         }
 

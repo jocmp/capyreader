@@ -336,6 +336,7 @@ fun ArticleLayout(
                         CapyPlaceholder()
                     }
                 } else if (article != null) {
+                    val compact = isCompact()
                     val indexedArticles =
                         rememberIndexedArticles(article = article, articles = pagingArticles)
 
@@ -355,7 +356,9 @@ fun ArticleLayout(
                     )
 
                     LaunchedEffect(article.id, indexedArticles.index) {
-                        scrollToArticle(indexedArticles.index)
+                        if (!compact) {
+                            scrollToArticle(indexedArticles.index)
+                        }
                     }
                 }
             }

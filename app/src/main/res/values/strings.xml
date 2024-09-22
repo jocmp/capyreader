@@ -156,4 +156,10 @@
     <string name="settings_reader_title">Reader</string>
     <string name="settings_options_reader_pin_toolbars">Pin Toolbars</string>
     <string name="article_bottom_bar_next_article">Go to next article</string>
+    <string name="settings_gestures_reader_swipe_down">Swipe Down</string>
+    <string name="settings_gestures_reader_swipe_up">Swipe Up</string>
+    <string name="article_vertical_swipe_previous_article">Previous article</string>
+    <string name="article_vertical_swipe_next_article">Next article</string>
+    <string name="article_vertical_swipe_disabled">Disabled</string>
+    <string name="article_vertical_swipe_full_content">Load full content</string>
 </resources>
