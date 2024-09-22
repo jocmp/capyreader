@@ -36,25 +36,27 @@ fun ArticleList(
         }
     }
 
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        state = listState,
-    ) {
-        items(count = articles.itemCount) { index ->
-            val item = articles[index]
+    LazyScrollbar(state = listState) {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            state = listState,
+        ) {
+            items(count = articles.itemCount) { index ->
+                val item = articles[index]
 
-            Box {
-                if (item == null) {
-                    PlaceholderArticleRow(articleOptions.imagePreview)
-                } else {
-                    ArticleRow(
-                        article = item,
-                        selected = selectedArticleKey == item.id,
-                        onSelect = { selectArticle(it) },
-                        onMarkAllRead = onMarkAllRead,
-                        currentTime = currentTime,
-                        options = articleOptions
-                    )
+                Box {
+                    if (item == null) {
+                        PlaceholderArticleRow(articleOptions.imagePreview)
+                    } else {
+                        ArticleRow(
+                            article = item,
+                            selected = selectedArticleKey == item.id,
+                            onSelect = { selectArticle(it) },
+                            onMarkAllRead = onMarkAllRead,
+                            currentTime = currentTime,
+                            options = articleOptions
+                        )
+                    }
                 }
             }
         }
