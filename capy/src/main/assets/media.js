@@ -43,20 +43,6 @@ function addImageClickListeners() {
   });
 }
 
-function displayContentAsync() {
-  setTimeout(() => {
-    displayContent();
-  }, 200);
-}
-
-function displayContent() {
-  const body = document.getElementsByTagName("body")[0]
-
-  if (body && !body.classList.contains("loaded")) {
-    body.classList.add("loaded");
-  }
-}
-
 window.onload = () => {
   cleanAnchorImageTags();
   addImageClickListeners();
