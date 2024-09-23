@@ -92,12 +92,10 @@ fun ArticleView(
                         onRequestPrevious = onRequestPrevious,
                         articles = articles,
                     ) {
-                        key(article.id) {
-                            ArticleReader(
-                                article = article,
-                                scrollState = scrollState
-                            )
-                        }
+                        ArticleReader(
+                            article = article,
+                            scrollState = scrollState
+                        )
                     }
                 }
 

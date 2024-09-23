@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -35,12 +36,12 @@ fun ArticleReader(
     val colors = articleTemplateColors()
     var lastScrollY by rememberSaveable { mutableIntStateOf(0) }
     val webViewState = rememberWebViewState()
-    val byline = article.byline(context = LocalContext.current)
+    val context = LocalContext.current
 
-    fun render(): String {
-        return renderer.render(
+    val render by rememberUpdatedState {
+        renderer.render(
             article,
-            byline = byline,
+            byline = article.byline(context = context),
             colors = colors
         )
     }
@@ -64,7 +65,7 @@ fun ArticleReader(
         }
     }
 
-    LaunchedEffect(article.content) {
+    LaunchedEffect(article.id, article.content) {
         webViewState.loadHtml(render())
     }
 
