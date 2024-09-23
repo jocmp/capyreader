@@ -48,7 +48,7 @@ fun ArticleView(
     onRequestArticle: (id: String) -> Unit
 ) {
     val fullContent = LocalFullContent.current
-    val scrollState = rememberSaveable(article.id, key = article.id, saver = ScrollState.Saver) {
+    val scrollState = rememberSaveable(key = article.id, saver = ScrollState.Saver) {
         ScrollState(initial = 0)
     }
 
@@ -92,12 +92,10 @@ fun ArticleView(
                         onRequestPrevious = onRequestPrevious,
                         articles = articles,
                     ) {
-                        key(article.id) {
-                            ArticleReader(
-                                article = article,
-                                scrollState = scrollState
-                            )
-                        }
+                        ArticleReader(
+                            article = article,
+                            scrollState = scrollState
+                        )
                     }
                 }
 

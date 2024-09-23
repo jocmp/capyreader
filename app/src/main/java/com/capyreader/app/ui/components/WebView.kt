@@ -2,25 +2,20 @@ package com.capyreader.app.ui.components
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
-import android.view.ViewGroup
-import android.view.ViewGroup.*
-import android.webkit.WebResourceError
+import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
@@ -34,15 +29,15 @@ import coil.request.ImageRequest
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.WebViewInterface
 import com.capyreader.app.common.openLink
-import com.capyreader.app.ui.components.LoadingState.Finished
-import com.capyreader.app.ui.components.LoadingState.Loading
+import com.capyreader.app.ui.articles.detail.articleTemplateColors
+import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
+import com.jocmp.capy.articles.ArticleRenderer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.koin.compose.koinInject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.io.ByteArrayInputStream
@@ -62,33 +57,12 @@ import java.io.InputStream
  */
 private const val ASSET_BASE_URL = "https://appassets.androidplatform.net"
 
-/**
- * A wrapper around the Android View WebView to provide a basic WebView composable.
- *
- * If you require more customisation you are most likely better rolling your own and using this
- * wrapper as an example.
- *
- * The WebView attempts to set the layoutParams based on the Compose modifier passed in. If it
- * is incorrectly sizing, use the layoutParams composable function instead.
- *
- * @param state The webview state holder where the Uri to load is defined.
- * @param modifier A compose modifier
- * @param navigator An optional navigator object that can be used to control the WebView's
- * navigation from outside the composable.
- * @param onCreated Called when the WebView is first created, this can be used to set additional
- * settings on the WebView. WebChromeClient and WebViewClient should not be set here as they will be
- * subsequently overwritten after this lambda is called.
- * @param onDispose Called when the WebView is destroyed. Provides a bundle which can be saved
- * if you need to save and restore state in this WebView.
- * @param client Provides access to WebViewClient via subclassing
- * @param chromeClient Provides access to WebChromeClient via subclassing
- * @param factory An optional WebView factory for using a custom subclass of WebView
- */
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun WebView(
     state: WebViewState,
     onNavigateToMedia: (url: String) -> Unit,
+    onPageStarted: () -> Unit,
     onDispose: (WebView) -> Unit,
 ) {
     val context = LocalContext.current
@@ -100,16 +74,21 @@ fun WebView(
                 .setDomain("appassets.androidplatform.net")
                 .addPathHandler("/assets/", AssetsPathHandler(context))
                 .addPathHandler("/res/", ResourcesPathHandler(context))
-                .build()
+                .build(),
+            onPageStarted = onPageStarted,
         )
     }
     client.state = state
 
     AndroidView(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
         factory = { ctx ->
             WebView(ctx).apply {
                 this.settings.javaScriptEnabled = true
                 this.settings.mediaPlaybackRequiresUserGesture = false
+                this.settings.offscreenPreRaster = true
                 isVerticalScrollBarEnabled = false
                 isHorizontalScrollBarEnabled = false
 
@@ -135,6 +114,7 @@ fun WebView(
 
 class AccompanistWebViewClient(
     private val assetLoader: WebViewAssetLoader,
+    private val onPageStarted: () -> Unit,
 ) : WebViewClient(),
     KoinComponent {
     lateinit var state: WebViewState
@@ -144,15 +124,19 @@ class AccompanistWebViewClient(
 
     override fun onPageStarted(view: WebView, url: String?, favicon: Bitmap?) {
         super.onPageStarted(view, url, favicon)
-        state.loadingState = Loading(0.0f)
-        state.errorsForCurrentRequest.clear()
-        state.pageTitle = null
-        state.pageIcon = null
+
+        view.postVisualStateCallback(requestId, object : WebView.VisualStateCallback() {
+            override fun onComplete(requestId: Long) {
+                onPageStarted()
+                view.visibility = View.VISIBLE
+            }
+        })
     }
+
+    private val requestId = 1200L
 
     override fun onPageFinished(view: WebView, url: String?) {
         super.onPageFinished(view, url)
-        state.loadingState = Finished
     }
 
     override fun shouldInterceptRequest(
@@ -173,7 +157,7 @@ class AccompanistWebViewClient(
                     return WebResourceResponse(
                         "image/jpg",
                         "UTF-8",
-                        bitmapInputStream(bitmap, Bitmap.CompressFormat.JPEG)
+                        jpegStream(bitmap)
                     )
                 }
             } catch (exception: Exception) {
@@ -193,122 +177,65 @@ class AccompanistWebViewClient(
 
         return true
     }
+}
 
-    override fun onReceivedError(
-        view: WebView,
-        request: WebResourceRequest?,
-        error: WebResourceError?
-    ) {
-        super.onReceivedError(view, request, error)
+@Stable
+class WebViewState(
+    private val renderer: ArticleRenderer,
+    private val colors: Map<String, String>,
+    private val scope: CoroutineScope,
+) {
+    internal var webView by mutableStateOf<WebView?>(null)
 
-        if (error != null) {
-            state.errorsForCurrentRequest.add(WebViewError(request, error))
+    private var htmlId: Long? = null
+
+    fun loadHtml(article: Article) {
+        val id = article.id.hashCode().toLong()
+        val view = webView ?: return
+
+        scope.launch {
+            if (id != htmlId) {
+                view.visibility = View.INVISIBLE
+            }
+
+            htmlId = id
+
+            withContext(Dispatchers.IO) {
+                val html = renderer.render(
+                    article,
+                    byline = article.byline(context = view.context),
+                    colors = colors
+                )
+
+                withContext(Dispatchers.Main) {
+                    view.loadDataWithBaseURL(
+                        ASSET_BASE_URL,
+                        html,
+                        null,
+                        "UTF-8",
+                        null
+                    )
+                }
+            }
         }
     }
 }
 
-/**
- * Sealed class for constraining possible loading states.
- * See [Loading] and [Finished].
- */
-sealed class LoadingState {
-    /**
-     * Describes a WebView that has not yet loaded for the first time.
-     */
-    data object Initializing : LoadingState()
+@Composable
+fun rememberWebViewState(renderer: ArticleRenderer = koinInject()): WebViewState {
+    val colors = articleTemplateColors()
+    val scope = rememberCoroutineScope()
 
-    /**
-     * Describes a webview between `onPageStarted` and `onPageFinished` events, contains a
-     * [progress] property which is updated by the webview.
-     */
-    data class Loading(val progress: Float) : LoadingState()
-
-    /**
-     * Describes a webview that has finished loading content.
-     */
-    data object Finished : LoadingState()
-}
-
-/**
- * A state holder to hold the state for the WebView. In most cases this will be remembered
- * using the rememberWebViewState(uri) function.
- */
-@SuppressLint("SetJavaScriptEnabled")
-@Stable
-class WebViewState {
-    /**
-     * Whether the WebView is currently [LoadingState.Loading] data in its main frame (along with
-     * progress) or the data loading has [LoadingState.Finished]. See [LoadingState]
-     */
-    public var loadingState: LoadingState by mutableStateOf(LoadingState.Initializing)
-        internal set
-
-    /**
-     * Whether the webview is currently loading data in its main frame
-     */
-    val isLoading: Boolean
-        get() = loadingState !is Finished
-
-    /**
-     * The title received from the loaded content of the current page
-     */
-    var pageTitle: String? by mutableStateOf(null)
-        internal set
-
-    /**
-     * the favicon received from the loaded content of the current page
-     */
-    var pageIcon: Bitmap? by mutableStateOf(null)
-        internal set
-
-    /**
-     * A list for errors captured in the last load. Reset when a new page is loaded.
-     * Errors could be from any resource (iframe, image, etc.), not just for the main page.
-     * For more fine grained control use the OnError callback of the WebView.
-     */
-    val errorsForCurrentRequest: SnapshotStateList<WebViewError> = mutableStateListOf()
-
-    // We need access to this in the state saver. An internal DisposableEffect or AndroidView
-    // onDestroy is called after the state saver and so can't be used.
-    internal var webView by mutableStateOf<WebView?>(null)
-
-    fun loadHtml(html: String) {
-        webView?.loadDataWithBaseURL(
-            ASSET_BASE_URL,
-            html,
-            null,
-            "UTF-8",
-            null,
-        )
+    return remember {
+        WebViewState(renderer, colors, scope)
     }
 }
 
-/**
- * A wrapper class to hold errors from the WebView.
- */
-@Immutable
-data class WebViewError(
-    /**
-     * The request the error came from.
-     */
-    val request: WebResourceRequest?,
-    /**
-     * The error that was reported.
-     */
-    val error: WebResourceError
-)
-
-@Composable
-fun rememberWebViewState() = remember {
-    WebViewState()
-}
-
-private fun bitmapInputStream(
+private fun jpegStream(
     bitmap: Bitmap,
-    compressFormat: Bitmap.CompressFormat
 ): InputStream {
     val byteArrayOutputStream = ByteArrayOutputStream()
-    bitmap.compress(compressFormat, 100, byteArrayOutputStream)
+    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
     val bitmapData = byteArrayOutputStream.toByteArray()
     return ByteArrayInputStream(bitmapData)
 }
