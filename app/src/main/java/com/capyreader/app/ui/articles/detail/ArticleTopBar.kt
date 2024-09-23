@@ -40,6 +40,7 @@ import java.net.URL
 @Composable
 fun ArticleTopBar(
     article: Article?,
+    scrollBehavior: TopAppBarScrollBehavior,
     onToggleExtractContent: () -> Unit,
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
@@ -49,6 +50,7 @@ fun ArticleTopBar(
     val (isStyleSheetOpen, setStyleSheetOpen) = rememberSaveable { mutableStateOf(false) }
 
     TopAppBar(
+        scrollBehavior = scrollBehavior,
         navigationIcon = {
             ArticleNavigationIcon(
                 onClick = onClose
@@ -163,6 +165,7 @@ private fun ArticleTopBarPreview(@PreviewParameter(ArticleSample::class) article
     InjectedCapyTheme {
         ArticleTopBar(
             article = article.copy(extractedContentURL = URL("https://example.com")),
+            scrollBehavior = enterAlwaysScrollBehavior(),
             onToggleExtractContent = {},
             onToggleRead = {},
             onToggleStar = {},
@@ -177,6 +180,7 @@ private fun ArticleTopBarPreview_Tablet(@PreviewParameter(ArticleSample::class) 
     InjectedCapyTheme {
         ArticleTopBar(
             article = article,
+            scrollBehavior = enterAlwaysScrollBehavior(),
             onToggleExtractContent = {},
             onToggleRead = {},
             onToggleStar = {},
@@ -191,6 +195,7 @@ private fun ArticleTopBarPreview_MissingArticle() {
     InjectedCapyTheme {
         ArticleTopBar(
             article = null,
+            scrollBehavior = enterAlwaysScrollBehavior(),
             onToggleExtractContent = {},
             onToggleRead = {},
             onToggleStar = {},

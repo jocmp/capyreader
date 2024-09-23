@@ -97,7 +97,7 @@ fun SwipeRefreshIndicator(
     shape: Shape = MaterialTheme.shapes.small.copy(CornerSize(percent = 50)),
     refreshingOffset: Dp = 16.dp,
     largeIndication: Boolean = false,
-    elevation: Dp = 6.dp,
+    elevation: Dp = 0.dp,
 ) {
     val sizes = if (largeIndication) LargeSizes else DefaultSizes
 
