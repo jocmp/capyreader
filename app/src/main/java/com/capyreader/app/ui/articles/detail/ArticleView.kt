@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.capyreader.app.ui.articles.detail
 
 import androidx.activity.compose.BackHandler
@@ -15,7 +17,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Article
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.TopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
@@ -25,6 +31,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.common.AppPreferences
@@ -36,6 +43,7 @@ import com.capyreader.app.ui.settings.ArticleVerticalSwipe.LOAD_FULL_CONTENT
 import com.jocmp.capy.Article
 import org.koin.compose.koinInject
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArticleView(
     article: Article,
@@ -71,9 +79,11 @@ fun ArticleView(
         }
     }
 
-    val showBars = canShowBars(scrollState)
+    val toolbars = rememberToolbarPreferences(articleID = article.id)
 
-    Scaffold { innerPadding ->
+    Scaffold(
+        modifier = Modifier.nestedScroll(toolbars.scrollBehavior.nestedScrollConnection),
+    ) { innerPadding ->
         Box(
             Modifier
                 .fillMaxSize()
@@ -85,7 +95,7 @@ fun ArticleView(
             ) {
                 Column {
                     ArticlePullRefresh(
-                        showBars,
+                        toolbars.show,
                         onToggleFullContent = onToggleFullContent,
                         onRequestNext = onRequestNext,
                         onRequestPrevious = onRequestPrevious,
@@ -100,7 +110,7 @@ fun ArticleView(
 
                 BarVisibility(
                     modifier = Modifier.align(Alignment.BottomCenter),
-                    visible = showBars
+                    visible = toolbars.show,
                 ) {
                     ArticleBottomBar(
                         onRequestNext = onRequestNext,
@@ -109,15 +119,14 @@ fun ArticleView(
                 }
             }
 
-            BarVisibility(visible = showBars) {
-                ArticleTopBar(
-                    article = article,
-                    onToggleExtractContent = onToggleFullContent,
-                    onToggleRead = onToggleRead,
-                    onToggleStar = onToggleStar,
-                    onClose = onBackPressed
-                )
-            }
+            ArticleTopBar(
+                article = article,
+                scrollBehavior = toolbars.scrollBehavior,
+                onToggleExtractContent = onToggleFullContent,
+                onToggleRead = onToggleRead,
+                onToggleStar = onToggleStar,
+                onClose = onBackPressed
+            )
         }
     }
 
@@ -203,18 +212,35 @@ fun BarVisibility(
 }
 
 @Composable
-fun canShowBars(
-    scrollState: ScrollState,
+fun rememberToolbarPreferences(
+    articleID: String,
     appPreferences: AppPreferences = koinInject(),
-): Boolean {
-    val pinBars by appPreferences.readerOptions.pinToolbars
+): ToolbarPreferences {
+    val topBarState = rememberSaveable(articleID, saver = TopAppBarState.Saver) {
+        TopAppBarState(0f, 0f, 0f)
+    }
+
+    val pinToolbars = appPreferences.readerOptions.pinToolbars
         .stateIn(rememberCoroutineScope())
         .collectAsState()
+        .value
 
-    return pinBars ||
-            scrollState.lastScrolledBackward ||
-            scrollState.value == 0
+    val scrollBehavior = if (pinToolbars) {
+        TopAppBarDefaults.pinnedScrollBehavior(state = topBarState)
+    } else {
+        TopAppBarDefaults.enterAlwaysScrollBehavior(state = topBarState)
+    }
+
+    val showToolbars = scrollBehavior.state.collapsedFraction == 0f
+
+    return ToolbarPreferences(scrollBehavior, showToolbars)
 }
+
+@Stable
+data class ToolbarPreferences(
+    val scrollBehavior: TopAppBarScrollBehavior,
+    val show: Boolean,
+)
 
 @Composable
 private fun rememberSwipePreferences(appPreferences: AppPreferences = koinInject()): SwipePreferences {
