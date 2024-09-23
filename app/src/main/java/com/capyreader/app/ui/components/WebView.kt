@@ -2,8 +2,8 @@ package com.capyreader.app.ui.components
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
-import android.view.ViewGroup.*
-import android.webkit.WebResourceError
+import android.util.Log
+import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
@@ -11,7 +11,6 @@ import android.webkit.WebViewClient
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,6 +29,11 @@ import coil.request.ImageRequest
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.WebViewInterface
 import com.capyreader.app.common.openLink
+import com.capyreader.app.ui.articles.detail.articleTemplateColors
+import com.capyreader.app.ui.articles.detail.byline
+import com.jocmp.capy.Article
+import com.jocmp.capy.articles.ArticleRenderer
+import org.koin.compose.koinInject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.io.ByteArrayInputStream
@@ -54,6 +58,7 @@ private const val ASSET_BASE_URL = "https://appassets.androidplatform.net"
 fun WebView(
     state: WebViewState,
     onNavigateToMedia: (url: String) -> Unit,
+    onPageStarted: () -> Unit,
     onDispose: (WebView) -> Unit,
 ) {
     val context = LocalContext.current
@@ -65,7 +70,8 @@ fun WebView(
                 .setDomain("appassets.androidplatform.net")
                 .addPathHandler("/assets/", AssetsPathHandler(context))
                 .addPathHandler("/res/", ResourcesPathHandler(context))
-                .build()
+                .build(),
+            onPageStarted = onPageStarted,
         )
     }
     client.state = state
@@ -103,6 +109,7 @@ fun WebView(
 
 class AccompanistWebViewClient(
     private val assetLoader: WebViewAssetLoader,
+    private val onPageStarted: () -> Unit,
 ) : WebViewClient(),
     KoinComponent {
     lateinit var state: WebViewState
@@ -112,6 +119,13 @@ class AccompanistWebViewClient(
 
     override fun onPageStarted(view: WebView, url: String?, favicon: Bitmap?) {
         super.onPageStarted(view, url, favicon)
+
+        view.postVisualStateCallback(1200L, object : WebView.VisualStateCallback() {
+            override fun onComplete(requestId: Long) {
+                onPageStarted()
+                view.visibility = View.VISIBLE
+            }
+        })
     }
 
     override fun onPageFinished(view: WebView, url: String?) {
@@ -136,7 +150,7 @@ class AccompanistWebViewClient(
                     return WebResourceResponse(
                         "image/jpg",
                         "UTF-8",
-                        bitmapInputStream(bitmap, Bitmap.CompressFormat.JPEG)
+                        jpegStream(bitmap)
                     )
                 }
             } catch (exception: Exception) {
@@ -159,31 +173,47 @@ class AccompanistWebViewClient(
 }
 
 @Stable
-class WebViewState {
+class WebViewState(
+    private val renderer: ArticleRenderer,
+    private val colors: Map<String, String>
+) {
     internal var webView by mutableStateOf<WebView?>(null)
 
-    fun loadHtml(html: String) {
-        webView?.loadDataWithBaseURL(
+    fun loadHtml(article: Article) {
+        val view = webView ?: return
+
+        view.visibility = View.INVISIBLE
+
+        val html = renderer.render(
+            article,
+            byline = article.byline(context = view.context),
+            colors = colors
+        )
+
+        view.loadDataWithBaseURL(
             ASSET_BASE_URL,
             html,
             null,
             "UTF-8",
-            null,
+            null
         )
     }
 }
 
 @Composable
-fun rememberWebViewState() = remember {
-    WebViewState()
+fun rememberWebViewState(renderer: ArticleRenderer = koinInject()): WebViewState {
+    val colors = articleTemplateColors()
+
+    return remember {
+        WebViewState(renderer, colors)
+    }
 }
 
-private fun bitmapInputStream(
+private fun jpegStream(
     bitmap: Bitmap,
-    compressFormat: Bitmap.CompressFormat
 ): InputStream {
     val byteArrayOutputStream = ByteArrayOutputStream()
-    bitmap.compress(compressFormat, 100, byteArrayOutputStream)
+    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
     val bitmapData = byteArrayOutputStream.toByteArray()
     return ByteArrayInputStream(bitmapData)
 }

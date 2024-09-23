@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -22,6 +23,7 @@ import com.capyreader.app.ui.components.WebView
 import com.capyreader.app.ui.components.rememberWebViewState
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
+import kotlinx.coroutines.launch
 import my.nanihadesuka.compose.ColumnScrollbar
 import my.nanihadesuka.compose.ScrollbarSettings
 import org.koin.compose.koinInject
@@ -30,21 +32,11 @@ import org.koin.compose.koinInject
 fun ArticleReader(
     article: Article,
     scrollState: ScrollState,
-    renderer: ArticleRenderer = koinInject(),
 ) {
+    val scope = rememberCoroutineScope()
     val mediaViewer = LocalMediaViewer.current
-    val colors = articleTemplateColors()
     var lastScrollY by rememberSaveable { mutableIntStateOf(0) }
     val webViewState = rememberWebViewState()
-    val context = LocalContext.current
-
-    val render by rememberUpdatedState {
-        renderer.render(
-            article,
-            byline = article.byline(context = context),
-            colors = colors
-        )
-    }
 
     Scrollbar(scrollState = scrollState) {
         Column(
@@ -57,6 +49,11 @@ fun ArticleReader(
                 onNavigateToMedia = {
                     mediaViewer.open(it)
                 },
+                onPageStarted = {
+                    scope.launch {
+                        scrollState.scrollTo(0)
+                    }
+                },
                 onDispose = {
                     lastScrollY = scrollState.value
                 },
@@ -66,7 +63,7 @@ fun ArticleReader(
     }
 
     LaunchedEffect(article.id, article.content) {
-        webViewState.loadHtml(render())
+        webViewState.loadHtml(article)
     }
 
     LaunchedEffect(lastScrollY, scrollState.maxValue) {
