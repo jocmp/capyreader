@@ -2,14 +2,11 @@ package com.capyreader.app.ui.components.pullrefresh
 
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animate
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.KeyboardArrowDown
-import androidx.compose.material.icons.rounded.KeyboardArrowUp
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.contentColorFor
@@ -95,7 +92,7 @@ fun SwipeRefreshIndicator(
     icon: ImageVector,
     fade: Boolean = true,
     scale: Boolean = false,
-    backgroundColor: Color = MaterialTheme.colorScheme.onSurface,
+    backgroundColor: Color = MaterialTheme.colorScheme.secondaryContainer,
     contentColor: Color = contentColorFor(backgroundColor),
     shape: Shape = MaterialTheme.shapes.small.copy(CornerSize(percent = 50)),
     refreshingOffset: Dp = 16.dp,
@@ -177,9 +174,10 @@ fun SwipeRefreshIndicator(
                 .alpha(alpha),
             contentAlignment = Alignment.Center
         ) {
-            Image(
+            Icon(
                 imageVector = icon,
                 contentDescription = null,
+                tint = contentColor,
                 modifier = Modifier.rotate(
                     if (clockwise) {
                         0f

@@ -20,7 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -162,7 +161,7 @@ fun ArticlePullRefresh(
         } else {
             Icons.Rounded.KeyboardArrowUp
         },
-        indicatorPadding = PaddingValues(top = TopBarContainerHeight),
+        indicatorPadding = PaddingValues(top = TopBarOffset),
         onTriggerThreshold = { triggerThreshold() }
     ) {
         SwipeRefresh(
@@ -171,7 +170,7 @@ fun ArticlePullRefresh(
             onTriggerThreshold = { triggerThreshold() },
             indicatorPadding = PaddingValues(
                 bottom = if (showBars) {
-                    BottomBarTokens.ContainerHeight
+                    BottomBarOffset
                 } else {
                     0.dp
                 }
@@ -183,7 +182,9 @@ fun ArticlePullRefresh(
     }
 }
 
-private val TopBarContainerHeight = 64.dp
+private val TopBarOffset = 56.dp
+
+private val BottomBarOffset = 44.dp
 
 @Composable
 fun BarVisibility(
