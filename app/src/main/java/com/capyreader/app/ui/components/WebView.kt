@@ -2,7 +2,6 @@ package com.capyreader.app.ui.components
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
-import android.util.Log
 import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
@@ -15,6 +14,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -33,6 +33,10 @@ import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.compose.koinInject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -84,6 +88,7 @@ fun WebView(
             WebView(ctx).apply {
                 this.settings.javaScriptEnabled = true
                 this.settings.mediaPlaybackRequiresUserGesture = false
+                this.settings.offscreenPreRaster = true
                 isVerticalScrollBarEnabled = false
                 isHorizontalScrollBarEnabled = false
 
@@ -120,13 +125,15 @@ class AccompanistWebViewClient(
     override fun onPageStarted(view: WebView, url: String?, favicon: Bitmap?) {
         super.onPageStarted(view, url, favicon)
 
-        view.postVisualStateCallback(1200L, object : WebView.VisualStateCallback() {
+        view.postVisualStateCallback(requestId, object : WebView.VisualStateCallback() {
             override fun onComplete(requestId: Long) {
                 onPageStarted()
                 view.visibility = View.VISIBLE
             }
         })
     }
+
+    private val requestId = 1200L
 
     override fun onPageFinished(view: WebView, url: String?) {
         super.onPageFinished(view, url)
@@ -175,37 +182,52 @@ class AccompanistWebViewClient(
 @Stable
 class WebViewState(
     private val renderer: ArticleRenderer,
-    private val colors: Map<String, String>
+    private val colors: Map<String, String>,
+    private val scope: CoroutineScope,
 ) {
     internal var webView by mutableStateOf<WebView?>(null)
 
+    private var htmlId: Long? = null
+
     fun loadHtml(article: Article) {
+        val id = article.id.hashCode().toLong()
         val view = webView ?: return
 
-        view.visibility = View.INVISIBLE
+        scope.launch {
+            if (id != htmlId) {
+                view.visibility = View.INVISIBLE
+            }
 
-        val html = renderer.render(
-            article,
-            byline = article.byline(context = view.context),
-            colors = colors
-        )
+            htmlId = id
 
-        view.loadDataWithBaseURL(
-            ASSET_BASE_URL,
-            html,
-            null,
-            "UTF-8",
-            null
-        )
+            withContext(Dispatchers.IO) {
+                val html = renderer.render(
+                    article,
+                    byline = article.byline(context = view.context),
+                    colors = colors
+                )
+
+                withContext(Dispatchers.Main) {
+                    view.loadDataWithBaseURL(
+                        ASSET_BASE_URL,
+                        html,
+                        null,
+                        "UTF-8",
+                        null
+                    )
+                }
+            }
+        }
     }
 }
 
 @Composable
 fun rememberWebViewState(renderer: ArticleRenderer = koinInject()): WebViewState {
     val colors = articleTemplateColors()
+    val scope = rememberCoroutineScope()
 
     return remember {
-        WebViewState(renderer, colors)
+        WebViewState(renderer, colors, scope)
     }
 }
 
