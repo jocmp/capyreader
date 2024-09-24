@@ -13,7 +13,7 @@ import kotlin.coroutines.resumeWithException
 
 internal class DefaultRequest(private val client: OkHttpClient = OkHttpClient()) : Request {
     override suspend fun fetch(url: URL): Response {
-        val parsedURL = URL("https", url.host, url.port, url.file)
+        val parsedURL = URL(url.protocol, url.host, url.port, url.file)
 
         val request = okhttp3.Request.Builder()
             .url(parsedURL)
