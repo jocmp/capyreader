@@ -1,3 +1,5 @@
+
+
 allByStatus:
 SELECT
   articles.id,
@@ -21,7 +23,11 @@ WHERE ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL 
 AND (article_statuses.starred = :starred OR :starred IS NULL)
 AND (articles.title LIKE '%' || :query || '%' OR articles.summary  LIKE '%' || :query || '%' OR :query IS NULL)
 GROUP BY articles.id
-ORDER BY articles.published_at DESC
+
+ORDER BY
+ CASE WHEN :order = Sort.OldestFirst THEN EmployeeName END Desc,
+ CASE WHEN Gender='Female' THEN Country END ASC
+articles.published_at DESC
 LIMIT :limit OFFSET :offset;
 
 countAllByStatus:
