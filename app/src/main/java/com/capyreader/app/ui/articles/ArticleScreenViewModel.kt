@@ -344,10 +344,12 @@ class ArticleScreenViewModel(
     private suspend fun fetchFullContent(article: Article) {
         account.fetchFullContent(article).fold(
             onSuccess = { value ->
-                _article = article.copy(
-                    content = parseHtml(article, value),
-                    fullContent = Article.FullContentState.LOADED
-                )
+                if (_article?.id == article.id) {
+                    _article = article.copy(
+                        content = parseHtml(article, value),
+                        fullContent = Article.FullContentState.LOADED
+                    )
+                }
             },
             onFailure = { resetFullContent() }
         )
