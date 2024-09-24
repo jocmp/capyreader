@@ -5,9 +5,10 @@ Added
 
 Updated
 
-• Translations for Spanish, Italian and Turkish thanks to volunteers
+• Updated Translations for Spanish, Italian and Turkish thanks to volunteers
 
 Fixed
 
 • Improved formatting for code blocks in articles
 • Fixed crash and improved speed when opening large articles
+• Fixed scroll behavior when unpinned
