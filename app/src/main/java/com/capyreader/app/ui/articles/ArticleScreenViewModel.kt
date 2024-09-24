@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.OffsetDateTime
 
@@ -99,15 +100,13 @@ class ArticleScreenViewModel(
     fun selectArticleFilter() {
         val nextFilter = ArticleFilter.default().withStatus(status = filterStatus)
 
-        selectArticleFilter(nextFilter)
+        updateFilter(nextFilter)
     }
 
     fun selectStatus(status: ArticleStatus) {
         val nextFilter = filter.value.withStatus(status = status)
 
-        updateFilterValue(nextFilter)
-
-        clearArticle()
+        updateFilter(nextFilter)
     }
 
     suspend fun selectFeed(feedID: String) {
@@ -115,7 +114,7 @@ class ArticleScreenViewModel(
             val feed = account.findFeed(feedID) ?: return@launch
             val feedFilter = ArticleFilter.Feeds(feedID = feed.id, feedStatus = filter.value.status)
 
-            selectArticleFilter(feedFilter)
+            updateFilter(feedFilter)
         }
     }
 
@@ -128,7 +127,7 @@ class ArticleScreenViewModel(
                     folderStatus = filter.value.status
                 )
 
-            selectArticleFilter(feedFilter)
+            updateFilter(feedFilter)
         }
     }
 
@@ -162,19 +161,23 @@ class ArticleScreenViewModel(
         refreshJob?.cancel()
 
         refreshJob = viewModelScope.launch(Dispatchers.IO) {
-            updateArticlesSince()
-
             account.refresh().onFailure { throwable ->
                 if (throwable is UnauthorizedError && _showUnauthorizedMessage == UnauthorizedMessageState.HIDE) {
                     _showUnauthorizedMessage = UnauthorizedMessageState.SHOW
                 }
             }
 
+            updateArticlesSince()
+
             onComplete()
         }
     }
 
     fun selectArticle(articleID: String) {
+        if (_article?.id == articleID) {
+            return
+        }
+
         viewModelScope.launch(Dispatchers.IO) {
             val article = buildArticle(articleID) ?: return@launch
             _article = article
@@ -231,6 +234,10 @@ class ArticleScreenViewModel(
         _searchQuery.value = query
     }
 
+    private fun updateArticlesSince() {
+        articlesSince.value = OffsetDateTime.now()
+    }
+
     private suspend fun addStar(articleID: String) {
         account.addStar(articleID)
             .onFailure {
@@ -260,24 +267,16 @@ class ArticleScreenViewModel(
     }
 
     private fun resetToDefaultFilter() {
-        selectArticleFilter(ArticleFilter.default().copy(filterStatus))
+        updateFilter(ArticleFilter.default().copy(filterStatus))
     }
 
-    private fun updateFilterValue(nextFilter: ArticleFilter) {
+    private fun updateFilter(nextFilter: ArticleFilter) {
         filter.value = nextFilter
         appPreferences.filter.set(nextFilter)
-    }
 
-    private fun selectArticleFilter(nextFilter: ArticleFilter) {
         updateArticlesSince()
 
-        updateFilterValue(nextFilter)
-
         clearArticle()
-    }
-
-    private fun updateArticlesSince() {
-        articlesSince.value = OffsetDateTime.now()
     }
 
     private fun copyFolderCounts(folder: Folder, counts: Map<String, Long>): Folder {

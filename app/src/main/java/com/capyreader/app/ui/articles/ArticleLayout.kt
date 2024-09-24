@@ -159,6 +159,10 @@ fun ArticleLayout(
         onFeedRefresh {
             isRefreshing = false
             resetScrollOffset()
+
+            if (!isInitialized) {
+                setInitialized(true)
+            }
         }
     }
 
@@ -400,7 +404,6 @@ fun ArticleLayout(
     LaunchedEffect(Unit) {
         if (!isInitialized) {
             refreshFeeds()
-            setInitialized(true)
         }
     }
 
