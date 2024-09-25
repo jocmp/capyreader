@@ -4,9 +4,8 @@ import com.jocmp.capy.AccountDelegate
 import com.jocmp.capy.Article
 import com.jocmp.capy.Feed
 import com.jocmp.capy.articles.ArticleContent
-import com.jocmp.capy.common.nowUTC
-import com.jocmp.capy.common.published
-import com.jocmp.capy.common.toDateTime
+import com.jocmp.capy.common.TimeHelpers.nowUTC
+import com.jocmp.capy.common.TimeHelpers.published
 import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.persistence.FeedRecords
@@ -19,8 +18,6 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import org.jsoup.Jsoup
-import java.net.URI
-import java.net.URL
 import java.net.UnknownHostException
 import java.time.ZonedDateTime
 import com.jocmp.feedfinder.parser.Feed as ParserFeed

@@ -3,9 +3,8 @@ package com.jocmp.capy.fixtures
 import com.jocmp.capy.Article
 import com.jocmp.capy.Feed
 import com.jocmp.capy.RandomUUID
-import com.jocmp.capy.common.nowUTCInSeconds
+import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.db.Database
-import com.jocmp.capy.db.LastUpdatedAt
 import com.jocmp.capy.persistence.articleMapper
 
 class ArticleFixture(private val database: Database) {
@@ -17,7 +16,7 @@ class ArticleFixture(private val database: Database) {
         summary: String = "Test article here",
         feed: Feed = feedFixture.create(feedURL = "https://example.com/${RandomUUID.generate()}"),
         read: Boolean = true,
-        publishedAt: Long = nowUTCInSeconds(),
+        publishedAt: Long = TimeHelpers.nowUTC().toEpochSecond(),
     ): Article {
         database.transaction {
             database.articlesQueries.create(

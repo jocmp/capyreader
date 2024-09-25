@@ -1,7 +1,7 @@
 package com.jocmp.capy
 
 import com.jocmp.capy.accounts.AutoDelete
-import com.jocmp.capy.common.nowUTC
+import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.fixtures.AccountFixture
 import com.jocmp.capy.fixtures.ArticleFixture
 import io.mockk.coEvery
