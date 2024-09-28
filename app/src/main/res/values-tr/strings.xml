@@ -155,4 +155,11 @@
     <string name="settings_options_reader_pin_toolbars">Araç Çubuklarını Sabitle</string>
     <string name="settings_reader_title">Okuyucu</string>
     <string name="article_bottom_bar_next_article">Sonraki makaleye git</string>
+    <string name="article_vertical_swipe_previous_article">Önceki makale</string>
+    <string name="article_vertical_swipe_next_article">Sonraki makale</string>
+    <string name="settings_panel_gestures_title">Hareketler</string>
+    <string name="settings_gestures_reader_swipe_down">Aşağı Kaydır</string>
+    <string name="article_vertical_swipe_disabled">Devre dışı</string>
+    <string name="settings_gestures_reader_swipe_up">Yukarı Kaydır</string>
+    <string name="article_vertical_swipe_full_content">Tüm içeriği yükle</string>
 </resources>
