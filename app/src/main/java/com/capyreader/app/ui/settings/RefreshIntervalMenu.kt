@@ -1,7 +1,6 @@
 package com.capyreader.app.ui.settings
 
 import android.content.Context
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,7 +21,7 @@ fun RefreshIntervalMenu(
 ) {
     val context = LocalContext.current
 
-    PreferenceDropdown(
+    PreferenceSelect(
         selected = refreshInterval,
         update = updateRefreshInterval,
         options = RefreshInterval.entries,

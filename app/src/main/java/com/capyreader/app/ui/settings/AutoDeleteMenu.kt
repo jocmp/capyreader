@@ -24,17 +24,19 @@ fun AutoDeleteMenu(
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        PreferenceDropdown(
+        PreferenceSelect(
             selected = autoDelete,
             update = { updateAutoDelete(it) },
             options = options,
             label = R.string.settings_auto_delete_articles_title,
             optionText = { translationKey(it) }
         )
-        Text(
-            text = stringResource(R.string.settings_auto_delete_disclaimer),
-            style = MaterialTheme.typography.labelMedium,
-        )
+        RowItem {
+            Text(
+                text = stringResource(R.string.settings_auto_delete_disclaimer),
+                style = MaterialTheme.typography.labelMedium,
+            )
+        }
     }
 }
 

@@ -10,9 +10,9 @@ enum class ThemeOption : Translated {
 
     override val translationKey: Int
         get() = when(this) {
-            ThemeOption.LIGHT -> R.string.theme_menu_option_light
-            ThemeOption.DARK -> R.string.theme_menu_option_dark
-            ThemeOption.SYSTEM_DEFAULT -> R.string.theme_menu_option_system_default
+            LIGHT -> R.string.theme_menu_option_light
+            DARK -> R.string.theme_menu_option_dark
+            SYSTEM_DEFAULT -> R.string.theme_menu_option_system_default
         }
 
     companion object {
