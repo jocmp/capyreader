@@ -1,8 +1,10 @@
 package com.jocmp.capy.persistence
 
+import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.RandomUUID
+import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.common.nowUTC
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.ArticleFixture
@@ -30,15 +32,24 @@ class ArticleRecordsTest {
 
     @Test
     fun allByStatus_returnsAll() {
-        val articles = 3.repeated {
-            articleFixture.create()
+        val startTime = nowUTC().minusMonths(1)
+
+        val articles = 3.repeated { i ->
+            articleFixture.create(
+                publishedAt = startTime.minusDays(i.toLong()).toEpochSecond()
+            )
         }
 
         val articleRecords = ArticleRecords(database)
 
         val results = articleRecords
             .byStatus
-            .all(ArticleStatus.ALL, limit = 3, offset = 0)
+            .all(
+                ArticleStatus.ALL,
+                limit = 3,
+                offset = 0,
+                unreadSort = UnreadSortOrder.NEWEST_FIRST,
+            )
             .executeAsList()
 
         val count = articleRecords
@@ -46,31 +57,45 @@ class ArticleRecordsTest {
             .count(ArticleStatus.ALL)
             .executeAsOne()
 
-        val expected = articles.map { it.id }.toSet()
-        val actual = results.map { it.id }.toSet()
+        val expected = articles.map { it.id }
+        val actual = results.map { it.id }
 
         assertTrue(actual.isNotEmpty())
-        assertEquals(actual = actual, expected = expected)
+        assertEquals(
+            actual = actual,
+            expected = expected,
+            message = sortedMessage(articles, results)
+        )
         assertEquals(expected = 3, actual = count)
     }
 
     @Test
     fun allByStatus_returnsUnread() {
-        val articles = 3.repeated {
-            articleFixture.create()
+        val startTime = nowUTC().minusMonths(1)
+
+        val articles = 3.repeated { i ->
+            articleFixture.create(
+                publishedAt = startTime.minusDays(i.toLong()).toEpochSecond()
+            )
         }
 
         val articleRecords = ArticleRecords(database)
 
-        val readArticleIDs = articles.take(2).map { it.id }.toSet()
+        val unread = articles.take(2)
+        val unreadIDs = unread.map { it.id }
 
-        readArticleIDs.forEach {
+        unreadIDs.forEach {
             articleRecords.markUnread(it)
         }
 
         val results = articleRecords
             .byStatus
-            .all(ArticleStatus.UNREAD, limit = 3, offset = 0)
+            .all(
+                ArticleStatus.UNREAD,
+                limit = 3,
+                offset = 0,
+                unreadSort = UnreadSortOrder.NEWEST_FIRST,
+            )
             .executeAsList()
 
         val count = articleRecords
@@ -78,11 +103,53 @@ class ArticleRecordsTest {
             .count(status = ArticleStatus.UNREAD)
             .executeAsOne()
 
-        val expected = readArticleIDs
-        val actual = results.map { it.id }.toSet()
+        val expected = unreadIDs
+        val actual = results.map { it.id }
 
         assertEquals(expected = 2, actual = count)
-        assertEquals(actual = actual, expected = expected)
+        assertEquals(actual = actual, expected = expected, message = sortedMessage(unread, results))
+    }
+
+    @Test
+    fun allByStatus_returnsUnread_oldestFirst() {
+        val startTime = nowUTC().minusMonths(1)
+
+        val articles = 3.repeated { i ->
+            articleFixture.create(
+                publishedAt = startTime.minusDays(i.toLong()).toEpochSecond()
+            )
+        }
+        .reversed()
+
+        val articleRecords = ArticleRecords(database)
+
+        val unread = articles.take(2)
+        val unreadIDs = unread.map { it.id }
+
+        unreadIDs.forEach {
+            articleRecords.markUnread(it)
+        }
+
+        val results = articleRecords
+            .byStatus
+            .all(
+                ArticleStatus.UNREAD,
+                limit = 3,
+                offset = 0,
+                unreadSort = UnreadSortOrder.OLDEST_FIRST,
+            )
+            .executeAsList()
+
+        val count = articleRecords
+            .byStatus
+            .count(status = ArticleStatus.UNREAD)
+            .executeAsOne()
+
+        val expected = unreadIDs
+        val actual = results.map { it.id }
+
+        assertEquals(expected = 2, actual = count)
+        assertEquals(actual = actual, expected = expected, message = sortedMessage(unread, results))
     }
 
     @Test
@@ -106,7 +173,8 @@ class ArticleRecordsTest {
                 status = ArticleStatus.ALL,
                 query = query,
                 limit = 3,
-                offset = 0
+                offset = 0,
+                unreadSort = UnreadSortOrder.NEWEST_FIRST,
             )
             .executeAsList()
 
@@ -145,7 +213,8 @@ class ArticleRecordsTest {
                 status = ArticleStatus.ALL,
                 query = query,
                 limit = 3,
-                offset = 0
+                offset = 0,
+                unreadSort = UnreadSortOrder.NEWEST_FIRST,
             )
             .executeAsList()
 
@@ -198,7 +267,8 @@ class ArticleRecordsTest {
                 feedIDs = listOf(vergeFeed.id),
                 since = since,
                 limit = 10,
-                offset = 0
+                offset = 0,
+                unreadSort = UnreadSortOrder.NEWEST_FIRST,
             )
             .executeAsList()
 
@@ -319,4 +389,8 @@ class ArticleRecordsTest {
         assertNull(articleRecords.reload(oldStarredArticle))
         assertNull(articleRecords.reload(oldArticle))
     }
+}
+
+fun sortedMessage(expected: List<Article>, actual: List<Article>): String {
+    return "Expected order ${expected.joinToString(", ") { it.title }}; got ${actual.joinToString(", ") { it.title }}"
 }

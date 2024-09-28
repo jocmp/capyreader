@@ -61,7 +61,10 @@ fun ArticleListSettings(
             update = options.updateImagePreview,
             options = ImagePreview.sorted,
             label = R.string.image_preview_label,
-            disabledOption = ImagePreview.NONE
+            disabledOption = ImagePreview.NONE,
+            optionText = {
+                stringResource(id = it.translationKey)
+            }
         )
 
         FormSection(

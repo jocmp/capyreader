@@ -2,6 +2,7 @@ package com.jocmp.capy.accounts
 
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.InMemoryDatabaseProvider
+import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.FeedFixture
 import com.jocmp.capy.persistence.ArticleRecords
@@ -206,7 +207,12 @@ class FeedbinAccountDelegateTest {
 
         val starredArticles = ArticleRecords(database)
             .byStatus
-            .all(ArticleStatus.STARRED, limit = 2, offset = 0)
+            .all(
+                ArticleStatus.STARRED,
+                limit = 2,
+                offset = 0,
+                unreadSort = UnreadSortOrder.NEWEST_FIRST,
+            )
             .executeAsList()
 
         val unreadArticle = starredArticles.find { it.id == unreadEntry.id.toString() }!!

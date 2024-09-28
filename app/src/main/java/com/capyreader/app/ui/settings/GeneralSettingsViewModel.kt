@@ -9,6 +9,7 @@ import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.refresher.RefreshScheduler
 import com.jocmp.capy.Account
 import com.jocmp.capy.accounts.AutoDelete
+import com.jocmp.capy.articles.UnreadSortOrder
 
 class GeneralSettingsViewModel(
     private val refreshScheduler: RefreshScheduler,
@@ -24,10 +25,19 @@ class GeneralSettingsViewModel(
     var canOpenLinksInternally by mutableStateOf(appPreferences.openLinksInternally.get())
         private set
 
+    var unreadSort by mutableStateOf(appPreferences.articleListOptions.unreadSort.get())
+        private set
+
     fun updateRefreshInterval(interval: RefreshInterval) {
         refreshScheduler.update(interval)
 
         this.refreshInterval = interval
+    }
+
+    fun updateUnreadSort(sort: UnreadSortOrder) {
+        appPreferences.articleListOptions.unreadSort.set(sort)
+
+        this.unreadSort = sort
     }
 
     fun updateAutoDelete(autoDelete: AutoDelete) {

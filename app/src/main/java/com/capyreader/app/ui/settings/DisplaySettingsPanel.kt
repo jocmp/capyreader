@@ -58,7 +58,10 @@ fun DisplaySettingsPanelView(
                     selected = theme,
                     update = onUpdateTheme,
                     options = ThemeOption.sorted,
-                    label = R.string.theme_menu_label
+                    label = R.string.theme_menu_label,
+                    optionText = {
+                        stringResource(it.translationKey)
+                    }
                 )
             }
         }

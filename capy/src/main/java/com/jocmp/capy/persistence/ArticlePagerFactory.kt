@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
+import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.db.Database
 import kotlinx.coroutines.Dispatchers
 import java.time.OffsetDateTime
@@ -14,18 +15,20 @@ class ArticlePagerFactory(private val database: Database) {
     fun find(
         filter: ArticleFilter,
         query: String?,
+        unreadSort: UnreadSortOrder,
         since: OffsetDateTime
     ): PagingSource<Int, Article> {
         return when (filter) {
-            is ArticleFilter.Articles -> articleSource(filter, query, since)
-            is ArticleFilter.Feeds -> feedSource(filter, query, since)
-            is ArticleFilter.Folders -> folderSource(filter, query, since)
+            is ArticleFilter.Articles -> articleSource(filter, query, unreadSort, since)
+            is ArticleFilter.Feeds -> feedSource(filter, query, unreadSort, since)
+            is ArticleFilter.Folders -> folderSource(filter, query, unreadSort, since)
         }
     }
 
     private fun articleSource(
         filter: ArticleFilter.Articles,
         query: String?,
+        unreadSort: UnreadSortOrder,
         since: OffsetDateTime
     ): PagingSource<Int, Article> {
         return QueryPagingSource(
@@ -42,6 +45,7 @@ class ArticlePagerFactory(private val database: Database) {
                     query = query,
                     since = since,
                     limit = limit,
+                    unreadSort = unreadSort,
                     offset = offset,
                 )
             }
@@ -51,6 +55,7 @@ class ArticlePagerFactory(private val database: Database) {
     private fun feedSource(
         filter: ArticleFilter.Feeds,
         query: String?,
+        unreadSort: UnreadSortOrder,
         since: OffsetDateTime
     ): PagingSource<Int, Article> {
         val feedIDs = listOf(filter.feedID)
@@ -59,6 +64,7 @@ class ArticlePagerFactory(private val database: Database) {
             feedIDs = feedIDs,
             filter = filter,
             query = query,
+            unreadSort = unreadSort,
             since = since,
         )
     }
@@ -66,6 +72,7 @@ class ArticlePagerFactory(private val database: Database) {
     private fun folderSource(
         filter: ArticleFilter.Folders,
         query: String?,
+        unreadSort: UnreadSortOrder,
         since: OffsetDateTime
     ): PagingSource<Int, Article> {
         val feedIDs = database
@@ -77,6 +84,7 @@ class ArticlePagerFactory(private val database: Database) {
             feedIDs = feedIDs,
             filter = filter,
             query = query,
+            unreadSort = unreadSort,
             since = since,
         )
     }
@@ -85,6 +93,7 @@ class ArticlePagerFactory(private val database: Database) {
         feedIDs: List<String>,
         query: String?,
         filter: ArticleFilter,
+        unreadSort: UnreadSortOrder,
         since: OffsetDateTime
     ): PagingSource<Int, Article> {
         return QueryPagingSource(
@@ -103,6 +112,7 @@ class ArticlePagerFactory(private val database: Database) {
                     query = query,
                     since = since,
                     limit = limit,
+                    unreadSort = unreadSort,
                     offset = offset,
                 )
             }

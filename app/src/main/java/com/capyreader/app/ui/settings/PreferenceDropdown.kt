@@ -18,11 +18,12 @@ import androidx.compose.ui.res.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun <T: Translated> PreferenceDropdown(
+fun <T> PreferenceDropdown(
     selected: T,
     update: (T) -> Unit,
     options: List<T>,
     disabledOption: T? = null,
+    optionText: @Composable (T) -> String,
     @StringRes label: Int,
 ) {
     val (expanded, setExpanded) = remember { mutableStateOf(false) }
@@ -36,7 +37,7 @@ fun <T: Translated> PreferenceDropdown(
                 .menuAnchor(PrimaryNotEditable)
                 .fillMaxWidth(),
             readOnly = true,
-            value = stringResource(id = selected.translationKey),
+            value = optionText(selected),
             onValueChange = {},
             label = { Text(stringResource(label)) },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
@@ -48,7 +49,7 @@ fun <T: Translated> PreferenceDropdown(
         ) {
             options.forEach { option ->
                 DropdownMenuItem(
-                    text = { Text(stringResource(id = option.translationKey)) },
+                    text = { Text(optionText(option)) },
                     onClick = {
                         update(option)
                         setExpanded(false)
