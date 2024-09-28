@@ -32,7 +32,9 @@
     <string name="settings_remove_account_confirm_local">Confirm</string>
     <string name="account_settings_save_name">Name saved</string>
     <string name="article_view_mark_as_read">Mark as read</string>
+    <string name="article_view_mark_as_unread">Mark as unread</string>
     <string name="article_view_star">Star</string>
+    <string name="article_view_unstar">Remove star</string>
     <string name="refresh_manually_only">Manually only</string>
     <string name="refresh_minutes">Every %1$d minutes</string>
     <plurals name="refresh_hours">
@@ -158,8 +160,13 @@
     <string name="article_bottom_bar_next_article">Go to next article</string>
     <string name="settings_gestures_reader_swipe_down">Swipe Down</string>
     <string name="settings_gestures_reader_swipe_up">Swipe Up</string>
+    <string name="settings_gestures_list_row_swipe_start">Swipe Right</string>
+    <string name="settings_gestures_list_row_swipe_end">Swipe Left</string>
     <string name="article_vertical_swipe_previous_article">Previous article</string>
     <string name="article_vertical_swipe_next_article">Next article</string>
     <string name="article_vertical_swipe_disabled">Disabled</string>
     <string name="article_vertical_swipe_full_content">Load full content</string>
+    <string name="article_list_row_swipe_disabled">Disabled</string>
+    <string name="article_list_row_swipe_toggle_read">Toggle Read</string>
+    <string name="article_list_row_swipe_toggle_starred">Toggle Starred</string>
 </resources>

@@ -9,10 +9,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import com.capyreader.app.common.AppPreferences
-import com.capyreader.app.sync.addStarAsync
-import com.capyreader.app.sync.markReadAsync
-import com.capyreader.app.sync.markUnreadAsync
-import com.capyreader.app.sync.removeStarAsync
+import com.capyreader.app.sync.Sync
 import com.jocmp.capy.Account
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
@@ -135,7 +132,7 @@ class ArticleScreenViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             val articleIDs = account.unreadArticleIDs(filter = filter.value, range = range)
 
-            markReadAsync(articleIDs, context)
+            Sync.markReadAsync(articleIDs, context)
         }
     }
 
@@ -234,35 +231,47 @@ class ArticleScreenViewModel(
         _searchQuery.value = query
     }
 
-    private fun updateArticlesSince() {
-        articlesSince.value = OffsetDateTime.now()
+    fun addStarAsync(articleID: String) = viewModelScope.launch(Dispatchers.IO) {
+        addStar(articleID)
+    }
+
+    fun removeStarAsync(articleID: String) = viewModelScope.launch(Dispatchers.IO) {
+        removeStar(articleID)
+    }
+
+    fun markReadAsync(articleID: String) = viewModelScope.launch(Dispatchers.IO) {
+        markRead(articleID)
+    }
+
+    fun markUnreadAsync(articleID: String) = viewModelScope.launch(Dispatchers.IO) {
+        markUnread(articleID)
     }
 
     private suspend fun addStar(articleID: String) {
         account.addStar(articleID)
             .onFailure {
-                addStarAsync(articleID, context)
+                Sync.addStarAsync(articleID, context)
             }
     }
 
     private suspend fun removeStar(articleID: String) {
         account.removeStar(articleID)
             .onFailure {
-                removeStarAsync(articleID, context)
+                Sync.removeStarAsync(articleID, context)
             }
     }
 
     private suspend fun markRead(articleID: String) {
         account.markRead(articleID)
             .onFailure {
-                markReadAsync(listOf(articleID), context)
+                Sync.markReadAsync(listOf(articleID), context)
             }
     }
 
     private suspend fun markUnread(articleID: String) {
         account.markUnread(articleID)
             .onFailure {
-                markUnreadAsync(articleID, context)
+                Sync.markUnreadAsync(articleID, context)
             }
     }
 
@@ -277,6 +286,10 @@ class ArticleScreenViewModel(
         updateArticlesSince()
 
         clearArticle()
+    }
+
+    private fun updateArticlesSince() {
+        articlesSince.value = OffsetDateTime.now()
     }
 
     private fun copyFolderCounts(folder: Folder, counts: Map<String, Long>): Folder {
