@@ -14,7 +14,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemColors
 import androidx.compose.material3.ListItemDefaults
@@ -28,6 +32,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -48,6 +53,7 @@ import com.capyreader.app.R
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.ui.articles.list.ArticleActionMenu
 import com.capyreader.app.ui.articles.list.ArticleListItem
+import com.capyreader.app.ui.articles.list.ArticleRowSwipeBox
 import com.capyreader.app.ui.fixtures.ArticleSample
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.Article
@@ -67,7 +73,6 @@ data class ArticleRowOptions(
     val fontScale: ArticleListFontScale = ArticleListFontScale.MEDIUM
 )
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ArticleRow(
     article: Article,
@@ -91,18 +96,22 @@ fun ArticleRow(
     }
 
     StyleProviders(options) {
-        Box(
-            Modifier
-                .combinedClickable(
-                    onClick = { onSelect(article.id) },
-                    onLongClick = openArticleMenu,
-                    onLongClickLabel = stringResource(R.string.article_actions_open_menu)
-                )
+        ArticleBox(
+            onClick = { onSelect(article.id) },
+            onLongClick = openArticleMenu,
+            article = article,
         ) {
             ArticleListItem(
+                headlineContent = {
+                    Text(
+                        article.title,
+                        fontWeight = FontWeight.Bold,
+                    )
+                },
                 overlineContent = {
                     Row(
                         horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(bottom = 2.dp)
@@ -117,6 +126,16 @@ fun ArticleRow(
                             )
                             Spacer(Modifier.width(16.dp))
                         }
+                        if (article.starred) {
+                            Icon(
+                                Icons.Rounded.Star,
+                                contentDescription = null,
+                                tint = feedNameColor,
+                                modifier = Modifier
+                                    .width(12.dp)
+                                    .padding(end = 2.dp)
+                            )
+                        }
                         Text(
                             text = relativeTime(
                                 time = article.publishedAt,
@@ -126,19 +145,6 @@ fun ArticleRow(
                             maxLines = 1,
                         )
                     }
-                },
-                leadingContent = if (options.showIcon) {
-                    {
-                        FaviconBadge(article.faviconURL)
-                    }
-                } else {
-                    null
-                },
-                headlineContent = {
-                    Text(
-                        article.title,
-                        fontWeight = FontWeight.Bold,
-                    )
                 },
                 supportingContent = {
                     Column(
@@ -156,6 +162,13 @@ fun ArticleRow(
                             ArticleImage(imageURL = imageURL, imagePreview = options.imagePreview)
                         }
                     }
+                },
+                leadingContent = if (options.showIcon) {
+                    {
+                        FaviconBadge(article.faviconURL)
+                    }
+                } else {
+                    null
                 },
 
                 trailingContent = if (imageURL != null && options.imagePreview == ImagePreview.SMALL) {
@@ -273,6 +286,28 @@ fun StyleProviders(options: ArticleRowOptions, content: @Composable () -> Unit) 
         )
     ) {
         content()
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun ArticleBox(
+    onClick: () -> Unit,
+    onLongClick: () -> Unit,
+    article: Article,
+    content: @Composable () -> Unit
+) {
+    ArticleRowSwipeBox(article) {
+        Box(
+            Modifier
+                .combinedClickable(
+                    onClick = onClick,
+                    onLongClick = onLongClick,
+                    onLongClickLabel = stringResource(R.string.article_actions_open_menu)
+                ),
+        ) {
+            content()
+        }
     }
 }
 

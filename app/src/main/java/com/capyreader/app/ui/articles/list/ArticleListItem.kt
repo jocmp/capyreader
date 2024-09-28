@@ -24,11 +24,10 @@ import com.capyreader.app.ui.theme.CapyTheme
 @Composable
 fun ArticleListItem(
     headlineContent: @Composable () -> Unit,
-    modifier: Modifier = Modifier,
-    overlineContent: @Composable (() -> Unit)? = null,
-    supportingContent: @Composable (() -> Unit)? = null,
-    leadingContent: @Composable (() -> Unit)? = null,
-    trailingContent: @Composable (() -> Unit)? = null,
+    overlineContent: @Composable() (() -> Unit)? = null,
+    supportingContent: @Composable() (() -> Unit)? = null,
+    leadingContent: @Composable() (() -> Unit)? = null,
+    trailingContent: @Composable() (() -> Unit)? = null,
     colors: ListItemColors = ListItemDefaults.colors()
 ) {
     Surface(
@@ -122,17 +121,17 @@ private fun ProvideTextStyleFromToken(
 private fun ArticleListItemPreview() {
     CapyTheme {
         ArticleListItem(
-            overlineContent = {
-                Text("Overline")
-            },
-            leadingContent = {
-                FaviconBadge(url = null)
-            },
             headlineContent = {
                 Text("Headline")
             },
+            overlineContent = {
+                Text("Overline")
+            },
             supportingContent = {
                 Text("Supporting")
+            },
+            leadingContent = {
+                FaviconBadge(url = null)
             },
             trailingContent = {
                 Text("Trailing")

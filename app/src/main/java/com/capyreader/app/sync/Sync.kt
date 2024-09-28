@@ -9,61 +9,64 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.capyreader.app.common.MD5
 
-fun addStarAsync(articleID: String, context: Context) {
-    val data = Data
-        .Builder()
-        .putString(StarSyncWorker.ARTICLE_KEY, articleID)
-        .putBoolean(StarSyncWorker.ADD_STAR_KEY, true)
-        .build()
+object Sync {
+    fun addStarAsync(articleID: String, context: Context) {
+        val data = Data
+            .Builder()
+            .putString(StarSyncWorker.ARTICLE_KEY, articleID)
+            .putBoolean(StarSyncWorker.ADD_STAR_KEY, true)
+            .build()
 
-    queueStarWorker(articleID, data, context)
-}
-
-fun removeStarAsync(articleID: String, context: Context) {
-    val data = Data
-        .Builder()
-        .putString(StarSyncWorker.ARTICLE_KEY, articleID)
-        .putBoolean(StarSyncWorker.ADD_STAR_KEY, false)
-        .build()
-
-    queueStarWorker(articleID, data, context)
-}
-
-/**
- * Batch enqueue IDs to stay under 10KB work manager limit
- * https://developer.android.com/jetpack/androidx/releases/work#1.0.0-alpha08
- */
-fun markReadAsync(articleIDs: List<String>, context: Context, batchSize: Int = 100) {
-    if (batchSize < 1) {
-        return
+        queueStarWorker(articleID, data, context)
     }
 
-    articleIDs.chunked(batchSize) { batch ->
-        try {
-            val data = Data
-                .Builder()
-                .putStringArray(ReadSyncWorker.ARTICLES_KEY, batch.toTypedArray())
-                .putBoolean(ReadSyncWorker.MARK_READ_KEY, true)
-                .build()
+    fun removeStarAsync(articleID: String, context: Context) {
+        val data = Data
+            .Builder()
+            .putString(StarSyncWorker.ARTICLE_KEY, articleID)
+            .putBoolean(StarSyncWorker.ADD_STAR_KEY, false)
+            .build()
 
-            queueReadWorker(batch, data, context)
-        } catch (e: IllegalStateException) {
-            markReadAsync(context = context, articleIDs = batch, batchSize = batchSize / 2)
+        queueStarWorker(articleID, data, context)
+    }
+
+    /**
+     * Batch enqueue IDs to stay under 10KB work manager limit
+     * https://developer.android.com/jetpack/androidx/releases/work#1.0.0-alpha08
+     */
+    fun markReadAsync(articleIDs: List<String>, context: Context, batchSize: Int = 100) {
+        if (batchSize < 1) {
+            return
+        }
+
+        articleIDs.chunked(batchSize) { batch ->
+            try {
+                val data = Data
+                    .Builder()
+                    .putStringArray(ReadSyncWorker.ARTICLES_KEY, batch.toTypedArray())
+                    .putBoolean(ReadSyncWorker.MARK_READ_KEY, true)
+                    .build()
+
+                queueReadWorker(batch, data, context)
+            } catch (e: IllegalStateException) {
+                markReadAsync(context = context, articleIDs = batch, batchSize = batchSize / 2)
+            }
         }
     }
+
+    fun markUnreadAsync(articleID: String, context: Context) {
+        val articleIDs = listOf(articleID)
+
+        val data = Data
+            .Builder()
+            .putStringArray(ReadSyncWorker.ARTICLES_KEY, articleIDs.toTypedArray())
+            .putBoolean(ReadSyncWorker.MARK_READ_KEY, false)
+            .build()
+
+        queueReadWorker(articleIDs, data, context)
+    }
 }
 
-fun markUnreadAsync(articleID: String, context: Context) {
-    val articleIDs = listOf(articleID)
-
-    val data = Data
-        .Builder()
-        .putStringArray(ReadSyncWorker.ARTICLES_KEY, articleIDs.toTypedArray())
-        .putBoolean(ReadSyncWorker.MARK_READ_KEY, false)
-        .build()
-
-    queueReadWorker(articleIDs, data, context)
-}
 
 private fun queueReadWorker(articleIDs: List<String>, data: Data, context: Context) {
     val workManager = WorkManager.getInstance(context)

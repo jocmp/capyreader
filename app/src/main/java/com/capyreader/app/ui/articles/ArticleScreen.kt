@@ -5,6 +5,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.ui.components.ArticleSearch
@@ -25,14 +26,13 @@ fun ArticleScreen(
     val filter by viewModel.filter.collectAsStateWithLifecycle()
     val searchQuery by viewModel.searchQuery.collectAsState(initial = null)
 
-    val fullContent = remember {
-        FullContentFetcher(
-            fetch = viewModel::fetchFullContentAsync,
-            reset = viewModel::resetFullContent,
-        )
-    }
+    val fullContent = rememberFullContent(viewModel)
+    val articleActions = rememberArticleActions(viewModel)
 
-    CompositionLocalProvider(LocalFullContent provides fullContent) {
+    CompositionLocalProvider(
+        LocalFullContent provides fullContent,
+        LocalArticleActions provides articleActions
+    ) {
         ArticleLayout(
             filter = filter,
             folders = folders,
@@ -64,6 +64,28 @@ fun ArticleScreen(
                 clear = { viewModel.clearSearch() },
                 update = viewModel::updateSearch,
             )
+        )
+    }
+}
+
+@Composable
+fun rememberArticleActions(viewModel: ArticleScreenViewModel): ArticleActions {
+    return remember {
+        ArticleActions(
+            markRead = viewModel::markReadAsync,
+            markUnread = viewModel::markUnreadAsync,
+            star = viewModel::addStarAsync,
+            unstar = viewModel::removeStarAsync,
+        )
+    }
+}
+
+@Composable
+fun rememberFullContent(viewModel: ArticleScreenViewModel): FullContentFetcher {
+    return remember {
+        FullContentFetcher(
+            fetch = viewModel::fetchFullContentAsync,
+            reset = viewModel::resetFullContent,
         )
     }
 }

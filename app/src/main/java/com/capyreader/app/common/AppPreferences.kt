@@ -89,5 +89,11 @@ class AppPreferences(context: Context) {
 
         val fontScale: Preference<ArticleListFontScale>
             get() = preferenceStore.getEnum("article_display_font_scale", ArticleListFontScale.default)
+
+        val swipeStart: Preference<RowSwipeOption>
+            get() = preferenceStore.getEnum("article_list_swipe_start", RowSwipeOption.default)
+
+        val swipeEnd: Preference<RowSwipeOption>
+            get() = preferenceStore.getEnum("article_list_swipe_end", RowSwipeOption.default)
     }
 }
