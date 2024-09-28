@@ -42,8 +42,8 @@ private fun GesturesSettingsPanelView(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         FormSection(title = stringResource(R.string.settings_reader_title)) {
-            RowItem {
-                PreferenceDropdown(
+            Column {
+                PreferenceSelect(
                     selected = topSwipe,
                     update = updateReaderTopSwipe,
                     options = ArticleVerticalSwipe.topOptions,
@@ -53,9 +53,8 @@ private fun GesturesSettingsPanelView(
                         stringResource(it.translationKey)
                     }
                 )
-            }
-            RowItem {
-                PreferenceDropdown(
+
+                PreferenceSelect(
                     selected = bottomSwipe,
                     update = updateReaderBottomSwipe,
                     options = ArticleVerticalSwipe.bottomOptions,
@@ -66,8 +65,8 @@ private fun GesturesSettingsPanelView(
             }
         }
         FormSection(title = stringResource(R.string.settings_article_list_title)) {
-            RowItem {
-                PreferenceDropdown(
+            Column {
+                PreferenceSelect(
                     selected = rowSwipeStart,
                     update = updateRowSwipeStart,
                     options = RowSwipeOption.sorted,
@@ -75,9 +74,8 @@ private fun GesturesSettingsPanelView(
                     disabledOption = RowSwipeOption.DISABLED,
                     optionText = { stringResource(it.translationKey) }
                 )
-            }
-            RowItem {
-                PreferenceDropdown(
+
+                PreferenceSelect(
                     selected = rowSwipeEnd,
                     update = updateRowSwipeEnd,
                     options = RowSwipeOption.sorted,

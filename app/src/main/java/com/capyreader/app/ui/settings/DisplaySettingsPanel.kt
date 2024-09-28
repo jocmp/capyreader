@@ -50,21 +50,17 @@ fun DisplaySettingsPanelView(
     articleListOptions: ArticleListOptions,
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(32.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-            RowItem {
-                PreferenceDropdown(
-                    selected = theme,
-                    update = onUpdateTheme,
-                    options = ThemeOption.sorted,
-                    label = R.string.theme_menu_label,
-                    optionText = {
-                        stringResource(it.translationKey)
-                    }
-                )
+        PreferenceSelect(
+            selected = theme,
+            update = onUpdateTheme,
+            options = ThemeOption.sorted,
+            label = R.string.theme_menu_label,
+            optionText = {
+                stringResource(it.translationKey)
             }
-        }
+        )
 
         FormSection(title = stringResource(R.string.settings_reader_title)) {
             RowItem {
@@ -75,11 +71,9 @@ fun DisplaySettingsPanelView(
         FormSection(
             title = stringResource(R.string.settings_article_list_title)
         ) {
-            RowItem {
-                ArticleListSettings(
-                    options = articleListOptions
-                )
-            }
+            ArticleListSettings(
+                options = articleListOptions
+            )
         }
     }
 }

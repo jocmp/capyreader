@@ -23,6 +23,7 @@ import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.components.TextSwitch
 import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.articles.UnreadSortOrder
+import com.jocmp.capy.preferences.Preference
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -59,7 +60,7 @@ fun GeneralSettingsPanelView(
     val onClearArticlesCancel = {
         setClearArticlesDialogOpen(false)
     }
-    
+
     val onRequestClearArticles = {
         setClearArticlesDialogOpen(false)
         onClearArticles()
@@ -68,13 +69,16 @@ fun GeneralSettingsPanelView(
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
+        UnreadSortOrderSelect(
+            unreadSort,
+            updateUnreadSort
+        )
+
         FormSection(title = stringResource(R.string.settings_section_refresh)) {
-            RowItem {
-                RefreshIntervalMenu(
-                    refreshInterval = refreshInterval,
-                    updateRefreshInterval = updateRefreshInterval,
-                )
-            }
+            RefreshIntervalMenu(
+                refreshInterval = refreshInterval,
+                updateRefreshInterval = updateRefreshInterval,
+            )
         }
 
         if (showCrashReporting()) {
@@ -96,12 +100,10 @@ fun GeneralSettingsPanelView(
         FormSection(
             title = stringResource(R.string.settings_section_advanced)
         ) {
-            RowItem {
-                AutoDeleteMenu(
-                    updateAutoDelete = updateAutoDelete,
-                    autoDelete = autoDelete,
-                )
-            }
+            AutoDeleteMenu(
+                updateAutoDelete = updateAutoDelete,
+                autoDelete = autoDelete,
+            )
 
             RowItem {
                 Button(

@@ -1,9 +1,8 @@
 package com.capyreader.app.ui.settings
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Slider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -40,24 +39,26 @@ fun ArticleListSettings(
     val fontScales = ArticleListFontScale.entries
 
     Column {
-        TextSwitch(
-            onCheckedChange = options.updateFeedName,
-            checked = options.showFeedName,
-            title = stringResource(R.string.settings_article_list_feed_name)
-        )
-        TextSwitch(
-            onCheckedChange = options.updateFeedIcons,
-            checked = options.showFeedIcons,
-            title = stringResource(R.string.settings_article_list_feed_icons)
-        )
-        TextSwitch(
-            onCheckedChange = options.updateSummary,
-            checked = options.showSummary,
-            title = stringResource(R.string.settings_article_list_summary)
-        )
+        RowItem {
+            TextSwitch(
+                onCheckedChange = options.updateFeedName,
+                checked = options.showFeedName,
+                title = stringResource(R.string.settings_article_list_feed_name)
+            )
+            TextSwitch(
+                onCheckedChange = options.updateFeedIcons,
+                checked = options.showFeedIcons,
+                title = stringResource(R.string.settings_article_list_feed_icons)
+            )
+            TextSwitch(
+                onCheckedChange = options.updateSummary,
+                checked = options.showSummary,
+                title = stringResource(R.string.settings_article_list_summary)
+            )
+        }
 
-        PreferenceDropdown(
-            selected =  options.imagePreview,
+        PreferenceSelect(
+            selected = options.imagePreview,
             update = options.updateImagePreview,
             options = ImagePreview.sorted,
             label = R.string.image_preview_label,
@@ -72,14 +73,16 @@ fun ArticleListSettings(
             title = stringResource(R.string.article_font_scale_label),
             labelStyle = LabelStyle.COMPACT,
         ) {
-            Slider(
-                steps = fontScales.size - 2,
-                valueRange = 0f..(fontScales.size - 1).toFloat(),
-                value = options.fontScale.ordinal.toFloat(),
-                onValueChange = {
-                    options.updateFontScale(fontScales[it.roundToInt()])
-                }
-            )
+            RowItem {
+                Slider(
+                    steps = fontScales.size - 2,
+                    valueRange = 0f..(fontScales.size - 1).toFloat(),
+                    value = options.fontScale.ordinal.toFloat(),
+                    onValueChange = {
+                        options.updateFontScale(fontScales[it.roundToInt()])
+                    }
+                )
+            }
         }
     }
 }
