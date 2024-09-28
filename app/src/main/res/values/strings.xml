@@ -169,4 +169,7 @@
     <string name="article_list_row_swipe_disabled">Disabled</string>
     <string name="article_list_row_swipe_toggle_read">Toggle Read</string>
     <string name="article_list_row_swipe_toggle_starred">Toggle Starred</string>
+    <string name="article_list_unread_sort_title">Newest First</string>
+    <string name="article_list_unread_sort_newest_first">Newest First</string>
+    <string name="article_list_unread_sort_oldest_first">Oldest First</string>
 </resources>

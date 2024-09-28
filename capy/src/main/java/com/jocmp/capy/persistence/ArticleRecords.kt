@@ -7,6 +7,7 @@ import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.MarkRead
+import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.common.nowUTC
 import com.jocmp.capy.common.toDateTimeFromSeconds
 import com.jocmp.capy.common.transactionWithErrorHandling
@@ -178,9 +179,13 @@ internal class ArticleRecords internal constructor(
             query: String? = null,
             since: OffsetDateTime,
             limit: Long,
+            unreadSort: UnreadSortOrder,
             offset: Long,
         ): Query<Article> {
             val (read, starred) = status.toStatusPair
+
+            val newestFirst = status != ArticleStatus.UNREAD ||
+                    unreadSort == UnreadSortOrder.NEWEST_FIRST
 
             return database.articlesQueries.allByFeeds(
                 feedIDs = feedIDs,
@@ -190,6 +195,7 @@ internal class ArticleRecords internal constructor(
                 limit = limit,
                 offset = offset,
                 lastReadAt = mapLastRead(read, since),
+                newestFirst = newestFirst,
                 mapper = ::listMapper
             )
         }
@@ -234,9 +240,12 @@ internal class ArticleRecords internal constructor(
             query: String? = null,
             limit: Long,
             offset: Long,
+            unreadSort: UnreadSortOrder,
             since: OffsetDateTime? = null
         ): Query<Article> {
             val (read, starred) = status.toStatusPair
+            val newestFirst = status != ArticleStatus.UNREAD ||
+                    unreadSort == UnreadSortOrder.NEWEST_FIRST
 
             return database.articlesQueries.allByStatus(
                 read = read,
@@ -245,6 +254,7 @@ internal class ArticleRecords internal constructor(
                 offset = offset,
                 lastReadAt = mapLastRead(read, since),
                 query = query,
+                newestFirst = newestFirst,
                 mapper = ::listMapper
             )
         }

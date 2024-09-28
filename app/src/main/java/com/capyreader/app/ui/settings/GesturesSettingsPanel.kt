@@ -7,7 +7,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
-import com.capyreader.app.common.RowSwipeOption
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.theme.CapyTheme
 import org.koin.androidx.compose.koinViewModel
@@ -50,6 +49,9 @@ private fun GesturesSettingsPanelView(
                     options = ArticleVerticalSwipe.topOptions,
                     label = R.string.settings_gestures_reader_swipe_down,
                     disabledOption = ArticleVerticalSwipe.DISABLED,
+                    optionText = {
+                        stringResource(it.translationKey)
+                    }
                 )
             }
             RowItem {
@@ -59,6 +61,7 @@ private fun GesturesSettingsPanelView(
                     options = ArticleVerticalSwipe.bottomOptions,
                     label = R.string.settings_gestures_reader_swipe_up,
                     disabledOption = ArticleVerticalSwipe.DISABLED,
+                    optionText = { stringResource(it.translationKey) }
                 )
             }
         }
@@ -70,6 +73,7 @@ private fun GesturesSettingsPanelView(
                     options = RowSwipeOption.sorted,
                     label = R.string.settings_gestures_list_row_swipe_start,
                     disabledOption = RowSwipeOption.DISABLED,
+                    optionText = { stringResource(it.translationKey) }
                 )
             }
             RowItem {
@@ -79,6 +83,7 @@ private fun GesturesSettingsPanelView(
                     options = RowSwipeOption.sorted,
                     label = R.string.settings_gestures_list_row_swipe_end,
                     disabledOption = RowSwipeOption.DISABLED,
+                    optionText = { stringResource(it.translationKey) }
                 )
             }
         }

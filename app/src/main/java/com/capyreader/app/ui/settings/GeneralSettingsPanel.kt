@@ -22,6 +22,7 @@ import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.components.TextSwitch
 import com.jocmp.capy.accounts.AutoDelete
+import com.jocmp.capy.articles.UnreadSortOrder
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -36,6 +37,8 @@ fun GeneralSettingsPanel(
         updateAutoDelete = viewModel::updateAutoDelete,
         autoDelete = viewModel.autoDelete,
         onClearArticles = viewModel::clearAllArticles,
+        updateUnreadSort = viewModel::updateUnreadSort,
+        unreadSort = viewModel.unreadSort,
     )
 }
 
@@ -48,6 +51,8 @@ fun GeneralSettingsPanelView(
     updateOpenLinksInternally: (canOpenLinksInternally: Boolean) -> Unit,
     updateAutoDelete: (AutoDelete) -> Unit,
     autoDelete: AutoDelete,
+    updateUnreadSort: (UnreadSortOrder) -> Unit,
+    unreadSort: UnreadSortOrder,
 ) {
     val (isClearArticlesDialogOpen, setClearArticlesDialogOpen) = remember { mutableStateOf(false) }
 
@@ -141,7 +146,9 @@ private fun GeneralSettingsPanelPreview() {
         onClearArticles = {},
         updateOpenLinksInternally = {},
         updateAutoDelete = {},
-        autoDelete = AutoDelete.WEEKLY
+        autoDelete = AutoDelete.WEEKLY,
+        unreadSort = UnreadSortOrder.NEWEST_FIRST,
+        updateUnreadSort = {}
     )
 }
 

@@ -1,7 +1,6 @@
-package com.capyreader.app.common
+package com.capyreader.app.ui.settings
 
 import com.capyreader.app.R
-import com.capyreader.app.ui.settings.Translated
 
 enum class RowSwipeOption : Translated {
     DISABLED,

@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.capyreader.app.common.AppPreferences
-import com.capyreader.app.common.RowSwipeOption
 
 class GesturesSettingsViewModel(private val appPreferences: AppPreferences) : ViewModel() {
     var readerTopSwipe by mutableStateOf(readerOptions.topSwipeGesture.get())

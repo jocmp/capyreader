@@ -29,7 +29,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.OffsetDateTime
 
@@ -51,15 +50,18 @@ class ArticleScreenViewModel(
 
     private var _showUnauthorizedMessage by mutableStateOf(UnauthorizedMessageState.HIDE)
 
+    private val unreadSort = appPreferences.articleListOptions.unreadSort.stateIn(viewModelScope)
+
     private val _counts = filter.flatMapLatest { latestFilter ->
         account.countAll(latestFilter.status)
     }
 
     val articles: Flow<PagingData<Article>> =
-        combine(filter, _searchQuery, articlesSince) { latestFilter, query, since ->
+        combine(filter, _searchQuery, articlesSince, unreadSort) { latestFilter, query, since, sort ->
             account.buildArticlePager(
                 filter = latestFilter,
                 query = query,
+                unreadSort = sort,
                 since = since
             ).flow
         }.flatMapLatest { it }

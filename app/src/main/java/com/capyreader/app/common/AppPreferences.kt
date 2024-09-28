@@ -5,6 +5,8 @@ import androidx.preference.PreferenceManager
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.capyreader.app.ui.settings.ArticleVerticalSwipe
+import com.capyreader.app.ui.settings.RowSwipeOption
+import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.articles.FontOption
 import com.jocmp.capy.articles.TextSize
@@ -75,6 +77,9 @@ class AppPreferences(context: Context) {
     }
 
     class ArticleListOptions(private val preferenceStore: PreferenceStore) {
+        val unreadSort: Preference<UnreadSortOrder>
+            get() = preferenceStore.getEnum("article_list_unread_sort_order", UnreadSortOrder.default)
+
         val showFeedName: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_display_feed_name", true)
 
