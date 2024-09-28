@@ -156,4 +156,11 @@
     <string name="article_bottom_bar_next_article">Ir al siguiente artículo</string>
     <string name="settings_reader_title">Lector</string>
     <string name="settings_options_reader_pin_toolbars">Fijar la barra de herramientas</string>
+    <string name="article_vertical_swipe_previous_article">Artículo anterior</string>
+    <string name="article_vertical_swipe_disabled">Desactivado</string>
+    <string name="article_vertical_swipe_full_content">Cargar el contenido entero</string>
+    <string name="settings_gestures_reader_swipe_up">Deslizar hacia arriba</string>
+    <string name="settings_panel_gestures_title">Gestos</string>
+    <string name="settings_gestures_reader_swipe_down">Deslizar hacia abajo</string>
+    <string name="article_vertical_swipe_next_article">Siguiente artículo</string>
 </resources>
