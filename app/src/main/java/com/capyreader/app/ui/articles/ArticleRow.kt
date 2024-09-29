@@ -46,6 +46,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.capyreader.app.R
@@ -131,7 +132,7 @@ fun ArticleRow(
                                 contentDescription = null,
                                 tint = feedNameColor,
                                 modifier = Modifier
-                                    .width(12.dp)
+                                    .width(12.dp.relative(options.fontScale))
                                     .padding(end = 2.dp)
                             )
                         }
@@ -455,6 +456,10 @@ fun ArticleRowPreview_Unread() {
             )
         )
     }
+}
+
+private fun Dp.relative(scale: ArticleListFontScale): Dp {
+    return this * scale.relative
 }
 
 @Preview(locale = "ar")

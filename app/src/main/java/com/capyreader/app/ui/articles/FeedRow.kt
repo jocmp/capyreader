@@ -1,11 +1,15 @@
 package com.capyreader.app.ui.articles
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.jocmp.capy.Feed
+import androidx.compose.ui.unit.dp
 import com.capyreader.app.ui.fixtures.FeedPreviewFixture
+import com.jocmp.capy.Feed
 
 @Composable
 fun FeedRow(
@@ -14,7 +18,9 @@ fun FeedRow(
     onSelect: (feed: Feed) -> Unit,
 ) {
     NavigationDrawerItem(
-        icon = { FaviconBadge(url = feed.faviconURL) },
+        icon = {
+            FaviconBadge(url = feed.faviconURL)
+        },
         label = { ListTitle(feed.title) },
         badge = { CountBadge(count = feed.count) },
         selected = selected,

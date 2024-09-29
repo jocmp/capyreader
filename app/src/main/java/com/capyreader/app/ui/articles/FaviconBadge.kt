@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.capyreader.app.R
@@ -22,6 +23,7 @@ import com.capyreader.app.ui.theme.CapyTheme
 @Composable
 fun FaviconBadge(
     url: String?,
+    size: Dp = 16.dp
 ) {
     val placeholder = painterResource(id = R.drawable.ic_rss_feed)
 
@@ -35,14 +37,14 @@ fun FaviconBadge(
                 AsyncImage(
                     url,
                     contentDescription = "",
-                    modifier = Modifier.size(16.dp)
+                    modifier = Modifier.size(size)
                 )
             } else {
                 Image(
                     placeholder,
                     contentDescription = null,
                     colorFilter = ColorFilter.tint(Color.DarkGray),
-                    modifier = Modifier.size(16.dp)
+                    modifier = Modifier.size(size),
                 )
             }
         }
