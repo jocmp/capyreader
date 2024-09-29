@@ -29,6 +29,8 @@ internal data class ArticleRowSwipeState(
     val enableStart: Boolean,
     val enableEnd: Boolean,
 ) {
+    val enabled = enableStart || enableEnd
+
     data class SwipeAction(
         val icon: ImageVector,
         @StringRes val translationKey: Int,

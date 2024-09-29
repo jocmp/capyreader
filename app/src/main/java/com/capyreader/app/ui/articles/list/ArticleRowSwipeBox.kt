@@ -33,6 +33,7 @@ fun ArticleRowSwipeBox(
         state = dismissState,
         enableDismissFromStartToEnd = swipeState.enableStart,
         enableDismissFromEndToStart = swipeState.enableEnd,
+        gesturesEnabled = swipeState.enabled,
         backgroundContent = {
             val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
 
