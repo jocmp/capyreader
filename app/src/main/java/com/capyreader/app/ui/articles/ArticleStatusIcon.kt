@@ -1,26 +1,28 @@
 package com.capyreader.app.ui.articles
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.Notes
+import androidx.compose.material.icons.rounded.Circle
+import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.painterResource
 import com.jocmp.capy.ArticleStatus
-import com.capyreader.app.R
 
 @Composable
 fun ArticleStatusIcon(status: ArticleStatus) {
     return when (status) {
         ArticleStatus.ALL -> Icon(
-            painter = painterResource(R.drawable.icon_notes),
+            Icons.AutoMirrored.Rounded.Notes,
             contentDescription = null
         )
 
         ArticleStatus.UNREAD -> Icon(
-            painterResource(R.drawable.icon_circle_filled),
+            Icons.Rounded.Circle,
             contentDescription = null
         )
 
         ArticleStatus.STARRED -> Icon(
-            painterResource(R.drawable.icon_star_filled),
+            Icons.Rounded.Star,
             contentDescription = null
         )
     }

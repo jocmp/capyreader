@@ -6,9 +6,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Circle
 import androidx.compose.material.icons.outlined.FormatSize
+import androidx.compose.material.icons.rounded.Circle
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Share
+import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material.icons.rounded.StarOutline
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -62,7 +66,7 @@ fun ArticleTopBar(
                 if (article != null) {
                     IconButton(onClick = { onToggleRead() }) {
                         Icon(
-                            painterResource(id = readIcon(article)),
+                            readIcon(article),
                             contentDescription = stringResource(R.string.article_view_mark_as_read)
                         )
                     }
@@ -80,7 +84,7 @@ fun ArticleTopBar(
 
                     IconButton(onClick = { onToggleStar() }) {
                         Icon(
-                            painterResource(id = starredIcon(article)),
+                            starredIcon(article),
                             contentDescription = stringResource(R.string.article_view_star)
                         )
                     }
@@ -120,17 +124,17 @@ fun ArticleTopBar(
 @Composable
 fun readIcon(article: Article) =
     if (article.read) {
-        R.drawable.icon_circle_outline
+        Icons.Rounded.Circle
     } else {
-        R.drawable.icon_circle_filled
+        Icons.Outlined.Circle
     }
 
 @Composable
 fun starredIcon(article: Article) =
     if (article.starred) {
-        R.drawable.icon_star_filled
+        Icons.Rounded.Star
     } else {
-        R.drawable.icon_star_outline
+        Icons.Rounded.StarOutline
     }
 
 @Composable
