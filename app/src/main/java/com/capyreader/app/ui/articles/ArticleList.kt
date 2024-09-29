@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -67,8 +68,10 @@ fun rememberArticleOptions(appPreferences: AppPreferences = koinInject()): Artic
 
     val showSummary by appPreferences.articleListOptions.showSummary.stateIn(scope).collectAsState()
     val showIcon by appPreferences.articleListOptions.showFeedIcons.stateIn(scope).collectAsState()
-    val showFeedName by appPreferences.articleListOptions.showFeedName.stateIn(scope).collectAsState()
-    val imagePreview by appPreferences.articleListOptions.imagePreview.stateIn(scope).collectAsState()
+    val showFeedName by appPreferences.articleListOptions.showFeedName.stateIn(scope)
+        .collectAsState()
+    val imagePreview by appPreferences.articleListOptions.imagePreview.stateIn(scope)
+        .collectAsState()
     val fontScale by appPreferences.articleListOptions.fontScale.stateIn(scope).collectAsState()
 
     return ArticleRowOptions(
