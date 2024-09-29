@@ -57,7 +57,12 @@ class ArticleScreenViewModel(
     }
 
     val articles: Flow<PagingData<Article>> =
-        combine(filter, _searchQuery, articlesSince, unreadSort) { latestFilter, query, since, sort ->
+        combine(
+            filter,
+            _searchQuery,
+            articlesSince,
+            unreadSort
+        ) { latestFilter, query, since, sort ->
             account.buildArticlePager(
                 filter = latestFilter,
                 query = query,
@@ -234,18 +239,22 @@ class ArticleScreenViewModel(
     }
 
     fun addStarAsync(articleID: String) = viewModelScope.launch(Dispatchers.IO) {
+        toggleCurrentStarred(articleID)
         addStar(articleID)
     }
 
     fun removeStarAsync(articleID: String) = viewModelScope.launch(Dispatchers.IO) {
+        toggleCurrentStarred(articleID)
         removeStar(articleID)
     }
 
     fun markReadAsync(articleID: String) = viewModelScope.launch(Dispatchers.IO) {
+        toggleCurrentRead(articleID)
         markRead(articleID)
     }
 
     fun markUnreadAsync(articleID: String) = viewModelScope.launch(Dispatchers.IO) {
+        toggleCurrentRead(articleID)
         markUnread(articleID)
     }
 
@@ -279,6 +288,22 @@ class ArticleScreenViewModel(
 
     private fun resetToDefaultFilter() {
         updateFilter(ArticleFilter.default().copy(filterStatus))
+    }
+
+    private fun toggleCurrentStarred(articleID: String) {
+        _article?.let { article ->
+            if (articleID == article.id) {
+                _article = article.copy(starred = !article.starred)
+            }
+        }
+    }
+
+    private fun toggleCurrentRead(articleID: String) {
+        _article?.let { article ->
+            if (articleID == article.id) {
+                _article = article.copy(read = !article.read)
+            }
+        }
     }
 
     private fun updateFilter(nextFilter: ArticleFilter) {
