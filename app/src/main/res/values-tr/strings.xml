@@ -162,4 +162,11 @@
     <string name="article_vertical_swipe_disabled">Devre dışı</string>
     <string name="settings_gestures_reader_swipe_up">Yukarı Kaydır</string>
     <string name="article_vertical_swipe_full_content">Tüm içeriği yükle</string>
+    <string name="article_view_unstar">Yıldızı kaldır</string>
+    <string name="article_list_row_swipe_toggle_starred">Yıldızlıyı Değiştir</string>
+    <string name="article_view_mark_as_unread">Okunmadı olarak işaretle</string>
+    <string name="settings_gestures_list_row_swipe_start">Sağa Kaydır</string>
+    <string name="settings_gestures_list_row_swipe_end">Sola Kaydır</string>
+    <string name="article_list_row_swipe_disabled">Devre Dışı</string>
+    <string name="article_list_row_swipe_toggle_read">Okunduyu Değiştir</string>
 </resources>
