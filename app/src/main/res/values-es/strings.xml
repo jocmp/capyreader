@@ -163,4 +163,11 @@
     <string name="settings_panel_gestures_title">Gestos</string>
     <string name="settings_gestures_reader_swipe_down">Deslizar hacia abajo</string>
     <string name="article_vertical_swipe_next_article">Siguiente artículo</string>
+    <string name="article_view_mark_as_unread">Marcar como no leído</string>
+    <string name="settings_gestures_list_row_swipe_start">Deslizar hacia la derecha</string>
+    <string name="article_view_unstar">Quitar de favoritos</string>
+    <string name="settings_gestures_list_row_swipe_end">Deslizar hacia la izquierda</string>
+    <string name="article_list_row_swipe_disabled">Desactivado</string>
+    <string name="article_list_row_swipe_toggle_read">Activar o desactivar lectura</string>
+    <string name="article_list_row_swipe_toggle_starred">Activar/desactivar destacados</string>
 </resources>
