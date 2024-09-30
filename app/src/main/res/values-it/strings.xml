@@ -163,4 +163,14 @@
     <string name="article_vertical_swipe_next_article">Articolo successivo</string>
     <string name="article_vertical_swipe_previous_article">Articolo precedente</string>
     <string name="settings_panel_gestures_title">Gesti</string>
+    <string name="article_view_unstar">Rimuovere la stella</string>
+    <string name="settings_gestures_list_row_swipe_start">Scorrimento verso destra</string>
+    <string name="settings_gestures_list_row_swipe_end">Scorrimento verso sinistra</string>
+    <string name="article_list_row_swipe_disabled">Disabilitato</string>
+    <string name="article_list_row_swipe_toggle_starred">Contrassegno o meno l\'articolo</string>
+    <string name="article_list_row_swipe_toggle_read">Imposto o meno l\'articolo come letto</string>
+    <string name="article_list_unread_sort_oldest_first">Prima gli articoli più vecchi</string>
+    <string name="article_view_mark_as_unread">Segna come non letto</string>
+    <string name="article_list_unread_sort_title">Ordina gli articoli non letti</string>
+    <string name="article_list_unread_sort_newest_first">Prima gli articoli più recenti</string>
 </resources>
