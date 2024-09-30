@@ -170,4 +170,7 @@
     <string name="article_list_row_swipe_disabled">Desactivado</string>
     <string name="article_list_row_swipe_toggle_read">Activar o desactivar lectura</string>
     <string name="article_list_row_swipe_toggle_starred">Activar/desactivar destacados</string>
+    <string name="article_list_unread_sort_oldest_first">Los más antiguos primero</string>
+    <string name="article_list_unread_sort_newest_first">Los más nuevos primero</string>
+    <string name="article_list_unread_sort_title">Ordenar no leídos</string>
 </resources>
