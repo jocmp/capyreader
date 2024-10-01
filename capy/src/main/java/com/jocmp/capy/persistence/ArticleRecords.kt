@@ -43,10 +43,12 @@ internal class ArticleRecords internal constructor(
         database.articlesQueries.deleteAllArticles()
     }
 
-    fun deleteOldArticles(before: ZonedDateTime) {
-        val maxDate = before.toEpochSecond()
+    fun deleteOldArticles(before: ZonedDateTime)  {
+        database.transactionWithErrorHandling {
+            val maxDate = before.toEpochSecond()
 
-        database.articlesQueries.deleteArticles(publishedBefore = maxDate)
+            database.articlesQueries.deleteArticles(publishedBefore = maxDate)
+        }
     }
 
     fun markAllUnread(articleIDs: List<String>, updatedAt: ZonedDateTime = nowUTC()) {
