@@ -2,13 +2,13 @@ package com.capyreader.app.ui.settings
 
 import com.capyreader.app.R
 
-enum class ArticleVerticalSwipe : Translated {
+enum class ArticleVerticalSwipe {
     DISABLED,
     PREVIOUS_ARTICLE,
     NEXT_ARTICLE,
     LOAD_FULL_CONTENT;
 
-    override val translationKey: Int
+    val translationKey: Int
         get() = when (this) {
             DISABLED -> R.string.article_vertical_swipe_disabled
             PREVIOUS_ARTICLE -> R.string.article_vertical_swipe_previous_article

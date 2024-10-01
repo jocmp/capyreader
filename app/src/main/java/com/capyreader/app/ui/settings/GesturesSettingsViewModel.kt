@@ -5,8 +5,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.common.BackAction
 
 class GesturesSettingsViewModel(private val appPreferences: AppPreferences) : ViewModel() {
+    var backAction by mutableStateOf(listOptions.backAction.get())
+        private set
+
     var readerTopSwipe by mutableStateOf(readerOptions.topSwipeGesture.get())
         private set
 
@@ -18,6 +22,12 @@ class GesturesSettingsViewModel(private val appPreferences: AppPreferences) : Vi
 
     var readerBottomSwipe by mutableStateOf(readerOptions.bottomSwipeGesture.get())
         private set
+
+    fun updateBackAction(action: BackAction) {
+        backAction = action
+
+        listOptions.backAction.set(action)
+    }
 
     fun updateReaderTopSwipe(swipe: ArticleVerticalSwipe) {
         readerTopSwipe = swipe

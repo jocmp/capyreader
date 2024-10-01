@@ -7,6 +7,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
+import com.capyreader.app.common.BackAction
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.theme.CapyTheme
 import org.koin.androidx.compose.koinViewModel
@@ -16,10 +17,12 @@ fun GesturesSettingPanel(
     viewModel: GesturesSettingsViewModel = koinViewModel(),
 ) {
     GesturesSettingsPanelView(
+        updateBackAction = viewModel::updateBackAction,
         updateRowSwipeStart = viewModel::updateRowSwipeStart,
         updateRowSwipeEnd = viewModel::updateRowSwipeEnd,
         updateReaderTopSwipe = viewModel::updateReaderTopSwipe,
         updateReaderBottomSwipe = viewModel::updateReaderBottomSwipe,
+        backAction = viewModel.backAction,
         topSwipe = viewModel.readerTopSwipe,
         bottomSwipe = viewModel.readerBottomSwipe,
         rowSwipeStart = viewModel.rowSwipeStart,
@@ -29,10 +32,12 @@ fun GesturesSettingPanel(
 
 @Composable
 private fun GesturesSettingsPanelView(
+    updateBackAction: (BackAction) -> Unit,
     updateRowSwipeStart: (swipe: RowSwipeOption) -> Unit,
     updateRowSwipeEnd: (swipe: RowSwipeOption) -> Unit,
     updateReaderTopSwipe: (swipe: ArticleVerticalSwipe) -> Unit,
     updateReaderBottomSwipe: (swipe: ArticleVerticalSwipe) -> Unit,
+    backAction: BackAction,
     topSwipe: ArticleVerticalSwipe,
     bottomSwipe: ArticleVerticalSwipe,
     rowSwipeStart: RowSwipeOption,
@@ -83,6 +88,14 @@ private fun GesturesSettingsPanelView(
                     disabledOption = RowSwipeOption.DISABLED,
                     optionText = { stringResource(it.translationKey) }
                 )
+
+                PreferenceSelect(
+                    selected = backAction,
+                    update = updateBackAction,
+                    options = BackAction.entries,
+                    label = R.string.settings_gestures_list_back_navigation_action,
+                    optionText = { stringResource(it.translationKey) }
+                )
             }
         }
     }
@@ -93,10 +106,12 @@ private fun GesturesSettingsPanelView(
 fun GesturesSettingsPanelPreview() {
     CapyTheme {
         GesturesSettingsPanelView(
+            updateBackAction = {},
             updateRowSwipeStart = {},
             updateRowSwipeEnd = {},
             updateReaderTopSwipe = {},
             updateReaderBottomSwipe = {},
+            backAction = BackAction.OPEN_DRAWER,
             topSwipe = ArticleVerticalSwipe.PREVIOUS_ARTICLE,
             bottomSwipe = ArticleVerticalSwipe.NEXT_ARTICLE,
             rowSwipeStart = RowSwipeOption.TOGGLE_READ,

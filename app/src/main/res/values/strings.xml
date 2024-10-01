@@ -172,4 +172,7 @@
     <string name="article_list_unread_sort_title">Unread Sort</string>
     <string name="article_list_unread_sort_newest_first">Newest First</string>
     <string name="article_list_unread_sort_oldest_first">Oldest First</string>
+    <string name="settings_gestures_list_back_navigation_action">Back Navigation Action</string>
+    <string name="settings_gestures_list_back_navigation_system_back">Default</string>
+    <string name="settings_gestures_list_back_navigation_open_drawer">Open Navigation Drawer</string>
 </resources>

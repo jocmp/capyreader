@@ -77,6 +77,9 @@ class AppPreferences(context: Context) {
     }
 
     class ArticleListOptions(private val preferenceStore: PreferenceStore) {
+        val backAction: Preference<BackAction>
+            get() = preferenceStore.getEnum("article_list_back_action", BackAction.default)
+
         val unreadSort: Preference<UnreadSortOrder>
             get() = preferenceStore.getEnum("article_list_unread_sort_order", UnreadSortOrder.default)
 
