@@ -21,7 +21,7 @@
     <string name="feed_action_unsubscribe_title">Unsubscribe</string>
     <string name="feed_action_edit_success">Feed updated</string>
     <string name="feed_action_unsubscribe_success">Unsubscribed</string>
-    <string name="settings">Accounts</string>
+    <string name="settings">Open settings</string>
     <string name="settings_remove_account_button_feedbin">Log Out</string>
     <string name="settings_remove_account_title_feedbin">Log Out</string>
     <string name="settings_remove_account_message_feedbin">Are you sure you want to log out?</string>

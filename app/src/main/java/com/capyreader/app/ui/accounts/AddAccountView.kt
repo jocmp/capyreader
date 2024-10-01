@@ -16,16 +16,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
+import com.capyreader.app.setupCommonModules
+import com.capyreader.app.ui.CrashReporting
 import com.capyreader.app.ui.Spacing
 import com.capyreader.app.ui.components.safeEdgePadding
 import com.capyreader.app.ui.components.widthMaxSingleColumn
 import com.capyreader.app.ui.isAtMostMedium
+import com.capyreader.app.ui.settings.CrashReportingCheckbox
+import com.capyreader.app.ui.settings.RowItem
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.accounts.Source
+import org.koin.android.ext.koin.androidContext
+import org.koin.compose.KoinApplication
 
 @Composable
 fun AddAccountView(
@@ -60,6 +67,15 @@ fun AddAccountView(
                     AccountRow(source = Source.LOCAL)
                 }
             }
+            if (CrashReporting.isAvailable) {
+                Box(
+                    Modifier
+                        .align(Alignment.BottomStart)
+                        .padding(8.dp)
+                ) {
+                    MiniSettings()
+                }
+            }
         }
     }
 }
@@ -85,21 +101,39 @@ private fun titlePadding(): PaddingValues {
 @Preview
 @Composable
 private fun AddAccountViewPreview() {
-    CapyTheme {
-        AddAccountView(
-            onSelectLocal = {},
-            onSelectFeedbin = {}
-        )
+    val context = LocalContext.current
+
+    KoinApplication(
+        application = {
+            androidContext(context)
+            setupCommonModules()
+        }
+    ) {
+        CapyTheme {
+            AddAccountView(
+                onSelectLocal = {},
+                onSelectFeedbin = {}
+            )
+        }
     }
 }
 
 @Preview(device = "id:pixel_fold")
 @Composable
 private fun AddAccountViewPreview_Tablet() {
-    CapyTheme {
-        AddAccountView(
-            onSelectLocal = {},
-            onSelectFeedbin = {}
-        )
+    val context = LocalContext.current
+
+    KoinApplication(
+        application = {
+            androidContext(context)
+            setupCommonModules()
+        }
+    ) {
+        CapyTheme {
+            AddAccountView(
+                onSelectLocal = {},
+                onSelectFeedbin = {}
+            )
+        }
     }
 }
