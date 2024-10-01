@@ -34,7 +34,7 @@ fun CrashReportingCheckbox(
 
     val updateCrashReporting = { enabled: Boolean ->
         setCrashReportingEnabled(enabled)
-        Firebase.crashlytics.setCrashlyticsCollectionEnabled(enabled)
+        Firebase.crashlytics.isCrashlyticsCollectionEnabled = enabled
         appPreferences.crashReporting.set(enabled)
     }
 

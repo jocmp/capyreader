@@ -6,4 +6,4 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Stable
-fun Modifier.widthMaxSingleColumn() = then(Modifier.widthIn(max = 600.dp))
+fun Modifier.widthMaxSingleColumn() = then(Modifier.widthIn(max = 450.dp))

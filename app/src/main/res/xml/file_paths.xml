@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
-    <files-path name="transfers" path="transfers/"/>
+    <files-path
+        name="transfers"
+        path="transfers/" />
+    <external-cache-path
+        name="external-cache"
+        path="." />
 </paths>

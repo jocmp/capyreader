@@ -19,11 +19,11 @@ import androidx.compose.ui.unit.dp
 import com.capyreader.app.BuildConfig
 import com.capyreader.app.R
 import com.capyreader.app.refresher.RefreshInterval
+import com.capyreader.app.ui.CrashReporting
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.components.TextSwitch
 import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.articles.UnreadSortOrder
-import com.jocmp.capy.preferences.Preference
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -81,7 +81,7 @@ fun GeneralSettingsPanelView(
             )
         }
 
-        if (showCrashReporting()) {
+        if (CrashReporting.isAvailable) {
             FormSection(title = stringResource(R.string.settings_section_privacy)) {
                 RowItem {
                     CrashReportingCheckbox()
@@ -100,6 +100,8 @@ fun GeneralSettingsPanelView(
         FormSection(
             title = stringResource(R.string.settings_section_advanced)
         ) {
+            CrashLogExportItem()
+
             AutoDeleteMenu(
                 updateAutoDelete = updateAutoDelete,
                 autoDelete = autoDelete,
@@ -153,5 +155,3 @@ private fun GeneralSettingsPanelPreview() {
         updateUnreadSort = {}
     )
 }
-
-fun showCrashReporting() = BuildConfig.FLAVOR == "gplay"

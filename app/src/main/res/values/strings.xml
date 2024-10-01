@@ -21,7 +21,7 @@
     <string name="feed_action_unsubscribe_title">Unsubscribe</string>
     <string name="feed_action_edit_success">Feed updated</string>
     <string name="feed_action_unsubscribe_success">Unsubscribed</string>
-    <string name="settings">Accounts</string>
+    <string name="settings">Open settings</string>
     <string name="settings_remove_account_button_feedbin">Log Out</string>
     <string name="settings_remove_account_title_feedbin">Log Out</string>
     <string name="settings_remove_account_message_feedbin">Are you sure you want to log out?</string>
@@ -175,4 +175,7 @@
     <string name="settings_gestures_list_back_navigation_action">Back Navigation Action</string>
     <string name="settings_gestures_list_back_navigation_system_back">Default</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">Open Navigation Drawer</string>
+    <string name="action_share">Share</string>
+    <string name="crash_log_export_item_title">Share crash logs</string>
+    <string name="crash_log_export_item_subtitle">Saves crash logs to a file to share with the developer</string>
 </resources>
