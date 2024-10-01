@@ -124,9 +124,9 @@ fun ArticleTopBar(
 @Composable
 fun readIcon(article: Article) =
     if (article.read) {
-        Icons.Rounded.Circle
-    } else {
         Icons.Outlined.Circle
+    } else {
+        Icons.Rounded.Circle
     }
 
 @Composable
