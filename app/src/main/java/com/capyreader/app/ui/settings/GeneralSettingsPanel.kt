@@ -100,6 +100,8 @@ fun GeneralSettingsPanelView(
         FormSection(
             title = stringResource(R.string.settings_section_advanced)
         ) {
+            CrashLogExportItem()
+
             AutoDeleteMenu(
                 updateAutoDelete = updateAutoDelete,
                 autoDelete = autoDelete,

@@ -42,14 +42,16 @@ fun AboutSettingsPanel() {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Box(
-            modifier = Modifier.clickable {
-                context.openLink(Uri.parse(SUPPORT_URL))
+        Column {
+            Box(
+                modifier = Modifier.clickable {
+                    context.openLink(Uri.parse(Support.URL))
+                }
+            ) {
+                ListItem(
+                    headlineContent = { Text(stringResource(R.string.settings_support_button)) }
+                )
             }
-        ) {
-            ListItem(
-                headlineContent = { Text(stringResource(R.string.settings_support_button)) }
-            )
         }
 
         FormSection(title = stringResource(R.string.settings_section_version)) {
@@ -81,7 +83,7 @@ fun AboutSettingsPanel() {
         HorizontalDivider()
         FormSection {
             Box(Modifier.padding(horizontal = 4.dp)) {
-                TextButton(onClick = { context.openLink(Uri.parse(ABOUT_URL)) }) {
+                TextButton(onClick = { context.openLink(Uri.parse(Support.ABOUT_URL)) }) {
                     Text("Made with ♥ in ✶✶✶✶")
                 }
             }
@@ -89,9 +91,11 @@ fun AboutSettingsPanel() {
     }
 }
 
-const val SUPPORT_URL = "https://github.com/jocmp/capyreader/issues"
+private object Support {
+    const val URL = "https://capyreader.com/support"
 
-const val ABOUT_URL = "https://jocmp.com"
+    const val ABOUT_URL = "https://jocmp.com"
+}
 
 @Preview
 @Composable

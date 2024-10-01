@@ -31,6 +31,7 @@ import com.capyreader.app.R
 import com.capyreader.app.setupCommonModules
 import com.capyreader.app.ui.CrashReporting
 import com.capyreader.app.ui.components.DialogCard
+import com.capyreader.app.ui.settings.CrashLogExportItem
 import com.capyreader.app.ui.settings.CrashReportingCheckbox
 import com.capyreader.app.ui.settings.RowItem
 import com.capyreader.app.ui.theme.CapyTheme
