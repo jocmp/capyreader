@@ -1,14 +1,13 @@
 package com.capyreader.app.common
 
 import com.capyreader.app.R
-import com.capyreader.app.ui.settings.Translated
 
-enum class ThemeOption : Translated {
+enum class ThemeOption {
     LIGHT,
     DARK,
     SYSTEM_DEFAULT;
 
-    override val translationKey: Int
+    val translationKey: Int
         get() = when(this) {
             LIGHT -> R.string.theme_menu_option_light
             DARK -> R.string.theme_menu_option_dark

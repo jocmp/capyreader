@@ -173,6 +173,16 @@ fun ArticleLayout(
         resetScrollOffset()
     }
 
+    val toggleDrawer = {
+        coroutineScope.launch {
+            if (drawerState.isOpen) {
+                drawerState.close()
+            } else {
+                drawerState.open()
+            }
+        }
+    }
+
     val closeDrawer = {
         coroutineScope.launch {
             drawerState.close()
@@ -415,15 +425,20 @@ fun ArticleLayout(
         search.clear()
     }
 
-    BackHandler(mediaUrl == null && canGoBackToAll(filter, article, search)) {
-        onSelectArticleFilter()
-        scrollToTop()
+    ArticleListBackHandler(
+        enabled = isFeedActive(mediaUrl, article, search)
+    ) {
+        toggleDrawer()
     }
 }
 
-fun canGoBackToAll(filter: ArticleFilter, article: Article?, search: ArticleSearch): Boolean {
-    return article == null &&
-            !filter.hasArticlesSelected() &&
+fun isFeedActive(
+    mediaURL: String?,
+    article: Article?,
+    search: ArticleSearch
+): Boolean {
+    return mediaURL == null &&
+            article == null &&
             !search.isActive
 }
 
@@ -462,8 +477,8 @@ fun ArticleLayoutPreview() {
             onNavigateToSettings = { },
             onRequestClearArticle = { },
             onToggleArticleRead = { },
-            onToggleArticleStar = {},
-            onMarkAllRead = {},
+            onToggleArticleStar = { },
+            onMarkAllRead = { },
             onRemoveFeed = { _, _, _ -> },
             drawerValue = DrawerValue.Open,
             showUnauthorizedMessage = false,

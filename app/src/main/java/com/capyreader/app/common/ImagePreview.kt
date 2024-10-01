@@ -1,14 +1,13 @@
 package com.capyreader.app.common
 
 import com.capyreader.app.R
-import com.capyreader.app.ui.settings.Translated
 
-enum class ImagePreview : Translated {
+enum class ImagePreview {
     NONE,
     SMALL,
     LARGE;
 
-    override val translationKey: Int
+    val translationKey: Int
         get() = when (this) {
             NONE -> R.string.image_preview_menu_option_none
             SMALL -> R.string.image_preview_menu_option_small
