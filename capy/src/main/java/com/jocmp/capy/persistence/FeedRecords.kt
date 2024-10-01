@@ -62,7 +62,8 @@ internal class FeedRecords(private val database: Database) {
         val feeds = database.feedsQueries.findByFolder(title, mapper = ::feedMapper)
             .asFlow()
             .mapToList(coroutineContext)
-            .first()
+            .firstOrNull()
+            .orEmpty()
 
         if (feeds.isEmpty()) {
             return null

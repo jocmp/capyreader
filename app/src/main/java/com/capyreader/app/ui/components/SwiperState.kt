@@ -97,7 +97,7 @@ class SwiperState(
                     onStart = onStart,
                     onDismiss = onDismiss,
                     onEnd = onEnd,
-                    initialOffset = it[0],
+                    initialOffset = it.getOrNull(0) ?: 0f
                 )
             }
         )

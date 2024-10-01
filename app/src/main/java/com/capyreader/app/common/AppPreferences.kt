@@ -16,6 +16,7 @@ import com.jocmp.capy.preferences.PreferenceStore
 import com.jocmp.capy.preferences.getEnum
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import kotlin.jvm.Throws
 
 class AppPreferences(context: Context) {
     private val preferenceStore: PreferenceStore = AndroidPreferenceStore(
@@ -34,7 +35,13 @@ class AppPreferences(context: Context) {
             key = "article_filter",
             defaultValue = ArticleFilter.default(),
             serializer = { Json.encodeToString(it) },
-            deserializer = { Json.decodeFromString(it) }
+            deserializer = {
+                try {
+                    Json.decodeFromString(it)
+                } catch (e: Throwable) {
+                    ArticleFilter.default()
+                }
+            }
         )
 
     val refreshInterval: Preference<RefreshInterval>
