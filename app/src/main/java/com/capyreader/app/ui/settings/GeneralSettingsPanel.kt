@@ -100,12 +100,14 @@ fun GeneralSettingsPanelView(
         FormSection(
             title = stringResource(R.string.settings_section_advanced)
         ) {
-            CrashLogExportItem()
+            Column {
+                CrashLogExportItem()
 
-            AutoDeleteMenu(
-                updateAutoDelete = updateAutoDelete,
-                autoDelete = autoDelete,
-            )
+                AutoDeleteMenu(
+                    updateAutoDelete = updateAutoDelete,
+                    autoDelete = autoDelete,
+                )
+            }
 
             RowItem {
                 Button(
