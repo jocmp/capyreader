@@ -1,8 +1,8 @@
 package com.prof18.rssparser.atom
 
-import com.prof18.rssparser.BaseXmlParserTest
+import com.prof18.rssparser.BaseParserTest
 
-class XmlParserAtomSelfLink : BaseXmlParserTest(
+class XmlParserAtomSelfLink : BaseParserTest(
     feedPath = "atom-self-link-example.xml",
     channelTitle = "Simon Willison's Weblog",
     channelLink = "http://simonwillison.net/",

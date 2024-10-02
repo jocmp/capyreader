@@ -17,10 +17,10 @@
 
 package com.prof18.rssparser.rss
 
-import com.prof18.rssparser.BaseXmlParserTest
+import com.prof18.rssparser.BaseParserTest
 import com.prof18.rssparser.model.RssImage
 
-class XmlParserXSLFeedTest : BaseXmlParserTest(
+class XmlParserXSLFeedTest : BaseParserTest(
     feedPath = "feed-test-xsl.xml",
     channelTitle = "SkySports | Liverpool",
     channelLink = "http://www.skysports.com",

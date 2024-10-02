@@ -17,9 +17,9 @@
 
 package com.prof18.rssparser.rss
 
-import com.prof18.rssparser.BaseXmlParserTest
+import com.prof18.rssparser.BaseParserTest
 
-class XmlParserSourceTest : BaseXmlParserTest(
+class XmlParserSourceTest : BaseParserTest(
     feedPath = "feed-test-source.xml",
     channelTitle = "À la une - Google Actualités",
     channelLink = "https://news.google.com/?hl=fr&gl=BE&ceid=BE:fr",

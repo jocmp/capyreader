@@ -17,10 +17,10 @@
 
 package com.prof18.rssparser.rss
 
-import com.prof18.rssparser.BaseXmlParserTest
+import com.prof18.rssparser.BaseParserTest
 import com.prof18.rssparser.model.RssImage
 
-class XmlParserImageFeedTest : BaseXmlParserTest(
+class XmlParserImageFeedTest : BaseParserTest(
     feedPath = "feed-test-image.xml",
     channelTitle = "Movie Reviews",
     channelLink = "https://movieweb.com/movie-reviews/",

@@ -1,4 +1,4 @@
-package com.prof18.rssparser.internal
+package com.prof18.rssparser.internal.rdf
 
 /**
  * RDF Site Summary 1.0 Modules

@@ -17,9 +17,9 @@
 
 package com.prof18.rssparser.rss
 
-import com.prof18.rssparser.BaseXmlParserTest
+import com.prof18.rssparser.BaseParserTest
 
-class XmlParserUnexpectedTokenTest : BaseXmlParserTest(
+class XmlParserUnexpectedTokenTest : BaseParserTest(
     feedPath = "feed-test-unexpected-token.xml",
     channelTitle = "Wheels Off-Road & 4x4",
     channelLink = "https://www.wheels24.co.za/",

@@ -2,8 +2,8 @@ package com.prof18.rssparser.internal.rdf
 
 import com.prof18.rssparser.internal.ChannelFactory
 import com.prof18.rssparser.internal.FeedHandler
-import com.prof18.rssparser.internal.RdfKeyword.Channel
-import com.prof18.rssparser.internal.RdfKeyword.Item
+import com.prof18.rssparser.internal.rdf.RdfKeyword.Channel
+import com.prof18.rssparser.internal.rdf.RdfKeyword.Item
 import com.prof18.rssparser.model.RssChannel
 import org.jsoup.nodes.Element
 
@@ -11,7 +11,6 @@ internal class RdfFeedHandler(val rdf: Element) : FeedHandler {
     private var channelFactory = ChannelFactory()
 
     override fun build(): RssChannel {
-
         rdf.children().forEach { node ->
             when (node.tagName()) {
                 Channel.value -> channel(node)

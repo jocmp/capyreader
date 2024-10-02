@@ -1,9 +1,9 @@
 package com.prof18.rssparser.atom
 
-import com.prof18.rssparser.BaseXmlParserTest
+import com.prof18.rssparser.BaseParserTest
 import com.prof18.rssparser.model.RssImage
 
-class XmlParserAtomTest: BaseXmlParserTest(
+class XmlParserAtomTest: BaseParserTest(
     feedPath = "feed-atom-test.xml",
     channelTitle = "The Verge -  All Posts",
     channelLink = "https://www.theverge.com/",

@@ -17,13 +17,13 @@
 
 package com.prof18.rssparser.rss
 
-import com.prof18.rssparser.BaseXmlParserTest
+import com.prof18.rssparser.BaseParserTest
 import com.prof18.rssparser.model.RssImage
 import com.prof18.rssparser.model.ItunesItemData
 import com.prof18.rssparser.model.ItunesChannelData
 import com.prof18.rssparser.model.ItunesOwner
 
-class XmlParserCharsetFeedTest : BaseXmlParserTest(
+class XmlParserCharsetFeedTest : BaseParserTest(
     feedPath = "feed-test-charset.xml",
     channelTitle = "Lørdagsrådet",
     channelLink = "https://radio.nrk.no/podkast/loerdagsraadet",

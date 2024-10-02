@@ -1,9 +1,9 @@
 package com.prof18.rssparser.rdf
 
-import com.prof18.rssparser.BaseXmlParserTest
+import com.prof18.rssparser.BaseParserTest
 import com.prof18.rssparser.model.RssImage
 
-class XmlParserAtomTest: BaseXmlParserTest(
+class XmlParserAtomTest: BaseParserTest(
     feedPath = "feed-rdf-test.xml",
     channelTitle = "Slashdot",
     channelLink = "https://slashdot.org/",

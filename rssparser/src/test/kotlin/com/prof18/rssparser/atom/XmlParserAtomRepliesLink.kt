@@ -1,9 +1,9 @@
 package com.prof18.rssparser.atom
 
-import com.prof18.rssparser.BaseXmlParserTest
+import com.prof18.rssparser.BaseParserTest
 import com.prof18.rssparser.model.RssImage
 
-class XmlParserAtomRepliesLink : BaseXmlParserTest(
+class XmlParserAtomRepliesLink : BaseParserTest(
     feedPath = "atom-replies-link-example.xml",
     channelTitle = "9to5Linux",
     channelLink = "https://9to5linux.com/",

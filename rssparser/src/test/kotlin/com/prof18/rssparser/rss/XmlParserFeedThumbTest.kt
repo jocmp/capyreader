@@ -1,9 +1,9 @@
 package com.prof18.rssparser.rss
 
-import com.prof18.rssparser.BaseXmlParserTest
+import com.prof18.rssparser.BaseParserTest
 import com.prof18.rssparser.model.RssImage
 
-class XmlParserFeedThumbTest : BaseXmlParserTest(
+class XmlParserFeedThumbTest : BaseParserTest(
     feedPath = "feed-test-thumb.xml",
     channelTitle = "HDblog.it",
     channelLink = "https://www.hdblog.it",

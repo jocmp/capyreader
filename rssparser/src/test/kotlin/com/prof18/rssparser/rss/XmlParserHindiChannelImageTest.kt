@@ -1,9 +1,9 @@
 package com.prof18.rssparser.rss
 
-import com.prof18.rssparser.BaseXmlParserTest
+import com.prof18.rssparser.BaseParserTest
 import com.prof18.rssparser.model.RssImage
 
-class XmlParserHindiChannelImageTest : BaseXmlParserTest(
+class XmlParserHindiChannelImageTest : BaseParserTest(
     feedPath = "feed-test-hindi-channel-image.xml",
     channelTitle = "Latest News चीन News18 हिंदी",
     channelLink = "https://hindi.news18.com/rss/khabar/world/china.xml",

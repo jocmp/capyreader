@@ -17,9 +17,9 @@
 
 package com.prof18.rssparser.atom
 
-import com.prof18.rssparser.BaseXmlParserTest
+import com.prof18.rssparser.BaseParserTest
 
-class XmlParserAtomFeedCreatedUpdated : BaseXmlParserTest(
+class XmlParserAtomFeedCreatedUpdated : BaseParserTest(
     feedPath = "atom-feed-created-updated.xml",
     channelTitle = "tonsky.me",
     channelLink = "https://tonsky.me/",
