@@ -1,2 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="add_feed_name_title">Nama</string>
+    <string name="add_feed_submit">Tambah</string>
+    <string name="add_feed_success">Umpan ditambahkan</string>
+    <string name="feed_form_cancel">Batal</string>
+    <string name="filter_starred">Diunggulkan</string>
+    <string name="filter_unread">Belum Dibaca</string>
+    <string name="filter_all">Semua</string>
+    <string name="feed_action_unsubscribe">Berhenti Berlangganan</string>
+    <string name="feed_action_edit">Edit Umpan</string>
+    <string name="filter_action_menu_description"></string>
+    <string name="feed_action_unsubscribe_confirm">Berhenti Berlangganan</string>
+    <string name="edit_feed_submit">Simpan</string>
+    <string name="dialog_cancel">Batal</string>
+    <string name="folder_action_edit">Ganti Nama</string>
+    <string name="feed_action_unsubscribe_title">Berhenti Berlangganan</string>
+    <string name="feed_action_edit_success">Umpan diperbarui</string>
+    <string name="add_feed_url_title">Tautan Umpan atau Situs Web</string>
+    <string name="feed_action_unsubscribe_message">Apa Anda yakin ingin berhenti berlangganan dari \"%1$s\"?</string>
+</resources>
