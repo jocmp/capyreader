@@ -170,4 +170,7 @@
     <string name="article_vertical_swipe_disabled">Désactivé</string>
     <string name="article_list_row_swipe_disabled">Désactivé</string>
     <string name="article_list_row_swipe_toggle_starred">Changer l\'état Favori</string>
+    <string name="article_list_unread_sort_newest_first">Trier par nouveauté</string>
+    <string name="article_list_unread_sort_oldest_first">Trier par ancienneté</string>
+    <string name="article_list_unread_sort_title">Non-lus</string>
 </resources>
