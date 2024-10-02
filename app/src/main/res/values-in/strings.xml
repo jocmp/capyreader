@@ -9,7 +9,6 @@
     <string name="filter_all">Semua</string>
     <string name="feed_action_unsubscribe">Berhenti Berlangganan</string>
     <string name="feed_action_edit">Edit Umpan</string>
-    <string name="filter_action_menu_description"></string>
     <string name="feed_action_unsubscribe_confirm">Berhenti Berlangganan</string>
     <string name="edit_feed_submit">Simpan</string>
     <string name="dialog_cancel">Batal</string>
