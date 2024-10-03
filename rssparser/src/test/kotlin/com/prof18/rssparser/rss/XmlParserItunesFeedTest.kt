@@ -1,12 +1,12 @@
 package com.prof18.rssparser.rss
 
-import com.prof18.rssparser.BaseXmlParserTest
+import com.prof18.rssparser.BaseParserTest
 import com.prof18.rssparser.model.RssImage
 import com.prof18.rssparser.model.ItunesItemData
 import com.prof18.rssparser.model.ItunesChannelData
 import com.prof18.rssparser.model.ItunesOwner
 
-class XmlParserItunesFeedTest : BaseXmlParserTest(
+class XmlParserItunesFeedTest : BaseParserTest(
     feedPath = "feed-itunes.xml",
     channelTitle = "The Joe Rogan Experience",
     channelLink = "https://www.joerogan.com",

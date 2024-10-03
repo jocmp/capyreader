@@ -1,0 +1,551 @@
+{
+  "version": "https://jsonfeed.org/version/1",
+  "title": "World",
+  "home_page_url": "https://www.npr.org/sections/world/?utm_medium=JSONFeed&utm_campaign=world",
+  "feed_url": "https://feeds.npr.org/1004/feed.json",
+  "description": "NPR world news, international art and culture, world business and financial markets, world economy, and global trends in health, science and technology. Subscribe to the World Story of the Day podcast and RSS feed.",
+  "icon": "https://media.npr.org/images/stations/nprone_logos/npr.png",
+  "author": {
+    "name": "NPR",
+    "url": "https://www.npr.org?utm_medium=JSONFeed&utm_campaign=world",
+    "avatar": "https://media.npr.org/images/stations/nprone_logos/npr.png"
+  },
+  "items": [
+    {
+      "id": "1198913145",
+      "url": "https://www.npr.org/2024/08/26/1198913145/eggs-and-bananas-life-after-a-russian-prison?utm_medium=JSONFeed&utm_campaign=world",
+      "title": "Eggs and Bananas: Life after a Russian prison",
+      "content_html": "<p>It's been more than three weeks since the U.S. and Russia completed the largest prisoner swap since the collapse of the Soviet Union.<br/><br/>Speaking from the White House shortly after news broke that three American prisoners were headed home, President Biden described the release as an \"incredible relief.\"<br/><br/>Russian-American journalist Alsu Kurmasheva was one of those prisoners, and she's sharing what life was like in a Russian prison and how she's adjusting to life at home. <br/><br/>For sponsor-free episodes of <em>Consider This,</em> sign up for C<em>onsider This+</em> via Apple Podcasts or at <a href=\"https://plus.npr.org/\">plus.npr.org</a>.<br/><br/>Email us at <a href=\"mailto:considerthis@npr.org\">considerthis@npr.org</a>.</p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1198913145' />",
+      "summary": "It's been more than three weeks since the U.S. and Russia completed the largest prisoner swap since the collapse of the Soviet Union.Speaking from the White House shortly after news broke that three American prisoners were headed home, President Biden described the release as an \"incredible relief.\"Russian-American journalist Alsu Kurmasheva was one of those prisoners, and she's sharing what life was like in a Russian prison and how she's adjusting to life at home. For sponsor-free episodes of Consider This, sign up for Consider This+ via Apple Podcasts or at plus.npr.org.Email us at considerthis@npr.org.",
+      "image": "https://media.npr.org/assets/img/2024/08/26/gettyimages-2164266488-3743ec7bca7a3dfe2a1d959d7913440c39d73824.jpg",
+      "date_published": "2024-08-26T20:32:01-04:00",
+      "date_modified": "2024-08-26T21:00:00-04:00",
+      "attachments": [
+        {
+          "url": "https://play.podtrac.com//traffic.megaphone.fm/NPR1237029792.mp3?orgId=1&p=&e=1198913145&size=10820172&d=676&t=podcast&ft=rss",
+          "mime_type": "audio/mp3",
+          "title": "Listen to the Story",
+          "duration_in_seconds": 676
+        }
+      ]
+    },
+    {
+      "id": "1197961495",
+      "url": "https://www.npr.org/2024/08/23/1197961495/the-trade-fraud-detective?utm_medium=JSONFeed&utm_campaign=world",
+      "title": "The trade fraud detective",
+      "content_html": "<p>When David Rashid took over US autoparts maker Plews and Edelmann, the company was losing business to its Chinese rival, Qingdao Sunsong. Both companies make power steering hoses, but Sunsong was offering its hoses to retailers at a much lower price.<br/><br/>Then, in 2018, the Trump administration threw companies like Rashid's a lifeline, by announcing tariffs on a range of Chinese goods, including some autoparts. Rashid thought the tariffs would finally force Sunsong to raise its prices, but, somehow, the company never did.<br/><br/>It was a mystery. And it led Rashid to take on a new role – amateur trade fraud investigator. How could his competitor, Sunsong, absorb that 25% tax without changing its prices? And why had all of Sunsong's steering hoses stopped coming from China and started coming from Thailand?<br/><br/>On today's episode, the wide gulf between how tariffs work in theory... and how they actually work in practice. And David Rashid's quest to figure out what, if anything, he could do about it. It's a quest that will involve international detectives, forensic chemists, and a friendship founded on a shared love for hummus.<br/><br/><em>This episode was hosted by Keith Romer and Jeff Guo. It was produced by Emma Peaslee and edited by Molly Messick. It was fact-checked by Sierra Juarez and engineered by Ko Takasugi-Czernowin. Alex Goldmark is our executive producer.<br/><br/>Help support </em>Planet Money<em> and hear our bonus episodes by subscribing to </em>Planet Money<em>+ </em><a href=\"http://n.pr/PM-digital\"><em>in Apple Podcasts</em></a><em> or at </em><a href=\"https://n.pr/3HlREPz\"><em>plus.npr.org/planetmoney</em></a><em>.</em></p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1197961495' />",
+      "summary": "When David Rashid took over US autoparts maker Plews and Edelmann, the company was losing business to its Chinese rival, Qingdao Sunsong. Both companies make power steering hoses, but Sunsong was offering its hoses to retailers at a much lower price.Then, in 2018, the Trump administration threw companies like Rashid's a lifeline, by announcing tariffs on a range of Chinese goods, including some autoparts. Rashid thought the tariffs would finally force Sunsong to raise its prices, but, somehow, the company never did.It was a mystery. And it led Rashid to take on a new role – amateur trade fraud investigator. How could his competitor, Sunsong, absorb that 25% tax without changing its prices? And why had all of Sunsong's steering hoses stopped coming from China and started coming from Thailand?On today's episode, the wide gulf between how tariffs work in theory... and how they actually work in practice. And David Rashid's quest to figure out what, if anything, he could do about it. It's a quest that will involve international detectives, forensic chemists, and a friendship founded on a shared love for hummus.This episode was hosted by Keith Romer and Jeff Guo. It was produced by Emma Peaslee and edited by Molly Messick. It was fact-checked by Sierra Juarez and engineered by Ko Takasugi-Czernowin. Alex Goldmark is our executive producer.Help support Planet Money and hear our bonus episodes by subscribing to Planet Money+ in Apple Podcasts or at plus.npr.org/planetmoney.",
+      "image": "https://media.npr.org/assets/img/2024/08/23/the-hong-kong-based-cscl-east-china-sea-container-ship-sits-news-photo_wide-64420882948df3fb63eebd12b245a344aa2137ff.jpg",
+      "date_published": "2024-08-23T17:26:50-04:00",
+      "author": {
+        "name": "Keith Romer",
+        "url": "https://www.npr.org/people/906714600/keith-romer?utm_medium=JSONFeed&utm_campaign=world"
+      },
+      "attachments": [
+        {
+          "url": "https://play.podtrac.com//traffic.megaphone.fm/NPR4020779994.mp3?orgId=1&p=&e=1197961495&size=25659438&d=1603&t=podcast&ft=rss",
+          "mime_type": "audio/mp3",
+          "title": "Listen to the Story",
+          "duration_in_seconds": 1603
+        }
+      ]
+    },
+    {
+      "id": "1198913099",
+      "url": "https://www.npr.org/2024/08/20/1198913099/bangladeshs-student-protestors-are-now-helping-to-running-the-country?utm_medium=JSONFeed&utm_campaign=world",
+      "title": "Bangladesh's student protestors are now helping to run the country",
+      "content_html": "<p>Earlier this month, student protestors filled the streets of Dhaka, Bangladesh, in opposition to a controversial quota system for government jobs.<br/><br/>Authorities then cracked down on demonstrators, blocking internet access, imposing a curfew and issuing police officers a shoot-on-sight order. In just over a month, more than 600 people have been killed.  <br/><br/>And as the protests escalated, the demonstrations started to become about much more than just the quota system.<br/><br/>Eventually, students were able to force Prime Minister Sheikh Hasina to resign.<br/><br/>The students who ousted Hasina are now helping to lead Bangladesh. <br/><br/>\"We youth are not only the generation of Facebook, YouTube and Instagram,\" says 19-year-old protestor Mumtahana Munir Mitti. <br/><br/>\"We also love our country. And we also love to participate in [the] rebuilding of our country.\"<br/><br/>For sponsor-free episodes of <em>Consider This,</em> sign up for C<em>onsider This+</em> via Apple Podcasts or at <a href=\"https://plus.npr.org/\">plus.npr.org</a>.<br/><br/>Email us at <a href=\"mailto:considerthis@npr.org\">considerthis@npr.org</a>.</p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1198913099' />",
+      "summary": "Earlier this month, student protestors filled the streets of Dhaka, Bangladesh, in opposition to a controversial quota system for government jobs.Authorities then cracked down on demonstrators, blocking internet access, imposing a curfew and issuing police officers a shoot-on-sight order. In just over a month, more than 600 people have been killed.  And as the protests escalated, the demonstrations started to become about much more than just the quota system.Eventually, students were able to force Prime Minister Sheikh Hasina to resign.The students who ousted Hasina are now helping to lead Bangladesh. \"We youth are not only the generation of Facebook, YouTube and Instagram,\" says 19-year-old protestor Mumtahana Munir Mitti. \"We also love our country. And we also love to participate in [the] rebuilding of our country.\"For sponsor-free episodes of Consider This, sign up for Consider This+ via Apple Podcasts or at plus.npr.org.Email us at considerthis@npr.org.",
+      "image": "https://media.npr.org/assets/img/2024/08/20/ap24226483537010-1--5ef68ed20f3ca9820a410ecfb381a9c65170dd12.jpg",
+      "date_published": "2024-08-20T17:16:01-04:00",
+      "date_modified": "2024-08-26T11:18:00-04:00",
+      "attachments": [
+        {
+          "url": "https://play.podtrac.com//traffic.megaphone.fm/NPR3732664152.mp3?orgId=1&p=&e=1198913099&size=7556747&d=472&t=podcast&ft=rss",
+          "mime_type": "audio/mp3",
+          "title": "Listen to the Story",
+          "duration_in_seconds": 472
+        }
+      ]
+    },
+    {
+      "id": "1196983088",
+      "url": "https://www.npr.org/2024/08/16/1196983088/what-is-the-strategy-behind-ukraines-assault-into-russia?utm_medium=JSONFeed&utm_campaign=world",
+      "title": "What is the Strategy Behind Ukraine's Assault Into Russia?",
+      "content_html": "<p>Ukraine's attack into Russian territory surprised many. Including, it would seem, the Russians themselves. But what are the strategic goals Ukraine is hoping to achieve with this move? We hear from a retired U.S. lieutenant general. </p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1196983088' />",
+      "summary": "Ukraine's attack into Russian territory surprised many. Including, it would seem, the Russians themselves. But what are the strategic goals Ukraine is hoping to achieve with this move? We hear from a retired U.S. lieutenant general.",
+      "image": "https://media.npr.org/assets/img/2024/08/16/gettyimages-2166170798_pod-02f28a0ef38c39025ca149c9cd378410964e18de.jpg",
+      "date_published": "2024-08-16T14:38:39-04:00",
+      "date_modified": "2024-08-16T15:00:00-04:00",
+      "author": {
+        "name": "Michel Martin",
+        "url": "https://www.npr.org/people/5201175/michel-martin?utm_medium=JSONFeed&utm_campaign=world",
+        "avatar": "https://media.npr.org/assets/img/2014/10/31/martin_bio2_sq-aed91a2b1da7834d384a340be0eb939aaa0cca49.jpg"
+      },
+      "attachments": [
+        {
+          "url": "https://play.podtrac.com//traffic.megaphone.fm/NPR1130316053.mp3?orgId=1&p=&e=1196983088&size=5060739&d=316&t=podcast&ft=rss",
+          "mime_type": "audio/mp3",
+          "title": "Listen to the Story",
+          "duration_in_seconds": 316
+        }
+      ]
+    },
+    {
+      "id": "1196982966",
+      "url": "https://www.npr.org/2024/08/15/1196982966/youth-in-charge-in-bangladesh?utm_medium=JSONFeed&utm_campaign=world",
+      "title": "Youth in Charge in Bangladesh",
+      "content_html": "<p>Earlier this month a youth-led movement helped topple the government of an autocratic prime minister in Bangladesh. Now students sweep broken glass, direct traffic, and join the government. But can they rebuild a country? We go to the streets of Dhaka.</p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1196982966' />",
+      "summary": "Earlier this month a youth-led movement helped topple the government of an autocratic prime minister in Bangladesh. Now students sweep broken glass, direct traffic, and join the government. But can they rebuild a country? We go to the streets of Dhaka.",
+      "image": "https://media.npr.org/assets/img/2024/08/15/_mg_3009_pod1-20c0aed2f55a4d74327ec18bd6bc86de37de29fc.jpg",
+      "date_published": "2024-08-15T15:01:15-04:00",
+      "author": {
+        "name": "Diaa Hadid",
+        "url": "https://www.npr.org/people/536641200/diaa-hadid?utm_medium=JSONFeed&utm_campaign=world",
+        "avatar": "https://media.npr.org/assets/img/2023/10/17/Diaa-Hadid-headshot_vert-c1d8a41c2eee0f8f3ef479c3198d912ea53ab1b6.jpg"
+      },
+      "attachments": [
+        {
+          "url": "https://play.podtrac.com//traffic.megaphone.fm/NPR1874396556.mp3?orgId=1&p=&e=1196982966&size=7191913&d=449&t=podcast&ft=rss",
+          "mime_type": "audio/mp3",
+          "title": "Listen to the Story",
+          "duration_in_seconds": 449
+        }
+      ]
+    },
+    {
+      "id": "1196982947",
+      "url": "https://www.npr.org/2024/08/14/1196982947/the-opposition-in-venezuela-is-afraid?utm_medium=JSONFeed&utm_campaign=world",
+      "title": "The Opposition in Venezuela is Afraid",
+      "content_html": "<p>Following a disputed election in Venezuela, autocratic president Nicolàs Maduro is cracking down on the opposition. Thousands have been arrested and lawmakers are threatening social media sites and planning to close down civic groups. We hear from opponents of Maduro.</p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1196982947' />",
+      "summary": "Following a disputed election in Venezuela, autocratic president Nicolàs Maduro is cracking down on the opposition. Thousands have been arrested and lawmakers are threatening social media sites and planning to close down civic groups. We hear from opponents of Maduro.",
+      "image": "https://media.npr.org/assets/img/2024/08/14/gettyimages-2165139578_pod-501ee097b06fe62d4bcbb6c98feb322291bb82ea.jpg",
+      "date_published": "2024-08-14T18:13:41-04:00",
+      "author": {
+        "name": "Carrie Kahn",
+        "url": "https://www.npr.org/people/2100701/carrie-kahn?utm_medium=JSONFeed&utm_campaign=world",
+        "avatar": "https://media.npr.org/assets/img/2022/09/16/carriekahn_vert-4b2724e15f639a4ee755aac154177f2b014b2a68.jpg"
+      },
+      "attachments": [
+        {
+          "url": "https://play.podtrac.com//traffic.megaphone.fm/NPR9739130715.mp3?orgId=1&p=&e=1196982947&size=4787767&d=299&t=podcast&ft=rss",
+          "mime_type": "audio/mp3",
+          "title": "Listen to the Story",
+          "duration_in_seconds": 299
+        }
+      ]
+    },
+    {
+      "id": "1198913054",
+      "url": "https://www.npr.org/2024/08/14/1198913054/gaza-israel-middle-east-cease-fire-war?utm_medium=JSONFeed&utm_campaign=world",
+      "title": "A new Israel-Hamas cease-fire talk starts this week. Is anything different this time?",
+      "content_html": "<p>So often, telling the story of the Israel-Hamas war is reduced to a catalog of numbers.<br/><br/>But this war is much more than all of that. It is the daily life of the people living in the midst of the war that has now been raging for 10 months.<br/><br/>The war has also come to encompass a sense of insecurity that permeates, as the humanitarian crisis worsens in Gaza through famine, unclean water and dwindling resources. Pair that with the prospect of a wider regional conflict with Iran that looms nearby.<br/><br/>On Thursday, U.S. and Arab mediators will launch new talks to attempt a cease-fire deal between Israel and Hamas. But hopes for tensions to be diffused are not high.<br/><br/>For sponsor-free episodes of <em>Consider This,</em> sign up for C<em>onsider This+</em> via Apple Podcasts or at <a href=\"https://plus.npr.org/\">plus.npr.org</a>.<br/><br/>Email us at <a href=\"mailto:considerthis@npr.org\">considerthis@npr.org</a>. </p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1198913054' />",
+      "summary": "So often, telling the story of the Israel-Hamas war is reduced to a catalog of numbers.But this war is much more than all of that. It is the daily life of the people living in the midst of the war that has now been raging for 10 months.The war has also come to encompass a sense of insecurity that permeates, as the humanitarian crisis worsens in Gaza through famine, unclean water and dwindling resources. Pair that with the prospect of a wider regional conflict with Iran that looms nearby.On Thursday, U.S. and Arab mediators will launch new talks to attempt a cease-fire deal between Israel and Hamas. But hopes for tensions to be diffused are not high.For sponsor-free episodes of Consider This, sign up for Consider This+ via Apple Podcasts or at plus.npr.org.Email us at considerthis@npr.org.",
+      "image": "https://media.npr.org/assets/img/2024/08/14/gettyimages-2166154020_custom-6d1bbe0bbd6bb20a7b8d22402ad540514b22b759.jpg",
+      "date_published": "2024-08-14T17:56:39-04:00",
+      "tags": [
+        "war",
+        "Middle East",
+        "Israel",
+        "Gaza"
+      ],
+      "attachments": [
+        {
+          "url": "https://play.podtrac.com//traffic.megaphone.fm/NPR6889271777.mp3?orgId=1&p=&e=1198913054&size=8459956&d=528&t=podcast&ft=rss",
+          "mime_type": "audio/mp3",
+          "title": "Listen to the Story",
+          "duration_in_seconds": 528
+        }
+      ]
+    },
+    {
+      "id": "1198913032",
+      "url": "https://www.npr.org/2024/08/09/1198913032/how-is-the-plot-to-attack-a-taylor-swift-concert-related-to-isis-k?utm_medium=JSONFeed&utm_campaign=world",
+      "title": "How is the plot to attack a Taylor Swift concert related to ISIS-K?",
+      "content_html": "<p>Three Taylor Swift concerts were canceled in Austria this week, after authorities foiled planned attacks on the venue. <br/><br/>Three young men are now in custody, and at least two of them recently pledged allegiance to the Islamic State — specifically an affiliate group known as ISIS-K.<br/><br/>This isn't the first time Islamic State-related groups have been tied to attacks in Europe — over 140 people were killed in an attack on a Moscow concert hall earlier this year, and an explosion at an Ariana Grande concert in 2017 killed 22 and injured more than a thousand.<br/><br/>So - what exactly is ISIS-K, and how should we think about their presence in Europe?<br/><br/>For sponsor-free episodes of <em>Consider This,</em> sign up for C<em>onsider This+</em> via Apple Podcasts or at <a href=\"https://plus.npr.org/\">plus.npr.org</a>.<br/><br/>Email us at <a href=\"mailto:considerthis@npr.org\">considerthis@npr.org</a>. </p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1198913032' />",
+      "summary": "Three Taylor Swift concerts were canceled in Austria this week, after authorities foiled planned attacks on the venue. Three young men are now in custody, and at least two of them recently pledged allegiance to the Islamic State — specifically an affiliate group known as ISIS-K.This isn't the first time Islamic State-related groups have been tied to attacks in Europe — over 140 people were killed in an attack on a Moscow concert hall earlier this year, and an explosion at an Ariana Grande concert in 2017 killed 22 and injured more than a thousand.So - what exactly is ISIS-K, and how should we think about their presence in Europe?For sponsor-free episodes of Consider This, sign up for Consider This+ via Apple Podcasts or at plus.npr.org.Email us at considerthis@npr.org.",
+      "image": "https://media.npr.org/assets/img/2024/08/09/gettyimages-2165307527-3c9aa1e64d4b91f977a6b34227710f16f04923c8.jpg",
+      "date_published": "2024-08-09T18:15:37-04:00",
+      "attachments": [
+        {
+          "url": "https://play.podtrac.com//traffic.megaphone.fm/NPR7910705302.mp3?orgId=1&p=&e=1198913032&size=9994702&d=624&t=podcast&ft=rss",
+          "mime_type": "audio/mp3",
+          "title": "Listen to the Story",
+          "duration_in_seconds": 624
+        }
+      ]
+    },
+    {
+      "id": "1196982856",
+      "url": "https://www.npr.org/2024/08/08/1196982856/the-root-cause-of-the-race-riots-in-the-uk?utm_medium=JSONFeed&utm_campaign=world",
+      "title": "The Root Cause of the Race Riots in the UK",
+      "content_html": "<p>For over a week race riots have broken out in the United Kingdom, mostly in smaller, poorer, less diverse cities. The violence has been stoked by misinformation and disinformation online. Our reporter travels to one of the places that saw mob violence to understand why it's happening.</p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1196982856' />",
+      "summary": "For over a week race riots have broken out in the United Kingdom, mostly in smaller, poorer, less diverse cities. The violence has been stoked by misinformation and disinformation online. Our reporter travels to one of the places that saw mob violence to understand why it's happening.",
+      "image": "https://media.npr.org/assets/img/2024/08/08/gettyimages-2164915111_pod-a8079cd843aa3d2e950222832f6ad277aef72b22.jpg",
+      "date_published": "2024-08-08T17:53:14-04:00",
+      "author": {
+        "name": "Lauren Frayer",
+        "url": "https://www.npr.org/people/463861805/lauren-frayer?utm_medium=JSONFeed&utm_campaign=world",
+        "avatar": "https://media.npr.org/assets/img/2022/05/24/lauren-frayer-headshot_vert-633a43936d9726bbf235ad789b42c7ee61eaaca9.jpg"
+      },
+      "tags": [
+        "United Kingdom"
+      ],
+      "attachments": [
+        {
+          "url": "https://play.podtrac.com//traffic.megaphone.fm/NPR7070738016.mp3?orgId=1&p=&e=1196982856&size=5056933&d=316&t=podcast&ft=rss",
+          "mime_type": "audio/mp3",
+          "title": "Listen to the Story",
+          "duration_in_seconds": 316
+        }
+      ]
+    },
+    {
+      "id": "1197958294",
+      "url": "https://www.npr.org/2024/08/07/1197958294/the-beauty-and-entitlement-of-traveling-as-a-tourist?utm_medium=JSONFeed&utm_campaign=world",
+      "title": "The beauty and entitlement of traveling as a tourist",
+      "content_html": "<p>Summer is a time when many Americans are taking off from work and setting their sights on far-off vacation destinations: tropical beaches, fairy-tale cities, sun-drenched countrysides. But in her book <em>Airplane Mode, </em>the reluctant travel writer Shahnaz Habib warns of recklessly embracing what she calls \"passport privilege,\" — and how that can skew peoples' images of what the world is and who it belongs to.</p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1197958294' />",
+      "summary": "Summer is a time when many Americans are taking off from work and setting their sights on far-off vacation destinations: tropical beaches, fairy-tale cities, sun-drenched countrysides. But in her book Airplane Mode, the reluctant travel writer Shahnaz Habib warns of recklessly embracing what she calls \"passport privilege,\" — and how that can skew peoples' images of what the world is and who it belongs to.",
+      "date_published": "2024-08-07T03:00:00-04:00",
+      "author": {
+        "name": "B.A. Parker",
+        "url": "https://www.npr.org/people/1114056142/b-a-parker?utm_medium=JSONFeed&utm_campaign=world",
+        "avatar": "https://media.npr.org/assets/img/2022/09/20/ba_parker_4_vert-3d8b39307c2df35e48ca52c5ec2d229c7fbf43cc.jpg"
+      },
+      "tags": [
+        "passport",
+        "summer vacation",
+        "Travel"
+      ],
+      "attachments": [
+        {
+          "url": "https://play.podtrac.com//traffic.megaphone.fm/NPR9589200205.mp3?orgId=1&p=&e=1197958294&size=31264270&d=1953&t=podcast&ft=rss",
+          "mime_type": "audio/mp3",
+          "title": "Listen to the Story",
+          "duration_in_seconds": 1953
+        }
+      ]
+    },
+    {
+      "id": "1196982837",
+      "url": "https://www.npr.org/2024/08/06/1196982837/protests-force-bangladeshs-longest-serving-prime-minister-to-flee?utm_medium=JSONFeed&utm_campaign=world",
+      "title": "Protests Force Bangladesh's Longest-Serving Prime Minister to Flee",
+      "content_html": "<p>This week the prime minister of Bangladesh fled the country by helicopter, forced out by a protest movement that started peacefully but became violent. We hear from our correspondent about the events that lead to this dramatic change in government. And we hear reaction from a journalist who had been jailed 6 years ago for criticizing that government.</p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1196982837' />",
+      "summary": "This week the prime minister of Bangladesh fled the country by helicopter, forced out by a protest movement that started peacefully but became violent. We hear from our correspondent about the events that lead to this dramatic change in government. And we hear reaction from a journalist who had been jailed 6 years ago for criticizing that government.",
+      "image": "https://media.npr.org/assets/img/2024/08/06/gettyimages-2164998903-abab1dfc2ac98ebf56a90fa027a120452928648e.jpg",
+      "date_published": "2024-08-06T17:09:51-04:00",
+      "date_modified": "2024-08-06T18:01:00-04:00",
+      "author": {
+        "name": "Diaa Hadid",
+        "url": "https://www.npr.org/people/536641200/diaa-hadid?utm_medium=JSONFeed&utm_campaign=world",
+        "avatar": "https://media.npr.org/assets/img/2023/10/17/Diaa-Hadid-headshot_vert-c1d8a41c2eee0f8f3ef479c3198d912ea53ab1b6.jpg"
+      },
+      "attachments": [
+        {
+          "url": "https://play.podtrac.com//traffic.megaphone.fm/NPR7737736403.mp3?orgId=1&p=&e=1196982837&size=8503424&d=531&t=podcast&ft=rss",
+          "mime_type": "audio/mp3",
+          "title": "Listen to the Story",
+          "duration_in_seconds": 531
+        }
+      ]
+    },
+    {
+      "id": "1198913002",
+      "url": "https://www.npr.org/2024/08/05/1198913002/consider-this-from-npr-draft-08-05-2024?utm_medium=JSONFeed&utm_campaign=world",
+      "title": "They are Olympic athletes — and refugees",
+      "content_html": "<p>There are some 43 million refugees in the world, according to the U.N.'s refugee agency.<br/><br/>The 37 of them competing in Paris as the Refugee Olympic Team are fighting for something more than just athletic excellence.<br/><br/>We hear from judoka Muna Dahouk and kayaker Saman Soltani.<br/><br/>For sponsor-free episodes of <em>Consider This,</em> sign up for C<em>onsider This+</em> via Apple Podcasts or at <a href=\"https://plus.npr.org/\">plus.npr.org</a>.<br/><br/>Email us at <a href=\"mailto:considerthis@npr.org\">considerthis@npr.org</a>. </p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1198913002' />",
+      "summary": "There are some 43 million refugees in the world, according to the U.N.'s refugee agency.The 37 of them competing in Paris as the Refugee Olympic Team are fighting for something more than just athletic excellence.We hear from judoka Muna Dahouk and kayaker Saman Soltani.For sponsor-free episodes of Consider This, sign up for Consider This+ via Apple Podcasts or at plus.npr.org.Email us at considerthis@npr.org.",
+      "image": "https://media.npr.org/assets/img/2024/08/05/gettyimages-2163013956_wide-81d6e96313fe790ef8deaf11d7385f1d02339f48.jpg",
+      "date_published": "2024-08-05T16:32:16-04:00",
+      "attachments": [
+        {
+          "url": "https://play.podtrac.com//traffic.megaphone.fm/NPR8639809213.mp3?orgId=1&p=&e=1198913002&size=7662490&d=478&t=podcast&ft=rss",
+          "mime_type": "audio/mp3",
+          "title": "Listen to the Story",
+          "duration_in_seconds": 478
+        }
+      ]
+    },
+    {
+      "id": "1200150223",
+      "url": "https://www.npr.org/2026/01/01/1200150223/tested-lumpers-splitters?utm_medium=JSONFeed&utm_campaign=world",
+      "title": "Tested: Lumpers and Splitters",
+      "content_html": "<p>Episode 6: Christine and Max are some of the most recent female athletes in this century-long history to face tests, stigma, and restrictions. But they are unlikely to be the last. In this episode, we find out whether Christine qualifies for the Paris Olympics, as well as the fate of Max's court case. And we explore the broader implications of the sex binary in sports. Is there a better way for sports to be categorized? <br/><br/><em>To listen to this series sponsor-free and support NPR, sign up for Embedded+ in </em><a href=\"https://podcasts.apple.com/us/channel/embedded/id6443991144\"><em>Apple Podcasts</em></a><em> or at </em><a href=\"http://plus.npr.org/\"><em>plus.npr.org</em></a><em>.</em></p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1200150223' />",
+      "summary": "Episode 6: Christine and Max are some of the most recent female athletes in this century-long history to face tests, stigma, and restrictions. But they are unlikely to be the last. In this episode, we find out whether Christine qualifies for the Paris Olympics, as well as the fate of Max's court case. And we explore the broader implications of the sex binary in sports. Is there a better way for sports to be categorized? To listen to this series sponsor-free and support NPR, sign up for Embedded+ in Apple Podcasts or at plus.npr.org.",
+      "image": "https://media.npr.org/assets/img/2024/07/26/tested_ep6_final_slide-48bd01e57d5dc778463a954759459fc9060788c9.jpg",
+      "date_published": "2024-08-01T03:00:00-04:00",
+      "date_modified": "2024-08-01T10:08:00-04:00",
+      "author": {
+        "name": "Rose Eveleth",
+        "url": "https://www.npr.org/people/1255807297/rose-eveleth?utm_medium=JSONFeed&utm_campaign=world",
+        "avatar": "https://media.npr.org/assets/img/2024/07/17/rose-eveleth_vert-56847eb19405581fa8b8b324aa4a80fb0d824bd8.jpg"
+      },
+      "tags": [
+        "women's sports",
+        "Paris Olympics 2024",
+        "dsd athletes",
+        "track and field",
+        "testosterone",
+        "gender"
+      ],
+      "attachments": [
+        {
+          "url": "https://play.podtrac.com//traffic.megaphone.fm/NPR8395846056.mp3?orgId=1&p=&e=1200150223&size=41165723&d=2572&t=podcast&ft=rss",
+          "mime_type": "audio/mp3",
+          "title": "Listen to the Story",
+          "duration_in_seconds": 2572
+        }
+      ]
+    },
+    {
+      "id": "1198912985",
+      "url": "https://www.npr.org/2024/07/31/1198912985/two-assassinations-of-major-leaders-could-change-the-middle-east?utm_medium=JSONFeed&utm_campaign=world",
+      "title": "Two assassinations of major leaders could change the Middle East",
+      "content_html": "<p>In the Middle East, two assassinations in less than 24 hours could transform the region. Israel claimed responsibility for one. It has no comment on the other. <br/><br/>First, an Israeli attack in Lebanon killed a leader of the militant group Hezbollah. Just hours later, the political leader of Hamas was killed in Iran.  <br/><br/>The Hamas leader Ismail Haniyeh was attending the swearing-in for Iran's new reformist president. Hamas says Haniyeh was killed by a rocket fired into his room at an official residency.  Hamas and Iran both blame Israel for the attack.<br/><br/>When Israeli Prime Minister Benjamin Netanyahu spoke after the two killings, he did not claim responsibility for the attack in Tehran. He did describe the Israeli strike in Beirut as a crushing blow.  <br/><br/>In Washington, White House spokesman John Kirby expressed concern the assassinations could result in an escalation of the conflicts already playing out.<br/><br/>Two assassinations in the Middle East have the potential to start a violent chain of retaliations.  Will they?<br/><br/>For sponsor-free episodes of Consider This, sign up for <em>Consider This+</em> via Apple Podcasts or at <a href=\"https://plus.npr.org/\">plus.npr.org</a>.<br/><br/>Email us at considerthis@npr.org. </p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1198912985' />",
+      "summary": "In the Middle East, two assassinations in less than 24 hours could transform the region. Israel claimed responsibility for one. It has no comment on the other. First, an Israeli attack in Lebanon killed a leader of the militant group Hezbollah. Just hours later, the political leader of Hamas was killed in Iran.  The Hamas leader Ismail Haniyeh was attending the swearing-in for Iran's new reformist president. Hamas says Haniyeh was killed by a rocket fired into his room at an official residency.  Hamas and Iran both blame Israel for the attack.When Israeli Prime Minister Benjamin Netanyahu spoke after the two killings, he did not claim responsibility for the attack in Tehran. He did describe the Israeli strike in Beirut as a crushing blow.  In Washington, White House spokesman John Kirby expressed concern the assassinations could result in an escalation of the conflicts already playing out.Two assassinations in the Middle East have the potential to start a violent chain of retaliations.  Will they?For sponsor-free episodes of Consider This, sign up for Consider This+ via Apple Podcasts or at plus.npr.org.Email us at considerthis@npr.org.",
+      "image": "https://media.npr.org/assets/img/2024/07/31/gettyimages-2164035472-4d5900cb4e388182ecea9daffac13f9b3afe4869.jpg",
+      "date_published": "2024-07-31T18:07:29-04:00",
+      "date_modified": "2024-07-31T19:03:00-04:00",
+      "tags": [
+        "Hezbollah",
+        "Hamas",
+        "Israel"
+      ],
+      "attachments": [
+        {
+          "url": "https://play.podtrac.com//traffic.megaphone.fm/NPR4402556037.mp3?orgId=1&p=&e=1198912985&size=8833194&d=552&t=podcast&ft=rss",
+          "mime_type": "audio/mp3",
+          "title": "Listen to the Story",
+          "duration_in_seconds": 552
+        }
+      ]
+    },
+    {
+      "id": "1198912978",
+      "url": "https://www.npr.org/2024/07/29/1198912978/venezuelans-foresaw-a-new-chapter-then-maduro-claimed-victory?utm_medium=JSONFeed&utm_campaign=world",
+      "title": "Venezuelans foresaw a new chapter. Then Maduro claimed victory",
+      "content_html": "<p>For a brief moment, people in the Venezuelan diaspora felt a surge of hope as reports indicated the opposition party was polling way ahead of Nicolas Maduro's party. Then, Venezuela's electoral authority declared Maduro the winner. <br/><br/>Members of the opposition have cried foul. And the US and other international observers have questioned the integrity of the election.<br/><br/>So where does Sunday's election leave Venezuelans, who are living in the midst of a humanitarian emergency? <br/><br/>And where does it leave the nearly 8 million people who have left Venezuela during President Maduro's time in office?<br/><br/>For sponsor-free episodes of <em>Consider This,</em> sign up for C<em>onsider This+</em> via Apple Podcasts or at <a href=\"http://plus.npr.org/\">plus.npr.org</a>.<br/><br/>Email us at <a href=\"mailto:considerthis@npr.org\">considerthis@npr.org</a>.</p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1198912978' />",
+      "summary": "For a brief moment, people in the Venezuelan diaspora felt a surge of hope as reports indicated the opposition party was polling way ahead of Nicolas Maduro's party. Then, Venezuela's electoral authority declared Maduro the winner. Members of the opposition have cried foul. And the US and other international observers have questioned the integrity of the election.So where does Sunday's election leave Venezuelans, who are living in the midst of a humanitarian emergency? And where does it leave the nearly 8 million people who have left Venezuela during President Maduro's time in office?For sponsor-free episodes of Consider This, sign up for Consider This+ via Apple Podcasts or at plus.npr.org.Email us at considerthis@npr.org.",
+      "image": "https://media.npr.org/assets/img/2024/07/29/gettyimages-2163819375_wide-666742d8881d887dbefc4c4d13f41afa5c035046.jpg",
+      "date_published": "2024-07-29T18:12:46-04:00",
+      "date_modified": "2024-07-29T18:19:00-04:00",
+      "tags": [
+        "Venezuela"
+      ],
+      "attachments": [
+        {
+          "url": "https://play.podtrac.com//traffic.megaphone.fm/NPR6360706730.mp3?orgId=1&p=&e=1198912978&size=9843819&d=615&t=podcast&ft=rss",
+          "mime_type": "audio/mp3",
+          "title": "Listen to the Story",
+          "duration_in_seconds": 615
+        }
+      ]
+    },
+    {
+      "id": "1200150217",
+      "url": "https://www.npr.org/2026/01/01/1200150217/tested-unfair-advantage?utm_medium=JSONFeed&utm_campaign=world",
+      "title": "Tested: Unfair Advantage?",
+      "content_html": "<p>Episode 5: A battle over science and ethics unfolds. World Athletics releases and then tweaks multiple policies impacting DSD athletes, while critics cry foul. In this episode, World Athletics doubles down on its claims, Caster Semenya challenges the rules again, and we dig deep on a big question: what constitutes an \"unfair\" advantage on the track? <br/><br/><em>To listen to this series sponsor-free and support NPR, sign up for Embedded+ in </em><a href=\"https://podcasts.apple.com/us/channel/embedded/id6443991144\"><em>Apple Podcasts</em></a><em> or at </em><a href=\"http://plus.npr.org/\"><em>plus.npr.org</em></a><em>.</em></p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1200150217' />",
+      "summary": "Episode 5: A battle over science and ethics unfolds. World Athletics releases and then tweaks multiple policies impacting DSD athletes, while critics cry foul. In this episode, World Athletics doubles down on its claims, Caster Semenya challenges the rules again, and we dig deep on a big question: what constitutes an \"unfair\" advantage on the track? To listen to this series sponsor-free and support NPR, sign up for Embedded+ in Apple Podcasts or at plus.npr.org.",
+      "image": "https://media.npr.org/assets/img/2024/07/24/tested_ep5_finalv2_custom-aa62e06daae7a1c295d03bdb71d50101adf813d2.jpg",
+      "date_published": "2024-07-29T05:30:00-04:00",
+      "date_modified": "2024-07-29T05:45:00-04:00",
+      "author": {
+        "name": "Rose Eveleth",
+        "url": "https://www.npr.org/people/1255807297/rose-eveleth?utm_medium=JSONFeed&utm_campaign=world",
+        "avatar": "https://media.npr.org/assets/img/2024/07/17/rose-eveleth_vert-56847eb19405581fa8b8b324aa4a80fb0d824bd8.jpg"
+      },
+      "tags": [
+        "women's sports",
+        "World Athletics",
+        "Paris Olympics 2024",
+        "dsd athletes",
+        "Caster Semenya",
+        "testosterone",
+        "gender"
+      ],
+      "attachments": [
+        {
+          "url": "https://play.podtrac.com//traffic.megaphone.fm/NPR3315077975.mp3?orgId=1&p=&e=1200150217&size=34505126&d=2156&t=podcast&ft=rss",
+          "mime_type": "audio/mp3",
+          "title": "Listen to the Story",
+          "duration_in_seconds": 2156
+        }
+      ]
+    },
+    {
+      "id": "1198912962",
+      "url": "https://www.npr.org/2024/07/25/1198912962/these-team-usa-marathon-runners-are-rooting-for-each-other-on-and-off-the-track?utm_medium=JSONFeed&utm_campaign=world",
+      "title": "These team USA marathon runners are rooting for each other on and off the track",
+      "content_html": "<p>Clayton Young and Conner Mantz are longtime training partners and friends.  They're also the two fastest men's marathoners  representing the U.S. at the 2024 Summer Olympics in Paris.<br/><br/>The pair met on a run at Brigham Young University in 2017.  They've been friends, training partners and competitors ever since. <br/><br/>With years of friendship and thousands of miles binding them together, can Young and Mantz break away from the pack and take home the gold at the Olympic games?<br/><br/>For sponsor-free episodes of <em>Consider This,</em> sign up for C<em>onsider This+</em> via Apple Podcasts or at <a href=\"https://plus.npr.org/\">plus.npr.org</a>.<br/><br/>Email us at <a href=\"mailto:considerthis@npr.org\">considerthis@npr.org</a>.</p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1198912962' />",
+      "summary": "Clayton Young and Conner Mantz are longtime training partners and friends.  They're also the two fastest men's marathoners  representing the U.S. at the 2024 Summer Olympics in Paris.The pair met on a run at Brigham Young University in 2017.  They've been friends, training partners and competitors ever since. With years of friendship and thousands of miles binding them together, can Young and Mantz break away from the pack and take home the gold at the Olympic games?For sponsor-free episodes of Consider This, sign up for Consider This+ via Apple Podcasts or at plus.npr.org.Email us at considerthis@npr.org.",
+      "image": "https://media.npr.org/assets/img/2024/07/25/gettyimages-1983011244-45659d7d7fb80ed9e2d8e1beebd1af906b28c8dc.jpg",
+      "date_published": "2024-07-25T17:54:25-04:00",
+      "tags": [
+        "Paris Olympics 2024"
+      ],
+      "attachments": [
+        {
+          "url": "https://play.podtrac.com//traffic.megaphone.fm/NPR5408391973.mp3?orgId=1&p=&e=1198912962&size=8398934&d=524&t=podcast&ft=rss",
+          "mime_type": "audio/mp3",
+          "title": "Listen to the Story",
+          "duration_in_seconds": 524
+        }
+      ]
+    },
+    {
+      "id": "1216507712",
+      "url": "https://www.npr.org/2026/01/01/1216507712/tested-running-in-circles?utm_medium=JSONFeed&utm_campaign=world",
+      "title": "Tested: Running in Circles",
+      "content_html": "<p>Episode 4: In 2009, South African sprinter Caster Semenya won gold at the World Championships. But instead of a celebration, she endured endless speculation about her body, her biology, and her gender. And soon, sports organizations would launch a new round of regulations, lead to multiple court cases, and require sporting organizations to justify their claim that DSD athletes have an unfair advantage. </p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1216507712' />",
+      "summary": "Episode 4: In 2009, South African sprinter Caster Semenya won gold at the World Championships. But instead of a celebration, she endured endless speculation about her body, her biology, and her gender. And soon, sports organizations would launch a new round of regulations, lead to multiple court cases, and require sporting organizations to justify their claim that DSD athletes have an unfair advantage.",
+      "image": "https://media.npr.org/assets/img/2024/07/19/tested_ep4_v2_custom-188230070a0220dba4e529a1de9f55202abc26ed.jpg",
+      "date_published": "2024-07-25T03:00:00-04:00",
+      "date_modified": "2024-07-25T10:24:00-04:00",
+      "author": {
+        "name": "Rose Eveleth",
+        "url": "https://www.npr.org/people/1255807297/rose-eveleth?utm_medium=JSONFeed&utm_campaign=world",
+        "avatar": "https://media.npr.org/assets/img/2024/07/17/rose-eveleth_vert-56847eb19405581fa8b8b324aa4a80fb0d824bd8.jpg"
+      },
+      "tags": [
+        "women's sports",
+        "World Athletics",
+        "Paris Olympics 2024",
+        "dsd athletes",
+        "track and field",
+        "testosterone",
+        "gender"
+      ],
+      "attachments": [
+        {
+          "url": "https://play.podtrac.com//traffic.megaphone.fm/NPR9943382766.mp3?orgId=1&p=&e=1216507712&size=31101684&d=1943&t=podcast&ft=rss",
+          "mime_type": "audio/mp3",
+          "title": "Listen to the Story",
+          "duration_in_seconds": 1943
+        }
+      ]
+    },
+    {
+      "id": "1216507659",
+      "url": "https://www.npr.org/2026/01/01/1216507659/tested-card-carrying-females?utm_medium=JSONFeed&utm_campaign=world",
+      "title": "Tested: Card-Carrying Females",
+      "content_html": "<p>Episode 3: We meet Kenyan sprinter Maximila Imali, who—like Christine Mboma—has been sidelined by DSD policies. She makes a different choice from Christine: to fight the regulations in court. And we learn about a previous fight, when scientists, athletes, and journalists spent thirty years trying to end an earlier version of sex testing.<br/><br/><em>To listen to this series sponsor-free and support NPR, sign up for Embedded+ in </em><a href=\"https://podcasts.apple.com/us/channel/embedded/id6443991144\"><em>Apple Podcasts</em></a><em> or at </em><a href=\"http://plus.npr.org\"><em>plus.npr.org.</em></a><em></em></p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1216507659' />",
+      "summary": "Episode 3: We meet Kenyan sprinter Maximila Imali, who—like Christine Mboma—has been sidelined by DSD policies. She makes a different choice from Christine: to fight the regulations in court. And we learn about a previous fight, when scientists, athletes, and journalists spent thirty years trying to end an earlier version of sex testing.To listen to this series sponsor-free and support NPR, sign up for Embedded+ in Apple Podcasts or at plus.npr.org.",
+      "image": "https://media.npr.org/assets/img/2024/07/17/tested_ep3_final_custom-a4b858694623cc10624afe58782233ef834e6e45.jpg",
+      "date_published": "2024-07-22T03:00:00-04:00",
+      "date_modified": "2024-07-22T06:17:00-04:00",
+      "author": {
+        "name": "Rose Eveleth",
+        "url": "https://www.npr.org/people/1255807297/rose-eveleth?utm_medium=JSONFeed&utm_campaign=world",
+        "avatar": "https://media.npr.org/assets/img/2024/07/17/rose-eveleth_vert-56847eb19405581fa8b8b324aa4a80fb0d824bd8.jpg"
+      },
+      "tags": [
+        "women's sports",
+        "World Athletics",
+        "Paris Olympics 2024",
+        "The Olympic Games",
+        "dsd athletes",
+        "track and field",
+        "testosterone",
+        "gender"
+      ],
+      "attachments": [
+        {
+          "url": "https://play.podtrac.com//traffic.megaphone.fm/NPR1059446174.mp3?orgId=1&p=&e=1216507659&size=37954125&d=2372&t=podcast&ft=rss",
+          "mime_type": "audio/mp3",
+          "title": "Listen to the Story",
+          "duration_in_seconds": 2372
+        }
+      ]
+    },
+    {
+      "id": "1196982610",
+      "url": "https://www.npr.org/2024/07/22/1196982610/a-story-about-witches-in-ukraine?utm_medium=JSONFeed&utm_campaign=world",
+      "title": "A Story About Witches in Ukraine",
+      "content_html": "<p>A play about witches is selling out in Ukraine's capital Kyiv. And even though the plot takes place centuries ago, the play's takeaways and parallels to today resonate with Ukrainians. We hear from actors and audience members.</p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1196982610' />",
+      "summary": "A play about witches is selling out in Ukraine's capital Kyiv. And even though the plot takes place centuries ago, the play's takeaways and parallels to today resonate with Ukrainians. We hear from actors and audience members.",
+      "image": "https://media.npr.org/assets/img/2024/07/19/img_1272_pod-d36ce7d149eb1f2fcd4051bfeebf19b1ee39100e.jpg",
+      "date_published": "2024-07-22T03:00:00-04:00",
+      "author": {
+        "name": "Ashley Westerman ",
+        "url": "https://www.npr.org/people/161527830/ashley-westerman?utm_medium=JSONFeed&utm_campaign=world",
+        "avatar": "https://media.npr.org/assets/img/2019/10/02/wany5982_vert-704aa20e6bbf7185255b78bd5759969d27027765.jpg"
+      },
+      "attachments": [
+        {
+          "url": "https://play.podtrac.com//traffic.megaphone.fm/NPR6066114407.mp3?orgId=1&p=&e=1196982610&size=7016743&d=438&t=podcast&ft=rss",
+          "mime_type": "audio/mp3",
+          "title": "Listen to the Story",
+          "duration_in_seconds": 438
+        }
+      ]
+    },
+    {
+      "id": "1196982599",
+      "url": "https://www.npr.org/2024/07/19/1196982599/a-u-s-journalist-is-sentenced-in-russia?utm_medium=JSONFeed&utm_campaign=world",
+      "title": "A U.S. Journalist is Sentenced in Russia",
+      "content_html": "<p>Wall Street Journal correspondent Evan Gershkovich was sentenced to 16 years in a Russian prison on charges of espionage. His employer and the U.S. government have said he is innocent and the trial is a sham. We hear the latest from Moscow and reaction from the U.S.</p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1196982599' />",
+      "summary": "Wall Street Journal correspondent Evan Gershkovich was sentenced to 16 years in a Russian prison on charges of espionage. His employer and the U.S. government have said he is innocent and the trial is a sham. We hear the latest from Moscow and reaction from the U.S.",
+      "image": "https://media.npr.org/assets/img/2024/07/19/gettyimages-2162015977_pod-cada2d082e575dcfb152f8a0941223e7af530e7f.jpg",
+      "date_published": "2024-07-19T17:00:09-04:00",
+      "author": {
+        "name": "Charles Maynes",
+        "url": "https://www.npr.org/people/825430211/charles-maynes?utm_medium=JSONFeed&utm_campaign=world"
+      },
+      "attachments": [
+        {
+          "url": "https://play.podtrac.com//traffic.megaphone.fm/NPR8013831996.mp3?orgId=1&p=&e=1196982599&size=7162193&d=447&t=podcast&ft=rss",
+          "mime_type": "audio/mp3",
+          "title": "Listen to the Story",
+          "duration_in_seconds": 447
+        }
+      ]
+    },
+    {
+      "id": "1198910415",
+      "url": "https://www.npr.org/2024/07/19/1198910415/india-river-linking-plan-flood-drought-weather?utm_medium=JSONFeed&utm_campaign=world",
+      "title": "India's plan to reroute rivers could have unintended consequences on rainfall",
+      "content_html": "<p>More than a hundred years ago, a British engineer proposed linking two rivers in India to better irrigate the area and cheaply move goods. The link never happened, but the idea survived. Today, due to extreme flooding in some parts of the country mirrored by debilitating drought in others, India's National Water Development Agency plans to dig thirty links between rivers across the country. It's the largest project of its kind and will take decades to complete. But scientists are worried what moving that much water could do to the land, the people — and even the weather. Host <a href=\"https://www.npr.org/people/767284140/emily-kwong\">Emily Kwong</a> talks to journalist <a href=\"https://sushmita.journoportfolio.com/about/\">Sushmita Pathak</a> about her recent story on the project. <br/><br/><strong>Read Sushmita's full story </strong><a href=\"https://hakaimagazine.com/news/the-audacious-scheme-to-reroute-indias-water/#:~:text=While%20today's%20incarnation%20of%20India's,and%20cheaper%20to%20move%20goods.\"><strong>here</strong></a><strong>.<br/><br/></strong><em>Interested in more science stories like this? Email us at shortwave@npr.org.</em> </p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1198910415' />",
+      "summary": "More than a hundred years ago, a British engineer proposed linking two rivers in India to better irrigate the area and cheaply move goods. The link never happened, but the idea survived. Today, due to extreme flooding in some parts of the country mirrored by debilitating drought in others, India's National Water Development Agency plans to dig thirty links between rivers across the country. It's the largest project of its kind and will take decades to complete. But scientists are worried what moving that much water could do to the land, the people — and even the weather. Host Emily Kwong talks to journalist Sushmita Pathak about her recent story on the project. Read Sushmita's full story here.Interested in more science stories like this? Email us at shortwave@npr.org.",
+      "image": "https://media.npr.org/assets/img/2024/07/18/7.19.24-ep-b9a17baa0d2c62c0d156e4d0c12056f274b7a7a1.jpg",
+      "date_published": "2024-07-19T03:00:59-04:00",
+      "date_modified": "2024-07-19T03:01:00-04:00",
+      "author": {
+        "name": "Emily Kwong",
+        "url": "https://www.npr.org/people/767284140/emily-kwong?utm_medium=JSONFeed&utm_campaign=world",
+        "avatar": "https://media.npr.org/assets/img/2022/10/04/emilykwong_vert-118dc22cc13bf6ccb1ec2f0b54b3051b54c61a9e.jpg"
+      },
+      "attachments": [
+        {
+          "url": "https://play.podtrac.com//traffic.megaphone.fm/NPR2341365847.mp3?orgId=1&p=&e=1198910415&size=13203793&d=825&t=podcast&ft=rss",
+          "mime_type": "audio/mp3",
+          "title": "Listen to the Story",
+          "duration_in_seconds": 825
+        }
+      ]
+    },
+    {
+      "id": "1198909021",
+      "url": "https://www.npr.org/2024/07/18/1198909021/the-creeping-coup?utm_medium=JSONFeed&utm_campaign=world",
+      "title": "The Creeping Coup",
+      "content_html": "<p>Sudan has been at the center of a deadly and brutal war for over a year. It's the site of the world's largest hunger crisis, and the world's largest displacement crisis.<br/><br/>On the surface, it's a story about two warring generals vying for power – the latest in a long cycle of power struggles that have plagued Sudan for decades. But it's also a story about the U.S. war on terror, Russia's war in Ukraine, and China's global rise.<br/><br/>Today on the show, we turn back the clock more than a century to untangle the complex web that put Sudan on the path to war.</p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1198909021' />",
+      "summary": "Sudan has been at the center of a deadly and brutal war for over a year. It's the site of the world's largest hunger crisis, and the world's largest displacement crisis.On the surface, it's a story about two warring generals vying for power – the latest in a long cycle of power struggles that have plagued Sudan for decades. But it's also a story about the U.S. war on terror, Russia's war in Ukraine, and China's global rise.Today on the show, we turn back the clock more than a century to untangle the complex web that put Sudan on the path to war.",
+      "image": "https://media.npr.org/assets/img/2024/07/17/sudan-military-tank1-2a48163a26f4b1ecc1912cd8be055430640a22d7.jpg",
+      "date_published": "2024-07-18T03:00:59-04:00",
+      "date_modified": "2024-07-18T03:01:00-04:00",
+      "author": {
+        "name": "Rund Abdelfatah",
+        "url": "https://www.npr.org/people/705948878/rund-abdelfatah?utm_medium=JSONFeed&utm_campaign=world",
+        "avatar": "https://media.npr.org/assets/img/2022/05/13/rund-abdelfatah_vert-d22e8facceb8970ebbe1e844f23b55bb90b24637.jpg"
+      },
+      "attachments": [
+        {
+          "url": "https://play.podtrac.com//traffic.megaphone.fm/NPR5239300107.mp3?orgId=1&p=&e=1198909021&size=48416479&d=3025&t=podcast&ft=rss",
+          "mime_type": "audio/mp3",
+          "title": "Listen to the Story",
+          "duration_in_seconds": 3025
+        }
+      ]
+    }
+  ]
+}

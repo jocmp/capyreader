@@ -17,9 +17,9 @@
 
 package com.prof18.rssparser.rss
 
-import com.prof18.rssparser.BaseXmlParserTest
+import com.prof18.rssparser.BaseParserTest
 
-class XmlParserFeedRuTest : BaseXmlParserTest(
+class XmlParserFeedRuTest : BaseParserTest(
     feedPath = "feed-test-ru.xml",
     channelTitle = "Аргументы и Факты",
     channelLink = "http://www.aif.ru/",

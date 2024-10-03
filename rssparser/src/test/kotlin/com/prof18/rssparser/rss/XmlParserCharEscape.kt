@@ -1,9 +1,9 @@
 package com.prof18.rssparser.rss
 
-import com.prof18.rssparser.BaseXmlParserTest
+import com.prof18.rssparser.BaseParserTest
 import com.prof18.rssparser.model.RssImage
 
-class XmlParserCharEscape : BaseXmlParserTest(
+class XmlParserCharEscape : BaseParserTest(
     feedPath = "feed-char-escape.xml",
     channelTitle = "NYT > Health",
     channelLink = "https://www.nytimes.com/section/health",

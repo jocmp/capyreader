@@ -17,9 +17,9 @@
 
 package com.prof18.rssparser.rss
 
-import com.prof18.rssparser.BaseXmlParserTest
+import com.prof18.rssparser.BaseParserTest
 
-class XmlParserTimeFeedTest : BaseXmlParserTest(
+class XmlParserTimeFeedTest : BaseParserTest(
     feedPath = "feed-test-time.xml",
     channelTitle = "Drug Recalls",
     channelLink = "http://www.fda.gov/about-fda/contact-fda/stay-informed/rss-feeds/drug-recalls/rss.xml",

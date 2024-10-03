@@ -17,10 +17,10 @@
 
 package com.prof18.rssparser.rss
 
-import com.prof18.rssparser.BaseXmlParserTest
+import com.prof18.rssparser.BaseParserTest
 import com.prof18.rssparser.model.RssImage
 
-class XmlParserItemChannelImageTest : BaseXmlParserTest(
+class XmlParserItemChannelImageTest : BaseParserTest(
     feedPath = "feed-item-channel-image.xml",
     channelTitle = "www.espn.com - TOP",
     channelLink = "https://www.espn.com",

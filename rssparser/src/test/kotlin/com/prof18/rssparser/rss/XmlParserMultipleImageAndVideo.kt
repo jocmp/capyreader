@@ -1,8 +1,8 @@
 package com.prof18.rssparser.rss
 
-import com.prof18.rssparser.BaseXmlParserTest
+import com.prof18.rssparser.BaseParserTest
 
-class XmlParserMultipleImageAndVideo : BaseXmlParserTest(
+class XmlParserMultipleImageAndVideo : BaseParserTest(
     feedPath = "feed-test-multiple-image-and-video.xml",
     channelTitle = "Motor.ru",
     channelLink = "https://motor.ru",

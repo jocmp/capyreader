@@ -17,10 +17,9 @@
 
 package com.prof18.rssparser.rss
 
-import com.prof18.rssparser.BaseXmlParserTest
-import com.prof18.rssparser.model.RssImage
+import com.prof18.rssparser.BaseParserTest
 
-class XmlParserImageEmptyTag : BaseXmlParserTest(
+class XmlParserImageEmptyTag : BaseParserTest(
     feedPath = "feed-test-image-empty-tag.xml",
     channelTitle = "Hacker Noon",
     channelLink = "https://hackernoon.com",

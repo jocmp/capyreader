@@ -1,9 +1,9 @@
 package com.prof18.rssparser.rdf
 
-import com.prof18.rssparser.BaseXmlParserTest
+import com.prof18.rssparser.BaseParserTest
 import com.prof18.rssparser.model.RssImage
 
-class XmlParserRdfDistroWatchTest : BaseXmlParserTest(
+class XmlParserRdfDistroWatchTest : BaseParserTest(
     feedPath = "feed-rdf-distrowatch.xml",
     channelTitle = "DistroWatch.com: DistroWatch Weekly",
     channelLink = "https://distrowatch.com/",

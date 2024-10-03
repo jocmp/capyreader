@@ -1,8 +1,8 @@
 package com.prof18.rssparser.rss
 
-import com.prof18.rssparser.BaseXmlParserTest
+import com.prof18.rssparser.BaseParserTest
 
-class XmlParserGreekTest : BaseXmlParserTest(
+class XmlParserGreekTest : BaseParserTest(
     feedPath = "feed-test-greek.xml",
     channelTitle = "Liberal - ΕΠΙΚΑΙΡΟΤΗΤΑ",
     channelLink = "https://www.liberal.gr/news",

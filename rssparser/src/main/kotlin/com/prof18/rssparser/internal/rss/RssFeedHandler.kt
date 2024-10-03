@@ -2,7 +2,6 @@ package com.prof18.rssparser.internal.rss
 
 import com.prof18.rssparser.internal.ChannelFactory
 import com.prof18.rssparser.internal.FeedHandler
-import com.prof18.rssparser.internal.RssKeyword
 import com.prof18.rssparser.model.RssChannel
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element

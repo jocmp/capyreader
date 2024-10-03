@@ -1,9 +1,9 @@
 package com.prof18.rssparser.atom
 
-import com.prof18.rssparser.BaseXmlParserTest
+import com.prof18.rssparser.BaseParserTest
 import com.prof18.rssparser.model.RssImage
 
-class XmlParserAtomImageQueryParams : BaseXmlParserTest(
+class XmlParserAtomImageQueryParams : BaseParserTest(
     feedPath = "atom-image-query-params.xml",
     channelTitle = "9to5Google",
     channelLink = "https://9to5google.com/",

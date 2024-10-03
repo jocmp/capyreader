@@ -17,9 +17,9 @@
 
 package com.prof18.rssparser.rss
 
-import com.prof18.rssparser.BaseXmlParserTest
+import com.prof18.rssparser.BaseParserTest
 
-class XmlParserCommentsTest : BaseXmlParserTest(
+class XmlParserCommentsTest : BaseParserTest(
     feedPath = "feed-comment.xml",
     channelTitle = "Hacker News",
     channelLink = "https://news.ycombinator.com/",

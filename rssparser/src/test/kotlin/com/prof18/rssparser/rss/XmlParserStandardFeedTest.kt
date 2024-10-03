@@ -17,9 +17,9 @@
 
 package com.prof18.rssparser.rss
 
-import com.prof18.rssparser.BaseXmlParserTest
+import com.prof18.rssparser.BaseParserTest
 
-class XmlParserStandardFeedTest : BaseXmlParserTest(
+class XmlParserStandardFeedTest : BaseParserTest(
     feedPath = "feed-test.xml",
     channelTitle = "Android Authority",
     channelLink = "https://www.androidauthority.com",

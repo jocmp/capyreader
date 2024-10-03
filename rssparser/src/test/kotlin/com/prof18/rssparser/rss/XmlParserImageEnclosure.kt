@@ -1,9 +1,9 @@
 package com.prof18.rssparser.rss
 
-import com.prof18.rssparser.BaseXmlParserTest
+import com.prof18.rssparser.BaseParserTest
 import com.prof18.rssparser.model.RssImage
 
-class XmlParserImageEnclosure : BaseXmlParserTest(
+class XmlParserImageEnclosure : BaseParserTest(
     feedPath = "feed-image-enclosure.xml",
     channelTitle = "Centrum dopravního výzkumu, v. v. i. (RSS 2.0)",
     channelLink = "https://www.cdv.cz/",

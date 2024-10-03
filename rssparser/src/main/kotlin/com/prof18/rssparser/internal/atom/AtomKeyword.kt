@@ -1,4 +1,4 @@
-package com.prof18.rssparser.internal
+package com.prof18.rssparser.internal.atom
 
 internal sealed class AtomKeyword(val value: String) {
     data object Atom : AtomKeyword("feed")

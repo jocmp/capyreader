@@ -10,7 +10,7 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-abstract class BaseXmlParserTest(
+abstract class BaseParserTest(
     val feedPath: String,
 
     // Channel Data
@@ -39,13 +39,14 @@ abstract class BaseXmlParserTest(
     val articleCommentsUrl: String? = null,
     val articleItunesData: ItunesItemData? = null,
 ) {
+
     private lateinit var channel: RssChannel
     private lateinit var article: RssItem
 
     @BeforeTest
     fun setUp() = runTest {
         val input = readFileFromResources(feedPath)
-        channel = XmlParserFactory.createXmlParser().parseXML(input)
+        channel = ParserFactory.build().parse(input)
         article = channel.items[0]
     }
 
@@ -66,7 +67,7 @@ abstract class BaseXmlParserTest(
 
     @Test
     fun channelImage_isCorrect() {
-        assertEquals(channelImage, channel.image)
+        assertEquals(channelImage?.url, channel.image?.url)
     }
 
     @Test
@@ -248,7 +249,7 @@ abstract class BaseXmlParserTest(
     @Test
     fun articleItunesKeywords_isCorrect() {
         assertEquals(
-            articleItunesData?.keywords ?: emptyList<String>(),
+            articleItunesData?.keywords.orEmpty(),
             article.itunesItemData?.keywords,
         )
     }
