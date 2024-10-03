@@ -18,7 +18,7 @@
     <string name="feed_action_unsubscribe_title">Loobu tellimusest</string>
     <string name="feed_action_edit_success">Uudisvoog on muudetud</string>
     <string name="feed_action_unsubscribe_success">Oled tellimusest loobunud</string>
-    <string name="settings">Kasutajakontod</string>
+    <string name="settings">Ava seadistused</string>
     <string name="settings_remove_account_button_feedbin">Logi välja</string>
     <string name="settings_remove_account_title_feedbin">Logi välja</string>
     <string name="settings_remove_account_message_feedbin">Kas sa oled kindel, et soovid välja logida?</string>
@@ -172,4 +172,10 @@
     <string name="article_list_unread_sort_title">Lugemata artiklite järjestus</string>
     <string name="article_list_unread_sort_oldest_first">Esmalt vanemad</string>
     <string name="article_list_unread_sort_newest_first">Esmalt uuemad</string>
+    <string name="settings_gestures_list_back_navigation_action">Tegevus tagasiliikumisel</string>
+    <string name="settings_gestures_list_back_navigation_open_drawer">Ava menüü</string>
+    <string name="action_share">Jaga</string>
+    <string name="crash_log_export_item_title">Jaga krahhilogisid</string>
+    <string name="crash_log_export_item_subtitle">Jagamiseks arendajaga salvesta rakenduse kokkujooksmise andmed tekstifaili</string>
+    <string name="settings_gestures_list_back_navigation_system_back">Vaikimisi määratud</string>
 </resources>
