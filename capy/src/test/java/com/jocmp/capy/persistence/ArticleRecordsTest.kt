@@ -5,7 +5,7 @@ import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.RandomUUID
 import com.jocmp.capy.articles.UnreadSortOrder
-import com.jocmp.capy.common.nowUTC
+import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.ArticleFixture
 import com.jocmp.capy.fixtures.FeedFixture

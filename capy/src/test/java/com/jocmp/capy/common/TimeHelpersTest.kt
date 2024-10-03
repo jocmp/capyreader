@@ -73,11 +73,11 @@ class TimeHelpersTest {
 
     @Test
     fun `published clamps future time`() {
-        val now = nowUTC()
+        val now = TimeHelpers.nowUTC()
 
         val futureTime = now.plusHours(1).format(DateTimeFormatter.RFC_1123_DATE_TIME)
 
-        val result = published(futureTime, fallback = now)
+        val result = TimeHelpers.published(futureTime, fallback = now)
 
         assertEquals(expected = now, actual = result)
     }
@@ -93,6 +93,24 @@ class TimeHelpersTest {
             5,
             23,
             12,
+            0,
+            ZoneOffset.UTC
+        )
+
+        assertEquals(expected = expected, actual = result)
+    }
+
+    @Test
+    fun `Date only`() {
+        val result = "Sep 20, 2024".toDateTime
+
+        val expected = ZonedDateTime.of(
+            2024,
+            9,
+            20,
+            0,
+            0,
+            0,
             0,
             ZoneOffset.UTC
         )

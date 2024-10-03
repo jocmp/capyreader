@@ -8,7 +8,7 @@ import com.jocmp.capy.accounts.LocalAccountDelegate
 import com.jocmp.capy.accounts.LocalOkHttpClient
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.asOPML
-import com.jocmp.capy.common.nowUTC
+import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.sortedByTitle
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.opml.ImportProgress

@@ -8,7 +8,7 @@ import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.articles.UnreadSortOrder
-import com.jocmp.capy.common.nowUTC
+import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.toDateTimeFromSeconds
 import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.db.Database
