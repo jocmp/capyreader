@@ -22,7 +22,7 @@
     <string name="feed_action_unsubscribe_title">Cancelar suscripción</string>
     <string name="feed_action_edit_success">Feed actualizado</string>
     <string name="feed_action_unsubscribe_success">Darse de baja</string>
-    <string name="settings">Cuentas</string>
+    <string name="settings">Abrir los ajustes</string>
     <string name="settings_remove_account_button_feedbin">Cerrar sesión</string>
     <string name="settings_remove_account_title_feedbin">Cerrar sesión</string>
     <string name="settings_remove_account_message_feedbin">¿Seguro que quieres cerrar la sesión?</string>
@@ -174,4 +174,9 @@
     <string name="article_list_unread_sort_newest_first">Los más nuevos primero</string>
     <string name="article_list_unread_sort_title">Ordenar no leídos</string>
     <string name="settings_gestures_list_back_navigation_system_back">Por defecto</string>
+    <string name="settings_gestures_list_back_navigation_open_drawer">Abrir cajón de navegación</string>
+    <string name="settings_gestures_list_back_navigation_action">Volver hacia atrás</string>
+    <string name="crash_log_export_item_subtitle">Guardar los registros de errores en un archivo para compartirlo con el desarrollador</string>
+    <string name="action_share">Compartir</string>
+    <string name="crash_log_export_item_title">Compartir registros de errores</string>
 </resources>
