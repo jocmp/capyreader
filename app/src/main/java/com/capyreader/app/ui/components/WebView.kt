@@ -19,6 +19,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.graphics.drawable.toBitmap
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewAssetLoader.AssetsPathHandler
+import androidx.webkit.WebViewAssetLoader.DEFAULT_DOMAIN
 import androidx.webkit.WebViewAssetLoader.ResourcesPathHandler
 import coil.executeBlocking
 import coil.imageLoader
@@ -52,7 +53,7 @@ import java.io.InputStream
  * * [How-to docs](https://developer.android.com/develop/ui/views/layout/webapps/load-local-content#mix-content)
  * * [JavaDoc](https://developer.android.com/reference/androidx/webkit/WebViewAssetLoader)
  */
-private const val ASSET_BASE_URL = "https://appassets.androidplatform.net"
+private const val ASSET_BASE_URL = "https://${DEFAULT_DOMAIN}"
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
@@ -197,7 +198,7 @@ fun rememberWebViewState(
         AccompanistWebViewClient(
             assetLoader =
             WebViewAssetLoader.Builder()
-                .setDomain("appassets.androidplatform.net")
+                .setDomain(DEFAULT_DOMAIN)
                 .addPathHandler("/assets/", AssetsPathHandler(context))
                 .addPathHandler("/res/", ResourcesPathHandler(context))
                 .build(),
