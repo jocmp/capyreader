@@ -3,7 +3,7 @@
     <string name="add_feed_url_title">Yayın veya Web Sitesi URL\'si</string>
     <string name="add_feed_submit">Ekle</string>
     <string name="filter_starred">Yıldızlı</string>
-    <string name="settings">Hesaplar</string>
+    <string name="settings">Ayarları aç</string>
     <string name="nav_headline_tags">Etiketler</string>
     <string name="add_feed_network_error">Yayın bulunamadı. Bağlantınızı kontrol edin.</string>
     <string name="mark_all_read_dialog_description">Tüm öğeleri okundu olarak işaretlensin mi?</string>
@@ -175,4 +175,7 @@
     <string name="settings_gestures_list_back_navigation_open_drawer">Gezinme Çekmecesini Aç</string>
     <string name="settings_gestures_list_back_navigation_action">Geri Gezinme Eylemi</string>
     <string name="settings_gestures_list_back_navigation_system_back">Öntanımlı</string>
+    <string name="action_share">Paylaş</string>
+    <string name="crash_log_export_item_subtitle">Geliştirici ile paylaşmak için çökme günlüklerini bir dosyaya kaydeder</string>
+    <string name="crash_log_export_item_title">Çökme günlüklerini paylaş</string>
 </resources>

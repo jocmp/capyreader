@@ -12,7 +12,7 @@
     <string name="feed_action_unsubscribe_title">Annulla l\'iscrizione</string>
     <string name="feed_action_edit_success">Feed aggiornato</string>
     <string name="feed_action_unsubscribe_success">Non iscritto</string>
-    <string name="settings">Account</string>
+    <string name="settings">Apri le impostazioni</string>
     <string name="settings_remove_account_button_feedbin">Logout</string>
     <string name="feed_action_edit">Modifica il feed</string>
     <string name="folder_action_delete_title">Rimuovi il tag</string>
@@ -168,9 +168,15 @@
     <string name="settings_gestures_list_row_swipe_end">Scorrimento verso sinistra</string>
     <string name="article_list_row_swipe_disabled">Disabilitato</string>
     <string name="article_list_row_swipe_toggle_starred">Contrassegno o meno l\'articolo</string>
-    <string name="article_list_row_swipe_toggle_read">Imposto o meno l\'articolo come letto</string>
+    <string name="article_list_row_swipe_toggle_read">Imposto o meno come letto</string>
     <string name="article_list_unread_sort_oldest_first">Prima gli articoli più vecchi</string>
     <string name="article_view_mark_as_unread">Segna come non letto</string>
     <string name="article_list_unread_sort_title">Ordina gli articoli non letti</string>
     <string name="article_list_unread_sort_newest_first">Prima gli articoli più recenti</string>
+    <string name="settings_gestures_list_back_navigation_system_back">Predefinito</string>
+    <string name="action_share">Condividi</string>
+    <string name="settings_gestures_list_back_navigation_action">Azione tasto indietro</string>
+    <string name="settings_gestures_list_back_navigation_open_drawer">Torna all\'elenco dei Tag</string>
+    <string name="crash_log_export_item_subtitle">Salva i log dei crash in un file da condividere con lo sviluppatore</string>
+    <string name="crash_log_export_item_title">Condividi i log di arresti anomali</string>
 </resources>
