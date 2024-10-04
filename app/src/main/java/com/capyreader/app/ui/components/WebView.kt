@@ -147,13 +147,16 @@ class WebViewState(
 ) {
     private var htmlId: String? = null
 
+    init {
+        webView.loadUrl("about:blank")
+    }
+
     fun loadHtml(article: Article) {
         val id = article.id
-        val view = webView
 
         scope.launch {
             if (id != htmlId) {
-                view.visibility = View.INVISIBLE
+                webView.visibility = View.INVISIBLE
             }
 
             htmlId = id
@@ -161,12 +164,12 @@ class WebViewState(
             withContext(Dispatchers.IO) {
                 val html = renderer.render(
                     article,
-                    byline = article.byline(context = view.context),
+                    byline = article.byline(context = webView.context),
                     colors = colors
                 )
 
                 withContext(Dispatchers.Main) {
-                    view.loadDataWithBaseURL(
+                    webView.loadDataWithBaseURL(
                         ASSET_BASE_URL,
                         html,
                         null,
