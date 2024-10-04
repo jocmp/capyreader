@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -55,4 +56,10 @@ fun ArticleReader(
     }
 
     ArticleStyleListener(webView = webViewState.webView)
+
+    DisposableEffect(article.id) {
+        onDispose {
+            webViewState.reset()
+        }
+    }
 }

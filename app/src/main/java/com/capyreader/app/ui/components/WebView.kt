@@ -149,14 +149,14 @@ class WebViewState(
     private var htmlId: String? = null
 
     init {
-        webView.loadUrl("about:blank")
+        loadEmpty()
     }
 
     fun loadHtml(article: Article) {
         val id = article.id
 
         scope.launch {
-            if (id != htmlId) {
+            if (htmlId != null && id != htmlId) {
                 webView.visibility = View.INVISIBLE
             }
 
@@ -181,6 +181,13 @@ class WebViewState(
             }
         }
     }
+
+    fun reset() {
+        htmlId = null
+        loadEmpty()
+    }
+
+    private fun loadEmpty() = webView.loadUrl("about:blank")
 }
 
 @SuppressLint("SetJavaScriptEnabled")
