@@ -10,26 +10,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.ui.articles.ColumnScrollbar
 import com.capyreader.app.ui.components.WebView
-import com.capyreader.app.ui.components.rememberWebViewState
+import com.capyreader.app.ui.components.WebViewState
 import com.jocmp.capy.Article
-import kotlinx.coroutines.launch
 
 @Composable
 fun ArticleReader(
     article: Article,
     scrollState: ScrollState,
+    webViewState: WebViewState,
 ) {
-    val scope = rememberCoroutineScope()
-    val mediaViewer = LocalMediaViewer.current
     var lastScrollY by rememberSaveable { mutableIntStateOf(0) }
-    val webViewState = rememberWebViewState()
 
     ColumnScrollbar(state = scrollState) {
         Column(
@@ -39,14 +35,6 @@ fun ArticleReader(
         ) {
             WebView(
                 state = webViewState,
-                onNavigateToMedia = {
-                    mediaViewer.open(it)
-                },
-                onPageStarted = {
-                    scope.launch {
-                        scrollState.scrollTo(0)
-                    }
-                },
                 onDispose = {
                     lastScrollY = scrollState.value
                 },

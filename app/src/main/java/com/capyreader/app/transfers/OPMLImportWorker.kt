@@ -41,7 +41,7 @@ class OPMLImportWorker(
     private val account by inject<Account>()
 
     private val channelID = Notifications.OPML_IMPORT.channelID
-    private val notificationsID = Notifications.OPML_IMPORT.notificationID
+    private val notificationsID = 6_170_000
 
     private val notificationManager =
         context.getSystemService(Context.NOTIFICATION_SERVICE) as
