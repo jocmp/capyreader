@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.ui.articles.IndexedArticles
 import com.capyreader.app.ui.articles.LocalFullContent
+import com.capyreader.app.ui.components.WebViewState
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.capyreader.app.ui.settings.ArticleVerticalSwipe
 import com.capyreader.app.ui.settings.ArticleVerticalSwipe.LOAD_FULL_CONTENT
@@ -47,6 +48,8 @@ import org.koin.compose.koinInject
 @Composable
 fun ArticleView(
     article: Article,
+    webViewState: WebViewState,
+    scrollState: ScrollState,
     articles: IndexedArticles,
     onBackPressed: () -> Unit,
     onToggleRead: () -> Unit,
@@ -55,9 +58,6 @@ fun ArticleView(
     onRequestArticle: (id: String) -> Unit
 ) {
     val fullContent = LocalFullContent.current
-    val scrollState = rememberSaveable(key = article.id, saver = ScrollState.Saver) {
-        ScrollState(initial = 0)
-    }
 
     fun selectArticle(relation: () -> Article?) {
         relation()?.let { onRequestArticle(it.id) }
@@ -103,7 +103,8 @@ fun ArticleView(
                     ) {
                         ArticleReader(
                             article = article,
-                            scrollState = scrollState
+                            webViewState = webViewState,
+                            scrollState = scrollState,
                         )
                     }
                 }

@@ -4,6 +4,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -53,6 +54,7 @@ import com.capyreader.app.ui.articles.list.EmptyOnboardingView
 import com.capyreader.app.ui.articles.list.FeedListTopBar
 import com.capyreader.app.ui.articles.media.ArticleMediaView
 import com.capyreader.app.ui.components.ArticleSearch
+import com.capyreader.app.ui.components.rememberWebViewState
 import com.capyreader.app.ui.fixtures.FeedPreviewFixture
 import com.capyreader.app.ui.fixtures.FolderPreviewFixture
 import com.capyreader.app.ui.isCompact
@@ -132,6 +134,20 @@ fun ArticleLayout(
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
     }
 
+    val scrollState = rememberSaveable(key = article?.id, saver = ScrollState.Saver) {
+        ScrollState(initial = 0)
+    }
+    val webViewState = rememberWebViewState(
+        onNavigateToMedia = {
+            mediaUrl = it
+        },
+        onPageStarted = {
+            coroutineScope.launch {
+                scrollState.scrollTo(0)
+            }
+        }
+    )
+
     fun scrollToArticle(index: Int) {
         coroutineScope.launch {
             if (index > -1) {
@@ -205,12 +221,6 @@ fun ArticleLayout(
             openNextList()
 
             showSnackbar(addFeedSuccessMessage)
-        }
-    }
-
-    val mediaViewer = remember {
-        MediaViewer {
-            mediaUrl = it
         }
     }
 
@@ -340,39 +350,39 @@ fun ArticleLayout(
             }
         },
         detailPane = {
-            CompositionLocalProvider(LocalMediaViewer provides mediaViewer) {
-                if (article == null && !isCompact()) {
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier
-                            .fillMaxSize()
-                    ) {
-                        CapyPlaceholder()
-                    }
-                } else if (article != null) {
-                    val compact = isCompact()
-                    val indexedArticles =
-                        rememberIndexedArticles(article = article, articles = pagingArticles)
+            if (article == null && !isCompact()) {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
+                    CapyPlaceholder()
+                }
+            } else if (article != null) {
+                val compact = isCompact()
+                val indexedArticles =
+                    rememberIndexedArticles(article = article, articles = pagingArticles)
 
-                    ArticleView(
-                        article = article,
-                        articles = indexedArticles,
-                        onBackPressed = {
-                            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
-                            onRequestClearArticle()
-                        },
-                        onToggleRead = onToggleArticleRead,
-                        onToggleStar = onToggleArticleStar,
-                        enableBackHandler = mediaUrl == null,
-                        onRequestArticle = { id ->
-                            onSelectArticle(id)
-                        },
-                    )
+                ArticleView(
+                    article = article,
+                    webViewState = webViewState,
+                    scrollState = scrollState,
+                    articles = indexedArticles,
+                    onBackPressed = {
+                        scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
+                        onRequestClearArticle()
+                    },
+                    onToggleRead = onToggleArticleRead,
+                    onToggleStar = onToggleArticleStar,
+                    enableBackHandler = mediaUrl == null,
+                    onRequestArticle = { id ->
+                        onSelectArticle(id)
+                    },
+                )
 
-                    LaunchedEffect(article.id, indexedArticles.index) {
-                        if (!compact) {
-                            scrollToArticle(indexedArticles.index)
-                        }
+                LaunchedEffect(article.id, indexedArticles.index) {
+                    if (!compact) {
+                        scrollToArticle(indexedArticles.index)
                     }
                 }
             }

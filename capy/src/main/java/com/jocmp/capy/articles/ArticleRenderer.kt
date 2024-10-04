@@ -23,13 +23,16 @@ class ArticleRenderer(
         byline: String,
         colors: Map<String, String>,
     ): String {
+        val fontFamily = fontOption.get()
+
         val substitutions = colors + mapOf(
             "external_link" to article.url.toString(),
             "title" to article.title,
             "byline" to byline,
             "feed_name" to article.feedName,
             "text_size" to textSize.get().slug,
-            "font_family" to fontOption.get().slug,
+            "font_family" to fontFamily.slug,
+            "font_preload" to fontPreload(fontFamily),
             "top_margin" to "64px"
         )
 
@@ -47,5 +50,14 @@ class ArticleRenderer(
         cleanLinks(document)
 
         return document.html()
+    }
+
+    private fun fontPreload(fontFamily: FontOption): String {
+        return when (fontFamily) {
+            FontOption.SYSTEM_DEFAULT -> ""
+            else -> """
+                    <link rel="preload" href="/res/font/${fontFamily.slug}.ttf" as="font" type="font/ttf" crossorigin>
+                """.trimIndent()
+        }
     }
 }

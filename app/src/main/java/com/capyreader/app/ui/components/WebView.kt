@@ -11,17 +11,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.graphics.drawable.toBitmap
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewAssetLoader.AssetsPathHandler
+import androidx.webkit.WebViewAssetLoader.DEFAULT_DOMAIN
 import androidx.webkit.WebViewAssetLoader.ResourcesPathHandler
 import coil.executeBlocking
 import coil.imageLoader
@@ -55,57 +53,19 @@ import java.io.InputStream
  * * [How-to docs](https://developer.android.com/develop/ui/views/layout/webapps/load-local-content#mix-content)
  * * [JavaDoc](https://developer.android.com/reference/androidx/webkit/WebViewAssetLoader)
  */
-private const val ASSET_BASE_URL = "https://appassets.androidplatform.net"
+private const val ASSET_BASE_URL = "https://${DEFAULT_DOMAIN}"
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun WebView(
     state: WebViewState,
-    onNavigateToMedia: (url: String) -> Unit,
-    onPageStarted: () -> Unit,
     onDispose: (WebView) -> Unit,
 ) {
-    val context = LocalContext.current
-
-    val client = remember {
-        AccompanistWebViewClient(
-            assetLoader =
-            WebViewAssetLoader.Builder()
-                .setDomain("appassets.androidplatform.net")
-                .addPathHandler("/assets/", AssetsPathHandler(context))
-                .addPathHandler("/res/", ResourcesPathHandler(context))
-                .build(),
-            onPageStarted = onPageStarted,
-        )
-    }
-    client.state = state
-
     AndroidView(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight(),
-        factory = { ctx ->
-            WebView(ctx).apply {
-                this.settings.javaScriptEnabled = true
-                this.settings.mediaPlaybackRequiresUserGesture = false
-                this.settings.offscreenPreRaster = true
-                isVerticalScrollBarEnabled = false
-                isHorizontalScrollBarEnabled = false
-
-                addJavascriptInterface(
-                    WebViewInterface(
-                        navigateToMedia = { onNavigateToMedia(it) },
-                    ),
-                    WebViewInterface.INTERFACE_NAME
-                )
-
-                setBackgroundColor(context.getColor(android.R.color.transparent))
-
-                webViewClient = client
-            }.also {
-                state.webView = it
-            }
-        },
+        factory = { state.webView },
         onRelease = {
             onDispose(it)
         }
@@ -114,7 +74,7 @@ fun WebView(
 
 class AccompanistWebViewClient(
     private val assetLoader: WebViewAssetLoader,
-    private val onPageStarted: () -> Unit,
+    private val onPageStarted: () -> Unit
 ) : WebViewClient(),
     KoinComponent {
     lateinit var state: WebViewState
@@ -184,18 +144,20 @@ class WebViewState(
     private val renderer: ArticleRenderer,
     private val colors: Map<String, String>,
     private val scope: CoroutineScope,
+    internal val webView: WebView,
 ) {
-    internal var webView by mutableStateOf<WebView?>(null)
+    private var htmlId: String? = null
 
-    private var htmlId: Long? = null
+    init {
+        loadEmpty()
+    }
 
     fun loadHtml(article: Article) {
-        val id = article.id.hashCode().toLong()
-        val view = webView ?: return
+        val id = article.id
 
         scope.launch {
-            if (id != htmlId) {
-                view.visibility = View.INVISIBLE
+            if (htmlId != null && id != htmlId) {
+                webView.visibility = View.INVISIBLE
             }
 
             htmlId = id
@@ -203,12 +165,12 @@ class WebViewState(
             withContext(Dispatchers.IO) {
                 val html = renderer.render(
                     article,
-                    byline = article.byline(context = view.context),
+                    byline = article.byline(context = webView.context),
                     colors = colors
                 )
 
                 withContext(Dispatchers.Main) {
-                    view.loadDataWithBaseURL(
+                    webView.loadDataWithBaseURL(
                         ASSET_BASE_URL,
                         html,
                         null,
@@ -219,15 +181,61 @@ class WebViewState(
             }
         }
     }
+
+    fun reset() {
+        htmlId = null
+        loadEmpty()
+    }
+
+    private fun loadEmpty() = webView.loadUrl("about:blank")
 }
 
+@SuppressLint("SetJavaScriptEnabled")
 @Composable
-fun rememberWebViewState(renderer: ArticleRenderer = koinInject()): WebViewState {
+fun rememberWebViewState(
+    renderer: ArticleRenderer = koinInject(),
+    onNavigateToMedia: (url: String) -> Unit,
+    onPageStarted: () -> Unit,
+): WebViewState {
     val colors = articleTemplateColors()
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+
+    val client = remember {
+        AccompanistWebViewClient(
+            assetLoader =
+            WebViewAssetLoader.Builder()
+                .setDomain(DEFAULT_DOMAIN)
+                .addPathHandler("/assets/", AssetsPathHandler(context))
+                .addPathHandler("/res/", ResourcesPathHandler(context))
+                .build(),
+            onPageStarted = onPageStarted,
+        )
+    }
 
     return remember {
-        WebViewState(renderer, colors, scope)
+        val webView = WebView(context).apply {
+            this.settings.javaScriptEnabled = true
+            this.settings.mediaPlaybackRequiresUserGesture = false
+            this.settings.offscreenPreRaster = true
+            isVerticalScrollBarEnabled = false
+            isHorizontalScrollBarEnabled = false
+
+            addJavascriptInterface(
+                WebViewInterface(
+                    navigateToMedia = { onNavigateToMedia(it) }
+                ),
+                WebViewInterface.INTERFACE_NAME
+            )
+
+            setBackgroundColor(context.getColor(android.R.color.transparent))
+
+            webViewClient = client
+        }
+
+        WebViewState(renderer, colors, scope, webView).also {
+            client.state = it
+        }
     }
 }
 
