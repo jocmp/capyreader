@@ -91,6 +91,7 @@ internal class FeedRecords(private val database: Database) {
         siteURL: String?,
         faviconURL: String?,
         enableStickyFullContent: Boolean = false,
+        enableNotifications: Boolean = false,
         folderName: String? = "",
         articleCount: Long = 0,
     ) = Feed(
@@ -102,6 +103,7 @@ internal class FeedRecords(private val database: Database) {
         faviconURL = faviconURL,
         folderName = folderName.orEmpty(),
         count = articleCount,
-        enableStickyFullContent = enableStickyFullContent
+        enableStickyFullContent = enableStickyFullContent,
+        enableNotifications = enableNotifications
     )
 }
