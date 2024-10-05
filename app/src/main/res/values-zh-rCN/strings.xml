@@ -95,7 +95,7 @@
     <string name="settings_remove_account_title_local">删除账户</string>
     <string name="settings_section_privacy">隐私</string>
     <string name="feed_action_edit_success">源已更新</string>
-    <string name="settings">账户</string>
+    <string name="settings">打开设置</string>
     <string name="settings_remove_account_title_feedbin">退出登录</string>
     <string name="settings_remove_account_message_feedbin">确定退出登录吗？</string>
     <string name="refresh_feeds_menu_label">刷新源</string>
@@ -161,4 +161,20 @@
     <string name="article_vertical_swipe_previous_article">上一篇</string>
     <string name="article_vertical_swipe_next_article">下一篇</string>
     <string name="article_vertical_swipe_disabled">禁用</string>
+    <string name="article_view_mark_as_unread">标记为已读</string>
+    <string name="article_view_unstar">删除星标</string>
+    <string name="settings_gestures_list_row_swipe_end">向左滑动</string>
+    <string name="article_list_row_swipe_disabled">已停用</string>
+    <string name="settings_gestures_list_row_swipe_start">向右滑动</string>
+    <string name="article_list_row_swipe_toggle_starred">切换星标状态</string>
+    <string name="article_list_row_swipe_toggle_read">切换阅读状态</string>
+    <string name="article_list_unread_sort_title">未读排序</string>
+    <string name="article_list_unread_sort_newest_first">最新优先</string>
+    <string name="article_list_unread_sort_oldest_first">最旧优先</string>
+    <string name="settings_gestures_list_back_navigation_action">返回导航操作</string>
+    <string name="action_share">分享</string>
+    <string name="crash_log_export_item_title">分享崩溃日志</string>
+    <string name="crash_log_export_item_subtitle">保存崩溃日志到文件和开发者分享</string>
+    <string name="settings_gestures_list_back_navigation_system_back">默认</string>
+    <string name="settings_gestures_list_back_navigation_open_drawer">打开导航抽屉</string>
 </resources>

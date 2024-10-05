@@ -60,4 +60,16 @@
     <plurals name="refresh_hours">
         <item quantity="other">Setiap %d jam</item>
     </plurals>
+    <string name="relative_time_minutes">%1$dm</string>
+    <string name="unauthorized_dialog_title">Anda keluar</string>
+    <string name="unauthorized_dialog_description">Ada masalah dalam menghubungkan ke akun Anda. Silakan masuk lagi.</string>
+    <string name="unauthorized_dialog_dismiss_text">Nanti</string>
+    <string name="unauthorized_dialog_confirm_text">Masuk</string>
+    <string name="auth_fields_password">Kata sandi</string>
+    <string name="auth_fields_username">Email</string>
+    <string name="auth_fields_show_password">Tampilkan kata sandi</string>
+    <string name="auth_fields_log_in_button">Masuk</string>
+    <string name="auth_fields_hide_password">Sembunyikan kata sandi</string>
+    <string name="article_actions_mark_below_as_read">Tandai di bawah sudah dibaca</string>
+    <string name="article_actions_mark_after_as_read">Tandai di atas sudah dibaca</string>
 </resources>
