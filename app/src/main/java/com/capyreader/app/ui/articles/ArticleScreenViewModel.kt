@@ -20,6 +20,7 @@ import com.jocmp.capy.MarkRead
 import com.jocmp.capy.articles.parseHtml
 import com.jocmp.capy.buildArticlePager
 import com.jocmp.capy.common.UnauthorizedError
+import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.countAll
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -136,10 +137,12 @@ class ArticleScreenViewModel(
     }
 
     fun markAllRead(range: MarkRead) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launchIO {
             val articleIDs = account.unreadArticleIDs(filter = filter.value, range = range)
 
-            Sync.markReadAsync(articleIDs, context)
+            account.markAllRead(articleIDs).onFailure {
+                Sync.markReadAsync(articleIDs, context)
+            }
         }
     }
 
