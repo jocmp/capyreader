@@ -4,7 +4,8 @@ Added
 
 Updated
 
-• Updates translations for Spanish, Estonian, Indonesian, Italian and Turkish thanks to volunteers
+• Improve reader speed when opening articles
+• Updates translations for Spanish, Estonian, Indonesian, Italian, Turkish and Chinese thanks to volunteers
 
 Fixed
 
