@@ -139,6 +139,7 @@ class ArticleScreenViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             val articleIDs = account.unreadArticleIDs(filter = filter.value, range = range)
 
+            // mark read, on failure do async
             Sync.markReadAsync(articleIDs, context)
         }
     }
