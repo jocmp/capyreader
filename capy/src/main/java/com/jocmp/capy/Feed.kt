@@ -13,4 +13,5 @@ data class Feed(
     val faviconURL: String? = null,
     override val count: Long = 0,
     val enableStickyFullContent: Boolean = false,
+    val enableNotifications: Boolean = false
 ): Countable

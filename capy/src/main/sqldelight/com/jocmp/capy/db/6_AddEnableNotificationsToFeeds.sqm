@@ -1,0 +1,4 @@
+import kotlin.Boolean;
+
+ALTER TABLE feeds
+ADD COLUMN enable_notifications INTEGER AS Boolean NOT NULL DEFAULT 0;
