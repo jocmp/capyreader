@@ -126,16 +126,20 @@ class LocalAccountDelegate(
     }
 
     private suspend fun refreshFeeds(cutoffDate: ZonedDateTime?) {
-        val feeds = feedRecords.feeds().firstOrNull() ?: return
+        try {
+            val feeds = feedRecords.feeds().firstOrNull() ?: return
 
-        coroutineScope {
-            feeds.forEach { feed ->
-                launch {
-                    feedFinder.fetch(feed.feedURL).onSuccess { channel ->
-                        saveArticles(channel.items, cutoffDate = cutoffDate, feed = feed)
+            coroutineScope {
+                feeds.forEach { feed ->
+                    launch {
+                        feedFinder.fetch(feed.feedURL).onSuccess { channel ->
+                            saveArticles(channel.items, cutoffDate = cutoffDate, feed = feed)
+                        }
                     }
                 }
             }
+        } catch (e: Throwable) {
+            // continue
         }
     }
 
