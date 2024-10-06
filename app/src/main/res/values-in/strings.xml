@@ -70,4 +70,6 @@
     <string name="auth_fields_show_password">Tampilkan kata sandi</string>
     <string name="auth_fields_log_in_button">Masuk</string>
     <string name="auth_fields_hide_password">Sembunyikan kata sandi</string>
+    <string name="article_actions_mark_below_as_read">Tandai di bawah sudah dibaca</string>
+    <string name="article_actions_mark_after_as_read">Tandai di atas sudah dibaca</string>
 </resources>
