@@ -19,6 +19,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
+import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.rememberDrawerState
@@ -429,15 +430,7 @@ fun ArticleLayout(
         }
     }
 
-    val compact = isCompact()
-
-    LaunchedEffect(compact, article, scaffoldNavigator) {
-        val isReader = scaffoldNavigator.currentDestination?.pane == ListDetailPaneScaffoldRole.Detail
-
-        if (isReader && article == null && compact) {
-            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
-        }
-    }
+    ResetPageOnClear(article, scaffoldNavigator)
 
     BackHandler(mediaUrl != null) {
         mediaUrl = null
@@ -451,6 +444,18 @@ fun ArticleLayout(
         enabled = isFeedActive(mediaUrl, article, search)
     ) {
         toggleDrawer()
+    }
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3AdaptiveApi::class)
+fun ResetPageOnClear(article: Article?, navigator: ThreePaneScaffoldNavigator<Any>) {
+    LaunchedEffect(article, navigator) {
+        val isReader = navigator.currentDestination?.pane == ListDetailPaneScaffoldRole.Detail
+
+        if (isReader && article == null) {
+            navigator.navigateTo(ListDetailPaneScaffoldRole.List)
+        }
     }
 }
 
