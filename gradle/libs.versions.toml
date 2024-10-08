@@ -1,19 +1,18 @@
 [versions]
 androidx-paging = "3.3.2"
 coil = "2.7.0"
-coroutines = "1.8.1"
-kotlin = "1.9.22"
-ksp = "1.9.22-1.0.16"
+coroutines = "1.9.0"
+kotlin = "2.0.20"
+ksp = "2.0.20-1.0.25"
 androidx-lifecycle-runtime = "2.8.6"
-androidx-adaptive = "1.1.0-alpha03"
+androidx-adaptive = "1.1.0-alpha04"
 mockk = "1.13.12"
-navigation-compose = "2.8.1"
+navigation-compose = "2.8.2"
 okhttp = "4.12.0"
 paging-compose = "3.3.2"
 readability4j = "1.0.8"
 sqldelight = "2.0.2"
 zoomable = "0.12.1"
-jetbrains-kotlin-jvm = "1.9.22"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version = "1.9.2" }
@@ -21,7 +20,7 @@ androidx-adaptive = { module = "androidx.compose.material3.adaptive:adaptive", v
 androidx-adaptive-layout = { module = "androidx.compose.material3.adaptive:adaptive-layout", version.ref = "androidx-adaptive" }
 androidx-adaptive-navigation = { module = "androidx.compose.material3.adaptive:adaptive-navigation", version.ref = "androidx-adaptive" }
 androidx-browser = { module = "androidx.browser:browser", version = "1.8.0" }
-androidx-compose-bom = { module = "androidx.compose:compose-bom", version = "2024.09.02" }
+androidx-compose-bom = { module = "androidx.compose:compose-bom", version = "2024.09.03" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version = "1.13.1" }
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle-runtime" }
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle-runtime" }
@@ -37,7 +36,7 @@ androidx-ui = { module = "androidx.compose.ui:ui" }
 androidx-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
 androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
-androidx-webkit = { module = "androidx.webkit:webkit", version = "1.12.0" }
+androidx-webkit = { module = "androidx.webkit:webkit", version = "1.12.1" }
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version = "2.9.1" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 coil-gif = { module = "io.coil-kt:coil-gif", version.ref = "coil" }
@@ -75,5 +74,7 @@ tests-mockk-mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 tests-okhttp-mock = { module = "com.github.gmazzo.okhttp.mock:mock-client", version = "2.0.0" }
 zoomable = { module = "me.saket.telephoto:zoomable", version.ref = "zoomable" }
 zoomable-image-coil = { module = "me.saket.telephoto:zoomable-image-coil", version.ref = "zoomable" }
+
 [plugins]
-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrains-kotlin-jvm" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

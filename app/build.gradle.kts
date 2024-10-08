@@ -6,6 +6,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
     kotlin("plugin.serialization") version libs.versions.kotlin
+    alias(libs.plugins.compose.compiler)
 }
 
 val secrets = Properties()

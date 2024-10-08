@@ -7,6 +7,7 @@ import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -14,6 +15,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.capyreader.app.setupCommonModules
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
 import com.capyreader.app.ui.isCompact
+import com.jocmp.capy.common.launchIO
+import com.jocmp.capy.common.launchUI
 import org.koin.android.ext.koin.androidContext
 import org.koin.compose.KoinApplication
 
@@ -23,6 +26,7 @@ fun SettingsView(
     onNavigateBack: () -> Unit,
     onRemoveAccount: () -> Unit,
 ) {
+    val coroutineScope = rememberCoroutineScope()
     val navigator = rememberListDetailPaneScaffoldNavigator<SettingsPanel>()
     val currentPanel = navigator.currentDestination?.contentKey
 
@@ -32,7 +36,9 @@ fun SettingsView(
             SettingsList(
                 selected = currentPanel,
                 onNavigate = { panel ->
-                    navigator.navigateTo(ThreePaneScaffoldRole.Primary, panel)
+                    coroutineScope.launchUI {
+                        navigator.navigateTo(ThreePaneScaffoldRole.Primary, panel)
+                    }
                 },
                 onNavigateBack = onNavigateBack
             )
@@ -49,7 +55,9 @@ fun SettingsView(
             } else if (currentPanel != null) {
                 SettingsPanelScaffold(
                     onBack = {
-                        navigator.navigateBack()
+                        coroutineScope.launchUI {
+                            navigator.navigateBack()
+                        }
                     },
                     panel = currentPanel,
                 ) {
@@ -68,7 +76,9 @@ fun SettingsView(
     )
 
     BackHandler(navigator.canNavigateBack()) {
-        navigator.navigateBack()
+        coroutineScope.launchUI {
+            navigator.navigateBack()
+        }
     }
 }
 
