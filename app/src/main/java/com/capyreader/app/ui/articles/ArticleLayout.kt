@@ -429,6 +429,16 @@ fun ArticleLayout(
         }
     }
 
+    val compact = isCompact()
+
+    LaunchedEffect(compact, article, scaffoldNavigator) {
+        val isReader = scaffoldNavigator.currentDestination?.pane == ListDetailPaneScaffoldRole.Detail
+
+        if (isReader && article == null && compact) {
+            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
+        }
+    }
+
     BackHandler(mediaUrl != null) {
         mediaUrl = null
     }
