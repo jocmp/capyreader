@@ -6,6 +6,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
     kotlin("plugin.serialization") version libs.versions.kotlin
+    alias(libs.plugins.compose.compiler)
 }
 
 val secrets = Properties()
@@ -22,8 +23,8 @@ android {
         applicationId = "com.capyreader.app"
         minSdk = 30
         targetSdk = 35
-        versionCode = 1057
-        versionName = "2024.10.1057-dev"
+        versionCode = 1058
+        versionName = "2024.10.1058"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

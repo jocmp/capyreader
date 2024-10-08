@@ -19,11 +19,11 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
+import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -47,8 +47,6 @@ import com.capyreader.app.R
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
-import com.capyreader.app.ui.articles.detail.LocalMediaViewer
-import com.capyreader.app.ui.articles.detail.MediaViewer
 import com.capyreader.app.ui.articles.detail.resetScrollBehaviorListener
 import com.capyreader.app.ui.articles.list.EmptyOnboardingView
 import com.capyreader.app.ui.articles.list.FeedListTopBar
@@ -64,6 +62,7 @@ import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
+import com.jocmp.capy.common.launchUI
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -131,7 +130,9 @@ fun ArticleLayout(
         setUpdatePasswordDialogOpen(true)
     }
     val navigateToDetail = {
-        scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
+        coroutineScope.launchUI {
+            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
+        }
     }
 
     val scrollState = rememberSaveable(key = article?.id, saver = ScrollState.Saver) {
@@ -369,7 +370,9 @@ fun ArticleLayout(
                     scrollState = scrollState,
                     articles = indexedArticles,
                     onBackPressed = {
-                        scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
+                        coroutineScope.launchUI {
+                            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
+                        }
                         onRequestClearArticle()
                     },
                     onToggleRead = onToggleArticleRead,
@@ -427,6 +430,8 @@ fun ArticleLayout(
         }
     }
 
+    ResetPageOnClear(article, scaffoldNavigator)
+
     BackHandler(mediaUrl != null) {
         mediaUrl = null
     }
@@ -439,6 +444,18 @@ fun ArticleLayout(
         enabled = isFeedActive(mediaUrl, article, search)
     ) {
         toggleDrawer()
+    }
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3AdaptiveApi::class)
+fun ResetPageOnClear(article: Article?, navigator: ThreePaneScaffoldNavigator<Any>) {
+    LaunchedEffect(article, navigator) {
+        val isReader = navigator.currentDestination?.pane == ListDetailPaneScaffoldRole.Detail
+
+        if (isReader && article == null) {
+            navigator.navigateTo(ListDetailPaneScaffoldRole.List)
+        }
     }
 }
 

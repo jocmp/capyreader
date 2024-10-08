@@ -6,7 +6,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
+import androidx.lifecycle.viewmodel.compose.saveable
 import androidx.paging.PagingData
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.sync.Sync
@@ -20,6 +23,7 @@ import com.jocmp.capy.MarkRead
 import com.jocmp.capy.articles.parseHtml
 import com.jocmp.capy.buildArticlePager
 import com.jocmp.capy.common.UnauthorizedError
+import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.countAll
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -136,10 +140,12 @@ class ArticleScreenViewModel(
     }
 
     fun markAllRead(range: MarkRead) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launchIO {
             val articleIDs = account.unreadArticleIDs(filter = filter.value, range = range)
 
-            Sync.markReadAsync(articleIDs, context)
+            account.markAllRead(articleIDs).onFailure {
+                Sync.markReadAsync(articleIDs, context)
+            }
         }
     }
 
