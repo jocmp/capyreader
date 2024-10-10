@@ -27,6 +27,8 @@ import com.jocmp.feedbinclient.pagingInfo
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
+import okio.IOException
+import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.time.ZonedDateTime
 
@@ -179,7 +181,7 @@ internal class FeedbinAccountDelegate(
 
                 AddFeedResult.MultipleChoices(choices)
             }
-        } catch (e: UnknownHostException) {
+        } catch (e: IOException) {
             AddFeedResult.Failure(AddFeedError.NetworkError())
         }
     }
@@ -193,10 +195,10 @@ internal class FeedbinAccountDelegate(
             refreshArticles(since = since)
 
             Result.success(Unit)
-        } catch (exception: UnknownHostException) {
+        } catch (exception: IOException) {
             Result.failure(exception)
         } catch (e: UnauthorizedError) {
-            return Result.failure(e)
+            Result.failure(e)
         }
     }
 
