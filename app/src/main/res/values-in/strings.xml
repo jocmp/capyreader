@@ -61,7 +61,7 @@
         <item quantity="other">Setiap %d jam</item>
     </plurals>
     <string name="relative_time_minutes">%1$dm</string>
-    <string name="unauthorized_dialog_title">Anda keluar</string>
+    <string name="unauthorized_dialog_title">Anda telah keluar</string>
     <string name="unauthorized_dialog_description">Ada masalah dalam menghubungkan ke akun Anda. Silakan masuk lagi.</string>
     <string name="unauthorized_dialog_dismiss_text">Nanti</string>
     <string name="unauthorized_dialog_confirm_text">Masuk</string>
@@ -72,4 +72,34 @@
     <string name="auth_fields_hide_password">Sembunyikan kata sandi</string>
     <string name="article_actions_mark_below_as_read">Tandai di bawah sudah dibaca</string>
     <string name="article_actions_mark_after_as_read">Tandai di atas sudah dibaca</string>
+    <string name="settings_top_bar_title">Pengaturan</string>
+    <string name="add_account_title">Tambah Akun</string>
+    <string name="settings_section_account">Akun</string>
+    <string name="transfers_export_subscriptions">Ekspor Langganan</string>
+    <string name="settings_section_export">Expor</string>
+    <string name="theme_menu_label">Tema</string>
+    <string name="theme_menu_option_light">Terang</string>
+    <string name="edit_feed_tags">Tag</string>
+    <string name="settings_account_title">Akun</string>
+    <string name="settings_about_title">Tentang</string>
+    <string name="settings_list_top_bar_title">Pengaturan</string>
+    <string name="settings_auto_delete_articles_title">Simpan artikel</string>
+    <string name="settings_auto_delete_option_keep_for_one_week">1 minggu</string>
+    <string name="settings_auto_delete_option_keep_for_two_week">2 minggu</string>
+    <string name="settings_auto_delete_option_keep_for_one_month">1 bulan</string>
+    <string name="article_bottom_bar_next_article">Ke artikel selanjutnya</string>
+    <string name="settings_gestures_reader_swipe_down">Usap ke Bawah</string>
+    <string name="settings_gestures_reader_swipe_up">Usap ke Atas</string>
+    <string name="settings_gestures_list_row_swipe_start">Usap ke Kanan</string>
+    <string name="settings_gestures_list_row_swipe_end">Usap ke Kiri</string>
+    <string name="article_vertical_swipe_previous_article">Artikel sebelumnya</string>
+    <string name="article_vertical_swipe_next_article">Artikel selanjutnya</string>
+    <string name="article_vertical_swipe_disabled">Dimatikan</string>
+    <string name="article_vertical_swipe_full_content">Muat konten lengkap</string>
+    <string name="article_list_row_swipe_disabled">Dimatikan</string>
+    <string name="settings_section_import">Impor</string>
+    <string name="opml_import_notification_title">Mengimpor langganan…</string>
+    <string name="theme_menu_option_dark">Gelap</string>
+    <string name="settings_auto_delete_option_keep_forever">Selamanya</string>
+    <string name="settings_auto_delete_option_keep_for_three_month">3 bulan</string>
 </resources>
