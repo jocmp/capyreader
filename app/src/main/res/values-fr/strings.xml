@@ -52,7 +52,7 @@
         <item quantity="many">Toutes les %d heures</item>
         <item quantity="other">Toutes les %d heures</item>
     </plurals>
-    <string name="refresh_feeds_menu_label">Rafraîchir les flux</string>
+    <string name="refresh_feeds_menu_label">Rafraichir les flux</string>
     <string name="nav_headline_feeds">Flux</string>
     <string name="nav_add_feed">Ajouter un flux</string>
     <string name="unsubscribe_error">Erreur à la désinscription du flux</string>
@@ -135,7 +135,7 @@
     <string name="filter_action_menu_description">Modifier</string>
     <string name="feed_action_edit">Modifier le flux</string>
     <string name="feed_action_unsubscribe_title">Se désinscrire</string>
-    <string name="settings">Comptes</string>
+    <string name="settings">Ouvrir les paramètres</string>
     <string name="article_view_mark_as_read">Marquer comme lu</string>
     <string name="feed_action_unsubscribe_message">Voulez-vous vraiment vous désinscrire de \"%1$s\" ?</string>
     <string name="folder_action_edit">Renommer</string>
@@ -173,4 +173,8 @@
     <string name="article_list_unread_sort_newest_first">Trier par nouveauté</string>
     <string name="article_list_unread_sort_oldest_first">Trier par ancienneté</string>
     <string name="article_list_unread_sort_title">Non-lus</string>
+    <string name="settings_gestures_list_back_navigation_system_back">Défaut</string>
+    <string name="action_share">Partager</string>
+    <string name="crash_log_export_item_title">Partager les logs de crash</string>
+    <string name="crash_log_export_item_subtitle">Sauvegarder les logs de crash dans un fichier pour le partager avec le développeur</string>
 </resources>
