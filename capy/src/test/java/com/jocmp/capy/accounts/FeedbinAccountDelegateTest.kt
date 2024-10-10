@@ -29,6 +29,7 @@ import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Before
 import org.junit.Test
 import retrofit2.Response
+import java.net.SocketTimeoutException
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -136,6 +137,18 @@ class FeedbinAccountDelegateTest {
         assertEquals(expected = listOf(null, "Gadgets"), actual = taggedNames)
 
         assertEquals(expected = 1, actual = articles.size)
+    }
+
+    @Test
+    fun refreshAll_IOException() = runTest {
+        val networkError = SocketTimeoutException("Sorry networked charlie")
+        coEvery { feedbin.subscriptions() }.throws(networkError)
+
+        val delegate = FeedbinAccountDelegate(database, feedbin)
+
+        val result = delegate.refresh()
+
+        assertEquals(result, Result.failure(networkError))
     }
 
     @Test
