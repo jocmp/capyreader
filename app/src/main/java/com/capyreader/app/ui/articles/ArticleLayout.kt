@@ -90,7 +90,7 @@ fun ArticleLayout(
     onSelectFeed: suspend (feedID: String) -> Unit,
     onSelectArticleFilter: () -> Unit,
     onSelectStatus: (status: ArticleStatus) -> Unit,
-    onSelectArticle: (articleID: String) -> Unit,
+    onSelectArticle: suspend (articleID: String) -> Unit,
     onNavigateToSettings: () -> Unit,
     onRequestClearArticle: () -> Unit,
     onToggleArticleRead: () -> Unit,
@@ -129,10 +129,9 @@ fun ArticleLayout(
         onUnauthorizedDismissRequest()
         setUpdatePasswordDialogOpen(true)
     }
-    val navigateToDetail = {
-        coroutineScope.launchUI {
-            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
-        }
+
+    suspend fun navigateToDetail() {
+        scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
     }
 
     val scrollState = rememberSaveable(key = article?.id, saver = ScrollState.Saver) {
@@ -340,10 +339,10 @@ fun ArticleLayout(
                             onMarkAllRead = onMarkAllRead,
                             onSelect = { articleID ->
                                 onSelectArticle(articleID)
-                                navigateToDetail()
                                 if (search.isActive) {
                                     focusManager.clearFocus()
                                 }
+                                navigateToDetail()
                             },
                         )
                     }
@@ -379,7 +378,9 @@ fun ArticleLayout(
                     onToggleStar = onToggleArticleStar,
                     enableBackHandler = mediaUrl == null,
                     onRequestArticle = { id ->
-                        onSelectArticle(id)
+                        coroutineScope.launchUI {
+                            onSelectArticle(id)
+                        }
                     },
                 )
 

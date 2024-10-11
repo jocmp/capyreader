@@ -34,6 +34,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.OffsetDateTime
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -183,13 +184,13 @@ class ArticleScreenViewModel(
         }
     }
 
-    fun selectArticle(articleID: String) {
+    suspend fun selectArticle(articleID: String) {
         if (_article?.id == articleID) {
             return
         }
 
-        viewModelScope.launch(Dispatchers.IO) {
-            val article = buildArticle(articleID) ?: return@launch
+        withContext(Dispatchers.IO) {
+            val article = buildArticle(articleID) ?: return@withContext
             _article = article
 
             markRead(articleID)
