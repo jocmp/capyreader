@@ -79,7 +79,7 @@
     <string name="settings_section_import">Importer</string>
     <string name="settings_section_export">Exporter</string>
     <string name="opml_import_notification_title">Importer les abonnements…</string>
-    <string name="notifications_channel_title">Importations des abonnements</string>
+    <string name="notifications_channel_title_opml_import">Importations des abonnements</string>
     <string name="settings_section_refresh">Rafraîchir</string>
     <string name="opml_import_button_text">Importer à partir d\'un fichier</string>
     <string name="opml_import_progress_content_text_start">Commencer l\'importation</string>

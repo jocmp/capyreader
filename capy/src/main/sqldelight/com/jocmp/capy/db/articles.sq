@@ -208,8 +208,7 @@ VALUES (
 :updated_at,
 :read
 )
-ON CONFLICT(article_id) DO UPDATE
-SET updated_at = excluded.updated_at, read = read, last_read_at = last_read_at;
+ON CONFLICT(article_id) DO NOTHING;
 
 upsertUnread:
 INSERT INTO article_statuses(

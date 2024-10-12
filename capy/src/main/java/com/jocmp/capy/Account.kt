@@ -178,6 +178,10 @@ data class Account(
         return OPMLFile(this).opmlDocument()
     }
 
+    suspend fun findNotifiableFeeds(since: ZonedDateTime): List<NotifiableFeed> {
+        return feedRecords.feedsWithNotifications(since = since)
+    }
+
     suspend fun import(inputStream: InputStream, onProgress: (ImportProgress) -> Unit) {
         OPMLImporter(this).import(onProgress, inputStream)
     }

@@ -114,7 +114,7 @@
     <string name="auth_fields_password">Heslo</string>
     <string name="update_auth_success_message">Přihlášení úspěšné</string>
     <string name="account_source_feedbin">Feedbin</string>
-    <string name="notifications_channel_title">Importované odběry</string>
+    <string name="notifications_channel_title_opml_import">Importované odběry</string>
     <string name="settings_section_privacy">Soukromí</string>
     <string name="opml_import_button_text">Importovat ze souboru</string>
     <string name="opml_export_button_text">Exportovat jako OPML</string>

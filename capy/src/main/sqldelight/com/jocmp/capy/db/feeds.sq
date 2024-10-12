@@ -22,6 +22,15 @@ FROM feeds
 LEFT JOIN taggings ON taggings.feed_id = feeds.id
 WHERE taggings.name = :name;
 
+findWithNotifications:
+SELECT feeds.*, COUNT(articles.id)
+FROM feeds
+JOIN articles ON articles.feed_id = feeds.id
+JOIN article_statuses ON articles.id = article_statuses.article_id
+WHERE article_statuses.updated_at >= :since
+AND enable_notifications = 1
+GROUP BY feeds.id;
+
 upsert:
 INSERT INTO feeds(
     id,

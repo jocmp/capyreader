@@ -161,7 +161,7 @@
     <string name="settings_clear_all_articles_text">Kas sa oled kindel, et soovid kõik artiklid kustutada? Seda tegevust ei saa tagasi pöörata.</string>
     <string name="settings_options_reader_pin_toolbars">Kinnita tööriistaribad</string>
     <string name="article_bottom_bar_next_article">Mine järgmise artikli juurde</string>
-    <string name="notifications_channel_title">Tellimuste import</string>
+    <string name="notifications_channel_title_opml_import">Tellimuste import</string>
     <string name="theme_menu_label">Kujundus</string>
     <string name="opml_export_button_text">Ekspordi OPML-faili</string>
     <string name="opml_import_toast_failed">Import ei õnnestunud</string>

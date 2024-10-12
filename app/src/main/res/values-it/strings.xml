@@ -123,7 +123,7 @@
     <string name="settings_section_import">Importare</string>
     <string name="settings_section_export">Esportare</string>
     <string name="opml_import_notification_title">Importazione delle sottoscrizioni…</string>
-    <string name="notifications_channel_title">Importazione della sottoscrizione</string>
+    <string name="notifications_channel_title_opml_import">Importazione della sottoscrizione</string>
     <string name="opml_import_button_text">Importazione da file</string>
     <string name="settings_section_privacy">Privacy</string>
     <string name="settings_section_refresh">Aggiornare</string>
