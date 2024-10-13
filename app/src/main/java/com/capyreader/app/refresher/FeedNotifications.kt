@@ -2,14 +2,20 @@ package com.capyreader.app.refresher
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
-import android.util.Log
+import android.content.Intent
 import androidx.core.app.NotificationCompat
+import com.capyreader.app.MainActivity
 import com.capyreader.app.Notifications.FEED_UPDATE
 import com.capyreader.app.R
+import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.notificationManager
+import com.capyreader.app.refresher.FeedNotifications.Companion.FEED_ID_KEY
 import com.jocmp.capy.Account
+import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.NotifiableFeed
+import com.jocmp.capy.preferences.getAndSet
 import java.time.ZonedDateTime
 
 class FeedNotifications(
@@ -30,6 +36,7 @@ class FeedNotifications(
         val builder = NotificationCompat.Builder(applicationContext, FEED_UPDATE.channelID)
             .setContentTitle(notification.title(applicationContext))
             .setSmallIcon(R.drawable.newsmode)
+            .setContentIntent(notification.intent(applicationContext))
             .setAutoCancel(true)
 
         notificationManager.notify(notification.id, builder.build())
@@ -45,6 +52,18 @@ class FeedNotifications(
 
         notificationManager.createNotificationChannel(channel)
     }
+
+    companion object {
+        const val FEED_ID_KEY = "feed_id"
+
+        fun handleResult(intent: Intent, appPreferences: AppPreferences) {
+            val feedID = intent.getStringExtra(FEED_ID_KEY) ?: return
+
+            appPreferences.filter.getAndSet { filter ->
+                ArticleFilter.Feeds(feedID = feedID, feedStatus = filter.status)
+            }
+        }
+    }
 }
 
 private fun NotifiableFeed.title(context: Context): String {
@@ -53,5 +72,19 @@ private fun NotifiableFeed.title(context: Context): String {
         articleCount.toInt(),
         articleCount.toInt(),
         feed.title
+    )
+}
+
+private fun NotifiableFeed.intent(context: Context): PendingIntent {
+    val notifyIntent = Intent(context, MainActivity::class.java).apply {
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        putExtra(FEED_ID_KEY, feed.id)
+    }
+
+    return PendingIntent.getActivity(
+        context,
+        0,
+        notifyIntent,
+        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
     )
 }
