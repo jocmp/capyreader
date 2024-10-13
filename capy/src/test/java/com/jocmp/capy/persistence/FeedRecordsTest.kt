@@ -2,6 +2,7 @@ package com.jocmp.capy.persistence
 
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.awaitRepeated
+import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.ArticleFixture
 import com.jocmp.capy.fixtures.FeedFixture
@@ -74,5 +75,29 @@ class FeedRecordsTest {
             expected = setOf(false),
             actual = updated.map { it.enableStickyFullContent }.toSet()
         )
+    }
+
+    @Test
+    fun feedsWithNotifications() = runTest {
+        val records = FeedRecords(database)
+        val fixtures = FeedFixture(database, records = records)
+        val now = TimeHelpers.nowUTC()
+
+        val feeds = 2.awaitRepeated {
+            fixtures.create().apply {
+                2.awaitRepeated { articleFixture.create(feed = this) }
+            }
+        }
+
+        val feedWithNotifications = feeds.first().also {
+            records.update(feedID = it.id, title = it.title, enableNotifications = true)
+        }
+
+        val results = records.feedsWithNotifications(since = now)
+
+        assertEquals(results.size, 1)
+        val result = results.first()
+        assertEquals(result.feed.id, feedWithNotifications.id)
+        assertEquals(result.articleCount, 2)
     }
 }

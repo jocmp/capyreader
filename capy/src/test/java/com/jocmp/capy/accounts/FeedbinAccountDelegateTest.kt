@@ -428,7 +428,8 @@ class FeedbinAccountDelegateTest {
         val updated = delegate.updateFeed(
             feed = feed,
             title = feedTitle,
-            folderTitles = emptyList()
+            folderTitles = emptyList(),
+            enableNotifications = false
         ).getOrThrow()
 
         assertEquals(expected = feedTitle, actual = updated.title)
