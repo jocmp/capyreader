@@ -4,7 +4,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.jocmp.capy.Feed
 import com.jocmp.capy.RandomUUID
 
-class FeedPreviewFixture : PreviewParameterProvider<Feed> {
+class FeedSample : PreviewParameterProvider<Feed> {
     override val values = feeds()
 
     private fun feeds(): Sequence<Feed> {

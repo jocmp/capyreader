@@ -28,7 +28,6 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import okio.IOException
-import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.time.ZonedDateTime
 
@@ -63,7 +62,8 @@ internal class FeedbinAccountDelegate(
     override suspend fun updateFeed(
         feed: Feed,
         title: String,
-        folderTitles: List<String>
+        folderTitles: List<String>,
+        enableNotifications: Boolean
     ): Result<Feed> = withErrorHandling {
         if (title != feed.title) {
             feedbin.updateSubscription(
@@ -71,7 +71,11 @@ internal class FeedbinAccountDelegate(
                 body = UpdateSubscriptionRequest(title = title)
             )
 
-            feedRecords.updateTitle(feed = feed, title = title)
+            feedRecords.update(
+                feedID = feed.id,
+                title = title,
+                enableNotifications = enableNotifications
+            )
         }
 
         val taggingIDsToDelete = taggingRecords.findFeedTaggingsToDelete(

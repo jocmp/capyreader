@@ -33,7 +33,7 @@ import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.capyreader.app.R
 import com.capyreader.app.ui.components.safeEdgePadding
-import com.capyreader.app.ui.fixtures.FeedPreviewFixture
+import com.capyreader.app.ui.fixtures.FeedSample
 import com.capyreader.app.ui.fixtures.FolderPreviewFixture
 import com.capyreader.app.ui.navigationTitle
 
@@ -182,7 +182,7 @@ private fun FeedListDivider() {
 @Composable
 fun FeedListPreview() {
     val folders = FolderPreviewFixture().values.take(2).toList()
-    val feeds = FeedPreviewFixture().values.take(2).toList()
+    val feeds = FeedSample().values.take(2).toList()
 
     FeedList(
         folders = folders,

@@ -41,10 +41,11 @@ internal class FeedRecords(private val database: Database) {
         return findBy(feedID)
     }
 
-    fun updateTitle(feed: Feed, title: String) {
-        database.feedsQueries.updateName(
+    fun update(feedID: String, title: String, enableNotifications: Boolean) {
+        database.feedsQueries.update(
+            feedID = feedID,
             title = title,
-            feedID = feed.id,
+            enableNotifications = enableNotifications
         )
     }
 

@@ -26,7 +26,7 @@ fun EditFeedDialog(
         Card {
             EditFeedView(
                 feed = feed,
-                folders = folders,
+                allFolders = folders,
                 onSubmit = submit,
                 onCancel = onCancel
             )

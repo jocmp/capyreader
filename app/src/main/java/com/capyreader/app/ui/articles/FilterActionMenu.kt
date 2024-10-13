@@ -14,10 +14,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.jocmp.capy.Feed
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.capyreader.app.R
 import com.capyreader.app.ui.articles.list.MarkAllReadButton
-import com.capyreader.app.ui.fixtures.FeedPreviewFixture
+import com.capyreader.app.ui.fixtures.FeedSample
+import com.jocmp.capy.Feed
 
 @Composable
 fun FeedActions(
@@ -105,9 +106,7 @@ fun FeedActions(
 
 @Preview
 @Composable
-fun FeedActionsPreview() {
-    val feed = FeedPreviewFixture().values.first()
-
+fun FeedActionsPreview(@PreviewParameter(FeedSample::class) feed: Feed) {
     FeedActions(
         onFeedEdited = {},
         onRemoveFeed = {},

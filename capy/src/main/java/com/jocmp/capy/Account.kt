@@ -87,6 +87,7 @@ data class Account(
         return delegate.updateFeed(
             feed = feed,
             title = form.title,
+            enableNotifications = form.enableNotifications,
             folderTitles = form.folderTitles
         )
     }

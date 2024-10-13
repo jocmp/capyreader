@@ -53,7 +53,7 @@ import com.capyreader.app.ui.articles.list.FeedListTopBar
 import com.capyreader.app.ui.articles.media.ArticleMediaView
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.rememberWebViewState
-import com.capyreader.app.ui.fixtures.FeedPreviewFixture
+import com.capyreader.app.ui.fixtures.FeedSample
 import com.capyreader.app.ui.fixtures.FolderPreviewFixture
 import com.capyreader.app.ui.isCompact
 import com.jocmp.capy.Article
@@ -482,7 +482,7 @@ fun findCurrentFeed(filter: ArticleFilter, feeds: List<Feed>): Feed? {
 @Composable
 fun ArticleLayoutPreview() {
     val folders = FolderPreviewFixture().values.take(2).toList()
-    val feeds = FeedPreviewFixture().values.take(2).toList()
+    val feeds = FeedSample().values.take(2).toList()
 
     MaterialTheme {
         ArticleLayout(

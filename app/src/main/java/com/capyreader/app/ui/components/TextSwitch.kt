@@ -22,6 +22,23 @@ fun TextSwitch(
     title: String,
     subtitle: String? = null,
 ) {
+    TextSwitch(
+        onCheckedChange,
+        checked,
+        title = {
+            Text(title)
+        },
+        subtitle
+    )
+}
+
+@Composable
+fun TextSwitch(
+    onCheckedChange: ((Boolean) -> Unit)?,
+    checked: Boolean,
+    title: @Composable () -> Unit,
+    subtitle: String? = null,
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -31,7 +48,7 @@ fun TextSwitch(
             verticalArrangement = Arrangement.spacedBy(4.dp),
             modifier = Modifier.weight(0.1f)
         ) {
-            Text(text = title)
+            title()
             if (subtitle != null) {
                 Text(
                     text = subtitle,

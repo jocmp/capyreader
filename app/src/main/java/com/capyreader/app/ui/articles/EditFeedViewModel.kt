@@ -8,6 +8,7 @@ import com.jocmp.capy.EditFeedFormEntry
 import com.jocmp.capy.Folder
 import com.jocmp.capy.preferences.getAndSet
 import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.refresher.RefreshInterval
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -28,6 +29,14 @@ class EditFeedViewModel(
             account
                 .editFeed(form = form)
                 .onSuccess { feed ->
+                    appPreferences.refreshInterval.getAndSet {
+                        if (feed.enableNotifications && !it.isPeriodic) {
+                            RefreshInterval.EVERY_12_HOURS
+                        } else {
+                            it
+                        }
+                    }
+
                     appPreferences.filter.getAndSet { filter ->
                         if (filter.isFeedSelected(feed)) {
                             ArticleFilter.Feeds(feed.id, filter.status)
