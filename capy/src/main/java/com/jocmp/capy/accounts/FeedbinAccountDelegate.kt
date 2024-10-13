@@ -63,7 +63,6 @@ internal class FeedbinAccountDelegate(
         feed: Feed,
         title: String,
         folderTitles: List<String>,
-        enableNotifications: Boolean
     ): Result<Feed> = withErrorHandling {
         if (title != feed.title) {
             feedbin.updateSubscription(
@@ -71,13 +70,11 @@ internal class FeedbinAccountDelegate(
                 body = UpdateSubscriptionRequest(title = title)
             )
 
+            feedRecords.update(
+                feedID = feed.id,
+                title = title,
+            )
         }
-
-        feedRecords.update(
-            feedID = feed.id,
-            title = title,
-            enableNotifications = enableNotifications
-        )
 
         val taggingIDsToDelete = taggingRecords.findFeedTaggingsToDelete(
             feed = feed,

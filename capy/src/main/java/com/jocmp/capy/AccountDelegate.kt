@@ -24,7 +24,6 @@ interface AccountDelegate {
         feed: Feed,
         title: String,
         folderTitles: List<String>,
-        enableNotifications: Boolean
     ): Result<Feed>
 
     suspend fun removeFeed(feed: Feed): Result<Unit>

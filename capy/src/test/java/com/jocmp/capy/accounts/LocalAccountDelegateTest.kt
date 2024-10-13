@@ -232,7 +232,6 @@ class LocalAccountDelegateTest {
             feed = feed,
             title = feedTitle,
             folderTitles = emptyList(),
-            enableNotifications = false
         ).getOrThrow()
 
         assertEquals(expected = feedTitle, actual = updated.title)

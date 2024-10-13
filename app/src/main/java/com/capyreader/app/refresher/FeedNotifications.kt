@@ -14,6 +14,7 @@ import com.capyreader.app.common.notificationManager
 import com.capyreader.app.refresher.FeedNotifications.Companion.FEED_ID_KEY
 import com.jocmp.capy.Account
 import com.jocmp.capy.ArticleFilter
+import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.NotifiableFeed
 import com.jocmp.capy.preferences.getAndSet
 import java.time.ZonedDateTime
@@ -28,11 +29,11 @@ class FeedNotifications(
         createChannel()
 
         account.findNotifiableFeeds(since = since).forEach {
-            notify(it, since)
+            notify(it)
         }
     }
 
-    private fun notify(notification: NotifiableFeed, since: ZonedDateTime) {
+    private fun notify(notification: NotifiableFeed) {
         val builder = NotificationCompat.Builder(applicationContext, FEED_UPDATE.channelID)
             .setContentTitle(notification.title(applicationContext))
             .setSmallIcon(R.drawable.newsmode)
@@ -59,9 +60,9 @@ class FeedNotifications(
         fun handleResult(intent: Intent, appPreferences: AppPreferences) {
             val feedID = intent.getStringExtra(FEED_ID_KEY) ?: return
 
-            appPreferences.filter.getAndSet { filter ->
-                ArticleFilter.Feeds(feedID = feedID, feedStatus = filter.status)
-            }
+            appPreferences.filter.set(
+                ArticleFilter.Feeds(feedID = feedID, feedStatus = ArticleStatus.UNREAD)
+            )
         }
     }
 }
@@ -83,7 +84,7 @@ private fun NotifiableFeed.intent(context: Context): PendingIntent {
 
     return PendingIntent.getActivity(
         context,
-        0,
+        id,
         notifyIntent,
         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
     )

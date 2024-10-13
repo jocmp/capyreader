@@ -8,11 +8,13 @@ import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
 import androidx.compose.material3.adaptive.navigation.BackNavigationBehavior
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.capyreader.app.setupCommonModules
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
 import com.capyreader.app.ui.isCompact
@@ -23,19 +25,23 @@ import com.capyreader.app.ui.settings.panels.GeneralSettingsPanel
 import com.capyreader.app.ui.settings.panels.GesturesSettingPanel
 import com.capyreader.app.ui.settings.panels.NotificationsSettingsPanel
 import com.capyreader.app.ui.settings.panels.SettingsPanel
+import com.capyreader.app.ui.settings.panels.SettingsViewModel
 import com.jocmp.capy.common.launchUI
 import org.koin.android.ext.koin.androidContext
 import org.koin.compose.KoinApplication
+import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun SettingsView(
+    viewModel: SettingsViewModel = koinInject(),
     onNavigateBack: () -> Unit,
     onRemoveAccount: () -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
     val navigator = rememberListDetailPaneScaffoldNavigator<SettingsPanel>()
     val currentPanel = navigator.currentDestination?.contentKey
+    val feeds by viewModel.feeds.collectAsStateWithLifecycle(emptyList())
 
     val navigateToPanel = { panel: SettingsPanel ->
         coroutineScope.launchUI {
@@ -81,7 +87,12 @@ fun SettingsView(
                                     navigateToPanel(SettingsPanel.Notifications)
                                 }
                             )
-                            SettingsPanel.Notifications -> NotificationsSettingsPanel()
+                            SettingsPanel.Notifications -> NotificationsSettingsPanel(
+                                onSelectNone = viewModel::deselectAllFeedNotifications,
+                                onSelectAll = viewModel::selectAllFeedNotifications,
+                                onToggleNotifications = viewModel::toggleNotifications,
+                                feeds = feeds,
+                            )
                             SettingsPanel.Display -> DisplaySettingsPanel()
                             SettingsPanel.Gestures -> GesturesSettingPanel()
                             SettingsPanel.Account -> AccountSettingsPanel(onRemoveAccount = onRemoveAccount)

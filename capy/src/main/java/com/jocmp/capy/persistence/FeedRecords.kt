@@ -41,11 +41,10 @@ internal class FeedRecords(private val database: Database) {
         return findBy(feedID)
     }
 
-    fun update(feedID: String, title: String, enableNotifications: Boolean) {
+    fun update(feedID: String, title: String) {
         database.feedsQueries.update(
             feedID = feedID,
             title = title,
-            enableNotifications = enableNotifications
         )
     }
 
@@ -54,6 +53,17 @@ internal class FeedRecords(private val database: Database) {
             enabled = enabled,
             feedID = feedID
         )
+    }
+
+    fun enableNotifications(feedID: String, enabled: Boolean) {
+        database.feedsQueries.enableNotifications(
+            enabled = enabled,
+            feedID = feedID
+        )
+    }
+
+    fun toggleAllNotifications(enabled: Boolean) {
+        database.feedsQueries.toggleAllNotifications(enabled = enabled)
     }
 
     fun clearStickyFullContent() {

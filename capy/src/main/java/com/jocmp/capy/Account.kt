@@ -87,7 +87,6 @@ data class Account(
         return delegate.updateFeed(
             feed = feed,
             title = form.title,
-            enableNotifications = form.enableNotifications,
             folderTitles = form.folderTitles
         )
     }
@@ -203,6 +202,14 @@ data class Account(
 
     fun enableStickyContent(feedID: String) {
         feedRecords.updateStickyFullContent(enabled = true, feedID = feedID)
+    }
+
+    fun toggleNotifications(feedID: String, enabled: Boolean) {
+        feedRecords.enableNotifications(enabled = enabled, feedID = feedID)
+    }
+
+    fun toggleAllFeedNotifications(enabled: Boolean) {
+        feedRecords.toggleAllNotifications(enabled)
     }
 
     fun disableStickyContent(feedID: String) {

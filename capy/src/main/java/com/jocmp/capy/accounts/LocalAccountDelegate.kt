@@ -78,12 +78,10 @@ class LocalAccountDelegate(
         feed: Feed,
         title: String,
         folderTitles: List<String>,
-        enableNotifications: Boolean,
     ): Result<Feed> {
         feedRecords.update(
             feedID = feed.id,
             title = title,
-            enableNotifications = enableNotifications
         )
 
         val taggingIDsToDelete = taggingRecords.findFeedTaggingsToDelete(

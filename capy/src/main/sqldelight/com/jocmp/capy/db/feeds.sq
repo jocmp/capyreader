@@ -59,13 +59,19 @@ enable_sticky_full_content = enable_sticky_full_content;
 
 update:
 UPDATE feeds SET
-title = :title, enable_notifications = :enableNotifications WHERE feeds.id = :feedID;
+title = :title WHERE feeds.id = :feedID;
 
 updateStickyFullContent:
 UPDATE feeds SET enable_sticky_full_content = :enabled WHERE feeds.id = :feedID;
 
 clearStickyFullContent:
 UPDATE feeds SET enable_sticky_full_content = 0;
+
+enableNotifications:
+UPDATE feeds SET enable_notifications = :enabled WHERE feeds.id = :feedID;
+
+toggleAllNotifications:
+UPDATE feeds SET enable_notifications = :enabled;
 
 delete {
   DELETE FROM article_statuses WHERE article_statuses.article_id IN (

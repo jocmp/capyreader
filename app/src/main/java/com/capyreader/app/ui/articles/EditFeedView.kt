@@ -1,5 +1,8 @@
 package com.capyreader.app.ui.articles
 
+import android.Manifest
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,6 +31,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.capyreader.app.Notifications
 import com.capyreader.app.R
 import com.capyreader.app.ui.components.DialogHorizontalDivider
 import com.capyreader.app.ui.components.FormSection
@@ -65,8 +69,6 @@ fun EditFeedView(
 
     val displaySwitchFolders = switchFolders.toSortedMap(String.CASE_INSENSITIVE_ORDER)
 
-    var enableNotifications by remember { mutableStateOf(feed.enableNotifications) }
-
     fun submitFeed() {
         val existingFolderNames = switchFolders.filter { it.value }.keys
         val folderNames = collectFolders(existingFolderNames, addedFolder)
@@ -75,7 +77,6 @@ fun EditFeedView(
             EditFeedFormEntry(
                 feedID = feed.id,
                 title = name,
-                enableNotifications = enableNotifications,
                 folderTitles = folderNames
             )
         )
@@ -108,15 +109,6 @@ fun EditFeedView(
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp)
                 )
-            }
-            RowItem {
-                Box(Modifier.padding(bottom = 16.dp)) {
-                    TextSwitch(
-                        onCheckedChange = { enableNotifications = it },
-                        checked = enableNotifications,
-                        title = stringResource(R.string.edit_feed_notifications_title),
-                    )
-                }
             }
             FormSection(
                 modifier = Modifier.padding(bottom = 16.dp),
