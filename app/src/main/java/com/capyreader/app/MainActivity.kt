@@ -1,5 +1,6 @@
 package com.capyreader.app
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.setThreadPolicy
@@ -34,6 +35,11 @@ class MainActivity : ComponentActivity() {
                 theme = themeState
             )
         }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        FeedNotifications.handleResult(intent, appPreferences = appPreferences)
     }
 
     private fun startDestination(): String {

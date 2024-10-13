@@ -71,12 +71,13 @@ internal class FeedbinAccountDelegate(
                 body = UpdateSubscriptionRequest(title = title)
             )
 
-            feedRecords.update(
-                feedID = feed.id,
-                title = title,
-                enableNotifications = enableNotifications
-            )
         }
+
+        feedRecords.update(
+            feedID = feed.id,
+            title = title,
+            enableNotifications = enableNotifications
+        )
 
         val taggingIDsToDelete = taggingRecords.findFeedTaggingsToDelete(
             feed = feed,
