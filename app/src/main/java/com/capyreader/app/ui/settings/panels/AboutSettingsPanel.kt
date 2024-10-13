@@ -1,4 +1,4 @@
-package com.capyreader.app.ui.settings
+package com.capyreader.app.ui.settings.panels
 
 import android.net.Uri
 import androidx.compose.foundation.clickable

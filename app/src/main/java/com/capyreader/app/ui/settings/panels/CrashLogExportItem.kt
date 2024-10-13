@@ -1,4 +1,4 @@
-package com.capyreader.app.ui.settings
+package com.capyreader.app.ui.settings.panels
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box

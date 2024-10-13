@@ -27,8 +27,6 @@ import com.capyreader.app.ui.Spacing
 import com.capyreader.app.ui.components.safeEdgePadding
 import com.capyreader.app.ui.components.widthMaxSingleColumn
 import com.capyreader.app.ui.isAtMostMedium
-import com.capyreader.app.ui.settings.CrashReportingCheckbox
-import com.capyreader.app.ui.settings.RowItem
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.accounts.Source
 import org.koin.android.ext.koin.androidContext

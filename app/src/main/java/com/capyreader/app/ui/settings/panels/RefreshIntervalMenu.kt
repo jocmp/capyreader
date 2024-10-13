@@ -1,4 +1,4 @@
-package com.capyreader.app.ui.settings
+package com.capyreader.app.ui.settings.panels
 
 import android.content.Context
 import androidx.compose.runtime.Composable
@@ -13,6 +13,7 @@ import com.capyreader.app.refresher.RefreshInterval.EVERY_HOUR
 import com.capyreader.app.refresher.RefreshInterval.EVERY_THIRTY_MINUTES
 import com.capyreader.app.refresher.RefreshInterval.MANUALLY_ONLY
 import com.capyreader.app.refresher.RefreshInterval.ON_START
+import com.capyreader.app.ui.settings.PreferenceSelect
 
 @Composable
 fun RefreshIntervalMenu(

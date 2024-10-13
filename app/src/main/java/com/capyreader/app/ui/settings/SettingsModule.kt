@@ -1,6 +1,10 @@
 package com.capyreader.app.ui.settings
 
 import com.capyreader.app.transfers.OPMLImportWorker
+import com.capyreader.app.ui.settings.panels.AccountSettingsViewModel
+import com.capyreader.app.ui.settings.panels.DisplaySettingsViewModel
+import com.capyreader.app.ui.settings.panels.GeneralSettingsViewModel
+import com.capyreader.app.ui.settings.panels.GesturesSettingsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.workmanager.dsl.worker
 import org.koin.dsl.module

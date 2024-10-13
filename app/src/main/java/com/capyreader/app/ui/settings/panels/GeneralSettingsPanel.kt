@@ -1,11 +1,14 @@
-package com.capyreader.app.ui.settings
+package com.capyreader.app.ui.settings.panels
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -13,33 +16,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
-import com.capyreader.app.BuildConfig
 import com.capyreader.app.R
-import com.capyreader.app.refresher.RefreshFeedsWorker
 import com.capyreader.app.refresher.RefreshInterval
-import com.capyreader.app.refresher.RefreshScheduler.Companion.WORK_NAME
-import com.capyreader.app.refresher.toTime
 import com.capyreader.app.ui.CrashReporting
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.components.TextSwitch
+import com.capyreader.app.ui.settings.CrashReportingCheckbox
+import com.capyreader.app.common.RowItem
 import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.articles.UnreadSortOrder
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun GeneralSettingsPanel(
-    viewModel: GeneralSettingsViewModel = koinViewModel()
+    viewModel: GeneralSettingsViewModel = koinViewModel(),
+    onNavigateToNotifications: () -> Unit,
 ) {
     GeneralSettingsPanelView(
+        onNavigateToNotifications = onNavigateToNotifications,
         refreshInterval = viewModel.refreshInterval,
         updateRefreshInterval = viewModel::updateRefreshInterval,
         canOpenLinksInternally = viewModel.canOpenLinksInternally,
@@ -54,6 +51,7 @@ fun GeneralSettingsPanel(
 
 @Composable
 fun GeneralSettingsPanelView(
+    onNavigateToNotifications: () -> Unit,
     onClearArticles: () -> Unit,
     refreshInterval: RefreshInterval,
     updateRefreshInterval: (RefreshInterval) -> Unit,
@@ -88,6 +86,17 @@ fun GeneralSettingsPanelView(
                 refreshInterval = refreshInterval,
                 updateRefreshInterval = updateRefreshInterval,
             )
+            Box(
+                Modifier.clickable {
+                    onNavigateToNotifications()
+                }
+            ) {
+                ListItem(
+                    headlineContent = {
+                        Text(stringResource(R.string.settings_panel_notifications_title))
+                    }
+                )
+            }
         }
 
         if (CrashReporting.isAvailable) {
@@ -163,6 +172,7 @@ private fun GeneralSettingsPanelPreview() {
         updateAutoDelete = {},
         autoDelete = AutoDelete.WEEKLY,
         unreadSort = UnreadSortOrder.NEWEST_FIRST,
-        updateUnreadSort = {}
+        updateUnreadSort = {},
+        onNavigateToNotifications = {}
     )
 }

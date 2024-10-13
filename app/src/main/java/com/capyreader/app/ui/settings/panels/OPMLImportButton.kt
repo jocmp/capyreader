@@ -1,4 +1,4 @@
-package com.capyreader.app.ui.settings
+package com.capyreader.app.ui.settings.panels
 
 import android.Manifest
 import android.os.Build

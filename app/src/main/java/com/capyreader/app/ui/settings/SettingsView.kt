@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
+import androidx.compose.material3.adaptive.navigation.BackNavigationBehavior
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -15,7 +16,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.capyreader.app.setupCommonModules
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
 import com.capyreader.app.ui.isCompact
-import com.jocmp.capy.common.launchIO
+import com.capyreader.app.ui.settings.panels.AboutSettingsPanel
+import com.capyreader.app.ui.settings.panels.AccountSettingsPanel
+import com.capyreader.app.ui.settings.panels.DisplaySettingsPanel
+import com.capyreader.app.ui.settings.panels.GeneralSettingsPanel
+import com.capyreader.app.ui.settings.panels.GesturesSettingPanel
+import com.capyreader.app.ui.settings.panels.NotificationsSettingsPanel
+import com.capyreader.app.ui.settings.panels.SettingsPanel
 import com.jocmp.capy.common.launchUI
 import org.koin.android.ext.koin.androidContext
 import org.koin.compose.KoinApplication
@@ -30,16 +37,24 @@ fun SettingsView(
     val navigator = rememberListDetailPaneScaffoldNavigator<SettingsPanel>()
     val currentPanel = navigator.currentDestination?.contentKey
 
+    val navigateToPanel = { panel: SettingsPanel ->
+        coroutineScope.launchUI {
+            navigator.navigateTo(ThreePaneScaffoldRole.Primary, panel)
+        }
+    }
+
+    val navigateBack = {
+        coroutineScope.launchUI {
+            navigator.navigateBack(BackNavigationBehavior.PopLatest)
+        }
+    }
+
     SettingsScaffold(
         scaffoldNavigator = navigator,
         listPane = {
             SettingsList(
                 selected = currentPanel,
-                onNavigate = { panel ->
-                    coroutineScope.launchUI {
-                        navigator.navigateTo(ThreePaneScaffoldRole.Primary, panel)
-                    }
-                },
+                onNavigate = { navigateToPanel(it) },
                 onNavigateBack = onNavigateBack
             )
         },
@@ -54,16 +69,19 @@ fun SettingsView(
                 }
             } else if (currentPanel != null) {
                 SettingsPanelScaffold(
-                    onBack = {
-                        coroutineScope.launchUI {
-                            navigator.navigateBack()
-                        }
-                    },
                     panel = currentPanel,
+                    onBack = {
+                        navigateBack()
+                    },
                 ) {
                     Box(contentAlignment = Alignment.Center) {
                         when (currentPanel) {
-                            SettingsPanel.General -> GeneralSettingsPanel()
+                            SettingsPanel.General -> GeneralSettingsPanel(
+                                onNavigateToNotifications = {
+                                    navigateToPanel(SettingsPanel.Notifications)
+                                }
+                            )
+                            SettingsPanel.Notifications -> NotificationsSettingsPanel()
                             SettingsPanel.Display -> DisplaySettingsPanel()
                             SettingsPanel.Gestures -> GesturesSettingPanel()
                             SettingsPanel.Account -> AccountSettingsPanel(onRemoveAccount = onRemoveAccount)
@@ -75,10 +93,8 @@ fun SettingsView(
         }
     )
 
-    BackHandler(navigator.canNavigateBack()) {
-        coroutineScope.launchUI {
-            navigator.navigateBack()
-        }
+    BackHandler(navigator.canNavigateBack(BackNavigationBehavior.PopLatest)) {
+        navigateBack()
     }
 }
 

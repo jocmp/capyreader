@@ -1,4 +1,4 @@
-package com.capyreader.app.ui.settings
+package com.capyreader.app.ui.settings.panels
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -26,6 +26,8 @@ import com.capyreader.app.R
 import com.capyreader.app.common.GetOPMLContent
 import com.capyreader.app.transfers.OPMLExporter
 import com.capyreader.app.ui.components.FormSection
+import com.capyreader.app.ui.settings.AccountSettingsStrings
+import com.capyreader.app.common.RowItem
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.opml.ImportProgress

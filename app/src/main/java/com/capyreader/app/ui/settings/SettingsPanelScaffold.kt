@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -23,6 +24,8 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.ui.isAtMostMedium
+import com.capyreader.app.ui.isExpanded
+import com.capyreader.app.ui.settings.panels.SettingsPanel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -52,14 +55,18 @@ fun SettingsPanelScaffold(
                     Text(stringResource(panel.title))
                 },
                 navigationIcon = {
-                    if (isAtMostMedium()) {
+                    if (isAtMostMedium() || panel.isNested()) {
                         IconButton(
                             onClick = {
                                 onBack()
                             }
                         ) {
                             Icon(
-                                imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                                imageVector = if(isExpanded() && panel.isNested()) {
+                                    Icons.Rounded.Close
+                                } else {
+                                    Icons.AutoMirrored.Rounded.ArrowBack
+                                },
                                 contentDescription = null
                             )
                         }

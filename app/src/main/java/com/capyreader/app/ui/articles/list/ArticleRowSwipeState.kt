@@ -15,7 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.capyreader.app.R
 import com.capyreader.app.common.AppPreferences
-import com.capyreader.app.ui.settings.RowSwipeOption
+import com.capyreader.app.ui.settings.panels.RowSwipeOption
 import com.capyreader.app.common.asState
 import com.capyreader.app.ui.articles.ArticleActions
 import com.capyreader.app.ui.articles.LocalArticleActions

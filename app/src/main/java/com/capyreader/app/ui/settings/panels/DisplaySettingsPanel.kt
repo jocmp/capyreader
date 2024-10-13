@@ -1,4 +1,4 @@
-package com.capyreader.app.ui.settings
+package com.capyreader.app.ui.settings.panels
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,6 +11,8 @@ import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.common.ThemeOption
 import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.capyreader.app.ui.components.FormSection
+import com.capyreader.app.ui.settings.PreferenceSelect
+import com.capyreader.app.common.RowItem
 import com.capyreader.app.ui.theme.CapyTheme
 import org.koin.androidx.compose.koinViewModel
 

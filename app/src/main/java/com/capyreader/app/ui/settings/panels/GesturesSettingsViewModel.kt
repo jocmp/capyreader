@@ -1,4 +1,4 @@
-package com.capyreader.app.ui.settings
+package com.capyreader.app.ui.settings.panels
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
