@@ -178,4 +178,17 @@
     <string name="action_share">Paylaş</string>
     <string name="crash_log_export_item_subtitle">Geliştirici ile paylaşmak için çökme günlüklerini bir dosyaya kaydeder</string>
     <string name="crash_log_export_item_title">Çökme günlüklerini paylaş</string>
+    <string name="settings_panel_notifications_title">Bildirimler</string>
+    <string name="settings_notifications_select_all">Tümünü Seç</string>
+    <string name="notifications_permission_disabled_title">Bildirim izni reddedildi</string>
+    <string name="notifications_channel_title_feed_update">Yayın Güncellemeleri</string>
+    <plurals name="notifications_feed_update_title">
+        <item quantity="one">%2$s yayınından %1$d yeni makale</item>
+        <item quantity="other">%2$s yayınından %1$d yeni makale</item>
+    </plurals>
+    <string name="edit_feed_tags_section">Etiketler</string>
+    <string name="edit_feed_notifications_title">Bildirimleri etkinleştir</string>
+    <string name="notifications_permissions_disabled_call_to_action">Ayarlar</string>
+    <string name="settings_enable_refresh_call_to_action">Önce düzenli yenileme etkinleştirilmelidir</string>
+    <string name="settings_notifications_select_none">Hiçbirini Seçme</string>
 </resources>
