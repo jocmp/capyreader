@@ -20,7 +20,11 @@ interface AccountDelegate {
 
     suspend fun markUnread(articleIDs: List<String>): Result<Unit>
 
-    suspend fun updateFeed(feed: Feed, title: String, folderTitles: List<String>): Result<Feed>
+    suspend fun updateFeed(
+        feed: Feed,
+        title: String,
+        folderTitles: List<String>,
+    ): Result<Feed>
 
     suspend fun removeFeed(feed: Feed): Result<Unit>
 

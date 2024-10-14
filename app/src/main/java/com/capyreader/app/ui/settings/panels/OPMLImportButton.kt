@@ -1,4 +1,4 @@
-package com.capyreader.app.ui.settings
+package com.capyreader.app.ui.settings.panels
 
 import android.Manifest
 import android.os.Build
@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
+import com.capyreader.app.Notifications
 import com.capyreader.app.R
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.opml.ImportProgress
@@ -31,7 +32,7 @@ fun OPMLImportButton(
     Button(
         enabled = importProgress == null,
         onClick = {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (Notifications.askForPermission) {
                 permissions.launch(Manifest.permission.POST_NOTIFICATIONS)
             } else {
                 onClick()

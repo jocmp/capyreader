@@ -13,6 +13,11 @@ fun isAtMostMedium(): Boolean {
 }
 
 @Composable
+fun isExpanded(): Boolean {
+    return currentWindowSizeClass().windowWidthSizeClass == EXPANDED
+}
+
+@Composable
 fun isCompact(): Boolean {
     return currentWindowSizeClass().windowWidthSizeClass != EXPANDED
 }

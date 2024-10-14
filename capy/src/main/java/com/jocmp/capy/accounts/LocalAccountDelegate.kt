@@ -77,11 +77,12 @@ class LocalAccountDelegate(
     override suspend fun updateFeed(
         feed: Feed,
         title: String,
-        folderTitles: List<String>
+        folderTitles: List<String>,
     ): Result<Feed> {
-        if (title != feed.title) {
-            feedRecords.updateTitle(feed = feed, title = title)
-        }
+        feedRecords.update(
+            feedID = feed.id,
+            title = title,
+        )
 
         val taggingIDsToDelete = taggingRecords.findFeedTaggingsToDelete(
             feed = feed,

@@ -73,7 +73,7 @@
     <string name="settings_section_import">Import</string>
     <string name="settings_section_export">Export</string>
     <string name="opml_import_notification_title">Abonnements importieren</string>
-    <string name="notifications_channel_title">Importierte Abonnements</string>
+    <string name="notifications_channel_title_opml_import">Importierte Abonnements</string>
     <string name="settings_panel_display_title">Anzeige &amp; Aussehen</string>
     <string name="theme_menu_label">Theme</string>
     <string name="theme_menu_option_light">Light</string>

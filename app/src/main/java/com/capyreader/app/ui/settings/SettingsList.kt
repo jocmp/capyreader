@@ -1,6 +1,5 @@
 package com.capyreader.app.ui.settings
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.ui.isAtMostMedium
+import com.capyreader.app.ui.settings.panels.SettingsPanel
 import com.capyreader.app.ui.theme.CapyTheme
 
 @OptIn(ExperimentalMaterial3Api::class)

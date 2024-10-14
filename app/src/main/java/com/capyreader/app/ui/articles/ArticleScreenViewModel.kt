@@ -34,6 +34,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.OffsetDateTime
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -44,7 +45,7 @@ class ArticleScreenViewModel(
 ) : AndroidViewModel(application) {
     private var refreshJob: Job? = null
 
-    val filter = MutableStateFlow(appPreferences.filter.get())
+    val filter = appPreferences.filter.changes()
 
     private val _searchQuery = MutableStateFlow<String?>(null)
 
@@ -66,27 +67,35 @@ class ArticleScreenViewModel(
             _searchQuery,
             articlesSince,
             unreadSort
-        ) { latestFilter, query, since, sort ->
+        ) { filter, query, since, sort ->
             account.buildArticlePager(
-                filter = latestFilter,
+                filter = filter,
                 query = query,
                 unreadSort = sort,
                 since = since
             ).flow
         }.flatMapLatest { it }
 
-    val folders: Flow<List<Folder>> = account.folders.combine(_counts) { folders, latestCounts ->
-        folders.map { copyFolderCounts(it, latestCounts) }
-            .withPositiveCount(filterStatus)
+    val folders: Flow<List<Folder>> = combine(
+        account.folders,
+        _counts,
+        filter,
+    ) { folders, latestCounts, filter ->
+        folders.map { copyFolderCounts(it, latestCounts, filter) }
+            .withPositiveCount(filter.status)
     }
 
     val allFeeds = account.allFeeds
 
     val allFolders = account.folders
 
-    val feeds = account.feeds.combine(_counts) { feeds, latestCounts ->
+    val feeds = combine(
+        account.feeds,
+        _counts,
+        filter,
+    ) { feeds, latestCounts, filter ->
         feeds.map { copyFeedCounts(it, latestCounts) }
-            .withPositiveCount(filterStatus)
+            .withPositiveCount(filter.status)
     }
 
     val statusCount: Flow<Long> = _counts.map {
@@ -102,17 +111,14 @@ class ArticleScreenViewModel(
     val searchQuery: Flow<String?>
         get() = _searchQuery
 
-    private val filterStatus: ArticleStatus
-        get() = filter.value.status
-
     fun selectArticleFilter() {
-        val nextFilter = ArticleFilter.default().withStatus(status = filterStatus)
+        val nextFilter = ArticleFilter.default().withStatus(status = latestFilter.status)
 
         updateFilter(nextFilter)
     }
 
     fun selectStatus(status: ArticleStatus) {
-        val nextFilter = filter.value.withStatus(status = status)
+        val nextFilter = latestFilter.withStatus(status = status)
 
         updateFilter(nextFilter)
     }
@@ -120,7 +126,7 @@ class ArticleScreenViewModel(
     suspend fun selectFeed(feedID: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val feed = account.findFeed(feedID) ?: return@launch
-            val feedFilter = ArticleFilter.Feeds(feedID = feed.id, feedStatus = filter.value.status)
+            val feedFilter = ArticleFilter.Feeds(feedID = feed.id, feedStatus = latestFilter.status)
 
             updateFilter(feedFilter)
         }
@@ -132,7 +138,7 @@ class ArticleScreenViewModel(
             val feedFilter =
                 ArticleFilter.Folders(
                     folderTitle = folder.title,
-                    folderStatus = filter.value.status
+                    folderStatus = latestFilter.status
                 )
 
             updateFilter(feedFilter)
@@ -141,7 +147,7 @@ class ArticleScreenViewModel(
 
     fun markAllRead(range: MarkRead) {
         viewModelScope.launchIO {
-            val articleIDs = account.unreadArticleIDs(filter = filter.value, range = range)
+            val articleIDs = account.unreadArticleIDs(filter = latestFilter, range = range)
 
             account.markAllRead(articleIDs).onFailure {
                 Sync.markReadAsync(articleIDs, context)
@@ -183,13 +189,13 @@ class ArticleScreenViewModel(
         }
     }
 
-    fun selectArticle(articleID: String) {
+    suspend fun selectArticle(articleID: String) {
         if (_article?.id == articleID) {
             return
         }
 
-        viewModelScope.launch(Dispatchers.IO) {
-            val article = buildArticle(articleID) ?: return@launch
+        withContext(Dispatchers.IO) {
+            val article = buildArticle(articleID) ?: return@withContext
             _article = article
 
             markRead(articleID)
@@ -293,7 +299,7 @@ class ArticleScreenViewModel(
     }
 
     private fun resetToDefaultFilter() {
-        updateFilter(ArticleFilter.default().copy(filterStatus))
+        updateFilter(ArticleFilter.default().copy(latestFilter.status))
     }
 
     private fun toggleCurrentStarred(articleID: String) {
@@ -313,7 +319,6 @@ class ArticleScreenViewModel(
     }
 
     private fun updateFilter(nextFilter: ArticleFilter) {
-        filter.value = nextFilter
         appPreferences.filter.set(nextFilter)
 
         updateArticlesSince()
@@ -325,11 +330,15 @@ class ArticleScreenViewModel(
         articlesSince.value = OffsetDateTime.now()
     }
 
-    private fun copyFolderCounts(folder: Folder, counts: Map<String, Long>): Folder {
+    private fun copyFolderCounts(
+        folder: Folder,
+        counts: Map<String, Long>,
+        filter: ArticleFilter
+    ): Folder {
         val folderFeeds = folder.feeds.map { copyFeedCounts(it, counts) }
 
         return folder.copy(
-            feeds = folderFeeds.withPositiveCount(filterStatus).toMutableList(),
+            feeds = folderFeeds.withPositiveCount(filter.status).toMutableList(),
             count = folderFeeds.sumOf { it.count }
         )
     }
@@ -400,6 +409,9 @@ class ArticleScreenViewModel(
             onFailure = { resetFullContent() }
         )
     }
+
+    private val latestFilter: ArticleFilter
+        get() = appPreferences.filter.get()
 
     private val enableStickyFullContent: Boolean
         get() = appPreferences.enableStickyFullContent.get()

@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.preference.PreferenceManager
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.ArticleListFontScale
-import com.capyreader.app.ui.settings.ArticleVerticalSwipe
-import com.capyreader.app.ui.settings.RowSwipeOption
+import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe
+import com.capyreader.app.ui.settings.panels.RowSwipeOption
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.articles.FontOption
@@ -16,7 +16,6 @@ import com.jocmp.capy.preferences.PreferenceStore
 import com.jocmp.capy.preferences.getEnum
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import kotlin.jvm.Throws
 
 class AppPreferences(context: Context) {
     private val preferenceStore: PreferenceStore = AndroidPreferenceStore(

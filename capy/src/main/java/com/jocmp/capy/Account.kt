@@ -178,6 +178,10 @@ data class Account(
         return OPMLFile(this).opmlDocument()
     }
 
+    suspend fun findNotifiableFeeds(since: ZonedDateTime): List<NotifiableFeed> {
+        return feedRecords.feedsWithNotifications(since = since)
+    }
+
     suspend fun import(inputStream: InputStream, onProgress: (ImportProgress) -> Unit) {
         OPMLImporter(this).import(onProgress, inputStream)
     }
@@ -198,6 +202,14 @@ data class Account(
 
     fun enableStickyContent(feedID: String) {
         feedRecords.updateStickyFullContent(enabled = true, feedID = feedID)
+    }
+
+    fun toggleNotifications(feedID: String, enabled: Boolean) {
+        feedRecords.enableNotifications(enabled = enabled, feedID = feedID)
+    }
+
+    fun toggleAllFeedNotifications(enabled: Boolean) {
+        feedRecords.toggleAllNotifications(enabled)
     }
 
     fun disableStickyContent(feedID: String) {

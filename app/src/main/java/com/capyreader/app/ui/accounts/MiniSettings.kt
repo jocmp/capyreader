@@ -1,7 +1,6 @@
 package com.capyreader.app.ui.accounts
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,9 +30,8 @@ import com.capyreader.app.R
 import com.capyreader.app.setupCommonModules
 import com.capyreader.app.ui.CrashReporting
 import com.capyreader.app.ui.components.DialogCard
-import com.capyreader.app.ui.settings.CrashLogExportItem
 import com.capyreader.app.ui.settings.CrashReportingCheckbox
-import com.capyreader.app.ui.settings.RowItem
+import com.capyreader.app.common.RowItem
 import com.capyreader.app.ui.theme.CapyTheme
 import org.koin.android.ext.koin.androidContext
 import org.koin.compose.KoinApplication

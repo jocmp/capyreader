@@ -58,7 +58,7 @@
     <string name="settings_section_account">账户</string>
     <string name="settings_section_import">导入</string>
     <string name="opml_import_notification_title">导入订阅…</string>
-    <string name="notifications_channel_title">导入订阅</string>
+    <string name="notifications_channel_title_opml_import">导入订阅</string>
     <string name="opml_import_button_text">从文件导入</string>
     <string name="opml_export_button_text">导出到 OPML</string>
     <string name="opml_import_progress_content_text_start">开始导入</string>

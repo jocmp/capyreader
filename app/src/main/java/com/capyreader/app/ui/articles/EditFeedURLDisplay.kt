@@ -10,7 +10,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentCopy
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemColors
+import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.Text
@@ -43,28 +49,26 @@ fun EditFeedURLDisplay(feedURL: String) {
                 copyToClipboard()
             }
     ) {
-        FormSection(
-            modifier = Modifier.padding(top = 8.dp, bottom = 16.dp),
-            title = stringResource(R.string.feed_form_feed_url_title)
-        ) {
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.padding(start = 16.dp, end = 8.dp)
-            ) {
+        ListItem(
+            colors = ListItemDefaults.colors(containerColor = CardDefaults.cardColors().containerColor),
+            headlineContent = {
+                Text(stringResource(R.string.feed_form_feed_url_title))
+            },
+            supportingContent = {
                 Text(
                     feedURL,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.weight(0.1f)
                 )
-                Spacer(modifier = Modifier.width(8.dp))
+            },
+            trailingContent = {
                 Icon(
                     imageVector = Icons.Filled.ContentCopy,
                     tint = colorScheme.secondary,
                     contentDescription = stringResource(R.string.feed_form_copy_feed_url_to_clipboard),
                 )
             }
-        }
+        )
     }
 }
 

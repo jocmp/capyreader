@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.capyreader.app.ui.FadePaneMotion
 import com.capyreader.app.ui.components.safeEdgePadding
+import com.capyreader.app.ui.settings.panels.SettingsPanel
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable

@@ -86,7 +86,13 @@
     <string name="settings_section_import">Import</string>
     <string name="settings_section_export">Export</string>
     <string name="opml_import_notification_title">Importing subscriptions…</string>
-    <string name="notifications_channel_title">Subscription Imports</string>
+    <string name="notifications_channel_title_opml_import">Subscription Imports</string>
+    <string name="notifications_channel_title_feed_update">Feed Updates</string>
+    <plurals name="notifications_feed_update_title">
+        <item quantity="one">%1$d new article from %2$s</item>
+        <item quantity="many">%1$d new articles from %2$s</item>
+        <item quantity="other">%1$d new articles from %2$s</item>
+    </plurals>
     <string name="settings_section_privacy">Privacy</string>
     <string name="settings_section_refresh">Refresh</string>
     <string name="opml_import_button_text">Import from File</string>
@@ -136,6 +142,7 @@
     <string name="feed_list_top_bar_close_search">Dismiss search</string>
     <string name="settings_panel_general_title">General</string>
     <string name="settings_panel_display_title">Display &amp; Appearance</string>
+    <string name="settings_panel_notifications_title">Notifications</string>
     <string name="settings_panel_gestures_title">Gestures</string>
     <string name="settings_account_title">Account</string>
     <string name="settings_about_title">About</string>
@@ -178,4 +185,11 @@
     <string name="action_share">Share</string>
     <string name="crash_log_export_item_title">Share crash logs</string>
     <string name="crash_log_export_item_subtitle">Saves crash logs to a file to share with the developer</string>
+    <string name="edit_feed_tags_section">Tags</string>
+    <string name="edit_feed_notifications_title">Enable notifications</string>
+    <string name="notifications_permissions_disabled_call_to_action">Settings</string>
+    <string name="notifications_permission_disabled_title">Notifications permission are disabled</string>
+    <string name="settings_enable_refresh_call_to_action">Periodic refresh must be enabled first</string>
+    <string name="settings_notifications_select_none">Select None</string>
+    <string name="settings_notifications_select_all">Select All</string>
 </resources>

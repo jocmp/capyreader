@@ -19,9 +19,10 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
-import com.jocmp.capy.Account
 import com.capyreader.app.Notifications
 import com.capyreader.app.R
+import com.capyreader.app.common.notificationManager
+import com.jocmp.capy.Account
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
@@ -29,8 +30,6 @@ import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.util.UUID
-import java.util.concurrent.ExecutionException
-import javax.xml.parsers.ParserConfigurationException
 import kotlin.math.roundToInt
 
 
@@ -43,9 +42,7 @@ class OPMLImportWorker(
     private val channelID = Notifications.OPML_IMPORT.channelID
     private val notificationsID = 6_170_000
 
-    private val notificationManager =
-        context.getSystemService(Context.NOTIFICATION_SERVICE) as
-                NotificationManager
+    private val notificationManager = context.notificationManager
 
     override suspend fun doWork(): Result {
         val uriValue = inputData.getString(OPML_URI_KEY) ?: return Result.failure()
@@ -130,7 +127,7 @@ class OPMLImportWorker(
     }
 
     private fun createChannel() {
-        val name = applicationContext.getString(R.string.notifications_channel_title)
+        val name = applicationContext.getString(R.string.notifications_channel_title_opml_import)
         val channel = NotificationChannel(channelID, name, NotificationManager.IMPORTANCE_DEFAULT)
 
         notificationManager.createNotificationChannel(channel)

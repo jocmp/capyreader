@@ -8,6 +8,7 @@ import com.jocmp.capy.EditFeedFormEntry
 import com.jocmp.capy.Folder
 import com.jocmp.capy.preferences.getAndSet
 import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.refresher.RefreshInterval
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch

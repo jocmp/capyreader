@@ -22,6 +22,15 @@ FROM feeds
 LEFT JOIN taggings ON taggings.feed_id = feeds.id
 WHERE taggings.name = :name;
 
+findWithNotifications:
+SELECT feeds.*, COUNT(articles.id)
+FROM feeds
+JOIN articles ON articles.feed_id = feeds.id
+JOIN article_statuses ON articles.id = article_statuses.article_id
+WHERE article_statuses.updated_at >= :since
+AND enable_notifications = 1
+GROUP BY feeds.id;
+
 upsert:
 INSERT INTO feeds(
     id,
@@ -48,14 +57,21 @@ site_url = excluded.site_url,
 favicon_url = excluded.favicon_url,
 enable_sticky_full_content = enable_sticky_full_content;
 
-updateName:
-UPDATE feeds SET title = :title WHERE feeds.id = :feedID;
+update:
+UPDATE feeds SET
+title = :title WHERE feeds.id = :feedID;
 
 updateStickyFullContent:
 UPDATE feeds SET enable_sticky_full_content = :enabled WHERE feeds.id = :feedID;
 
 clearStickyFullContent:
 UPDATE feeds SET enable_sticky_full_content = 0;
+
+enableNotifications:
+UPDATE feeds SET enable_notifications = :enabled WHERE feeds.id = :feedID;
+
+toggleAllNotifications:
+UPDATE feeds SET enable_notifications = :enabled;
 
 delete {
   DELETE FROM article_statuses WHERE article_statuses.article_id IN (

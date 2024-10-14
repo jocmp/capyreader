@@ -1,8 +1,9 @@
-package com.capyreader.app.ui.settings
+package com.capyreader.app.ui.settings.panels
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.capyreader.app.R
+import com.capyreader.app.ui.settings.PreferenceSelect
 import com.jocmp.capy.articles.UnreadSortOrder
 
 @Composable

@@ -231,7 +231,7 @@ class LocalAccountDelegateTest {
         val updated = delegate.updateFeed(
             feed = feed,
             title = feedTitle,
-            folderTitles = emptyList()
+            folderTitles = emptyList(),
         ).getOrThrow()
 
         assertEquals(expected = feedTitle, actual = updated.title)

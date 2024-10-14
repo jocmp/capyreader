@@ -39,8 +39,8 @@ import com.capyreader.app.ui.articles.IndexedArticles
 import com.capyreader.app.ui.articles.LocalFullContent
 import com.capyreader.app.ui.components.WebViewState
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
-import com.capyreader.app.ui.settings.ArticleVerticalSwipe
-import com.capyreader.app.ui.settings.ArticleVerticalSwipe.LOAD_FULL_CONTENT
+import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe
+import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.LOAD_FULL_CONTENT
 import com.jocmp.capy.Article
 import org.koin.compose.koinInject
 

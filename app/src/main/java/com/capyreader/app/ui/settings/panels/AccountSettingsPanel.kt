@@ -1,11 +1,15 @@
-package com.capyreader.app.ui.settings
+package com.capyreader.app.ui.settings.panels
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -26,6 +30,8 @@ import com.capyreader.app.R
 import com.capyreader.app.common.GetOPMLContent
 import com.capyreader.app.transfers.OPMLExporter
 import com.capyreader.app.ui.components.FormSection
+import com.capyreader.app.ui.settings.AccountSettingsStrings
+import com.capyreader.app.common.RowItem
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.opml.ImportProgress
@@ -94,6 +100,7 @@ fun AccountSettingsPanelView(
 
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = Modifier.verticalScroll(rememberScrollState()),
     ) {
         if (showAccountName(accountSource)) {
             FormSection(
@@ -138,6 +145,7 @@ fun AccountSettingsPanelView(
                 }
             }
         }
+        Spacer(Modifier.height(16.dp))
     }
 
     if (isRemoveDialogOpen) {

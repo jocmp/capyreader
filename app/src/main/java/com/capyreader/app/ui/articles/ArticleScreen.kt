@@ -23,7 +23,7 @@ fun ArticleScreen(
     val allFolders by viewModel.allFolders.collectAsStateWithLifecycle(initialValue = emptyList())
     val folders by viewModel.folders.collectAsStateWithLifecycle(initialValue = emptyList())
     val statusCount by viewModel.statusCount.collectAsStateWithLifecycle(initialValue = 0)
-    val filter by viewModel.filter.collectAsStateWithLifecycle()
+    val filter by viewModel.filter.collectAsStateWithLifecycle(appPreferences.filter.get())
     val searchQuery by viewModel.searchQuery.collectAsState(initial = null)
 
     val fullContent = rememberFullContent(viewModel)

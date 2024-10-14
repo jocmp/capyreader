@@ -1,4 +1,4 @@
-package com.capyreader.app.ui.settings
+package com.capyreader.app.ui.settings.panels
 
 import android.os.Parcelable
 import androidx.annotation.StringRes
@@ -7,8 +7,8 @@ import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.material.icons.rounded.Build
 import androidx.compose.material.icons.rounded.Gesture
 import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material.icons.rounded.Palette
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.capyreader.app.R
 import kotlinx.parcelize.Parcelize
@@ -19,6 +19,11 @@ sealed class SettingsPanel(@StringRes val title: Int) {
     @Parcelize
     data object General : SettingsPanel(title = R.string.settings_panel_general_title), Parcelable {
         override fun icon() = Icons.Rounded.Build
+    }
+
+    @Parcelize
+    data object Notifications : SettingsPanel(title = R.string.settings_panel_notifications_title), Parcelable {
+        override fun icon() = Icons.Rounded.Notifications
     }
 
     @Parcelize
@@ -41,6 +46,8 @@ sealed class SettingsPanel(@StringRes val title: Int) {
     data object About : SettingsPanel(title = R.string.settings_about_title), Parcelable {
         override fun icon() = Icons.Rounded.Info
     }
+
+    fun isNested() = !items.contains(this)
 
     companion object {
         val items: List<SettingsPanel>
