@@ -48,7 +48,7 @@ class FeedNotifications(
         val channel = NotificationChannel(
             FEED_UPDATE.channelID,
             name,
-            NotificationManager.IMPORTANCE_LOW
+            NotificationManager.IMPORTANCE_DEFAULT
         )
 
         notificationManager.createNotificationChannel(channel)
