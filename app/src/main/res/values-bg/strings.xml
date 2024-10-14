@@ -105,7 +105,7 @@
     <string name="settings_section_import">Внасяне</string>
     <string name="settings_section_export">Изнасяне</string>
     <string name="opml_import_notification_title">Внасяне на абонаменти…</string>
-    <string name="notifications_channel_title">Внасяне на абонаменти</string>
+    <string name="notifications_channel_title_opml_import">Внасяне на абонаменти</string>
     <string name="settings_section_privacy">Поверителност</string>
     <string name="settings_section_refresh">Опресни</string>
     <string name="opml_export_button_text">Изнасяне в OPML</string>

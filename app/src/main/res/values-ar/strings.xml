@@ -76,7 +76,7 @@
     <string name="settings_section_import">استيراد</string>
     <string name="settings_section_export">تصدير</string>
     <string name="opml_import_notification_title">جارٍ استيراد الاشتراكات…</string>
-    <string name="notifications_channel_title">تم استيراد الإشتراكات</string>
+    <string name="notifications_channel_title_opml_import">تم استيراد الإشتراكات</string>
     <string name="settings_section_privacy">الخصوصية</string>
     <string name="settings_section_refresh">تحديث</string>
     <string name="opml_import_button_text">استيراد من ملف</string>
