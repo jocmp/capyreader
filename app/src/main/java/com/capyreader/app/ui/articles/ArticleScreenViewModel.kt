@@ -189,13 +189,13 @@ class ArticleScreenViewModel(
         }
     }
 
-    suspend fun selectArticle(articleID: String) {
+    fun selectArticle(articleID: String) {
         if (_article?.id == articleID) {
             return
         }
 
-        withContext(Dispatchers.IO) {
-            val article = buildArticle(articleID) ?: return@withContext
+        viewModelScope.launchIO {
+            val article = buildArticle(articleID) ?: return@launchIO
             _article = article
 
             markRead(articleID)
