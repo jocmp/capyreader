@@ -46,14 +46,10 @@ import com.jocmp.capy.Folder
 @Composable
 fun EditFeedView(
     feed: Feed,
-    allFolders: List<Folder>,
+    folders: List<Folder>,
     onSubmit: (feed: EditFeedFormEntry) -> Unit,
     onCancel: () -> Unit
 ) {
-    val folders = remember(allFolders.isEmpty()) {
-        allFolders
-    }
-
     val feedFolderTitles = folders
         .filter { folder -> folder.feeds.any { it.id == feed.id } }
         .map { it.title }
@@ -194,7 +190,7 @@ fun EditFeedViewPreview() {
         Card(Modifier.height(600.dp)) {
             EditFeedView(
                 feed = FeedSample().values.first(),
-                allFolders = folders,
+                folders = folders,
                 onSubmit = {},
                 onCancel = {}
             )
