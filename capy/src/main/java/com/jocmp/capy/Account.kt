@@ -49,7 +49,9 @@ data class Account(
 
     private val feedRecords: FeedRecords = FeedRecords(database)
 
-    val allFeeds = feedRecords.feeds()
+    val allFeeds = feedRecords.feeds().map {
+        it.sortedByTitle()
+    }
 
     val feeds: Flow<List<Feed>> = allFeeds.map { all ->
         all.filter { it.folderName.isBlank() }

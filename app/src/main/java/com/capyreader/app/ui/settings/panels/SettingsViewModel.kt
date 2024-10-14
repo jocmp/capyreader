@@ -6,7 +6,7 @@ import com.jocmp.capy.Account
 class SettingsViewModel(
     private val account: Account,
 ) : ViewModel() {
-    val feeds = account.feeds
+    val feeds = account.allFeeds
 
     fun toggleNotifications(feedID: String, enabled: Boolean) {
         account.toggleNotifications(feedID = feedID, enabled = enabled)
