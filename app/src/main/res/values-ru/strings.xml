@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_feed_name_title">Имя</string>
+    <string name="add_feed_submit">Добавить</string>
+    <string name="filter_unread">Непрочитанное</string>
+    <string name="filter_all">Все</string>
+    <string name="feed_action_unsubscribe">Отписаться</string>
+    <string name="filter_action_menu_description">Правка</string>
+    <string name="feed_action_edit">Правка канал</string>
+    <string name="add_feed_new_folder_title">Новый тег</string>
+    <string name="add_feed_url_title">Канал или веб-сайт URL</string>
+    <string name="folder_action_delete_title">Удалить тег</string>
+    <string name="folder_action_edit">Переименовать</string>
+    <string name="feed_action_edit_success">Канал обновлен</string>
+    <string name="settings_remove_account_button_local">Удалить аккаунт</string>
+    <string name="settings_remove_account_message_local">Вы уверены, что хотите удалить свой аккаунт? Это невозможно отменить.</string>
+    <string name="settings_remove_account_confirm_local">Подтвердить</string>
+    <string name="account_settings_save_name">Имя сохранено</string>
+    <string name="article_view_mark_as_unread">Отметить как непрочитанное</string>
+    <string name="article_view_star">Звезда</string>
+    <string name="article_view_unstar">Убрать звезду</string>
+    <string name="refresh_manually_only">Только вручную</string>
+    <string name="refresh_feeds_menu_label">Обновить каналы</string>
+    <string name="nav_headline_tags">Теги</string>
+    <string name="nav_headline_feeds">Каналы</string>
+    <string name="nav_add_feed">Добавить канал</string>
+    <string name="add_feed_success">Канал добавлен</string>
+    <string name="feed_form_cancel">Отмена</string>
+    <string name="feed_action_unsubscribe_confirm">Отписаться</string>
+    <string name="edit_feed_submit">Сохранить</string>
+    <string name="dialog_cancel">Отмена</string>
+    <string name="feed_action_unsubscribe_title">Отписаться</string>
+    <string name="settings">Открыть настройки</string>
+    <string name="settings_remove_account_title_local">Удалить аккаунт</string>
+    <string name="feed_action_unsubscribe_message">Вы уверены, что хотите отписаться от \"%1$s\"?</string>
+    <string name="article_view_mark_as_read">Отметить как прочитанное</string>
+    <string name="refresh_minutes">Каждые %1$d минут</string>
+    <plurals name="refresh_hours">
+        <item quantity="one">Каждый час</item>
+        <item quantity="few">Каждые %d часов</item>
+        <item quantity="many"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="add_feed_feed_not_error">Не смог найти канал</string>
+</resources>

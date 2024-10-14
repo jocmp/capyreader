@@ -68,7 +68,7 @@
     <string name="edit_feed_tags">Tag</string>
     <string name="settings_option_in_app_browser">Usare il browser in-app</string>
     <string name="opml_import_notification_cancel">Stop</string>
-    <string name="image_preview_menu_option_none">Nessuno</string>
+    <string name="image_preview_menu_option_none">Nessuna</string>
     <string name="image_preview_label">Anteprima dell\'immagine</string>
     <string name="settings_article_list_feed_name">Nome del feed</string>
     <string name="settings_article_list_feed_icons">Icone dei feed</string>
@@ -179,4 +179,18 @@
     <string name="settings_gestures_list_back_navigation_open_drawer">Torna all\'elenco dei Tag</string>
     <string name="crash_log_export_item_subtitle">Salva i log dei crash in un file da condividere con lo sviluppatore</string>
     <string name="crash_log_export_item_title">Condividi i log di arresti anomali</string>
+    <string name="edit_feed_notifications_title">Abilita notifiche</string>
+    <string name="settings_enable_refresh_call_to_action">L\'aggiornamento periodico deve essere prima abilitato</string>
+    <string name="settings_notifications_select_all">Seleziona tutti</string>
+    <string name="settings_notifications_select_none">Nessuna selezione</string>
+    <string name="notifications_channel_title_feed_update">Aggiornamento dei feed</string>
+    <plurals name="notifications_feed_update_title">
+        <item quantity="one">%1$d nuovo articolo di %2$s</item>
+        <item quantity="many">%1$d nuovi articoli di %2$s</item>
+        <item quantity="other">%1$d nuovi articoli di %2$s</item>
+    </plurals>
+    <string name="settings_panel_notifications_title">Notifiche</string>
+    <string name="notifications_permission_disabled_title">Le notifiche sono disabilitate</string>
+    <string name="edit_feed_tags_section">Tag</string>
+    <string name="notifications_permissions_disabled_call_to_action">Impostazioni</string>
 </resources>
