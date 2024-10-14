@@ -4,7 +4,7 @@
     <string name="unsubscribe_error">Грешка при отписване от емисия</string>
     <string name="nav_headline_tags">Етикети</string>
     <string name="app_name">RSS четец</string>
-    <string name="add_account_title">Добавяне на акаунт</string>
+    <string name="add_account_title">Добави акаунт</string>
     <string name="transfers_export_subscriptions">Изнасяне на абонаменти</string>
     <string name="opml_import_button_text">Внасяне от файл</string>
     <string name="settings_import_progress">Внасяне на абонаменти %1$d от %2$d</string>
@@ -34,7 +34,7 @@
     <string name="image_preview_menu_option_large">Голяма</string>
     <string name="image_preview_label">Преглед на изображения</string>
     <string name="settings_option_copy_version">Копиране на версията</string>
-    <string name="action_mark_all_read">Маркирай всички като прочетени</string>
+    <string name="action_mark_all_read">Маркирай всичко като прочетени</string>
     <string name="add_feed_feed_not_error">Не може да се намери емисия</string>
     <string name="settings_remove_account_message_local">Сигурни ли сте, че искате да изтриете акаунта си? Това не може да бъде отменено.</string>
     <string name="add_feed_url_title">Емисия или URL адрес на уебсайт</string>
@@ -44,7 +44,7 @@
     <string name="feed_action_unsubscribe_message">Сигурни ли сте, че искате да се отпишете от \"%1$s\"?</string>
     <string name="folder_action_edit">Преименувай</string>
     <string name="feed_action_unsubscribe_title">Отписване</string>
-    <string name="settings_remove_account_confirm_local">Потвърдете</string>
+    <string name="settings_remove_account_confirm_local">Потвърди</string>
     <string name="account_settings_save_name">Името е запазено</string>
     <string name="settings_remove_account_message_feedbin">Сигурни ли сте, че искате да излезете?</string>
     <string name="settings_remove_account_button_local">Изтриване на акаунт</string>
@@ -57,8 +57,8 @@
     <string name="filter_starred">Със звезда</string>
     <string name="filter_all">Всичко</string>
     <string name="feed_action_unsubscribe">Отписване</string>
-    <string name="filter_action_menu_description">Редактиране</string>
-    <string name="feed_action_edit">Редактиране на емисия</string>
+    <string name="filter_action_menu_description">Редактирай</string>
+    <string name="feed_action_edit">Редактирай емисия</string>
     <string name="feed_action_unsubscribe_confirm">Отписване</string>
     <string name="edit_feed_submit">Запази</string>
     <string name="dialog_cancel">Отказ</string>
@@ -70,7 +70,7 @@
     <string name="settings_remove_account_title_local">Изтриване на акаунт</string>
     <string name="settings_remove_account_button_feedbin">Излезте</string>
     <string name="article_view_star">Звезда</string>
-    <string name="article_view_unstar">Премахване на звезда</string>
+    <string name="article_view_unstar">Премахни звезда</string>
     <string name="refresh_manually_only">Само ръчно</string>
     <string name="refresh_minutes">На всеки %1$d минути</string>
     <plurals name="refresh_hours">
@@ -78,16 +78,16 @@
         <item quantity="other">На всеки %d часа</item>
     </plurals>
     <string name="nav_headline_feeds">Емисии</string>
-    <string name="nav_add_feed">Добави на емисия</string>
-    <string name="add_feed_save_error">Емисията не можа да бъде запазена</string>
+    <string name="nav_add_feed">Добави емисия</string>
+    <string name="add_feed_save_error">Не можа да се запази емисия</string>
     <string name="add_feed_network_error">Не може да се намери емисия. Проверете връзката си.</string>
     <string name="relative_time_just_now">Току-що</string>
     <string name="relative_time_minutes">%1$dм</string>
     <string name="relative_time_hours">%1$dч</string>
     <string name="relative_time_days">%1$dд</string>
-    <string name="article_share">Споделете статия</string>
-    <string name="extract_full_content">Извлечение на пълното съдържание</string>
-    <string name="mark_all_read_dialog_description">Маркирай всички елементи като прочетени?</string>
+    <string name="article_share">Сподели статия</string>
+    <string name="extract_full_content">Извлечение на пълно съдържание</string>
+    <string name="mark_all_read_dialog_description">Маркирай всичко елементи като прочетени?</string>
     <string name="mark_all_read_dialog_submit">Потвърди</string>
     <string name="article_actions_open_menu">Действия за отваряне на статия</string>
     <string name="article_actions_mark_below_as_read">Маркирай по-долу като прочетено</string>
@@ -128,7 +128,7 @@
     <string name="settings_option_full_content_title">Лепкаво пълно съдържание</string>
     <string name="refresh_on_start">При стартиране</string>
     <string name="empty_onboarding_title">Все още няма емисии</string>
-    <string name="empty_onboarding_prompt">Започнете с добавяне на емисия</string>
+    <string name="empty_onboarding_prompt">Започни с добавяне на емисия</string>
     <string name="article_style_options">Опции за стил на шрифта</string>
     <string name="font_option_system_default">Система по подразбиране</string>
     <string name="font_option_atkinson_hyperlegible">Atkinson Hyperlegible</string>
@@ -140,7 +140,7 @@
     <string name="article_byline_date_only">%1$s при %2$s</string>
     <string name="refresh_every_day">Всеки ден</string>
     <string name="feed_form_feed_url_title">URL на емисия</string>
-    <string name="feed_form_copy_feed_url_to_clipboard">Копирайте URL на емисията в клипборда</string>
+    <string name="feed_form_copy_feed_url_to_clipboard">Копирайте URL на емисия в клипборда</string>
     <string name="filter_action_menu_search_articles">Търсене на статии</string>
     <string name="feed_list_top_bar_close_search">Отхвърляне на търсенето</string>
     <string name="settings_panel_general_title">Общи</string>
