@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="edit_feed_error">Грешка при запазване на емисията</string>
+    <string name="edit_feed_error">Грешка при запазване на емисия</string>
     <string name="unsubscribe_error">Грешка при отписване от емисия</string>
     <string name="nav_headline_tags">Етикети</string>
     <string name="app_name">RSS четец</string>
@@ -178,4 +178,17 @@
     <string name="crash_log_export_item_title">Сподели регистрационни файлове за сривове</string>
     <string name="action_share">Сподели</string>
     <string name="refresh_feeds_menu_label">Опресняване на емисии</string>
+    <string name="notifications_channel_title_feed_update">Актуализации на емисии</string>
+    <plurals name="notifications_feed_update_title">
+        <item quantity="one">%1$d нова статия от %2$s</item>
+        <item quantity="other">%1$d нови статии от %2$s</item>
+    </plurals>
+    <string name="settings_notifications_select_all">Избери всички</string>
+    <string name="settings_notifications_select_none">Избери без</string>
+    <string name="edit_feed_notifications_title">Активирай известията</string>
+    <string name="notifications_permission_disabled_title">Разрешението за известия е деактивирано</string>
+    <string name="edit_feed_tags_section">Етикети</string>
+    <string name="settings_panel_notifications_title">Известия</string>
+    <string name="settings_enable_refresh_call_to_action">Първо трябва да се активира периодично опресняване</string>
+    <string name="notifications_permissions_disabled_call_to_action">Настройки</string>
 </resources>
