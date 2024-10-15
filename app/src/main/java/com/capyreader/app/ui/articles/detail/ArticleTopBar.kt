@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.common.shareArticle
 import com.capyreader.app.ui.articles.FullContentLoadingIcon
+import com.capyreader.app.ui.components.TopBarTooltip
 import com.capyreader.app.ui.fixtures.ArticleSample
 import com.capyreader.app.ui.fixtures.InjectedCapyTheme
 import com.capyreader.app.ui.isAtMostMedium
@@ -64,49 +65,75 @@ fun ArticleTopBar(
         actions = {
             Row {
                 if (article != null) {
-                    IconButton(onClick = { onToggleRead() }) {
-                        Icon(
-                            readIcon(article),
-                            contentDescription = stringResource(R.string.article_view_mark_as_read)
-                        )
-                    }
-
-                    IconButton(onClick = { onToggleExtractContent() }) {
-                        if (article.fullContent == LOADING) {
-                            FullContentLoadingIcon()
-                        } else {
+                    TopBarTooltip(
+                        message = stringResource(R.string.article_view_mark_as_read)
+                    ) {
+                        IconButton(
+                            onClick = { onToggleRead() },
+                        ) {
                             Icon(
-                                painterResource(id = extractIcon(article.fullContent)),
-                                contentDescription = stringResource(R.string.extract_full_content)
+                                readIcon(article),
+                                contentDescription = stringResource(R.string.article_view_mark_as_read)
                             )
                         }
                     }
-
-                    IconButton(onClick = { onToggleStar() }) {
-                        Icon(
-                            starredIcon(article),
-                            contentDescription = stringResource(R.string.article_view_star)
-                        )
+                    TopBarTooltip(
+                        message = stringResource(R.string.extract_full_content)
+                    ) {
+                        IconButton(
+                            onClick = { onToggleExtractContent() },
+                        ) {
+                            if (article.fullContent == LOADING) {
+                                FullContentLoadingIcon()
+                            } else {
+                                Icon(
+                                    painterResource(id = extractIcon(article.fullContent)),
+                                    contentDescription = stringResource(R.string.extract_full_content)
+                                )
+                            }
+                        }
                     }
+                    TopBarTooltip(
+                        message = stringResource(R.string.article_view_star)
+                    ) {
+                        IconButton(
+                            onClick = { onToggleStar() },
 
-                    IconButton(onClick = { setStyleSheetOpen(true) }) {
-                        Icon(
-                            Icons.Outlined.FormatSize,
-                            stringResource(R.string.article_style_options)
-                        )
+                            ) {
+                            Icon(
+                                starredIcon(article),
+                                contentDescription = stringResource(R.string.article_view_star)
+                            )
+                        }
                     }
-
-                    IconButton(onClick = { context.shareArticle(article = article) }) {
-                        Icon(
-                            Icons.Rounded.Share,
-                            contentDescription = stringResource(R.string.article_share)
-                        )
+                    TopBarTooltip(
+                        message = stringResource(R.string.article_style_options)
+                    ) {
+                        IconButton(
+                            onClick = { setStyleSheetOpen(true) },
+                        ) {
+                            Icon(
+                                Icons.Outlined.FormatSize,
+                                stringResource(R.string.article_style_options)
+                            )
+                        }
+                    }
+                    TopBarTooltip(
+                        message = stringResource(R.string.article_share)
+                    ) {
+                        IconButton(
+                            onClick = { context.shareArticle(article = article) },
+                        ) {
+                            Icon(
+                                Icons.Rounded.Share,
+                                contentDescription = stringResource(R.string.article_share)
+                            )
+                        }
                     }
                 }
             }
         }
     )
-
 
     if (isStyleSheetOpen) {
         ModalBottomSheet(onDismissRequest = { setStyleSheetOpen(false) }) {
@@ -138,7 +165,7 @@ fun starredIcon(article: Article) =
     }
 
 @Composable
-fun extractIcon(fullContentState: Article.FullContentState) = when(fullContentState) {
+fun extractIcon(fullContentState: Article.FullContentState) = when (fullContentState) {
     LOADED -> R.drawable.icon_article_filled
     else -> R.drawable.icon_article_empty
 }
