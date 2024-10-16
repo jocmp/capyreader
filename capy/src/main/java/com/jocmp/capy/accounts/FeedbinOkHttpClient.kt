@@ -11,21 +11,14 @@ import java.net.URI
 
 internal object FeedbinOkHttpClient {
     fun forAccount(path: URI, preferences: AccountPreferences): OkHttpClient {
-        val basicAuthInterceptor = BasicAuthInterceptor {
-            val username = preferences.username.get()
-            val password = preferences.password.get()
+        return httpClientBuilder(cachePath = path)
+            .addInterceptor(
+                BasicAuthInterceptor {
+                    val username = preferences.username.get()
+                    val password = preferences.password.get()
 
-            Credentials.basic(username, password)
-        }
-
-        return OkHttpClient.Builder()
-            .addInterceptor(basicAuthInterceptor)
-            .addInterceptor(UserAgentInterceptor())
-            .cache(
-                Cache(
-                    directory = File(File(path), "http_cache"),
-                    maxSize = 50L * 1024L * 1024L // 50 MiB
-                )
+                    Credentials.basic(username, password)
+                }
             )
             .build()
     }
