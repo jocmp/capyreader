@@ -28,6 +28,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import okio.IOException
+import org.jsoup.Jsoup
 import java.net.UnknownHostException
 import java.time.ZonedDateTime
 
@@ -317,7 +318,7 @@ internal class FeedbinAccountDelegate(
                 database.articlesQueries.create(
                     id = entry.id.toString(),
                     feed_id = entry.feed_id.toString(),
-                    title = entry.title,
+                    title = entry.title?.let { Jsoup.parse(it).text() },
                     author = entry.author,
                     content_html = entry.content,
                     extracted_content_url = entry.extracted_content_url,
