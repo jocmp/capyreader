@@ -216,8 +216,10 @@ internal class FeedbinAccountDelegate(
         val icons = fetchIcons()
 
         withResult(feedbin.subscriptions()) { subscriptions ->
-            subscriptions.forEach { subscription ->
-                upsertFeed(subscription, icons)
+            database.transactionWithErrorHandling {
+                subscriptions.forEach { subscription ->
+                    upsertFeed(subscription, icons)
+                }
             }
 
             val feedsToRemove = subscriptions.map { it.feed_id.toString() }
