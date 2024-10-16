@@ -177,4 +177,16 @@
     <string name="crash_log_export_item_subtitle">保存崩溃日志到文件和开发者分享</string>
     <string name="settings_gestures_list_back_navigation_system_back">默认</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">打开导航抽屉</string>
+    <string name="notifications_channel_title_feed_update">Feed 更新</string>
+    <plurals name="notifications_feed_update_title">
+        <item quantity="other">来自 %2$s 的 %1$d 篇新文章</item>
+    </plurals>
+    <string name="settings_enable_refresh_call_to_action">必须首先启用定期刷新</string>
+    <string name="settings_notifications_select_none">全不选</string>
+    <string name="settings_panel_notifications_title">通知</string>
+    <string name="edit_feed_tags_section">标签</string>
+    <string name="edit_feed_notifications_title">启用通知</string>
+    <string name="notifications_permissions_disabled_call_to_action">设置</string>
+    <string name="notifications_permission_disabled_title">禁用了通知权限</string>
+    <string name="settings_notifications_select_all">全选</string>
 </resources>
