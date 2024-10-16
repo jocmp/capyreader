@@ -4,7 +4,6 @@ import okhttp3.Interceptor
 import okhttp3.Interceptor.Chain
 import okhttp3.Response
 import okhttp3.internal.userAgent as OkHttpUserAgent
-import java.io.IOException
 
 class UserAgentInterceptor : Interceptor {
     override fun intercept(chain: Chain): Response {
@@ -16,6 +15,6 @@ class UserAgentInterceptor : Interceptor {
     }
 
     companion object {
-        const val USER_AGENT = "CapyReader (RSS Reader http://capyreader.com/) $OkHttpUserAgent"
+        const val USER_AGENT = "CapyReader (RSS Reader https://capyreader.com/) $OkHttpUserAgent"
     }
 }

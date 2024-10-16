@@ -61,6 +61,9 @@ fun AddAccountView(
                 Row(Modifier.clickable { onSelectFeedbin() }) {
                     AccountRow(source = Source.FEEDBIN)
                 }
+                Row(Modifier.clickable { }) {
+                    AccountRow(source = Source.FRESHRSS)
+                }
                 Row(Modifier.clickable { onSelectLocal() }) {
                     AccountRow(source = Source.LOCAL)
                 }

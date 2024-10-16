@@ -44,6 +44,8 @@ data class Account(
                 preferences = preferences
             )
         )
+
+        Source.FRESHRSS -> TODO()
     }
 ) {
     internal val articleRecords: ArticleRecords = ArticleRecords(database)
