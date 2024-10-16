@@ -6,10 +6,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
-import androidx.lifecycle.viewmodel.compose.saveable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.PagingData
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.sync.Sync
@@ -20,6 +18,7 @@ import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
+import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.articles.parseHtml
 import com.jocmp.capy.buildArticlePager
 import com.jocmp.capy.common.UnauthorizedError
@@ -34,7 +33,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.time.OffsetDateTime
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -45,7 +43,7 @@ class ArticleScreenViewModel(
 ) : AndroidViewModel(application) {
     private var refreshJob: Job? = null
 
-    val filter = appPreferences.filter.changes()
+    val filter = appPreferences.filter.stateIn(viewModelScope)
 
     private val _searchQuery = MutableStateFlow<String?>(null)
 
@@ -147,7 +145,11 @@ class ArticleScreenViewModel(
 
     fun markAllRead(range: MarkRead) {
         viewModelScope.launchIO {
-            val articleIDs = account.unreadArticleIDs(filter = latestFilter, range = range)
+            val articleIDs = account.unreadArticleIDs(
+                filter = latestFilter,
+                range = range,
+                unreadSort = unreadSort.value
+            )
 
             account.markAllRead(articleIDs).onFailure {
                 Sync.markReadAsync(articleIDs, context)
@@ -411,7 +413,7 @@ class ArticleScreenViewModel(
     }
 
     private val latestFilter: ArticleFilter
-        get() = appPreferences.filter.get()
+        get() = filter.value
 
     private val enableStickyFullContent: Boolean
         get() = appPreferences.enableStickyFullContent.get()
