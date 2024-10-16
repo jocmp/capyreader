@@ -53,6 +53,12 @@ private fun buildItem(source: Source): SourceModel {
                 title = stringResource(R.string.account_source_feedbin),
                 iconID = R.drawable.feedbin_logo
             )
+
+        Source.FRESHRSS ->
+            SourceModel(
+                title = stringResource(R.string.account_source_freshrss),
+                iconID = R.drawable.freshrss_logo
+            )
     }
 }
 
