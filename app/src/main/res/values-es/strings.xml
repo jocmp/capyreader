@@ -179,4 +179,18 @@
     <string name="crash_log_export_item_subtitle">Guardar los registros de errores en un archivo para compartirlo con el desarrollador</string>
     <string name="action_share">Compartir</string>
     <string name="crash_log_export_item_title">Compartir registros de errores</string>
+    <plurals name="notifications_feed_update_title">
+        <item quantity="one">%1$d nuevo artículo de %2$s</item>
+        <item quantity="many">%1$d nuevos artículos de %2$s</item>
+        <item quantity="other">%1$d nuevos artículos de %2$s</item>
+    </plurals>
+    <string name="edit_feed_tags_section">Etiquetas</string>
+    <string name="edit_feed_notifications_title">Activar las notificaciones</string>
+    <string name="notifications_permission_disabled_title">Notificaciones desactivadas</string>
+    <string name="notifications_channel_title_feed_update">Actualizaciones de feeds</string>
+    <string name="settings_panel_notifications_title">Notificaciones</string>
+    <string name="notifications_permissions_disabled_call_to_action">Ajustes</string>
+    <string name="settings_enable_refresh_call_to_action">Primero debe activarse la actualización periódica</string>
+    <string name="settings_notifications_select_all">Seleccionar todo</string>
+    <string name="settings_notifications_select_none">Sin seleccionar</string>
 </resources>
