@@ -186,9 +186,6 @@ internal class ArticleRecords internal constructor(
         ): Query<Article> {
             val (read, starred) = status.toStatusPair
 
-            val newestFirst = status != ArticleStatus.UNREAD ||
-                    unreadSort == UnreadSortOrder.NEWEST_FIRST
-
             return database.articlesQueries.allByFeeds(
                 feedIDs = feedIDs,
                 query = query,
@@ -197,7 +194,7 @@ internal class ArticleRecords internal constructor(
                 limit = limit,
                 offset = offset,
                 lastReadAt = mapLastRead(read, since),
-                newestFirst = newestFirst,
+                newestFirst = isDescendingOrder(status, unreadSort),
                 mapper = ::listMapper
             )
         }
@@ -208,13 +205,14 @@ internal class ArticleRecords internal constructor(
             range: MarkRead,
         ): Query<String> {
             val (_, starred) = status.toStatusPair
+
             val (afterArticleID, beforeArticleID) = range.toPair
 
             return database.articlesQueries.findArticleIDsByFeeds(
                 feedIDs = feedIDs,
                 starred = starred,
                 afterArticleID = afterArticleID,
-                beforeArticleID = beforeArticleID
+                beforeArticleID = beforeArticleID,
             )
         }
 
@@ -292,6 +290,11 @@ internal class ArticleRecords internal constructor(
         return nowUTC().minusMonths(3)
     }
 }
+
+
+private fun isDescendingOrder(status: ArticleStatus, unreadSort: UnreadSortOrder) =
+    status != ArticleStatus.UNREAD ||
+            unreadSort == UnreadSortOrder.NEWEST_FIRST
 
 private fun mapLastRead(read: Boolean?, value: OffsetDateTime?): Long? {
     if (read != null) {

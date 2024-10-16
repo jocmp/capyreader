@@ -12,6 +12,14 @@ sealed class MarkRead {
 
     data class After(val articleID: String): MarkRead()
 
+    fun reversed(): MarkRead {
+        return when(this) {
+            is All -> All
+            is Before -> After(articleID)
+            is After -> Before(articleID)
+        }
+    }
+
     val toPair: Pair
         get() = when(this) {
             is After -> Pair(afterArticleID = articleID)

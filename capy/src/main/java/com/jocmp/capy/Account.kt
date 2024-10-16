@@ -8,6 +8,7 @@ import com.jocmp.capy.accounts.LocalAccountDelegate
 import com.jocmp.capy.accounts.LocalOkHttpClient
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.asOPML
+import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.sortedByTitle
 import com.jocmp.capy.db.Database
@@ -147,10 +148,23 @@ data class Account(
         return delegate.removeStar(listOf(articleID))
     }
 
-    fun unreadArticleIDs(filter: ArticleFilter, range: MarkRead): List<String> {
+    fun unreadArticleIDs(
+        filter: ArticleFilter,
+        range: MarkRead,
+        unreadSort: UnreadSortOrder,
+    ): List<String> {
+        val flipRange = filter.status == ArticleStatus.UNREAD &&
+                unreadSort == UnreadSortOrder.OLDEST_FIRST
+
+        val orderedRange = if (flipRange) {
+            range.reversed()
+        } else {
+            range
+        }
+
         return articleRecords.unreadArticleIDs(
             filter = filter,
-            range = range
+            range = orderedRange,
         )
     }
 
