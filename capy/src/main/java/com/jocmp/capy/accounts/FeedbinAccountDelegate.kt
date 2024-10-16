@@ -24,6 +24,7 @@ import com.jocmp.feedbinclient.Subscription
 import com.jocmp.feedbinclient.UnreadEntriesRequest
 import com.jocmp.feedbinclient.UpdateSubscriptionRequest
 import com.jocmp.feedbinclient.pagingInfo
+import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
@@ -205,17 +206,19 @@ internal class FeedbinAccountDelegate(
         }
     }
 
-    private suspend fun refreshArticles(since: String = articleRecords.maxUpdatedAt()) {
-        refreshStarredEntries()
-        refreshUnreadEntries()
-        refreshAllArticles(since = since)
-        fetchMissingArticles()
-    }
+    private suspend fun refreshArticles(since: String = articleRecords.maxUpdatedAt()) =
+        coroutineScope {
+            launch { refreshStarredEntries() }
+            launch { refreshUnreadEntries() }
+            refreshAllArticles(since = since)
+            fetchMissingArticles()
+        }
 
-    private suspend fun refreshFeeds() {
-        val icons = fetchIcons()
+    private suspend fun refreshFeeds() = coroutineScope {
+        val subscriptionsRequest = async { feedbin.subscriptions() }
+        val icons = async { fetchIcons() }.await()
 
-        withResult(feedbin.subscriptions()) { subscriptions ->
+        withResult(subscriptionsRequest.await()) { subscriptions ->
             subscriptions.forEach { subscription ->
                 upsertFeed(subscription, icons)
             }
@@ -251,20 +254,22 @@ internal class FeedbinAccountDelegate(
         )
     }
 
-    private suspend fun refreshTaggings() {
-        withResult(feedbin.taggings()) { taggings ->
-            database.transactionWithErrorHandling {
-                taggings.forEach { tagging ->
-                    database.taggingsQueries.upsert(
-                        id = tagging.id.toString(),
-                        feed_id = tagging.feed_id.toString(),
-                        name = tagging.name,
+    private suspend fun refreshTaggings() = coroutineScope {
+        launch {
+            withResult(feedbin.taggings()) { taggings ->
+                database.transactionWithErrorHandling {
+                    taggings.forEach { tagging ->
+                        database.taggingsQueries.upsert(
+                            id = tagging.id.toString(),
+                            feed_id = tagging.feed_id.toString(),
+                            name = tagging.name,
+                        )
+                    }
+
+                    database.taggingsQueries.deleteOrphanedTags(
+                        excludedIDs = taggings.map { it.id.toString() }
                     )
                 }
-
-                database.taggingsQueries.deleteOrphanedTags(
-                    excludedIDs = taggings.map { it.id.toString() }
-                )
             }
         }
     }
