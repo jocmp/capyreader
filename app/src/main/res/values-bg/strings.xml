@@ -153,7 +153,7 @@
     <string name="settings_auto_delete_option_keep_for_one_month">1 месец</string>
     <string name="settings_section_advanced">Разширени</string>
     <string name="settings_clear_all_articles_confirm">Потвърди</string>
-    <string name="settings_clear_all_articles_text">Сигурни ли сте, че искате да изтриете всички статии? Това не може да бъде отменено.</string>
+    <string name="settings_clear_articles_text">Сигурни ли сте, че искате да изтриете всички статии? Това не може да бъде отменено.</string>
     <string name="settings_clear_all_articles_button">Изчисти всички статии</string>
     <string name="settings_support_button">Поддръжка</string>
     <string name="settings_article_list_title">Списък със статии</string>
@@ -179,10 +179,6 @@
     <string name="action_share">Сподели</string>
     <string name="refresh_feeds_menu_label">Опресни емисии</string>
     <string name="notifications_channel_title_feed_update">Актуализации на емисия</string>
-    <plurals name="notifications_feed_update_title">
-        <item quantity="one">%1$d нова статия от %2$s</item>
-        <item quantity="other">%1$d нови статии от %2$s</item>
-    </plurals>
     <string name="settings_notifications_select_all">Избери всички</string>
     <string name="settings_notifications_select_none">Избери без</string>
     <string name="edit_feed_notifications_title">Активирай известията</string>

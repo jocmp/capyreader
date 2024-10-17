@@ -147,7 +147,7 @@
     <string name="settings_auto_delete_option_keep_for_three_month">3 meses</string>
     <string name="settings_section_advanced">Avanzado</string>
     <string name="settings_clear_all_articles_confirm">Confirmar</string>
-    <string name="settings_clear_all_articles_text">¿Estás seguro de que quieres borrar todos los artículos? Esto no se puede deshacer.</string>
+    <string name="settings_clear_articles_text">¿Estás seguro de que quieres borrar todos los artículos? Esto no se puede deshacer.</string>
     <string name="settings_clear_all_articles_button">Borrar todos los artículos</string>
     <string name="settings_support_button">Soporte</string>
     <string name="settings_article_list_title">Lista de artículos</string>
@@ -179,11 +179,6 @@
     <string name="crash_log_export_item_subtitle">Guardar los registros de errores en un archivo para compartirlo con el desarrollador</string>
     <string name="action_share">Compartir</string>
     <string name="crash_log_export_item_title">Compartir registros de errores</string>
-    <plurals name="notifications_feed_update_title">
-        <item quantity="one">%1$d nuevo artículo de %2$s</item>
-        <item quantity="many">%1$d nuevos artículos de %2$s</item>
-        <item quantity="other">%1$d nuevos artículos de %2$s</item>
-    </plurals>
     <string name="edit_feed_tags_section">Etiquetas</string>
     <string name="edit_feed_notifications_title">Activar las notificaciones</string>
     <string name="notifications_permission_disabled_title">Notificaciones desactivadas</string>

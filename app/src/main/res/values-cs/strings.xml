@@ -138,7 +138,7 @@
     <string name="settings_support_button">Podpora</string>
     <string name="settings_section_advanced">Pokročilé</string>
     <string name="settings_clear_all_articles_confirm">Potvrdit</string>
-    <string name="settings_clear_all_articles_text">Jste si jist, že chcete smazat všechny články? Nelze to vzít zpět.</string>
+    <string name="settings_clear_articles_text">Jste si jist, že chcete smazat všechny články? Nelze to vzít zpět.</string>
     <string name="settings_article_list_title">Seznam článků</string>
     <string name="article_vertical_swipe_previous_article">Předchozí článek</string>
     <string name="article_vertical_swipe_next_article">Další článek</string>

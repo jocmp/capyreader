@@ -149,7 +149,7 @@
     <string name="settings_section_advanced">Napredno</string>
     <string name="article_vertical_swipe_next_article">Sledeći članak</string>
     <string name="settings_clear_all_articles_confirm">Potvrdi</string>
-    <string name="settings_clear_all_articles_text">Da li ste sigurni da želite da izbrišete sve članke? Ovo se ne može poništiti.</string>
+    <string name="settings_clear_articles_text">Da li ste sigurni da želite da izbrišete sve članke? Ovo se ne može poništiti.</string>
     <string name="article_vertical_swipe_full_content">Učitaj ceo sadržaj</string>
     <string name="settings_panel_gestures_title">Pokreti</string>
     <string name="settings_auto_delete_option_keep_for_one_month">1 mjesec</string>

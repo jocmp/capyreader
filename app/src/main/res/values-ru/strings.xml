@@ -43,12 +43,6 @@
     </plurals>
     <string name="add_feed_feed_not_error">Не смог найти канал</string>
     <string name="add_account_title">Добавить аккаунт</string>
-    <plurals name="notifications_feed_update_title">
-        <item quantity="one">%1$d новая статья из %2$s</item>
-        <item quantity="few">%1$d новых статей из %2$s</item>
-        <item quantity="many"></item>
-        <item quantity="other"></item>
-    </plurals>
     <string name="opml_export_button_text">Экспорт в OPML</string>
     <string name="opml_import_toast_complete">Импорт завершён</string>
     <string name="theme_menu_label">Тема</string>
@@ -67,7 +61,7 @@
     <string name="settings_auto_delete_option_keep_forever">Навсегда</string>
     <string name="settings_auto_delete_option_keep_for_one_month">1 месяц</string>
     <string name="settings_section_advanced">Расширенный</string>
-    <string name="settings_clear_all_articles_text">Вы точно хотите удалить все статьи? Это нельзя отменить.</string>
+    <string name="settings_clear_articles_text">Вы точно хотите удалить все статьи? Это нельзя отменить.</string>
     <string name="settings_article_list_title">Список статей</string>
     <string name="opml_exporter_failure">Экспорт не удался</string>
     <string name="article_list_unread_sort_title">Сортировка непрочитанных</string>
