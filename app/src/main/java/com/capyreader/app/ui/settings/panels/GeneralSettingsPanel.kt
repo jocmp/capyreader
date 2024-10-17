@@ -149,7 +149,7 @@ fun GeneralSettingsPanelView(
                     ),
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(stringResource(R.string.settings_clear_articles_button))
+                    Text(stringResource(R.string.settings_clear_all_articles_button))
                 }
             }
         }

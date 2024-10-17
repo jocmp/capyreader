@@ -25,7 +25,9 @@ fun AutoDeleteMenu(
 ) {
     val options = AutoDelete.entries
 
-    Column {
+    Column(
+        modifier = Modifier.padding(bottom = 16.dp),
+    ) {
         PreferenceSelect(
             selected = autoDelete,
             update = { updateAutoDelete(it) },
@@ -33,6 +35,12 @@ fun AutoDeleteMenu(
             label = R.string.settings_auto_delete_articles_title,
             optionText = { translationKey(it) }
         )
+        RowItem {
+            Text(
+                text = stringResource(R.string.settings_auto_delete_disclaimer),
+                style = MaterialTheme.typography.labelMedium,
+            )
+        }
     }
 }
 
