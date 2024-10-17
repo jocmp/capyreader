@@ -188,4 +188,6 @@
     <string name="settings_enable_refresh_call_to_action">Primero debe activarse la actualización periódica</string>
     <string name="settings_notifications_select_all">Seleccionar todo</string>
     <string name="settings_notifications_select_none">Sin seleccionar</string>
+    <string name="article_list_row_swipe_open_externally">Abrir el artículo en el navegador</string>
+    <string name="article_view_open_externally">Abrir externamente</string>
 </resources>

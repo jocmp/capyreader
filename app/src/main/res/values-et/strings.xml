@@ -187,4 +187,6 @@
     <string name="settings_panel_notifications_title">Teavitused</string>
     <string name="notifications_permissions_disabled_call_to_action">Seadistused</string>
     <string name="settings_notifications_select_all">Vali kõik</string>
+    <string name="article_list_row_swipe_open_externally">Ava artikkel veebibrauseris</string>
+    <string name="article_view_open_externally">Ava väliselt</string>
 </resources>

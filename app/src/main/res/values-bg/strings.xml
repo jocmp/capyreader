@@ -3,7 +3,7 @@
     <string name="edit_feed_error">Грешка при запазване на емисия</string>
     <string name="unsubscribe_error">Грешка при отписване от емисия</string>
     <string name="nav_headline_tags">Етикети</string>
-    <string name="app_name">RSS четец</string>
+    <string name="app_name">Капи Четец</string>
     <string name="add_account_title">Добави акаунт</string>
     <string name="transfers_export_subscriptions">Изнасяне на абонаменти</string>
     <string name="opml_import_button_text">Внасяне от файл</string>
@@ -187,4 +187,6 @@
     <string name="settings_panel_notifications_title">Известия</string>
     <string name="settings_enable_refresh_call_to_action">Първо трябва да се активира периодично опресняване</string>
     <string name="notifications_permissions_disabled_call_to_action">Настройки</string>
+    <string name="article_view_open_externally">Отвори външно</string>
+    <string name="article_list_row_swipe_open_externally">Отвори статия в браузъра</string>
 </resources>

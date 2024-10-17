@@ -186,4 +186,6 @@
     <string name="notifications_permissions_disabled_call_to_action">设置</string>
     <string name="notifications_permission_disabled_title">禁用了通知权限</string>
     <string name="settings_notifications_select_all">全选</string>
+    <string name="article_list_row_swipe_open_externally">在浏览器中打开文章</string>
+    <string name="article_view_open_externally">外部打开</string>
 </resources>
