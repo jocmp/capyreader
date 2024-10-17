@@ -7,10 +7,11 @@ import android.os.StrictMode.setThreadPolicy
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.capyreader.app.common.AppPreferences
-import com.capyreader.app.refresher.FeedNotifications
+import com.capyreader.app.refresher.ArticleNotifications
 import com.capyreader.app.ui.App
 import com.capyreader.app.ui.Route
 import org.koin.android.ext.android.get
@@ -23,7 +24,7 @@ class MainActivity : ComponentActivity() {
         enableStrictModeOnDebug()
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        FeedNotifications.handleResult(intent, appPreferences = appPreferences)
+        ArticleNotifications.handleResult(intent, appPreferences = appPreferences)
 
         val theme = appPreferences.theme
 
@@ -39,7 +40,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        FeedNotifications.handleResult(intent, appPreferences = appPreferences)
+        ArticleNotifications.handleResult(intent, appPreferences = appPreferences)
     }
 
     private fun startDestination(): String {

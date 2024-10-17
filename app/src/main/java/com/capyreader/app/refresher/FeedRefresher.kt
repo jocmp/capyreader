@@ -10,7 +10,7 @@ class FeedRefresher(
     private val account: Account,
     applicationContext: Context,
 ) {
-    private val notifications = FeedNotifications(account = account, applicationContext)
+    private val notifications = ArticleNotifications(account = account, applicationContext)
 
     suspend fun refresh() {
         val since = TimeHelpers.nowUTC()

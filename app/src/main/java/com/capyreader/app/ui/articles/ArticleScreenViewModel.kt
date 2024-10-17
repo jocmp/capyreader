@@ -205,6 +205,8 @@ class ArticleScreenViewModel(
             if (article.fullContent == Article.FullContentState.LOADING) {
                 viewModelScope.launch(Dispatchers.IO) { fetchFullContent(article) }
             }
+
+            appPreferences.articleID.set(articleID)
         }
     }
 
@@ -242,6 +244,7 @@ class ArticleScreenViewModel(
 
     fun clearArticle() {
         _article = null
+        appPreferences.articleID.delete()
     }
 
     fun clearSearch() {
