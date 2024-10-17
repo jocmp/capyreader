@@ -274,8 +274,8 @@ UPDATE article_statuses SET starred = :starred, updated_at = :updatedAt
 WHERE article_statuses.article_id = :articleID;
 
 deleteAllArticles {
-  DELETE FROM article_statuses;
-  DELETE FROM articles;
+  DELETE FROM article_statuses WHERE starred = 0 AND read = 1;
+  DELETE FROM articles WHERE id NOT IN (SELECT article_id FROM article_statuses);
 }
 
 deleteArticles {

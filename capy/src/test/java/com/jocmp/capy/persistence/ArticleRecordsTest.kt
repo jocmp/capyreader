@@ -371,23 +371,23 @@ class ArticleRecordsTest {
 
         val oldArticle = articleFixture.create(publishedAt = oldPublishedAt)
         val oldUnreadArticle = articleFixture.create(publishedAt = oldPublishedAt, read = false)
-        val newArticle = articleFixture.create()
+        val newReadArticle = articleFixture.create()
         val oldStarredArticle = articleFixture.create(publishedAt = oldPublishedAt).run {
             articleRecords.markAllStarred(listOf(id))
             articleRecords.find(id)!!
         }
 
-        assertNotNull(articleRecords.reload(newArticle))
+        assertNotNull(articleRecords.reload(newReadArticle))
         assertNotNull(articleRecords.reload(oldUnreadArticle))
         assertNotNull(articleRecords.reload(oldStarredArticle))
         assertNotNull(articleRecords.reload(oldArticle))
 
         articleRecords.deleteAllArticles()
 
-        assertNull(articleRecords.reload(newArticle))
-        assertNull(articleRecords.reload(oldUnreadArticle))
-        assertNull(articleRecords.reload(oldStarredArticle))
         assertNull(articleRecords.reload(oldArticle))
+        assertNull(articleRecords.reload(newReadArticle))
+        assertNotNull(articleRecords.reload(oldUnreadArticle))
+        assertNotNull(articleRecords.reload(oldStarredArticle))
     }
 }
 

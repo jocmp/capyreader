@@ -151,8 +151,8 @@
     <string name="settings_auto_delete_disclaimer">Automatically deletes read, unstarred articles based on their publish date. Deleted articles cannot be recovered.</string>
     <string name="settings_section_advanced">Advanced</string>
     <string name="settings_clear_all_articles_confirm">Confirm</string>
-    <string name="settings_clear_all_articles_text">Are you sure you want to delete all articles? This cannot be undone.</string>
-    <string name="settings_clear_all_articles_button">Clear all articles</string>
+    <string name="settings_clear_articles_text">Are you sure you want to delete all read, unstarred articles from your device? This action cannot be undone.</string>
+    <string name="settings_clear_articles_button">Clear articles</string>
     <string name="settings_support_button">Support</string>
     <string name="settings_article_list_title">Article List</string>
     <string name="opml_exporter_success">Export complete</string>
