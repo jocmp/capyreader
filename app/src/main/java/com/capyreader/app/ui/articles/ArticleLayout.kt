@@ -19,7 +19,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
-import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.rememberDrawerState
@@ -90,7 +89,7 @@ fun ArticleLayout(
     onSelectFeed: suspend (feedID: String) -> Unit,
     onSelectArticleFilter: () -> Unit,
     onSelectStatus: (status: ArticleStatus) -> Unit,
-    onSelectArticle: suspend (articleID: String) -> Unit,
+    onSelectArticle: (articleID: String) -> Unit,
     onNavigateToSettings: () -> Unit,
     onRequestClearArticle: () -> Unit,
     onToggleArticleRead: () -> Unit,
@@ -224,6 +223,20 @@ fun ArticleLayout(
         }
     }
 
+    val selectArticle = { articleID: String ->
+        onSelectArticle(articleID)
+        if (search.isActive) {
+            focusManager.clearFocus()
+        }
+        coroutineScope.launch {
+            navigateToDetail()
+        }
+    }
+
+    ArticleHandler {
+        selectArticle(it)
+    }
+
     ArticleScaffold(
         drawerState = drawerState,
         scaffoldNavigator = scaffoldNavigator,
@@ -337,13 +350,7 @@ fun ArticleLayout(
                             selectedArticleKey = article?.id,
                             listState = listState,
                             onMarkAllRead = onMarkAllRead,
-                            onSelect = { articleID ->
-                                onSelectArticle(articleID)
-                                if (search.isActive) {
-                                    focusManager.clearFocus()
-                                }
-                                navigateToDetail()
-                            },
+                            onSelect = { selectArticle(it) },
                         )
                     }
                 }
@@ -431,8 +438,6 @@ fun ArticleLayout(
         }
     }
 
-    ResetPageOnClear(article, scaffoldNavigator)
-
     BackHandler(mediaUrl != null) {
         mediaUrl = null
     }
@@ -445,18 +450,6 @@ fun ArticleLayout(
         enabled = isFeedActive(mediaUrl, article, search)
     ) {
         toggleDrawer()
-    }
-}
-
-@Composable
-@OptIn(ExperimentalMaterial3AdaptiveApi::class)
-fun ResetPageOnClear(article: Article?, navigator: ThreePaneScaffoldNavigator<Any>) {
-    LaunchedEffect(article, navigator) {
-        val isReader = navigator.currentDestination?.pane == ListDetailPaneScaffoldRole.Detail
-
-        if (isReader && article == null) {
-            navigator.navigateTo(ListDetailPaneScaffoldRole.List)
-        }
     }
 }
 

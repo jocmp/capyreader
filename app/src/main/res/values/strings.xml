@@ -88,11 +88,6 @@
     <string name="opml_import_notification_title">Importing subscriptions…</string>
     <string name="notifications_channel_title_opml_import">Subscription Imports</string>
     <string name="notifications_channel_title_feed_update">Feed Updates</string>
-    <plurals name="notifications_feed_update_title">
-        <item quantity="one">%1$d new article from %2$s</item>
-        <item quantity="many">%1$d new articles from %2$s</item>
-        <item quantity="other">%1$d new articles from %2$s</item>
-    </plurals>
     <string name="settings_section_privacy">Privacy</string>
     <string name="settings_section_refresh">Refresh</string>
     <string name="opml_import_button_text">Import from File</string>

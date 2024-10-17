@@ -21,7 +21,7 @@ import java.time.LocalDateTime
 @Composable
 fun ArticleList(
     articles: LazyPagingItems<Article>,
-    onSelect: suspend (articleID: String) -> Unit,
+    onSelect: (articleID: String) -> Unit,
     onMarkAllRead: (range: MarkRead) -> Unit,
     selectedArticleKey: String?,
     listState: LazyListState,

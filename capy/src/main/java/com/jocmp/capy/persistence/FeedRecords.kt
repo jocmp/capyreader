@@ -5,12 +5,10 @@ import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOneNotNull
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
-import com.jocmp.capy.NotifiableFeed
 import com.jocmp.capy.db.Database
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
-import java.time.ZonedDateTime
 import kotlin.coroutines.coroutineContext
 
 internal class FeedRecords(private val database: Database) {
@@ -84,19 +82,7 @@ internal class FeedRecords(private val database: Database) {
         return Folder(title = title, feeds = feeds)
     }
 
-    internal suspend fun feedsWithNotifications(since: ZonedDateTime): List<NotifiableFeed> {
-        return database.feedsQueries
-            .findWithNotifications(
-                since = since.toEpochSecond(),
-                mapper = ::notifiableFeedMapper
-            )
-            .asFlow()
-            .mapToList(Dispatchers.IO)
-            .firstOrNull()
-            .orEmpty()
-    }
-
-    internal fun feeds(): Flow<List<Feed>> {
+     internal fun feeds(): Flow<List<Feed>> {
         return database.feedsQueries
             .tagged(mapper = ::feedMapper)
             .asFlow()
@@ -106,30 +92,6 @@ internal class FeedRecords(private val database: Database) {
     internal fun removeFeed(feedID: String) {
         database.feedsQueries.delete(listOf(feedID))
     }
-
-    private fun notifiableFeedMapper(
-        id: String,
-        subscriptionID: String,
-        title: String,
-        feedURL: String,
-        siteURL: String?,
-        faviconURL: String?,
-        enableStickyFullContent: Boolean = false,
-        enableNotifications: Boolean = false,
-        articleCount: Long,
-    ) = NotifiableFeed(
-        feed = Feed(
-            id = id,
-            subscriptionID = subscriptionID,
-            title = title,
-            feedURL = feedURL,
-            siteURL = siteURL.orEmpty(),
-            faviconURL = faviconURL,
-            enableStickyFullContent = enableStickyFullContent,
-            enableNotifications = enableNotifications
-        ),
-        articleCount
-    )
 
     private fun feedMapper(
         id: String,

@@ -12,8 +12,10 @@ import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.toDateTimeFromSeconds
 import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.db.Database
+import com.jocmp.capy.notifications.ArticleNotification
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import java.time.OffsetDateTime
 import java.time.ZonedDateTime
@@ -37,6 +39,18 @@ internal class ArticleRecords internal constructor(
             .findMissingArticles()
             .executeAsList()
             .map { it.toLong() }
+    }
+
+    internal suspend fun notifications(since: ZonedDateTime): List<ArticleNotification> {
+        return database.articlesQueries
+            .withNotifications(
+                since = since.toEpochSecond(),
+                mapper = ::articleNotificationMapper
+            )
+            .asFlow()
+            .mapToList(Dispatchers.IO)
+            .firstOrNull()
+            .orEmpty()
     }
 
     fun deleteAllArticles() {
