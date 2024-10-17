@@ -146,7 +146,7 @@
     <string name="settings_auto_delete_option_keep_for_one_month">1 ay</string>
     <string name="settings_auto_delete_option_keep_for_three_month">3 ay</string>
     <string name="settings_clear_all_articles_confirm">Onayla</string>
-    <string name="settings_clear_articles_text">Tüm makaleleri silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.</string>
+    <string name="settings_clear_all_articles_text">Tüm makaleleri silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.</string>
     <string name="settings_clear_all_articles_button">Tüm makaleleri temizle</string>
     <string name="settings_support_button">Destek</string>
     <string name="settings_article_list_title">Makale Listesi</string>

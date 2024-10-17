@@ -158,7 +158,7 @@
     <string name="settings_panel_general_title">Allgemein</string>
     <string name="settings_section_advanced">Fortgeschritten</string>
     <string name="settings_clear_all_articles_confirm">Bestätigen</string>
-    <string name="settings_clear_articles_text">Bist Du sicher, dass Du alle Artikel löschen möchtest? Dies kann nicht rückgängig gemacht werden.</string>
+    <string name="settings_clear_all_articles_text">Bist Du sicher, dass Du alle Artikel löschen möchtest? Dies kann nicht rückgängig gemacht werden.</string>
     <string name="settings_clear_all_articles_button">Alle Artikel löschen</string>
     <string name="settings_support_button">Hilfe</string>
     <string name="settings_article_list_title">Artikelliste</string>

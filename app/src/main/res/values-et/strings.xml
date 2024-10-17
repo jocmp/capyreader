@@ -158,7 +158,7 @@
     <string name="settings_auto_delete_option_keep_for_two_week">2 nädalat</string>
     <string name="settings_auto_delete_option_keep_for_three_month">3 kuud</string>
     <string name="settings_clear_all_articles_button">Kustuta kõik artiklid</string>
-    <string name="settings_clear_articles_text">Kas sa oled kindel, et soovid kõik artiklid kustutada? Seda tegevust ei saa tagasi pöörata.</string>
+    <string name="settings_clear_all_articles_text">Kas sa oled kindel, et soovid kõik artiklid kustutada? Seda tegevust ei saa tagasi pöörata.</string>
     <string name="settings_options_reader_pin_toolbars">Kinnita tööriistaribad</string>
     <string name="article_bottom_bar_next_article">Mine järgmise artikli juurde</string>
     <string name="notifications_channel_title_opml_import">Tellimuste import</string>

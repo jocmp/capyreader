@@ -159,7 +159,7 @@ fun GeneralSettingsPanelView(
     if (isClearArticlesDialogOpen) {
         AlertDialog(
             onDismissRequest = onClearArticlesCancel,
-            text = { Text(stringResource(R.string.settings_clear_articles_text)) },
+            text = { Text(stringResource(R.string.settings_clear_all_articles_text)) },
             dismissButton = {
                 TextButton(onClick = onClearArticlesCancel) {
                     Text(stringResource(R.string.dialog_cancel))

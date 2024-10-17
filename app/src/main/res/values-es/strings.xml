@@ -147,7 +147,7 @@
     <string name="settings_auto_delete_option_keep_for_three_month">3 meses</string>
     <string name="settings_section_advanced">Avanzado</string>
     <string name="settings_clear_all_articles_confirm">Confirmar</string>
-    <string name="settings_clear_articles_text">¿Estás seguro de que quieres borrar todos los artículos? Esto no se puede deshacer.</string>
+    <string name="settings_clear_all_articles_text">¿Estás seguro de que quieres borrar todos los artículos? Esto no se puede deshacer.</string>
     <string name="settings_clear_all_articles_button">Borrar todos los artículos</string>
     <string name="settings_support_button">Soporte</string>
     <string name="settings_article_list_title">Lista de artículos</string>
