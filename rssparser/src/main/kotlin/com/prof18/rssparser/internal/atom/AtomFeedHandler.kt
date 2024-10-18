@@ -98,6 +98,7 @@ internal class AtomFeedHandler(val atom: Element) : FeedHandler {
             Link.Edit.value,
             Link.Self.value,
             Link.Replies.value,
+            Link.Enclosure.value,
         )
     }
 }
