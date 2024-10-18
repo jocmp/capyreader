@@ -120,7 +120,7 @@
     <string name="settings_auto_delete_disclaimer">Supprimer automatiquement les articles lus, non favoris, d\'après leur date de publication. Les articles supprimés ne peuvent être retrouvés.</string>
     <string name="settings_section_advanced">Avancés</string>
     <string name="settings_clear_all_articles_confirm">Confirmer</string>
-    <string name="settings_clear_all_articles_text">Voulez-vous vraiment supprimer tous les articles ? Cela ne peut être annulé.</string>
+    <string name="settings_clear_all_articles_text">Voulez-vous vraiment supprimer tous les articles lus, non étoilés de votre appareil ? Cette action est irréversible.</string>
     <string name="settings_clear_all_articles_button">Supprimer tous les articles</string>
     <string name="settings_support_button">Assistance</string>
     <string name="settings_article_list_title">Liste d\'articles</string>
@@ -170,11 +170,23 @@
     <string name="article_vertical_swipe_disabled">Désactivé</string>
     <string name="article_list_row_swipe_disabled">Désactivé</string>
     <string name="article_list_row_swipe_toggle_starred">Changer l\'état Favori</string>
-    <string name="article_list_unread_sort_newest_first">Trier par nouveauté</string>
-    <string name="article_list_unread_sort_oldest_first">Trier par ancienneté</string>
-    <string name="article_list_unread_sort_title">Non-lus</string>
+    <string name="article_list_unread_sort_newest_first">Plus récents d\'abord</string>
+    <string name="article_list_unread_sort_oldest_first">Plus anciens d\'abord</string>
+    <string name="article_list_unread_sort_title">Tri par non lus</string>
     <string name="settings_gestures_list_back_navigation_system_back">Défaut</string>
     <string name="action_share">Partager</string>
-    <string name="crash_log_export_item_title">Partager les logs de crash</string>
-    <string name="crash_log_export_item_subtitle">Sauvegarder les logs de crash dans un fichier pour le partager avec le développeur</string>
+    <string name="crash_log_export_item_title">Partager les rapports de plantage</string>
+    <string name="crash_log_export_item_subtitle">Sauvegarder les rapports de plantage dans un fichier pour partager avec le développeur</string>
+    <string name="article_list_row_swipe_open_externally">Ouvrir l\'article dans le navigateur</string>
+    <string name="settings_gestures_list_back_navigation_open_drawer">Ouvrir le menu de navigation</string>
+    <string name="notifications_permissions_disabled_call_to_action">Paramètres</string>
+    <string name="settings_enable_refresh_call_to_action">Le rafraîchissement périodique doit d\'abord être activé</string>
+    <string name="article_view_open_externally">Ouvrir à l\'externe</string>
+    <string name="settings_panel_notifications_title">Notifications</string>
+    <string name="edit_feed_notifications_title">Activer les notifications</string>
+    <string name="notifications_channel_title_feed_update">Mises à jour des flux</string>
+    <string name="edit_feed_tags_section">Étiquettes</string>
+    <string name="settings_notifications_select_all">Sélectionner Tous</string>
+    <string name="settings_notifications_select_none">Sélectionner Aucun</string>
+    <string name="settings_gestures_list_back_navigation_action">Action de navigation retour</string>
 </resources>
