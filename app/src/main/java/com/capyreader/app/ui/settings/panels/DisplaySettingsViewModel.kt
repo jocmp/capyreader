@@ -29,6 +29,9 @@ class DisplaySettingsViewModel(
     private val _showFeedIcons =
         mutableStateOf(appPreferences.articleListOptions.showFeedIcons.get())
 
+    private val _confirmMarkAllRead =
+        mutableStateOf(appPreferences.articleListOptions.confirmMarkAllRead.get())
+
     var fontScale by mutableStateOf(appPreferences.articleListOptions.fontScale.get())
         private set
 
@@ -46,6 +49,9 @@ class DisplaySettingsViewModel(
 
     val showFeedIcons: Boolean
         get() = _showFeedIcons.value
+
+    val confirmMarkAllRead: Boolean
+        get() = _confirmMarkAllRead.value
 
     var enableStickyFullContent by mutableStateOf(appPreferences.enableStickyFullContent.get())
         private set
@@ -102,5 +108,11 @@ class DisplaySettingsViewModel(
         appPreferences.articleListOptions.showFeedName.set(show)
 
         _showFeedName.value = show
+    }
+
+    fun updateConfirmMarkAllRead(confirm: Boolean) {
+        appPreferences.articleListOptions.confirmMarkAllRead.set(confirm)
+
+        _confirmMarkAllRead.value = confirm
     }
 }

@@ -40,11 +40,13 @@ fun DisplaySettingsPanel(
             fontScale = viewModel.fontScale,
             showFeedIcons = viewModel.showFeedIcons,
             showFeedName = viewModel.showFeedName,
+            confirmMarkAllRead = viewModel.confirmMarkAllRead,
             updateImagePreview = viewModel::updateImagePreview,
             updateSummary = viewModel::updateSummary,
             updateFeedName = viewModel::updateFeedName,
             updateFeedIcons = viewModel::updateFeedIcons,
             updateFontScale = viewModel::updateFontScale,
+            updateConfirmMarkAllRead = viewModel::updateConfirmMarkAllRead,
         )
     )
 }
@@ -106,11 +108,13 @@ private fun DisplaySettingsPanelViewPreview() {
                 fontScale = ArticleListFontScale.MEDIUM,
                 showFeedIcons = true,
                 showFeedName = false,
+                confirmMarkAllRead = true,
                 updateImagePreview = {},
                 updateSummary = {},
                 updateFeedName = {},
                 updateFeedIcons = {},
-                updateFontScale = {}
+                updateFontScale = {},
+                updateConfirmMarkAllRead = {},
             )
         )
     }
