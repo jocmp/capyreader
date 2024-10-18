@@ -14,6 +14,7 @@ import com.capyreader.app.R
 fun MarkAllReadButton(
     onMarkAllRead: () -> Unit
 ) {
+    val state = rememberMarkAllReadState()
     val (isDialogOpen, setDialogOpen) = remember {
         mutableStateOf(false)
     }
@@ -22,7 +23,10 @@ fun MarkAllReadButton(
         setDialogOpen(false)
     }
 
-    IconButton(onClick = { setDialogOpen(true) }) {
+    IconButton(onClick = { when(state.confirmationEnabled) {
+        true -> setDialogOpen(true)
+        false -> onMarkAllRead()
+    } }) {
         Icon(
             imageVector = Icons.Filled.CheckCircle,
             contentDescription = stringResource(R.string.action_mark_all_read)

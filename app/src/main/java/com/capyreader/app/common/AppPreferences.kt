@@ -109,5 +109,8 @@ class AppPreferences(context: Context) {
 
         val swipeEnd: Preference<RowSwipeOption>
             get() = preferenceStore.getEnum("article_list_swipe_end", RowSwipeOption.default)
+
+        val confirmMarkAllRead: Preference<Boolean>
+            get() = preferenceStore.getBoolean("article_list_mark_all_read_confirmation_enabled", true)
     }
 }

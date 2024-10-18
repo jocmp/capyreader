@@ -189,4 +189,5 @@
     <string name="settings_notifications_select_all">Select All</string>
     <string name="article_list_row_swipe_open_externally">Open article in browser</string>
     <string name="article_view_open_externally">Open externally</string>
+    <string name="settings_article_list_confirm_mark_all_read">Confirm marking all as read</string>
 </resources>
