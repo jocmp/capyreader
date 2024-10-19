@@ -153,7 +153,7 @@
     <string name="settings_clear_all_articles_button">清空文章</string>
     <string name="settings_support_button">支持</string>
     <string name="settings_article_list_title">文章列表</string>
-    <string name="settings_clear_all_articles_text">确定要清空文章吗？此操作不可撤销。</string>
+    <string name="settings_clear_all_articles_text">确定要从设备删除所有已读且未加星标的文章吗？此操作不可撤销。</string>
     <string name="settings_gestures_reader_swipe_up">上拉</string>
     <string name="article_vertical_swipe_full_content">加载全文</string>
     <string name="settings_panel_gestures_title">手势</string>

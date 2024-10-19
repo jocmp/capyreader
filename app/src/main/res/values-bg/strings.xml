@@ -3,7 +3,7 @@
     <string name="edit_feed_error">Грешка при запазване на емисия</string>
     <string name="unsubscribe_error">Грешка при отписване от емисия</string>
     <string name="nav_headline_tags">Етикети</string>
-    <string name="app_name">Капи Четец</string>
+    <string name="app_name">Capy Reader</string>
     <string name="add_account_title">Добави акаунт</string>
     <string name="transfers_export_subscriptions">Изнасяне на абонаменти</string>
     <string name="opml_import_button_text">Внасяне от файл</string>
@@ -53,7 +53,7 @@
     <string name="add_feed_name_title">Име</string>
     <string name="add_feed_new_folder_title">Нов етикет</string>
     <string name="add_feed_submit">Добави</string>
-    <string name="add_feed_success">Емисията е добавена</string>
+    <string name="add_feed_success">Добавена емисия</string>
     <string name="filter_starred">Със звезда</string>
     <string name="filter_all">Всички</string>
     <string name="feed_action_unsubscribe">Отписване</string>
@@ -62,7 +62,7 @@
     <string name="feed_action_unsubscribe_confirm">Отписване</string>
     <string name="edit_feed_submit">Запази</string>
     <string name="dialog_cancel">Отказ</string>
-    <string name="feed_action_edit_success">Емисията е актуализирана</string>
+    <string name="feed_action_edit_success">Актуализирана емисия</string>
     <string name="feed_action_unsubscribe_success">Отменен абонамент</string>
     <string name="settings">Отвори настройки</string>
     <string name="settings_remove_account_title_feedbin">Излезте</string>
@@ -117,7 +117,7 @@
     <string name="theme_menu_option_light">Светла</string>
     <string name="theme_menu_option_dark">Тъмна</string>
     <string name="theme_menu_option_system_default">Система по подразбиране</string>
-    <string name="settings_option_in_app_browser">Използвай браузър в приложението</string>
+    <string name="settings_option_in_app_browser">Използвай вградения браузър</string>
     <string name="opml_import_notification_cancel">Спри</string>
     <string name="image_preview_menu_option_small">Малко</string>
     <string name="image_preview_menu_option_none">Без</string>
@@ -125,7 +125,7 @@
     <string name="settings_article_list_feed_icons">Икони на емисия</string>
     <string name="settings_article_list_summary">Резюме</string>
     <string name="settings_section_version">Версия</string>
-    <string name="settings_option_full_content_title">Пълно съдържание</string>
+    <string name="settings_option_full_content_title">Приложи пълно съдържание</string>
     <string name="refresh_on_start">При стартиране</string>
     <string name="empty_onboarding_title">Все още няма емисии</string>
     <string name="empty_onboarding_prompt">Започни с добавяне на емисия</string>
@@ -153,7 +153,7 @@
     <string name="settings_auto_delete_option_keep_for_one_month">1 месец</string>
     <string name="settings_section_advanced">Разширени</string>
     <string name="settings_clear_all_articles_confirm">Потвърди</string>
-    <string name="settings_clear_all_articles_text">Сигурни ли сте, че искате да изтриете всички статии? Това не може да бъде отменено.</string>
+    <string name="settings_clear_all_articles_text">Сигурни ли сте, че искате да изтриете всички прочетени, без звезда статии от устройството си? Това действие не може да бъде отменено.</string>
     <string name="settings_clear_all_articles_button">Изчисти всички статии</string>
     <string name="settings_support_button">Поддръжка</string>
     <string name="settings_article_list_title">Списък със статии</string>
