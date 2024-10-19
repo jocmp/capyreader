@@ -189,4 +189,5 @@
     <string name="settings_notifications_select_all">Sélectionner Tous</string>
     <string name="settings_notifications_select_none">Sélectionner Aucun</string>
     <string name="settings_gestures_list_back_navigation_action">Action de navigation retour</string>
+    <string name="settings_confirm_mark_all_read">Confirmer marquer tous comme lus</string>
 </resources>
