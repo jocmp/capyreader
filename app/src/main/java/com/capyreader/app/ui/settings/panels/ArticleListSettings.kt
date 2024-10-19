@@ -61,7 +61,7 @@ fun ArticleListSettings(
             TextSwitch(
                 onCheckedChange = options.updateConfirmMarkAllRead,
                 checked = options.confirmMarkAllRead,
-                title = stringResource(R.string.settings_article_list_confirm_mark_all_read),
+                title = stringResource(R.string.settings_confirm_mark_all_read),
             )
         }
 
