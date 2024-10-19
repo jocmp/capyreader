@@ -54,10 +54,15 @@ class ArticleNotifications(
 
     private fun notifyArticle(notification: ArticleNotification) {
         val builder = NotificationCompat.Builder(applicationContext, FEED_UPDATE.channelID)
-            .setContentTitle(notification.title)
+            .setContentText(notification.title)
+            .setStyle(
+                NotificationCompat.BigTextStyle()
+                    .bigText(notification.title)
+            )
             .setSmallIcon(R.drawable.newsmode)
             .setGroup(notification.feedID)
             .setSubText(notification.feedTitle)
+            .setContentInfo(notification.title)
             .setAutoCancel(true)
             .setContentIntent(notification.intent(applicationContext))
 
