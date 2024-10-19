@@ -9,15 +9,15 @@ jobs:
       contents: write
     if: github.ref == 'refs/heads/main'
     steps:
-      - uses: actions/checkout@v4.1.7
+      - uses: actions/checkout@v4.2.1
         with:
           ssh-key: ${{ secrets.RELEASE_SSH_KEY }}
       - name: Set up Ruby
-        uses: ruby/setup-ruby@v1.185.0
+        uses: ruby/setup-ruby@v1.197.0
         with:
           bundler-cache: true
       - name: Set up Java
-        uses: actions/setup-java@v4.2.1
+        uses: actions/setup-java@v4.4.0
         with:
           distribution: "zulu"
           java-version: "17"
