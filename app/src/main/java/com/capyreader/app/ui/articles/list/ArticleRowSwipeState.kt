@@ -1,11 +1,8 @@
 package com.capyreader.app.ui.articles.list
 
 import android.content.Context
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.OpenInNew
 import androidx.compose.material3.SwipeToDismissBoxState
 import androidx.compose.material3.SwipeToDismissBoxValue
-import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -17,6 +14,7 @@ import com.capyreader.app.common.openLinkExternally
 import com.capyreader.app.ui.articles.LocalArticleActions
 import com.capyreader.app.ui.components.ArticleAction
 import com.capyreader.app.ui.components.readAction
+import com.capyreader.app.ui.components.rememberNoFlingSwipeToDismissBoxState
 import com.capyreader.app.ui.components.starAction
 import com.capyreader.app.ui.settings.panels.RowSwipeOption
 import com.jocmp.capy.Article
@@ -37,7 +35,7 @@ internal fun rememberArticleRowSwipeState(
     appPreferences: AppPreferences = koinInject(),
 ): ArticleRowSwipeState {
     val actions = LocalArticleActions.current
-    val state = rememberSwipeToDismissBoxState()
+    val state = rememberNoFlingSwipeToDismissBoxState()
     val context = LocalContext.current
     val swipeStart by appPreferences.articleListOptions.swipeStart.asState()
     val swipeEnd by appPreferences.articleListOptions.swipeEnd.asState()
