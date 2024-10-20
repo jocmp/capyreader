@@ -186,7 +186,7 @@ fun ArticleRow(
 
             ArticleActionMenu(
                 expanded = isArticleMenuOpen,
-                articleID = article.id,
+                article = article,
                 onMarkAllRead = {
                     setArticleMenuOpen(false)
                     onMarkAllRead(it)

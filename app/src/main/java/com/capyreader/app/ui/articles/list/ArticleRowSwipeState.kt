@@ -1,47 +1,34 @@
 package com.capyreader.app.ui.articles.list
 
 import android.content.Context
-import android.net.Uri
-import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
-import androidx.compose.material.icons.outlined.Circle
-import androidx.compose.material.icons.rounded.Circle
-import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material.icons.rounded.StarOutline
 import androidx.compose.material3.SwipeToDismissBoxState
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import com.capyreader.app.R
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.asState
-import com.capyreader.app.common.openLink
 import com.capyreader.app.common.openLinkExternally
-import com.capyreader.app.ui.articles.ArticleActions
 import com.capyreader.app.ui.articles.LocalArticleActions
-import com.capyreader.app.ui.articles.list.ArticleRowSwipeState.SwipeAction
+import com.capyreader.app.ui.components.ArticleAction
+import com.capyreader.app.ui.components.readAction
+import com.capyreader.app.ui.components.starAction
 import com.capyreader.app.ui.settings.panels.RowSwipeOption
 import com.jocmp.capy.Article
 import org.koin.compose.koinInject
 
 internal data class ArticleRowSwipeState(
     val state: SwipeToDismissBoxState,
-    val action: SwipeAction,
+    val action: ArticleAction,
     val enableStart: Boolean,
     val enableEnd: Boolean,
 ) {
     val enabled = enableStart || enableEnd
-
-    data class SwipeAction(
-        val icon: ImageVector,
-        @StringRes val translationKey: Int,
-        val commit: () -> Unit,
-    )
 }
 
 @Composable
@@ -85,45 +72,9 @@ fun swipePreference(
 }
 
 private fun openExternally(context: Context, article: Article) =
-    SwipeAction(
-        Icons.AutoMirrored.Rounded.OpenInNew,
+    ArticleAction(
+        R.drawable.icon_open_in_new,
         R.string.article_view_open_externally,
     ) {
         context.openLinkExternally(article.url)
     }
-
-private fun starAction(article: Article, actions: ArticleActions): SwipeAction {
-    return when {
-        article.starred -> SwipeAction(
-            Icons.Rounded.StarOutline,
-            R.string.article_view_unstar,
-        ) {
-            actions.unstar(article.id)
-        }
-
-        else -> SwipeAction(
-            Icons.Rounded.Star,
-            R.string.article_view_star,
-        ) {
-            actions.star(article.id)
-        }
-    }
-}
-
-private fun readAction(article: Article, actions: ArticleActions): SwipeAction {
-    return when {
-        article.read -> SwipeAction(
-            Icons.Rounded.Circle,
-            R.string.article_view_mark_as_unread,
-        ) {
-            actions.markUnread(article.id)
-        }
-
-        else -> SwipeAction(
-            Icons.Outlined.Circle,
-            R.string.article_view_mark_as_read,
-        ) {
-            actions.markRead(article.id)
-        }
-    }
-}
