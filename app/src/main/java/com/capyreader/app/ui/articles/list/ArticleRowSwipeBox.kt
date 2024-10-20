@@ -14,13 +14,13 @@ fun ArticleRowSwipeBox(
 
     if (swipeState.disabled) {
         content()
-    }
-
-    SwipeableActionsBox(
-        startActions = swipeState.start,
-        endActions = swipeState.end,
-        backgroundUntilSwipeThreshold = MaterialTheme.colorScheme.surface
-    ) {
-        content()
+    } else {
+        SwipeableActionsBox(
+            startActions = swipeState.start,
+            endActions = swipeState.end,
+            backgroundUntilSwipeThreshold = MaterialTheme.colorScheme.surface
+        ) {
+            content()
+        }
     }
 }

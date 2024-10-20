@@ -125,11 +125,11 @@ private fun ActionIconBox(
         layout(width = placeable.width, height = placeable.height) {
           // Align icon with the left/right edge of the content being swiped.
           val iconOffset = if (action.isOnRightSide) constraints.maxWidth + offset else offset - placeable.width
-          placeable.placeRelative(x = iconOffset.roundToInt(), y = 0)
+          placeable.place(x = iconOffset.roundToInt(), y = 0)
         }
       }
       .background(color = backgroundColor),
-    horizontalArrangement = if (action.isOnRightSide) Arrangement.Start else Arrangement.End,
+    horizontalArrangement = if (action.isOnRightSide) Arrangement.Absolute.Left else Arrangement.Absolute.Right,
     verticalAlignment = Alignment.CenterVertically,
   ) {
     content()
