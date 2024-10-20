@@ -8,17 +8,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.MarkRead.After
 import com.jocmp.capy.MarkRead.Before
 import com.capyreader.app.R
+import com.capyreader.app.ui.articles.LocalArticleActions
+import com.capyreader.app.ui.components.ArticleAction
+import com.capyreader.app.ui.components.readAction
+import com.capyreader.app.ui.components.starAction
+import com.capyreader.app.ui.fixtures.ArticleSample
+import com.jocmp.capy.Article
 
 @Composable
 fun ArticleActionMenu(
     expanded: Boolean,
-    articleID: String,
+    article: Article,
     onMarkAllRead: (range: MarkRead) -> Unit = {},
     onDismissRequest: () -> Unit = {},
 ) {
@@ -27,6 +34,8 @@ fun ArticleActionMenu(
         onDismissRequest = { onDismissRequest() },
         offset = DpOffset(x = 4.dp, y = 0.dp)
     ) {
+        ToggleStarMenuItem(onDismissRequest, article)
+        ToggleReadMenuItem(onDismissRequest, article)
         DropdownMenuItem(
             leadingIcon = {
                 Icon(
@@ -35,7 +44,7 @@ fun ArticleActionMenu(
                 )
             },
             text = { Text(stringResource(R.string.article_actions_mark_after_as_read)) },
-            onClick = { onMarkAllRead(After(articleID)) },
+            onClick = { onMarkAllRead(After(article.id)) },
         )
         DropdownMenuItem(
             leadingIcon = {
@@ -45,16 +54,51 @@ fun ArticleActionMenu(
                 )
             },
             text = { Text(stringResource(R.string.article_actions_mark_below_as_read)) },
-            onClick = { onMarkAllRead(Before(articleID)) },
+            onClick = { onMarkAllRead(Before(article.id)) },
         )
     }
 }
 
+@Composable
+private fun ToggleReadMenuItem(onDismissRequest: () -> Unit, article: Article) {
+    val action = readAction(article, LocalArticleActions.current)
+
+    ToggleActionMenuItem(onDismissRequest, action)
+}
+
+
+@Composable
+private fun ToggleStarMenuItem(onDismissRequest: () -> Unit, article: Article) {
+    val action = starAction(article, LocalArticleActions.current)
+
+    ToggleActionMenuItem(onDismissRequest, action)
+}
+
+@Composable
+private fun ToggleActionMenuItem(
+    onDismissRequest: () -> Unit,
+    action: ArticleAction,
+) {
+    DropdownMenuItem(
+        leadingIcon = {
+            Icon(
+                painterResource(action.icon),
+                contentDescription = null
+            )
+        },
+        text = { Text(stringResource(action.translationKey)) },
+        onClick = {
+            onDismissRequest()
+            action.commit()
+        },
+    )
+}
+
 @Preview
 @Composable
-private fun ArticleActionMenuPreview() {
+private fun ArticleActionMenuPreview(@PreviewParameter(ArticleSample::class) article: Article) {
     ArticleActionMenu(
         expanded = true,
-        articleID = "1234"
+        article = article
     )
 }
