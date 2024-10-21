@@ -104,14 +104,12 @@ interface Feedbin {
             password: String,
             client: OkHttpClient = OkHttpClient(),
             baseURL: String = DEFAULT_URL
-        ): Boolean {
+        ): Response<Void> {
             val feedbin = create(client = client, baseURL = baseURL)
 
             val authentication = Credentials.basic(username, password)
 
-            return feedbin
-                .authentication(authentication = authentication)
-                .isSuccessful
+            return feedbin.authentication(authentication = authentication)
         }
     }
 }

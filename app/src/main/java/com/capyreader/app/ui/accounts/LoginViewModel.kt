@@ -5,13 +5,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.loadAccountModules
 import com.jocmp.capy.Account
 import com.jocmp.capy.AccountManager
+import com.jocmp.capy.accounts.Credentials
+import com.jocmp.capy.accounts.FeedbinCredentials
 import com.jocmp.capy.accounts.Source
-import com.jocmp.capy.accounts.verifyCredentials
-import com.capyreader.app.common.AppPreferences
 import com.jocmp.capy.common.Async
-import com.capyreader.app.loadAccountModules
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -53,9 +54,14 @@ class LoginViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             _result = Async.Loading
 
-            val isSuccessful = verifyCredentials(username = username, password = password)
+            val result = Credentials.verify(
+                credentials = FeedbinCredentials(
+                    username = username,
+                    secret = password,
+                ),
+            )
 
-            if (isSuccessful) {
+            if (result.isSuccess) {
                 withContext(Dispatchers.Main) {
                     updateOrCreateAccount()
                     onSuccess()

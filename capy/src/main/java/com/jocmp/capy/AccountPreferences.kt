@@ -15,6 +15,9 @@ class AccountPreferences(
     val username: Preference<String>
         get() = store.getString("username", "")
 
+    val url: Preference<String>
+        get() = store.getString("api_url", "")
+
     val password: Preference<String>
         get() = store.getString("password", "")
 
