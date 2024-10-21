@@ -1,9 +1,12 @@
 package com.capyreader.app.ui.accounts
 
+import org.koin.compose.koinInject
+
+package com.capyreader.app.ui.accounts
+
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.capyreader.app.common.AppPreferences
@@ -18,18 +21,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class LoginViewModel(
-    val savedStateHandle: SavedStateHandle,
-    private val account: Account? = null,
+class UpdateLoginViewModel(
+    private val account: Account = koinInject(),
     private val accountManager: AccountManager,
     private val appPreferences: AppPreferences,
 ) : ViewModel() {
-    private var _username by mutableStateOf(account?.preferences?.username?.get().orEmpty())
+    private val _username = account.preferences?.username?.get().orEmpty()
     private var _password by mutableStateOf("")
     private var _result by mutableStateOf<Async<Unit>>(Async.Uninitialized)
-
-    val username: String
-        get() = _username
 
     val password: String
         get() = _password
@@ -64,9 +63,8 @@ class LoginViewModel(
             )
 
             if (result.isSuccess) {
-                updateOrCreateAccount()
-
                 withContext(Dispatchers.Main) {
+                    updateOrCreateAccount()
                     onSuccess()
                 }
             } else {

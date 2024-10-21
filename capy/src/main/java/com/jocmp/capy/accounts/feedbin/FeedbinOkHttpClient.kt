@@ -1,12 +1,10 @@
-package com.jocmp.capy.accounts
+package com.jocmp.capy.accounts.feedbin
 
 import com.jocmp.capy.AccountPreferences
-import com.jocmp.capy.UserAgentInterceptor
+import com.jocmp.capy.accounts.httpClientBuilder
 import com.jocmp.feedbinclient.BasicAuthInterceptor
-import okhttp3.Cache
 import okhttp3.Credentials
 import okhttp3.OkHttpClient
-import java.io.File
 import java.net.URI
 
 internal object FeedbinOkHttpClient {
