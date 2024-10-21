@@ -66,7 +66,7 @@
     <string name="theme_menu_option_dark">Scuro</string>
     <string name="theme_menu_option_system_default">Predefinito dal sistema</string>
     <string name="edit_feed_tags">Tag</string>
-    <string name="settings_option_in_app_browser">Usare il browser in-app</string>
+    <string name="settings_option_in_app_browser">Usa il browser in-app</string>
     <string name="opml_import_notification_cancel">Stop</string>
     <string name="image_preview_menu_option_none">Nessuna</string>
     <string name="image_preview_label">Anteprima dell\'immagine</string>
@@ -78,9 +78,9 @@
     <string name="image_preview_menu_option_large">Grande</string>
     <string name="image_preview_menu_option_small">Piccola</string>
     <string name="settings_option_copy_version">Versione della copia</string>
-    <string name="settings_option_full_content_title">Bloccare il contenuto completo</string>
-    <string name="settings_option_full_content_subtitle">Ricordare la scelta di caricare il contenuto completo dell\'articolo</string>
-    <string name="empty_onboarding_prompt">Iniziare con l\'aggiunta di un feed</string>
+    <string name="settings_option_full_content_title">Blocca il contenuto completo</string>
+    <string name="settings_option_full_content_subtitle">Ricorda la scelta di caricare il contenuto completo dell\'articolo</string>
+    <string name="empty_onboarding_prompt">Inizia con l\'aggiunta di un feed</string>
     <string name="article_style_options">Opzioni di stile dei caratteri</string>
     <string name="font_option_vollkorn">Vollkorn</string>
     <string name="font_option_poppins">Poppins</string>
@@ -190,4 +190,5 @@
     <string name="notifications_permissions_disabled_call_to_action">Impostazioni</string>
     <string name="article_list_row_swipe_open_externally">Apri l\'articolo nel browser</string>
     <string name="article_view_open_externally">Apri esternamente</string>
+    <string name="settings_confirm_mark_all_read">Segna tutto come già letto</string>
 </resources>

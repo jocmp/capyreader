@@ -61,7 +61,7 @@
     <string name="settings_auto_delete_option_keep_forever">Навсегда</string>
     <string name="settings_auto_delete_option_keep_for_one_month">1 месяц</string>
     <string name="settings_section_advanced">Расширенные</string>
-    <string name="settings_clear_all_articles_text">Вы точно хотите удалить все статьи? Это нельзя отменить.</string>
+    <string name="settings_clear_all_articles_text">Вы уверены, что хотите удалить все прочитанные, не отмеченные звёздочкой статьи с вашего устройства? Это действие нельзя отменить.</string>
     <string name="settings_article_list_title">Список статей</string>
     <string name="opml_exporter_failure">Экспорт не удался</string>
     <string name="article_list_unread_sort_title">Сорт. по непрочитанным</string>
@@ -191,4 +191,5 @@
     <string name="settings_gestures_list_back_navigation_open_drawer">Открыть навигационную панель</string>
     <string name="settings_enable_refresh_call_to_action">Периодическое обновление должно быть сначала включено</string>
     <string name="settings_notifications_select_none">Не выбрано</string>
+    <string name="settings_confirm_mark_all_read">Подтвердите пометить все как прочитанны</string>
 </resources>
