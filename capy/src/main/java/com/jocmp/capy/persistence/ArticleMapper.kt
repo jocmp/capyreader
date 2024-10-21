@@ -33,7 +33,7 @@ internal fun articleMapper(
         author = author,
         contentHTML = contentHtml ?: "",
         extractedContentURL = optionalURL(extractedContentURL),
-        url = URL(url),
+        url = optionalURL(url),
         imageURL = imageURL,
         feedURL = feedURL,
         siteURL = siteURL,

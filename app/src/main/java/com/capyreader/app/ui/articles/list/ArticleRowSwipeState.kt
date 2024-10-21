@@ -86,5 +86,7 @@ private fun openExternally(context: Context, article: Article) =
         R.drawable.icon_open_in_new,
         R.string.article_view_open_externally,
     ) {
-        context.openLinkExternally(article.url)
+        val url = article.url ?: return@ArticleAction
+
+        context.openLinkExternally(url)
     }
