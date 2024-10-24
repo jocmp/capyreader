@@ -179,4 +179,5 @@
     <string name="settings_reader_title">Čtečka</string>
     <string name="settings_options_reader_pin_toolbars">Připnout lišty</string>
     <string name="settings_panel_general_title">Obecné</string>
+    <string name="notifications_channel_title_feed_update">Aktualizace zdroje</string>
 </resources>
