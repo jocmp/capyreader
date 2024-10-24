@@ -6,7 +6,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.Style
 import com.capyreader.app.MainActivity
@@ -20,7 +19,6 @@ import com.jocmp.capy.Account
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.notifications.ArticleNotification
-import java.lang.reflect.Field
 import java.time.ZonedDateTime
 
 class ArticleNotifications(
@@ -92,7 +90,7 @@ class ArticleNotifications(
             appPreferences.filter.set(
                 ArticleFilter.Feeds(
                     feedID,
-                    feedStatus = ArticleStatus.ALL
+                    feedStatus = ArticleStatus.UNREAD
                 )
             )
             appPreferences.articleID.set(articleID)
