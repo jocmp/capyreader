@@ -23,6 +23,7 @@ internal val articlesModule = module {
             context = get(),
             textSize = get<AppPreferences>().readerOptions.textSize,
             fontOption = get<AppPreferences>().readerOptions.fontFamily,
+            hideTopMargin = get<AppPreferences>().readerOptions.pinToolbars,
         )
     }
     viewModel {

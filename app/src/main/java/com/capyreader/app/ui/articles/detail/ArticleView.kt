@@ -81,8 +81,60 @@ fun ArticleView(
 
     val toolbars = rememberToolbarPreferences(articleID = article.id)
 
+    ArticleViewScaffold(
+        topBar = {
+            ArticleTopBar(
+                article = article,
+                scrollBehavior = toolbars.scrollBehavior,
+                onToggleExtractContent = onToggleFullContent,
+                onToggleRead = onToggleRead,
+                onToggleStar = onToggleStar,
+                onClose = onBackPressed
+            )
+        },
+        reader = {
+            ArticlePullRefresh(
+                toolbars.show,
+                onToggleFullContent = onToggleFullContent,
+                onRequestNext = onRequestNext,
+                onRequestPrevious = onRequestPrevious,
+                articles = articles,
+            ) {
+                ArticleReader(
+                    article = article,
+                    webViewState = webViewState,
+                    scrollState = scrollState,
+                )
+            }
+        },
+        bottomBar = {
+            ArticleBottomBar(
+                onRequestNext = onRequestNext,
+                showNext = articles.hasNext()
+            )
+        },
+        toolbarPreferences = toolbars
+    )
+
+    BackHandler(enableBackHandler) {
+        onBackPressed()
+    }
+}
+
+@Composable
+private fun ArticleViewScaffold(
+    topBar: @Composable () -> Unit,
+    reader: @Composable () -> Unit,
+    bottomBar: @Composable () -> Unit,
+    toolbarPreferences: ToolbarPreferences,
+) {
     Scaffold(
-        modifier = Modifier.nestedScroll(toolbars.scrollBehavior.nestedScrollConnection),
+        modifier = Modifier.nestedScroll(toolbarPreferences.scrollBehavior.nestedScrollConnection),
+        topBar = {
+            if (toolbarPreferences.pinned) {
+                topBar()
+            }
+        }
     ) { innerPadding ->
         Box(
             Modifier
@@ -94,45 +146,29 @@ fun ArticleView(
                     .fillMaxSize()
             ) {
                 Column {
-                    ArticlePullRefresh(
-                        toolbars.show,
-                        onToggleFullContent = onToggleFullContent,
-                        onRequestNext = onRequestNext,
-                        onRequestPrevious = onRequestPrevious,
-                        articles = articles,
-                    ) {
-                        ArticleReader(
-                            article = article,
-                            webViewState = webViewState,
-                            scrollState = scrollState,
-                        )
+                    Column(Modifier.weight(0.1f)) {
+                        reader()
+                    }
+
+                    if (toolbarPreferences.pinned) {
+                        bottomBar()
                     }
                 }
 
-                BarVisibility(
-                    modifier = Modifier.align(Alignment.BottomCenter),
-                    visible = toolbars.show,
-                ) {
-                    ArticleBottomBar(
-                        onRequestNext = onRequestNext,
-                        showNext = articles.hasNext()
-                    )
+                if (!toolbarPreferences.pinned) {
+                    BarVisibility(
+                        modifier = Modifier.align(Alignment.BottomCenter),
+                        visible = toolbarPreferences.show,
+                    ) {
+                        bottomBar()
+                    }
                 }
             }
 
-            ArticleTopBar(
-                article = article,
-                scrollBehavior = toolbars.scrollBehavior,
-                onToggleExtractContent = onToggleFullContent,
-                onToggleRead = onToggleRead,
-                onToggleStar = onToggleStar,
-                onClose = onBackPressed
-            )
+            if (!toolbarPreferences.pinned) {
+                topBar()
+            }
         }
-    }
-
-    BackHandler(enableBackHandler) {
-        onBackPressed()
     }
 }
 
@@ -234,13 +270,14 @@ fun rememberToolbarPreferences(
 
     val showToolbars = scrollBehavior.state.collapsedFraction == 0f
 
-    return ToolbarPreferences(scrollBehavior, showToolbars)
+    return ToolbarPreferences(scrollBehavior, showToolbars, pinToolbars)
 }
 
 @Stable
 data class ToolbarPreferences(
     val scrollBehavior: TopAppBarScrollBehavior,
     val show: Boolean,
+    val pinned: Boolean,
 )
 
 @Composable

@@ -11,6 +11,7 @@ class ArticleRenderer(
     private val context: Context,
     private val textSize: Preference<TextSize>,
     private val fontOption: Preference<FontOption>,
+    private val hideTopMargin: Preference<Boolean>,
 ) {
     private val template by lazy {
         context.resources.openRawResource(CapyRes.raw.template)
@@ -33,7 +34,7 @@ class ArticleRenderer(
             "text_size" to textSize.get().slug,
             "font_family" to fontFamily.slug,
             "font_preload" to fontPreload(fontFamily),
-            "top_margin" to "64px"
+            "top_margin" to topMargin()
         )
 
         val html = MacroProcessor(
@@ -50,6 +51,14 @@ class ArticleRenderer(
         cleanLinks(document)
 
         return document.html()
+    }
+
+    private fun topMargin(): String {
+        return if (hideTopMargin.get()) {
+            "0px"
+        } else {
+            "64px"
+        }
     }
 
     private fun fontPreload(fontFamily: FontOption): String {
