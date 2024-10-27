@@ -59,4 +59,4 @@ build-iPhoneSimulator/
 
 # Project generated
 dist/
-./public/assets/stylesheet.css
+public/assets/stylesheet.css

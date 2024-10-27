@@ -24,14 +24,14 @@ GEM
       rb-inotify (~> 0.9, >= 0.9.10)
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
-    nio4r (2.7.1)
+    nio4r (2.7.3)
     parallel (1.24.0)
     parser (3.3.0.5)
       ast (~> 2.4.1)
       racc
     psych (5.1.2)
       stringio
-    puma (6.4.2)
+    puma (6.4.3)
       nio4r (~> 2.0)
     racc (1.7.3)
     rack (3.0.10)
@@ -106,8 +106,8 @@ PLATFORMS
 DEPENDENCIES
   debug
   liquid
-  puma
-  rackup
+  puma (~> 6.4.3)
+  rackup (~> 2.1)
   rb-fsevent (~> 0.11.2)
   rerun
   rexml (~> 3.3.9)
