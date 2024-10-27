@@ -8,7 +8,7 @@ GEM
       irb (~> 1.10)
       reline (>= 0.3.8)
     ffi (1.17.0-arm64-darwin)
-    google-protobuf (4.27.2-arm64-darwin)
+    google-protobuf (4.28.3-arm64-darwin)
       bigdecimal
       rake (>= 13)
     io-console (0.7.2)
@@ -98,7 +98,7 @@ GEM
     terminal-notifier (2.0.0)
     tilt (2.3.0)
     unicode-display_width (2.5.0)
-    webrick (1.8.1)
+    webrick (1.8.2)
 
 PLATFORMS
   arm64-darwin-23
