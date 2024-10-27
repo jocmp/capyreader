@@ -3,6 +3,7 @@ package com.jocmp.capy.accounts
 import com.prof18.rssparser.model.RssItem
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 class ParsedItemTest {
     @Test
@@ -29,6 +30,32 @@ class ParsedItemTest {
         val parsedItem = ParsedItem(item, siteURL = "")
 
         assertEquals(expected = "", actual = parsedItem.title)
+    }
+
+    @Test
+    fun id_whenUrlIsPresent() {
+        val url = "https://example.com/article"
+        val item = RssItem.Builder().link(url).build()
+        val parsedItem = ParsedItem(item, siteURL = "")
+
+        assertEquals(expected = url, actual = parsedItem.id)
+    }
+
+    @Test
+    fun id_whenUrlIsMissing() {
+        val id = "https://example.com/article"
+        val item = RssItem.Builder().guid(id).build()
+        val parsedItem = ParsedItem(item, siteURL = "")
+
+        assertEquals(expected = id, actual = parsedItem.id)
+    }
+
+    @Test
+    fun id_whenURLAndGuidAreMissing() {
+        val item = RssItem.Builder().build()
+        val parsedItem = ParsedItem(item, siteURL = "")
+
+        assertNull(parsedItem.id)
     }
 
     @Test

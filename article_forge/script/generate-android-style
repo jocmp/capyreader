@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require "fileutils"
+require "./style_minifier"
+
+def main
+  FileUtils.mkdir_p("dist")
+  StyleMinifier.minify(destination: "dist")
+end
+
+main

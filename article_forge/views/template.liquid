@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html dir="auto">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      :root {
+        --color-primary: {{color_primary}};
+        --color-surface: {{color_surface}};
+        --color-surface-container-highest: {{color_surface_container_highest}};
+        --color-on-surface: {{color_on_surface}};
+        --color-on-surface-variant: {{color_on_surface_variant}};
+        --color-surface-variant: {{color_surface_variant}};
+        --color-primary-container: {{color_primary_container}};
+        --color-on-primary-container: {{color_on_primary_container}};
+        --color-surface-container: {{color_surface_container}};
+        --article-top-margin: {{top_margin}};
+      }
+    </style>
+    {{font_preload}}
+    <link rel="stylesheet" href="/assets/stylesheet.css">
+    <script type="text/javascript" src="/assets/media.js"></script>
+  </head>
+  <body>
+    <article>
+      <a class="article__header" href="{{external_link}}">
+        <div class="article__title">
+          <h1>{{title}}</h1>
+        </div>
+        <div>{{byline}}</div>
+        <div>{{feed_name}}</div>
+      </a>
+      <div class="article__body article__body--font-{{font_family}} article__body--text-size-{{text_size}}">
+        <div id="article-body-content">{{body}}</div>
+      </div>
+    </article>
+  </body>
+</html>

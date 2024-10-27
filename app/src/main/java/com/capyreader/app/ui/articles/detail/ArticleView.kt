@@ -94,7 +94,7 @@ fun ArticleView(
         },
         reader = {
             ArticlePullRefresh(
-                toolbars.show,
+                toolbars.show && !toolbars.pinned,
                 onToggleFullContent = onToggleFullContent,
                 onRequestNext = onRequestNext,
                 onRequestPrevious = onRequestPrevious,
@@ -174,7 +174,7 @@ private fun ArticleViewScaffold(
 
 @Composable
 fun ArticlePullRefresh(
-    showBars: Boolean,
+    includePadding: Boolean,
     onToggleFullContent: () -> Unit,
     onRequestNext: () -> Unit,
     onRequestPrevious: () -> Unit,
@@ -207,7 +207,13 @@ fun ArticlePullRefresh(
         } else {
             Icons.Rounded.KeyboardArrowUp
         },
-        indicatorPadding = PaddingValues(top = TopBarOffset),
+        indicatorPadding = PaddingValues(
+            top = if (includePadding) {
+                TopBarOffset
+            } else {
+                0.dp
+            }
+        ),
         onTriggerThreshold = { triggerThreshold() }
     ) {
         SwipeRefresh(
@@ -215,7 +221,7 @@ fun ArticlePullRefresh(
             swipeEnabled = bottomSwipe.enabled && articles.hasNext(),
             onTriggerThreshold = { triggerThreshold() },
             indicatorPadding = PaddingValues(
-                bottom = if (showBars) {
+                bottom = if (includePadding) {
                     BottomBarOffset
                 } else {
                     0.dp

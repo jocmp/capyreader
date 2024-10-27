@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html>
+ <head>
+    <title>Friday Facts #421 - Optimizations 2.0 | Factorio</title>
+
+    <meta property="og:title" content="Friday Facts #421 - Optimizations 2.0 | Factorio">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://cdn.factorio.com/assets/img/blog/fff-421-swarming-ups-thumbnail.png">
+    <meta property="og:site_name" content="Factorio">
+    <meta property="og:description" content="Hello,   We all love building bigger and bigger, but hitting the UPS ceiling really puts a damper on the mood.   Thats why we must continue our endless quest to optimize the game.    ">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@factoriogame">
+    <meta name="twitter:creator" content="@factoriogame">
+    <meta name="twitter:image" content="https://cdn.factorio.com/assets/img/blog/fff-421-swarming-ups-thumbnail-wide.png">
+    <meta name="twitter:description" content="Hello,   We all love building bigger and bigger, but hitting the UPS ceiling really puts a damper on the mood.   Thats why we must continue our endless quest to optimize the game.    ">
+
+    <link href="https://cdn.factorio.com/assets/fonts/titillium-web.css" rel="stylesheet">
+    <link href="https://cdn.factorio.com/assets/vendor/fontawesome/css/all.min.css" rel="stylesheet" crossorigin="anonymous">
+
+    <link href="/static/img/favicon.ico" rel="icon" type="image/x-icon"/>
+    <link href="/static/img/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+    <link href="/static/css/main.css?v=2ee84bf7" rel="stylesheet" type="text/css"/>
+    <!--<link href="/static/lightbox/css/lightbox.css" rel="stylesheet" type="text/css"/>-->
+    <link href="/blog/rss" rel="alternate" title="Recent Blog Posts" type="application/atom+xml">
+    <meta name="viewport" content="width=device-width">
+
+    <script src="/static/js/jquery-3.7.0.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.factorio.com/assets/lite-youtube-embed/lite-yt-embed.css">
+    <script src="https://cdn.factorio.com/assets/lite-youtube-embed/lite-yt-embed.js"></script>
+
+    <script src="https://cdn.factorio.com/assets/js/floating-ui-core@1.0.1.js"></script>
+    <script src="https://cdn.factorio.com/assets/js/floating-ui-dom@1.0.4.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/htmx/1.9.10/htmx.min.js" integrity="sha512-9qpauSP4+dDIldsrdNEZ2Z7JoyLZGfJsAP2wfXnc3drOh+5NXOBxjlq3sGXKdulmN9W+iwLxRt42zKMa8AHEeg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    
+    
+ </head>
+ <body>
+    <div id="top" class="top-bar">
+        <div class="top-bar-inner">
+            <div class="sites links flex flex-items-baseline">
+                
+                
+                    <a href="/" class="sites-current">
+                        Factorio.com</a>
+                    
+                        <span class="separator separator-blue">|</span>
+                    
+                
+                    <a href="https://forums.factorio.com/" class="">
+                        Forums</a>
+                    
+                        <span class="separator separator-blue">|</span>
+                    
+                
+                    <a href="https://wiki.factorio.com/" class="">
+                        Wiki</a>
+                    
+                        <span class="separator separator-blue">|</span>
+                    
+                
+                    <a href="https://mods.factorio.com" class="">
+                        Mod Portal</a>
+                    
+                        <span class="separator separator-blue">|</span>
+                    
+                
+                    <a href="https://lua-api.factorio.com/latest/" class="">
+                        API Docs</a>
+                    
+                
+            </div>
+            <div class="user-controls links flex flex-items-baseline flex-end">
+                <a href="/login">
+                        <i class="fas fa-user"></i>
+                        Log in
+                    </a>
+                    <span class="separator separator-blue">|</span>
+                    <a href="/signup">
+                        <i class="fas fa-user-plus"></i>
+                        Sign up
+                    </a>
+            </div>
+            <style>
+                .top-banner {
+                    margin-top: 12px;
+                    font-size: larger;
+                    text-decoration: underline;
+                    text-decoration-color: red;
+                }
+                .top-banner a {
+                    color: white;
+                }
+                .top-banner i {
+                    color: #ffa200;
+                }
+                .top-banner-divider {
+                    margin-top: 12px;
+                    margin-left: 12px;
+                    margin-right: 12px;
+                    font-size: larger;
+                }
+            </style>
+            <div class="top-banner">
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="header">
+        <div class="header-inner">
+            <a href="/" class="header-logo">
+                <img src="https://cdn.factorio.com/assets/img/web/factorio-logo.png">
+            </a>
+            
+            
+            
+            
+            
+
+            <div class="header-links">
+                
+                    <div  class="dropdown" >
+                        <a class="button  flex flex-space-between" href="/game/game-overview">
+                            <div>
+                                Game
+                            </div>
+                            
+                                <div>
+                                    <i class="fas fa-caret-down"></i>
+                                </div>
+                            
+                        </a>
+                        
+                            <div class="submenu">
+                                
+                                    
+                                    
+                                            
+                                            <a
+                                                class="button " href="/game/screenshots">
+                                                    
+                                                        Screenshots
+                                                    
+                                            </a>
+                                    
+                                
+                                    
+                                    
+                                            
+                                            <a
+                                                class="button " href="/game/videos">
+                                                    
+                                                        Videos
+                                                    
+                                            </a>
+                                    
+                                
+                                    
+                                    
+                                            
+                                            <a
+                                                class="button " href="/game/content">
+                                                    
+                                                        Content
+                                                    
+                                            </a>
+                                    
+                                
+                                    
+                                    
+                                            
+                                            <a
+                                                class="button " href="/game/artwork">
+                                                    
+                                                        Artwork
+                                                    
+                                            </a>
+                                    
+                                
+                                    
+                                    
+                                            
+                                            <a
+                                                class="button " href="/game/about">
+                                                    
+                                                        About us
+                                                    
+                                            </a>
+                                    
+                                
+                                    
+                                    
+                                            
+                                            <a
+                                                class="button  button-green " href="/buy">
+                                                    
+                                                        Buy
+                                                    
+                                            </a>
+                                    
+                                
+                                    
+                                    
+                                            
+                                            <a
+                                                class="button  button-green " href="/download">
+                                                    
+                                                        Demo
+                                                    
+                                            </a>
+                                    
+                                
+                                    
+                                    
+                                
+                            </div>
+                        
+                    </div>
+                    <div >
+                        <a class="button  flex flex-space-between" href="/store">
+                            <div>
+                                Merch
+                            </div>
+                            
+                        </a>
+                        
+                    </div>
+                    <div >
+                        <a class="button  flex flex-space-between" href="/blog/">
+                            <div>
+                                Blog
+                            </div>
+                            
+                        </a>
+                        
+                    </div>
+                    <div  class="dropdown" >
+                        <a class="button  flex flex-space-between" href="/support/support-overview">
+                            <div>
+                                Support
+                            </div>
+                            
+                                <div>
+                                    <i class="fas fa-caret-down"></i>
+                                </div>
+                            
+                        </a>
+                        
+                            <div class="submenu">
+                                
+                                    
+                                    
+                                            
+                                            <a
+                                                class="button " href="/support/help">
+                                                    
+                                                        Help
+                                                    
+                                            </a>
+                                    
+                                
+                                    
+                                    
+                                            
+                                            <a
+                                                class="button " href="/support/faq">
+                                                    
+                                                        FAQ
+                                                    
+                                            </a>
+                                    
+                                
+                                    
+                                    
+                                            
+                                            <a
+                                                class="button " href="/presskit">
+                                                    
+                                                        Presskit
+                                                    
+                                            </a>
+                                    
+                                
+                                    
+                                    
+                                            
+                                            <a
+                                                class="button " href="/support/contact">
+                                                    
+                                                        Contact
+                                                    
+                                            </a>
+                                    
+                                
+                            </div>
+                        
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="container-inner">
+            <div id="flashed-messages" class="small-center">
+                
+                    
+                
+                
+            </div>
+
+            
+
+            
+
+<div class="panel blog-post">
+    <div class="flex-space-between">
+        <h2>
+            Friday Facts #421 - Optimizations 2.0</h2>
+        <div>
+            
+        </div>
+    </div>
+
+    <div class="panel-inset mb0 mt0">
+        Posted by 
+    <a href="/blog/author/Rseding" class="yellow">Rseding</a>, <a href="/blog/author/boskid" class="yellow">boskid</a>, <a href="/blog/author/kovarex" class="yellow">kovarex</a>
+ on 2024-07-26</div>
+    <div class="panel-inset-lighter mt0">
+        <p>
+        <p>
+  Hello,<br/>
+  We all love building bigger and bigger, but hitting the UPS ceiling really puts a damper on the mood.<br/>
+  Thats why we must continue our endless quest to optimize the game.
+</p>
+
+<hr>
+<h3>Roboports Optimization<author>Rseding</author></h3>
+
+<p>
+  I've profiled many save files over the years of working on Factorio and frequently see saves where logistics and or
+  construction robots are taking a lot of update time. That's nothing new, but along with robots come Roboports - in large
+  numbers.
+</p>
+
+<p style="text-align: center; margin: 20px auto 20px auto; ">
+  <img src="https://cdn.factorio.com/assets/blog-sync/fff-421-lots-of-roboports.png">
+  <i>A typical factory with lots of roboports.</i>
+</p>
+
+<p>
+  Roboports have never been "slow" but they're always present and people are encouraged to build a lot of them - even more
+  in the upcoming Space Age where you want to do a lot remotely. After the most recent play-testing session, the resulting
+  save once again showed them taking some small, but non-zero amount of time, and it got me thinking about them again.
+</p>
+
+<p>
+  It would be really nice if they didn't need to be active and updated all the time. Most Roboports don't have anything to
+  do except consume power. Every so often (relative to their lifetime) they will have some robots come along and need to
+  charge/station. But, most don't really do anything except exist as an extension of the logistics network.
+  So, I tried an experiment; what if I just turned them off when they don't need to do anything special? If a robot comes
+  along and wants to charge, or one of the other rare situations where they need to do things, I just turn them back on
+  until it's over.
+</p>
+
+<p>
+  There were of course more complexities to it than just that, but the end result worked.<br/>
+  The time spent on Roboports in our recent play-testing save file dropped from an average of 1ms to 0.025ms per tick.
+</p>
+
+<hr>
+<h3>Radar logic optimization<author>Rseding</author></h3>
+
+<p>
+  Earlier this month a minor feature card appeared on the to-do list to add a "small radar coverage" area to Roboports.
+  Normally that would be about 5 minutes of work to implement, but the card had a small stipulation attached: <i>"do it in a
+  way where overlapping areas don't increase the performance cost"</i>.
+</p>
+
+<p>
+  Up until this point radars the entity and radar features built into other things (like the player) were a very simple
+  "every so often, iterate around it and ask the map system to keep it revealed". That worked fine for the most part
+  because you don't typically have a lot of overlapping players or radars. But now, we wanted Roboports - an entity you do
+  build in very tight clusters with a lot of overlap - to do the same logic.
+</p>
+
+<p>
+  I settled on a registration style system where anything that wants to reveal an area of the map simply registers the
+  chunks as "keep revealed" by increasing a counter for that chunk in the map system. As long as the counter is larger
+  than zero the chunk stays visible. Things can overlap as much as they want and it simply increases the counters.
+</p>
+
+<p style="text-align: center; margin: 20px auto 20px auto; ">
+  <img src="https://cdn.factorio.com/assets/blog-sync/fff-421-overlap-count.png">
+  <i>Debug option showing the 'keep revealed' counter.</i>
+</p>
+
+<p>
+  If a chunk has a counter greater than 1, it is put in an update bucket, and we loop through 1 bucket each tick.
+  <br/>When the counter goes back to 0 for a chunk, its removed from the bucket and it stops getting updated.
+</p>
+
+<p style="text-align: center; margin: 20px auto 20px auto;">
+  <video autoplay muted loop playsinline class="shadow">
+    <source src="https://cdn.factorio.com/assets/blog-sync/fff-421-charting-logic.mp4" type='video/mp4' />
+    Mp4 playback not supported on your device.
+  </video>
+  </br/><i>Looping through the buckets to keep the chunk charted.
+  </br/>(50% speed)
+  </i>
+</p>
+
+<p>
+  With this new system I was also able to replace the radar entity's logic and other entities radar logic so they all use
+  the same shared registrations. This had a surprising effect in that radar entities take less update time, and combined
+  with Roboports providing radar coverage meant you didn't need as many radars.
+</p>
+
+<p>
+  On another play-testing save file we had it improved the overall game performance by 3.6%.
+  Given it wasn't meant to have any measurable impact (if anything I expected adding radar coverage to Roboports would make it worse), a 3.6% overall improvement was great.
+</p>
+
+<p>
+  So it was a success, and <b>in 2.0 Roboports will have a small 'built-in' radar range of 2 chunks</b>.
+</p>
+
+<hr>
+<h3>Lamp Always ON<author>boskid</author></h3>
+
+<p>
+  During our recent office LAN party when we were eating at a restaurant kovarex shared an idea that given it is possible
+  to pick any RGB color for lamps, he wants to place an image using lamps. Only problem was in order to power the lamps he
+  would need to place substations every so often making the image slightly ugly. At this point I said "unless you built them
+  on a space platform" knowing that on platforms you do not need electric poles. He seemed to be happy and
+  excited while I remained calm not knowing what will happen the next day.
+</p>
+
+<p>
+  When the next day of playtesting arrived, he made a 100 wide by 150 high blueprint containing lamps that he placed on the
+  space platform with an image converted into RGB colors of those lamps. There was however one significant issue that was
+  to solve: on the space platform it is always a daytime so lamps do not turn on. Lamps had to be connected to circuit
+  network to force enable them during a day. This was quickly noticed as the update time on our quickly growing save file
+  went up too fast.
+</p>
+
+<p style="text-align: center; margin: 20px auto 20px auto; ">
+  <img src="https://cdn.factorio.com/assets/blog-sync/fff-421-making-lamps-to-be-on.png">
+  <i>One of the lamps forced on by control behavior.</i>
+</p>
+
+<p>
+  Having 15,000 lamps with control behavior that needs to update every tick was not optimal so I made lamps possible to be
+  forced on even during a day.
+</p>
+
+<p style="text-align: center; margin: 20px auto 20px auto; ">
+  <img src="https://cdn.factorio.com/assets/blog-sync/fff-421-lamps-always-on.png">
+  <i>Lamp using Always ON.</i>
+</p>
+
+<p>
+  This made our save file to update faster by about 1.2ms just by being able to skip having lamps connected to circuit
+  network. However by looking at the update time of control behaviors after the change was made I was slightly worried
+  why the control behavior update is still so high, so I had to identify it.
+</p>
+
+<hr>
+<h3>Belt reader and multithreading control behaviors<author>boskid</author></h3>
+
+<p>
+  Control behavior update being still high was easy to explain. It was the feature that I made: the ability to read content
+  of all belts in sequence (<a href="https://factorio.com/blog/post/fff-405">FFF-405</a>).
+</p>
+
+<p>
+  The belt reader itself was added for similar reasons as the Lamp Always ON - to reduce the amount of active control behaviors
+  as every belt piece had to be connected individually to read content. Ability to read content of all belts in a sequence
+  means there was need for only one of those belts to be connected with wire, only one control behavior needs to count
+  the items and transport lines themselves do not need to be split into 1 tile long pieces. Effectively by adding belt
+  reader it was possible to significantly reduce update costs of control behaviors and update costs of transport lines
+  while also gaining new abilities that were not possible before (like counting items that are in underground belts).
+</p>
+
+<p>
+  The problem with belt reader is that it is so easy to use, during our playtesting it was used quite a lot, not only on
+  space platforms which was the intended use case but also in other places.
+</p>
+
+<p style="text-align: center; margin: 20px auto 20px auto; ">
+  <img src="https://cdn.factorio.com/assets/blog-sync/fff-421-belt-reader-heavy-usage.png">
+  <i>Belt reader used where I was not expecting it.</i>
+</p>
+
+<p>
+  I could say that Hrusa was the primary saboteur of our playtesting. He was responsible for some of the belt reader
+  usages that could be solved without them. There were also active provider chests placed on Fulgora that turned it into
+  a logistic robots hell with more than 10k logistic robots being in the air at all times. I cannot punish him for playing
+  the game so it was time to optimize. Optimizing code for logistic robots was for someone else, belt reader and control
+  behaviors are however for me to handle.
+</p>
+
+<p>
+  Belt reader under the hood is really simple: every tick it has to see what items are on the belts and how many of
+  them are in each stack on belt to count the total.
+</p>
+
+<p>
+  Optimizing belt readers went through couple of iterations. One of them was trying to keep running total on transport
+  lines however it failed.
+</p>
+
+<p>
+  The turning point for me was realizing a really simple fact: belt reader is mostly a "read" operation: it just reads a
+  lot of data from memory (content of belt stacks) to count items and at the end produces a single frame of signals
+  to be sent to a circuit network. This structure means I should be able to do multithreading on it: multiple belt
+  readers computed at the same time do not interfere with each other as they only read belt contents and their output
+  is not used by other belt readers. Similar structure was easy to see in other places like roboports reading logistic
+  network content, arithmetic combinators, selector combinators and decider combinators. With the exception of
+  selector combinator (which could no longer use a global random generator) all of those were relatively easy to
+  make multithreaded.
+</p>
+
+<p>
+  With those changes done, our playtesting save file could run about 9.5% faster.
+</p>
+
+<p>
+  A synthetic save file filled with 77k of combinators interconnected with 6k circuit networks I was using during
+  development was running 14.9x faster while keeping a consistent 100% CPU usage (a benchmark time went down from
+  131s to just about 8.2s to complete).
+</p>
+
+<hr>
+<h3>Failed attempt: Multithreading electric network update<author>boskid</author></h3>
+
+<p>
+  This is one of those things that I keep hearing from everyone: <i>make electric network update multithreaded</i>.
+</p>
+
+<p>
+  The electric network update was already improved (<a href="https://www.factorio.com/blog/post/fff-209">FFF-209</a>),
+  however it was still performed by only one thread which was often observed to be the slowest one to finish. In most cases save games have just 1 huge network, so multithreading wouldn't make much benefit. However with Space age, there are many large networks (different planets), so the potential is greater.
+</p>
+
+<p>
+  As for anything that is multithreaded, the first step that has to be done is identifying the moving parts and how they interact with
+  each other. All of this is required because the game needs to remain fully deterministic or a desync would happen.
+</p>
+
+<p>
+  At first glance you would think it should be pretty simple, each thread works on a different electric network and its done.
+  This is however not the case because there is one game mechanic that makes it slightly more complicated: the ability to have
+  an entity powered by multiple electric networks.
+</p>
+
+<p style="text-align: center; margin: 20px auto 20px auto; ">
+  <img src="https://cdn.factorio.com/assets/blog-sync/fff-421-electric-network-shared-state.png">
+  <i>One of the cases where electric networks are not independent.</i>
+</p>
+
+<p>
+  In this example when the oil refinery is crafting, its energy storage is discharged and the electric network needs
+  to charge it back again.
+  Here we have 2 possible cases that can happen:
+  <ul>
+    <li>Left electric network updates first - charging the oil refinery from the Steam engine, the boiler would burn fuel and the inserter would activate.</li>
+    <li>Right electric network updates first - charging the oil refinery from the solar panels (in which case boiler remains idle).</li>
+  </ul>
+</p>
+<p>
+  Because of this, the networks are dependant on each other, and must be updated by the same thread.
+</p>
+
+<p>
+  After finding all the cases like this (like power switch closing causing multiple networks to merge),
+  I was able to define what should an update group contain. If two electric networks had at least one entity powered by both
+  networks, those networks had to be in the same update group, be updated by the same thread and desyncs will not happen.
+</p>
+
+<p>
+  I was able to start doing measurements...
+</p>
+
+<h4>The results</h4>
+
+<p>
+  And this is where this idea failed completely. I could see our playtesting save file having at least 4 large electric networks completely
+  independent since they are on different planets, however the electric network update time remained the same while the CPU usage
+  went significantly up.
+</p>
+
+<p>
+  As it turns out, electric network update does not really do much: it just reads two variables, does one or
+  two additions and goes to the next entity. It was memory throughput limited and by having more threads reading the
+  data from memory, processor cannot simply read data faster.
+  <b>With multithreading here, instead of having one thread wait for memory,  all of the threads doing electric network update were waiting for memory, slowing each other.</b>
+</p>
+
+<p>
+  To fully reject this idea I had to use additional profiling tools like Intel's VTune which allowed me to give more numeric
+  arguments that showed that electric network is memory throughput limited. Our playtesting save file had electric network
+  update time improved from 0.5ms to 0.39ms while CPU usage went up from 0.5% to 15%. Overall the save file was not running faster.
+</p>
+
+<hr>
+<h3>Smarter update of worker robots <author>kovarex</author></h3>
+
+<p>
+  I noticed a problem with logistic robots in our office save: someone removed a cable from the automated system adding more robots to roboports on Fulgora.
+  In a few hours, we ended up with an overpopulated logistic networks with 10k robots having nowhere to go, because all the roboports were full.
+</p>
+
+<p>
+  Since no one noticed this problems for hours, the first reaction was to add an alert for when the worker robots don't have any space to station, similar to the alert of no storage space.
+</p>
+
+<p style="text-align: center; margin: 20px auto 20px auto; ">
+  <img src="https://cdn.factorio.com/assets/blog-sync/fff-421-homeless-robots.png">
+  <i>Homeless robots huddling around roboports.</i>
+</p>
+
+<p>
+  But the underlying problem is, that the worker robot update is too simplistic. All the robots are iterated every tick and their update logic executed. However the update logic is most of the time very very simple, things like "continue moving towards this target", "wait in the queue to start charging", etc.
+</p>
+
+<p>
+  It is not a new idea, to fake the smooth movement of something while actually updating only once in a while. We used the chunk update planner (<a href="https://www.factorio.com/blog/post/fff-161">FFF-161</a>) and the smoke update trick (<a href="https://www.factorio.com/blog/post/fff-84">FFF-84</a>) 9 years ago, so it was just a question of time until these techniques would be applied to the worker robots.
+</p>
+
+<p>
+  The problem with the worker robots, compared to just smokes is, that they do a lot of different things (different types of job, stationing, charging, etc.), but since I was motivated to find another way to optimise the game, I sat down, and jumped right in.
+</p>
+
+<p>
+The main part of the challenge was the robots moving, as most of the logic worked in a simple way of:
+<ul>
+  <li>Are we there yet?</li>
+  <li>No! Move closer</li>
+  <li>Are we there yet?</li>
+  <li>Yes, do the next part of the logic.</li>
+</ul>
+</p>
+
+<p>
+  But now we need to have move intention stored in the robot and use that when we want to move somewhere.
+  Once the move intention is known, the robot can enter limbo and the rendering code can use this intention to pretend the robot is moving smoothly all the time.
+  This can also be used to calculate the arrival time at the destination, to know when to schedule the next update.
+</p>
+
+<p style="text-align: center; margin: 20px auto 20px auto;">
+  <video autoplay muted loop playsinline class="shadow">
+    <source src="https://cdn.factorio.com/assets/blog-sync/fff-421-robot-movement.mp4" type='video/mp4' />
+    Mp4 playback not supported on your device.
+  </video>
+  </br /><i>Debug visualisation: Red (real robot) is only updated once every 20 ticks.
+    Ghost robot is the predicted position used for rendering.
+  </i>
+</p>
+
+<p>
+  There needs to be some limit, as the robot can be traveling for a long time, and maybe some distant robot travels into the center of our screen, but we wouldn't know about it, as its physical position would be too far. We check edges of screen for different reasons of similar kinds (lamps making light from offscreen for example), so there is some leeway. Because of that, I just decided to define some hardcoded magic numbers of maximum 20 ticks of movement without update and 60 ticks of stationary robot without updates. These could be probably increased, but the practical performance gain would have extremely diminishing returns at this point.
+</p>
+
+<h4>The result</h4>
+<p>
+  In the office LAN party save, the overall save performance was increased by 15%, and it generally depends on the amount of robots, but with some heavy robot saves, the overall performance gain is usually around 10-25%. I call this a success.
+</p>
+
+<hr>
+
+<p>
+  With all of the changes combined, we are getting into more comfortable territory when it comes to performance with bigger space-age saves. But it would be nice to push it even a little bit more, to allow players to go more crazy. We have some ideas which could help lot, so stay tuned, and hope that these would be success stories and not failed postmortems.
+</p>
+
+<hr>
+
+<p>
+  As always, let us know what you think at the usual places.
+</p>
+
+        </p>
+
+        <div class="mt8 flex flex-column flex-items-center">
+            
+                <a class="button-green-right m4" style="width: 16em;" href="https://forums.factorio.com/114468">Discuss on our forums</a>
+            
+            
+                <a class="button-green-right m4" style="width: 16em;" href="https://www.reddit.com/r/factorio/comments/1ecl8bt/friday_facts_421_optimizations_20/">Discuss on Reddit</a>
+            
+            <a class="button-green-right m4" style="width: 16em;" href="https://newsletter.factorio.com/subscription/Km9uSnxm9">
+                Subscribe by email
+            </a>
+        </div>
+    </div>
+    <div class="panel-inset mb0 p4 flex flex-space-between">
+        <div>
+            
+                <a
+                    class="button square-sm"
+                    href="/blog/post/fff-420"
+                >
+                    <i class="fas fa-angle-double-left"></i>
+                </a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</div>
+
+
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-inner panel">
+
+            <div class="footer-links flex flex-wrap flex-center panel-inset m0">
+                <a href="/terms-of-service">Terms of Service</a><span class="separator">|</span><a href="/privacy-policy">Privacy</a><span class="separator">|</span><a href="/imprint">Imprint</a><span class="separator">|</span><a href="/presskit">Presskit</a><span class="separator">|</span><a href="/support/contact">Contact</a><span class="separator">|</span><a href="/blog/rss">RSS</a><span class="separator">|</span><a href="/jobs">Jobs</a>
+            </div>
+            <div class="footer-rocket panel-inset m0 p0">
+                <div id="rocket" class="rocket"></div>
+                <div class="shadow-overlay"></div>
+                <div class="shadow-overlay-bottom"></div>
+            </div>
+            <div class="footer-copyright panel-inset m0">
+                Copyright © 2015 - 2024 Wube Software - all rights reserved.
+            </div>
+        </div>
+    </div>
+
+    
+
+    <script src="/static/js/factorio.js?v=2ee84bf7" type="module"></script>
+    <!--
+    <script src="/static/lightbox/js/lightbox.min.js" type="text/javascript"></script>
+    -->
+    <script>
+        document.body.addEventListener('htmx:configRequest', (event) => {
+            event.detail.headers['X-CSRFToken'] = 'ImJjOTYxMDJjMDcxZTVhNzMzZDYwZjk4ZGNlZjk5NWRhYTAzOTJmZjgi.ZqVIGA.u4xQu0gERxVeANWMWfEAO3FMFc8';
+        })
+    </script>
+</body>
+</html>

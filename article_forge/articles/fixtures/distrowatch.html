@@ -1,0 +1,852 @@
+<div id="readability-page-1" class="page">
+ <div>
+  <table>
+   <tbody>
+    <tr>
+     <th><a href="https://distrowatch.com/news/dww.xml"><img src="https://distrowatch.com/images/other/xml.png" alt="Weekly RSS feed"></a> DistroWatch Weekly</th>
+    </tr>
+    <tr>
+     <td>
+      <table>
+       <tbody>
+        <tr>
+         <td>DistroWatch Weekly, Issue 1084, 19 August 2024</td>
+        </tr>
+        <tr>
+         <td>
+          <div>
+          </div><b>Welcome to this year's 34th issue of DistroWatch Weekly!</b> Many distributions these days seek to offer an experience which can be described as an easy-to-use Arch Linux. One such project is Liya, an Arch-based distribution that uses the Calamares system installer and the Cinnamon desktop. Jeff Siegel recently took Liya for a test drive and reported on his findings. Read on to learn his thoughts on the distribution in our Feature Story. In our News section we share new performance improvements coming to the Haiku project along with an announcement Gentoo is dropping IA-64 processor support next month. Plus we talk about a major collection of updates coming to Redcore users and challenges this project is facing. This week we also talk about encryption, particularly how to encrypt multiple filesystems on the same hard drive. Do you use full disk or home directory encryption? Let us know in this week's Opinion Poll. Plus we are pleased to share the new releases of the past week and list the torrents we are seeding. We wish you all a fantastic week and happy reading! <br><b>This week's DistroWatch Weekly is presented by <a href="https://distrowatch.com/k/tuxedo.php">TUXEDO Computers</a></b>.
+          <p><b>Content:</b></p><br>
+          <ul>
+           <li><a href="#liya">Review: Liya 2.0</a></li>
+           <li><a href="#news">News: Haiku introduces performance improvements, Redcore merges major upgrade, Gentoo dropping IA-64 support</a></li>
+           <li><a href="#qa">Questions and answers: Dual boot with encryption</a></li>
+           <li><a href="#released">Released last week: Tails 6.6, RebeccaBlackOS 2024-08-12, deepin 23</a></li>
+           <li><a href="#torrent">Torrent corner: deepin, Endless OS, SparkyLinux, Tails</a></li>
+           <li><a href="#upcoming">Upcoming releases: FreeBSD 13.4-RC1</a></li>
+           <li><a href="#poll">Opinion poll: Do you encrypt your root filesystem or home directories?</a></li>
+           <li><a href="#waiting">New distributions: BredOS, Red OS</a></li>
+           <li><a href="#comments">Reader comments</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+         <td><a id="liya"></a>Feature Story (By Jeff Siegel)</td>
+        </tr>
+        <tr>
+         <td><b><u>Liya 2.0</u></b> Look upon <a href="https://distrowatch.com/liya">Liya</a>, a rolling release distribution based on <a href="https://distrowatch.com/arch">Arch Linux</a>, and prepare to be amazed. It's slick. It's snappy. And it somehow manages to give Arch an intuitive graphical interface for those of us who don't need to use the command line to be fulfilled as a human being.
+          <p></p>
+          <div>
+           <a href="https://distrowatch.com/images/screenshots/liya-2.0-desktop.png"><img src="https://distrowatch.com/images/screenshots/liya-2.0-desktop-small.png" alt="The Cinnamon desktop" title="The Cinnamon desktop"></a>
+           <br><b>Liya 2.0 -- The Cinnamon desktop</b>
+           <p style="display: inline;" class="readability-styled">(full image size: 455kB, resolution: 1366x768 pixels)&nbsp;</p>
+           <br>
+          </div>
+          <p></p><br>
+           Most amazing, it's a one-person operation, the work of Sayed M. Hisham, who seems to have put his heart and soul - and who knows what else - into producing Liya. Who else would offer this warning? "<span>Liya Is Not For Users Who ... Are distro-hoppers.</span>" The ISO, download, and installation procedure are as capable as anything from <a href="https://distrowatch.com/fedora">Fedora</a> or <a href="https://distrowatch.com/ubuntu">Ubuntu</a>, and that's not necessarily easy to do.
+          <p>So why isn't this this a completely positive review of Liya 2.0 (codenamed Aadnya), after a week or so tinkering with Liya? Because it took me a week to navigate the balky software updater/installer, which kept throwing errors related to a series of corrupted keyring PGP signatures. The instructions for fixing the problem were incomplete and contradictory; I'd do one thing, which didn't work, and then have find another approach, which also didn't work.</p>
+          <p>And if one takes a week to figure out how to install new software and update the existing installation, that kind of puts a damper on using Liya, doesn't it?</p>
+          <p>Nevertheless, Liya is worth writing about because - assuming Hisham can clean up the documentation - it offers something that seems to fill a need. He understands this, writing that Liya's goal is to provide an Arch-based distro that isn't bloated, works on lower-spec hardware, and combines a clean and efficient interface with quality performance.</p>
+          <p><b>Where's the update?</b></p>
+          <p>The update and installation flummox was about the last thing I expected after running Liya without any trouble in VirtualBox and then installing it on my test machine. Both went off without a hitch; in fact, it was one of the smoothest VirtualBox sessions I've had when writing a DistroWatch review. The live version of Liya didn't hang up, make the screen go goofy, or any of the rest. It just worked.</p>
+          <p>Even better: it took just seven minutes to install the 64-bit Cinnamon desktop edition, which is provided through a 3.6GB ISO (there is also a 4.1GB MATE desktop edition). Requirements are 4GB of RAM, a dual core CPU, and 20GB of hard drive space - hardly overwhelming specs. Liya comes with systemd 256, Cinnamon 6.2.2 and it updates to the 6.10.0-rc6-1 mainline kernel after installation.</p>
+          <p>The Calamares installer did what it was supposed to do without any problems, even giving the option to install the distro on an ext4 or Btrfs filesystem (I chose the latter), In fact, it restored my wireless connection and remembered my screen resolution, as well as rebooting without a problem while removing the installation media, which sometimes hangs up with other distros.</p>
+          <p></p>
+          <div>
+           <a href="https://distrowatch.com/images/screenshots/liya-2.0-calamares.png"><img src="https://distrowatch.com/images/screenshots/liya-2.0-calamares-small.png" alt="The Calamares system installer" title="The Calamares system installer"></a>
+           <br><b>Liya 2.0 -- The Calamares system installer</b>
+           <p style="display: inline;" class="readability-styled">(full image size: 615kB, resolution: 1920x1080 pixels)&nbsp;</p>
+           <br>
+          </div>
+          <p></p><br>
+           The trouble started when I went to update the system after installation. I ran the Pamac software updater/installer, and got an error: "Failed to commit transaction/Failed to retrieve some files." I messed around with the settings, figuring a repository was set up incorrectly. No joy there, either. So I clicked the Forum desktop icon, which took me to the distro's <a href="https://liyalinux.freeflarum.com/t/wiki">wiki</a>. Listed were three terminal commands to run after installation: refreshing the mirror list and keyring and then updating the system with "sudo pacman -Syu".
+          <p></p>
+          <div>
+           <a href="https://distrowatch.com/images/screenshots/liya-2.0-updatefailed.png"><img src="https://distrowatch.com/images/screenshots/liya-2.0-updatefailed-small.png" alt="Failing to update packages" title="Failing to update packages"></a>
+           <br><b>Liya 2.0 -- Failing to update packages</b>
+           <p style="display: inline;" class="readability-styled">(full image size: 249kB, resolution: 1366x768 pixels)&nbsp;</p>
+           <br>
+          </div>
+          <p></p><br>
+           "Ah," I thought, "it's based on Arch, so my Debian-centric mind just didn't understand what needed to be done." But the provided commands from the wiki didn't work, either - the terminal kept spitting out lines about untrusted software keys and didn't do any updating.
+          <p>At this point, I thought about moving on, but - to be completely honest - I didn't want to admit that an Arch-based distro had beaten me. So I put Liya away for a day or so, planning to return with a fresh mindset and to undertake some intensive <a href="https://duckduckgo.com/">DuckDuckGo</a>-ing.</p>
+          <p>This process went on for about a week, with no more success. The only related entry in the Liya forum was more than a year old, but didn't offer a solution. And nothing turned up during various Internet searches, save for some hints that the same problem existed with <a href="https://distrowatch.com/kali">Kali Linux</a>,</p>
+          <p>And then, for no particular reason, I looked yet again at the almost too spartan Liya website. At the very bottom of the <a href="https://liyalinux.gitlab.io/">home page</a>, there was an 11-step installation guide. I had not paid much attention to it before, since it said to use Rufus to install Liya, and I don't use Windows. But the 11th step was the difference: "<span>After the installation, run fixpacrepo from the terminal.</span>" Which I did, and - save for one remaining annoyance where clicking "shut down" on the menu only logs out - Liya was ready to run as a daily driver.</p>
+          <p><b>Software and apps</b></p>
+          <p>The Cinnamon desktop works nicely in Liya - no stutters, no hang-ups, and a minimum of spinning wheels after launching an app. Cinnamon extensions are added through a dedicated app, and I installed the weather extension without trouble. And it is light to use, with only 8% on the CPU and 1,400MB of memory used while a YouTube video was running at the same time as a song played on the music player.</p>
+          <p></p>
+          <div>
+           <a href="https://distrowatch.com/images/screenshots/liya-2.0-cinnamonmenu.png"><img src="https://distrowatch.com/images/screenshots/liya-2.0-cinnamonmenu-small.png" alt="The Cinnamon application menu" title="The Cinnamon application menu"></a>
+           <br><b>Liya 2.0 -- The Cinnamon application menu</b>
+           <p style="display: inline;" class="readability-styled">(full image size: 339kB, resolution: 1366x768 pixels)&nbsp;</p>
+           <br>
+          </div>
+          <p></p><br>
+           The default applications are a mix of Cinnamon, Arch and its underpinnings, including access to the <a href="https://aur.archlinux.org/">AUR</a>, and Hisham's selections. Cinnamon contributions include the Nemo file manager and its Actions Centre; the Pix photo viewer; xed text editor; the GNOME Terminal; and the Celluloid video player. Hisham has chosen Brave as the browser, Geary as the e-mail client, and the free version of OnlyOffice as the office suite. Also included are the Ulauncher application launcher; Vim, for those who prefer that sort of thing; Deluge for BitTorrent; Bleachbit (for the intrepid); and Exaile for music.
+          <p>Brave and OnlyOffice are intriguing choices, though Ulauncher and Geary aren't common, either. Brave seemed to work as it was supposed to, though it didn't seem any lighter than Firefox. I know OnlyOffice a little (I've worked my way through most office suites, free and paid, in a vain attempt to liberate myself from LibreOffice's annoyances), and it's fine, but not appreciably different from LibreOffice. Geary, thanks to Google's security witchcraft, wouldn't recognize the Gmail account I use for these reviews, so it was easier to set up a Brave progressive web app (<a href="https://www.pcmag.com/how-to/how-to-use-progressive-web-apps">PWA</a>) and run Gmail through it. Ulauncher was a pleasant surprise, though I wish it was as easy to set up to access files and documents as it is on the Albert launcher.</p>
+          <p></p>
+          <div>
+           <a href="https://distrowatch.com/images/screenshots/liya-2.0-onlyoffice.png"><img src="https://distrowatch.com/images/screenshots/liya-2.0-onlyoffice-small.png" alt="Running OnlyOffice" title="Running OnlyOffice"></a>
+           <br><b>Liya 2.0 -- Running OnlyOffice</b>
+           <p style="display: inline;" class="readability-styled">(full image size: 113kB, resolution: 1366x768 pixels)&nbsp;</p>
+           <br>
+          </div>
+          <p></p><br>
+           One word here about Hardinfo2, a system information and benchmark utility. Usually, one of the Neofetch clones suffices for my purposes, but Hardinfo2 is much more complete, offers the information in a user-friendly way, and allowed me to run fun, if useless, benchmarks for my older test machine.
+          <p>In the end, the problems with Liya aren't about the distro itself, which is so simple to use it's almost as if it's not based on Arch. Believe it or not, there's as little need to use the command line as there is on Ubuntu. And yes, I can see using it on my older hardware as a daily driver, even though it likely does far more than I need it to do. That it was a rolling release also didn't seem to matter. Once I got everything working, nothing gummed up or to acted wonky.</p>
+          <p>Rather, the problem is - sadly - typical of so many one-person and small group Linux efforts. There's so much to do in just building the damned thing that so much else falls through the cracks. Yes, I probably should have found the instructions to run <i>fixpacrepo</i> to rebuild the repos and update the GPG keys sooner than I did. And, almost certainly, an Arch devotee would have known to do it as matter of course.</p>
+          <p>On the other hand, for anyone coming to Arch from elsewhere, which seems to be one of Liya's goals, one set of accurate and complete instructions located in every place anyone would look - home page, wiki, forum, whatever - is necessary, even if it's a lot of work. That's one of the basics in running a distro. Hopefully, Hisham can take that next step, since Liya deserves all the attention it can get.</p>
+          <p>* * * * *</p><b>Hardware used for this review</b> My physical test equipment for this review was a Dell Latitude E7440 laptop with the following specifications:
+          <ul>
+           <li>Processor: Intel i7-4600U</li>
+           <li>Storage: 256GB SSD</li>
+           <li>Memory: 8GB of RAM</li>
+           <li>Networking: Qualcomm Atheros AR9485</li>
+           <li>Display: Intel HD Graphics 4400</li>
+          </ul> When he is not testing out new versions of Linux distributions, Jeff Siegel can be found writing about all things related to wine at <a href="https://winecurmudgeon.com/#/">Wine Curmudgeon</a>.
+          <p>* * * * *</p><b>Visitor supplied rating</b>
+          <p></p>
+          <p>Liya has a visitor supplied average rating of: <b>5/10</b> from <b>4</b> review(s).</p><br>
+           Have you used Liya? You can leave your own review of the project on our <a href="https://distrowatch.com/dwres.php?resource=ratings&amp;distro=liya">ratings page</a>.</td>
+        </tr>
+        <tr>
+         <td><a id="news"></a>Miscellaneous News (by Jesse Smith)</td>
+        </tr>
+        <tr>
+         <td><b><u>Haiku introduces performance improvements, Redcore merges major upgrade, Gentoo dropping IA-64 support</u></b> <a href="https://distrowatch.com/haiku"><img src="https://distrowatch.com/images/icon-small/haiku.png" title="Haiku" alt="Haiku"></a> The <a href="https://distrowatch.com/haiku">Haiku</a> project has been making progress on multiple fronts. Developer x512 recently <a href="https://discuss.haiku-os.org/t/progress-on-porting-firefox/13493/142">posted</a> they have a mostly-functioning port of the Firefox web browser and offered screenshots of Firefox running on the open source operating system.
+          <p>Meanwhile the project's <a href="https://www.haiku-os.org/blog/waddlesplash/2024-08-12-haiku_activity_contract_report_july_2024/">monthly newsletter</a> talks about performance and profile improvements: "<span>Haiku has a built-in CPU time profiler (just called profile.) Unfortunately, it's been rather broken for years, regularly outputting data that was either empty or just didn't make any sense. In order to use it to try and track down some of the other bottlenecks, I spent a bunch of time fixing various bugs in it, as well as the debugger support code that it relies on to function, including to stack trace collection, buffer flushing, symbol lookup, scheduler callbacks, image load reporting, and more. I also implemented userspace-only profiling (ignoring kernel stack frames entirely), fixed some output buffer sizing issues, and fixed a race condition in thread resumption that also affected strace. While it isn't perfect, it's much better than before, and can now be used to profile applications and the kernel to see where CPU time is being spent; and notably it now checks the thread's CPU time counters to detect if it 'missed' profiling ticks, and if so how many.</span>"</p>
+          <p>* * * * *</p><a href="https://distrowatch.com/redcore"><img src="https://distrowatch.com/images/icon-small/redcore.png" alt="Redcore Linux" title="Redcore Linux"></a> People who run <a href="https://distrowatch.com/redcore">Redcore Linux</a> should prepare for a major upgrade of the rolling release project. Part of the flood of updates, for new and existing users, comes from time constraints. "<span> I have promised I will merge all the changes from branch next and release an ISO at the same time, however I cannot keep that promise and I apologise. Producing an ISO image is a time consuming endeavour. It takes 3 hours to spin, followed by days of testing. If something goes wrong, I have to start from scratch. I understand many of you would prefer not to go through a lengthy update, however, for the time being, I cannot dedicate a few days to produce a new release. Branch master is, as of this post, almost 3 months behind, and it falls even further behind each time I push updates into branch next. As mentioned above, pushing frequent updates is easy, producing a new release, not so much. At the same time, holding a branch behind with the hope I might get some time to produce a release, is unreasonable. As a result, I have decided to merge all the goodies from branch next, into branch master, aka Plasma 6, LXQt 2.0, new system profile, and a new binary format.</span>" Instructions for how to handle the new flood of updates are covered in the project's <a href="https://redcorelinux.org/news/the-big-merge">blog post</a>.
+          <p>* * * * *</p><a href="https://distrowatch.com/gentoo"><img src="https://distrowatch.com/images/icon-small/gentoo.png" title="Gentoo" alt="Gentoo"></a> The <a href="https://distrowatch.com/gentoo">Gentoo</a> project has <a href="https://www.gentoo.org/news/2024/08/14/Gentoo-drops-IA-64-support.html">announced</a> it will be dropping support for the IA-64 CPU architecture in the near future, following the Linux kernel phasing out support. "<span>Following the removal of IA-64 (Itanium) support in the Linux kernel and glibc, and subsequent discussions on our mailing list, as well as a vote by the Gentoo Council, Gentoo will discontinue all ia64 profiles and keywords. The primary reason for this decision is the inability of the Gentoo IA-64 team to support this architecture without kernel support, glibc support, and a functional development box (or even a well-established emulator). In addition, there have been only very few users interested in this type of hardware.</span>" The change will take place in early September 2024.
+          <p>* * * * *</p> These and other news stories can be found on our <a href="https://distrowatch.com/dwres.php?resource=headlines">Headlines</a> page.
+          <p></p></td>
+        </tr>
+        <tr>
+         <td><a id="qa"></a>Questions and Answers (by Jesse Smith)</td>
+        </tr>
+        <tr>
+         <td><b><u>Dual boot with encryption</u></b> <b>Shields-up asks:</b> How can I make it so the files from one Linux distro on my laptop can't be accessed by another distro on the same laptop? I only have one hard drive in the laptop.
+          <p><b>DistroWatch answers:</b> When you are trying to protect one operating system from another on the same hardware, you pretty much need to use encryption. Depending on which files you want to protect, you might take different approaches to using encryption. For instance, if you are only worried about protecting your user's files (data stored under your home directory) then you could use user directory encryption or encrypt the <i>/home</i> partition only. However, if you are worried about one operating system compromising another, not just reading the contents of private data on the filesystem, then you'll need full disk/partition encryption.</p>
+          <p>The challenge we then face is few distribution system installers make it easy to set up multiple distributions on the same hard drive, both with encrypted root filesystems. Some projects, such as <a href="https://distrowatch.com/ubuntu">Ubuntu</a>, make it easy to wipe an entire drive and encrypt the operating system's disk, but they don't really offer a smooth way to install two operating systems side-by-side, with both of them encrypted. It's generally assumed that if you want to protect your operating system's data using encryption, then you won't install a second operating system which might be used to compromise it.</p>
+          <p>There are a few suggestions I can make for working around this assumption.</p>
+          <p>The first and easiest option is to set up your preferred distribution normally with full disk encryption. Then install your second distribution inside a virtual machine running on the original (host) distribution. This won't, technically, provide dual boot capabilities, so if that is something you really need this won't help. However, in the vast majority of cases, installing a distribution in a virtual machine and using full disk encryption in the VM is the most practical way to go. The host won't see the encrypted files inside the virtualized guest and the guest won't see the host's files.</p>
+          <p>The only situations where this will not work are if you really need the second operating system to have direct access to the hardware or you have an extremely limited amount of RAM available.</p>
+          <p>Another option would be to plug in an external hard drive to your laptop. Then install one distribution per drive, each of them using full disk encryption. Most laptops will boot from an external drive and that way each distro can have its own disk. For added security, when not using the distribution on the external drive, you could unplug it, guaranteeing the distro on the internal drive can't see the second distro at all.</p>
+          <p>The performance of the distro on the second drive will be reduced when reading from the disk, and you'll have some up front costs for the external drive, but this is probably the easiest approach if you absolutely need to dual boot.</p>
+          <p>Since most system installers do not handle setting up dual-boot, encrypted operating systems gracefully, a third option is to do the disk partitioning and encrypting ourselves. We can set up encrypted disk partitions manually and then try to install our distribution of choice into the encrypted volume. This usually only works well with highly manual distributions, such as <a href="https://distrowatch.com/arch">Arch Linux</a> or in cases where the user knows how to set up a distribution manually using a live media. However, for those who are brave enough to go this route and want full control, the Arch wiki has tutorials for <a href="https://wiki.archlinux.org/title/Dm-crypt/Encrypting_an_entire_system">setting up encrypted partitions, ZFS, and LVM volumes</a>.</p>
+          <p>This last option is certainly the most complex and involves the most work. However, if the situation really requires dual booting, full filesystem encryption, and cannot involve a second hard drive, this is probably the best option left to you.</p>
+          <p>* * * * *</p> Additional answers can be found in our <a href="https://distrowatch.com/qanda.php">Questions and Answers archive</a>.
+          <p></p></td>
+        </tr>
+        <tr>
+         <td><a id="released"></a>Released Last Week</td>
+        </tr>
+        <tr>
+         <td><b><a href="https://distrowatch.com/12214">RebeccaBlackOS 2024-08-12</a></b>
+          <p><a href="https://distrowatch.com/rebeccablackos">RebeccaBlackOS</a> is a Debian-based live distribution which can be used to run Wayland desktop sessions. The project's latest release features a number of upgrades, including swapping out Qt5 for Qt6 and dropping support for 32-bit processors. "<span>New in these ISOs since 2023-01-16: Only 64-bit ISOs are made as QtWebEngine refuses to build in 32 bit chroots. Config files in packages built by checkinstall are correctly marked as config files. Files from the build process are all part of packages, and are not ophaned. The number of potential file conflicts with unintalled packages from the tier 1 Debian repo has been vastly reduced. The few that remain are properly handled by dpkg-divert. Linux 6.10 is built, and drm_panic is enabled. The ttynull driver is enabled. Linux is patched directly to use /dev/ttynull as the default console device. This allows systemd to correctly log to /dev/console. The tier 1 packages are now Debian Bookworm. Qt5 is now removed in favor of Qt6.</span>" Additional information can be found in the project's <a href="https://downloads.sourceforge.net/rebeccablackos/PRERELEASE_README.txt">release notes</a>.</p>
+          <p><b><a href="https://distrowatch.com/12215">Tails 6.6</a></b></p>
+          <p>The Amnesic Incognito Live System (<a href="https://distrowatch.com/tails">Tails</a>) is a Debian-based live DVD/USB with the goal of providing complete Internet anonymity. The project's latest release, Tails 6.6, is focused on fixing issues and improving the persistent storage experience. "<span>Fixed problems: Persistent storage: Increase the maximum waiting time to 4 minutes when unlocking the Persistent Storage before returning an error. Made the creation of the Persistent Storage more robust after starting a Tails USB stick for the first time. Prevent the Persistent Storage settings from freezing after opening a link to the documentation. Prevent Additional Software from crashing when installing virtual packages. Networking: Fix connecting to the Tor network using default bridges. Allow enabling multiple network interfaces again.</span>" The <a href="https://tails.net/news/version_6.6/index.en.html">release announcement</a> offers additional information.</p>
+          <p><b><a href="https://distrowatch.com/12216">deepin 23</a></b></p>
+          <p>The <a href="https://distrowatch.com/deepin">deepin</a> distribution is based on Debian and features the custom-made Deepin Desktop Environment (Deepin DE). The project's latest release is version 23 which introduces atomic updates and support for a wider range of CPU architectures. The new CPU support includes install media and packages for ARM and RISC-V processors. "<span>The system repository packages have been comprehensively upgraded to enhance stability and security, and better support new hardware and architectures such as ARM64, RISC-V, and LoongArch64. Established a new V23 repository for the upgrade of over 8,000 core packages. Introduced a new installation and upgrade mechanism to reduce disk space occupation during whole disk installation. Provided a flexible upgrade backup mechanism to ensure user rollback capability in case of upgrade anomalies, and offered users the ability to manage multiple versions. Optimized system backup solutions to reduce disk space usage compared to the previous A/B partition scheme. Added the "Atomic Update" capability, allowing users to flexibly roll back or switch system versions based on backup restore points.</span>" Additional details can be found in the project's <a href="https://www.deepin.org/en/deepin-v23-is-officially-released/">release announcement</a>.</p>
+          <p></p>
+          <div>
+           <a href="https://distrowatch.com/images/screenshots/deepin-23.png"><img src="https://distrowatch.com/images/screenshots/deepin-23-small.png" alt="The Deepin desktop and application menu" title="The Deepin desktop and application menu"></a>
+           <br><b>deepin 23 -- The Deepin desktop and application menu</b>
+           <p style="display: inline;" class="readability-styled">(full image size: 2.6MB, resolution: 1920x1440 pixels)&nbsp;</p>
+           <br>
+          </div>
+          <p></p><br><b><a href="https://distrowatch.com/12217">ExTiX 24.8</a></b>
+          <p><a href="https://distrowatch.com/extix">ExTiX</a> is a distribution in the Debian family which offers alterative desktop environments. The project's latest release, ExTiX 24.8, is based on deepin 23. "<span>New functions etc. in ExTiX 24.8 'Deepin': 1. VirtualBox Guest Additions are not pre-installed. No real need for them since you can run ExTiX in full screen in VirtualBox by just changing the screen resolution. 2. You can run ExTiX from RAM. Use boot alternative 2 (load to RAM) or Advanced. A wonderful way to run Linux if you have enough RAM. Everything will be super fast. When ExTiX has booted up you can remove the DVD or USB stick. 3. You can use Deepin Installer as an alternative to Refracta Installer. Use Deepin Installer preferable on UEFI computers if you want/need to install or reinstall GRUB. 4. I have installed Google Chrome 127.0.6533.119-1 as a replacement for Deepin's Browser, which suddenly can be in Chinese. 5. I've added Synaptic Package Manager. A must I think. Watch a screenshot when Synaptic is running. 6. You can watch Netflix while running Google Chrome....</span>" Additional details can be found in the project's <a href="https://www.extix.se/extix-deepin-24-8-live-based-on-deepin-23-stable-latest-with-refracta-snapshot-and-kernel-6-10-3-amd64-exton-build-240816/">release announcement</a>.</p>
+          <p>* * * * *</p><b>Development, unannounced and minor bug-fix releases</b>
+          <p></p><br>
+          <ul>
+           <li><a href="https://distrowatch.com/manjaro">Manjaro Linux</a> 24.0.6</li>
+           <li><a href="https://distrowatch.com/endless">Endless OS</a> 6.0.2</li>
+           <li><a href="https://distrowatch.com/austrumi">AUSTRUMI</a> 4.9.6</li>
+           <li><a href="https://distrowatch.com/sparky">SparkyLinux</a> 2024.08</li>
+           <li><a href="https://distrowatch.com/easyos">EasyOS</a> 5.8.4</li>
+           <li><a href="https://distrowatch.com/calculate">Calculate Linux</a> 20240813</li>
+           <li><a href="https://distrowatch.com/makulu">MakuluLinux 2024-08-07 </a></li>
+           <li><a href="https://distrowatch.com/freebsd">FreeBSD</a> 13.4-BETA3</li>
+           <li><a href="https://distrowatch.com/regata">Regata OS</a> 24.0.8</li>
+           <li><a href="https://distrowatch.com/fatdog">Fatdog64 Linux</a> 903</li>
+           <li><a href="https://distrowatch.com/bluestar">Bluestar Linux</a> 6.10.5</li>
+           <li><a href="https://distrowatch.com/cachyos">CachyOS</a> 240818</li>
+          </ul></td>
+        </tr>
+        <tr>
+         <td><a id="torrent"></a>Torrent Corner</td>
+        </tr>
+        <tr>
+         <td><b><u>Weekly Torrents</u></b>
+          <p>The table below provides a list of <a href="https://en.wikipedia.org/wiki/Bittorrent">torrents</a> DistroWatch is currently seeding. If you do not have a bittorrent client capable of handling the linked files, we suggest installing either the <a href="https://www.transmissionbt.com/">Transmission</a> or <a href="https://www.kde.org/applications/internet/ktorrent/">KTorrent</a> bittorrent clients.</p>
+          <p></p>
+          <table>
+           <tbody>
+            <tr>
+             <td><b>Operating System</b></td>
+             <td><b>Torrent</b></td>
+             <td><b>SHA256 checksum</b></td>
+            </tr>
+            <tr>
+             <td><a href="https://distrowatch.com/deepin">deepin 23</a></td>
+             <td><a href="https://distrowatch.com/dwres/torrents/deepin-desktop-community-23-amd64.iso.torrent"> deepin-desktop-community-23-amd64.iso </a></td>
+             <td>fd0037372c58081ed68e244771c01b0a7b0cd921c5bf23301b8ab85299e1e94b</td>
+            </tr>
+            <tr>
+             <td><a href="https://distrowatch.com/endless">Endless OS 6.0.2</a></td>
+             <td><a href="https://distrowatch.com/dwres/torrents/endlessos-amd64-amd64-base-6.0.2-iso.torrent"> eos-eos6.0-amd64-amd64.240812-084843.base.iso </a></td>
+             <td>deeb1793c874bd35c4fdd4ddf82a9af4212cdc275d3f84512c2812577b43cef8</td>
+            </tr>
+            <tr>
+             <td><a href="https://distrowatch.com/sparky">SparkyLinux 2024.08 "KDE"</a></td>
+             <td><a href="https://distrowatch.com/dwres/torrents/sparkylinux-2024.08-x86_64-kde.iso.torrent"> sparkylinux-2024.08-x86_64-kde.iso </a></td>
+             <td>82b26e04a45b8e71d30f309397dce261d6de176eb671202bfa58326ca1120e41</td>
+            </tr>
+            <tr>
+             <td><a href="https://distrowatch.com/sparky">SparkyLinux 2024.08 "LXQt"</a></td>
+             <td><a href="https://distrowatch.com/dwres/torrents/sparkylinux-2024.08-x86_64-lxqt.iso.torrent"> sparkylinux-2024.08-x86_64-lxqt.iso </a></td>
+             <td>d33e0ae0ce2bade991356ceda7fe35c93d654f9908cd41ca73346104cacad79c</td>
+            </tr>
+            <tr>
+             <td><a href="https://distrowatch.com/sparky">SparkyLinux 2024.08 "MATE"</a></td>
+             <td><a href="https://distrowatch.com/dwres/torrents/sparkylinux-2024.08-x86_64-mate.iso.torrent"> sparkylinux-2024.08-x86_64-mate.iso </a></td>
+             <td>8c1ed195911edaabb68e132f11486c1c50c4071849a207701c924fc3f15813a8</td>
+            </tr>
+            <tr>
+             <td><a href="https://distrowatch.com/sparky">SparkyLinux 2024.08 "Minimal CLI"</a></td>
+             <td><a href="https://distrowatch.com/dwres/torrents/sparkylinux-2024.08-x86_64-minimalcli.iso.torrent"> sparkylinux-2024.08-x86_64-minimalcli.iso </a></td>
+             <td>307a60b2485a31cc01cd9b4829d10a432cc8e99fc7dbc20ed350f2870cd5d1fd</td>
+            </tr>
+            <tr>
+             <td><a href="https://distrowatch.com/sparky">SparkyLinux 2024.08 "Minimal GUI"</a></td>
+             <td><a href="https://distrowatch.com/dwres/torrents/sparkylinux-2024.08-x86_64-minimalgui.iso.torrent"> sparkylinux-2024.08-x86_64-minimalgui.iso </a></td>
+             <td>13ca7ce77297ab06c03e08495f18764cb12b96f9a9a372fb02f5f281eec78a89</td>
+            </tr>
+            <tr>
+             <td><a href="https://distrowatch.com/sparky">SparkyLinux 2024.08 "Xfce"</a></td>
+             <td><a href="https://distrowatch.com/dwres/torrents/sparkylinux-2024.08-x86_64-xfce.iso.torrent"> sparkylinux-2024.08-x86_64-xfce.iso </a></td>
+             <td>6155b975f3a925618d9a9e73f3e2478cc9525d99b7be3ea7bd12cbb5fc33435f</td>
+            </tr>
+            <tr>
+             <td><a href="https://distrowatch.com/tails">Tails 6.6 "USB/IMG"</a></td>
+             <td><a href="https://distrowatch.com/dwres/torrents/tails-amd64-6.6.img.torrent"> tails-amd64-6.6.img </a></td>
+             <td>fe0e7b24e4a1400843eb25e483858378693647e2ab4521c684826e3be1704369</td>
+            </tr>
+            <tr>
+             <td><a href="https://distrowatch.com/tails">Tails 6.6 "DVD/ISO"</a></td>
+             <td><a href="https://distrowatch.com/dwres/torrents/tails-amd64-6.6.iso.torrent"> tails-amd64-6.6.iso </a></td>
+             <td>40d65d21dac5d4660ba2e2594257da2c7cec5835500f4aad3c05869adda91dbf</td>
+            </tr>
+           </tbody>
+          </table>
+          <p></p>
+          <p>Archives of our previously seeded torrents may be found in our <a href="https://distrowatch.com/dwres.php?resource=bittorrent">Torrent Archive</a>. We also maintain a <a href="https://distrowatch.com/news/torrents.xml">Torrents RSS feed</a> for people who wish to have open source torrents delivered to them. To share your own open source torrents of Linux and BSD projects, please visit our <a href="https://distrowatch.com/dwres.php?resource=upload-torrent">Upload Torrents</a> page.</p>
+          <p><b>Torrent Corner statistics:</b></p><br>
+          <ul>
+           <li>Total torrents seeded: 3,055</li>
+           <li>Total data uploaded: 45.1TB</li>
+          </ul><br></td>
+        </tr>
+        <tr>
+         <td><a id="upcoming"></a>Upcoming Releases and Announcements</td>
+        </tr>
+        <tr>
+         <td><b>Summary of expected upcoming releases</b>
+          <ul>
+           <li>2024-08-23: <a href="https://distrowatch.com/freebsd">FreeBSD</a> 13.4-RC1</li>
+           <li><b>2024-08-29: <a href="https://distrowatch.com/ubuntu">Ubuntu</a> 24.04.1</b> (see <a href="https://wiki.ubuntu.com/Releases">schedule</a>)</li>
+           <li><b>2024-08-29: <a href="https://distrowatch.com/ubuntu">Ubuntu</a> 22.04.5</b> (see <a href="https://wiki.ubuntu.com/Releases">schedule</a>)</li>
+           <li><b>2024-09-03: <a href="https://distrowatch.com/freebsd">FreeBSD</a> 13.4</b></li>
+           <li>2024-09-10: <a href="https://distrowatch.com/fedora">Fedora</a> 41 Beta</li>
+           <li>2024-09-19: <a href="https://distrowatch.com/ubuntu">Ubuntu</a> 24.10 Beta</li>
+           <li><b>2024-10-10: <a href="https://distrowatch.com/ubuntu">Ubuntu</a> 24.10</b> (see <a href="https://discourse.ubuntu.com/t/oracular-oriole-release-schedule/36460">release schedule</a>)</li>
+           <li><b>2024-10-15: <a href="https://distrowatch.com/fedora">Fedora</a> 41</b> (see <a href="https://fedorapeople.org/groups/schedule/f-41/f-41-key-tasks.html">release schedule</a>)</li>
+          </ul></td>
+        </tr>
+        <tr>
+         <td><a id="poll"></a>Opinion Poll (by Jesse Smith)</td>
+        </tr>
+        <tr>
+         <td>
+          <table>
+           <tbody>
+            <tr>
+             <td><b>Do you encrypt your root filesystem or home directories?</b> In our <a href="#qa">Questions and Answers</a> column we talked about disk encryption. When it comes to protecting data there are a few approaches people can take. One is to encrypt everything on the disk, including the operating system and user files. Some people prefer to just encrypt the data files under their account. Others may not encrypt any parts of the filesystem and, instead, use encrypted file vaults for sensitive information. We'd like to hear which approach to encryption you use.
+              <p>You can see the results of our previous poll on types of smartphones our readers use in our <a href="https://distrowatch.com/weekly.php?myaction=SeeVote&amp;issue=20240812#poll">previous edition</a>. All previous poll results can be found in our <a href="https://distrowatch.com/polls.php">poll archives</a>.</p></td>
+             <td><br></td>
+            </tr>
+           </tbody>
+          </table></td>
+        </tr>
+        <tr>
+         <td><a id="sitenews"></a>Website News</td>
+        </tr>
+        <tr>
+         <td><a id="waiting"></a><b>New distributions added to waiting list</b><br>
+          <ul>
+           <li><a href="https://bredos.org/">BredOS</a>. BredOS is a user-friendly Arch-based Linux distribution specifically designed for ARM-based single board computers (SBCs).</li>
+           <li><a href="https://redos.red-soft.ru/">Red OS</a>. Red OS is a Russian distribution for servers and workstations. The distribution offers KDE, GNOME, and MATE editions for the x86_64 architecture.</li>
+          </ul>
+          <p>* * * * *</p><b>DistroWatch database summary</b><br>
+          <ul>
+           <li>Number of <a href="https://distrowatch.com/search.php?status=All">all distributions</a> in the database: 962<br></li>
+           <li>Number of <a href="https://distrowatch.com/search.php?status=Active">active distributions</a> in the database: 269<br></li>
+           <li>Number of <a href="https://distrowatch.com/search.php?status=Dormant">dormant distributions</a>: 49<br></li>
+           <li>Number of <a href="https://distrowatch.com/search.php?status=Discontinued">discontinued distributions</a>: 644<br></li>
+           <li>Number of distributions on the <a href="https://distrowatch.com/new">waiting list</a>: 157</li>
+           <li>Number of distributions waiting for <a href="https://distrowatch.com/new">evaluation</a>: 55</li>
+          </ul>
+          <p>* * * * *</p> This concludes this week's issue of DistroWatch Weekly. The next instalment will be published on Monday, 26 August 2024. Past articles and reviews can be found through our <a href="https://distrowatch.com/weekly.php">Weekly Archive</a> and <a href="https://distrowatch.com/dwres.php?resource=article-search">Article Search</a> pages. To contact the authors please send e-mail to:
+          <ul>
+           <li><b><a href="mailto:distro@distrowatch.com">Jesse Smith</a></b> (feedback, questions and suggestions: distribution reviews/submissions, questions and answers, tips and tricks)</li>
+           <li><b><a href="mailto:distro@distrowatch.com">Ladislav Bodnar</a></b> (feedback, questions, donations, comments)</li>
+          </ul></td>
+        </tr>
+       </tbody>
+      </table></td>
+    </tr>
+   </tbody>
+  </table>
+  <br>
+  <table>
+   <tbody>
+    <tr>
+     <th><a id="comments"></a>Tip Jar</th>
+    </tr>
+    <tr>
+     <td>
+      <table>
+       <tbody>
+        <tr>
+         <td colspan="3">
+          <p>If you've enjoyed this week's issue of DistroWatch Weekly, please consider sending us a tip.<br>
+            (Tips this week: <b>1</b>, value: <b>US$20</b>)</p></td>
+        </tr>
+        <tr>
+         <td>
+          <div>
+           <img src="https://distrowatch.com/images/other/bitcoinqr-for-dww.png" alt="Bitcoin QR code">
+          </div></td>
+         <td>
+          <div>
+           <img src="https://distrowatch.com/images/other/lightningqr-for-dww.png" alt="Lightning">
+          </div></td>
+         <td>
+          <div>
+           <img src="https://distrowatch.com/images/other/moneroqr-for-dww.png" title="Monero QR code" alt="Monero QR code">
+          </div></td>
+        </tr>
+       </tbody>
+      </table><br>
+      <table>
+       <tbody>
+        <tr>
+         <td>
+          <div>
+           <img src="https://distrowatch.com/images/other/bitcoin16.png" alt="Bitcoin">
+           <p style="display: inline;" class="readability-styled">bc1qxes3k2wq3uqzr074tkwwjmwfe63z70gwzfu4lx&nbsp;</p>
+           <br><img src="https://distrowatch.com/images/other/lightning16.png" alt="Bitcoin Lightning" title="Bitcoin Lightning">
+           <p style="display: inline;" class="readability-styled">lnurl1dp68gurn8ghj7ampd3kx2ar0veekzar0wd5xjtnrdakj7tnhv4kxctttdehhwm30d3h82unvwqhhxarpw3jkc7tzw4ex6cfexyfua2nr&nbsp;</p>
+           <br><img src="https://distrowatch.com/images/other/monero16.png" alt="Monero">
+           <p style="display: inline;" class="readability-styled">86fA3qPTeQtNb2k1vLwEQaAp3XxkvvvXt69gSG5LGunXXikK9koPWZaRQgfFPBPWhMgXjPjccy9LA9xRFchPWQAnPvxh5Le&nbsp;</p>
+           <br><a href="https://www.paypal.me/distrowatchweekly">paypal.me/distrowatchweekly</a>
+           <p style="display: inline;" class="readability-styled">•&nbsp;</p><a href="https://www.patreon.com/distrowatch">patreon.com/distrowatch</a>
+          </div></td>
+        </tr>
+       </tbody>
+      </table></td>
+    </tr>
+   </tbody>
+  </table>
+  <br>
+  <table>
+   <tbody>
+    <tr>
+     <th>Extended Lifecycle Support by TuxCare</th>
+    </tr>
+    <tr>
+     <td>
+      <table>
+       <tbody>
+        <tr>
+         <td>
+          <div>
+           <br><a href="https://distrowatch.com/unjklf"><img src="https://distrowatch.com/images/cpxtu/bieqdhjtn" alt="Extended Lifecycle Support for Ubuntu 18.04 - TuxCare" title="Extended Lifecycle Support for Ubuntu 18.04 - TuxCare"></a>
+          </div></td>
+        </tr>
+       </tbody>
+      </table></td>
+    </tr>
+   </tbody>
+  </table>
+  <br>
+  <br>
+  <table>
+   <tbody>
+    <tr>
+     <th>Reader Comments • <a href="#comment-44"><span>Jump to last comment</span></a></th>
+    </tr>
+    <tr>
+     <td>
+      <table>
+       <tbody>
+        <tr>
+         <td><a id="comment-1"></a> <b>1</b> • <b>disk encryption (by Name (mandatory) on 2024-08-19 01:24:31 GMT from United States)</b><br>
+           I'm noob. If something goes wrong with encryption, I would not know how to help myself. Hence, my disks are not encrypted <br>
+          <hr><a id="comment-2"></a> <b>2</b> • <b>Liya (by Kilroy the Great on 2024-08-19 02:57:17 GMT from United States)</b><br>
+           "The system is intended to be easy to use, easy to explore, and distraction-free." Would be nice to see how it compares with Endeavour, Manjaro, Garuda, or a bunch of other easy to install, easy to use, etc. Arch-based distros. <br>
+          <hr><a id="comment-3"></a> <b>3</b> • <b>Disk encryption (by <a href="mailto:ted@alamedated.com">Alamedated</a> on 2024-08-19 03:04:14 GMT from United States)</b><br>
+           I am afraid of disk encryption. My work computer encrypts the disk and it takes them about 15 minutes to boot up. It is a bit irrational that I am afraid to encrypt a disk that I don't mind wiping out.
+          <p>Thank you for the poll. I am going to try disk encryption!</p><br>
+          <hr><a id="comment-4"></a> <b>4</b> • <b>If you use disk encryption.... (by eco2geek on 2024-08-19 03:47:18 GMT from United States)</b><br>
+           If you use disk encryption, you need a backup in case something goes wrong.
+          <p>(And do you encrypt the backup too? :-)</p><br>
+          <hr><a id="comment-5"></a> <b>5</b> • <b>Encryption (by Friar Tux on 2024-08-19 04:10:32 GMT from Canada)</b><br>
+           I'm with <a href="#comment-3">@3</a> (Alamedated), though I don't actually fear encryption. I just find it way too cumbersome, irritating and lagging to deal with. I'm the only one using my laptop and no one else in the family even uses Linux (The Wife does, but I do the wrangling), so no one actually knows how to work our computers. I guess you could say, in our case, the very OS is the actual encryption. <br>
+           By the way, in The Wife's case, one big "plus" of switching her to Linux was that her hearing aids connected automatically, directly to her laptop, which the proprietary OS never did. <br>
+          <hr><a id="comment-6"></a> <b>6</b> • <b>Encryption (by eb on 2024-08-19 07:44:26 GMT from France)</b><br>
+           I encrypt only some files with ccrypt ; very simple and convenient. Seldom, I need to encrypt a folder : I tar.gz it, and then I ccrypt the tar.gz <br>
+          <hr><a id="comment-7"></a> <b>7</b> • <b>encryption (by dr.j on 2024-08-19 08:07:56 GMT from Bulgaria)</b><br>
+           I use full encryption.
+          <p>Anything else makes no sense in my opinion, because even in Linux systems so much data/information is stored outside the home directory that encryption is superfluous.</p>
+          <p>And fear of encryption? Unnecessary. I've been working with it for more than two decades. Back then with the good old pgp, then truecrypt and gpg etc. I now use zulucrypt. Problems: never. There is also a backup of the header - for emergencies.</p><br>
+          <hr><a id="comment-8"></a> <b>8</b> • <b>DIsk Encryption (by <a href="https://hellfirehost.uk.eu.org/">Hellfire103</a> on 2024-08-19 09:29:17 GMT from Belgium)</b><br>
+           I use full disk encryption whenever possible, whether its using LUKS, FileVault, GELI, or whatever. However, this is not yet possible on my Raspberry Pi 5, so I just use encfs to encrypt my $HOME. <br>
+          <hr><a id="comment-9"></a> <b>9</b> • <b>DIsk Encryption (by James on 2024-08-19 09:33:02 GMT from United States)</b><br>
+           I don't use DIsk Encryption as I only use one OS on any of my three laptops and I am the only user. There is only myself and my wife, so I don't have any worries about anyone snooping either. <br>
+          <hr><a id="comment-10"></a> <b>10</b> • <b>Disk encryption (by DachshundMan on 2024-08-19 10:50:44 GMT from United Kingdom)</b><br>
+           I don't encrypt my disk or partitions but I do use Veracrypt, a successor to Trucrypt, to store some files that I want to keep secured. I chose Veracrypt as it also works on Windows and therefore I could read my encrypted virtual disk from my corporate laptop if required. <br>
+          <hr><a id="comment-11"></a> <b>11</b> • <b>Encryption (by Jesse on 2024-08-19 10:52:22 GMT from Canada)</b><br><a href="#comment-3">@3</a>: " My work computer encrypts the disk and it takes them about 15 minutes to boot up. "
+          <p>Disk encryption carries almost no performance penalty. You won't notice any slow-down from using disk encryption. Something else is very _very_ wrong with your work computer.</p>
+          <p><a href="#comment-4">@4</a>: "If you use disk encryption, you need a backup in case something goes wrong."</p>
+          <p>You should have a backup whether you encrypt or not. Accidental deletion of files or hard drive failure will ruin your day just as quickly as an encrypted partition.</p><br>
+          <hr><a id="comment-12"></a> <b>12</b> • <b>Encryption (by Alfonse on 2024-08-19 11:00:41 GMT from Czechia)</b><br>
+           I use LUKS for full encryption (except for /boot).
+          <p><a href="#comment-11">@11</a> Jesse, thank you, you just spared me from answering <a href="#comment-3">@3</a> and <a href="#comment-4">@4</a>. :)</p>
+          <p>By the way <a href="#comment-4">@4</a>: yes, my backups themselves are encrypted, and they are made to disks which in turn are also encrypted. (LUKS+borgbackup)</p><br>
+          <hr><a id="comment-13"></a> <b>13</b> • <b>Liya (past) (by <a href="mailto:n3potvin@yahoo.com">Nathan3</a> on 2024-08-19 12:33:24 GMT from United States)</b><br>
+           I tried Liya (1. something) last summer for about three months on a Dell laptop.<br>
+           Clean, easy to set up and use.<br>
+           I used the three CLI commands after installation, not the Pamac gui process.<br>
+           I had no need to use the AUR.<br>
+           This was the only Arch or Arch based distro that got through more then three updates<br>
+           before getting corrupted. Others refused to advance to the login screen, refused to accept <br>
+           my used name or password, refused to open the browser etc.<br>
+           So, good memories of the previous version.
+          <p>The Dell was / is a "play" laptop used to check out distros. This week, I tried Archcraft</p><br>
+           (Arch + openbox), Lilidog (Debian + openbox) and presently Linux Mint 22 "MATE"<br>
+           Awaiting sometime in Sept 2024 for Lilidog 2.0
+          <p>My daily driver remains MX, currently version 23 XFCE but with the Cinnamon desktop</p><br>
+           on a Lenovo desktop PC. So far (more then 4 years) no reason to change from MX<br>
+           except to upgrade to the latest version. <br>
+          <hr><a id="comment-14"></a> <b>14</b> • <b>Liya (by TMoss on 2024-08-19 13:53:57 GMT from Belgium)</b><br><a href="#comment-13">@13</a>: I assume you meant that you got through more *than three updates (took me some time to make out the meaning of your sentence).
+          <p>I had some problems until I refrained from updating with something else than pacman -Syu. From that point on, I've used and updated a couple of Manjaro installations for more than 2 years without any trouble.</p><br>
+          <hr><a id="comment-15"></a> <b>15</b> • <b>disk encryption (by <a href="mailto:penguinx86@yahoo.com">penguinx86</a> on 2024-08-19 15:11:00 GMT from United States)</b><br>
+           I don't encrypt anything. I have a handful of home computers and the rest of my family never uses them. They're too busy with their iPhones to bother with a computer that doesn't have a touchscreen. <br>
+          <hr><a id="comment-16"></a> <b>16</b> • <b>Missing information (by <a href="mailto:rpt@gmx.com">Martins</a> on 2024-08-19 17:23:52 GMT from Portugal)</b><br>
+           In your "Summary of expected upcoming releases" section, you forgot to mention the upcoming interim release of ubuntu 24.04.1 now rescheduled to 2024-08-29. It may be important for the many users of ubuntu, only this interim release will allow the use of "do-release-upgrade" for those who use older ubuntu releases. <br>
+          <hr><a id="comment-17"></a> <b>17</b> • <b>disk encryption (by IchWerSonst on 2024-08-19 18:16:11 GMT from Germany)</b><br><a href="#comment-6">@6</a>: Didn't know that one. Seems handy, like kryptor but with less functions.
+          <p>To address the "naysayers". Encryption is really not that hard to cope with nowadays. If you're using a laptop or any other mobile device, encryption should be mandatory. No matter if you're the only one in your relationship/family using it. Think of theft/robbery i.e.</p>
+          <p>Some useful tools:</p><br><a href="https://www.privacyguides.org/en/encryption/">https://www.privacyguides.org/en/encryption/</a>
+          <p><a href="#comment-12">@12</a>: Same thought. :D</p><br>
+          <hr><a id="comment-18"></a> <b>18</b> • <b>Encryption (by Much Derper on 2024-08-19 18:20:25 GMT from United Kingdom)</b><br><a href="#comment-11">@11</a><br>
+           &gt; Disk encryption carries almost no performance penalty. You won't notice any slow-down from using disk encryption.
+          <p>That's not an absolute, it's conditional on hardware being sufficiently new to support AES-NI or an equivalent instruction set. For people that still rock, e.g., first-gen Core i7 CPUs (like the one in the otherwise still quite usable with its 32GiB RAM and SSD ThinkPad W510 I have) disk encryption does slow down the system noticeably enough. And it not only causes the disk I/O to be slower than it would be otherwise, but it also takes away CPU cycles from the rest of the software. Still, depending on the workload the system can still remain quite usable even then.</p><br>
+          <hr><a id="comment-19"></a> <b>19</b> • <b>Encryption (by Jesse on 2024-08-19 20:15:20 GMT from Canada)</b><br><a href="#comment-18">@18</a>: "That's not an absolute, it's conditional on hardware being sufficiently new to support AES-NI or an equivalent instruction set. For people that still rock, e.g., first-gen Core i7 CPUs (like the one in the otherwise still quite usable with its 32GiB RAM and SSD ThinkPad W510 I have) disk encryption does slow down the system noticeably enough."
+          <p>First, no you don't need a newer computer/CPU to run encrypiton without a noticeable performance penalty. Second, there must be something else affecting your machine, it's not going to be the encryption.</p>
+          <p>I can run encryption on a 15 year old laptop with a spinning drive, 4GB of RAM and i3 processor in it with no performance hit. There is no way you're seeing a slow down due to encryption on anything made in the last decade or so.</p><br>
+          <hr><a id="comment-20"></a> <b>20</b> • <b>Use encryption (by Simon on 2024-08-19 23:11:00 GMT from New Zealand)</b><br>
+           As long as you’re perfectly comfortable with burglars or hackers browsing through all of your data, sharing your photos, reading your emails and using them to impersonate you, and so on and so on, it can indeed make sense to avoid encryption as it can involve a very small cost (depending on your implementation) in terms of speed and/or ease of data recovery.
+          <p>On the other hand if you’re not completely comfortable with the contents of your computer being fully available to anyone who wants to use them for any purpose, it would be ridiculous not to implement something so easy and with so much flexibility (you can encrypt anything from physical drives to single files… including encrypting large single files that you can then mount as drives full of directories and data).</p>
+          <p>It’s maybe possible that the 71% of poll respondents who don’t use encryption at all genuinely don’t need it… but I bet some of them are just counting foolishly on good luck. They may regret it when their laptops are lost or stolen and they suddenly realize that their login password couldn’t stop a competent 7-year-old and their digital lives are now anyone’s for the taking. Especially if they were foolish enough to allow their browsers to save their online passwords too, on unencrypted systems that allow anyone to launch those browsers as if they were the owner! Some folk seem to go through life with an irrational “it won’t happen to me” filter: it certainly does happen, so if you don’t want it to happen to you, use encryption.</p><br>
+          <hr><a id="comment-21"></a> <b>21</b> • <b>encryption / paranoia (by Steve on 2024-08-20 00:13:36 GMT from New Zealand)</b><br><a href="#comment-20">@20</a> - depends on the crime rate in your part of the Great Green Lie, aka NZ Aostealaroa.
+          <p>I travelled to Africa a few years back and my laptop was encrypted - just in case, to calm the fear mongerers. I returned with the laptop, the only "feature" was I had a ridiculously slower laptop and an extra step login for that period. It got reinstalled within a week of returning.</p>
+          <p>Talking of installs. Noto. Do I need to say any more to anyone in Linuxland? Everything from LinearA and Egyptian hieroglyphs, to Mayan, and 200+ Indic fonts - FORCED IN and as a DEPENDENCY by crucial packages at the unremovable CORE of many, many distros. Gentlemen (distro makers), unless you want to see BILLING for my hours to clean up this Noto s**t, drop this dependency!! I am the ba***d who WILL come knocking at your Embassy's door, bill in hand!</p><br>
+          <hr><a id="comment-22"></a> <b>22</b> • <b>Encryption (by ThomasAnderson on 2024-08-20 04:27:52 GMT from Australia)</b><br>
+           Fear is the path to the dark side. Fear leads to anger. Anger leads to hate. Hate leads to suffering.
+          <p>Do not fear encrypting your drive, whether a full disk or just the home partition with LUKS, it is battle tested now for years without any issues.</p>
+          <p>The reasons why you should encrypt at the bare minimum your /home are primarily for privacy. We all have things we need to keep confidential and encryption is your friend in this regard.</p>
+          <p>Almost everyone has a mobile, which is encrypted. Do you fear having an encrypted phone? If not, why fear an encrypted drive which provides so much benefit. Even on Windows, installations are encrypted with Bitlocker, although not secure, encryption is there.</p>
+          <p>Embrace encryption. Edward Snowden warns that if your computer or laptop is stolen, “pictures, where you live, where you work, where your kids are, where you go to school” would all be accessible to a criminal.” Not to mention financial records, personal documents, potential passwords, crypto wallets etc etc.</p><br>
+          <hr><a id="comment-23"></a> <b>23</b> • <b>@22 Thomas Anderspn: (by <a href="mailto:fcd76218@opayq.com">dragonmouth</a> on 2024-08-20 11:36:14 GMT from United States)</b><br>
+           There is also paranoia which leads to hysteria.
+          <p>If you feel the entire world is just itching to have a look at your files.and you MUST encrypt, have at it. I don't encrypt but then I do not keep my entire life on my computer. The things that I "need to keep confidential" are NOT on my PC. They are safely stored away.</p>
+          <p>BTW - your PC can be encrypted three ways from Sunday but there is NOTHING that you can do about personal and confidential information gathered by every institution you deal with. How many BILLIONS of records have been compromised by the breaches of such institutions? How would your fully encrypted PC prevent your private and confidential information being stolen?</p><br>
+          <hr><a id="comment-24"></a> <b>24</b> • <b>Encryption (by picamanic on 2024-08-20 11:39:06 GMT from United Kingdom)</b><br>
+           OK, I am convinced by the need to encrypt more of my "home" directory. At present I just use a symmetric AES file encryption for files containing "secrets". The only complication of is that I use a semi-custom filesystem Mirror based on Lsyncd for my "home" directory. I might have to create some new software to realise this.
+          <p>I am wary of encrypting the whole file system or even whole "disk". Just gut feeling.</p><br>
+          <hr><a id="comment-25"></a> <b>25</b> • <b>Encrypted Install Tips (by Random Experienced Void User on 2024-08-20 17:17:31 GMT from United States)</b><br>
+           For pain-free setup, make /boot a cleartext partition, encrypt the rest. Nearly all of the supposed "pain" of encryption revolves around bootloader issues. So /boot should be cleartext ext4 minus journaling. Bye bye bootloader hassle. The /boot files are not your personal work or configs anyway. Leaving /boot as cleartext is a rational trade-off. Technically you could stash /boot on a separate USB key, just as you could a keyfile.
+          <p>I never let installers partition disks, but use gdisk, and often make my own filesystems too. Installer options are too limited and outdated. Installers still enable swap needlessly. The best advise on /swap is not using it. And I *always* turn off ext4 journaling. That change makes ext4 faster and more stable. Installers don't present the option.</p>
+          <p>The minimum to encrypt: /root, /home, and /etc, which encompass $HOME, $XDG_CONFIG_HOME, and $XDG_DATA_HOME for all users. Yet encrypting everything is easier than such cherry-picking.</p>
+          <p>Backup is simple with ddrescue. Create an image of the encrypted partition on another drive. That image is equally encrypted and mountable as a filesystem. This method is neither space-efficient nor maximally fast, but trivial, and makes recovery so. To get an old file, mount the image and copy the file out. To restore in full, ddrescue the whole (unmounted) image back to the (unmounted) source partition. You can finish a full system backup (all partitions) in under an hour, give or take.</p>
+          <p>The world needs encryption more in communications. Distros should package the superb SimpleX Chat app which covers all platforms and phones. There's even an AppImage. The home page lags development, so get releases from GitHub. Currently 6.0.1 is the latest.</p>
+          <p><a href="https://simplex.chat/">https://simplex.chat/</a></p><br><a href="https://github.com/simplex-chat/simplex-chat/releases">https://github.com/simplex-chat/simplex-chat/releases</a>
+          <p>RetroShare is another vastly underappreciated and also multi-mode comm app with solid encryption baked in.</p><br>
+          <hr><a id="comment-26"></a> <b>26</b> • <b>fixpacrepo (by <a href="https://nerdonthestreet.com">Jacob Kauffmann</a> on 2024-08-20 21:20:24 GMT from United States)</b><br>
+           "Yes, I probably should have found the instructions to run fixpacrepo to rebuild the repos and update the GPG keys sooner than I did. And, almost certainly, an Arch devotee would have known to do it as matter of course."
+          <p>While a well-versed Arch user might have known how to investigate the issue to fix manually, there is no such "fixpacrepo" command in Arch, as far as I can tell. I tried to look and see if it's an in-house Liya Linux tool, but I'm having a hard time finding any of Liya's source code.</p><br>
+          <hr><a id="comment-27"></a> <b>27</b> • <b>fixpacrepo (by Roger Brown on 2024-08-21 01:46:10 GMT from Australia)</b><br><a href="#comment-26">@26</a> - Further to this topic, trying to find an easy entrance to Archlinux by installing a distro based on an Archlinux snapshot is invariably bad news due to the likely large number of updates and the possibility of package authentication issues.
+          <p>Users unwilling to adopt the Archlinux manual install procedure should look for a "live" installer which will pull the latest packages.</p>
+          <p>I'd recommend either Arch's own archinstall script or the excellent Calam-Arch installer found on Sourceforge.</p><br>
+          <hr><a id="comment-28"></a> <b>28</b> • <b>@21 (by Simon on 2024-08-21 01:49:19 GMT from New Zealand)</b><br>
+           A "ridiculously slower laptop" is not encryption's fault: that's just user error. If 95% of a drive's contents are files downloaded from distro servers and installed from packages then those are publicly available files so to waste time encrypting and decrypting them is more likely to be a mistake than a real need for that level of security. When it comes to encrypting all of home, that's more reasonable because a lot of data can be hiding in hidden directories that users don't know about... but users who are familiar with the contents of their home directories can usually encrypt a single secure folder and pop anything sensitive in there... it has zero impact on system performance.
+          <p>As for the "Great Green Lie", you must be living in an unusually dangerous neighbourhood, or else perhaps basing your opinion on reporting (which, obviously, chases ratings with an endless parade of crime) rather than stats. New Zealand is consistently ranked as one of the safest and least corrupt nations in the world: the US, for example, has a much higher crime rate. Knowing how safe this country is relative to others doesn't change the fact that laptops are often stolen from public places, here as in other countries, desktops are occasionally stolen in burglaries, and everything on the Internet is an attack surface for people in much less safe nations (China, Nigeria, etc.) to get their hands on whatever they can.</p>
+          <p>It's not just a matter of personal privacy: anyone with clients and legal obligations to protect client data or commercially sensitive data and so on definitely needs encryption. I still think most of the people who said they're not using any encryption probably should be (or they are already, because they're just playing with Linux and are using encryption on their Windows or Mac boxes). But if you don't need it, cool: like I said, if you don't really need it then it makes sense not to use it, as things are simpler without it. Most people though, if they're using their computers in the real world, do need it and should be using it.</p><br>
+          <hr><a id="comment-29"></a> <b>29</b> • <b>Encryption (by <a href="mailto:jdavidson89@gmail.com">Jason</a> on 2024-08-21 03:49:25 GMT from Canada)</b><br>
+           I am not against the idea of encrypting and I think businesses should definitely do it but for myself, I have a couple dozen computers at home and nothing on any of them is of any concern that I would be worried about it being lost or stolen, anything important is kept on removable media on multiple backups, and any serious internet usage(banking,payments,etc.)I do through secure anonymous browsing with nothing saved beyond that session so I just never seen the point in personal encrypting at home. So honestly in 24 years of linux usage I have never even once played with encryption, maybe I should try it out sometime just to have the experience with it if it ever comes up but I seriously have no opinion on the tools for it. <br>
+          <hr><a id="comment-30"></a> <b>30</b> • <b>disk encryption (by Vukota on 2024-08-21 13:15:32 GMT from Serbia)</b><br><a href="#comment-4">@4</a>: "And do you encrypt the backup too?"
+          <p>Of course I do. That one is even more likely to get lost or stolen (or digged up from trash). For easy, full/partial and fast access to the backups and "refresh" I make raw file on external medium as LUKS encrypted disk with compression. I can even access that from Windows (and WSL) what other options doesn't provide.</p><br>
+          <hr><a id="comment-31"></a> <b>31</b> • <b>@11 Jesse, that does make me suspect drive failure or a bad drive connection (by <a href="mailto:rjarrrpcgp@yahoo.com">RJA</a> on 2024-08-21 13:20:48 GMT from United States)</b><br>
+           That's likely a bad drive, indeed. Or the drive connection is bad, causing the OS to be in PIO mode! PIO mode=They will be lucky to get 5 MB/s-7 MB/s! <br>
+          <hr><a id="comment-32"></a> <b>32</b> • <b>Package Cache + Be Worried Already (by Random Experienced Void User on 2024-08-21 19:40:12 GMT from United States)</b><br><a href="#comment-28">@28</a> <a href="#comment-29">@29</a> "...files downloaded from distro servers...are publicly available...so to waste time encrypting and decrypting them is...a mistake [not] security."
+          <p>Fair point. Now carry that thought to its logical conclusion: package cache belongs in tmpfs regardless of encryption. Putting it on disk at all is bad engineering. You want performance? Then why write packages to disk at all? Keep them in RAM, where they were first downloaded anyway, use them from RAM, and delete them from RAM. They are deadweight after installation. Save disk write time and space! RAM is 100x faster and erases itself at shutdown. Most distros have an env var to set cache location. It should be tmpfs by default. All distros would boost performance and free disk space with this change.</p>
+          <p>The encryption story changes after installation. Once the package is installed and running, configuration files hold sensitive data. Even library files, with the right network hack, evil maid, or government backdoor, could be compromised. Think about replacing glibc with a backdoored version. Nobody steals your laptop. Someone just inserts a USB key and copies a file to it while you took a bathroom break at the airport. The attack comes over the Internet weeks later. Or the enemy might be your kid's school chum doing it in your own house. Your lack of encryption enabled this attack.</p>
+          <p>Official packages are threats too! Recently the humble xz compression library was caught. Heartbleed lived in the SSL lib. Online banking activity was wide open. Anyone with 5ki11z could have written JavaScript to read your disk through an "secure" website. Lately the entire US Social Security database was lifted. Ransomware is everywhere. Threats exist whether you imagine yourself living with safe people, or on safe property, or not. Assuming that you know in advance what form and fashion future attacks will take is hubris.</p>
+          <p>Businesses have this hubris in spades and are dumb as rocks. Few have security oversight officers. People don't want to bother. They want an easy-peasy, unencrypted, "paperless" work life. I once contracted with a European concern. It asked me to scan and transmit official IDs and bank statements as image attachments to e-mail. I told them that request was extremely stupid and no, I would not do it. That set of files is everything a thief needs to rob me blind. I would mail paper copies. Businesses want to go "paperless" and think it's very clever and efficient and hip. Sensitive document scans, whether sitting on disk or transmitted, need encryption.</p>
+          <p>Those afraid of OS disk encryption might want to use Tomb for sensitive files or current work. The latest Tomb is 2.11, Void is at 2.10, Debian stable at 2.9, Debian sid at 2.11.</p><br><a href="https://dyne.org/tomb/">https://dyne.org/tomb/</a> <br>
+          <hr><a id="comment-33"></a> <b>33</b> • <b>Packages (by Jesse on 2024-08-21 20:19:21 GMT from Canada)</b><br><a href="#comment-32">@32</a>: "Now carry that thought to its logical conclusion: package cache belongs in tmpfs regardless of encryption."
+          <p>This isn't a good idea as it means you can't access/use the packages later if you want them. For example, to re-install or downgrade a package. You'd need to fetch them over again, which is going to be a problem if an update broke your network connection.</p>
+          <p>"You want performance? Then why write packages to disk at all? Keep them in RAM, where they were first downloaded anyway, use them from RAM, and delete them from RAM."</p>
+          <p>This already happens automatically. Files downloaded and saved to the disk are cached in memory. It doesn't speed up anything to put the files in tmpfs because they're already cached. Writing to the disk just saves the packages for later use/querying.</p>
+          <p>"All distros would boost performance and free disk space with this change."</p>
+          <p>They'd save a few megabytes of disk space, which no one is going to notice. But there wouldn't be any performance boost due to the caching in RAM.</p><br>
+          <hr><a id="comment-34"></a> <b>34</b> • <b>Liya 2.0 (by <a href="mailto:crowzlinux@gmail.com">zephyr</a> on 2024-08-21 21:32:29 GMT from United States)</b><br>
+           Installed Liya, found it to be attractive and easy to use distro. Found none of the issues Jeff Siegel mentions. Install was great, update and added extra apps with pamac. No issues what so ever and now day 3 as a daily driver. I like it. <br>
+          <hr><a id="comment-35"></a> <b>35</b> • <b>Disk encryption for laptops requiered (by <a href="mailto:s.lumineau@gmx.com">Sebastien</a> on 2024-08-21 22:07:15 GMT from France)</b><br><a href="#comment-9">@9</a>: here all laptops of the family have disk encryption activated. Because one can always be stolen, whether you bring it outside the house or not. Loosing your favorite device would be already a bad experience you would not want your sensitive data to leek as well, this would be even worst. <br>
+          <hr><a id="comment-36"></a> <b>36</b> • <b>Encryption (by Josh on 2024-08-21 23:51:20 GMT from Spain)</b><br>
+           Encryption is the bare minimum, all phones use it in user data, an computer without encryption is basically open for anybody who plug something. The idea that anyone should just disclose everything is bonkers made by social media. <br>
+          <hr><a id="comment-37"></a> <b>37</b> • <b>Package Fallback Trope (by Random Experienced Void User on 2024-08-22 00:17:15 GMT from United States)</b><br><a href="#comment-33">@33</a> Hi Jessie, I've run this way for years on multiple distros. I never need to fallback to some old version. It's a trope in my opinion as a software engineer. I don't know why so many devs are stuck on the idea. Maybe your personal use case as a regular distro tester is unique.
+          <p>Caching in tmpfs does not happen automatically. If you mean disk cache, yes hard drives have that, and SSDs are another ball of wax. Eventually there is a physical write to physical disk media (and SSD writes are notoriously slow compared to HDD platters). If you mean RAM cache related to the file system, it's exactly the same story. Eventually a disk write (flush) happens. Only if you tell the distro to *store* packages in tmpfs will you avoid disk writes to actual media.</p>
+          <p>And unattended cache can easily eat gigabytes. The typical n00b will never clean it. I have in the past found myself shocked at the wasted space on my own systems.</p>
+          <p>Even as a software engineer who distrohops and runs Ventoy I have never, repeat never, not once, *ever* needed to fall back to an old version of *anything*. If that need occurs, the upstream distro itself reverts users to the old version via the package manager. It has happened e.g. in Void with the recent xz fiasco.</p>
+          <p>Ultimately one can carry the off Internet logic to its own conclusion too. If lack of Internet is anticipated, one should maintain a full rsync copy of the entire distro repo. You know, all 2 terabytes. After all, you never know what app you might want to install when your Internet is off. These hypotheticals get silly. In practice nobody needs a package cache on disk. It's bad engineering these days. When RAM was small things were different, and that was also when we still needed swap.</p><br>
+          <hr><a id="comment-38"></a> <b>38</b> • <b>File encryption (by Rothingham Coyle on 2024-08-22 05:38:12 GMT from United States)</b><br>
+           I write my own encryption software, my own algorithms, and use it extensively to encrypt<br>
+           any and all of my sensitive files. That way I know for certain that I'm not using tools that contain trap doors, have been cracked or otherwise compromised. I won't divulge my methodology but I do encourage others to use home grown encryption to secure their really sensitive data. <br>
+          <hr><a id="comment-39"></a> <b>39</b> • <b>re: File encryption (by picamanic on 2024-08-22 09:04:32 GMT from United Kingdom)</b><br><a href="#comment-38">@38</a>: Just out of interest, does your encryption software depend on being itself secret, or could you publish it? <br>
+          <hr><a id="comment-40"></a> <b>40</b> • <b>Filw encryption (by Rothingham Coyle on 2024-08-22 11:24:22 GMT from United States)</b><br>
+           It depends heavily on being itself secret. I keep the source code locked in my safety deposit box and the executable I keep on a usb memory chip so that it only gets exposed to my operating system whenever I have to use it. <br>
+          <hr><a id="comment-41"></a> <b>41</b> • <b>@37 (by Jürgen on 2024-08-22 12:04:05 GMT from Czechia)</b><br><a href="#comment-37">@37</a> Sorry, but you're full of fallacies *and* confidence, which makes for false statements and a terrible "community experience".
+          <p>You appeal to your supposed authority, namely to your supposed experience[d user] and software engineer status. Appeal to authority is a common fallacy, yet you consistently do it, which is just all the more proof that your supposed labels mean nothing. It's also funny how you, a supposed software engineer don't know what caching Jesse was referring to, or at least you pretend not to understand it.</p>
+          <p>&gt; I never need to [...] in my opinion as a software engineer. I don't know why [...] Maybe your personal use case as a regular distro tester is unique.</p>
+          <p>Your ignorance and faulty thought process shine here. You call out Jesse for mentioning his own use-case, while you keep referring to your use-case as if it mattered anything *in general*. It doesn't. And if it did, so did Jesse's. (Also, look up the Linux-related software Jess has or is maintaining, compare that to your "experience", and then decide who has more "authority" to make fact-based statements in these topics.)</p>
+          <p>It's also funny you try to justify your *opinion* with your recurring label ("software engineer"). No offense, but what kind of engineer does that? =)The "I don't know why" and the "maybe" also speak for themselves, you seem to have only ideas, but little relevant knowledge in the field.</p>
+          <p>&gt; and SSD writes are notoriously slow compared to HDD platters</p>
+          <p>I must have misunderstood you, but it seems you think SSDs are slower than traditional HDDs. Is that what you meant?</p>
+          <p>&gt; And unattended cache can easily eat gigabytes.</p>
+          <p>For which there is at least an order of magnitude more space on the hard drive than in memory. Not everyone has your fancy "software engineer" machine with zettabytes of memory, especially not people with "older hardware". Also, the RAM being much smaller than the hard-drive means the RAM will fill up much faster (with your idea of caching everything there), which just defeats the (/your) whole purpose.</p>
+          <p>&gt; Even as a software engineer [..] I have never, repeat never, not once, *ever* needed to</p>
+          <p>Again, appeal to authority, and appeal to your own needs as if it were the needs of others or as if they proved any technical point. (They aren't and they don't.)</p>
+          <p>&gt; Ultimately one can carry the off Internet logic</p>
+          <p>Slippery slope "argument"; apparently you still lack any real arguments.</p>
+          <p>&gt; one should maintain a full rsync copy of the entire distro repo. You know, all 2 terabytes.</p>
+          <p>Not even close. You would need a basic set of packages, including drivers for our hardware. Most of the popular disrtibutions provide them on their live discs, and if not, you could just download them and write them to a USB key. Again, you make faulty and ridiculous statements to try and prove your point, but again, it shows your ignorance and faulty thinking.</p>
+          <p>&gt; These hypotheticals get silly.</p>
+          <p>Your hypotheticals get silly. Also, labelling legit concerns as "hypotheticals" is not an argument.</p>
+          <p>&gt; In practice nobody needs a package cache on disk.</p>
+          <p>"In practice" means "some (maybe many) people do, but I want you to forget that, because that would reveal I'm wrong". Also, you forgot to prove your statement.</p>
+          <p>&gt; It's bad engineering these days.</p>
+          <p>Except when it isn't. Hard disk space is way cheaper (and therefore way more plentiful) than RAM, therefore it makes sense to use it for caching the latest version of any installed packages, because the cost is so little. With companies with their own package caches/proxies, it is almost mandatory. (Red Hat Satellite comes to mind.) By the way, while it's anecdotal, my Mint install seems to only store a single deb package in the cache right now, so I wonder how many desktop distros cahce packages these days. If not many, then your assumption about disks getting full is even less likely; if many of them, your argument about no one needing it is false. :)</p>
+          <p>Also "bad engineering" is silly coming from an "engineer" with incredulously faulty thinking, wrong assumptions, false statements, statements without proof, appealing to authority, using anecdotal "evidence" and an insufferable amount of ego. Please, less hubris, more facts, more logic. (If you won't stop making yourself look bad, please at least stop engineers look bad.)</p><br>
+          <hr><a id="comment-42"></a> <b>42</b> • <b>Cache (by Jesse on 2024-08-22 12:36:55 GMT from Canada)</b><br>
+           @37: " I never need to fallback to some old version. It's a trope in my opinion as a software engineer. "
+          <p>So because you don't use a feature in your job you feel it's not a feature anyone would use in any job? That seems a bit narrow in focus. I can tell you, as a system administrator, it's often handy to be able to rollback packages. Perhaps broadening your view to what other people want/need would shine light on what features make sense in a distribution.</p>
+          <p>"Maybe your personal use case as a regular distro tester is unique."</p>
+          <p>Do you think my entire career in IT for the past 25 years has just been reviewing a new distro every week?</p>
+          <p>"Caching in tmpfs does not happen automatically. If you mean disk cache, yes hard drives have that, and SSDs are another ball of wax."</p>
+          <p>I'm not talking about using tmpfs or disk cache. I'm talking about how all files the operating system accesses (downloads or reads) are kept in memory. All the files you open (or download) are kept in RAM. tmpfs for files you plan to just download and access once is redundant.</p>
+          <p>"If you mean RAM cache related to the file system, it's exactly the same story. Eventually a disk write (flush) happens. Only if you tell the distro to *store* packages in tmpfs will you avoid disk writes to actual media."</p>
+          <p>Yes, eventually the package gets written to the disk, but that's not a problem. The disk won't be the bottleneck when downloading new software and updates, the network connection will be. Also, you're going to end up writing to the disk eventually when you install the package (probably to /usr or /opt). One way or another, data is going to end up on the disk. tmpfs just adds an extra step you don't need to set up due to automatic RAM caching.</p>
+          <p>"And unattended cache can easily eat gigabytes."</p>
+          <p>Modern drives are in the range of 500GB to 8TB. You can easily update a distribution for years without ever noticing the few GB of space that might get consumed.</p>
+          <p>"Even as a software engineer who distrohops and runs Ventoy I have never, repeat never, not once, *ever* needed to fall back to an old version of *anything*."</p>
+          <p>Again, you're assuming your needs and experiences match everyone else's. But we have different jobs. Your needs are not my needs and vice versa.</p>
+          <p>"Ultimately one can carry the off Internet logic to its own conclusion too. If lack of Internet is anticipated, one should maintain a full rsync copy of the entire distro repo. You know, all 2 terabytes. After all, you never know what app you might want to install when your Internet is off."</p>
+          <p>Now you're just being silly. I pointed out it's possible to have one key package break during an update (like Network Manager) and it's handy in those cases to be able to revert from the cache immediately, instead of re-fetching the package on another machine or recovering using live media. Can you think of a better/faster way to recover than having the last version in the cache?</p>
+          <p>"These hypotheticals get silly."</p>
+          <p>Your extreme version of caching the entire repo, instead of just packages the system is actually using is certainly silly. Why would anyone cache packages that aren't installed?</p>
+          <p>"In practice nobody needs a package cache on disk"</p>
+          <p>This is factually wrong. Lots of people do. It's just _you_ don't and you don't acknowledge the use cases of others.</p><br>
+          <hr><a id="comment-43"></a> <b>43</b> • <b>encryption? Yes, pleas... (by tom joad on 2024-08-22 20:59:52 GMT from United States)</b><br>
+           I am shocked.
+          <p>Only 14%, as of this writing, use full disk encryption.</p>
+          <p>I spend a lot of time on the road and in public facilities. I am on the go all the time.</p>
+          <p>Several year ago i started encryping. First my laptop. Later, I encrypted my hope tower. And since then I have moved on to encryping USB drives. And I encrypt my frequent back up also. Lastly I have added encrypted cloud storage.</p>
+          <p>Sorry to disappoint you; I am really just an average Joe. But my stuff is MY stuff and I fully intend to keep it my stuff.</p>
+          <p>I find it equally shocking that 75% of the respondents don't encrypt anything. I wish them the best and maybe where they are there just isn't a need for encryption. I wish I lived there. But I live in 'realville.' In realville we have to have our dukes up. My world is full of a lot of bad actors who daily seem to be ever more intent of getting at our stuff.</p>
+          <p>And I am ever more intent on keeping those bad actors at bay.</p>
+          <p>Lastly my question to the 75% who encrypt nothing why bother with passwords, anti viruses, etc.? Why lock your doors at night or any time for that matter? Just leave the keys in the ignition too. Let folks rummage through your purse too and leave your wallet on the bar while you to go to the bathroom.</p>
+          <p>Think!!!!!</p><br>
+          <hr><a id="comment-44"></a> <b>44</b> • <b>nocrypt. (by Jack Byus on 2024-08-22 22:45:11 GMT from United States)</b><br>
+           As always, the minority speak the loudest. For the rest of us 75%, we just smile and move on.<br>
+           I have never nor will I ever encrypt. Simple as that. What are they going to find; an operating system, some useless text files. My important stuff is kept off-line. <br>
+          <hr>
+          <p><b><a id="lastcomment"></a> <a href="http://distrowatch.com/weekly.php?issue=20240819&amp;mode=67">Number of Comments: 44</a></b></p></td>
+        </tr>
+       </tbody>
+      </table></td>
+    </tr>
+   </tbody>
+  </table>
+  <table>
+   <tbody>
+    <tr>
+     <th>TUXEDO</th>
+    </tr>
+    <tr>
+     <td><a href="https://distrowatch.com/k/tuxedo.php"><img src="https://distrowatch.com/images/k/txd.png" alt="TUXEDO Computers"></a>
+      <p><b>TUXEDO Computers - Linux Hardware in a tailor made suite</b></p><br>
+       Choose from a wide range of laptops and PCs in various sizes and shapes at <a href="https://distrowatch.com/k/tuxedo.php">TUXEDOComputers.com</a>. Every machine comes pre-installed and ready-to-run with <a href="https://distrowatch.com/k/tuxedo.php">Linux</a>. Full <b>24 months of warranty</b> and lifetime support included!
+      <p>Learn more about our <a href="https://distrowatch.com/k/why-tuxedo.php">full service package</a> and all benefits from buying at TUXEDO.</p></td>
+    </tr>
+   </tbody>
+  </table>
+  <br>
+  <table>
+   <tbody>
+    <tr>
+     <th><a href="https://distrowatch.com/news/dww.xml"><img src="https://distrowatch.com/images/other/xml.png" alt="Weekly RSS feed"></a> Archives</th>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240819">Issue 1084 (2024-08-19): Liya 2.0, dual boot with encryption, Haiku introduces performance improvements, Gentoo dropping IA-64, Redcore merges major upgrade</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240812">Issue 1083 (2024-08-12): TrueNAS 24.04.2 "SCALE", Linux distros for smartphones, Redox OS introduces web server, PipeWire exposes battery drain on Linux, Canonical updates kernel version policy</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240805">Issue 1082 (2024-08-05): Linux Mint 22, taking snapshots of UFS on FreeBSD, openSUSE updates Tumbleweed and Aeon, Debian creates Tiny QA Tasks, Manjaro testing immutable images</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240729">Issue 1081 (2024-07-29): SysLinuxOS 12.4, OpenBSD gain hardware acceleration, Slackware changes kernel naming, Mint publishes upgrade instructions</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240722">Issue 1080 (2024-07-22): Running GNU/Linux on Android with Andronix, protecting network services, Solus dropping AppArmor and Snap, openSUSE Aeon Desktop gaining full disk encryption, SUSE asks openSUSE to change its branding</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240715">Issue 1079 (2024-07-15): Ubuntu Core 24, hiding files on Linux, Fedora dropping X11 packages on Workstation, Red Hat phasing out GRUB, new OpenSSH vulnerability, FreeBSD speeds up release cycle, UBports testing new first-run wizard</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240708">Issue 1078 (2024-07-08): Changing init software, server machines running desktop environments, OpenSSH vulnerability patched, Peppermint launches new edition, HardenedBSD updates ports</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240701">Issue 1077 (2024-07-01): The Unity and Lomiri interfaces, different distros for different tasks, Ubuntu plans to run Wayland on NVIDIA cards, openSUSE updates Leap Micro, Debian releases refreshed media, UBports gaining contact synchronisation, FreeDOS celebrates its 30th anniversary</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240624">Issue 1076 (2024-06-24): openSUSE 15.6, what makes Linux unique, SUSE Liberty Linux to support CentOS Linux 7, SLE receives 19 years of support, openSUSE testing Leap Micro edition</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240617">Issue 1075 (2024-06-17): Redox OS, X11 and Wayland on the BSDs, AlmaLinux releases Pi build, Canonical announces RISC-V laptop with Ubuntu, key changes in systemd</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240610">Issue 1074 (2024-06-10): Endless OS 6.0.0, distros with init diversity, Mint to filter unverified Flatpaks, Debian adds systemd-boot options, Redox adopts COSMIC desktop, OpenSSH gains new security features</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240603">Issue 1073 (2024-06-03): LXQt 2.0.0, an overview of Linux desktop environments, Canonical partners with Milk-V, openSUSE introduces new features in Aeon Desktop, Fedora mirrors see rise in traffic, Wayland adds OpenBSD support</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240527">Issue 1072 (2024-05-27): Manjaro 24.0, comparing init software, OpenBSD ports Plasma 6, Arch community debates mirror requirements, ThinOS to upgrade its FreeBSD core</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240520">Issue 1071 (2024-05-20): Archcraft 2024.04.06, common command line mistakes, ReactOS imports WINE improvements, Haiku makes adjusting themes easier, NetBSD takes a stand against code generated by chatbots</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240513">Issue 1070 (2024-05-13): Damn Small Linux 2024, hiding kernel messages during boot, Red Hat offers AI edition, new web browser for UBports, Fedora Asahi Remix 40 released, Qubes extends support for version 4.1</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240506">Issue 1069 (2024-05-06): Ubuntu 24.04, installing packages in alternative locations, systemd creates sudo alternative, Mint encourages XApps collaboration, FreeBSD publishes quarterly update</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240429">Issue 1068 (2024-04-29): Fedora 40, transforming one distro into another, Debian elects new Project Leader, Red Hat extends support cycle, Emmabuntus adds accessibility features, Canonical's new security features</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240422">Issue 1067 (2024-04-22): LocalSend for transferring files, detecting supported CPU architecure levels, new visual design for APT, Fedora and openSUSE working on reproducible builds, LXQt released, AlmaLinux re-adds hardware support</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240415">Issue 1066 (2024-04-15): Fun projects to do with the Raspberry Pi and PinePhone, installing new software on fixed-release distributions, improving GNOME Terminal performance, Mint testing new repository mirrors, Gentoo becomes a Software In the Public Interest project</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240408">Issue 1065 (2024-04-08): Dr.Parted Live 24.03, answering questions about the xz exploit, Linux Mint to ship HWE kernel, AlmaLinux patches flaw ahead of upstream Red Hat, Calculate changes release model</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240401">Issue 1064 (2024-04-01): NixOS 23.11, the status of Hurd, liblzma compromised upstream, FreeBSD Foundation focuses on improving wireless networking, Ubuntu Pro offers 12 years of support</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240325">Issue 1063 (2024-03-25): Redcore Linux 2401, how slowly can a rolling release update, Debian starts new Project Leader election, Red Hat creating new NVIDIA driver, Snap store hit with more malware</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240318">Issue 1062 (2024-03-18): KDE neon 20240304, changing file permissions, Canonical turns 20, Pop!_OS creates new software centre, openSUSE packages Plasma 6</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240311">Issue 1061 (2024-03-11): Using a PinePhone as a workstation, restarting background services on a schedule, NixBSD ports Nix to FreeBSD, Fedora packaging COSMIC, postmarketOS to adopt systemd, Linux Mint replacing HexChat</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240304">Issue 1060 (2024-03-04): AV Linux MX-23.1, bootstrapping a network connection, key OpenBSD features, Qubes certifies new hardware, LXQt and Plasma migrate to Qt 6</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240226">Issue 1059 (2024-02-26): Warp Terminal, navigating manual pages, malware found in the Snap store, Red Hat considering CPU requirement update, UBports organizes ongoing work</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240219">Issue 1058 (2024-02-19): Drauger OS 7.6, how much disk space to allocate, System76 prepares to launch COSMIC desktop, UBports changes its version scheme, TrueNAS to offer faster deduplication</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240212">Issue 1057 (2024-02-12): Adelie Linux 1.0 Beta, rolling release vs fixed for a smoother experience, Debian working on 2038 bug, elementary OS to split applications from base system updates, Fedora announces Atomic Desktops</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240205">Issue 1056 (2024-02-05): wattOS R13, the various write speeds of ISO writing tools, DSL returns, Mint faces Wayland challenges, HardenedBSD blocks foreign USB devices, Gentoo publishes new repository, Linux distros patch glibc flaw</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240129">Issue 1055 (2024-01-29): CNIX OS 231204, distributions patching packages the most, Gentoo team presents ongoing work, UBports introduces connectivity and battery improvements, interview with Haiku developer</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240122">Issue 1054 (2024-01-22): Solus 4.5, comparing dd and cp when writing ISO files, openSUSE plans new major Leap version, XeroLinux shutting down, HardenedBSD changes its build schedule</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240115">Issue 1053 (2024-01-15): Linux AI voice assistants, some distributions running hotter than others, UBports talks about coming changes, Qubes certifies StarBook laptops, Asahi Linux improves energy savings</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240108">Issue 1052 (2024-01-08): OpenMandriva Lx 5.0, keeping shell commands running when theterminal closes, Mint upgrades Edge kernel, Vanilla OS plans big changes, Canonical working to make Snap more cross-platform</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20240101">Issue 1051 (2024-01-01): Favourite distros of 2023, reloading shell settings, Asahi Linux releases Fedora remix, Gentoo offers binary packages, openSUSE provides full disk encryption</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20231218">Issue 1050 (2023-12-18): rlxos 2023.11, renaming files and opening terminal windows in specific directories, TrueNAS publishes ZFS fixes, Debian publishes delayed install media, Haiku polishes desktop experience</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20231211">Issue 1049 (2023-12-11): Lernstick 12, alternatives to WINE, openSUSE updates its branding, Mint unveils new features, Lubuntu team plans for 24.04</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20231204">Issue 1048 (2023-12-04): openSUSE MicroOS, the transition from X11 to Wayland, Red Hat phasing out X11 packages, UBports making mobile development easier</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20231127">Issue 1047 (2023-11-27): GhostBSD 23.10.1, Why Linux uses swap when memory is free, Ubuntu Budgie may benefit from Wayland work in Xfce, early issues with FreeBSD 14.0</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20231120">Issue 1046 (2023-11-20): Slackel 7.7 "Openbox", restricting CPU usage, Haiku improves font handling and software centre performance, Canonical launches MicroCloud</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20231113">Issue 1045 (2023-11-13): Fedora 39, how to trust software packages, ReactOS booting with UEFI, elementary OS plans to default to Wayland, Mir gaining ability to split work across video cards</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20231106">Issue 1044 (2023-11-06): Porteus 5.01, disabling IPv6, applications unique to a Linux distro, Linux merges bcachefs, OpenELA makes source packages available</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20231030">Issue 1043 (2023-10-30): Murena Two with privacy switches, where old files go when packages are updated, UBports on Volla phones, Mint testing Cinnamon on Wayland, Peppermint releases ARM build</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20231023">Issue 1042 (2023-10-23): Ubuntu Cinnamon compared with Linux Mint, extending battery life on Linux, Debian resumes /usr merge, Canonical publishes fixed install media</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20231016">Issue 1041 (2023-10-16): FydeOS 17.0, Dr.Parted 23.09, changing UIDs, Fedora partners with Slimbook, GNOME phasing out X11 sessions, Ubuntu revokes 23.10 install media</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20231009">Issue 1040 (2023-10-09): CROWZ 5.0, changing the location of default directories, Linux Mint updates its Edge edition, Murena crowdfunding new privacy phone, Debian publishes new install media</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20231002">Issue 1039 (2023-10-02): Zenwalk Current, finding the duration of media files, Peppermint OS tries out new edition, COSMIC gains new features, Canonical reports on security incident in Snap store</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20230925">Issue 1038 (2023-09-25): Mageia 9, trouble-shooting launchers, running desktop Linux in the cloud, New documentation for Nix, Linux phasing out ReiserFS, GNU celebrates 40 years</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20230918">Issue 1037 (2023-09-18): Bodhi Linux 7.0.0, finding specific distros and unified package managemnt, Zevenet replaced by two new forks, openSUSE introduces Slowroll branch, Fedora considering dropping Plasma X11 session</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20230911">Issue 1036 (2023-09-11): SDesk 2023.08.12, hiding command line passwords, openSUSE shares contributor survery results, Ubuntu plans seamless disk encryption, GNOME 45 to break extension compatibility</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20230904">Issue 1035 (2023-09-04): Debian GNU/Hurd 2023, PCLinuxOS 2023.07, do home users need a firewall, AlmaLinux introduces new repositories, Rocky Linux commits to RHEL compatibility, NetBSD machine runs unattended for nine years, Armbian runs wallpaper contest</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20230828">Issue 1034 (2023-08-28): Void 20230628, types of memory usage, FreeBSD receives port of Linux NVIDIA driver, Fedora plans improved theme handling for Qt applications, Canonical's plans for Ubuntu</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20230821">Issue 1033 (2023-08-21): MiniOS 20230606, system user accounts, how Red Hat clones are moving forward, Haiku improves WINE performance, Debian turns 30</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20230814">Issue 1032 (2023-08-14): MX Linux 23, positioning new windows on the desktop, Linux Containers adopts LXD fork, Oracle, SUSE, and CIQ form OpenELA</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php?issue=20230807">Issue 1031 (2023-08-07): Peppermint OS 2023-07-01, preventing a file from being changed, Asahi Linux partners with Fedora, Linux Mint plans new releases</a></td>
+    </tr>
+    <tr>
+     <td>• <a href="https://distrowatch.com/weekly.php"><b>Full list of all issues</b></a></td>
+    </tr>
+   </tbody>
+  </table>
+  <br>
+  <br>
+  <table>
+   <tbody>
+    <tr>
+     <th>Star Labs</th>
+    </tr>
+    <tr>
+     <td><br><a href="https://starlabs.systems/"><img src="https://distrowatch.com/images/k/starlabs.png" alt="Star Labs Systems | Laptops designed for Linux"></a>
+      <p><b>Star Labs - Laptops built for Linux.</b></p><br>
+       View our range including the highly anticipated <a href="https://starlabs.systems/pages/starfighter">StarFighter</a>. Available with coreboot open-source firmware and a choice of Ubuntu, elementary, Manjaro and more. Visit <a href="https://starlabs.systems">Star Labs</a> for information, to buy and get support.</td>
+    </tr>
+   </tbody>
+  </table>
+  <br>
+  <br>
+  <table>
+   <tbody>
+    <tr>
+     <th>Random Distribution</th>
+    </tr>
+    <tr>
+     <td><a href="https://distrowatch.com/exe"><img src="https://distrowatch.com/images/yvzhuwbpy/exe.png" title="Exe GNU/Linux" alt="Exe GNU/Linux"></a>
+      <p></p>
+      <p>Exe GNU/Linux</p>
+      <p></p><br>
+       Exe GNU/Linux is a Debian-based desktop Linux distribution. Its primary goal is to provide a Debian variant that ships with a slightly re-themed Trinity desktop environment (a fork of KDE 3), as well as several useful scripts and utilities. It offers LXDE as an alternative desktop. It uses the official Debian repositories, as well as the Trinity mirror for updating the desktop environment. In late 2017, the distribution re-based itself on Devuan, using the official Devuan repositories.
+      <p><a href="https://distrowatch.com/images/slinks/exe.png"><img src="https://distrowatch.com/images/slinks/exe-small.png" alt="Exe GNU/Linux" title="Exe GNU/Linux" width="150" height="120"></a></p>
+      <p><b>Status: <span>Active</span></b></p></td>
+    </tr>
+   </tbody>
+  </table>
+  <br>
+  <br>
+  <table>
+   <tbody>
+    <tr>
+     <th>TUXEDO</th>
+    </tr>
+    <tr>
+     <td><a href="https://distrowatch.com/k/tuxedo.php"><img src="https://distrowatch.com/images/k/txd.png" alt="TUXEDO Computers"></a>
+      <p><b>TUXEDO Computers - Linux Hardware in a tailor made suite</b></p><br>
+       Choose from a wide range of laptops and PCs in various sizes and shapes at <a href="https://distrowatch.com/k/tuxedo.php">TUXEDOComputers.com</a>. Every machine comes pre-installed and ready-to-run with <a href="https://distrowatch.com/k/tuxedo.php">Linux</a>. Full <b>24 months of warranty</b> and lifetime support included!
+      <p>Learn more about our <a href="https://distrowatch.com/k/why-tuxedo.php">full service package</a> and all benefits from buying at TUXEDO.</p></td>
+    </tr>
+   </tbody>
+  </table>
+  <br>
+  <table>
+   <tbody>
+    <tr>
+     <th>Star Labs</th>
+    </tr>
+    <tr>
+     <td><br><a href="https://starlabs.systems/"><img src="https://distrowatch.com/images/k/starlabs.png" alt="Star Labs Systems | Laptops designed for Linux"></a>
+      <p><b>Star Labs - Laptops built for Linux.</b></p><br>
+       View our range including the highly anticipated <a href="https://starlabs.systems/pages/starfighter">StarFighter</a>. Available with coreboot open-source firmware and a choice of Ubuntu, elementary, Manjaro and more. Visit <a href="https://starlabs.systems">Star Labs</a> for information, to buy and get support.</td>
+    </tr>
+   </tbody>
+  </table>
+  <br>
+ </div>
+ <p></p>
+ <hr>
+ <table>
+  <tbody>
+   <tr>
+    <td>Copyright (C) 2001 - 2024 Atea Ataroa Limited. All rights reserved. All trademarks are the property of their respective owners. <a href="https://distrowatch.com/dwres.php?resource=privacy">Privacy policy</a>. <a href="#" onclick="if(window.__lxG__consent__ !== undefined) {window.__lxG__consent__.showConsent()} else {alert('This function only for users from European Economic Area (EEA)')}; return false">Change privacy settings</a>.<br>
+      DistroWatch.com is hosted at Copenhagen.
+     <p>Contact, corrections and suggestions: <a href="mailto:distro@distrowatch.com">Jesse Smith</a></p>
+     <p>Tips: <img src="https://distrowatch.com/images/other/bitcoin16.png" title="Bitcoin"> bc1qxes3k2wq3uqzr074tkwwjmwfe63z70gwzfu4lx</p><br><img src="https://distrowatch.com/images/other/lightning16.png" title="Bitcoin Lightning"> lnurl1dp68gurn8ghj7ampd3kx2ar0veekzar0wd5xjtnrdakj7tnhv4kxctttdehhwm30d3h82unvwqhhxarpw3jkc7tzw4ex6cfexyfua2nr <br><img src="https://distrowatch.com/images/other/monero16.png" title="Monero"> 86fA3qPTeQtNb2k1vLwEQaAp3XxkvvvXt69gSG5LGunXXikK9koPWZaRQgfFPBPWhMgXjPjccy9LA9xRFchPWQAnPvxh5Le <br><img src="https://distrowatch.com/images/other/ethereum16.png" title="Ethereum"> 0x969CD4E778C7b6549A2B00e34114e0168c86A542 <br><a href="https://www.paypal.me/distrow">PayPal.me/distrow</a> • <a href="https://www.patreon.com/distrowatch">Patreon.com/distrowatch</a></td>
+   </tr>
+  </tbody>
+ </table>
+ <p></p>
+</div>

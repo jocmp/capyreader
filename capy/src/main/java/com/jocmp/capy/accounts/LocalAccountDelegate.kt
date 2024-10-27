@@ -164,9 +164,9 @@ class LocalAccountDelegate(
 
                 val withinCutoff = cutoffDate == null || publishedAt > cutoffDate.toEpochSecond()
 
-                if (parsedItem.url != null && withinCutoff) {
+                if (parsedItem.id != null && withinCutoff) {
                     database.articlesQueries.create(
-                        id = item.link!!,
+                        id = parsedItem.id,
                         feed_id = feed.id,
                         title = parsedItem.title,
                         author = item.author,
@@ -179,7 +179,7 @@ class LocalAccountDelegate(
                     )
 
                     database.articlesQueries.updateStatus(
-                        article_id = item.link!!,
+                        article_id = parsedItem.id,
                         updated_at = updatedAtSeconds,
                         read = false
                     )

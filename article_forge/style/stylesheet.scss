@@ -1,0 +1,147 @@
+$font-families: (
+  "default": sans-serif,
+  "vollkorn": "Vollkorn",
+  "atkinson_hyperlegible": "Atkinson Hyperlegible",
+  "poppins": "Poppins",
+);
+$text-sizes: small, medium, large, x-large, xx-large;
+
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/res/font/atkinson_hyperlegible.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/res/font/poppins.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Vollkorn";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/res/font/vollkorn.ttf") format("truetype");
+}
+
+:root {
+  --corner-radius: 0.1875rem;
+}
+
+::selection {
+  background-color: var(--color-primary-container);
+}
+
+/* #region Base */
+body {
+  font-family: sans-serif;
+  word-wrap: break-word;
+  margin: var(--article-top-margin) 0 0 0;
+  padding: 2rem 1rem;
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  -webkit-tap-highlight-color: rgb(from var(--color-primary) r g b / 30%);
+
+  @media only screen and (min-width: 769px) {
+    padding: 2rem 4rem;
+  }
+}
+
+a {
+  &:link,
+  &:visited {
+    color: var(--color-primary);
+  }
+}
+
+code,
+pre {
+  background: var(--color-surface-container);
+  border-radius: var(--corner-radius);
+}
+
+code {
+  padding: 0.2em;
+}
+
+pre {
+  overflow-x: scroll;
+  padding: 1em;
+}
+
+img,
+figure,
+video,
+div,
+object {
+  max-width: 100%;
+  height: auto !important;
+  margin: 0 auto;
+}
+
+iframe {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+}
+
+video {
+  background-color: black;
+
+  &::-webkit-media-controls-fullscreen-button {
+    display: none;
+  }
+}
+
+td,
+th {
+  border: 1px solid #999;
+  padding: 0.5rem;
+  text-align: left;
+  word-wrap: break-word;
+}
+
+.article__header {
+  display: block;
+  margin-bottom: 1rem;
+
+  &:link,
+  &:visited {
+    text-decoration: none;
+  }
+}
+
+.article__title {
+  h1 {
+    margin: 0;
+  }
+}
+
+#article-body-content {
+  line-height: 1.6em;
+  margin-bottom: 20vh;
+
+  img {
+    background-color: var(--color-surface-container-highest);
+  }
+}
+
+@each $family, $value in $font-families {
+  .article__body--font-#{$family} {
+    font-family: $value;
+  }
+}
+
+@each $size in $text-sizes {
+  .article__body--text-size-#{$size} {
+    font-size: $size;
+  }
+}
