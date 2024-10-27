@@ -43,6 +43,7 @@ body {
   padding: 2rem 1rem;
   background-color: var(--color-surface);
   color: var(--color-on-surface);
+  -webkit-tap-highlight-color: rgb(from var(--color-primary) r g b / 30%);
 
   @media only screen and (min-width: 769px) {
     padding: 2rem 4rem;
@@ -50,8 +51,6 @@ body {
 }
 
 a {
-  -webkit-tap-highlight-color: salmon;
-
   &:link,
   &:visited {
     color: var(--color-primary);

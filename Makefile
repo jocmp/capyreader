@@ -4,6 +4,10 @@ FASTLANE ?= bundle exec fastlane
 
 .PHONY: test release-secrets deploy-production
 
+.PHONY: assets
+assets:
+	cd article_forge && make
+
 .PHONY: deps
 deps: ## Install bumpver
 	pip install bumpver==2023.1129
