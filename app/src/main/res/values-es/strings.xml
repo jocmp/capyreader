@@ -147,7 +147,7 @@
     <string name="settings_auto_delete_option_keep_for_three_month">3 meses</string>
     <string name="settings_section_advanced">Avanzado</string>
     <string name="settings_clear_all_articles_confirm">Confirmar</string>
-    <string name="settings_clear_all_articles_text">¿Estás seguro de que quieres borrar todos los artículos? Esto no se puede deshacer.</string>
+    <string name="settings_clear_all_articles_text">¿Estás seguro de que deseas eliminar todos los artículos leídos, no destacados desde tu dispositivo? Esta acción no se puede deshacer.</string>
     <string name="settings_clear_all_articles_button">Borrar todos los artículos</string>
     <string name="settings_support_button">Soporte</string>
     <string name="settings_article_list_title">Lista de artículos</string>
@@ -190,4 +190,5 @@
     <string name="settings_notifications_select_none">Sin seleccionar</string>
     <string name="article_list_row_swipe_open_externally">Abrir el artículo en el navegador</string>
     <string name="article_view_open_externally">Abrir externamente</string>
+    <string name="settings_confirm_mark_all_read">Confirmar que se ha leído todo</string>
 </resources>
