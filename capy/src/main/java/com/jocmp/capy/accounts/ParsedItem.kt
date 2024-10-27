@@ -6,6 +6,10 @@ import java.net.URI
 import java.net.URL
 
 internal class ParsedItem(private val item: RssItem, private val siteURL: String?) {
+    val url: String? = cleanedURL(item.link)?.toString()
+
+    val id: String? = url ?: item.guid
+
     val contentHTML: String?
         get() {
             val currentContent = item.content.orEmpty().ifBlank {
@@ -27,11 +31,9 @@ internal class ParsedItem(private val item: RssItem, private val siteURL: String
                 Jsoup.parse(it).text()
             }
         }
-    
+
     val title: String
         get() = Jsoup.parse(item.title.orEmpty()).text()
-
-    val url: String? = cleanedURL(item.link)?.toString()
 
     val imageURL: String?
         get() = cleanedURL(item.image)?.toString()
