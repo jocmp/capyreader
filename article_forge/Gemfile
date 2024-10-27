@@ -5,6 +5,9 @@ gem "puma", require: false
 gem "sinatra", require: false
 gem "liquid"
 
+gem "rexml", "~> 3.3.9"
+
+
 group :development, :test do
   gem "sass-embedded"
   gem "rerun"

@@ -55,7 +55,7 @@ GEM
       io-console (~> 0.5)
     rerun (0.14.0)
       listen (~> 3.0)
-    rexml (3.2.6)
+    rexml (3.3.9)
     rubocop (1.62.1)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
@@ -110,6 +110,7 @@ DEPENDENCIES
   rackup
   rb-fsevent (~> 0.11.2)
   rerun
+  rexml (~> 3.3.9)
   sass-embedded
   sinatra
   standard
