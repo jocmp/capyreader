@@ -27,7 +27,7 @@ class ArticleRenderer(
         val fontFamily = fontOption.get()
 
         val substitutions = colors + mapOf(
-            "external_link" to article.url.toString(),
+            "external_link" to article.externalLink(),
             "title" to article.title,
             "byline" to byline,
             "feed_name" to article.feedName,
@@ -69,4 +69,10 @@ class ArticleRenderer(
                 """.trimIndent()
         }
     }
+}
+
+private fun Article.externalLink(): String {
+    val potentialURL = url ?: siteURL
+
+    return potentialURL?.toString() ?: ""
 }

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+        :root {
+          --color-primary: {{color_primary}};
+          --color-surface: {{color_surface}};›
+          --color-on-surface: {{color_on_surface}};
+          --color-on-surface-variant: {{color_on_surface_variant}};
+          --color-surface-variant: {{color_surface_variant}};
+          --color-primary-container: {{color_primary_container}};
+          --color-on-primary-container: {{color_on_primary_container}};
+        }
+    </style>
+    <link href="/stylesheet.css" rel="stylesheet" >
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <div>
+      <div>
+        <h2>Headers</h2>
+        <h1>h1</h1>
+        <h2>h2</h2>
+        <h3>h3</h3>
+        <h4>h4</h4>
+        <h5>h5</h5>
+        <h6>h6</h6>
+      </div>
+      <div>
+        <h2>Links</h2>
+        <div>
+          <a href="https://example.com">Visited Link</a>
+        </div>
+        <div>
+          <a href="{{unvisited_link}}">Unvisited Link</a>
+        </div>
+      </div>
+      <div>
+        <h2>Subscript</h2>
+        <p>
+          Almost every developer's favorite molecule is C<sub>8</sub>H<sub>10</sub>N<sub>4</sub>O<sub>2</sub>, also known as
+          "caffeine."
+        </p>
+      </div>
+      <div>
+        <h2>Superscript</h2>
+        <p>The <em>Pythagorean theorem</em> is often expressed as the following equation:</p>
+        <p>
+          <var>a<sup>2</sup></var> + <var>b<sup>2</sup></var> = <var>c<sup>2</sup></var>
+        </p>
+      </div>
+      <div>
+        <h2>Tables</h2>
+        <table>
+          <caption>
+            Front-end web developer course 2021
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Person</th>
+              <th scope="col">Most interest in</th>
+              <th scope="col">Age</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Chris</th>
+              <td>HTML tables</td>
+              <td>22</td>
+            </tr>
+            <tr>
+              <th scope="row">Dennis</th>
+              <td>Web accessibility</td>
+              <td>45</td>
+            </tr>
+            <tr>
+              <th scope="row">Sarah</th>
+              <td>JavaScript frameworks</td>
+              <td>29</td>
+            </tr>
+            <tr>
+              <th scope="row">Karen</th>
+              <td>Web performance</td>
+              <td>36</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th scope="row" colspan="2">Average age</th>
+              <td>33</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div>
+        <h2>Code</h2>
+        <p>
+          The <code>push()</code> method adds one or more elements to the end of an array and returns the new length of the
+          array.
+        </p>
+      </div>
+      <div>
+        <h2>pre</h2>
+        <p>Using CSS to change the font color is easy.</p>
+        <pre>
+body {
+  color: red;
+}
+</pre>
+      </div>
+      <div>
+        <h2>iFrame</h2>
+        <iframe
+  id="inlineFrameExample"
+  title="Inline Frame Example"
+  width="300"
+  height="200"
+  src="https://www.openstreetmap.org/export/embed.html?bbox=-0.004017949104309083%2C51.47612752641776%2C0.00030577182769775396%2C51.478569861898606&layer=mapnik">
+        </iframe>
+      </div>
+    </div>
+    <div>
+      <blockquote cite="https://www.huxley.net/bnw/four.html">
+  <p>Words can be like X-rays, if you use them properly—they’ll go through anything. You read and you’re pierced.</p>
+  <footer>—Aldous Huxley, <cite>Brave New World</cite></footer>
+</blockquote>
+    </div>
+    <div>
+      <h2>Figure</h2>
+      <figure>
+        <img src="https://interactive-examples.mdn.mozilla.net/media/cc0-images/elephant-660-480.jpg" alt="Elephant at sunset" />
+        <figcaption>An elephant at sunset</figcaption>
+      </figure>
+    </div>
+    <div>
+      <h2>Image</h2>
+      <img
+        class="fit-picture"
+        src="https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg"
+        alt="Grapefruit slice atop a pile of other slices" />
+    </div>
+  </body>
+</html>

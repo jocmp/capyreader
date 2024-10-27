@@ -1,0 +1,13 @@
+require "fileutils"
+
+def main
+  filename = "template"
+
+  file_content = File.read("./views/#{filename}.liquid")
+  file_content = file_content.gsub("{{body}}", "")
+
+  FileUtils.mkdir_p("dist")
+  File.write("dist/#{File.basename("#{filename}.html")}", file_content)
+end
+
+main
