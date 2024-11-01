@@ -112,7 +112,7 @@ DEPENDENCIES
   rerun
   rexml (~> 3.3.9)
   sass-embedded
-  sinatra
+  sinatra (~> 4.0.0)
   standard
   terminal-notifier
 
