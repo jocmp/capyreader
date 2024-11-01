@@ -5,7 +5,7 @@
     <string name="add_feed_name_title">名称</string>
     <string name="add_feed_new_folder_title">新标签</string>
     <string name="add_feed_submit">添加</string>
-    <string name="add_feed_url_title">源或网站 URL</string>
+    <string name="add_feed_url_title">源或网站URL</string>
     <string name="add_feed_success">已添加源</string>
     <string name="feed_form_cancel">取消</string>
     <string name="filter_starred">已加星标</string>
@@ -81,13 +81,13 @@
     <string name="image_error_text">加载图片错误</string>
     <string name="article_byline">%1$s 于 %2$s %3$s</string>
     <string name="article_byline_date_only">%1$s 于 %2$s</string>
-    <string name="settings_option_auto_delete_articles_subtitle">删除 3 个月前已读且未加星标的文章</string>
+    <string name="settings_option_auto_delete_articles_subtitle">删除3个月前已读且未加星标的文章</string>
     <string name="settings_option_auto_delete_articles_title">自动删除文章</string>
     <string name="settings_article_list_feed_name">源名称</string>
     <string name="settings_article_list_feed_icons">源图标</string>
     <string name="refresh_every_day">每天</string>
-    <string name="feed_form_copy_feed_url_to_clipboard">复制 Feed URL 到剪贴板</string>
-    <string name="feed_form_feed_url_title">源 URL</string>
+    <string name="feed_form_copy_feed_url_to_clipboard">复制源URL到剪贴板</string>
+    <string name="feed_form_feed_url_title">源URL</string>
     <string name="feed_action_unsubscribe_title">取消订阅</string>
     <string name="feed_action_unsubscribe_confirm">取消订阅</string>
     <string name="settings_remove_account_button_feedbin">退出登录</string>
@@ -121,7 +121,7 @@
     <string name="opml_import_notification_cancel">停止</string>
     <string name="edit_feed_tags">标签</string>
     <string name="image_preview_menu_option_small">小</string>
-    <string name="theme_menu_option_light">明亮</string>
+    <string name="theme_menu_option_light">浅色</string>
     <string name="theme_menu_option_system_default">系统默认</string>
     <string name="image_preview_menu_option_large">大</string>
     <string name="image_preview_label">图片预览</string>

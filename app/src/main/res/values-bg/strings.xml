@@ -2,7 +2,7 @@
 <resources>
     <string name="edit_feed_error">Грешка при запазване на емисия</string>
     <string name="unsubscribe_error">Грешка при отписване от емисия</string>
-    <string name="nav_headline_tags">Етикети</string>
+    <string name="nav_headline_tags">Категории</string>
     <string name="app_name">Capy Reader</string>
     <string name="add_account_title">Добави акаунт</string>
     <string name="transfers_export_subscriptions">Изнаси абонаменти</string>
@@ -10,7 +10,7 @@
     <string name="settings_import_progress">Внасяне на абонаменти %1$d от %2$d</string>
     <string name="account_source_feedbin">Feedbin</string>
     <string name="account_source_local">Локален</string>
-    <string name="edit_feed_tags">Етикети</string>
+    <string name="edit_feed_tags">Категории</string>
     <string name="unauthorized_dialog_description">Възникна проблем при свързването с вашия акаунт. Моля, влезте отново.</string>
     <string name="auth_fields_hide_password">Скрий паролата</string>
     <string name="settings_top_bar_title">Настройки</string>
@@ -40,7 +40,7 @@
     <string name="add_feed_url_title">Емисия или URL адрес на уебсайт</string>
     <string name="feed_form_cancel">Отказ</string>
     <string name="filter_unread">Непрочетени</string>
-    <string name="folder_action_delete_title">Изтрий етикет</string>
+    <string name="folder_action_delete_title">Изтрий категория</string>
     <string name="feed_action_unsubscribe_message">Сигурни ли сте, че искате да се отпишете от \"%1$s\"?</string>
     <string name="folder_action_edit">Преименувай</string>
     <string name="feed_action_unsubscribe_title">Отписване</string>
@@ -51,7 +51,7 @@
     <string name="article_view_mark_as_read">Маркирай като прочетено</string>
     <string name="article_view_mark_as_unread">Маркирай като непрочетено</string>
     <string name="add_feed_name_title">Име</string>
-    <string name="add_feed_new_folder_title">Нов етикет</string>
+    <string name="add_feed_new_folder_title">Нова категория</string>
     <string name="add_feed_submit">Добави</string>
     <string name="add_feed_success">Добавена емисия</string>
     <string name="filter_starred">Със звезда</string>
@@ -183,7 +183,7 @@
     <string name="settings_notifications_select_none">Не избрано</string>
     <string name="edit_feed_notifications_title">Активирай известията</string>
     <string name="notifications_permission_disabled_title">Разрешението за известие е деактивирано</string>
-    <string name="edit_feed_tags_section">Етикети</string>
+    <string name="edit_feed_tags_section">Категории</string>
     <string name="settings_panel_notifications_title">Известия</string>
     <string name="settings_enable_refresh_call_to_action">Първо трябва да се активира периодично опресняване</string>
     <string name="notifications_permissions_disabled_call_to_action">Настройки</string>
