@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.jocmp.capy"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 30
@@ -32,8 +32,6 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = true
-
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -42,8 +40,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     packaging {
@@ -51,10 +49,6 @@ android {
             excludes.add("lib/x86/libsqlite3x.so")
             excludes.add("lib/x86_64/libsqlite3x.so")
         }
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
     }
 }
 
