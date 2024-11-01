@@ -110,15 +110,19 @@ data class Account(
     }
 
     suspend fun refresh(): Result<Unit> {
-        val cutoffDate = preferences.autoDelete.get().cutoffDate()
+        return try {
+            val cutoffDate = preferences.autoDelete.get().cutoffDate()
 
-        val result = delegate.refresh(cutoffDate = cutoffDate)
+            val result = delegate.refresh(cutoffDate = cutoffDate)
 
-        if (cutoffDate != null) {
-            articleRecords.deleteOldArticles(before = cutoffDate)
+            if (cutoffDate != null) {
+                articleRecords.deleteOldArticles(before = cutoffDate)
+            }
+
+            result
+        } catch (e: Throwable) {
+            Result.failure(e)
         }
-
-        return result
     }
 
     suspend fun findFeed(feedID: String): Feed? {
