@@ -11,7 +11,7 @@ jobs:
         uses: actions/setup-java@v4.4.0
         with:
           distribution: 'zulu'
-          java-version: '17'
+          java-version: "21"
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1.197.0
         with:

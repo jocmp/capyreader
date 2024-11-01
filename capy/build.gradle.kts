@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.jocmp.capy"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 30
@@ -42,8 +42,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     packaging {
@@ -51,10 +51,6 @@ android {
             excludes.add("lib/x86/libsqlite3x.so")
             excludes.add("lib/x86_64/libsqlite3x.so")
         }
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
     }
 }
 
