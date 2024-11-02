@@ -1,15 +1,18 @@
 package com.capyreader.app.ui
 
-import androidx.navigation.NavController
-import androidx.navigation.NavOptionsBuilder
-import androidx.navigation.navOptions
+import com.jocmp.capy.accounts.Source
+import kotlinx.serialization.Serializable
 
-sealed class Route(val path: String) {
-    data object AddAccount : Route("add-account")
+sealed class Route {
+    @Serializable
+    data object AddAccount : Route()
 
-    data object Login : Route("login")
+    @Serializable
+    data class Login(val source: Source) : Route()
 
-    data object Settings : Route("settings")
+    @Serializable
+    data object Settings : Route()
 
-    data object Articles : Route("articles")
+    @Serializable
+    data object Articles: Route()
 }

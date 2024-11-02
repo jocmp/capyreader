@@ -14,7 +14,7 @@ dependencies {
     implementation(libs.moshi)
     implementation(libs.moshi.converter)
     implementation(libs.retrofit2.retrofit)
-    implementation(libs.retrofit2.retrofit)
+    implementation(libs.converter.scalars)
     ksp(libs.moshi.kotlin.codegen)
     testImplementation(kotlin("test"))
     testImplementation(libs.tests.junit)

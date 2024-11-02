@@ -7,23 +7,27 @@ import com.jocmp.readerclient.GoogleReader
 data class ReaderCredentials(
     override val username: String,
     override val secret: String,
-    val url: String
+    override val url: String
 ) : Credentials {
     override val source: Source = Source.FRESHRSS
 
     override suspend fun verify(): Result<Credentials> {
-        val response = GoogleReader.verifyCredentials(
-            username = username,
-            password = secret,
-            baseURL = url
-        )
+        try {
+            val response = GoogleReader.verifyCredentials(
+                username = username,
+                password = secret,
+                baseURL = url
+            )
 
-        val responseBody = response.body()
+            val responseBody = response.body()
 
-        return if (response.isSuccessful && responseBody != null) {
-            parseCredentials(responseBody)
-        } else {
-            Result.failure(Throwable("Failed with status ${response.message()}"))
+            return if (response.isSuccessful && responseBody != null) {
+                parseCredentials(responseBody)
+            } else {
+                Result.failure(Throwable("Failed with status ${response.code()} ${response.message()}"))
+            }
+        } catch (e: Throwable) {
+           return Result.failure(e)
         }
     }
 

@@ -28,10 +28,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.common.GetOPMLContent
+import com.capyreader.app.common.RowItem
 import com.capyreader.app.transfers.OPMLExporter
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.settings.AccountSettingsStrings
-import com.capyreader.app.common.RowItem
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.opml.ImportProgress
@@ -73,6 +73,7 @@ fun AccountSettingsPanel(
         },
         importProgress = viewModel.importProgress,
         accountSource = viewModel.accountSource,
+        accountURL = viewModel.accountURL,
         accountName = viewModel.accountName,
     )
 }
@@ -83,6 +84,7 @@ fun AccountSettingsPanelView(
     onRequestImport: () -> Unit,
     onRequestExport: () -> Unit,
     accountSource: Source,
+    accountURL: String,
     accountName: String,
     importProgress: ImportProgress?,
 ) {
@@ -108,6 +110,15 @@ fun AccountSettingsPanelView(
             ) {
                 RowItem {
                     Text(text = accountName)
+                }
+            }
+            if (accountURL.isNotBlank()) {
+                FormSection(
+                    title = stringResource(R.string.settings_section_account_server),
+                ) {
+                    RowItem {
+                        Text(text = accountURL)
+                    }
                 }
             }
         }
@@ -198,6 +209,7 @@ private fun AccountSettingsPanelViewPreview() {
             onRequestImport = {},
             onRequestExport = {},
             accountSource = Source.FEEDBIN,
+            accountURL = "",
             accountName = "test@example.com",
             importProgress = null
         )
@@ -212,6 +224,7 @@ private fun AccountSettingsPanelViewLocalPreview() {
             onRequestRemoveAccount = {},
             onRequestImport = {},
             onRequestExport = {},
+            accountURL = "",
             accountSource = Source.LOCAL,
             accountName = "test@example.com",
             importProgress = ImportProgress(currentCount = 3, total = 9001)

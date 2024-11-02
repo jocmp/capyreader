@@ -3,7 +3,7 @@ package com.jocmp.capy.common
 import java.net.MalformedURLException
 import java.net.URL
 
-fun optionalURL(string: String?, baseURL: String? = null): URL? {
+fun optionalURL(string: String?): URL? {
     if (string.isNullOrBlank()) {
         return null
     }

@@ -4,9 +4,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
@@ -16,40 +17,42 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
+import com.capyreader.app.common.titleKey
 import com.capyreader.app.setupCommonModules
 import com.capyreader.app.ui.Spacing
 import com.capyreader.app.ui.components.safeEdgePadding
 import com.capyreader.app.ui.components.widthMaxSingleColumn
+import com.jocmp.capy.accounts.Source
 import org.koin.android.ext.koin.androidContext
 import org.koin.compose.KoinApplication
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginView(
+    source: Source,
     onUsernameChange: (username: String) -> Unit = {},
     onPasswordChange: (password: String) -> Unit = {},
+    onUrlChange: (url: String) -> Unit = {},
     onSubmit: () -> Unit = {},
     onNavigateBack: () -> Unit = {},
+    url: String,
     username: String,
     password: String,
     loading: Boolean = false,
-    showError: Boolean = false,
+    errorMessage: String? = null,
 ) {
-    val errorMessage = if (showError) {
-        stringResource(R.string.auth_error_message)
-    } else {
-        null
-    }
-
     Scaffold(
         topBar = {
             TopAppBar(
@@ -85,22 +88,53 @@ fun LoginView(
                     modifier = Modifier.padding(horizontal = 16.dp)
                 ) {
                     Text(
-                        text = stringResource(R.string.login_title),
+                        text = stringResource(source.titleKey),
                         style = typography.headlineMedium,
                     )
-                    AuthFields(
-                        username = username,
-                        password = password,
-                        onUsernameChange = onUsernameChange,
-                        onPasswordChange = onPasswordChange,
-                        onSubmit = onSubmit,
-                        loading = loading,
-                        errorMessage = errorMessage
-                    )
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
+                        if (source.hasCustomURL) {
+                            UrlField(
+                                onChange = onUrlChange,
+                                url = url,
+                            )
+                        }
+                        AuthFields(
+                            username = username,
+                            password = password,
+                            onUsernameChange = onUsernameChange,
+                            onPasswordChange = onPasswordChange,
+                            onSubmit = onSubmit,
+                            loading = loading,
+                            errorMessage = errorMessage
+                        )
+                    }
                 }
             }
         }
     }
+}
+
+@Composable
+fun UrlField(
+    onChange: (url: String) -> Unit,
+    url: String,
+) {
+    TextField(
+        value = url,
+        onValueChange = onChange,
+        singleLine = true,
+        label = {
+            Text(stringResource(R.string.auth_fields_api_url))
+        },
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Next,
+            keyboardType = KeyboardType.Uri,
+        ),
+        modifier = Modifier
+            .fillMaxWidth()
+    )
 }
 
 @Preview
@@ -115,6 +149,8 @@ private fun LoginViewPreview() {
         }
     ) {
         LoginView(
+            source = Source.FEEDBIN,
+            url = "",
             username = "test@example.com",
             password = "",
         )

@@ -7,7 +7,6 @@ import android.os.StrictMode.setThreadPolicy
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.capyreader.app.common.AppPreferences
@@ -43,15 +42,15 @@ class MainActivity : ComponentActivity() {
         ArticleNotifications.handleResult(intent, appPreferences = appPreferences)
     }
 
-    private fun startDestination(): String {
+    private fun startDestination(): Route {
         val appPreferences = get<AppPreferences>()
 
         val accountID = appPreferences.accountID.get()
 
         return if (accountID.isBlank()) {
-            Route.AddAccount.path
+            Route.AddAccount
         } else {
-            Route.Articles.path
+            Route.Articles
         }
     }
 }

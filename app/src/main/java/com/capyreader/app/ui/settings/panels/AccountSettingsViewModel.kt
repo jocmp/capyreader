@@ -31,8 +31,9 @@ class AccountSettingsViewModel(
     var importProgress by mutableStateOf<ImportProgress?>(null)
         private set
 
-    val accountName: String
-        get() = account.preferences.username.get()
+    val accountURL = account.preferences.url.get()
+
+    val accountName = account.preferences.username.get()
 
     fun removeAccount() {
         appPreferences.clearAll()

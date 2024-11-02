@@ -4,19 +4,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.jocmp.capy.Account
 import com.capyreader.app.R
+import com.capyreader.app.ui.accounts.UpdateLoginViewModel
 import com.capyreader.app.ui.components.DialogCard
-import com.capyreader.app.ui.accounts.LoginViewModel
-import org.koin.compose.koinInject
-import org.koin.core.parameter.parametersOf
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun UpdateAuthDialog(
     onDismissRequest: () -> Unit,
     onSuccess: (message: String) -> Unit,
-    account: Account = koinInject(),
-    viewModel: LoginViewModel = koinInject(parameters = { parametersOf(account) })
+    viewModel: UpdateLoginViewModel = koinViewModel()
 ) {
     val successMessage = stringResource(R.string.update_auth_success_message)
 
@@ -26,6 +23,7 @@ fun UpdateAuthDialog(
     ) {
         DialogCard {
             UpdateAuthView(
+                source = viewModel.source,
                 onPasswordChange = viewModel::setPassword,
                 onNavigateBack = onDismissRequest,
                 onSubmit = {
@@ -36,7 +34,7 @@ fun UpdateAuthDialog(
                 username = viewModel.username,
                 password = viewModel.password,
                 loading = viewModel.loading,
-                showError = viewModel.showError
+                errorMessage = viewModel.errorMessage
             )
         }
     }

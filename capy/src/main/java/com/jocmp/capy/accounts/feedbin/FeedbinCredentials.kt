@@ -8,6 +8,8 @@ internal data class FeedbinCredentials(
     override val username: String,
     override val secret: String,
 ) : Credentials {
+    override val url = ""
+
     override val source: Source = Source.FEEDBIN
 
     override suspend fun verify(): Result<Credentials> {
@@ -19,7 +21,7 @@ internal data class FeedbinCredentials(
         return if (response.isSuccessful) {
             Result.success(this)
         } else {
-            Result.failure(Throwable("Failed with status ${response.message()}"))
+            Result.failure(Throwable("Failed with status ${response.code()} ${response.message()}"))
         }
     }
 }
