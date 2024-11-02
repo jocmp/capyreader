@@ -39,8 +39,6 @@
     <string name="unauthorized_dialog_dismiss_text">Později</string>
     <string name="auth_fields_show_password">Ukázat heslo</string>
     <string name="settings_top_bar_title">Nastavení</string>
-    <string name="update_auth_title">Přihlásit se k Feedbin</string>
-    <string name="login_title">Přihlásit se k Feedbin</string>
     <string name="crash_reporting_checkbox_title">Zapnout hlášení problémů</string>
     <string name="account_source_local">Místní</string>
     <string name="add_account_title">Přidat účet</string>
@@ -109,7 +107,6 @@
     <string name="unauthorized_dialog_confirm_text">Přihlásit</string>
     <string name="auth_fields_hide_password">Skrýt heslo</string>
     <string name="auth_fields_log_in_button">Přihlásit</string>
-    <string name="auth_error_message">Neplatný email nebo heslo</string>
     <string name="article_actions_mark_below_as_read">Označit všechno pod jako přečtené</string>
     <string name="auth_fields_password">Heslo</string>
     <string name="update_auth_success_message">Přihlášení úspěšné</string>

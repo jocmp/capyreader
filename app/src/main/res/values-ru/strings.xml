@@ -90,7 +90,6 @@
     <string name="auth_fields_password">Пароль</string>
     <string name="auth_fields_username">Электронная почта</string>
     <string name="settings_top_bar_title">Настройки</string>
-    <string name="auth_error_message">Неверная электронная почта или пароль</string>
     <string name="account_source_local">Локально</string>
     <string name="transfers_export_subscriptions">Экспортировать подписки</string>
     <string name="settings_section_account">Аккаунт</string>
@@ -155,7 +154,6 @@
     <string name="unauthorized_dialog_description">Возникла проблема с подключением к вашему аккаунту. Пожалуйста, войдите снова.</string>
     <string name="auth_fields_hide_password">Скрыть пароль</string>
     <string name="auth_fields_show_password">Показать пароль</string>
-    <string name="login_title">Войти в Feedbin</string>
     <string name="font_option_system_default">Системный по умолчанию</string>
     <string name="filter_starred">Избранное</string>
     <string name="app_name">Капи Читалка</string>
@@ -167,7 +165,6 @@
     <string name="unauthorized_dialog_title">Вы вышли из системы</string>
     <string name="unauthorized_dialog_confirm_text">Войти</string>
     <string name="auth_fields_log_in_button">Войти</string>
-    <string name="update_auth_title">Войти в Feedbin</string>
     <string name="update_auth_success_message">Успешно вошли в систему</string>
     <string name="account_source_feedbin">Feedbin</string>
     <string name="notifications_channel_title_opml_import">Импорт подписок</string>

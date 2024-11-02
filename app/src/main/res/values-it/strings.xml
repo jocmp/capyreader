@@ -50,10 +50,7 @@
     <string name="relative_time_days">%1$dg</string>
     <string name="refresh_feeds_menu_label">Aggiorna i feed</string>
     <string name="nav_add_feed">Aggiungi un feed</string>
-    <string name="update_auth_title">Accedi a Feedbin</string>
-    <string name="auth_error_message">Email o password non valide</string>
     <string name="update_auth_success_message">Accesso riuscito</string>
-    <string name="login_title">Accedi a Feedbin</string>
     <string name="account_source_feedbin">Feedbin</string>
     <string name="opml_export_button_text">Esporta in OPML</string>
     <string name="opml_import_progress_content_text_start">Iniziare l\'importazione</string>

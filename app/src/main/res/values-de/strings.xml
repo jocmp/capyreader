@@ -61,10 +61,7 @@
     <string name="auth_fields_show_password">Passwort anzeigen</string>
     <string name="auth_fields_log_in_button">Einloggen</string>
     <string name="settings_top_bar_title">Einstellungen</string>
-    <string name="update_auth_title">Bei Feedbin einloggen</string>
-    <string name="auth_error_message">Email oder Passwort ungültig</string>
     <string name="update_auth_success_message">Sie wurden erfolgreich eingeloggt</string>
-    <string name="login_title">Bei Feedbin einloggen</string>
     <string name="crash_reporting_checkbox_title">Fehlerberichterstattung einschalten</string>
     <string name="account_source_local">Lokal</string>
     <string name="add_account_title">Benutzerkonto hinzufügen</string>

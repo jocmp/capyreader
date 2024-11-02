@@ -128,7 +128,6 @@
     <string name="font_option_system_default">Sistem default</string>
     <string name="settings_panel_notifications_title">Notifikasi</string>
     <string name="settings_panel_general_title">Umum</string>
-    <string name="auth_error_message">Email atau password tidak valid</string>
     <string name="update_auth_success_message">Berhasil masuk</string>
     <string name="crash_reporting_checkbox_title">Aktifkan laporan kerusakan</string>
     <string name="account_source_local">Lokal</string>

@@ -85,8 +85,6 @@
     <string name="unauthorized_dialog_confirm_text">Giriş Yap</string>
     <string name="auth_fields_hide_password">Parolayı gizle</string>
     <string name="settings_top_bar_title">Ayarlar</string>
-    <string name="update_auth_title">Feedbin\'e giriş yapın</string>
-    <string name="login_title">Feedbin\'e giriş yapın</string>
     <string name="account_source_feedbin">Feedin</string>
     <string name="account_source_local">Yerel</string>
     <string name="font_option_system_default">Sistem varsayılanı</string>
@@ -118,7 +116,6 @@
     <string name="nav_headline_feeds">Yayınlar</string>
     <string name="nav_add_feed">Yayın Ekle</string>
     <string name="unauthorized_dialog_description">Hesabınıza bağlanırken bir sorun oluştu. Lütfen tekrar giriş yapın.</string>
-    <string name="auth_error_message">Geçersiz e-posta veya şifre</string>
     <string name="opml_import_notification_title">Abonelikler içeri aktarılıyor…</string>
     <string name="notifications_channel_title_opml_import">Abonelik İçeri Aktarma</string>
     <string name="settings_section_privacy">Gizlilik</string>

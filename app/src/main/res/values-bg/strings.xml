@@ -14,8 +14,6 @@
     <string name="unauthorized_dialog_description">Възникна проблем при свързването с вашия акаунт. Моля, влезте отново.</string>
     <string name="auth_fields_hide_password">Скрий паролата</string>
     <string name="settings_top_bar_title">Настройки</string>
-    <string name="auth_error_message">Невалиден имейл или парола</string>
-    <string name="update_auth_title">Влезте във Feedbin</string>
     <string name="update_auth_success_message">Успешно влизане</string>
     <string name="settings_option_full_content_subtitle">Запомни избора за зареждане на пълно съдържание на статия</string>
     <string name="font_option_poppins">Poppins</string>
@@ -99,7 +97,6 @@
     <string name="auth_fields_username">Имейл</string>
     <string name="auth_fields_show_password">Покажи паролата</string>
     <string name="auth_fields_log_in_button">Влезте</string>
-    <string name="login_title">Влезте във Feedbin</string>
     <string name="crash_reporting_checkbox_title">Активирай отчет за срив</string>
     <string name="settings_section_account">Акаунт</string>
     <string name="settings_section_import">Внасяне</string>
