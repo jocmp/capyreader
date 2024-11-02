@@ -1,0 +1,10 @@
+Updated
+
+• Updated translations for Serbian, Bulgarian, Czech, Spanish, and Chinese thanks to volunteers
+
+Fixed
+
+• Fixed padding on scrollbar in long articles
+• Fix handling for feeds that are missing article URL
+• Added more error handling around article refresh on spotty networks
+
