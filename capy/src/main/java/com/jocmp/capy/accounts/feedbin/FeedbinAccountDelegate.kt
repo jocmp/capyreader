@@ -6,6 +6,7 @@ import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.FeedOption
 import com.jocmp.capy.accounts.SubscriptionChoice
+import com.jocmp.capy.accounts.withErrorHandling
 import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.host
@@ -31,7 +32,6 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import okio.IOException
 import org.jsoup.Jsoup
-import java.net.UnknownHostException
 import java.time.ZonedDateTime
 
 internal class FeedbinAccountDelegate(
@@ -355,21 +355,5 @@ internal class FeedbinAccountDelegate(
     companion object {
         const val MAX_ENTRY_LIMIT = 100
         const val MAX_CREATE_UNREAD_LIMIT = 1_000
-    }
-
-    private suspend fun <T> withErrorHandling(func: suspend () -> T?): Result<T> {
-        return try {
-            val result = func()
-
-            if (result != null) {
-                Result.success(result)
-            } else {
-                Result.failure(Throwable("Unexpected error"))
-            }
-        } catch (e: UnknownHostException) {
-            return Result.failure(e)
-        } catch (e: UnauthorizedError) {
-            return Result.failure(e)
-        }
     }
 }
