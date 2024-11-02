@@ -71,10 +71,7 @@
     <string name="auth_fields_show_password">Mostrar senha</string>
     <string name="auth_fields_log_in_button">Log In</string>
     <string name="settings_top_bar_title">Configurações</string>
-    <string name="update_auth_title">Logar no Feedbin</string>
-    <string name="auth_error_message">Email ou senha inválida</string>
     <string name="update_auth_success_message">Logado com sucesso</string>
-    <string name="login_title">Logar no Feedbin</string>
     <string name="crash_reporting_checkbox_title">Enable crash reporting</string>
     <string name="account_source_feedbin">Feedbin</string>
     <string name="account_source_local">Local</string>

@@ -46,10 +46,7 @@
     <string name="auth_fields_password">密码</string>
     <string name="auth_fields_username">邮箱</string>
     <string name="auth_fields_hide_password">隐藏密码</string>
-    <string name="update_auth_title">登录 Feedbin</string>
-    <string name="auth_error_message">无效的邮箱或密码</string>
     <string name="update_auth_success_message">登录成功</string>
-    <string name="login_title">登录 Feedbin</string>
     <string name="crash_reporting_checkbox_title">启用崩溃报告</string>
     <string name="account_source_feedbin">Feedbin</string>
     <string name="account_source_local">本地</string>

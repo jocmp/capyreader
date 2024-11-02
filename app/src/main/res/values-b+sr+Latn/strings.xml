@@ -72,10 +72,7 @@
     <string name="auth_fields_show_password">Prikaži lozinku</string>
     <string name="auth_fields_log_in_button">Prijavi se</string>
     <string name="settings_top_bar_title">Podešavanja</string>
-    <string name="update_auth_title">Prijavi se na Feedbin</string>
-    <string name="auth_error_message">Neispravan email ili lozinka</string>
     <string name="update_auth_success_message">Uspešno ste prijavljeni</string>
-    <string name="login_title">Prijavi se na Feedbin</string>
     <string name="crash_reporting_checkbox_title">Omogućite slanje izveštaja o padu aplikacije</string>
     <string name="account_source_feedbin">Feedbin</string>
     <string name="account_source_local">Lokalni</string>

@@ -54,10 +54,7 @@
     <string name="unauthorized_dialog_dismiss_text">Hiljem</string>
     <string name="auth_fields_password">Salasõna</string>
     <string name="settings_top_bar_title">Seadistused</string>
-    <string name="update_auth_title">Logi teenusesse Feedbin</string>
-    <string name="auth_error_message">Vigane e-posti aadress või salasõna</string>
     <string name="update_auth_success_message">Sisselogimine õnnestus</string>
-    <string name="login_title">Logi teenusesse Feedbin</string>
     <string name="crash_reporting_checkbox_title">Võta kasutusele rakenduse kokkujooksmistest teatamine</string>
     <string name="account_source_feedbin">Feedbin</string>
     <string name="account_source_local">Kohalik andmekogu</string>

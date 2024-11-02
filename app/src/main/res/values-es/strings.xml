@@ -72,10 +72,7 @@
     <string name="auth_fields_show_password">Mostrar la contraseña</string>
     <string name="auth_fields_log_in_button">Iniciar sesión</string>
     <string name="settings_top_bar_title">Ajustes</string>
-    <string name="update_auth_title">Iniciar sesión en Feedbin</string>
-    <string name="auth_error_message">Correo electrónico o contraseña no válidos</string>
     <string name="update_auth_success_message">Te has conectado correctamente</string>
-    <string name="login_title">Iniciar sesión en Feedbin</string>
     <string name="crash_reporting_checkbox_title">Habilitar informes de fallos</string>
     <string name="account_source_feedbin">Feedbin</string>
     <string name="account_source_local">Local</string>
