@@ -34,3 +34,8 @@
 
 # Readability4J
 -dontwarn org.slf4j.impl.StaticLoggerBinder
+
+# Internal
+-keep class com.jocmp.** { *; }
+
+-dontwarn com.jocmp.**
