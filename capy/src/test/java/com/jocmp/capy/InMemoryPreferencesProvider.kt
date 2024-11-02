@@ -66,6 +66,7 @@ class InMemoryPreference<T>(
         return key
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun get(): T {
         return store.getOrDefault(key, defaultValue) as T
     }

@@ -144,6 +144,7 @@ dependencies {
     implementation(libs.zoomable.image.coil)
     implementation(platform(libs.androidx.compose.bom))
     implementation(project(":capy"))
+    implementation(project(":feedfinder"))
     "gplayImplementation"(libs.firebase.crashlytics)
     testImplementation(libs.tests.junit)
     androidTestImplementation(libs.tests.androidx.test.ext)

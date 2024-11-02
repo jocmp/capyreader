@@ -15,7 +15,7 @@ import com.capyreader.app.unloadAccountModules
 
 @Composable
 fun App(
-    startDestination: String,
+    startDestination: Route,
     theme: ThemeOption,
 ) {
     val navController = rememberNavController()
@@ -31,10 +31,10 @@ fun App(
             ) {
                 accountsGraph(
                     onAddSuccess = {
-                        navController.navigate(Route.Articles.path) {
+                        navController.navigate(Route.Articles) {
                             launchSingleTop = true
 
-                            popUpTo(Route.AddAccount.path) {
+                            popUpTo(Route.AddAccount) {
                                 inclusive = true
                             }
                         }
@@ -42,12 +42,12 @@ fun App(
                     onNavigateBack = {
                         navController.navigateUp()
                     },
-                    onNavigateToLogin = {
-                        navController.navigate(Route.Login.path)
+                    onNavigateToLogin = { source ->
+                        navController.navigate(Route.Login(source))
                     },
                     onRemoveAccount = {
-                        navController.navigate(Route.AddAccount.path) {
-                            popUpTo(Route.Articles.path) {
+                        navController.navigate(Route.AddAccount) {
+                            popUpTo(Route.Articles) {
                                 inclusive = true
                             }
                         }

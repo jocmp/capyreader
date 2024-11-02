@@ -8,12 +8,10 @@ import com.capyreader.app.ui.Route
 fun NavGraphBuilder.articleGraph(
     navController: NavController,
 ) {
-    composable(
-        route = "articles",
-    ) {
+    composable<Route.Articles> {
         ArticleScreen(
             onNavigateToSettings = {
-                navController.navigate(Route.Settings.path) {
+                navController.navigate(Route.Settings) {
                     launchSingleTop = true
                 }
             }

@@ -67,6 +67,7 @@ dependencies {
     implementation(project(":feedbinclient"))
     implementation(project(":feedfinder"))
     implementation(project(":rssparser"))
+    implementation(project(":readerclient"))
     testImplementation(kotlin("test"))
     testImplementation(libs.sqldelight.sqlite.driver)
     testImplementation(libs.tests.junit)

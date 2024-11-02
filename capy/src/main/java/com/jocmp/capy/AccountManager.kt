@@ -22,12 +22,18 @@ class AccountManager(
         return buildAccount(existingAccount, database)
     }
 
-    fun createAccount(username: String, password: String, source: Source): String {
+    fun createAccount(
+        username: String,
+        password: String,
+        url: String,
+        source: Source
+    ): String {
         val accountID = createAccount(source = source)
 
         preferenceStoreProvider.build(accountID).let { preferences ->
             preferences.username.set(username)
             preferences.password.set(password)
+            preferences.url.set(url)
         }
 
         return accountID

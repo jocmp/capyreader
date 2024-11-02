@@ -10,11 +10,16 @@ val loginModule = module {
             appPreferences = get()
         )
     }
-    viewModel { parameters ->
+    viewModel {
         LoginViewModel(
-            account = parameters.getOrNull(),
+            handle = get(),
             accountManager = get(),
             appPreferences = get()
+        )
+    }
+    viewModel {
+        UpdateLoginViewModel(
+            account = get()
         )
     }
 }

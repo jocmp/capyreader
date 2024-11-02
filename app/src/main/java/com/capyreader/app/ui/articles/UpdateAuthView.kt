@@ -16,35 +16,31 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.capyreader.app.R
+import com.capyreader.app.common.titleKey
 import com.capyreader.app.ui.accounts.AuthFields
 import com.capyreader.app.ui.components.DialogCard
 import com.capyreader.app.ui.theme.CapyTheme
+import com.jocmp.capy.accounts.Source
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UpdateAuthView(
+    source: Source,
     onPasswordChange: (password: String) -> Unit = {},
     onSubmit: () -> Unit = {},
     onNavigateBack: () -> Unit = {},
     username: String,
     password: String,
     loading: Boolean = false,
-    showError: Boolean = false,
+    errorMessage: String? = null
 ) {
-    val errorMessage = if (showError) {
-        stringResource(R.string.auth_error_message)
-    } else {
-        null
-    }
-
     DialogCard {
         MediumTopAppBar(
             colors = TopAppBarDefaults.mediumTopAppBarColors().copy(
                 containerColor = colorScheme.surfaceVariant
             ),
             title = {
-                Text(text = stringResource(R.string.update_auth_title))
+                Text(text = stringResource(source.titleKey))
             },
             navigationIcon = {
                 IconButton(
@@ -80,6 +76,7 @@ fun UpdateAuthView(
 private fun UpdateAuthViewPreview() {
     CapyTheme {
         UpdateAuthView(
+            source = Source.FRESHRSS,
             username = "test@example.com",
             password = "secrets"
         )

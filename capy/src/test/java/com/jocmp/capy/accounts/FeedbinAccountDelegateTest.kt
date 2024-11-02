@@ -2,6 +2,7 @@ package com.jocmp.capy.accounts
 
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.InMemoryDatabaseProvider
+import com.jocmp.capy.accounts.feedbin.FeedbinAccountDelegate
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.FeedFixture

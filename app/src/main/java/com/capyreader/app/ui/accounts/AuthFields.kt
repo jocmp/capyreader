@@ -72,9 +72,6 @@ fun AuthFields(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = Modifier.imePadding()
     ) {
-        errorMessage?.let { message ->
-            ErrorAlert(message = message)
-        }
         TextField(
             value = username,
             onValueChange = onUsernameChange,
@@ -86,6 +83,7 @@ fun AuthFields(
             },
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next,
+                keyboardType = KeyboardType.Email
             ),
             modifier = Modifier
                 .fillMaxWidth()
@@ -139,6 +137,9 @@ fun AuthFields(
                 }
             }
         )
+        errorMessage?.let { message ->
+            ErrorAlert(message = message)
+        }
         Column(
             Modifier.padding(top = 16.dp)
         ) {

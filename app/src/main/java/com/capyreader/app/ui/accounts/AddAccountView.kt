@@ -20,6 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.capyreader.app.BuildConfig
 import com.capyreader.app.R
 import com.capyreader.app.setupCommonModules
 import com.capyreader.app.ui.CrashReporting
@@ -35,7 +36,7 @@ import org.koin.compose.KoinApplication
 @Composable
 fun AddAccountView(
     onSelectLocal: () -> Unit,
-    onSelectFeedbin: () -> Unit,
+    onSelectService: (source: Source) -> Unit,
 ) {
     Scaffold(
         modifier = Modifier.safeEdgePadding(),
@@ -58,8 +59,15 @@ fun AddAccountView(
                     modifier = Modifier
                         .padding(titlePadding())
                 )
-                Row(Modifier.clickable { onSelectFeedbin() }) {
-                    AccountRow(source = Source.FEEDBIN)
+                SyncServiceRow(
+                    onSelectService,
+                    source = Source.FEEDBIN
+                )
+                if (BuildConfig.DEBUG) {
+                    SyncServiceRow(
+                        onSelectService,
+                        source = Source.FRESHRSS
+                    )
                 }
                 Row(Modifier.clickable { onSelectLocal() }) {
                     AccountRow(source = Source.LOCAL)
@@ -75,6 +83,16 @@ fun AddAccountView(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun SyncServiceRow(
+    onSelect: (source: Source) -> Unit,
+    source: Source,
+) {
+    Row(Modifier.clickable { onSelect(source) }) {
+        AccountRow(source = source)
     }
 }
 
@@ -110,7 +128,7 @@ private fun AddAccountViewPreview() {
         CapyTheme {
             AddAccountView(
                 onSelectLocal = {},
-                onSelectFeedbin = {}
+                onSelectService = {}
             )
         }
     }
@@ -130,7 +148,7 @@ private fun AddAccountViewPreview_Tablet() {
         CapyTheme {
             AddAccountView(
                 onSelectLocal = {},
-                onSelectFeedbin = {}
+                onSelectService = {}
             )
         }
     }

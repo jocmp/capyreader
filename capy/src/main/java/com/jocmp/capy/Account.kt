@@ -2,12 +2,13 @@ package com.jocmp.capy
 
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.AutoDelete
-import com.jocmp.capy.accounts.FeedbinAccountDelegate
-import com.jocmp.capy.accounts.FeedbinOkHttpClient
 import com.jocmp.capy.accounts.LocalAccountDelegate
 import com.jocmp.capy.accounts.LocalOkHttpClient
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.asOPML
+import com.jocmp.capy.accounts.feedbin.FeedbinAccountDelegate
+import com.jocmp.capy.accounts.feedbin.FeedbinOkHttpClient
+import com.jocmp.capy.accounts.reader.ReaderAccountDelegate
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.sortedByTitle
@@ -45,6 +46,8 @@ data class Account(
                 preferences = preferences
             )
         )
+
+        Source.FRESHRSS -> ReaderAccountDelegate()
     }
 ) {
     internal val articleRecords: ArticleRecords = ArticleRecords(database)

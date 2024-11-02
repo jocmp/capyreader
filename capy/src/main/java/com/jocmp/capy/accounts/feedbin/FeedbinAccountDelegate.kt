@@ -1,10 +1,12 @@
-package com.jocmp.capy.accounts
+package com.jocmp.capy.accounts.feedbin
 
 import com.jocmp.capy.AccountDelegate
 import com.jocmp.capy.Article
 import com.jocmp.capy.Feed
-import com.jocmp.capy.accounts.AddFeedResult.AddFeedError
-import com.jocmp.capy.common.TimeHelpers.nowUTC
+import com.jocmp.capy.accounts.AddFeedResult
+import com.jocmp.capy.accounts.FeedOption
+import com.jocmp.capy.accounts.SubscriptionChoice
+import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.host
 import com.jocmp.capy.common.toDateTime
@@ -157,7 +159,7 @@ internal class FeedbinAccountDelegate(
             val errorBody = response.errorBody()?.string()
 
             if (response.code() > 300) {
-                return AddFeedResult.Failure(AddFeedError.FeedNotFound())
+                return AddFeedResult.Failure(AddFeedResult.AddFeedError.FeedNotFound())
             }
 
             return if (subscription != null) {
@@ -173,7 +175,7 @@ internal class FeedbinAccountDelegate(
 
                     AddFeedResult.Success(feed)
                 } else {
-                    AddFeedResult.Failure(AddFeedError.SaveFailure())
+                    AddFeedResult.Failure(AddFeedResult.AddFeedError.SaveFailure())
                 }
             } else {
                 val decodedChoices = Json.decodeFromString<List<SubscriptionChoice>>(errorBody!!)
@@ -185,7 +187,7 @@ internal class FeedbinAccountDelegate(
                 AddFeedResult.MultipleChoices(choices)
             }
         } catch (e: IOException) {
-            AddFeedResult.Failure(AddFeedError.NetworkError())
+            AddFeedResult.Failure(AddFeedResult.AddFeedError.NetworkError())
         }
     }
 
@@ -312,7 +314,7 @@ internal class FeedbinAccountDelegate(
         )
     }
 
-    private fun saveEntries(entries: List<Entry>, updatedAt: ZonedDateTime = nowUTC()) {
+    private fun saveEntries(entries: List<Entry>, updatedAt: ZonedDateTime = TimeHelpers.nowUTC()) {
         database.transactionWithErrorHandling {
             entries.forEach { entry ->
                 val updated = updatedAt.toEpochSecond()
@@ -354,20 +356,20 @@ internal class FeedbinAccountDelegate(
         const val MAX_ENTRY_LIMIT = 100
         const val MAX_CREATE_UNREAD_LIMIT = 1_000
     }
-}
 
-private suspend fun <T> withErrorHandling(func: suspend () -> T?): Result<T> {
-    return try {
-        val result = func()
+    private suspend fun <T> withErrorHandling(func: suspend () -> T?): Result<T> {
+        return try {
+            val result = func()
 
-        if (result != null) {
-            Result.success(result)
-        } else {
-            Result.failure(Throwable("Unexpected error"))
+            if (result != null) {
+                Result.success(result)
+            } else {
+                Result.failure(Throwable("Unexpected error"))
+            }
+        } catch (e: UnknownHostException) {
+            return Result.failure(e)
+        } catch (e: UnauthorizedError) {
+            return Result.failure(e)
         }
-    } catch (e: UnknownHostException) {
-        return Result.failure(e)
-    } catch (e: UnauthorizedError) {
-        return Result.failure(e)
     }
 }
