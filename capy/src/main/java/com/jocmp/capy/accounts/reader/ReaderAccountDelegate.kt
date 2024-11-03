@@ -13,23 +13,26 @@ import com.jocmp.capy.db.Database
 import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.readerclient.Category
 import com.jocmp.readerclient.GoogleReader
+import com.jocmp.readerclient.GoogleReader.Companion.BAD_TOKEN_HEADER_KEY
 import com.jocmp.readerclient.Item
+import com.jocmp.readerclient.ItemRef
 import com.jocmp.readerclient.Stream
 import com.jocmp.readerclient.Subscription
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import org.jsoup.Jsoup
+import retrofit2.Response
 import java.io.IOException
 import java.time.ZonedDateTime
+import java.util.concurrent.atomic.AtomicReference
 
-/**
- * Save Auth Token for later use
- * self.credentials = Credentials(type: .readerAPIKey, username: credentials.username, secret: authString)
- */
 internal class ReaderAccountDelegate(
     private val database: Database,
-    private val httpClient: OkHttpClient,
     private val googleReader: GoogleReader,
+    httpClient: OkHttpClient = OkHttpClient(),
 ) : AccountDelegate {
+    private var postToken = AtomicReference<String?>(null)
     private val articleContent = ArticleContent(httpClient)
     private val articleRecords = ArticleRecords(database)
 
@@ -120,7 +123,7 @@ internal class ReaderAccountDelegate(
             title = subscription.title,
             feed_url = subscription.url,
             site_url = subscription.htmlUrl,
-            favicon_url = subscription.iconUrl
+            favicon_url = subscription.iconUrl.ifBlank { null }
         )
     }
 
@@ -139,8 +142,8 @@ internal class ReaderAccountDelegate(
     private suspend fun refreshArticles(
         since: Long = articleRecords.maxUpdatedAt().toEpochSecond()
     ) {
-        refreshUnreadItems()
         refreshStarredItems()
+        refreshUnreadItems()
         refreshAllArticles(since = since)
         fetchMissingArticles()
     }
@@ -162,8 +165,25 @@ internal class ReaderAccountDelegate(
         }
     }
 
+    private suspend fun fetchMissingArticles() {
+        val ids = articleRecords.findMissingArticles()
 
-    private fun fetchMissingArticles() {
+        coroutineScope {
+            ids.chunked(MAX_PAGINATED_ITEM_LIMIT).map { chunkedIDs ->
+                launch {
+                    val response = withPostToken {
+                        googleReader.streamItemsContents(
+                            postToken = postToken.get(),
+                            ids = chunkedIDs
+                        )
+                    }
+
+                    val result = response.body() ?: return@launch
+
+                    saveItems(result.items)
+                }
+            }
+        }
     }
 
     private suspend fun refreshAllArticles(since: Long) {
@@ -178,15 +198,21 @@ internal class ReaderAccountDelegate(
         stream: Stream,
         continuation: String? = null,
     ) {
-        val response = googleReader.streamContents(
+        val response = googleReader.streamItemsIDs(
             streamID = stream.id,
             since = since,
             continuation = continuation,
+            excludedStreamID = Stream.READ.id,
+            count = MAX_PAGINATED_ITEM_LIMIT,
         )
 
         val result = response.body() ?: return
 
-        saveItems(result.items)
+        coroutineScope {
+            launch {
+                fetchItemContents(result.itemRefs)
+            }
+        }
 
         val nextContinuation = result.continuation ?: return
 
@@ -195,6 +221,19 @@ internal class ReaderAccountDelegate(
             stream = stream,
             continuation = nextContinuation
         )
+    }
+
+    private suspend fun fetchItemContents(items: List<ItemRef>) {
+        val response = withPostToken {
+            googleReader.streamItemsContents(
+                postToken = postToken.get(),
+                ids = items.map { it.hexID }
+            )
+        }
+
+        val result = response.body() ?: return
+
+        saveItems(result.items)
     }
 
     private fun saveItems(items: List<Item>) {
@@ -207,7 +246,7 @@ internal class ReaderAccountDelegate(
                     feed_id = item.origin.streamId,
                     title = item.title,
                     author = item.author,
-                    content_html = item.summary.content,
+                    content_html = item.content?.content ?: item.summary.content,
                     extracted_content_url = null,
                     summary = Jsoup.parse(item.summary.content).text(),
                     url = item.canonical.firstOrNull()?.href,
@@ -224,7 +263,34 @@ internal class ReaderAccountDelegate(
         }
     }
 
+    private suspend fun <T> withPostToken(handler: suspend () -> Response<T>): Response<T> {
+        val response = handler()
+
+        val isBadToken = response
+            .headers()
+            .get(BAD_TOKEN_HEADER_KEY)
+            .orEmpty()
+            .toBoolean()
+
+        if (!isBadToken) {
+            return response
+        }
+
+        try {
+            postToken.set(googleReader.token().body())
+
+            return handler()
+        } catch (exception: IOException) {
+            return response
+        }
+    }
+
     private fun taggingID(subscription: Subscription, category: Category): String {
         return "${subscription.id}:${category.id}"
+    }
+
+
+    companion object {
+        const val MAX_PAGINATED_ITEM_LIMIT = 100
     }
 }

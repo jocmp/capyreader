@@ -33,12 +33,11 @@ internal class ArticleRecords internal constructor(
         ).executeAsOneOrNull()
     }
 
-    fun findMissingArticles(): List<Long> {
+    fun findMissingArticles(): List<String> {
         return database
             .articlesQueries
             .findMissingArticles()
             .executeAsList()
-            .map { it.toLong() }
     }
 
     internal suspend fun notifications(since: ZonedDateTime): List<ArticleNotification> {

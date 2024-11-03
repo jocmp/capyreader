@@ -283,7 +283,7 @@ internal class FeedbinAccountDelegate(
         coroutineScope {
             ids.chunked(MAX_ENTRY_LIMIT).map { chunkedIDs ->
                 launch {
-                    fetchPaginatedEntries(ids = chunkedIDs)
+                    fetchPaginatedEntries(ids = chunkedIDs.map { it.toLong() })
                 }
             }
         }

@@ -1,4 +1,4 @@
-package com.jocmp.feedbinclient
+package com.jocmp.capy.accounts
 
 import okhttp3.Interceptor
 
@@ -6,7 +6,7 @@ class BasicAuthInterceptor(private val credentials: () -> String) : Interceptor 
     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
         val request = chain.request()
 
-        if (request.headers("Authorization").isNullOrEmpty()) {
+        if (request.headers("Authorization").isEmpty()) {
             val authenticatedRequest =
                 request.newBuilder().header("Authorization", credentials()).build()
             return chain.proceed(authenticatedRequest)

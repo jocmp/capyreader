@@ -10,6 +10,7 @@ data class Item(
     val canonical: List<Link>,
     val summary: Summary,
     val origin: Origin,
+    val content: Content? = null,
     val author: String? = null,
     val enclosure: List<Enclosure>? = null,
 ) {
@@ -24,6 +25,11 @@ data class Item(
 
     @JsonClass(generateAdapter = true)
     data class Summary(
+        val content: String,
+    )
+
+    @JsonClass(generateAdapter = true)
+    data class Content(
         val content: String,
     )
 

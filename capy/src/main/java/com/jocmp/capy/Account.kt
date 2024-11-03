@@ -6,10 +6,9 @@ import com.jocmp.capy.accounts.LocalAccountDelegate
 import com.jocmp.capy.accounts.LocalOkHttpClient
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.asOPML
+import com.jocmp.capy.accounts.reader.buildFreshRSSDelegate
 import com.jocmp.capy.accounts.feedbin.FeedbinAccountDelegate
 import com.jocmp.capy.accounts.feedbin.FeedbinOkHttpClient
-import com.jocmp.capy.accounts.reader.ReaderAccountDelegate
-import com.jocmp.capy.accounts.reader.ReaderOkHttpClient
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.sortedByTitle
@@ -20,7 +19,6 @@ import com.jocmp.capy.opml.OPMLImporter
 import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.capy.persistence.FeedRecords
 import com.jocmp.feedbinclient.Feedbin
-import com.jocmp.readerclient.GoogleReader
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -257,23 +255,6 @@ data class Account(
 
 private fun Feedbin.Companion.forAccount(path: URI, preferences: AccountPreferences) =
     create(client = FeedbinOkHttpClient.forAccount(path, preferences))
-
-private fun buildFreshRSSDelegate(
-    database: Database,
-    path: URI,
-    preferences: AccountPreferences
-): AccountDelegate {
-    val httpClient = ReaderOkHttpClient.forAccount(path, preferences)
-
-    return ReaderAccountDelegate(
-        database = database,
-        httpClient = httpClient,
-        googleReader = GoogleReader.create(
-            client = httpClient,
-            baseURL = preferences.url.get()
-        )
-    )
-}
 
 private fun AutoDelete.cutoffDate(): ZonedDateTime? {
     val now = nowUTC()

@@ -1,16 +1,16 @@
-package com.jocmp.capy.accounts
+package com.jocmp.capy.accounts.feedbin
 
+import com.jocmp.capy.AccountDelegate
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.InMemoryDatabaseProvider
-import com.jocmp.capy.accounts.feedbin.FeedbinAccountDelegate
+import com.jocmp.capy.accounts.AddFeedResult
+import com.jocmp.capy.accounts.SubscriptionChoice
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.FeedFixture
 import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.feedbinclient.CreateSubscriptionRequest
 import com.jocmp.feedbinclient.Entry
-import com.jocmp.feedbinclient.Entry.Images
-import com.jocmp.feedbinclient.Entry.Images.SizeOne
 import com.jocmp.feedbinclient.Feedbin
 import com.jocmp.feedbinclient.StarredEntriesRequest
 import com.jocmp.feedbinclient.Subscription
@@ -27,10 +27,10 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.Protocol
 import okhttp3.Request
 import okhttp3.ResponseBody.Companion.toResponseBody
-import org.junit.Before
 import org.junit.Test
 import retrofit2.Response
 import java.net.SocketTimeoutException
+import kotlin.test.BeforeTest
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -40,6 +40,7 @@ class FeedbinAccountDelegateTest {
     private lateinit var database: Database
     private lateinit var feedbin: Feedbin
     private lateinit var feedFixture: FeedFixture
+    private lateinit var delegate: AccountDelegate
 
     private val subscriptions = listOf(
         Subscription(
@@ -80,26 +81,27 @@ class FeedbinAccountDelegateTest {
             created_at = "2024-02-23T17:47:45.708056Z",
             extracted_content_url = "https://extract.feedbin.com/parser/feedbin/fa2d8d34c403421a766dbec46c58738c36ff359e?base64_url=aHR0cHM6Ly9hcnN0ZWNobmljYS5jb20vP3A9MjAwNTUyNg==",
             author = "Scharon Harding",
-            images = Images(
+            images = Entry.Images(
                 original_url = "https://cdn.arstechnica.net/wp-content/uploads/2024/02/GettyImages-2023785321-800x534.jpg",
-                size_1 = SizeOne(
+                size_1 = Entry.Images.SizeOne(
                     cdn_url = "https://cdn.arstechnica.net/wp-content/uploads/2024/02/GettyImages-2023785321-800x534.jpg"
                 ),
             ),
         )
     )
 
-    @Before
+    @BeforeTest
     fun setup() {
         database = InMemoryDatabaseProvider.build(accountID)
         feedFixture = FeedFixture(database)
-        feedbin = mockk<Feedbin>()
+        feedbin = mockk()
+        delegate = FeedbinAccountDelegate(database, feedbin)
 
         coEvery { feedbin.icons() }.returns(Response.success(listOf()))
     }
 
     @Test
-    fun refreshAll_updatesEntries() = runTest {
+    fun refresh_updatesEntries() = runTest {
         coEvery { feedbin.subscriptions() }.returns(Response.success(subscriptions))
         coEvery { feedbin.unreadEntries() }.returns(Response.success(entries.map { it.id }))
         coEvery { feedbin.starredEntries() }.returns(Response.success(emptyList()))
@@ -112,8 +114,6 @@ class FeedbinAccountDelegateTest {
                 ids = any(),
             )
         }.returns(Response.success(entries))
-
-        val delegate = FeedbinAccountDelegate(database, feedbin)
 
         delegate.refresh()
 
@@ -141,11 +141,9 @@ class FeedbinAccountDelegateTest {
     }
 
     @Test
-    fun refreshAll_IOException() = runTest {
+    fun refresh_IOException() = runTest {
         val networkError = SocketTimeoutException("Sorry networked charlie")
         coEvery { feedbin.subscriptions() }.throws(networkError)
-
-        val delegate = FeedbinAccountDelegate(database, feedbin)
 
         val result = delegate.refresh()
 
@@ -153,7 +151,7 @@ class FeedbinAccountDelegateTest {
     }
 
     @Test
-    fun refreshAll_findsMissingArticles() = runTest {
+    fun refresh_findsMissingArticles() = runTest {
         val unreadEntry = Entry(
             id = 1,
             feed_id = 2,
@@ -165,9 +163,9 @@ class FeedbinAccountDelegateTest {
             created_at = "2024-02-23T17:47:45.708056Z",
             extracted_content_url = "https://extract.feedbin.com/parser/feedbin/fa2d8d34c403421a766dbec46c58738c36ff359e?base64_url=aHR0cHM6Ly9hcnN0ZWNobmljYS5jb20vP3A9MjAwNTUyNg==",
             author = "Scharon Harding",
-            images = Images(
+            images = Entry.Images(
                 original_url = "https://cdn.arstechnica.net/wp-content/uploads/2024/02/GettyImages-2023785321-800x534.jpg",
-                size_1 = SizeOne(
+                size_1 = Entry.Images.SizeOne(
                     cdn_url = "https://cdn.arstechnica.net/wp-content/uploads/2024/02/GettyImages-2023785321-800x534.jpg"
                 ),
             ),
@@ -184,9 +182,9 @@ class FeedbinAccountDelegateTest {
             created_at = "2024-08-243T17:47:45.708056Z",
             extracted_content_url = "https://extract.feedbin.com/parser/feedbin/fa2d8d34c403421a766dbec46c58738c36ff359e?base64_url=aHR0cHM6Ly9hcnN0ZWNobmljYS5jb20vP3A9MjAwNTUyNg==",
             author = "Jay Peters",
-            images = Images(
+            images = Entry.Images(
                 original_url = "https://cdn.arstechnica.net/wp-content/uploads/2024/02/GettyImages-2023785321-800x534.jpg",
-                size_1 = SizeOne(
+                size_1 = Entry.Images.SizeOne(
                     cdn_url = "https://cdn.arstechnica.net/wp-content/uploads/2024/02/GettyImages-2023785321-800x534.jpg"
                 ),
             ),
@@ -215,8 +213,6 @@ class FeedbinAccountDelegateTest {
             )
         }.returns(Response.success(emptyList()))
 
-        val delegate = FeedbinAccountDelegate(database, feedbin)
-
         delegate.refresh()
 
         val starredArticles = ArticleRecords(database)
@@ -244,8 +240,6 @@ class FeedbinAccountDelegateTest {
             null
         )
 
-        val delegate = FeedbinAccountDelegate(database, feedbin)
-
         delegate.markRead(listOf(id.toString()))
 
         coVerify { feedbin.deleteUnreadEntries(body = UnreadEntriesRequest(listOf(id))) }
@@ -258,8 +252,6 @@ class FeedbinAccountDelegateTest {
         coEvery { feedbin.createUnreadEntries(body = any<UnreadEntriesRequest>()) } returns Response.success(
             listOf(id)
         )
-
-        val delegate = FeedbinAccountDelegate(database, feedbin)
 
         delegate.markUnread(listOf(id.toString()))
 
@@ -274,8 +266,6 @@ class FeedbinAccountDelegateTest {
             listOf(id)
         )
 
-        val delegate = FeedbinAccountDelegate(database, feedbin)
-
         delegate.addStar(listOf(id.toString()))
 
         coVerify { feedbin.createStarredEntries(body = StarredEntriesRequest(listOf(id))) }
@@ -289,8 +279,6 @@ class FeedbinAccountDelegateTest {
             null
         )
 
-        val delegate = FeedbinAccountDelegate(database, feedbin)
-
         delegate.removeStar(listOf(id.toString()))
 
         coVerify { feedbin.deleteStarredEntries(body = StarredEntriesRequest(listOf(id))) }
@@ -298,7 +286,6 @@ class FeedbinAccountDelegateTest {
 
     @Test
     fun addFeed() = runTest {
-        val delegate = FeedbinAccountDelegate(database, feedbin)
         val url = "wheresyoured.at"
         val successResponse = Response.success<Subscription>(
             Subscription(
@@ -326,7 +313,7 @@ class FeedbinAccountDelegateTest {
             )
         }.returns(Response.success(emptyList()))
 
-        val result = delegate.addFeed(url = url) as AddFeedResult.Success
+        val result = delegate.addFeed(url = url, folderTitles = emptyList(), title = "") as AddFeedResult.Success
         val feed = result.feed
 
         assertEquals(
@@ -337,7 +324,6 @@ class FeedbinAccountDelegateTest {
 
     @Test
     fun addFeed_multipleChoice() = runTest {
-        val delegate = FeedbinAccountDelegate(database, feedbin)
         val url = "9to5google.com"
         val choices = listOf(
             SubscriptionChoice(
@@ -373,7 +359,7 @@ class FeedbinAccountDelegateTest {
             feedbin.createSubscription(body = CreateSubscriptionRequest(feed_url = url))
         } returns multipleChoiceResponse
 
-        val result = delegate.addFeed(url = url)
+        val result = delegate.addFeed(url = url, folderTitles = emptyList(), title = "")
 
         val actualTitles =
             (result as AddFeedResult.MultipleChoices).choices.map { it.title }
@@ -383,7 +369,6 @@ class FeedbinAccountDelegateTest {
 
     @Test
     fun addFeed_Failure() = runTest {
-        val delegate = FeedbinAccountDelegate(database, feedbin)
         val url = "example.com"
 
         val responseBody = """
@@ -398,7 +383,7 @@ class FeedbinAccountDelegateTest {
             feedbin.createSubscription(body = CreateSubscriptionRequest(feed_url = url))
         } returns Response.error(404, responseBody)
 
-        val result = delegate.addFeed(url = url)
+        val result = delegate.addFeed(url = url, folderTitles = emptyList(), title = "")
 
         assertTrue(result is AddFeedResult.Failure)
     }
@@ -435,6 +420,3 @@ class FeedbinAccountDelegateTest {
         assertEquals(expected = feedTitle, actual = updated.title)
     }
 }
-
-private suspend fun FeedbinAccountDelegate.addFeed(url: String) =
-    addFeed(url = url, null, null)

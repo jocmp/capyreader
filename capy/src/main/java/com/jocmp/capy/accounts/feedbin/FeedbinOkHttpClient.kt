@@ -2,7 +2,7 @@ package com.jocmp.capy.accounts.feedbin
 
 import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.accounts.httpClientBuilder
-import com.jocmp.feedbinclient.BasicAuthInterceptor
+import com.jocmp.capy.accounts.BasicAuthInterceptor
 import okhttp3.Credentials
 import okhttp3.OkHttpClient
 import java.net.URI

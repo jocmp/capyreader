@@ -7,9 +7,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.create
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface GoogleReader {
@@ -20,29 +21,23 @@ interface GoogleReader {
 
     @GET("reader/api/0/stream/items/ids")
     suspend fun streamItemsIDs(
-       @Query("s") streamID: String,
-       @Query("n") count: Int = 10_000,
-       @Query("xt") excludedStreamID: String? = null,
-       @Query("output") output: String = "json",
-    ): Response<StreamItemIDsResult>
-
-    // use to fetch missing articles
-    @POST("reader/api/0/stream/items/contents")
-    suspend fun streamItemsContents(
-//        @FormUrlEncoded
-    )
-
-    @GET("reader/api/0/stream/contents/{streamID}")
-    suspend fun streamContents(
-        @Path("streamID") streamID: String,
-        @Query("n") count: Int = 100,
+        @Query("s") streamID: String,
         /** Epoch timestamp. Items older than this timestamp are filtered out. */
         @Query("ot") since: Long? = null,
-        /** A stream ID to exclude from the list. */
-        @Query("xt") excludedStreamID: String = Stream.READ.id,
         @Query("c") continuation: String? = null,
+        @Query("n") count: Int = 10_000,
+        /** A stream ID to exclude from the list. */
+        @Query("xt") excludedStreamID: String? = null,
         @Query("output") output: String = "json",
-    ): Response<StreamContentsResult>
+    ): Response<StreamItemIDsResult>
+
+    @FormUrlEncoded
+    @POST("reader/api/0/stream/items/contents")
+    suspend fun streamItemsContents(
+        @Field("i") ids: List<String>,
+        @Field("T") postToken: String?,
+        @Query("output") output: String = "json",
+    ): Response<StreamItemsContentsResult>
 
     @POST("accounts/ClientLogin")
     suspend fun clientLogin(
@@ -50,7 +45,12 @@ interface GoogleReader {
         @Query("Passwd") password: String
     ): Response<String>
 
+    @GET("reader/api/0/token")
+    suspend fun token(): Response<String>
+
     companion object {
+        const val BAD_TOKEN_HEADER_KEY = "X-Reader-Google-Bad-Token"
+
         fun create(
             client: OkHttpClient,
             baseURL: String
