@@ -1,18 +1,24 @@
 package com.jocmp.capy.accounts.reader
 
+import android.util.Log
 import com.jocmp.capy.AccountDelegate
 import com.jocmp.capy.Article
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
+import com.jocmp.capy.articles.ArticleContent
+import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.common.withResult
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.persistence.ArticleRecords
-import com.jocmp.feedbinclient.pagingInfo
 import com.jocmp.readerclient.Category
 import com.jocmp.readerclient.GoogleReader
+import com.jocmp.readerclient.Item
+import com.jocmp.readerclient.Stream
 import com.jocmp.readerclient.Subscription
+import okhttp3.OkHttpClient
+import org.jsoup.Jsoup
 import java.io.IOException
 import java.time.ZonedDateTime
 
@@ -22,8 +28,10 @@ import java.time.ZonedDateTime
  */
 internal class ReaderAccountDelegate(
     private val database: Database,
+    private val httpClient: OkHttpClient,
     private val googleReader: GoogleReader,
 ) : AccountDelegate {
+    private val articleContent = ArticleContent(httpClient)
     private val articleRecords = ArticleRecords(database)
 
     override suspend fun addFeed(
@@ -40,7 +48,7 @@ internal class ReaderAccountDelegate(
 
     override suspend fun refresh(cutoffDate: ZonedDateTime?): Result<Unit> {
         return try {
-            val since = articleRecords.maxUpdatedAt()
+            val since = articleRecords.maxUpdatedAt().toEpochSecond()
 
             refreshFeeds()
             refreshArticles(since = since)
@@ -78,7 +86,9 @@ internal class ReaderAccountDelegate(
     }
 
     override suspend fun fetchFullContent(article: Article): Result<String> {
-        return Result.failure(Throwable(""))
+        article.url ?: return Result.failure(Error("No article url found"))
+
+        return articleContent.fetch(article.url)
     }
 
     private suspend fun refreshFeeds() {
@@ -127,33 +137,84 @@ internal class ReaderAccountDelegate(
         )
     }
 
-    private suspend fun refreshAllArticles(since: String) {
-        fetchPaginatedEntries(since = since)
+    private suspend fun refreshArticles(
+        since: Long = articleRecords.maxUpdatedAt().toEpochSecond()
+    ) {
+        refreshUnreadEntries()
+        refreshStarredEntries()
+        refreshAllArticles(since = since)
     }
 
-    private suspend fun fetchPaginatedEntries(
-        since: String? = null,
-        nextPage: Int? = 1,
-        ids: List<Long>? = null
+    private fun refreshUnreadEntries() {
+    }
+
+    private suspend fun refreshStarredEntries() {
+//        withResult(googleReader.) { ids ->
+//            articleRecords.markAllUnread(articleIDs = ids.map { it.toString() })
+//        }
+    }
+
+    private suspend fun refreshAllArticles(since: Long) {
+        fetchPaginatedItems(
+            since = since,
+            stream = Stream.READING_LIST
+        )
+    }
+
+    private suspend fun fetchPaginatedItems(
+        since: Long? = null,
+        stream: Stream,
+        continuation: String? = null,
     ) {
-        nextPage ?: return
-
-        val response = googleReader.items(
+        val response = googleReader.streamContents(
+            streamID = stream.id,
             since = since,
-            page = nextPage.toString(),
-            ids = ids?.joinToString(",")
+            continuation = continuation,
         )
-        val entries = response.body()
 
-        if (entries != null) {
-            saveEntries(entries)
+        val result = response.body() ?: return
+
+        saveItems(result.items)
+
+        val nextContinuation = result.continuation ?: return
+
+        fetchPaginatedItems(
+            since = since,
+            stream = stream,
+            continuation = nextContinuation
+        )
+    }
+
+    private fun saveItems(items: List<Item>) {
+        Log.d(
+            "[DEBUG] ReaderAccountDelegate",
+            "total=${items.size} ${items.joinToString(",") { it.id }}"
+        )
+
+        database.transactionWithErrorHandling {
+            items.forEach { item ->
+                val updated = TimeHelpers.nowUTC().toEpochSecond()
+
+                database.articlesQueries.create(
+                    id = item.id,
+                    feed_id = item.origin.streamId,
+                    title = item.title,
+                    author = item.author,
+                    content_html = item.summary.content,
+                    extracted_content_url = null,
+                    summary = Jsoup.parse(item.summary.content).text(),
+                    url = item.canonical.firstOrNull()?.href,
+                    image_url = item.image?.href,
+                    published_at = item.published
+                )
+
+                database.articlesQueries.updateStatus(
+                    article_id = item.id,
+                    updated_at = updated,
+                    read = true
+                )
+            }
         }
-
-        fetchPaginatedEntries(
-            since = since,
-            nextPage = response.pagingInfo?.nextPage,
-            ids = ids
-        )
     }
 
     private fun taggingID(subscription: Subscription, category: Category): String {

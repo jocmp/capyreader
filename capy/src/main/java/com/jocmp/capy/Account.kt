@@ -49,12 +49,10 @@ data class Account(
             )
         )
 
-        Source.FRESHRSS -> ReaderAccountDelegate(
+        Source.FRESHRSS -> buildFreshRSSDelegate(
             database = database,
-            googleReader = GoogleReader.forAccount(
-                path = cacheDirectory,
-                preferences = preferences
-            )
+            path = cacheDirectory,
+            preferences = preferences
         )
     }
 ) {
@@ -260,11 +258,22 @@ data class Account(
 private fun Feedbin.Companion.forAccount(path: URI, preferences: AccountPreferences) =
     create(client = FeedbinOkHttpClient.forAccount(path, preferences))
 
-private fun GoogleReader.Companion.forAccount(path: URI, preferences: AccountPreferences) =
-    create(
-        client = ReaderOkHttpClient.forAccount(path, preferences),
-        baseURL = preferences.url.get()
+private fun buildFreshRSSDelegate(
+    database: Database,
+    path: URI,
+    preferences: AccountPreferences
+): AccountDelegate {
+    val httpClient = ReaderOkHttpClient.forAccount(path, preferences)
+
+    return ReaderAccountDelegate(
+        database = database,
+        httpClient = httpClient,
+        googleReader = GoogleReader.create(
+            client = httpClient,
+            baseURL = preferences.url.get()
+        )
     )
+}
 
 private fun AutoDelete.cutoffDate(): ZonedDateTime? {
     val now = nowUTC()

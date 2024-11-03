@@ -9,6 +9,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.create
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface GoogleReader {
@@ -17,13 +18,20 @@ interface GoogleReader {
         @Query("output") output: String = "json"
     ): Response<SubscriptionListResult>
 
-    // reader/api/0/stream/items/ids
-    @GET("reader/api/0/subscription/list")
-    suspend fun items(
-        @Query("output") output: String = "json"
-    ): Response<SubscriptionListResult>
-//    user/-/state/com.google/reading-list
 
+    @GET("reader/api/0/stream/contents/{streamID}")
+    suspend fun streamContents(
+        @Path("streamID") streamID: String,
+        @Query("output") output: String = "json",
+        @Query("n") count: Int = 100,
+        /** Epoch timestamp. Items older than this timestamp are filtered out. */
+        @Query("ot") since: Long? = null,
+        @Query("c") continuation: String? = null
+    ): Response<StreamContentsResult>
+
+    // user/-/state/com.google/read
+
+//    suspend fun itemContents()
 
     @POST("accounts/ClientLogin")
     suspend fun clientLogin(

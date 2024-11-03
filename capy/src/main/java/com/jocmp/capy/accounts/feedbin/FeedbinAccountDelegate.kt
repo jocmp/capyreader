@@ -193,7 +193,7 @@ internal class FeedbinAccountDelegate(
 
     override suspend fun refresh(cutoffDate: ZonedDateTime?): Result<Unit> {
         return try {
-            val since = articleRecords.maxUpdatedAt()
+            val since = articleRecords.maxUpdatedAt().toString()
 
             refreshFeeds()
             refreshTaggings()
@@ -207,7 +207,7 @@ internal class FeedbinAccountDelegate(
         }
     }
 
-    private suspend fun refreshArticles(since: String = articleRecords.maxUpdatedAt()) {
+    private suspend fun refreshArticles(since: String = articleRecords.maxUpdatedAt().toString()) {
         refreshStarredEntries()
         refreshUnreadEntries()
         refreshAllArticles(since = since)
@@ -314,10 +314,10 @@ internal class FeedbinAccountDelegate(
         )
     }
 
-    private fun saveEntries(entries: List<Entry>, updatedAt: ZonedDateTime = TimeHelpers.nowUTC()) {
+    private fun saveEntries(entries: List<Entry>) {
         database.transactionWithErrorHandling {
             entries.forEach { entry ->
-                val updated = updatedAt.toEpochSecond()
+                val updated = TimeHelpers.nowUTC().toEpochSecond()
 
                 database.articlesQueries.create(
                     id = entry.id.toString(),

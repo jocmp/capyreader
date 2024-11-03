@@ -1,6 +1,5 @@
 package com.jocmp.capy.accounts.reader
 
-
 import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.accounts.httpClientBuilder
 import com.jocmp.feedbinclient.BasicAuthInterceptor

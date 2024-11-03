@@ -150,12 +150,12 @@ internal class ArticleRecords internal constructor(
     }
 
     /** Date in UTC */
-    fun maxUpdatedAt(): String {
+    fun maxUpdatedAt(): ZonedDateTime {
         val max = database.articlesQueries.lastUpdatedAt().executeAsOne().MAX
 
-        max ?: return cutoffDate().toString()
+        max ?: return cutoffDate()
 
-        return max.toDateTimeFromSeconds.toString()
+        return max.toDateTimeFromSeconds
     }
 
     fun unreadArticleIDs(filter: ArticleFilter, range: MarkRead): List<String> {
