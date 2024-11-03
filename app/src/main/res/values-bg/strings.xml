@@ -187,4 +187,6 @@
     <string name="article_view_open_externally">Отвори външно</string>
     <string name="article_list_row_swipe_open_externally">Отвори статия в браузъра</string>
     <string name="settings_confirm_mark_all_read">Потвърди маркирането на всички като прочетени</string>
+    <string name="auth_fields_api_url">Сървър</string>
+    <string name="settings_section_account_server">Сървър</string>
 </resources>
