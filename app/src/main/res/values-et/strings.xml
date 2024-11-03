@@ -187,4 +187,7 @@
     <string name="article_list_row_swipe_open_externally">Ava artikkel veebibrauseris</string>
     <string name="article_view_open_externally">Ava väliselt</string>
     <string name="settings_confirm_mark_all_read">Kinnita, et soovid kõik märkida loetuks</string>
+    <string name="auth_fields_api_url">Server</string>
+    <string name="settings_section_account_server">Server</string>
+    <string name="account_source_freshrss">FreshRSS</string>
 </resources>
