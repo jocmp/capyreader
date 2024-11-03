@@ -1,6 +1,5 @@
 package com.jocmp.capy.accounts.reader
 
-import android.util.Log
 import com.jocmp.capy.AccountDelegate
 import com.jocmp.capy.Article
 import com.jocmp.capy.Feed
@@ -140,18 +139,31 @@ internal class ReaderAccountDelegate(
     private suspend fun refreshArticles(
         since: Long = articleRecords.maxUpdatedAt().toEpochSecond()
     ) {
-        refreshUnreadEntries()
-        refreshStarredEntries()
+        refreshUnreadItems()
+        refreshStarredItems()
         refreshAllArticles(since = since)
+        fetchMissingArticles()
     }
 
-    private fun refreshUnreadEntries() {
+    private suspend fun refreshUnreadItems() {
+        withResult(
+            googleReader.streamItemsIDs(
+                streamID = Stream.READING_LIST.id,
+                excludedStreamID = Stream.READ.id
+            )
+        ) { result ->
+            articleRecords.markAllUnread(articleIDs = result.itemRefs.map { it.hexID })
+        }
     }
 
-    private suspend fun refreshStarredEntries() {
-//        withResult(googleReader.) { ids ->
-//            articleRecords.markAllUnread(articleIDs = ids.map { it.toString() })
-//        }
+    private suspend fun refreshStarredItems() {
+        withResult(googleReader.streamItemsIDs(streamID = Stream.STARRED.id)) { result ->
+            articleRecords.markAllStarred(articleIDs = result.itemRefs.map { it.hexID })
+        }
+    }
+
+
+    private fun fetchMissingArticles() {
     }
 
     private suspend fun refreshAllArticles(since: Long) {
@@ -186,17 +198,12 @@ internal class ReaderAccountDelegate(
     }
 
     private fun saveItems(items: List<Item>) {
-        Log.d(
-            "[DEBUG] ReaderAccountDelegate",
-            "total=${items.size} ${items.joinToString(",") { it.id }}"
-        )
-
         database.transactionWithErrorHandling {
             items.forEach { item ->
                 val updated = TimeHelpers.nowUTC().toEpochSecond()
 
                 database.articlesQueries.create(
-                    id = item.id,
+                    id = item.hexID,
                     feed_id = item.origin.streamId,
                     title = item.title,
                     author = item.author,
@@ -209,7 +216,7 @@ internal class ReaderAccountDelegate(
                 )
 
                 database.articlesQueries.updateStatus(
-                    article_id = item.id,
+                    article_id = item.hexID,
                     updated_at = updated,
                     read = true
                 )

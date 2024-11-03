@@ -18,20 +18,31 @@ interface GoogleReader {
         @Query("output") output: String = "json"
     ): Response<SubscriptionListResult>
 
+    @GET("reader/api/0/stream/items/ids")
+    suspend fun streamItemsIDs(
+       @Query("s") streamID: String,
+       @Query("n") count: Int = 10_000,
+       @Query("xt") excludedStreamID: String? = null,
+       @Query("output") output: String = "json",
+    ): Response<StreamItemIDsResult>
+
+    // use to fetch missing articles
+    @POST("reader/api/0/stream/items/contents")
+    suspend fun streamItemsContents(
+//        @FormUrlEncoded
+    )
 
     @GET("reader/api/0/stream/contents/{streamID}")
     suspend fun streamContents(
         @Path("streamID") streamID: String,
-        @Query("output") output: String = "json",
         @Query("n") count: Int = 100,
         /** Epoch timestamp. Items older than this timestamp are filtered out. */
         @Query("ot") since: Long? = null,
-        @Query("c") continuation: String? = null
+        /** A stream ID to exclude from the list. */
+        @Query("xt") excludedStreamID: String = Stream.READ.id,
+        @Query("c") continuation: String? = null,
+        @Query("output") output: String = "json",
     ): Response<StreamContentsResult>
-
-    // user/-/state/com.google/read
-
-//    suspend fun itemContents()
 
     @POST("accounts/ClientLogin")
     suspend fun clientLogin(

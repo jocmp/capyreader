@@ -13,6 +13,8 @@ data class Item(
     val author: String? = null,
     val enclosure: List<Enclosure>? = null,
 ) {
+    val hexID = id.split("/").last()
+
     @JsonClass(generateAdapter = true)
     data class Origin(
         val streamId: String,
