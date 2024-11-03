@@ -186,4 +186,7 @@
     <string name="article_list_row_swipe_open_externally">在浏览器中打开文章</string>
     <string name="article_view_open_externally">外部打开</string>
     <string name="settings_confirm_mark_all_read">需要确认才能标记全部为已读</string>
+    <string name="auth_fields_api_url">服务器</string>
+    <string name="account_source_freshrss">FreshRSS</string>
+    <string name="settings_section_account_server">服务器</string>
 </resources>
