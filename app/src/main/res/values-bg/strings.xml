@@ -189,4 +189,5 @@
     <string name="settings_confirm_mark_all_read">Потвърди маркирането на всички като прочетени</string>
     <string name="auth_fields_api_url">Сървър</string>
     <string name="settings_section_account_server">Сървър</string>
+    <string name="account_source_freshrss">FreshRSS</string>
 </resources>
