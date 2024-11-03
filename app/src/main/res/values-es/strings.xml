@@ -188,4 +188,7 @@
     <string name="article_list_row_swipe_open_externally">Abrir el artículo en el navegador</string>
     <string name="article_view_open_externally">Abrir externamente</string>
     <string name="settings_confirm_mark_all_read">Confirmar que se ha leído todo</string>
+    <string name="settings_section_account_server">Servidor</string>
+    <string name="auth_fields_api_url">Servidor</string>
+    <string name="account_source_freshrss">FreshRSS</string>
 </resources>
