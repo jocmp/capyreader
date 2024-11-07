@@ -33,12 +33,11 @@ internal class ArticleRecords internal constructor(
         ).executeAsOneOrNull()
     }
 
-    fun findMissingArticles(): List<Long> {
+    fun findMissingArticles(): List<String> {
         return database
             .articlesQueries
             .findMissingArticles()
             .executeAsList()
-            .map { it.toLong() }
     }
 
     internal suspend fun notifications(since: ZonedDateTime): List<ArticleNotification> {
@@ -150,12 +149,12 @@ internal class ArticleRecords internal constructor(
     }
 
     /** Date in UTC */
-    fun maxUpdatedAt(): String {
+    fun maxUpdatedAt(): ZonedDateTime {
         val max = database.articlesQueries.lastUpdatedAt().executeAsOne().MAX
 
-        max ?: return cutoffDate().toString()
+        max ?: return cutoffDate()
 
-        return max.toDateTimeFromSeconds.toString()
+        return max.toDateTimeFromSeconds
     }
 
     fun unreadArticleIDs(filter: ArticleFilter, range: MarkRead): List<String> {

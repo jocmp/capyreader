@@ -6,6 +6,7 @@ import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.FeedOption
 import com.jocmp.capy.accounts.SubscriptionChoice
+import com.jocmp.capy.accounts.withErrorHandling
 import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.host
@@ -31,7 +32,6 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import okio.IOException
 import org.jsoup.Jsoup
-import java.net.UnknownHostException
 import java.time.ZonedDateTime
 
 internal class FeedbinAccountDelegate(
@@ -193,7 +193,7 @@ internal class FeedbinAccountDelegate(
 
     override suspend fun refresh(cutoffDate: ZonedDateTime?): Result<Unit> {
         return try {
-            val since = articleRecords.maxUpdatedAt()
+            val since = articleRecords.maxUpdatedAt().toString()
 
             refreshFeeds()
             refreshTaggings()
@@ -207,7 +207,7 @@ internal class FeedbinAccountDelegate(
         }
     }
 
-    private suspend fun refreshArticles(since: String = articleRecords.maxUpdatedAt()) {
+    private suspend fun refreshArticles(since: String = articleRecords.maxUpdatedAt().toString()) {
         refreshStarredEntries()
         refreshUnreadEntries()
         refreshAllArticles(since = since)
@@ -283,7 +283,7 @@ internal class FeedbinAccountDelegate(
         coroutineScope {
             ids.chunked(MAX_ENTRY_LIMIT).map { chunkedIDs ->
                 launch {
-                    fetchPaginatedEntries(ids = chunkedIDs)
+                    fetchPaginatedEntries(ids = chunkedIDs.map { it.toLong() })
                 }
             }
         }
@@ -314,10 +314,10 @@ internal class FeedbinAccountDelegate(
         )
     }
 
-    private fun saveEntries(entries: List<Entry>, updatedAt: ZonedDateTime = TimeHelpers.nowUTC()) {
+    private fun saveEntries(entries: List<Entry>) {
         database.transactionWithErrorHandling {
             entries.forEach { entry ->
-                val updated = updatedAt.toEpochSecond()
+                val updated = TimeHelpers.nowUTC().toEpochSecond()
 
                 database.articlesQueries.create(
                     id = entry.id.toString(),
@@ -355,21 +355,5 @@ internal class FeedbinAccountDelegate(
     companion object {
         const val MAX_ENTRY_LIMIT = 100
         const val MAX_CREATE_UNREAD_LIMIT = 1_000
-    }
-
-    private suspend fun <T> withErrorHandling(func: suspend () -> T?): Result<T> {
-        return try {
-            val result = func()
-
-            if (result != null) {
-                Result.success(result)
-            } else {
-                Result.failure(Throwable("Unexpected error"))
-            }
-        } catch (e: UnknownHostException) {
-            return Result.failure(e)
-        } catch (e: UnauthorizedError) {
-            return Result.failure(e)
-        }
     }
 }
