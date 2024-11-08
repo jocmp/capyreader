@@ -39,6 +39,16 @@ interface GoogleReader {
         @Query("output") output: String = "json",
     ): Response<StreamItemsContentsResult>
 
+    @FormUrlEncoded
+    @POST("reader/api/0/edit-tag")
+    suspend fun editTag(
+        @Field("i") ids: List<String>,
+        @Field("T") postToken: String?,
+        @Field("a") addTag: String? = null,
+        @Field("r") removeTag: String? = null,
+        @Query("output") output: String = "json",
+    ): Response<String>
+
     @POST("accounts/ClientLogin")
     suspend fun clientLogin(
         @Query("Email") email: String,

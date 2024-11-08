@@ -4,6 +4,8 @@ import com.jocmp.capy.AccountDelegate
 import com.jocmp.capy.Article
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
+import com.jocmp.capy.accounts.feedbin.FeedbinAccountDelegate.Companion.MAX_CREATE_UNREAD_LIMIT
+import com.jocmp.capy.accounts.withErrorHandling
 import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.common.UnauthorizedError
@@ -36,18 +38,6 @@ internal class ReaderAccountDelegate(
     private val articleContent = ArticleContent(httpClient)
     private val articleRecords = ArticleRecords(database)
 
-    override suspend fun addFeed(
-        url: String,
-        title: String?,
-        folderTitles: List<String>?
-    ): AddFeedResult {
-        return AddFeedResult.Failure(error = AddFeedResult.AddFeedError.NetworkError())
-    }
-
-    override suspend fun addStar(articleIDs: List<String>): Result<Unit> {
-        return Result.failure(Throwable(""))
-    }
-
     override suspend fun refresh(cutoffDate: ZonedDateTime?): Result<Unit> {
         return try {
             val since = articleRecords.maxUpdatedAt().toEpochSecond()
@@ -63,16 +53,33 @@ internal class ReaderAccountDelegate(
         }
     }
 
-    override suspend fun removeStar(articleIDs: List<String>): Result<Unit> {
-        return Result.failure(Throwable(""))
-    }
-
     override suspend fun markRead(articleIDs: List<String>): Result<Unit> {
-        return Result.failure(Throwable(""))
+        return withErrorHandling {
+            articleIDs.chunked(MAX_CREATE_UNREAD_LIMIT).map { batchIDs ->
+                editTag(ids = batchIDs, addTag = Stream.READ)
+            }
+            Unit
+        }
     }
 
     override suspend fun markUnread(articleIDs: List<String>): Result<Unit> {
-        return Result.failure(Throwable(""))
+        return editTag(ids = articleIDs, removeTag = Stream.READ)
+    }
+
+    override suspend fun addStar(articleIDs: List<String>): Result<Unit> {
+        return editTag(ids = articleIDs, addTag = Stream.STARRED)
+    }
+
+    override suspend fun removeStar(articleIDs: List<String>): Result<Unit> {
+        return editTag(ids = articleIDs, removeTag = Stream.STARRED)
+    }
+
+    override suspend fun addFeed(
+        url: String,
+        title: String?,
+        folderTitles: List<String>?
+    ): AddFeedResult {
+        return AddFeedResult.Failure(error = AddFeedResult.AddFeedError.NetworkError())
     }
 
     override suspend fun updateFeed(
@@ -206,7 +213,11 @@ internal class ReaderAccountDelegate(
             count = MAX_PAGINATED_ITEM_LIMIT,
         )
 
-        val result = response.body() ?: return
+        val result = response.body()
+
+        if (result == null || result.itemRefs.isEmpty()) {
+            return
+        }
 
         coroutineScope {
             launch {
@@ -263,7 +274,30 @@ internal class ReaderAccountDelegate(
         }
     }
 
+    private suspend fun editTag(
+        ids: List<String>,
+        addTag: Stream? = null,
+        removeTag: Stream? = null,
+    ): Result<Unit> {
+        return withErrorHandling {
+            withPostToken {
+                googleReader.editTag(
+                    ids,
+                    postToken = postToken.get(),
+                    addTag = addTag?.id,
+                    removeTag = removeTag?.id
+                )
+            }
+
+            Unit
+        }
+    }
+
     private suspend fun <T> withPostToken(handler: suspend () -> Response<T>): Response<T> {
+        if (postToken.get() == null) {
+            fetchToken()
+        }
+
         val response = handler()
 
         val isBadToken = response
@@ -276,19 +310,22 @@ internal class ReaderAccountDelegate(
             return response
         }
 
+        fetchToken()
+
+        return handler()
+    }
+
+    private suspend fun fetchToken() {
         try {
             postToken.set(googleReader.token().body())
-
-            return handler()
         } catch (exception: IOException) {
-            return response
+            // continue
         }
     }
 
     private fun taggingID(subscription: Subscription, category: Category): String {
         return "${subscription.id}:${category.id}"
     }
-
 
     companion object {
         const val MAX_PAGINATED_ITEM_LIMIT = 100

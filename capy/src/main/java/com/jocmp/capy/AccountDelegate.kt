@@ -4,21 +4,21 @@ import com.jocmp.capy.accounts.AddFeedResult
 import java.time.ZonedDateTime
 
 interface AccountDelegate {
+    suspend fun refresh(cutoffDate: ZonedDateTime? = null): Result<Unit>
+
+    suspend fun markRead(articleIDs: List<String>): Result<Unit>
+
+    suspend fun markUnread(articleIDs: List<String>): Result<Unit>
+
+    suspend fun addStar(articleIDs: List<String>): Result<Unit>
+
+    suspend fun removeStar(articleIDs: List<String>): Result<Unit>
+
     suspend fun addFeed(
         url: String,
         title: String?,
         folderTitles: List<String>?
     ): AddFeedResult
-
-    suspend fun addStar(articleIDs: List<String>): Result<Unit>
-
-    suspend fun refresh(cutoffDate: ZonedDateTime? = null): Result<Unit>
-
-    suspend fun removeStar(articleIDs: List<String>): Result<Unit>
-
-    suspend fun markRead(articleIDs: List<String>): Result<Unit>
-
-    suspend fun markUnread(articleIDs: List<String>): Result<Unit>
 
     suspend fun updateFeed(
         feed: Feed,

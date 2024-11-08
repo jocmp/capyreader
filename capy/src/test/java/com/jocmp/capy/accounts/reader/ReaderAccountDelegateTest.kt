@@ -20,6 +20,7 @@ import com.jocmp.readerclient.StreamItemsContentsResult
 import com.jocmp.readerclient.Subscription
 import com.jocmp.readerclient.SubscriptionListResult
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import okhttp3.Headers
@@ -42,7 +43,7 @@ class ReaderAccountDelegateTest {
     private lateinit var feedFixture: FeedFixture
     private lateinit var delegate: AccountDelegate
 
-    val subscriptions = listOf(
+    private val subscriptions = listOf(
         Subscription(
             id = "feed/2",
             title = "Ars Technica - All content",
@@ -203,6 +204,106 @@ class ReaderAccountDelegateTest {
         assertEquals(result, Result.failure(networkError))
     }
 
+    @Test
+    fun markRead() = runTest {
+        val id = "0006265cd4de43c6"
+
+        coEvery {
+            googleReader.editTag(
+                ids = listOf(id),
+                postToken = postToken,
+                addTag = Stream.READ.id,
+            )
+        } returns Response.success("OK")
+
+        stubPostToken()
+
+        delegate.markRead(listOf(id))
+
+        coVerify {
+            googleReader.editTag(
+                ids = listOf(id),
+                postToken = postToken,
+                addTag = Stream.READ.id,
+            )
+        }
+    }
+
+    @Test
+    fun markUnread() = runTest {
+        val id = "0006265cd4de43c6"
+
+        coEvery {
+            googleReader.editTag(
+                ids = listOf(id),
+                postToken = postToken,
+                removeTag = Stream.READ.id,
+            )
+        } returns Response.success("OK")
+
+        stubPostToken()
+
+        delegate.markUnread(listOf(id))
+
+        coVerify {
+            googleReader.editTag(
+                ids = listOf(id),
+                postToken = postToken,
+                removeTag = Stream.READ.id,
+            )
+        }
+    }
+
+    @Test
+    fun addStar() = runTest {
+        val id = "0006265cd4de43c6"
+
+        coEvery {
+            googleReader.editTag(
+                ids = listOf(id),
+                postToken = postToken,
+                addTag = Stream.STARRED.id,
+            )
+        } returns Response.success("OK")
+
+        stubPostToken()
+
+        delegate.addStar(listOf(id))
+
+        coVerify {
+            googleReader.editTag(
+                ids = listOf(id),
+                postToken = postToken,
+                addTag = Stream.STARRED.id,
+            )
+        }
+    }
+
+    @Test
+    fun removeStar() = runTest {
+        val id = "0006265cd4de43c6"
+
+        coEvery {
+            googleReader.editTag(
+                ids = listOf(id),
+                postToken = postToken,
+                removeTag = Stream.STARRED.id,
+            )
+        } returns Response.success("OK")
+
+        stubPostToken()
+
+        delegate.removeStar(listOf(id))
+
+        coVerify {
+            googleReader.editTag(
+                ids = listOf(id),
+                postToken = postToken,
+                removeTag = Stream.STARRED.id,
+            )
+        }
+    }
+
     private fun stubSubscriptions(subscriptions: List<Subscription> = this.subscriptions) {
         coEvery { googleReader.subscriptionList() }.returns(
             Response.success(
@@ -251,13 +352,17 @@ class ReaderAccountDelegateTest {
             googleReader.streamItemsContents(items.map { it.hexID }, postToken = null)
         }.returns(Response.error("".toResponseBody(), errorResponse))
 
-        coEvery {
-            googleReader.token()
-        }.returns(Response.success(postToken))
+        stubPostToken()
 
         coEvery {
             googleReader.streamItemsContents(items.map { it.hexID }, postToken = postToken)
         }.returns(Response.success(StreamItemsContentsResult(items)))
+    }
+
+    private fun stubPostToken() {
+        coEvery {
+            googleReader.token()
+        }.returns(Response.success(postToken))
     }
 
     private fun stubUnread(itemRefs: List<ItemRef>) {
