@@ -135,7 +135,7 @@ internal class FeedbinAccountDelegate(
                 AddFeedResult.MultipleChoices(choices)
             }
         } catch (e: IOException) {
-            AddFeedResult.Failure(AddFeedResult.AddFeedError.NetworkError())
+            AddFeedResult.networkError()
         }
     }
 

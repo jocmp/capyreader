@@ -49,6 +49,15 @@ interface GoogleReader {
         @Query("output") output: String = "json",
     ): Response<String>
 
+    @FormUrlEncoded
+    @POST("reader/api/0/subscription/quickadd")
+    suspend fun quickAddSubscription(
+        @Field("quickadd") url: String,
+        @Field("T") postToken: String?,
+        @Query("output") output: String = "json"
+    ):Response<SubscriptionQuickAddResult>
+
+
     @POST("accounts/ClientLogin")
     suspend fun clientLogin(
         @Query("Email") email: String,

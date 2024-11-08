@@ -13,6 +13,7 @@ import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.common.withResult
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.persistence.ArticleRecords
+import com.jocmp.capy.persistence.FeedRecords
 import com.jocmp.readerclient.Category
 import com.jocmp.readerclient.GoogleReader
 import com.jocmp.readerclient.GoogleReader.Companion.BAD_TOKEN_HEADER_KEY
@@ -37,6 +38,7 @@ internal class ReaderAccountDelegate(
     private var postToken = AtomicReference<String?>(null)
     private val articleContent = ArticleContent(httpClient)
     private val articleRecords = ArticleRecords(database)
+    private val feedRecords = FeedRecords(database)
 
     override suspend fun refresh(cutoffDate: ZonedDateTime?): Result<Unit> {
         return try {
@@ -79,7 +81,35 @@ internal class ReaderAccountDelegate(
         title: String?,
         folderTitles: List<String>?
     ): AddFeedResult {
-        return AddFeedResult.Failure(error = AddFeedResult.AddFeedError.NetworkError())
+        return try {
+            val result = googleReader
+                .quickAddSubscription(url = url, postToken = postToken.get())
+                .body() ?: return AddFeedResult.feedNotFound()
+
+            val subscriptions = googleReader
+                .subscriptionList()
+                .body()
+                ?.subscriptions ?: return AddFeedResult.networkError()
+
+            val subscription = subscriptions.find { it.id == result.streamId }
+                ?: return AddFeedResult.feedNotFound()
+
+            upsertFeed(subscription)
+
+            val feed = feedRecords.findBy(subscription.id)
+
+            if (feed != null) {
+                coroutineScope {
+                    launch { refreshArticles() }
+                }
+
+                AddFeedResult.Success(feed)
+            } else {
+                AddFeedResult.saveFailure()
+            }
+        } catch (e: IOException) {
+            AddFeedResult.networkError()
+        }
     }
 
     override suspend fun updateFeed(
