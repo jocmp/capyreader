@@ -47,7 +47,7 @@ interface GoogleReader {
         @Field("a") addTag: String? = null,
         @Field("r") removeTag: String? = null,
         @Query("output") output: String = "json",
-    ): Response<Void>
+    ): Response<String>
 
     @POST("accounts/ClientLogin")
     suspend fun clientLogin(
