@@ -42,6 +42,22 @@ internal class FeedbinAccountDelegate(
     private val feedRecords = FeedRecords(database)
     private val taggingRecords = TaggingRecords(database)
 
+    override suspend fun refresh(cutoffDate: ZonedDateTime?): Result<Unit> {
+        return try {
+            val since = articleRecords.maxUpdatedAt().toString()
+
+            refreshFeeds()
+            refreshTaggings()
+            refreshArticles(since = since)
+
+            Result.success(Unit)
+        } catch (exception: IOException) {
+            Result.failure(exception)
+        } catch (e: UnauthorizedError) {
+            Result.failure(e)
+        }
+    }
+
     override suspend fun markRead(articleIDs: List<String>): Result<Unit> {
         val entryIDs = articleIDs.map { it.toLong() }
 
@@ -59,6 +75,67 @@ internal class FeedbinAccountDelegate(
         return withErrorHandling {
             feedbin.createUnreadEntries(UnreadEntriesRequest(unread_entries = entryIDs))
             Unit
+        }
+    }
+
+    override suspend fun addStar(articleIDs: List<String>): Result<Unit> {
+        val entryIDs = articleIDs.map { it.toLong() }
+
+        return withErrorHandling {
+            feedbin.createStarredEntries(StarredEntriesRequest(starred_entries = entryIDs))
+            Unit
+        }
+    }
+
+    override suspend fun removeStar(articleIDs: List<String>): Result<Unit> {
+        val entryIDs = articleIDs.map { it.toLong() }
+
+        return withErrorHandling {
+            feedbin.deleteStarredEntries(StarredEntriesRequest(starred_entries = entryIDs))
+            Unit
+        }
+    }
+
+    override suspend fun addFeed(
+        url: String,
+        title: String?,
+        folderTitles: List<String>?
+    ): AddFeedResult {
+        return try {
+            val response = feedbin.createSubscription(CreateSubscriptionRequest(feed_url = url))
+            val subscription = response.body()
+            val errorBody = response.errorBody()?.string()
+
+            if (response.code() > 300) {
+                return AddFeedResult.Failure(AddFeedResult.AddFeedError.FeedNotFound())
+            }
+
+            return if (subscription != null) {
+                val icons = fetchIcons()
+                upsertFeed(subscription, icons)
+
+                val feed = feedRecords.findBy(subscription.feed_id.toString())
+
+                if (feed != null) {
+                    coroutineScope {
+                        launch { refreshArticles() }
+                    }
+
+                    AddFeedResult.Success(feed)
+                } else {
+                    AddFeedResult.Failure(AddFeedResult.AddFeedError.SaveFailure())
+                }
+            } else {
+                val decodedChoices = Json.decodeFromString<List<SubscriptionChoice>>(errorBody!!)
+
+                val choices = decodedChoices.map {
+                    FeedOption(feedURL = it.feed_url, title = it.title)
+                }
+
+                AddFeedResult.MultipleChoices(choices)
+            }
+        } catch (e: IOException) {
+            AddFeedResult.Failure(AddFeedResult.AddFeedError.NetworkError())
         }
     }
 
@@ -126,83 +203,6 @@ internal class FeedbinAccountDelegate(
                 return Result.failure(Throwable("Error extracting article"))
             }
         } catch (e: Exception) {
-            Result.failure(e)
-        }
-    }
-
-    override suspend fun addStar(articleIDs: List<String>): Result<Unit> {
-        val entryIDs = articleIDs.map { it.toLong() }
-
-        return withErrorHandling {
-            feedbin.createStarredEntries(StarredEntriesRequest(starred_entries = entryIDs))
-            Unit
-        }
-    }
-
-    override suspend fun removeStar(articleIDs: List<String>): Result<Unit> {
-        val entryIDs = articleIDs.map { it.toLong() }
-
-        return withErrorHandling {
-            feedbin.deleteStarredEntries(StarredEntriesRequest(starred_entries = entryIDs))
-            Unit
-        }
-    }
-
-    override suspend fun addFeed(
-        url: String,
-        title: String?,
-        folderTitles: List<String>?
-    ): AddFeedResult {
-        return try {
-            val response = feedbin.createSubscription(CreateSubscriptionRequest(feed_url = url))
-            val subscription = response.body()
-            val errorBody = response.errorBody()?.string()
-
-            if (response.code() > 300) {
-                return AddFeedResult.Failure(AddFeedResult.AddFeedError.FeedNotFound())
-            }
-
-            return if (subscription != null) {
-                val icons = fetchIcons()
-                upsertFeed(subscription, icons)
-
-                val feed = feedRecords.findBy(subscription.feed_id.toString())
-
-                if (feed != null) {
-                    coroutineScope {
-                        launch { refreshArticles() }
-                    }
-
-                    AddFeedResult.Success(feed)
-                } else {
-                    AddFeedResult.Failure(AddFeedResult.AddFeedError.SaveFailure())
-                }
-            } else {
-                val decodedChoices = Json.decodeFromString<List<SubscriptionChoice>>(errorBody!!)
-
-                val choices = decodedChoices.map {
-                    FeedOption(feedURL = it.feed_url, title = it.title)
-                }
-
-                AddFeedResult.MultipleChoices(choices)
-            }
-        } catch (e: IOException) {
-            AddFeedResult.Failure(AddFeedResult.AddFeedError.NetworkError())
-        }
-    }
-
-    override suspend fun refresh(cutoffDate: ZonedDateTime?): Result<Unit> {
-        return try {
-            val since = articleRecords.maxUpdatedAt().toString()
-
-            refreshFeeds()
-            refreshTaggings()
-            refreshArticles(since = since)
-
-            Result.success(Unit)
-        } catch (exception: IOException) {
-            Result.failure(exception)
-        } catch (e: UnauthorizedError) {
             Result.failure(e)
         }
     }
