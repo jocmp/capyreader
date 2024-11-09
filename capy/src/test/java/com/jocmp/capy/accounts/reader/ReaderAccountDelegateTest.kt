@@ -356,7 +356,7 @@ class ReaderAccountDelegateTest {
         assertEquals(expected = subscription.id, actual = feed.id)
         assertEquals(expected = subscription.title, actual = feed.title)
         assertEquals(expected = subscription.url, actual = feed.feedURL)
-        assertTrue(feed.siteURL.isBlank())
+        assertEquals(expected = subscription.htmlUrl, actual = feed.siteURL)
     }
 
     @Test

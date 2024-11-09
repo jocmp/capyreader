@@ -91,7 +91,11 @@ internal class ReaderAccountDelegate(
 
             val subscription = result?.toSubscription ?: return AddFeedResult.feedNotFound()
 
-            upsertFeed(subscription)
+            try {
+                refreshFeeds()
+            } catch (e: Throwable) {
+                upsertFeed(subscription)
+            }
 
             val feed = feedRecords.findBy(subscription.id)
 
