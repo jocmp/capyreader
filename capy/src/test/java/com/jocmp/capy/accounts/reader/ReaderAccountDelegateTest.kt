@@ -3,6 +3,7 @@ package com.jocmp.capy.accounts.reader
 import com.jocmp.capy.AccountDelegate
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.InMemoryDatabaseProvider
+import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.FeedFixture
@@ -19,11 +20,13 @@ import com.jocmp.readerclient.StreamItemIDsResult
 import com.jocmp.readerclient.StreamItemsContentsResult
 import com.jocmp.readerclient.Subscription
 import com.jocmp.readerclient.SubscriptionListResult
+import com.jocmp.readerclient.SubscriptionQuickAddResult
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import okhttp3.Headers
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.Protocol
 import okhttp3.Request
 import okhttp3.ResponseBody.Companion.toResponseBody
@@ -304,6 +307,104 @@ class ReaderAccountDelegateTest {
         }
     }
 
+    @org.junit.Test
+    fun addFeed() = runTest {
+        stubPostToken()
+        stubUnread()
+        stubStarred()
+        stubReadingList()
+
+        val subscription = Subscription(
+            id = "feed/4",
+            title = "404 Media",
+            categories = listOf(
+                Category(
+                    id = "user/1/label/All",
+                    label = "All"
+                )
+            ),
+            url = "https://www.404media.co/rss/",
+            htmlUrl = "https://www.404media.co/",
+            iconUrl = "",
+        )
+
+        stubSubscriptions(subscriptions + listOf(subscription))
+
+        val response = Response.success(
+            SubscriptionQuickAddResult(
+                numResults = 1,
+                streamId = "feed/4",
+                streamName = "404 Media",
+                query = "https://www.404media.co/rss/"
+            )
+        )
+
+        val url = "https://404media.co"
+
+        coEvery {
+            googleReader.quickAddSubscription(url = url, postToken = postToken)
+        } returns response
+
+        val result = delegate.addFeed(
+            url = url,
+            folderTitles = emptyList(),
+            title = ""
+        ) as AddFeedResult.Success
+
+        val feed = result.feed
+
+        assertEquals(expected = subscription.id, actual = feed.id)
+        assertEquals(expected = subscription.title, actual = feed.title)
+        assertEquals(expected = subscription.url, actual = feed.feedURL)
+        assertTrue(feed.siteURL.isBlank())
+    }
+
+    @Test
+    fun addFeed_validationError() = runTest {
+        stubPostToken()
+
+        val response = Response.success(
+            SubscriptionQuickAddResult(
+                numResults = 0,
+            )
+        )
+
+        coEvery {
+            googleReader.quickAddSubscription(url = "https://theverge.com", postToken = postToken)
+        } returns response
+
+        val result = delegate.addFeed(
+            url = "theverge.com",
+            folderTitles = emptyList(),
+            title = ""
+        ) as AddFeedResult.Failure
+
+        assertTrue(result.error is AddFeedResult.Error.FeedNotFound)
+    }
+
+    @Test
+    fun addFeed_networkError() = runTest {
+        stubPostToken()
+
+        val responseBody = """
+            {
+              "error_message": "This feed already exists."
+            }
+        """.toResponseBody(contentType = "application/json".toMediaType())
+
+        coEvery {
+            googleReader.quickAddSubscription(url = "https://theverge.com", postToken = postToken)
+        } returns Response.error(500, responseBody)
+
+        val result = delegate.addFeed(
+            url = "theverge.com",
+            folderTitles = emptyList(),
+            title = ""
+        ) as AddFeedResult.Failure
+
+        assertTrue(result.error is AddFeedResult.Error.FeedNotFound)
+    }
+
     private fun stubSubscriptions(subscriptions: List<Subscription> = this.subscriptions) {
         coEvery { googleReader.subscriptionList() }.returns(
             Response.success(
@@ -329,7 +430,10 @@ class ReaderAccountDelegateTest {
         )
     }
 
-    private fun stubReadingList(itemRefs: List<ItemRef>, items: List<Item> = this.items) {
+    private fun stubReadingList(
+        itemRefs: List<ItemRef> = emptyList(),
+        items: List<Item> = this.items
+    ) {
         coEvery {
             googleReader.streamItemsIDs(
                 streamID = Stream.READING_LIST.id,
@@ -365,7 +469,7 @@ class ReaderAccountDelegateTest {
         }.returns(Response.success(postToken))
     }
 
-    private fun stubUnread(itemRefs: List<ItemRef>) {
+    private fun stubUnread(itemRefs: List<ItemRef> = emptyList()) {
         coEvery {
             googleReader.streamItemsIDs(
                 streamID = Stream.READING_LIST.id,

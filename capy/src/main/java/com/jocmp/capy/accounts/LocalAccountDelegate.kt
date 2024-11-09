@@ -64,13 +64,13 @@ class LocalAccountDelegate(
 
                     AddFeedResult.Success(feed)
                 } else {
-                    AddFeedResult.Failure(AddFeedResult.AddFeedError.SaveFailure())
+                    AddFeedResult.Failure(AddFeedResult.Error.SaveFailure())
                 }
             } else {
-                return AddFeedResult.Failure(AddFeedResult.AddFeedError.FeedNotFound())
+                return AddFeedResult.Failure(AddFeedResult.Error.FeedNotFound())
             }
         } catch (e: UnknownHostException) {
-            return AddFeedResult.Failure(AddFeedResult.AddFeedError.NetworkError())
+            return AddFeedResult.Failure(AddFeedResult.Error.NetworkError())
         }
     }
 

@@ -49,7 +49,7 @@ fun AddFeedView(
     onAddFeed: (url: String) -> Unit,
     onCancel: () -> Unit,
     loading: Boolean,
-    error: AddFeedResult.AddFeedError?,
+    error: AddFeedResult.Error?,
 ) {
     val (queryURL, setQueryURL) = rememberSaveable { mutableStateOf("") }
     val (selectedOption, selectOption) = remember { mutableStateOf<FeedOption?>(null) }
@@ -85,9 +85,9 @@ fun AddFeedView(
                 supportingText = {
                     error?.let {
                         val resource = when (it) {
-                            is AddFeedResult.AddFeedError.FeedNotFound -> R.string.add_feed_feed_not_error
-                            is AddFeedResult.AddFeedError.NetworkError -> R.string.add_feed_network_error
-                            is AddFeedResult.AddFeedError.SaveFailure -> R.string.add_feed_save_error
+                            is AddFeedResult.Error.FeedNotFound -> R.string.add_feed_feed_not_error
+                            is AddFeedResult.Error.NetworkError -> R.string.add_feed_network_error
+                            is AddFeedResult.Error.SaveFailure -> R.string.add_feed_save_error
                         }
 
                         Text(stringResource(resource))
