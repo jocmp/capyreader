@@ -3,24 +3,25 @@ package com.jocmp.capy.accounts
 import com.jocmp.capy.Feed
 
 sealed class AddFeedResult {
-    enum class ErrorType {
-        FEED_NOT_FOUND,
-        NETWORK_ERROR,
-        SAVE_FAILURE,
+    sealed class Error : Throwable() {
+        class FeedNotFound : Error()
+        class NetworkError : Error()
+        class SaveFailure : Error()
     }
 
-    sealed class AddFeedError: Exception() {
-        class FeedNotFound: AddFeedError()
-        class NetworkError: AddFeedError()
+    data class Success(val feed: Feed) : AddFeedResult()
 
-        class SaveFailure: AddFeedError()
+    data class MultipleChoices(val choices: List<FeedOption>) : AddFeedResult()
+
+    data class Failure(val error: Error) : AddFeedResult()
+
+    companion object {
+        fun networkError() = Failure(Error.NetworkError())
+
+        fun feedNotFound() = Failure(Error.FeedNotFound())
+
+        fun saveFailure() = Failure(Error.SaveFailure())
     }
-
-    data class Success(val feed: Feed): AddFeedResult()
-
-    data class MultipleChoices(val choices: List<FeedOption>): AddFeedResult()
-
-    data class Failure(val error: AddFeedError): AddFeedResult()
 }
 
 data class FeedOption(

@@ -13,6 +13,8 @@ import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.common.withResult
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.persistence.ArticleRecords
+import com.jocmp.capy.persistence.FeedRecords
+import com.jocmp.feedfinder.withProtocol
 import com.jocmp.readerclient.Category
 import com.jocmp.readerclient.GoogleReader
 import com.jocmp.readerclient.GoogleReader.Companion.BAD_TOKEN_HEADER_KEY
@@ -20,6 +22,7 @@ import com.jocmp.readerclient.Item
 import com.jocmp.readerclient.ItemRef
 import com.jocmp.readerclient.Stream
 import com.jocmp.readerclient.Subscription
+import com.jocmp.readerclient.SubscriptionQuickAddResult
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
@@ -37,6 +40,7 @@ internal class ReaderAccountDelegate(
     private var postToken = AtomicReference<String?>(null)
     private val articleContent = ArticleContent(httpClient)
     private val articleRecords = ArticleRecords(database)
+    private val feedRecords = FeedRecords(database)
 
     override suspend fun refresh(cutoffDate: ZonedDateTime?): Result<Unit> {
         return try {
@@ -79,7 +83,34 @@ internal class ReaderAccountDelegate(
         title: String?,
         folderTitles: List<String>?
     ): AddFeedResult {
-        return AddFeedResult.Failure(error = AddFeedResult.AddFeedError.NetworkError())
+        return try {
+            val result = withPostToken {
+                googleReader
+                    .quickAddSubscription(url = url.withProtocol, postToken = postToken.get())
+            }.body()
+
+            val subscription = result?.toSubscription ?: return AddFeedResult.feedNotFound()
+
+            try {
+                refreshFeeds()
+            } catch (e: Throwable) {
+                upsertFeed(subscription)
+            }
+
+            val feed = feedRecords.findBy(subscription.id)
+
+            if (feed != null) {
+                coroutineScope {
+                    launch { refreshArticles() }
+                }
+
+                AddFeedResult.Success(feed)
+            } else {
+                AddFeedResult.saveFailure()
+            }
+        } catch (e: IOException) {
+            AddFeedResult.networkError()
+        }
     }
 
     override suspend fun updateFeed(
@@ -102,11 +133,14 @@ internal class ReaderAccountDelegate(
 
     private suspend fun refreshFeeds() {
         withResult(googleReader.subscriptionList()) { result ->
+            val subscriptions = result.subscriptions
+
             database.transactionWithErrorHandling {
-                result.subscriptions.forEach { subscription ->
+                subscriptions.forEach { subscription ->
                     upsertFeed(subscription)
-                    upsertTaggings(subscription)
                 }
+
+                database.feedsQueries.deleteAllExcept(subscriptions.map { it.id })
 
                 cleanUpTaggings(result.subscriptions)
             }
@@ -132,6 +166,8 @@ internal class ReaderAccountDelegate(
             site_url = subscription.htmlUrl,
             favicon_url = subscription.iconUrl.ifBlank { null }
         )
+
+        upsertTaggings(subscription)
     }
 
     private fun cleanUpTaggings(subscriptions: List<Subscription>) {
@@ -331,3 +367,20 @@ internal class ReaderAccountDelegate(
         const val MAX_PAGINATED_ITEM_LIMIT = 100
     }
 }
+
+private val SubscriptionQuickAddResult.toSubscription: Subscription?
+    get() {
+        val id = streamId ?: return null
+        val url = query ?: return null
+
+        return Subscription(
+            id = id,
+            title = streamName ?: DEFAULT_FEED_NAME,
+            categories = emptyList(),
+            url = url,
+            htmlUrl = "",
+            iconUrl = ""
+        )
+    }
+
+private const val DEFAULT_FEED_NAME = "Untitled"

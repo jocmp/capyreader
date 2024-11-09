@@ -107,7 +107,7 @@ internal class FeedbinAccountDelegate(
             val errorBody = response.errorBody()?.string()
 
             if (response.code() > 300) {
-                return AddFeedResult.Failure(AddFeedResult.AddFeedError.FeedNotFound())
+                return AddFeedResult.Failure(AddFeedResult.Error.FeedNotFound())
             }
 
             return if (subscription != null) {
@@ -123,7 +123,7 @@ internal class FeedbinAccountDelegate(
 
                     AddFeedResult.Success(feed)
                 } else {
-                    AddFeedResult.Failure(AddFeedResult.AddFeedError.SaveFailure())
+                    AddFeedResult.Failure(AddFeedResult.Error.SaveFailure())
                 }
             } else {
                 val decodedChoices = Json.decodeFromString<List<SubscriptionChoice>>(errorBody!!)
@@ -135,7 +135,7 @@ internal class FeedbinAccountDelegate(
                 AddFeedResult.MultipleChoices(choices)
             }
         } catch (e: IOException) {
-            AddFeedResult.Failure(AddFeedResult.AddFeedError.NetworkError())
+            AddFeedResult.networkError()
         }
     }
 
@@ -224,9 +224,9 @@ internal class FeedbinAccountDelegate(
                 }
             }
 
-            val feedsToRemove = subscriptions.map { it.feed_id.toString() }
+            val feedsToKeep = subscriptions.map { it.feed_id.toString() }
 
-            database.feedsQueries.deleteAllExcept(feedsToRemove)
+            database.feedsQueries.deleteAllExcept(feedsToKeep)
         }
     }
 
