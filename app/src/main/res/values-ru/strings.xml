@@ -189,4 +189,7 @@
     <string name="settings_enable_refresh_call_to_action">Периодическое обновление должно быть сначала включено</string>
     <string name="settings_notifications_select_none">Не выбрано</string>
     <string name="settings_confirm_mark_all_read">Подтвердите пометить все как прочитанны</string>
+    <string name="settings_section_account_server">Сервер</string>
+    <string name="auth_fields_api_url">Сервер</string>
+    <string name="account_source_freshrss">FreshRSS</string>
 </resources>
