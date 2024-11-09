@@ -166,7 +166,7 @@
     <string name="article_vertical_swipe_full_content">تحميل المحتوى الكامل</string>
     <string name="article_list_row_swipe_disabled">تعطيل</string>
     <string name="article_list_row_swipe_toggle_read">وضع علامة مقروء/غير مقروء</string>
-    <string name="article_list_row_swipe_toggle_starred">وضع علامة مميزة بنجمة/غير مميز بنجمة</string>
+    <string name="article_list_row_swipe_toggle_starred">وضع علامة مميز/غير مميز بنجمة</string>
     <string name="article_list_unread_sort_title">فرز غير المقروء</string>
     <string name="article_list_unread_sort_newest_first">الأحدث أولاً</string>
     <string name="opml_exporter_success">إكتمل التصدير</string>
@@ -179,4 +179,19 @@
     <string name="settings_reader_title">القارئ</string>
     <string name="settings_options_reader_pin_toolbars">تثبيت شريط الأدوات</string>
     <string name="article_bottom_bar_next_article">إنتقل إلى المقال التالي</string>
+    <string name="edit_feed_tags_section">المجلدات</string>
+    <string name="edit_feed_notifications_title">تمكين الإشعارات</string>
+    <string name="notifications_permissions_disabled_call_to_action">الإعدادات</string>
+    <string name="settings_notifications_select_none">إلغاء تحديد الكل</string>
+    <string name="settings_notifications_select_all">تحديد الكل</string>
+    <string name="article_list_row_swipe_open_externally">افتح المقالة في المتصفح</string>
+    <string name="article_view_open_externally">فتح في متصفح خارجي</string>
+    <string name="notifications_permission_disabled_title">تم تعطيل إذن الإشعارات</string>
+    <string name="settings_confirm_mark_all_read">تأكيد وضع علامة كمقروءة على الكل</string>
+    <string name="auth_fields_api_url">الخادم</string>
+    <string name="account_source_freshrss">FreshRSS</string>
+    <string name="settings_section_account_server">الخادم</string>
+    <string name="notifications_channel_title_feed_update">تحديثات الموجز</string>
+    <string name="settings_panel_notifications_title">الإشعارات</string>
+    <string name="settings_enable_refresh_call_to_action">يجب تمكين التحديث الدوري أولاً</string>
 </resources>
