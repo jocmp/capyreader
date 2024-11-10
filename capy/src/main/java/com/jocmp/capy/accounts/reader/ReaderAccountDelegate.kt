@@ -4,16 +4,17 @@ import com.jocmp.capy.AccountDelegate
 import com.jocmp.capy.Article
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
+import com.jocmp.capy.accounts.ValidationError
 import com.jocmp.capy.accounts.feedbin.FeedbinAccountDelegate.Companion.MAX_CREATE_UNREAD_LIMIT
 import com.jocmp.capy.accounts.withErrorHandling
 import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.common.TimeHelpers
-import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.common.withResult
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.capy.persistence.FeedRecords
+import com.jocmp.capy.persistence.TaggingRecords
 import com.jocmp.feedfinder.withProtocol
 import com.jocmp.readerclient.Category
 import com.jocmp.readerclient.GoogleReader
@@ -22,7 +23,10 @@ import com.jocmp.readerclient.Item
 import com.jocmp.readerclient.ItemRef
 import com.jocmp.readerclient.Stream
 import com.jocmp.readerclient.Subscription
+import com.jocmp.readerclient.SubscriptionEditAction
 import com.jocmp.readerclient.SubscriptionQuickAddResult
+import com.jocmp.readerclient.ext.editSubscription
+import com.jocmp.readerclient.ext.streamItemsIDs
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
@@ -41,19 +45,14 @@ internal class ReaderAccountDelegate(
     private val articleContent = ArticleContent(httpClient)
     private val articleRecords = ArticleRecords(database)
     private val feedRecords = FeedRecords(database)
+    private val taggingRecords = TaggingRecords(database)
 
     override suspend fun refresh(cutoffDate: ZonedDateTime?): Result<Unit> {
-        return try {
+        return withErrorHandling {
             val since = articleRecords.maxUpdatedAt().toEpochSecond()
 
             refreshFeeds()
             refreshArticles(since = since)
-
-            Result.success(Unit)
-        } catch (exception: IOException) {
-            Result.failure(exception)
-        } catch (e: UnauthorizedError) {
-            Result.failure(e)
         }
     }
 
@@ -118,7 +117,55 @@ internal class ReaderAccountDelegate(
         title: String,
         folderTitles: List<String>
     ): Result<Feed> {
-        return Result.failure(Throwable(""))
+        if (folderTitles.size != 1) {
+            return Result.failure(InvalidFoldersError())
+        }
+
+        return withErrorHandling {
+            val addCategoryID = folderTitles.map {
+                userLabel(it)
+            }
+
+            val response = withPostToken {
+                googleReader.editSubscription(
+                    id = feed.id,
+                    title = title,
+                    action = SubscriptionEditAction.EDIT,
+                    addCategoryID = addCategoryID.first(),
+                    postToken = postToken.get(),
+                )
+            }
+
+            if (!response.isSuccessful) {
+                throw ValidationError(response.message())
+            }
+
+            database.transactionWithErrorHandling {
+                feedRecords.update(
+                    feedID = feed.id,
+                    title = title,
+                )
+
+                folderTitles.forEach { title ->
+                    taggingRecords.upsert(
+                        id = taggingID(feed, title),
+                        feedID = feed.id,
+                        name = title
+                    )
+                }
+
+                val taggingIDsToDelete = taggingRecords.findFeedTaggingsToDelete(
+                    feed = feed,
+                    excludedTaggingNames = folderTitles
+                )
+
+                taggingIDsToDelete.forEach { taggingID ->
+                    taggingRecords.deleteTagging(taggingID = taggingID)
+                }
+            }
+
+            feedRecords.findBy(feed.id)
+        }
     }
 
     override suspend fun removeFeed(feed: Feed): Result<Unit> {
@@ -194,8 +241,8 @@ internal class ReaderAccountDelegate(
     private suspend fun refreshUnreadItems() {
         withResult(
             googleReader.streamItemsIDs(
-                streamID = Stream.READING_LIST.id,
-                excludedStreamID = Stream.READ.id
+                stream = Stream.READING_LIST,
+                excludedStream = Stream.READ
             )
         ) { result ->
             articleRecords.markAllUnread(articleIDs = result.itemRefs.map { it.hexID })
@@ -203,7 +250,7 @@ internal class ReaderAccountDelegate(
     }
 
     private suspend fun refreshStarredItems() {
-        withResult(googleReader.streamItemsIDs(streamID = Stream.STARRED.id)) { result ->
+        withResult(googleReader.streamItemsIDs(stream = Stream.STARRED)) { result ->
             articleRecords.markAllStarred(articleIDs = result.itemRefs.map { it.hexID })
         }
     }
@@ -242,10 +289,10 @@ internal class ReaderAccountDelegate(
         continuation: String? = null,
     ) {
         val response = googleReader.streamItemsIDs(
-            streamID = stream.id,
+            stream = stream,
             since = since,
             continuation = continuation,
-            excludedStreamID = Stream.READ.id,
+            excludedStream = Stream.READ,
             count = MAX_PAGINATED_ITEM_LIMIT,
         )
 
@@ -359,6 +406,10 @@ internal class ReaderAccountDelegate(
         }
     }
 
+    private fun taggingID(feed: Feed, categoryTitle: String): String {
+        return "${feed.id}:${userLabel(categoryTitle)}"
+    }
+
     private fun taggingID(subscription: Subscription, category: Category): String {
         return "${subscription.id}:${category.id}"
     }
@@ -382,5 +433,9 @@ private val SubscriptionQuickAddResult.toSubscription: Subscription?
             iconUrl = ""
         )
     }
+
+private fun userLabel(title: String): String {
+    return "user/-/label/${title}"
+}
 
 private const val DEFAULT_FEED_NAME = "Untitled"

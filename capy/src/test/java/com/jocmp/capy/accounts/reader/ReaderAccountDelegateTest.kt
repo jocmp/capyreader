@@ -46,20 +46,22 @@ class ReaderAccountDelegateTest {
     private lateinit var feedFixture: FeedFixture
     private lateinit var delegate: AccountDelegate
 
-    private val subscriptions = listOf(
-        Subscription(
-            id = "feed/2",
-            title = "Ars Technica - All content",
-            categories = listOf(
-                Category(
-                    id = "user/1/label/Gadgets",
-                    label = "Gadgets"
-                )
-            ),
-            url = "https://feeds.arstechnica.com/arstechnica/index",
-            htmlUrl = "https://arstechnica.com",
-            iconUrl = "",
+    private val arsTechnica = Subscription(
+        id = "feed/2",
+        title = "Ars Technica - All content",
+        categories = listOf(
+            Category(
+                id = "user/1/label/Gadgets",
+                label = "Gadgets"
+            )
         ),
+        url = "https://feeds.arstechnica.com/arstechnica/index",
+        htmlUrl = "https://arstechnica.com",
+        iconUrl = "",
+    )
+
+    private val subscriptions = listOf(
+        arsTechnica,
         Subscription(
             id = "feed/3",
             title = "The Verge",
@@ -307,7 +309,7 @@ class ReaderAccountDelegateTest {
         }
     }
 
-    @org.junit.Test
+    @Test
     fun addFeed() = runTest {
         stubPostToken()
         stubUnread()
@@ -403,6 +405,37 @@ class ReaderAccountDelegateTest {
         ) as AddFeedResult.Failure
 
         assertTrue(result.error is AddFeedResult.Error.FeedNotFound)
+    }
+
+
+    @Test
+    fun updateFeed_modifyTitle() = runTest {
+        stubPostToken()
+
+        val feed = feedFixture.create(
+            feedID = "feed/2",
+            title = "something else"
+        )
+
+        val feedTitle = "Ars Technica"
+
+        coEvery {
+           googleReader.editSubscription(
+               id = feed.id,
+               actionID = "edit",
+               title = feedTitle,
+               addCategoryID = "user/-/label/Tech",
+               postToken = postToken
+           )
+        }.returns(Response.success("OK"))
+
+        val updated = delegate.updateFeed(
+            feed = feed,
+            title = feedTitle,
+            folderTitles = listOf("Tech"),
+        ).getOrThrow()
+
+        assertEquals(expected = feedTitle, actual = updated.title)
     }
 
     private fun stubSubscriptions(subscriptions: List<Subscription> = this.subscriptions) {

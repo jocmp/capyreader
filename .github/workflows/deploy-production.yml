@@ -20,7 +20,7 @@ jobs:
         uses: actions/setup-java@v4.4.0
         with:
           distribution: "zulu"
-          java-version: "17"
+          java-version: "21"
       - name: Setup build dependencies
         run: make deps
       - name: Configure Git user

@@ -1,7 +1,9 @@
 package com.jocmp.capy.accounts
 
 import com.jocmp.capy.common.UnauthorizedError
-import java.net.UnknownHostException
+import java.io.IOException
+
+class ValidationError(override val message: String? = null): Throwable(message)
 
 internal suspend fun <T> withErrorHandling(func: suspend () -> T?): Result<T> {
     return try {
@@ -12,9 +14,11 @@ internal suspend fun <T> withErrorHandling(func: suspend () -> T?): Result<T> {
         } else {
             Result.failure(Throwable("Unexpected error"))
         }
-    } catch (e: UnknownHostException) {
+    } catch (e: IOException) {
         return Result.failure(e)
     } catch (e: UnauthorizedError) {
+        return Result.failure(e)
+    } catch (e: ValidationError) {
         return Result.failure(e)
     }
 }

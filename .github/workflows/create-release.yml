@@ -22,7 +22,7 @@ jobs:
         uses: actions/setup-java@v4.4.0
         with:
           distribution: "zulu"
-          java-version: "17"
+          java-version: "21"
       - name: Build APK
         env:
           ENCODED_GOOGLE_SERVICES: ${{ secrets.ENCODED_GOOGLE_SERVICES }}

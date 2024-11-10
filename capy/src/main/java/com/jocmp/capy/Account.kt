@@ -6,9 +6,9 @@ import com.jocmp.capy.accounts.LocalAccountDelegate
 import com.jocmp.capy.accounts.LocalOkHttpClient
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.asOPML
-import com.jocmp.capy.accounts.reader.buildFreshRSSDelegate
 import com.jocmp.capy.accounts.feedbin.FeedbinAccountDelegate
 import com.jocmp.capy.accounts.feedbin.FeedbinOkHttpClient
+import com.jocmp.capy.accounts.reader.buildFreshRSSDelegate
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.sortedByTitle
@@ -214,20 +214,6 @@ data class Account(
         OPMLImporter(this).import(onProgress, inputStream)
     }
 
-    internal suspend fun asOPML(): String {
-        var opml = ""
-
-        feeds.first().forEach { feed ->
-            opml += feed.asOPML(indentLevel = 2)
-        }
-
-        folders.first().forEach { folder ->
-            opml += folder.asOPML(indentLevel = 2)
-        }
-
-        return opml
-    }
-
     fun enableStickyContent(feedID: String) {
         feedRecords.updateStickyFullContent(enabled = true, feedID = feedID)
     }
@@ -250,6 +236,23 @@ data class Account(
 
     fun clearStickyFullContent() {
         feedRecords.clearStickyFullContent()
+    }
+
+    val supportsMultiFolderFeeds: Boolean
+        get() = source == Source.FEEDBIN || source == Source.LOCAL
+
+    internal suspend fun asOPML(): String {
+        var opml = ""
+
+        feeds.first().forEach { feed ->
+            opml += feed.asOPML(indentLevel = 2)
+        }
+
+        folders.first().forEach { folder ->
+            opml += folder.asOPML(indentLevel = 2)
+        }
+
+        return opml
     }
 }
 
