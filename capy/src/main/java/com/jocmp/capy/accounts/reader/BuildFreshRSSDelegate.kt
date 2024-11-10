@@ -7,7 +7,7 @@ import com.jocmp.capy.db.Database
 import com.jocmp.readerclient.GoogleReader
 import java.net.URI
 
-internal fun buildFreshRSSDelegate(
+internal fun buildReaderDelegate(
     database: Database,
     path: URI,
     preferences: AccountPreferences

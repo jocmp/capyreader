@@ -59,18 +59,22 @@ fun AddAccountView(
                     modifier = Modifier
                         .padding(titlePadding())
                 )
+                Row(Modifier.clickable { onSelectLocal() }) {
+                    AccountRow(source = Source.LOCAL)
+                }
                 SyncServiceRow(
                     onSelectService,
                     source = Source.FEEDBIN
                 )
-                if (BuildConfig.DEBUG) {
+                if (BuildConfig.FLAVOR == "free") {
                     SyncServiceRow(
                         onSelectService,
                         source = Source.FRESHRSS
                     )
-                }
-                Row(Modifier.clickable { onSelectLocal() }) {
-                    AccountRow(source = Source.LOCAL)
+                    SyncServiceRow(
+                        onSelectService,
+                        source = Source.READER
+                    )
                 }
             }
             if (CrashReporting.isAvailable) {

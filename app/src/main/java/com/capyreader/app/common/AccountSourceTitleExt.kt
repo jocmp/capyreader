@@ -8,4 +8,5 @@ val Source.titleKey: Int
         Source.FEEDBIN -> R.string.account_source_feedbin
         Source.FRESHRSS -> R.string.account_source_freshrss
         Source.LOCAL -> R.string.account_source_local
+        Source.READER -> R.string.account_source_reader
     }

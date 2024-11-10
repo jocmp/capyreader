@@ -192,7 +192,8 @@ fun removeAccountButtonColors(source: Source) = when (source) {
     )
 
     Source.FEEDBIN,
-    Source.FRESHRSS -> ButtonDefaults.buttonColors(
+    Source.FRESHRSS,
+    Source.READER -> ButtonDefaults.buttonColors(
         containerColor = colorScheme.secondary,
         contentColor = colorScheme.onSecondary
     )

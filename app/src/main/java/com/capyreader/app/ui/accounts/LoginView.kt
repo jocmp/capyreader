@@ -109,6 +109,7 @@ fun LoginView(
                             loading = loading,
                             errorMessage = errorMessage
                         )
+                        ServiceSignup(source)
                     }
                 }
             }

@@ -21,7 +21,8 @@ data class AccountSettingsStrings(
                 )
 
                 Source.FEEDBIN,
-                Source.FRESHRSS -> AccountSettingsStrings(
+                Source.FRESHRSS,
+                Source.READER -> AccountSettingsStrings(
                     dialogTitle = R.string.settings_remove_account_title_service,
                     dialogMessage = R.string.settings_remove_account_message_service,
                     dialogConfirmText = R.string.settings_remove_account_confirm_service,

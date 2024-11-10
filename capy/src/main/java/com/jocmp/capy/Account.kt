@@ -8,7 +8,7 @@ import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.asOPML
 import com.jocmp.capy.accounts.feedbin.FeedbinAccountDelegate
 import com.jocmp.capy.accounts.feedbin.FeedbinOkHttpClient
-import com.jocmp.capy.accounts.reader.buildFreshRSSDelegate
+import com.jocmp.capy.accounts.reader.buildReaderDelegate
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.sortedByTitle
@@ -47,7 +47,7 @@ data class Account(
             )
         )
 
-        Source.FRESHRSS -> buildFreshRSSDelegate(
+        Source.FRESHRSS, Source.READER -> buildReaderDelegate(
             database = database,
             path = cacheDirectory,
             preferences = preferences

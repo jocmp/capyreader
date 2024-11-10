@@ -21,7 +21,7 @@ interface Credentials {
         ): Credentials {
             return when (source) {
                 Source.FEEDBIN -> FeedbinCredentials(username, password)
-                Source.FRESHRSS -> ReaderCredentials(username, password, url = normalizeURL(url))
+                Source.FRESHRSS, Source.READER -> ReaderCredentials(username, password, url = normalizeURL(url))
                 Source.LOCAL -> throw UnsupportedOperationException()
             }
         }
