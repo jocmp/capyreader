@@ -57,12 +57,11 @@ internal class ReaderAccountDelegate(
     }
 
     override suspend fun markRead(articleIDs: List<String>): Result<Unit> {
-        return withErrorHandling {
-            articleIDs.chunked(MAX_CREATE_UNREAD_LIMIT).map { batchIDs ->
-                editTag(ids = batchIDs, addTag = Stream.READ)
-            }
-            Unit
+        val results = articleIDs.chunked(MAX_CREATE_UNREAD_LIMIT).map { batchIDs ->
+            editTag(ids = batchIDs, addTag = Stream.READ)
         }
+
+        return results.firstOrNull { it.isFailure } ?: Result.success(Unit)
     }
 
     override suspend fun markUnread(articleIDs: List<String>): Result<Unit> {
@@ -169,7 +168,20 @@ internal class ReaderAccountDelegate(
     }
 
     override suspend fun removeFeed(feed: Feed): Result<Unit> {
-        return Result.failure(Throwable(""))
+        return withErrorHandling {
+            val response = withPostToken {
+                googleReader.editSubscription(
+                    id = feed.id,
+                    action = SubscriptionEditAction.UNSUBSCRIBE,
+                    postToken = postToken.get()
+                )
+
+            }
+
+            if (!response.isSuccessful) {
+                throw ValidationError(response.message())
+            }
+        }
     }
 
     override suspend fun fetchFullContent(article: Article): Result<String> {

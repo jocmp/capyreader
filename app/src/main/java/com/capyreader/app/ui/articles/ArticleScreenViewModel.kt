@@ -7,7 +7,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.PagingData
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.sync.Sync
@@ -18,7 +17,6 @@ import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
-import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.articles.parseHtml
 import com.jocmp.capy.buildArticlePager
 import com.jocmp.capy.common.UnauthorizedError
@@ -255,7 +253,7 @@ class ArticleScreenViewModel(
         _searchQuery.value = query
     }
 
-    fun addStarAsync(articleID: String) = viewModelScope.launch(Dispatchers.IO) {
+    fun addStarAsync(articleID: String)  {
         toggleCurrentStarred(articleID)
         addStar(articleID)
     }
@@ -275,11 +273,13 @@ class ArticleScreenViewModel(
         markUnread(articleID)
     }
 
-    private suspend fun addStar(articleID: String) {
-        account.addStar(articleID)
-            .onFailure {
-                Sync.addStarAsync(articleID, context)
-            }
+    private fun addStar(articleID: String) {
+        viewModelScope.launchIO {
+            account.addStar(articleID)
+                .onFailure {
+                    Sync.addStarAsync(articleID, context)
+                }
+        }
     }
 
     private suspend fun removeStar(articleID: String) {
