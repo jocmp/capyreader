@@ -7,10 +7,9 @@ import com.jocmp.readerclient.GoogleReader
 data class ReaderCredentials(
     override val username: String,
     override val secret: String,
-    override val url: String
+    override val url: String,
+    override val source: Source
 ) : Credentials {
-    override val source: Source = Source.FRESHRSS
-
     override suspend fun verify(): Result<Credentials> {
         try {
             val response = GoogleReader.verifyCredentials(

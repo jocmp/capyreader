@@ -98,6 +98,11 @@ fun LoginView(
                             UrlField(
                                 onChange = onUrlChange,
                                 url = url,
+                                placeholder = {
+                                    if (source == Source.FRESHRSS) {
+                                        Text(stringResource(R.string.auth_fields_api_url_freshrss_placeholder))
+                                    }
+                                }
                             )
                         }
                         AuthFields(
@@ -107,9 +112,11 @@ fun LoginView(
                             onPasswordChange = onPasswordChange,
                             onSubmit = onSubmit,
                             loading = loading,
-                            errorMessage = errorMessage
+                            errorMessage = errorMessage,
+                            prompt = {
+                                ServiceSignup(source)
+                            }
                         )
-                        ServiceSignup(source)
                     }
                 }
             }
@@ -120,12 +127,14 @@ fun LoginView(
 @Composable
 fun UrlField(
     onChange: (url: String) -> Unit,
+    placeholder: (@Composable () -> Unit)? = null,
     url: String,
 ) {
     TextField(
         value = url,
         onValueChange = onChange,
         singleLine = true,
+        placeholder = placeholder,
         label = {
             Text(stringResource(R.string.auth_fields_api_url))
         },

@@ -50,6 +50,7 @@ fun AuthFields(
     password: String,
     loading: Boolean = false,
     errorMessage: String? = null,
+    prompt: (@Composable () -> Unit)? = null,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -151,6 +152,8 @@ fun AuthFields(
                 Text(stringResource(R.string.auth_fields_log_in_button))
             }
         }
+
+        prompt?.invoke()
     }
 }
 
