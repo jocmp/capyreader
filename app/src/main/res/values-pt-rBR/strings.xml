@@ -23,10 +23,10 @@
     <string name="feed_action_edit_success">Feed atualizado</string>
     <string name="feed_action_unsubscribe_success">Desinscrito</string>
     <string name="settings">Contas</string>
-    <string name="settings_remove_account_button_feedbin">Sair da sessão</string>
-    <string name="settings_remove_account_title_feedbin">Sair da sessão</string>
-    <string name="settings_remove_account_message_feedbin">Você tem certeza que quer deslogar?</string>
-    <string name="settings_remove_account_confirm_feedbin">Deslogar</string>
+    <string name="settings_remove_account_button_service">Sair da sessão</string>
+    <string name="settings_remove_account_title_service">Sair da sessão</string>
+    <string name="settings_remove_account_message_service">Você tem certeza que quer deslogar?</string>
+    <string name="settings_remove_account_confirm_service">Deslogar</string>
     <string name="settings_remove_account_button_local">Deletar conta</string>
     <string name="settings_remove_account_title_local">Deletar conta</string>
     <string name="settings_remove_account_message_local">Você tem certeza de que deseja deletar sua conta? Isso não pode ser desfeito.</string>

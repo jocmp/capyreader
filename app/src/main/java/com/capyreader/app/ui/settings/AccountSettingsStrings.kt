@@ -22,10 +22,10 @@ data class AccountSettingsStrings(
 
                 Source.FEEDBIN,
                 Source.FRESHRSS -> AccountSettingsStrings(
-                    dialogTitle = R.string.settings_remove_account_title_feedbin,
-                    dialogMessage = R.string.settings_remove_account_message_feedbin,
-                    dialogConfirmText = R.string.settings_remove_account_confirm_feedbin,
-                    requestRemoveText = R.string.settings_remove_account_button_feedbin,
+                    dialogTitle = R.string.settings_remove_account_title_service,
+                    dialogMessage = R.string.settings_remove_account_message_service,
+                    dialogConfirmText = R.string.settings_remove_account_confirm_service,
+                    requestRemoveText = R.string.settings_remove_account_button_service,
                 )
             }
         }

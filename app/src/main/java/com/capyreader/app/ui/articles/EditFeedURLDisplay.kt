@@ -1,22 +1,14 @@
 package com.capyreader.app.ui.articles
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentCopy
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.ListItemColors
 import androidx.compose.material3.ListItemDefaults
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.Text
@@ -28,17 +20,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
-import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.theme.CapyTheme
 
 @Composable
-fun EditFeedURLDisplay(feedURL: String) {
+fun EditFeedURLDisplay(
+    url: String
+) {
     val clipboardManager = LocalClipboardManager.current
 
     val copyToClipboard = {
-        clipboardManager.setText(AnnotatedString(feedURL))
+        clipboardManager.setText(AnnotatedString(url))
     }
 
     Box(
@@ -56,7 +48,7 @@ fun EditFeedURLDisplay(feedURL: String) {
             },
             supportingContent = {
                 Text(
-                    feedURL,
+                    url,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
@@ -76,7 +68,7 @@ fun EditFeedURLDisplay(feedURL: String) {
 @Composable
 private fun EditFeedURLDisplayShort() {
     CapyTheme {
-        EditFeedURLDisplay(feedURL = "https://www.404media.co/rss")
+        EditFeedURLDisplay(url = "https://www.404media.co/rss")
     }
 }
 
@@ -84,6 +76,6 @@ private fun EditFeedURLDisplayShort() {
 @Composable
 private fun EditFeedURLDisplayLong() {
     CapyTheme {
-        EditFeedURLDisplay(feedURL = "https://deprogrammaticaipsum.com/index.xml")
+        EditFeedURLDisplay(url = "https://deprogrammaticaipsum.com/index.xml")
     }
 }

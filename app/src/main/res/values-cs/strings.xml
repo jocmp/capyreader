@@ -8,10 +8,10 @@
     <string name="feed_action_unsubscribe_message">Opravdu chcete zrušit odběr „%1$s“?</string>
     <string name="folder_action_delete_title">Smazat štítek</string>
     <string name="folder_action_edit">Přejmenovat</string>
-    <string name="settings_remove_account_button_feedbin">Odhlásit</string>
-    <string name="settings_remove_account_title_feedbin">Odhlásit</string>
-    <string name="settings_remove_account_message_feedbin">Opravdu se chcete odhlásit?</string>
-    <string name="settings_remove_account_confirm_feedbin">Odhlásit</string>
+    <string name="settings_remove_account_button_service">Odhlásit</string>
+    <string name="settings_remove_account_title_service">Odhlásit</string>
+    <string name="settings_remove_account_message_service">Opravdu se chcete odhlásit?</string>
+    <string name="settings_remove_account_confirm_service">Odhlásit</string>
     <string name="settings_remove_account_button_local">Odstranit účet</string>
     <string name="settings_remove_account_message_local">Opravdu chcete odstranit účet? Toto nelze vrátit zpět.</string>
     <string name="settings_remove_account_confirm_local">Potvrdit</string>

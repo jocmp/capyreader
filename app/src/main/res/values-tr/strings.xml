@@ -65,10 +65,10 @@
     <string name="unsubscribe_error">Yayın aboneliği iptal etme hatası</string>
     <string name="relative_time_just_now">Şimdi</string>
     <string name="feed_action_unsubscribe_success">Abonelikten çıkıldı</string>
-    <string name="settings_remove_account_button_feedbin">Çıkış Yap</string>
+    <string name="settings_remove_account_button_service">Çıkış Yap</string>
     <string name="article_view_star">Yıldız</string>
     <string name="refresh_feeds_menu_label">Yayınları Yenile</string>
-    <string name="settings_remove_account_title_feedbin">Çıkış Yap</string>
+    <string name="settings_remove_account_title_service">Çıkış Yap</string>
     <string name="article_view_mark_as_read">Okundu olarak işaretle</string>
     <string name="refresh_manually_only">Sadece Manuel</string>
     <string name="relative_time_minutes">%1$ddakika</string>
@@ -104,8 +104,8 @@
     <string name="feed_form_copy_feed_url_to_clipboard">Yayın URL\'sini panoya kopyala</string>
     <string name="feed_action_unsubscribe_confirm">Abonelikten çık</string>
     <string name="edit_feed_submit">Kaydet</string>
-    <string name="settings_remove_account_message_feedbin">Çıkış yapmak istediğinize emin misiniz?</string>
-    <string name="settings_remove_account_confirm_feedbin">Çıkış Yap</string>
+    <string name="settings_remove_account_message_service">Çıkış yapmak istediğinize emin misiniz?</string>
+    <string name="settings_remove_account_confirm_service">Çıkış Yap</string>
     <string name="settings_remove_account_button_local">Hesabı Sil</string>
     <string name="settings_remove_account_confirm_local">Doğrula</string>
     <string name="refresh_minutes">Her %1$d dakikada bir</string>

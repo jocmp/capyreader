@@ -44,7 +44,7 @@
     <string name="feed_action_unsubscribe_title">Отписване</string>
     <string name="settings_remove_account_confirm_local">Потвърди</string>
     <string name="account_settings_save_name">Името е запазено</string>
-    <string name="settings_remove_account_message_feedbin">Сигурни ли сте, че искате да излезете?</string>
+    <string name="settings_remove_account_message_service">Сигурни ли сте, че искате да излезете?</string>
     <string name="settings_remove_account_button_local">Изтрий акаунт</string>
     <string name="article_view_mark_as_read">Маркирай като прочетено</string>
     <string name="article_view_mark_as_unread">Маркирай като непрочетено</string>
@@ -63,10 +63,10 @@
     <string name="feed_action_edit_success">Актуализирана емисия</string>
     <string name="feed_action_unsubscribe_success">Отменен абонамент</string>
     <string name="settings">Отвори настройки</string>
-    <string name="settings_remove_account_title_feedbin">Излезте</string>
-    <string name="settings_remove_account_confirm_feedbin">Излезте</string>
+    <string name="settings_remove_account_title_service">Излезте</string>
+    <string name="settings_remove_account_confirm_service">Излезте</string>
     <string name="settings_remove_account_title_local">Изтриване на акаунт</string>
-    <string name="settings_remove_account_button_feedbin">Излезте</string>
+    <string name="settings_remove_account_button_service">Излезте</string>
     <string name="article_view_star">Звезда</string>
     <string name="article_view_unstar">Премахни звезда</string>
     <string name="refresh_manually_only">Само ръчно</string>
