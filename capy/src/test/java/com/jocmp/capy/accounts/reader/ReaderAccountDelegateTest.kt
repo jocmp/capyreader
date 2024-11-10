@@ -420,13 +420,13 @@ class ReaderAccountDelegateTest {
         val feedTitle = "Ars Technica"
 
         coEvery {
-           googleReader.editSubscription(
-               id = feed.id,
-               actionID = "edit",
-               title = feedTitle,
-               addCategoryID = "user/-/label/Tech",
-               postToken = postToken
-           )
+            googleReader.editSubscription(
+                id = feed.id,
+                actionID = "edit",
+                title = feedTitle,
+                addCategoryID = "user/-/label/Tech",
+                postToken = postToken
+            )
         }.returns(Response.success("OK"))
 
         val updated = delegate.updateFeed(
@@ -436,6 +436,44 @@ class ReaderAccountDelegateTest {
         ).getOrThrow()
 
         assertEquals(expected = feedTitle, actual = updated.title)
+    }
+
+    @Test
+    fun removeFeed() = runTest {
+        stubPostToken()
+
+        val feed = feedFixture.create(feedID = "feed/2")
+
+        coEvery {
+            googleReader.editSubscription(
+                id = feed.id,
+                actionID = "unsubscribe",
+                postToken = postToken
+            )
+        }.returns(Response.success("OK"))
+
+        val result = delegate.removeFeed(feed = feed)
+
+        assertTrue(result.isSuccess)
+    }
+
+    @Test
+    fun removeFeed_networkError() = runTest {
+        stubPostToken()
+
+        val feed = feedFixture.create(feedID = "feed/2")
+
+        coEvery {
+            googleReader.editSubscription(
+                id = feed.id,
+                actionID = "unsubscribe",
+                postToken = postToken
+            )
+        }.returns(Response.error(400, "Bad Request!".toResponseBody()))
+
+        val result = delegate.removeFeed(feed = feed)
+
+        assertTrue(result.isFailure)
     }
 
     private fun stubSubscriptions(subscriptions: List<Subscription> = this.subscriptions) {
