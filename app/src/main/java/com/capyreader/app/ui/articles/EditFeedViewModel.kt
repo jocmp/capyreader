@@ -2,13 +2,12 @@ package com.capyreader.app.ui.articles
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.capyreader.app.common.AppPreferences
 import com.jocmp.capy.Account
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.EditFeedFormEntry
 import com.jocmp.capy.Folder
 import com.jocmp.capy.preferences.getAndSet
-import com.capyreader.app.common.AppPreferences
-import com.capyreader.app.refresher.RefreshInterval
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -19,6 +18,7 @@ class EditFeedViewModel(
     private val appPreferences: AppPreferences
 ) : ViewModel() {
     val folders: Flow<List<Folder>> = account.folders
+    val showMultiselect = account.supportsMultiFolderFeeds
 
     fun submit(
         form: EditFeedFormEntry,
