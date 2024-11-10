@@ -182,6 +182,7 @@
     <string name="crash_log_export_item_title">Share crash logs</string>
     <string name="crash_log_export_item_subtitle">Saves crash logs to a file to share with the developer</string>
     <string name="edit_feed_tags_section">Tags</string>
+    <string name="edit_feed_tag_section">Tag</string>
     <string name="edit_feed_notifications_title">Enable notifications</string>
     <string name="notifications_permissions_disabled_call_to_action">Settings</string>
     <string name="notifications_permission_disabled_title">Notification permission is disabled</string>
