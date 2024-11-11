@@ -1,6 +1,7 @@
 package com.capyreader.app.ui.components
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
@@ -14,10 +15,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.graphics.drawable.toBitmap
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewAssetLoader.AssetsPathHandler
 import androidx.webkit.WebViewAssetLoader.DEFAULT_DOMAIN
 import androidx.webkit.WebViewAssetLoader.ResourcesPathHandler
+import coil.executeBlocking
+import coil.imageLoader
+import coil.request.ImageRequest
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.WebViewInterface
 import com.capyreader.app.common.openLink
@@ -32,6 +37,9 @@ import kotlinx.coroutines.withContext
 import org.koin.compose.koinInject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.io.InputStream
 
 /**
  * Doesn't really fetch from androidplatform.net. This is used as a placeholder domain:
@@ -76,7 +84,31 @@ class AccompanistWebViewClient(
         view: WebView,
         request: WebResourceRequest
     ): WebResourceResponse? {
-        return assetLoader.shouldInterceptRequest(request.url)
+        val asset = assetLoader.shouldInterceptRequest(request.url)
+
+        if (asset != null) {
+            return asset
+        }
+
+        return try {
+            val imageRequest = ImageRequest.Builder(view.context)
+                .data(request.url)
+                .build()
+            val bitmap =
+                view.context.imageLoader.executeBlocking(imageRequest).drawable?.toBitmap()
+
+            if (bitmap != null) {
+                return WebResourceResponse(
+                    "image/jpg",
+                    "UTF-8",
+                    jpegStream(bitmap)
+                )
+            }
+
+            null
+        } catch (exception: Exception) {
+            null
+        }
     }
 
     override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
@@ -97,15 +129,12 @@ class WebViewState(
     private val scope: CoroutineScope,
     internal val webView: WebView,
 ) {
-    private var htmlId: String? = null
 
     init {
         loadEmpty()
     }
 
     fun loadHtml(article: Article) {
-        val id = article.id
-
         scope.launch {
             withContext(Dispatchers.IO) {
                 val html = renderer.render(
@@ -116,7 +145,7 @@ class WebViewState(
 
                 withContext(Dispatchers.Main) {
                     webView.loadDataWithBaseURL(
-                        null,
+                        ASSET_BASE_URL,
                         html,
                         null,
                         "UTF-8",
@@ -128,7 +157,6 @@ class WebViewState(
     }
 
     fun reset() {
-        htmlId = null
         loadEmpty()
     }
 
@@ -148,7 +176,6 @@ fun rememberWebViewState(
     val client = remember {
         AccompanistWebViewClient(
             assetLoader = WebViewAssetLoader.Builder()
-                .setDomain(DEFAULT_DOMAIN)
                 .addPathHandler("/assets/", AssetsPathHandler(context))
                 .addPathHandler("/res/", ResourcesPathHandler(context))
                 .build(),
@@ -179,4 +206,13 @@ fun rememberWebViewState(
             client.state = it
         }
     }
+}
+
+private fun jpegStream(
+    bitmap: Bitmap,
+): InputStream {
+    val byteArrayOutputStream = ByteArrayOutputStream()
+    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+    val bitmapData = byteArrayOutputStream.toByteArray()
+    return ByteArrayInputStream(bitmapData)
 }
