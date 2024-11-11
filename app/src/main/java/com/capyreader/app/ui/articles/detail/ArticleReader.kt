@@ -23,9 +23,12 @@ import com.jocmp.capy.Article
 @Composable
 fun ArticleReader(
     article: Article,
-    scrollState: ScrollState,
     webViewState: WebViewState,
 ) {
+    val scrollState = rememberSaveable(saver = ScrollState.Saver) {
+        ScrollState(initial = 0)
+    }
+
     var lastScrollY by rememberSaveable { mutableIntStateOf(0) }
 
     ColumnScrollbar(state = scrollState) {
@@ -40,7 +43,7 @@ fun ArticleReader(
                     lastScrollY = scrollState.value
                 },
             )
-            Spacer(modifier = Modifier.height(150.dp))
+            Spacer(modifier = Modifier.height(120.dp))
         }
     }
 

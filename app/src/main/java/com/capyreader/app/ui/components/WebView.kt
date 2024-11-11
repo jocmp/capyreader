@@ -1,8 +1,6 @@
 package com.capyreader.app.ui.components
 
 import android.annotation.SuppressLint
-import android.graphics.Bitmap
-import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
@@ -16,14 +14,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.core.graphics.drawable.toBitmap
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewAssetLoader.AssetsPathHandler
 import androidx.webkit.WebViewAssetLoader.DEFAULT_DOMAIN
 import androidx.webkit.WebViewAssetLoader.ResourcesPathHandler
-import coil.executeBlocking
-import coil.imageLoader
-import coil.request.ImageRequest
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.WebViewInterface
 import com.capyreader.app.common.openLink
@@ -38,9 +32,6 @@ import kotlinx.coroutines.withContext
 import org.koin.compose.koinInject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
-import java.io.InputStream
 
 /**
  * Doesn't really fetch from androidplatform.net. This is used as a placeholder domain:
@@ -74,7 +65,6 @@ fun WebView(
 
 class AccompanistWebViewClient(
     private val assetLoader: WebViewAssetLoader,
-    private val onPageStarted: () -> Unit
 ) : WebViewClient(),
     KoinComponent {
     lateinit var state: WebViewState
@@ -82,49 +72,10 @@ class AccompanistWebViewClient(
 
     private val appPreferences by inject<AppPreferences>()
 
-    override fun onPageStarted(view: WebView, url: String?, favicon: Bitmap?) {
-        super.onPageStarted(view, url, favicon)
-
-        view.postVisualStateCallback(requestId, object : WebView.VisualStateCallback() {
-            override fun onComplete(requestId: Long) {
-                onPageStarted()
-                view.visibility = View.VISIBLE
-            }
-        })
-    }
-
-    private val requestId = 1200L
-
-    override fun onPageFinished(view: WebView, url: String?) {
-        super.onPageFinished(view, url)
-    }
-
     override fun shouldInterceptRequest(
         view: WebView,
         request: WebResourceRequest
     ): WebResourceResponse? {
-        val accept = request.requestHeaders.getOrDefault("Accept", null)
-
-        if (accept != null && accept.contains("image")) {
-            try {
-                val imageRequest = ImageRequest.Builder(view.context)
-                    .data(request.url)
-                    .build()
-                val bitmap =
-                    view.context.imageLoader.executeBlocking(imageRequest).drawable?.toBitmap()
-
-                if (bitmap != null) {
-                    return WebResourceResponse(
-                        "image/jpg",
-                        "UTF-8",
-                        jpegStream(bitmap)
-                    )
-                }
-            } catch (exception: Exception) {
-                return null
-            }
-        }
-
         return assetLoader.shouldInterceptRequest(request.url)
     }
 
@@ -156,12 +107,6 @@ class WebViewState(
         val id = article.id
 
         scope.launch {
-            if (htmlId != null && id != htmlId) {
-                webView.visibility = View.INVISIBLE
-            }
-
-            htmlId = id
-
             withContext(Dispatchers.IO) {
                 val html = renderer.render(
                     article,
@@ -171,7 +116,7 @@ class WebViewState(
 
                 withContext(Dispatchers.Main) {
                     webView.loadDataWithBaseURL(
-                        ASSET_BASE_URL,
+                        null,
                         html,
                         null,
                         "UTF-8",
@@ -195,7 +140,6 @@ class WebViewState(
 fun rememberWebViewState(
     renderer: ArticleRenderer = koinInject(),
     onNavigateToMedia: (url: String) -> Unit,
-    onPageStarted: () -> Unit,
 ): WebViewState {
     val colors = articleTemplateColors()
     val scope = rememberCoroutineScope()
@@ -203,13 +147,11 @@ fun rememberWebViewState(
 
     val client = remember {
         AccompanistWebViewClient(
-            assetLoader =
-            WebViewAssetLoader.Builder()
+            assetLoader = WebViewAssetLoader.Builder()
                 .setDomain(DEFAULT_DOMAIN)
                 .addPathHandler("/assets/", AssetsPathHandler(context))
                 .addPathHandler("/res/", ResourcesPathHandler(context))
                 .build(),
-            onPageStarted = onPageStarted,
         )
     }
 
@@ -237,13 +179,4 @@ fun rememberWebViewState(
             client.state = it
         }
     }
-}
-
-private fun jpegStream(
-    bitmap: Bitmap,
-): InputStream {
-    val byteArrayOutputStream = ByteArrayOutputStream()
-    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
-    val bitmapData = byteArrayOutputStream.toByteArray()
-    return ByteArrayInputStream(bitmapData)
 }

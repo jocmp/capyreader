@@ -4,7 +4,6 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -133,18 +132,10 @@ fun ArticleLayout(
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
     }
 
-    val scrollState = rememberSaveable(key = article?.id, saver = ScrollState.Saver) {
-        ScrollState(initial = 0)
-    }
     val webViewState = rememberWebViewState(
         onNavigateToMedia = {
             mediaUrl = it
         },
-        onPageStarted = {
-            coroutineScope.launch {
-                scrollState.scrollTo(0)
-            }
-        }
     )
 
     fun scrollToArticle(index: Int) {
@@ -373,7 +364,6 @@ fun ArticleLayout(
                 ArticleView(
                     article = article,
                     webViewState = webViewState,
-                    scrollState = scrollState,
                     articles = indexedArticles,
                     onBackPressed = {
                         coroutineScope.launchUI {
