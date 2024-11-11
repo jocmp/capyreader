@@ -27,6 +27,7 @@ import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
+import com.jocmp.capy.common.launchUI
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -34,9 +35,6 @@ import kotlinx.coroutines.withContext
 import org.koin.compose.koinInject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
-import java.io.InputStream
 
 /**
  * Doesn't really fetch from androidplatform.net. This is used as a placeholder domain:
@@ -126,7 +124,7 @@ class WebViewState(
         val id = article.id
 
         scope.launch {
-            if (htmlId != null && id != htmlId) {
+            if (htmlId == null || id != htmlId) {
                 webView.visibility = View.INVISIBLE
             }
 
@@ -207,13 +205,4 @@ fun rememberWebViewState(
             client.state = it
         }
     }
-}
-
-private fun jpegStream(
-    bitmap: Bitmap,
-): InputStream {
-    val byteArrayOutputStream = ByteArrayOutputStream()
-    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
-    val bitmapData = byteArrayOutputStream.toByteArray()
-    return ByteArrayInputStream(bitmapData)
 }
