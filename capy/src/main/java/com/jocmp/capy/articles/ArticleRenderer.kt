@@ -48,8 +48,6 @@ class ArticleRenderer(
 
         document.getElementById("article-body-content")?.append(article.content)
 
-        cleanLinks(document)
-
         return document.html()
     }
 

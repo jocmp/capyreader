@@ -133,7 +133,7 @@ fun ArticleLayout(
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
     }
 
-    val scrollState = rememberSaveable(key = article?.id, saver = ScrollState.Saver) {
+    val scrollState = rememberSaveable(saver = ScrollState.Saver) {
         ScrollState(initial = 0)
     }
     val webViewState = rememberWebViewState(
@@ -141,7 +141,7 @@ fun ArticleLayout(
             mediaUrl = it
         },
         onPageStarted = {
-            coroutineScope.launch {
+            coroutineScope.launchUI {
                 scrollState.scrollTo(0)
             }
         }

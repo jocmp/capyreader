@@ -40,7 +40,7 @@ fun ArticleReader(
                     lastScrollY = scrollState.value
                 },
             )
-            Spacer(modifier = Modifier.height(150.dp))
+            Spacer(modifier = Modifier.height(120.dp))
         }
     }
 

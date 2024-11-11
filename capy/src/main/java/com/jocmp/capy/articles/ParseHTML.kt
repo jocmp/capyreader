@@ -13,8 +13,6 @@ fun parseHtml(article: Article, html: String): String {
             element.append("&nbsp;")
         }
 
-        cleanLinks(content)
-
         return content.html()
     } catch (ex: Throwable) {
         return ""

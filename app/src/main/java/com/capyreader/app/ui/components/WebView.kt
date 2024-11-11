@@ -16,14 +16,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.core.graphics.drawable.toBitmap
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewAssetLoader.AssetsPathHandler
 import androidx.webkit.WebViewAssetLoader.DEFAULT_DOMAIN
 import androidx.webkit.WebViewAssetLoader.ResourcesPathHandler
-import coil.executeBlocking
-import coil.imageLoader
-import coil.request.ImageRequest
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.WebViewInterface
 import com.capyreader.app.common.openLink
@@ -74,7 +70,7 @@ fun WebView(
 
 class AccompanistWebViewClient(
     private val assetLoader: WebViewAssetLoader,
-    private val onPageStarted: () -> Unit
+    private val onPageStarted: () -> Unit,
 ) : WebViewClient(),
     KoinComponent {
     lateinit var state: WebViewState
@@ -84,10 +80,10 @@ class AccompanistWebViewClient(
 
     override fun onPageStarted(view: WebView, url: String?, favicon: Bitmap?) {
         super.onPageStarted(view, url, favicon)
+        onPageStarted()
 
         view.postVisualStateCallback(requestId, object : WebView.VisualStateCallback() {
             override fun onComplete(requestId: Long) {
-                onPageStarted()
                 view.visibility = View.VISIBLE
             }
         })
@@ -95,36 +91,10 @@ class AccompanistWebViewClient(
 
     private val requestId = 1200L
 
-    override fun onPageFinished(view: WebView, url: String?) {
-        super.onPageFinished(view, url)
-    }
-
     override fun shouldInterceptRequest(
         view: WebView,
         request: WebResourceRequest
     ): WebResourceResponse? {
-        val accept = request.requestHeaders.getOrDefault("Accept", null)
-
-        if (accept != null && accept.contains("image")) {
-            try {
-                val imageRequest = ImageRequest.Builder(view.context)
-                    .data(request.url)
-                    .build()
-                val bitmap =
-                    view.context.imageLoader.executeBlocking(imageRequest).drawable?.toBitmap()
-
-                if (bitmap != null) {
-                    return WebResourceResponse(
-                        "image/jpg",
-                        "UTF-8",
-                        jpegStream(bitmap)
-                    )
-                }
-            } catch (exception: Exception) {
-                return null
-            }
-        }
-
         return assetLoader.shouldInterceptRequest(request.url)
     }
 
@@ -171,7 +141,7 @@ class WebViewState(
 
                 withContext(Dispatchers.Main) {
                     webView.loadDataWithBaseURL(
-                        ASSET_BASE_URL,
+                        null,
                         html,
                         null,
                         "UTF-8",
