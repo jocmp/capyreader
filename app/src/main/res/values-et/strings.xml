@@ -19,10 +19,10 @@
     <string name="feed_action_edit_success">Uudisvoog on muudetud</string>
     <string name="feed_action_unsubscribe_success">Oled tellimusest loobunud</string>
     <string name="settings">Ava seadistused</string>
-    <string name="settings_remove_account_button_feedbin">Logi välja</string>
-    <string name="settings_remove_account_title_feedbin">Logi välja</string>
-    <string name="settings_remove_account_message_feedbin">Kas sa oled kindel, et soovid välja logida?</string>
-    <string name="settings_remove_account_confirm_feedbin">Logi välja</string>
+    <string name="settings_remove_account_button_service">Logi välja</string>
+    <string name="settings_remove_account_title_service">Logi välja</string>
+    <string name="settings_remove_account_message_service">Kas sa oled kindel, et soovid välja logida?</string>
+    <string name="settings_remove_account_confirm_service">Logi välja</string>
     <string name="settings_remove_account_button_local">Kustuta kasutajakonto</string>
     <string name="settings_remove_account_title_local">Kustuta kasutajakonto</string>
     <string name="settings_remove_account_message_local">Kas sa oled kindel, et soovid kasutajakonto eemaldada? Seda tegevust ei saa tagasi pöörata.</string>

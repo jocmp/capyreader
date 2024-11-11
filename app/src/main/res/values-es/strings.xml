@@ -23,10 +23,10 @@
     <string name="feed_action_edit_success">Feed actualizado</string>
     <string name="feed_action_unsubscribe_success">Darse de baja</string>
     <string name="settings">Abrir los ajustes</string>
-    <string name="settings_remove_account_button_feedbin">Cerrar sesión</string>
-    <string name="settings_remove_account_title_feedbin">Cerrar sesión</string>
-    <string name="settings_remove_account_message_feedbin">¿Seguro que quieres cerrar la sesión?</string>
-    <string name="settings_remove_account_confirm_feedbin">Cerrar sesión</string>
+    <string name="settings_remove_account_button_service">Cerrar sesión</string>
+    <string name="settings_remove_account_title_service">Cerrar sesión</string>
+    <string name="settings_remove_account_message_service">¿Seguro que quieres cerrar la sesión?</string>
+    <string name="settings_remove_account_confirm_service">Cerrar sesión</string>
     <string name="settings_remove_account_button_local">Eliminar la cuenta</string>
     <string name="settings_remove_account_title_local">Eliminar la cuenta</string>
     <string name="settings_remove_account_message_local">¿Estás seguro de que quieres eliminar tu cuenta? Esto no se puede deshacer.</string>

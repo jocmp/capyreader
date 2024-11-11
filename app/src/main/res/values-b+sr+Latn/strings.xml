@@ -23,10 +23,10 @@
     <string name="feed_action_edit_success">Izvor je ažuriran</string>
     <string name="feed_action_unsubscribe_success">Izvor je uspešno uklonjen</string>
     <string name="settings">Otvori podešavanja</string>
-    <string name="settings_remove_account_button_feedbin">Odjavi se</string>
-    <string name="settings_remove_account_title_feedbin">Odjavi se</string>
-    <string name="settings_remove_account_message_feedbin">Da li ste sigurni da želite da se odjavite?</string>
-    <string name="settings_remove_account_confirm_feedbin">Odjavi se</string>
+    <string name="settings_remove_account_button_service">Odjavi se</string>
+    <string name="settings_remove_account_title_service">Odjavi se</string>
+    <string name="settings_remove_account_message_service">Da li ste sigurni da želite da se odjavite?</string>
+    <string name="settings_remove_account_confirm_service">Odjavi se</string>
     <string name="settings_remove_account_button_local">Izbriši nalog</string>
     <string name="settings_remove_account_title_local">Izbriši nalog</string>
     <string name="settings_remove_account_message_local">Da li ste sigurni da želite da izbrišete svoj nalog? Ovo se ne može poništiti.</string>

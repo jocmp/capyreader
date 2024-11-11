@@ -22,9 +22,9 @@
     <string name="folder_action_delete_title">Hapus Tag</string>
     <string name="feed_action_unsubscribe_success">Berhenti berlangganan</string>
     <string name="settings">Buka pengaturan</string>
-    <string name="settings_remove_account_button_feedbin">Keluar</string>
-    <string name="settings_remove_account_title_feedbin">Keluar</string>
-    <string name="settings_remove_account_message_feedbin">Apakah kamu yakin ingin keluar?</string>
+    <string name="settings_remove_account_button_service">Keluar</string>
+    <string name="settings_remove_account_title_service">Keluar</string>
+    <string name="settings_remove_account_message_service">Apakah kamu yakin ingin keluar?</string>
     <string name="settings_remove_account_button_local">Hapus Akun</string>
     <string name="settings_remove_account_message_local">Apakah kamu yakin ingin menghapus akunmu? Tindakan ini tidak dapat dibatalkan.</string>
     <string name="settings_remove_account_confirm_local">Konfirmasi</string>
@@ -54,7 +54,7 @@
     <string name="article_actions_open_menu">Buka tindakan artikel</string>
     <string name="filter_action_menu_description">Sunting</string>
     <string name="action_share">Bagikan</string>
-    <string name="settings_remove_account_confirm_feedbin">Keluar</string>
+    <string name="settings_remove_account_confirm_service">Keluar</string>
     <string name="nav_add_feed">Tambah Umpan</string>
     <string name="settings_remove_account_title_local">Hapus Akun</string>
     <plurals name="refresh_hours">

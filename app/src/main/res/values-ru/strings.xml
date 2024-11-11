@@ -158,10 +158,10 @@
     <string name="filter_starred">Избранное</string>
     <string name="app_name">Капи Читалка</string>
     <string name="feed_action_unsubscribe_success">Отписались</string>
-    <string name="settings_remove_account_button_feedbin">Выход</string>
-    <string name="settings_remove_account_title_feedbin">Выход</string>
-    <string name="settings_remove_account_message_feedbin">Вы уверены, что хотите выйти?</string>
-    <string name="settings_remove_account_confirm_feedbin">Выход</string>
+    <string name="settings_remove_account_button_service">Выход</string>
+    <string name="settings_remove_account_title_service">Выход</string>
+    <string name="settings_remove_account_message_service">Вы уверены, что хотите выйти?</string>
+    <string name="settings_remove_account_confirm_service">Выход</string>
     <string name="unauthorized_dialog_title">Вы вышли из системы</string>
     <string name="unauthorized_dialog_confirm_text">Войти</string>
     <string name="auth_fields_log_in_button">Войти</string>

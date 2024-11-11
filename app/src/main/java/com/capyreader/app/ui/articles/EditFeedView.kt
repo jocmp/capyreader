@@ -102,7 +102,7 @@ fun EditFeedView(
                 modifier = Modifier
                     .padding(vertical = 16.dp)
             ) {
-                EditFeedURLDisplay(feedURL = feed.feedURL)
+                EditFeedURLDisplay(url = feed.feedURL)
                 OutlinedTextField(
                     value = name,
                     onValueChange = setName,

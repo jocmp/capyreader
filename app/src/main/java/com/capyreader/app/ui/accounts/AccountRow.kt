@@ -14,9 +14,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.jocmp.capy.accounts.Source
 import com.capyreader.app.R
+import com.capyreader.app.common.titleKey
 import com.capyreader.app.ui.theme.CapyTheme
+import com.jocmp.capy.accounts.Source
 
 @Composable
 fun AccountRow(
@@ -27,6 +28,9 @@ fun AccountRow(
     ListItem(
         headlineContent = {
             Text(text = item.title)
+        },
+        supportingContent = {
+            Text(item.subtitle)
         },
         leadingContent = {
             Image(
@@ -44,36 +48,49 @@ private fun buildItem(source: Source): SourceModel {
     return when (source) {
         Source.LOCAL ->
             SourceModel(
-                title = stringResource(R.string.account_source_local),
+                title = stringResource(source.titleKey),
+                subtitle = stringResource(R.string.add_account_local_subtitle),
                 iconID = R.drawable.rss_logo
             )
 
         Source.FEEDBIN ->
             SourceModel(
-                title = stringResource(R.string.account_source_feedbin),
+                title = stringResource(source.titleKey),
+                subtitle = stringResource(R.string.add_account_feedbin_subtitle),
                 iconID = R.drawable.feedbin_logo
             )
 
         Source.FRESHRSS ->
             SourceModel(
-                title = stringResource(R.string.account_source_freshrss),
-                iconID = R.drawable.freshrss_logo
+                title = stringResource(source.titleKey),
+                iconID = R.drawable.freshrss_logo,
+                subtitle = stringResource(R.string.add_account_freshrss_subtitle),
             )
+
+        Source.READER ->
+            SourceModel(
+                title = stringResource(source.titleKey),
+                iconID = R.drawable.rss_logo,
+                subtitle = stringResource(R.string.add_account_reader_subtitle),
+            )
+
     }
 }
 
 private data class SourceModel(
     val title: String,
+    val subtitle: String,
     @DrawableRes val iconID: Int,
 )
 
 @Preview
 @Composable
-private fun FeedbinAccountRow() {
+private fun AccountRowPreview() {
     CapyTheme {
         Column {
-            AccountRow(source = Source.FEEDBIN)
-            AccountRow(source = Source.LOCAL)
+            Source.entries.forEach {
+                AccountRow(source = it)
+            }
         }
     }
 }

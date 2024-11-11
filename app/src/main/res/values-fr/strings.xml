@@ -14,10 +14,10 @@
     <string name="folder_action_delete_title">Supprimer l\'étiquette</string>
     <string name="feed_action_edit_success">Flux mis à jour</string>
     <string name="feed_action_unsubscribe_success">Désinscrit</string>
-    <string name="settings_remove_account_button_feedbin">Se déconnecter</string>
-    <string name="settings_remove_account_title_feedbin">Se déconnecter</string>
-    <string name="settings_remove_account_message_feedbin">Voulez-vous vraiment vous déconnecter ?</string>
-    <string name="settings_remove_account_confirm_feedbin">Se déconnecter</string>
+    <string name="settings_remove_account_button_service">Se déconnecter</string>
+    <string name="settings_remove_account_title_service">Se déconnecter</string>
+    <string name="settings_remove_account_message_service">Voulez-vous vraiment vous déconnecter ?</string>
+    <string name="settings_remove_account_confirm_service">Se déconnecter</string>
     <string name="settings_remove_account_title_local">Supprimer le comte</string>
     <string name="settings_remove_account_message_local">Voulez-vous vraiment supprimer votre compte ? Cela ne peut être annulé.</string>
     <string name="settings_remove_account_confirm_local">Confirmer</string>

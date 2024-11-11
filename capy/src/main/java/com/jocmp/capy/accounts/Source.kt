@@ -6,8 +6,9 @@ import kotlinx.serialization.Serializable
 enum class Source(val value: String) {
     LOCAL("local"),
     FEEDBIN("feedbin"),
-    FRESHRSS("freshrss");
+    FRESHRSS("freshrss"),
+    READER("reader");
 
     val hasCustomURL
-        get() = this == FRESHRSS
+        get() = this == FRESHRSS || this == READER
 }
