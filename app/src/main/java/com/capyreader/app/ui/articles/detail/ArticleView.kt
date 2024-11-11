@@ -8,7 +8,6 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -26,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -49,7 +49,6 @@ import org.koin.compose.koinInject
 fun ArticleView(
     article: Article,
     webViewState: WebViewState,
-    scrollState: ScrollState,
     articles: IndexedArticles,
     onBackPressed: () -> Unit,
     onToggleRead: () -> Unit,
@@ -93,18 +92,19 @@ fun ArticleView(
             )
         },
         reader = {
-            ArticlePullRefresh(
-                toolbars.show && !toolbars.pinned,
-                onToggleFullContent = onToggleFullContent,
-                onRequestNext = onRequestNext,
-                onRequestPrevious = onRequestPrevious,
-                articles = articles,
-            ) {
-                ArticleReader(
-                    article = article,
-                    webViewState = webViewState,
-                    scrollState = scrollState,
-                )
+            key(article.id) {
+                ArticlePullRefresh(
+                    toolbars.show && !toolbars.pinned,
+                    onToggleFullContent = onToggleFullContent,
+                    onRequestNext = onRequestNext,
+                    onRequestPrevious = onRequestPrevious,
+                    articles = articles,
+                ) {
+                    ArticleReader(
+                        article = article,
+                        webViewState = webViewState,
+                    )
+                }
             }
         },
         bottomBar = {

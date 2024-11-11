@@ -1,8 +1,6 @@
 package com.capyreader.app.ui.components
 
 import android.annotation.SuppressLint
-import android.graphics.Bitmap
-import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
@@ -27,7 +25,6 @@ import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
-import com.jocmp.capy.common.launchUI
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -68,26 +65,12 @@ fun WebView(
 
 class AccompanistWebViewClient(
     private val assetLoader: WebViewAssetLoader,
-    private val onPageStarted: () -> Unit,
 ) : WebViewClient(),
     KoinComponent {
     lateinit var state: WebViewState
         internal set
 
     private val appPreferences by inject<AppPreferences>()
-
-    override fun onPageStarted(view: WebView, url: String?, favicon: Bitmap?) {
-        super.onPageStarted(view, url, favicon)
-        onPageStarted()
-
-        view.postVisualStateCallback(requestId, object : WebView.VisualStateCallback() {
-            override fun onComplete(requestId: Long) {
-                view.visibility = View.VISIBLE
-            }
-        })
-    }
-
-    private val requestId = 1200L
 
     override fun shouldInterceptRequest(
         view: WebView,
@@ -124,12 +107,6 @@ class WebViewState(
         val id = article.id
 
         scope.launch {
-            if (htmlId == null || id != htmlId) {
-                webView.visibility = View.INVISIBLE
-            }
-
-            htmlId = id
-
             withContext(Dispatchers.IO) {
                 val html = renderer.render(
                     article,
@@ -163,7 +140,6 @@ class WebViewState(
 fun rememberWebViewState(
     renderer: ArticleRenderer = koinInject(),
     onNavigateToMedia: (url: String) -> Unit,
-    onPageStarted: () -> Unit,
 ): WebViewState {
     val colors = articleTemplateColors()
     val scope = rememberCoroutineScope()
@@ -171,13 +147,11 @@ fun rememberWebViewState(
 
     val client = remember {
         AccompanistWebViewClient(
-            assetLoader =
-            WebViewAssetLoader.Builder()
+            assetLoader = WebViewAssetLoader.Builder()
                 .setDomain(DEFAULT_DOMAIN)
                 .addPathHandler("/assets/", AssetsPathHandler(context))
                 .addPathHandler("/res/", ResourcesPathHandler(context))
                 .build(),
-            onPageStarted = onPageStarted,
         )
     }
 
