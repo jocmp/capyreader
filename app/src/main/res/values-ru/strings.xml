@@ -192,4 +192,15 @@
     <string name="settings_section_account_server">Сервер</string>
     <string name="auth_fields_api_url">Сервер</string>
     <string name="account_source_freshrss">FreshRSS</string>
+    <string name="auth_fields_api_url_freshrss_placeholder">example.com/api/greader.php</string>
+    <string name="account_source_reader">Читалка</string>
+    <string name="add_account_feedbin_subtitle">feedbin.com</string>
+    <string name="add_account_freshrss_subtitle">freshrss.org</string>
+    <string name="add_account_reader_subtitle">Личный хостинг Google Reader API</string>
+    <string name="add_account_feedbin_signup_prompt">У вас нет аккаунта Feedbin?</string>
+    <string name="add_account_freshrss_signup_link_text">Узнать больше.</string>
+    <string name="add_account_feedbin_signup_link_text">Создайте один здесь.</string>
+    <string name="add_account_freshrss_signup_prompt">У вас нет экземпляра FreshRSS?</string>
+    <string name="add_account_local_subtitle">На вашем устройстве</string>
+    <string name="edit_feed_tag_section">Тег</string>
 </resources>
