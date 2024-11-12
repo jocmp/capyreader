@@ -71,7 +71,7 @@
     <string name="auth_fields_password">Password</string>
     <string name="auth_fields_username">Email</string>
     <string name="auth_fields_api_url">Server</string>
-    <string name="auth_fields_api_url_freshrss_placeholder">example.com/api/greader.php</string>
+    <string name="auth_fields_api_url_freshrss_placeholder" translatable="false">example.com/api/greader.php</string>
     <string name="auth_fields_hide_password">Hide password</string>
     <string name="auth_fields_show_password">Show password</string>
     <string name="auth_fields_log_in_button">Log In</string>
@@ -84,8 +84,8 @@
     <string name="account_source_local">Local</string>
     <string name="add_account_title">Add Account</string>
     <string name="add_account_local_subtitle">On your device</string>
-    <string name="add_account_feedbin_subtitle">feedbin.com</string>
-    <string name="add_account_freshrss_subtitle">freshrss.org</string>
+    <string name="add_account_feedbin_subtitle" translatable="false">feedbin.com</string>
+    <string name="add_account_freshrss_subtitle" translatable="false">freshrss.org</string>
     <string name="add_account_reader_subtitle">Self-hosted Google Reader API</string>
     <string name="add_account_feedbin_signup_prompt">Don\'t have a Feedbin account?</string>
     <string name="add_account_feedbin_signup_link_text">Create one here.</string>
