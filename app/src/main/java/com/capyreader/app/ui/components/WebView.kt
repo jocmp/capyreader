@@ -148,9 +148,13 @@ class WebViewState(
     }
 
     fun loadHtml(article: Article) {
-        if (htmlId == null || article.id != htmlId) {
+        val id = article.id
+
+        if (htmlId == null || id != htmlId) {
             webView.visibility = View.INVISIBLE
         }
+
+        htmlId = id
 
         scope.launch {
             withContext(Dispatchers.IO) {
