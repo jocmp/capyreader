@@ -20,7 +20,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.capyreader.app.BuildConfig
 import com.capyreader.app.R
 import com.capyreader.app.setupCommonModules
 import com.capyreader.app.ui.CrashReporting
@@ -66,16 +65,14 @@ fun AddAccountView(
                     onSelectService,
                     source = Source.FEEDBIN
                 )
-                if (BuildConfig.FLAVOR == "free") {
-                    SyncServiceRow(
-                        onSelectService,
-                        source = Source.FRESHRSS
-                    )
-                    SyncServiceRow(
-                        onSelectService,
-                        source = Source.READER
-                    )
-                }
+                SyncServiceRow(
+                    onSelectService,
+                    source = Source.FRESHRSS
+                )
+                SyncServiceRow(
+                    onSelectService,
+                    source = Source.READER
+                )
             }
             if (CrashReporting.isAvailable) {
                 Box(
