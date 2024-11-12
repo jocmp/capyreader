@@ -64,7 +64,7 @@
     <string name="update_auth_success_message">Sie wurden erfolgreich eingeloggt</string>
     <string name="crash_reporting_checkbox_title">Fehlerberichterstattung einschalten</string>
     <string name="account_source_local">Lokal</string>
-    <string name="add_account_title">Benutzerkonto hinzufügen</string>
+    <string name="add_account_title">Konto hinzufügen</string>
     <string name="transfers_export_subscriptions">Abonnements exportieren</string>
     <string name="settings_section_account">Benutzerkonto</string>
     <string name="settings_section_import">Import</string>
@@ -183,8 +183,12 @@
     <string name="settings_gestures_list_back_navigation_action">Aktion bei Zurück Geste</string>
     <string name="settings_gestures_list_back_navigation_system_back">Standard</string>
     <string name="crash_log_export_item_subtitle">Speichert Absturzberichte in Datei um sie mit dem Entwickler zu teilen</string>
-    <string name="edit_feed_tags_section">Tags</string>
+    <string name="edit_feed_tags_section">Schlagwörter</string>
     <string name="settings_notifications_select_none">Nichts ausgewählt</string>
     <string name="settings_notifications_select_all">Alles ausgewählt</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">Navigationsübersicht öffnen</string>
+    <string name="add_account_local_subtitle">Auf Ihrem Gerät</string>
+    <string name="edit_feed_tag_section">Schlagwort</string>
+    <string name="auth_fields_api_url">Server</string>
+    <string name="settings_section_account_server">Server</string>
 </resources>
