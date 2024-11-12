@@ -7,7 +7,7 @@ data class Subscription(
     val id: String,
     val title: String,
     val categories: List<Category>,
-    val url: String,
+    val url: String?,
     val htmlUrl: String,
-    val iconUrl: String,
+    val iconUrl: String?,
 )

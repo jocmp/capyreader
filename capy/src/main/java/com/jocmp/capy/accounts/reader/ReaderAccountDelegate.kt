@@ -221,9 +221,9 @@ internal class ReaderAccountDelegate(
             id = subscription.id,
             subscription_id = subscription.id,
             title = subscription.title,
-            feed_url = subscription.url,
+            feed_url = subscription.url.orEmpty(),
             site_url = subscription.htmlUrl,
-            favicon_url = subscription.iconUrl.ifBlank { null }
+            favicon_url = subscription.iconUrl?.ifBlank { null }
         )
 
         upsertTaggings(subscription)
