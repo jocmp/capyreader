@@ -302,7 +302,6 @@ internal class ReaderAccountDelegate(
     ) {
         val response = googleReader.streamItemsIDs(
             stream = stream,
-            since = since,
             continuation = continuation,
             excludedStream = Stream.READ,
             count = MAX_PAGINATED_ITEM_LIMIT,

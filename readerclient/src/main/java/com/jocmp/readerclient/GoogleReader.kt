@@ -22,8 +22,6 @@ interface GoogleReader {
     @GET("reader/api/0/stream/items/ids")
     suspend fun streamItemsIDs(
         @Query("s") streamID: String,
-        /** Epoch timestamp. Items older than this timestamp are filtered out. */
-        @Query("ot") since: Long? = null,
         @Query("c") continuation: String? = null,
         @Query("n") count: Int = 10_000,
         /** A stream ID to exclude from the list. */
