@@ -48,6 +48,8 @@ class ArticleRenderer(
 
         document.getElementById("article-body-content")?.append(article.content)
 
+        cleanStyles(document)
+
         return document.html()
     }
 
