@@ -2,7 +2,7 @@ Just like its namesake, Capy Reader is a small RSS reader focused on approachabi
 
 Some features include:
 
-• Sync with your Feedbin account or keep feeds local on device
+• Syncing via Feedbin, FreshRSS, or directly to your device
 • Track read and starred articles
 • Article search
 • Notifications
