@@ -6,10 +6,10 @@ import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe
 import com.capyreader.app.ui.settings.panels.RowSwipeOption
-import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.articles.FontOption
 import com.jocmp.capy.articles.TextSize
+import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.preferences.AndroidPreferenceStore
 import com.jocmp.capy.preferences.Preference
 import com.jocmp.capy.preferences.PreferenceStore
@@ -80,6 +80,9 @@ class AppPreferences(context: Context) {
 
         val bottomSwipeGesture: Preference<ArticleVerticalSwipe>
             get() = preferenceStore.getEnum("article_bottom_swipe_gesture", ArticleVerticalSwipe.NEXT_ARTICLE)
+
+        val enablePagingTapGesture: Preference<Boolean>
+            get() = preferenceStore.getBoolean("article_enable_paging_tap_gesture", false)
     }
 
     class ArticleListOptions(private val preferenceStore: PreferenceStore) {

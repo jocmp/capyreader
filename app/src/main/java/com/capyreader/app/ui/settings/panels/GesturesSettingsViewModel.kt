@@ -23,6 +23,9 @@ class GesturesSettingsViewModel(private val appPreferences: AppPreferences) : Vi
     var readerBottomSwipe by mutableStateOf(readerOptions.bottomSwipeGesture.get())
         private set
 
+    var enablePagingTapGesture by mutableStateOf(readerOptions.enablePagingTapGesture.get())
+        private set
+
     fun updateBackAction(action: BackAction) {
         backAction = action
 
@@ -51,6 +54,12 @@ class GesturesSettingsViewModel(private val appPreferences: AppPreferences) : Vi
         rowSwipeEnd = swipe
 
         listOptions.swipeEnd.set(swipe)
+    }
+
+    fun updatePagingTapGesture(enabled: Boolean) {
+        enablePagingTapGesture = enabled
+
+        readerOptions.enablePagingTapGesture.set(enabled)
     }
 
     private val readerOptions: AppPreferences.ReaderOptions

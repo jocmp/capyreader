@@ -53,7 +53,7 @@ fun TextSwitch(
                 Text(
                     text = subtitle,
                     color = colorScheme.onSurfaceVariant,
-                    style = typography.bodySmall,
+                    style = typography.bodyMedium,
                 )
             }
         }
