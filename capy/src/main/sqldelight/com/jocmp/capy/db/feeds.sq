@@ -52,6 +52,10 @@ update:
 UPDATE feeds SET
 title = :title WHERE feeds.id = :feedID;
 
+updateFavicon:
+UPDATE feeds SET
+favicon_url = :faviconURL WHERE feeds.id = :feedID;
+
 updateStickyFullContent:
 UPDATE feeds SET enable_sticky_full_content = :enabled WHERE feeds.id = :feedID;
 

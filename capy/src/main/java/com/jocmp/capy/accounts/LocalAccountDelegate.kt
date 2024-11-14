@@ -25,6 +25,7 @@ import com.jocmp.feedfinder.parser.Feed as ParserFeed
 class LocalAccountDelegate(
     private val database: Database,
     private val httpClient: OkHttpClient,
+    private val faviconFetcher: FaviconFetcher,
     private val feedFinder: FeedFinder = DefaultFeedFinder(httpClient),
 ) : AccountDelegate {
     private val articleContent = ArticleContent(httpClient)
@@ -59,6 +60,7 @@ class LocalAccountDelegate(
                 val feed = feedRecords.findBy(id = resultFeed.feedURL.toString())
 
                 return if (feed != null) {
+                    verifyFavicon(feed)
                     upsertFolders(feed, folderTitles)
                     saveArticles(resultFeed.items, cutoffDate = null, feed = feed)
 
@@ -220,6 +222,14 @@ class LocalAccountDelegate(
                 name = folderTitle
             )
         }
+    }
+
+    private suspend fun verifyFavicon(feed: Feed) {
+        if (faviconFetcher.isValid(feed.faviconURL)) {
+            return
+        }
+
+        feedRecords.clearFavicon(feed.id)
     }
 }
 

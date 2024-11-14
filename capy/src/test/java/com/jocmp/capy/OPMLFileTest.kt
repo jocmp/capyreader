@@ -1,5 +1,6 @@
 package com.jocmp.capy
 
+import com.jocmp.capy.accounts.FakeFaviconFetcher
 import com.jocmp.capy.accounts.LocalAccountDelegate
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.AccountFixture
@@ -35,7 +36,8 @@ class OPMLFileTest {
         val delegate = LocalAccountDelegate(
             database = database,
             httpClient = httpClient,
-            feedFinder = MockFeedFinder()
+            feedFinder = MockFeedFinder(),
+            faviconFetcher = FakeFaviconFetcher
         )
 
         account = AccountFixture.create(

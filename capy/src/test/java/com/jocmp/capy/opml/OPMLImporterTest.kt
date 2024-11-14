@@ -3,6 +3,7 @@ package com.jocmp.capy.opml
 import com.jocmp.capy.Account
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.MockFeedFinder
+import com.jocmp.capy.accounts.FakeFaviconFetcher
 import com.jocmp.capy.accounts.LocalAccountDelegate
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.AccountFixture
@@ -11,9 +12,6 @@ import com.jocmp.capy.testFile
 import com.jocmp.feedfinder.parser.Feed
 import io.mockk.mockk
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.last
-import kotlinx.coroutines.flow.single
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import okhttp3.OkHttpClient
 import org.junit.Before
@@ -21,7 +19,6 @@ import org.junit.Rule
 import org.junit.rules.TemporaryFolder
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 class OPMLImporterTest {
     @JvmField
@@ -53,7 +50,8 @@ class OPMLImporterTest {
         val delegate = LocalAccountDelegate(
             database = database,
             httpClient = httpClient,
-            feedFinder = finder
+            feedFinder = finder,
+            faviconFetcher = FakeFaviconFetcher
         )
 
         account = AccountFixture.create(

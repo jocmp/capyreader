@@ -2,6 +2,7 @@ package com.jocmp.capy
 
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.AutoDelete
+import com.jocmp.capy.accounts.FaviconFetcher
 import com.jocmp.capy.accounts.LocalAccountDelegate
 import com.jocmp.capy.accounts.LocalOkHttpClient
 import com.jocmp.capy.accounts.Source
@@ -33,10 +34,12 @@ data class Account(
     val database: Database,
     val preferences: AccountPreferences,
     val source: Source = Source.LOCAL,
+    val faviconFetcher: FaviconFetcher,
     val delegate: AccountDelegate = when (source) {
         Source.LOCAL -> LocalAccountDelegate(
             database = database,
             httpClient = LocalOkHttpClient.forAccount(path = cacheDirectory),
+            faviconFetcher = faviconFetcher,
         )
 
         Source.FEEDBIN -> FeedbinAccountDelegate(

@@ -25,7 +25,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import coil.request.ImageRequest
-import com.capyreader.app.common.supportGifs
 import com.capyreader.app.ui.components.LoadingView
 import com.capyreader.app.ui.components.Swiper
 import com.capyreader.app.ui.components.rememberSwiperState
@@ -67,7 +66,6 @@ fun ArticleMediaView(
                 ZoomableAsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(url)
-                        .supportGifs()
                         .listener(
                             onError = { _, _ ->
                                 if (url != null) {

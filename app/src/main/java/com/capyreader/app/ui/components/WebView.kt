@@ -17,11 +17,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.core.graphics.drawable.toBitmap
+import androidx.core.graphics.drawable.toBitmapOrNull
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewAssetLoader.AssetsPathHandler
 import androidx.webkit.WebViewAssetLoader.DEFAULT_DOMAIN
 import androidx.webkit.WebViewAssetLoader.ResourcesPathHandler
+import coil.asDrawable
 import coil.executeBlocking
 import coil.imageLoader
 import coil.request.ImageRequest
@@ -107,7 +108,11 @@ class AccompanistWebViewClient(
                 .data(request.url)
                 .build()
             val bitmap =
-                view.context.imageLoader.executeBlocking(imageRequest).drawable?.toBitmap()
+                view.context.imageLoader
+                    .executeBlocking(imageRequest)
+                    .image
+                    ?.asDrawable(view.resources)
+                    ?.toBitmapOrNull()
 
             if (bitmap != null) {
                 return WebResourceResponse(
