@@ -191,4 +191,12 @@
     <string name="settings_section_account_server">Servidor</string>
     <string name="auth_fields_api_url">Servidor</string>
     <string name="account_source_freshrss">FreshRSS</string>
+    <string name="add_account_local_subtitle">En tu dispositivo</string>
+    <string name="add_account_reader_subtitle">API de Google Reader autohospedada</string>
+    <string name="add_account_feedbin_signup_prompt">¿No tienes una cuenta Feedbin?</string>
+    <string name="add_account_feedbin_signup_link_text">Crea una aquí.</string>
+    <string name="add_account_freshrss_signup_prompt">¿No tienes una instancia de FreshRSS ?</string>
+    <string name="add_account_freshrss_signup_link_text">Descubra más.</string>
+    <string name="edit_feed_tag_section">Etiqueta</string>
+    <string name="account_source_reader">Lector</string>
 </resources>
