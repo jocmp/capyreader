@@ -3,13 +3,11 @@ package com.capyreader.app.ui.articles.detail
 import android.webkit.WebView
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.ui.collectChanges
 import com.jocmp.capy.articles.FontOption
 import com.jocmp.capy.articles.TextSize
-import com.jocmp.capy.preferences.Preference
 import org.koin.compose.koinInject
 
 @Composable
@@ -29,9 +27,6 @@ fun ArticleStyleListener(webView: WebView?, appPreferences: AppPreferences = koi
         }
     }
 }
-
-@Composable
-fun <T> Preference<T>.collectChanges(): State<T> = changes().collectAsState(initial = defaultValue())
 
 private fun updateTextSize(webView: WebView, textSize: TextSize) {
     webView.evaluateJavascript(
