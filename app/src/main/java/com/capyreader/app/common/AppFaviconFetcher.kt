@@ -16,6 +16,6 @@ class AppFaviconFetcher(private val context: Context) : FaviconFetcher {
                     .build()
             )
 
-        return result.image != null
+        return result.drawable != null
     }
 }

@@ -3,6 +3,7 @@ package com.capyreader.app
 import android.app.Application
 import coil.ImageLoader
 import coil.ImageLoaderFactory
+import coil.decode.ImageDecoderDecoder
 import com.capyreader.app.common.AppPreferences
 import com.google.android.material.color.DynamicColors
 import com.jocmp.capy.UserAgentInterceptor
@@ -30,7 +31,9 @@ class MainApplication : Application(), ImageLoaderFactory {
 
     override fun newImageLoader(): ImageLoader {
         return ImageLoader.Builder(this)
-            
+            .components {
+                add(ImageDecoderDecoder.Factory())
+            }
             .okHttpClient {
                 OkHttpClient.Builder()
                     .addInterceptor(UserAgentInterceptor())
