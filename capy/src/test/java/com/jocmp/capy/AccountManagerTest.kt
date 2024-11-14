@@ -1,5 +1,6 @@
 package com.jocmp.capy
 
+import com.jocmp.capy.accounts.FakeFaviconFetcher
 import com.jocmp.capy.accounts.Source
 import kotlinx.coroutines.runBlocking
 import org.junit.Rule
@@ -20,6 +21,7 @@ class AccountManagerTest {
             preferenceStoreProvider = InMemoryPreferencesProvider(),
             cacheDirectory = rootFolder.newFolder().toURI(),
             databaseProvider = InMemoryDatabaseProvider,
+            faviconFetcher = FakeFaviconFetcher
         )
     }
 

@@ -46,6 +46,10 @@ internal class FeedRecords(private val database: Database) {
         )
     }
 
+    fun clearFavicon(feedID: String) {
+        database.feedsQueries.updateFavicon(faviconURL = null, feedID = feedID)
+    }
+
     fun updateStickyFullContent(feedID: String, enabled: Boolean) {
         database.feedsQueries.updateStickyFullContent(
             enabled = enabled,

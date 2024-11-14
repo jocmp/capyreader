@@ -1,5 +1,6 @@
 package com.jocmp.capy.accounts
 
+import com.jocmp.capy.AccountDelegate
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.FeedFixture
@@ -28,6 +29,7 @@ class LocalAccountDelegateTest {
     private lateinit var database: Database
     private lateinit var feedFinder: FeedFinder
     private lateinit var feedFixture: FeedFixture
+    private lateinit var delegate: AccountDelegate
 
     private val item = RssItem(
         guid = null,
@@ -71,13 +73,17 @@ class LocalAccountDelegateTest {
         database = InMemoryDatabaseProvider.build(accountID)
         feedFixture = FeedFixture(database)
         feedFinder = mockk<FeedFinder>()
+        delegate = LocalAccountDelegate(
+            database,
+            httpClient,
+            feedFinder = feedFinder,
+            faviconFetcher = FakeFaviconFetcher
+        )
     }
 
     @Test
     fun refreshAll_updatesEntries() = runTest {
         coEvery { feedFinder.fetch(url = any()) }.returns(Result.success(channel))
-
-        val delegate = LocalAccountDelegate(database, httpClient, feedFinder)
 
         FeedFixture(database).create(feedID = channel.link!!)
 
@@ -103,8 +109,6 @@ class LocalAccountDelegateTest {
     fun refreshAll_updatesEntriesWithCutoff() = runTest {
         coEvery { feedFinder.fetch(url = any()) }.returns(Result.success(channel))
 
-        val delegate = LocalAccountDelegate(database, httpClient, feedFinder)
-
         FeedFixture(database).create(feedID = channel.link!!)
 
         delegate.refresh(cutoffDate = ZonedDateTime.of(2024, 5, 1, 8, 0, 0, 0, ZoneOffset.UTC))
@@ -128,35 +132,26 @@ class LocalAccountDelegateTest {
 
     @Test
     fun markRead() = runTest {
-        val delegate = LocalAccountDelegate(database, httpClient, feedFinder)
-
         assertTrue(delegate.markRead(listOf("777")).isSuccess)
     }
 
     @Test
     fun markUnread() = runTest {
-        val delegate = LocalAccountDelegate(database, httpClient, feedFinder)
-
         assertTrue(delegate.markUnread(listOf("777")).isSuccess)
     }
 
     @Test
     fun addStar() = runTest {
-        val delegate = LocalAccountDelegate(database, httpClient, feedFinder)
-
         assertTrue(delegate.addStar(listOf("777")).isSuccess)
     }
 
     @Test
     fun removeStar() = runTest {
-        val delegate = LocalAccountDelegate(database, httpClient, feedFinder)
-
         assertTrue(delegate.removeStar(listOf("777")).isSuccess)
     }
 
     @Test
     fun addFeed() = runTest {
-        val delegate = LocalAccountDelegate(database, httpClient, feedFinder)
         val url = "wheresyoured.at"
 
         coEvery { feedFinder.find(url) }.returns(
@@ -182,7 +177,6 @@ class LocalAccountDelegateTest {
 
     @Test
     fun addFeed_multipleChoice() = runTest {
-        val delegate = LocalAccountDelegate(database, httpClient, feedFinder)
         val url = "9to5google.com"
 
         val choices = listOf(
@@ -211,7 +205,6 @@ class LocalAccountDelegateTest {
 
     @Test
     fun addFeed_Failure() = runTest {
-        val delegate = LocalAccountDelegate(database, httpClient, feedFinder)
         val url = "example.com"
 
         coEvery { feedFinder.find(url) }.returns(Result.failure(Error("Sorry charlie")))
@@ -223,7 +216,6 @@ class LocalAccountDelegateTest {
 
     @Test
     fun updateFeed_modifyTitle() = runTest {
-        val delegate = LocalAccountDelegate(database, httpClient, feedFinder)
         val feed = feedFixture.create()
 
         val feedTitle = "The Verge Mobile Podcast"
@@ -292,5 +284,5 @@ class LocalAccountDelegateTest {
     }
 }
 
-private suspend fun LocalAccountDelegate.addFeed(url: String) =
+private suspend fun AccountDelegate.addFeed(url: String) =
     addFeed(url = url, null, null)
