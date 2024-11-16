@@ -26,6 +26,7 @@ import coil.executeBlocking
 import coil.imageLoader
 import coil.request.ImageRequest
 import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.common.Media
 import com.capyreader.app.common.WebViewInterface
 import com.capyreader.app.common.openLink
 import com.capyreader.app.ui.articles.detail.articleTemplateColors
@@ -189,7 +190,7 @@ class WebViewState(
 @Composable
 fun rememberWebViewState(
     renderer: ArticleRenderer = koinInject(),
-    onNavigateToMedia: (url: String) -> Unit,
+    onNavigateToMedia: (media: Media) -> Unit,
 ): WebViewState {
     val colors = articleTemplateColors()
     val scope = rememberCoroutineScope()

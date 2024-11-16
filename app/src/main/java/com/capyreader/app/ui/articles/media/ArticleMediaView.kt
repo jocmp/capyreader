@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.SideEffect
@@ -23,8 +24,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import coil.request.ImageRequest
+import com.capyreader.app.common.Media
 import com.capyreader.app.ui.components.LoadingView
 import com.capyreader.app.ui.components.Swiper
 import com.capyreader.app.ui.components.rememberSwiperState
@@ -36,9 +39,11 @@ import me.saket.telephoto.zoomable.rememberZoomableState
 @Composable
 fun ArticleMediaView(
     onDismissRequest: () -> Unit,
-    url: String?
+    media: Media?,
 ) {
     val view = LocalView.current
+    val url = media?.url
+    val caption = media?.altText?.ifBlank { null }
 
     var showError by rememberSaveable { mutableStateOf(false) }
 
@@ -85,6 +90,13 @@ fun ArticleMediaView(
                 } else if (showError) {
                     ImageErrorView()
                 }
+            }
+
+            if (caption != null) {
+                Text(caption,
+                    modifier = Modifier.align(Alignment.BottomStart).padding(16.dp),
+                    color = Color.White
+                )
             }
 
             CloseButton(

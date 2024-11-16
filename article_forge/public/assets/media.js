@@ -38,7 +38,7 @@ function attachImageToAnchorParent(img, parentNode) {
 function addImageClickListeners() {
   [...document.getElementsByTagName("img")].forEach((img) => {
     img.addEventListener("click", () => {
-      Android.openImage(img.src);
+      Android.openImage(img.src, img.alt);
     });
   });
 }

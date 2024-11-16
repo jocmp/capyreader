@@ -31,9 +31,18 @@ get "/articles/:slug" do
     body: article.body,
     text_size: params["text_size"],
     font_family:,
-    assets_url: "",
-    resource_url: ""
+    debug_script: '<script type="text/javascript" src="/assets/debug.js"></script>'
   }.merge(colors)
+end
+
+get "/image" do
+  image_src = Base64.decode64(params["src"])
+  image_caption = params["caption"].to_s
+
+  liquid :image, locals: {
+    image_src:,
+    image_caption:,
+  }
 end
 
 get "/test-room" do
