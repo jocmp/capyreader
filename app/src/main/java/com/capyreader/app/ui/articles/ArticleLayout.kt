@@ -43,6 +43,7 @@ import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.R
 import com.capyreader.app.common.Media
+import com.capyreader.app.common.Saver
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
@@ -122,7 +123,7 @@ fun ArticleLayout(
         listState = listState,
         scrollBehavior = scrollBehavior
     )
-    var media by rememberSaveable { mutableStateOf<Media?>(null) }
+    var media by rememberSaveable(saver = Media.Saver) { mutableStateOf(null) }
     val focusManager = LocalFocusManager.current
     val openUpdatePasswordDialog = {
         onUnauthorizedDismissRequest()
