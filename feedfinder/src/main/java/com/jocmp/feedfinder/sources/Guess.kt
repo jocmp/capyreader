@@ -17,7 +17,7 @@ internal class Guess(
     override suspend fun find(): List<Feed> {
         return try {
             coroutineScope {
-                listOf("/rss", "/feed")
+                PATHS
                     .map { path ->
                         val guess = response.url.toURI().resolve(path).toURL()
                         async { request.fetch(url = guess) }
@@ -28,5 +28,14 @@ internal class Guess(
         } catch (e: Parser.NotFeedError) {
             emptyList()
         }
+    }
+
+    companion object {
+        private val PATHS = listOf(
+            "/rss",
+            "/feed",
+            "/rss.xml",
+            "/feed.xml"
+        )
     }
 }
