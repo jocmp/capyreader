@@ -13,13 +13,11 @@ function configureVideoTags() {
 }
 
 function addImageClickListeners() {
-  [...document.querySelectorAll("img")]
-    .filter(i => !i.parentNode.closest("a"))
-    .forEach((img) => {
-      img.addEventListener("click", () => {
-        Android.openImage(img.src);
-      });
+  [...document.getElementsByTagName("img")].forEach((img) => {
+    img.addEventListener("click", () => {
+      Android.openImage(img.src, img.alt);
     });
+  });
 }
 
 window.onload = () => {

@@ -4,12 +4,12 @@ import android.webkit.JavascriptInterface
 import com.jocmp.capy.common.optionalURL
 
 class WebViewInterface(
-    private val navigateToMedia: (url: String) -> Unit,
+    private val navigateToMedia: (media: Media) -> Unit,
 ) {
     @JavascriptInterface
-    fun openImage(src: String) {
+    fun openImage(src: String, altText: String?) {
         optionalURL(src)?.let {
-            navigateToMedia(it.toString())
+            navigateToMedia(Media(url = src, altText = altText))
         }
     }
 

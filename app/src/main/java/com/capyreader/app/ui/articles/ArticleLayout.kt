@@ -42,6 +42,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.R
+import com.capyreader.app.common.Media
+import com.capyreader.app.common.Saver
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
@@ -121,7 +123,7 @@ fun ArticleLayout(
         listState = listState,
         scrollBehavior = scrollBehavior
     )
-    var mediaUrl by rememberSaveable { mutableStateOf<String?>(null) }
+    var media by rememberSaveable(saver = Media.Saver) { mutableStateOf(null) }
     val focusManager = LocalFocusManager.current
     val openUpdatePasswordDialog = {
         onUnauthorizedDismissRequest()
@@ -134,7 +136,7 @@ fun ArticleLayout(
 
     val webViewState = rememberWebViewState(
         onNavigateToMedia = {
-            mediaUrl = it
+            media = it
         },
     )
 
@@ -373,7 +375,7 @@ fun ArticleLayout(
                     },
                     onToggleRead = onToggleArticleRead,
                     onToggleStar = onToggleArticleStar,
-                    enableBackHandler = mediaUrl == null,
+                    enableBackHandler = media == null,
                     onRequestArticle = { id ->
                         coroutineScope.launchUI {
                             onSelectArticle(id)
@@ -393,13 +395,13 @@ fun ArticleLayout(
     AnimatedVisibility(
         enter = fadeIn(),
         exit = fadeOut(),
-        visible = mediaUrl != null
+        visible = media != null
     ) {
         ArticleMediaView(
             onDismissRequest = {
-                mediaUrl = null
+                media = null
             },
-            url = mediaUrl,
+            media = media
         )
     }
 
@@ -428,27 +430,27 @@ fun ArticleLayout(
         }
     }
 
-    BackHandler(mediaUrl != null) {
-        mediaUrl = null
+    BackHandler(media != null) {
+        media = null
     }
 
-    BackHandler(mediaUrl == null && search.isActive && article == null) {
+    BackHandler(media == null && search.isActive && article == null) {
         search.clear()
     }
 
     ArticleListBackHandler(
-        enabled = isFeedActive(mediaUrl, article, search)
+        enabled = isFeedActive(media, article, search)
     ) {
         toggleDrawer()
     }
 }
 
 fun isFeedActive(
-    mediaURL: String?,
+    media: Media?,
     article: Article?,
     search: ArticleSearch
 ): Boolean {
-    return mediaURL == null &&
+    return media == null &&
             article == null &&
             !search.isActive
 }

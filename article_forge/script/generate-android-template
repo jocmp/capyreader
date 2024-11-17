@@ -7,9 +7,18 @@ def main
 
   file_content = File.read("./views/#{filename}.liquid")
   file_content = file_content.gsub("{{body}}", "")
+  file_content = file_content.gsub("    {{debug_script}}\n", "")
+
+  assert_clean(file_content)
 
   FileUtils.mkdir_p("dist")
   File.write("dist/#{File.basename("#{filename}.html")}", file_content)
+end
+
+def assert_clean(html)
+  if html.include?("{{debug_script}}")
+    raise "Debug tag detected"
+  end
 end
 
 main
