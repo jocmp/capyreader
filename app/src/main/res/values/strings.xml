@@ -134,6 +134,9 @@
     <string name="font_option_atkinson_hyperlegible" translatable="false">Atkinson Hyperlegible</string>
     <string name="font_option_poppins" translatable="false">Poppins</string>
     <string name="font_option_system_default">System default</string>
+    <string name="font_option_inter" translatable="false">Inter</string>
+    <string name="font_option_jost" translatable="false">Jost</string>
+    <string name="font_option_literata" translatable="false">Literata</string>
     <string name="article_font_menu_label">Font</string>
     <string name="article_font_scale_label">Font scale</string>
     <string name="image_error_text">Error loading image</string>

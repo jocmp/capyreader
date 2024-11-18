@@ -1,8 +1,11 @@
 $font-families: (
   "default": sans-serif,
-  "vollkorn": "Vollkorn",
   "atkinson_hyperlegible": "Atkinson Hyperlegible",
+  "inter": "Inter",
+  "jost": "Jost",
+  "literata": "Literata",
   "poppins": "Poppins",
+  "vollkorn": "Vollkorn",
 );
 $text-sizes: small, medium, large, x-large, xx-large;
 
@@ -11,6 +14,27 @@ $text-sizes: small, medium, large, x-large, xx-large;
   font-style: normal;
   font-weight: normal;
   src: url("/res/font/atkinson_hyperlegible.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/res/font/inter.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Jost";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/res/font/jost.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Literata";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/res/font/literata.ttf") format("truetype");
 }
 
 @font-face {

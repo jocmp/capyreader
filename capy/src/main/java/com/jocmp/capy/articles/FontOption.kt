@@ -2,27 +2,25 @@ package com.jocmp.capy.articles
 
 enum class FontOption {
     SYSTEM_DEFAULT,
-    POPPINS,
     ATKINSON_HYPERLEGIBLE,
+    INTER,
+    JOST,
+    LITERATA,
+    POPPINS,
     VOLLKORN;
 
     val slug: String
         get() = when(this) {
             SYSTEM_DEFAULT -> "default"
-            POPPINS -> "poppins"
             ATKINSON_HYPERLEGIBLE -> "atkinson_hyperlegible"
+            INTER -> "inter"
+            JOST -> "jost"
+            LITERATA -> "literata"
+            POPPINS -> "poppins"
             VOLLKORN -> "vollkorn"
         }
 
     companion object {
         val default = SYSTEM_DEFAULT
-
-        val sorted: List<FontOption>
-            get() = listOf(
-                SYSTEM_DEFAULT,
-                ATKINSON_HYPERLEGIBLE,
-                POPPINS,
-                VOLLKORN
-            )
     }
 }
