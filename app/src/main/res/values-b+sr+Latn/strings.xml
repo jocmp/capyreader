@@ -115,9 +115,9 @@
     <string name="empty_onboarding_title">Još nema Izvora</string>
     <string name="empty_onboarding_prompt">Započni sa dodavanjem Izvora</string>
     <string name="article_style_options">Font Opcije</string>
-    <string name="font_option_vollkorn">Volokorn</string>
-    <string name="font_option_atkinson_hyperlegible">Atkinson Hiperčitko</string>
-    <string name="font_option_poppins">Popins</string>
+    <string name="font_option_vollkorn">Vollkorn</string>
+    <string name="font_option_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="font_option_poppins">Poppins</string>
     <string name="font_option_system_default">Sistemski podrazumevano</string>
     <string name="article_font_menu_label">Font</string>
     <string name="article_font_scale_label">Veličina Teksta</string>
