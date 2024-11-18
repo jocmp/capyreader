@@ -130,9 +130,9 @@
     <string name="empty_onboarding_title">No feeds yet</string>
     <string name="empty_onboarding_prompt">Start by adding a feed</string>
     <string name="article_style_options">Font style options</string>
-    <string name="font_option_vollkorn">Vollkorn</string>
-    <string name="font_option_atkinson_hyperlegible">Atkinson Hyperlegible</string>
-    <string name="font_option_poppins">Poppins</string>
+    <string name="font_option_vollkorn" translatable="false">Vollkorn</string>
+    <string name="font_option_atkinson_hyperlegible" translatable="false">Atkinson Hyperlegible</string>
+    <string name="font_option_poppins" translatable="false">Poppins</string>
     <string name="font_option_system_default">System default</string>
     <string name="article_font_menu_label">Font</string>
     <string name="article_font_scale_label">Font scale</string>

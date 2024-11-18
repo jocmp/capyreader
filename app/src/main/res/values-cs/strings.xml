@@ -121,7 +121,7 @@
     <string name="settings_article_list_summary">Souhrn</string>
     <string name="article_style_options">Nastavení fontu</string>
     <string name="font_option_vollkorn">Vollkorn</string>
-    <string name="font_option_atkinson_hyperlegible">Atkinson Hyperčitelný</string>
+    <string name="font_option_atkinson_hyperlegible">Atkinson Hyperlegible</string>
     <string name="font_option_poppins">Poppins</string>
     <string name="article_font_menu_label">Font</string>
     <string name="article_byline">%1$s krát %2$s krát %3$s</string>

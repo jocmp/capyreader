@@ -20,8 +20,8 @@ enum class FontOption {
         val sorted: List<FontOption>
             get() = listOf(
                 SYSTEM_DEFAULT,
-                POPPINS,
                 ATKINSON_HYPERLEGIBLE,
+                POPPINS,
                 VOLLKORN
             )
     }
