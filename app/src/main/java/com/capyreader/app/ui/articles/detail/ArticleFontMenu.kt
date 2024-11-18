@@ -30,8 +30,8 @@ fun ArticleFontMenu(
 ) {
     val context = LocalContext.current
     val (expanded, setExpanded) = remember { mutableStateOf(false) }
-    val options = FontOption.sorted.map {
-        it to  context.translationKey(it)
+    val options = FontOption.entries.map {
+        it to context.translationKey(it)
     }
 
     ExposedDropdownMenuBox(
@@ -76,15 +76,21 @@ fun ArticleFontMenu(
 private fun Context.translationKey(option: FontOption): String {
     return when (option) {
         FontOption.SYSTEM_DEFAULT -> getString(R.string.font_option_system_default)
-        FontOption.POPPINS -> getString(R.string.font_option_poppins)
         FontOption.ATKINSON_HYPERLEGIBLE -> getString(R.string.font_option_atkinson_hyperlegible)
+        FontOption.INTER -> getString(R.string.font_option_inter)
+        FontOption.JOST -> getString(R.string.font_option_jost)
+        FontOption.LITERATA -> getString(R.string.font_option_literata)
+        FontOption.POPPINS -> getString(R.string.font_option_poppins)
         FontOption.VOLLKORN -> getString(R.string.font_option_vollkorn)
     }
 }
 
 private fun findFont(fontOption: FontOption) = when (fontOption) {
     FontOption.SYSTEM_DEFAULT -> null
-    FontOption.POPPINS -> Font(resId = com.jocmp.capy.R.font.poppins)
     FontOption.ATKINSON_HYPERLEGIBLE -> Font(resId = com.jocmp.capy.R.font.atkinson_hyperlegible)
+    FontOption.INTER -> Font(resId = com.jocmp.capy.R.font.inter)
+    FontOption.JOST -> Font(resId = com.jocmp.capy.R.font.jost)
+    FontOption.LITERATA -> Font(resId = com.jocmp.capy.R.font.literata)
+    FontOption.POPPINS -> Font(resId = com.jocmp.capy.R.font.poppins)
     FontOption.VOLLKORN -> Font(resId = com.jocmp.capy.R.font.vollkorn)
 }?.toFontFamily()
