@@ -5,6 +5,7 @@ Added
 Updated
 
 • Updated translations for Spanish, Chinese, French, Estonian, and Bulgarian thanks to volunteers
+• New font options including Jost, Inter, and Literata
 
 Fixed
 
