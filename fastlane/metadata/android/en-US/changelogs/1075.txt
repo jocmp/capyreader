@@ -1,0 +1,11 @@
+Added
+
+• Show alt text with their images in the media viewer
+
+Updated
+
+• Updated translations for Spanish, Chinese, French, Estonian, and Bulgarian thanks to volunteers
+
+Fixed
+
+• Re-added handling for images with links so that they are always shown in the media viewer
