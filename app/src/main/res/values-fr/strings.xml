@@ -191,4 +191,14 @@
     <string name="auth_fields_api_url">Serveur</string>
     <string name="account_source_freshrss">FreshRSS</string>
     <string name="settings_section_account_server">Serveur</string>
+    <string name="account_source_reader">Lecteur</string>
+    <string name="add_account_local_subtitle">Sur votre appareil</string>
+    <string name="add_account_reader_subtitle">API Google Reader auto-hébergée</string>
+    <string name="add_account_feedbin_signup_link_text">Créez-en un ici.</string>
+    <string name="add_account_freshrss_signup_link_text">En savoir plus.</string>
+    <string name="edit_feed_tag_section">Étiquette</string>
+    <string name="settings_gestures_reader_tap_to_page_subtitle">Appuyez les coins inférieurs pour naviguer le contenu de l\'article</string>
+    <string name="add_account_feedbin_signup_prompt">Vous n\'avez pas de compte Feedbin ?</string>
+    <string name="add_account_freshrss_signup_prompt">Vous n\'avez pas d\'instance FreshRSS ?</string>
+    <string name="settings_gestures_reader_tap_to_page_title">Appui pour défiler E Ink</string>
 </resources>
