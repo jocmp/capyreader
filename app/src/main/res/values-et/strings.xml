@@ -201,4 +201,6 @@
     <string name="edit_feed_tag_section">Silt</string>
     <string name="add_account_feedbin_signup_prompt">Kas sul pole Feedbini kontot?</string>
     <string name="add_account_freshrss_signup_prompt">Sul pole FreshRSSi serverit?</string>
+    <string name="settings_gestures_reader_tap_to_page_title">Klõpsi artikli vaatamisel lehel</string>
+    <string name="settings_gestures_reader_tap_to_page_subtitle">Artiklis liikumiseks klõpsi alumistes nurkades</string>
 </resources>
