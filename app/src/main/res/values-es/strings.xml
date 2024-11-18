@@ -199,4 +199,6 @@
     <string name="add_account_freshrss_signup_link_text">Descubra más.</string>
     <string name="edit_feed_tag_section">Etiqueta</string>
     <string name="account_source_reader">Lector</string>
+    <string name="settings_gestures_reader_tap_to_page_subtitle">Tocar las esquinas inferiores para navegar por el contenido del artículo</string>
+    <string name="settings_gestures_reader_tap_to_page_title">Presione para desplazarse por la tinta electrónica</string>
 </resources>
