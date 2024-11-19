@@ -56,10 +56,19 @@ class DisplaySettingsViewModel(
     var enableStickyFullContent by mutableStateOf(appPreferences.enableStickyFullContent.get())
         private set
 
+    var enableHighContrastDarkTheme by mutableStateOf(appPreferences.enableHighContrastDarkTheme.get())
+        private set
+
     fun updateTheme(theme: ThemeOption) {
         appPreferences.theme.set(theme)
 
         this.theme = theme
+    }
+
+    fun updateHighContrastDarkTheme(enable: Boolean) {
+        appPreferences.enableHighContrastDarkTheme.set(enable)
+
+        this.enableHighContrastDarkTheme = enable
     }
 
     fun updatePinTopBar(pinTopBar: Boolean) {
