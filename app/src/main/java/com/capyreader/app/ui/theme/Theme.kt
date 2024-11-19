@@ -11,6 +11,7 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
@@ -18,7 +19,6 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.ThemeOption
-import com.capyreader.app.ui.collectChanges
 import org.koin.compose.koinInject
 
 private val DarkColorScheme = darkColorScheme(
@@ -117,7 +117,9 @@ private fun lightScheme(): ColorScheme {
 @Composable
 private fun darkScheme(appPreferences: AppPreferences = koinInject()): ColorScheme {
     val context = LocalContext.current
-    val enableTrueBlack by appPreferences.enableHighContrastDarkTheme.collectChanges()
+    val enableTrueBlack by appPreferences.enableHighContrastDarkTheme
+        .changes()
+        .collectAsState(appPreferences.enableHighContrastDarkTheme.get())
 
     return if (enableTrueBlack) {
         highContrastDarkColorScheme
