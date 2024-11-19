@@ -47,7 +47,7 @@ internal class ChannelFactory {
         val image = Jsoup.parse(content.wholeText()).selectFirst("img") ?: return
         val imageSource = image.attr("src")
 
-        if (!imageSource.isNullOrBlank() && !imageSource.contains(EMOJI_WEBSITE)) {
+        if (ImagePolicy.isValidArticleImage(imageSource)) {
             imageUrlFromContent = imageSource
         }
     }
@@ -81,9 +81,5 @@ internal class ChannelFactory {
         }
         channelBuilder.itunesChannelData(itunesChannelBuilder.build())
         return channelBuilder.build()
-    }
-
-    private companion object {
-        const val EMOJI_WEBSITE = "https://s.w.org/images/core/emoji"
     }
 }

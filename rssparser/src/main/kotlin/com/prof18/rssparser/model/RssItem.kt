@@ -17,6 +17,8 @@
 
 package com.prof18.rssparser.model
 
+import com.prof18.rssparser.internal.ImagePolicy
+
 data class RssItem(
     val guid: String?,
     val title: String?,
@@ -68,7 +70,7 @@ data class RssItem(
         fun description(description: String?) = apply { this.description = description }
         fun content(content: String?) = apply { this.content = content }
         fun image(image: String?) = apply {
-            if (this.image == null && image?.isNotEmpty() == true) {
+            if (this.image == null && image != null && ImagePolicy.isValidArticleImage(image)) {
                 this.image = image
             }
         }

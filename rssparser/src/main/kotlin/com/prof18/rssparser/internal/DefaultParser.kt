@@ -37,7 +37,6 @@ internal class DefaultParser(
             }
 
             handler.build()
-
         }
     }
 
