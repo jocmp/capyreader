@@ -21,7 +21,7 @@ class CleanLinksTest {
             <img src="https://example.com/1.png">
             <img src="https://example.com/2.png" loading="lazy">
             <img src="https://example.com/3.png" loading="lazy">
-            """
+            """.trimIndent().lines().joinToString(" ")
         }
     }
 
@@ -59,7 +59,7 @@ class CleanLinksTest {
             """
             <img src="https://example.com/1.png">
             <img src="https://example.com/nested.png" loading="lazy">
-            """
+            """.trimIndent().lines().joinToString(" ")
         }
     }
 }

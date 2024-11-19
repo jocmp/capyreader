@@ -25,13 +25,11 @@ private fun extractChildImages(document: Element) {
 }
 
 private fun attachImageToAnchorParent(img: Element) {
-    val parent = img.parentNode() as Element?
+    val parent = img.parent()
     if (parent == null || parent.tagName() == "body") {
         return;
     } else if (parent.tagName() == "a") {
-        (parent.parentNode() as Element?)?.apply {
-            appendChild(img)
-        }
+        parent.parent()?.apply { appendChild(img) }
         parent.remove()
     } else {
         attachImageToAnchorParent(img)

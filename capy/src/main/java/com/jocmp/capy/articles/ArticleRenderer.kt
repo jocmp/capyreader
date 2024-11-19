@@ -50,6 +50,7 @@ class ArticleRenderer(
 
         cleanStyles(document)
         cleanLinks(document)
+        wrapTables(document)
 
         return document.html()
     }

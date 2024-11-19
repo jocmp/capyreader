@@ -111,26 +111,32 @@ iframe {
   margin: 0 auto;
 }
 
-table {
-  border-collapse: collapse;
+.table__wrapper {
+  overflow-x: auto;
   width: 100%;
-  table-layout: fixed;
-}
 
-video {
-  background-color: black;
-
-  &::-webkit-media-controls-fullscreen-button {
-    display: none;
+  table {
+    border-spacing: 0;
   }
-}
 
-td,
-th {
-  border: 1px solid #999;
-  padding: 0.5rem;
-  text-align: left;
-  word-wrap: break-word;
+  table table {
+    margin-bottom: 0;
+    border: none;
+  }
+
+  td,
+  th {
+    border: 1px solid #999;
+    padding: 0.5rem;
+    text-align: left;
+    word-wrap: break-word;
+    overflow-x: auto;
+  }
+
+  td:has(pre) {
+    border: none;
+    padding: 0;
+  }
 }
 
 .article__header {
@@ -140,6 +146,14 @@ th {
   &:link,
   &:visited {
     text-decoration: none;
+  }
+}
+
+video {
+  background-color: black;
+
+  &::-webkit-media-controls-fullscreen-button {
+    display: none;
   }
 }
 
