@@ -61,6 +61,9 @@ class AppPreferences(context: Context) {
     val enableStickyFullContent: Preference<Boolean>
         get() = preferenceStore.getBoolean("enable_sticky_full_content", false)
 
+    val enableHighContrastDarkTheme: Preference<Boolean>
+        get() = preferenceStore.getBoolean("enable_high_contrast_dark_theme", false)
+
     fun clearAll() {
         preferenceStore.clearAll()
     }
@@ -76,10 +79,16 @@ class AppPreferences(context: Context) {
             get() = preferenceStore.getEnum("article_font_family", FontOption.default)
 
         val topSwipeGesture: Preference<ArticleVerticalSwipe>
-            get() = preferenceStore.getEnum("article_top_swipe_gesture", ArticleVerticalSwipe.PREVIOUS_ARTICLE)
+            get() = preferenceStore.getEnum(
+                "article_top_swipe_gesture",
+                ArticleVerticalSwipe.PREVIOUS_ARTICLE
+            )
 
         val bottomSwipeGesture: Preference<ArticleVerticalSwipe>
-            get() = preferenceStore.getEnum("article_bottom_swipe_gesture", ArticleVerticalSwipe.NEXT_ARTICLE)
+            get() = preferenceStore.getEnum(
+                "article_bottom_swipe_gesture",
+                ArticleVerticalSwipe.NEXT_ARTICLE
+            )
 
         val enablePagingTapGesture: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_enable_paging_tap_gesture", false)
@@ -90,7 +99,10 @@ class AppPreferences(context: Context) {
             get() = preferenceStore.getEnum("article_list_back_action", BackAction.default)
 
         val unreadSort: Preference<UnreadSortOrder>
-            get() = preferenceStore.getEnum("article_list_unread_sort_order", UnreadSortOrder.default)
+            get() = preferenceStore.getEnum(
+                "article_list_unread_sort_order",
+                UnreadSortOrder.default
+            )
 
         val showFeedName: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_display_feed_name", true)
@@ -105,7 +117,10 @@ class AppPreferences(context: Context) {
             get() = preferenceStore.getEnum("article_display_image_preview", ImagePreview.default)
 
         val fontScale: Preference<ArticleListFontScale>
-            get() = preferenceStore.getEnum("article_display_font_scale", ArticleListFontScale.default)
+            get() = preferenceStore.getEnum(
+                "article_display_font_scale",
+                ArticleListFontScale.default
+            )
 
         val swipeStart: Preference<RowSwipeOption>
             get() = preferenceStore.getEnum("article_list_swipe_start", RowSwipeOption.default)
