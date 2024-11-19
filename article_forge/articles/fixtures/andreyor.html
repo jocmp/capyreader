@@ -1,0 +1,200 @@
+<article>
+ <a class="article__header" href="https://andreyor.st/posts/2020-05-10-making-emacs-tabs-look-like-in-atom/">
+  <div class="article__title">
+   <h1>Making Emacs tabs look like in Atom</h1>
+  </div>
+  <div>
+   May 10, 2020 at 2:41 PM
+  </div>
+  <div>
+   Andrey Listopadov
+  </div></a>
+ <div class="article__body article__body--font-atkinson_hyperlegible article__body--text-size-large">
+  <div id="article-body-content">
+   <p>This is yet another follow-up post in the Emacs configuration series, which is also about Tabs. The previous post was about how tabs behave when you close them, and how I think the algorithm can be improved. This post is more about visuals and horizontal space management.</p>
+   <p>By default tabs in Emacs are named after their respective buffers. This is how tabs look with my configurations and default naming:</p>
+   <figure>
+    <img src="https://andreyor.st/2020-05-10-making-emacs-tabs-look-like-in-atom/emacs-default-look.png">
+   </figure>
+   <p>Looks fine, but there’s a catch. Tabs with really long names take a lot of horizontal space, which can be a problem when dealing with buffers that were created by some package, like CIDER:</p>
+   <figure>
+    <img src="https://andreyor.st/2020-05-10-making-emacs-tabs-look-like-in-atom/emacs-cider-buffer-name.png" loading="lazy">
+   </figure>
+   <p>With tabs of this size, no wonder we get complaints that tabs are not usable. And on this screenshot, you can see that all tabs have different widths, which doesn’t really look good in my opinion. Both problems can be fixed with some code, but first, let’s check how the Atom editor handles tab sizes.</p>
+   <h2 id="tabs-in-atom">Tabs in Atom</h2>
+   <p>This is the default look of tabs in Atom editor with One Dark theme:</p>
+   <figure>
+    <img src="https://andreyor.st/2020-05-10-making-emacs-tabs-look-like-in-atom/atom-two-tabs.png" loading="lazy">
+   </figure>
+   <p>By default tabs in Atom occupy more space than is actually needed for a tab, and I think that this is beautiful. Someone may be concerned that it wastes horizontal space, but it’s actually not - if we open more tabs, their width will shrink to make those fit in the window:</p>
+   <figure>
+    <img src="https://andreyor.st/2020-05-10-making-emacs-tabs-look-like-in-atom/atom-many-tabs.png" loading="lazy">
+   </figure>
+   <p>But this not going to happen all the time, and eventually, once some minimum width is reached, tabs will no longer shrink, and we’ll have to scroll those. We still can get the idea of what file is opened in the tab, and there are a lot of them in such a tiny window. And if some tab has really long name that doesn’t fit into a tab, it gets truncated:</p>
+   <figure>
+    <img src="https://andreyor.st/2020-05-10-making-emacs-tabs-look-like-in-atom/atom-a-lot-of-tabs.png" loading="lazy">
+   </figure>
+   <p>This is the behavior we’re going to replicate in Emacs.</p>
+   <h2 id="making-emacs-tabs-resize-automatically">Making Emacs tabs resize automatically</h2>
+   <p>First, we will need two variables - one for minimum width, and one for maximum width. I like to define variables that extend some built-in packages via <code>defcustom</code> because if someone else will use my config they will be able to customize such things with the custom interface or via code. Also Custom makes persistent configurations a bit easier as well.</p>
+   <div class="highlight">
+    <pre tabindex="0"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span><span>(<span>defcustom</span> <span>tab-line-tab-min-width</span> 10
+</span></span><span><span>  <span>"Minimum width of a tab in characters."</span>
+</span></span><span><span>  <span>:type</span> <span>'integer</span>
+</span></span><span><span>  <span>:group</span> <span>'tab-line</span>)
+</span></span><span><span>
+</span></span><span><span>(<span>defcustom</span> <span>tab-line-tab-max-width</span> 30
+</span></span><span><span>  <span>"Maximum width of a tab in characters."</span>
+</span></span><span><span>  <span>:type</span> <span>'integer</span>
+</span></span><span><span>  <span>:group</span> <span>'tab-line</span>)
+</span></span></code></pre>
+   </div>
+   <p>Good. This will later be used in a function that creates a name for the tab. Now we need to think about the general algorithm. Note that we’re defining size in terms of monospace characters. This algorithm will not work for variable pitch fonts.</p>
+   <p>In Atom, tabs use fixed width up until there is no more horizontal space in the window to fit full-sized tabs. In Emacs, we can access the width of a window with the <code>window-width</code> function. So our first step will be to obtain such width, and check how many tabs will fit into it. However, instead of checking the number of tabs, we will calculate the width of the tab that we will need for all tabs that we currently have:</p><img src="https://andreyor.st/ltximg/2020-05-10-making-emacs-tabs-look-like-in-atom_001cf887ecd716cf6126afdedc5ec5891109f887.svg" alt="\[\text{window-tab-width}=\frac{\text{window-width}}{\text{amount-of-tabs}}\]" class="org-svg" loading="lazy">
+   <p>So, if our window is <code>300</code> chars wide, and we have one tab, it will occupy the whole width. If we have two tabs, each should be <code>150</code> chars long, and so on. This is great, but if we have 70 tabs, each would be only <code>4</code> chars. Given that we need at least one char to display the left padding, one char to display the close button, and one char for the right padding, we’re left with <code>1</code> char for the name which is not good at all. However we don’t want to use such wide or such narrow tabs, so we need to adjust their length based on these conditions:</p>
+   <p><img src="https://andreyor.st/ltximg/2020-05-10-making-emacs-tabs-look-like-in-atom_bd41ae352c2315c7e34fd5bf533b07983a71cdee.svg" alt="\[
+\text{tab-width}=\left(\begin{cases}
+\text{tab-line-tab-max-width}&amp;amp;\text{if window-tab-width}\geq\text{tab-line-tab-max-width}\\
+\text{tab-line-tab-min-width}&amp;amp;\text{if window-tab-width}&amp;lt;\text{tab-line-tab-min-width}\\
+\text{window-tab-width}&amp;amp;\text{otherwise}
+\end{cases}\right)-\text{close-button-width}
+\]" class="org-svg" loading="lazy"></p>
+   <p>This way if we have a tab width larger than our maximum width, we will use maximum width. If we have a width that is less than our minimum width, we will use minimal width, and this will enable scrolling. If we’re in between, we’re using the width that was calculated in the previous formula. Note that we’re subtracting the size of the close button from our width which is represented as <code>×</code> with spaces at the front and the end.</p>
+   <p>The second thing we need is to produce a valid name for the tab, but right now we will simply <code>string-trim</code> buffer name, and calculate its width. This should leave us with these computations:</p>
+   <div class="highlight">
+    <div>
+     <div class="table__wrapper">
+      <table>
+       <tbody>
+        <tr>
+         <td>
+          <pre tabindex="0"><code><span> 1
+</span><span> 2
+</span><span> 3
+</span><span> 4
+</span><span> 5
+</span><span> 6
+</span><span> 7
+</span><span> 8
+</span><span> 9
+</span><span>10
+</span><span>11
+</span><span>12
+</span><span>13
+</span><span>14
+</span><span>15
+</span><span>16
+</span></code></pre></td>
+         <td>
+          <pre tabindex="0"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span><span>(<span>defun</span> <span>aorst/tab-line-name-buffer</span> (<span>buffer</span> <span>&amp;rest</span> <span>_buffers</span>)
+</span></span><span><span>  (<span>with-current-buffer</span> <span>buffer</span>
+</span></span><span><span>    (<span>let*</span> ((<span>window-width</span> (<span>window-width</span> (<span>get-buffer-window</span>)))
+</span></span><span><span>           (<span>close-button-size</span> (<span>if</span> <span>tab-line-close-button-show</span>
+</span></span><span><span>                                  (<span>length</span> (<span>substring-no-properties</span> <span>tab-line-close-button</span>))
+</span></span><span><span>                                0))
+</span></span><span><span>           (<span>tab-amount</span> (<span>length</span> (<span>tab-line-tabs-window-buffers</span>)))
+</span></span><span><span>           (<span>window-max-tab-width</span> (<span>/</span> <span>window-width</span> <span>tab-amount</span>))
+</span></span><span><span>           (<span>tab-width</span> (<span>-</span> (<span>cond</span> ((<span>&gt;=</span> <span>window-max-tab-width</span> <span>tab-line-tab-max-width</span>)
+</span></span><span><span>                                <span>tab-line-tab-max-width</span>)
+</span></span><span><span>                               ((<span>&lt;</span> <span>window-max-tab-width</span> <span>tab-line-tab-min-width</span>)
+</span></span><span><span>                                <span>tab-line-tab-min-width</span>)
+</span></span><span><span>                               (<span>t</span> <span>window-max-tab-width</span>))
+</span></span><span><span>                         <span>close-button-size</span>))
+</span></span><span><span>           (<span>buffer-name</span> (<span>string-trim</span> (<span>buffer-name</span>)))
+</span></span><span><span>           (<span>name-width</span> (<span>length</span> <span>buffer-name</span>)))
+</span></span></code></pre></td>
+        </tr>
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <p>Now, when we have all this information, we can compute the name for the tab and its paddings. First, we need to check if the trimmed buffer name exceeds the tab width. If it is, we truncate the name to the width of the tab minus <code>3</code>, because we need to add single space padding before a name and add an ellipsis symbol followed by a space at the end.</p>
+   <div class="highlight">
+    <div>
+     <div class="table__wrapper">
+      <table>
+       <tbody>
+        <tr>
+         <td>
+          <pre tabindex="0"><code><span>17
+</span><span>18
+</span></code></pre></td>
+         <td>
+          <pre tabindex="0"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span><span>(<span>if</span> (<span>&gt;=</span> <span>name-width</span> (<span>-</span> <span>tab-width</span> 3))
+</span></span><span><span>    (<span>concat</span>  <span>" "</span> (<span>truncate-string-to-width</span> <span>buffer-name</span> (<span>-</span> <span>tab-width</span> 3)) <span>"… "</span>)
+</span></span></code></pre></td>
+        </tr>
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <p>If <code>name-width</code> is less than <code>tab-width</code> minus <code>3</code>, we can produce left <code>padding</code>, by computing difference between <code>tab-width</code> and <code>name-width</code>, and dividing it by <code>2</code>. Then we concatenate this padding and calculate the right padding needed for the name. This extra calculation is needed when a name is odd or even, so we produce equally sized tabs for any buffer name:</p>
+   <div class="highlight">
+    <div>
+     <div class="table__wrapper">
+      <table>
+       <tbody>
+        <tr>
+         <td>
+          <pre tabindex="0"><code><span>19
+</span><span>20
+</span><span>21
+</span><span>22
+</span></code></pre></td>
+         <td>
+          <pre tabindex="0"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span><span>(<span>let*</span> ((<span>padding</span> (<span>make-string</span> (<span>/</span> (<span>-</span> <span>tab-width</span> <span>name-width</span>) 2) <span>?\s</span>))
+</span></span><span><span>       (<span>buffer-name</span> (<span>concat</span> <span>padding</span> <span>buffer-name</span>))
+</span></span><span><span>       (<span>name-width</span> (<span>length</span> <span>buffer-name</span>)))
+</span></span><span><span>  (<span>concat</span> <span>buffer-name</span> (<span>make-string</span> (<span>-</span> <span>tab-width</span> <span>name-width</span>) <span>?\s</span>)))))))
+</span></span></code></pre></td>
+        </tr>
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <p>This gives us such results. With the same window width as in Atom examples, two tabs will occupy this amount of space:</p>
+   <figure>
+    <img src="https://andreyor.st/2020-05-10-making-emacs-tabs-look-like-in-atom/emacs-two-tabs.png" loading="lazy">
+   </figure>
+   <p>If we will open four tabs, the size of each tab will shrink accordingly:</p>
+   <figure>
+    <img src="https://andreyor.st/2020-05-10-making-emacs-tabs-look-like-in-atom/emacs-many-tabs.png" loading="lazy">
+   </figure>
+   <p>Though this is not as nice as in atom, due to the small unused space on the right side of the window. Unfortunately, we can compute width only in terms of characters, which can’t really have variable width, unless we use variable pitch font, but as I’ve mentioned earlier, this algorithm will not work with variable-sized fonts, and perhaps such computation will be quite expensive. Computing variable width in terms of pixels may be possible, but I couldn’t find any information on this topic. But the character-based solution should also work fine in terminal Emacs.</p>
+   <p>When we open too many tabs, we can see scroll buttons, and tabs no longer shrink in size beyond <code>tab-line-tab-min-width</code> value. We also can disable the close button if we want:</p>
+   <figure>
+    <img src="https://andreyor.st/2020-05-10-making-emacs-tabs-look-like-in-atom/emacs-a-lot-of-tabs.png" loading="lazy">
+   </figure>
+   <h2 id="rationale">Rationale</h2>
+   <p>Before:</p>
+   <figure>
+    <img src="https://andreyor.st/2020-05-10-making-emacs-tabs-look-like-in-atom/emacs-cider-buffer-name.png" loading="lazy">
+   </figure>
+   <p>After:</p>
+   <figure>
+    <img src="https://andreyor.st/2020-05-10-making-emacs-tabs-look-like-in-atom/emacs-cider-buffer-name-new.png" loading="lazy">
+   </figure>
+   <p>In the beginning, I’ve said that there are a lot of complaints that tabs unnecessarily waste horizontal space. Even though we’ve fixed this, now you may think, that this is still impractical, because you can’t see the whole name of a file in the tab, and tabs are not usable as a concept overall. And I can agree to a certain point. An interactive buffer list, that we can fuzzy match through, has no issues with space because we pop it up when needed, and can show you full buffer names any time. But I find myself using tabs very often simply as a visual indicator of what buffers are next and previous in the list, and switch between those via <kbd>C-x right</kbd> and <kbd>C-x left</kbd>. You can’t really do this with a buffer list unless you display it somewhere all the time, but then it takes much more space than tabs.</p>
+   <p>Tabs also help a lot when someone, who isn’t an Emacs user and is unfamiliar with the concept of buffer list, sits near me, since the concept of tabs is well known and obvious to most other people, because of tabs in browsers or other editors.</p>
+   <p>
+    <del>One thing that I have not yet succeeded to achieve is to automatically recalculate tab width on frame or window resize events</del>.
+    <del>It seems that <code>force-mode-line-update</code> does not initiate the process of name building, but for some reason, it happens on focus events, so I have yet to investigate this part</del>.</p>
+   <p>Turns out there’s a way to update tab width on resize events by clearing the cache of <code>tab-line</code> in each window. As a quite dirty hack, we can use this <code>hook</code>:</p>
+   <div class="highlight">
+    <pre tabindex="0"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span><span>(<span>add-hook</span> <span>'window-configuration-change-hook</span>
+</span></span><span><span>          <span>#'</span>(<span>lambda</span> ()
+</span></span><span><span>              (<span>dolist</span> (<span>window</span> (<span>window-list</span>))
+</span></span><span><span>                (<span>set-window-parameter</span> <span>window</span> <span>'tab-line-cache</span> <span>nil</span>))))
+</span></span></code></pre>
+   </div>
+   <p>This makes tabs resize whenever you change window or frame width with your mouse, or when you split windows via <kbd>C-x 3</kbd> and other windowing commands that change window layout.</p>
+   <p>Though this post only mentions the naming function, I’ve set up a bit more things to make tabs look as represented on screenshots. This configuration can be found in full form in my <a href="https://github.com/andreyorst/dotfiles/blob/740d346088ce5a51804724659a895d13ed574f81/.config/emacs/README.org#tabline" target="_blank">.dotfiles</a>.</p>
+   <div class="comment-link">
+    <a href="mailto:%61%6e%64%72%65%79%6f%72%73%74%2b%62%6c%6f%67%40%67%6d%61%69%6c%2e%63%6f%6d?subject=Comment: Making Emacs tabs look like in Atom" target="_blank" rel="noopener noreferrer">Comment via email</a>
+   </div>
+  </div>
+ </div>
+</article>

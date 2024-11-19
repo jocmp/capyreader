@@ -19,10 +19,10 @@ object HtmlHelpers {
     }
 
     fun assertEquals(actual: Document, expected: () -> String) {
-        assertEquals(expected = snapshot(expected()), actual = actual.body().html())
+        assertEquals(expected = snapshot(expected()), actual = snapshot(actual.body().html()))
     }
 
     private fun snapshot(content: String): String {
-        return content.trimIndent().lines().joinToString(" ")
+        return content.trimIndent()
     }
 }
