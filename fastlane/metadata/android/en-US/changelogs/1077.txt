@@ -1,0 +1,18 @@
+Added
+
+• Added "Tap to page article" gesture option for navigation on E-Ink readers
+• Show alt text with their images in the media viewer
+• Added high contrast dark theme meant for OLED displays
+
+Updated
+
+• Added new font options Jost, Inter, and Literata
+• Updated Bulgarian, Estonian, German, Spanish, French, Italian, Indonesian, Chinese translations thanks to volunteers
+
+Fixed
+
+• Fix missing User-Agent headers when requesting images
+• Ensure that invalid favicons are not requested between feed refreshes
+• Re-added handling for images with links so that they are always shown in the media viewer
+• Fixed formatting for code blocks in HTML tables
+• Fixed article preview images for feeds with gravatars
