@@ -137,8 +137,8 @@
     <string name="feed_action_unsubscribe_message">Voulez-vous vraiment vous désinscrire de \"%1$s\" ?</string>
     <string name="folder_action_edit">Renommer</string>
     <string name="settings_remove_account_button_local">Supprimer le compte</string>
-    <string name="article_actions_mark_below_as_read">Marquer au-dessus comme lus</string>
-    <string name="article_actions_mark_after_as_read">Marquer en-dessous comme lus</string>
+    <string name="article_actions_mark_below_as_read">Marquer ci-dessous comme lus</string>
+    <string name="article_actions_mark_after_as_read">Marquer ci-dessus comme lus</string>
     <string name="unauthorized_dialog_description">Un problème est apparu lors de la connexion à votre compte. Veuillez vous connecter à nouveau.</string>
     <string name="auth_fields_hide_password">Masquer le mot de passe</string>
     <string name="auth_fields_show_password">Afficher le mot de passe</string>
