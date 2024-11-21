@@ -19,19 +19,22 @@ internal fun cleanLinks(element: Element) {
 }
 
 private fun extractChildImages(document: Element) {
-    document.select("a img").forEach {
-        attachImageToAnchorParent(it)
+    try {
+        document.select("a img").forEach {
+            attachImageToAnchorParent(it, it.parent())
+        }
+    } catch (e: StackOverflowError) {
+        return
     }
 }
 
-private fun attachImageToAnchorParent(img: Element) {
-    val parent = img.parent()
+private fun attachImageToAnchorParent(img: Element, parent: Element?) {
     if (parent == null || parent.tagName() == "body") {
         return;
     } else if (parent.tagName() == "a") {
         parent.parent()?.apply { appendChild(img) }
         parent.remove()
     } else {
-        attachImageToAnchorParent(img)
+        attachImageToAnchorParent(img, parent.parent())
     }
 }
