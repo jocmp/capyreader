@@ -203,4 +203,5 @@
     <string name="add_account_freshrss_signup_prompt">Sul pole FreshRSSi serverit?</string>
     <string name="settings_gestures_reader_tap_to_page_title">Kerimiseks klõpsi</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Artiklis sisus liikumiseks klõpsi alumistes nurkades</string>
+    <string name="settings_enable_high_contrast_dark_theme">Kasuta suure kontrastsusega tumedat kujundust</string>
 </resources>
