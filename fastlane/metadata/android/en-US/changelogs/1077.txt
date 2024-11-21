@@ -16,3 +16,4 @@ Fixed
 • Re-added handling for images with links so that they are always shown in the media viewer
 • Fixed formatting for code blocks in HTML tables
 • Fixed article preview images for feeds with gravatars
+• Fixed article image bug causing app crashes specifically on Substack pages
