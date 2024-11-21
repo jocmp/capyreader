@@ -1,8 +1,8 @@
 Added
 
-• Added "Tap to page article" gesture option for navigation on E-Ink readers
+• Added "Tap to page article" gesture option for E-Ink readers
 • Show alt text with their images in the media viewer
-• Added high contrast dark theme meant for OLED displays
+• Added high contrast dark theme
 
 Updated
 
@@ -11,9 +11,6 @@ Updated
 
 Fixed
 
-• Fix missing User-Agent headers when requesting images
-• Ensure that invalid favicons are not requested between feed refreshes
-• Re-added handling for images with links so that they are always shown in the media viewer
+• Feed fixes around favicons and preview images
 • Fixed formatting for code blocks in HTML tables
-• Fixed article preview images for feeds with gravatars
-• Fixed article image bug causing app crashes specifically on Substack pages
+• Fixed article image bug causing app crashes
