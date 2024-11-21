@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Kapi Čitač</string>
+    <string name="app_name">Capy Reader</string>
     <string name="add_feed_url_title">Link Izvora ili Veb sajta</string>
     <string name="add_feed_name_title">Naziv</string>
     <string name="add_feed_new_folder_title">Novi Tag</string>
