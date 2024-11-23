@@ -65,6 +65,12 @@ fun GeneralSettingsPanel(
         onClearArticles = viewModel::clearAllArticles,
         updateUnreadSort = viewModel::updateUnreadSort,
         unreadSort = viewModel.unreadSort,
+        updateConfirmMarkAllRead = viewModel::updateConfirmMarkAllRead,
+        updateMarkReadOnScroll = viewModel::updateMarkReadOnScroll,
+        confirmMarkAllRead = viewModel.confirmMarkAllRead,
+        markReadOnScroll = viewModel.markReadOnScroll,
+        updateStickyFullContent = viewModel::updateStickyFullContent,
+        enableStickyFullContent = viewModel.enableStickyFullContent,
     )
 }
 
@@ -80,7 +86,14 @@ fun GeneralSettingsPanelView(
     autoDelete: AutoDelete,
     updateUnreadSort: (UnreadSortOrder) -> Unit,
     unreadSort: UnreadSortOrder,
-) {
+    updateStickyFullContent: (enable: Boolean) -> Unit,
+    enableStickyFullContent: Boolean,
+    updateConfirmMarkAllRead: (enable: Boolean) -> Unit,
+    updateMarkReadOnScroll: (enable: Boolean) -> Unit,
+    confirmMarkAllRead: Boolean,
+    markReadOnScroll: Boolean,
+
+    ) {
     val (isClearArticlesDialogOpen, setClearArticlesDialogOpen) = remember { mutableStateOf(false) }
 
     val onClearArticlesCancel = {
@@ -102,14 +115,16 @@ fun GeneralSettingsPanelView(
         )
 
         FormSection(title = stringResource(R.string.settings_section_refresh)) {
-            RefreshIntervalMenu(
-                refreshInterval = refreshInterval,
-                updateRefreshInterval = updateRefreshInterval,
-            )
-            NotificationsListItem(
-                onNavigate = onNavigateToNotifications,
-                refreshInterval = refreshInterval,
-            )
+            Column {
+                RefreshIntervalMenu(
+                    refreshInterval = refreshInterval,
+                    updateRefreshInterval = updateRefreshInterval,
+                )
+                NotificationsListItem(
+                    onNavigate = onNavigateToNotifications,
+                    refreshInterval = refreshInterval,
+                )
+            }
         }
 
         if (CrashReporting.isAvailable) {
@@ -120,12 +135,42 @@ fun GeneralSettingsPanelView(
             }
         }
 
-        RowItem {
-            TextSwitch(
-                checked = canOpenLinksInternally,
-                onCheckedChange = updateOpenLinksInternally,
-                title = stringResource(R.string.settings_option_in_app_browser)
-            )
+        FormSection(title = stringResource(R.string.settings_section_browser)) {
+            RowItem {
+                TextSwitch(
+                    checked = canOpenLinksInternally,
+                    onCheckedChange = updateOpenLinksInternally,
+                    title = stringResource(R.string.settings_option_in_app_browser)
+                )
+            }
+        }
+
+        FormSection(title = stringResource(R.string.settings_reader_title)) {
+            RowItem {
+                TextSwitch(
+                    checked = enableStickyFullContent,
+                    onCheckedChange = updateStickyFullContent,
+                    title = stringResource(R.string.settings_option_full_content_title),
+                    subtitle = stringResource(R.string.settings_option_full_content_subtitle)
+                )
+            }
+        }
+
+        FormSection(
+            title = stringResource(R.string.settings_section_mark_all_as_read),
+        ) {
+            RowItem {
+                TextSwitch(
+                    onCheckedChange = updateConfirmMarkAllRead,
+                    checked = confirmMarkAllRead,
+                    title = stringResource(R.string.settings_confirm_mark_all_read),
+                )
+                TextSwitch(
+                    onCheckedChange = updateMarkReadOnScroll,
+                    checked = markReadOnScroll,
+                    title = stringResource(R.string.settings_mark_read_on_scroll),
+                )
+            }
         }
 
         FormSection(
@@ -257,6 +302,12 @@ private fun GeneralSettingsPanelPreview() {
         autoDelete = AutoDelete.WEEKLY,
         unreadSort = UnreadSortOrder.NEWEST_FIRST,
         updateUnreadSort = {},
-        onNavigateToNotifications = {}
+        onNavigateToNotifications = {},
+        markReadOnScroll = true,
+        updateConfirmMarkAllRead = {},
+        updateMarkReadOnScroll = {},
+        confirmMarkAllRead = true,
+        updateStickyFullContent = {},
+        enableStickyFullContent = true,
     )
 }

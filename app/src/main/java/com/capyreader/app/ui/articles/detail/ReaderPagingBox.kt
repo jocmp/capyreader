@@ -22,7 +22,7 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalHapticFeedback
 import com.capyreader.app.common.AppPreferences
-import com.capyreader.app.ui.collectChanges
+import com.capyreader.app.ui.collectChangesWithDefault
 import com.jocmp.capy.common.launchUI
 import org.koin.compose.koinInject
 
@@ -33,7 +33,7 @@ fun ReaderPagingBox(
     appPreferences: AppPreferences = koinInject(),
     content: @Composable () -> Unit,
 ) {
-    val enabled by appPreferences.readerOptions.enablePagingTapGesture.collectChanges()
+    val enabled by appPreferences.readerOptions.enablePagingTapGesture.collectChangesWithDefault()
 
     if (!enabled) {
         return content()

@@ -4,14 +4,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.common.ThemeOption
 import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.jocmp.capy.Account
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class DisplaySettingsViewModel(
     val account: Account,
@@ -29,13 +26,7 @@ class DisplaySettingsViewModel(
     private val _showFeedIcons =
         mutableStateOf(appPreferences.articleListOptions.showFeedIcons.get())
 
-    private val _confirmMarkAllRead =
-        mutableStateOf(appPreferences.articleListOptions.confirmMarkAllRead.get())
-
     var fontScale by mutableStateOf(appPreferences.articleListOptions.fontScale.get())
-        private set
-
-    var pinArticleTopBar by mutableStateOf(appPreferences.readerOptions.pinToolbars.get())
         private set
 
     val imagePreview: ImagePreview
@@ -50,13 +41,10 @@ class DisplaySettingsViewModel(
     val showFeedIcons: Boolean
         get() = _showFeedIcons.value
 
-    val confirmMarkAllRead: Boolean
-        get() = _confirmMarkAllRead.value
-
-    var enableStickyFullContent by mutableStateOf(appPreferences.enableStickyFullContent.get())
+    var enableHighContrastDarkTheme by mutableStateOf(appPreferences.enableHighContrastDarkTheme.get())
         private set
 
-    var enableHighContrastDarkTheme by mutableStateOf(appPreferences.enableHighContrastDarkTheme.get())
+    var pinArticleBars by mutableStateOf(appPreferences.readerOptions.pinToolbars.get())
         private set
 
     fun updateTheme(theme: ThemeOption) {
@@ -71,22 +59,10 @@ class DisplaySettingsViewModel(
         this.enableHighContrastDarkTheme = enable
     }
 
-    fun updatePinTopBar(pinTopBar: Boolean) {
-        appPreferences.readerOptions.pinToolbars.set(pinTopBar)
+    fun updatePinArticleBars(pinBars: Boolean) {
+        appPreferences.readerOptions.pinToolbars.set(pinBars)
 
-        this.pinArticleTopBar = pinTopBar
-    }
-
-    fun updateStickyFullContent(enable: Boolean) {
-        appPreferences.enableStickyFullContent.set(enable)
-
-        enableStickyFullContent = enable
-
-        if (!enable) {
-            viewModelScope.launch(Dispatchers.IO) {
-                account.clearStickyFullContent()
-            }
-        }
+        this.pinArticleBars = pinBars
     }
 
     fun updateFontScale(fontScale: ArticleListFontScale) {
@@ -117,11 +93,5 @@ class DisplaySettingsViewModel(
         appPreferences.articleListOptions.showFeedName.set(show)
 
         _showFeedName.value = show
-    }
-
-    fun updateConfirmMarkAllRead(confirm: Boolean) {
-        appPreferences.articleListOptions.confirmMarkAllRead.set(confirm)
-
-        _confirmMarkAllRead.value = confirm
     }
 }
