@@ -8,8 +8,8 @@ import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.capy.rssItemFixture
 import com.jocmp.feedfinder.FeedFinder
 import com.jocmp.feedfinder.parser.Feed
-import com.prof18.rssparser.model.RssChannel
-import com.prof18.rssparser.model.RssItem
+import com.jocmp.rssparser.model.RssChannel
+import com.jocmp.rssparser.model.RssItem
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest

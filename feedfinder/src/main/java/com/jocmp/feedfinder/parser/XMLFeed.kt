@@ -1,9 +1,9 @@
 package com.jocmp.feedfinder.parser
 
 import com.jocmp.feedfinder.optionalURL
-import com.prof18.rssparser.RssParser
-import com.prof18.rssparser.model.RssChannel
-import com.prof18.rssparser.model.RssItem
+import com.jocmp.rssparser.RssParser
+import com.jocmp.rssparser.model.RssChannel
+import com.jocmp.rssparser.model.RssItem
 import java.net.URL
 
 internal class XMLFeed(

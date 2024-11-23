@@ -1,7 +1,7 @@
 package com.jocmp.capy
 
-import com.prof18.rssparser.model.ItunesItemData
-import com.prof18.rssparser.model.RssItem
+import com.jocmp.rssparser.model.ItunesItemData
+import com.jocmp.rssparser.model.RssItem
 
 fun rssItemFixture(
     guid: String? = null,

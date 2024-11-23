@@ -2,7 +2,7 @@ package com.jocmp.capy
 
 import com.jocmp.feedfinder.FeedFinder
 import com.jocmp.feedfinder.parser.Feed
-import com.prof18.rssparser.model.RssChannel
+import com.jocmp.rssparser.model.RssChannel
 
 class MockFeedFinder(private val sites: Map<String, Feed> = emptyMap()) : FeedFinder {
     override suspend fun find(url: String): Result<List<Feed>> {

@@ -6,9 +6,9 @@ import com.jocmp.feedfinder.sources.Guess
 import com.jocmp.feedfinder.sources.MetaLinks
 import com.jocmp.feedfinder.sources.Source
 import com.jocmp.feedfinder.sources.XML
-import com.prof18.rssparser.RssParser
-import com.prof18.rssparser.RssParserBuilder
-import com.prof18.rssparser.model.RssChannel
+import com.jocmp.rssparser.RssParser
+import com.jocmp.rssparser.RssParserBuilder
+import com.jocmp.rssparser.model.RssChannel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient

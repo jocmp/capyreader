@@ -1,7 +1,7 @@
 package com.jocmp.capy.fixtures
 
 import com.jocmp.feedfinder.parser.Feed
-import com.prof18.rssparser.model.RssItem
+import com.jocmp.rssparser.model.RssItem
 import java.net.URL
 
 class GenericFeed(

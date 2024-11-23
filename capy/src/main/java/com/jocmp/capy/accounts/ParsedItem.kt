@@ -1,6 +1,6 @@
 package com.jocmp.capy.accounts
 
-import com.prof18.rssparser.model.RssItem
+import com.jocmp.rssparser.model.RssItem
 import org.jsoup.Jsoup
 import java.net.URI
 import java.net.URL

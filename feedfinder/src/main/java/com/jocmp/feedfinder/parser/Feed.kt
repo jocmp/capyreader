@@ -1,6 +1,6 @@
 package com.jocmp.feedfinder.parser
 
-import com.prof18.rssparser.model.RssItem
+import com.jocmp.rssparser.model.RssItem
 import java.net.URL
 
 interface Feed {
