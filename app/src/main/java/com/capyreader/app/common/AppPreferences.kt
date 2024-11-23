@@ -130,5 +130,8 @@ class AppPreferences(context: Context) {
 
         val confirmMarkAllRead: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_list_confirm_mark_all_read", true)
+
+        val markReadOnScroll: Preference<Boolean>
+            get() = preferenceStore.getBoolean("article_list_mark_read_on_scroll", false)
     }
 }

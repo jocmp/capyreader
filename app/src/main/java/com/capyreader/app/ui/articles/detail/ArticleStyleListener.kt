@@ -5,15 +5,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import com.capyreader.app.common.AppPreferences
-import com.capyreader.app.ui.collectChanges
+import com.capyreader.app.ui.collectChangesWithDefault
 import com.jocmp.capy.articles.FontOption
 import com.jocmp.capy.articles.TextSize
 import org.koin.compose.koinInject
 
 @Composable
 fun ArticleStyleListener(webView: WebView?, appPreferences: AppPreferences = koinInject()) {
-    val textSize by appPreferences.readerOptions.textSize.collectChanges()
-    val fontFamily by appPreferences.readerOptions.fontFamily.collectChanges()
+    val textSize by appPreferences.readerOptions.textSize.collectChangesWithDefault()
+    val fontFamily by appPreferences.readerOptions.fontFamily.collectChangesWithDefault()
 
     LaunchedEffect(fontFamily) {
         if (webView != null) {

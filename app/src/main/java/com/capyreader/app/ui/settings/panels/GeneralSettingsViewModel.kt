@@ -4,12 +4,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.refresher.RefreshScheduler
 import com.jocmp.capy.Account
 import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.articles.UnreadSortOrder
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class GeneralSettingsViewModel(
     private val refreshScheduler: RefreshScheduler,
@@ -26,6 +29,15 @@ class GeneralSettingsViewModel(
         private set
 
     var unreadSort by mutableStateOf(appPreferences.articleListOptions.unreadSort.get())
+        private set
+
+    var confirmMarkAllRead by mutableStateOf(appPreferences.articleListOptions.confirmMarkAllRead.get())
+        private set
+
+    var markReadOnScroll by mutableStateOf(appPreferences.articleListOptions.markReadOnScroll.get())
+        private set
+
+    var enableStickyFullContent by mutableStateOf(appPreferences.enableStickyFullContent.get())
         private set
 
     fun updateRefreshInterval(interval: RefreshInterval) {
@@ -50,6 +62,30 @@ class GeneralSettingsViewModel(
         appPreferences.openLinksInternally.set(openLinksInternally)
 
         this.canOpenLinksInternally = openLinksInternally
+    }
+
+    fun updateConfirmMarkAllRead(confirm: Boolean) {
+        appPreferences.articleListOptions.confirmMarkAllRead.set(confirm)
+
+        confirmMarkAllRead = confirm
+    }
+
+    fun updateStickyFullContent(enable: Boolean) {
+        appPreferences.enableStickyFullContent.set(enable)
+
+        enableStickyFullContent = enable
+
+        if (!enable) {
+            viewModelScope.launch(Dispatchers.IO) {
+                account.clearStickyFullContent()
+            }
+        }
+    }
+
+    fun updateMarkReadOnScroll(enable: Boolean) {
+        appPreferences.articleListOptions.markReadOnScroll.set(enable)
+
+        markReadOnScroll = enable
     }
 
     fun clearAllArticles() {

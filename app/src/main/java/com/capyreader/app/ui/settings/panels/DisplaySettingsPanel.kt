@@ -32,25 +32,19 @@ fun DisplaySettingsPanel(
         theme = viewModel.theme,
         enableHighContrastDarkTheme = viewModel.enableHighContrastDarkTheme,
         updateHighContrastDarkTheme = viewModel::updateHighContrastDarkTheme,
-        readerOptions = ReaderOptions(
-            updateStickyFullContent = viewModel::updateStickyFullContent,
-            updatePinTopBar = viewModel::updatePinTopBar,
-            pinTopBar = viewModel.pinArticleTopBar,
-            enableStickyFullContent = viewModel.enableStickyFullContent,
-        ),
+        updatePinArticleBars = viewModel::updatePinArticleBars,
+        pinArticleBars = viewModel.pinArticleBars,
         articleListOptions = ArticleListOptions(
             imagePreview = viewModel.imagePreview,
             showSummary = viewModel.showSummary,
             fontScale = viewModel.fontScale,
             showFeedIcons = viewModel.showFeedIcons,
             showFeedName = viewModel.showFeedName,
-            confirmMarkAllRead = viewModel.confirmMarkAllRead,
             updateImagePreview = viewModel::updateImagePreview,
             updateSummary = viewModel::updateSummary,
             updateFeedName = viewModel::updateFeedName,
             updateFeedIcons = viewModel::updateFeedIcons,
             updateFontScale = viewModel::updateFontScale,
-            updateConfirmMarkAllRead = viewModel::updateConfirmMarkAllRead,
         )
     )
 }
@@ -60,8 +54,9 @@ fun DisplaySettingsPanelView(
     onUpdateTheme: (theme: ThemeOption) -> Unit,
     enableHighContrastDarkTheme: Boolean,
     updateHighContrastDarkTheme: (enabled: Boolean) -> Unit,
+    updatePinArticleBars: (enable: Boolean) -> Unit,
+    pinArticleBars: Boolean,
     theme: ThemeOption,
-    readerOptions: ReaderOptions,
     articleListOptions: ArticleListOptions,
 ) {
     Column(
@@ -89,10 +84,15 @@ fun DisplaySettingsPanelView(
                 )
             }
         }
-
-        FormSection(title = stringResource(R.string.settings_reader_title)) {
+        FormSection(
+            title = stringResource(R.string.settings_reader_title)
+        ) {
             RowItem {
-                ReaderSettings(options = readerOptions)
+                TextSwitch(
+                    checked = pinArticleBars,
+                    onCheckedChange = updatePinArticleBars,
+                    title = stringResource(R.string.settings_options_reader_pin_toolbars),
+                )
             }
         }
 
@@ -116,26 +116,20 @@ private fun DisplaySettingsPanelViewPreview() {
             theme = ThemeOption.SYSTEM_DEFAULT,
             enableHighContrastDarkTheme = true,
             updateHighContrastDarkTheme = {},
-            readerOptions = ReaderOptions(
-                updateStickyFullContent = {},
-                enableStickyFullContent = true,
-                updatePinTopBar = {},
-                pinTopBar = true,
-            ),
             articleListOptions = ArticleListOptions(
                 imagePreview = ImagePreview.default,
                 showSummary = true,
                 fontScale = ArticleListFontScale.MEDIUM,
                 showFeedIcons = true,
                 showFeedName = false,
-                confirmMarkAllRead = true,
                 updateImagePreview = {},
                 updateSummary = {},
                 updateFeedName = {},
                 updateFeedIcons = {},
                 updateFontScale = {},
-                updateConfirmMarkAllRead = {},
-            )
+            ),
+            updatePinArticleBars = {},
+            pinArticleBars = false,
         )
     }
 }

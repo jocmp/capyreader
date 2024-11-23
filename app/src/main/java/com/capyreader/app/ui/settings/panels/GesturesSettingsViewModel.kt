@@ -6,8 +6,12 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.BackAction
+import com.jocmp.capy.Account
 
-class GesturesSettingsViewModel(private val appPreferences: AppPreferences) : ViewModel() {
+class GesturesSettingsViewModel(
+    private val account: Account,
+    private val appPreferences: AppPreferences
+) : ViewModel() {
     var backAction by mutableStateOf(listOptions.backAction.get())
         private set
 
