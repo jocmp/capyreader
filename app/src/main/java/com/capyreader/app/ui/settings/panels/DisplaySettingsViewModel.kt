@@ -44,6 +44,9 @@ class DisplaySettingsViewModel(
     var enableHighContrastDarkTheme by mutableStateOf(appPreferences.enableHighContrastDarkTheme.get())
         private set
 
+    var pinArticleBars by mutableStateOf(appPreferences.readerOptions.pinToolbars.get())
+        private set
+
     fun updateTheme(theme: ThemeOption) {
         appPreferences.theme.set(theme)
 
@@ -54,6 +57,12 @@ class DisplaySettingsViewModel(
         appPreferences.enableHighContrastDarkTheme.set(enable)
 
         this.enableHighContrastDarkTheme = enable
+    }
+
+    fun updatePinArticleBars(pinBars: Boolean) {
+        appPreferences.readerOptions.pinToolbars.set(pinBars)
+
+        this.pinArticleBars = pinBars
     }
 
     fun updateFontScale(fontScale: ArticleListFontScale) {

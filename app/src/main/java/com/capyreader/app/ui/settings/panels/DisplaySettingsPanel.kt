@@ -32,6 +32,8 @@ fun DisplaySettingsPanel(
         theme = viewModel.theme,
         enableHighContrastDarkTheme = viewModel.enableHighContrastDarkTheme,
         updateHighContrastDarkTheme = viewModel::updateHighContrastDarkTheme,
+        updatePinArticleBars = viewModel::updatePinArticleBars,
+        pinArticleBars = viewModel.pinArticleBars,
         articleListOptions = ArticleListOptions(
             imagePreview = viewModel.imagePreview,
             showSummary = viewModel.showSummary,
@@ -52,6 +54,8 @@ fun DisplaySettingsPanelView(
     onUpdateTheme: (theme: ThemeOption) -> Unit,
     enableHighContrastDarkTheme: Boolean,
     updateHighContrastDarkTheme: (enabled: Boolean) -> Unit,
+    updatePinArticleBars: (enable: Boolean) -> Unit,
+    pinArticleBars: Boolean,
     theme: ThemeOption,
     articleListOptions: ArticleListOptions,
 ) {
@@ -77,6 +81,17 @@ fun DisplaySettingsPanelView(
                     title = {
                         Text(stringResource(R.string.settings_enable_high_contrast_dark_theme))
                     }
+                )
+            }
+        }
+        FormSection(
+            title = stringResource(R.string.settings_reader_title)
+        ) {
+            RowItem {
+                TextSwitch(
+                    checked = pinArticleBars,
+                    onCheckedChange = updatePinArticleBars,
+                    title = stringResource(R.string.settings_options_reader_pin_toolbars),
                 )
             }
         }
@@ -112,7 +127,9 @@ private fun DisplaySettingsPanelViewPreview() {
                 updateFeedName = {},
                 updateFeedIcons = {},
                 updateFontScale = {},
-            )
+            ),
+            updatePinArticleBars = {},
+            pinArticleBars = false,
         )
     }
 }

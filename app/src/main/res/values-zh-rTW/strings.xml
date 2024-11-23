@@ -52,7 +52,7 @@
     <string name="opml_exporter_success">匯出完成</string>
     <string name="article_list_row_swipe_open_externally">在瀏覽器中打開文章</string>
     <string name="article_view_open_externally">外部打開</string>
-    <string name="settings_panel_gestures_and_behavior_title">手勢</string>
+    <string name="settings_panel_gestures_title">手勢</string>
     <string name="settings_auto_delete_option_keep_for_one_month">1個月</string>
     <string name="settings_auto_delete_option_keep_for_three_month">3個月</string>
     <string name="settings_auto_delete_option_keep_for_two_week">2週</string>

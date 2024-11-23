@@ -159,7 +159,7 @@
     <string name="settings_gestures_reader_swipe_up">Scorrimento verso l\'alto</string>
     <string name="article_vertical_swipe_next_article">Articolo successivo</string>
     <string name="article_vertical_swipe_previous_article">Articolo precedente</string>
-    <string name="settings_panel_gestures_and_behavior_title">Gesti</string>
+    <string name="settings_panel_gestures_title">Gesti</string>
     <string name="article_view_unstar">Rimuovere la stella</string>
     <string name="settings_gestures_list_row_swipe_start">Scorrimento verso destra</string>
     <string name="settings_gestures_list_row_swipe_end">Scorrimento verso sinistra</string>

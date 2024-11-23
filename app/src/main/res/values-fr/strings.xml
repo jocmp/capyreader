@@ -108,7 +108,7 @@
     <string name="filter_action_menu_search_articles">Rechercher des articles</string>
     <string name="settings_panel_general_title">Général</string>
     <string name="settings_panel_display_title">Affichage et style</string>
-    <string name="settings_panel_gestures_and_behavior_title">Gestes</string>
+    <string name="settings_panel_gestures_title">Gestes</string>
     <string name="settings_account_title">Compte</string>
     <string name="settings_list_top_bar_title">Paramètres</string>
     <string name="settings_auto_delete_articles_title">Conserver les articles</string>

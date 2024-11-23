@@ -27,22 +27,14 @@ fun GesturesSettingPanel(
 ) {
     GesturesSettingsPanelView(
         updateBackAction = viewModel::updateBackAction,
-        updateConfirmMarkAllRead = viewModel::updateConfirmMarkAllRead,
-        updateMarkReadOnScroll = viewModel::updateMarkReadOnScroll,
         updatePagingTapGesture = viewModel::updatePagingTapGesture,
-        updatePinTopBar = viewModel::updatePinTopBar,
         updateReaderBottomSwipe = viewModel::updateReaderBottomSwipe,
         updateReaderTopSwipe = viewModel::updateReaderTopSwipe,
         updateRowSwipeEnd = viewModel::updateRowSwipeEnd,
         updateRowSwipeStart = viewModel::updateRowSwipeStart,
-        updateStickyFullContent = viewModel::updateStickyFullContent,
         backAction = viewModel.backAction,
         bottomSwipe = viewModel.readerBottomSwipe,
-        confirmMarkAllRead = viewModel.confirmMarkAllRead,
         enablePagingTapGesture = viewModel.enablePagingTapGesture,
-        enableStickyFullContent = viewModel.enableStickyFullContent,
-        markReadOnScroll = viewModel.markReadOnScroll,
-        pinTopBar = viewModel.pinArticleTopBar,
         rowSwipeEnd = viewModel.rowSwipeEnd,
         rowSwipeStart = viewModel.rowSwipeStart,
         topSwipe = viewModel.readerTopSwipe,
@@ -52,22 +44,14 @@ fun GesturesSettingPanel(
 @Composable
 private fun GesturesSettingsPanelView(
     updateBackAction: (BackAction) -> Unit,
-    updateConfirmMarkAllRead: (enable: Boolean) -> Unit,
-    updateMarkReadOnScroll: (enable: Boolean) -> Unit,
     updatePagingTapGesture: (enabled: Boolean) -> Unit,
-    updatePinTopBar: (enable: Boolean) -> Unit,
     updateReaderBottomSwipe: (swipe: ArticleVerticalSwipe) -> Unit,
     updateReaderTopSwipe: (swipe: ArticleVerticalSwipe) -> Unit,
     updateRowSwipeEnd: (swipe: RowSwipeOption) -> Unit,
     updateRowSwipeStart: (swipe: RowSwipeOption) -> Unit,
-    updateStickyFullContent: (enable: Boolean) -> Unit,
     backAction: BackAction,
     bottomSwipe: ArticleVerticalSwipe,
-    confirmMarkAllRead: Boolean,
     enablePagingTapGesture: Boolean,
-    enableStickyFullContent: Boolean,
-    markReadOnScroll: Boolean,
-    pinTopBar: Boolean,
     rowSwipeEnd: RowSwipeOption,
     rowSwipeStart: RowSwipeOption,
     topSwipe: ArticleVerticalSwipe,
@@ -104,17 +88,6 @@ private fun GesturesSettingsPanelView(
                         title = { Text(stringResource(R.string.settings_gestures_reader_tap_to_page_title)) },
                         subtitle = stringResource(R.string.settings_gestures_reader_tap_to_page_subtitle)
                     )
-                    TextSwitch(
-                        checked = pinTopBar,
-                        onCheckedChange = updatePinTopBar,
-                        title = stringResource(R.string.settings_options_reader_pin_toolbars),
-                    )
-                    TextSwitch(
-                        checked = enableStickyFullContent,
-                        onCheckedChange = updateStickyFullContent,
-                        title = stringResource(R.string.settings_option_full_content_title),
-                        subtitle = stringResource(R.string.settings_option_full_content_subtitle)
-                    )
                 }
             }
         }
@@ -145,18 +118,6 @@ private fun GesturesSettingsPanelView(
                     label = R.string.settings_gestures_list_back_navigation_action,
                     optionText = { stringResource(it.translationKey) }
                 )
-                RowItem {
-                    TextSwitch(
-                        onCheckedChange = updateConfirmMarkAllRead,
-                        checked = confirmMarkAllRead,
-                        title = stringResource(R.string.settings_confirm_mark_all_read),
-                    )
-                    TextSwitch(
-                        onCheckedChange = updateMarkReadOnScroll,
-                        checked = markReadOnScroll,
-                        title = stringResource(R.string.settings_mark_read_on_scroll),
-                    )
-                }
             }
         }
         Spacer(Modifier.height(16.dp))
@@ -180,14 +141,6 @@ fun GesturesSettingsPanelPreview() {
             rowSwipeStart = RowSwipeOption.TOGGLE_READ,
             rowSwipeEnd = RowSwipeOption.TOGGLE_STARRED,
             enablePagingTapGesture = true,
-            updatePinTopBar = {},
-            markReadOnScroll = true,
-            updateStickyFullContent = {},
-            enableStickyFullContent = true,
-            pinTopBar = true,
-            updateConfirmMarkAllRead = {},
-            updateMarkReadOnScroll = {},
-            confirmMarkAllRead = true,
         )
     }
 }
