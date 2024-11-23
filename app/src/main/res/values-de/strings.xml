@@ -145,7 +145,7 @@
     <string name="article_vertical_swipe_next_article">Nächster Artikel</string>
     <string name="article_vertical_swipe_disabled">Ausgeschaltet</string>
     <string name="article_vertical_swipe_full_content">Ganzen Inhalt laden</string>
-    <string name="settings_panel_gestures_title">Gesten</string>
+    <string name="settings_panel_gestures_and_behavior_title">Gesten</string>
     <string name="settings_account_title">Account</string>
     <string name="settings_reader_title">Reader</string>
     <string name="article_vertical_swipe_previous_article">Vorheriger Artikel</string>

@@ -119,9 +119,9 @@
     <string name="image_preview_menu_option_small">Small</string>
     <string name="image_preview_menu_option_large">Large</string>
     <string name="image_preview_label">Image Preview</string>
-    <string name="settings_article_list_feed_name">Feed Name</string>
-    <string name="settings_article_list_feed_icons">Feed Icons</string>
-    <string name="settings_article_list_summary">Summary</string>
+    <string name="settings_article_list_feed_name">Show Feed Name</string>
+    <string name="settings_article_list_feed_icons">Show Feed Icons</string>
+    <string name="settings_article_list_summary">Show Summary</string>
     <string name="settings_section_version">Version</string>
     <string name="settings_option_copy_version">Copy version</string>
     <string name="settings_option_full_content_title">Sticky Full Content</string>
@@ -152,7 +152,7 @@
     <string name="settings_panel_general_title">General</string>
     <string name="settings_panel_display_title">Display &amp; Appearance</string>
     <string name="settings_panel_notifications_title">Notifications</string>
-    <string name="settings_panel_gestures_title">Gestures</string>
+    <string name="settings_panel_gestures_and_behavior_title">Gestures &amp; Behavior</string>
     <string name="settings_account_title">Account</string>
     <string name="settings_about_title">About</string>
     <string name="settings_list_top_bar_title">Settings</string>
@@ -205,6 +205,7 @@
     <string name="article_list_row_swipe_open_externally">Open article in browser</string>
     <string name="article_view_open_externally">Open externally</string>
     <string name="settings_confirm_mark_all_read">Confirm marking all as read</string>
+    <string name="settings_mark_read_on_scroll">Mark as read on scroll</string>
     <string name="settings_gestures_reader_tap_to_page_title">E Ink tap to scroll</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Tap bottom corners to navigate article content</string>
     <string name="settings_enable_high_contrast_dark_theme">Enable high contrast dark theme</string>

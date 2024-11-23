@@ -124,7 +124,7 @@
     <string name="feed_list_top_bar_close_search">Прекратить поиск</string>
     <string name="settings_panel_display_title">Отображение и Облик</string>
     <string name="settings_panel_notifications_title">Уведомления</string>
-    <string name="settings_panel_gestures_title">Жесты</string>
+    <string name="settings_panel_gestures_and_behavior_title">Жесты</string>
     <string name="settings_account_title">Аккаунт</string>
     <string name="settings_list_top_bar_title">Настройки</string>
     <string name="settings_auto_delete_articles_title">Сохранить статьи</string>

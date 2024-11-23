@@ -142,7 +142,7 @@
     <string name="feed_list_top_bar_close_search">Отхвърли търсенето</string>
     <string name="settings_panel_general_title">Общи</string>
     <string name="settings_panel_display_title">Дисплей и Външен вид</string>
-    <string name="settings_panel_gestures_title">Жестове</string>
+    <string name="settings_panel_gestures_and_behavior_title">Жестове</string>
     <string name="settings_account_title">Акаунт</string>
     <string name="settings_about_title">Относно</string>
     <string name="settings_auto_delete_articles_title">Запази статии</string>

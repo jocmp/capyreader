@@ -34,6 +34,7 @@ val settingsModule = module {
     }
     viewModel {
         GesturesSettingsViewModel(
+            account = get(),
             appPreferences = get(),
         )
     }

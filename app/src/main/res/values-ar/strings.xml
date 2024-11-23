@@ -155,7 +155,7 @@
     <string name="article_list_unread_sort_oldest_first">الأقدم أولاً</string>
     <string name="article_view_mark_as_unread">وضع علامة كغير مقروءة</string>
     <string name="article_view_unstar">إزالة النجمة</string>
-    <string name="settings_panel_gestures_title">الإيماءات</string>
+    <string name="settings_panel_gestures_and_behavior_title">الإيماءات</string>
     <string name="opml_exporter_failure">فشل التصدير</string>
     <string name="settings_gestures_reader_swipe_down">السحب لأسفل</string>
     <string name="settings_gestures_reader_swipe_up">السحب لأعلى</string>

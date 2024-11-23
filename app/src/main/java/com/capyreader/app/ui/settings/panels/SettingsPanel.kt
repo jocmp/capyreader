@@ -32,7 +32,7 @@ sealed class SettingsPanel(@StringRes val title: Int) {
     }
 
     @Parcelize
-    data object Gestures : SettingsPanel(title = R.string.settings_panel_gestures_title),
+    data object Gestures : SettingsPanel(title = R.string.settings_panel_gestures_and_behavior_title),
         Parcelable {
         override fun icon() = Icons.Rounded.Gesture
     }

@@ -147,7 +147,7 @@
     <string name="feed_form_feed_url_title">Tautan Umpan</string>
     <string name="feed_form_copy_feed_url_to_clipboard">Salin Tautan Umpan ke papan klip</string>
     <string name="settings_panel_display_title">Tampilan &amp; Penampilan</string>
-    <string name="settings_panel_gestures_title">Gerakan</string>
+    <string name="settings_panel_gestures_and_behavior_title">Gerakan</string>
     <string name="opml_exporter_success">Ekspor selesai</string>
     <string name="opml_exporter_failure">Ekspor gagal</string>
 </resources>
