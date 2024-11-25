@@ -132,7 +132,7 @@
     <string name="feed_list_top_bar_close_search">Suche abbrechen</string>
     <string name="settings_about_title">Über</string>
     <string name="settings_list_top_bar_title">Einstellungen</string>
-    <string name="settings_auto_delete_articles_title">Artikel behalten</string>
+    <string name="settings_auto_delete_articles_title">Gelesene Artikel behalten</string>
     <string name="settings_auto_delete_option_keep_for_two_week">2 Wochen</string>
     <string name="settings_auto_delete_option_keep_for_one_month">1 Monat</string>
     <string name="settings_auto_delete_option_keep_for_three_month">3 Monate</string>
