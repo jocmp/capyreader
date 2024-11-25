@@ -202,4 +202,7 @@
     <string name="settings_gestures_reader_tap_to_page_subtitle">點擊底部角落快速翻頁</string>
     <string name="settings_gestures_reader_tap_to_page_title">電子墨水屏翻頁</string>
     <string name="settings_enable_high_contrast_dark_theme">高對比度深色主題</string>
+    <string name="settings_mark_read_on_scroll">滾動時標為已讀</string>
+    <string name="settings_section_mark_all_as_read">全部標為已讀</string>
+    <string name="settings_section_browser">瀏覽器</string>
 </resources>
