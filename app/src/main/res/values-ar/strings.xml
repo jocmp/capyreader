@@ -136,7 +136,6 @@
     <string name="update_auth_success_message">تم تسجيل الدخول بنجاح</string>
     <string name="settings_panel_general_title">عام</string>
     <string name="settings_auto_delete_articles_title">إحتفظ بالمقالات</string>
-    <string name="settings_auto_delete_disclaimer">إحذف تلقائيًا المقالات المقروءة وغير المميزة بنجمة استنادًا إلى تاريخ نشرها. لا يمكن استرداد المقالات المحذوفة.</string>
     <string name="settings_account_title">الحساب</string>
     <string name="settings_about_title">حول</string>
     <string name="settings_list_top_bar_title">الإعدادات</string>

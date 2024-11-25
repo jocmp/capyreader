@@ -176,7 +176,6 @@
     <string name="font_option_poppins">Poppins</string>
     <string name="settings_option_auto_delete_articles_subtitle">Удалить прочитанные, без звезд, статьи старше 3 месяцев</string>
     <string name="settings_panel_general_title">Общие</string>
-    <string name="settings_auto_delete_disclaimer">Автоматически удаляет прочитанные, не выделенные статьи на основе их даты публикации. Удаленные статьи не могут быть восстановлены.</string>
     <string name="article_bottom_bar_next_article">Перейти к следующей статье</string>
     <string name="settings_gestures_reader_swipe_down">Провести вниз</string>
     <string name="settings_gestures_reader_swipe_up">Провести вверх</string>

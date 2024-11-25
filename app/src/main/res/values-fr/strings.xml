@@ -114,7 +114,6 @@
     <string name="settings_auto_delete_articles_title">Conserver les articles</string>
     <string name="settings_auto_delete_option_keep_forever">Toujours</string>
     <string name="settings_auto_delete_option_keep_for_one_week">1 semaine</string>
-    <string name="settings_auto_delete_disclaimer">Supprimer automatiquement les articles lus, non favoris, d’après leur date de publication. Les articles supprimés ne peuvent être retrouvés.</string>
     <string name="settings_section_advanced">Avancés</string>
     <string name="settings_clear_all_articles_confirm">Confirmer</string>
     <string name="settings_clear_all_articles_text">Voulez-vous vraiment supprimer tous les articles lus, non étoilés de votre appareil ? Cette action est irréversible.</string>

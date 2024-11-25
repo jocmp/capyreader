@@ -21,7 +21,6 @@
     <string name="settings_list_top_bar_title">Настройки</string>
     <string name="settings_auto_delete_option_keep_forever">Завинаги</string>
     <string name="settings_auto_delete_option_keep_for_one_week">1 седмица</string>
-    <string name="settings_auto_delete_disclaimer">Автоматично изтрива прочетени, без звезда статии въз основа на датата им на публикуване. Изтритите статии не могат да бъдат възстановени.</string>
     <string name="settings_auto_delete_option_keep_for_three_month">3 месеца</string>
     <string name="article_vertical_swipe_previous_article">Предишна статия</string>
     <string name="settings_gestures_reader_swipe_up">Плъзнете нагоре</string>

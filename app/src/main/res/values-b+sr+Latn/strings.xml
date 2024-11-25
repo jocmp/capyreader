@@ -134,7 +134,6 @@
     <string name="settings_auto_delete_articles_title">Čuvaj članke</string>
     <string name="settings_auto_delete_option_keep_forever">Zauvek</string>
     <string name="settings_auto_delete_option_keep_for_one_week">1 nedelju</string>
-    <string name="settings_auto_delete_disclaimer">Automatski briše pročitane članke koji nisu sačuvani na osnovu datuma njihovog objavljivanja. Izbrisani članci se ne mogu vratiti.</string>
     <string name="settings_clear_all_articles_button">Obriši sve članke</string>
     <string name="settings_support_button">Podrška</string>
     <string name="settings_article_list_title">Lista članaka</string>

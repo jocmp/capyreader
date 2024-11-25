@@ -144,7 +144,6 @@
     <string name="settings_auto_delete_option_keep_for_two_week">2星期</string>
     <string name="settings_auto_delete_option_keep_for_one_month">1个月</string>
     <string name="settings_auto_delete_option_keep_for_three_month">3个月</string>
-    <string name="settings_auto_delete_disclaimer">根据发布日期自动删除已读且未加星标的文章。删除的文章不可恢复。</string>
     <string name="settings_section_advanced">高级设置</string>
     <string name="settings_clear_all_articles_confirm">确定</string>
     <string name="settings_clear_all_articles_button">清空文章</string>
