@@ -138,7 +138,7 @@
     <string name="settings_account_title">账户</string>
     <string name="settings_about_title">关于</string>
     <string name="settings_list_top_bar_title">设置</string>
-    <string name="settings_auto_delete_articles_title">文章保留时长</string>
+    <string name="settings_auto_delete_articles_title">保留已读文章</string>
     <string name="settings_auto_delete_option_keep_forever">永久</string>
     <string name="settings_auto_delete_option_keep_for_one_week">1星期</string>
     <string name="settings_auto_delete_option_keep_for_two_week">2星期</string>
@@ -202,4 +202,7 @@
     <string name="settings_gestures_reader_tap_to_page_title">电子墨水屏设备轻按滚动</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">轻按底部角落上下滚动文章内容</string>
     <string name="settings_enable_high_contrast_dark_theme">启用高对比度深色主题</string>
+    <string name="settings_section_mark_all_as_read">标记全部为已读</string>
+    <string name="settings_mark_read_on_scroll">滚动时标记为已读</string>
+    <string name="settings_section_browser">浏览器</string>
 </resources>
