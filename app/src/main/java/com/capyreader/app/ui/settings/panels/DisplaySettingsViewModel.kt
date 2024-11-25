@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.ImagePreview
+import com.capyreader.app.common.ReaderImageVisibility
 import com.capyreader.app.common.ThemeOption
 import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.jocmp.capy.Account
@@ -47,6 +48,9 @@ class DisplaySettingsViewModel(
     var pinArticleBars by mutableStateOf(appPreferences.readerOptions.pinToolbars.get())
         private set
 
+    var imageVisibility by mutableStateOf(appPreferences.readerOptions.imageVisibility.get())
+        private set
+
     fun updateTheme(theme: ThemeOption) {
         appPreferences.theme.set(theme)
 
@@ -81,6 +85,12 @@ class DisplaySettingsViewModel(
         appPreferences.articleListOptions.showSummary.set(show)
 
         _showSummary.value = show
+    }
+
+    fun updateImageVisibility(option: ReaderImageVisibility) {
+        appPreferences.readerOptions.imageVisibility.set(option)
+
+        this.imageVisibility = option
     }
 
     fun updateFeedIcons(show: Boolean) {

@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.common.ImagePreview
+import com.capyreader.app.common.ReaderImageVisibility
 import com.capyreader.app.common.RowItem
 import com.capyreader.app.common.ThemeOption
 import com.capyreader.app.ui.articles.ArticleListFontScale
@@ -34,6 +35,8 @@ fun DisplaySettingsPanel(
         updateHighContrastDarkTheme = viewModel::updateHighContrastDarkTheme,
         updatePinArticleBars = viewModel::updatePinArticleBars,
         pinArticleBars = viewModel.pinArticleBars,
+        updateImageVisibility = viewModel::updateImageVisibility,
+        imageVisibility = viewModel.imageVisibility,
         articleListOptions = ArticleListOptions(
             imagePreview = viewModel.imagePreview,
             showSummary = viewModel.showSummary,
@@ -56,6 +59,8 @@ fun DisplaySettingsPanelView(
     updateHighContrastDarkTheme: (enabled: Boolean) -> Unit,
     updatePinArticleBars: (enable: Boolean) -> Unit,
     pinArticleBars: Boolean,
+    imageVisibility: ReaderImageVisibility,
+    updateImageVisibility: (option: ReaderImageVisibility) -> Unit,
     theme: ThemeOption,
     articleListOptions: ArticleListOptions,
 ) {
@@ -94,6 +99,15 @@ fun DisplaySettingsPanelView(
                     title = stringResource(R.string.settings_options_reader_pin_toolbars),
                 )
             }
+            PreferenceSelect(
+                selected = imageVisibility,
+                update = updateImageVisibility,
+                options = ReaderImageVisibility.entries,
+                label = R.string.reader_image_visibility_label,
+                optionText = {
+                    stringResource(it.translationKey)
+                }
+            )
         }
 
         FormSection(
@@ -130,6 +144,8 @@ private fun DisplaySettingsPanelViewPreview() {
             ),
             updatePinArticleBars = {},
             pinArticleBars = false,
+            updateImageVisibility = {},
+            imageVisibility = ReaderImageVisibility.ALWAYS_SHOW,
         )
     }
 }

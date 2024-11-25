@@ -10,6 +10,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -19,10 +20,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
+import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.common.ReaderImageVisibility
+import com.capyreader.app.ui.ConnectivityType
+import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.articles.ColumnScrollbar
 import com.capyreader.app.ui.components.WebView
 import com.capyreader.app.ui.components.WebViewState
 import com.jocmp.capy.Article
+import org.koin.compose.koinInject
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -30,6 +36,7 @@ fun ArticleReader(
     article: Article,
     webViewState: WebViewState,
 ) {
+    val showImages = rememberImageVisibility()
     var maxHeight by remember { mutableFloatStateOf(0f) }
     val scrollState = rememberSaveable(saver = ScrollState.Saver) {
         ScrollState(initial = 0)
@@ -63,7 +70,7 @@ fun ArticleReader(
     }
 
     LaunchedEffect(article.id, article.content) {
-        webViewState.loadHtml(article)
+        webViewState.loadHtml(article, showImages = showImages)
     }
 
     LaunchedEffect(lastScrollY, scrollState.maxValue) {
@@ -81,3 +88,19 @@ fun ArticleReader(
         }
     }
 }
+
+@Composable
+fun rememberImageVisibility(appPreferences: AppPreferences = koinInject()): Boolean {
+    val imagePreference by appPreferences.readerOptions
+        .imageVisibility
+        .changes()
+        .collectAsState(appPreferences.readerOptions.imageVisibility.get())
+
+    val connectivity = LocalConnectivity.current
+
+    return imagePreference == ReaderImageVisibility.ALWAYS_SHOW ||
+            (imagePreference == ReaderImageVisibility.SHOW_ON_WIFI && connectivity.isOnWifi)
+}
+
+private val ConnectivityType.isOnWifi
+    get() = this == ConnectivityType.WIFI || this == ConnectivityType.ETHERNET

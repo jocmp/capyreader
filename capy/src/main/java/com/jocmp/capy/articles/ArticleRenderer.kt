@@ -23,6 +23,7 @@ class ArticleRenderer(
         article: Article,
         byline: String,
         colors: Map<String, String>,
+        hideImages: Boolean,
     ): String {
         val fontFamily = fontOption.get()
 
@@ -50,6 +51,9 @@ class ArticleRenderer(
 
         cleanStyles(document)
         cleanLinks(document)
+        if (hideImages) {
+            removeImages(document)
+        }
         wrapTables(document)
 
         return document.html()

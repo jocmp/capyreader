@@ -90,6 +90,9 @@ class AppPreferences(context: Context) {
                 ArticleVerticalSwipe.NEXT_ARTICLE
             )
 
+        val imageVisibility: Preference<ReaderImageVisibility>
+            get() = preferenceStore.getEnum("article_image_visibility", ReaderImageVisibility.ALWAYS_SHOW)
+
         val enablePagingTapGesture: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_enable_paging_tap_gesture", false)
     }

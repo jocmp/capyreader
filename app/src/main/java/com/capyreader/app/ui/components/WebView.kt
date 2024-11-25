@@ -148,7 +148,7 @@ class WebViewState(
         loadEmpty()
     }
 
-    fun loadHtml(article: Article) {
+    fun loadHtml(article: Article, showImages: Boolean) {
         val id = article.id
 
         if (htmlId == null || id != htmlId) {
@@ -161,6 +161,7 @@ class WebViewState(
             withContext(Dispatchers.IO) {
                 val html = renderer.render(
                     article,
+                    hideImages = !showImages,
                     byline = article.byline(context = webView.context),
                     colors = colors
                 )

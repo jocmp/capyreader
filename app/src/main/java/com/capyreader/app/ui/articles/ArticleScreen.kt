@@ -5,10 +5,11 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.components.ArticleSearch
+import com.capyreader.app.ui.rememberLocalConnectivity
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
 
@@ -28,10 +29,12 @@ fun ArticleScreen(
 
     val fullContent = rememberFullContent(viewModel)
     val articleActions = rememberArticleActions(viewModel)
+    val connectivity = rememberLocalConnectivity()
 
     CompositionLocalProvider(
         LocalFullContent provides fullContent,
-        LocalArticleActions provides articleActions
+        LocalArticleActions provides articleActions,
+        LocalConnectivity provides connectivity
     ) {
         ArticleLayout(
             filter = filter,
