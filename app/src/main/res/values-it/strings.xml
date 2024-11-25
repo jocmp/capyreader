@@ -141,13 +141,12 @@
     <string name="settings_account_title">Account</string>
     <string name="settings_about_title">Info</string>
     <string name="settings_list_top_bar_title">Impostazioni</string>
-    <string name="settings_auto_delete_articles_title">Conserva gli articoli</string>
+    <string name="settings_auto_delete_articles_title">Conserva gli articoli letti</string>
     <string name="settings_auto_delete_option_keep_forever">Per sempre</string>
     <string name="settings_auto_delete_option_keep_for_one_week">1 settimana</string>
     <string name="settings_auto_delete_option_keep_for_two_week">2 settimane</string>
     <string name="settings_auto_delete_option_keep_for_one_month">1 mese</string>
     <string name="settings_auto_delete_option_keep_for_three_month">3 mesi</string>
-    <string name="settings_auto_delete_disclaimer">Elimina automaticamente gli articoli letti e non contrassegnati in base alla loro data di pubblicazione. Gli articoli eliminati non possono essere recuperati.</string>
     <string name="opml_exporter_success">Esportazione completata</string>
     <string name="opml_exporter_failure">Esportazione fallita</string>
     <string name="settings_reader_title">Lettore</string>
@@ -205,4 +204,7 @@
     <string name="settings_gestures_reader_tap_to_page_subtitle">Tocca gli angoli inferiori per navigare nel contenuto dell\'articolo</string>
     <string name="settings_gestures_reader_tap_to_page_title">Dispositivi E-Ink tocca per scorrere</string>
     <string name="settings_enable_high_contrast_dark_theme">Abilita il tema scuro ad alto contrasto</string>
+    <string name="settings_mark_read_on_scroll">Marca come letto scorrendo</string>
+    <string name="settings_section_mark_all_as_read">Marca tutto come letto</string>
+    <string name="settings_section_browser">Browser</string>
 </resources>

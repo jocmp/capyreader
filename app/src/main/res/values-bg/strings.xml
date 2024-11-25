@@ -21,7 +21,6 @@
     <string name="settings_list_top_bar_title">Настройки</string>
     <string name="settings_auto_delete_option_keep_forever">Завинаги</string>
     <string name="settings_auto_delete_option_keep_for_one_week">1 седмица</string>
-    <string name="settings_auto_delete_disclaimer">Автоматично изтрива прочетени, без звезда статии въз основа на датата им на публикуване. Изтритите статии не могат да бъдат възстановени.</string>
     <string name="settings_auto_delete_option_keep_for_three_month">3 месеца</string>
     <string name="article_vertical_swipe_previous_article">Предишна статия</string>
     <string name="settings_gestures_reader_swipe_up">Плъзнете нагоре</string>
@@ -145,7 +144,7 @@
     <string name="settings_panel_gestures_title">Жестове</string>
     <string name="settings_account_title">Акаунт</string>
     <string name="settings_about_title">Относно</string>
-    <string name="settings_auto_delete_articles_title">Запази статии</string>
+    <string name="settings_auto_delete_articles_title">Запази прочетени статии</string>
     <string name="settings_auto_delete_option_keep_for_two_week">2 седмици</string>
     <string name="settings_auto_delete_option_keep_for_one_month">1 месец</string>
     <string name="settings_section_advanced">Разширени</string>
@@ -204,4 +203,7 @@
     <string name="settings_gestures_reader_tap_to_page_title">Устройство с екран с електронно мастило докоснете, за да превъртите</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Докоснете долните ъгли, за да навигирате в съдържанието на статията</string>
     <string name="settings_enable_high_contrast_dark_theme">Активирай тъмна тема с висок контраст</string>
+    <string name="settings_section_mark_all_as_read">Маркирай всички като прочетено</string>
+    <string name="settings_mark_read_on_scroll">Маркирай като прочетено при превъртане</string>
+    <string name="settings_section_browser">Браузър</string>
 </resources>

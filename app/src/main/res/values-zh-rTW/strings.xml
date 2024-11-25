@@ -59,7 +59,6 @@
     <string name="settings_section_advanced">高級設置</string>
     <string name="settings_clear_all_articles_confirm">確認</string>
     <string name="settings_clear_all_articles_text">確認要從設備刪除全部已讀且未加星標的文章嗎？此操作不可撤銷。</string>
-    <string name="settings_auto_delete_disclaimer">根據發佈日期自動刪除已讀且未加星標的文章，刪除的文章將無法恢復。</string>
     <string name="settings_gestures_reader_swipe_down">向下滑動</string>
     <string name="settings_support_button">支援</string>
     <string name="settings_article_list_title">文章列表</string>
@@ -203,4 +202,7 @@
     <string name="settings_gestures_reader_tap_to_page_subtitle">點擊底部角落快速翻頁</string>
     <string name="settings_gestures_reader_tap_to_page_title">電子墨水屏翻頁</string>
     <string name="settings_enable_high_contrast_dark_theme">高對比度深色主題</string>
+    <string name="settings_mark_read_on_scroll">滾動時標為已讀</string>
+    <string name="settings_section_mark_all_as_read">全部標為已讀</string>
+    <string name="settings_section_browser">瀏覽器</string>
 </resources>

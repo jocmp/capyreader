@@ -132,11 +132,10 @@
     <string name="feed_list_top_bar_close_search">Suche abbrechen</string>
     <string name="settings_about_title">Über</string>
     <string name="settings_list_top_bar_title">Einstellungen</string>
-    <string name="settings_auto_delete_articles_title">Artikel behalten</string>
+    <string name="settings_auto_delete_articles_title">Gelesene Artikel behalten</string>
     <string name="settings_auto_delete_option_keep_for_two_week">2 Wochen</string>
     <string name="settings_auto_delete_option_keep_for_one_month">1 Monat</string>
     <string name="settings_auto_delete_option_keep_for_three_month">3 Monate</string>
-    <string name="settings_auto_delete_disclaimer">Löscht automatisch gelesene, nicht favorisierte Artikel basierend auf deren Veröffentlichungsdatum. Gelöschte Artikel können nicht wiederhergestellt werden.</string>
     <string name="opml_exporter_failure">Export fehlgeschlagen</string>
     <string name="settings_options_reader_pin_toolbars">Toolbar immer anzeigen</string>
     <string name="article_bottom_bar_next_article">Nächster Artikel</string>

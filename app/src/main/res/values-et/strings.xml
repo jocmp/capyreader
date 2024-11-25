@@ -102,9 +102,8 @@
     <string name="settings_panel_display_title">Kuvamine ja välimus</string>
     <string name="settings_account_title">Kasutajakonto</string>
     <string name="settings_about_title">Rakenduse teave</string>
-    <string name="settings_auto_delete_articles_title">Säilita artikleid</string>
+    <string name="settings_auto_delete_articles_title">Säilita loetud artiklid</string>
     <string name="settings_auto_delete_option_keep_forever">Igavesti</string>
-    <string name="settings_auto_delete_disclaimer">See valik määrab sinu eelistuse lugemata ja tähega märkimata artiklite kustutamise osas alates nende avaldamise kuupäevast. Kustutatud artikleid taastada ei saa. Ilmselt võib neid vajadusel olla võimalik leida veebisaidist, kus nad algselt avaldati.</string>
     <string name="settings_section_advanced">Täiendavad seadistused</string>
     <string name="settings_clear_all_articles_confirm">Kinnita</string>
     <string name="settings_support_button">Kasutajatugi</string>
@@ -204,4 +203,7 @@
     <string name="settings_gestures_reader_tap_to_page_title">Kerimiseks klõpsi</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Artiklis sisus liikumiseks klõpsi alumistes nurkades</string>
     <string name="settings_enable_high_contrast_dark_theme">Kasuta suure kontrastsusega tumedat kujundust</string>
+    <string name="settings_section_mark_all_as_read">Märgi kõik loetuks</string>
+    <string name="settings_mark_read_on_scroll">Märgi kerimisega loetuks</string>
+    <string name="settings_section_browser">Brauser</string>
 </resources>

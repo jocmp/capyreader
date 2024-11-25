@@ -148,7 +148,6 @@
     <string name="settings_auto_delete_option_keep_for_two_week">2 týdny</string>
     <string name="settings_auto_delete_option_keep_for_one_month">1 měsíc</string>
     <string name="settings_auto_delete_option_keep_for_three_month">3 měsíce</string>
-    <string name="settings_auto_delete_disclaimer">Automaticky smaže přečtené, neohvězdičkované články podle jejich data zveřejnění. Smazané články nelze obnovit.</string>
     <string name="settings_gestures_reader_swipe_down">Táhnout dolů</string>
     <string name="settings_gestures_reader_swipe_up">Táhnout nahoru</string>
     <string name="settings_gestures_list_row_swipe_start">Táhnout doprava</string>

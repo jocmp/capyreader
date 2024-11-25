@@ -133,7 +133,6 @@
     <string name="feed_list_top_bar_close_search">Descartar la búsqueda</string>
     <string name="settings_account_title">Cuenta</string>
     <string name="settings_panel_general_title">General</string>
-    <string name="settings_auto_delete_disclaimer">Borra automáticamente los artículos leídos y no marcados en función de su fecha de publicación. Los artículos eliminados no se pueden recuperar.</string>
     <string name="settings_about_title">Acerca de</string>
     <string name="settings_list_top_bar_title">Ajustes</string>
     <string name="settings_auto_delete_articles_title">Conservar artículos</string>
