@@ -304,7 +304,6 @@ internal class ReaderAccountDelegate(
             stream = stream,
             since = since,
             continuation = continuation,
-            excludedStream = Stream.READ,
             count = MAX_PAGINATED_ITEM_LIMIT,
         )
 
