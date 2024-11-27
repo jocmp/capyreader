@@ -119,7 +119,7 @@ class ArticleScreenViewModel(
         updateFilter(nextFilter)
     }
 
-    suspend fun selectFeed(feedID: String) {
+    fun selectFeed(feedID: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val feed = account.findFeed(feedID) ?: return@launch
             val feedFilter = ArticleFilter.Feeds(feedID = feed.id, feedStatus = latestFilter.status)
@@ -152,6 +152,8 @@ class ArticleScreenViewModel(
             account.markAllRead(articleIDs).onFailure {
                 Sync.markReadAsync(articleIDs, context)
             }
+
+            updateArticlesSince()
         }
     }
 
@@ -253,7 +255,7 @@ class ArticleScreenViewModel(
         _searchQuery.value = query
     }
 
-    fun addStarAsync(articleID: String)  {
+    fun addStarAsync(articleID: String) {
         toggleCurrentStarred(articleID)
         addStar(articleID)
     }

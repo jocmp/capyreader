@@ -26,7 +26,6 @@ import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 import java.time.LocalDateTime
 
-@OptIn(FlowPreview::class)
 @Composable
 fun ArticleList(
     articles: LazyPagingItems<Article>,

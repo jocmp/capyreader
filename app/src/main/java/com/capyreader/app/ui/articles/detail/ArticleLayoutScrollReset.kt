@@ -11,7 +11,10 @@ import androidx.compose.runtime.remember
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun resetScrollBehaviorListener(listState: LazyListState, scrollBehavior: TopAppBarScrollBehavior): () -> Unit {
+fun resetScrollBehaviorListener(
+    listState: LazyListState,
+    scrollBehavior: TopAppBarScrollBehavior
+): () -> Unit {
     val resetContentOffset by remember {
         derivedStateOf {
             listState.firstVisibleItemScrollOffset == 0 &&

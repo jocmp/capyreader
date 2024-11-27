@@ -35,3 +35,4 @@ app/gplay/release/
 
 # Cruft
 technotes/.obsidian/
+.idea/runConfigurations.xml
