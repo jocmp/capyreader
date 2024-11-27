@@ -7,7 +7,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -16,6 +16,8 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
+import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.TopAppBarState
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
@@ -113,16 +115,12 @@ fun ArticleLayout(
     val coroutineScope = rememberCoroutineScope()
     val scaffoldNavigator = rememberListDetailPaneScaffoldNavigator()
     var isRefreshing by remember { mutableStateOf(false) }
-    val listState = rememberLazyListState()
+    val listState = rememberArticleListState(filter)
     val pagingArticles = articles.collectAsLazyPagingItems(Dispatchers.IO)
     val snackbarHost = remember { SnackbarHostState() }
     val addFeedSuccessMessage = stringResource(R.string.add_feed_success)
     val currentFeed = findCurrentFeed(filter, allFeeds)
-    val scrollBehavior = pinnedScrollBehavior()
-    val resetScrollBehaviorOffset = resetScrollBehaviorListener(
-        listState = listState,
-        scrollBehavior = scrollBehavior
-    )
+    val scrollBehavior = rememberArticleTopBar(filter)
     var media by rememberSaveable(saver = Media.Saver) { mutableStateOf(null) }
     val focusManager = LocalFocusManager.current
     val openUpdatePasswordDialog = {
@@ -148,16 +146,21 @@ fun ArticleLayout(
         }
     }
 
+    val resetScrollBehaviorOffset = resetScrollBehaviorListener(
+        listState = listState,
+        scrollBehavior = scrollBehavior
+    )
+
     val scrollToTop = {
         coroutineScope.launch {
             listState.scrollToItem(0)
+            resetScrollBehaviorOffset()
         }
     }
 
-    val resetScrollOffset = {
+    val refreshPagination = {
         coroutineScope.launch {
             pagingArticles.refresh()
-            delay(500)
             resetScrollBehaviorOffset()
         }
     }
@@ -166,7 +169,7 @@ fun ArticleLayout(
         isRefreshing = true
         onFeedRefresh {
             isRefreshing = false
-            resetScrollOffset()
+            refreshPagination()
 
             if (!isInitialized) {
                 setInitialized(true)
@@ -178,7 +181,7 @@ fun ArticleLayout(
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
         delay(200)
         drawerState.close()
-        resetScrollOffset()
+        refreshPagination()
     }
 
     val toggleDrawer = {
@@ -273,7 +276,7 @@ fun ArticleLayout(
                 statusCount = statusCount,
                 onSelectStatus = {
                     onSelectStatus(it)
-                    resetScrollOffset()
+                    refreshPagination()
                 }
             )
         },
@@ -461,6 +464,28 @@ fun findCurrentFeed(filter: ArticleFilter, feeds: List<Feed>): Feed? {
     }
 
     return null
+}
+
+
+@Composable
+fun rememberArticleListState(filter: ArticleFilter): LazyListState {
+    return rememberSaveable(filter, saver = LazyListState.Saver) {
+        LazyListState()
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun rememberArticleTopBar(filter: ArticleFilter): TopAppBarScrollBehavior {
+    val state = rememberSaveable(filter, saver = TopAppBarState.Saver) {
+        TopAppBarState(
+            initialHeightOffsetLimit = 0f,
+            initialHeightOffset = 0f,
+            initialContentOffset = 0f
+        )
+    }
+
+    return pinnedScrollBehavior(state)
 }
 
 @Preview
