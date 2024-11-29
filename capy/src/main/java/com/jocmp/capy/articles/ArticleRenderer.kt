@@ -49,14 +49,7 @@ class ArticleRenderer(
 
         document.getElementById("article-body-content")?.append(article.content)
 
-        cleanStyles(document)
-        cleanLinks(document)
-        if (hideImages) {
-            removeImages(document)
-        }
-        wrapTables(document)
-
-        return document.html()
+        return HtmlPreprocessor.clean(html, siteURL = article.siteURL, hideImages = hideImages)
     }
 
     private fun topMargin(): String {

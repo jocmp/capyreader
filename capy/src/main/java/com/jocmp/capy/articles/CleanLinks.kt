@@ -19,22 +19,16 @@ internal fun cleanLinks(element: Element) {
 }
 
 private fun extractChildImages(document: Element) {
-    try {
-        document.select("a img").forEach {
-            attachImageToAnchorParent(it, it.parent())
-        }
-    } catch (e: StackOverflowError) {
-        return
+    document.select("a img").forEach {
+        attachImageToAnchorParent(it, it.parent())
     }
 }
 
 private fun attachImageToAnchorParent(img: Element, parent: Element?) {
-    if (parent == null || parent.tagName() == "body") {
-        return;
-    } else if (parent.tagName() == "a") {
+    parent ?: return
+
+    if (parent.tagName() == "a") {
         parent.parent()?.apply { appendChild(img) }
         parent.remove()
-    } else {
-        attachImageToAnchorParent(img, parent.parent())
     }
 }
