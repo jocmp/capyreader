@@ -15,7 +15,7 @@ _A smallish RSS reader with support for Feedbin, FreshRSS, and local feeds._
 - [IzzyOnDroid][izzy_link]
 - [GitHub Releases][github_link]
 
-Capy Reader is free across all sources.
+Capy Reader is free across all sources. It is available for devices running Android 11 or later.
 
 ### Releases
 
