@@ -47,9 +47,19 @@ class ArticleRenderer(
             article.siteURL?.let { setBaseUri(it) }
         }
 
-        document.getElementById("article-body-content")?.append(article.content)
+        if (article.parseFullContent) {
+            val contentHTML = Jsoup.parse(article.content)
 
-        return HtmlPreprocessor.clean(html, siteURL = article.siteURL, hideImages = hideImages)
+            HtmlPostProcessor.clean(contentHTML, hideImages = hideImages)
+
+            document.getElementById("article-body-content")?.append(parseHtml(article, contentHTML.html()))
+        } else {
+            document.getElementById("article-body-content")?.append(article.content)
+
+            HtmlPostProcessor.clean(document, hideImages = hideImages)
+        }
+
+        return document.html()
     }
 
     private fun topMargin(): String {
