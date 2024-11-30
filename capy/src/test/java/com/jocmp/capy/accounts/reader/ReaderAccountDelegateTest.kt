@@ -510,7 +510,6 @@ class ReaderAccountDelegateTest {
                 streamID = Stream.READING_LIST.id,
                 since = any(),
                 count = 100,
-                excludedStreamID = Stream.READ.id
             )
         }.returns(Response.success(StreamItemIDsResult(itemRefs = itemRefs, continuation = null)))
 
