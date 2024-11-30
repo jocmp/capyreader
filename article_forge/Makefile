@@ -9,7 +9,7 @@ SHELL:=/usr/bin/env bash
 
 .PHONY: forge clean
 
-build: $(TEMPLATE_DEST) $(STYLE_DEST) $(MEDIA_LISTENERS_JS_DEST)
+build: $(TEMPLATE_DEST) $(STYLE_DEST) $(MEDIA_LISTENERS_JS_DEST) $(CUSTOM_EXTRACTOR_JS_DEST)
 
 .PHONY: forge
 forge:
