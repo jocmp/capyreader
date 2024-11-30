@@ -23,5 +23,4 @@ function addImageClickListeners() {
 window.onload = () => {
   addImageClickListeners();
   configureVideoTags();
-  console.log("Loaded");
 };
