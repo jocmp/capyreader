@@ -168,7 +168,7 @@ class WebViewState(
 
                 withContext(Dispatchers.Main) {
                     webView.loadDataWithBaseURL(
-                        article.url?.toString(),
+                        ASSET_BASE_URL,
                         html,
                         null,
                         "UTF-8",

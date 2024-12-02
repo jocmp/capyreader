@@ -8,7 +8,6 @@ def main
   file_content = File.read("./views/#{filename}.liquid")
   file_content = file_content.gsub("{{body}}", "")
   file_content = file_content.gsub("    {{debug_script}}\n", "")
-  file_content = file_content.gsub("/assets/", 'https://appassets.androidplatform.net/assets/')
 
   assert_clean(file_content)
 

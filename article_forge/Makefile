@@ -19,8 +19,10 @@ forge:
 clean:
 	rm -f dist/*
 
-$(STYLE_DEST): ./style/stylesheet.scss
+$(STYLE_OUT): style/stylesheet.scss
 	ruby ./script/generate-android-style
+
+$(STYLE_DEST): $(STYLE_OUT)
 	cp $(STYLE_OUT) $(STYLE_DEST)
 
 dist/template.html: ./views/template.liquid

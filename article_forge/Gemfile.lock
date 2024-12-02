@@ -8,7 +8,11 @@ GEM
       irb (~> 1.10)
       reline (>= 0.3.8)
     ffi (1.17.0-arm64-darwin)
+    ffi (1.17.0-x86_64-linux-gnu)
     google-protobuf (4.28.3-arm64-darwin)
+      bigdecimal
+      rake (>= 13)
+    google-protobuf (4.28.3-x86_64-linux)
       bigdecimal
       rake (>= 13)
     io-console (0.7.2)
@@ -77,6 +81,8 @@ GEM
     ruby2_keywords (0.0.5)
     sass-embedded (1.77.8-arm64-darwin)
       google-protobuf (~> 4.26)
+    sass-embedded (1.77.8-x86_64-linux-gnu)
+      google-protobuf (~> 4.26)
     sinatra (4.1.1)
       logger (>= 1.6.0)
       mustermann (~> 3.0)
@@ -103,6 +109,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-23
+  x86_64-linux
 
 DEPENDENCIES
   debug

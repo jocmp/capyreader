@@ -58,7 +58,6 @@ dependencies {
     implementation(libs.jsoup)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.serialization.json)
-    implementation(libs.readability4j)
     implementation(libs.retrofit2.retrofit)
     implementation(libs.sqldelight.androidx.paging.extensions)
     implementation(libs.sqldelight.coroutines.extensions)
