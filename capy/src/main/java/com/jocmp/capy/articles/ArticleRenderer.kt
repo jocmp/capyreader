@@ -47,14 +47,17 @@ class ArticleRenderer(
             article.siteURL?.let { setBaseUri(it) }
         }
 
-        document.getElementById("article-body-content")?.append(article.content)
+        if (article.parseFullContent) {
+            val contentHTML = Jsoup.parse(article.content)
 
-        cleanStyles(document)
-        cleanLinks(document)
-        if (hideImages) {
-            removeImages(document)
+            HtmlPostProcessor.clean(contentHTML, hideImages = hideImages)
+
+            document.getElementById("article-body-content")?.append(parseHtml(article, contentHTML.html()))
+        } else {
+            document.getElementById("article-body-content")?.append(article.content)
+
+            HtmlPostProcessor.clean(document, hideImages = hideImages)
         }
-        wrapTables(document)
 
         return document.html()
     }

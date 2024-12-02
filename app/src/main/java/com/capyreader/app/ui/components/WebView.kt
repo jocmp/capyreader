@@ -168,7 +168,7 @@ class WebViewState(
 
                 withContext(Dispatchers.Main) {
                     webView.loadDataWithBaseURL(
-                        ASSET_BASE_URL,
+                        article.url?.toString(),
                         html,
                         null,
                         "UTF-8",
@@ -211,7 +211,6 @@ fun rememberWebViewState(
             settings.apply {
                 javaScriptEnabled = true
                 mediaPlaybackRequiresUserGesture = false
-                offscreenPreRaster = true
             }
             isVerticalScrollBarEnabled = false
             isHorizontalScrollBarEnabled = false

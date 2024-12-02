@@ -1,20 +1,33 @@
 package com.jocmp.capy.articles
 
 import com.jocmp.capy.Article
-import net.dankito.readability4j.Readability4J
+import org.json.JSONObject
 
 fun parseHtml(article: Article, html: String): String {
-    try {
-        val uri = (article.feedURL ?: article.url).toString()
-        val readability4J = Readability4J(uri, html)
-        val content = readability4J.parse().articleContent ?: return ""
+    return """
+      <script>
+        (async () => {
+          let downloaded = ${JSONObject(mapOf("value" to html))};
 
-        content.getElementsByClass("readability-styled").forEach { element ->
-            element.append("&nbsp;")
-        }
+          Mercury.parse("${article.url?.toString()}", { html: downloaded.value }).then(article => {
+            let extracted = document.createElement("div");
 
-        return content.html()
-    } catch (ex: Throwable) {
-        return ""
-    }
+            extracted.id = "article-body-content"
+            extracted.innerHTML = article.content;
+
+            let shouldAddImage = article.lead_image_url &&
+                ![...extracted.querySelectorAll("img")].some(img => img.src.includes(article.lead_image_url));
+
+            if (shouldAddImage) {
+              let leadImage = document.createElement("img");
+              leadImage.src = article.lead_image_url;
+              extracted.prepend(leadImage);
+            }
+
+            let content = document.getElementById("article-body-content");
+            content.replaceWith(extracted);
+          });
+        })();
+      </script>
+    """.trimIndent()
 }

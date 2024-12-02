@@ -17,7 +17,6 @@ import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
-import com.jocmp.capy.articles.parseHtml
 import com.jocmp.capy.buildArticlePager
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
@@ -408,7 +407,7 @@ class ArticleScreenViewModel(
             onSuccess = { value ->
                 if (_article?.id == article.id) {
                     _article = article.copy(
-                        content = parseHtml(article, value),
+                        content = value,
                         fullContent = Article.FullContentState.LOADED
                     )
                 }
