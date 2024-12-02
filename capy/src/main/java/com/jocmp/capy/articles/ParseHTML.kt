@@ -2,8 +2,11 @@ package com.jocmp.capy.articles
 
 import com.jocmp.capy.Article
 import org.json.JSONObject
+import org.jsoup.nodes.Document
 
-fun parseHtml(article: Article, html: String): String {
+fun parseHtml(article: Article, document: Document): String {
+    val html = document.html()
+
     return """
       <script>
         (async () => {

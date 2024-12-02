@@ -48,4 +48,10 @@ extractors([
       },
     },
   },
+  {
+    domain: "economictimes.indiatimes.com",
+    content: {
+      selectors: [["article"]]
+    }
+  }
 ]);
