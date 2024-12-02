@@ -205,4 +205,8 @@
     <string name="settings_section_mark_all_as_read">标记全部为已读</string>
     <string name="settings_mark_read_on_scroll">滚动时标记为已读</string>
     <string name="settings_section_browser">浏览器</string>
+    <string name="reader_image_visibility_show_on_wifi">仅在 Wi-Fi 连接下显示图片</string>
+    <string name="reader_image_visibility_always_hide">拦截图片</string>
+    <string name="reader_image_visibility_always_show">始终显示图片</string>
+    <string name="reader_image_visibility_label">图片</string>
 </resources>
