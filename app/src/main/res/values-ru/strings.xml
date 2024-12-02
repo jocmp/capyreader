@@ -127,7 +127,7 @@
     <string name="settings_panel_gestures_title">Жесты</string>
     <string name="settings_account_title">Аккаунт</string>
     <string name="settings_list_top_bar_title">Настройки</string>
-    <string name="settings_auto_delete_articles_title">Сохранить статьи</string>
+    <string name="settings_auto_delete_articles_title">Продолжать читать статьи</string>
     <string name="settings_auto_delete_option_keep_for_one_week">1 неделя</string>
     <string name="settings_auto_delete_option_keep_for_two_week">2 недели</string>
     <string name="settings_auto_delete_option_keep_for_three_month">3 месяца</string>
@@ -205,4 +205,11 @@
     <string name="settings_gestures_reader_tap_to_page_title">E Ink касание для прокрутки</string>
     <string name="settings_enable_high_contrast_dark_theme">Включить высококонтрастную темную тему</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Коснитесь нижних углов, чтобы перемещаться по содержимому статьи.</string>
+    <string name="settings_mark_read_on_scroll">Отметить как прочитанное при прокрутке</string>
+    <string name="settings_section_mark_all_as_read">Отметить все как прочитанное</string>
+    <string name="settings_section_browser">Браузер</string>
+    <string name="reader_image_visibility_show_on_wifi">Показывать изображения только при Wi-Fi</string>
+    <string name="reader_image_visibility_always_hide">Блочные изображения</string>
+    <string name="reader_image_visibility_always_show">Всегда показывать изображения</string>
+    <string name="reader_image_visibility_label">Изображения</string>
 </resources>
