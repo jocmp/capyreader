@@ -75,7 +75,7 @@
     <string name="settings_notifications_select_all">全選</string>
     <string name="settings_notifications_select_none">全不選</string>
     <string name="notifications_permission_disabled_title">通知權限被封鎖</string>
-    <string name="settings_confirm_mark_all_read">需要確認才能全部標爲已讀</string>
+    <string name="settings_confirm_mark_all_read">全部標爲已讀時需確認</string>
     <string name="article_view_mark_as_unread">標為未讀</string>
     <string name="article_view_unstar">移除星標</string>
     <string name="mark_all_read_dialog_submit">確認</string>
@@ -203,6 +203,10 @@
     <string name="settings_gestures_reader_tap_to_page_title">電子墨水屏翻頁</string>
     <string name="settings_enable_high_contrast_dark_theme">高對比度深色主題</string>
     <string name="settings_mark_read_on_scroll">滾動時標為已讀</string>
-    <string name="settings_section_mark_all_as_read">全部標為已讀</string>
+    <string name="settings_section_mark_all_as_read">標為已讀</string>
     <string name="settings_section_browser">瀏覽器</string>
+    <string name="reader_image_visibility_label">圖像</string>
+    <string name="reader_image_visibility_always_show">始終顯示</string>
+    <string name="reader_image_visibility_show_on_wifi">僅 Wi-Fi 顯示</string>
+    <string name="reader_image_visibility_always_hide">不顯示</string>
 </resources>

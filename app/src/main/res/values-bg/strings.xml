@@ -206,4 +206,8 @@
     <string name="settings_section_mark_all_as_read">Маркирай всички като прочетено</string>
     <string name="settings_mark_read_on_scroll">Маркирай като прочетено при превъртане</string>
     <string name="settings_section_browser">Браузър</string>
+    <string name="reader_image_visibility_always_hide">Блокирай изображения</string>
+    <string name="reader_image_visibility_show_on_wifi">Показвай изображения само при Wi-Fi</string>
+    <string name="reader_image_visibility_label">Изображения</string>
+    <string name="reader_image_visibility_always_show">Винаги показвай изображения</string>
 </resources>
