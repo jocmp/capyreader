@@ -207,4 +207,8 @@
     <string name="settings_mark_read_on_scroll">Marca come letto scorrendo</string>
     <string name="settings_section_mark_all_as_read">Marca tutto come letto</string>
     <string name="settings_section_browser">Browser</string>
+    <string name="reader_image_visibility_always_show">Mostra sempre le immagini</string>
+    <string name="reader_image_visibility_label">Immagini</string>
+    <string name="reader_image_visibility_show_on_wifi">Mostra le immagini solo con Wi-Fi</string>
+    <string name="reader_image_visibility_always_hide">Blocca le immagini</string>
 </resources>
