@@ -135,7 +135,7 @@
     <string name="settings_panel_general_title">General</string>
     <string name="settings_about_title">Acerca de</string>
     <string name="settings_list_top_bar_title">Ajustes</string>
-    <string name="settings_auto_delete_articles_title">Conservar artículos</string>
+    <string name="settings_auto_delete_articles_title">Segir leyendo los artículos</string>
     <string name="settings_auto_delete_option_keep_forever">Para siempre</string>
     <string name="settings_auto_delete_option_keep_for_one_week">1 semana</string>
     <string name="settings_auto_delete_option_keep_for_two_week">2 semanas</string>
@@ -201,4 +201,11 @@
     <string name="settings_gestures_reader_tap_to_page_subtitle">Tocar las esquinas inferiores para navegar por el contenido del artículo</string>
     <string name="settings_gestures_reader_tap_to_page_title">Presione para desplazarse por la tinta electrónica</string>
     <string name="settings_enable_high_contrast_dark_theme">Activar tema oscuro con alto contraste</string>
+    <string name="settings_mark_read_on_scroll">Marcar como leído al desplazarse</string>
+    <string name="settings_section_mark_all_as_read">Marcar todo como leído</string>
+    <string name="settings_section_browser">Navegador</string>
+    <string name="reader_image_visibility_show_on_wifi">Mostrar imágenes solo en Wi-Fi</string>
+    <string name="reader_image_visibility_always_hide">Bloquear imágenes</string>
+    <string name="reader_image_visibility_always_show">Mostrar siempre las imágenes</string>
+    <string name="reader_image_visibility_label">Imágenes</string>
 </resources>
