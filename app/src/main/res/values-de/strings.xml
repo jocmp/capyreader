@@ -197,4 +197,14 @@
     <string name="account_source_freshrss">FreshRSS</string>
     <string name="add_account_reader_subtitle">Self-hosted Google Reader API</string>
     <string name="add_account_freshrss_signup_prompt">Du hast keine FreshRSS Instanz?</string>
+    <string name="settings_section_mark_all_as_read">Alles als gelesen markieren</string>
+    <string name="settings_mark_read_on_scroll">Beim Scrollen als gelesen markieren</string>
+    <string name="settings_section_browser">Browser</string>
+    <string name="reader_image_visibility_show_on_wifi">Bilder nur bei Wi-Fi Verbindung zeigen</string>
+    <string name="reader_image_visibility_always_hide">Bilder niemals anzeigen</string>
+    <string name="reader_image_visibility_always_show">Bilder immer anzeigen</string>
+    <string name="reader_image_visibility_label">Bilder</string>
+    <string name="settings_gestures_reader_tap_to_page_subtitle">Tippen auf die unteren Ecken um innerhalb eines Artikels zu navigieren</string>
+    <string name="settings_gestures_reader_tap_to_page_title">Tippen um zu Scrollen bei E-Ink Displays</string>
+    <string name="settings_enable_high_contrast_dark_theme">Dunkles Theme mit hohem Kontrast aktivieren</string>
 </resources>
