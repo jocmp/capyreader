@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -44,26 +45,28 @@ fun ArticleList(
         }
     }
 
-    LazyScrollbar(state = listState) {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            state = listState,
-        ) {
-            items(count = articles.itemCount) { index ->
-                val item = articles[index]
+    key(articles.itemCount) {
+        LazyScrollbar(state = listState) {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                state = listState,
+            ) {
+                items(count = articles.itemCount) { index ->
+                    val item = articles[index]
 
-                Box {
-                    if (item == null) {
-                        PlaceholderArticleRow(articleOptions.imagePreview)
-                    } else {
-                        ArticleRow(
-                            article = item,
-                            selected = selectedArticleKey == item.id,
-                            onSelect = { selectArticle(it) },
-                            onMarkAllRead = onMarkAllRead,
-                            currentTime = currentTime,
-                            options = articleOptions
-                        )
+                    Box {
+                        if (item == null) {
+                            PlaceholderArticleRow(articleOptions.imagePreview)
+                        } else {
+                            ArticleRow(
+                                article = item,
+                                selected = selectedArticleKey == item.id,
+                                onSelect = { selectArticle(it) },
+                                onMarkAllRead = onMarkAllRead,
+                                currentTime = currentTime,
+                                options = articleOptions
+                            )
+                        }
                     }
                 }
             }
