@@ -9,12 +9,12 @@ import org.koin.dsl.module
 
 internal val articlesModule = module {
     factory {
-        AddFeedStateHolder(
+        AddFeedViewModel(
             account = get<Account>(parameters = { parametersOf(get<AppPreferences>().accountID.get()) }),
         )
     }
     factory {
-        AddFeedStateHolder(
+        AddFeedViewModel(
             account = get<Account>(parameters = { parametersOf(get<AppPreferences>().accountID.get()) }),
         )
     }
