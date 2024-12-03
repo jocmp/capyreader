@@ -37,11 +37,12 @@ fun ArticleScreen(
 
     val pager = remember(
         filter,
-        searchQuery,
+        searchQuery.orEmpty(),
         unreadSort,
         since
     ) {
-       viewModel.articlePagerFactory
+        viewModel
+            .articlePagerFactory
             .pager(
                 filter = filter,
                 query = searchQuery,

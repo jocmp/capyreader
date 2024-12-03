@@ -25,6 +25,7 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -322,13 +323,15 @@ fun ArticleLayout(
                             )
                         }
                     } else {
-                        ArticleList(
-                            articles = pagingArticles,
-                            selectedArticleKey = article?.id,
-                            listState = listState,
-                            onMarkAllRead = onMarkAllRead,
-                            onSelect = { selectArticle(it) },
-                        )
+                        key(filter) {
+                            ArticleList(
+                                articles = pagingArticles,
+                                selectedArticleKey = article?.id,
+                                listState = listState,
+                                onMarkAllRead = onMarkAllRead,
+                                onSelect = { selectArticle(it) },
+                            )
+                        }
                     }
                 }
             }
