@@ -1,7 +1,7 @@
 package com.capyreader.app.ui.articles
 
-import com.jocmp.capy.Account
 import com.capyreader.app.common.AppPreferences
+import com.jocmp.capy.Account
 import com.jocmp.capy.articles.ArticleRenderer
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.parameter.parametersOf

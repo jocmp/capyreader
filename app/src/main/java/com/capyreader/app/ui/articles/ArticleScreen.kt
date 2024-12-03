@@ -6,6 +6,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.components.ArticleSearch
@@ -26,6 +27,7 @@ fun ArticleScreen(
     val statusCount by viewModel.statusCount.collectAsStateWithLifecycle(initialValue = 0)
     val filter by viewModel.filter.collectAsStateWithLifecycle(appPreferences.filter.get())
     val searchQuery by viewModel.searchQuery.collectAsState(initial = null)
+    val articles = viewModel.articles.collectAsLazyPagingItems()
 
     val fullContent = rememberFullContent(viewModel)
     val articleActions = rememberArticleActions(viewModel)
@@ -42,7 +44,7 @@ fun ArticleScreen(
             feeds = feeds,
             allFolders = allFolders,
             allFeeds = allFeeds,
-            articles = viewModel.articles,
+            pagingArticles = articles,
             article = viewModel.article,
             statusCount = statusCount,
             refreshInterval = appPreferences.refreshInterval.get(),
