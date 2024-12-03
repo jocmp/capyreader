@@ -371,7 +371,7 @@ fun ArticleLayout(
                 )
 
                 LaunchedEffect(article.id, indexedArticles.index) {
-                    if (!compact) {
+                    if (!(compact || search.isActive)) {
                         scrollToArticle(indexedArticles.index)
                     }
                 }
