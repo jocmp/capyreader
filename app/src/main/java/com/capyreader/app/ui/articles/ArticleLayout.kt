@@ -42,7 +42,6 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.paging.PagingData
-import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.R
 import com.capyreader.app.common.Media
@@ -117,7 +116,7 @@ fun ArticleLayout(
     val scaffoldNavigator = rememberListDetailPaneScaffoldNavigator()
     var isRefreshing by remember { mutableStateOf(false) }
     val pagingArticles = articles.collectAsLazyPagingItems(Dispatchers.IO)
-    val listState = rememberArticleListState(pagingArticles)
+    val listState = rememberArticleListState(filter)
     val snackbarHost = remember { SnackbarHostState() }
     val addFeedSuccessMessage = stringResource(R.string.add_feed_success)
     val currentFeed = findCurrentFeed(filter, allFeeds)
@@ -469,8 +468,8 @@ fun findCurrentFeed(filter: ArticleFilter, feeds: List<Feed>): Feed? {
 
 
 @Composable
-fun rememberArticleListState(articles: LazyPagingItems<Article>): LazyListState {
-    return rememberSaveable(articles.itemCount, saver = LazyListState.Saver) {
+fun rememberArticleListState(filter: ArticleFilter): LazyListState {
+    return rememberSaveable(filter, saver = LazyListState.Saver) {
         LazyListState()
     }
 }
