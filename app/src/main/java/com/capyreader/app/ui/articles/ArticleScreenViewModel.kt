@@ -7,7 +7,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.sync.Sync
 import com.jocmp.capy.Account
@@ -17,10 +16,10 @@ import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
-import com.jocmp.capy.buildArticlePager
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.countAll
+import com.jocmp.capy.persistence.ArticlePagerFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
@@ -46,30 +45,17 @@ class ArticleScreenViewModel(
 
     private var _article by mutableStateOf<Article?>(null)
 
-    private val articlesSince = MutableStateFlow<OffsetDateTime>(OffsetDateTime.now())
+    val articlesSince = MutableStateFlow<OffsetDateTime>(OffsetDateTime.now())
 
     private var _showUnauthorizedMessage by mutableStateOf(UnauthorizedMessageState.HIDE)
 
-    private val unreadSort = appPreferences.articleListOptions.unreadSort.stateIn(viewModelScope)
+    val unreadSort = appPreferences.articleListOptions.unreadSort.stateIn(viewModelScope)
+
+    val articlePagerFactory = ArticlePagerFactory(account.database)
 
     private val _counts = filter.flatMapLatest { latestFilter ->
         account.countAll(latestFilter.status)
     }
-
-    val articles: Flow<PagingData<Article>> =
-        combine(
-            filter,
-            _searchQuery,
-            articlesSince,
-            unreadSort
-        ) { filter, query, since, sort ->
-            account.buildArticlePager(
-                filter = filter,
-                query = query,
-                unreadSort = sort,
-                since = since
-            ).flow
-        }.flatMapLatest { it }
 
     val folders: Flow<List<Folder>> = combine(
         account.folders,

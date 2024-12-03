@@ -6,7 +6,7 @@ import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.persistence.ArticlePagerFactory
 import java.time.OffsetDateTime
 
-fun Account.buildArticlePager(
+fun ArticlePagerFactory.pager(
     filter: ArticleFilter,
     query: String? = null,
     unreadSort: UnreadSortOrder,
@@ -18,7 +18,7 @@ fun Account.buildArticlePager(
             prefetchDistance = 10,
         ),
         pagingSourceFactory = {
-            ArticlePagerFactory(database).find(
+            find(
                 filter = filter,
                 query = query,
                 unreadSort = unreadSort,

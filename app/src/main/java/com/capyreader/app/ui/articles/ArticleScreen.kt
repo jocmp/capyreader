@@ -6,10 +6,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.rememberLocalConnectivity
+import com.jocmp.capy.pager
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
 
@@ -26,10 +28,31 @@ fun ArticleScreen(
     val statusCount by viewModel.statusCount.collectAsStateWithLifecycle(initialValue = 0)
     val filter by viewModel.filter.collectAsStateWithLifecycle(appPreferences.filter.get())
     val searchQuery by viewModel.searchQuery.collectAsState(initial = null)
+    val unreadSort by viewModel.unreadSort.collectAsStateWithLifecycle()
+    val since by viewModel.articlesSince.collectAsStateWithLifecycle()
 
     val fullContent = rememberFullContent(viewModel)
     val articleActions = rememberArticleActions(viewModel)
     val connectivity = rememberLocalConnectivity()
+
+    val pager = remember(
+        filter,
+        searchQuery,
+        unreadSort,
+        since
+    ) {
+       viewModel.articlePagerFactory
+            .pager(
+                filter = filter,
+                query = searchQuery,
+                unreadSort = unreadSort,
+                since = since,
+            )
+    }
+
+    val pagingArticles = pager
+        .flow
+        .collectAsLazyPagingItems()
 
     CompositionLocalProvider(
         LocalFullContent provides fullContent,
@@ -42,7 +65,7 @@ fun ArticleScreen(
             feeds = feeds,
             allFolders = allFolders,
             allFeeds = allFeeds,
-            articles = viewModel.articles,
+            pagingArticles = pagingArticles,
             article = viewModel.article,
             statusCount = statusCount,
             refreshInterval = appPreferences.refreshInterval.get(),
