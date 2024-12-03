@@ -7,10 +7,9 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -40,9 +39,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.paging.PagingData
-import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.LazyPagingItems
 import com.capyreader.app.R
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.Saver
@@ -55,8 +52,6 @@ import com.capyreader.app.ui.articles.list.FeedListTopBar
 import com.capyreader.app.ui.articles.media.ArticleMediaView
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.rememberWebViewState
-import com.capyreader.app.ui.fixtures.FeedSample
-import com.capyreader.app.ui.fixtures.FolderPreviewFixture
 import com.capyreader.app.ui.isCompact
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
@@ -65,10 +60,7 @@ import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.common.launchUI
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 
 @OptIn(
@@ -82,7 +74,7 @@ fun ArticleLayout(
     feeds: List<Feed>,
     allFeeds: List<Feed>,
     allFolders: List<Folder>,
-    articles: Flow<PagingData<Article>>,
+    pagingArticles: LazyPagingItems<Article>,
     article: Article?,
     search: ArticleSearch,
     statusCount: Long,
@@ -115,8 +107,7 @@ fun ArticleLayout(
     val coroutineScope = rememberCoroutineScope()
     val scaffoldNavigator = rememberListDetailPaneScaffoldNavigator()
     var isRefreshing by remember { mutableStateOf(false) }
-    val pagingArticles = articles.collectAsLazyPagingItems(Dispatchers.IO)
-    val listState = rememberArticleListState(filter)
+    val listState = rememberLazyListState()
     val snackbarHost = remember { SnackbarHostState() }
     val addFeedSuccessMessage = stringResource(R.string.add_feed_success)
     val currentFeed = findCurrentFeed(filter, allFeeds)
@@ -127,6 +118,7 @@ fun ArticleLayout(
         onUnauthorizedDismissRequest()
         setUpdatePasswordDialogOpen(true)
     }
+    var listVisible by remember { mutableStateOf(true) }
 
     suspend fun navigateToDetail() {
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
@@ -160,7 +152,6 @@ fun ArticleLayout(
 
     val refreshPagination = {
         coroutineScope.launch {
-            pagingArticles.refresh()
             resetScrollBehaviorOffset()
         }
     }
@@ -177,11 +168,26 @@ fun ArticleLayout(
         }
     }
 
-    val openNextList = suspend {
-        scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
+    suspend fun openNextStatus(action: suspend () -> Unit) {
+        listVisible = false
         delay(200)
-        drawerState.close()
-        refreshPagination()
+        action()
+        scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
+        resetScrollBehaviorOffset()
+
+        coroutineScope.launch {
+            delay(500)
+            if (!listVisible) {
+                listVisible = true
+            }
+        }
+    }
+
+    fun openNextList(action: suspend () -> Unit) {
+        coroutineScope.launchUI {
+            openNextStatus(action)
+            drawerState.close()
+        }
     }
 
     val toggleDrawer = {
@@ -212,8 +218,7 @@ fun ArticleLayout(
 
     val onFeedAdded = { feedID: String ->
         coroutineScope.launch {
-            onSelectFeed(feedID)
-            openNextList()
+            openNextList { onSelectFeed(feedID) }
 
             showSnackbar(addFeedSuccessMessage)
         }
@@ -242,10 +247,7 @@ fun ArticleLayout(
                 feeds = feeds,
                 onSelectFolder = {
                     if (!filter.isFolderSelect(it)) {
-                        onSelectFolder(it.title)
-                        coroutineScope.launch {
-                            openNextList()
-                        }
+                        openNextList { onSelectFolder(it.title) }
                     } else {
                         closeDrawer()
                     }
@@ -253,8 +255,7 @@ fun ArticleLayout(
                 onSelectFeed = {
                     coroutineScope.launch {
                         if (!filter.isFeedSelected(it)) {
-                            onSelectFeed(it.id)
-                            openNextList()
+                            openNextList { onSelectFeed(it.id) }
                         } else {
                             closeDrawer()
                         }
@@ -264,10 +265,7 @@ fun ArticleLayout(
                 onNavigateToSettings = onNavigateToSettings,
                 onFilterSelect = {
                     if (!filter.hasArticlesSelected()) {
-                        onSelectArticleFilter()
-                        coroutineScope.launch {
-                            openNextList()
-                        }
+                        openNextList { onSelectArticleFilter() }
                     } else {
                         closeDrawer()
                     }
@@ -275,8 +273,9 @@ fun ArticleLayout(
                 filter = filter,
                 statusCount = statusCount,
                 onSelectStatus = {
-                    onSelectStatus(it)
-                    refreshPagination()
+                    coroutineScope.launchUI {
+                        openNextStatus { onSelectStatus(it) }
+                    }
                 }
             )
         },
@@ -341,13 +340,20 @@ fun ArticleLayout(
                             )
                         }
                     } else {
-                        ArticleList(
-                            articles = pagingArticles,
-                            selectedArticleKey = article?.id,
-                            listState = listState,
-                            onMarkAllRead = onMarkAllRead,
-                            onSelect = { selectArticle(it) },
-                        )
+                        AnimatedVisibility(
+                            listVisible,
+                            enter = fadeIn(),
+                            exit = fadeOut(),
+                            modifier = Modifier.fillMaxSize(),
+                        ) {
+                            ArticleList(
+                                articles = pagingArticles,
+                                selectedArticleKey = article?.id,
+                                listState = listState,
+                                onMarkAllRead = onMarkAllRead,
+                                onSelect = { selectArticle(it) },
+                            )
+                        }
                     }
                 }
             }
@@ -446,6 +452,13 @@ fun ArticleLayout(
     ) {
         toggleDrawer()
     }
+
+    LaunchedEffect(pagingArticles.itemCount) {
+        if (!listVisible) {
+            listState.scrollToItem(0)
+            listVisible = true
+        }
+    }
 }
 
 fun isFeedActive(
@@ -466,14 +479,6 @@ fun findCurrentFeed(filter: ArticleFilter, feeds: List<Feed>): Feed? {
     return null
 }
 
-
-@Composable
-fun rememberArticleListState(filter: ArticleFilter): LazyListState {
-    return rememberSaveable(filter, saver = LazyListState.Saver) {
-        LazyListState()
-    }
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun rememberArticleTopBar(filter: ArticleFilter): TopAppBarScrollBehavior {
@@ -486,41 +491,4 @@ fun rememberArticleTopBar(filter: ArticleFilter): TopAppBarScrollBehavior {
     }
 
     return pinnedScrollBehavior(state)
-}
-
-@Preview
-@Composable
-fun ArticleLayoutPreview() {
-    val folders = FolderPreviewFixture().values.take(2).toList()
-    val feeds = FeedSample().values.take(2).toList()
-
-    MaterialTheme {
-        ArticleLayout(
-            filter = ArticleFilter.default(),
-            folders = folders,
-            feeds = feeds,
-            allFolders = emptyList(),
-            allFeeds = emptyList(),
-            articles = emptyFlow(),
-            search = ArticleSearch(),
-            article = null,
-            statusCount = 30,
-            refreshInterval = RefreshInterval.MANUALLY_ONLY,
-            onFeedRefresh = {},
-            onSelectFolder = {},
-            onSelectFeed = {},
-            onSelectArticleFilter = { },
-            onSelectStatus = {},
-            onSelectArticle = {},
-            onNavigateToSettings = { },
-            onRequestClearArticle = { },
-            onToggleArticleRead = { },
-            onToggleArticleStar = { },
-            onMarkAllRead = { },
-            onRemoveFeed = { _, _, _ -> },
-            drawerValue = DrawerValue.Open,
-            showUnauthorizedMessage = false,
-            onUnauthorizedDismissRequest = {},
-        )
-    }
 }

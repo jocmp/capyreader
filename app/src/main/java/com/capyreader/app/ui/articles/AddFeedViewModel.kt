@@ -1,16 +1,17 @@
 package com.capyreader.app.ui.articles
 
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.jocmp.capy.Account
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.FeedOption
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.jocmp.capy.common.launchIO
 
-class AddFeedStateHolder(
+class AddFeedViewModel(
     val account: Account
-) {
+): ViewModel() {
     private val _result = mutableStateOf<AddFeedResult?>(null)
     private val _loading = mutableStateOf(false)
 
@@ -30,11 +31,11 @@ class AddFeedStateHolder(
             } ?: emptyList()
         }
 
-    suspend fun addFeed(
+    fun addFeed(
         url: String,
         onComplete: (feed: Feed) -> Unit,
     ) {
-        withContext(Dispatchers.IO) {
+        viewModelScope.launchIO {
             _loading.value = true
 
             val result = account.addFeed(url = url)

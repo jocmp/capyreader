@@ -151,8 +151,6 @@ class ArticleScreenViewModel(
             account.markAllRead(articleIDs).onFailure {
                 Sync.markReadAsync(articleIDs, context)
             }
-
-            updateArticlesSince()
         }
     }
 
