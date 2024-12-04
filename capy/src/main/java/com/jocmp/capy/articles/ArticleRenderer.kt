@@ -52,7 +52,8 @@ class ArticleRenderer(
 
             HtmlPostProcessor.clean(contentHTML, hideImages = hideImages)
 
-            document.getElementById("article-body-content")?.append(parseHtml(article, contentHTML))
+            document.getElementById("article-body-content")
+                ?.append(parseHtml(article, contentHTML, hideImages = hideImages))
         } else {
             document.getElementById("article-body-content")?.append(article.content)
 
