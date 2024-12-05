@@ -105,7 +105,7 @@ fun ArticleLayout(
     }
     val drawerState = rememberDrawerState(drawerValue)
     val coroutineScope = rememberCoroutineScope()
-    val scaffoldNavigator = rememberListDetailPaneScaffoldNavigator()
+    val scaffoldNavigator = rememberArticleScaffoldNavigator()
     var isRefreshing by remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
     val snackbarHost = remember { SnackbarHostState() }
