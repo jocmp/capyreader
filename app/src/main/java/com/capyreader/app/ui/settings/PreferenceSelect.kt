@@ -62,7 +62,16 @@ fun <T> PreferenceSelect(
             DialogCard {
                 Column(
                     Modifier.verticalScroll(rememberScrollState())
+                        .padding(bottom = 16.dp)
                 ) {
+                    Text(
+                        stringResource(label),
+                        style = typography.headlineSmall,
+                        modifier = Modifier
+                            .padding(top = 24.dp, bottom = 8.dp)
+                            .padding(horizontal = 24.dp)
+                    )
+
                     options.forEach { option ->
                         val isSelected = selected == option
 
@@ -78,7 +87,7 @@ fun <T> PreferenceSelect(
                                     },
                                     role = Role.RadioButton
                                 )
-                                .padding(horizontal = 16.dp),
+                                .padding(horizontal = 24.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             RadioButton(selected = isSelected, onClick = null)

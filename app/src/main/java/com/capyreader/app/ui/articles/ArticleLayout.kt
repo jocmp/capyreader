@@ -19,7 +19,6 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.TopAppBarState
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
-import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -359,7 +358,7 @@ fun ArticleLayout(
             }
         },
         detailPane = {
-            if (article == null && !isCompact()) {
+            if (article == null && scaffoldNavigator.scaffoldDirective.maxHorizontalPartitions > 1) {
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier

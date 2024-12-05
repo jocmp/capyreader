@@ -64,6 +64,9 @@ class AppPreferences(context: Context) {
     val enableHighContrastDarkTheme: Preference<Boolean>
         get() = preferenceStore.getBoolean("enable_high_contrast_dark_theme", false)
 
+    val layout: Preference<LayoutPreference>
+        get() = preferenceStore.getEnum("layout_preference", LayoutPreference.RESPONSIVE)
+
     fun clearAll() {
         preferenceStore.clearAll()
     }
@@ -91,7 +94,10 @@ class AppPreferences(context: Context) {
             )
 
         val imageVisibility: Preference<ReaderImageVisibility>
-            get() = preferenceStore.getEnum("article_image_visibility", ReaderImageVisibility.ALWAYS_SHOW)
+            get() = preferenceStore.getEnum(
+                "article_image_visibility",
+                ReaderImageVisibility.ALWAYS_SHOW
+            )
 
         val enablePagingTapGesture: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_enable_paging_tap_gesture", false)

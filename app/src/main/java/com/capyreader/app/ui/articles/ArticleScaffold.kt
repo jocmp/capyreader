@@ -9,29 +9,28 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
-import androidx.compose.material3.adaptive.WindowAdaptiveInfo
-import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.layout.AnimatedPane
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffold
 import androidx.compose.material3.adaptive.layout.PaneScaffoldDirective
 import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
 import androidx.compose.material3.adaptive.layout.calculateListDetailPaneScaffoldMotion
-import androidx.compose.material3.adaptive.layout.calculatePaneScaffoldDirective
 import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.window.core.layout.WindowHeightSizeClass.Companion.MEDIUM
-import androidx.window.core.layout.WindowSizeClass
+import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.common.LayoutPreference
+import com.capyreader.app.common.asState
 import com.capyreader.app.ui.FadePaneMotion
 import com.capyreader.app.ui.components.safeEdgePadding
 import com.capyreader.app.ui.isAtMostMedium
 import com.capyreader.app.ui.theme.CapyTheme
+import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
@@ -80,17 +79,23 @@ fun ArticleScaffold(
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
-fun rememberArticleScaffoldNavigator(): ThreePaneScaffoldNavigator<Any> {
-    return rememberListDetailPaneScaffoldNavigator(
-        scaffoldDirective = PaneScaffoldDirective(
-            maxHorizontalPartitions = 1,
-            horizontalPartitionSpacerSize = 0.dp,
-            maxVerticalPartitions = 1,
-            verticalPartitionSpacerSize = 0.dp,
-            defaultPanePreferredWidth = 360.dp,
-            emptyList(),
+fun rememberArticleScaffoldNavigator(appPreferences: AppPreferences = koinInject()): ThreePaneScaffoldNavigator<Any> {
+    val layout by appPreferences.layout.asState()
+
+    if (layout == LayoutPreference.SINGLE) {
+        return rememberListDetailPaneScaffoldNavigator(
+            scaffoldDirective = PaneScaffoldDirective(
+                maxHorizontalPartitions = 1,
+                horizontalPartitionSpacerSize = 0.dp,
+                maxVerticalPartitions = 1,
+                verticalPartitionSpacerSize = 0.dp,
+                defaultPanePreferredWidth = 360.dp,
+                emptyList(),
+            )
         )
-    )
+    }
+
+    return rememberListDetailPaneScaffoldNavigator()
 }
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
