@@ -94,6 +94,17 @@ fun DisplaySettingsPanelView(
                 )
             }
         }
+        FormSection {
+            PreferenceSelect(
+                selected = layout,
+                update = updateLayoutPreference,
+                options = LayoutPreference.entries,
+                label = R.string.layout_preference_label,
+                optionText = {
+                    stringResource(it.translationKey)
+                }
+            )
+        }
         FormSection(
             title = stringResource(R.string.settings_reader_title)
         ) {
@@ -122,17 +133,7 @@ fun DisplaySettingsPanelView(
                 options = articleListOptions
             )
         }
-        FormSection {
-            PreferenceSelect(
-                selected = layout,
-                update = updateLayoutPreference,
-                options = LayoutPreference.entries,
-                label = R.string.layout_preference_label,
-                optionText = {
-                    stringResource(it.translationKey)
-                }
-            )
-        }
+
         Spacer(Modifier.height(16.dp))
     }
 }
