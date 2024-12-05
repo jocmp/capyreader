@@ -3,6 +3,7 @@ package com.jocmp.capy
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.persistence.ArticleRecords
+import com.jocmp.capy.persistence.FeedRecords
 
 object InMemoryDatabaseProvider : DatabaseProvider {
     override fun build(accountID: String): Database {
@@ -16,5 +17,9 @@ object InMemoryDatabaseProvider : DatabaseProvider {
 }
 
 internal fun Database.reload(article: Article) = ArticleRecords(this).reload(article)
+
+internal fun Database.reload(feed: Feed) = FeedRecords(this).reload(feed)
+
+internal fun FeedRecords.reload(feed: Feed) = findBy(feed.id)!!
 
 internal fun ArticleRecords.reload(article: Article) = find(article.id)

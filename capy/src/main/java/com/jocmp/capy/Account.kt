@@ -217,6 +217,10 @@ data class Account(
         OPMLImporter(this).import(onProgress, inputStream)
     }
 
+    fun isFullContentEnabled(feedID: String): Boolean {
+        return feedRecords.isFullContentEnabled(feedID = feedID)
+    }
+
     fun enableStickyContent(feedID: String) {
         feedRecords.updateStickyFullContent(enabled = true, feedID = feedID)
     }

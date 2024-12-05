@@ -376,8 +376,8 @@ class ArticleScreenViewModel(
     fun fetchFullContentAsync(article: Article? = _article) {
         article ?: return
 
-        viewModelScope.launch(Dispatchers.IO) {
-            if (enableStickyFullContent && !article.enableStickyFullContent) {
+        viewModelScope.launchIO {
+            if (enableStickyFullContent && !account.isFullContentEnabled(feedID = article.feedID)) {
                 account.enableStickyContent(article.feedID)
             }
 
