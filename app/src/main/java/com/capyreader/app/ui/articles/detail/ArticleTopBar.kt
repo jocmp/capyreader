@@ -36,7 +36,6 @@ import com.capyreader.app.ui.articles.FullContentLoadingIcon
 import com.capyreader.app.ui.components.TopBarTooltip
 import com.capyreader.app.ui.fixtures.ArticleSample
 import com.capyreader.app.ui.fixtures.InjectedCapyTheme
-import com.capyreader.app.ui.isAtMostMedium
 import com.jocmp.capy.Article
 import com.jocmp.capy.Article.FullContentState.LOADED
 import com.jocmp.capy.Article.FullContentState.LOADING
@@ -172,12 +171,6 @@ fun extractIcon(fullContentState: Article.FullContentState) = when (fullContentS
 
 @Composable
 fun ArticleNavigationIcon(onClick: () -> Unit) {
-    val showIcon = isAtMostMedium()
-
-    if (!showIcon) {
-        return
-    }
-
     IconButton(
         onClick = {
             onClick()

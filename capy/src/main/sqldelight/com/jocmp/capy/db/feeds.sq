@@ -56,6 +56,9 @@ updateFavicon:
 UPDATE feeds SET
 favicon_url = :faviconURL WHERE feeds.id = :feedID;
 
+isFullContentEnabled:
+SELECT enable_sticky_full_content FROM feeds WHERE feeds.id = :feedID LIMIT 1;
+
 updateStickyFullContent:
 UPDATE feeds SET enable_sticky_full_content = :enabled WHERE feeds.id = :feedID;
 

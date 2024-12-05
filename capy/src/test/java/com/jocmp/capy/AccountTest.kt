@@ -5,6 +5,7 @@ import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.fixtures.AccountFixture
 import com.jocmp.capy.fixtures.ArticleFixture
+import com.jocmp.capy.fixtures.FeedFixture
 import io.mockk.coEvery
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -12,8 +13,10 @@ import org.junit.Rule
 import org.junit.rules.TemporaryFolder
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 class AccountTest {
     @JvmField
@@ -161,5 +164,16 @@ class AccountTest {
         val result = unreadArticleIDs.takeLast(2)
 
         assertEquals(result, ids)
+    }
+
+    @Test
+    fun `it enables full content mode`() {
+        val feed = FeedFixture(account.database).create()
+
+        assertFalse(account.isFullContentEnabled(feed.id))
+
+        account.enableStickyContent(feed.id)
+
+        assertTrue(account.isFullContentEnabled(feed.id))
     }
 }

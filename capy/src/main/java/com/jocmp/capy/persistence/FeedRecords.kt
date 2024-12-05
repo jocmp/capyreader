@@ -2,7 +2,6 @@ package com.jocmp.capy.persistence
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
-import app.cash.sqldelight.coroutines.mapToOneNotNull
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.db.Database
@@ -12,11 +11,8 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlin.coroutines.coroutineContext
 
 internal class FeedRecords(private val database: Database) {
-    suspend fun findBy(id: String): Feed? {
-        return database.feedsQueries.findBy(id, mapper = ::feedMapper)
-            .asFlow()
-            .mapToOneNotNull(coroutineContext)
-            .firstOrNull()
+    fun findBy(id: String): Feed? {
+        return database.feedsQueries.findBy(id, mapper = ::feedMapper).executeAsOneOrNull()
     }
 
     suspend fun upsert(
@@ -48,6 +44,10 @@ internal class FeedRecords(private val database: Database) {
 
     fun clearFavicon(feedID: String) {
         database.feedsQueries.updateFavicon(faviconURL = null, feedID = feedID)
+    }
+
+    fun isFullContentEnabled(feedID: String): Boolean {
+        return database.feedsQueries.isFullContentEnabled(feedID).executeAsOneOrNull() ?: false
     }
 
     fun updateStickyFullContent(feedID: String, enabled: Boolean) {
@@ -86,7 +86,7 @@ internal class FeedRecords(private val database: Database) {
         return Folder(title = title, feeds = feeds)
     }
 
-     internal fun feeds(): Flow<List<Feed>> {
+    internal fun feeds(): Flow<List<Feed>> {
         return database.feedsQueries
             .tagged(mapper = ::feedMapper)
             .asFlow()
