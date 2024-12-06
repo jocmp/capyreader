@@ -4,9 +4,8 @@ FASTLANE ?= bundle exec fastlane
 
 .PHONY: test release-secrets deploy-production
 
-.PHONY: assets
 assets:
-	cd article_forge && make
+	$(MAKE) -C article_forge clean build
 
 .PHONY: deps
 deps: ## Install bumpver
