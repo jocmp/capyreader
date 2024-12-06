@@ -10,6 +10,7 @@ import com.jocmp.capy.accounts.asOPML
 import com.jocmp.capy.accounts.feedbin.FeedbinAccountDelegate
 import com.jocmp.capy.accounts.feedbin.FeedbinOkHttpClient
 import com.jocmp.capy.accounts.reader.buildReaderDelegate
+import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.sortedByTitle
@@ -23,6 +24,7 @@ import com.jocmp.feedbinclient.Feedbin
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import okhttp3.OkHttpClient
 import java.io.InputStream
 import java.net.URI
 import java.time.ZonedDateTime
@@ -35,10 +37,11 @@ data class Account(
     val preferences: AccountPreferences,
     val source: Source = Source.LOCAL,
     val faviconFetcher: FaviconFetcher,
+    private val localHttpClient: OkHttpClient = LocalOkHttpClient.forAccount(path = cacheDirectory),
     val delegate: AccountDelegate = when (source) {
         Source.LOCAL -> LocalAccountDelegate(
             database = database,
-            httpClient = LocalOkHttpClient.forAccount(path = cacheDirectory),
+            httpClient = localHttpClient,
             faviconFetcher = faviconFetcher,
         )
 
@@ -60,6 +63,8 @@ data class Account(
     internal val articleRecords: ArticleRecords = ArticleRecords(database)
 
     private val feedRecords: FeedRecords = FeedRecords(database)
+
+    private val articleContent = ArticleContent(httpClient = localHttpClient)
 
     val allFeeds = feedRecords.feeds().map {
         it.sortedByTitle()
@@ -202,7 +207,9 @@ data class Account(
     }
 
     suspend fun fetchFullContent(article: Article): Result<String> {
-        return delegate.fetchFullContent(article)
+        article.url ?: return Result.failure(Error("No article url found"))
+
+        return articleContent.fetch(article.url)
     }
 
     suspend fun opmlDocument(): String {

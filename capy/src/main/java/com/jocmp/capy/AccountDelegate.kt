@@ -27,6 +27,4 @@ interface AccountDelegate {
     ): Result<Feed>
 
     suspend fun removeFeed(feed: Feed): Result<Unit>
-
-    suspend fun fetchFullContent(article: Article): Result<String>
 }
