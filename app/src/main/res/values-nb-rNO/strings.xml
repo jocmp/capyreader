@@ -152,7 +152,7 @@
     <string name="settings_article_list_feed_name">Kanalnavn</string>
     <string name="settings_article_list_feed_icons">Kanalikoner</string>
     <string name="settings_about_title">Om</string>
-    <string name="settings_auto_delete_articles_title">Behold artikler</string>
+    <string name="settings_auto_delete_articles_title">Behold leste artikler</string>
     <string name="settings_auto_delete_option_keep_forever">For alltid</string>
     <string name="image_error_text">Feil ved lasting av bilde</string>
     <string name="settings_option_auto_delete_articles_title">Automatisk sletting av artikler</string>
@@ -175,4 +175,33 @@
     <string name="edit_feed_tags_section">Etiketter</string>
     <string name="edit_feed_tag_section">Etikett</string>
     <string name="settings_confirm_mark_all_read">Bekreft markering av alle som lest</string>
+    <string name="article_list_row_swipe_toggle_read">Veksle lest</string>
+    <string name="article_list_row_swipe_toggle_starred">Veksle stjernemerking</string>
+    <string name="settings_mark_read_on_scroll">Merk som lest ved skrolling</string>
+    <string name="settings_section_mark_all_as_read">Marker alle som lest</string>
+    <string name="article_list_unread_sort_title">Rekkefølge av artikler som skal leses</string>
+    <string name="settings_section_browser">Nettleser</string>
+    <string name="reader_image_visibility_show_on_wifi">Kun vis bilder på Wi-Fi</string>
+    <string name="reader_image_visibility_always_hide">Blokker bilder</string>
+    <string name="reader_image_visibility_always_show">Vis alltid bilder</string>
+    <string name="reader_image_visibility_label">Bilder</string>
+    <string name="filter_starred">Stjernemerket</string>
+    <string name="article_view_star">Stjernemerk</string>
+    <string name="article_view_unstar">Fjern stjernemerke</string>
+    <string name="unsubscribe_error">Kunne ikke stoppe abonnement av kanal</string>
+    <string name="article_actions_open_menu">Åpne artikkelhandlinger</string>
+    <string name="article_actions_mark_below_as_read">Merk alle under som lest</string>
+    <string name="article_actions_mark_after_as_read">Merk alle over som lest</string>
+    <string name="settings_option_full_content_subtitle">Husk valg for å laste hele artikkelens innhold</string>
+    <string name="settings_option_auto_delete_articles_subtitle">Slett leste artikler uten stjernemerke som er eldre enn tre måneder</string>
+    <string name="settings_option_full_content_title">Husk full visning av innholdet</string>
+    <string name="settings_clear_all_articles_text">Er du sikker på at du vil slette alle leste artikler uten stjernemerke fra enheten din? Denne handlingen kan ikke angres.</string>
+    <string name="settings_gestures_list_back_navigation_action">Handling for tilbakenavigering</string>
+    <string name="settings_notifications_select_none">Velg ingen</string>
+    <string name="settings_gestures_reader_tap_to_page_title">Trykkskrolling for e-ink</string>
+    <string name="settings_gestures_reader_tap_to_page_subtitle">Trykk nedre hjørner for å navigere i artikkelinnhold</string>
+    <plurals name="refresh_hours">
+        <item quantity="one">Hver time</item>
+        <item quantity="other">Hver %d. time</item>
+    </plurals>
 </resources>
