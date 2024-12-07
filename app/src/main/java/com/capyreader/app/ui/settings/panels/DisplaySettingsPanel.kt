@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.common.ImagePreview
+import com.capyreader.app.common.LayoutPreference
 import com.capyreader.app.common.ReaderImageVisibility
 import com.capyreader.app.common.RowItem
 import com.capyreader.app.common.ThemeOption
@@ -37,6 +38,8 @@ fun DisplaySettingsPanel(
         pinArticleBars = viewModel.pinArticleBars,
         updateImageVisibility = viewModel::updateImageVisibility,
         imageVisibility = viewModel.imageVisibility,
+        layout = viewModel.layout,
+        updateLayoutPreference = viewModel::updateLayoutPreference,
         articleListOptions = ArticleListOptions(
             imagePreview = viewModel.imagePreview,
             showSummary = viewModel.showSummary,
@@ -60,6 +63,8 @@ fun DisplaySettingsPanelView(
     updatePinArticleBars: (enable: Boolean) -> Unit,
     pinArticleBars: Boolean,
     imageVisibility: ReaderImageVisibility,
+    layout: LayoutPreference,
+    updateLayoutPreference: (layout: LayoutPreference) -> Unit,
     updateImageVisibility: (option: ReaderImageVisibility) -> Unit,
     theme: ThemeOption,
     articleListOptions: ArticleListOptions,
@@ -89,6 +94,17 @@ fun DisplaySettingsPanelView(
                 )
             }
         }
+        FormSection {
+            PreferenceSelect(
+                selected = layout,
+                update = updateLayoutPreference,
+                options = LayoutPreference.entries,
+                label = R.string.layout_preference_label,
+                optionText = {
+                    stringResource(it.translationKey)
+                }
+            )
+        }
         FormSection(
             title = stringResource(R.string.settings_reader_title)
         ) {
@@ -117,6 +133,7 @@ fun DisplaySettingsPanelView(
                 options = articleListOptions
             )
         }
+
         Spacer(Modifier.height(16.dp))
     }
 }
@@ -130,6 +147,8 @@ private fun DisplaySettingsPanelViewPreview() {
             theme = ThemeOption.SYSTEM_DEFAULT,
             enableHighContrastDarkTheme = true,
             updateHighContrastDarkTheme = {},
+            layout = LayoutPreference.RESPONSIVE,
+            updateLayoutPreference = {},
             articleListOptions = ArticleListOptions(
                 imagePreview = ImagePreview.default,
                 showSummary = true,

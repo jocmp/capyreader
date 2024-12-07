@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.ImagePreview
+import com.capyreader.app.common.LayoutPreference
 import com.capyreader.app.common.ReaderImageVisibility
 import com.capyreader.app.common.ThemeOption
 import com.capyreader.app.ui.articles.ArticleListFontScale
@@ -51,6 +52,9 @@ class DisplaySettingsViewModel(
     var imageVisibility by mutableStateOf(appPreferences.readerOptions.imageVisibility.get())
         private set
 
+    var layout by mutableStateOf(appPreferences.layout.get())
+        private set
+
     fun updateTheme(theme: ThemeOption) {
         appPreferences.theme.set(theme)
 
@@ -91,6 +95,12 @@ class DisplaySettingsViewModel(
         appPreferences.readerOptions.imageVisibility.set(option)
 
         this.imageVisibility = option
+    }
+
+    fun updateLayoutPreference(layout: LayoutPreference) {
+        appPreferences.layout.set(layout)
+
+        this.layout = layout
     }
 
     fun updateFeedIcons(show: Boolean) {

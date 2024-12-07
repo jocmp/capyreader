@@ -19,7 +19,6 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.TopAppBarState
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
-import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -52,7 +51,6 @@ import com.capyreader.app.ui.articles.list.FeedListTopBar
 import com.capyreader.app.ui.articles.media.ArticleMediaView
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.rememberWebViewState
-import com.capyreader.app.ui.isCompact
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
@@ -105,7 +103,8 @@ fun ArticleLayout(
     }
     val drawerState = rememberDrawerState(drawerValue)
     val coroutineScope = rememberCoroutineScope()
-    val scaffoldNavigator = rememberListDetailPaneScaffoldNavigator()
+    val scaffoldNavigator = rememberArticleScaffoldNavigator()
+    val hasMultipleColumns = scaffoldNavigator.scaffoldDirective.maxHorizontalPartitions > 1
     var isRefreshing by remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
     val snackbarHost = remember { SnackbarHostState() }
@@ -359,7 +358,7 @@ fun ArticleLayout(
             }
         },
         detailPane = {
-            if (article == null && !isCompact()) {
+            if (article == null && hasMultipleColumns) {
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier
@@ -368,7 +367,6 @@ fun ArticleLayout(
                     CapyPlaceholder()
                 }
             } else if (article != null) {
-                val compact = isCompact()
                 val indexedArticles =
                     rememberIndexedArticles(article = article, articles = pagingArticles)
 
@@ -393,7 +391,7 @@ fun ArticleLayout(
                 )
 
                 LaunchedEffect(article.id, indexedArticles.index) {
-                    if (!compact) {
+                    if (hasMultipleColumns) {
                         scrollToArticle(indexedArticles.index)
                     }
                 }

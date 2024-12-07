@@ -214,4 +214,7 @@
     <string name="reader_image_visibility_always_hide">Block images</string>
     <string name="reader_image_visibility_always_show">Always show images</string>
     <string name="reader_image_visibility_label">Images</string>
+    <string name="layout_preference_responsive">Responsive</string>
+    <string name="layout_preference_single">Single Column</string>
+    <string name="layout_preference_label">Preferred Layout</string>
 </resources>
