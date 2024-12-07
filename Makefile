@@ -4,8 +4,13 @@ FASTLANE ?= bundle exec fastlane
 
 .PHONY: test release-secrets deploy-production
 
+.PHONY: assets
 assets:
 	$(MAKE) -C article_forge clean build
+
+.PHONY: build-mercury
+build-mercury:
+	$(MAKE) -C article_forge build-mercury
 
 .PHONY: deps
 deps: ## Install bumpver
