@@ -1,13 +1,11 @@
 package com.jocmp.capy.accounts.reader
 
 import com.jocmp.capy.AccountDelegate
-import com.jocmp.capy.Article
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.ValidationError
 import com.jocmp.capy.accounts.feedbin.FeedbinAccountDelegate.Companion.MAX_CREATE_UNREAD_LIMIT
 import com.jocmp.capy.accounts.withErrorHandling
-import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.common.withResult
@@ -29,7 +27,6 @@ import com.jocmp.readerclient.ext.editSubscription
 import com.jocmp.readerclient.ext.streamItemsIDs
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import okhttp3.OkHttpClient
 import org.jsoup.Jsoup
 import retrofit2.Response
 import java.io.IOException
@@ -39,10 +36,8 @@ import java.util.concurrent.atomic.AtomicReference
 internal class ReaderAccountDelegate(
     private val database: Database,
     private val googleReader: GoogleReader,
-    httpClient: OkHttpClient = OkHttpClient(),
 ) : AccountDelegate {
     private var postToken = AtomicReference<String?>(null)
-    private val articleContent = ArticleContent(httpClient)
     private val articleRecords = ArticleRecords(database)
     private val feedRecords = FeedRecords(database)
     private val taggingRecords = TaggingRecords(database)
@@ -182,12 +177,6 @@ internal class ReaderAccountDelegate(
                 throw ValidationError(response.message())
             }
         }
-    }
-
-    override suspend fun fetchFullContent(article: Article): Result<String> {
-        article.url ?: return Result.failure(Error("No article url found"))
-
-        return articleContent.fetch(article.url)
     }
 
     private suspend fun refreshFeeds() {

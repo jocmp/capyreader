@@ -1,7 +1,6 @@
 package com.jocmp.capy.accounts.feedbin
 
 import com.jocmp.capy.AccountDelegate
-import com.jocmp.capy.Article
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.FeedOption
@@ -188,23 +187,6 @@ internal class FeedbinAccountDelegate(
         feedbin.deleteSubscription(subscriptionID = feed.subscriptionID)
 
         Unit
-    }
-
-    override suspend fun fetchFullContent(article: Article): Result<String> {
-        return try {
-            val url = article.extractedContentURL!!
-
-            val result = feedbin.fetchExtractedContent(url = url.toString())
-            val responseBody = result.body()
-
-            if (result.isSuccessful && responseBody != null) {
-                return Result.success(responseBody.content)
-            } else {
-                return Result.failure(Throwable("Error extracting article"))
-            }
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
     }
 
     private suspend fun refreshArticles(since: String = articleRecords.maxUpdatedAt().toString()) {

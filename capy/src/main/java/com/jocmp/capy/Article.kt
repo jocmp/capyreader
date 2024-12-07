@@ -27,7 +27,7 @@ data class Article(
 ) {
     val defaultContent = contentHTML.ifBlank { summary }
 
-    val parseFullContent = fullContent == FullContentState.LOADED && extractedContentURL == null
+    val parseFullContent = fullContent == FullContentState.LOADED
 
     enum class FullContentState {
         NONE,

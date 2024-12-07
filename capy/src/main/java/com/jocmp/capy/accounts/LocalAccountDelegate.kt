@@ -1,9 +1,7 @@
 package com.jocmp.capy.accounts
 
 import com.jocmp.capy.AccountDelegate
-import com.jocmp.capy.Article
 import com.jocmp.capy.Feed
-import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.TimeHelpers.published
 import com.jocmp.capy.common.transactionWithErrorHandling
@@ -28,7 +26,6 @@ class LocalAccountDelegate(
     private val faviconFetcher: FaviconFetcher,
     private val feedFinder: FeedFinder = DefaultFeedFinder(httpClient),
 ) : AccountDelegate {
-    private val articleContent = ArticleContent(httpClient)
     private val feedRecords = FeedRecords(database)
     private val taggingRecords = TaggingRecords(database)
 
@@ -122,12 +119,6 @@ class LocalAccountDelegate(
         taggingRecords.deleteTaggings(ids)
 
         return Result.success(Unit)
-    }
-
-    override suspend fun fetchFullContent(article: Article): Result<String> {
-        article.url ?: return Result.failure(Error("No article url found"))
-
-        return articleContent.fetch(article.url)
     }
 
     private suspend fun refreshFeeds(cutoffDate: ZonedDateTime?) {

@@ -1,15 +1,48 @@
+
 STYLE_OUT =  ./dist/stylesheet.css
-STYLE_DEST ?= ../capy/src/main/assets/stylesheet.css
+STYLE_RES ?= ../capy/src/main/assets/stylesheet.css
 TEMPLATE_OUT = ./dist/template.html
-TEMPLATE_DEST ?= ../capy/src/main/res/raw/template.html
-CUSTOM_EXTRACTOR_JS_DEST := ../capy/src/main/assets/custom-extractors.js
-MEDIA_LISTENERS_JS_DEST := ../capy/src/main/assets/media.js
+TEMPLATE_RES ?= ../capy/src/main/res/raw/template.html
+MEDIA_LISTENERS_JS_SRC = ./public/assets/media.js
+CUSTOM_EXTRACTOR_JS_RES := ../capy/src/main/assets/custom-extractors.js
+MEDIA_LISTENERS_JS_RES := ../capy/src/main/assets/media.js
+MERCURY_JS_RES = ../capy/src/main/assets/mercury-parser.js
 
 SHELL:=/usr/bin/env bash
 
 .PHONY: forge clean
 
-build: $(TEMPLATE_DEST) $(STYLE_DEST) $(MEDIA_LISTENERS_JS_DEST) $(CUSTOM_EXTRACTOR_JS_DEST)
+build: $(TEMPLATE_RES) $(STYLE_RES) $(MERCURY_JS_RES) $(MEDIA_LISTENERS_JS_RES) $(CUSTOM_EXTRACTOR_JS_RES)
+
+$(STYLE_OUT): style/stylesheet.scss
+	@echo "Style..."
+	ruby ./script/generate-android-style
+
+$(STYLE_RES): $(STYLE_OUT)
+	cp $(STYLE_OUT) $(STYLE_RES)
+
+$(TEMPLATE_OUT): ./views/template.liquid
+	@echo "Template..."
+	ruby ./script/generate-android-template
+
+$(TEMPLATE_RES): $(TEMPLATE_OUT)
+	cp $(TEMPLATE_OUT) $(TEMPLATE_RES)
+
+$(CUSTOM_EXTRACTOR_JS_RES): ./public/assets/custom-extractors.js
+	@echo 'Custom extractors...'
+	cp ./public/assets/custom-extractors.js $(CUSTOM_EXTRACTOR_JS_RES)
+
+$(MEDIA_LISTENERS_JS_RES): $(MEDIA_LISTENERS_JS_SRC)
+	@echo 'Media script...'
+	cp $(MEDIA_LISTENERS_JS_SRC) $(MEDIA_LISTENERS_JS_RES)
+
+$(MERCURY_JS_RES): latest-mercury-parser
+	@echo 'Mercury script...'
+	cp ../../mercury-parser/dist/mercury.web.js $(MERCURY_JS_RES)
+
+.PHONY: latest-mercury-parser
+latest-mercury-parser:
+	cd ../../mercury-parser && git checkout main
 
 .PHONY: forge
 forge:
@@ -19,20 +52,3 @@ forge:
 clean:
 	rm -f dist/*
 
-$(STYLE_OUT): style/stylesheet.scss
-	ruby ./script/generate-android-style
-
-$(STYLE_DEST): $(STYLE_OUT)
-	cp $(STYLE_OUT) $(STYLE_DEST)
-
-dist/template.html: ./views/template.liquid
-	ruby ./script/generate-android-template
-
-$(TEMPLATE_DEST): dist/template.html
-	cp ./dist/template.html $(TEMPLATE_DEST)
-
-$(CUSTOM_EXTRACTOR_JS_DEST): ./public/assets/custom-extractors.js
-	cp ./public/assets/custom-extractors.js $(CUSTOM_EXTRACTOR_JS_DEST)
-
-$(MEDIA_LISTENERS_JS_DEST): ./public/assets/media.js
-	cp ./public/assets/media.js $(MEDIA_LISTENERS_JS_DEST)
