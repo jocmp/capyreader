@@ -1,0 +1,25 @@
+name: Improve Full Content for a Feed
+description: Request better support in full content mode for a feed of your choice
+title: "[Full Content]: "
+labels: ["full-content"]
+body:
+    - type: input
+      attributes:
+          label: Feed URL
+          description: URL to the site's feed
+          placeholder: http://theverge.com/rss/index.xml
+      validations:
+          required: true
+
+    - type: textarea
+      attributes:
+          label: Add any details, links, or screenshots about the article layout that's missing or wrong
+      validations:
+          required: false
+
+    - type: checkboxes
+      attributes:
+          label: Optionally [donated](https://github.com/sponsors/jocmp) to help support the development of this improvement
+          options:
+              - label: 'Yes'
+                required: false
