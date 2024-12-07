@@ -36,13 +36,14 @@ $(MEDIA_LISTENERS_JS_RES): $(MEDIA_LISTENERS_JS_SRC)
 	@echo 'Media script...'
 	cp $(MEDIA_LISTENERS_JS_SRC) $(MEDIA_LISTENERS_JS_RES)
 
-$(MERCURY_JS_RES): latest-mercury-parser
+.PHONY: $(MERCURY_JS_RES)
+$(MERCURY_JS_RES):
 	@echo 'Mercury script...'
 	cp ../../mercury-parser/dist/mercury.web.js $(MERCURY_JS_RES)
 
-.PHONY: latest-mercury-parser
-latest-mercury-parser:
-	cd ../../mercury-parser && git checkout main
+.PHONY: build-mercury
+build-mercury:
+	cd ../../mercury-parser && yarn build yarn build:web
 
 .PHONY: forge
 forge:
