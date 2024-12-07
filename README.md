@@ -27,11 +27,19 @@ GitHub releases are marked with a "-dev" suffix and happen more frequently. They
 
 Bug reports are always welcome and are my top priority.
 
-If you run into an issue, let me know by submitting a [bug report](https://github.com/jocmp/capyreader/issues/new?labels=bug&template=bug_report.yml).
+If you run into an issue, let me know by submitting a [bug report](https://github.com/jocmp/capyreader/issues/new?labels=bug&template=1-bug-report.yml).
 
 ## Feature Requests
 
-If you have questions or feature requests, please post them to [Discussions](https://github.com/jocmp/capyreader/discussions).
+If you have questions or a general feature request, please post them to [Discussions](https://github.com/jocmp/capyreader/discussions).
+
+### Full Content Support
+
+Sometimes Capy's full content mode doesn't work as expected on a site due to the chaos of the web.
+
+When this happens, please submit a separate feature request to support full content for that site: [Full Content Request form](https://github.com/jocmp/capyreader/issues/new?labels=bug&template=2-full-content-request.yml)
+
+## Roadmap
 
 Check out the [project roadmap](https://github.com/users/jocmp/projects/3) to see what's currently in progress and on deck.
 
