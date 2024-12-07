@@ -17,9 +17,8 @@ body:
       validations:
           required: false
 
-    - type: checkboxes
+    - type: markdown
       attributes:
-          label: Sponsorship
-          options:
-              - label: Optionally [donated](https://github.com/sponsors/jocmp?frequency=one-time&sponsor=jocmp) to help support the development of this improvement
-                required: false
+          value: |
+              **Donate (Optional)**
+              [Donate](https://github.com/sponsors/jocmp?frequency=one-time&sponsor=jocmp) to help support the development of this project and receive priority support on this request.
