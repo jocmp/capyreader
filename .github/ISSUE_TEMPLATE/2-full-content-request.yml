@@ -1,7 +1,7 @@
-name: Improve Full Content for a Feed
-description: Request better support in full content mode for a feed of your choice
+name: Support Full Content for a Feed
+description: Request better support for full content mode for a feed of your choice
 title: "[Full Content]: "
-labels: ["full-content"]
+labels: ["full content request"]
 body:
     - type: input
       attributes:
