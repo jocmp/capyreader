@@ -37,7 +37,7 @@ If you have questions or a general feature request, please post them to [Discuss
 
 Sometimes Capy's full content mode doesn't work as expected on a site due to the chaos of the web.
 
-When this happens, please submit a separate feature request to support full content for that site: [Full Content Request form](https://github.com/jocmp/capyreader/issues/new?labels=bug&template=2-full-content-request.yml)
+When this happens, please submit a separate feature request to support full content for that site: [Full Content Request form](https://github.com/jocmp/capyreader/issues/new?labels=full%20content%20request&template=2-full-content-request.yml)
 
 ## Roadmap
 
