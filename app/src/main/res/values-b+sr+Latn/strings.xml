@@ -131,7 +131,7 @@
     <string name="feed_form_copy_feed_url_to_clipboard">Kopiraj Link Izvora</string>
     <string name="filter_action_menu_search_articles">Pretraži članke</string>
     <string name="feed_list_top_bar_close_search">Odbaci pretragu</string>
-    <string name="settings_auto_delete_articles_title">Čuvaj članke</string>
+    <string name="settings_auto_delete_articles_title">Zadržite već pročitane članke</string>
     <string name="settings_auto_delete_option_keep_forever">Zauvek</string>
     <string name="settings_auto_delete_option_keep_for_one_week">1 nedelju</string>
     <string name="settings_clear_all_articles_button">Obriši sve članke</string>
@@ -187,4 +187,28 @@
     <string name="settings_gestures_list_back_navigation_open_drawer">Otvorite Fioku Za Navigaciju</string>
     <string name="notifications_permission_disabled_title">Dozvola za obaveštenja je onemogućena</string>
     <string name="settings_confirm_mark_all_read">Potvrdite označavanje svega kao pročitano</string>
+    <string name="account_source_freshrss">FreshRSS</string>
+    <string name="account_source_reader">Čitač</string>
+    <string name="add_account_local_subtitle">Na vašem uređaju</string>
+    <string name="add_account_reader_subtitle">API za Google Reader koji se samostalno hostuje</string>
+    <string name="add_account_feedbin_signup_prompt">Nemate Feedbin nalog?</string>
+    <string name="add_account_feedbin_signup_link_text">Napravite jedan ovde.</string>
+    <string name="add_account_freshrss_signup_prompt">Nemate FreshRSS instancu?</string>
+    <string name="add_account_freshrss_signup_link_text">Saznajte više.</string>
+    <string name="settings_section_account_server">Server</string>
+    <string name="edit_feed_tag_section">Tag</string>
+    <string name="auth_fields_api_url">Server</string>
+    <string name="settings_mark_read_on_scroll">Označi kao pročitano na skrolovanju</string>
+    <string name="settings_section_mark_all_as_read">Označi sve kao pročitano</string>
+    <string name="settings_section_browser">Brovser</string>
+    <string name="reader_image_visibility_show_on_wifi">Prikaži slike samo na Wi-Fi</string>
+    <string name="reader_image_visibility_always_hide">Blokirajte slike</string>
+    <string name="reader_image_visibility_always_show">Uvek prikaži slike</string>
+    <string name="reader_image_visibility_label">Slike</string>
+    <string name="layout_preference_responsive">Responzivan</string>
+    <string name="layout_preference_single">Jedna Kolona</string>
+    <string name="layout_preference_label">Željeni raspored</string>
+    <string name="settings_enable_high_contrast_dark_theme">Omogućite tamnu temu visokog kontrasta</string>
+    <string name="settings_gestures_reader_tap_to_page_title">E Mastilo dodirnite za pomeranje</string>
+    <string name="settings_gestures_reader_tap_to_page_subtitle">Dodirnite donje uglove da biste se kretali po sadržaju članka</string>
 </resources>
