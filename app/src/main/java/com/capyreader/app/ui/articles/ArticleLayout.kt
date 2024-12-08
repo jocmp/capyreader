@@ -342,7 +342,13 @@ fun ArticleLayout(
                         }
                     } else {
                         PullToNextFeedBox(
-                            onRequestNext = onRequestNextFeed,
+                            onRequestNext = {
+                                coroutineScope.launchUI {
+                                    openNextStatus {
+                                        onRequestNextFeed()
+                                    }
+                                }
+                            },
                         ) {
                             AnimatedVisibility(
                                 listVisible,

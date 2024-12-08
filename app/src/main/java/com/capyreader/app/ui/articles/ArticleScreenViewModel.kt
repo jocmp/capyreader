@@ -277,9 +277,7 @@ class ArticleScreenViewModel(
     }
 
     fun onRequestNextFeed(feeds: List<Feed>, folders: List<Folder>) = viewModelScope.launchIO {
-        val currentFilter = filter.value
-
-        when (currentFilter) {
+        when (val currentFilter = filter.value) {
             is ArticleFilter.Articles -> {
                 val firstFeed = feeds.firstOrNull()
                 val firstFolder = folders.firstOrNull()
@@ -295,16 +293,36 @@ class ArticleScreenViewModel(
                 val firstFeed = folders
                     .find { it.title == currentFilter.folderTitle }
                     ?.feeds
-                    ?.firstOrNull()
+                    ?.firstOrNull() ?: return@launchIO
 
-                if (firstFeed != null) {
-                    selectFeed(feedID = firstFeed.id, folderTitle = currentFilter.folderTitle)
-                }
+                selectFeed(feedID = firstFeed.id, folderTitle = currentFilter.folderTitle)
             }
 
-            is ArticleFilter.Feeds -> TODO()
+            is ArticleFilter.Feeds -> {
+                if (currentFilter.folderTitle == null) {
+                    val index = feeds.indexOfFirst { it.id == currentFilter.feedID }
+
+                    val nextFeed = feeds.getOrNull(index + 1) ?: return@launchIO
+
+                    selectFeed(feedID = nextFeed.id, folderTitle = null)
+                } else {
+                    val folderIndex = folders
+                        .indexOfFirst { it.title == currentFilter.folderTitle }
+
+                    val folderFeeds = folders.getOrNull(folderIndex)?.feeds.orEmpty()
+
+                    val index = folderFeeds.indexOfFirst { it.id == currentFilter.feedID }
+                    val nextFeed = folderFeeds.getOrNull(index + 1)
+                    val nextFolder = folders.getOrNull(folderIndex + 1)
+
+                    if (nextFeed != null) {
+                        selectFeed(feedID = nextFeed.id, folderTitle = currentFilter.folderTitle)
+                    } else if (nextFolder != null) {
+                        selectFolder(nextFolder.title)
+                    }
+                }
+            }
         }
-        // if filter is folder, select first item in folder
         // if filter is feed, select next feed
     }
 
