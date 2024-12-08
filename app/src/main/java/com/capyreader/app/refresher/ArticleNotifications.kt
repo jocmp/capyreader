@@ -90,7 +90,8 @@ class ArticleNotifications(
             appPreferences.filter.set(
                 ArticleFilter.Feeds(
                     feedID,
-                    feedStatus = ArticleStatus.UNREAD
+                    feedStatus = ArticleStatus.UNREAD,
+                    folderTitle = null
                 )
             )
             appPreferences.articleID.set(articleID)

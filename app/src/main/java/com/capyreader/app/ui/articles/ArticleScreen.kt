@@ -64,6 +64,9 @@ fun ArticleScreen(
             onRemoveFeed = viewModel::removeFeed,
             showUnauthorizedMessage = viewModel.showUnauthorizedMessage,
             onUnauthorizedDismissRequest = viewModel::dismissUnauthorizedMessage,
+            onRequestNextFeed = {
+                viewModel.onRequestNextFeed(feeds, folders)
+            },
             search = ArticleSearch(
                 query = searchQuery,
                 clear = { viewModel.clearSearch() },

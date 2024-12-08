@@ -118,10 +118,14 @@ class ArticleScreenViewModel(
         updateFilter(nextFilter)
     }
 
-    fun selectFeed(feedID: String) {
+    fun selectFeed(feedID: String, folderTitle: String? = null) {
         viewModelScope.launch(Dispatchers.IO) {
             val feed = account.findFeed(feedID) ?: return@launch
-            val feedFilter = ArticleFilter.Feeds(feedID = feed.id, feedStatus = latestFilter.status)
+            val feedFilter = ArticleFilter.Feeds(
+                feedID = feed.id,
+                folderTitle = folderTitle,
+                feedStatus = latestFilter.status
+            )
 
             updateFilter(feedFilter)
         }
@@ -257,19 +261,51 @@ class ArticleScreenViewModel(
         addStar(articleID)
     }
 
-    fun removeStarAsync(articleID: String) = viewModelScope.launch(Dispatchers.IO) {
+    fun removeStarAsync(articleID: String) = viewModelScope.launchIO {
         toggleCurrentStarred(articleID)
         removeStar(articleID)
     }
 
-    fun markReadAsync(articleID: String) = viewModelScope.launch(Dispatchers.IO) {
+    fun markReadAsync(articleID: String) = viewModelScope.launchIO {
         toggleCurrentRead(articleID)
         markRead(articleID)
     }
 
-    fun markUnreadAsync(articleID: String) = viewModelScope.launch(Dispatchers.IO) {
+    fun markUnreadAsync(articleID: String) = viewModelScope.launchIO {
         toggleCurrentRead(articleID)
         markUnread(articleID)
+    }
+
+    fun onRequestNextFeed(feeds: List<Feed>, folders: List<Folder>) = viewModelScope.launchIO {
+        val currentFilter = filter.value
+
+        when (currentFilter) {
+            is ArticleFilter.Articles -> {
+                val firstFeed = feeds.firstOrNull()
+                val firstFolder = folders.firstOrNull()
+
+                if (firstFolder != null) {
+                    selectFolder(firstFolder.title)
+                } else if (firstFeed != null) {
+                    selectFeed(feedID = firstFeed.id, folderTitle = null)
+                }
+            }
+
+            is ArticleFilter.Folders -> {
+                val firstFeed = folders
+                    .find { it.title == currentFilter.folderTitle }
+                    ?.feeds
+                    ?.firstOrNull()
+
+                if (firstFeed != null) {
+                    selectFeed(feedID = firstFeed.id, folderTitle = currentFilter.folderTitle)
+                }
+            }
+
+            is ArticleFilter.Feeds -> TODO()
+        }
+        // if filter is folder, select first item in folder
+        // if filter is feed, select next feed
     }
 
     private fun addStar(articleID: String) {

@@ -27,15 +27,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.jocmp.capy.ArticleFilter
-import com.jocmp.capy.ArticleStatus
-import com.jocmp.capy.Feed
-import com.jocmp.capy.Folder
 import com.capyreader.app.R
 import com.capyreader.app.ui.components.safeEdgePadding
 import com.capyreader.app.ui.fixtures.FeedSample
 import com.capyreader.app.ui.fixtures.FolderPreviewFixture
 import com.capyreader.app.ui.navigationTitle
+import com.jocmp.capy.ArticleFilter
+import com.jocmp.capy.ArticleStatus
+import com.jocmp.capy.Feed
+import com.jocmp.capy.Folder
 
 @Composable
 fun FeedList(
@@ -45,7 +45,7 @@ fun FeedList(
     feeds: List<Feed> = emptyList(),
     onFilterSelect: () -> Unit,
     onSelectFolder: (folder: Folder) -> Unit,
-    onSelectFeed: (feed: Feed) -> Unit,
+    onSelectFeed: (feed: Feed, folderTitle: String?) -> Unit,
     onFeedAdded: (feedID: String) -> Unit,
     onSelectStatus: (status: ArticleStatus) -> Unit,
     onNavigateToSettings: () -> Unit,
@@ -116,11 +116,13 @@ fun FeedList(
                 ListHeadline(text = stringResource(R.string.nav_headline_tags))
             }
 
-            folders.forEach {
+            folders.forEach { folder ->
                 FolderRow(
-                    folder = it,
+                    folder = folder,
                     onFolderSelect = onSelectFolder,
-                    onFeedSelect = onSelectFeed,
+                    onFeedSelect = { feed ->
+                        onSelectFeed(feed, folder.title)
+                    },
                     filter = filter
                 )
             }
@@ -133,11 +135,13 @@ fun FeedList(
                 ListHeadline(text = stringResource(R.string.nav_headline_feeds))
             }
 
-            feeds.forEach {
+            feeds.forEach { feed ->
                 FeedRow(
-                    feed = it,
-                    onSelect = onSelectFeed,
-                    selected = filter.isFeedSelected(it),
+                    feed = feed,
+                    onSelect = {
+                        onSelectFeed(it, null)
+                    },
+                    selected = filter.isFeedSelected(feed),
                 )
             }
 
@@ -188,7 +192,7 @@ fun FeedListPreview() {
         folders = folders,
         feeds = feeds,
         onSelectFolder = {},
-        onSelectFeed = {},
+        onSelectFeed = { _, _ -> },
         onNavigateToSettings = {},
         onFilterSelect = {},
         filter = ArticleFilter.default(),

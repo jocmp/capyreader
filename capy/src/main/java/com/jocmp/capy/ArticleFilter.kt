@@ -8,8 +8,8 @@ sealed class ArticleFilter(open val status: ArticleStatus) {
         return this is Folders && this.folderTitle == folder.title
     }
 
-    fun isFeedSelected(feed: Feed): Boolean {
-        return this is Feeds && this.feedID == feed.id
+    fun isFeedSelected(feed: Feed, folderTitle: String? = null): Boolean {
+        return this is Feeds && this.feedID == feed.id && this.folderTitle == folderTitle
     }
 
     fun hasArticlesSelected(): Boolean {
@@ -31,7 +31,8 @@ sealed class ArticleFilter(open val status: ArticleStatus) {
     }
 
     @Serializable
-    data class Feeds(val feedID: String, val feedStatus: ArticleStatus) : ArticleFilter(feedStatus) {
+    data class Feeds(val feedID: String, val folderTitle: String?, val feedStatus: ArticleStatus) :
+        ArticleFilter(feedStatus) {
         override val status: ArticleStatus
             get() = feedStatus
     }

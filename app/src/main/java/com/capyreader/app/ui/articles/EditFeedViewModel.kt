@@ -31,7 +31,7 @@ class EditFeedViewModel(
                 .onSuccess { feed ->
                     appPreferences.filter.getAndSet { filter ->
                         if (filter.isFeedSelected(feed)) {
-                            ArticleFilter.Feeds(feed.id, filter.status)
+                            ArticleFilter.Feeds(feedID = feed.id, folderTitle = null, filter.status)
                         } else {
                             filter
                         }

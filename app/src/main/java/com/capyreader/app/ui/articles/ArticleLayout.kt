@@ -48,6 +48,7 @@ import com.capyreader.app.ui.articles.detail.CapyPlaceholder
 import com.capyreader.app.ui.articles.detail.resetScrollBehaviorListener
 import com.capyreader.app.ui.articles.list.EmptyOnboardingView
 import com.capyreader.app.ui.articles.list.FeedListTopBar
+import com.capyreader.app.ui.articles.list.PullToNextFeedBox
 import com.capyreader.app.ui.articles.media.ArticleMediaView
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.rememberWebViewState
@@ -79,7 +80,7 @@ fun ArticleLayout(
     refreshInterval: RefreshInterval,
     onFeedRefresh: (completion: () -> Unit) -> Unit,
     onSelectFolder: (folderTitle: String) -> Unit,
-    onSelectFeed: suspend (feedID: String) -> Unit,
+    onSelectFeed: (feedID: String, folderTitle: String?) -> Unit,
     onSelectArticleFilter: () -> Unit,
     onSelectStatus: (status: ArticleStatus) -> Unit,
     onSelectArticle: (articleID: String) -> Unit,
@@ -88,6 +89,7 @@ fun ArticleLayout(
     onToggleArticleRead: () -> Unit,
     onToggleArticleStar: () -> Unit,
     onMarkAllRead: (range: MarkRead) -> Unit,
+    onRequestNextFeed: () -> Unit,
     onRemoveFeed: (feedID: String, onSuccess: () -> Unit, onFailure: () -> Unit) -> Unit,
     drawerValue: DrawerValue = DrawerValue.Closed,
     showUnauthorizedMessage: Boolean,
@@ -217,7 +219,7 @@ fun ArticleLayout(
 
     val onFeedAdded = { feedID: String ->
         coroutineScope.launch {
-            openNextList { onSelectFeed(feedID) }
+            openNextList { onSelectFeed(feedID, null) }
 
             showSnackbar(addFeedSuccessMessage)
         }
@@ -251,10 +253,10 @@ fun ArticleLayout(
                         closeDrawer()
                     }
                 },
-                onSelectFeed = {
+                onSelectFeed = { feed, folderTitle ->
                     coroutineScope.launch {
-                        if (!filter.isFeedSelected(it)) {
-                            openNextList { onSelectFeed(it.id) }
+                        if (!filter.isFeedSelected(feed)) {
+                            openNextList { onSelectFeed(feed.id, folderTitle) }
                         } else {
                             closeDrawer()
                         }
@@ -339,19 +341,23 @@ fun ArticleLayout(
                             )
                         }
                     } else {
-                        AnimatedVisibility(
-                            listVisible,
-                            enter = fadeIn(),
-                            exit = fadeOut(),
-                            modifier = Modifier.fillMaxSize(),
+                        PullToNextFeedBox(
+                            onRequestNext = onRequestNextFeed,
                         ) {
-                            ArticleList(
-                                articles = pagingArticles,
-                                selectedArticleKey = article?.id,
-                                listState = listState,
-                                onMarkAllRead = onMarkAllRead,
-                                onSelect = { selectArticle(it) },
-                            )
+                            AnimatedVisibility(
+                                listVisible,
+                                enter = fadeIn(),
+                                exit = fadeOut(),
+                                modifier = Modifier.fillMaxSize(),
+                            ) {
+                                ArticleList(
+                                    articles = pagingArticles,
+                                    selectedArticleKey = article?.id,
+                                    listState = listState,
+                                    onMarkAllRead = onMarkAllRead,
+                                    onSelect = { selectArticle(it) },
+                                )
+                            }
                         }
                     }
                 }
