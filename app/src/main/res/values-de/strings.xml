@@ -207,4 +207,7 @@
     <string name="settings_gestures_reader_tap_to_page_subtitle">Tippen auf die unteren Ecken um innerhalb eines Artikels zu navigieren</string>
     <string name="settings_gestures_reader_tap_to_page_title">Tippen um zu Scrollen bei E-Ink Displays</string>
     <string name="settings_enable_high_contrast_dark_theme">Dunkles Theme mit hohem Kontrast aktivieren</string>
+    <string name="layout_preference_single">Eine Spalte</string>
+    <string name="layout_preference_responsive">Zwei Spalten</string>
+    <string name="layout_preference_label">Bevorzugte Ansicht</string>
 </resources>
