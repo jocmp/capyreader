@@ -209,4 +209,7 @@
     <string name="reader_image_visibility_always_hide">拦截图片</string>
     <string name="reader_image_visibility_always_show">始终显示图片</string>
     <string name="reader_image_visibility_label">图片</string>
+    <string name="layout_preference_responsive">响应式</string>
+    <string name="layout_preference_single">单列</string>
+    <string name="layout_preference_label">首选布局</string>
 </resources>
