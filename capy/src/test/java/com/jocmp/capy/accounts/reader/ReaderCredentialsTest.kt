@@ -50,6 +50,21 @@ internal class ReaderCredentialsTest {
     }
 
     @Test
+    fun verify_onError_unauthorized() = runTest {
+        coEvery { googleReader.clientLogin(email = any(), password = any()) }.returns(
+            Response.success(
+                200,
+                "Unauthorized!"
+            )
+        )
+
+        val result = credentials.verify()
+
+        assertTrue(result.isFailure)
+        assertEquals(result.exceptionOrNull()!!.message, "Unauthorized!")
+    }
+
+    @Test
     fun verify_onError_shouldReturnFailure() = runTest {
         coEvery { googleReader.clientLogin(email = any(), password = any()) }.returns(
             Response.error(

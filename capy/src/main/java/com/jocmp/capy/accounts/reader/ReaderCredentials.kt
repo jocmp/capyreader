@@ -3,6 +3,7 @@ package com.jocmp.capy.accounts.reader
 import com.jocmp.capy.accounts.Credentials
 import com.jocmp.capy.accounts.Source
 import com.jocmp.readerclient.GoogleReader
+import com.jocmp.readerclient.GoogleReader.Companion.UNAUTHORIZED_MESSAGE
 
 data class ReaderCredentials(
     override val username: String,
@@ -26,11 +27,15 @@ data class ReaderCredentials(
                 Result.failure(Throwable("Failed with status ${response.code()} ${response.message()}"))
             }
         } catch (e: Throwable) {
-           return Result.failure(e)
+            return Result.failure(e)
         }
     }
 
     private fun parseCredentials(responseBody: String): Result<Credentials> {
+        if (responseBody.contains(UNAUTHORIZED_MESSAGE)) {
+            return Result.failure(Throwable(responseBody))
+        }
+
         val auth = findAuth(responseBody)
 
         return if (auth != null) {

@@ -79,6 +79,8 @@ interface GoogleReader {
     companion object {
         const val BAD_TOKEN_HEADER_KEY = "X-Reader-Google-Bad-Token"
 
+        const val UNAUTHORIZED_MESSAGE = "Unauthorized"
+
         fun create(
             client: OkHttpClient,
             baseURL: String
