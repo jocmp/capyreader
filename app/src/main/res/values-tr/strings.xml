@@ -79,7 +79,7 @@
     <string name="mark_all_read_dialog_submit">Onayla</string>
     <string name="article_actions_open_menu">Makale eylemlerini aç</string>
     <string name="article_actions_mark_after_as_read">Yukarıyı okundu olarak işaretle</string>
-    <string name="auth_fields_username">E-posta</string>
+    <string name="auth_fields_email">E-posta</string>
     <string name="unauthorized_dialog_title">Çıkış yaptınız</string>
     <string name="unauthorized_dialog_dismiss_text">Sonra</string>
     <string name="unauthorized_dialog_confirm_text">Giriş Yap</string>

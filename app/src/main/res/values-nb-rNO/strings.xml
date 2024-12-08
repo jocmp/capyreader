@@ -92,7 +92,7 @@
     <string name="settings_enable_high_contrast_dark_theme">Aktiver høykontrast mørkt tema</string>
     <string name="edit_feed_submit">Lagre</string>
     <string name="filter_action_menu_description">Rediger</string>
-    <string name="auth_fields_username">E-post</string>
+    <string name="auth_fields_email">E-post</string>
     <string name="unauthorized_dialog_dismiss_text">Senere</string>
     <string name="settings_section_export">Eksport</string>
     <string name="auth_fields_api_url">Tjener</string>

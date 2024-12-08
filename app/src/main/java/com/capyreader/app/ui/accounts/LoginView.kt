@@ -113,6 +113,7 @@ fun LoginView(
                             onSubmit = onSubmit,
                             loading = loading,
                             errorMessage = errorMessage,
+                            source = source,
                             prompt = {
                                 ServiceSignup(source)
                             }

@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.ui.autofill
 import com.capyreader.app.ui.theme.CapyTheme
+import com.jocmp.capy.accounts.Source
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -51,6 +52,7 @@ fun AuthFields(
     loading: Boolean = false,
     errorMessage: String? = null,
     prompt: (@Composable () -> Unit)? = null,
+    source: Source,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -80,7 +82,7 @@ fun AuthFields(
             enabled = !readOnlyUsername,
             readOnly = readOnlyUsername,
             label = {
-                Text(stringResource(R.string.auth_fields_username))
+                Text(stringResource(source.usernameKey))
             },
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next,
@@ -176,6 +178,12 @@ private fun ErrorAlert(message: String) {
     }
 }
 
+private val Source.usernameKey
+    get() = when(this) {
+        Source.FEEDBIN -> R.string.auth_fields_email
+        else -> R.string.auth_fields_username
+    }
+
 @Preview
 @Composable
 private fun AuthFieldsPreview() {
@@ -186,7 +194,8 @@ private fun AuthFieldsPreview() {
             onSubmit = {},
             username = "test@example.com",
             password = "its a secret to everyone",
-            loading = true
+            loading = true,
+            source = Source.FRESHRSS
         )
     }
 }

@@ -67,7 +67,7 @@
     <string name="unauthorized_dialog_dismiss_text">Kasnije</string>
     <string name="unauthorized_dialog_confirm_text">Prijavi se</string>
     <string name="auth_fields_password">Lozinka</string>
-    <string name="auth_fields_username">Email</string>
+    <string name="auth_fields_email">Email</string>
     <string name="auth_fields_hide_password">Sakrij Lozinku</string>
     <string name="auth_fields_show_password">Prikaži lozinku</string>
     <string name="auth_fields_log_in_button">Prijavi se</string>
