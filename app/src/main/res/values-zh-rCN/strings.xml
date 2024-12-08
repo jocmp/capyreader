@@ -44,7 +44,7 @@
     <string name="unauthorized_dialog_dismiss_text">稍后</string>
     <string name="unauthorized_dialog_confirm_text">登录</string>
     <string name="auth_fields_password">密码</string>
-    <string name="auth_fields_username">邮箱</string>
+    <string name="auth_fields_email">邮箱</string>
     <string name="auth_fields_hide_password">隐藏密码</string>
     <string name="update_auth_success_message">登录成功</string>
     <string name="crash_reporting_checkbox_title">启用崩溃报告</string>
@@ -188,7 +188,7 @@
     <string name="auth_fields_api_url">服务器</string>
     <string name="account_source_freshrss">FreshRSS</string>
     <string name="settings_section_account_server">服务器</string>
-    <string name="auth_fields_api_url_freshrss_placeholder">example.com/api/greader.php</string>
+    <string name="auth_fields_api_url_freshrss_placeholder">https://example.com/api/greader.php</string>
     <string name="account_source_reader">Reader</string>
     <string name="add_account_local_subtitle">在设备上</string>
     <string name="add_account_feedbin_subtitle">feedbin.com</string>

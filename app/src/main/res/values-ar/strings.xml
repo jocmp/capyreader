@@ -61,7 +61,7 @@
     <string name="unauthorized_dialog_dismiss_text">لاحقاً</string>
     <string name="unauthorized_dialog_confirm_text">تسجيل الدخول</string>
     <string name="auth_fields_password">كلمة المرور</string>
-    <string name="auth_fields_username">البريد الإلكتروني</string>
+    <string name="auth_fields_email">البريد الإلكتروني</string>
     <string name="auth_fields_hide_password">إخفاء كلمة المرور</string>
     <string name="auth_fields_show_password">إظهار كلمة المرور</string>
     <string name="settings_top_bar_title">الإعدادات</string>

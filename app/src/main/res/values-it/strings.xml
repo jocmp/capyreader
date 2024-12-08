@@ -40,7 +40,7 @@
     <string name="unauthorized_dialog_dismiss_text">Dopo</string>
     <string name="unauthorized_dialog_confirm_text">Login</string>
     <string name="auth_fields_password">Password</string>
-    <string name="auth_fields_username">Email</string>
+    <string name="auth_fields_email">Email</string>
     <string name="auth_fields_hide_password">Nascondi la password</string>
     <string name="auth_fields_show_password">Mostra la password</string>
     <string name="article_actions_mark_below_as_read">Contrassegna il seguente come letto</string>
@@ -190,7 +190,7 @@
     <string name="account_source_freshrss">FreshRSS</string>
     <string name="settings_section_account_server">Server</string>
     <string name="auth_fields_api_url">Server</string>
-    <string name="auth_fields_api_url_freshrss_placeholder">example.com/api/greader.php</string>
+    <string name="auth_fields_api_url_freshrss_placeholder">https://example.com/api/greader.php</string>
     <string name="account_source_reader">Lettore</string>
     <string name="add_account_local_subtitle">Sul tuo dispositivo</string>
     <string name="add_account_freshrss_subtitle">freshrss.org</string>

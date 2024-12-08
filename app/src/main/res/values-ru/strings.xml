@@ -88,7 +88,7 @@
     <string name="article_actions_mark_below_as_read">Отметить ниже как прочитанное</string>
     <string name="unauthorized_dialog_dismiss_text">Позже</string>
     <string name="auth_fields_password">Пароль</string>
-    <string name="auth_fields_username">Электронная почта</string>
+    <string name="auth_fields_email">Электронная почта</string>
     <string name="settings_top_bar_title">Настройки</string>
     <string name="account_source_local">Локально</string>
     <string name="transfers_export_subscriptions">Экспортировать подписки</string>
@@ -191,7 +191,7 @@
     <string name="settings_section_account_server">Сервер</string>
     <string name="auth_fields_api_url">Сервер</string>
     <string name="account_source_freshrss">FreshRSS</string>
-    <string name="auth_fields_api_url_freshrss_placeholder">example.com/api/greader.php</string>
+    <string name="auth_fields_api_url_freshrss_placeholder">https://example.com/api/greader.php</string>
     <string name="account_source_reader">Читалка</string>
     <string name="add_account_feedbin_subtitle">feedbin.com</string>
     <string name="add_account_freshrss_subtitle">freshrss.org</string>

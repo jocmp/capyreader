@@ -93,7 +93,7 @@
     <string name="unauthorized_dialog_dismiss_text">По-късно</string>
     <string name="unauthorized_dialog_confirm_text">Влезте</string>
     <string name="auth_fields_password">Парола</string>
-    <string name="auth_fields_username">Имейл</string>
+    <string name="auth_fields_email">Имейл</string>
     <string name="auth_fields_show_password">Покажи паролата</string>
     <string name="auth_fields_log_in_button">Влезте</string>
     <string name="crash_reporting_checkbox_title">Активирай отчет за срив</string>
@@ -195,7 +195,7 @@
     <string name="add_account_feedbin_signup_prompt">Нямате Feedbin акаунт?</string>
     <string name="add_account_freshrss_signup_link_text">Научете повече.</string>
     <string name="account_source_reader">Четец</string>
-    <string name="auth_fields_api_url_freshrss_placeholder">example.com/api/greader.php</string>
+    <string name="auth_fields_api_url_freshrss_placeholder">https://example.com/api/greader.php</string>
     <string name="add_account_reader_subtitle">Самостоятелно хостван Google Reader API</string>
     <string name="add_account_feedbin_signup_link_text">Създайте такъв тук.</string>
     <string name="edit_feed_tag_section">Категоерия</string>
