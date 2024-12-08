@@ -67,7 +67,7 @@
     <string name="unauthorized_dialog_dismiss_text">Más tarde</string>
     <string name="unauthorized_dialog_confirm_text">Iniciar sesión</string>
     <string name="auth_fields_password">Contraseña</string>
-    <string name="auth_fields_username">Correo electrónico</string>
+    <string name="auth_fields_email">Correo electrónico</string>
     <string name="auth_fields_hide_password">Ocultar la contraseña</string>
     <string name="auth_fields_show_password">Mostrar la contraseña</string>
     <string name="auth_fields_log_in_button">Iniciar sesión</string>

@@ -125,7 +125,7 @@
     <string name="extract_full_content">Vollständigen Inhalt laden</string>
     <string name="action_mark_all_read">Alles als gelesen markieren</string>
     <string name="unauthorized_dialog_description">Es gab ein Problem mit der Verbindung zu ihrem Benutzerkonto. Bitte nochmals einloggen.</string>
-    <string name="auth_fields_username">Email</string>
+    <string name="auth_fields_email">Email</string>
     <string name="account_source_feedbin">Feedbin</string>
     <string name="feed_form_copy_feed_url_to_clipboard">Feed URL in die Zwischenablage kopieren</string>
     <string name="filter_action_menu_search_articles">Artikel suchen</string>

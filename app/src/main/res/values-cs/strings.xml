@@ -102,7 +102,7 @@
     <string name="extract_full_content">Vypsat celý obsah</string>
     <string name="action_mark_all_read">Označit vše jako přečtené</string>
     <string name="mark_all_read_dialog_submit">Potvrdit</string>
-    <string name="auth_fields_username">Email</string>
+    <string name="auth_fields_email">Email</string>
     <string name="article_actions_mark_after_as_read">Označit všechno nad jako přečtené</string>
     <string name="unauthorized_dialog_confirm_text">Přihlásit</string>
     <string name="auth_fields_hide_password">Skrýt heslo</string>

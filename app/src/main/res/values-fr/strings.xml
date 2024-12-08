@@ -67,7 +67,7 @@
     <string name="unauthorized_dialog_dismiss_text">Plus tard</string>
     <string name="unauthorized_dialog_confirm_text">Se connecter</string>
     <string name="auth_fields_password">Mot de passe</string>
-    <string name="auth_fields_username">Adresse courriel</string>
+    <string name="auth_fields_email">Adresse courriel</string>
     <string name="settings_top_bar_title">Paramètres</string>
     <string name="update_auth_success_message">Connexion réussie</string>
     <string name="crash_reporting_checkbox_title">Activer les rapports d’anomalie</string>
