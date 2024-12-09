@@ -93,7 +93,8 @@ fun ArticleLayout(
     onRemoveFeed: (feedID: String, onSuccess: () -> Unit, onFailure: () -> Unit) -> Unit,
     drawerValue: DrawerValue = DrawerValue.Closed,
     showUnauthorizedMessage: Boolean,
-    onUnauthorizedDismissRequest: () -> Unit
+    onUnauthorizedDismissRequest: () -> Unit,
+    canSwipeToNextFeed: Boolean,
 ) {
     val skipInitialRefresh = refreshInterval == RefreshInterval.MANUALLY_ONLY
 
@@ -144,6 +145,37 @@ fun ArticleLayout(
         scrollBehavior = scrollBehavior
     )
 
+    suspend fun openNextStatus(action: suspend () -> Unit) {
+        listVisible = false
+        delay(200)
+        action()
+        scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
+        resetScrollBehaviorOffset()
+
+        coroutineScope.launch {
+            delay(500)
+            if (!listVisible) {
+                listVisible = true
+            }
+        }
+    }
+
+    fun requestNextFeed() {
+        coroutineScope.launchUI {
+            openNextStatus {
+                onRequestNextFeed()
+            }
+        }
+    }
+
+    fun markAllRead(range: MarkRead) {
+        if (range is MarkRead.All && filter !is ArticleFilter.Articles && canSwipeToNextFeed) {
+            requestNextFeed()
+        }
+
+        onMarkAllRead(range)
+    }
+
     val scrollToTop = {
         coroutineScope.launch {
             listState.scrollToItem(0)
@@ -165,21 +197,6 @@ fun ArticleLayout(
 
             if (!isInitialized) {
                 setInitialized(true)
-            }
-        }
-    }
-
-    suspend fun openNextStatus(action: suspend () -> Unit) {
-        listVisible = false
-        delay(200)
-        action()
-        scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
-        resetScrollBehaviorOffset()
-
-        coroutineScope.launch {
-            delay(500)
-            if (!listVisible) {
-                listVisible = true
             }
         }
     }
@@ -315,7 +332,9 @@ fun ArticleLayout(
                             scrollToTop()
                         },
                         scrollBehavior = scrollBehavior,
-                        onMarkAllRead = onMarkAllRead,
+                        onMarkAllRead = {
+                            markAllRead(it)
+                        },
                         search = search,
                         filter = filter,
                         currentFeed = currentFeed,
@@ -342,12 +361,9 @@ fun ArticleLayout(
                         }
                     } else {
                         PullToNextFeedBox(
+                            enabled = canSwipeToNextFeed,
                             onRequestNext = {
-                                coroutineScope.launchUI {
-                                    openNextStatus {
-                                        onRequestNextFeed()
-                                    }
-                                }
+                                requestNextFeed()
                             },
                         ) {
                             AnimatedVisibility(
@@ -463,7 +479,7 @@ fun ArticleLayout(
         toggleDrawer()
     }
 
-    LaunchedEffect(pagingArticles.itemCount) {
+    LaunchedEffect(pagingArticles.itemCount, filter) {
         if (!listVisible) {
             listState.scrollToItem(0)
             listVisible = true

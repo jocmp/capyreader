@@ -17,6 +17,7 @@ import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
+import com.jocmp.capy.articles.NextFilter
 import com.jocmp.capy.buildArticlePager
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
@@ -93,6 +94,13 @@ class ArticleScreenViewModel(
             .withPositiveCount(filter.status)
     }
 
+    private val nextFilterListener: Flow<NextFilter?> =
+        combine(feeds, folders, filter) { feeds, folders, filter ->
+            NextFilter.find(filter, feeds, folders)
+        }
+
+    private val _nextFilter = MutableStateFlow<NextFilter?>(null)
+
     val statusCount: Flow<Long> = _counts.map {
         it.values.sum()
     }
@@ -106,16 +114,27 @@ class ArticleScreenViewModel(
     val searchQuery: Flow<String?>
         get() = _searchQuery
 
-    fun selectArticleFilter() {
-        val nextFilter = ArticleFilter.default().withStatus(status = latestFilter.status)
+    val nextFilter: Flow<NextFilter?>
+        get() = _nextFilter
 
-        updateFilter(nextFilter)
+    init {
+        viewModelScope.launch {
+            nextFilterListener.collect {
+                _nextFilter.value = it
+            }
+        }
+    }
+
+    fun selectArticleFilter() {
+        val filter = ArticleFilter.default().withStatus(status = latestFilter.status)
+
+        updateFilter(filter)
     }
 
     fun selectStatus(status: ArticleStatus) {
-        val nextFilter = latestFilter.withStatus(status = status)
+        val filter = latestFilter.withStatus(status = status)
 
-        updateFilter(nextFilter)
+        updateFilter(filter)
     }
 
     fun selectFeed(feedID: String, folderTitle: String? = null) {
@@ -276,54 +295,17 @@ class ArticleScreenViewModel(
         markUnread(articleID)
     }
 
-    fun onRequestNextFeed(feeds: List<Feed>, folders: List<Folder>) = viewModelScope.launchIO {
-        when (val currentFilter = filter.value) {
-            is ArticleFilter.Articles -> {
-                val firstFeed = feeds.firstOrNull()
-                val firstFolder = folders.firstOrNull()
+    fun requestNextFeed() {
+        _nextFilter.value?.let {
+            when (it) {
+                is NextFilter.FeedFilter -> selectFeed(
+                    feedID = it.feedID,
+                    folderTitle = it.folderTitle
+                )
 
-                if (firstFolder != null) {
-                    selectFolder(firstFolder.title)
-                } else if (firstFeed != null) {
-                    selectFeed(feedID = firstFeed.id, folderTitle = null)
-                }
-            }
-
-            is ArticleFilter.Folders -> {
-                val firstFeed = folders
-                    .find { it.title == currentFilter.folderTitle }
-                    ?.feeds
-                    ?.firstOrNull() ?: return@launchIO
-
-                selectFeed(feedID = firstFeed.id, folderTitle = currentFilter.folderTitle)
-            }
-
-            is ArticleFilter.Feeds -> {
-                if (currentFilter.folderTitle == null) {
-                    val index = feeds.indexOfFirst { it.id == currentFilter.feedID }
-
-                    val nextFeed = feeds.getOrNull(index + 1) ?: return@launchIO
-
-                    selectFeed(feedID = nextFeed.id, folderTitle = null)
-                } else {
-                    val folderIndex = folders
-                        .indexOfFirst { it.title == currentFilter.folderTitle }
-
-                    val folderFeeds = folders.getOrNull(folderIndex)?.feeds.orEmpty()
-
-                    val index = folderFeeds.indexOfFirst { it.id == currentFilter.feedID }
-                    val nextFeed = folderFeeds.getOrNull(index + 1)
-                    val nextFolder = folders.getOrNull(folderIndex + 1)
-
-                    if (nextFeed != null) {
-                        selectFeed(feedID = nextFeed.id, folderTitle = currentFilter.folderTitle)
-                    } else if (nextFolder != null) {
-                        selectFolder(nextFolder.title)
-                    }
-                }
+                is NextFilter.FolderFilter -> selectFolder(title = it.folderTitle)
             }
         }
-        // if filter is feed, select next feed
     }
 
     private fun addStar(articleID: String) {
@@ -376,8 +358,8 @@ class ArticleScreenViewModel(
         }
     }
 
-    private fun updateFilter(nextFilter: ArticleFilter) {
-        appPreferences.filter.set(nextFilter)
+    private fun updateFilter(filter: ArticleFilter) {
+        appPreferences.filter.set(filter)
 
         updateArticlesSince()
 
