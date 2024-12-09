@@ -28,7 +28,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
-import com.capyreader.app.ui.components.safeEdgePadding
 import com.capyreader.app.ui.fixtures.FeedSample
 import com.capyreader.app.ui.fixtures.FolderPreviewFixture
 import com.capyreader.app.ui.navigationTitle
@@ -60,9 +59,7 @@ fun FeedList(
     }
 
     Column(
-        Modifier
-            .safeEdgePadding()
-            .fillMaxSize()
+        Modifier.fillMaxSize()
     ) {
         Column(
             Modifier
@@ -148,14 +145,16 @@ fun FeedList(
             Box(Modifier.padding(vertical = 16.dp))
         }
 
+        HorizontalDivider()
+
         Surface(
-            shadowElevation = 2.dp,
-            tonalElevation = 2.dp,
-            modifier = Modifier.fillMaxWidth()
+            color = MaterialTheme.colorScheme.surfaceContainerLow
         ) {
             Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
             ) {
                 IconButton(onClick = { onNavigateToSettings() }) {
                     Icon(

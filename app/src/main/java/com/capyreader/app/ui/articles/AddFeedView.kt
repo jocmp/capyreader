@@ -40,6 +40,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
+import com.capyreader.app.ui.components.DialogCard
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.FeedOption
 
@@ -68,9 +69,7 @@ fun AddFeedView(
         }
     }
 
-    Card(
-        shape = RoundedCornerShape(16.dp)
-    ) {
+    DialogCard {
         Column(Modifier.padding(top = 16.dp)) {
             OutlinedTextField(
                 value = queryURL,
