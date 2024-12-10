@@ -212,4 +212,5 @@
     <string name="layout_preference_responsive">响应式</string>
     <string name="layout_preference_single">单列</string>
     <string name="layout_preference_label">首选布局</string>
+    <string name="auth_fields_username">用户名</string>
 </resources>
