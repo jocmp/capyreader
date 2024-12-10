@@ -479,7 +479,7 @@ fun ArticleLayout(
         toggleDrawer()
     }
 
-    LaunchedEffect(pagingArticles.itemCount, filter) {
+    LaunchedEffect(pagingArticles.itemCount) {
         if (!listVisible) {
             listState.scrollToItem(0)
             listVisible = true
