@@ -17,6 +17,7 @@ import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
+import com.jocmp.capy.articles.NextFilter
 import com.jocmp.capy.buildArticlePager
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
@@ -93,6 +94,13 @@ class ArticleScreenViewModel(
             .withPositiveCount(filter.status)
     }
 
+    private val nextFilterListener: Flow<NextFilter?> =
+        combine(feeds, folders, filter) { feeds, folders, filter ->
+            NextFilter.find(filter, feeds, folders)
+        }
+
+    private val _nextFilter = MutableStateFlow<NextFilter?>(null)
+
     val statusCount: Flow<Long> = _counts.map {
         it.values.sum()
     }
@@ -106,22 +114,37 @@ class ArticleScreenViewModel(
     val searchQuery: Flow<String?>
         get() = _searchQuery
 
-    fun selectArticleFilter() {
-        val nextFilter = ArticleFilter.default().withStatus(status = latestFilter.status)
+    val nextFilter: Flow<NextFilter?>
+        get() = _nextFilter
 
-        updateFilter(nextFilter)
+    init {
+        viewModelScope.launch {
+            nextFilterListener.collect {
+                _nextFilter.value = it
+            }
+        }
+    }
+
+    fun selectArticleFilter() {
+        val filter = ArticleFilter.default().withStatus(status = latestFilter.status)
+
+        updateFilter(filter)
     }
 
     fun selectStatus(status: ArticleStatus) {
-        val nextFilter = latestFilter.withStatus(status = status)
+        val filter = latestFilter.withStatus(status = status)
 
-        updateFilter(nextFilter)
+        updateFilter(filter)
     }
 
-    fun selectFeed(feedID: String) {
+    fun selectFeed(feedID: String, folderTitle: String? = null) {
         viewModelScope.launch(Dispatchers.IO) {
             val feed = account.findFeed(feedID) ?: return@launch
-            val feedFilter = ArticleFilter.Feeds(feedID = feed.id, feedStatus = latestFilter.status)
+            val feedFilter = ArticleFilter.Feeds(
+                feedID = feed.id,
+                folderTitle = folderTitle,
+                feedStatus = latestFilter.status
+            )
 
             updateFilter(feedFilter)
         }
@@ -257,19 +280,32 @@ class ArticleScreenViewModel(
         addStar(articleID)
     }
 
-    fun removeStarAsync(articleID: String) = viewModelScope.launch(Dispatchers.IO) {
+    fun removeStarAsync(articleID: String) = viewModelScope.launchIO {
         toggleCurrentStarred(articleID)
         removeStar(articleID)
     }
 
-    fun markReadAsync(articleID: String) = viewModelScope.launch(Dispatchers.IO) {
+    fun markReadAsync(articleID: String) = viewModelScope.launchIO {
         toggleCurrentRead(articleID)
         markRead(articleID)
     }
 
-    fun markUnreadAsync(articleID: String) = viewModelScope.launch(Dispatchers.IO) {
+    fun markUnreadAsync(articleID: String) = viewModelScope.launchIO {
         toggleCurrentRead(articleID)
         markUnread(articleID)
+    }
+
+    fun requestNextFeed() {
+        _nextFilter.value?.let {
+            when (it) {
+                is NextFilter.FeedFilter -> selectFeed(
+                    feedID = it.feedID,
+                    folderTitle = it.folderTitle
+                )
+
+                is NextFilter.FolderFilter -> selectFolder(title = it.folderTitle)
+            }
+        }
     }
 
     private fun addStar(articleID: String) {
@@ -322,8 +358,8 @@ class ArticleScreenViewModel(
         }
     }
 
-    private fun updateFilter(nextFilter: ArticleFilter) {
-        appPreferences.filter.set(nextFilter)
+    private fun updateFilter(filter: ArticleFilter) {
+        appPreferences.filter.set(filter)
 
         updateArticlesSince()
 

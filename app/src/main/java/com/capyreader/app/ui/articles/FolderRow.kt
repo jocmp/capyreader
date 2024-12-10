@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.IconButtonDefaults
@@ -32,11 +31,11 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.capyreader.app.ui.fixtures.FolderPreviewFixture
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
-import com.jocmp.capy.Folder
-import com.capyreader.app.ui.fixtures.FolderPreviewFixture
 import com.jocmp.capy.Feed
+import com.jocmp.capy.Folder
 
 @Composable
 fun FolderRow(
@@ -74,7 +73,7 @@ fun FolderRow(
                         FeedRow(
                             feed = feed,
                             onSelect = { onFeedSelect(feed) },
-                            selected = filter.isFeedSelected(feed),
+                            selected = filter.isFeedSelected(feed, folderTitle = folder.title),
                         )
                     }
                 }

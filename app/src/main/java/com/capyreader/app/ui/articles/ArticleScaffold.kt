@@ -9,11 +9,13 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.layout.AnimatedPane
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffold
 import androidx.compose.material3.adaptive.layout.PaneScaffoldDirective
 import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
 import androidx.compose.material3.adaptive.layout.calculateListDetailPaneScaffoldMotion
+import androidx.compose.material3.adaptive.layout.calculatePaneScaffoldDirective
 import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.material3.rememberDrawerState
@@ -27,7 +29,6 @@ import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.LayoutPreference
 import com.capyreader.app.common.asState
 import com.capyreader.app.ui.FadePaneMotion
-import com.capyreader.app.ui.components.safeEdgePadding
 import com.capyreader.app.ui.isAtMostMedium
 import com.capyreader.app.ui.theme.CapyTheme
 import org.koin.compose.koinInject
@@ -59,8 +60,7 @@ fun ArticleScaffold(
         },
     ) {
         ListDetailPaneScaffold(
-            modifier = Modifier.safeEdgePadding(),
-            directive = scaffoldNavigator.scaffoldDirective.copy(maxHorizontalPartitions = 1),
+            directive = scaffoldNavigator.scaffoldDirective,
             value = scaffoldNavigator.scaffoldValue,
             paneMotions = paneMotions,
             listPane = {
@@ -94,8 +94,11 @@ fun rememberArticleScaffoldNavigator(appPreferences: AppPreferences = koinInject
             )
         )
     }
+    val directive = calculatePaneScaffoldDirective(currentWindowAdaptiveInfo())
 
-    return rememberListDetailPaneScaffoldNavigator()
+    return rememberListDetailPaneScaffoldNavigator(
+        scaffoldDirective = directive.copy(horizontalPartitionSpacerSize = 0.dp)
+    )
 }
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
