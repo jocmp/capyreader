@@ -27,7 +27,7 @@ class NextFilterTest {
         val folder = Folder(title = "This Is My Next Folder")
         val folders = listOf(folder)
 
-        val next = NextFilter.find(filter, feeds = emptyList(), folders = folders)!!
+        val next = NextFilter.findSwipeDestination(filter, feeds = emptyList(), folders = folders)!!
 
         assertTrue(next is NextFilter.FolderFilter)
         assertEquals(actual = next.folderTitle, expected = folder.title)
@@ -39,7 +39,7 @@ class NextFilterTest {
         val feed = feedFixture.create()
         val feeds = listOf(feed)
 
-        val next = NextFilter.find(filter, feeds = feeds, folders = emptyList())!!
+        val next = NextFilter.findSwipeDestination(filter, feeds = feeds, folders = emptyList())!!
 
         assertTrue(next is NextFilter.FeedFilter)
         assertEquals(actual = next.feedID, expected = feed.id)
@@ -50,7 +50,7 @@ class NextFilterTest {
     fun `on article filter that is empty`() {
         val filter = ArticleFilter.Articles(articleStatus = ArticleStatus.UNREAD)
 
-        val next = NextFilter.find(filter, feeds = emptyList(), folders = emptyList())
+        val next = NextFilter.findSwipeDestination(filter, feeds = emptyList(), folders = emptyList())
 
         assertNull(next)
     }
@@ -72,7 +72,7 @@ class NextFilterTest {
         )
 
         val next =
-            NextFilter.find(filter, feeds = emptyList(), folders = listOf(anotherFolder, folder))!!
+            NextFilter.findSwipeDestination(filter, feeds = emptyList(), folders = listOf(anotherFolder, folder))!!
 
         val expectedFeed = folderFeeds.first()
         assertTrue(next is NextFilter.FeedFilter)
@@ -92,7 +92,7 @@ class NextFilterTest {
         )
 
         val next =
-            NextFilter.find(filter, feeds = emptyList(), folders = listOf(anotherFolder, folder))
+            NextFilter.findSwipeDestination(filter, feeds = emptyList(), folders = listOf(anotherFolder, folder))
 
         assertNull(next)
     }
@@ -111,7 +111,7 @@ class NextFilterTest {
             feedStatus = ArticleStatus.UNREAD
         )
 
-        val next = NextFilter.find(
+        val next = NextFilter.findSwipeDestination(
             filter,
             feeds = topLevelFeeds,
             folders = listOf(someFolder, anotherFolder)
@@ -137,7 +137,7 @@ class NextFilterTest {
             feedStatus = ArticleStatus.UNREAD
         )
 
-        val next = NextFilter.find(
+        val next = NextFilter.findSwipeDestination(
             filter,
             feeds = topLevelFeeds,
             folders = listOf(someFolder, anotherFolder)
@@ -163,7 +163,7 @@ class NextFilterTest {
             feedStatus = ArticleStatus.UNREAD
         )
         val next =
-            NextFilter.find(filter, feeds = emptyList(), folders = listOf(folder, anotherFolder))!!
+            NextFilter.findSwipeDestination(filter, feeds = emptyList(), folders = listOf(folder, anotherFolder))!!
 
         val expectedFeed = folderFeeds[1]
         assertTrue(next is NextFilter.FeedFilter)
@@ -188,7 +188,7 @@ class NextFilterTest {
             feedStatus = ArticleStatus.UNREAD
         )
         val next =
-            NextFilter.find(filter, feeds = emptyList(), folders = listOf(folder, anotherFolder))!!
+            NextFilter.findSwipeDestination(filter, feeds = emptyList(), folders = listOf(folder, anotherFolder))!!
 
         assertTrue(next is NextFilter.FolderFilter)
         assertEquals(actual = next.folderTitle, expected = anotherFolder.title)
@@ -213,7 +213,7 @@ class NextFilterTest {
             feedStatus = ArticleStatus.UNREAD
         )
         val next =
-            NextFilter.find(filter, feeds = topLevelFeeds, folders = listOf(folder))!!
+            NextFilter.findSwipeDestination(filter, feeds = topLevelFeeds, folders = listOf(folder))!!
 
         val expectedFeed = topLevelFeeds.first()
         assertTrue(next is NextFilter.FeedFilter)

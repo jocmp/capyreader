@@ -96,7 +96,7 @@ class ArticleScreenViewModel(
 
     private val nextFilterListener: Flow<NextFilter?> =
         combine(feeds, folders, filter) { feeds, folders, filter ->
-            NextFilter.find(filter, feeds, folders)
+            NextFilter.findSwipeDestination(filter, feeds, folders)
         }
 
     private val _nextFilter = MutableStateFlow<NextFilter?>(null)
@@ -163,7 +163,13 @@ class ArticleScreenViewModel(
         }
     }
 
-    fun markAllRead(range: MarkRead) {
+    fun markAllRead(
+        onEndOfList: () -> Unit,
+        range: MarkRead,
+        filter: ArticleFilter,
+        feeds: List<Feed>,
+        folders: List<Folder>,
+    ) {
         viewModelScope.launchIO {
             val articleIDs = account.unreadArticleIDs(
                 filter = latestFilter,
@@ -173,6 +179,20 @@ class ArticleScreenViewModel(
 
             account.markAllRead(articleIDs).onFailure {
                 Sync.markReadAsync(articleIDs, context)
+            }
+
+            if (range is MarkRead.All) {
+                val nextFilter = NextFilter.findMarkReadDestination(filter, folders, feeds)
+
+                if (nextFilter != null) {
+                    selectNextFilter(nextFilter)
+                } else {
+                    if (filter.status == ArticleStatus.UNREAD) {
+                        selectArticleFilter()
+                        updateArticlesSince(OffsetDateTime.now().plusSeconds(1))
+                    }
+                    onEndOfList()
+                }
             }
         }
     }
@@ -296,15 +316,17 @@ class ArticleScreenViewModel(
     }
 
     fun requestNextFeed() {
-        _nextFilter.value?.let {
-            when (it) {
-                is NextFilter.FeedFilter -> selectFeed(
-                    feedID = it.feedID,
-                    folderTitle = it.folderTitle
-                )
+        _nextFilter.value?.let(::selectNextFilter)
+    }
 
-                is NextFilter.FolderFilter -> selectFolder(title = it.folderTitle)
-            }
+    private fun selectNextFilter(filter: NextFilter) {
+        when (filter) {
+            is NextFilter.FeedFilter -> selectFeed(
+                feedID = filter.feedID,
+                folderTitle = filter.folderTitle
+            )
+
+            is NextFilter.FolderFilter -> selectFolder(title = filter.folderTitle)
         }
     }
 
@@ -366,8 +388,8 @@ class ArticleScreenViewModel(
         clearArticle()
     }
 
-    private fun updateArticlesSince() {
-        articlesSince.value = OffsetDateTime.now()
+    private fun updateArticlesSince(since: OffsetDateTime = OffsetDateTime.now()) {
+        articlesSince.value = since
     }
 
     private fun copyFolderCounts(

@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
@@ -20,7 +20,6 @@ import androidx.compose.material3.TopAppBarState
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -91,7 +90,7 @@ fun ArticleLayout(
     onMarkAllRead: (range: MarkRead) -> Unit,
     onRequestNextFeed: () -> Unit,
     onRemoveFeed: (feedID: String, onSuccess: () -> Unit, onFailure: () -> Unit) -> Unit,
-    drawerValue: DrawerValue = DrawerValue.Closed,
+    drawerState: DrawerState,
     showUnauthorizedMessage: Boolean,
     onUnauthorizedDismissRequest: () -> Unit,
     canSwipeToNextFeed: Boolean,
@@ -104,7 +103,6 @@ fun ArticleLayout(
     val (isUpdatePasswordDialogOpen, setUpdatePasswordDialogOpen) = rememberSaveable {
         mutableStateOf(false)
     }
-    val drawerState = rememberDrawerState(drawerValue)
     val coroutineScope = rememberCoroutineScope()
     val scaffoldNavigator = rememberArticleScaffoldNavigator()
     val hasMultipleColumns = scaffoldNavigator.scaffoldDirective.maxHorizontalPartitions > 1
@@ -145,17 +143,22 @@ fun ArticleLayout(
         scrollBehavior = scrollBehavior
     )
 
+    suspend fun resetListVisibility() {
+        listState.scrollToItem(0)
+        resetScrollBehaviorOffset()
+        listVisible = true
+    }
+
     suspend fun openNextStatus(action: suspend () -> Unit) {
         listVisible = false
         delay(200)
         action()
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
-        resetScrollBehaviorOffset()
 
         coroutineScope.launch {
             delay(500)
             if (!listVisible) {
-                listVisible = true
+                resetListVisibility()
             }
         }
     }
@@ -170,10 +173,14 @@ fun ArticleLayout(
 
     fun markAllRead(range: MarkRead) {
         if (range is MarkRead.All && filter !is ArticleFilter.Articles && canSwipeToNextFeed) {
-            requestNextFeed()
+            coroutineScope.launchUI {
+                openNextStatus {
+                    onMarkAllRead(range)
+                }
+            }
+        } else {
+            onMarkAllRead(range)
         }
-
-        onMarkAllRead(range)
     }
 
     val scrollToTop = {
@@ -376,7 +383,9 @@ fun ArticleLayout(
                                     articles = pagingArticles,
                                     selectedArticleKey = article?.id,
                                     listState = listState,
-                                    onMarkAllRead = onMarkAllRead,
+                                    onMarkAllRead = { range ->
+                                        onMarkAllRead(range)
+                                    },
                                     onSelect = { selectArticle(it) },
                                 )
                             }
@@ -481,8 +490,7 @@ fun ArticleLayout(
 
     LaunchedEffect(pagingArticles.itemCount) {
         if (!listVisible) {
-            listState.scrollToItem(0)
-            listVisible = true
+            resetListVisibility()
         }
     }
 }
