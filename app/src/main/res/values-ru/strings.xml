@@ -215,4 +215,5 @@
     <string name="layout_preference_single">Один столбец</string>
     <string name="layout_preference_label">Предпочтительный макет</string>
     <string name="layout_preference_responsive">Отзывчивый</string>
+    <string name="auth_fields_username">Имя пользователя</string>
 </resources>
