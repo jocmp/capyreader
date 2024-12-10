@@ -210,4 +210,8 @@
     <string name="reader_image_visibility_always_hide">Blokeeri pildid</string>
     <string name="reader_image_visibility_label">Pildid</string>
     <string name="reader_image_visibility_always_show">Näita alati pilte</string>
+    <string name="auth_fields_username">Kasutajanimi</string>
+    <string name="layout_preference_single">Üheveeruline liides</string>
+    <string name="layout_preference_responsive">Reageeriv kasutajaliides</string>
+    <string name="layout_preference_label">Eelistatud paigutus</string>
 </resources>

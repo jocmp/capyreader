@@ -213,4 +213,5 @@
     <string name="layout_preference_single">Единична колона</string>
     <string name="layout_preference_responsive">Отзивчив</string>
     <string name="layout_preference_label">Предпочитано оформление</string>
+    <string name="auth_fields_username">Потребителско име</string>
 </resources>
