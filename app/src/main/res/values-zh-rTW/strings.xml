@@ -212,4 +212,5 @@
     <string name="layout_preference_label">首選佈局</string>
     <string name="layout_preference_responsive">響應式</string>
     <string name="layout_preference_single">單列</string>
+    <string name="auth_fields_username">用戶名</string>
 </resources>
