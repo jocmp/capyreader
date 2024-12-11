@@ -109,6 +109,13 @@ object {
 iframe {
   max-width: 100%;
   margin: 0 auto;
+
+  &[src*="youtube-nocookie.com"], &[src*="youtube.com"] {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 0;
+    border-radius: var(--corner-radius);
+  }
 }
 
 .table__wrapper {
