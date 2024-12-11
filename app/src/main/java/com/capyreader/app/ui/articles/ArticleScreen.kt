@@ -1,16 +1,20 @@
 package com.capyreader.app.ui.articles
 
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.rememberLocalConnectivity
+import com.jocmp.capy.common.launchUI
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
 
@@ -30,10 +34,12 @@ fun ArticleScreen(
     val articles = viewModel.articles.collectAsLazyPagingItems()
     val nextFilter by viewModel.nextFilter.collectAsStateWithLifecycle(initialValue = null)
     val canSwipeToNextFeed = nextFilter != null
+    val scope = rememberCoroutineScope()
 
     val fullContent = rememberFullContent(viewModel)
     val articleActions = rememberArticleActions(viewModel)
     val connectivity = rememberLocalConnectivity()
+    val drawerState = rememberDrawerState(DrawerValue.Closed)
 
     CompositionLocalProvider(
         LocalFullContent provides fullContent,
@@ -53,6 +59,7 @@ fun ArticleScreen(
             onFeedRefresh = { completion ->
                 viewModel.refreshFeed(completion)
             },
+            drawerState = drawerState,
             onSelectFolder = viewModel::selectFolder,
             onSelectFeed = viewModel::selectFeed,
             onSelectArticleFilter = viewModel::selectArticleFilter,
@@ -62,7 +69,19 @@ fun ArticleScreen(
             onRequestClearArticle = viewModel::clearArticle,
             onToggleArticleRead = viewModel::toggleArticleRead,
             onToggleArticleStar = viewModel::toggleArticleStar,
-            onMarkAllRead = viewModel::markAllRead,
+            onMarkAllRead = { range ->
+                viewModel.markAllRead(
+                    onEndOfList = {
+                        scope.launchUI {
+                            drawerState.open()
+                        }
+                    },
+                    range = range,
+                    filter = filter,
+                    feeds = feeds,
+                    folders = folders,
+                )
+            },
             onRemoveFeed = viewModel::removeFeed,
             showUnauthorizedMessage = viewModel.showUnauthorizedMessage,
             onUnauthorizedDismissRequest = viewModel::dismissUnauthorizedMessage,
