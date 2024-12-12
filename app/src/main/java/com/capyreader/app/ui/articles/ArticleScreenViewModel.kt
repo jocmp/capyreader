@@ -53,6 +53,9 @@ class ArticleScreenViewModel(
 
     private val unreadSort = appPreferences.articleListOptions.unreadSort.stateIn(viewModelScope)
 
+    val openNextFeedOnReadAll =
+        appPreferences.articleListOptions.openNextFeedOnReadAll.stateIn(viewModelScope)
+
     private val _counts = filter.flatMapLatest { latestFilter ->
         account.countAll(latestFilter.status)
     }
@@ -166,7 +169,6 @@ class ArticleScreenViewModel(
     fun markAllRead(
         onEndOfList: () -> Unit,
         range: MarkRead,
-        filter: ArticleFilter,
         feeds: List<Feed>,
         folders: List<Folder>,
     ) {
@@ -181,13 +183,21 @@ class ArticleScreenViewModel(
                 Sync.markReadAsync(articleIDs, context)
             }
 
+            if (!openNextFeedOnReadAll.value) {
+                return@launchIO
+            }
+
             if (range is MarkRead.All) {
-                val nextFilter = NextFilter.findMarkReadDestination(filter, folders, feeds)
+                val nextFilter = NextFilter.findMarkReadDestination(
+                    latestFilter,
+                    folders,
+                    feeds,
+                )
 
                 if (nextFilter != null) {
                     selectNextFilter(nextFilter)
                 } else {
-                    if (filter.status == ArticleStatus.UNREAD) {
+                    if (latestFilter.status == ArticleStatus.UNREAD) {
                         selectArticleFilter()
                         updateArticlesSince(OffsetDateTime.now().plusSeconds(1))
                     }
