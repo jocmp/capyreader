@@ -1,0 +1,19 @@
+Added
+
+∙ Added support to fetch read articles from FreshRSS
+• Added option to mark read on scroll
+• Added option to hide images in articles
+• Add end-of-feed swipe gesture to move to the next feed
+• Add option to move next feed when marking all as read
+• Added option for single-column layouts on big screens
+
+Updated
+
+∙ Updated the full content parser to better support lead images and custom parsing
+• Updated translations for Arabic, Bulgarian, Chinese, Estonian, German, Italian, Norwegian, Russian, Serbian, and Spanish thanks to volunteers
+
+Fixed
+
+• Fixed bug where sticky content preference didn't reset after toggle
+∙ Fixed scroll position bug when switching between feeds
+• Improve FreshRSS login wording
