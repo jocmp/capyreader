@@ -69,6 +69,8 @@ fun GeneralSettingsPanel(
         updateMarkReadOnScroll = viewModel::updateMarkReadOnScroll,
         confirmMarkAllRead = viewModel.confirmMarkAllRead,
         markReadOnScroll = viewModel.markReadOnScroll,
+        openNextFeedOnReadAll = viewModel.openNextFeedOnReadAll,
+        updateOpenNextFeedOnReadAll = viewModel::updateOpenNextFeedOnReadAll,
         updateStickyFullContent = viewModel::updateStickyFullContent,
         enableStickyFullContent = viewModel.enableStickyFullContent,
     )
@@ -90,6 +92,8 @@ fun GeneralSettingsPanelView(
     enableStickyFullContent: Boolean,
     updateConfirmMarkAllRead: (enable: Boolean) -> Unit,
     updateMarkReadOnScroll: (enable: Boolean) -> Unit,
+    openNextFeedOnReadAll: Boolean,
+    updateOpenNextFeedOnReadAll: (enable: Boolean) -> Unit,
     confirmMarkAllRead: Boolean,
     markReadOnScroll: Boolean,
 
@@ -169,6 +173,11 @@ fun GeneralSettingsPanelView(
                     onCheckedChange = updateMarkReadOnScroll,
                     checked = markReadOnScroll,
                     title = stringResource(R.string.settings_mark_read_on_scroll),
+                )
+                TextSwitch(
+                    onCheckedChange = updateOpenNextFeedOnReadAll,
+                    checked = openNextFeedOnReadAll,
+                    title = stringResource(R.string.settings_open_next_feed_on_read_all),
                 )
             }
         }
@@ -309,5 +318,7 @@ private fun GeneralSettingsPanelPreview() {
         confirmMarkAllRead = true,
         updateStickyFullContent = {},
         enableStickyFullContent = true,
+        openNextFeedOnReadAll = false,
+        updateOpenNextFeedOnReadAll = {}
     )
 }

@@ -94,6 +94,7 @@ fun ArticleLayout(
     showUnauthorizedMessage: Boolean,
     onUnauthorizedDismissRequest: () -> Unit,
     canSwipeToNextFeed: Boolean,
+    openNextFeedOnReadAll: Boolean,
 ) {
     val skipInitialRefresh = refreshInterval == RefreshInterval.MANUALLY_ONLY
 
@@ -172,7 +173,11 @@ fun ArticleLayout(
     }
 
     fun markAllRead(range: MarkRead) {
-        if (range is MarkRead.All && filter !is ArticleFilter.Articles && canSwipeToNextFeed) {
+        val animateMarkRead = openNextFeedOnReadAll &&
+                canSwipeToNextFeed &&
+                canOpenNextFeed(filter, range)
+
+        if (animateMarkRead) {
             coroutineScope.launchUI {
                 openNextStatus {
                     onMarkAllRead(range)
@@ -493,6 +498,13 @@ fun ArticleLayout(
             resetListVisibility()
         }
     }
+}
+
+fun canOpenNextFeed(
+    filter: ArticleFilter,
+    range: MarkRead,
+): Boolean {
+    return range is MarkRead.All && filter !is ArticleFilter.Articles
 }
 
 fun isFeedActive(

@@ -34,6 +34,7 @@ fun ArticleScreen(
     val articles = viewModel.articles.collectAsLazyPagingItems()
     val nextFilter by viewModel.nextFilter.collectAsStateWithLifecycle(initialValue = null)
     val canSwipeToNextFeed = nextFilter != null
+    val openNextFeedOnReadAll by viewModel.openNextFeedOnReadAll.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
 
     val fullContent = rememberFullContent(viewModel)
@@ -76,10 +77,9 @@ fun ArticleScreen(
                             drawerState.open()
                         }
                     },
-                    range = range,
-                    filter = filter,
                     feeds = feeds,
                     folders = folders,
+                    range = range,
                 )
             },
             onRemoveFeed = viewModel::removeFeed,
@@ -87,6 +87,7 @@ fun ArticleScreen(
             onUnauthorizedDismissRequest = viewModel::dismissUnauthorizedMessage,
             onRequestNextFeed = viewModel::requestNextFeed,
             canSwipeToNextFeed = canSwipeToNextFeed,
+            openNextFeedOnReadAll = openNextFeedOnReadAll,
             search = ArticleSearch(
                 query = searchQuery,
                 clear = { viewModel.clearSearch() },

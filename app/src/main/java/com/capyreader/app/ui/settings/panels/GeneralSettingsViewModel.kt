@@ -37,6 +37,9 @@ class GeneralSettingsViewModel(
     var markReadOnScroll by mutableStateOf(appPreferences.articleListOptions.markReadOnScroll.get())
         private set
 
+    var openNextFeedOnReadAll by mutableStateOf(appPreferences.articleListOptions.openNextFeedOnReadAll.get())
+        private set
+
     var enableStickyFullContent by mutableStateOf(appPreferences.enableStickyFullContent.get())
         private set
 
@@ -68,6 +71,12 @@ class GeneralSettingsViewModel(
         appPreferences.articleListOptions.confirmMarkAllRead.set(confirm)
 
         confirmMarkAllRead = confirm
+    }
+
+    fun updateOpenNextFeedOnReadAll(enable: Boolean) {
+        appPreferences.articleListOptions.openNextFeedOnReadAll.set(enable)
+
+        openNextFeedOnReadAll = enable
     }
 
     fun updateStickyFullContent(enable: Boolean) {
