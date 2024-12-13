@@ -6,6 +6,7 @@ Added
 • Add end-of-feed swipe gesture to move to the next feed
 • Add option to move next feed when marking all as read
 • Added option for single-column layouts on big screens
+• Added Tamil as a language (thanks to a kind volunteer!)
 
 Updated
 
