@@ -127,7 +127,7 @@
     <string name="settings_panel_gestures_title">Жесты</string>
     <string name="settings_account_title">Аккаунт</string>
     <string name="settings_list_top_bar_title">Настройки</string>
-    <string name="settings_auto_delete_articles_title">Продолжить читать статьи</string>
+    <string name="settings_auto_delete_articles_title">Сохранять прочитанные статьи</string>
     <string name="settings_auto_delete_option_keep_for_one_week">1 неделя</string>
     <string name="settings_auto_delete_option_keep_for_two_week">2 недели</string>
     <string name="settings_auto_delete_option_keep_for_three_month">3 месяца</string>
@@ -202,7 +202,7 @@
     <string name="add_account_freshrss_signup_prompt">У вас нет экземпляра FreshRSS?</string>
     <string name="add_account_local_subtitle">На вашем устройстве</string>
     <string name="edit_feed_tag_section">Тег</string>
-    <string name="settings_gestures_reader_tap_to_page_title">Касание для прокрутки (для E-ink)</string>
+    <string name="settings_gestures_reader_tap_to_page_title">Прокрутка касанием (для E-ink)</string>
     <string name="settings_enable_high_contrast_dark_theme">Включить высококонтрастную темную тему</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Коснитесь нижних углов, чтобы перемещаться по содержимому статьи</string>
     <string name="settings_mark_read_on_scroll">Отметить как прочитанное при прокрутке</string>
@@ -216,4 +216,5 @@
     <string name="layout_preference_label">Предпочтительный макет</string>
     <string name="layout_preference_responsive">Отзывчивый</string>
     <string name="auth_fields_username">Имя пользователя</string>
+    <string name="settings_open_next_feed_on_read_all">Открыть следующий канал, когда все прочитано</string>
 </resources>
