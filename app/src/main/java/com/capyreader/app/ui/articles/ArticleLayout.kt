@@ -72,7 +72,7 @@ fun ArticleLayout(
     feeds: List<Feed>,
     allFeeds: List<Feed>,
     allFolders: List<Folder>,
-    pagingArticles: LazyPagingItems<Article>,
+    articles: LazyPagingItems<Article>,
     article: Article?,
     search: ArticleSearch,
     statusCount: Long,
@@ -126,9 +126,7 @@ fun ArticleLayout(
     }
 
     val webViewState = rememberWebViewState(
-        onNavigateToMedia = {
-            media = it
-        },
+        onNavigateToMedia = { media = it },
     )
 
     fun scrollToArticle(index: Int) {
@@ -152,12 +150,12 @@ fun ArticleLayout(
 
     suspend fun openNextStatus(action: suspend () -> Unit) {
         listVisible = false
-        delay(200)
+        delay(150)
         action()
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
 
         coroutineScope.launch {
-            delay(500)
+            delay(300)
             if (!listVisible) {
                 resetListVisibility()
             }
@@ -201,7 +199,7 @@ fun ArticleLayout(
         }
     }
 
-    val refreshFeeds = {
+    fun refreshFeeds() {
         isRefreshing = true
         onFeedRefresh {
             isRefreshing = false
@@ -215,8 +213,9 @@ fun ArticleLayout(
 
     fun openNextList(action: suspend () -> Unit) {
         coroutineScope.launchUI {
-            openNextStatus(action)
+            listVisible = false
             drawerState.close()
+            openNextStatus(action)
         }
     }
 
@@ -230,9 +229,15 @@ fun ArticleLayout(
         }
     }
 
-    val closeDrawer = {
-        coroutineScope.launch {
+    fun closeDrawer() {
+        coroutineScope.launchUI {
             drawerState.close()
+        }
+    }
+
+    fun openDrawer() {
+        coroutineScope.launchUI {
+            drawerState.open()
         }
     }
 
@@ -254,7 +259,7 @@ fun ArticleLayout(
         }
     }
 
-    val selectArticle = { articleID: String ->
+    fun selectArticle(articleID: String) {
         onSelectArticle(articleID)
         if (search.isActive) {
             focusManager.clearFocus()
@@ -334,9 +339,7 @@ fun ArticleLayout(
                             scrollToTop()
                         },
                         onNavigateToDrawer = {
-                            coroutineScope.launch {
-                                drawerState.open()
-                            }
+                            openDrawer()
                         },
                         onRequestSnackbar = { showSnackbar(it) },
                         onRemoveFeed = onRemoveFeed,
@@ -360,8 +363,12 @@ fun ArticleLayout(
             ) { innerPadding ->
                 PullToRefreshBox(
                     isRefreshing = isRefreshing,
-                    onRefresh = refreshFeeds,
-                    modifier = Modifier.padding(innerPadding)
+                    onRefresh = {
+                        refreshFeeds()
+                    },
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding)
                 ) {
                     if (isInitialized && !isRefreshing && allFeeds.isEmpty()) {
                         EmptyOnboardingView {
@@ -373,6 +380,7 @@ fun ArticleLayout(
                         }
                     } else {
                         PullToNextFeedBox(
+                            modifier = Modifier.fillMaxSize(),
                             enabled = canSwipeToNextFeed,
                             onRequestNext = {
                                 requestNextFeed()
@@ -385,7 +393,7 @@ fun ArticleLayout(
                                 modifier = Modifier.fillMaxSize(),
                             ) {
                                 ArticleList(
-                                    articles = pagingArticles,
+                                    articles = articles,
                                     selectedArticleKey = article?.id,
                                     listState = listState,
                                     onMarkAllRead = { range ->
@@ -410,7 +418,7 @@ fun ArticleLayout(
                 }
             } else if (article != null) {
                 val indexedArticles =
-                    rememberIndexedArticles(article = article, articles = pagingArticles)
+                    rememberIndexedArticles(article = article, articles = articles)
 
                 ArticleView(
                     article = article,
@@ -493,7 +501,7 @@ fun ArticleLayout(
         toggleDrawer()
     }
 
-    LaunchedEffect(pagingArticles.itemCount) {
+    LaunchedEffect(articles.itemCount) {
         if (!listVisible) {
             resetListVisibility()
         }

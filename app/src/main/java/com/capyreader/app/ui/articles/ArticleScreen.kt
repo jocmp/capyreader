@@ -53,7 +53,7 @@ fun ArticleScreen(
             feeds = feeds,
             allFolders = allFolders,
             allFeeds = allFeeds,
-            pagingArticles = articles,
+            articles = articles,
             article = viewModel.article,
             statusCount = statusCount,
             refreshInterval = appPreferences.refreshInterval.get(),
