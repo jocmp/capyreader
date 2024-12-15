@@ -56,12 +56,20 @@ sealed class NextFilter {
                 }
 
                 is ArticleFilter.Folders -> {
-                    val firstFeed = folders
+                    val firstFolderFeed = folders
                         .find { it.title == filter.folderTitle }
                         ?.feeds
-                        ?.firstOrNull() ?: return null
+                        ?.firstOrNull()
 
-                    FeedFilter(feedID = firstFeed.id, folderTitle = filter.folderTitle)
+                    val nextFeed = feeds.firstOrNull()
+
+                    if (firstFolderFeed != null) {
+                        FeedFilter(feedID = firstFolderFeed.id, folderTitle = filter.folderTitle)
+                    } else if (nextFeed != null) {
+                        FeedFilter(feedID = nextFeed.id, folderTitle = null)
+                    } else {
+                        null
+                    }
                 }
 
                 is ArticleFilter.Feeds -> findNextFeed(filter, folders, feeds)
