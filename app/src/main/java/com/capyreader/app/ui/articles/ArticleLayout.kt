@@ -44,10 +44,10 @@ import com.capyreader.app.common.Saver
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
-import com.capyreader.app.ui.articles.detail.resetScrollBehaviorListener
 import com.capyreader.app.ui.articles.list.EmptyOnboardingView
 import com.capyreader.app.ui.articles.list.FeedListTopBar
 import com.capyreader.app.ui.articles.list.PullToNextFeedBox
+import com.capyreader.app.ui.articles.list.resetScrollBehaviorListener
 import com.capyreader.app.ui.articles.media.ArticleMediaView
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.rememberWebViewState
