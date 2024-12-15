@@ -1,4 +1,4 @@
-package com.capyreader.app.ui.articles.detail
+package com.capyreader.app.ui.articles.list
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -24,7 +24,7 @@ fun resetScrollBehaviorListener(
 
     val resetScrollBehaviorOffset = {
         val maxCardSize = listState.layoutInfo.visibleItemsInfo.maxOfOrNull { it.size } ?: 0
-        val nextContentOffset = -(maxCardSize * listState.firstVisibleItemIndex).toFloat()
+        val nextContentOffset = -( maxCardSize * listState.firstVisibleItemIndex).toFloat()
         scrollBehavior.state.contentOffset = nextContentOffset
     }
 

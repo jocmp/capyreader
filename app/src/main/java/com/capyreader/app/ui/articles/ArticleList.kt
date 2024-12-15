@@ -2,8 +2,12 @@ package com.capyreader.app.ui.articles
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -13,8 +17,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
+import com.capyreader.app.R
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.jocmp.capy.Article
@@ -33,10 +45,14 @@ fun ArticleList(
     onMarkAllRead: (range: MarkRead) -> Unit,
     selectedArticleKey: String?,
     listState: LazyListState,
+    appPreferences: AppPreferences = koinInject(),
 ) {
     val composableScope = rememberCoroutineScope()
     val articleOptions = rememberArticleOptions()
     val currentTime = rememberCurrentTime()
+    val localDensity = LocalDensity.current
+    var listHeight by remember { mutableStateOf(0.dp) }
+    val enableMarkReadOnScroll by appPreferences.articleListOptions.markReadOnScroll.collectChangesWithDefault()
 
     val selectArticle = { articleID: String ->
         composableScope.launch {
@@ -46,8 +62,12 @@ fun ArticleList(
 
     LazyScrollbar(state = listState) {
         LazyColumn(
-            modifier = Modifier.fillMaxSize(),
             state = listState,
+            modifier = Modifier
+                .fillMaxSize()
+                .onGloballyPositioned { coordinates ->
+                    listHeight = with(localDensity) { coordinates.size.height.toDp() }
+                }
         ) {
             items(count = articles.itemCount) { index ->
                 val item = articles[index]
@@ -67,10 +87,17 @@ fun ArticleList(
                     }
                 }
             }
+
+            if (enableMarkReadOnScroll && articles.itemCount > 0) {
+                item {
+                    FeedOverScrollBox(height = listHeight)
+                }
+            }
         }
     }
 
     MarkReadOnScroll(
+        enabled = enableMarkReadOnScroll,
         articles = articles,
         listState
     ) { lastReadID ->
@@ -78,17 +105,32 @@ fun ArticleList(
     }
 }
 
+@Composable
+fun FeedOverScrollBox(height: Dp) {
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .height(height)
+    ) {
+        Text(
+            stringResource(R.string.end_of_feed_text),
+            fontStyle = FontStyle.Italic,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 32.dp)
+        )
+    }
+}
+
 @OptIn(FlowPreview::class)
 @Composable
 fun MarkReadOnScroll(
+    enabled: Boolean,
     articles: LazyPagingItems<Article>,
     listState: LazyListState,
-    appPreferences: AppPreferences = koinInject(),
     onRead: (lastReadArticleID: String) -> Unit
 ) {
-    val enable by appPreferences.articleListOptions.markReadOnScroll.collectChangesWithDefault()
-
-    if (!enable) {
+    if (!enabled) {
         return
     }
 

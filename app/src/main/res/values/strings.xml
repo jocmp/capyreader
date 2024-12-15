@@ -219,4 +219,5 @@
     <string name="layout_preference_responsive">Responsive</string>
     <string name="layout_preference_single">Single Column</string>
     <string name="layout_preference_label">Preferred Layout</string>
+    <string name="end_of_feed_text">All caught up!</string>
 </resources>
