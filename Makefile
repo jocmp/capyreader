@@ -14,7 +14,7 @@ build-mercury:
 
 .PHONY: deps
 deps: ## Install bumpver
-	pip install bumpver==2023.1129
+	pip install bumpver==2024.1130
 
 .PHONY: bump-release-dev
 bump-release-dev: ## Bump GitHub version
