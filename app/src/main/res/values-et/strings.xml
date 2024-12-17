@@ -214,4 +214,6 @@
     <string name="layout_preference_single">Üheveeruline liides</string>
     <string name="layout_preference_responsive">Reageeriv kasutajaliides</string>
     <string name="layout_preference_label">Eelistatud paigutus</string>
+    <string name="settings_open_next_feed_on_read_all">Kõikide artiklite loetuks märkimisel ava järgmine uudisvoog</string>
+    <string name="end_of_feed_text">Eks kõik olegi nüüd loetud!</string>
 </resources>
