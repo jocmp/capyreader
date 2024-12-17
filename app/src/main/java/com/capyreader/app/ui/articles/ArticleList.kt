@@ -144,7 +144,7 @@ fun MarkReadOnScroll(
                     return@collect
                 }
 
-                articles[index]?.let { onRead(MarkRead.After(it.id)) }
+                articles.getOrNull(index)?.let { onRead(MarkRead.After(it.id)) }
             }
     }
 }
@@ -182,4 +182,8 @@ fun rememberArticleOptions(appPreferences: AppPreferences = koinInject()): Artic
         imagePreview = imagePreview,
         fontScale = fontScale,
     )
+}
+
+private fun <T : Any> LazyPagingItems<T>.getOrNull(index: Int): T? {
+    return if (index in 0..<itemCount) get(index) else null
 }
