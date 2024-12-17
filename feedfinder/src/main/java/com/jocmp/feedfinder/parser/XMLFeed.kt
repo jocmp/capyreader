@@ -11,8 +11,7 @@ internal class XMLFeed(
     private val channel: RssChannel?
 ) : Feed {
     override fun isValid(): Boolean {
-        return channel != null &&
-                hasEntries()
+        return channel != null
     }
 
     override val name: String
