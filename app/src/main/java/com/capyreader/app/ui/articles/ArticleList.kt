@@ -100,8 +100,8 @@ fun ArticleList(
         enabled = enableMarkReadOnScroll,
         articles = articles,
         listState
-    ) { lastReadID ->
-        onMarkAllRead(MarkRead.After(lastReadID))
+    ) { range ->
+        onMarkAllRead(range)
     }
 }
 
@@ -128,7 +128,7 @@ fun MarkReadOnScroll(
     enabled: Boolean,
     articles: LazyPagingItems<Article>,
     listState: LazyListState,
-    onRead: (lastReadArticleID: String) -> Unit
+    onRead: (range: MarkRead) -> Unit
 ) {
     if (!enabled) {
         return
@@ -136,7 +136,7 @@ fun MarkReadOnScroll(
 
     LaunchedEffect(listState) {
         snapshotFlow { listState.firstVisibleItemIndex }
-            .debounce(1_500)
+            .debounce(500)
             .collect { firstVisibleIndex ->
                 val index = firstVisibleIndex - 1
 
@@ -144,7 +144,7 @@ fun MarkReadOnScroll(
                     return@collect
                 }
 
-                articles[index]?.let { onRead(it.id) }
+                articles[index]?.let { onRead(MarkRead.After(it.id)) }
             }
     }
 }

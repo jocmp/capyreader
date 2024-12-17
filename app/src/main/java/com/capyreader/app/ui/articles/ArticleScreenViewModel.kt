@@ -199,7 +199,6 @@ class ArticleScreenViewModel(
                 } else {
                     if (latestFilter.status == ArticleStatus.UNREAD) {
                         selectArticleFilter()
-                        updateArticlesSince(OffsetDateTime.now().plusSeconds(1))
                     }
                     onEndOfList()
                 }
@@ -398,8 +397,8 @@ class ArticleScreenViewModel(
         clearArticle()
     }
 
-    private fun updateArticlesSince(since: OffsetDateTime = OffsetDateTime.now()) {
-        articlesSince.value = since
+    private fun updateArticlesSince() {
+        articlesSince.value = OffsetDateTime.now().plusSeconds(1)
     }
 
     private fun copyFolderCounts(
