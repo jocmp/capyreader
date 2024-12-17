@@ -1,0 +1,3 @@
+• Adds Galician and Polish translations to the app. Thanks!
+• Updated translations for Bulgarian, Estonian, Russian and Chinese thanks to volunteers
+• Ensures 
