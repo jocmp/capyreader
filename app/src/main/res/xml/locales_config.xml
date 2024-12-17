@@ -7,9 +7,11 @@
     <locale android:name="en"/>
     <locale android:name="es"/>
     <locale android:name="et"/>
+    <locale android:name="gl" />
     <locale android:name="fr"/>
     <locale android:name="it"/>
     <locale android:name="pt-BR"/>
+    <locale android:name="pl" />
     <locale android:name="sr-Latn"/>
     <locale android:name="ta"/>
     <locale android:name="tr"/>
