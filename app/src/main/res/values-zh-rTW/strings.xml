@@ -214,4 +214,5 @@
     <string name="layout_preference_single">單列</string>
     <string name="auth_fields_username">用戶名</string>
     <string name="settings_open_next_feed_on_read_all">全部已讀後跳轉下個源</string>
+    <string name="end_of_feed_text">暫時沒有新文章！</string>
 </resources>

@@ -208,4 +208,5 @@
     <string name="add_account_feedbin_signup_prompt">Non tes unha conta Feedbin?</string>
     <string name="notifications_channel_title_feed_update">Actualización das Canles</string>
     <string name="settings_section_privacy">Privacidade</string>
+    <string name="end_of_feed_text">Estás ao día!</string>
 </resources>

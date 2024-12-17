@@ -212,4 +212,6 @@
     <string name="layout_preference_responsive">Adaptable (Responsive)</string>
     <string name="layout_preference_label">Disposición preferida</string>
     <string name="layout_preference_single">Columna única</string>
+    <string name="settings_open_next_feed_on_read_all">Abrir el siguiente feed para leer todo</string>
+    <string name="end_of_feed_text">¡Estás al día!</string>
 </resources>
