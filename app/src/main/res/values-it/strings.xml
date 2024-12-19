@@ -186,7 +186,7 @@
     <string name="notifications_permissions_disabled_call_to_action">Impostazioni</string>
     <string name="article_list_row_swipe_open_externally">Apri l\'articolo nel browser</string>
     <string name="article_view_open_externally">Apri esternamente</string>
-    <string name="settings_confirm_mark_all_read">Segna tutto come già letto</string>
+    <string name="settings_confirm_mark_all_read">Chiedi conferma</string>
     <string name="account_source_freshrss">FreshRSS</string>
     <string name="settings_section_account_server">Server</string>
     <string name="auth_fields_api_url">Server</string>
@@ -204,7 +204,7 @@
     <string name="settings_gestures_reader_tap_to_page_subtitle">Tocca gli angoli inferiori per navigare nel contenuto dell\'articolo</string>
     <string name="settings_gestures_reader_tap_to_page_title">Dispositivi E-Ink tocca per scorrere</string>
     <string name="settings_enable_high_contrast_dark_theme">Abilita il tema scuro ad alto contrasto</string>
-    <string name="settings_mark_read_on_scroll">Marca come letto scorrendo</string>
+    <string name="settings_mark_read_on_scroll">Scorrendo verso il basso</string>
     <string name="settings_section_mark_all_as_read">Marca tutto come letto</string>
     <string name="settings_section_browser">Browser</string>
     <string name="reader_image_visibility_always_show">Mostra sempre</string>
@@ -216,5 +216,5 @@
     <string name="layout_preference_single">Colonna singola</string>
     <string name="layout_preference_label">Layout preferito</string>
     <string name="end_of_feed_text">Tutti presi!</string>
-    <string name="settings_open_next_feed_on_read_all">Aprire il prossimo feed su leggi tutto</string>
+    <string name="settings_open_next_feed_on_read_all">Segna e apri il prossimo feed</string>
 </resources>
