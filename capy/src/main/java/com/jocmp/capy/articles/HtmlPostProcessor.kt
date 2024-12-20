@@ -4,7 +4,6 @@ import org.jsoup.nodes.Document
 
 object HtmlPostProcessor {
     fun clean(document: Document, hideImages: Boolean) {
-        cleanEmbeds(document)
         cleanStyles(document)
         cleanLinks(document)
         if (hideImages) {
