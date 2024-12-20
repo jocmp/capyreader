@@ -9,13 +9,13 @@ import kotlin.test.assertEquals
 class CleanLinksTest {
     @Test
     fun `makes all subsequent links lazy loaded`() {
-        val document = html {
+        val document = html(
             """
            <img src="https://example.com/1.png">
            <img src="https://example.com/2.png">
            <img src="https://example.com/3.png">
            """
-        }
+        )
 
         cleanLinks(document)
 
@@ -30,11 +30,11 @@ class CleanLinksTest {
 
     @Test
     fun `moves lazy-loaded src to src attribute`() {
-        val document = html {
+        val document = html (
             """
             <img data-src="https://example.com/1.png">
             """
-        }
+        )
 
         cleanLinks(document)
 
@@ -47,14 +47,14 @@ class CleanLinksTest {
 
     @Test
     fun `pulls nested images out of links`() {
-        val document = html {
+        val document = html (
             """
             <img src="https://example.com/1.png">
             <a href=""https://example.com/nested.png">
                 <img src="https://example.com/nested.png">
             </a>
             """
-        }
+        )
 
         cleanLinks(document)
 
