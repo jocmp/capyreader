@@ -5,11 +5,11 @@ import org.jsoup.nodes.Document
 import kotlin.test.assertEquals
 
 object HtmlHelpers {
-    fun html(content: () -> String): Document {
+    fun html(content: String): Document {
         val documentString = """
         <html>
         <body>
-        ${content()}
+        $content
         </body>
         </html>
     """.trimIndent()

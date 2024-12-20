@@ -159,6 +159,8 @@ class WebViewState(
 
         scope.launch {
             withContext(Dispatchers.IO) {
+
+
                 val html = renderer.render(
                     article,
                     hideImages = !showImages,
