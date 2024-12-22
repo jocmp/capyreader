@@ -5,7 +5,6 @@ import org.junit.Test
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
-import kotlin.math.exp
 import kotlin.test.assertEquals
 
 class TimeHelpersTest {
@@ -99,6 +98,25 @@ class TimeHelpersTest {
 
         assertEquals(expected = expected, actual = result)
     }
+
+    @Test
+    fun `RFC1123 with timezone abbreviation`() {
+        val result =  "Sun, 22 Dec 2024 08:18:56 EDT".toDateTime
+
+        val expected = ZonedDateTime.of(
+            2024,
+            12,
+            22,
+            13,
+            18,
+            56,
+            0,
+            ZoneOffset.UTC
+        )
+
+        assertEquals(expected = expected, actual = result)
+    }
+
 
     @Test
     fun `Date only`() {
