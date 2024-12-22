@@ -96,6 +96,16 @@ pre {
   padding: 1em;
 }
 
+img,
+figure,
+video,
+div,
+object {
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
 .iframe-embed {
   display: block;
   position: relative;
@@ -121,22 +131,12 @@ pre {
     top: 0;
     margin: auto;
     width: 4rem;
-    height: 4em !important;
+    aspect-ratio: 1;
     background-image: url("/assets/play-arrow.svg");
     background-repeat: no-repeat;
     background-size: 3em;
     background-position: center;
   }
-}
-
-img,
-figure,
-video,
-div,
-object {
-  max-width: 100%;
-  height: auto !important;
-  margin: 0 auto;
 }
 
 iframe {
