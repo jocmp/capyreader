@@ -35,7 +35,7 @@ class WrapTablesTest {
             </table>
             """.trimIndent()
 
-        val document = html { table }
+        val document = html(table)
 
         wrapTables(document)
 

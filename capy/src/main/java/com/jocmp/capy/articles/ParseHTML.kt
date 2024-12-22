@@ -18,16 +18,19 @@ fun parseHtml(article: Article, document: Document, hideImages: Boolean): String
             extracted.id = "article-body-content"
             extracted.innerHTML = article.content;
 
+            let hasEmbed = cleanEmbeds(extracted);
+
             let shouldAddImage = article.lead_image_url &&
                 !hideImages &&
-                ![...extracted.querySelectorAll("img")].some(img => img.src.includes(article.lead_image_url));
+                !hasEmbed &&
+                ![...extracted.querySelectorAll("img")].some(img => img.src.includes(article.lead_image_url));            
 
             if (shouldAddImage) {
               let leadImage = document.createElement("img");
               leadImage.src = article.lead_image_url;
               extracted.prepend(leadImage);
             }
-
+            
             let content = document.getElementById("article-body-content");
             content.replaceWith(extracted);
           });
