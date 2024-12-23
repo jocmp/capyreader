@@ -8,10 +8,6 @@ FASTLANE ?= bundle exec fastlane
 assets:
 	$(MAKE) -C article_forge clean build
 
-.PHONY: build-mercury
-build-mercury:
-	$(MAKE) -C article_forge build-mercury
-
 .PHONY: deps
 deps: ## Install bumpver
 	pip install bumpver==2024.1130
