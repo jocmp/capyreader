@@ -5,9 +5,18 @@ import org.junit.Test
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Locale
+import kotlin.test.AfterTest
 import kotlin.test.assertEquals
 
 class TimeHelpersTest {
+    private val defaultLocale = Locale.getDefault()
+
+    @AfterTest
+    fun teardown() {
+        Locale.setDefault(defaultLocale)
+    }
+
     @Test
     fun `parseISODate parses an offset ISO timestamp to UTC`() {
         val result = "2023-12-25T09:00:00-05:00".toDateTime
@@ -117,6 +126,46 @@ class TimeHelpersTest {
         assertEquals(expected = expected, actual = result)
     }
 
+
+    @Test
+    fun `RFC1123 with timezone abbreviation non-US locale`() {
+        Locale.setDefault(Locale("en", "AU"))
+
+        val result =  "Sun, 22 Dec 2024 08:18:56 EDT".toDateTime
+
+        val expected = ZonedDateTime.of(
+            2024,
+            12,
+            22,
+            13,
+            18,
+            56,
+            0,
+            ZoneOffset.UTC
+        )
+
+        assertEquals(expected = expected, actual = result)
+    }
+
+    @Test
+    fun `RFC1123 with timezone abbreviation non-English locale`() {
+        Locale.setDefault(Locale("es", "US"))
+
+        val result =  "Sun, 22 Dec 2024 08:18:56 EDT".toDateTime
+
+        val expected = ZonedDateTime.of(
+            2024,
+            12,
+            22,
+            13,
+            18,
+            56,
+            0,
+            ZoneOffset.UTC
+        )
+
+        assertEquals(expected = expected, actual = result)
+    }
 
     @Test
     fun `Date only`() {

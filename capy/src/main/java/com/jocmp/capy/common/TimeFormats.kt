@@ -22,9 +22,11 @@ internal object TimeFormats {
             DateTimeFormatter.ISO_ZONED_DATE_TIME,
             DateTimeFormatter.RFC_1123_DATE_TIME,
             DateTimeFormatter.ofPattern(RSS_1123_UK).withLocale(Locale.UK),
-        ) + patterns(DATETIME_PATTERNS)
+        ) + usPatterns(DATETIME_PATTERNS)
 
-    fun dateFormatters() = patterns(DATE_PATTERNS)
+    fun dateFormatters() = usPatterns(DATE_PATTERNS)
 
-    private fun patterns(list: List<String>) = list.map { DateTimeFormatter.ofPattern(it) }
+    private fun usPatterns(list: List<String>) = list.map {
+        DateTimeFormatter.ofPattern(it).withLocale(Locale.US)
+    }
 }
