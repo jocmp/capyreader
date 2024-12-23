@@ -7,15 +7,18 @@
     <locale android:name="en"/>
     <locale android:name="es"/>
     <locale android:name="et"/>
-    <locale android:name="gl" />
     <locale android:name="fr"/>
+    <locale android:name="gl" />
+    <locale android:name="in"/>
     <locale android:name="it"/>
-    <locale android:name="pt-BR"/>
+    <locale android:name="ml" />
+    <locale android:name="nb" />
     <locale android:name="pl" />
+    <locale android:name="pt-BR"/>
+    <locale android:name="ru"/>
     <locale android:name="sr-Latn"/>
     <locale android:name="ta"/>
     <locale android:name="tr"/>
     <locale android:name="zh-CN" />
     <locale android:name="zh-TW"/>
-    <locale android:name="ru"/>
 </locale-config>
