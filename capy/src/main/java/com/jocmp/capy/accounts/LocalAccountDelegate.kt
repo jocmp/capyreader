@@ -6,6 +6,7 @@ import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.TimeHelpers.published
 import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.db.Database
+import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.capy.persistence.FeedRecords
 import com.jocmp.capy.persistence.TaggingRecords
 import com.jocmp.feedfinder.DefaultFeedFinder
@@ -27,6 +28,7 @@ class LocalAccountDelegate(
     private val feedFinder: FeedFinder = DefaultFeedFinder(httpClient),
 ) : AccountDelegate {
     private val feedRecords = FeedRecords(database)
+    private val articleRecords = ArticleRecords(database)
     private val taggingRecords = TaggingRecords(database)
 
     override suspend fun refresh(cutoffDate: ZonedDateTime?): Result<Unit> {
@@ -146,8 +148,6 @@ class LocalAccountDelegate(
         updatedAt: ZonedDateTime = nowUTC()
     ) {
         database.transactionWithErrorHandling {
-            val updatedAtSeconds = updatedAt.toEpochSecond()
-
             items.forEach { item ->
                 val publishedAt = published(item.pubDate, fallback = updatedAt).toEpochSecond()
                 val parsedItem = ParsedItem(
@@ -171,9 +171,9 @@ class LocalAccountDelegate(
                         published_at = publishedAt,
                     )
 
-                    database.articlesQueries.updateStatus(
-                        article_id = parsedItem.id,
-                        updated_at = updatedAtSeconds,
+                    articleRecords.updateStatus(
+                        articleID = parsedItem.id,
+                        updatedAt = updatedAt,
                         read = false
                     )
                 }

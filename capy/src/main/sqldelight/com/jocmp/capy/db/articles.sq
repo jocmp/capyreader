@@ -212,14 +212,20 @@ updateStatus:
 INSERT INTO article_statuses(
   article_id,
   updated_at,
+  last_read_at,
   read
 )
 VALUES (
 :article_id,
 :updated_at,
+:last_read_at,
 :read
 )
-ON CONFLICT(article_id) DO NOTHING;
+ON CONFLICT(article_id) DO UPDATE
+SET
+updated_at = updated_at,
+last_read_at = excluded.last_read_at,
+read = excluded.read;
 
 upsertUnread:
 INSERT INTO article_statuses(

@@ -13,8 +13,12 @@ data class Item(
     val content: Content? = null,
     val author: String? = null,
     val enclosure: List<Enclosure>? = null,
+    val categories: List<Category>? = null
 ) {
     val hexID = id.split("/").last()
+
+    val read: Boolean
+        get() = categories?.any { it.id == Stream.READ.id } ?: true
 
     @JsonClass(generateAdapter = true)
     data class Origin(

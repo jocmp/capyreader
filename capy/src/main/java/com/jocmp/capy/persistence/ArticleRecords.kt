@@ -33,6 +33,23 @@ internal class ArticleRecords internal constructor(
         ).executeAsOneOrNull()
     }
 
+    fun updateStatus(articleID: String, updatedAt: ZonedDateTime, read: Boolean) {
+        val updatedAtSeconds = updatedAt.toEpochSecond()
+
+        val lastReadAt = if (read) {
+            updatedAtSeconds
+        } else {
+            null
+        }
+
+        database.articlesQueries.updateStatus(
+            article_id = articleID,
+            updated_at = updatedAtSeconds,
+            last_read_at = lastReadAt,
+            read = read,
+        )
+    }
+
     fun findMissingArticles(): List<String> {
         return database
             .articlesQueries
@@ -56,7 +73,7 @@ internal class ArticleRecords internal constructor(
         database.articlesQueries.deleteAllArticles()
     }
 
-    fun deleteOldArticles(before: ZonedDateTime)  {
+    fun deleteOldArticles(before: ZonedDateTime) {
         database.transactionWithErrorHandling {
             val maxDate = before.toEpochSecond()
 
