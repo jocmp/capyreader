@@ -143,7 +143,7 @@
     <string name="article_vertical_swipe_full_content">Načíst celý obsah</string>
     <string name="article_view_unstar">Odstranit hvězdu</string>
     <string name="article_view_mark_as_unread">Označit jako nepřečtené</string>
-    <string name="settings_auto_delete_articles_title">Ponechat články</string>
+    <string name="settings_auto_delete_articles_title">Ponechat přečtené články</string>
     <string name="settings_auto_delete_option_keep_forever">Navždy</string>
     <string name="settings_auto_delete_option_keep_for_two_week">2 týdny</string>
     <string name="settings_auto_delete_option_keep_for_one_month">1 měsíc</string>
@@ -201,4 +201,17 @@
     <string name="settings_enable_refresh_call_to_action">Nejdříve je nutno zapnout pravidelné načítání</string>
     <string name="article_list_row_swipe_open_externally">Otevřít článek v prohlížeči</string>
     <string name="settings_enable_high_contrast_dark_theme">Zapnout vysoce kontrastní tmavé téma</string>
+    <string name="settings_open_next_feed_on_read_all">Otevřít příští kanál po přečtení</string>
+    <string name="settings_section_mark_all_as_read">Označit vše jako přečtené</string>
+    <string name="settings_section_browser">Prohlížeč</string>
+    <string name="layout_preference_single">Jeden sloupec</string>
+    <string name="auth_fields_username">Uživatelské jméno</string>
+    <string name="end_of_feed_text">Vše dohnáno!</string>
+    <string name="reader_image_visibility_show_on_wifi">Načítat obrázky pouze přes Wi-Fi</string>
+    <string name="reader_image_visibility_always_hide">Blokovat obrázky</string>
+    <string name="reader_image_visibility_always_show">Vždy načítat obrázky</string>
+    <string name="reader_image_visibility_label">Obrázky</string>
+    <string name="layout_preference_responsive">Responzivní</string>
+    <string name="layout_preference_label">Preferované rozvržení</string>
+    <string name="settings_mark_read_on_scroll">Označit jako přečtené při posunutí</string>
 </resources>
