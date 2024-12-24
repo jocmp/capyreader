@@ -299,7 +299,7 @@ internal class FeedbinAccountDelegate(
     private fun saveEntries(entries: List<Entry>) {
         database.transactionWithErrorHandling {
             entries.forEach { entry ->
-                val updated = TimeHelpers.nowUTC().toEpochSecond()
+                val updated = TimeHelpers.nowUTC()
 
                 database.articlesQueries.create(
                     id = entry.id.toString(),
@@ -314,9 +314,9 @@ internal class FeedbinAccountDelegate(
                     published_at = entry.published.toDateTime?.toEpochSecond(),
                 )
 
-                database.articlesQueries.updateStatus(
-                    article_id = entry.id.toString(),
-                    updated_at = updated,
+                articleRecords.createStatus(
+                    articleID = entry.id.toString(),
+                    updatedAt = updated,
                     read = true
                 )
             }

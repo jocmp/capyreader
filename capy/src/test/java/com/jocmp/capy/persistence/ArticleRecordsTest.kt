@@ -22,11 +22,13 @@ import kotlin.test.assertTrue
 
 class ArticleRecordsTest {
     private lateinit var database: Database
+    private lateinit var articleRecords: ArticleRecords
     private lateinit var articleFixture: ArticleFixture
 
     @Before
     fun setup() {
         database = InMemoryDatabaseProvider.build("777")
+        articleRecords = ArticleRecords(database)
         articleFixture = ArticleFixture(database)
     }
 
@@ -119,7 +121,7 @@ class ArticleRecordsTest {
                 publishedAt = startTime.minusDays(i.toLong()).toEpochSecond()
             )
         }
-        .reversed()
+            .reversed()
 
         val articleRecords = ArticleRecords(database)
 
@@ -388,6 +390,36 @@ class ArticleRecordsTest {
         assertNull(articleRecords.reload(newReadArticle))
         assertNotNull(articleRecords.reload(oldUnreadArticle))
         assertNotNull(articleRecords.reload(oldStarredArticle))
+    }
+
+    @Test
+    fun createStatus() {
+        val article = articleFixture.create(read = false)
+
+        articleRecords.createStatus(
+            articleID = article.id,
+            updatedAt = nowUTC(),
+            read = true,
+        )
+
+        assertFalse(articleRecords.reload(article)!!.read)
+    }
+
+    @Test
+    fun updateStatus() {
+        var article = articleFixture.create(read = false)
+        val updated = nowUTC()
+
+        articleRecords.updateStatus(
+            articleID = article.id,
+            updatedAt = updated,
+            read = true,
+        )
+
+        article = articleRecords.reload(article)!!
+
+        assertTrue(article.read)
+        assertEquals(expected = updated.toEpochSecond(), actual = article.updatedAt.toEpochSecond())
     }
 }
 
