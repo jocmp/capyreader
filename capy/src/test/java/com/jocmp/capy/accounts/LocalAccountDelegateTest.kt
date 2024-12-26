@@ -4,6 +4,7 @@ import com.jocmp.capy.AccountDelegate
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.FeedFixture
+import com.jocmp.capy.logging.CapyLog
 import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.capy.rssItemFixture
 import com.jocmp.feedfinder.FeedFinder
@@ -11,7 +12,9 @@ import com.jocmp.feedfinder.parser.Feed
 import com.jocmp.rssparser.model.RssChannel
 import com.jocmp.rssparser.model.RssItem
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkObject
 import kotlinx.coroutines.test.runTest
 import okhttp3.OkHttpClient
 import org.junit.Before
@@ -70,6 +73,9 @@ class LocalAccountDelegateTest {
 
     @Before
     fun setup() {
+        mockkObject(CapyLog)
+        every { CapyLog.warn(any(), any()) }.returns(Unit)
+
         database = InMemoryDatabaseProvider.build(accountID)
         feedFixture = FeedFixture(database)
         feedFinder = mockk<FeedFinder>()

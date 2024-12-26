@@ -39,7 +39,7 @@ class CrashLogExport(private val context: Context) {
             file.appendText(buildDebugInfo() + "\n\n")
             exception?.let { file.appendText("$it\n\n") }
 
-            Runtime.getRuntime().exec("logcat *:E -d -f ${file.absolutePath}").waitFor()
+            Runtime.getRuntime().exec("logcat ${BuildConfig.APPLICATION_ID}:I -d -f ${file.absolutePath}").waitFor()
 
             val uri = context.fileURI(file)
             context.startActivity(uri.toShareIntent(context, "text/plain"))

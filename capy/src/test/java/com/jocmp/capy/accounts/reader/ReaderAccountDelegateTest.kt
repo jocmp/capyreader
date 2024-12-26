@@ -7,6 +7,7 @@ import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.FeedFixture
+import com.jocmp.capy.logging.CapyLog
 import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.readerclient.Category
 import com.jocmp.readerclient.GoogleReader
@@ -23,7 +24,9 @@ import com.jocmp.readerclient.SubscriptionListResult
 import com.jocmp.readerclient.SubscriptionQuickAddResult
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkObject
 import kotlinx.coroutines.test.runTest
 import okhttp3.Headers
 import okhttp3.MediaType.Companion.toMediaType
@@ -95,6 +98,9 @@ class ReaderAccountDelegateTest {
 
     @BeforeTest
     fun setup() {
+        mockkObject(CapyLog)
+        every { CapyLog.warn(any(), any()) }.returns(Unit)
+
         database = InMemoryDatabaseProvider.build(accountID)
         feedFixture = FeedFixture(database)
         googleReader = mockk()

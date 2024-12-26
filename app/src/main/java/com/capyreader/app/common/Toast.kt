@@ -47,7 +47,7 @@ fun Context.toast(
     duration: Int = Toast.LENGTH_SHORT,
     block: (Toast) -> Unit = {},
 ): Toast {
-    return Toast.makeText(applicationContext, text.orEmpty(), duration).also {
+    return Toast.makeText(applicationContext, text, duration).also {
         block(it)
         it.show()
     }
