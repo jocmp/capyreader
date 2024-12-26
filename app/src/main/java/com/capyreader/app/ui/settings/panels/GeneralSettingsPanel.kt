@@ -35,6 +35,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.capyreader.app.BuildConfig
 import com.capyreader.app.Notifications
 import com.capyreader.app.R
 import com.capyreader.app.common.RowItem
@@ -205,6 +206,10 @@ fun GeneralSettingsPanelView(
                 ) {
                     Text(stringResource(R.string.settings_clear_all_articles_button))
                 }
+            }
+
+            if (BuildConfig.DEBUG) {
+                TestNotificationRow()
             }
         }
         Spacer(Modifier.height(16.dp))

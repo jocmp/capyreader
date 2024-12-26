@@ -10,14 +10,14 @@ class FeedRefresher(
     private val account: Account,
     applicationContext: Context,
 ) {
-    private val notifications = ArticleNotifications(account = account, applicationContext)
+    private val notificationHelper = NotificationHelper(account = account, applicationContext)
 
     suspend fun refresh() {
         val since = TimeHelpers.nowUTC()
 
         return withContext(Dispatchers.IO) {
             account.refresh()
-            notifications.notify(since = since)
+            notificationHelper.notify(since = since)
         }
     }
 }

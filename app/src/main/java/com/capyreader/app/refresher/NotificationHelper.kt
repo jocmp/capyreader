@@ -9,19 +9,20 @@ import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.Style
 import com.capyreader.app.MainActivity
+import com.capyreader.app.Notifications
 import com.capyreader.app.Notifications.FEED_UPDATE
 import com.capyreader.app.R
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.notificationManager
-import com.capyreader.app.refresher.ArticleNotifications.Companion.ARTICLE_ID_KEY
-import com.capyreader.app.refresher.ArticleNotifications.Companion.FEED_ID_KEY
+import com.capyreader.app.refresher.NotificationHelper.Companion.ARTICLE_ID_KEY
+import com.capyreader.app.refresher.NotificationHelper.Companion.FEED_ID_KEY
 import com.jocmp.capy.Account
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.notifications.ArticleNotification
 import java.time.ZonedDateTime
 
-class ArticleNotifications(
+class NotificationHelper(
     private val account: Account,
     private val applicationContext: Context,
 ) {
@@ -30,27 +31,20 @@ class ArticleNotifications(
     suspend fun notify(since: ZonedDateTime) {
         createChannel()
 
-        account.findNotifications(since = since)
-            .grouped()
-            .forEach {
-                notify(it)
-            }
+        val notifications = account.findNotifications(since = since)
+
+        if (notifications.isEmpty()) {
+            return
+        }
+
+        notifications.forEach {
+            sendNotification(it)
+        }
+
+        sendGroupNotification(notifications)
     }
 
-    private fun notify(group: FeedNotification) {
-        val builder = NotificationCompat.Builder(applicationContext, FEED_UPDATE.channelID)
-            .setContentTitle(group.title)
-            .setSmallIcon(R.drawable.newsmode)
-            .setGroup(group.id)
-            .setGroupSummary(true)
-            .setStyle(group.inboxStyle())
-
-        group.notifications.forEach { notifyArticle(it) }
-
-        notificationManager.notify(group.notificationID, builder.build())
-    }
-
-    private fun notifyArticle(notification: ArticleNotification) {
+    private fun sendNotification(notification: ArticleNotification) {
         val builder = NotificationCompat.Builder(applicationContext, FEED_UPDATE.channelID)
             .setContentText(notification.title)
             .setStyle(
@@ -58,13 +52,24 @@ class ArticleNotifications(
                     .bigText(notification.title)
             )
             .setSmallIcon(R.drawable.newsmode)
-            .setGroup(notification.feedID)
+            .setGroup(ARTICLE_REFRESH_GROUP)
             .setSubText(notification.feedTitle)
             .setContentInfo(notification.title)
             .setAutoCancel(true)
             .setContentIntent(notification.intent(applicationContext))
 
         notificationManager.notify(notification.notificationID, builder.build())
+    }
+
+    private fun sendGroupNotification(notifications: List<ArticleNotification>) {
+        val builder = NotificationCompat.Builder(applicationContext, FEED_UPDATE.channelID)
+            .setContentTitle("${notifications.size} new notifications")
+            .setSmallIcon(R.drawable.newsmode)
+            .setGroup(ARTICLE_REFRESH_GROUP)
+            .setGroupSummary(true)
+            .setStyle(groupInboxStyle(notifications))
+
+        notificationManager.notify(Notifications.FEED_UPDATE_GROUP_NOTIFICATION_ID, builder.build())
     }
 
     private fun createChannel() {
@@ -81,6 +86,7 @@ class ArticleNotifications(
     companion object {
         const val ARTICLE_ID_KEY = "article_id"
         const val FEED_ID_KEY = "feed_id"
+        private const val ARTICLE_REFRESH_GROUP = "article_refresh"
 
         fun handleResult(intent: Intent, appPreferences: AppPreferences) {
             val articleID = intent.getStringExtra(ARTICLE_ID_KEY) ?: return
@@ -99,14 +105,14 @@ class ArticleNotifications(
     }
 }
 
-private fun FeedNotification.inboxStyle(): Style {
+private fun groupInboxStyle(notifications: List<ArticleNotification>): Style {
     val style = NotificationCompat.InboxStyle()
 
     notifications.take(3).forEach {
         style.addLine(it.title)
     }
 
-    style.setSummaryText(title)
+//    style.setSummaryText(title)
 
     return style
 }
