@@ -10,6 +10,7 @@ import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.common.withResult
 import com.jocmp.capy.db.Database
+import com.jocmp.capy.logging.CapyLog
 import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.capy.persistence.FeedRecords
 import com.jocmp.capy.persistence.TaggingRecords
@@ -212,7 +213,10 @@ internal class ReaderAccountDelegate(
             title = subscription.title,
             feed_url = subscription.url,
             site_url = subscription.htmlUrl,
-            favicon_url = subscription.iconUrl.ifBlank { null }
+            favicon_url = subscription.iconUrl.ifBlank {
+                CapyLog.warn(tag("blank_icon"), mapOf("feed_url" to subscription.url))
+                null
+            }
         )
 
         upsertTaggings(subscription)
@@ -402,6 +406,7 @@ internal class ReaderAccountDelegate(
         try {
             postToken.set(googleReader.token().body())
         } catch (exception: IOException) {
+            CapyLog.error(tag("post_token"), exception)
             // continue
         }
     }
@@ -416,6 +421,10 @@ internal class ReaderAccountDelegate(
 
     companion object {
         const val MAX_PAGINATED_ITEM_LIMIT = 100
+
+        private const val TAG = "reader"
+
+        private fun tag(path: String) = "$TAG.$path"
     }
 }
 

@@ -6,6 +6,7 @@ import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.TimeHelpers.published
 import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.db.Database
+import com.jocmp.capy.logging.CapyLog
 import com.jocmp.capy.persistence.FeedRecords
 import com.jocmp.capy.persistence.TaggingRecords
 import com.jocmp.feedfinder.DefaultFeedFinder
@@ -42,7 +43,19 @@ class LocalAccountDelegate(
     ): AddFeedResult {
         try {
             val response = feedFinder.find(url = url)
+
             val feeds = response.getOrDefault(emptyList())
+
+            if (feeds.isEmpty()) {
+                CapyLog.warn(
+                    tag("find"),
+                    data = mapOf(
+                        "error_message" to response.exceptionOrNull()?.message
+                    )
+                )
+
+                return AddFeedResult.Failure(AddFeedResult.Error.FeedNotFound())
+            }
 
             if (feeds.size > 1) {
                 val choices = feeds.map {
@@ -50,7 +63,7 @@ class LocalAccountDelegate(
                 }
 
                 return AddFeedResult.MultipleChoices(choices)
-            } else if (feeds.size == 1) {
+            } else {
                 val resultFeed = feeds.first()
                 upsertFeed(resultFeed, title = title)
 
@@ -65,10 +78,9 @@ class LocalAccountDelegate(
                 } else {
                     AddFeedResult.Failure(AddFeedResult.Error.SaveFailure())
                 }
-            } else {
-                return AddFeedResult.Failure(AddFeedResult.Error.FeedNotFound())
             }
         } catch (e: UnknownHostException) {
+            CapyLog.error(tag("find"), e)
             return AddFeedResult.Failure(AddFeedResult.Error.NetworkError())
         }
     }
@@ -220,7 +232,15 @@ class LocalAccountDelegate(
             return
         }
 
+        CapyLog.warn(tag("favicon"), data = mapOf("invalid_favicon_url" to feed.faviconURL))
+
         feedRecords.clearFavicon(feed.id)
+    }
+
+    companion object {
+        private fun tag(path: String) = "$TAG.$path"
+
+        private const val TAG = "local_account"
     }
 }
 
