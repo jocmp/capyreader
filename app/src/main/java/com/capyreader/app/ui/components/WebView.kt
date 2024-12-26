@@ -20,7 +20,6 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.graphics.drawable.toBitmap
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewAssetLoader.AssetsPathHandler
-import androidx.webkit.WebViewAssetLoader.DEFAULT_DOMAIN
 import androidx.webkit.WebViewAssetLoader.ResourcesPathHandler
 import coil.executeBlocking
 import coil.imageLoader
@@ -43,19 +42,6 @@ import org.koin.core.component.inject
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
-
-/**
- * Doesn't really fetch from androidplatform.net. This is used as a placeholder domain:
- *
- * > Using http(s):// URLs to access local resources may conflict
- * > with a real website. This means that local files should only
- * > be hosted on domains your organization owns (at paths reserved for this purpose)
- * > or the default domain reserved for this: appassets.androidplatform.net
- *
- * * [How-to docs](https://developer.android.com/develop/ui/views/layout/webapps/load-local-content#mix-content)
- * * [JavaDoc](https://developer.android.com/reference/androidx/webkit/WebViewAssetLoader)
- */
-private const val ASSET_BASE_URL = "https://${DEFAULT_DOMAIN}"
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
@@ -100,6 +86,10 @@ class AccompanistWebViewClient(
         val asset = assetLoader.shouldInterceptRequest(request.url)
 
         if (asset != null) {
+            val headers = asset.responseHeaders ?: mutableMapOf()
+            headers["Access-Control-Allow-Origin"] = "*"
+            asset.responseHeaders = headers
+
             return asset
         }
 
@@ -159,8 +149,6 @@ class WebViewState(
 
         scope.launch {
             withContext(Dispatchers.IO) {
-
-
                 val html = renderer.render(
                     article,
                     hideImages = !showImages,
@@ -170,7 +158,7 @@ class WebViewState(
 
                 withContext(Dispatchers.Main) {
                     webView.loadDataWithBaseURL(
-                        ASSET_BASE_URL,
+                        article.url?.toString(),
                         html,
                         null,
                         "UTF-8",

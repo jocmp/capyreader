@@ -75,7 +75,7 @@ class ArticleRenderer(
         return when (fontFamily) {
             FontOption.SYSTEM_DEFAULT -> ""
             else -> """
-                    <link rel="preload" href="/res/font/${fontFamily.slug}.ttf" as="font" type="font/ttf" crossorigin>
+                    <link rel="preload" href="https://appassets.androidplatform.net/res/font/${fontFamily.slug}.ttf" as="font" type="font/ttf" crossorigin>
                 """.trimIndent()
         }
     }
