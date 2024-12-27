@@ -1,0 +1,6 @@
+• Allow user-provided network certificates
+• Improve favicon fallback state
+• Adds translations for Welsh thanks to a volunteer
+• Updated translations for Polish, French, Portuguese, Czech and German thanks to volunteers.
+• Fixed a bug cross-site origin bug when parsing some feeds
+• Improved client-local crash reporting
