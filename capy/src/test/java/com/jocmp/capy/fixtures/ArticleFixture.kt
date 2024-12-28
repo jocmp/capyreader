@@ -31,10 +31,10 @@ class ArticleFixture(private val database: Database) {
                 summary = summary,
                 url = "https://example.com/test-article"
             )
-            database.articlesQueries.updateStatus(
+            database.articlesQueries.createStatus(
                 article_id = id,
                 updated_at = publishedAt,
-                read = read
+                read = read,
             )
         }
 

@@ -208,7 +208,7 @@ summary = excluded.summary,
 image_url = excluded.image_url,
 published_at = published_at;
 
-updateStatus:
+createStatus:
 INSERT INTO article_statuses(
   article_id,
   updated_at,
@@ -220,6 +220,25 @@ VALUES (
 :read
 )
 ON CONFLICT(article_id) DO NOTHING;
+
+updateStatus:
+INSERT INTO article_statuses(
+  article_id,
+  updated_at,
+  last_read_at,
+  read
+)
+VALUES (
+:article_id,
+:updated_at,
+:last_read_at,
+:read
+)
+ON CONFLICT(article_id) DO UPDATE
+SET
+updated_at = updated_at,
+last_read_at = excluded.last_read_at,
+read = excluded.read;
 
 upsertUnread:
 INSERT INTO article_statuses(

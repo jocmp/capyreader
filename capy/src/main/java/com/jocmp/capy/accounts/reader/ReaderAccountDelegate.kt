@@ -337,7 +337,7 @@ internal class ReaderAccountDelegate(
     private fun saveItems(items: List<Item>) {
         database.transactionWithErrorHandling {
             items.forEach { item ->
-                val updated = TimeHelpers.nowUTC().toEpochSecond()
+                val updated = TimeHelpers.nowUTC()
 
                 database.articlesQueries.create(
                     id = item.hexID,
@@ -352,10 +352,10 @@ internal class ReaderAccountDelegate(
                     published_at = item.published
                 )
 
-                database.articlesQueries.updateStatus(
-                    article_id = item.hexID,
-                    updated_at = updated,
-                    read = true
+                articleRecords.updateStatus(
+                    articleID = item.hexID,
+                    updatedAt = updated,
+                    read = item.read
                 )
             }
         }

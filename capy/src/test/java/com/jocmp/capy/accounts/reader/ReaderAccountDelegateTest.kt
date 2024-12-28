@@ -176,6 +176,9 @@ class ReaderAccountDelegateTest {
                 title = "The Verge",
                 htmlUrl = "https://theverge.com",
             ),
+            categories = listOf(
+                "user/-/state/com.google/read"
+            )
         )
 
         stubReadingList(itemRefs, listOf(unreadItem, items.first()))
