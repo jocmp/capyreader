@@ -5,6 +5,7 @@ import com.jocmp.rssparser.RssParser
 import com.jocmp.rssparser.model.RssChannel
 import com.jocmp.rssparser.model.RssItem
 import java.net.URL
+import java.nio.charset.Charset
 
 internal class XMLFeed(
     override val feedURL: URL,
@@ -27,15 +28,10 @@ internal class XMLFeed(
     override val items: List<RssItem>
         get() = channel?.items.orEmpty()
 
-    private fun hasEntries(): Boolean {
-        return channel != null &&
-                channel.items.isNotEmpty()
-    }
-
     companion object {
-        suspend fun from(url: URL, body: String): XMLFeed {
+        suspend fun from(url: URL, body: String, charset: Charset?): XMLFeed {
             val channel = try {
-                RssParser().parse(body)
+                RssParser().parse(body, charset = charset)
             } catch (e: Exception) {
                 null
             }

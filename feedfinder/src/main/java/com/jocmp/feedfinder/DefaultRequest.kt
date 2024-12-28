@@ -5,6 +5,7 @@ import kotlinx.coroutines.CompletionHandler
 import kotlinx.coroutines.suspendCancellableCoroutine
 import okhttp3.Call
 import okhttp3.Callback
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import java.io.IOException
 import java.net.URL
@@ -20,9 +21,14 @@ internal class DefaultRequest(private val client: OkHttpClient = OkHttpClient())
             .get()
             .build()
 
-        val body = client.newCall(request).await().body?.string().orEmpty()
+        val response = client.newCall(request).await()
+        val body = response.body?.string().orEmpty()
 
-        return Response(url = parsedURL, body = body)
+        return Response(
+            url = parsedURL,
+            body = body,
+            charset = response.header("content-type")?.toMediaType()?.charset()
+        )
     }
 }
 

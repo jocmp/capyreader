@@ -4,6 +4,7 @@ import com.jocmp.rssparser.exception.HttpException
 import kotlinx.coroutines.suspendCancellableCoroutine
 import okhttp3.Call
 import okhttp3.Callback
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
@@ -33,8 +34,9 @@ internal class DefaultFetcher(
                 override fun onResponse(call: Call, response: Response) {
                     if (response.isSuccessful) {
                         val body = requireNotNull(response.body)
+                        val charset = response.header("content-type")?.toMediaType()?.charset()
                         continuation.resume(
-                            ParserInput(body.bytes())
+                            ParserInput(body.bytes(), charset = charset)
                         )
                     } else {
                         val exception = HttpException(

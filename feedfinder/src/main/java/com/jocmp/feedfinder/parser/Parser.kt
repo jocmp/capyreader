@@ -4,13 +4,14 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import java.io.IOException
 import java.net.URL
+import java.nio.charset.Charset
 
 internal object Parser {
     class NotFeedError : Throwable()
 
     @Throws(NotFeedError::class)
-    suspend fun parse(body: String, url: URL, validate: Boolean): Result {
-        val xmlFeed = XMLFeed.from(url, body)
+    suspend fun parse(body: String, url: URL, charset: Charset?, validate: Boolean): Result {
+        val xmlFeed = XMLFeed.from(url, body = body, charset = charset)
 
         if (xmlFeed.isValid()) {
             return Result.ParsedFeed(xmlFeed)
@@ -38,7 +39,7 @@ internal object Parser {
     }
 
     sealed class Result {
-        class ParsedFeed(val feed: Feed): Result()
-        class HTMLDocument(val document: Document): Result()
+        class ParsedFeed(val feed: Feed) : Result()
+        class HTMLDocument(val document: Document) : Result()
     }
 }

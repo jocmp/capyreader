@@ -1,13 +1,11 @@
 package com.jocmp.feedfinder.sources
 
-import com.jocmp.feedfinder.Request
 import com.jocmp.feedfinder.Response
 import com.jocmp.feedfinder.TestRequest
 import com.jocmp.feedfinder.testFile
 import com.jocmp.feedfinder.testResource
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
-import java.io.File
 import java.net.URL
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -18,7 +16,8 @@ class MetaLinksTest {
         val feedURL = "http://feeds.arstechnica.com/arstechnica/index"
         val response = Response(
             url = URL("https://arstechnica.com"),
-            body = testFile("arstechnica.html").readText()
+            body = testFile("arstechnica.html").readText(),
+            charset = null
         )
 
         val sites = mapOf(
@@ -38,7 +37,8 @@ class MetaLinksTest {
 
         val response = Response(
             url = URL("https://theverge.com"),
-            body = testFile("theverge.html").readText()
+            body = testFile("theverge.html").readText(),
+            charset = null,
         )
 
         val sites = mapOf(

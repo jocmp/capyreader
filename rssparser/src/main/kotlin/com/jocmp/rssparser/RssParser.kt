@@ -7,6 +7,7 @@ import com.jocmp.rssparser.model.RssChannel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.withContext
+import java.nio.charset.Charset
 import kotlin.coroutines.CoroutineContext
 
 class RssParser internal constructor(
@@ -31,14 +32,15 @@ class RssParser internal constructor(
     /**
      * Parses an RSS feed provided by [rawRssFeed] and returns an [RssChannel]
      */
-    suspend fun parse(rawRssFeed: String): RssChannel = withContext(coroutineContext) {
-        val parserInput = generateParserInputFromString(rawRssFeed)
-        return@withContext parser.parse(parserInput)
-    }
+    suspend fun parse(rawRssFeed: String, charset: Charset? = null): RssChannel =
+        withContext(coroutineContext) {
+            val parserInput = generateParserInputFromString(rawRssFeed, charset)
+            return@withContext parser.parse(parserInput)
+        }
 
-    private fun generateParserInputFromString(rawRssFeed: String): ParserInput {
+    private fun generateParserInputFromString(rawRssFeed: String, charset: Charset?): ParserInput {
         val cleanedXml = rawRssFeed.trim()
-        val inputStream = cleanedXml.byteInputStream(Charsets.UTF_8)
-        return ParserInput.from(inputStream)
+        val inputStream = cleanedXml.byteInputStream(charset ?: Charsets.UTF_8)
+        return ParserInput.from(inputStream, charset)
     }
 }

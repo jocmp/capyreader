@@ -11,7 +11,7 @@ import kotlin.test.assertEquals
 class GuessTest {
     @Test
     fun `should guess feed`() = runBlocking {
-        val response = Response(url = URL("https://example.com"), body = "")
+        val response = Response(url = URL("https://example.com"), body = "", charset = null)
 
         val sites = mapOf(
             "https://example.com/feed" to testResource("arstechnica_feed.xml")
@@ -28,7 +28,7 @@ class GuessTest {
 
     @Test
     fun `should guess rss`() = runBlocking {
-        val response = Response(url = URL("https://example.com"), body = "")
+        val response = Response(url = URL("https://example.com"), body = "", charset = null)
 
         val sites = mapOf(
             "https://example.com/rss" to testResource("arstechnica_feed.xml")
