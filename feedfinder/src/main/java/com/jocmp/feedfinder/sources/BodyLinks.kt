@@ -5,12 +5,10 @@ import com.jocmp.feedfinder.Request
 import com.jocmp.feedfinder.Response
 import com.jocmp.feedfinder.parser.Feed
 import com.jocmp.feedfinder.parser.Parser
-import com.jocmp.feedfinder.toParsedFeed
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import org.jsoup.nodes.Element
-import java.net.URL
 
 internal class BodyLinks(
     private val response: Response,
@@ -23,9 +21,9 @@ internal class BodyLinks(
            return coroutineScope {
                document.select("a")
                    .filter { element -> isCandidate(element) }
-                   .map { async { request.fetch(url = URL(it.absUrl("href"))) } }
+                   .map { async { createFromURL(url = it.absUrl("href"), fetcher = request) } }
                    .awaitAll()
-                   .mapNotNull { it.toParsedFeed() }
+                   .mapNotNull { it }
            }
        } catch (e: Parser.NotFeedError) {
            return emptyList()

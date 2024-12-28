@@ -3,6 +3,7 @@ package com.jocmp.feedfinder
 import com.jocmp.feedfinder.parser.Feed
 import com.jocmp.feedfinder.sources.BodyLinks
 import com.jocmp.feedfinder.sources.Guess
+import com.jocmp.feedfinder.sources.KnownPatterns
 import com.jocmp.feedfinder.sources.MetaLinks
 import com.jocmp.feedfinder.sources.Source
 import com.jocmp.feedfinder.sources.XML
@@ -62,6 +63,7 @@ class DefaultFeedFinder internal constructor(
         return listOf(
             XML(response),
             MetaLinks(response = response, request = request),
+            KnownPatterns(response = response, request =request),
             BodyLinks(response = response, request = request),
             Guess(response = response, request = request)
         )
