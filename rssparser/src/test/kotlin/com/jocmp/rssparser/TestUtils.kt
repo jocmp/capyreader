@@ -8,5 +8,5 @@ internal fun readFileFromResources(
 ): ParserInput {
     val file = File("src/test/resources/$resourceName")
 
-    return ParserInput(file.readBytes())
+    return ParserInput(file.readBytes(), charset = null)
 }

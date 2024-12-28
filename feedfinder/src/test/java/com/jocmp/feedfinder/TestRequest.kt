@@ -13,6 +13,6 @@ internal class TestRequest(val sites: Map<String, String>) : Request {
             File(bodyPath).readText()
         }
 
-        return Response(url = url, body = body)
+        return Response(url = url, body = body, charset = null)
     }
 }

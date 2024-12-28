@@ -1,6 +1,5 @@
 package com.jocmp.feedfinder.parser
 
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import java.io.File
 import java.net.URL
@@ -13,7 +12,7 @@ class XMLFeedTest {
     fun isValid() = runTest {
         val responseBody = File("src/test/resources/arstechnica_feed.xml").readText()
 
-        val feed = XMLFeed.from(url = URL("https://arstechnica.com"), body = responseBody)
+        val feed = XMLFeed.from(url = URL("https://arstechnica.com"), body = responseBody, charset = null)
 
         assertTrue(feed.isValid())
     }
@@ -24,7 +23,8 @@ class XMLFeedTest {
 
         val feed = XMLFeed.from(
             url = URL("https://support.microsoft.com/en-us/feed/rss/6ae59d69-36fc-8e4d-23dd-631d98bf74a9"),
-            body = responseBody
+            body = responseBody,
+            charset = null,
         )
 
         assertTrue(feed.isValid())
@@ -37,7 +37,8 @@ class XMLFeedTest {
 
         val feed = XMLFeed.from(
             url = URL("https://www.brasildefato.com.br/rss2.xml"),
-            body = responseBody
+            body = responseBody,
+            charset = null,
         )
 
         assertTrue(feed.isValid())

@@ -12,7 +12,7 @@ class XMLTest {
     fun `it parses from an XML source`() = runBlocking {
         val body = File("src/test/resources/arstechnica_feed.xml").readText()
 
-        val feeds = XML(Response(url = URL("https://arstechnica.com"), body = body)).find()
+        val feeds = XML(Response(url = URL("https://arstechnica.com"), body = body, charset = null)).find()
 
         assertEquals(expected = 1, actual = feeds.size)
     }

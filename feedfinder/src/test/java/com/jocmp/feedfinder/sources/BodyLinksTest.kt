@@ -19,7 +19,9 @@ class BodyLinksTest {
     @Test
     fun `finds candidate links in the document body`() = runBlocking {
         val response = Response(
-            url = URL("https://example.com"), body = document
+            url = URL("https://example.com"),
+            body = document,
+            charset = null,
         )
 
         val sites = mapOf(
@@ -36,7 +38,9 @@ class BodyLinksTest {
     @Test
     fun `should skip HTML links`() = runBlocking {
         val response = Response(
-            url = URL("https://example.com"), body = document
+            url = URL("https://example.com"),
+            body = document,
+            charset = null,
         )
 
         val sites = mapOf(

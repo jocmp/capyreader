@@ -3,11 +3,16 @@ package com.jocmp.feedfinder
 import com.jocmp.feedfinder.parser.Feed
 import com.jocmp.feedfinder.parser.Parser
 import java.net.URL
+import java.nio.charset.Charset
 
-internal class Response(val url: URL, val body: String) {
+internal class Response(
+    val url: URL,
+    val body: String,
+    val charset: Charset?
+) {
     suspend fun parse(validate: Boolean = true): Parser.Result {
         if (parsed == null) {
-            parsed = Parser.parse(body, url = url, validate = validate)
+            parsed = Parser.parse(body, url = url, charset = charset, validate = validate)
         }
 
         return parsed!!
