@@ -1,5 +1,6 @@
 package com.capyreader.app.refresher
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -7,18 +8,18 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationCompat.Style
+import androidx.core.app.NotificationManagerCompat
 import com.capyreader.app.MainActivity
 import com.capyreader.app.Notifications
 import com.capyreader.app.Notifications.FEED_UPDATE
 import com.capyreader.app.R
 import com.capyreader.app.common.AppPreferences
-import com.capyreader.app.common.notificationManager
 import com.capyreader.app.refresher.NotificationHelper.Companion.ARTICLE_ID_KEY
 import com.capyreader.app.refresher.NotificationHelper.Companion.FEED_ID_KEY
 import com.jocmp.capy.Account
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
+import com.jocmp.capy.logging.CapyLog
 import com.jocmp.capy.notifications.ArticleNotification
 import java.time.ZonedDateTime
 
@@ -26,8 +27,6 @@ class NotificationHelper(
     private val account: Account,
     private val applicationContext: Context,
 ) {
-    private val notificationManager = applicationContext.notificationManager
-
     suspend fun notify(since: ZonedDateTime) {
         createChannel()
 
@@ -36,6 +35,7 @@ class NotificationHelper(
         if (notifications.isEmpty()) {
             return
         }
+
 
         notifications.forEach {
             sendNotification(it)
@@ -56,20 +56,22 @@ class NotificationHelper(
             .setSubText(notification.feedTitle)
             .setContentInfo(notification.title)
             .setAutoCancel(true)
-            .setContentIntent(notification.intent(applicationContext))
+            .setContentIntent(notification.contentIntent(applicationContext))
 
-        notificationManager.notify(notification.notificationID, builder.build())
+        NotificationManagerCompat
+            .from(applicationContext)
+            .tryNotify(notification.notificationID, builder.build())
     }
 
     private fun sendGroupNotification(notifications: List<ArticleNotification>) {
         val builder = NotificationCompat.Builder(applicationContext, FEED_UPDATE.channelID)
-            .setContentTitle("${notifications.size} new notifications")
             .setSmallIcon(R.drawable.newsmode)
             .setGroup(ARTICLE_REFRESH_GROUP)
             .setGroupSummary(true)
-            .setStyle(groupInboxStyle(notifications))
 
-        notificationManager.notify(Notifications.FEED_UPDATE_GROUP_NOTIFICATION_ID, builder.build())
+        NotificationManagerCompat
+            .from(applicationContext)
+            .tryNotify(Notifications.FEED_UPDATE_GROUP_NOTIFICATION_ID, builder.build())
     }
 
     private fun createChannel() {
@@ -80,7 +82,9 @@ class NotificationHelper(
             NotificationManager.IMPORTANCE_DEFAULT
         )
 
-        notificationManager.createNotificationChannel(channel)
+        NotificationManagerCompat
+            .from(applicationContext)
+            .createNotificationChannel(channel)
     }
 
     companion object {
@@ -105,20 +109,15 @@ class NotificationHelper(
     }
 }
 
-private fun groupInboxStyle(notifications: List<ArticleNotification>): Style {
-    val style = NotificationCompat.InboxStyle()
-
-    notifications.take(3).forEach {
-        style.addLine(it.title)
+private fun NotificationManagerCompat.tryNotify(id: Int, notification: Notification) {
+    try {
+        notify(id, notification)
+    } catch (e: SecurityException) {
+        CapyLog.error("notification_helper", e)
     }
-
-//    style.setSummaryText(title)
-
-    return style
 }
 
-
-private fun ArticleNotification.intent(context: Context): PendingIntent {
+private fun ArticleNotification.contentIntent(context: Context): PendingIntent {
     val notifyIntent = Intent(context, MainActivity::class.java).apply {
         flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         putExtra(ARTICLE_ID_KEY, id)
