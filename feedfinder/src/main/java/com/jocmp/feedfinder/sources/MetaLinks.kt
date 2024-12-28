@@ -9,7 +9,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import org.jsoup.nodes.Element
-import java.net.URL
 
 internal class MetaLinks(
     private val response: Response,
@@ -22,14 +21,9 @@ internal class MetaLinks(
             return coroutineScope {
                 document.select("link[rel~=alternate]")
                     .filter { element -> isValidLink(element) }
-                    .map { async { request.fetch(url = URL(it.absUrl("href"))) } }
+                    .map { async { createFromURL(url = it.absUrl("href"), fetcher = request) } }
                     .awaitAll()
-                    .mapNotNull { response ->
-                        when (val result = response.parse()) {
-                            is Parser.Result.ParsedFeed -> result.feed
-                            is Parser.Result.HTMLDocument -> null
-                        }
-                    }
+                    .mapNotNull { it }
             }
         } catch (e: Parser.NotFeedError) {
             return emptyList()
