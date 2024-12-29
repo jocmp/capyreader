@@ -73,7 +73,7 @@ fun FolderRow(
                         FeedRow(
                             feed = feed,
                             onSelect = { onFeedSelect(feed) },
-                            selected = filter.isFeedSelected(feed, folderTitle = folder.title),
+                            selected = filter.isFeedSelected(feed),
                         )
                     }
                 }

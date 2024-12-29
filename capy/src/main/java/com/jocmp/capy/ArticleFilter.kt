@@ -8,8 +8,8 @@ sealed class ArticleFilter(open val status: ArticleStatus) {
         return this is Folders && this.folderTitle == folder.title
     }
 
-    fun isFeedSelected(feed: Feed, folderTitle: String? = null): Boolean {
-        return this is Feeds && this.feedID == feed.id && this.folderTitle == folderTitle
+    fun isFeedSelected(feed: Feed): Boolean {
+        return this is Feeds && this.feedID == feed.id && this.folderTitle.orEmpty() == feed.folderName
     }
 
     fun hasArticlesSelected(): Boolean {
