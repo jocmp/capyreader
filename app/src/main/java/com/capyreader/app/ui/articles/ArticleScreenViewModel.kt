@@ -184,6 +184,10 @@ class ArticleScreenViewModel(
             }
 
             if (!openNextFeedOnReadAll.value) {
+                if (range is MarkRead.All) {
+                    updateArticlesSince()
+                }
+
                 return@launchIO
             }
 
