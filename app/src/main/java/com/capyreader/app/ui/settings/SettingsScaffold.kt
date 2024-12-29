@@ -1,6 +1,5 @@
 package com.capyreader.app.ui.settings
 
-//import androidx.compose.material3.adaptive.layout.calculateListDetailPaneScaffoldMotion
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
