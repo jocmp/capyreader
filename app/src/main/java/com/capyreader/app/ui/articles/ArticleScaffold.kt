@@ -3,7 +3,12 @@ package com.capyreader.app.ui.articles
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material3.DrawerDefaults
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalDrawerSheet
@@ -13,25 +18,25 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.layout.AnimatedPane
+import androidx.compose.material3.adaptive.layout.AnimatedPaneScope
+import androidx.compose.material3.adaptive.layout.ExtendedPaneScaffoldPaneScope
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffold
 import androidx.compose.material3.adaptive.layout.PaneScaffoldDirective
+import androidx.compose.material3.adaptive.layout.PaneScaffoldValue
 import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
 import androidx.compose.material3.adaptive.layout.calculatePaneScaffoldDirective
 import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.LayoutPreference
-import com.capyreader.app.common.asState
 import com.capyreader.app.ui.isAtMostMedium
+import com.capyreader.app.ui.rememberLayoutPreference
 import com.capyreader.app.ui.theme.CapyTheme
-import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
@@ -42,45 +47,81 @@ fun ArticleScaffold(
     listPane: @Composable () -> Unit,
     detailPane: @Composable () -> Unit,
 ) {
+    val layout = rememberLayoutPreference()
+
     val enableGesture = drawerState.isOpen ||
             isAtMostMedium() && scaffoldNavigator.currentDestination?.pane != ThreePaneScaffoldRole.Primary
 
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        gesturesEnabled = enableGesture,
-        drawerContent = {
-            ModalDrawerSheet {
-                drawerPane()
-            }
-        },
-    ) {
+    if (layout == LayoutPreference.SINGLE) {
         ListDetailPaneScaffold(
             directive = scaffoldNavigator.scaffoldDirective,
             value = scaffoldNavigator.scaffoldValue,
             listPane = {
-                AnimatedPane(
-                    enterTransition = fadeIn(),
-                    exitTransition = fadeOut(),
-                ) {
-                    listPane()
+                ArticlePane {
+                    Row {
+                        Column(
+                            Modifier
+                                .sizeIn(
+                                    minWidth = 240.dp,
+                                    maxWidth = 300.dp
+                                )
+                                .windowInsetsPadding(DrawerDefaults.windowInsets)
+                        ) {
+                            drawerPane()
+                        }
+
+                        listPane()
+                    }
                 }
             },
             detailPane = {
-                AnimatedPane(
-                    enterTransition = fadeIn(),
-                    exitTransition = fadeOut(),
-                ) {
+                ArticlePane {
                     detailPane()
                 }
             }
         )
+    } else {
+        ModalNavigationDrawer(
+            drawerState = drawerState,
+            gesturesEnabled = enableGesture,
+            drawerContent = {
+                ModalDrawerSheet {
+                    drawerPane()
+                }
+            },
+        ) {
+            ListDetailPaneScaffold(
+                directive = scaffoldNavigator.scaffoldDirective,
+                value = scaffoldNavigator.scaffoldValue,
+                listPane = {
+                    ArticlePane {
+                        listPane()
+                    }
+                },
+                detailPane = {
+                    ArticlePane {
+                        detailPane()
+                    }
+                }
+            )
+        }
     }
+}
+
+@ExperimentalMaterial3AdaptiveApi
+@Composable
+private fun <S, T : PaneScaffoldValue<S>> ExtendedPaneScaffoldPaneScope<S, T>.ArticlePane(content: (@Composable AnimatedPaneScope.() -> Unit)) {
+    AnimatedPane(
+        enterTransition = fadeIn(),
+        exitTransition = fadeOut(),
+        content = content,
+    )
 }
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
-fun rememberArticleScaffoldNavigator(appPreferences: AppPreferences = koinInject()): ThreePaneScaffoldNavigator<Any> {
-    val layout by appPreferences.layout.asState()
+fun rememberArticleScaffoldNavigator(): ThreePaneScaffoldNavigator<Any> {
+    val layout = rememberLayoutPreference()
 
     if (layout == LayoutPreference.SINGLE) {
         return rememberListDetailPaneScaffoldNavigator(

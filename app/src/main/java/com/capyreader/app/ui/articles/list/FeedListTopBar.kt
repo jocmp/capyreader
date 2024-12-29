@@ -27,10 +27,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
+import com.capyreader.app.common.LayoutPreference
 import com.capyreader.app.ui.articles.FeedActions
 import com.capyreader.app.ui.articles.FilterAppBarTitle
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.SearchTextField
+import com.capyreader.app.ui.rememberLayoutPreference
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
@@ -56,6 +58,7 @@ fun FeedListTopBar(
     val unsubscribeMessage = stringResource(R.string.feed_action_unsubscribe_success)
     val unsubscribeErrorMessage = stringResource(R.string.unsubscribe_error)
     val enableSearch = search.isActive
+    val layout = rememberLayoutPreference()
 
     val openSearch = {
         search.update("")
@@ -130,7 +133,7 @@ fun FeedListTopBar(
                         contentDescription = stringResource(R.string.feed_list_top_bar_close_search)
                     )
                 }
-            } else {
+            } else if (layout != LayoutPreference.SINGLE) {
                 IconButton(
                     onClick = onNavigateToDrawer
                 ) {
