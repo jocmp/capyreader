@@ -501,6 +501,12 @@ fun ArticleLayout(
         toggleDrawer()
     }
 
+    LayoutNavigationHandler(
+        enabled = article == null
+    ) {
+        scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
+    }
+
     LaunchedEffect(articles.itemCount) {
         if (!listVisible) {
             resetListVisibility()
