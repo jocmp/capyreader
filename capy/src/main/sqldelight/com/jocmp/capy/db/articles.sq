@@ -255,10 +255,8 @@ VALUES (
 )
 ON CONFLICT(article_id) DO UPDATE
 SET
-updated_at = updated_at,
 last_read_at = excluded.last_read_at,
-read = excluded.read,
-starred = starred;
+read = excluded.read;
 
 updateStaleUnreads:
 UPDATE article_statuses SET read = 1 WHERE article_id NOT IN :excludedIDs;
@@ -279,17 +277,14 @@ VALUES (
 )
 ON CONFLICT(article_id) DO UPDATE
 SET
-updated_at = updated_at,
-last_read_at = last_read_at,
-read = read,
 starred = excluded.starred;
 
 markRead:
-UPDATE article_statuses SET read = :read, last_read_at = :lastReadAt, updated_at = :updatedAt
+UPDATE article_statuses SET read = :read, last_read_at = :lastReadAt
 WHERE article_statuses.article_id IN :articleIDs;
 
 markStarred:
-UPDATE article_statuses SET starred = :starred, updated_at = :updatedAt
+UPDATE article_statuses SET starred = :starred
 WHERE article_statuses.article_id = :articleID;
 
 deleteAllArticles {
