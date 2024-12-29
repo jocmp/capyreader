@@ -1,16 +1,16 @@
 [versions]
-androidx-paging = "3.3.2"
+androidx-paging = "3.3.5"
 coil = "2.7.0"
 coroutines = "1.9.0"
 kotlin = "2.0.21"
 ksp = "2.0.21-1.0.26"
 androidx-lifecycle-runtime = "2.8.7"
-androidx-adaptive = "1.1.0-alpha04"
+androidx-adaptive = "1.1.0-alpha08"
 mockk = "1.13.12"
-navigation-compose = "2.8.3"
+navigation-compose = "2.8.5"
 okhttp = "4.12.0"
 retrofit = "2.11.0"
-paging-compose = "3.3.2"
+paging-compose = "3.3.5"
 sqldelight = "2.0.2"
 zoomable = "0.12.1"
 
@@ -20,7 +20,7 @@ androidx-adaptive = { module = "androidx.compose.material3.adaptive:adaptive", v
 androidx-adaptive-layout = { module = "androidx.compose.material3.adaptive:adaptive-layout", version.ref = "androidx-adaptive" }
 androidx-adaptive-navigation = { module = "androidx.compose.material3.adaptive:adaptive-navigation", version.ref = "androidx-adaptive" }
 androidx-browser = { module = "androidx.browser:browser", version = "1.8.0" }
-androidx-compose-bom = { module = "androidx.compose:compose-bom", version = "2024.10.01" }
+androidx-compose-bom = { module = "androidx.compose:compose-bom", version = "2024.12.01" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version = "1.15.0" }
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle-runtime" }
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle-runtime" }
@@ -41,7 +41,7 @@ androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 coil-gif = { module = "io.coil-kt:coil-gif", version.ref = "coil" }
 converter-scalars = { module = "com.squareup.retrofit2:converter-scalars", version.ref = "retrofit" }
-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics", version = "19.2.1" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics", version = "19.3.0" }
 jsoup = { module = "org.jsoup:jsoup", version = "1.17.1" }
 koin-android = { module = "io.insert-koin:koin-android" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose" }

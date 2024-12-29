@@ -1,5 +1,7 @@
 package com.capyreader.app.ui.articles
 
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.DrawerState
@@ -14,7 +16,6 @@ import androidx.compose.material3.adaptive.layout.AnimatedPane
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffold
 import androidx.compose.material3.adaptive.layout.PaneScaffoldDirective
 import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
-import androidx.compose.material3.adaptive.layout.calculateListDetailPaneScaffoldMotion
 import androidx.compose.material3.adaptive.layout.calculatePaneScaffoldDirective
 import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
@@ -28,7 +29,6 @@ import androidx.compose.ui.unit.dp
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.LayoutPreference
 import com.capyreader.app.common.asState
-import com.capyreader.app.ui.FadePaneMotion
 import com.capyreader.app.ui.isAtMostMedium
 import com.capyreader.app.ui.theme.CapyTheme
 import org.koin.compose.koinInject
@@ -45,11 +45,6 @@ fun ArticleScaffold(
     val enableGesture = drawerState.isOpen ||
             isAtMostMedium() && scaffoldNavigator.currentDestination?.pane != ThreePaneScaffoldRole.Primary
 
-    val paneMotions = calculateListDetailPaneScaffoldMotion(scaffoldNavigator.scaffoldValue).copy(
-        primaryPaneMotion = FadePaneMotion(),
-        secondaryPaneMotion = FadePaneMotion()
-    )
-
     ModalNavigationDrawer(
         drawerState = drawerState,
         gesturesEnabled = enableGesture,
@@ -62,14 +57,19 @@ fun ArticleScaffold(
         ListDetailPaneScaffold(
             directive = scaffoldNavigator.scaffoldDirective,
             value = scaffoldNavigator.scaffoldValue,
-            paneMotions = paneMotions,
             listPane = {
-                AnimatedPane {
+                AnimatedPane(
+                    enterTransition = fadeIn(),
+                    exitTransition = fadeOut(),
+                ) {
                     listPane()
                 }
             },
             detailPane = {
-                AnimatedPane {
+                AnimatedPane(
+                    enterTransition = fadeIn(),
+                    exitTransition = fadeOut(),
+                ) {
                     detailPane()
                 }
             }
