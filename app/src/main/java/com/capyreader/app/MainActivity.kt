@@ -10,7 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.capyreader.app.common.AppPreferences
-import com.capyreader.app.refresher.ArticleNotifications
+import com.capyreader.app.refresher.NotificationHelper
 import com.capyreader.app.ui.App
 import com.capyreader.app.ui.Route
 import org.koin.android.ext.android.get
@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
         enableStrictModeOnDebug()
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        ArticleNotifications.handleResult(intent, appPreferences = appPreferences)
+        NotificationHelper.handleResult(intent, appPreferences = appPreferences)
 
         val theme = appPreferences.theme
 
@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        ArticleNotifications.handleResult(intent, appPreferences = appPreferences)
+        NotificationHelper.handleResult(intent, appPreferences = appPreferences)
     }
 
     private fun startDestination(): Route {

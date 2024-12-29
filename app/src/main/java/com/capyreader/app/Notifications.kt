@@ -9,5 +9,9 @@ enum class Notifications(val channelID: String) {
 
     companion object {
         val askForPermission = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+
+        const val OPML_IMPORT_NOTIFICATION_ID = 6_170_000
+
+        const val FEED_UPDATE_GROUP_NOTIFICATION_ID = 6_170_100
     }
 }

@@ -40,7 +40,6 @@ class OPMLImportWorker(
     private val account by inject<Account>()
 
     private val channelID = Notifications.OPML_IMPORT.channelID
-    private val notificationsID = 6_170_000
 
     private val notificationManager = context.notificationManager
 
@@ -78,7 +77,7 @@ class OPMLImportWorker(
 
             setForegroundAsync(
                 ForegroundInfo(
-                    notificationsID,
+                    Notifications.OPML_IMPORT_NOTIFICATION_ID,
                     notification,
                     FOREGROUND_SERVICE_TYPE_DATA_SYNC
                 )
@@ -100,7 +99,11 @@ class OPMLImportWorker(
             applicationContext.getString(R.string.opml_import_progress_content_text_start)
         )
 
-        return ForegroundInfo(notificationsID, notification, FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+        return ForegroundInfo(
+            Notifications.OPML_IMPORT_NOTIFICATION_ID,
+            notification,
+            FOREGROUND_SERVICE_TYPE_DATA_SYNC
+        )
     }
 
     private fun buildNotification(
