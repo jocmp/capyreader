@@ -37,6 +37,7 @@ import com.capyreader.app.ui.components.TopBarTooltip
 import com.capyreader.app.ui.fixtures.ArticleSample
 import com.capyreader.app.ui.fixtures.InjectedCapyTheme
 import com.jocmp.capy.Article
+import com.jocmp.capy.Article.FullContentState.ERROR
 import com.jocmp.capy.Article.FullContentState.LOADED
 import com.jocmp.capy.Article.FullContentState.LOADING
 import java.net.URL
@@ -166,7 +167,7 @@ fun starredIcon(article: Article) =
 @Composable
 fun extractIcon(fullContentState: Article.FullContentState) = when (fullContentState) {
     LOADED -> R.drawable.icon_article_filled
-//    ERROR -> R.drawable.
+    Article.FullContentState.ERROR -> R.drawable.icon_article_error
     else -> R.drawable.icon_article_empty
 }
 
@@ -184,12 +185,15 @@ fun ArticleNavigationIcon(onClick: () -> Unit) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 private fun ArticleTopBarPreview(@PreviewParameter(ArticleSample::class) article: Article) {
     InjectedCapyTheme {
         ArticleTopBar(
-            article = article.copy(extractedContentURL = URL("https://example.com")),
+            article = article.copy(
+                extractedContentURL = URL("https://example.com"),
+            ),
             scrollBehavior = enterAlwaysScrollBehavior(),
             onToggleExtractContent = {},
             onToggleRead = {},
@@ -199,27 +203,16 @@ private fun ArticleTopBarPreview(@PreviewParameter(ArticleSample::class) article
     }
 }
 
-@Preview(device = "id:pixel_fold")
-@Composable
-private fun ArticleTopBarPreview_Tablet(@PreviewParameter(ArticleSample::class) article: Article) {
-    InjectedCapyTheme {
-        ArticleTopBar(
-            article = article,
-            scrollBehavior = enterAlwaysScrollBehavior(),
-            onToggleExtractContent = {},
-            onToggleRead = {},
-            onToggleStar = {},
-            onClose = {}
-        )
-    }
-}
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
-private fun ArticleTopBarPreview_MissingArticle() {
+private fun ArticleTopBarPreviewError(@PreviewParameter(ArticleSample::class) article: Article) {
     InjectedCapyTheme {
         ArticleTopBar(
-            article = null,
+            article = article.copy(
+                extractedContentURL = URL("https://example.com"),
+                fullContent = ERROR
+            ),
             scrollBehavior = enterAlwaysScrollBehavior(),
             onToggleExtractContent = {},
             onToggleRead = {},
