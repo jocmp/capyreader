@@ -182,7 +182,6 @@
     <string name="settings_panel_notifications_title">Notificações</string>
     <string name="settings_auto_delete_option_keep_for_one_week">1 semana</string>
     <string name="article_view_open_externally">Abrir externamente</string>
-    <string name="settings_open_next_feed_on_read_all">Abrir próximo artigo ao ler todos</string>
     <string name="article_vertical_swipe_disabled">Desabilitado</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Tocar no canto inferior para navegar para o conteúdo do artigo</string>
     <string name="settings_panel_gestures_title">Gestos</string>

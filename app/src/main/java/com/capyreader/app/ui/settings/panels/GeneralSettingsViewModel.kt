@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.capyreader.app.common.AfterReadAllBehavior
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.refresher.RefreshScheduler
@@ -37,7 +38,7 @@ class GeneralSettingsViewModel(
     var markReadOnScroll by mutableStateOf(appPreferences.articleListOptions.markReadOnScroll.get())
         private set
 
-    var openNextFeedOnReadAll by mutableStateOf(appPreferences.articleListOptions.openNextFeedOnReadAll.get())
+    var afterReadAll by mutableStateOf(appPreferences.articleListOptions.afterReadAllBehavior.get())
         private set
 
     var enableStickyFullContent by mutableStateOf(appPreferences.enableStickyFullContent.get())
@@ -73,10 +74,10 @@ class GeneralSettingsViewModel(
         confirmMarkAllRead = confirm
     }
 
-    fun updateOpenNextFeedOnReadAll(enable: Boolean) {
-        appPreferences.articleListOptions.openNextFeedOnReadAll.set(enable)
+    fun updateAfterReadAll(behavior: AfterReadAllBehavior) {
+        appPreferences.articleListOptions.afterReadAllBehavior.set(behavior)
 
-        openNextFeedOnReadAll = enable
+        afterReadAll = behavior
     }
 
     fun updateStickyFullContent(enable: Boolean) {

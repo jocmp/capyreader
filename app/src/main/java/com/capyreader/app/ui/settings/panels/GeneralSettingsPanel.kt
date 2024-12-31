@@ -38,17 +38,22 @@ import androidx.compose.ui.unit.dp
 import com.capyreader.app.BuildConfig
 import com.capyreader.app.Notifications
 import com.capyreader.app.R
+import com.capyreader.app.common.AfterReadAllBehavior
 import com.capyreader.app.common.RowItem
 import com.capyreader.app.refresher.RefreshInterval
+import com.capyreader.app.setupCommonModules
 import com.capyreader.app.ui.CrashReporting
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.components.TextSwitch
 import com.capyreader.app.ui.settings.CrashReportingCheckbox
 import com.capyreader.app.ui.settings.LocalSnackbarHost
+import com.capyreader.app.ui.settings.PreferenceSelect
 import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.common.launchUI
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.KoinApplication
 
 @Composable
 fun GeneralSettingsPanel(
@@ -70,8 +75,8 @@ fun GeneralSettingsPanel(
         updateMarkReadOnScroll = viewModel::updateMarkReadOnScroll,
         confirmMarkAllRead = viewModel.confirmMarkAllRead,
         markReadOnScroll = viewModel.markReadOnScroll,
-        openNextFeedOnReadAll = viewModel.openNextFeedOnReadAll,
-        updateOpenNextFeedOnReadAll = viewModel::updateOpenNextFeedOnReadAll,
+        afterReadAll = viewModel.afterReadAll,
+        updateAfterReadAll = viewModel::updateAfterReadAll,
         updateStickyFullContent = viewModel::updateStickyFullContent,
         enableStickyFullContent = viewModel.enableStickyFullContent,
     )
@@ -93,8 +98,8 @@ fun GeneralSettingsPanelView(
     enableStickyFullContent: Boolean,
     updateConfirmMarkAllRead: (enable: Boolean) -> Unit,
     updateMarkReadOnScroll: (enable: Boolean) -> Unit,
-    openNextFeedOnReadAll: Boolean,
-    updateOpenNextFeedOnReadAll: (enable: Boolean) -> Unit,
+    afterReadAll: AfterReadAllBehavior,
+    updateAfterReadAll: (behavior: AfterReadAllBehavior) -> Unit,
     confirmMarkAllRead: Boolean,
     markReadOnScroll: Boolean,
 
@@ -164,21 +169,27 @@ fun GeneralSettingsPanelView(
         FormSection(
             title = stringResource(R.string.settings_section_mark_all_as_read),
         ) {
-            RowItem {
-                TextSwitch(
-                    onCheckedChange = updateConfirmMarkAllRead,
-                    checked = confirmMarkAllRead,
-                    title = stringResource(R.string.settings_confirm_mark_all_read),
-                )
-                TextSwitch(
-                    onCheckedChange = updateMarkReadOnScroll,
-                    checked = markReadOnScroll,
-                    title = stringResource(R.string.settings_mark_read_on_scroll),
-                )
-                TextSwitch(
-                    onCheckedChange = updateOpenNextFeedOnReadAll,
-                    checked = openNextFeedOnReadAll,
-                    title = stringResource(R.string.settings_open_next_feed_on_read_all),
+            Column {
+                RowItem {
+                    TextSwitch(
+                        onCheckedChange = updateConfirmMarkAllRead,
+                        checked = confirmMarkAllRead,
+                        title = stringResource(R.string.settings_confirm_mark_all_read),
+                    )
+                    TextSwitch(
+                        onCheckedChange = updateMarkReadOnScroll,
+                        checked = markReadOnScroll,
+                        title = stringResource(R.string.settings_mark_read_on_scroll),
+                    )
+                }
+                PreferenceSelect(
+                    selected = afterReadAll,
+                    update = updateAfterReadAll,
+                    options = AfterReadAllBehavior.entries,
+                    label = R.string.after_read_all_behavior_label,
+                    optionText = {
+                        stringResource(id = it.translationKey)
+                    }
                 )
             }
         }
@@ -306,24 +317,33 @@ private fun Context.openAppSettings() {
 @Preview
 @Composable
 private fun GeneralSettingsPanelPreview() {
-    GeneralSettingsPanelView(
-        refreshInterval = RefreshInterval.EVERY_HOUR,
-        updateRefreshInterval = {},
-        canOpenLinksInternally = false,
-        onClearArticles = {},
-        updateOpenLinksInternally = {},
-        updateAutoDelete = {},
-        autoDelete = AutoDelete.WEEKLY,
-        unreadSort = UnreadSortOrder.NEWEST_FIRST,
-        updateUnreadSort = {},
-        onNavigateToNotifications = {},
-        markReadOnScroll = true,
-        updateConfirmMarkAllRead = {},
-        updateMarkReadOnScroll = {},
-        confirmMarkAllRead = true,
-        updateStickyFullContent = {},
-        enableStickyFullContent = true,
-        openNextFeedOnReadAll = false,
-        updateOpenNextFeedOnReadAll = {}
-    )
+    val context = LocalContext.current
+
+    KoinApplication(
+        application = {
+            androidContext(context)
+            setupCommonModules()
+        }
+    ) {
+        GeneralSettingsPanelView(
+            refreshInterval = RefreshInterval.EVERY_HOUR,
+            updateRefreshInterval = {},
+            canOpenLinksInternally = false,
+            onClearArticles = {},
+            updateOpenLinksInternally = {},
+            updateAutoDelete = {},
+            autoDelete = AutoDelete.WEEKLY,
+            unreadSort = UnreadSortOrder.NEWEST_FIRST,
+            updateUnreadSort = {},
+            onNavigateToNotifications = {},
+            markReadOnScroll = true,
+            updateConfirmMarkAllRead = {},
+            updateMarkReadOnScroll = {},
+            confirmMarkAllRead = true,
+            updateStickyFullContent = {},
+            enableStickyFullContent = true,
+            afterReadAll = AfterReadAllBehavior.NOTHING,
+            updateAfterReadAll = {}
+        )
+    }
 }

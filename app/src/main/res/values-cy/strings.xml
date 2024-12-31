@@ -204,7 +204,6 @@
     <string name="settings_notifications_select_none">Dewis dim</string>
     <string name="settings_notifications_select_all">Dewis y cwbl</string>
     <string name="settings_mark_read_on_scroll">Nodi fel ei ddarllen wrth sgrolio</string>
-    <string name="settings_open_next_feed_on_read_all">Agor y ffrwd nesaf pan fydd y cwbl wedi\'i darllen</string>
     <string name="settings_gestures_reader_tap_to_page_title">Sgrolio sgrin bapur electronig</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Tapio corneli\'rgwaelod i lywio cynnwys yr erthygl</string>
     <string name="layout_preference_label">Llunwedd a ffafrir</string>

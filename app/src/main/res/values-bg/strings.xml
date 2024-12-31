@@ -214,6 +214,5 @@
     <string name="layout_preference_responsive">Отзивчив</string>
     <string name="layout_preference_label">Предпочитано оформление</string>
     <string name="auth_fields_username">Потребителско име</string>
-    <string name="settings_open_next_feed_on_read_all">Отвори следваща емисия при прочитане на всички</string>
     <string name="end_of_feed_text">Всички статии са прочетени!</string>
 </resources>

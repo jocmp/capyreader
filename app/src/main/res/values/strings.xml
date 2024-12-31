@@ -205,7 +205,6 @@
     <string name="article_list_row_swipe_open_externally">Open article in browser</string>
     <string name="article_view_open_externally">Open externally</string>
     <string name="settings_confirm_mark_all_read">Confirm marking all as read</string>
-    <string name="settings_open_next_feed_on_read_all">Open next feed on read all</string>
     <string name="settings_mark_read_on_scroll">Mark as read on scroll</string>
     <string name="settings_gestures_reader_tap_to_page_title">E Ink tap to scroll</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Tap bottom corners to navigate article content</string>
@@ -220,4 +219,8 @@
     <string name="layout_preference_single">Single Column</string>
     <string name="layout_preference_label">Preferred Layout</string>
     <string name="end_of_feed_text">All caught up!</string>
+    <string name="after_read_all_behavior_label">After Read All</string>
+    <string name="after_read_all_behavior_do_nothing">Do nothing</string>
+    <string name="after_read_all_behavior_hide_articles">Hide articles</string>
+    <string name="after_read_all_behavior_open_next_feed">Open next feed</string>
 </resources>

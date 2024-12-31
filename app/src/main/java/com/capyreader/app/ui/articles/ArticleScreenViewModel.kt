@@ -8,6 +8,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import com.capyreader.app.common.AfterReadAllBehavior
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.sync.Sync
 import com.jocmp.capy.Account
@@ -53,8 +54,8 @@ class ArticleScreenViewModel(
 
     private val unreadSort = appPreferences.articleListOptions.unreadSort.stateIn(viewModelScope)
 
-    val openNextFeedOnReadAll =
-        appPreferences.articleListOptions.openNextFeedOnReadAll.stateIn(viewModelScope)
+    val afterReadAll =
+        appPreferences.articleListOptions.afterReadAllBehavior.stateIn(viewModelScope)
 
     private val _counts = filter.flatMapLatest { latestFilter ->
         account.countAll(latestFilter.status)
@@ -167,7 +168,7 @@ class ArticleScreenViewModel(
     }
 
     fun markAllRead(
-        onEndOfList: () -> Unit,
+        onArticlesCleared: () -> Unit,
         range: MarkRead,
         feeds: List<Feed>,
         folders: List<Folder>,
@@ -183,29 +184,14 @@ class ArticleScreenViewModel(
                 Sync.markReadAsync(articleIDs, context)
             }
 
-            if (!openNextFeedOnReadAll.value) {
-                if (range is MarkRead.All) {
-                    updateArticlesSince()
-                }
-
+            if (range != MarkRead.All) {
                 return@launchIO
             }
 
-            if (range is MarkRead.All) {
-                val nextFilter = NextFilter.findMarkReadDestination(
-                    latestFilter,
-                    folders,
-                    feeds,
-                )
-
-                if (nextFilter != null) {
-                    selectNextFilter(nextFilter)
-                } else {
-                    if (latestFilter.status == ArticleStatus.UNREAD) {
-                        selectArticleFilter()
-                    }
-                    onEndOfList()
-                }
+            if (afterReadAll.value == AfterReadAllBehavior.HIDE_ARTICLES) {
+                clearArticlesOnAllRead(onArticlesCleared)
+            } else if (afterReadAll.value == AfterReadAllBehavior.OPEN_NEXT_FEED) {
+                openNextFeedOnAllRead(onArticlesCleared, feeds, folders)
             }
         }
     }
@@ -483,6 +469,34 @@ class ArticleScreenViewModel(
             },
             onFailure = { resetFullContent() }
         )
+    }
+
+    private fun clearArticlesOnAllRead(
+        onArticlesCleared: () -> Unit,
+    ) {
+        updateArticlesSince()
+        onArticlesCleared()
+    }
+
+    private fun openNextFeedOnAllRead(
+        onArticlesCleared: () -> Unit,
+        feeds: List<Feed>,
+        folders: List<Folder>,
+    ) {
+        val nextFilter = NextFilter.findMarkReadDestination(
+            latestFilter,
+            folders,
+            feeds,
+        )
+
+        if (nextFilter != null) {
+            selectNextFilter(nextFilter)
+        } else {
+            if (latestFilter.status == ArticleStatus.UNREAD) {
+                selectArticleFilter()
+            }
+            onArticlesCleared()
+        }
     }
 
     private val latestFilter: ArticleFilter
