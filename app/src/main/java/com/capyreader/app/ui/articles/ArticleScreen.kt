@@ -10,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.capyreader.app.common.AfterReadAllBehavior
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.components.ArticleSearch
@@ -34,7 +35,7 @@ fun ArticleScreen(
     val articles = viewModel.articles.collectAsLazyPagingItems()
     val nextFilter by viewModel.nextFilter.collectAsStateWithLifecycle(initialValue = null)
     val canSwipeToNextFeed = nextFilter != null
-    val openNextFeedOnReadAll by viewModel.openNextFeedOnReadAll.collectAsStateWithLifecycle()
+    val afterReadAll by viewModel.afterReadAll.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
 
     val fullContent = rememberFullContent(viewModel)
@@ -72,7 +73,7 @@ fun ArticleScreen(
             onToggleArticleStar = viewModel::toggleArticleStar,
             onMarkAllRead = { range ->
                 viewModel.markAllRead(
-                    onEndOfList = {
+                    onArticlesCleared = {
                         scope.launchUI {
                             drawerState.open()
                         }
@@ -87,7 +88,7 @@ fun ArticleScreen(
             onUnauthorizedDismissRequest = viewModel::dismissUnauthorizedMessage,
             onRequestNextFeed = viewModel::requestNextFeed,
             canSwipeToNextFeed = canSwipeToNextFeed,
-            openNextFeedOnReadAll = openNextFeedOnReadAll,
+            openNextFeedOnReadAll = afterReadAll == AfterReadAllBehavior.OPEN_NEXT_FEED,
             search = ArticleSearch(
                 query = searchQuery,
                 clear = { viewModel.clearSearch() },

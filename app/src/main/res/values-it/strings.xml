@@ -216,5 +216,4 @@
     <string name="layout_preference_single">Colonna singola</string>
     <string name="layout_preference_label">Layout preferito</string>
     <string name="end_of_feed_text">Tutti presi!</string>
-    <string name="settings_open_next_feed_on_read_all">Segna e apri il prossimo feed</string>
 </resources>

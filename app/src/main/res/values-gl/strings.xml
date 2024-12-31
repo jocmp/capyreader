@@ -187,7 +187,6 @@
     <string name="layout_preference_single">Columna única</string>
     <string name="layout_preference_label">Disposición preferida</string>
     <string name="layout_preference_responsive">Adaptativo</string>
-    <string name="settings_open_next_feed_on_read_all">Abrir canle seguinte ao Ler todo</string>
     <string name="add_feed_success">Engadiuse a canle</string>
     <string name="filter_unread">Sen ler</string>
     <string name="auth_fields_password">Contrasinal</string>

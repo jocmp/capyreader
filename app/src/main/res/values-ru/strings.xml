@@ -216,5 +216,4 @@
     <string name="layout_preference_label">Предпочтительный макет</string>
     <string name="layout_preference_responsive">Отзывчивый</string>
     <string name="auth_fields_username">Имя пользователя</string>
-    <string name="settings_open_next_feed_on_read_all">Открыть следующий канал, когда все прочитано</string>
 </resources>

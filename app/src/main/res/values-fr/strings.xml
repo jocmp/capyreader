@@ -201,7 +201,6 @@
     <string name="add_account_freshrss_signup_prompt">Vous n’avez pas d’instance FreshRSS ?</string>
     <string name="settings_gestures_reader_tap_to_page_title">E Ink appuyer pour faire défiler</string>
     <string name="settings_enable_high_contrast_dark_theme">Activer le thème sombre à contraste élevé</string>
-    <string name="settings_open_next_feed_on_read_all">Ouvrir le flux suivant après avoir tout lu</string>
     <string name="reader_image_visibility_show_on_wifi">Afficher les images uniquement sur Wi-Fi</string>
     <string name="reader_image_visibility_always_hide">Bloquer les images</string>
     <string name="reader_image_visibility_always_show">Toujours afficher les images</string>

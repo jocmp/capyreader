@@ -210,7 +210,6 @@
     <string name="layout_preference_single">Eine Spalte</string>
     <string name="layout_preference_responsive">Zwei Spalten</string>
     <string name="layout_preference_label">Bevorzugte Ansicht</string>
-    <string name="settings_open_next_feed_on_read_all">Nächsten Newsfeed öffnen, wenn alles als gelesen markiert wird</string>
     <string name="end_of_feed_text">Alles erledigt!</string>
     <string name="auth_fields_username">Benutzername</string>
 </resources>
