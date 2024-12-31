@@ -134,7 +134,6 @@ internal class ArticleRecords internal constructor(
             articleIDs = articleIDs,
             read = true,
             lastReadAt = updated,
-            updatedAt = updated
         )
     }
 
@@ -143,7 +142,6 @@ internal class ArticleRecords internal constructor(
             articleIDs = listOf(articleID),
             read = false,
             lastReadAt = null,
-            updatedAt = nowUTC().toEpochSecond()
         )
     }
 
@@ -151,7 +149,6 @@ internal class ArticleRecords internal constructor(
         database.articlesQueries.markStarred(
             articleID = articleID,
             starred = true,
-            updatedAt = updatedAt.toEpochSecond()
         )
     }
 
@@ -159,7 +156,6 @@ internal class ArticleRecords internal constructor(
         database.articlesQueries.markStarred(
             articleID = articleID,
             starred = false,
-            updatedAt = updatedAt.toEpochSecond()
         )
     }
 
