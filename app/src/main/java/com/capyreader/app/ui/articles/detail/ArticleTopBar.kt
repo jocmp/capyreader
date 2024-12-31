@@ -166,6 +166,7 @@ fun starredIcon(article: Article) =
 @Composable
 fun extractIcon(fullContentState: Article.FullContentState) = when (fullContentState) {
     LOADED -> R.drawable.icon_article_filled
+//    ERROR -> R.drawable.
     else -> R.drawable.icon_article_empty
 }
 

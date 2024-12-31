@@ -23,6 +23,7 @@ import com.jocmp.capy.buildArticlePager
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.countAll
+import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
@@ -458,17 +459,24 @@ class ArticleScreenViewModel(
     }
 
     private suspend fun fetchFullContent(article: Article) {
-        account.fetchFullContent(article).fold(
-            onSuccess = { value ->
-                if (_article?.id == article.id) {
+        account.fetchFullContent(article)
+            .fold(
+                onSuccess = { value ->
+                    if (_article?.id == article.id) {
+                        _article = article.copy(
+                            content = value,
+                            fullContent = Article.FullContentState.LOADED
+                        )
+                    }
+                },
+                onFailure = {
                     _article = article.copy(
-                        content = value,
-                        fullContent = Article.FullContentState.LOADED
+                        content = article.defaultContent,
+                        fullContent = Article.FullContentState.ERROR
                     )
+                    CapyLog.warn("full_content", mapOf("error_message" to it.message))
                 }
-            },
-            onFailure = { resetFullContent() }
-        )
+            )
     }
 
     private fun clearArticlesOnAllRead(

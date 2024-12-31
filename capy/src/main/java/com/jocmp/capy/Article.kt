@@ -33,5 +33,6 @@ data class Article(
         NONE,
         LOADING,
         LOADED,
+        ERROR,
     }
 }
