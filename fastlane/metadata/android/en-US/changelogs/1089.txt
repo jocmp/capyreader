@@ -1,0 +1,2 @@
+• Add more behavior options to Mark All Read
+• Add error indicator when full content fails to load
