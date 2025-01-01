@@ -10,30 +10,9 @@ fun parseHtml(article: Article, document: Document, hideImages: Boolean): String
     return """
       <script>
         (async () => {
-          let { html, hideImages } = ${JSONObject(mapOf("html" to html, "hideImages" to hideImages))};
-
-          Mercury.parse("${article.url?.toString()}", { html }).then(article => {
-            let extracted = document.createElement("div");
-
-            extracted.id = "article-body-content"
-            extracted.innerHTML = article.content;
-
-            let hasEmbed = cleanEmbeds(extracted);
-
-            let shouldAddImage = article.lead_image_url &&
-                !hideImages &&
-                !hasEmbed &&
-                ![...extracted.querySelectorAll("img")].some(img => img.src.includes(article.lead_image_url));            
-
-            if (shouldAddImage) {
-              let leadImage = document.createElement("img");
-              leadImage.src = article.lead_image_url;
-              extracted.prepend(leadImage);
-            }
-            
-            let content = document.getElementById("article-body-content");
-            content.replaceWith(extracted);
-          });
+          const input = ${JSONObject(mapOf("url" to article.url?.toString(), "html" to html, "hideImages" to hideImages))};
+          
+          displayFullContent(input);
         })();
       </script>
     """.trimIndent()
