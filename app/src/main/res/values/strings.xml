@@ -220,7 +220,7 @@
     <string name="layout_preference_label">Preferred Layout</string>
     <string name="end_of_feed_text">All caught up!</string>
     <string name="after_read_all_behavior_label">After Read All</string>
-    <string name="after_read_all_behavior_do_nothing">Do Nothing</string>
+    <string name="after_read_all_behavior_default">Default</string>
     <string name="after_read_all_behavior_open_drawer">Open Navigation Drawer</string>
     <string name="after_read_all_behavior_open_next_feed">Open Next Feed</string>
     <string name="full_content_error_missing_response">Failed to fetch article</string>
