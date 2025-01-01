@@ -168,6 +168,7 @@
     <string name="settings_clear_all_articles_text">Are you sure you want to delete all read, unstarred articles from your device? This action cannot be undone.</string>
     <string name="settings_clear_all_articles_button">Clear all articles</string>
     <string name="settings_support_button">Support</string>
+    <string name="settings_donate_button">Donate</string>
     <string name="settings_article_list_title">Article List</string>
     <string name="opml_exporter_success">Export complete</string>
     <string name="opml_exporter_failure">Export failed</string>

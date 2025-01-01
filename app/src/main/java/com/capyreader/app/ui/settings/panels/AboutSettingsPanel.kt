@@ -14,6 +14,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentCopy
+import androidx.compose.material.icons.rounded.BugReport
+import androidx.compose.material.icons.rounded.VolunteerActivism
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
@@ -54,7 +56,18 @@ fun AboutSettingsPanel() {
                 }
             ) {
                 ListItem(
+                    leadingContent = { Icon(Icons.Rounded.BugReport, contentDescription = null) },
                     headlineContent = { Text(stringResource(R.string.settings_support_button)) }
+                )
+            }
+            Box(
+                modifier = Modifier.clickable {
+                    context.openLink(Uri.parse(Support.DONATE_URL))
+                }
+            ) {
+                ListItem(
+                    leadingContent = { Icon(Icons.Rounded.VolunteerActivism, contentDescription = null) },
+                    headlineContent = { Text(stringResource(R.string.settings_donate_button)) }
                 )
             }
         }
@@ -98,6 +111,8 @@ fun AboutSettingsPanel() {
 }
 
 private object Support {
+    const val DONATE_URL = "https://capyreader.com/donate"
+
     const val URL = "https://capyreader.com/support"
 
     const val ABOUT_URL = "https://jocmp.com"
