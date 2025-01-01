@@ -1,10 +1,10 @@
 package com.jocmp.rssparser
 
-import com.jocmp.rssparser.model.RssItem
+import com.jocmp.rssparser.model.ItunesChannelData
+import com.jocmp.rssparser.model.ItunesItemData
 import com.jocmp.rssparser.model.RssChannel
 import com.jocmp.rssparser.model.RssImage
-import com.jocmp.rssparser.model.ItunesItemData
-import com.jocmp.rssparser.model.ItunesChannelData
+import com.jocmp.rssparser.model.RssItem
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -38,6 +38,7 @@ abstract class BaseParserTest(
     val articleCategories: List<String> = emptyList(),
     val articleCommentsUrl: String? = null,
     val articleItunesData: ItunesItemData? = null,
+//    val media: MediaData? = null,
 ) {
 
     private lateinit var channel: RssChannel
