@@ -193,7 +193,7 @@ class ArticleScreenViewModel(
                 return@launchIO
             }
 
-            if (afterReadAll.value == AfterReadAllBehavior.HIDE_ARTICLES) {
+            if (afterReadAll.value == AfterReadAllBehavior.OPEN_DRAWER) {
                 clearArticlesOnAllRead(onArticlesCleared)
             } else if (afterReadAll.value == AfterReadAllBehavior.OPEN_NEXT_FEED) {
                 openNextFeedOnAllRead(onArticlesCleared, feeds, folders)

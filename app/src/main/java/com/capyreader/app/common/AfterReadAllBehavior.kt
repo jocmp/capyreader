@@ -4,13 +4,13 @@ import com.capyreader.app.R
 
 enum class AfterReadAllBehavior {
     NOTHING,
-    HIDE_ARTICLES,
+    OPEN_DRAWER,
     OPEN_NEXT_FEED;
 
     val translationKey: Int
         get() = when (this) {
             NOTHING -> R.string.after_read_all_behavior_do_nothing
-            HIDE_ARTICLES -> R.string.after_read_all_behavior_hide_articles
+            OPEN_DRAWER -> R.string.after_read_all_behavior_open_drawer
             OPEN_NEXT_FEED -> R.string.after_read_all_behavior_open_next_feed
         }
 
