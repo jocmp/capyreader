@@ -207,8 +207,6 @@ data class Account(
     }
 
     suspend fun fetchFullContent(article: Article): Result<String> {
-        article.url ?: return Result.failure(Error("No article url found"))
-
         return articleContent.fetch(article.url)
     }
 

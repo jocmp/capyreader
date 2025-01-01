@@ -223,4 +223,6 @@
     <string name="after_read_all_behavior_do_nothing">Do nothing</string>
     <string name="after_read_all_behavior_hide_articles">Hide articles</string>
     <string name="after_read_all_behavior_open_next_feed">Open next feed</string>
+    <string name="full_content_error_missing_response">Failed to fetch article</string>
+    <string name="full_content_error_generic">Failed to parse article</string>
 </resources>
