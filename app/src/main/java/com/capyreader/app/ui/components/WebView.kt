@@ -32,6 +32,7 @@ import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
+import com.jocmp.capy.common.windowOrigin
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -158,11 +159,11 @@ class WebViewState(
 
                 withContext(Dispatchers.Main) {
                     webView.loadDataWithBaseURL(
-                        article.url?.toString(),
+                        windowOrigin(article.url),
                         html,
                         null,
                         "UTF-8",
-                        null
+                        null,
                     )
                 }
             }
