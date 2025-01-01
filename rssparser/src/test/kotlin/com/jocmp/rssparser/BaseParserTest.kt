@@ -2,6 +2,7 @@ package com.jocmp.rssparser
 
 import com.jocmp.rssparser.model.ItunesChannelData
 import com.jocmp.rssparser.model.ItunesItemData
+import com.jocmp.rssparser.model.Media
 import com.jocmp.rssparser.model.RssChannel
 import com.jocmp.rssparser.model.RssImage
 import com.jocmp.rssparser.model.RssItem
@@ -39,7 +40,8 @@ abstract class BaseParserTest(
     val articleCategories: List<String> = emptyList(),
     val articleCommentsUrl: String? = null,
     val articleItunesData: ItunesItemData? = null,
-    val charset: Charset? = null
+    val charset: Charset? = null,
+    val media: Media? = null,
 ) {
 
     private lateinit var channel: RssChannel
@@ -269,5 +271,25 @@ abstract class BaseParserTest(
     @Test
     fun articleItunesSeason_isCorrect() {
         assertEquals(articleItunesData?.season, article.itunesItemData?.season)
+    }
+
+    @Test
+    fun articleMediaTitle_isCorrect() {
+        assertEquals(media?.title, article.media?.title)
+    }
+
+    @Test
+    fun articleMediaContentUrl_isCorrect() {
+        assertEquals(media?.contentUrl, article.media?.contentUrl)
+    }
+
+    @Test
+    fun articleMediaThumbnailUrl_isCorrect() {
+        assertEquals(media?.thumbnailUrl, article.media?.thumbnailUrl)
+    }
+
+    @Test
+    fun articleMediaDescription_isCorrect() {
+        assertEquals(media?.description, article.media?.description)
     }
 }
