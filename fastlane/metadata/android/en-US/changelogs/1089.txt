@@ -1,2 +1,3 @@
 • Add more behavior options to Mark All Read
 • Add error indicator when full content fails to load
+• Fix article link in reader heading for some feeds
