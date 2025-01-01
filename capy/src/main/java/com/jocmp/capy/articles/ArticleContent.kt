@@ -7,10 +7,12 @@ import okhttp3.Response
 import java.io.IOException
 import java.net.URL
 
-internal class ArticleContent(
+class ArticleContent(
     private val httpClient: OkHttpClient
 ) {
-    suspend fun fetch(url: URL): Result<String> {
+    internal suspend fun fetch(url: URL?): Result<String> {
+        url ?: return Result.failure(MissingURLError())
+
         val request = Request.Builder()
             .url(url)
             .get()
@@ -21,7 +23,7 @@ internal class ArticleContent(
             val body = getBodyOrNull(response)
 
             if (body == null) {
-                Result.failure(Error("Couldn't parse body"))
+                Result.failure(MissingBodyError(message = response.code.toString()))
             } else {
                 Result.success(body)
             }
@@ -45,4 +47,8 @@ internal class ArticleContent(
             null
         }
     }
+
+    class MissingBodyError(override val message: String?) : Throwable(message = message)
+
+    class MissingURLError : Throwable()
 }

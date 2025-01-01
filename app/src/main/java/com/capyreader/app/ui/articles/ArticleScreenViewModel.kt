@@ -8,8 +8,10 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import com.capyreader.app.R
 import com.capyreader.app.common.AfterReadAllBehavior
 import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.common.toast
 import com.capyreader.app.sync.Sync
 import com.jocmp.capy.Account
 import com.jocmp.capy.Article
@@ -18,10 +20,12 @@ import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
+import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.articles.NextFilter
 import com.jocmp.capy.buildArticlePager
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
+import com.jocmp.capy.common.launchUI
 import com.jocmp.capy.countAll
 import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.Dispatchers
@@ -474,7 +478,18 @@ class ArticleScreenViewModel(
                         content = article.defaultContent,
                         fullContent = Article.FullContentState.ERROR
                     )
-                    CapyLog.warn("full_content", mapOf("error_message" to it.message))
+
+                    CapyLog.warn(
+                        "full_content",
+                        mapOf(
+                            "error_type" to it::class.simpleName,
+                            "error_message" to it.message
+                        )
+                    )
+
+                    viewModelScope.launchUI {
+                        context.showFullContentErrorToast(it)
+                    }
                 }
             )
     }
@@ -521,4 +536,13 @@ class ArticleScreenViewModel(
         SHOW,
         LATER,
     }
+}
+
+fun Context.showFullContentErrorToast(throwable: Throwable) {
+    val message = when (throwable) {
+        is ArticleContent.MissingBodyError -> R.string.full_content_error_missing_response
+        else -> R.string.full_content_error_generic
+    }
+
+    toast(message)
 }
