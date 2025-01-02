@@ -209,7 +209,6 @@
     <string name="settings_section_privacy">Privacidade</string>
     <string name="end_of_feed_text">Estás ao día!</string>
     <string name="after_read_all_behavior_label">Após Ler todo</string>
-    <string name="after_read_all_behavior_do_nothing">Non facer nada</string>
     <string name="after_read_all_behavior_open_drawer">Abrir panel de navegación</string>
     <string name="after_read_all_behavior_open_next_feed">Abrir a Seguinte canle</string>
     <string name="full_content_error_missing_response">Non se puido obter o artigo</string>

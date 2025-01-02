@@ -220,5 +220,4 @@
     <string name="after_read_all_behavior_open_drawer">Ava menüü</string>
     <string name="full_content_error_generic">Artikli töötlemine ei õnnestunud</string>
     <string name="after_read_all_behavior_open_next_feed">Ava järgmine uudisvoog</string>
-    <string name="after_read_all_behavior_do_nothing">Ära tee midagi</string>
 </resources>

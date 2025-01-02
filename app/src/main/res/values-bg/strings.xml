@@ -220,5 +220,4 @@
     <string name="after_read_all_behavior_open_next_feed">Отвори следваща емисия</string>
     <string name="full_content_error_missing_response">Неуспешно извличане на статия</string>
     <string name="full_content_error_generic">Неуспешно анализиране на статия</string>
-    <string name="after_read_all_behavior_do_nothing">Не прави нищо</string>
 </resources>
