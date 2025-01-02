@@ -214,4 +214,10 @@
     <string name="layout_preference_label">首选布局</string>
     <string name="auth_fields_username">用户名</string>
     <string name="end_of_feed_text">都读完了！</string>
+    <string name="after_read_all_behavior_open_next_feed">打开下个订阅源</string>
+    <string name="full_content_error_missing_response">获取文章失败</string>
+    <string name="full_content_error_generic">解析文章失败</string>
+    <string name="after_read_all_behavior_label">全部读完后的操作</string>
+    <string name="after_read_all_behavior_open_drawer">打开导航抽屉</string>
+    <string name="after_read_all_behavior_do_nothing">什么也不做</string>
 </resources>
