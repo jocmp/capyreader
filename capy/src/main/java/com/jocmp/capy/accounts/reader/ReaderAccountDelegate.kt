@@ -8,6 +8,7 @@ import com.jocmp.capy.accounts.feedbin.FeedbinAccountDelegate.Companion.MAX_CREA
 import com.jocmp.capy.accounts.withErrorHandling
 import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.common.transactionWithErrorHandling
+import com.jocmp.capy.common.unescapingHTMLCharacters
 import com.jocmp.capy.common.withResult
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.logging.CapyLog
@@ -348,7 +349,7 @@ internal class ReaderAccountDelegate(
                     extracted_content_url = null,
                     summary = Jsoup.parse(item.summary.content).text(),
                     url = item.canonical.firstOrNull()?.href,
-                    image_url = item.image?.href,
+                    image_url = item.image?.href?.unescapingHTMLCharacters,
                     published_at = item.published
                 )
 

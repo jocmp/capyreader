@@ -21,3 +21,11 @@ val String.escapingSpecialXMLCharacters: String
 
         return escaped
     }
+
+val String.unescapingHTMLCharacters: String
+    get() {
+        return this
+            .replace("&amp;", "&")
+            .replace("&lt;", "<")
+            .replace("&gt;", ">")
+    }
