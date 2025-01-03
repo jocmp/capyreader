@@ -52,12 +52,12 @@
     <string name="mark_all_read_dialog_submit">Bestätigen</string>
     <string name="article_actions_open_menu">Artikeloptionen öffnen</string>
     <string name="article_actions_mark_below_as_read">Alles unterhalb als gelesen markieren</string>
-    <string name="article_actions_mark_after_as_read">Alles überhalb als gelesen markieren</string>
+    <string name="article_actions_mark_after_as_read">Alles oberhalb als gelesen markieren</string>
     <string name="unauthorized_dialog_title">Sie sind ausgeloggt</string>
     <string name="unauthorized_dialog_dismiss_text">Später</string>
     <string name="unauthorized_dialog_confirm_text">Einloggen</string>
     <string name="auth_fields_password">Passwort</string>
-    <string name="auth_fields_hide_password">Passwort verstecken</string>
+    <string name="auth_fields_hide_password">Passwort ausblenden</string>
     <string name="auth_fields_show_password">Passwort anzeigen</string>
     <string name="auth_fields_log_in_button">Einloggen</string>
     <string name="settings_top_bar_title">Einstellungen</string>
@@ -205,11 +205,18 @@
     <string name="reader_image_visibility_always_show">Bilder immer anzeigen</string>
     <string name="reader_image_visibility_label">Bilder</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Tippen auf die unteren Ecken um innerhalb eines Artikels zu navigieren</string>
-    <string name="settings_gestures_reader_tap_to_page_title">Tippen um zu Scrollen bei E-Ink Displays</string>
+    <string name="settings_gestures_reader_tap_to_page_title">Tippen um zu Scrollen</string>
     <string name="settings_enable_high_contrast_dark_theme">Dunkles Theme mit hohem Kontrast aktivieren</string>
     <string name="layout_preference_single">Eine Spalte</string>
-    <string name="layout_preference_responsive">Zwei Spalten</string>
+    <string name="layout_preference_responsive">Automatisch</string>
     <string name="layout_preference_label">Bevorzugte Ansicht</string>
     <string name="end_of_feed_text">Alles erledigt!</string>
     <string name="auth_fields_username">Benutzername</string>
+    <string name="settings_donate_button">Spenden</string>
+    <string name="after_read_all_behavior_open_next_feed">Nächsten Feed öffnen</string>
+    <string name="full_content_error_missing_response">Artikel laden fehlgeschlagen</string>
+    <string name="after_read_all_behavior_open_drawer">Navigationsleiste anzeigen</string>
+    <string name="after_read_all_behavior_label">Wenn Alles Gelesen</string>
+    <string name="full_content_error_generic">Artikel verarbeiten fehlgeschlagen</string>
+    <string name="after_read_all_behavior_default">Standard</string>
 </resources>
