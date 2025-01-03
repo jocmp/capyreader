@@ -216,4 +216,11 @@
     <string name="layout_preference_single">Colonna singola</string>
     <string name="layout_preference_label">Layout preferito</string>
     <string name="end_of_feed_text">Tutti presi!</string>
+    <string name="settings_donate_button">Donare</string>
+    <string name="full_content_error_generic">Impossibile analizzare l\'articolo</string>
+    <string name="after_read_all_behavior_open_drawer">Apri menù a scomparsa</string>
+    <string name="after_read_all_behavior_default">Predefinito</string>
+    <string name="after_read_all_behavior_label">Dopo aver letto tutto</string>
+    <string name="full_content_error_missing_response">Impossibile recuperare l\'articolo</string>
+    <string name="after_read_all_behavior_open_next_feed">Vai al prossimo feed</string>
 </resources>
