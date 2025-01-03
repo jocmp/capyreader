@@ -348,7 +348,7 @@ internal class ReaderAccountDelegate(
                     extracted_content_url = null,
                     summary = Jsoup.parse(item.summary.content).text(),
                     url = item.canonical.firstOrNull()?.href,
-                    image_url = item.image?.href,
+                    image_url = parsedImageURL(item),
                     published_at = item.published
                 )
 
