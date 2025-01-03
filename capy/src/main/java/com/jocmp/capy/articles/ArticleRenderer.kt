@@ -32,7 +32,7 @@ class ArticleRenderer(
             "title" to article.title,
             "byline" to byline,
             "feed_name" to article.feedName,
-            "text_size" to textSize.get().slug,
+            "font_size" to "${textSize.get().px}px",
             "font_family" to fontFamily.slug,
             "font_preload" to fontPreload(fontFamily),
             "top_margin" to topMargin()

@@ -32,16 +32,13 @@ private fun updateTextSize(webView: WebView, textSize: TextSize) {
     webView.evaluateJavascript(
         """
         (function() {         
-          let slug = "${textSize.slug}";
-          let articleBody = document.getElementsByClassName("article__body")[0];
-          const classes = articleBody.className.split(" ").filter(c => !c.startsWith("article__body--text-size"));
-          
-          articleBody.className = classes.join(" ").trim() + " article__body--text-size-" + slug;
+          document.documentElement.style.setProperty("--article-font-size", "${textSize.px}px");
         })();
         """.trimIndent()
     ) {
     }
 }
+
 private fun updateFontFamily(webView: WebView, fontOption: FontOption) {
     webView.evaluateJavascript(
         """
