@@ -213,4 +213,9 @@
     <string name="layout_preference_single">Uma Coluna</string>
     <string name="layout_preference_label">Layout Preferido</string>
     <string name="settings_panel_general_title">Geral</string>
+    <string name="after_read_all_behavior_label">Depois de Ler Tudo</string>
+    <string name="after_read_all_behavior_open_drawer">Abrir Painel de Navegação</string>
+    <string name="after_read_all_behavior_open_next_feed">Abrir Próximo Feed</string>
+    <string name="full_content_error_missing_response">Falha ao buscar artigo</string>
+    <string name="full_content_error_generic">Falha ao analisar artigo</string>
 </resources>
