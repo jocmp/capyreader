@@ -21,7 +21,7 @@ internal val articlesModule = module {
     single {
         ArticleRenderer(
             context = get(),
-            textSize = get<AppPreferences>().readerOptions.textSize,
+            textSize = get<AppPreferences>().readerOptions.fontSize,
             fontOption = get<AppPreferences>().readerOptions.fontFamily,
             hideTopMargin = get<AppPreferences>().readerOptions.pinToolbars,
         )

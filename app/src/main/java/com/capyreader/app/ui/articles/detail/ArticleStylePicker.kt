@@ -17,8 +17,8 @@ import com.capyreader.app.R
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.components.LabelStyle
-import com.jocmp.capy.articles.TextSize
 import com.capyreader.app.ui.theme.CapyTheme
+import com.jocmp.capy.articles.FontSize
 import org.koin.compose.koinInject
 import kotlin.math.roundToInt
 
@@ -27,11 +27,13 @@ fun ArticleStylePicker(
     appPreferences: AppPreferences = koinInject(),
     onChange: () -> Unit = {}
 ) {
-    val textSizes = TextSize.sorted
+    val textSizes = FontSize.entries
 
     var fontFamily by remember { mutableStateOf(appPreferences.readerOptions.fontFamily.get()) }
     var sliderPosition by remember {
-        mutableFloatStateOf(textSizes.indexOf(appPreferences.readerOptions.textSize.get()).toFloat())
+        mutableFloatStateOf(
+            textSizes.indexOf(appPreferences.readerOptions.fontSize.get()).toFloat()
+        )
     }
 
     Column(
@@ -57,7 +59,9 @@ fun ArticleStylePicker(
                     value = sliderPosition,
                     onValueChange = {
                         sliderPosition = it
-                        appPreferences.readerOptions.textSize.set(TextSize.sorted[it.roundToInt()])
+                        FontSize.entries.getOrNull(it.roundToInt())?.let { size ->
+                            appPreferences.readerOptions.fontSize.set(size)
+                        }
                         onChange()
                     }
                 )
