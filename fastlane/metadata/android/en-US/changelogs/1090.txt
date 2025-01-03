@@ -1,0 +1,2 @@
+• Add custom full content parser for techcrunch.com
+• Improve FreshRSS image preview parsing
