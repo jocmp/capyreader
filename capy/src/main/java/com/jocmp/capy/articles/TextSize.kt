@@ -1,31 +1,15 @@
 package com.jocmp.capy.articles
 
-enum class TextSize {
-    SMALL,
-    MEDIUM,
-    LARGE,
-    X_LARGE,
-    XX_LARGE;
-
-    val slug: String
-        get() = when(this) {
-            SMALL -> "small"
-            MEDIUM -> "medium"
-            LARGE -> "large"
-            X_LARGE -> "x-large"
-            XX_LARGE -> "xx-large"
-        }
+enum class TextSize(val px: Int) {
+    XX_SMALL(px = 13),
+    X_SMALL(px = 14),
+    MEDIUM(px = 16),
+    LARGE(px = 19),
+    X_LARGE(px = 22),
+    XX_LARGE(px = 25),
+    XXX_LARGE(px = 32);
 
     companion object {
         val default = MEDIUM
-
-        val sorted: List<TextSize>
-            get() = listOf(
-                SMALL,
-                MEDIUM,
-                LARGE,
-                X_LARGE,
-                XX_LARGE,
-            )
     }
 }

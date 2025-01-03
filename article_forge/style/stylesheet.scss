@@ -7,7 +7,6 @@ $font-families: (
   "poppins": "Poppins",
   "vollkorn": "Vollkorn",
 );
-$text-sizes: small, medium, large, x-large, xx-large;
 
 @font-face {
   font-family: "Atkinson Hyperlegible";
@@ -206,6 +205,10 @@ video {
   }
 }
 
+.article__body {
+  font-size: var(--article-font-size);
+}
+
 #article-body-content {
   line-height: 1.6em;
   margin-bottom: 20vh;
@@ -218,11 +221,5 @@ video {
 @each $family, $value in $font-families {
   .article__body--font-#{$family} {
     font-family: $value;
-  }
-}
-
-@each $size in $text-sizes {
-  .article__body--text-size-#{$size} {
-    font-size: $size;
   }
 }
