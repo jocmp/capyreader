@@ -1,11 +1,12 @@
 package com.jocmp.rssparser
 
-import com.jocmp.rssparser.model.RssItem
+import com.jocmp.rssparser.model.ItunesChannelData
+import com.jocmp.rssparser.model.ItunesItemData
 import com.jocmp.rssparser.model.RssChannel
 import com.jocmp.rssparser.model.RssImage
-import com.jocmp.rssparser.model.ItunesItemData
-import com.jocmp.rssparser.model.ItunesChannelData
+import com.jocmp.rssparser.model.RssItem
 import kotlinx.coroutines.test.runTest
+import java.nio.charset.Charset
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -38,6 +39,7 @@ abstract class BaseParserTest(
     val articleCategories: List<String> = emptyList(),
     val articleCommentsUrl: String? = null,
     val articleItunesData: ItunesItemData? = null,
+    val charset: Charset? = null
 ) {
 
     private lateinit var channel: RssChannel
@@ -45,7 +47,7 @@ abstract class BaseParserTest(
 
     @BeforeTest
     fun setUp() = runTest {
-        val input = readFileFromResources(feedPath)
+        val input = readFileFromResources(feedPath, charset = charset)
         channel = ParserFactory.build().parse(input)
         article = channel.items[0]
     }
