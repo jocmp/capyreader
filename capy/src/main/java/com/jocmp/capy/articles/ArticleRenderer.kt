@@ -9,7 +9,7 @@ import com.jocmp.capy.R as CapyRes
 
 class ArticleRenderer(
     private val context: Context,
-    private val textSize: Preference<TextSize>,
+    private val textSize: Preference<Int>,
     private val fontOption: Preference<FontOption>,
     private val hideTopMargin: Preference<Boolean>,
 ) {
@@ -32,7 +32,7 @@ class ArticleRenderer(
             "title" to article.title,
             "byline" to byline,
             "feed_name" to article.feedName,
-            "text_size" to textSize.get().slug,
+            "font_size" to "${textSize.get()}px",
             "font_family" to fontFamily.slug,
             "font_preload" to fontPreload(fontFamily),
             "top_margin" to topMargin()

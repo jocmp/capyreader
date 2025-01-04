@@ -7,12 +7,11 @@ import androidx.compose.runtime.getValue
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.jocmp.capy.articles.FontOption
-import com.jocmp.capy.articles.TextSize
 import org.koin.compose.koinInject
 
 @Composable
 fun ArticleStyleListener(webView: WebView?, appPreferences: AppPreferences = koinInject()) {
-    val textSize by appPreferences.readerOptions.textSize.collectChangesWithDefault()
+    val textSize by appPreferences.readerOptions.fontSize.collectChangesWithDefault()
     val fontFamily by appPreferences.readerOptions.fontFamily.collectChangesWithDefault()
 
     LaunchedEffect(fontFamily) {
@@ -23,25 +22,22 @@ fun ArticleStyleListener(webView: WebView?, appPreferences: AppPreferences = koi
 
     LaunchedEffect(textSize) {
         if (webView != null) {
-            updateTextSize(webView, textSize)
+            updateFontSize(webView, textSize)
         }
     }
 }
 
-private fun updateTextSize(webView: WebView, textSize: TextSize) {
+private fun updateFontSize(webView: WebView, fontSize: Int) {
     webView.evaluateJavascript(
         """
         (function() {         
-          let slug = "${textSize.slug}";
-          let articleBody = document.getElementsByClassName("article__body")[0];
-          const classes = articleBody.className.split(" ").filter(c => !c.startsWith("article__body--text-size"));
-          
-          articleBody.className = classes.join(" ").trim() + " article__body--text-size-" + slug;
+          document.documentElement.style.setProperty("--article-font-size", "${fontSize}px");
         })();
         """.trimIndent()
     ) {
     }
 }
+
 private fun updateFontFamily(webView: WebView, fontOption: FontOption) {
     webView.evaluateJavascript(
         """

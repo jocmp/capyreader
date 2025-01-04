@@ -8,7 +8,7 @@ import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe
 import com.capyreader.app.ui.settings.panels.RowSwipeOption
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.articles.FontOption
-import com.jocmp.capy.articles.TextSize
+import com.jocmp.capy.articles.FontSize
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.preferences.AndroidPreferenceStore
 import com.jocmp.capy.preferences.Preference
@@ -75,8 +75,8 @@ class AppPreferences(context: Context) {
         val pinToolbars: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_pin_top_bar", true)
 
-        val textSize: Preference<TextSize>
-            get() = preferenceStore.getEnum("article_text_size", TextSize.default)
+        val fontSize: Preference<Int>
+            get() = preferenceStore.getInt("article_font_size", FontSize.default)
 
         val fontFamily: Preference<FontOption>
             get() = preferenceStore.getEnum("article_font_family", FontOption.default)
