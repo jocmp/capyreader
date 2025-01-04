@@ -213,4 +213,11 @@
     <string name="settings_section_browser">Navigateur</string>
     <string name="end_of_feed_text">Tous les articles sont lus !</string>
     <string name="reader_image_visibility_label">Images</string>
+    <string name="after_read_all_behavior_default">Par défaut</string>
+    <string name="after_read_all_behavior_open_drawer">Ouvrir le menu de navigation</string>
+    <string name="after_read_all_behavior_open_next_feed">Ouvrir le flux suivant</string>
+    <string name="full_content_error_generic">Impossible d\'analyser l\'article</string>
+    <string name="settings_donate_button">Faire un don</string>
+    <string name="full_content_error_missing_response">Impossible de récupérer l\'article</string>
+    <string name="after_read_all_behavior_label">Après avoir tout lu</string>
 </resources>

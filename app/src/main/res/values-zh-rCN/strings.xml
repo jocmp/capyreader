@@ -219,4 +219,6 @@
     <string name="full_content_error_generic">解析文章失败</string>
     <string name="after_read_all_behavior_label">全部读完后的操作</string>
     <string name="after_read_all_behavior_open_drawer">打开导航抽屉</string>
+    <string name="settings_donate_button">捐赠</string>
+    <string name="after_read_all_behavior_default">默认</string>
 </resources>

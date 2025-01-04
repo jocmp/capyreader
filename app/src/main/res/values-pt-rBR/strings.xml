@@ -218,4 +218,6 @@
     <string name="after_read_all_behavior_open_next_feed">Abrir Próximo Feed</string>
     <string name="full_content_error_missing_response">Falha ao buscar artigo</string>
     <string name="full_content_error_generic">Falha ao analisar artigo</string>
+    <string name="settings_donate_button">Doar</string>
+    <string name="after_read_all_behavior_default">Padrão</string>
 </resources>
