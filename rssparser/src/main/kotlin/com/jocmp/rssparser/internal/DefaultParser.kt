@@ -67,7 +67,7 @@ internal class DefaultParser(
 
 private fun tryXmlParse(input: ParserInput): Document? {
     return try {
-        Jsoup.parse(input.inputStream(), null, "", JsoupParser.xmlParser())
+        Jsoup.parse(input.inputStream(), input.charset?.toString(), "", JsoupParser.xmlParser())
     } catch (e: IOException) {
         null
     }
