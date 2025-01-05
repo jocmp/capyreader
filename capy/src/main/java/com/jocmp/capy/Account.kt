@@ -54,6 +54,7 @@ data class Account(
         )
 
         Source.FRESHRSS, Source.READER -> buildReaderDelegate(
+            source = source,
             database = database,
             path = cacheDirectory,
             preferences = preferences
@@ -124,11 +125,11 @@ data class Account(
         )
     }
 
-    suspend fun refresh(): Result<Unit> {
+    suspend fun refresh(filter: ArticleFilter = ArticleFilter.default()): Result<Unit> {
         return try {
             val cutoffDate = preferences.autoDelete.get().cutoffDate()
 
-            val result = delegate.refresh(cutoffDate = cutoffDate)
+            val result = delegate.refresh(filter, cutoffDate = cutoffDate)
 
             if (cutoffDate != null) {
                 articleRecords.deleteOldArticles(before = cutoffDate)

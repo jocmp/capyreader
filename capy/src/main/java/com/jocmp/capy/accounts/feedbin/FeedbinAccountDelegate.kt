@@ -1,6 +1,7 @@
 package com.jocmp.capy.accounts.feedbin
 
 import com.jocmp.capy.AccountDelegate
+import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.FeedOption
@@ -41,7 +42,7 @@ internal class FeedbinAccountDelegate(
     private val feedRecords = FeedRecords(database)
     private val taggingRecords = TaggingRecords(database)
 
-    override suspend fun refresh(cutoffDate: ZonedDateTime?): Result<Unit> {
+    override suspend fun refresh(filter: ArticleFilter, cutoffDate: ZonedDateTime?): Result<Unit> {
         return try {
             val since = articleRecords.maxUpdatedAt().toString()
 

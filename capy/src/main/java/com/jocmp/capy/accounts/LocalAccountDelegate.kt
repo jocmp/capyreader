@@ -1,6 +1,7 @@
 package com.jocmp.capy.accounts
 
 import com.jocmp.capy.AccountDelegate
+import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.TimeHelpers.published
@@ -32,7 +33,7 @@ class LocalAccountDelegate(
     private val articleRecords = ArticleRecords(database)
     private val taggingRecords = TaggingRecords(database)
 
-    override suspend fun refresh(cutoffDate: ZonedDateTime?): Result<Unit> {
+    override suspend fun refresh(filter: ArticleFilter, cutoffDate: ZonedDateTime?): Result<Unit> {
         refreshFeeds(cutoffDate)
 
         return Result.success(Unit)

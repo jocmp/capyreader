@@ -1,9 +1,11 @@
 package com.jocmp.capy.accounts.reader
 
 import com.jocmp.capy.AccountDelegate
+import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.accounts.AddFeedResult
+import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.FeedFixture
@@ -105,7 +107,7 @@ class ReaderAccountDelegateTest {
         feedFixture = FeedFixture(database)
         googleReader = mockk()
 
-        delegate = ReaderAccountDelegate(database, googleReader)
+        delegate = ReaderAccountDelegate(source = Source.FRESHRSS, database, googleReader)
     }
 
     @Test
@@ -117,7 +119,7 @@ class ReaderAccountDelegateTest {
         stubStarred()
         stubReadingList(itemRefs)
 
-        delegate.refresh()
+        delegate.refresh(ArticleFilter.default())
 
         val articles = database
             .articlesQueries
@@ -189,7 +191,7 @@ class ReaderAccountDelegateTest {
             googleReader.streamItemsContents(starredItems.map { it.hexID }, postToken = postToken)
         }.returns(Response.success(StreamItemsContentsResult(starredItems)))
 
-        delegate.refresh()
+        delegate.refresh(ArticleFilter.default())
 
         val starredArticles = ArticleRecords(database)
             .byStatus
@@ -213,7 +215,7 @@ class ReaderAccountDelegateTest {
         val networkError = SocketTimeoutException("Sorry networked charlie")
         coEvery { googleReader.subscriptionList() }.throws(networkError)
 
-        val result = delegate.refresh()
+        val result = delegate.refresh(ArticleFilter.default())
 
         assertEquals(result, Result.failure(networkError))
     }

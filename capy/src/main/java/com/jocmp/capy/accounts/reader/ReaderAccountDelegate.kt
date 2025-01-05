@@ -1,8 +1,10 @@
 package com.jocmp.capy.accounts.reader
 
 import com.jocmp.capy.AccountDelegate
+import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
+import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.ValidationError
 import com.jocmp.capy.accounts.feedbin.FeedbinAccountDelegate.Companion.MAX_CREATE_UNREAD_LIMIT
 import com.jocmp.capy.accounts.withErrorHandling
@@ -35,6 +37,7 @@ import java.time.ZonedDateTime
 import java.util.concurrent.atomic.AtomicReference
 
 internal class ReaderAccountDelegate(
+    private val source: Source,
     private val database: Database,
     private val googleReader: GoogleReader,
 ) : AccountDelegate {
@@ -43,7 +46,7 @@ internal class ReaderAccountDelegate(
     private val feedRecords = FeedRecords(database)
     private val taggingRecords = TaggingRecords(database)
 
-    override suspend fun refresh(cutoffDate: ZonedDateTime?): Result<Unit> {
+    override suspend fun refresh(filter: ArticleFilter, cutoffDate: ZonedDateTime?): Result<Unit> {
         return withErrorHandling {
             val since = articleRecords.maxUpdatedAt().toEpochSecond()
 
