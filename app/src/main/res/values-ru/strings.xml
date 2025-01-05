@@ -216,4 +216,12 @@
     <string name="layout_preference_label">Предпочтительный макет</string>
     <string name="layout_preference_responsive">Отзывчивый</string>
     <string name="auth_fields_username">Имя пользователя</string>
+    <string name="full_content_error_missing_response">Не удалось получить статью</string>
+    <string name="after_read_all_behavior_default">По умолчанию</string>
+    <string name="settings_donate_button">Пожертвовать</string>
+    <string name="after_read_all_behavior_open_next_feed">Открыть следующий канал</string>
+    <string name="full_content_error_generic">Не удалось разобрать статью</string>
+    <string name="end_of_feed_text">Все статьи прочитаны!</string>
+    <string name="after_read_all_behavior_label">После прочтения всего</string>
+    <string name="after_read_all_behavior_open_drawer">Открыть нав. панель</string>
 </resources>
