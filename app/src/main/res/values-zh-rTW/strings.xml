@@ -9,7 +9,7 @@
     <string name="settings_remove_account_message_local">您确定要刪除帳戶嗎？此操作不可撤銷。</string>
     <string name="settings_remove_account_confirm_local">確認</string>
     <string name="account_settings_save_name">名稱已保存</string>
-    <string name="article_view_mark_as_read">標為已讀</string>
+    <string name="article_view_mark_as_read">閲讀操作</string>
     <string name="article_view_star">星標</string>
     <string name="refresh_manually_only">僅手動</string>
     <string name="refresh_minutes">每%1$d分鐘</string>
@@ -159,7 +159,7 @@
     <string name="settings_article_list_feed_icons">源圖標</string>
     <string name="settings_option_full_content_subtitle">記住每個源的全文加載配置</string>
     <string name="empty_onboarding_title">還沒有源</string>
-    <string name="empty_onboarding_prompt">首先添加一個源</string>
+    <string name="empty_onboarding_prompt">先來添加一個源</string>
     <string name="settings_option_copy_version">複製版本號</string>
     <string name="theme_menu_option_system_default">系統默認</string>
     <string name="edit_feed_tags">標簽</string>
@@ -214,4 +214,11 @@
     <string name="layout_preference_single">單列</string>
     <string name="auth_fields_username">用戶名</string>
     <string name="end_of_feed_text">暫時沒有新文章！</string>
+    <string name="settings_donate_button">捐贈</string>
+    <string name="after_read_all_behavior_default">默認</string>
+    <string name="after_read_all_behavior_open_drawer">打開導覽匣</string>
+    <string name="full_content_error_missing_response">取得文章失敗</string>
+    <string name="full_content_error_generic">解析文章失敗</string>
+    <string name="after_read_all_behavior_label">全部已讀後的操作</string>
+    <string name="after_read_all_behavior_open_next_feed">打開下個源</string>
 </resources>
