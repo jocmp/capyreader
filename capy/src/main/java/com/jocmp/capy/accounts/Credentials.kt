@@ -1,5 +1,6 @@
 package com.jocmp.capy.accounts
 
+import android.content.Context
 import com.jocmp.capy.accounts.feedbin.FeedbinCredentials
 import com.jocmp.capy.accounts.reader.ReaderCredentials
 import com.jocmp.capy.common.optionalURL
@@ -8,9 +9,10 @@ interface Credentials {
     val username: String
     val secret: String
     val url: String
+    val clientCertAlias: String
     val source: Source
 
-    suspend fun verify(): Result<Credentials>
+    suspend fun verify(context: Context): Result<Credentials>
 
     companion object {
         fun from(
@@ -18,6 +20,7 @@ interface Credentials {
             username: String,
             password: String,
             url: String,
+            clientCertAlias: String,
         ): Credentials {
             return when (source) {
                 Source.FEEDBIN -> FeedbinCredentials(username, password)
@@ -27,6 +30,7 @@ interface Credentials {
                     username,
                     password,
                     url = normalizeURL(url),
+                    clientCertAlias = clientCertAlias,
                     source = source
                 )
 

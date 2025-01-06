@@ -1,5 +1,9 @@
 package com.capyreader.app.ui.accounts
 
+import android.app.Activity
+import android.security.KeyChain
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,6 +24,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -45,9 +51,11 @@ fun LoginView(
     onUsernameChange: (username: String) -> Unit = {},
     onPasswordChange: (password: String) -> Unit = {},
     onUrlChange: (url: String) -> Unit = {},
+    onClientCertAliasChange: (clientCertAlias: String) -> Unit = {},
     onSubmit: () -> Unit = {},
     onNavigateBack: () -> Unit = {},
     url: String,
+    clientCertAlias: String,
     username: String,
     password: String,
     loading: Boolean = false,
@@ -104,6 +112,10 @@ fun LoginView(
                                     }
                                 }
                             )
+                            CertificateField(
+                                onChange = onClientCertAliasChange,
+                                certAlias = clientCertAlias,
+                            )
                         }
                         AuthFields(
                             username = username,
@@ -148,6 +160,37 @@ fun UrlField(
     )
 }
 
+@Composable
+fun CertificateField(
+    onChange: (certAlias: String) -> Unit,
+    certAlias: String,
+) {
+    val context = LocalContext.current
+    TextField(
+        value = certAlias,
+        onValueChange = onChange,
+        singleLine = true,
+        label = {
+            Text(stringResource(R.string.auth_fields_client_certificate))
+        },
+        modifier = Modifier
+            .fillMaxWidth(),
+        readOnly = true,
+        interactionSource = remember { MutableInteractionSource() }
+            .also { interactionSource ->
+                LaunchedEffect(interactionSource) {
+                    interactionSource.interactions.collect {
+                        if (it is PressInteraction.Release) {
+                            KeyChain.choosePrivateKeyAlias(context as Activity, { alias ->
+                                onChange(alias ?: "")
+                            }, null, null, null, null)
+                        }
+                    }
+                }
+            }
+    )
+}
+
 @Preview
 @Composable
 private fun LoginViewPreview() {
@@ -162,6 +205,7 @@ private fun LoginViewPreview() {
         LoginView(
             source = Source.FEEDBIN,
             url = "",
+            clientCertAlias = "",
             username = "test@example.com",
             password = "",
         )
