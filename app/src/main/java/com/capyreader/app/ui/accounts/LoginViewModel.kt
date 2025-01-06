@@ -1,5 +1,6 @@
 package com.capyreader.app.ui.accounts
 
+import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -27,6 +28,7 @@ class LoginViewModel(
     private var _username by mutableStateOf("")
     private var _password by mutableStateOf("")
     private var _url by mutableStateOf("")
+    private var _clientCertAlias by mutableStateOf("")
     private var _result by mutableStateOf<Async<Unit>>(Async.Uninitialized)
     val source = handle.toRoute<Route.Login>().source
 
@@ -38,6 +40,9 @@ class LoginViewModel(
 
     val url
         get() = _url
+
+    val clientCertAlias
+        get() = _clientCertAlias
 
     val loading: Boolean
         get() = _result is Async.Loading
@@ -57,7 +62,11 @@ class LoginViewModel(
         _url = url
     }
 
-    fun submit(onSuccess: () -> Unit) {
+    fun setClientCertAlias(clientCertAlias: String) {
+        _clientCertAlias = clientCertAlias
+    }
+
+    fun submit(context: Context, onSuccess: () -> Unit) {
         if (username.isBlank() || password.isBlank()) {
             _result = Async.Failure(loginError())
         }
@@ -67,7 +76,7 @@ class LoginViewModel(
         viewModelScope.launchIO {
             _result = Async.Loading
 
-            credentials.verify()
+            credentials.verify(context)
                 .onSuccess { result ->
                     createAccount(result)
 
@@ -94,7 +103,8 @@ class LoginViewModel(
             source = source,
             username = username,
             password = password,
-            url = _url
+            url = url,
+            clientCertAlias = clientCertAlias,
         )
 
     private fun createAccount(credentials: Credentials) {
@@ -102,6 +112,7 @@ class LoginViewModel(
             username = credentials.username,
             password = credentials.secret,
             url = credentials.url,
+            clientCertAlias = credentials.clientCertAlias,
             source = credentials.source
         )
 
