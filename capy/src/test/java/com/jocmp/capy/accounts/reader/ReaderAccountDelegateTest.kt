@@ -115,6 +115,9 @@ class ReaderAccountDelegateTest {
             htmlUrl = "https://arstechnica.com",
         ),
         summary = Summary("Enlarge (credit: Jakub Porzycki/NurPhoto via Getty Images) Reddit filed to go public on Thursday (PDF), revealing various details of the social media company's inner workings. Among the revelations, Reddit acknowledged the threat of future user protests"),
+        categories = listOf(
+            "user/-/state/com.google/starred"
+        )
     )
 
     private val readItem = Item(
@@ -130,7 +133,8 @@ class ReaderAccountDelegateTest {
             htmlUrl = "https://theverge.com",
         ),
         categories = listOf(
-            "user/-/state/com.google/read"
+            "user/-/state/com.google/read",
+            "user/-/state/com.google/starred"
         )
     )
 
@@ -155,6 +159,7 @@ class ReaderAccountDelegateTest {
         stubUnread(itemRefs)
         stubStarred()
         stubStreamItemsIDs(itemRefs)
+        stubStreamItemsIDs(itemRefs = emptyList(), stream = Stream.Read())
 
         delegate.refresh(ArticleFilter.default())
 
@@ -258,13 +263,15 @@ class ReaderAccountDelegateTest {
 
     @Test
     fun refresh_findsMissingArticles() = runTest {
-        val itemRefs = listOf("1", "16").map { ItemRef(it) }
+        val readingListItems = listOf(unreadItem, items.first())
+        val readingListItemRefs = listOf("1", "16").map { ItemRef(it) }
 
         stubSubscriptions()
-        stubUnread(itemRefs)
+        stubUnread(readingListItemRefs)
         stubStarred(listOf("1", "2").map { ItemRef(it) })
 
-        stubStreamItemsIDs(itemRefs, listOf(unreadItem, items.first()))
+        stubStreamItemsIDs(itemRefs = readingListItemRefs, readingListItems)
+        stubStreamItemsIDs(itemRefs = emptyList(), stream = Stream.Read())
 
         val starredItems = listOf(unreadItem, readItem)
 
@@ -290,6 +297,7 @@ class ReaderAccountDelegateTest {
         assertFalse(unreadArticle.read)
         assertTrue(readArticle.read)
     }
+
 
     @Test
     fun refresh_IOException() = runTest {
@@ -595,7 +603,7 @@ class ReaderAccountDelegateTest {
 
     private fun stubStreamItemsIDs(
         itemRefs: List<ItemRef> = emptyList(),
-        items: List<Item> = this.items,
+        responseItems: List<Item> = this.items,
         stream: Stream = Stream.ReadingList(),
     ) {
         coEvery {
@@ -616,14 +624,14 @@ class ReaderAccountDelegateTest {
             ).build()
 
         coEvery {
-            googleReader.streamItemsContents(items.map { it.hexID }, postToken = null)
+            googleReader.streamItemsContents(responseItems.map { it.hexID }, postToken = null)
         }.returns(Response.error("".toResponseBody(), errorResponse))
 
         stubPostToken()
 
         coEvery {
-            googleReader.streamItemsContents(items.map { it.hexID }, postToken = postToken)
-        }.returns(Response.success(StreamItemsContentsResult(items)))
+            googleReader.streamItemsContents(responseItems.map { it.hexID }, postToken = postToken)
+        }.returns(Response.success(StreamItemsContentsResult(responseItems)))
     }
 
     private fun stubPostToken() {
@@ -632,13 +640,20 @@ class ReaderAccountDelegateTest {
         }.returns(Response.success(postToken))
     }
 
-    private fun stubUnread(itemRefs: List<ItemRef> = emptyList()) {
+    private fun stubUnread(responseItemRefs: List<ItemRef> = emptyList()) {
         coEvery {
             googleReader.streamItemsIDs(
                 streamID = Stream.ReadingList().id,
                 count = 10_000,
                 excludedStreamID = Stream.Read().id,
             )
-        }.returns(Response.success(StreamItemIDsResult(itemRefs = itemRefs, continuation = null)))
+        }.returns(
+            Response.success(
+                StreamItemIDsResult(
+                    itemRefs = responseItemRefs,
+                    continuation = null
+                )
+            )
+        )
     }
 }

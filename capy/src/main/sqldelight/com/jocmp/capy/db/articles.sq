@@ -238,7 +238,8 @@ VALUES (
 )
 ON CONFLICT(article_id) DO UPDATE
 SET
-last_read_at = excluded.last_read_at,
+updated_at = updated_at,
+last_read_at = last_read_at,
 read = excluded.read,
 starred = excluded.starred;
 
