@@ -223,7 +223,7 @@ class ArticleScreenViewModel(
         refreshJob?.cancel()
 
         refreshJob = viewModelScope.launch(Dispatchers.IO) {
-            account.refresh().onFailure { throwable ->
+            account.refresh(latestFilter).onFailure { throwable ->
                 if (throwable is UnauthorizedError && _showUnauthorizedMessage == UnauthorizedMessageState.HIDE) {
                     _showUnauthorizedMessage = UnauthorizedMessageState.SHOW
                 }

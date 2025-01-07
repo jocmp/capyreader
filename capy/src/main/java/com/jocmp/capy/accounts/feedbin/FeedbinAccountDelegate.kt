@@ -44,7 +44,7 @@ internal class FeedbinAccountDelegate(
 
     override suspend fun refresh(filter: ArticleFilter, cutoffDate: ZonedDateTime?): Result<Unit> {
         return try {
-            val since = articleRecords.maxUpdatedAt().toString()
+            val since = articleRecords.maxArrivedAt().toString()
 
             refreshFeeds()
             refreshTaggings()
@@ -190,7 +190,7 @@ internal class FeedbinAccountDelegate(
         Unit
     }
 
-    private suspend fun refreshArticles(since: String = articleRecords.maxUpdatedAt().toString()) {
+    private suspend fun refreshArticles(since: String = articleRecords.maxArrivedAt().toString()) {
         refreshStarredEntries()
         refreshUnreadEntries()
         refreshAllArticles(since = since)

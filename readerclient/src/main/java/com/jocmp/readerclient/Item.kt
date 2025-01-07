@@ -20,6 +20,9 @@ data class Item(
     val read: Boolean
         get() = isRead(categories)
 
+    val starred: Boolean
+        get() = isStarred(categories)
+
     @JsonClass(generateAdapter = true)
     data class Origin(
         val streamId: String,
@@ -52,8 +55,12 @@ data class Item(
         get() = enclosure?.find { it.type.startsWith("image") }
 }
 
+/** open for testing */
 internal fun isRead(categories: List<String>?): Boolean {
-    val pattern = Regex("user/.*/state/com.google/read$")
+    return categories?.any { it.endsWith("state/com.google/read") } ?: false
+}
 
-    return categories?.any { pattern.find(it) != null } ?: false
+/** open for testing */
+internal fun isStarred(categories: List<String>?): Boolean {
+    return categories?.any { it.endsWith("state/com.google/starred") } ?: false
 }

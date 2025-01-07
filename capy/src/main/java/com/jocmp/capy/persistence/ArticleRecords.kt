@@ -49,7 +49,7 @@ internal class ArticleRecords internal constructor(
     /**
      * Upserts a record status. On conflict it overwrites "read" metadata.
      */
-    fun updateStatus(articleID: String, updatedAt: ZonedDateTime, read: Boolean) {
+    fun updateStatus(articleID: String, updatedAt: ZonedDateTime, read: Boolean, starred: Boolean) {
         val updatedAtSeconds = updatedAt.toEpochSecond()
 
         val lastReadAt = if (read) {
@@ -63,6 +63,7 @@ internal class ArticleRecords internal constructor(
             updated_at = updatedAtSeconds,
             last_read_at = lastReadAt,
             read = read,
+            starred = starred
         )
     }
 
@@ -145,14 +146,14 @@ internal class ArticleRecords internal constructor(
         )
     }
 
-    fun addStar(articleID: String, updatedAt: ZonedDateTime = nowUTC()) {
+    fun addStar(articleID: String) {
         database.articlesQueries.markStarred(
             articleID = articleID,
             starred = true,
         )
     }
 
-    fun removeStar(articleID: String, updatedAt: ZonedDateTime = nowUTC()) {
+    fun removeStar(articleID: String) {
         database.articlesQueries.markStarred(
             articleID = articleID,
             starred = false,
@@ -178,7 +179,7 @@ internal class ArticleRecords internal constructor(
     }
 
     /** Date in UTC */
-    fun maxUpdatedAt(): ZonedDateTime {
+    fun maxArrivedAt(): ZonedDateTime {
         val max = database.articlesQueries.lastUpdatedAt().executeAsOne().MAX
 
         max ?: return cutoffDate()
