@@ -182,46 +182,6 @@ class ReaderAccountDelegateTest {
     }
 
     @Test
-    fun refresh_unreadOnly() = runTest {
-        val itemRefs = listOf(ItemRef("16"))
-
-        stubSubscriptions()
-        stubUnread(itemRefs)
-        stubStreamItemsIDs(itemRefs, stream = Stream.ReadingList())
-
-        delegate.refresh(
-            ArticleFilter.Articles(articleStatus = ArticleStatus.UNREAD)
-        )
-
-        val articles = database
-            .articlesQueries
-            .countAll(read = false, starred = false)
-            .executeAsList()
-
-        assertEquals(expected = 1, actual = articles.size)
-    }
-
-    @Test
-    fun refresh_starredOnly() = runTest {
-        val itemRefs = listOf(ItemRef("16"))
-
-        stubSubscriptions()
-        stubStarred()
-        stubStreamItemsIDs(itemRefs, stream = Stream.Starred())
-
-        delegate.refresh(
-            ArticleFilter.Articles(articleStatus = ArticleStatus.STARRED)
-        )
-
-        val articles = database
-            .articlesQueries
-            .countAll(read = false, starred = false)
-            .executeAsList()
-
-        assertEquals(expected = 1, actual = articles.size)
-    }
-
-    @Test
     fun refresh_feedOnly() = runTest {
         val id = "feed/2"
         val itemRefs = listOf(ItemRef("16"))

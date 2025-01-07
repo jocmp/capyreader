@@ -2,7 +2,6 @@ package com.jocmp.capy.accounts.reader
 
 import com.jocmp.capy.AccountDelegate
 import com.jocmp.capy.ArticleFilter
-import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.Source
@@ -50,9 +49,12 @@ internal class ReaderAccountDelegate(
 
     override suspend fun refresh(filter: ArticleFilter, cutoffDate: ZonedDateTime?): Result<Unit> {
         return withErrorHandling {
-            refreshTopLevelArticles(filter)
-            val stream = filter.toStream(source)
-            refreshArticles(stream = stream, since = since(stream))
+            if (filter.hasArticlesSelected()) {
+                refreshTopLevelArticles()
+            } else {
+                val stream = filter.toStream(source)
+                refreshArticles(stream = stream)
+            }
         }
     }
 
@@ -200,20 +202,15 @@ internal class ReaderAccountDelegate(
         }
     }
 
-    private suspend fun refreshTopLevelArticles(filter: ArticleFilter) {
-        if (!filter.hasArticlesSelected()) {
-            return
-        }
-
+    private suspend fun refreshTopLevelArticles() {
         refreshFeeds()
-
-        if (filter.status != ArticleStatus.UNREAD) {
-            refreshStarredItems()
-        }
-
-        if (filter.status != ArticleStatus.STARRED) {
-            refreshUnreadItems()
-        }
+        refreshStarredItems()
+        refreshUnreadItems()
+        fetchPaginatedArticles(stream = Stream.ReadingList())
+        refreshArticles(
+            stream = Stream.Read(),
+            since = articleRecords.maxArrivedAt().toEpochSecond()
+        )
     }
 
     private fun upsertTaggings(subscription: Subscription) {
@@ -432,14 +429,6 @@ internal class ReaderAccountDelegate(
 
     private fun taggingID(subscription: Subscription, category: Category): String {
         return "${subscription.id}:${category.id}"
-    }
-
-    private fun since(stream: Stream): Long? {
-        return if (stream.isStateStream) {
-            articleRecords.maxArrivedAt().toEpochSecond()
-        } else {
-            null
-        }
     }
 
     companion object {
