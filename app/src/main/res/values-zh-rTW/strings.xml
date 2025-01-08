@@ -9,7 +9,7 @@
     <string name="settings_remove_account_message_local">您确定要刪除帳戶嗎？此操作不可撤銷。</string>
     <string name="settings_remove_account_confirm_local">確認</string>
     <string name="account_settings_save_name">名稱已保存</string>
-    <string name="article_view_mark_as_read">閲讀操作</string>
+    <string name="article_view_mark_as_read">標為已讀</string>
     <string name="article_view_star">星標</string>
     <string name="refresh_manually_only">僅手動</string>
     <string name="refresh_minutes">每%1$d分鐘</string>
@@ -203,7 +203,7 @@
     <string name="settings_gestures_reader_tap_to_page_title">電子墨水屏翻頁</string>
     <string name="settings_enable_high_contrast_dark_theme">高對比度深色主題</string>
     <string name="settings_mark_read_on_scroll">滾動時標為已讀</string>
-    <string name="settings_section_mark_all_as_read">標為已讀</string>
+    <string name="settings_section_mark_all_as_read">閲讀操作</string>
     <string name="settings_section_browser">瀏覽器</string>
     <string name="reader_image_visibility_label">圖像</string>
     <string name="reader_image_visibility_always_show">始終顯示</string>
