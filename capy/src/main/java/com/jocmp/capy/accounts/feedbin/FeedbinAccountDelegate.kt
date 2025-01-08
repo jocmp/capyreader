@@ -2,6 +2,7 @@ package com.jocmp.capy.accounts.feedbin
 
 import com.jocmp.capy.AccountDelegate
 import com.jocmp.capy.ArticleFilter
+import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.FeedOption
@@ -44,11 +45,9 @@ internal class FeedbinAccountDelegate(
 
     override suspend fun refresh(filter: ArticleFilter, cutoffDate: ZonedDateTime?): Result<Unit> {
         return try {
-            val since = articleRecords.maxArrivedAt().toString()
-
             refreshFeeds()
             refreshTaggings()
-            refreshArticles(since = since)
+            refreshArticles(since = maxArrivedAt())
 
             Result.success(Unit)
         } catch (exception: IOException) {
@@ -190,7 +189,7 @@ internal class FeedbinAccountDelegate(
         Unit
     }
 
-    private suspend fun refreshArticles(since: String = articleRecords.maxArrivedAt().toString()) {
+    private suspend fun refreshArticles(since: String = maxArrivedAt()) {
         refreshStarredEntries()
         refreshUnreadEntries()
         refreshAllArticles(since = since)
@@ -323,6 +322,8 @@ internal class FeedbinAccountDelegate(
             }
         }
     }
+
+    private fun maxArrivedAt() = articleRecords.maxArrivedAt().toString()
 
     private suspend fun fetchIcons(): List<Icon> {
         val response = feedbin.icons()

@@ -180,7 +180,7 @@ internal class ArticleRecords internal constructor(
 
     /** Date in UTC */
     fun maxArrivedAt(): ZonedDateTime {
-        val max = database.articlesQueries.lastUpdatedAt().executeAsOne().MAX
+        val max = byStatus.maxArrivedAt()
 
         max ?: return cutoffDate()
 
@@ -201,20 +201,22 @@ internal class ArticleRecords internal constructor(
             )
 
             is ArticleFilter.Folders -> {
-                val feedIDs = database
-                    .taggingsQueries
-                    .findFeedIDs(folderTitle = filter.folderTitle)
-                    .executeAsList()
-
                 byFeed.unreadArticleIDs(
                     filter.status,
-                    feedIDs = feedIDs,
+                    feedIDs = folderFeedIDs(filter),
                     range = range
                 )
             }
         }
 
         return ids.executeAsList()
+    }
+
+    private fun folderFeedIDs(filter: ArticleFilter.Folders): List<String> {
+        return database
+            .taggingsQueries
+            .findFeedIDs(folderTitle = filter.folderTitle)
+            .executeAsList()
     }
 
     class ByFeed(private val database: Database) {
@@ -311,6 +313,10 @@ internal class ArticleRecords internal constructor(
                 afterArticleID = afterArticleID,
                 beforeArticleID = beforeArticleID
             )
+        }
+
+        fun maxArrivedAt(): Long? {
+            return database.articlesQueries.lastUpdatedAt().executeAsOne().MAX
         }
 
         fun count(

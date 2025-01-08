@@ -84,26 +84,26 @@ class ReaderAccountDelegateTest {
         ),
     )
 
-    private val items = listOf(
-        Item(
-            id = "tag:google.com,2005:reader/item/0000000000000010",
-            published = 1723806013,
-            title = "Rocket Report: ULA is losing engineers; SpaceX is launching every two days",
-            canonical = listOf(Link("https://arstechnica.com/?p=2043638")),
-            origin = Origin(
-                streamId = "feed/2",
-                title = "Ars Technica - All content",
-                htmlUrl = "https://arstechnica.com",
-            ),
-            categories = listOf(
-                "user/-/label/Tech"
-            ),
-            summary = Summary("Summary - Welcome to Edition 7.07 of the Rocket Report! SpaceX has not missed a beat since the Federal Aviation Administration gave the company a green light to resume Falcon 9 launches after a failure last month."),
-            content = Item.Content("Content - Welcome to Edition 7.07 of the Rocket Report! SpaceX has not missed a beat since the Federal Aviation Administration gave the company a green light to resume Falcon 9 launches after a failure last month."),
-        )
+    private val unreadItem = Item(
+        id = "tag:google.com,2005:reader/item/0000000000000010",
+        published = 1723806013,
+        title = "Rocket Report: ULA is losing engineers; SpaceX is launching every two days",
+        canonical = listOf(Link("https://arstechnica.com/?p=2043638")),
+        origin = Origin(
+            streamId = "feed/2",
+            title = "Ars Technica - All content",
+            htmlUrl = "https://arstechnica.com",
+        ),
+        categories = listOf(
+            "user/-/label/Tech"
+        ),
+        summary = Summary("Summary - Welcome to Edition 7.07 of the Rocket Report! SpaceX has not missed a beat since the Federal Aviation Administration gave the company a green light to resume Falcon 9 launches after a failure last month."),
+        content = Item.Content("Content - Welcome to Edition 7.07 of the Rocket Report! SpaceX has not missed a beat since the Federal Aviation Administration gave the company a green light to resume Falcon 9 launches after a failure last month."),
     )
 
-    private val unreadItem = Item(
+    private val items = listOf(unreadItem)
+
+    private val unreadStarredItem = Item(
         id = "tag:google.com,2005:reader/item/0000000000000001",
         published = 1708710158,
         title = "Reddit admits more moderator protests could hurt its business",
@@ -191,6 +191,9 @@ class ReaderAccountDelegateTest {
         val id = "feed/2"
         val itemRefs = listOf(ItemRef("16"))
 
+
+        stubStarred()
+        stubUnread()
         stubStreamItemsIDs(itemRefs, stream = Stream.Feed(id))
 
         delegate.refresh(
@@ -217,6 +220,8 @@ class ReaderAccountDelegateTest {
 
         val itemRefs = listOf(ItemRef("16"))
 
+        stubStarred()
+        stubUnread()
         stubStreamItemsIDs(itemRefs, stream = Stream.Label(folderTitle))
 
         delegate.refresh(
@@ -244,6 +249,8 @@ class ReaderAccountDelegateTest {
 
         val itemRefs = listOf(ItemRef("16"))
 
+        stubStarred()
+        stubUnread()
         stubStreamItemsIDs(itemRefs, stream = Stream.ReadingList())
 
         delegate.refresh(
@@ -263,7 +270,7 @@ class ReaderAccountDelegateTest {
 
     @Test
     fun refresh_findsMissingArticles() = runTest {
-        val readingListItems = listOf(unreadItem, items.first())
+        val readingListItems = listOf(unreadStarredItem, unreadItem)
         val readingListItemRefs = listOf("1", "16").map { ItemRef(it) }
 
         stubSubscriptions()
@@ -273,10 +280,16 @@ class ReaderAccountDelegateTest {
         stubStreamItemsIDs(itemRefs = readingListItemRefs, readingListItems)
         stubStreamItemsIDs(itemRefs = emptyList(), stream = Stream.Read())
 
-        val starredItems = listOf(unreadItem, readItem)
+        val starredItems = listOf(unreadStarredItem, readItem)
 
         coEvery {
-            googleReader.streamItemsContents(starredItems.map { it.hexID }, postToken = postToken)
+            googleReader.streamItemsContents(
+                listOf(
+                    unreadStarredItem,
+                    readItem,
+                    items.first()
+                ).map { it.hexID }, postToken = postToken
+            )
         }.returns(Response.success(StreamItemsContentsResult(starredItems)))
 
         delegate.refresh(ArticleFilter.default())
@@ -291,7 +304,7 @@ class ReaderAccountDelegateTest {
             )
             .executeAsList()
 
-        val unreadArticle = starredArticles.find { it.id == unreadItem.hexID }!!
+        val unreadArticle = starredArticles.find { it.id == unreadStarredItem.hexID }!!
         val readArticle = starredArticles.find { it.id == readItem.hexID }!!
 
         assertFalse(unreadArticle.read)

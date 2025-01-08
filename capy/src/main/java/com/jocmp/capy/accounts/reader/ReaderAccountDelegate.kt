@@ -26,7 +26,6 @@ import com.jocmp.readerclient.Stream
 import com.jocmp.readerclient.Subscription
 import com.jocmp.readerclient.SubscriptionEditAction
 import com.jocmp.readerclient.SubscriptionQuickAddResult
-import com.jocmp.readerclient.buildHexID
 import com.jocmp.readerclient.ext.editSubscription
 import com.jocmp.readerclient.ext.streamItemsIDs
 import kotlinx.coroutines.coroutineScope
@@ -52,8 +51,7 @@ internal class ReaderAccountDelegate(
             if (filter.hasArticlesSelected()) {
                 refreshTopLevelArticles()
             } else {
-                val stream = filter.toStream(source)
-                refreshArticles(stream = stream)
+                refreshCategoryArticles(filter)
             }
         }
     }
@@ -101,7 +99,7 @@ internal class ReaderAccountDelegate(
 
             if (feed != null) {
                 coroutineScope {
-                    launch { refreshArticles(stream = Stream.ReadingList()) }
+                    launch { fetchPaginatedArticles(stream = Stream.ReadingList()) }
                 }
 
                 AddFeedResult.Success(feed)
@@ -203,14 +201,12 @@ internal class ReaderAccountDelegate(
     }
 
     private suspend fun refreshTopLevelArticles() {
+        val since = articleRecords.maxArrivedAt().toEpochSecond()
+
         refreshFeeds()
-        refreshStarredItems()
-        refreshUnreadItems()
-        fetchPaginatedArticles(stream = Stream.ReadingList())
-        refreshArticles(
-            stream = Stream.Read(),
-            since = articleRecords.maxArrivedAt().toEpochSecond()
-        )
+        refreshArticleState()
+        fetchPaginatedArticles(since = since, stream = Stream.Read())
+        fetchMissingArticles()
     }
 
     private fun upsertTaggings(subscription: Subscription) {
@@ -251,15 +247,9 @@ internal class ReaderAccountDelegate(
         )
     }
 
-    private suspend fun refreshArticles(
-        stream: Stream,
-        since: Long? = null
-    ) {
-        fetchPaginatedArticles(
-            since = since,
-            stream = stream
-        )
-        fetchMissingArticles()
+    private suspend fun refreshArticleState() {
+        refreshStarredItems()
+        refreshUnreadItems()
     }
 
     private suspend fun refreshUnreadItems() {
@@ -279,8 +269,26 @@ internal class ReaderAccountDelegate(
         }
     }
 
+    /**
+     * This is a slightly different algorithm that `refreshTopLevelArticles`.
+     *
+     *   - Assume the category (folder or feed) exists so it skips refreshing
+     *   the subscription list
+     *   - Refresh all IDs in a given feed and save its content
+     */
+    private suspend fun refreshCategoryArticles(filter: ArticleFilter) {
+        val stream = filter.toStream(source)
+
+        refreshArticleState()
+        fetchPaginatedArticles(stream = stream)
+    }
+
     private suspend fun fetchMissingArticles() {
         val ids = articleRecords.findMissingArticles()
+
+        if (ids.isEmpty()) {
+            return
+        }
 
         coroutineScope {
             ids.chunked(MAX_PAGINATED_ITEM_LIMIT).map { chunkedIDs ->
@@ -288,7 +296,7 @@ internal class ReaderAccountDelegate(
                     val response = withPostToken {
                         googleReader.streamItemsContents(
                             postToken = postToken.get(),
-                            ids = chunkedIDs.map { buildHexID(it) }
+                            ids = chunkedIDs.map { it }
                         )
                     }
 

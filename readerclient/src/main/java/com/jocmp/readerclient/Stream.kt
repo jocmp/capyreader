@@ -7,10 +7,7 @@ sealed class Stream(val id: String) {
 
     class Read: Stream("user/-/state/com.google/read")
 
-    class Feed(id: String): Stream("user/-/$id")
+    class Feed(id: String): Stream(id)
 
     class Label(name: String): Stream("user/-/label/$name")
-
-    val isStateStream: Boolean
-        get() = !(this is Feed || this is Label)
 }
