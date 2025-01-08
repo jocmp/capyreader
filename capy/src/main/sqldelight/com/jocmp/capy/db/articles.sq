@@ -226,19 +226,22 @@ INSERT INTO article_statuses(
   article_id,
   updated_at,
   last_read_at,
-  read
+  read,
+  starred
 )
 VALUES (
 :article_id,
 :updated_at,
 :last_read_at,
-:read
+:read,
+:starred
 )
 ON CONFLICT(article_id) DO UPDATE
 SET
 updated_at = updated_at,
-last_read_at = excluded.last_read_at,
-read = excluded.read;
+last_read_at = last_read_at,
+read = excluded.read,
+starred = excluded.starred;
 
 upsertUnread:
 INSERT INTO article_statuses(

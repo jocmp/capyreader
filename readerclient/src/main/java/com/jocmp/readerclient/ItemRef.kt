@@ -6,5 +6,7 @@ import com.squareup.moshi.JsonClass
 data class ItemRef(
     val id: String,
 ) {
-    val hexID = String.format("%016x", id.toLong())
+    val hexID = buildHexID(id)
 }
+
+fun buildHexID(id: String) = String.format("%016x", id.toLong())

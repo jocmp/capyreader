@@ -1,6 +1,7 @@
 package com.jocmp.capy.accounts.feedbin
 
 import com.jocmp.capy.AccountDelegate
+import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.accounts.AddFeedResult
@@ -115,7 +116,7 @@ class FeedbinAccountDelegateTest {
             )
         }.returns(Response.success(entries))
 
-        delegate.refresh()
+        delegate.refresh(ArticleFilter.default())
 
         val articles = database
             .articlesQueries
@@ -145,7 +146,7 @@ class FeedbinAccountDelegateTest {
         val networkError = SocketTimeoutException("Sorry networked charlie")
         coEvery { feedbin.subscriptions() }.throws(networkError)
 
-        val result = delegate.refresh()
+        val result = delegate.refresh(ArticleFilter.default())
 
         assertEquals(result, Result.failure(networkError))
     }
@@ -213,7 +214,7 @@ class FeedbinAccountDelegateTest {
             )
         }.returns(Response.success(emptyList()))
 
-        delegate.refresh()
+        delegate.refresh(ArticleFilter.default())
 
         val starredArticles = ArticleRecords(database)
             .byStatus

@@ -1,8 +1,10 @@
 package com.jocmp.capy.accounts.reader
 
 import com.jocmp.capy.AccountDelegate
+import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
+import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.ValidationError
 import com.jocmp.capy.accounts.feedbin.FeedbinAccountDelegate.Companion.MAX_CREATE_UNREAD_LIMIT
 import com.jocmp.capy.accounts.withErrorHandling
@@ -35,6 +37,7 @@ import java.time.ZonedDateTime
 import java.util.concurrent.atomic.AtomicReference
 
 internal class ReaderAccountDelegate(
+    private val source: Source,
     private val database: Database,
     private val googleReader: GoogleReader,
 ) : AccountDelegate {
@@ -43,33 +46,34 @@ internal class ReaderAccountDelegate(
     private val feedRecords = FeedRecords(database)
     private val taggingRecords = TaggingRecords(database)
 
-    override suspend fun refresh(cutoffDate: ZonedDateTime?): Result<Unit> {
+    override suspend fun refresh(filter: ArticleFilter, cutoffDate: ZonedDateTime?): Result<Unit> {
         return withErrorHandling {
-            val since = articleRecords.maxUpdatedAt().toEpochSecond()
-
-            refreshFeeds()
-            refreshArticles(since = since)
+            if (filter.hasArticlesSelected()) {
+                refreshTopLevelArticles()
+            } else {
+                refreshCategoryArticles(filter)
+            }
         }
     }
 
     override suspend fun markRead(articleIDs: List<String>): Result<Unit> {
         val results = articleIDs.chunked(MAX_CREATE_UNREAD_LIMIT).map { batchIDs ->
-            editTag(ids = batchIDs, addTag = Stream.READ)
+            editTag(ids = batchIDs, addTag = Stream.Read())
         }
 
         return results.firstOrNull { it.isFailure } ?: Result.success(Unit)
     }
 
     override suspend fun markUnread(articleIDs: List<String>): Result<Unit> {
-        return editTag(ids = articleIDs, removeTag = Stream.READ)
+        return editTag(ids = articleIDs, removeTag = Stream.Read())
     }
 
     override suspend fun addStar(articleIDs: List<String>): Result<Unit> {
-        return editTag(ids = articleIDs, addTag = Stream.STARRED)
+        return editTag(ids = articleIDs, addTag = Stream.Starred())
     }
 
     override suspend fun removeStar(articleIDs: List<String>): Result<Unit> {
-        return editTag(ids = articleIDs, removeTag = Stream.STARRED)
+        return editTag(ids = articleIDs, removeTag = Stream.Starred())
     }
 
     override suspend fun addFeed(
@@ -95,7 +99,7 @@ internal class ReaderAccountDelegate(
 
             if (feed != null) {
                 coroutineScope {
-                    launch { refreshArticles() }
+                    launch { fetchPaginatedArticles(stream = Stream.ReadingList()) }
                 }
 
                 AddFeedResult.Success(feed)
@@ -196,6 +200,15 @@ internal class ReaderAccountDelegate(
         }
     }
 
+    private suspend fun refreshTopLevelArticles() {
+        val since = articleRecords.maxArrivedAt().toEpochSecond()
+
+        refreshFeeds()
+        refreshArticleState()
+        fetchPaginatedArticles(since = since, stream = Stream.Read())
+        fetchMissingArticles()
+    }
+
     private fun upsertTaggings(subscription: Subscription) {
         subscription.categories.forEach { category ->
             database.taggingsQueries.upsert(
@@ -234,20 +247,16 @@ internal class ReaderAccountDelegate(
         )
     }
 
-    private suspend fun refreshArticles(
-        since: Long = articleRecords.maxUpdatedAt().toEpochSecond()
-    ) {
+    private suspend fun refreshArticleState() {
         refreshStarredItems()
         refreshUnreadItems()
-        refreshAllArticles(since = since)
-        fetchMissingArticles()
     }
 
     private suspend fun refreshUnreadItems() {
         withResult(
             googleReader.streamItemsIDs(
-                stream = Stream.READING_LIST,
-                excludedStream = Stream.READ
+                stream = Stream.ReadingList(),
+                excludedStream = Stream.Read()
             )
         ) { result ->
             articleRecords.markAllUnread(articleIDs = result.itemRefs.map { it.hexID })
@@ -255,13 +264,31 @@ internal class ReaderAccountDelegate(
     }
 
     private suspend fun refreshStarredItems() {
-        withResult(googleReader.streamItemsIDs(stream = Stream.STARRED)) { result ->
+        withResult(googleReader.streamItemsIDs(stream = Stream.Starred())) { result ->
             articleRecords.markAllStarred(articleIDs = result.itemRefs.map { it.hexID })
         }
     }
 
+    /**
+     * This is a slightly different algorithm that `refreshTopLevelArticles`.
+     *
+     *   - Assume the category (folder or feed) exists so it skips refreshing
+     *   the subscription list
+     *   - Refresh all IDs in a given feed and save its content
+     */
+    private suspend fun refreshCategoryArticles(filter: ArticleFilter) {
+        val stream = filter.toStream(source)
+
+        refreshArticleState()
+        fetchPaginatedArticles(stream = stream)
+    }
+
     private suspend fun fetchMissingArticles() {
         val ids = articleRecords.findMissingArticles()
+
+        if (ids.isEmpty()) {
+            return
+        }
 
         coroutineScope {
             ids.chunked(MAX_PAGINATED_ITEM_LIMIT).map { chunkedIDs ->
@@ -269,7 +296,7 @@ internal class ReaderAccountDelegate(
                     val response = withPostToken {
                         googleReader.streamItemsContents(
                             postToken = postToken.get(),
-                            ids = chunkedIDs
+                            ids = chunkedIDs.map { it }
                         )
                     }
 
@@ -281,14 +308,7 @@ internal class ReaderAccountDelegate(
         }
     }
 
-    private suspend fun refreshAllArticles(since: Long) {
-        fetchPaginatedItems(
-            since = since,
-            stream = Stream.READING_LIST
-        )
-    }
-
-    private suspend fun fetchPaginatedItems(
+    private suspend fun fetchPaginatedArticles(
         since: Long? = null,
         stream: Stream,
         continuation: String? = null,
@@ -314,7 +334,7 @@ internal class ReaderAccountDelegate(
 
         val nextContinuation = result.continuation ?: return
 
-        fetchPaginatedItems(
+        fetchPaginatedArticles(
             since = since,
             stream = stream,
             continuation = nextContinuation
@@ -355,7 +375,8 @@ internal class ReaderAccountDelegate(
                 articleRecords.updateStatus(
                     articleID = item.hexID,
                     updatedAt = updated,
-                    read = item.read
+                    read = item.read,
+                    starred = item.starred
                 )
             }
         }
@@ -407,7 +428,6 @@ internal class ReaderAccountDelegate(
             postToken.set(googleReader.token().body())
         } catch (exception: IOException) {
             CapyLog.error(tag("post_token"), exception)
-            // continue
         }
     }
 
@@ -442,6 +462,25 @@ private val SubscriptionQuickAddResult.toSubscription: Subscription?
             iconUrl = ""
         )
     }
+
+private fun ArticleFilter.toStream(source: Source): Stream {
+    return when (this) {
+        is ArticleFilter.Articles -> Stream.Read()
+        is ArticleFilter.Feeds -> Stream.Feed(feedID)
+        is ArticleFilter.Folders -> folderStream(this, source)
+    }
+}
+
+/**
+ * Default to reading list for folders since Miniflux doesn't support label lookups
+ */
+private fun folderStream(filter: ArticleFilter.Folders, source: Source): Stream {
+    return if (source == Source.FRESHRSS) {
+        Stream.Label(filter.folderTitle)
+    } else {
+        Stream.ReadingList()
+    }
+}
 
 private fun userLabel(title: String): String {
     return "user/-/label/${title}"

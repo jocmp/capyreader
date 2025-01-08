@@ -5,7 +5,7 @@ import com.jocmp.capy.accounts.LocalAccountDelegate
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.AccountFixture
 import com.jocmp.capy.fixtures.FeedFixture
-import com.jocmp.capy.fixtures.TagFixture
+import com.jocmp.capy.fixtures.FolderFixture
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import okhttp3.OkHttpClient
@@ -25,13 +25,13 @@ class OPMLFileTest {
     private lateinit var account: Account
     private lateinit var database: Database
     private lateinit var feedFixture: FeedFixture
-    private lateinit var tagFixture: TagFixture
+    private lateinit var tagFixture: FolderFixture
 
     @Before
     fun setup() {
         database = InMemoryDatabaseProvider.build(accountID)
         feedFixture = FeedFixture(database)
-        tagFixture = TagFixture(database)
+        tagFixture = FolderFixture(database)
 
         val delegate = LocalAccountDelegate(
             database = database,
