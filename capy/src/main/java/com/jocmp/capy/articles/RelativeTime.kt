@@ -1,14 +1,11 @@
-package com.capyreader.app.ui.articles
+package com.jocmp.capy.articles
 
-import androidx.compose.runtime.Composable
-import java.time.Duration
 import java.time.LocalDateTime
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.util.TimeZone
 
-@Composable
 fun relativeTime(
     time: ZonedDateTime,
     currentTime: LocalDateTime,
@@ -16,11 +13,10 @@ fun relativeTime(
     val local = time.withZoneSameInstant(TimeZone.getDefault().toZoneId()).toLocalDateTime()
     val timeFormat = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)
     val dateFormat = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
-
-    val duration = Duration.between(local, currentTime)
+    val currentDay = currentTime.toLocalDate().atStartOfDay()
 
     return when {
-        duration.toHours() < 24 -> timeFormat.format(local)
+        local.isAfter(currentDay) -> timeFormat.format(local)
         else -> dateFormat.format(local)
     }
 }

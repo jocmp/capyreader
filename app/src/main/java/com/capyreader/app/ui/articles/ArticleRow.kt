@@ -58,7 +58,7 @@ import com.capyreader.app.ui.fixtures.ArticleSample
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.Article
 import com.jocmp.capy.MarkRead
-import com.jocmp.capy.common.escapingSpecialXMLCharacters
+import com.jocmp.capy.articles.relativeTime
 import java.net.URL
 import java.time.LocalDateTime
 import java.time.ZoneOffset
