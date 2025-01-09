@@ -214,8 +214,16 @@ data class Account(
         return OPMLFile(this).opmlDocument()
     }
 
-    suspend fun findNotifications(since: ZonedDateTime): List<ArticleNotification> {
-        return articleRecords.notifications(since = since)
+    suspend fun createNotifications(since: ZonedDateTime): List<ArticleNotification> {
+        return articleRecords.createNotifications(since = since)
+    }
+
+    fun countNotifications(): Long {
+        return articleRecords.countNotifications()
+    }
+
+    fun deleteNotifications(ids: List<String>) {
+       articleRecords.deleteNotification(ids)
     }
 
     suspend fun import(inputStream: InputStream, onProgress: (ImportProgress) -> Unit) {

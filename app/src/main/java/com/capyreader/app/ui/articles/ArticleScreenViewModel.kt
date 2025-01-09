@@ -45,6 +45,7 @@ class ArticleScreenViewModel(
     private val account: Account,
     private val appPreferences: AppPreferences,
     private val application: Application,
+    private val notificationHelper: NotificationHelper,
 ) : AndroidViewModel(application) {
     private var refreshJob: Job? = null
 
@@ -191,7 +192,7 @@ class ArticleScreenViewModel(
             }
 
             launchIO {
-                NotificationHelper.clearNotifications(articleIDs, context = context)
+                notificationHelper.dismissNotifications(articleIDs)
             }
 
             if (range != MarkRead.All) {
@@ -361,7 +362,7 @@ class ArticleScreenViewModel(
                 Sync.markReadAsync(listOf(articleID), context)
             }
 
-        NotificationHelper.clearNotification(articleID, context = context)
+        notificationHelper.dismissNotifications(listOf(articleID))
     }
 
     private suspend fun markUnread(articleID: String) {

@@ -3,24 +3,32 @@ package com.capyreader.app
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.capyreader.app.sync.Sync
+import com.capyreader.app.notifications.NotificationHelper
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class ArticleStatusBroadcastReceiver : BroadcastReceiver() {
+class ArticleStatusBroadcastReceiver : BroadcastReceiver(), KoinComponent {
+    private val handler: BroadcastHandler by lazy { BroadcastHandler() }
+
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == ACTION_CLEAR_NOTIFICATION) {
-            val articleID = intent.getIntExtra(ARTICLE_NOTIFICATION_ID, 0)
+        if (intent.action == ACTION_DISMISS_NOTIFICATION) {
+            val articleID = intent.getStringExtra(ARTICLE_ID) ?: return
 
-            if (articleID > 0) {
+            handler.dismissNotification(articleID)
+        }
+    }
 
-            }
+    class BroadcastHandler : KoinComponent {
+        private val notificationHelper by inject<NotificationHelper>()
 
-            Sync.markReadAsync(listOf(articleID), context)
+        fun dismissNotification(articleID: String) {
+            notificationHelper.dismissNotifications(listOf(articleID))
         }
     }
 
     companion object {
-        const val ACTION_CLEAR_NOTIFICATION = "com.capyreader.ACTION_CLEAR_NOTIFICATION"
+        const val ACTION_DISMISS_NOTIFICATION = "com.capyreader.ACTION_DISMISS_NOTIFICATION"
 
-        const val ARTICLE_NOTIFICATION_ID = "com.capyreader.articles.article_notification_id"
+        const val ARTICLE_ID = "com.capyreader.articles.article_id"
     }
 }

@@ -29,7 +29,7 @@ class NotificationHelper(
     suspend fun notify(since: ZonedDateTime) {
         createChannel()
 
-        val notifications = account.findNotifications(since = since)
+        val notifications = account.createNotifications(since = since)
 
         if (notifications.isEmpty()) {
             return
@@ -42,11 +42,25 @@ class NotificationHelper(
         sendGroupNotification()
     }
 
+    fun dismissNotifications(ids: List<String>) {
+        account.deleteNotifications(ids)
+
+        val notificationManager = NotificationManagerCompat.from(applicationContext)
+
+        ids.forEach {
+            notificationManager.cancel(it.hashCode())
+        }
+
+        if (account.countNotifications() == 0L) {
+            notificationManager.cancel(Notifications.FEED_UPDATE_GROUP_NOTIFICATION_ID)
+        }
+    }
+
     private fun sendNotification(notification: ArticleNotification) {
-        val clearIntent = PendingIntent.getBroadcast(
+        val clearNotificationIntent = PendingIntent.getBroadcast(
             applicationContext,
-            0,
-            clearNotificationIntent(id = notification.id, context = applicationContext),
+            notification.id,
+            dismissNotificationIntent(notification.articleID, context = applicationContext),
             PendingIntent.FLAG_IMMUTABLE
         )
 
@@ -64,6 +78,7 @@ class NotificationHelper(
             .setSubText(notification.feedTitle)
             .setContentInfo(notification.title)
             .setAutoCancel(true)
+            .setDeleteIntent(clearNotificationIntent)
             .setContentIntent(notification.contentIntent(applicationContext))
 
         NotificationManagerCompat.from(applicationContext)
@@ -100,35 +115,17 @@ class NotificationHelper(
         const val FEED_ID_KEY = "feed_id"
         private const val ARTICLE_REFRESH_GROUP = "article_refresh"
 
-        fun clearNotificationIntent(id: Int, context: Context): Intent {
-            return Intent(context, ArticleStatusBroadcastReceiver::class.java).apply {
-                action = ArticleStatusBroadcastReceiver.ACTION_CLEAR_NOTIFICATION
-                putExtra(ArticleStatusBroadcastReceiver.ARTICLE_NOTIFICATION_ID, id)
-            }
+        /**
+         * Clear notification via broadcast receiver
+         */
+        fun clearNotificationAsync(articleID: String, context: Context) {
+            DeleteNotificationWorker.performAsync(articleID, context = context)
         }
 
-//        fun clearNotification(articleID: String, context: Context) =
-//            clearNotifications(listOf(articleID), context)
-//
-//        fun clearNotifications(articleIDs: List<String>, context: Context) {
-//            val notificationManager = NotificationManagerCompat.from(context)
-//
-//            articleIDs.forEach {
-//                notificationManager.cancel()
-//            }
-//
-//            clearGroupNotification(context)
-//        }
-
-        private fun clearGroupNotification(context: Context) {
-            val notificationManager = NotificationManagerCompat.from(context)
-
-            CapyLog.info(
-                "active",
-                mapOf("count" to "${notificationManager.activeNotifications.size}")
-            )
-            if (notificationManager.activeNotifications.size < 2) {
-                notificationManager.cancel(Notifications.FEED_UPDATE_GROUP_NOTIFICATION_ID)
+        fun dismissNotificationIntent(articleID: String, context: Context): Intent {
+            return Intent(context, ArticleStatusBroadcastReceiver::class.java).apply {
+                action = ArticleStatusBroadcastReceiver.ACTION_DISMISS_NOTIFICATION
+                putExtra(ArticleStatusBroadcastReceiver.ARTICLE_ID, articleID)
             }
         }
 

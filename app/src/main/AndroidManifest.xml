@@ -62,7 +62,7 @@
 
         <receiver android:name=".ArticleStatusBroadcastReceiver" android:exported="false">
             <intent-filter>
-                <action android:name="com.capyreader.MARK_ARTICLE_READ" />
+                <action android:name="com.capyreader.ACTION_DISMISS_NOTIFICATION" />
             </intent-filter>
         </receiver>
     </application>

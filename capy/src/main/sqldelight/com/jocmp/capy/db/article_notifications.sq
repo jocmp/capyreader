@@ -1,11 +1,36 @@
+allNotifications:
+SELECT
+    article_id,
+    articles.title,
+    feeds.id AS feed_id,
+    feeds.title AS feed_title,
+    feeds.favicon_url AS feed_favicon_url
+FROM article_notifications
+JOIN articles ON article_notifications.article_id = articles.id
+JOIN feeds ON articles.feed_id = feeds.id;
+
 createNotification:
 INSERT INTO article_notifications(
    article_id
 )
 VALUES (
-    :article_id
+:article_id
 )
 ON CONFLICT(article_id) DO NOTHING;
 
-clearNotification:
-DELETE FROM article_notifications WHERE article_id = :article_id;
+count:
+SELECT COUNT(*)
+FROM article_notifications;
+
+deleteNotifications:
+DELETE FROM article_notifications WHERE article_id IN :ids;
+
+articlesToNotify:
+SELECT
+    articles.id AS article_id
+FROM articles
+JOIN article_statuses ON articles.id = article_statuses.article_id
+JOIN feeds ON articles.feed_id = feeds.id
+WHERE article_statuses.updated_at >= :since
+AND article_statuses.read = 0
+AND feeds.enable_notifications = 1;

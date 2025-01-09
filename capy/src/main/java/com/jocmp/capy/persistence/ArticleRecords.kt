@@ -74,16 +74,36 @@ internal class ArticleRecords internal constructor(
             .executeAsList()
     }
 
-    internal suspend fun notifications(since: ZonedDateTime): List<ArticleNotification> {
-        return database.articlesQueries
-            .withNotifications(
-                since = since.toEpochSecond(),
-                mapper = ::articleNotificationMapper
-            )
+    internal suspend fun createNotifications(since: ZonedDateTime): List<ArticleNotification> {
+        val articleIDs =
+            notificationQueries.articlesToNotify(since = since.toEpochSecond()).executeAsList()
+
+        articleIDs.forEach {
+            database.transactionWithErrorHandling {
+                notificationQueries.createNotification(article_id = it)
+            }
+        }
+
+        return allNotifications()
+    }
+
+    private suspend fun allNotifications(): List<ArticleNotification> {
+        return notificationQueries
+            .allNotifications(mapper = ::articleNotificationMapper)
             .asFlow()
             .mapToList(Dispatchers.IO)
             .firstOrNull()
             .orEmpty()
+    }
+
+    internal fun countNotifications(): Long {
+        return notificationQueries
+            .count()
+            .executeAsOneOrNull() ?: 0
+    }
+
+    internal fun deleteNotification(ids: List<String>) {
+        notificationQueries.deleteNotifications(ids = ids)
     }
 
     fun deleteAllArticles() {
@@ -338,6 +358,9 @@ internal class ArticleRecords internal constructor(
     private fun cutoffDate(): ZonedDateTime {
         return nowUTC().minusMonths(3)
     }
+
+    private val notificationQueries
+        get() = database.article_notificationsQueries
 }
 
 
