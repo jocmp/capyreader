@@ -159,15 +159,18 @@ AND article_statuses.read = 0 OR article_statuses.starred = 1;
 
 withNotifications:
 SELECT
-    articles.id,
+    article_notifications.id,
+    articles.id AS article_id,
     articles.title,
     feeds.id AS feed_id,
     feeds.title AS feed_title,
     feeds.favicon_url AS feed_favicon_url
 FROM articles
 JOIN article_statuses ON articles.id = article_statuses.article_id
+JOIN article_notifications ON articles.id = article_notifications.article_id
 JOIN feeds ON articles.feed_id = feeds.id
 WHERE article_statuses.updated_at >= :since
+AND article_statuses.read = 0
 AND feeds.enable_notifications = 1;
 
 create:

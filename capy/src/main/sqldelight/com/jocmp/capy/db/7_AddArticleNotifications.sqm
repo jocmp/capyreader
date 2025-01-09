@@ -1,0 +1,4 @@
+CREATE TABLE article_notifications (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    article_id TEXT NOT NULL
+);

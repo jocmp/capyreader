@@ -34,6 +34,16 @@ class RelativeTimeTest {
     }
 
     @Test
+    fun `when the article date is on the current day at midnight`() {
+        val time = ZonedDateTime.parse("2023-12-25T09:00:00-00:00")
+        val currentTime = time.toLocalDateTime()
+
+        val result = relativeTime(time = time, currentTime = currentTime)
+
+        assertEquals(expected = "9:00 AM", actual = result)
+    }
+
+    @Test
     fun `same day with a different locale`() {
         Locale.setDefault(Locale("fr", "FR"))
         val time = ZonedDateTime.parse("2023-12-25T09:00:00-00:00")

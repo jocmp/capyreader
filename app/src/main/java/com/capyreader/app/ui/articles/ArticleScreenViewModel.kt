@@ -12,6 +12,7 @@ import com.capyreader.app.R
 import com.capyreader.app.common.AfterReadAllBehavior
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.toast
+import com.capyreader.app.notifications.NotificationHelper
 import com.capyreader.app.sync.Sync
 import com.jocmp.capy.Account
 import com.jocmp.capy.Article
@@ -189,6 +190,10 @@ class ArticleScreenViewModel(
                 Sync.markReadAsync(articleIDs, context)
             }
 
+            launchIO {
+                NotificationHelper.clearNotifications(articleIDs, context = context)
+            }
+
             if (range != MarkRead.All) {
                 return@launchIO
             }
@@ -355,6 +360,8 @@ class ArticleScreenViewModel(
             .onFailure {
                 Sync.markReadAsync(listOf(articleID), context)
             }
+
+        NotificationHelper.clearNotification(articleID, context = context)
     }
 
     private suspend fun markUnread(articleID: String) {

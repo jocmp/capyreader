@@ -1,4 +1,4 @@
-package com.capyreader.app.refresher
+package com.capyreader.app.notifications
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -9,18 +9,17 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.capyreader.app.ArticleStatusBroadcastReceiver
 import com.capyreader.app.MainActivity
-import com.capyreader.app.Notifications
-import com.capyreader.app.Notifications.FEED_UPDATE
 import com.capyreader.app.R
 import com.capyreader.app.common.AppPreferences
-import com.capyreader.app.refresher.NotificationHelper.Companion.ARTICLE_ID_KEY
-import com.capyreader.app.refresher.NotificationHelper.Companion.FEED_ID_KEY
+import com.capyreader.app.notifications.NotificationHelper.Companion.ARTICLE_ID_KEY
+import com.capyreader.app.notifications.NotificationHelper.Companion.FEED_ID_KEY
 import com.jocmp.capy.Account
 import com.jocmp.capy.ArticleFilter
+import com.jocmp.capy.ArticleNotification
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.logging.CapyLog
-import com.jocmp.capy.notifications.ArticleNotification
 import java.time.ZonedDateTime
 
 class NotificationHelper(
@@ -36,16 +35,25 @@ class NotificationHelper(
             return
         }
 
-
         notifications.forEach {
             sendNotification(it)
         }
 
-        sendGroupNotification(notifications)
+        sendGroupNotification()
     }
 
     private fun sendNotification(notification: ArticleNotification) {
-        val builder = NotificationCompat.Builder(applicationContext, FEED_UPDATE.channelID)
+        val clearIntent = PendingIntent.getBroadcast(
+            applicationContext,
+            0,
+            clearNotificationIntent(id = notification.id, context = applicationContext),
+            PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val builder = NotificationCompat.Builder(
+            applicationContext,
+            Notifications.FEED_UPDATE.channelID
+        )
             .setContentText(notification.title)
             .setStyle(
                 NotificationCompat.BigTextStyle()
@@ -58,32 +66,32 @@ class NotificationHelper(
             .setAutoCancel(true)
             .setContentIntent(notification.contentIntent(applicationContext))
 
-        NotificationManagerCompat
-            .from(applicationContext)
-            .tryNotify(notification.notificationID, builder.build())
+        NotificationManagerCompat.from(applicationContext)
+            .tryNotify(notification.id, builder.build())
     }
 
-    private fun sendGroupNotification(notifications: List<ArticleNotification>) {
-        val builder = NotificationCompat.Builder(applicationContext, FEED_UPDATE.channelID)
+    private fun sendGroupNotification() {
+        val builder = NotificationCompat.Builder(
+            applicationContext,
+            Notifications.FEED_UPDATE.channelID
+        )
             .setSmallIcon(R.drawable.newsmode)
             .setGroup(ARTICLE_REFRESH_GROUP)
             .setGroupSummary(true)
 
-        NotificationManagerCompat
-            .from(applicationContext)
+        NotificationManagerCompat.from(applicationContext)
             .tryNotify(Notifications.FEED_UPDATE_GROUP_NOTIFICATION_ID, builder.build())
     }
 
     private fun createChannel() {
         val name = applicationContext.getString(R.string.notifications_channel_title_feed_update)
         val channel = NotificationChannel(
-            FEED_UPDATE.channelID,
+            Notifications.FEED_UPDATE.channelID,
             name,
             NotificationManager.IMPORTANCE_DEFAULT
         )
 
-        NotificationManagerCompat
-            .from(applicationContext)
+        NotificationManagerCompat.from(applicationContext)
             .createNotificationChannel(channel)
     }
 
@@ -91,6 +99,38 @@ class NotificationHelper(
         const val ARTICLE_ID_KEY = "article_id"
         const val FEED_ID_KEY = "feed_id"
         private const val ARTICLE_REFRESH_GROUP = "article_refresh"
+
+        fun clearNotificationIntent(id: Int, context: Context): Intent {
+            return Intent(context, ArticleStatusBroadcastReceiver::class.java).apply {
+                action = ArticleStatusBroadcastReceiver.ACTION_CLEAR_NOTIFICATION
+                putExtra(ArticleStatusBroadcastReceiver.ARTICLE_NOTIFICATION_ID, id)
+            }
+        }
+
+//        fun clearNotification(articleID: String, context: Context) =
+//            clearNotifications(listOf(articleID), context)
+//
+//        fun clearNotifications(articleIDs: List<String>, context: Context) {
+//            val notificationManager = NotificationManagerCompat.from(context)
+//
+//            articleIDs.forEach {
+//                notificationManager.cancel()
+//            }
+//
+//            clearGroupNotification(context)
+//        }
+
+        private fun clearGroupNotification(context: Context) {
+            val notificationManager = NotificationManagerCompat.from(context)
+
+            CapyLog.info(
+                "active",
+                mapOf("count" to "${notificationManager.activeNotifications.size}")
+            )
+            if (notificationManager.activeNotifications.size < 2) {
+                notificationManager.cancel(Notifications.FEED_UPDATE_GROUP_NOTIFICATION_ID)
+            }
+        }
 
         fun handleResult(intent: Intent, appPreferences: AppPreferences) {
             val articleID = intent.getStringExtra(ARTICLE_ID_KEY) ?: return
@@ -120,19 +160,14 @@ private fun NotificationManagerCompat.tryNotify(id: Int, notification: Notificat
 private fun ArticleNotification.contentIntent(context: Context): PendingIntent {
     val notifyIntent = Intent(context, MainActivity::class.java).apply {
         flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        putExtra(ARTICLE_ID_KEY, id)
+        putExtra(ARTICLE_ID_KEY, articleID)
         putExtra(FEED_ID_KEY, feedID)
     }
 
     return PendingIntent.getActivity(
         context,
-        notificationID,
+        id,
         notifyIntent,
         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
     )
 }
-
-private fun List<ArticleNotification>.grouped() =
-    groupBy { it.feedID }.map { (feedID, notifications) ->
-        FeedNotification.from(feedID, notifications)
-    }

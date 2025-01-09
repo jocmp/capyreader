@@ -59,5 +59,11 @@
             android:name="androidx.work.impl.foreground.SystemForegroundService"
             android:foregroundServiceType="dataSync"
             tools:node="merge" />
+
+        <receiver android:name=".ArticleStatusBroadcastReceiver" android:exported="false">
+            <intent-filter>
+                <action android:name="com.capyreader.MARK_ARTICLE_READ" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

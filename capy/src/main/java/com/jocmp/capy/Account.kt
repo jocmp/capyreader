@@ -15,7 +15,6 @@ import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.sortedByTitle
 import com.jocmp.capy.db.Database
-import com.jocmp.capy.notifications.ArticleNotification
 import com.jocmp.capy.opml.ImportProgress
 import com.jocmp.capy.opml.OPMLImporter
 import com.jocmp.capy.persistence.ArticleRecords

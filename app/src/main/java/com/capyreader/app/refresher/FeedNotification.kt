@@ -1,6 +1,6 @@
 package com.capyreader.app.refresher
 
-import com.jocmp.capy.notifications.ArticleNotification
+import com.jocmp.capy.ArticleNotification
 
 internal data class FeedNotification(
     val id: String,

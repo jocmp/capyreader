@@ -1,0 +1,11 @@
+createNotification:
+INSERT INTO article_notifications(
+   article_id
+)
+VALUES (
+    :article_id
+)
+ON CONFLICT(article_id) DO NOTHING;
+
+clearNotification:
+DELETE FROM article_notifications WHERE article_id = :article_id;

@@ -5,6 +5,7 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
+import com.jocmp.capy.ArticleNotification
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.articles.UnreadSortOrder
@@ -12,7 +13,6 @@ import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.toDateTimeFromSeconds
 import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.db.Database
-import com.jocmp.capy.notifications.ArticleNotification
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
