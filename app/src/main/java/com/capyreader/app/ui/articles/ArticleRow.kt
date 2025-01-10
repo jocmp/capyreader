@@ -40,7 +40,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.fromHtml
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -105,7 +107,7 @@ fun ArticleRow(
             ArticleListItem(
                 headlineContent = {
                     Text(
-                        article.title,
+                        AnnotatedString.fromHtml(article.title),
                         fontWeight = FontWeight.Bold,
                     )
                 },

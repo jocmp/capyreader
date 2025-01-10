@@ -1,7 +1,9 @@
 package com.jocmp.capy.accounts
 
+import com.jocmp.capy.common.escapingHTMLCharacters
 import com.jocmp.rssparser.model.RssItem
 import org.jsoup.Jsoup
+import org.jsoup.safety.Safelist
 import java.net.URI
 import java.net.URL
 
@@ -28,12 +30,12 @@ internal class ParsedItem(private val item: RssItem, private val siteURL: String
             if (it.isBlank()) {
                 null
             } else {
-                Jsoup.parse(it).text()
+                Jsoup.clean(it, Safelist.none())
             }
         }
 
     val title: String
-        get() = Jsoup.parse(item.title.orEmpty()).text()
+        get() = Jsoup.parse(item.title.orEmpty()).text().escapingHTMLCharacters
 
     val imageURL: String?
         get() = cleanedURL(item.image)?.toString()
