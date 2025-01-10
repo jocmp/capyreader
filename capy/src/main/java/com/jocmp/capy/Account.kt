@@ -15,7 +15,6 @@ import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.sortedByTitle
 import com.jocmp.capy.db.Database
-import com.jocmp.capy.notifications.ArticleNotification
 import com.jocmp.capy.opml.ImportProgress
 import com.jocmp.capy.opml.OPMLImporter
 import com.jocmp.capy.persistence.ArticleRecords
@@ -215,8 +214,16 @@ data class Account(
         return OPMLFile(this).opmlDocument()
     }
 
-    suspend fun findNotifications(since: ZonedDateTime): List<ArticleNotification> {
-        return articleRecords.notifications(since = since)
+    suspend fun createNotifications(since: ZonedDateTime): List<ArticleNotification> {
+        return articleRecords.createNotifications(since = since)
+    }
+
+    fun countNotifications(): Long {
+        return articleRecords.countNotifications()
+    }
+
+    fun deleteNotifications(ids: List<String>) {
+       articleRecords.deleteNotification(ids)
     }
 
     suspend fun import(inputStream: InputStream, onProgress: (ImportProgress) -> Unit) {

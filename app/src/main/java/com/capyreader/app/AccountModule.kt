@@ -1,6 +1,7 @@
 package com.capyreader.app
 
 import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.notifications.NotificationHelper
 import com.jocmp.capy.Account
 import com.jocmp.capy.AccountManager
 import com.jocmp.capy.DatabaseProvider
@@ -17,4 +18,5 @@ val accountModule = module {
             database = get<Database>()
         )!!
     }
+    single<NotificationHelper> { NotificationHelper(account = get(), applicationContext = get()) }
 }

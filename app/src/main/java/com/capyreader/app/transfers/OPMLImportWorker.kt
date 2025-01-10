@@ -19,7 +19,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
-import com.capyreader.app.Notifications
+import com.capyreader.app.notifications.Notifications
 import com.capyreader.app.R
 import com.capyreader.app.common.notificationManager
 import com.jocmp.capy.Account

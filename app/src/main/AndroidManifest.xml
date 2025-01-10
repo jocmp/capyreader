@@ -59,5 +59,11 @@
             android:name="androidx.work.impl.foreground.SystemForegroundService"
             android:foregroundServiceType="dataSync"
             tools:node="merge" />
+
+        <receiver android:name=".ArticleStatusBroadcastReceiver" android:exported="false">
+            <intent-filter>
+                <action android:name="com.capyreader.ACTION_DISMISS_NOTIFICATION" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

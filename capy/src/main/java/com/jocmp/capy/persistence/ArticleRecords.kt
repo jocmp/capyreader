@@ -5,6 +5,7 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
+import com.jocmp.capy.ArticleNotification
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.articles.UnreadSortOrder
@@ -12,7 +13,6 @@ import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.toDateTimeFromSeconds
 import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.db.Database
-import com.jocmp.capy.notifications.ArticleNotification
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
@@ -74,16 +74,36 @@ internal class ArticleRecords internal constructor(
             .executeAsList()
     }
 
-    internal suspend fun notifications(since: ZonedDateTime): List<ArticleNotification> {
-        return database.articlesQueries
-            .withNotifications(
-                since = since.toEpochSecond(),
-                mapper = ::articleNotificationMapper
-            )
+    internal suspend fun createNotifications(since: ZonedDateTime): List<ArticleNotification> {
+        val articleIDs =
+            notificationQueries.articlesToNotify(since = since.toEpochSecond()).executeAsList()
+
+        articleIDs.forEach {
+            database.transactionWithErrorHandling {
+                notificationQueries.createNotification(article_id = it)
+            }
+        }
+
+        return allNotifications()
+    }
+
+    private suspend fun allNotifications(): List<ArticleNotification> {
+        return notificationQueries
+            .allNotifications(mapper = ::articleNotificationMapper)
             .asFlow()
             .mapToList(Dispatchers.IO)
             .firstOrNull()
             .orEmpty()
+    }
+
+    internal fun countNotifications(): Long {
+        return notificationQueries
+            .count()
+            .executeAsOneOrNull() ?: 0
+    }
+
+    internal fun deleteNotification(ids: List<String>) {
+        notificationQueries.deleteNotifications(ids = ids)
     }
 
     fun deleteAllArticles() {
@@ -338,6 +358,9 @@ internal class ArticleRecords internal constructor(
     private fun cutoffDate(): ZonedDateTime {
         return nowUTC().minusMonths(3)
     }
+
+    private val notificationQueries
+        get() = database.article_notificationsQueries
 }
 
 
