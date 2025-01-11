@@ -8,6 +8,7 @@ Updated
 • Improve FreshRSS image preview parsing
 • Improve FreshRSS refresh for old articles
 • Show absolute time and date in article feed
+• Automatically dismiss notifications when read
 • Updated translations for Bulgarian, Chinese, Czech, Estonian, French, Galician, German, Italian, Portuguese, Polish, and Russian thanks to volunteers.
 
 Fixed
