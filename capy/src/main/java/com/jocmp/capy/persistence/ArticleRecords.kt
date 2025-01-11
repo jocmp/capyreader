@@ -47,6 +47,16 @@ internal class ArticleRecords internal constructor(
     }
 
     /**
+     * Create placeholder statuses to be updated
+     * by the [findMissingArticles] query
+     */
+    fun createStatuses(articleIDs: List<String>, updatedAt: ZonedDateTime = nowUTC()) {
+        database.transactionWithErrorHandling {
+            articleIDs.forEach { createStatus(articleID = it, updatedAt = updatedAt, read = false) }
+        }
+    }
+
+    /**
      * Upserts a record status. On conflict it overwrites "read" metadata.
      */
     fun updateStatus(articleID: String, updatedAt: ZonedDateTime, read: Boolean, starred: Boolean) {

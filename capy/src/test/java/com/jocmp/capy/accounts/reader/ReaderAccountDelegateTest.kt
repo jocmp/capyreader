@@ -623,7 +623,7 @@ class ReaderAccountDelegateTest {
             googleReader.streamItemsIDs(
                 streamID = stream.id,
                 since = any(),
-                count = 100,
+                count = 10_000,
             )
         }.returns(Response.success(StreamItemIDsResult(itemRefs = itemRefs, continuation = null)))
 
