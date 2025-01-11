@@ -191,7 +191,7 @@ class FeedbinAccountDelegateTest {
             ),
         )
 
-        val starredEntries = listOf(readEntry, unreadEntry)
+        val starredEntries = listOf(unreadEntry, readEntry)
 
         coEvery { feedbin.subscriptions() }.returns(Response.success(subscriptions))
         coEvery { feedbin.unreadEntries() }.returns(Response.success(listOf(unreadEntry.id)))

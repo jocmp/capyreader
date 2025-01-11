@@ -53,6 +53,8 @@ internal class ReaderAccountDelegate(
             } else {
                 refreshCategoryArticles(filter)
             }
+
+            fetchMissingArticles()
         }
     }
 
@@ -206,7 +208,6 @@ internal class ReaderAccountDelegate(
         refreshFeeds()
         refreshArticleState()
         fetchPaginatedArticles(since = since, stream = Stream.Read())
-        fetchMissingArticles()
     }
 
     private fun upsertTaggings(subscription: Subscription) {
@@ -270,17 +271,21 @@ internal class ReaderAccountDelegate(
     }
 
     /**
-     * This is a slightly different algorithm that `refreshTopLevelArticles`.
+     * This is a slightly different algorithm than [refreshTopLevelArticles].
      *
-     *   - Assume the category (folder or feed) exists so it skips refreshing
-     *   the subscription list
-     *   - Refresh all IDs in a given feed and save its content
+     *   - Assume the category (folder or feed) exists so it skips refreshing the subscription list
+     *   - Fetches up to 10k IDs
+     *   - On return, the [fetchMissingArticles] will only fetch articles that are not already
+     *     saved
      */
     private suspend fun refreshCategoryArticles(filter: ArticleFilter) {
         val stream = filter.toStream(source)
 
         refreshArticleState()
-        fetchPaginatedArticles(stream = stream)
+
+        withResult(googleReader.streamItemsIDs(stream = stream)) { result ->
+            articleRecords.createStatuses(articleIDs = result.itemRefs.map { it.hexID })
+        }
     }
 
     private suspend fun fetchMissingArticles() {
@@ -317,7 +322,6 @@ internal class ReaderAccountDelegate(
             stream = stream,
             since = since,
             continuation = continuation,
-            count = MAX_PAGINATED_ITEM_LIMIT,
         )
 
         val result = response.body()

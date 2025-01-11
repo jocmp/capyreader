@@ -1,0 +1,15 @@
+Added
+
+• Add custom full content parser for techcrunch.com
+• Add more font sizes to article list and reader options
+
+Updated
+
+• Improve FreshRSS image preview parsing
+• Improve FreshRSS refresh for old articles
+• Show absolute time and date in article feed
+• Updated translations for Bulgarian, Chinese, Czech, Estonian, French, Galician, German, Italian, Portuguese, Polish, and Russian thanks to volunteers.
+
+Fixed
+
+• Ensure parser handles accented characters for some feed encodings
