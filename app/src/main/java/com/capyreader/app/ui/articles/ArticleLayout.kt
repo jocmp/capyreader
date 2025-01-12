@@ -50,7 +50,6 @@ import com.capyreader.app.ui.articles.list.PullToNextFeedBox
 import com.capyreader.app.ui.articles.list.resetScrollBehaviorListener
 import com.capyreader.app.ui.articles.media.ArticleMediaView
 import com.capyreader.app.ui.components.ArticleSearch
-import com.capyreader.app.ui.components.rememberWebViewState
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
@@ -127,10 +126,6 @@ fun ArticleLayout(
     suspend fun navigateToDetail() {
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
     }
-
-    val webViewState = rememberWebViewState(
-        onNavigateToMedia = { media = it },
-    )
 
     fun scrollToArticle(index: Int) {
         coroutineScope.launch {
@@ -444,7 +439,7 @@ fun ArticleLayout(
 
                 ArticleView(
                     article = article,
-                    webViewState = webViewState,
+                    onNavigateToMedia = { media = it },
                     articles = indexedArticles,
                     onBackPressed = {
                         coroutineScope.launchUI {
