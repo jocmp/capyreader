@@ -35,9 +35,9 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.common.Media
 import com.capyreader.app.ui.articles.IndexedArticles
 import com.capyreader.app.ui.articles.LocalFullContent
-import com.capyreader.app.ui.components.WebViewState
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.LOAD_FULL_CONTENT
@@ -48,7 +48,7 @@ import org.koin.compose.koinInject
 @Composable
 fun ArticleView(
     article: Article,
-    webViewState: WebViewState,
+    onNavigateToMedia: (media: Media) -> Unit,
     articles: IndexedArticles,
     onBackPressed: () -> Unit,
     onToggleRead: () -> Unit,
@@ -102,7 +102,7 @@ fun ArticleView(
                 ) {
                     ArticleReader(
                         article = article,
-                        webViewState = webViewState,
+                        onNavigateToMedia = onNavigateToMedia,
                     )
                 }
             }

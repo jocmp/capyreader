@@ -1,6 +1,5 @@
 package com.capyreader.app.ui.articles.detail
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -21,20 +20,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.common.Media
 import com.capyreader.app.common.ReaderImageVisibility
 import com.capyreader.app.ui.ConnectivityType
 import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.articles.ColumnScrollbar
 import com.capyreader.app.ui.components.WebView
-import com.capyreader.app.ui.components.WebViewState
+import com.capyreader.app.ui.components.rememberWebViewState
 import com.jocmp.capy.Article
 import org.koin.compose.koinInject
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ArticleReader(
     article: Article,
-    webViewState: WebViewState,
+    onNavigateToMedia: (media: Media) -> Unit,
 ) {
     val showImages = rememberImageVisibility()
     var maxHeight by remember { mutableFloatStateOf(0f) }
