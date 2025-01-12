@@ -1,8 +1,10 @@
-package com.jocmp.capy.accounts
+package com.jocmp.capy.accounts.local
 
 import com.jocmp.capy.AccountDelegate
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.InMemoryDatabaseProvider
+import com.jocmp.capy.accounts.AddFeedResult
+import com.jocmp.capy.accounts.FakeFaviconFetcher
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.FeedFixture
 import com.jocmp.capy.logging.CapyLog
@@ -118,7 +120,10 @@ class LocalAccountDelegateTest {
 
         FeedFixture(database).create(feedID = channel.link!!)
 
-        delegate.refresh(ArticleFilter.default(), cutoffDate = ZonedDateTime.of(2024, 5, 1, 8, 0, 0, 0, ZoneOffset.UTC))
+        delegate.refresh(
+            ArticleFilter.default(),
+            cutoffDate = ZonedDateTime.of(2024, 5, 1, 8, 0, 0, 0, ZoneOffset.UTC)
+        )
 
         val articlesCount = database
             .articlesQueries

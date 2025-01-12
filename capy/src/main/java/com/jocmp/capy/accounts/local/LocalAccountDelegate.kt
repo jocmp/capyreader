@@ -1,8 +1,11 @@
-package com.jocmp.capy.accounts
+package com.jocmp.capy.accounts.local
 
 import com.jocmp.capy.AccountDelegate
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
+import com.jocmp.capy.accounts.AddFeedResult
+import com.jocmp.capy.accounts.FaviconFetcher
+import com.jocmp.capy.accounts.FeedOption
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.TimeHelpers.published
 import com.jocmp.capy.common.transactionWithErrorHandling
@@ -23,7 +26,7 @@ import java.net.UnknownHostException
 import java.time.ZonedDateTime
 import com.jocmp.feedfinder.parser.Feed as ParserFeed
 
-class LocalAccountDelegate(
+internal class LocalAccountDelegate(
     private val database: Database,
     private val httpClient: OkHttpClient,
     private val faviconFetcher: FaviconFetcher,

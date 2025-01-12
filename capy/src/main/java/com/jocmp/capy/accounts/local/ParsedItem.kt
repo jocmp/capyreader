@@ -1,4 +1,4 @@
-package com.jocmp.capy.accounts
+package com.jocmp.capy.accounts.local
 
 import com.jocmp.capy.common.escapingHTMLCharacters
 import com.jocmp.rssparser.model.RssItem
@@ -8,7 +8,7 @@ import java.net.URI
 import java.net.URL
 
 internal class ParsedItem(private val item: RssItem, private val siteURL: String?) {
-    val url: String? = cleanedURL(item.link)?.toString()
+    val url: String? = articleURL()
 
     val id: String? = url ?: item.guid
 
@@ -39,6 +39,12 @@ internal class ParsedItem(private val item: RssItem, private val siteURL: String
 
     val imageURL: String?
         get() = cleanedURL(item.image)?.toString()
+
+    private fun articleURL(): String? {
+        val link = cleanedURL(item.link) ?: return null
+
+        return ArticleURL.parse(link).toString()
+    }
 
     private fun cleanedURL(inputURL: String?): URL? {
         val url = inputURL.orEmpty()
