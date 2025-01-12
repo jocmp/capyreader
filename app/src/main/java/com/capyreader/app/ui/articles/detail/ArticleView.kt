@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Article
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
@@ -22,12 +24,13 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.TopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -42,6 +45,7 @@ import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.LOAD_FULL_CONTENT
 import com.jocmp.capy.Article
+import com.jocmp.capy.logging.CapyLog
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -80,6 +84,11 @@ fun ArticleView(
 
     val toolbars = rememberToolbarPreferences(articleID = article.id)
 
+    val pagerState = rememberPagerState(
+        pageCount = {
+            articles.size
+        })
+
     ArticleViewScaffold(
         topBar = {
             ArticleTopBar(
@@ -92,7 +101,8 @@ fun ArticleView(
             )
         },
         reader = {
-            key(article.id) {
+            HorizontalPager(state = pagerState) { page ->
+                CapyLog.info("page", mapOf("page" to page.toString()))
                 ArticlePullRefresh(
                     toolbars.show && !toolbars.pinned,
                     onToggleFullContent = onToggleFullContent,
@@ -100,10 +110,18 @@ fun ArticleView(
                     onRequestPrevious = onRequestPrevious,
                     articles = articles,
                 ) {
-                    ArticleReader(
-                        article = article,
-                        onNavigateToMedia = onNavigateToMedia,
-                    )
+                    articles.find(page)?.let { pagedArticle ->
+                        val presented = if (article.id == pagedArticle.id) {
+                            article
+                        } else {
+                            pagedArticle
+                        }
+
+                        ArticleReader(
+                            article = presented,
+                            onNavigateToMedia = onNavigateToMedia,
+                        )
+                    }
                 }
             }
         },
@@ -115,6 +133,22 @@ fun ArticleView(
         },
         toolbarPreferences = toolbars
     )
+
+    /** TODO: jumps to index=0 when no articles are selected */
+    LaunchedEffect(pagerState) {
+        snapshotFlow { pagerState.currentPage }.collect { page ->
+            val currentArticle = articles.find(page) ?: return@collect
+//            if (currentArticle.id != article.id) {
+//                onRequestArticle(currentArticle.id)
+//            }
+        }
+    }
+
+    LaunchedEffect(article.id) {
+        CapyLog.info("new_article", mapOf("title" to article.title.split(" ").take(13).joinToString(" ")))
+
+        pagerState.scrollToPage(articles.index)
+    }
 
     BackHandler(enableBackHandler) {
         onBackPressed()

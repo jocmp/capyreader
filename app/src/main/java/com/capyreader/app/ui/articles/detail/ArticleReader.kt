@@ -43,6 +43,10 @@ fun ArticleReader(
 
     var lastScrollY by rememberSaveable { mutableIntStateOf(0) }
 
+    val webViewState = rememberWebViewState(
+        onNavigateToMedia = onNavigateToMedia,
+    )
+
     ReaderPagingBox(
         maxArticleHeight = maxHeight,
         scrollState = scrollState,
