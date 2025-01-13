@@ -192,6 +192,8 @@ video {
 .article__header {
   display: block;
   margin-bottom: 1.5rem;
+  max-width: 40rem;
+  margin: 0 auto 1rem;
 
   &:link,
   &:visited {
@@ -213,6 +215,7 @@ video {
 #article-body-content {
   line-height: 1.6em;
   margin-bottom: 20vh;
+  max-width: 40rem;
 
   img {
     background-color: var(--color-surface-container-highest);
