@@ -153,6 +153,14 @@ iframe {
   }
 }
 
+video {
+  background-color: black;
+
+  &::-webkit-media-controls-fullscreen-button {
+    display: none;
+  }
+}
+
 .table__wrapper {
   overflow-x: auto;
   width: 100%;
@@ -183,7 +191,7 @@ iframe {
 
 .article__header {
   display: block;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 
   &:link,
   &:visited {
@@ -191,15 +199,8 @@ iframe {
   }
 }
 
-video {
-  background-color: black;
-
-  &::-webkit-media-controls-fullscreen-button {
-    display: none;
-  }
-}
-
 .article__title {
+  padding-bottom: 0.5rem;
   h1 {
     margin: 0;
   }
