@@ -1,6 +1,5 @@
 package com.jocmp.capy.accounts.local
 
-import com.jocmp.capy.common.escapingHTMLCharacters
 import com.jocmp.rssparser.model.RssItem
 import org.jsoup.Jsoup
 import org.jsoup.safety.Safelist
@@ -35,7 +34,7 @@ internal class ParsedItem(private val item: RssItem, private val siteURL: String
         }
 
     val title: String
-        get() = Jsoup.parse(item.title.orEmpty()).text().escapingHTMLCharacters
+        get() = Jsoup.clean(item.title.orEmpty(), Safelist.none())
 
     val imageURL: String?
         get() = cleanedURL(item.image)?.toString()
