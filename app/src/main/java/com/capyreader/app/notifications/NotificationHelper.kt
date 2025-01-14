@@ -35,11 +35,11 @@ class NotificationHelper(
             return
         }
 
+        sendGroupNotification()
+
         notifications.forEach {
             sendNotification(it)
         }
-
-        sendGroupNotification()
     }
 
     fun dismissNotifications(ids: List<String>) {
