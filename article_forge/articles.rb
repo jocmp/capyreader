@@ -89,10 +89,11 @@ module Articles
   end
 end
 
-require "./articles/factorio"
-require "./articles/distrowatch"
-require "./articles/tagesschau"
-require "./articles/one_pezeshk"
-require "./articles/secretclub"
 require "./articles/andreyor"
 require "./articles/androidauthority"
+require "./articles/distrowatch"
+require "./articles/factorio"
+require "./articles/one_pezeshk"
+require "./articles/secretclub"
+require "./articles/tagesschau"
+require "./articles/versants"

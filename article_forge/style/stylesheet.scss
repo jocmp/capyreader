@@ -161,6 +161,11 @@ video {
   }
 }
 
+ul:has(img) {
+  list-style-type: none;
+  padding-left: 0;
+}
+
 .table__wrapper {
   overflow-x: auto;
   width: 100%;
