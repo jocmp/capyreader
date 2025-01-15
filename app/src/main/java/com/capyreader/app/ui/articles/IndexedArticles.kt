@@ -2,11 +2,8 @@ package com.capyreader.app.ui.articles
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.jocmp.capy.Article
-import kotlinx.coroutines.flow.Flow
 
 data class IndexedArticles(
     val index: Int,
@@ -25,6 +22,8 @@ data class IndexedArticles(
     fun hasNext(): Boolean {
         return next < size
     }
+
+    fun find(page: Int) = articles.getOrNull(page)
 
     val size = articles.size
 }
