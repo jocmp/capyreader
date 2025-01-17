@@ -64,6 +64,7 @@
     <string name="article_actions_open_menu">Open article actions</string>
     <string name="article_actions_mark_below_as_read">Mark below as read</string>
     <string name="article_actions_mark_after_as_read">Mark above as read</string>
+    <string name="article_actions_copy_link">Copy link</string>
     <string name="unauthorized_dialog_title">You\'re logged out</string>
     <string name="unauthorized_dialog_description">There was an issue connecting to your account. Please log in again.</string>
     <string name="unauthorized_dialog_dismiss_text">Later</string>
@@ -72,7 +73,7 @@
     <string name="auth_fields_email">Email</string>
     <string name="auth_fields_username">Username</string>
     <string name="auth_fields_api_url">Server</string>
-    <string name="auth_fields_api_url_freshrss_placeholder" translatable="false">https://example.com/api/greader.php</string>
+    <string name="auth_fields_api_url_freshrss_placeholder" translatable="false">https://example.com/</string>
     <string name="auth_fields_hide_password">Hide password</string>
     <string name="auth_fields_show_password">Show password</string>
     <string name="auth_fields_log_in_button">Log In</string>

@@ -12,6 +12,7 @@ import com.capyreader.app.loadAccountModules
 import com.capyreader.app.ui.Route
 import com.jocmp.capy.AccountManager
 import com.jocmp.capy.accounts.Credentials
+import com.jocmp.capy.accounts.withFreshRSSPath
 import com.jocmp.capy.common.Async
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.withTrailingSeparator
@@ -86,7 +87,10 @@ class LoginViewModel(
            return
         }
 
-        _url = _url.withProtocol.withTrailingSeparator
+        _url = _url
+            .withProtocol
+            .withTrailingSeparator
+            .let { withFreshRSSPath(it, source) }
     }
 
     private val credentials: Credentials

@@ -52,6 +52,7 @@ $font-families: (
 
 :root {
   --corner-radius: 0.1875rem;
+  --article-line-height: 1.6em;
 }
 
 ::selection {
@@ -103,6 +104,11 @@ object {
   max-width: 100%;
   height: auto;
   margin: 0 auto;
+}
+
+figure {
+  font-size: calc(var(--article-font-size) * 0.85);
+  line-height: 1.4em;
 }
 
 .iframe-embed {
@@ -218,7 +224,7 @@ ul:has(img) {
 }
 
 #article-body-content {
-  line-height: 1.6em;
+  line-height: var(--article-line-height);
   margin-bottom: 20vh;
   max-width: 40rem;
 

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+  <html dir="auto">
+    <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+      <style>
+        :root {
+          --color-primary: {{color_primary}};
+          --color-surface: {{color_surface}};
+          --color-surface-container-highest: {{color_surface_container_highest}};
+          --color-on-surface: {{color_on_surface}};
+          --color-on-surface-variant: {{color_on_surface_variant}};
+          --color-surface-variant: {{color_surface_variant}};
+          --color-primary-container: {{color_primary_container}};
+          --color-on-primary-container: {{color_on_primary_container}};
+          --color-surface-container: {{color_surface_container}};
+          --article-top-margin: {{top_margin}};
+          --article-font-size: {{font_size}};
+        }
+      </style>
+      {{font_preload}}
+      <link rel="stylesheet" href="/assets/stylesheet.css">
+    </head>
+    <body>
+      <form method="GET" action="/articles">
+        <input type="text" name="article_url" placeholder="Enter article URL">
+        <button type="submit">Submit</button>
+      </form>
+    </body>
+  </html>
