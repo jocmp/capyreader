@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="add_feed_url_title">Flöde eller webbsidans URL</string>
+    <string name="add_feed_submit">Lägg till</string>
+    <string name="add_feed_success">Flöde tillagt</string>
+    <string name="feed_form_cancel">Avbryt</string>
+    <string name="filter_starred">Stjärnmärkt</string>
+    <string name="add_feed_name_title">Namn</string>
+</resources>
