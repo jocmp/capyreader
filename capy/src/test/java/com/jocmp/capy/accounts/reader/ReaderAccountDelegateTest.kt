@@ -222,6 +222,7 @@ class ReaderAccountDelegateTest {
 
         stubStarred()
         stubUnread()
+        stubSubscriptions()
         stubStreamItemsIDs(itemRefs, stream = Stream.Label(folderTitle))
 
         delegate.refresh(

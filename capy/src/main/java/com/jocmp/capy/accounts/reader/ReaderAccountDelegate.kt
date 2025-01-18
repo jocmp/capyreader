@@ -279,6 +279,10 @@ internal class ReaderAccountDelegate(
      *     saved
      */
     private suspend fun refreshCategoryArticles(stream: Stream) {
+        if (stream is Stream.Label) {
+            refreshFeeds()
+        }
+
         refreshArticleState()
 
         withResult(googleReader.streamItemsIDs(stream = stream)) { result ->
