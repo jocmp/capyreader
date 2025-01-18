@@ -222,6 +222,7 @@ class ReaderAccountDelegateTest {
 
         stubStarred()
         stubUnread()
+        stubSubscriptions()
         stubStreamItemsIDs(itemRefs, stream = Stream.Label(folderTitle))
 
         delegate.refresh(
@@ -427,7 +428,7 @@ class ReaderAccountDelegateTest {
         stubPostToken()
         stubUnread()
         stubStarred()
-        stubStreamItemsIDs()
+        stubStreamItemsIDs(stream = Stream.Feed("feed/4"))
 
         val subscription = Subscription(
             id = "feed/4",
