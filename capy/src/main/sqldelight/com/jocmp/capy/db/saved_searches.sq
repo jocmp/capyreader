@@ -1,0 +1,15 @@
+upsert:
+INSERT OR REPLACE INTO saved_searches(
+    id,
+    name
+)
+VALUES (
+  :id,
+  :name
+);
+
+deleteOrphaned {
+    DELETE FROM saved_searches WHERE id NOT IN :excludedIDs;
+
+    DELETE FROM saved_search_articles WHERE saved_search_id NOT IN :excludedIDs;
+}

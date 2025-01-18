@@ -16,6 +16,7 @@ import com.jocmp.capy.db.Database
 import com.jocmp.capy.logging.CapyLog
 import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.capy.persistence.FeedRecords
+import com.jocmp.capy.persistence.SavedSearchRecords
 import com.jocmp.capy.persistence.TaggingRecords
 import com.jocmp.feedfinder.withProtocol
 import com.jocmp.readerclient.Category
@@ -27,6 +28,7 @@ import com.jocmp.readerclient.Stream
 import com.jocmp.readerclient.Subscription
 import com.jocmp.readerclient.SubscriptionEditAction
 import com.jocmp.readerclient.SubscriptionQuickAddResult
+import com.jocmp.readerclient.Tag
 import com.jocmp.readerclient.ext.editSubscription
 import com.jocmp.readerclient.ext.streamItemsIDs
 import kotlinx.coroutines.coroutineScope
@@ -46,6 +48,7 @@ internal class ReaderAccountDelegate(
     private val articleRecords = ArticleRecords(database)
     private val feedRecords = FeedRecords(database)
     private val taggingRecords = TaggingRecords(database)
+    private val savedSearchRecords = SavedSearchRecords(database)
 
     override suspend fun refresh(filter: ArticleFilter, cutoffDate: ZonedDateTime?): Result<Unit> {
         return withErrorHandling {
@@ -185,6 +188,16 @@ internal class ReaderAccountDelegate(
         }
     }
 
+    private fun upsertTaggings(subscription: Subscription) {
+        subscription.categories.forEach { category ->
+            database.taggingsQueries.upsert(
+                id = taggingID(subscription, category),
+                feed_id = subscription.id,
+                name = category.label.orEmpty(),
+            )
+        }
+    }
+
     private suspend fun refreshFeeds() {
         withResult(googleReader.subscriptionList()) { result ->
             val subscriptions = result.subscriptions
@@ -205,9 +218,9 @@ internal class ReaderAccountDelegate(
         val since = articleRecords.maxArrivedAt().toEpochSecond()
 
         refreshFeeds()
+        refreshSavedSearches()
         refreshArticleState()
         fetchPaginatedArticles(since = since, stream = Stream.Read())
-        fetchMissingArticles()
     }
 
     private fun upsertTaggings(subscription: Subscription) {
@@ -243,8 +256,27 @@ internal class ReaderAccountDelegate(
             }
         }
 
-        database.taggingsQueries.deleteOrphanedTags(
-            excludedIDs = excludedIDs
+        taggingRecords.deleteOrphaned(excludedIDs = excludedIDs)
+    }
+
+    private suspend fun refreshSavedSearches() {
+        withResult(googleReader.tagList()) { result ->
+            database.transactionWithErrorHandling {
+                val tags = result.tags.filter { it.type == Tag.Type.TAG }
+
+                tags.forEach {
+                    upsertSavedSearch(it)
+                }
+
+                savedSearchRecords.deleteOrphaned(excludedIDs = tags.map { it.id })
+            }
+        }
+    }
+
+    private fun upsertSavedSearch(tag: Tag) {
+        savedSearchRecords.upsert(
+            id = tag.id,
+            name = tag.name
         )
     }
 
