@@ -9,6 +9,7 @@ import com.jocmp.capy.accounts.ValidationError
 import com.jocmp.capy.accounts.feedbin.FeedbinAccountDelegate.Companion.MAX_CREATE_UNREAD_LIMIT
 import com.jocmp.capy.accounts.withErrorHandling
 import com.jocmp.capy.common.TimeHelpers
+import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.common.withResult
 import com.jocmp.capy.db.Database
@@ -51,10 +52,8 @@ internal class ReaderAccountDelegate(
             if (filter.hasArticlesSelected()) {
                 refreshTopLevelArticles()
             } else {
-                refreshCategoryArticles(filter)
+                refreshCategoryArticles(filter.toStream(source))
             }
-
-            fetchMissingArticles()
         }
     }
 
@@ -101,7 +100,7 @@ internal class ReaderAccountDelegate(
 
             if (feed != null) {
                 coroutineScope {
-                    launch { fetchPaginatedArticles(stream = Stream.ReadingList()) }
+                    launchIO { refreshCategoryArticles(Stream.Feed(feed.id)) }
                 }
 
                 AddFeedResult.Success(feed)
@@ -208,6 +207,7 @@ internal class ReaderAccountDelegate(
         refreshFeeds()
         refreshArticleState()
         fetchPaginatedArticles(since = since, stream = Stream.Read())
+        fetchMissingArticles()
     }
 
     private fun upsertTaggings(subscription: Subscription) {
@@ -275,17 +275,17 @@ internal class ReaderAccountDelegate(
      *
      *   - Assume the category (folder or feed) exists so it skips refreshing the subscription list
      *   - Fetches up to 10k IDs
-     *   - On return, the [fetchMissingArticles] will only fetch articles that are not already
+     *   - On result, the [fetchMissingArticles] will only fetch articles that are not already
      *     saved
      */
-    private suspend fun refreshCategoryArticles(filter: ArticleFilter) {
-        val stream = filter.toStream(source)
-
+    private suspend fun refreshCategoryArticles(stream: Stream) {
         refreshArticleState()
 
         withResult(googleReader.streamItemsIDs(stream = stream)) { result ->
             articleRecords.createStatuses(articleIDs = result.itemRefs.map { it.hexID })
         }
+
+        fetchMissingArticles()
     }
 
     private suspend fun fetchMissingArticles() {
