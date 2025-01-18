@@ -135,7 +135,7 @@
     <string name="auth_fields_log_in_button">تسجيل الدخول</string>
     <string name="update_auth_success_message">تم تسجيل الدخول بنجاح</string>
     <string name="settings_panel_general_title">عام</string>
-    <string name="settings_auto_delete_articles_title">إحتفظ بالمقالات</string>
+    <string name="settings_auto_delete_articles_title">إستمر في قراءة المقالات</string>
     <string name="settings_account_title">الحساب</string>
     <string name="settings_about_title">حول</string>
     <string name="settings_list_top_bar_title">الإعدادات</string>
@@ -146,7 +146,7 @@
     <string name="settings_auto_delete_option_keep_for_three_month">3 شهور</string>
     <string name="settings_section_advanced">متقدم</string>
     <string name="settings_clear_all_articles_confirm">تأكيد</string>
-    <string name="settings_clear_all_articles_text">هل أنت متأكد من أنك تريد حذف جميع المقالات؟ لا يمكن التراجع عن هذا.</string>
+    <string name="settings_clear_all_articles_text">هل أنت متأكد من أنك تريد حذف جميع المقالات المقروءة وغير المميزة بنجمة من جهازك؟ لا يمكن التراجع عن هذا الإجراء.</string>
     <string name="settings_clear_all_articles_button">مسح جميع المقالات</string>
     <string name="settings_support_button">الدعم</string>
     <string name="settings_article_list_title">قائمة المقالات</string>
@@ -215,4 +215,11 @@
     <string name="layout_preference_label">التخطيط المفضل</string>
     <string name="layout_preference_responsive">مستجيب</string>
     <string name="layout_preference_single">قائمة عمودية</string>
+    <string name="settings_donate_button">تبرع</string>
+    <string name="after_read_all_behavior_label">بعد قراءة الكل</string>
+    <string name="after_read_all_behavior_default">إفتراضي</string>
+    <string name="after_read_all_behavior_open_drawer">إفتح درج التنقل</string>
+    <string name="after_read_all_behavior_open_next_feed">إفتح المقالة التالية</string>
+    <string name="full_content_error_missing_response">فشل في جلب المقالة</string>
+    <string name="full_content_error_generic">فشل تحليل المقالة</string>
 </resources>
