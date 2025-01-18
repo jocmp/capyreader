@@ -221,4 +221,5 @@
     <string name="after_read_all_behavior_open_drawer">打开导航抽屉</string>
     <string name="settings_donate_button">捐赠</string>
     <string name="after_read_all_behavior_default">默认</string>
+    <string name="article_actions_copy_link">复制链接</string>
 </resources>
