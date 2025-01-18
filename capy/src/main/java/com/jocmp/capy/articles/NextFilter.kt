@@ -73,6 +73,19 @@ sealed class NextFilter {
                 }
 
                 is ArticleFilter.Feeds -> findNextFeed(filter, folders, feeds)
+                is ArticleFilter.SavedSearch -> {
+                    // TODO handle saved searches
+                    val firstFolder = folders.firstOrNull()
+                    val nextFeed = feeds.firstOrNull()
+
+                    if (firstFolder != null) {
+                        FolderFilter(firstFolder.title)
+                    } else if (nextFeed != null) {
+                        FeedFilter(feedID = nextFeed.id, folderTitle = null)
+                    } else {
+                        null
+                    }
+                }
             }
         }
 

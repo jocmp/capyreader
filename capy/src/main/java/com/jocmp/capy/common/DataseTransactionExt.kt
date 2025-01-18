@@ -2,6 +2,7 @@ package com.jocmp.capy.common
 
 import app.cash.sqldelight.TransactionWithoutReturn
 import com.jocmp.capy.db.Database
+import com.jocmp.capy.logging.CapyLog
 
 fun Database.transactionWithErrorHandling(
     body: TransactionWithoutReturn.() -> Unit
@@ -9,6 +10,6 @@ fun Database.transactionWithErrorHandling(
     try {
         transaction(noEnclosing = false, body)
     } catch(e: Exception) {
-        // continue
+        CapyLog.error("db_error", e)
     }
 }

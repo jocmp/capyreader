@@ -55,7 +55,7 @@ internal class ReaderAccountDelegate(
             if (filter.hasArticlesSelected()) {
                 refreshTopLevelArticles()
             } else {
-                refreshCategoryArticles(filter.toStream(source))
+                refreshArticles(filter.toStream(source))
             }
         }
     }
@@ -103,7 +103,7 @@ internal class ReaderAccountDelegate(
 
             if (feed != null) {
                 coroutineScope {
-                    launchIO { refreshCategoryArticles(Stream.Feed(feed.id)) }
+                    launchIO { refreshArticles(Stream.Feed(feed.id)) }
                 }
 
                 AddFeedResult.Success(feed)
@@ -188,16 +188,6 @@ internal class ReaderAccountDelegate(
         }
     }
 
-    private fun upsertTaggings(subscription: Subscription) {
-        subscription.categories.forEach { category ->
-            database.taggingsQueries.upsert(
-                id = taggingID(subscription, category),
-                feed_id = subscription.id,
-                name = category.label.orEmpty(),
-            )
-        }
-    }
-
     private suspend fun refreshFeeds() {
         withResult(googleReader.subscriptionList()) { result ->
             val subscriptions = result.subscriptions
@@ -218,9 +208,10 @@ internal class ReaderAccountDelegate(
         val since = articleRecords.maxArrivedAt().toEpochSecond()
 
         refreshFeeds()
-        refreshSavedSearches()
+        refreshAllSavedSearches()
         refreshArticleState()
         fetchPaginatedArticles(since = since, stream = Stream.Read())
+        fetchMissingArticles()
     }
 
     private fun upsertTaggings(subscription: Subscription) {
@@ -259,7 +250,7 @@ internal class ReaderAccountDelegate(
         taggingRecords.deleteOrphaned(excludedIDs = excludedIDs)
     }
 
-    private suspend fun refreshSavedSearches() {
+    private suspend fun refreshAllSavedSearches() {
         withResult(googleReader.tagList()) { result ->
             database.transactionWithErrorHandling {
                 val tags = result.tags.filter { it.type == Tag.Type.TAG }
@@ -270,6 +261,15 @@ internal class ReaderAccountDelegate(
 
                 savedSearchRecords.deleteOrphaned(excludedIDs = tags.map { it.id })
             }
+        }
+
+        coroutineScope {
+            savedSearchRecords.fetchSavedSearches()
+                .forEach { savedSearchID ->
+                    launch {
+                        fetchPaginatedArticles(stream = Stream.UserLabel(savedSearchID))
+                    }
+                }
         }
     }
 
@@ -310,18 +310,22 @@ internal class ReaderAccountDelegate(
      *   - On result, the [fetchMissingArticles] will only fetch articles that are not already
      *     saved
      */
-    private suspend fun refreshCategoryArticles(stream: Stream) {
-        if (stream is Stream.Label) {
+    private suspend fun refreshArticles(stream: Stream) {
+        if (stream !is Stream.Feed) {
             refreshFeeds()
         }
 
-        refreshArticleState()
+        if (stream is Stream.UserLabel) {
+            fetchPaginatedArticles(stream = stream)
+        } else {
+            refreshArticleState()
 
-        withResult(googleReader.streamItemsIDs(stream = stream)) { result ->
-            articleRecords.createStatuses(articleIDs = result.itemRefs.map { it.hexID })
+            withResult(googleReader.streamItemsIDs(stream = stream)) { result ->
+                articleRecords.createStatuses(articleIDs = result.itemRefs.map { it.hexID })
+            }
+
+            fetchMissingArticles()
         }
-
-        fetchMissingArticles()
     }
 
     private suspend fun fetchMissingArticles() {
@@ -343,7 +347,7 @@ internal class ReaderAccountDelegate(
 
                     val result = response.body() ?: return@launch
 
-                    saveItems(result.items)
+                    saveArticles(result.items)
                 }
             }
         }
@@ -391,11 +395,13 @@ internal class ReaderAccountDelegate(
 
         val result = response.body() ?: return
 
-        saveItems(result.items)
+        saveArticles(result.items)
     }
 
-    private fun saveItems(items: List<Item>) {
+    private fun saveArticles(items: List<Item>) {
         database.transactionWithErrorHandling {
+            val labels = savedSearchRecords.fetchSavedSearches()
+
             items.forEach { item ->
                 val updated = TimeHelpers.nowUTC()
 
@@ -418,6 +424,15 @@ internal class ReaderAccountDelegate(
                     read = item.read,
                     starred = item.starred
                 )
+
+                item.categories?.forEach { category ->
+                    if (labels.contains(category)) {
+                        savedSearchRecords.upsertArticle(
+                            articleID = item.hexID,
+                            id = category,
+                        )
+                    }
+                }
             }
         }
     }
@@ -508,6 +523,7 @@ private fun ArticleFilter.toStream(source: Source): Stream {
         is ArticleFilter.Articles -> Stream.Read()
         is ArticleFilter.Feeds -> Stream.Feed(feedID)
         is ArticleFilter.Folders -> folderStream(this, source)
+        is ArticleFilter.SavedSearch -> Stream.UserLabel(savedSearchID)
     }
 }
 

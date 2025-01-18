@@ -12,6 +12,10 @@ sealed class ArticleFilter(open val status: ArticleStatus) {
         return this is Feeds && this.feedID == feed.id && this.folderTitle.orEmpty() == feed.folderName
     }
 
+    fun isSavedSearchSelected(savedSearch: SavedSearch): Boolean {
+        return this is SavedSearch
+    }
+
     fun hasArticlesSelected(): Boolean {
         return this is Articles
     }
@@ -21,6 +25,7 @@ sealed class ArticleFilter(open val status: ArticleStatus) {
             is Articles -> copy(articleStatus = status)
             is Feeds -> copy(feedStatus = status)
             is Folders -> copy(folderStatus = status)
+            is SavedSearch -> copy(savedSearchStatus = status)
         }
     }
 
@@ -44,6 +49,14 @@ sealed class ArticleFilter(open val status: ArticleStatus) {
             get() = folderStatus
     }
 
+    @Serializable
+    data class SavedSearch(
+        val savedSearchID: String,
+        val savedSearchStatus: ArticleStatus
+    ) : ArticleFilter(savedSearchStatus) {
+        override val status: ArticleStatus
+            get() = savedSearchStatus
+    }
 
     companion object {
         fun default() = Articles(articleStatus = ArticleStatus.ALL)

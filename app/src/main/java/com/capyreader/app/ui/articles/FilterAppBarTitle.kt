@@ -36,6 +36,9 @@ fun FilterAppBarTitle(
         is ArticleFilter.Folders -> {
             allFolders.find { it.title == filter.folderTitle }?.title
         }
+
+        is ArticleFilter.SavedSearch -> TODO()
+        // allSavedSearches.find { it.id == filter.savedSearchID }?.name
     }.orEmpty()
 
     Box(

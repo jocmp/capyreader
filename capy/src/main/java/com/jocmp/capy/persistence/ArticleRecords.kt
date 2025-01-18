@@ -237,6 +237,8 @@ internal class ArticleRecords internal constructor(
                     range = range
                 )
             }
+
+            is ArticleFilter.SavedSearch -> TODO()
         }
 
         return ids.executeAsList()

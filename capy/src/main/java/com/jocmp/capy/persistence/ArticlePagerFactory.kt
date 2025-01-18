@@ -22,6 +22,7 @@ class ArticlePagerFactory(private val database: Database) {
             is ArticleFilter.Articles -> articleSource(filter, query, unreadSort, since)
             is ArticleFilter.Feeds -> feedSource(filter, query, unreadSort, since)
             is ArticleFilter.Folders -> folderSource(filter, query, unreadSort, since)
+            is ArticleFilter.SavedSearch -> TODO()
         }
     }
 

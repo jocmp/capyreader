@@ -10,4 +10,6 @@ sealed class Stream(val id: String) {
     class Feed(id: String): Stream(id)
 
     class Label(name: String): Stream("user/-/label/$name")
+
+    class UserLabel(id: String): Stream(id)
 }

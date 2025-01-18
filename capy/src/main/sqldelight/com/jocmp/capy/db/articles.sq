@@ -278,7 +278,15 @@ WHERE article_statuses.article_id = :articleID;
 
 deleteAllArticles {
   DELETE FROM article_statuses WHERE starred = 0 AND read = 1;
-  DELETE FROM articles WHERE id NOT IN (SELECT article_id FROM article_statuses);
+
+  DELETE FROM articles WHERE id NOT IN (
+    SELECT article_id FROM article_statuses
+  );
+
+  DELETE FROM saved_search_articles
+  WHERE article_id NOT IN (
+    SELECT article_id FROM article_statuses
+  );
 }
 
 deleteArticles {
@@ -288,5 +296,13 @@ deleteArticles {
     WHERE published_at < :publishedBefore
   );
 
-  DELETE FROM articles WHERE id NOT IN (SELECT article_id FROM article_statuses);
+  DELETE FROM articles
+  WHERE id NOT IN (
+    SELECT article_id FROM article_statuses
+  );
+
+  DELETE FROM saved_search_articles
+  WHERE article_id NOT IN (
+    SELECT article_id FROM article_statuses
+  );
 }

@@ -1,3 +1,7 @@
+fetchSavedSearches:
+SELECT id
+FROM saved_searches;
+
 upsert:
 INSERT OR REPLACE INTO saved_searches(
     id,
@@ -6,6 +10,16 @@ INSERT OR REPLACE INTO saved_searches(
 VALUES (
   :id,
   :name
+);
+
+upsertArticle:
+INSERT OR IGNORE INTO saved_search_articles(
+  saved_search_id,
+  article_id
+)
+VALUES (
+    :saved_search_id,
+    :article_id
 );
 
 deleteOrphaned {
