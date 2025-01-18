@@ -125,7 +125,7 @@
     <string name="feed_list_top_bar_close_search">تجاهل البحث</string>
     <string name="app_name">Capy Reader</string>
     <string name="add_feed_url_title">رابط الموقع أو موجز الأخبار</string>
-    <string name="add_feed_name_title">الأسم</string>
+    <string name="add_feed_name_title">الاسم</string>
     <string name="filter_action_menu_description">تعديل</string>
     <string name="settings_remove_account_message_service">هل أنت متأكد أنك تريد تسجيل الخروج؟</string>
     <string name="article_view_star">نجمة</string>
