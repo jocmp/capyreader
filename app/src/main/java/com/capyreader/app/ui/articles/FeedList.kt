@@ -27,10 +27,14 @@ import com.capyreader.app.R
 import com.capyreader.app.ui.fixtures.FeedSample
 import com.capyreader.app.ui.fixtures.FolderPreviewFixture
 import com.capyreader.app.ui.navigationTitle
+import com.jocmp.capy.Account
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
+import com.jocmp.capy.SavedSearch
+import com.jocmp.capy.accounts.Source
+import org.koin.compose.koinInject
 
 @Composable
 fun FeedList(
@@ -38,7 +42,9 @@ fun FeedList(
     statusCount: Long,
     folders: List<Folder> = emptyList(),
     feeds: List<Feed> = emptyList(),
+    savedSearches: List<SavedSearch> = emptyList(),
     onFilterSelect: () -> Unit,
+    onSelectSavedSearch: (search: SavedSearch) -> Unit,
     onSelectFolder: (folder: Folder) -> Unit,
     onSelectFeed: (feed: Feed, folderTitle: String?) -> Unit,
     onFeedAdded: (feedID: String) -> Unit,
@@ -105,9 +111,22 @@ fun FeedList(
                 }
             )
 
+            if (savedSearches.isNotEmpty()) {
+                FeedListDivider()
+                ListHeadline(text = savedSearchTitle())
+
+                savedSearches.forEach {
+                    SavedSearchRow(
+                        onSelect = onSelectSavedSearch,
+                        selected = filter.isSavedSearchSelected(it),
+                        savedSearch = it,
+                    )
+                }
+            }
+
             if (folders.isNotEmpty()) {
                 FeedListDivider()
-                ListHeadline(text = stringResource(R.string.nav_headline_tags))
+                ListHeadline(text = tagsTitle())
             }
 
             folders.forEach { folder ->
@@ -159,6 +178,26 @@ fun FeedList(
 }
 
 @Composable
+private fun savedSearchTitle(account: Account = koinInject()): String {
+    val res = when (account.source) {
+        Source.FRESHRSS, Source.READER -> R.string.nav_headline_my_labels
+        else -> R.string.nav_headline_saved_searches
+    }
+
+    return stringResource(res)
+}
+
+@Composable
+private fun tagsTitle(account: Account = koinInject()): String {
+    val res = when (account.source) {
+        Source.FRESHRSS, Source.READER -> R.string.nav_headline_categories
+        else -> R.string.nav_headline_tags
+    }
+
+    return stringResource(res)
+}
+
+@Composable
 private fun FeedListDivider() {
     HorizontalDivider(
         Modifier
@@ -183,6 +222,7 @@ fun FeedListPreview() {
         filter = ArticleFilter.default(),
         statusCount = 10,
         onFeedAdded = {},
-        onSelectStatus = {}
+        onSelectStatus = {},
+        onSelectSavedSearch = {}
     )
 }

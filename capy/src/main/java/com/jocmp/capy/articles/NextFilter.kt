@@ -73,7 +73,7 @@ sealed class NextFilter {
                 }
 
                 is ArticleFilter.Feeds -> findNextFeed(filter, folders, feeds)
-                is ArticleFilter.SavedSearch -> {
+                is ArticleFilter.SavedSearches -> {
                     // TODO handle saved searches
                     val firstFolder = folders.firstOrNull()
                     val nextFeed = feeds.firstOrNull()

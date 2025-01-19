@@ -99,7 +99,7 @@ internal class ReaderAccountDelegate(
                 upsertFeed(subscription)
             }
 
-            val feed = feedRecords.findBy(subscription.id)
+            val feed = feedRecords.find(subscription.id)
 
             if (feed != null) {
                 coroutineScope {
@@ -167,7 +167,7 @@ internal class ReaderAccountDelegate(
                 }
             }
 
-            feedRecords.findBy(feed.id)
+            feedRecords.find(feed.id)
         }
     }
 
@@ -264,7 +264,7 @@ internal class ReaderAccountDelegate(
         }
 
         coroutineScope {
-            savedSearchRecords.fetchSavedSearches()
+            savedSearchRecords.allIDs()
                 .forEach { savedSearchID ->
                     launch {
                         fetchPaginatedArticles(stream = Stream.UserLabel(savedSearchID))
@@ -400,7 +400,7 @@ internal class ReaderAccountDelegate(
 
     private fun saveArticles(items: List<Item>) {
         database.transactionWithErrorHandling {
-            val labels = savedSearchRecords.fetchSavedSearches()
+            val labels = savedSearchRecords.allIDs()
 
             items.forEach { item ->
                 val updated = TimeHelpers.nowUTC()
@@ -523,7 +523,7 @@ private fun ArticleFilter.toStream(source: Source): Stream {
         is ArticleFilter.Articles -> Stream.Read()
         is ArticleFilter.Feeds -> Stream.Feed(feedID)
         is ArticleFilter.Folders -> folderStream(this, source)
-        is ArticleFilter.SavedSearch -> Stream.UserLabel(savedSearchID)
+        is ArticleFilter.SavedSearches -> Stream.UserLabel(savedSearchID)
     }
 }
 

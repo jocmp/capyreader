@@ -1,5 +1,5 @@
 CREATE TABLE saved_searches (
   id TEXT NOT NULL PRIMARY KEY,
   name TEXT NOT NULL,
-  query TEXT
+  query_text TEXT
 );

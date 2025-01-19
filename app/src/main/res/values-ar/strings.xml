@@ -200,7 +200,7 @@
     <string name="add_account_feedbin_signup_link_text">قم بإنشاء حساب من هنا.</string>
     <string name="add_account_freshrss_signup_prompt">ليس لديك نسخة FreshRSS ؟</string>
     <string name="add_account_freshrss_signup_link_text">اكتشف المزيد.</string>
-    <string name="edit_feed_tag_section">المجلد</string>
+    <string name="edit_feed_category_section">المجلد</string>
     <string name="settings_mark_read_on_scroll">ضع علامة كمقروء تلقائيًا خلال التمرير</string>
     <string name="settings_section_mark_all_as_read">وضع علامة كمقروء على الكل</string>
     <string name="settings_section_browser">المتصفح</string>

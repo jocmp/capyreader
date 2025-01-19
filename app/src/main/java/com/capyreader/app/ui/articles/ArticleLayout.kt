@@ -57,6 +57,7 @@ import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
+import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.common.launchUI
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -70,6 +71,7 @@ fun ArticleLayout(
     filter: ArticleFilter,
     folders: List<Folder>,
     feeds: List<Feed>,
+    savedSearches: List<SavedSearch>,
     allFeeds: List<Feed>,
     allFolders: List<Folder>,
     articles: LazyPagingItems<Article>,
@@ -79,6 +81,7 @@ fun ArticleLayout(
     refreshInterval: RefreshInterval,
     onFeedRefresh: (completion: () -> Unit) -> Unit,
     onSelectFolder: (folderTitle: String) -> Unit,
+    onSelectSavedSearch: (savedSearchID: String) -> Unit,
     onSelectFeed: (feedID: String, folderTitle: String?) -> Unit,
     onSelectArticleFilter: () -> Unit,
     onSelectStatus: (status: ArticleStatus) -> Unit,
@@ -301,6 +304,14 @@ fun ArticleLayout(
         }
     }
 
+    fun selectSavedSearch(savedSearch: SavedSearch) {
+        if (!filter.isSavedSearchSelected(savedSearch)) {
+            openNextList { onSelectSavedSearch(savedSearch.id) }
+        } else {
+            closeDrawer()
+        }
+    }
+
     ArticleHandler {
         selectArticle(it)
     }
@@ -315,6 +326,8 @@ fun ArticleLayout(
                 onSelectFolder = ::selectFolder,
                 onSelectFeed = ::selectFeed,
                 onFeedAdded = { onFeedAdded(it) },
+                savedSearches = savedSearches,
+                onSelectSavedSearch = ::selectSavedSearch,
                 onNavigateToSettings = onNavigateToSettings,
                 onFilterSelect = ::selectFilter,
                 filter = filter,
@@ -362,7 +375,8 @@ fun ArticleLayout(
                         filter = filter,
                         currentFeed = currentFeed,
                         feeds = allFeeds,
-                        allFolders = allFolders
+                        savedSearches = savedSearches,
+                        folders = allFolders
                     )
                 },
                 snackbarHost = {

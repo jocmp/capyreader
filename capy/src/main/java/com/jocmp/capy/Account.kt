@@ -13,12 +13,14 @@ import com.jocmp.capy.accounts.reader.buildReaderDelegate
 import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
+import com.jocmp.capy.common.sortedByName
 import com.jocmp.capy.common.sortedByTitle
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.opml.ImportProgress
 import com.jocmp.capy.opml.OPMLImporter
 import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.capy.persistence.FeedRecords
+import com.jocmp.capy.persistence.SavedSearchRecords
 import com.jocmp.feedbinclient.Feedbin
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -61,13 +63,17 @@ data class Account(
     }
 ) {
     internal val articleRecords: ArticleRecords = ArticleRecords(database)
-
     private val feedRecords: FeedRecords = FeedRecords(database)
+    private val savedSearchRecords = SavedSearchRecords(database)
 
     private val articleContent = ArticleContent(httpClient = localHttpClient)
 
     val allFeeds = feedRecords.feeds().map {
         it.sortedByTitle()
+    }
+
+    val savedSearches = savedSearchRecords.all().map {
+        it.sortedByName()
     }
 
     val feeds: Flow<List<Feed>> = allFeeds.map { all ->
@@ -111,7 +117,7 @@ data class Account(
     }
 
     suspend fun removeFeed(feedID: String): Result<Unit> {
-        val feed = feedRecords.findBy(feedID) ?: return Result.failure(Throwable("Feed not found"))
+        val feed = feedRecords.find(feedID) ?: return Result.failure(Throwable("Feed not found"))
 
         return delegate.removeFeed(feed = feed).fold(
             onSuccess = {
@@ -140,8 +146,12 @@ data class Account(
         }
     }
 
-    suspend fun findFeed(feedID: String): Feed? {
-        return feedRecords.findBy(feedID)
+    fun findFeed(feedID: String): Feed? {
+        return feedRecords.find(feedID)
+    }
+
+    fun findSavedSearch(savedSearchID: String): SavedSearch? {
+        return savedSearchRecords.find(savedSearchID)
     }
 
     suspend fun findFolder(title: String): Folder? {
@@ -223,7 +233,7 @@ data class Account(
     }
 
     fun deleteNotifications(ids: List<String>) {
-       articleRecords.deleteNotification(ids)
+        articleRecords.deleteNotification(ids)
     }
 
     suspend fun import(inputStream: InputStream, onProgress: (ImportProgress) -> Unit) {

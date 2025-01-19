@@ -167,7 +167,7 @@
     <string name="crash_log_export_item_title">Compartir informe de fallos</string>
     <string name="crash_log_export_item_subtitle">Garda un informe do fallo nun ficheiro para compartilo coas desenvolvedoras</string>
     <string name="edit_feed_tags_section">Etiquetas</string>
-    <string name="edit_feed_tag_section">Etiqueta</string>
+    <string name="edit_feed_category_section">Etiqueta</string>
     <string name="edit_feed_notifications_title">Activar notificacións</string>
     <string name="settings_enable_refresh_call_to_action">Primeiro debes activar a actualización periódica</string>
     <string name="settings_notifications_select_none">Sen selección</string>

@@ -132,7 +132,7 @@
     <string name="settings_gestures_list_back_navigation_system_back">Rhagosodiad</string>
     <string name="crash_log_export_item_title">Rhannu logiau\'r chwalu</string>
     <string name="edit_feed_tags_section">Tagiau</string>
-    <string name="edit_feed_tag_section">Tag</string>
+    <string name="edit_feed_category_section">Tag</string>
     <string name="edit_feed_notifications_title">Galluogi hysbysiadau</string>
     <string name="notifications_permissions_disabled_call_to_action">Gosodiadau</string>
     <string name="article_list_row_swipe_open_externally">Agor yr erthygl mewn porwr</string>

@@ -13,7 +13,7 @@ sealed class ArticleFilter(open val status: ArticleStatus) {
     }
 
     fun isSavedSearchSelected(savedSearch: SavedSearch): Boolean {
-        return this is SavedSearch
+        return this is SavedSearches && this.savedSearchID == savedSearch.id
     }
 
     fun hasArticlesSelected(): Boolean {
@@ -25,7 +25,7 @@ sealed class ArticleFilter(open val status: ArticleStatus) {
             is Articles -> copy(articleStatus = status)
             is Feeds -> copy(feedStatus = status)
             is Folders -> copy(folderStatus = status)
-            is SavedSearch -> copy(savedSearchStatus = status)
+            is SavedSearches -> copy(savedSearchStatus = status)
         }
     }
 
@@ -50,7 +50,7 @@ sealed class ArticleFilter(open val status: ArticleStatus) {
     }
 
     @Serializable
-    data class SavedSearch(
+    data class SavedSearches(
         val savedSearchID: String,
         val savedSearchStatus: ArticleStatus
     ) : ArticleFilter(savedSearchStatus) {

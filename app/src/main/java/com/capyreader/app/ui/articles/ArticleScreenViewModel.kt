@@ -92,6 +92,8 @@ class ArticleScreenViewModel(
             .withPositiveCount(filter.status)
     }
 
+    val savedSearches = account.savedSearches
+
     val allFeeds = account.allFeeds
 
     val allFolders = account.folders
@@ -158,6 +160,18 @@ class ArticleScreenViewModel(
             )
 
             updateFilter(feedFilter)
+        }
+    }
+
+    fun selectSavedSearch(savedSearchID: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val savedSearch = account.findSavedSearch(savedSearchID) ?: return@launch
+            val searchFilter = ArticleFilter.SavedSearches(
+                savedSearch.id,
+                savedSearchStatus = latestFilter.status
+            )
+
+            updateFilter(searchFilter)
         }
     }
 

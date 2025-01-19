@@ -196,7 +196,7 @@
     <string name="add_account_freshrss_signup_prompt">Nemate FreshRSS instancu?</string>
     <string name="add_account_freshrss_signup_link_text">Saznajte više.</string>
     <string name="settings_section_account_server">Server</string>
-    <string name="edit_feed_tag_section">Tag</string>
+    <string name="edit_feed_category_section">Tag</string>
     <string name="auth_fields_api_url">Server</string>
     <string name="settings_mark_read_on_scroll">Označi kao pročitano na skrolovanju</string>
     <string name="settings_section_mark_all_as_read">Označi sve kao pročitano</string>

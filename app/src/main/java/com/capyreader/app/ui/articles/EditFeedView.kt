@@ -184,7 +184,7 @@ private fun FolderSelect(
                 .fillMaxWidth(),
             value = value,
             onValueChange = onChange,
-            label = { Text(stringResource(R.string.edit_feed_tag_section)) },
+            label = { Text(stringResource(R.string.edit_feed_category_section)) },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
             colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(),
         )

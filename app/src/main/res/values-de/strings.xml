@@ -187,7 +187,7 @@
     <string name="settings_notifications_select_all">Alles ausgewählt</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">Navigationsübersicht öffnen</string>
     <string name="add_account_local_subtitle">Auf Ihrem Gerät</string>
-    <string name="edit_feed_tag_section">Schlagwort</string>
+    <string name="edit_feed_category_section">Schlagwort</string>
     <string name="auth_fields_api_url">Server</string>
     <string name="settings_section_account_server">Server</string>
     <string name="account_source_reader">Reader</string>

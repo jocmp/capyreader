@@ -10,7 +10,7 @@ LEFT JOIN articles ON articles.feed_id = feeds.id
 GROUP BY feeds.id, taggings.name
 ORDER BY taggings.name;
 
-findBy:
+find:
 SELECT *
 FROM feeds
 WHERE id = :id

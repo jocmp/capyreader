@@ -45,6 +45,9 @@
     </plurals>
     <string name="refresh_feeds_menu_label">Refresh Feeds</string>
     <string name="nav_headline_tags">Tags</string>
+    <string name="nav_headline_categories">Categories</string>
+    <string name="nav_headline_saved_searches">Searches</string>
+    <string name="nav_headline_my_labels">My Labels</string>
     <string name="nav_headline_feeds">Feeds</string>
     <string name="nav_add_feed">Add Feed</string>
     <string name="add_feed_feed_not_error">Couldn\'t find feed</string>
@@ -197,7 +200,7 @@
     <string name="crash_log_export_item_title">Share crash logs</string>
     <string name="crash_log_export_item_subtitle">Saves crash logs to a file to share with the developer</string>
     <string name="edit_feed_tags_section">Tags</string>
-    <string name="edit_feed_tag_section">Tag</string>
+    <string name="edit_feed_category_section">Category</string>
     <string name="edit_feed_notifications_title">Enable notifications</string>
     <string name="notifications_permissions_disabled_call_to_action">Settings</string>
     <string name="notifications_permission_disabled_title">Notification permission is disabled</string>

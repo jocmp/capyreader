@@ -74,7 +74,7 @@ internal class LocalAccountDelegate(
                 val resultFeed = feeds.first()
                 upsertFeed(resultFeed, title = title)
 
-                val feed = feedRecords.findBy(id = resultFeed.feedURL.toString())
+                val feed = feedRecords.find(id = resultFeed.feedURL.toString())
 
                 return if (feed != null) {
                     upsertFolders(feed, folderTitles)
@@ -112,7 +112,7 @@ internal class LocalAccountDelegate(
         taggingRecords.deleteTaggings(taggingIDsToDelete)
 
         val updatedFeed =
-            feedRecords.findBy(feed.id) ?: return Result.failure(Throwable("Feed not found"))
+            feedRecords.find(feed.id) ?: return Result.failure(Throwable("Feed not found"))
 
         return Result.success(updatedFeed)
     }

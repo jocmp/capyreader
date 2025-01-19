@@ -188,7 +188,7 @@
     <string name="add_account_feedbin_signup_link_text">Vytvořte si ho zde.</string>
     <string name="add_account_freshrss_signup_prompt">Nemáte instanci FreshRSS?</string>
     <string name="add_account_freshrss_signup_link_text">Zjistit více.</string>
-    <string name="edit_feed_tag_section">Štítek</string>
+    <string name="edit_feed_category_section">Štítek</string>
     <string name="settings_notifications_select_none">Nevybrat nic</string>
     <string name="settings_notifications_select_all">Vybrat vše</string>
     <string name="settings_confirm_mark_all_read">Potvrdit označení všeho jako přečtené</string>

@@ -198,7 +198,7 @@
     <string name="add_account_feedbin_signup_prompt">Non hai un account Feedbin?</string>
     <string name="add_account_feedbin_signup_link_text">Creane uno qui.</string>
     <string name="add_account_freshrss_signup_prompt">Non hai un\'istanza FreshRSS?</string>
-    <string name="edit_feed_tag_section">Tag</string>
+    <string name="edit_feed_category_section">Tag</string>
     <string name="add_account_feedbin_subtitle">feedbin.com</string>
     <string name="add_account_freshrss_signup_link_text">Per saperne di più.</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Tocca gli angoli inferiori per navigare nel contenuto dell\'articolo</string>

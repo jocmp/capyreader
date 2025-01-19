@@ -1,6 +1,21 @@
-fetchSavedSearches:
+all:
+SELECT
+  id,
+  name,
+  query_text
+FROM saved_searches;
+
+allIDs:
 SELECT id
 FROM saved_searches;
+
+find:
+SELECT
+  id,
+  name,
+  query_text
+FROM saved_searches
+WHERE id = :id;
 
 upsert:
 INSERT OR REPLACE INTO saved_searches(

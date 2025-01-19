@@ -198,7 +198,7 @@
     <string name="auth_fields_api_url_freshrss_placeholder">https://example.com/</string>
     <string name="add_account_reader_subtitle">Самостоятелно хостван Google Reader API</string>
     <string name="add_account_feedbin_signup_link_text">Създайте такъв тук.</string>
-    <string name="edit_feed_tag_section">Категоерия</string>
+    <string name="edit_feed_category_section">Категоерия</string>
     <string name="add_account_freshrss_signup_prompt">Нямате FreshRSS инстанция?</string>
     <string name="settings_gestures_reader_tap_to_page_title">Докоснете за превъртане (за E-ink)</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Докоснете долните ъгли, за да навигирате в съдържанието на статията</string>

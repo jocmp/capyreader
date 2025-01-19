@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 data class SavedSearch(
     val id: String,
     val name: String,
-    val query: String?
+    val query: String?,
 )
