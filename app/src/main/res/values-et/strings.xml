@@ -197,7 +197,7 @@
     <string name="auth_fields_api_url_freshrss_placeholder">https://example.com/</string>
     <string name="account_source_reader">Uudistelugeja</string>
     <string name="add_account_reader_subtitle">Oma serveris asuv Google Readeri API</string>
-    <string name="edit_feed_category_section">Silt</string>
+    <string name="edit_feed_tag_section">Silt</string>
     <string name="add_account_feedbin_signup_prompt">Kas sul pole Feedbin kontot?</string>
     <string name="add_account_freshrss_signup_prompt">Sul pole FreshRSSi serverit?</string>
     <string name="settings_gestures_reader_tap_to_page_title">Kerimiseks klõpsi</string>

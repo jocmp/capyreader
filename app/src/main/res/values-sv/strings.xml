@@ -168,7 +168,7 @@
     <string name="settings_notifications_select_none">Välj inga</string>
     <string name="crash_log_export_item_title">Dela kraschloggar</string>
     <string name="edit_feed_tags_section">Etiketter</string>
-    <string name="edit_feed_category_section">Etikett</string>
+    <string name="edit_feed_tag_section">Etikett</string>
     <string name="settings_enable_refresh_call_to_action">Periodisk uppdatering måste vara aktiverad först</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">Öppna navigationsfält</string>
     <string name="notifications_permission_disabled_title">Behörighet till aviseringar avaktiverad</string>
