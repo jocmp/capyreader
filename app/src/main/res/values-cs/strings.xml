@@ -213,4 +213,11 @@
     <string name="layout_preference_responsive">Responzivní</string>
     <string name="layout_preference_label">Preferované rozvržení</string>
     <string name="settings_mark_read_on_scroll">Označit jako přečtené při posunutí</string>
+    <string name="settings_donate_button">Přispět</string>
+    <string name="after_read_all_behavior_default">Výchozí</string>
+    <string name="after_read_all_behavior_open_drawer">Otevřít navigační šuplík</string>
+    <string name="after_read_all_behavior_open_next_feed">Otevřít další kanál</string>
+    <string name="full_content_error_missing_response">Chyba při načítání článku</string>
+    <string name="full_content_error_generic">Chyba při zpracování článku</string>
+    <string name="after_read_all_behavior_label">Po přečtení všeho</string>
 </resources>

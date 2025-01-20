@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import com.capyreader.app.common.RowItem
-import com.capyreader.app.refresher.NotificationHelper
+import com.capyreader.app.notifications.NotificationHelper
 import com.jocmp.capy.Account
 import com.jocmp.capy.common.launchIO
 import org.koin.compose.koinInject

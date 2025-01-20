@@ -5,7 +5,7 @@ import com.jocmp.capy.RandomUUID
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.persistence.TaggingRecords
 
-class TagFixture(private val database: Database) {
+class FolderFixture(private val database: Database) {
     private val feedFixture = FeedFixture(database)
 
     fun create(

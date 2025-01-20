@@ -5,6 +5,7 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
+import com.jocmp.capy.ArticleNotification
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.articles.UnreadSortOrder
@@ -12,7 +13,6 @@ import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.toDateTimeFromSeconds
 import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.db.Database
-import com.jocmp.capy.notifications.ArticleNotification
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
@@ -47,9 +47,19 @@ internal class ArticleRecords internal constructor(
     }
 
     /**
+     * Create placeholder statuses to be updated
+     * by the [findMissingArticles] query
+     */
+    fun createStatuses(articleIDs: List<String>, updatedAt: ZonedDateTime = nowUTC()) {
+        database.transactionWithErrorHandling {
+            articleIDs.forEach { createStatus(articleID = it, updatedAt = updatedAt, read = false) }
+        }
+    }
+
+    /**
      * Upserts a record status. On conflict it overwrites "read" metadata.
      */
-    fun updateStatus(articleID: String, updatedAt: ZonedDateTime, read: Boolean) {
+    fun updateStatus(articleID: String, updatedAt: ZonedDateTime, read: Boolean, starred: Boolean) {
         val updatedAtSeconds = updatedAt.toEpochSecond()
 
         val lastReadAt = if (read) {
@@ -63,6 +73,7 @@ internal class ArticleRecords internal constructor(
             updated_at = updatedAtSeconds,
             last_read_at = lastReadAt,
             read = read,
+            starred = starred
         )
     }
 
@@ -73,16 +84,36 @@ internal class ArticleRecords internal constructor(
             .executeAsList()
     }
 
-    internal suspend fun notifications(since: ZonedDateTime): List<ArticleNotification> {
-        return database.articlesQueries
-            .withNotifications(
-                since = since.toEpochSecond(),
-                mapper = ::articleNotificationMapper
-            )
+    internal suspend fun createNotifications(since: ZonedDateTime): List<ArticleNotification> {
+        val articleIDs =
+            notificationQueries.articlesToNotify(since = since.toEpochSecond()).executeAsList()
+
+        articleIDs.forEach {
+            database.transactionWithErrorHandling {
+                notificationQueries.createNotification(article_id = it)
+            }
+        }
+
+        return allNotifications()
+    }
+
+    private suspend fun allNotifications(): List<ArticleNotification> {
+        return notificationQueries
+            .allNotifications(mapper = ::articleNotificationMapper)
             .asFlow()
             .mapToList(Dispatchers.IO)
             .firstOrNull()
             .orEmpty()
+    }
+
+    internal fun countNotifications(): Long {
+        return notificationQueries
+            .count()
+            .executeAsOneOrNull() ?: 0
+    }
+
+    internal fun deleteNotification(ids: List<String>) {
+        notificationQueries.deleteNotifications(ids = ids)
     }
 
     fun deleteAllArticles() {
@@ -145,14 +176,14 @@ internal class ArticleRecords internal constructor(
         )
     }
 
-    fun addStar(articleID: String, updatedAt: ZonedDateTime = nowUTC()) {
+    fun addStar(articleID: String) {
         database.articlesQueries.markStarred(
             articleID = articleID,
             starred = true,
         )
     }
 
-    fun removeStar(articleID: String, updatedAt: ZonedDateTime = nowUTC()) {
+    fun removeStar(articleID: String) {
         database.articlesQueries.markStarred(
             articleID = articleID,
             starred = false,
@@ -178,8 +209,8 @@ internal class ArticleRecords internal constructor(
     }
 
     /** Date in UTC */
-    fun maxUpdatedAt(): ZonedDateTime {
-        val max = database.articlesQueries.lastUpdatedAt().executeAsOne().MAX
+    fun maxArrivedAt(): ZonedDateTime {
+        val max = byStatus.maxArrivedAt()
 
         max ?: return cutoffDate()
 
@@ -200,20 +231,22 @@ internal class ArticleRecords internal constructor(
             )
 
             is ArticleFilter.Folders -> {
-                val feedIDs = database
-                    .taggingsQueries
-                    .findFeedIDs(folderTitle = filter.folderTitle)
-                    .executeAsList()
-
                 byFeed.unreadArticleIDs(
                     filter.status,
-                    feedIDs = feedIDs,
+                    feedIDs = folderFeedIDs(filter),
                     range = range
                 )
             }
         }
 
         return ids.executeAsList()
+    }
+
+    private fun folderFeedIDs(filter: ArticleFilter.Folders): List<String> {
+        return database
+            .taggingsQueries
+            .findFeedIDs(folderTitle = filter.folderTitle)
+            .executeAsList()
     }
 
     class ByFeed(private val database: Database) {
@@ -312,6 +345,10 @@ internal class ArticleRecords internal constructor(
             )
         }
 
+        fun maxArrivedAt(): Long? {
+            return database.articlesQueries.lastUpdatedAt().executeAsOne().MAX
+        }
+
         fun count(
             status: ArticleStatus,
             query: String? = null,
@@ -331,6 +368,9 @@ internal class ArticleRecords internal constructor(
     private fun cutoffDate(): ZonedDateTime {
         return nowUTC().minusMonths(3)
     }
+
+    private val notificationQueries
+        get() = database.article_notificationsQueries
 }
 
 

@@ -52,6 +52,7 @@ $font-families: (
 
 :root {
   --corner-radius: 0.1875rem;
+  --article-line-height: 1.6em;
 }
 
 ::selection {
@@ -105,6 +106,11 @@ object {
   margin: 0 auto;
 }
 
+figure {
+  font-size: calc(var(--article-font-size) * 0.85);
+  line-height: 1.4em;
+}
+
 .iframe-embed {
   display: block;
   position: relative;
@@ -153,6 +159,19 @@ iframe {
   }
 }
 
+video {
+  background-color: black;
+
+  &::-webkit-media-controls-fullscreen-button {
+    display: none;
+  }
+}
+
+ul:has(img) {
+  list-style-type: none;
+  padding-left: 0;
+}
+
 .table__wrapper {
   overflow-x: auto;
   width: 100%;
@@ -183,7 +202,9 @@ iframe {
 
 .article__header {
   display: block;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  max-width: 40rem;
+  margin: 0 auto 1rem;
 
   &:link,
   &:visited {
@@ -191,15 +212,8 @@ iframe {
   }
 }
 
-video {
-  background-color: black;
-
-  &::-webkit-media-controls-fullscreen-button {
-    display: none;
-  }
-}
-
 .article__title {
+  padding-bottom: 0.5rem;
   h1 {
     margin: 0;
   }
@@ -210,8 +224,9 @@ video {
 }
 
 #article-body-content {
-  line-height: 1.6em;
+  line-height: var(--article-line-height);
   margin-bottom: 20vh;
+  max-width: 40rem;
 
   img {
     background-color: var(--color-surface-container-highest);

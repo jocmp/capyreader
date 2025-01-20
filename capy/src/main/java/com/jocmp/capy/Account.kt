@@ -4,19 +4,18 @@ import android.content.Context
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.accounts.FaviconFetcher
-import com.jocmp.capy.accounts.LocalAccountDelegate
 import com.jocmp.capy.accounts.LocalOkHttpClient
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.asOPML
 import com.jocmp.capy.accounts.feedbin.FeedbinAccountDelegate
 import com.jocmp.capy.accounts.feedbin.FeedbinOkHttpClient
+import com.jocmp.capy.accounts.local.LocalAccountDelegate
 import com.jocmp.capy.accounts.reader.buildReaderDelegate
 import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.sortedByTitle
 import com.jocmp.capy.db.Database
-import com.jocmp.capy.notifications.ArticleNotification
 import com.jocmp.capy.opml.ImportProgress
 import com.jocmp.capy.opml.OPMLImporter
 import com.jocmp.capy.persistence.ArticleRecords
@@ -57,6 +56,7 @@ data class Account(
 
         Source.FRESHRSS, Source.READER -> buildReaderDelegate(
             context = context,
+            source = source,
             database = database,
             path = cacheDirectory,
             preferences = preferences
@@ -127,11 +127,11 @@ data class Account(
         )
     }
 
-    suspend fun refresh(): Result<Unit> {
+    suspend fun refresh(filter: ArticleFilter = ArticleFilter.default()): Result<Unit> {
         return try {
             val cutoffDate = preferences.autoDelete.get().cutoffDate()
 
-            val result = delegate.refresh(cutoffDate = cutoffDate)
+            val result = delegate.refresh(filter, cutoffDate = cutoffDate)
 
             if (cutoffDate != null) {
                 articleRecords.deleteOldArticles(before = cutoffDate)
@@ -217,8 +217,16 @@ data class Account(
         return OPMLFile(this).opmlDocument()
     }
 
-    suspend fun findNotifications(since: ZonedDateTime): List<ArticleNotification> {
-        return articleRecords.notifications(since = since)
+    suspend fun createNotifications(since: ZonedDateTime): List<ArticleNotification> {
+        return articleRecords.createNotifications(since = since)
+    }
+
+    fun countNotifications(): Long {
+        return articleRecords.countNotifications()
+    }
+
+    fun deleteNotifications(ids: List<String>) {
+       articleRecords.deleteNotification(ids)
     }
 
     suspend fun import(inputStream: InputStream, onProgress: (ImportProgress) -> Unit) {

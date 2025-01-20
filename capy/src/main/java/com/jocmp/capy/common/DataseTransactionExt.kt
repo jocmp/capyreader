@@ -1,6 +1,5 @@
 package com.jocmp.capy.common
 
-import android.util.Log
 import app.cash.sqldelight.TransactionWithoutReturn
 import com.jocmp.capy.db.Database
 

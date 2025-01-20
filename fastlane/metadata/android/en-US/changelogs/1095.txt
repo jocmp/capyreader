@@ -1,0 +1,1 @@
+• Fix bug where notification titles appear incorrectly for local feeds

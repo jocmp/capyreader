@@ -10,7 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.capyreader.app.common.AppPreferences
-import com.capyreader.app.refresher.NotificationHelper
+import com.capyreader.app.notifications.NotificationHelper
 import com.capyreader.app.ui.App
 import com.capyreader.app.ui.Route
 import org.koin.android.ext.android.get

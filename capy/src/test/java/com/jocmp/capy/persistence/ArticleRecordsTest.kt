@@ -414,6 +414,7 @@ class ArticleRecordsTest {
             articleID = article.id,
             updatedAt = updated,
             read = true,
+            starred = false
         )
 
         article = articleRecords.reload(article)!!

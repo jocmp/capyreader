@@ -156,7 +156,7 @@ fun rememberCurrentTime(): LocalDateTime {
     LaunchedEffect(Unit) {
         while (true) {
             currentTime = LocalDateTime.now()
-            delay(30_000)
+            delay(30 * 60 * 1_000)
         }
     }
 

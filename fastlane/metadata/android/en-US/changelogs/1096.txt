@@ -1,0 +1,5 @@
+• Add "Copy Link" menu item to article list menu
+• Improve image caption display
+• Improve custom extractor for versants.com and androidauthority.com
+• Autofill "/api/greader.php" path when logging into FreshRSS
+• Update translations for Arabic thanks to volunteers.

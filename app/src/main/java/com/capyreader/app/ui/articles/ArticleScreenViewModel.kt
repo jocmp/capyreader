@@ -12,6 +12,7 @@ import com.capyreader.app.R
 import com.capyreader.app.common.AfterReadAllBehavior
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.toast
+import com.capyreader.app.notifications.NotificationHelper
 import com.capyreader.app.sync.Sync
 import com.jocmp.capy.Account
 import com.jocmp.capy.Article
@@ -44,6 +45,7 @@ class ArticleScreenViewModel(
     private val account: Account,
     private val appPreferences: AppPreferences,
     private val application: Application,
+    private val notificationHelper: NotificationHelper,
 ) : AndroidViewModel(application) {
     private var refreshJob: Job? = null
 
@@ -189,6 +191,10 @@ class ArticleScreenViewModel(
                 Sync.markReadAsync(articleIDs, context)
             }
 
+            launchIO {
+                notificationHelper.dismissNotifications(articleIDs)
+            }
+
             if (range != MarkRead.All) {
                 return@launchIO
             }
@@ -223,7 +229,7 @@ class ArticleScreenViewModel(
         refreshJob?.cancel()
 
         refreshJob = viewModelScope.launch(Dispatchers.IO) {
-            account.refresh().onFailure { throwable ->
+            account.refresh(latestFilter).onFailure { throwable ->
                 if (throwable is UnauthorizedError && _showUnauthorizedMessage == UnauthorizedMessageState.HIDE) {
                     _showUnauthorizedMessage = UnauthorizedMessageState.SHOW
                 }
@@ -355,6 +361,8 @@ class ArticleScreenViewModel(
             .onFailure {
                 Sync.markReadAsync(listOf(articleID), context)
             }
+
+        notificationHelper.dismissNotifications(listOf(articleID))
     }
 
     private suspend fun markUnread(articleID: String) {

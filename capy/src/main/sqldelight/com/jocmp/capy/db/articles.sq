@@ -154,21 +154,7 @@ findMissingArticles:
 SELECT article_id
 FROM article_statuses
 LEFT OUTER JOIN articles ON article_statuses.article_id = articles.id
-WHERE articles.id IS NULL
-AND article_statuses.read = 0 OR article_statuses.starred = 1;
-
-withNotifications:
-SELECT
-    articles.id,
-    articles.title,
-    feeds.id AS feed_id,
-    feeds.title AS feed_title,
-    feeds.favicon_url AS feed_favicon_url
-FROM articles
-JOIN article_statuses ON articles.id = article_statuses.article_id
-JOIN feeds ON articles.feed_id = feeds.id
-WHERE article_statuses.updated_at >= :since
-AND feeds.enable_notifications = 1;
+WHERE articles.id IS NULL;
 
 create:
 INSERT INTO articles(
@@ -226,19 +212,22 @@ INSERT INTO article_statuses(
   article_id,
   updated_at,
   last_read_at,
-  read
+  read,
+  starred
 )
 VALUES (
 :article_id,
 :updated_at,
 :last_read_at,
-:read
+:read,
+:starred
 )
 ON CONFLICT(article_id) DO UPDATE
 SET
 updated_at = updated_at,
-last_read_at = excluded.last_read_at,
-read = excluded.read;
+last_read_at = last_read_at,
+read = excluded.read,
+starred = excluded.starred;
 
 upsertUnread:
 INSERT INTO article_statuses(

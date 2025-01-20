@@ -12,5 +12,5 @@ object FontSize {
         32,
     )
 
-    const val default = 16
+    const val DEFAULT = 16
 }

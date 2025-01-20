@@ -188,7 +188,7 @@
     <string name="auth_fields_api_url">服务器</string>
     <string name="account_source_freshrss">FreshRSS</string>
     <string name="settings_section_account_server">服务器</string>
-    <string name="auth_fields_api_url_freshrss_placeholder">https://example.com/api/greader.php</string>
+    <string name="auth_fields_api_url_freshrss_placeholder">https://example.com/</string>
     <string name="account_source_reader">Reader</string>
     <string name="add_account_local_subtitle">在设备上</string>
     <string name="add_account_feedbin_subtitle">feedbin.com</string>
@@ -221,4 +221,5 @@
     <string name="after_read_all_behavior_open_drawer">打开导航抽屉</string>
     <string name="settings_donate_button">捐赠</string>
     <string name="after_read_all_behavior_default">默认</string>
+    <string name="article_actions_copy_link">复制链接</string>
 </resources>

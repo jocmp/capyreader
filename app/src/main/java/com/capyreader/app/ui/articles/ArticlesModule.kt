@@ -32,7 +32,8 @@ internal val articlesModule = module {
         ArticleScreenViewModel(
             account = get<Account>(parameters = { parametersOf(appPreferences.accountID.get()) }),
             appPreferences = appPreferences,
-            application = get()
+            notificationHelper = get(),
+            application = get(),
         )
     }
     viewModel {

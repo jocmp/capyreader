@@ -1,12 +1,13 @@
-package com.jocmp.capy.accounts
+package com.jocmp.capy.accounts.local
 
 import com.jocmp.rssparser.model.RssItem
 import org.jsoup.Jsoup
+import org.jsoup.safety.Safelist
 import java.net.URI
 import java.net.URL
 
 internal class ParsedItem(private val item: RssItem, private val siteURL: String?) {
-    val url: String? = cleanedURL(item.link)?.toString()
+    val url: String? = articleURL()
 
     val id: String? = url ?: item.guid
 
@@ -28,15 +29,21 @@ internal class ParsedItem(private val item: RssItem, private val siteURL: String
             if (it.isBlank()) {
                 null
             } else {
-                Jsoup.parse(it).text()
+                Jsoup.clean(it, Safelist.none())
             }
         }
 
     val title: String
-        get() = Jsoup.parse(item.title.orEmpty()).text()
+        get() = Jsoup.clean(item.title.orEmpty(), Safelist.none())
 
     val imageURL: String?
         get() = cleanedURL(item.image)?.toString()
+
+    private fun articleURL(): String? {
+        val link = cleanedURL(item.link) ?: return null
+
+        return ArticleURL.parse(link).toString()
+    }
 
     private fun cleanedURL(inputURL: String?): URL? {
         val url = inputURL.orEmpty()

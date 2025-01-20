@@ -38,17 +38,6 @@ extractors([
     },
   },
   {
-    domain: "mobilesyrup.com",
-    content: {
-      selectors: [[".article-content"]],
-      transforms: {
-        ".article-content > ul": (node) => {
-          node.attr("class", "mercury-parser-keep");
-        },
-      },
-    },
-  },
-  {
     domain: "economictimes.indiatimes.com",
     content: {
       selectors: [["article"]]

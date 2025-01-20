@@ -4,7 +4,7 @@ import com.jocmp.capy.accounts.AddFeedResult
 import java.time.ZonedDateTime
 
 interface AccountDelegate {
-    suspend fun refresh(cutoffDate: ZonedDateTime? = null): Result<Unit>
+    suspend fun refresh(filter: ArticleFilter, cutoffDate: ZonedDateTime? = null): Result<Unit>
 
     suspend fun markRead(articleIDs: List<String>): Result<Unit>
 

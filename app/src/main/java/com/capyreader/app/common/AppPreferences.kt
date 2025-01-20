@@ -76,7 +76,7 @@ class AppPreferences(context: Context) {
             get() = preferenceStore.getBoolean("article_pin_top_bar", true)
 
         val fontSize: Preference<Int>
-            get() = preferenceStore.getInt("article_font_size", FontSize.default)
+            get() = preferenceStore.getInt("article_font_size", FontSize.DEFAULT)
 
         val fontFamily: Preference<FontOption>
             get() = preferenceStore.getEnum("article_font_family", FontOption.default)

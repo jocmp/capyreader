@@ -1,11 +1,12 @@
 require "sinatra"
 require "rack"
-require "./articles"
 require "./color_picker"
 require "./font_picker"
 require "./style_minifier"
 require "securerandom"
 require "liquid"
+
+js_context = nil
 
 configure do
   Sinatra::Application.reset!
@@ -13,25 +14,31 @@ configure do
 end
 
 get "/" do
-  redirect to("/articles/nine_to_five_google")
+  colors = ColorPicker.pick(params["theme"])
+
+  liquid :article_form, locals: colors
 end
 
-get "/articles/:slug" do
-  article = Articles.find(params["slug"])
-
+get "/articles" do
   colors = ColorPicker.pick(params["theme"])
 
   font_family = FontPicker.pick(params["font_family"])
 
+  article_url = params["article_url"]
+  article_content = JSON.parse(`cd ../../mercury-parser && npx mercury-parser #{article_url}`)
+
+  published = Time.parse(article_content["date_published"]).strftime("%B %-d, %Y at %I:%M %p")
+
   liquid :template, locals: {
-    title: article.title,
-    byline: article.byline,
-    external_link: article.external_link,
-    feed_name: article.feed_name,
-    body: article.body,
+    title: article_content["title"],
+    byline: "#{article_content["author"]} on #{published}",
+    external_link: article_url,
+    feed_name: article_content["domain"],
+    body: article_content["content"],
     text_size: params["text_size"],
     font_family:,
-    debug_script: '<script type="text/javascript" src="/assets/debug.js"></script>'
+    debug_script: '<script type="text/javascript" src="/assets/debug.js"></script>',
+    font_size: "16px",
   }.merge(colors)
 end
 

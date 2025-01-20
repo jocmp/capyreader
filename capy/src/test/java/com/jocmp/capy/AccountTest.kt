@@ -28,7 +28,7 @@ class AccountTest {
     @Before
     fun setup() {
         account = AccountFixture.create(parentFolder = folder)
-        coEvery { account.delegate.refresh(any()) }.returns(Result.success(Unit))
+        coEvery { account.delegate.refresh(any(), any()) }.returns(Result.success(Unit))
     }
 
     @Test

@@ -1,4 +1,4 @@
-package com.capyreader.app
+package com.capyreader.app.notifications
 
 import android.os.Build
 

@@ -195,7 +195,7 @@
     <string name="add_account_feedbin_signup_prompt">Нямате Feedbin акаунт?</string>
     <string name="add_account_freshrss_signup_link_text">Научете повече.</string>
     <string name="account_source_reader">Четец</string>
-    <string name="auth_fields_api_url_freshrss_placeholder">https://example.com/api/greader.php</string>
+    <string name="auth_fields_api_url_freshrss_placeholder">https://example.com/</string>
     <string name="add_account_reader_subtitle">Самостоятелно хостван Google Reader API</string>
     <string name="add_account_feedbin_signup_link_text">Създайте такъв тук.</string>
     <string name="edit_feed_tag_section">Категоерия</string>
