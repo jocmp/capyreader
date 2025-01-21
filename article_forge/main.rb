@@ -27,11 +27,9 @@ get "/articles" do
   article_url = params["article_url"]
   article_content = JSON.parse(`cd ../../mercury-parser && npx mercury-parser #{article_url}`)
 
-  published = Time.parse(article_content["date_published"]).strftime("%B %-d, %Y at %I:%M %p")
-
   liquid :template, locals: {
     title: article_content["title"],
-    byline: "#{article_content["author"]} on #{published}",
+    byline: "#{article_content["author"]}#{published(article_content["date_published"])}",
     external_link: article_url,
     feed_name: article_content["domain"],
     body: article_content["content"],
@@ -58,4 +56,12 @@ get "/test-room" do
   liquid :"test-room", locals: {
     unvisited_link: "https://example.com/#{SecureRandom.uuid}"
   }.merge(colors)
+end
+
+def published(timestamp)
+  return "" if !timestamp
+
+  published = Time.parse(article_content["date_published"]).strftime("%B %-d, %Y at %I:%M %p")
+
+  "on #{published}"
 end

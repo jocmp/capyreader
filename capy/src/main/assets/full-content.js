@@ -14,12 +14,11 @@ async function displayFullContent(article) {
     extracted.id = "article-body-content"
     extracted.innerHTML = result.content;
 
-    const hasEmbed = cleanEmbeds(extracted);
+    cleanEmbeds(extracted);
 
     const shouldAddImage = result.lead_image_url &&
       !hideImages &&
-      !hasEmbed &&
-      !extracted.querySelectorAll("img").length;
+      !extracted.querySelectorAll("img:not(iframe img):not(.iframe-embed img)").length;
 
     if (shouldAddImage) {
       const leadImage = document.createElement("img");
