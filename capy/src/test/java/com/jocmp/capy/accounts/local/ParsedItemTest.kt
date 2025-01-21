@@ -27,13 +27,13 @@ class ParsedItemTest {
     @Test
     fun title_withNestedHTML() {
         val title =
-            "<mark>The `&lt;details&gt;` and `&lt;summary&gt;` elements are getting an upgrade</mark>"
+            "<mark>The `&lt;details&gt;` &amp; `&lt;summary&gt;` elements are getting an upgrade</mark>"
 
         val item = RssItem.Builder().title(title).build()
         val parsedItem = ParsedItem(item, siteURL = "")
 
         assertEquals(
-            expected = "The `&lt;details&gt;` and `&lt;summary&gt;` elements are getting an upgrade",
+            expected = "The `<details>` & `<summary>` elements are getting an upgrade",
             actual = parsedItem.title
         )
     }
