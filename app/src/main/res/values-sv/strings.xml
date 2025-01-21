@@ -38,7 +38,7 @@
     <string name="add_feed_new_folder_title">Ny etikett</string>
     <string name="settings_remove_account_message_local">Är du säker på att du vill ta bort ditt konto? Detta kan inte ångras.</string>
     <string name="filter_unread">Oläst</string>
-    <string name="refresh_minutes">Var %1$d minut</string>
+    <string name="refresh_minutes">Var %1$d:e minut</string>
     <string name="refresh_feeds_menu_label">Uppdatera flöden</string>
     <string name="nav_headline_feeds">Flöden</string>
     <string name="nav_add_feed">Lägg till flöde</string>
@@ -76,7 +76,7 @@
     <string name="relative_time_just_now">Just nu</string>
     <plurals name="refresh_hours">
         <item quantity="one">Varje timma</item>
-        <item quantity="other">Var %d timma</item>
+        <item quantity="other">Var %d:e timma</item>
     </plurals>
     <string name="crash_reporting_checkbox_title">Aktivera felrapportering</string>
     <string name="add_account_feedbin_signup_link_text">Skapa ett här.</string>
