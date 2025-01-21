@@ -107,8 +107,10 @@ object {
 }
 
 figure {
-  font-size: calc(var(--article-font-size) * 0.85);
-  line-height: 1.4em;
+  font-size: calc(var(--article-font-size) * 0.75);
+  color: var(--color-on-surface-variant);
+  line-height: 1.2em;
+  margin-bottom: 1em;
 }
 
 .iframe-embed {
