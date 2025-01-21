@@ -61,7 +61,7 @@ end
 def published(timestamp)
   return "" if !timestamp
 
-  published = Time.parse(article_content["date_published"]).strftime("%B %-d, %Y at %I:%M %p")
+  published = Time.parse(timestamp).strftime("%B %-d, %Y at %I:%M %p")
 
   "on #{published}"
 end
