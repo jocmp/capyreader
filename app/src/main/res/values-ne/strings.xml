@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_feed_new_folder_title">नयाँ ट्याग</string>
+    <string name="add_feed_submit">थप्नुहोस्</string>
+    <string name="add_feed_success">फिड थपियो</string>
+    <string name="feed_form_cancel">रद्द गर्नुहोस्</string>
+    <string name="filter_unread">नपढिएको</string>
+    <string name="feed_action_unsubscribe">सदस्यता रद्द गर्नुहोस्</string>
+    <string name="filter_action_menu_description">सम्पादन गर्नुहोस्</string>
+    <string name="feed_action_edit">फिड सम्पादन गर्नुहोस्</string>
+    <string name="feed_action_unsubscribe_confirm">सदस्यता रद्द गर्नुहोस्</string>
+    <string name="dialog_cancel">रद्द गर्नुहोस्</string>
+    <string name="folder_action_edit">पुन: नामाकरण गर्नुहोस्</string>
+    <string name="feed_action_edit_success">फिड अपडेट गरियो</string>
+    <string name="feed_action_unsubscribe_success">सदस्यता रद्द गरियो</string>
+    <string name="settings">सेटिङहरू खोल्नुहोस्</string>
+    <string name="settings_remove_account_title_service">बाहिर निस्कनुहोस्</string>
+    <string name="folder_action_delete_title">ट्याग हटाउनुहोस्</string>
+    <string name="article_view_star">ताराङ्कन गर्नुहोस्</string>
+    <string name="article_view_unstar">तारा हटाउनुहोस्</string>
+    <plurals name="refresh_hours">
+        <item quantity="one">प्रत्येक घण्टामा</item>
+        <item quantity="other">प्रत्येक %d घण्टामा</item>
+    </plurals>
+    <string name="refresh_feeds_menu_label">फिडहरू रिफ्रेस गर्नुहोस्</string>
+    <string name="settings_remove_account_confirm_service">बाहिर निस्कनुहोस्</string>
+    <string name="after_read_all_behavior_open_next_feed">अर्को फिड खोल्नुहोस्</string>
+    <string name="full_content_error_missing_response">लेख ल्याउन असफल भयो</string>
+    <string name="full_content_error_generic">लेख पार्स गर्न असफल भयो</string>
+    <string name="reader_image_visibility_label">तस्बिरहरू</string>
+    <string name="layout_preference_label">रुचाइएको लेआउट</string>
+    <string name="after_read_all_behavior_label">सबै पढेपछि</string>
+    <string name="after_read_all_behavior_default">पूर्वनिर्धारित</string>
+    <string name="settings_remove_account_button_service">बाहिर निस्कनुहोस्</string>
+    <string name="feed_action_unsubscribe_title">सदस्यता रद्द गर्नुहोस्</string>
+    <string name="refresh_minutes">प्रत्येक %1$d मिनेटमा</string>
+    <string name="add_feed_name_title">नाम</string>
+    <string name="filter_starred">ताराङ्कित</string>
+    <string name="filter_all">सबै</string>
+    <string name="feed_action_unsubscribe_message">के तपाईं \"%1$s\" बाट सदस्यता रद्द गर्न निश्चित हुनुहुन्छ?</string>
+    <string name="add_feed_url_title">फिड वा वेबसाइट URL</string>
+</resources>

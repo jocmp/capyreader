@@ -223,4 +223,5 @@
     <string name="after_read_all_behavior_label">Dopo aver letto tutto</string>
     <string name="full_content_error_missing_response">Impossibile recuperare l\'articolo</string>
     <string name="after_read_all_behavior_open_next_feed">Vai al prossimo feed</string>
+    <string name="article_actions_copy_link">Copia il link</string>
 </resources>
