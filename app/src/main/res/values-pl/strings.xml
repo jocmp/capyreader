@@ -183,4 +183,12 @@
     <string name="reader_image_visibility_always_show">Zawsze ładuj obrazy</string>
     <string name="settings_donate_button">Wspomóż finansowo</string>
     <string name="after_read_all_behavior_default">Domyślne</string>
+    <string name="mark_all_read_dialog_description">Oznaczyć wszystkie artykuły jako przeczytane?</string>
+    <string name="unauthorized_dialog_description">Wystąpił błąd podczas łączenia się z twoim kontem. Prosimy zalogować się ponownie.</string>
+    <string name="add_account_feedbin_signup_prompt">Nie posiadasz konta Feedbin?</string>
+    <string name="settings_import_progress">Importowanie subskrypcji, %1$d z %2$d</string>
+    <string name="article_byline">%1$s o %2$s autorstwa %3$s</string>
+    <string name="add_account_freshrss_signup_prompt">Nie posiadasz instancji FreshRSS?</string>
+    <string name="article_actions_copy_link">Kopiuj link</string>
+    <string name="settings_option_auto_delete_articles_subtitle">Usuń przeczytane, niezapisane artykułu starsze niż 3 miesiące</string>
 </resources>
