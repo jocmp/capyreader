@@ -222,4 +222,5 @@
     <string name="full_content_error_generic">Неуспешно анализиране на статия</string>
     <string name="settings_donate_button">Дарете</string>
     <string name="after_read_all_behavior_default">По подразбиране</string>
+    <string name="article_actions_copy_link">Копирайте връзката</string>
 </resources>
