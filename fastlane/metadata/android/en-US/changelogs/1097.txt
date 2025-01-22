@@ -1,9 +1,8 @@
 • Add "Copy Link" menu item to article list menu
 • Autofill "/api/greader.php" path when logging into FreshRSS
-• Add translations for Swedish and Nepali (thanks volunteers!)
 • Improve image caption display
 • Improve custom extractors for several sites
-• Update translations for Arabic, Chinese, Czech, Galacian, Estonian, German, Italian, Indonesian, and Russian thanks to volunteers.
+• Update translations for Arabic, Chinese, Czech, Galacian, Estonian, German, Italian, Indonesian, Nepali, Russian, Swedish thanks to volunteers.
 • Fix HTML in titles for local feeds
 • Fix imports for some local feeds
 • Fix category refresh for FreshRSS feeds
