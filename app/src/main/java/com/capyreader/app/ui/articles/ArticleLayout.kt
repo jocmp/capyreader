@@ -269,6 +269,38 @@ fun ArticleLayout(
         }
     }
 
+    fun selectFilter() {
+        if (!filter.hasArticlesSelected()) {
+            openNextList { onSelectArticleFilter() }
+        } else {
+            closeDrawer()
+        }
+    }
+
+    fun selectStatus(status: ArticleStatus) {
+        coroutineScope.launchUI {
+            openNextStatus { onSelectStatus(status) }
+        }
+    }
+
+    fun selectFeed(feed: Feed, folderTitle: String?) {
+        coroutineScope.launch {
+            if (!filter.isFeedSelected(feed)) {
+                openNextList { onSelectFeed(feed.id, folderTitle) }
+            } else {
+                closeDrawer()
+            }
+        }
+    }
+
+    fun selectFolder(folder: Folder) {
+        if (!filter.isFolderSelect(folder)) {
+            openNextList { onSelectFolder(folder.title) }
+        } else {
+            closeDrawer()
+        }
+    }
+
     ArticleHandler {
         selectArticle(it)
     }
@@ -280,38 +312,14 @@ fun ArticleLayout(
             FeedList(
                 folders = folders,
                 feeds = feeds,
-                onSelectFolder = {
-                    if (!filter.isFolderSelect(it)) {
-                        openNextList { onSelectFolder(it.title) }
-                    } else {
-                        closeDrawer()
-                    }
-                },
-                onSelectFeed = { feed, folderTitle ->
-                    coroutineScope.launch {
-                        if (!filter.isFeedSelected(feed)) {
-                            openNextList { onSelectFeed(feed.id, folderTitle) }
-                        } else {
-                            closeDrawer()
-                        }
-                    }
-                },
+                onSelectFolder = ::selectFolder,
+                onSelectFeed = ::selectFeed,
                 onFeedAdded = { onFeedAdded(it) },
                 onNavigateToSettings = onNavigateToSettings,
-                onFilterSelect = {
-                    if (!filter.hasArticlesSelected()) {
-                        openNextList { onSelectArticleFilter() }
-                    } else {
-                        closeDrawer()
-                    }
-                },
+                onFilterSelect = ::selectFilter,
                 filter = filter,
                 statusCount = statusCount,
-                onSelectStatus = {
-                    coroutineScope.launchUI {
-                        openNextStatus { onSelectStatus(it) }
-                    }
-                }
+                onSelectStatus = ::selectStatus
             )
         },
         listPane = {

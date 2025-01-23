@@ -55,7 +55,6 @@ fun FilterAppBarTitle(
             overflow = TextOverflow.Ellipsis
         )
     }
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -10,19 +10,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationDrawerItem
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -70,30 +68,26 @@ fun FeedList(
         ) {
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp),
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                TextButton(
-                    onClick = { setMenuExpanded(true) },
-                ) {
-                    Text(
-                        stringResource(articleStatus.navigationTitle),
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                    Box(Modifier.padding(start = 8.dp)) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowDropDown,
-                            contentDescription = null,
-                        )
-                    }
-                }
-                ArticleFilterMenu(
-                    expanded = isMenuExpanded,
-                    onDismissRequest = { setMenuExpanded(false) },
-                    onSelect = onStatusChange,
+                Text(
+                    stringResource(R.string.feed_nav_drawer_title),
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier
+                        .padding(
+                            vertical = 24.dp,
+                            horizontal = 12.dp
+                        ),
                 )
+                IconButton(onClick = { onNavigateToSettings() }) {
+                    Icon(
+                        imageVector = Icons.Filled.Settings,
+                        contentDescription = stringResource(R.string.settings)
+                    )
+                }
             }
-
             NavigationDrawerItem(
                 icon = { ArticleStatusIcon(status = articleStatus) },
                 label = {
@@ -147,27 +141,22 @@ fun FeedList(
 
         HorizontalDivider()
 
-        Surface(
-            color = MaterialTheme.colorScheme.surfaceContainerLow
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 12.dp, vertical = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 12.dp, vertical = 8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                IconButton(onClick = { onNavigateToSettings() }) {
-                    Icon(
-                        imageVector = Icons.Filled.Settings,
-                        contentDescription = stringResource(R.string.settings)
-                    )
+            ArticleStatusBar(
+                status = filter.status,
+                onSelectStatus = onSelectStatus,
+            )
+            AddFeedButton(
+                iconOnly = true,
+                onComplete = {
+                    onFeedAdded(it)
                 }
-                AddFeedButton(
-                    onComplete = {
-                        onFeedAdded(it)
-                    }
-                )
-            }
+            )
         }
     }
 }

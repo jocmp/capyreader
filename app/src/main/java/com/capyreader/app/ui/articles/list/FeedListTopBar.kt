@@ -81,7 +81,7 @@ fun FeedListTopBar(
                     contentAlignment = Alignment.Center
                 ) {
                     SearchTextField(
-                        value = search.query ?: "",
+                        value = search.query.orEmpty(),
                         onValueChange = {
                             search.update(it)
                             onSearchQueryChange()
