@@ -77,12 +77,13 @@ fun FeedList(
                     style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier
                         .padding(
-                            vertical = 24.dp,
+                            vertical = 18.dp,
                             horizontal = 12.dp
                         ),
                 )
                Row(
-                   horizontalArrangement = Arrangement.spacedBy(8.dp)
+                   horizontalArrangement = Arrangement.spacedBy(8.dp),
+                   verticalAlignment = Alignment.CenterVertically
                ) {
                    IconButton(onClick = { onNavigateToSettings() }) {
                        Icon(
