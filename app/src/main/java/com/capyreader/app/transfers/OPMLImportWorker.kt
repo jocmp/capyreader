@@ -19,10 +19,11 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
-import com.capyreader.app.notifications.Notifications
 import com.capyreader.app.R
 import com.capyreader.app.common.notificationManager
+import com.capyreader.app.notifications.Notifications
 import com.jocmp.capy.Account
+import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
@@ -54,6 +55,7 @@ class OPMLImportWorker(
 
             showToast(R.string.opml_import_toast_complete)
         } catch (e: Throwable) {
+            CapyLog.error("importer", e)
             showToast(R.string.opml_import_toast_failed)
         }
 

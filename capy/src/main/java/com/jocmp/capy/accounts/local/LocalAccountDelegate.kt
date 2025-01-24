@@ -56,7 +56,8 @@ internal class LocalAccountDelegate(
                 CapyLog.warn(
                     tag("find"),
                     data = mapOf(
-                        "error_message" to response.exceptionOrNull()?.message
+                        "error_message" to response.exceptionOrNull()?.message,
+                        "feed_url" to url
                     )
                 )
 
@@ -76,9 +77,9 @@ internal class LocalAccountDelegate(
                 val feed = feedRecords.findBy(id = resultFeed.feedURL.toString())
 
                 return if (feed != null) {
-                    verifyFavicon(feed)
                     upsertFolders(feed, folderTitles)
                     saveArticles(resultFeed.items, cutoffDate = null, feed = feed)
+                    verifyFavicon(feed)
 
                     AddFeedResult.Success(feed)
                 } else {
@@ -222,12 +223,14 @@ internal class LocalAccountDelegate(
     private fun upsertFolders(feed: Feed, folderTitles: List<String>?) {
         folderTitles ?: return
 
-        folderTitles.forEach { folderTitle ->
-            taggingRecords.upsert(
-                id = "${feed.id}:$folderTitle",
-                feedID = feed.id,
-                name = folderTitle
-            )
+        database.transactionWithErrorHandling {
+            folderTitles.forEach { folderTitle ->
+                taggingRecords.upsert(
+                    id = "${feed.id}:$folderTitle",
+                    feedID = feed.id,
+                    name = folderTitle
+                )
+            }
         }
     }
 
@@ -236,7 +239,12 @@ internal class LocalAccountDelegate(
             return
         }
 
-        CapyLog.warn(tag("favicon"), data = mapOf("invalid_favicon_url" to feed.faviconURL))
+        CapyLog.warn(
+            tag("favicon"), data = mapOf(
+                "invalid_favicon_url" to feed.faviconURL,
+                "feed_url" to feed.feedURL,
+            )
+        )
 
         feedRecords.clearFavicon(feed.id)
     }
@@ -244,7 +252,7 @@ internal class LocalAccountDelegate(
     companion object {
         private fun tag(path: String) = "$TAG.$path"
 
-        private const val TAG = "local_account"
+        private const val TAG = "local"
     }
 }
 
