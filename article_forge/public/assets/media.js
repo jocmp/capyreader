@@ -47,18 +47,14 @@ function cleanEmbeds(element = document) {
 
     if (youtubeID !== null) {
       swapPlaceholder(embed, src, youtubeID);
-      addEmbedListeners();
-
-      return true;
     }
   }
 
-  return false;
+  addEmbedListeners();
 }
 
 /**
  * @param {string} src
- * @returns string | null
  */
 function findYouTubeMatch(src) {
   for (const regex of YOUTUBE_DOMAINS) {
