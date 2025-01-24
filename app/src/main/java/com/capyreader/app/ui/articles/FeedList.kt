@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -81,12 +81,22 @@ fun FeedList(
                             horizontal = 12.dp
                         ),
                 )
-                IconButton(onClick = { onNavigateToSettings() }) {
-                    Icon(
-                        imageVector = Icons.Filled.Settings,
-                        contentDescription = stringResource(R.string.settings)
-                    )
-                }
+               Row(
+                   horizontalArrangement = Arrangement.spacedBy(8.dp)
+               ) {
+                   IconButton(onClick = { onNavigateToSettings() }) {
+                       Icon(
+                           imageVector = Icons.Rounded.Settings,
+                           contentDescription = stringResource(R.string.settings)
+                       )
+                   }
+                   AddFeedButton(
+                       iconOnly = true,
+                       onComplete = {
+                           onFeedAdded(it)
+                       }
+                   )
+               }
             }
             NavigationDrawerItem(
                 icon = { ArticleStatusIcon(status = articleStatus) },
@@ -145,17 +155,11 @@ fun FeedList(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 12.dp, vertical = 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.Center
         ) {
             ArticleStatusBar(
                 status = filter.status,
                 onSelectStatus = onSelectStatus,
-            )
-            AddFeedButton(
-                iconOnly = true,
-                onComplete = {
-                    onFeedAdded(it)
-                }
             )
         }
     }

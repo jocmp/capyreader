@@ -16,7 +16,11 @@ fun ArticleStatusBar(
         options.forEachIndexed { index, buttonStatus ->
             SegmentedButton(
                 shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
-                onClick = { onSelectStatus(buttonStatus) },
+                onClick = {
+                    if (buttonStatus != status) {
+                        onSelectStatus(buttonStatus)
+                    }
+                },
                 icon = {},
                 selected = buttonStatus == status
             ) {
