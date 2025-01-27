@@ -220,4 +220,6 @@
     <string name="settings_donate_button">Faire un don</string>
     <string name="full_content_error_missing_response">Impossible de récupérer l\'article</string>
     <string name="after_read_all_behavior_label">Après avoir tout lu</string>
+    <string name="article_actions_copy_link">Copier le lien</string>
+    <string name="feed_nav_drawer_title">Flux</string>
 </resources>
