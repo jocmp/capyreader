@@ -124,7 +124,7 @@
     <string name="font_option_atkinson_hyperlegible">Atkinson Hyperlegible</string>
     <string name="font_option_poppins">Poppins</string>
     <string name="article_font_menu_label">Font</string>
-    <string name="article_byline">%1$s krát %2$s krát %3$s</string>
+    <string name="article_byline">%1$s v %2$s od %3$s</string>
     <string name="article_font_scale_label">Velikost textu</string>
     <string name="refresh_every_day">Každý den</string>
     <string name="add_feed_url_title">Adresa kanálu nebo webové stránky</string>
