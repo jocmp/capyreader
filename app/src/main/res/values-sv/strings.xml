@@ -216,4 +216,5 @@
     <string name="article_list_row_swipe_toggle_read">Markera läst</string>
     <string name="full_content_error_generic">Artikelinläsning misslyckad</string>
     <string name="add_feed_network_error">Kunde inte hitta flöde. Kontrollera din uppkoppling.</string>
+    <string name="feed_nav_drawer_title">Flöden</string>
 </resources>
