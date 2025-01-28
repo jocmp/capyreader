@@ -3,11 +3,13 @@ SELECT
   id,
   name,
   query_text
-FROM saved_searches;
+FROM saved_searches
+ORDER BY id;
 
 allIDs:
 SELECT id
-FROM saved_searches;
+FROM saved_searches
+ORDER BY id;
 
 find:
 SELECT
