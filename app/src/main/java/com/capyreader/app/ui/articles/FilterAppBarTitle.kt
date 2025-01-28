@@ -19,12 +19,14 @@ import com.capyreader.app.ui.navigationTitle
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
+import com.jocmp.capy.SavedSearch
 
 @Composable
 fun FilterAppBarTitle(
     filter: ArticleFilter,
     allFeeds: List<Feed>,
     allFolders: List<Folder>,
+    allSavedSearches: List<SavedSearch>,
     onRequestJumpToTop: () -> Unit
 ) {
     val text = when (filter) {
@@ -36,6 +38,9 @@ fun FilterAppBarTitle(
         is ArticleFilter.Folders -> {
             allFolders.find { it.title == filter.folderTitle }?.title
         }
+
+        is ArticleFilter.SavedSearches ->
+            allSavedSearches.find { it.id == filter.savedSearchID }?.name
     }.orEmpty()
 
     Box(
@@ -67,6 +72,7 @@ fun FilterAppBarTitlePreview() {
                 filter = ArticleFilter.default(),
                 allFeeds = emptyList(),
                 allFolders = emptyList(),
+                allSavedSearches = emptyList(),
                 onRequestJumpToTop = {}
             )
         })

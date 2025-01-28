@@ -29,6 +29,7 @@ fun ArticleScreen(
     val allFeeds by viewModel.allFeeds.collectAsStateWithLifecycle(initialValue = emptyList())
     val allFolders by viewModel.allFolders.collectAsStateWithLifecycle(initialValue = emptyList())
     val folders by viewModel.folders.collectAsStateWithLifecycle(initialValue = emptyList())
+    val savedSearches by viewModel.savedSearches.collectAsStateWithLifecycle(initialValue = emptyList())
     val statusCount by viewModel.statusCount.collectAsStateWithLifecycle(initialValue = 0)
     val filter by viewModel.filter.collectAsStateWithLifecycle(appPreferences.filter.get())
     val searchQuery by viewModel.searchQuery.collectAsState(initial = null)
@@ -51,6 +52,7 @@ fun ArticleScreen(
         ArticleLayout(
             filter = filter,
             folders = folders,
+            savedSearches = savedSearches,
             feeds = feeds,
             allFolders = allFolders,
             allFeeds = allFeeds,
@@ -64,6 +66,7 @@ fun ArticleScreen(
             drawerState = drawerState,
             onSelectFolder = viewModel::selectFolder,
             onSelectFeed = viewModel::selectFeed,
+            onSelectSavedSearch = viewModel::selectSavedSearch,
             onSelectArticleFilter = viewModel::selectArticleFilter,
             onSelectStatus = viewModel::selectStatus,
             onSelectArticle = viewModel::selectArticle,
@@ -78,8 +81,9 @@ fun ArticleScreen(
                             drawerState.open()
                         }
                     },
-                    feeds = feeds,
+                    searches = savedSearches,
                     folders = folders,
+                    feeds = feeds,
                     range = range,
                 )
             },

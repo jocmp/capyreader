@@ -37,6 +37,7 @@ import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
+import com.jocmp.capy.SavedSearch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -52,7 +53,8 @@ fun FeedListTopBar(
     filter: ArticleFilter,
     currentFeed: Feed?,
     feeds: List<Feed>,
-    allFolders: List<Folder>,
+    savedSearches: List<SavedSearch>,
+    folders: List<Folder>,
 ) {
     val editSuccessMessage = stringResource(R.string.feed_action_edit_success)
     val unsubscribeMessage = stringResource(R.string.feed_action_unsubscribe_success)
@@ -116,7 +118,8 @@ fun FeedListTopBar(
                 FilterAppBarTitle(
                     filter = filter,
                     allFeeds = feeds,
-                    allFolders = allFolders,
+                    allFolders = folders,
+                    allSavedSearches = savedSearches,
                     onRequestJumpToTop = onRequestJumpToTop
                 )
             }
@@ -189,6 +192,7 @@ private fun FeedListTopBarPreview() {
         filter = ArticleFilter.default(),
         currentFeed = null,
         feeds = listOf(),
-        allFolders = emptyList()
+        savedSearches = emptyList(),
+        folders = emptyList()
     )
 }

@@ -25,6 +25,8 @@ import com.jocmp.readerclient.StreamItemsContentsResult
 import com.jocmp.readerclient.Subscription
 import com.jocmp.readerclient.SubscriptionListResult
 import com.jocmp.readerclient.SubscriptionQuickAddResult
+import com.jocmp.readerclient.Tag
+import com.jocmp.readerclient.TagListResult
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -67,6 +69,16 @@ class ReaderAccountDelegateTest {
         iconUrl = "",
     )
 
+    private val techTag = Tag(
+        id = "user/1/label/Tech",
+        type = Tag.Type.FOLDER,
+    )
+
+    private val chicagoTag = Tag(
+        id = "user/-/label/Chicago",
+        type = Tag.Type.TAG,
+    )
+
     private val subscriptions = listOf(
         arsTechnica,
         Subscription(
@@ -82,6 +94,11 @@ class ReaderAccountDelegateTest {
             htmlUrl = "https://theverge.com",
             iconUrl = "",
         ),
+    )
+
+    private val tags = listOf(
+        techTag,
+        chicagoTag,
     )
 
     private val unreadItem = Item(
@@ -156,10 +173,12 @@ class ReaderAccountDelegateTest {
         val itemRefs = listOf(ItemRef("16"))
 
         stubSubscriptions()
+        stubTags()
         stubUnread(itemRefs)
         stubStarred()
         stubStreamItemsIDs(itemRefs)
-        stubStreamItemsIDs(itemRefs = emptyList(), stream = Stream.Read())
+        stubStreamItemsIDs(stream = Stream.UserLabel(chicagoTag.id), itemRefs = emptyList())
+        stubStreamItemsIDs(stream = Stream.Read(), itemRefs = emptyList())
 
         delegate.refresh(ArticleFilter.default())
 
@@ -190,7 +209,6 @@ class ReaderAccountDelegateTest {
     fun refresh_feedOnly() = runTest {
         val id = "feed/2"
         val itemRefs = listOf(ItemRef("16"))
-
 
         stubStarred()
         stubUnread()
@@ -250,6 +268,7 @@ class ReaderAccountDelegateTest {
 
         val itemRefs = listOf(ItemRef("16"))
 
+        stubSubscriptions()
         stubStarred()
         stubUnread()
         stubStreamItemsIDs(itemRefs, stream = Stream.ReadingList())
@@ -275,9 +294,11 @@ class ReaderAccountDelegateTest {
         val readingListItemRefs = listOf("1", "16").map { ItemRef(it) }
 
         stubSubscriptions()
+        stubTags()
         stubUnread(readingListItemRefs)
         stubStarred(listOf("1", "2").map { ItemRef(it) })
 
+        stubStreamItemsIDs(stream = Stream.UserLabel(chicagoTag.id), itemRefs = emptyList())
         stubStreamItemsIDs(itemRefs = readingListItemRefs, readingListItems)
         stubStreamItemsIDs(itemRefs = emptyList(), stream = Stream.Read())
 
@@ -597,6 +618,12 @@ class ReaderAccountDelegateTest {
                     subscriptions
                 )
             )
+        )
+    }
+
+    private fun stubTags(tags: List<Tag> = this.tags) {
+        coEvery { googleReader.tagList() }.returns(
+            Response.success(TagListResult(tags))
         )
     }
 

@@ -2,7 +2,6 @@ package com.jocmp.capy.accounts.feedbin
 
 import com.jocmp.capy.AccountDelegate
 import com.jocmp.capy.ArticleFilter
-import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.FeedOption
@@ -113,7 +112,7 @@ internal class FeedbinAccountDelegate(
                 val icons = fetchIcons()
                 upsertFeed(subscription, icons)
 
-                val feed = feedRecords.findBy(subscription.feed_id.toString())
+                val feed = feedRecords.find(subscription.feed_id.toString())
 
                 if (feed != null) {
                     coroutineScope {
@@ -180,7 +179,7 @@ internal class FeedbinAccountDelegate(
             }
         }
 
-        feedRecords.findBy(feed.id)
+        feedRecords.find(feed.id)
     }
 
     override suspend fun removeFeed(feed: Feed): Result<Unit> = withErrorHandling {

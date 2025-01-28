@@ -14,6 +14,10 @@ internal class TaggingRecords(
         database.taggingsQueries.deleteTaggings(taggingIDs)
     }
 
+    fun deleteOrphaned(excludedIDs: List<String>) {
+        database.taggingsQueries.deleteOrphanedTags(excludedIDs = excludedIDs)
+    }
+
     fun findFeedTaggingsToDelete(
         feed: Feed,
         excludedTaggingNames: List<String> = emptyList()

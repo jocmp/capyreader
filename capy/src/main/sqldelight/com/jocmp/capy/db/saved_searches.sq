@@ -1,0 +1,46 @@
+all:
+SELECT
+  id,
+  name,
+  query_text
+FROM saved_searches
+ORDER BY id;
+
+allIDs:
+SELECT id
+FROM saved_searches
+ORDER BY id;
+
+find:
+SELECT
+  id,
+  name,
+  query_text
+FROM saved_searches
+WHERE id = :id;
+
+upsert:
+INSERT OR REPLACE INTO saved_searches(
+    id,
+    name
+)
+VALUES (
+  :id,
+  :name
+);
+
+upsertArticle:
+INSERT OR IGNORE INTO saved_search_articles(
+  saved_search_id,
+  article_id
+)
+VALUES (
+    :saved_search_id,
+    :article_id
+);
+
+deleteOrphaned {
+    DELETE FROM saved_searches WHERE id NOT IN :excludedIDs;
+
+    DELETE FROM saved_search_articles WHERE saved_search_id NOT IN :excludedIDs;
+}

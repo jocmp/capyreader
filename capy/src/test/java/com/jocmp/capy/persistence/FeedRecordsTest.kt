@@ -2,7 +2,6 @@ package com.jocmp.capy.persistence
 
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.awaitRepeated
-import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.ArticleFixture
 import com.jocmp.capy.fixtures.FeedFixture
@@ -48,7 +47,7 @@ class FeedRecordsTest {
 
         records.updateStickyFullContent(enabled = true, feedID = feed.id)
 
-        feed = records.findBy(feed.id)!!
+        feed = records.find(feed.id)!!
 
         assertTrue(feed.enableStickyFullContent)
     }
@@ -60,7 +59,7 @@ class FeedRecordsTest {
             val feed = FeedFixture(database, records = records).create()
             records.updateStickyFullContent(enabled = true, feedID = feed.id)
 
-            records.findBy(feed.id)!!
+            records.find(feed.id)!!
         }
 
         assertEquals(
@@ -70,7 +69,7 @@ class FeedRecordsTest {
 
         records.clearStickyFullContent()
 
-        val updated = feeds.map { records.findBy(it.id)!! }
+        val updated = feeds.map { records.find(it.id)!! }
         assertEquals(
             expected = setOf(false),
             actual = updated.map { it.enableStickyFullContent }.toSet()

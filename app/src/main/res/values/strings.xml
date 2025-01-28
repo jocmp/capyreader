@@ -45,6 +45,7 @@
     </plurals>
     <string name="refresh_feeds_menu_label">Refresh Feeds</string>
     <string name="nav_headline_tags">Tags</string>
+    <string name="nav_headline_saved_searches">Searches</string>
     <string name="nav_headline_feeds">Feeds</string>
     <string name="nav_add_feed">Add Feed</string>
     <string name="add_feed_feed_not_error">Couldn\'t find feed</string>

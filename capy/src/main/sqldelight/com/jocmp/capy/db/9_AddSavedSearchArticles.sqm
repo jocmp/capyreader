@@ -1,0 +1,5 @@
+CREATE TABLE saved_search_articles (
+  saved_search_id TEXT NOT NULL REFERENCES saved_searches(id),
+  article_id TEXT NOT NULL REFERENCES articles(id),
+  PRIMARY KEY (saved_search_id, article_id)
+);

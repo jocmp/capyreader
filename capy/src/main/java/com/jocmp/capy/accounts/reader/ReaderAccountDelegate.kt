@@ -16,6 +16,7 @@ import com.jocmp.capy.db.Database
 import com.jocmp.capy.logging.CapyLog
 import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.capy.persistence.FeedRecords
+import com.jocmp.capy.persistence.SavedSearchRecords
 import com.jocmp.capy.persistence.TaggingRecords
 import com.jocmp.feedfinder.withProtocol
 import com.jocmp.readerclient.Category
@@ -27,6 +28,7 @@ import com.jocmp.readerclient.Stream
 import com.jocmp.readerclient.Subscription
 import com.jocmp.readerclient.SubscriptionEditAction
 import com.jocmp.readerclient.SubscriptionQuickAddResult
+import com.jocmp.readerclient.Tag
 import com.jocmp.readerclient.ext.editSubscription
 import com.jocmp.readerclient.ext.streamItemsIDs
 import kotlinx.coroutines.coroutineScope
@@ -46,13 +48,14 @@ internal class ReaderAccountDelegate(
     private val articleRecords = ArticleRecords(database)
     private val feedRecords = FeedRecords(database)
     private val taggingRecords = TaggingRecords(database)
+    private val savedSearchRecords = SavedSearchRecords(database)
 
     override suspend fun refresh(filter: ArticleFilter, cutoffDate: ZonedDateTime?): Result<Unit> {
         return withErrorHandling {
             if (filter.hasArticlesSelected()) {
                 refreshTopLevelArticles()
             } else {
-                refreshCategoryArticles(filter.toStream(source))
+                refreshArticles(filter.toStream(source))
             }
         }
     }
@@ -96,11 +99,11 @@ internal class ReaderAccountDelegate(
                 upsertFeed(subscription)
             }
 
-            val feed = feedRecords.findBy(subscription.id)
+            val feed = feedRecords.find(subscription.id)
 
             if (feed != null) {
                 coroutineScope {
-                    launchIO { refreshCategoryArticles(Stream.Feed(feed.id)) }
+                    launchIO { refreshArticles(Stream.Feed(feed.id)) }
                 }
 
                 AddFeedResult.Success(feed)
@@ -164,7 +167,7 @@ internal class ReaderAccountDelegate(
                 }
             }
 
-            feedRecords.findBy(feed.id)
+            feedRecords.find(feed.id)
         }
     }
 
@@ -205,6 +208,7 @@ internal class ReaderAccountDelegate(
         val since = articleRecords.maxArrivedAt().toEpochSecond()
 
         refreshFeeds()
+        refreshAllSavedSearches()
         refreshArticleState()
         fetchPaginatedArticles(since = since, stream = Stream.Read())
         fetchMissingArticles()
@@ -243,8 +247,36 @@ internal class ReaderAccountDelegate(
             }
         }
 
-        database.taggingsQueries.deleteOrphanedTags(
-            excludedIDs = excludedIDs
+        taggingRecords.deleteOrphaned(excludedIDs = excludedIDs)
+    }
+
+    private suspend fun refreshAllSavedSearches() {
+        withResult(googleReader.tagList()) { result ->
+            database.transactionWithErrorHandling {
+                val tags = result.tags.filter { it.type == Tag.Type.TAG }
+
+                tags.forEach {
+                    upsertSavedSearch(it)
+                }
+
+                savedSearchRecords.deleteOrphaned(excludedIDs = tags.map { it.id })
+            }
+        }
+
+        coroutineScope {
+            savedSearchRecords.allIDs()
+                .forEach { savedSearchID ->
+                    launch {
+                        fetchPaginatedArticles(stream = Stream.UserLabel(savedSearchID))
+                    }
+                }
+        }
+    }
+
+    private fun upsertSavedSearch(tag: Tag) {
+        savedSearchRecords.upsert(
+            id = tag.id,
+            name = tag.name
         )
     }
 
@@ -278,18 +310,22 @@ internal class ReaderAccountDelegate(
      *   - On result, the [fetchMissingArticles] will only fetch articles that are not already
      *     saved
      */
-    private suspend fun refreshCategoryArticles(stream: Stream) {
-        if (stream is Stream.Label) {
+    private suspend fun refreshArticles(stream: Stream) {
+        if (stream !is Stream.Feed) {
             refreshFeeds()
         }
 
-        refreshArticleState()
+        if (stream is Stream.UserLabel) {
+            fetchPaginatedArticles(stream = stream)
+        } else {
+            refreshArticleState()
 
-        withResult(googleReader.streamItemsIDs(stream = stream)) { result ->
-            articleRecords.createStatuses(articleIDs = result.itemRefs.map { it.hexID })
+            withResult(googleReader.streamItemsIDs(stream = stream)) { result ->
+                articleRecords.createStatuses(articleIDs = result.itemRefs.map { it.hexID })
+            }
+
+            fetchMissingArticles()
         }
-
-        fetchMissingArticles()
     }
 
     private suspend fun fetchMissingArticles() {
@@ -311,7 +347,7 @@ internal class ReaderAccountDelegate(
 
                     val result = response.body() ?: return@launch
 
-                    saveItems(result.items)
+                    saveArticles(result.items)
                 }
             }
         }
@@ -359,11 +395,13 @@ internal class ReaderAccountDelegate(
 
         val result = response.body() ?: return
 
-        saveItems(result.items)
+        saveArticles(result.items)
     }
 
-    private fun saveItems(items: List<Item>) {
+    private fun saveArticles(items: List<Item>) {
         database.transactionWithErrorHandling {
+            val labels = savedSearchRecords.allIDs()
+
             items.forEach { item ->
                 val updated = TimeHelpers.nowUTC()
 
@@ -386,6 +424,15 @@ internal class ReaderAccountDelegate(
                     read = item.read,
                     starred = item.starred
                 )
+
+                item.categories?.forEach { category ->
+                    if (labels.contains(category)) {
+                        savedSearchRecords.upsertArticle(
+                            articleID = item.hexID,
+                            id = category,
+                        )
+                    }
+                }
             }
         }
     }
@@ -476,6 +523,7 @@ private fun ArticleFilter.toStream(source: Source): Stream {
         is ArticleFilter.Articles -> Stream.Read()
         is ArticleFilter.Feeds -> Stream.Feed(feedID)
         is ArticleFilter.Folders -> folderStream(this, source)
+        is ArticleFilter.SavedSearches -> Stream.UserLabel(savedSearchID)
     }
 }
 

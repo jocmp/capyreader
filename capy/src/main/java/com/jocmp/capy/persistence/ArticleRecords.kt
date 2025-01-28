@@ -25,6 +25,7 @@ internal class ArticleRecords internal constructor(
 ) {
     val byStatus = ByStatus(database)
     val byFeed = ByFeed(database)
+    val bySavedSearch = BySavedSearch(database)
 
     fun find(articleID: String): Article? {
         return database.articlesQueries.findBy(
@@ -237,6 +238,12 @@ internal class ArticleRecords internal constructor(
                     range = range
                 )
             }
+
+            is ArticleFilter.SavedSearches -> bySavedSearch.unreadArticleIDs(
+                filter.status,
+                savedSearchID = filter.savedSearchID,
+                range = range
+            )
         }
 
         return ids.executeAsList()
@@ -360,6 +367,67 @@ internal class ArticleRecords internal constructor(
                 read = read,
                 starred = starred,
                 query = query,
+                lastReadAt = mapLastRead(read, since)
+            )
+        }
+    }
+
+
+    class BySavedSearch(private val database: Database) {
+        fun all(
+            savedSearchID: String,
+            status: ArticleStatus,
+            query: String? = null,
+            since: OffsetDateTime,
+            limit: Long,
+            unreadSort: UnreadSortOrder,
+            offset: Long,
+        ): Query<Article> {
+            val (read, starred) = status.toStatusPair
+
+            return database.articlesQueries.allBySavedSearch(
+                savedSearchID = savedSearchID,
+                query = query,
+                read = read,
+                starred = starred,
+                limit = limit,
+                offset = offset,
+                lastReadAt = mapLastRead(read, since),
+                newestFirst = isDescendingOrder(status, unreadSort),
+                mapper = ::listMapper
+            )
+        }
+
+        fun unreadArticleIDs(
+            status: ArticleStatus,
+            savedSearchID: String,
+            range: MarkRead,
+        ): Query<String> {
+            val (_, starred) = status.toStatusPair
+
+            val (afterArticleID, beforeArticleID) = range.toPair
+
+            return database.articlesQueries.findArticleIDsBySavedSearch(
+                savedSearchID = savedSearchID,
+                starred = starred,
+                afterArticleID = afterArticleID,
+                beforeArticleID = beforeArticleID,
+            )
+        }
+
+        fun count(
+            savedSearchID: String,
+            status: ArticleStatus,
+            query: String?,
+            since: OffsetDateTime
+        ): Query<Long> {
+            val (read, starred) = status.toStatusPair
+
+            return database.articlesQueries.countAllBySavedSearch(
+                savedSearchID = savedSearchID,
+                query = query,
+                read = read,
+                starred = starred,
                 lastReadAt = mapLastRead(read, since)
             )
         }

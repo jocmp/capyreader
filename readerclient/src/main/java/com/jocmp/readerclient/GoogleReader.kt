@@ -19,6 +19,11 @@ interface GoogleReader {
         @Query("output") output: String = "json"
     ): Response<SubscriptionListResult>
 
+    @GET("reader/api/0/tag/list")
+    suspend fun tagList(
+        @Query("output") output: String = "json"
+    ): Response<TagListResult>
+
     @GET("reader/api/0/stream/items/ids")
     suspend fun streamItemsIDs(
         @Query("s") streamID: String,

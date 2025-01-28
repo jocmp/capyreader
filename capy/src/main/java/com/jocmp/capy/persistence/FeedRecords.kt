@@ -11,8 +11,8 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlin.coroutines.coroutineContext
 
 internal class FeedRecords(private val database: Database) {
-    fun findBy(id: String): Feed? {
-        return database.feedsQueries.findBy(id, mapper = ::feedMapper).executeAsOneOrNull()
+    fun find(id: String): Feed? {
+        return database.feedsQueries.find(id, mapper = ::feedMapper).executeAsOneOrNull()
     }
 
     suspend fun upsert(
@@ -32,7 +32,7 @@ internal class FeedRecords(private val database: Database) {
             favicon_url = faviconURL,
         )
 
-        return findBy(feedID)
+        return find(feedID)
     }
 
     fun update(feedID: String, title: String) {

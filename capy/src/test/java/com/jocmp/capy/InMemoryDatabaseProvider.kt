@@ -20,6 +20,6 @@ internal fun Database.reload(article: Article) = ArticleRecords(this).reload(art
 
 internal fun Database.reload(feed: Feed) = FeedRecords(this).reload(feed)
 
-internal fun FeedRecords.reload(feed: Feed) = findBy(feed.id)!!
+internal fun FeedRecords.reload(feed: Feed) = find(feed.id)!!
 
 internal fun ArticleRecords.reload(article: Article) = find(article.id)
