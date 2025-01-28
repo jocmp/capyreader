@@ -21,6 +21,7 @@ import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
+import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.articles.NextFilter
 import com.jocmp.capy.buildArticlePager
@@ -108,8 +109,13 @@ class ArticleScreenViewModel(
     }
 
     private val nextFilterListener: Flow<NextFilter?> =
-        combine(feeds, folders, filter) { feeds, folders, filter ->
-            NextFilter.findSwipeDestination(filter, feeds, folders)
+        combine(savedSearches, feeds, folders, filter) { savedSearches, feeds, folders, filter ->
+            NextFilter.findSwipeDestination(
+                filter,
+                searches = savedSearches,
+                folders = folders,
+                feeds = feeds,
+            )
         }
 
     private val _nextFilter = MutableStateFlow<NextFilter?>(null)
@@ -191,8 +197,9 @@ class ArticleScreenViewModel(
     fun markAllRead(
         onArticlesCleared: () -> Unit,
         range: MarkRead,
-        feeds: List<Feed>,
+        searches: List<SavedSearch>,
         folders: List<Folder>,
+        feeds: List<Feed>,
     ) {
         viewModelScope.launchIO {
             val articleIDs = account.unreadArticleIDs(
@@ -216,7 +223,7 @@ class ArticleScreenViewModel(
             if (afterReadAll.value == AfterReadAllBehavior.OPEN_DRAWER) {
                 clearArticlesOnAllRead(onArticlesCleared)
             } else if (afterReadAll.value == AfterReadAllBehavior.OPEN_NEXT_FEED) {
-                openNextFeedOnAllRead(onArticlesCleared, feeds, folders)
+                openNextFeedOnAllRead(onArticlesCleared, searches, folders, feeds)
             }
         }
     }
@@ -351,6 +358,7 @@ class ArticleScreenViewModel(
             )
 
             is NextFilter.FolderFilter -> selectFolder(title = filter.folderTitle)
+            is NextFilter.SearchFilter -> selectSavedSearch(filter.savedSearchID)
         }
     }
 
@@ -525,11 +533,13 @@ class ArticleScreenViewModel(
 
     private fun openNextFeedOnAllRead(
         onArticlesCleared: () -> Unit,
-        feeds: List<Feed>,
+        searches: List<SavedSearch>,
         folders: List<Folder>,
+        feeds: List<Feed>,
     ) {
         val nextFilter = NextFilter.findMarkReadDestination(
             latestFilter,
+            searches,
             folders,
             feeds,
         )

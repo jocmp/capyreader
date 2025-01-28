@@ -81,8 +81,9 @@ fun ArticleScreen(
                             drawerState.open()
                         }
                     },
-                    feeds = feeds,
+                    searches = savedSearches,
                     folders = folders,
+                    feeds = feeds,
                     range = range,
                 )
             },
