@@ -4,14 +4,14 @@
     <string name="unsubscribe_error">Грешка при отписване от емисия</string>
     <string name="nav_headline_tags">Категории</string>
     <string name="app_name">Capy Reader</string>
-    <string name="add_account_title">Добави акаунт</string>
+    <string name="add_account_title">Добави профил</string>
     <string name="transfers_export_subscriptions">Изнаси абонаменти</string>
     <string name="opml_import_button_text">Внасяне от файл</string>
     <string name="settings_import_progress">Внасяне на абонаменти %1$d от %2$d</string>
     <string name="account_source_feedbin">Feedbin</string>
     <string name="account_source_local">Локален</string>
     <string name="edit_feed_tags">Категории</string>
-    <string name="unauthorized_dialog_description">Възникна проблем при свързването с вашия акаунт. Моля, влезте отново.</string>
+    <string name="unauthorized_dialog_description">Възникна проблем при свързването с вашия профил. Моля, влезте отново.</string>
     <string name="auth_fields_hide_password">Скрий паролата</string>
     <string name="settings_top_bar_title">Настройки</string>
     <string name="update_auth_success_message">Успешно влизане</string>
@@ -33,7 +33,7 @@
     <string name="settings_option_copy_version">Копирай версията</string>
     <string name="action_mark_all_read">Маркирай всичко като прочетено</string>
     <string name="add_feed_feed_not_error">Не може да се намери емисия</string>
-    <string name="settings_remove_account_message_local">Сигурни ли сте, че искате да изтриете акаунта си? Това не може да бъде отменено.</string>
+    <string name="settings_remove_account_message_local">Сигурни ли сте, че искате да изтриете профила си? Това не може да бъде отменено.</string>
     <string name="add_feed_url_title">Емисия или URL адрес на уебсайт</string>
     <string name="feed_form_cancel">Отказ</string>
     <string name="filter_unread">Непрочетени</string>
@@ -44,7 +44,7 @@
     <string name="settings_remove_account_confirm_local">Потвърди</string>
     <string name="account_settings_save_name">Името е запазено</string>
     <string name="settings_remove_account_message_service">Сигурни ли сте, че искате да излезете?</string>
-    <string name="settings_remove_account_button_local">Изтрий акаунт</string>
+    <string name="settings_remove_account_button_local">Изтрий профил</string>
     <string name="article_view_mark_as_read">Маркирай като прочетено</string>
     <string name="article_view_mark_as_unread">Маркирай като непрочетено</string>
     <string name="add_feed_name_title">Име</string>
@@ -64,7 +64,7 @@
     <string name="settings">Отвори настройки</string>
     <string name="settings_remove_account_title_service">Излезте</string>
     <string name="settings_remove_account_confirm_service">Излезте</string>
-    <string name="settings_remove_account_title_local">Изтриване на акаунт</string>
+    <string name="settings_remove_account_title_local">Изтриване на профил</string>
     <string name="settings_remove_account_button_service">Излезте</string>
     <string name="article_view_star">Звезда</string>
     <string name="article_view_unstar">Премахни звезда</string>
@@ -97,7 +97,7 @@
     <string name="auth_fields_show_password">Покажи паролата</string>
     <string name="auth_fields_log_in_button">Влезте</string>
     <string name="crash_reporting_checkbox_title">Активирай отчет за срив</string>
-    <string name="settings_section_account">Акаунт</string>
+    <string name="settings_section_account">Профил</string>
     <string name="settings_section_import">Внасяне</string>
     <string name="settings_section_export">Изнасяне</string>
     <string name="opml_import_notification_title">Внасяне на абонаменти…</string>
@@ -142,7 +142,7 @@
     <string name="settings_panel_general_title">Общи</string>
     <string name="settings_panel_display_title">Дисплей и Външен вид</string>
     <string name="settings_panel_gestures_title">Жестове</string>
-    <string name="settings_account_title">Акаунт</string>
+    <string name="settings_account_title">Профил</string>
     <string name="settings_about_title">Относно</string>
     <string name="settings_auto_delete_articles_title">Запази прочетени статии</string>
     <string name="settings_auto_delete_option_keep_for_two_week">2 седмици</string>
@@ -192,7 +192,7 @@
     <string name="add_account_local_subtitle">На вашето устройство</string>
     <string name="add_account_feedbin_subtitle">feedbin.com</string>
     <string name="add_account_freshrss_subtitle">freshrss.org</string>
-    <string name="add_account_feedbin_signup_prompt">Нямате Feedbin акаунт?</string>
+    <string name="add_account_feedbin_signup_prompt">Нямате Feedbin профил?</string>
     <string name="add_account_freshrss_signup_link_text">Научете повече.</string>
     <string name="account_source_reader">Четец</string>
     <string name="auth_fields_api_url_freshrss_placeholder">https://example.com/</string>
@@ -223,4 +223,5 @@
     <string name="settings_donate_button">Дарете</string>
     <string name="after_read_all_behavior_default">По подразбиране</string>
     <string name="article_actions_copy_link">Копирай връзката</string>
+    <string name="feed_nav_drawer_title">Емисии</string>
 </resources>
