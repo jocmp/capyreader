@@ -18,8 +18,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -48,13 +46,7 @@ fun FeedList(
     onNavigateToSettings: () -> Unit,
 ) {
     val scrollState = rememberScrollState()
-    val (isMenuExpanded, setMenuExpanded) = remember { mutableStateOf(false) }
     val articleStatus = filter.status
-
-    val onStatusChange = { status: ArticleStatus ->
-        setMenuExpanded(false)
-        onSelectStatus(status)
-    }
 
     Column(
         Modifier.fillMaxSize()
