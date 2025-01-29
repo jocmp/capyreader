@@ -30,7 +30,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -85,9 +84,11 @@ fun ArticleView(
     val toolbars = rememberToolbarPreferences(articleID = article.id)
 
     val pagerState = rememberPagerState(
+        initialPage = articles.index,
         pageCount = {
             articles.size
-        })
+        }
+    )
 
     ArticleViewScaffold(
         topBar = {
@@ -134,19 +135,15 @@ fun ArticleView(
         toolbarPreferences = toolbars
     )
 
-    /** TODO: jumps to index=0 when no articles are selected */
-    LaunchedEffect(pagerState) {
-        snapshotFlow { pagerState.currentPage }.collect { page ->
-            val currentArticle = articles.find(page) ?: return@collect
-//            if (currentArticle.id != article.id) {
-//                onRequestArticle(currentArticle.id)
-//            }
+    LaunchedEffect(pagerState.currentPage) {
+        val currentArticle = articles.find(pagerState.currentPage) ?: return@LaunchedEffect
+
+        if (currentArticle.id != article.id) {
+            onRequestArticle(currentArticle.id)
         }
     }
 
     LaunchedEffect(article.id) {
-        CapyLog.info("new_article", mapOf("title" to article.title.split(" ").take(13).joinToString(" ")))
-
         pagerState.scrollToPage(articles.index)
     }
 
