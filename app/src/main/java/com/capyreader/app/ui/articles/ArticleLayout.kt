@@ -58,6 +58,7 @@ import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.common.launchUI
+import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -458,6 +459,7 @@ fun ArticleLayout(
                 )
 
                 LaunchedEffect(article.id, indexedArticles.index) {
+                    CapyLog.info("callback", mapOf("index" to indexedArticles.index.toString()))
                     if (hasMultipleColumns) {
                         scrollToArticle(indexedArticles.index)
                     }

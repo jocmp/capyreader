@@ -60,6 +60,7 @@ fun ArticleView(
     onRequestArticle: (id: String) -> Unit
 ) {
     val fullContent = LocalFullContent.current
+    val startPage = rememberSaveable { articles.index }
 
     fun selectArticle(relation: () -> Article?) {
         relation()?.let { onRequestArticle(it.id) }
@@ -103,7 +104,6 @@ fun ArticleView(
         },
         reader = {
             HorizontalPager(state = pagerState) { page ->
-                CapyLog.info("page", mapOf("page" to page.toString()))
                 ArticlePullRefresh(
                     toolbars.show && !toolbars.pinned,
                     onToggleFullContent = onToggleFullContent,
@@ -111,15 +111,10 @@ fun ArticleView(
                     onRequestPrevious = onRequestPrevious,
                     articles = articles,
                 ) {
+                    CapyLog.info("reader", mapOf("page" to page.toString()))
                     articles.find(page)?.let { pagedArticle ->
-                        val presented = if (article.id == pagedArticle.id) {
-                            article
-                        } else {
-                            pagedArticle
-                        }
-
                         ArticleReader(
-                            article = presented,
+                            article = currentArticle(article, pagedArticle),
                             onNavigateToMedia = onNavigateToMedia,
                         )
                     }
@@ -143,7 +138,7 @@ fun ArticleView(
         }
     }
 
-    LaunchedEffect(article.id) {
+    LaunchedEffect(articles.index) {
         pagerState.scrollToPage(articles.index)
     }
 
@@ -336,3 +331,11 @@ private data class SwipePreferences(
     val topSwipe: ArticleVerticalSwipe,
     val bottomSwipe: ArticleVerticalSwipe,
 )
+
+fun currentArticle(article: Article, pagedArticle: Article): Article {
+    return if (article.id == pagedArticle.id) {
+        article
+    } else {
+        pagedArticle
+    }
+}

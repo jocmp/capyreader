@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.paging.compose.LazyPagingItems
 import com.jocmp.capy.Article
+import com.jocmp.capy.logging.CapyLog
 
 data class IndexedArticles(
     val index: Int,
@@ -37,6 +38,12 @@ fun rememberIndexedArticles(
 
     return remember(article, snapshot.size) {
         val index = snapshot.indexOfFirst { it?.id == article.id }
+
+        // trigger reload of snapshot list
+        if (index > -1) {
+            CapyLog.info("index", mapOf("index" to index.toString()))
+            articles.get(index)
+        }
 
         IndexedArticles(
             index = index,
