@@ -84,13 +84,13 @@ class AppPreferences(context: Context) {
         val topSwipeGesture: Preference<ArticleVerticalSwipe>
             get() = preferenceStore.getEnum(
                 "article_top_swipe_gesture",
-                ArticleVerticalSwipe.PREVIOUS_ARTICLE
+                ArticleVerticalSwipe.LOAD_FULL_CONTENT
             )
 
         val bottomSwipeGesture: Preference<ArticleVerticalSwipe>
             get() = preferenceStore.getEnum(
                 "article_bottom_swipe_gesture",
-                ArticleVerticalSwipe.NEXT_ARTICLE
+                ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWSER
             )
 
         val imageVisibility: Preference<ReaderImageVisibility>

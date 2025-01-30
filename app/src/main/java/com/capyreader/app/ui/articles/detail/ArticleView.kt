@@ -2,12 +2,8 @@
 
 package com.capyreader.app.ui.articles.detail
 
+import android.net.Uri
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,6 +13,8 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Article
+import androidx.compose.material.icons.automirrored.rounded.OpenInNew
+import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -34,15 +32,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.Media
+import com.capyreader.app.common.openLink
 import com.capyreader.app.ui.articles.IndexedArticles
 import com.capyreader.app.ui.articles.LocalFullContent
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.LOAD_FULL_CONTENT
+import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.NEXT_ARTICLE
+import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWSER
+import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.PREVIOUS_ARTICLE
 import com.jocmp.capy.Article
 import org.koin.compose.koinInject
 
@@ -56,10 +59,11 @@ fun ArticleView(
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
     enableBackHandler: Boolean = false,
-    onRequestArticle: (id: String) -> Unit
+    onRequestArticle: (id: String) -> Unit,
 ) {
     val fullContent = LocalFullContent.current
-    val startPage = rememberSaveable { articles.index }
+
+    val openLink = articleOpenLink(article)
 
     fun selectArticle(relation: () -> Article?) {
         relation()?.let { onRequestArticle(it.id) }
@@ -78,6 +82,16 @@ fun ArticleView(
             fullContent.reset()
         } else if (article.fullContent != Article.FullContentState.LOADING) {
             fullContent.fetch()
+        }
+    }
+
+    val onSwipe = { swipe: ArticleVerticalSwipe ->
+        when (swipe) {
+            PREVIOUS_ARTICLE -> onRequestPrevious()
+            NEXT_ARTICLE -> onRequestNext()
+            LOAD_FULL_CONTENT -> onToggleFullContent()
+            OPEN_ARTICLE_IN_BROWSER -> openLink()
+            ArticleVerticalSwipe.DISABLED -> {}
         }
     }
 
@@ -108,9 +122,7 @@ fun ArticleView(
             ) { page ->
                 ArticlePullRefresh(
                     toolbars.show && !toolbars.pinned,
-                    onToggleFullContent = onToggleFullContent,
-                    onRequestNext = onRequestNext,
-                    onRequestPrevious = onRequestPrevious,
+                    onSwipe = onSwipe,
                     articles = articles,
                 ) {
                     articles.find(page)?.let { pagedArticle ->
@@ -121,12 +133,6 @@ fun ArticleView(
                     }
                 }
             }
-        },
-        bottomBar = {
-            ArticleBottomBar(
-                onRequestNext = onRequestNext,
-                showNext = articles.hasNext()
-            )
         },
         toolbarPreferences = toolbars
     )
@@ -152,7 +158,6 @@ fun ArticleView(
 private fun ArticleViewScaffold(
     topBar: @Composable () -> Unit,
     reader: @Composable () -> Unit,
-    bottomBar: @Composable () -> Unit,
     toolbarPreferences: ToolbarPreferences,
 ) {
     Scaffold(
@@ -187,9 +192,7 @@ private fun ArticleViewScaffold(
 @Composable
 fun ArticlePullRefresh(
     includePadding: Boolean,
-    onToggleFullContent: () -> Unit,
-    onRequestNext: () -> Unit,
-    onRequestPrevious: () -> Unit,
+    onSwipe: (swipe: ArticleVerticalSwipe) -> Unit,
     articles: IndexedArticles,
     content: @Composable () -> Unit,
 ) {
@@ -200,19 +203,15 @@ fun ArticlePullRefresh(
         haptics.performHapticFeedback(HapticFeedbackType.LongPress)
     }
 
-    val onPullUp = {
-        if (topSwipe == LOAD_FULL_CONTENT) {
-            onToggleFullContent()
-        } else {
-            onRequestPrevious()
-        }
-    }
 
     val enableTopSwipe = topSwipe.enabled &&
-            (topSwipe == LOAD_FULL_CONTENT || (topSwipe.openArticle && articles.hasPrevious()))
+            (topSwipe != PREVIOUS_ARTICLE || (topSwipe.openArticle && articles.hasPrevious()))
+
+    val enableBottomSwipe = bottomSwipe.enabled &&
+            (bottomSwipe != NEXT_ARTICLE || (bottomSwipe.openArticle && articles.hasNext()))
 
     SwipeRefresh(
-        onRefresh = { onPullUp() },
+        onRefresh = { onSwipe(topSwipe) },
         swipeEnabled = enableTopSwipe,
         icon = if (topSwipe == LOAD_FULL_CONTENT) {
             Icons.AutoMirrored.Rounded.Article
@@ -229,8 +228,13 @@ fun ArticlePullRefresh(
         onTriggerThreshold = { triggerThreshold() }
     ) {
         SwipeRefresh(
-            onRefresh = { onRequestNext() },
-            swipeEnabled = bottomSwipe.enabled && articles.hasNext(),
+            onRefresh = { onSwipe(bottomSwipe) },
+            swipeEnabled = enableBottomSwipe,
+            icon = if (bottomSwipe == OPEN_ARTICLE_IN_BROWSER) {
+                Icons.AutoMirrored.Rounded.OpenInNew
+            } else {
+                Icons.Rounded.KeyboardArrowDown
+            },
             onTriggerThreshold = { triggerThreshold() },
             indicatorPadding = PaddingValues(
                 bottom = if (includePadding) {
@@ -249,22 +253,6 @@ fun ArticlePullRefresh(
 private val TopBarOffset = 56.dp
 
 private val BottomBarOffset = 44.dp
-
-@Composable
-fun BarVisibility(
-    modifier: Modifier = Modifier,
-    visible: Boolean,
-    content: @Composable () -> Unit
-) {
-    AnimatedVisibility(
-        visible = visible,
-        enter = fadeIn() + expandVertically(),
-        exit = shrinkVertically() + fadeOut(),
-        modifier = modifier
-    ) {
-        content()
-    }
-}
 
 @Composable
 fun rememberToolbarPreferences(
@@ -310,6 +298,22 @@ private fun rememberSwipePreferences(appPreferences: AppPreferences = koinInject
         .collectAsState()
 
     return SwipePreferences(topSwipe, bottomSwipe)
+}
+
+@Composable
+fun articleOpenLink(
+    article: Article,
+    appPreferences: AppPreferences = koinInject()
+): () -> Unit {
+    val context = LocalContext.current
+
+    fun open() {
+        val link = article.url?.toString() ?: return
+
+        context.openLink(Uri.parse(link), appPreferences)
+    }
+
+    return ::open
 }
 
 @Stable
