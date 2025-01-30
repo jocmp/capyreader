@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Article
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
@@ -22,10 +24,10 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.TopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -35,9 +37,9 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.common.Media
 import com.capyreader.app.ui.articles.IndexedArticles
 import com.capyreader.app.ui.articles.LocalFullContent
-import com.capyreader.app.ui.components.WebViewState
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.LOAD_FULL_CONTENT
@@ -48,7 +50,7 @@ import org.koin.compose.koinInject
 @Composable
 fun ArticleView(
     article: Article,
-    webViewState: WebViewState,
+    onNavigateToMedia: (media: Media) -> Unit,
     articles: IndexedArticles,
     onBackPressed: () -> Unit,
     onToggleRead: () -> Unit,
@@ -57,6 +59,7 @@ fun ArticleView(
     onRequestArticle: (id: String) -> Unit
 ) {
     val fullContent = LocalFullContent.current
+    val startPage = rememberSaveable { articles.index }
 
     fun selectArticle(relation: () -> Article?) {
         relation()?.let { onRequestArticle(it.id) }
@@ -80,6 +83,13 @@ fun ArticleView(
 
     val toolbars = rememberToolbarPreferences(articleID = article.id)
 
+    val pagerState = rememberPagerState(
+        initialPage = articles.index,
+        pageCount = {
+            articles.size
+        }
+    )
+
     ArticleViewScaffold(
         topBar = {
             ArticleTopBar(
@@ -92,7 +102,10 @@ fun ArticleView(
             )
         },
         reader = {
-            key(article.id) {
+            HorizontalPager(
+                state = pagerState,
+                beyondViewportPageCount = 1,
+            ) { page ->
                 ArticlePullRefresh(
                     toolbars.show && !toolbars.pinned,
                     onToggleFullContent = onToggleFullContent,
@@ -100,10 +113,12 @@ fun ArticleView(
                     onRequestPrevious = onRequestPrevious,
                     articles = articles,
                 ) {
-                    ArticleReader(
-                        article = article,
-                        webViewState = webViewState,
-                    )
+                    articles.find(page)?.let { pagedArticle ->
+                        ArticleReader(
+                            article = currentArticle(article, pagedArticle),
+                            onNavigateToMedia = onNavigateToMedia,
+                        )
+                    }
                 }
             }
         },
@@ -115,6 +130,18 @@ fun ArticleView(
         },
         toolbarPreferences = toolbars
     )
+
+    LaunchedEffect(pagerState.currentPage) {
+        val currentArticle = articles.find(pagerState.currentPage) ?: return@LaunchedEffect
+
+        if (currentArticle.id != article.id) {
+            onRequestArticle(currentArticle.id)
+        }
+    }
+
+    LaunchedEffect(articles.index) {
+        pagerState.scrollToPage(articles.index)
+    }
 
     BackHandler(enableBackHandler) {
         onBackPressed()
@@ -305,3 +332,19 @@ private data class SwipePreferences(
     val topSwipe: ArticleVerticalSwipe,
     val bottomSwipe: ArticleVerticalSwipe,
 )
+
+fun currentArticle(article: Article, pagedArticle: Article): Article {
+    return if (article.id == pagedArticle.id) {
+        article
+    } else {
+        pagedArticle.withPlaceholderContent()
+    }
+}
+
+private fun Article.withPlaceholderContent(): Article {
+    return if (enableStickyFullContent) {
+        copy(summary = "", content = "")
+    } else {
+        this
+    }
+}

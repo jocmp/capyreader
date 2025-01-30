@@ -11,6 +11,7 @@ import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
@@ -46,7 +47,6 @@ fun FeedListTopBar(
     onNavigateToDrawer: () -> Unit,
     onRequestSnackbar: (message: String) -> Unit,
     onRemoveFeed: (feedID: String, onSuccess: () -> Unit, onFailure: () -> Unit) -> Unit,
-    onSearchQueryChange: () -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
     onMarkAllRead: (MarkRead) -> Unit,
     search: ArticleSearch,
@@ -83,10 +83,10 @@ fun FeedListTopBar(
                     contentAlignment = Alignment.Center
                 ) {
                     SearchTextField(
+                        placeholder = { Text(stringResource(R.string.search_bar_placeholder)) },
                         value = search.query.orEmpty(),
                         onValueChange = {
                             search.update(it)
-                            onSearchQueryChange()
                         },
                         colors = TextFieldDefaults.colors(
                             focusedIndicatorColor = Color.Transparent,
@@ -185,7 +185,6 @@ private fun FeedListTopBarPreview() {
         onNavigateToDrawer = { },
         onRequestSnackbar = {},
         onRemoveFeed = { _, _, _ -> },
-        onSearchQueryChange = {},
         scrollBehavior = scrollBehavior,
         onMarkAllRead = {},
         search = ArticleSearch(),

@@ -2,11 +2,12 @@ package com.capyreader.app.ui.articles
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -37,8 +38,10 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import com.capyreader.app.R
+import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.Saver
 import com.capyreader.app.refresher.RefreshInterval
@@ -49,8 +52,8 @@ import com.capyreader.app.ui.articles.list.FeedListTopBar
 import com.capyreader.app.ui.articles.list.PullToNextFeedBox
 import com.capyreader.app.ui.articles.list.resetScrollBehaviorListener
 import com.capyreader.app.ui.articles.media.ArticleMediaView
+import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.ArticleSearch
-import com.capyreader.app.ui.components.rememberWebViewState
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
@@ -59,8 +62,9 @@ import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.common.launchUI
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
 
 @OptIn(
     ExperimentalMaterial3AdaptiveApi::class,
@@ -75,10 +79,12 @@ fun ArticleLayout(
     allFeeds: List<Feed>,
     allFolders: List<Folder>,
     articles: LazyPagingItems<Article>,
+    searchResults: Flow<PagingData<Article>>,
     article: Article?,
     search: ArticleSearch,
     statusCount: Long,
     refreshInterval: RefreshInterval,
+    onInitialized: (completion: () -> Unit) -> Unit,
     onFeedRefresh: (completion: () -> Unit) -> Unit,
     onSelectFolder: (folderTitle: String) -> Unit,
     onSelectSavedSearch: (savedSearchID: String) -> Unit,
@@ -98,6 +104,7 @@ fun ArticleLayout(
     onUnauthorizedDismissRequest: () -> Unit,
     canSwipeToNextFeed: Boolean,
     openNextFeedOnReadAll: Boolean,
+    appPreferences: AppPreferences = koinInject()
 ) {
     val skipInitialRefresh = refreshInterval == RefreshInterval.MANUALLY_ONLY
 
@@ -122,15 +129,11 @@ fun ArticleLayout(
         onUnauthorizedDismissRequest()
         setUpdatePasswordDialogOpen(true)
     }
-    var listVisible by remember { mutableStateOf(true) }
+    val enableMarkReadOnScroll by appPreferences.articleListOptions.markReadOnScroll.collectChangesWithDefault()
 
     suspend fun navigateToDetail() {
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
     }
-
-    val webViewState = rememberWebViewState(
-        onNavigateToMedia = { media = it },
-    )
 
     fun scrollToArticle(index: Int) {
         coroutineScope.launch {
@@ -145,24 +148,9 @@ fun ArticleLayout(
         scrollBehavior = scrollBehavior
     )
 
-    suspend fun resetListVisibility() {
-        listState.scrollToItem(0)
-        resetScrollBehaviorOffset()
-        listVisible = true
-    }
-
     suspend fun openNextStatus(action: suspend () -> Unit) {
-        listVisible = false
-        delay(150)
         action()
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
-
-        coroutineScope.launch {
-            delay(300)
-            if (!listVisible) {
-                resetListVisibility()
-            }
-        }
     }
 
     fun requestNextFeed() {
@@ -202,21 +190,27 @@ fun ArticleLayout(
         }
     }
 
-    fun refreshFeeds() {
+    fun initialize() {
         isRefreshing = true
-        onFeedRefresh {
+        onInitialized {
             isRefreshing = false
             refreshPagination()
-
             if (!isInitialized) {
                 setInitialized(true)
             }
         }
     }
 
+    fun refreshFeeds() {
+        isRefreshing = true
+        onFeedRefresh {
+            isRefreshing = false
+            refreshPagination()
+        }
+    }
+
     fun openNextList(action: suspend () -> Unit) {
         coroutineScope.launchUI {
-            listVisible = false
             drawerState.close()
             openNextStatus(action)
         }
@@ -364,9 +358,6 @@ fun ArticleLayout(
                         },
                         onRequestSnackbar = { showSnackbar(it) },
                         onRemoveFeed = onRemoveFeed,
-                        onSearchQueryChange = {
-                            scrollToTop()
-                        },
                         scrollBehavior = scrollBehavior,
                         onMarkAllRead = {
                             markAllRead(it)
@@ -383,16 +374,11 @@ fun ArticleLayout(
                     SnackbarHost(hostState = snackbarHost)
                 },
             ) { innerPadding ->
-                PullToRefreshBox(
-                    isRefreshing = isRefreshing,
-                    onRefresh = {
-                        refreshFeeds()
-                    },
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(innerPadding)
-                ) {
-                    if (isInitialized && !isRefreshing && allFeeds.isEmpty()) {
+                ArticleListScaffold(
+                    padding = innerPadding,
+                    showOnboarding = isInitialized && !isRefreshing && allFeeds.isEmpty(),
+                    showSearch = search.isActive,
+                    onboarding = {
                         EmptyOnboardingView {
                             AddFeedButton(
                                 onComplete = {
@@ -400,7 +386,23 @@ fun ArticleLayout(
                                 }
                             )
                         }
-                    } else {
+                    },
+                    search = {
+                        ArticleSearchView(
+                            showResults = search.hasQuery,
+                            articles = searchResults,
+                            selectedArticleID = article?.id,
+                            onSelectArticle = ::selectArticle
+                        )
+                    }
+                ) {
+                    PullToRefreshBox(
+                        isRefreshing = isRefreshing,
+                        onRefresh = {
+                            refreshFeeds()
+                        },
+                        modifier = Modifier.fillMaxSize()
+                    ) {
                         PullToNextFeedBox(
                             modifier = Modifier.fillMaxSize(),
                             enabled = canSwipeToNextFeed,
@@ -408,20 +410,21 @@ fun ArticleLayout(
                                 requestNextFeed()
                             },
                         ) {
-                            AnimatedVisibility(
-                                listVisible,
-                                enter = fadeIn(),
-                                exit = fadeOut(),
+                            Crossfade(
+                                articles,
+                                animationSpec = tween(500),
                                 modifier = Modifier.fillMaxSize(),
+                                label = "",
                             ) {
                                 ArticleList(
-                                    articles = articles,
+                                    articles = it,
                                     selectedArticleKey = article?.id,
                                     listState = listState,
+                                    enableMarkReadOnScroll = enableMarkReadOnScroll,
                                     onMarkAllRead = { range ->
                                         onMarkAllRead(range)
                                     },
-                                    onSelect = { selectArticle(it) },
+                                    onSelect = ::selectArticle,
                                 )
                             }
                         }
@@ -444,7 +447,7 @@ fun ArticleLayout(
 
                 ArticleView(
                     article = article,
-                    webViewState = webViewState,
+                    onNavigateToMedia = { media = it },
                     articles = indexedArticles,
                     onBackPressed = {
                         coroutineScope.launchUI {
@@ -505,7 +508,7 @@ fun ArticleLayout(
 
     LaunchedEffect(Unit) {
         if (!isInitialized) {
-            refreshFeeds()
+            initialize()
         }
     }
 
@@ -527,12 +530,6 @@ fun ArticleLayout(
         enabled = article == null
     ) {
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
-    }
-
-    LaunchedEffect(articles.itemCount) {
-        if (!listVisible) {
-            resetListVisibility()
-        }
     }
 }
 

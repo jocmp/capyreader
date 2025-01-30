@@ -8,4 +8,6 @@ data class ArticleSearch(
     val isActive = query != null
 
     val isInitialized = query != null && query.isBlank()
+
+    val hasQuery = !query.isNullOrBlank()
 }

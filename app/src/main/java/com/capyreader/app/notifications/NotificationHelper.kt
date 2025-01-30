@@ -115,13 +115,6 @@ class NotificationHelper(
         const val FEED_ID_KEY = "feed_id"
         private const val ARTICLE_REFRESH_GROUP = "article_refresh"
 
-        /**
-         * Clear notification via broadcast receiver
-         */
-        fun clearNotificationAsync(articleID: String, context: Context) {
-            DeleteNotificationWorker.performAsync(articleID, context = context)
-        }
-
         fun dismissNotificationIntent(articleID: String, context: Context): Intent {
             return Intent(context, ArticleStatusBroadcastReceiver::class.java).apply {
                 action = ArticleStatusBroadcastReceiver.ACTION_DISMISS_NOTIFICATION
@@ -137,7 +130,7 @@ class NotificationHelper(
             appPreferences.filter.set(
                 ArticleFilter.Feeds(
                     feedID,
-                    feedStatus = ArticleStatus.UNREAD,
+                    feedStatus = ArticleStatus.ALL,
                     folderTitle = null
                 )
             )

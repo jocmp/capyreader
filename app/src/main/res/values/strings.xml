@@ -229,4 +229,5 @@
     <string name="full_content_error_missing_response">Failed to fetch article</string>
     <string name="full_content_error_generic">Failed to parse article</string>
     <string name="feed_nav_drawer_title">Feeds</string>
+    <string name="search_bar_placeholder">Search</string>
 </resources>
