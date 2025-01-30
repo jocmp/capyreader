@@ -173,22 +173,7 @@ private fun ArticleViewScaffold(
                     .fillMaxSize()
             ) {
                 Column {
-                    Column(Modifier.weight(0.1f)) {
-                        reader()
-                    }
-
-                    if (toolbarPreferences.pinned) {
-                        bottomBar()
-                    }
-                }
-
-                if (!toolbarPreferences.pinned) {
-                    BarVisibility(
-                        modifier = Modifier.align(Alignment.BottomCenter),
-                        visible = toolbarPreferences.show,
-                    ) {
-                        bottomBar()
-                    }
+                    reader()
                 }
             }
 
