@@ -20,7 +20,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
@@ -178,13 +177,13 @@ fun SwipeRefreshIndicator(
                 imageVector = icon,
                 contentDescription = null,
                 tint = contentColor,
-                modifier = Modifier.rotate(
-                    if (clockwise) {
-                        0f
-                    } else {
-                        180f
-                    }
-                )
+//                modifier = Modifier.rotate(
+//                    if (clockwise) {
+//                        0f
+//                    } else {
+//                        180f
+//                    }
+//                )
             )
         }
     }

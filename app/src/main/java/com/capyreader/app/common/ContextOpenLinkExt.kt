@@ -4,17 +4,22 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
+import com.jocmp.capy.logging.CapyLog
 import java.net.URL
 
 fun Context.openLink(url: Uri, appPreferences: AppPreferences? = null) {
-    if (appPreferences != null && appPreferences.openLinksInternally.get()) {
-        val intent = CustomTabsIntent
-            .Builder()
-            .build()
+    try {
+        if (appPreferences != null && appPreferences.openLinksInternally.get()) {
+            val intent = CustomTabsIntent
+                .Builder()
+                .build()
 
-        intent.launchUrl(this, url)
-    } else {
-        openLinkExternally(url)
+            intent.launchUrl(this, url)
+        } else {
+            openLinkExternally(url)
+        }
+    } catch (e: Throwable) {
+        CapyLog.error("open_link", e)
     }
 }
 
