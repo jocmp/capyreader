@@ -8,7 +8,6 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -39,8 +38,10 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import com.capyreader.app.R
+import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.Saver
 import com.capyreader.app.refresher.RefreshInterval
@@ -51,6 +52,7 @@ import com.capyreader.app.ui.articles.list.FeedListTopBar
 import com.capyreader.app.ui.articles.list.PullToNextFeedBox
 import com.capyreader.app.ui.articles.list.resetScrollBehaviorListener
 import com.capyreader.app.ui.articles.media.ArticleMediaView
+import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.ArticleSearch
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
@@ -60,7 +62,9 @@ import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.common.launchUI
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
 
 @OptIn(
     ExperimentalMaterial3AdaptiveApi::class,
@@ -75,6 +79,7 @@ fun ArticleLayout(
     allFeeds: List<Feed>,
     allFolders: List<Folder>,
     articles: LazyPagingItems<Article>,
+    searchResults: Flow<PagingData<Article>>,
     article: Article?,
     search: ArticleSearch,
     statusCount: Long,
@@ -99,6 +104,7 @@ fun ArticleLayout(
     onUnauthorizedDismissRequest: () -> Unit,
     canSwipeToNextFeed: Boolean,
     openNextFeedOnReadAll: Boolean,
+    appPreferences: AppPreferences = koinInject()
 ) {
     val skipInitialRefresh = refreshInterval == RefreshInterval.MANUALLY_ONLY
 
@@ -123,6 +129,7 @@ fun ArticleLayout(
         onUnauthorizedDismissRequest()
         setUpdatePasswordDialogOpen(true)
     }
+    val enableMarkReadOnScroll by appPreferences.articleListOptions.markReadOnScroll.collectChangesWithDefault()
 
     suspend fun navigateToDetail() {
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
@@ -351,9 +358,6 @@ fun ArticleLayout(
                         },
                         onRequestSnackbar = { showSnackbar(it) },
                         onRemoveFeed = onRemoveFeed,
-                        onSearchQueryChange = {
-                            scrollToTop()
-                        },
                         scrollBehavior = scrollBehavior,
                         onMarkAllRead = {
                             markAllRead(it)
@@ -370,16 +374,11 @@ fun ArticleLayout(
                     SnackbarHost(hostState = snackbarHost)
                 },
             ) { innerPadding ->
-                PullToRefreshBox(
-                    isRefreshing = isRefreshing,
-                    onRefresh = {
-                        refreshFeeds()
-                    },
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(innerPadding)
-                ) {
-                    if (isInitialized && !isRefreshing && allFeeds.isEmpty()) {
+                ArticleListScaffold(
+                    padding = innerPadding,
+                    showOnboarding = isInitialized && !isRefreshing && allFeeds.isEmpty(),
+                    showSearch = search.isActive,
+                    onboarding = {
                         EmptyOnboardingView {
                             AddFeedButton(
                                 onComplete = {
@@ -387,7 +386,23 @@ fun ArticleLayout(
                                 }
                             )
                         }
-                    } else {
+                    },
+                    search = {
+                        ArticleSearchView(
+                            showResults = search.hasQuery,
+                            articles = searchResults,
+                            selectedArticleID = article?.id,
+                            onSelectArticle = ::selectArticle
+                        )
+                    }
+                ) {
+                    PullToRefreshBox(
+                        isRefreshing = isRefreshing,
+                        onRefresh = {
+                            refreshFeeds()
+                        },
+                        modifier = Modifier.fillMaxSize()
+                    ) {
                         PullToNextFeedBox(
                             modifier = Modifier.fillMaxSize(),
                             enabled = canSwipeToNextFeed,
@@ -405,6 +420,7 @@ fun ArticleLayout(
                                     articles = it,
                                     selectedArticleKey = article?.id,
                                     listState = listState,
+                                    enableMarkReadOnScroll = enableMarkReadOnScroll,
                                     onMarkAllRead = { range ->
                                         onMarkAllRead(range)
                                     },

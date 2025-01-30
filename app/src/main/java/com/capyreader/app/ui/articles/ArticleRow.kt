@@ -224,7 +224,7 @@ private fun ArticleImage(
 }
 
 @Composable
-fun PlaceholderArticleRow(imagePreview: ImagePreview) {
+fun PlaceholderArticleRow(imagePreview: ImagePreview = ImagePreview.NONE) {
     ListItem(
         supportingContent = {
             if (imagePreview == ImagePreview.LARGE) {

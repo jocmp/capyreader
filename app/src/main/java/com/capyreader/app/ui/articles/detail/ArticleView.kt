@@ -181,6 +181,15 @@ private fun ArticleViewScaffold(
                         bottomBar()
                     }
                 }
+
+                if (!toolbarPreferences.pinned) {
+                    BarVisibility(
+                        modifier = Modifier.align(Alignment.BottomCenter),
+                        visible = toolbarPreferences.show,
+                    ) {
+                        bottomBar()
+                    }
+                }
             }
 
             if (!toolbarPreferences.pinned) {

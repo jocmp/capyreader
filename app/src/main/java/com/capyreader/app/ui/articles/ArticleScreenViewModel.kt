@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import com.capyreader.app.R
 import com.capyreader.app.common.AfterReadAllBehavior
 import com.capyreader.app.common.AppPreferences
@@ -73,12 +74,27 @@ class ArticleScreenViewModel(
         filter: ArticleFilter,
         sort: UnreadSortOrder,
         since: OffsetDateTime,
+        query: String = ""
     ) =
         account.buildArticlePager(
             filter = filter,
+            query = query,
             unreadSort = sort,
             since = since
         )
+
+    val searchResults: Flow<PagingData<Article>> =
+        combine(
+            filter,
+            _searchQuery,
+            articlesSince,
+        ) { filter, query, since ->
+            account.buildArticlePager(
+                filter = filter,
+                query = query,
+                since = since
+            ).flow
+        }.flatMapLatest { it }
 
     val folders: Flow<List<Folder>> = combine(
         account.folders,

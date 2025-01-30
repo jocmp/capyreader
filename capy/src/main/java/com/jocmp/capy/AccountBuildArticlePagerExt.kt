@@ -9,7 +9,7 @@ import java.time.OffsetDateTime
 fun Account.buildArticlePager(
     filter: ArticleFilter,
     query: String? = null,
-    unreadSort: UnreadSortOrder,
+    unreadSort: UnreadSortOrder = UnreadSortOrder.NEWEST_FIRST,
     since: OffsetDateTime = OffsetDateTime.now()
 ): Pager<Int, Article> {
     return Pager(

@@ -103,7 +103,8 @@ fun ArticleScreen(
                 query = searchQuery,
                 clear = { viewModel.clearSearch() },
                 update = viewModel::updateSearch,
-            )
+            ),
+            searchResults = viewModel.searchResults
         )
     }
 }

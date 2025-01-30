@@ -28,7 +28,6 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import com.capyreader.app.R
 import com.capyreader.app.common.AppPreferences
-import com.capyreader.app.ui.collectChangesWithDefault
 import com.jocmp.capy.Article
 import com.jocmp.capy.MarkRead
 import kotlinx.coroutines.FlowPreview
@@ -42,17 +41,16 @@ import java.time.LocalDateTime
 fun ArticleList(
     articles: LazyPagingItems<Article>,
     onSelect: (articleID: String) -> Unit,
-    onMarkAllRead: (range: MarkRead) -> Unit,
     selectedArticleKey: String?,
     listState: LazyListState,
-    appPreferences: AppPreferences = koinInject(),
+    onMarkAllRead: (range: MarkRead) -> Unit = {},
+    enableMarkReadOnScroll: Boolean = false,
 ) {
     val composableScope = rememberCoroutineScope()
     val articleOptions = rememberArticleOptions()
     val currentTime = rememberCurrentTime()
     val localDensity = LocalDensity.current
     var listHeight by remember { mutableStateOf(0.dp) }
-    val enableMarkReadOnScroll by appPreferences.articleListOptions.markReadOnScroll.collectChangesWithDefault()
 
     val selectArticle = { articleID: String ->
         composableScope.launch {
