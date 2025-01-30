@@ -69,7 +69,6 @@ fun ArticleReader(
                 Spacer(modifier = Modifier.height(120.dp))
             }
         }
-
     }
 
     LaunchedEffect(article.id, article.content) {

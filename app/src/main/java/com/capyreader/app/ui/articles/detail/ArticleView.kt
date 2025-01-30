@@ -44,7 +44,6 @@ import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.LOAD_FULL_CONTENT
 import com.jocmp.capy.Article
-import com.jocmp.capy.logging.CapyLog
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -103,7 +102,10 @@ fun ArticleView(
             )
         },
         reader = {
-            HorizontalPager(state = pagerState) { page ->
+            HorizontalPager(
+                state = pagerState,
+                beyondViewportPageCount = 1,
+            ) { page ->
                 ArticlePullRefresh(
                     toolbars.show && !toolbars.pinned,
                     onToggleFullContent = onToggleFullContent,
@@ -111,7 +113,6 @@ fun ArticleView(
                     onRequestPrevious = onRequestPrevious,
                     articles = articles,
                 ) {
-                    CapyLog.info("reader", mapOf("page" to page.toString()))
                     articles.find(page)?.let { pagedArticle ->
                         ArticleReader(
                             article = currentArticle(article, pagedArticle),
@@ -177,15 +178,6 @@ private fun ArticleViewScaffold(
                     }
 
                     if (toolbarPreferences.pinned) {
-                        bottomBar()
-                    }
-                }
-
-                if (!toolbarPreferences.pinned) {
-                    BarVisibility(
-                        modifier = Modifier.align(Alignment.BottomCenter),
-                        visible = toolbarPreferences.show,
-                    ) {
                         bottomBar()
                     }
                 }
@@ -336,6 +328,14 @@ fun currentArticle(article: Article, pagedArticle: Article): Article {
     return if (article.id == pagedArticle.id) {
         article
     } else {
-        pagedArticle
+        pagedArticle.withPlaceholderContent()
+    }
+}
+
+private fun Article.withPlaceholderContent(): Article {
+    return if (enableStickyFullContent) {
+        copy(summary = "", content = "")
+    } else {
+        this
     }
 }

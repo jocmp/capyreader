@@ -32,8 +32,9 @@ fun ArticleScreen(
     val savedSearches by viewModel.savedSearches.collectAsStateWithLifecycle(initialValue = emptyList())
     val statusCount by viewModel.statusCount.collectAsStateWithLifecycle(initialValue = 0)
     val filter by viewModel.filter.collectAsStateWithLifecycle(appPreferences.filter.get())
+    val articlesSince by viewModel.articlesSince.collectAsStateWithLifecycle()
+    val unreadSort by viewModel.unreadSort.collectAsStateWithLifecycle()
     val searchQuery by viewModel.searchQuery.collectAsState(initial = null)
-    val articles = viewModel.articles.collectAsLazyPagingItems()
     val nextFilter by viewModel.nextFilter.collectAsStateWithLifecycle(initialValue = null)
     val canSwipeToNextFeed = nextFilter != null
     val afterReadAll by viewModel.afterReadAll.collectAsStateWithLifecycle()
@@ -43,6 +44,12 @@ fun ArticleScreen(
     val articleActions = rememberArticleActions(viewModel)
     val connectivity = rememberLocalConnectivity()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
+
+    val pager = remember(filter, unreadSort, articlesSince) {
+        viewModel.pager(filter, unreadSort, articlesSince)
+    }
+
+    val articles = pager.flow.collectAsLazyPagingItems()
 
     CompositionLocalProvider(
         LocalFullContent provides fullContent,
@@ -60,9 +67,8 @@ fun ArticleScreen(
             article = viewModel.article,
             statusCount = statusCount,
             refreshInterval = appPreferences.refreshInterval.get(),
-            onFeedRefresh = { completion ->
-                viewModel.refreshFeed(completion)
-            },
+            onInitialized = viewModel::initialize,
+            onFeedRefresh = viewModel::refreshFeed,
             drawerState = drawerState,
             onSelectFolder = viewModel::selectFolder,
             onSelectFeed = viewModel::selectFeed,

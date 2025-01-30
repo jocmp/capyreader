@@ -12,6 +12,7 @@ SELECT
   articles.published_at,
   feeds.title AS feed_title,
   feeds.favicon_url,
+  feeds.enable_sticky_full_content,
   article_statuses.updated_at,
   article_statuses.starred,
   article_statuses.read
@@ -72,6 +73,7 @@ SELECT
   articles.published_at,
   feeds.title AS feed_title,
   feeds.favicon_url,
+  feeds.enable_sticky_full_content,
   article_statuses.updated_at,
   article_statuses.starred,
   article_statuses.read
@@ -135,6 +137,7 @@ SELECT
   articles.published_at,
   feeds.title AS feed_title,
   feeds.favicon_url,
+  feeds.enable_sticky_full_content,
   article_statuses.updated_at,
   article_statuses.starred,
   article_statuses.read

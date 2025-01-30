@@ -7,7 +7,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
 import com.capyreader.app.R
 import com.capyreader.app.common.AfterReadAllBehavior
 import com.capyreader.app.common.AppPreferences
@@ -24,6 +23,7 @@ import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.articles.NextFilter
+import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.buildArticlePager
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
@@ -56,11 +56,11 @@ class ArticleScreenViewModel(
 
     private var _article by mutableStateOf<Article?>(null)
 
-    private val articlesSince = MutableStateFlow<OffsetDateTime>(OffsetDateTime.now())
+    val articlesSince = MutableStateFlow<OffsetDateTime>(OffsetDateTime.now())
 
     private var _showUnauthorizedMessage by mutableStateOf(UnauthorizedMessageState.HIDE)
 
-    private val unreadSort = appPreferences.articleListOptions.unreadSort.stateIn(viewModelScope)
+    val unreadSort = appPreferences.articleListOptions.unreadSort.stateIn(viewModelScope)
 
     val afterReadAll =
         appPreferences.articleListOptions.afterReadAllBehavior.stateIn(viewModelScope)
@@ -69,20 +69,16 @@ class ArticleScreenViewModel(
         account.countAll(latestFilter.status)
     }
 
-    val articles: Flow<PagingData<Article>> =
-        combine(
-            filter,
-            _searchQuery,
-            articlesSince,
-            unreadSort
-        ) { filter, query, since, sort ->
-            account.buildArticlePager(
-                filter = filter,
-                query = query,
-                unreadSort = sort,
-                since = since
-            ).flow
-        }.flatMapLatest { it }
+    fun pager(
+        filter: ArticleFilter,
+        sort: UnreadSortOrder,
+        since: OffsetDateTime,
+    ) =
+        account.buildArticlePager(
+            filter = filter,
+            unreadSort = sort,
+            since = since
+        )
 
     val folders: Flow<List<Folder>> = combine(
         account.folders,
@@ -246,7 +242,7 @@ class ArticleScreenViewModel(
         }
     }
 
-    fun refreshFeed(onComplete: () -> Unit) {
+    fun initialize(onComplete: () -> Unit) {
         refreshJob?.cancel()
 
         refreshJob = viewModelScope.launch(Dispatchers.IO) {
@@ -256,8 +252,13 @@ class ArticleScreenViewModel(
                 }
             }
 
-            updateArticlesSince()
+            onComplete()
+        }
+    }
 
+    fun refreshFeed(onComplete: () -> Unit) {
+        initialize {
+            updateArticlesSince()
             onComplete()
         }
     }

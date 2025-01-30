@@ -2,6 +2,8 @@ package com.capyreader.app.ui.articles
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
@@ -58,8 +60,6 @@ import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.common.launchUI
-import com.jocmp.capy.logging.CapyLog
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(
@@ -79,6 +79,7 @@ fun ArticleLayout(
     search: ArticleSearch,
     statusCount: Long,
     refreshInterval: RefreshInterval,
+    onInitialized: (completion: () -> Unit) -> Unit,
     onFeedRefresh: (completion: () -> Unit) -> Unit,
     onSelectFolder: (folderTitle: String) -> Unit,
     onSelectSavedSearch: (savedSearchID: String) -> Unit,
@@ -122,7 +123,6 @@ fun ArticleLayout(
         onUnauthorizedDismissRequest()
         setUpdatePasswordDialogOpen(true)
     }
-    var listVisible by remember { mutableStateOf(true) }
 
     suspend fun navigateToDetail() {
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
@@ -141,24 +141,9 @@ fun ArticleLayout(
         scrollBehavior = scrollBehavior
     )
 
-    suspend fun resetListVisibility() {
-        listState.scrollToItem(0)
-        resetScrollBehaviorOffset()
-        listVisible = true
-    }
-
     suspend fun openNextStatus(action: suspend () -> Unit) {
-        listVisible = false
-        delay(150)
         action()
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
-
-        coroutineScope.launch {
-            delay(300)
-            if (!listVisible) {
-                resetListVisibility()
-            }
-        }
     }
 
     fun requestNextFeed() {
@@ -198,21 +183,27 @@ fun ArticleLayout(
         }
     }
 
-    fun refreshFeeds() {
+    fun initialize() {
         isRefreshing = true
-        onFeedRefresh {
+        onInitialized {
             isRefreshing = false
             refreshPagination()
-
             if (!isInitialized) {
                 setInitialized(true)
             }
         }
     }
 
+    fun refreshFeeds() {
+        isRefreshing = true
+        onFeedRefresh {
+            isRefreshing = false
+            refreshPagination()
+        }
+    }
+
     fun openNextList(action: suspend () -> Unit) {
         coroutineScope.launchUI {
-            listVisible = false
             drawerState.close()
             openNextStatus(action)
         }
@@ -404,20 +395,20 @@ fun ArticleLayout(
                                 requestNextFeed()
                             },
                         ) {
-                            AnimatedVisibility(
-                                listVisible,
-                                enter = fadeIn(),
-                                exit = fadeOut(),
+                            Crossfade(
+                                articles,
+                                animationSpec = tween(500),
                                 modifier = Modifier.fillMaxSize(),
+                                label = "",
                             ) {
                                 ArticleList(
-                                    articles = articles,
+                                    articles = it,
                                     selectedArticleKey = article?.id,
                                     listState = listState,
                                     onMarkAllRead = { range ->
                                         onMarkAllRead(range)
                                     },
-                                    onSelect = { selectArticle(it) },
+                                    onSelect = ::selectArticle,
                                 )
                             }
                         }
@@ -459,7 +450,6 @@ fun ArticleLayout(
                 )
 
                 LaunchedEffect(article.id, indexedArticles.index) {
-                    CapyLog.info("callback", mapOf("index" to indexedArticles.index.toString()))
                     if (hasMultipleColumns) {
                         scrollToArticle(indexedArticles.index)
                     }
@@ -502,7 +492,7 @@ fun ArticleLayout(
 
     LaunchedEffect(Unit) {
         if (!isInitialized) {
-            refreshFeeds()
+            initialize()
         }
     }
 
@@ -524,12 +514,6 @@ fun ArticleLayout(
         enabled = article == null
     ) {
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
-    }
-
-    LaunchedEffect(articles.itemCount) {
-        if (!listVisible) {
-            resetListVisibility()
-        }
     }
 }
 
