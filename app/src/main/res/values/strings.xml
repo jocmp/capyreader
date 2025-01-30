@@ -185,6 +185,7 @@
     <string name="article_vertical_swipe_next_article">Next article</string>
     <string name="article_vertical_swipe_disabled">Disabled</string>
     <string name="article_vertical_swipe_full_content">Load full content</string>
+    <string name="article_vertical_open_article_in_browser">Open article in browser</string>
     <string name="article_list_row_swipe_disabled">Disabled</string>
     <string name="article_list_row_swipe_toggle_read">Toggle Read</string>
     <string name="article_list_row_swipe_toggle_starred">Toggle Starred</string>
