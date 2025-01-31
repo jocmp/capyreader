@@ -224,4 +224,7 @@
     <string name="after_read_all_behavior_default">По подразбиране</string>
     <string name="article_actions_copy_link">Копирай връзката</string>
     <string name="feed_nav_drawer_title">Емисии</string>
+    <string name="nav_headline_saved_searches">Търсения</string>
+    <string name="article_vertical_open_article_in_browser">Отвори статията в браузъра</string>
+    <string name="search_bar_placeholder">Търсене</string>
 </resources>

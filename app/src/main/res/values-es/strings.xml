@@ -213,4 +213,8 @@
     <string name="layout_preference_label">Disposición preferida</string>
     <string name="layout_preference_single">Columna única</string>
     <string name="end_of_feed_text">¡Estás al día!</string>
+    <string name="settings_donate_button">Donar</string>
+    <string name="after_read_all_behavior_default">Por defecto</string>
+    <string name="article_actions_copy_link">Copiar enlace</string>
+    <string name="article_vertical_open_article_in_browser">Abrir artículo en el navegador</string>
 </resources>
