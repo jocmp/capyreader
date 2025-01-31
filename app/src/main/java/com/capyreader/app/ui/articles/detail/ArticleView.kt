@@ -146,7 +146,9 @@ fun ArticleView(
     }
 
     LaunchedEffect(articles.index) {
-        pagerState.scrollToPage(articles.index)
+        if (articles.isValidIndex) {
+            pagerState.scrollToPage(articles.index)
+        }
     }
 
     BackHandler(enableBackHandler) {

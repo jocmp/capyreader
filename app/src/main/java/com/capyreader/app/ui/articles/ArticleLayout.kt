@@ -466,7 +466,7 @@ fun ArticleLayout(
                 )
 
                 LaunchedEffect(article.id, indexedArticles.index) {
-                    if (hasMultipleColumns) {
+                    if (hasMultipleColumns && indexedArticles.isValidIndex) {
                         scrollToArticle(indexedArticles.index)
                     }
                 }
