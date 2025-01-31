@@ -37,6 +37,7 @@ fun rememberIndexedArticles(
 
     return remember(article, snapshot.size) {
         val index = snapshot.indexOfFirst { it?.id == article.id }
+        val isValidIndex = index > -1
 
         // Trigger reload of snapshot list
         if (index > -1 && articles.peek(index) == null) {
@@ -44,7 +45,11 @@ fun rememberIndexedArticles(
         }
 
         IndexedArticles(
-            index = index,
+            index = if (isValidIndex) {
+                index
+            } else {
+                0
+            },
             previous = index - 1,
             next = index + 1,
             articles = snapshot
