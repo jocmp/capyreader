@@ -19,6 +19,7 @@ object AccountFixture {
         accountDelegate: AccountDelegate = mockk()
     ): Account {
         return Account(
+            context = mockk(),
             id = id,
             path = parentFolder.newFile().toURI(),
             database = database,

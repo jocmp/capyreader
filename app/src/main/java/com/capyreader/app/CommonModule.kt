@@ -15,6 +15,7 @@ internal val common = module {
     single<DatabaseProvider> { AndroidDatabaseProvider(context = get()) }
     single {
         AccountManager(
+            context = get(),
             rootFolder = androidContext().filesDir.toURI(),
             databaseProvider = get(),
             cacheDirectory = androidContext().cacheDir.toURI(),
