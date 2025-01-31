@@ -38,7 +38,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
-import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import com.capyreader.app.R
 import com.capyreader.app.common.AppPreferences
@@ -62,7 +61,6 @@ import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.common.launchUI
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
@@ -79,7 +77,6 @@ fun ArticleLayout(
     allFeeds: List<Feed>,
     allFolders: List<Folder>,
     articles: LazyPagingItems<Article>,
-    searchResults: Flow<PagingData<Article>>,
     article: Article?,
     search: ArticleSearch,
     statusCount: Long,
@@ -377,7 +374,6 @@ fun ArticleLayout(
                 ArticleListScaffold(
                     padding = innerPadding,
                     showOnboarding = isInitialized && !isRefreshing && allFeeds.isEmpty(),
-                    showSearch = search.isActive,
                     onboarding = {
                         EmptyOnboardingView {
                             AddFeedButton(
@@ -387,14 +383,6 @@ fun ArticleLayout(
                             )
                         }
                     },
-                    search = {
-                        ArticleSearchView(
-                            showResults = search.hasQuery,
-                            articles = searchResults,
-                            selectedArticleID = article?.id,
-                            onSelectArticle = ::selectArticle
-                        )
-                    }
                 ) {
                     PullToRefreshBox(
                         isRefreshing = isRefreshing,
@@ -466,7 +454,7 @@ fun ArticleLayout(
                 )
 
                 LaunchedEffect(article.id, indexedArticles.index) {
-                    if (hasMultipleColumns && indexedArticles.isValidIndex) {
+                    if (hasMultipleColumns) {
                         scrollToArticle(indexedArticles.index)
                     }
                 }

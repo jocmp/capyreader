@@ -116,15 +116,15 @@ fun ArticleView(
             )
         },
         reader = {
-            HorizontalPager(
-                state = pagerState,
-                beyondViewportPageCount = 1,
-            ) { page ->
-                ArticlePullRefresh(
-                    toolbars.show && !toolbars.pinned,
-                    onSwipe = onSwipe,
-                    articles = articles,
-                ) {
+            ArticlePullRefresh(
+                toolbars.show && !toolbars.pinned,
+                onSwipe = onSwipe,
+                articles = articles,
+            ) {
+                HorizontalPager(
+                    state = pagerState,
+                    beyondViewportPageCount = 1,
+                ) { page ->
                     articles.find(page)?.let { pagedArticle ->
                         ArticleReader(
                             article = currentArticle(article, pagedArticle),
@@ -146,9 +146,7 @@ fun ArticleView(
     }
 
     LaunchedEffect(articles.index) {
-        if (articles.isValidIndex) {
-            pagerState.scrollToPage(articles.index)
-        }
+        pagerState.scrollToPage(articles.index)
     }
 
     BackHandler(enableBackHandler) {

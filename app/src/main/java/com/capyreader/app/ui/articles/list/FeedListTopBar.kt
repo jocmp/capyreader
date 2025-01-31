@@ -62,10 +62,6 @@ fun FeedListTopBar(
     val enableSearch = search.isActive
     val layout = rememberLayoutPreference()
 
-    val openSearch = {
-        search.update("")
-    }
-
     val closeSearch = {
         search.clear()
     }
@@ -109,8 +105,8 @@ fun FeedListTopBar(
                     )
                 }
 
-                LaunchedEffect(search.isInitialized) {
-                    if (search.isInitialized) {
+                LaunchedEffect(search.isActive) {
+                    if (search.isActive) {
                         focusRequester.requestFocus()
                     }
                 }
@@ -167,7 +163,7 @@ fun FeedListTopBar(
                     )
                 },
                 onEditFailure = onRequestSnackbar,
-                onRequestSearch = openSearch,
+                onRequestSearch = { search.start( )},
                 hideSearchIcon = enableSearch,
                 feed = currentFeed,
             )

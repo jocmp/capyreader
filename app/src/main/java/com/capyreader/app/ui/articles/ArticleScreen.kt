@@ -4,7 +4,6 @@ import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -14,6 +13,7 @@ import com.capyreader.app.common.AfterReadAllBehavior
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.components.ArticleSearch
+import com.capyreader.app.ui.components.SearchState
 import com.capyreader.app.ui.rememberLocalConnectivity
 import com.jocmp.capy.common.launchUI
 import org.koin.androidx.compose.koinViewModel
@@ -34,7 +34,8 @@ fun ArticleScreen(
     val filter by viewModel.filter.collectAsStateWithLifecycle(appPreferences.filter.get())
     val articlesSince by viewModel.articlesSince.collectAsStateWithLifecycle()
     val unreadSort by viewModel.unreadSort.collectAsStateWithLifecycle()
-    val searchQuery by viewModel.searchQuery.collectAsState(initial = null)
+    val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle("")
+    val searchState by viewModel.searchState.collectAsStateWithLifecycle(SearchState.INACTIVE)
     val nextFilter by viewModel.nextFilter.collectAsStateWithLifecycle(initialValue = null)
     val canSwipeToNextFeed = nextFilter != null
     val afterReadAll by viewModel.afterReadAll.collectAsStateWithLifecycle()
@@ -45,8 +46,13 @@ fun ArticleScreen(
     val connectivity = rememberLocalConnectivity()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
 
-    val pager = remember(filter, unreadSort, articlesSince) {
-        viewModel.pager(filter, unreadSort, articlesSince)
+    val pager = remember(filter, unreadSort, articlesSince, searchQuery) {
+        viewModel.pager(
+            filter,
+            unreadSort,
+            articlesSince,
+            searchQuery,
+        )
     }
 
     val articles = pager.flow.collectAsLazyPagingItems()
@@ -101,10 +107,11 @@ fun ArticleScreen(
             openNextFeedOnReadAll = afterReadAll == AfterReadAllBehavior.OPEN_NEXT_FEED,
             search = ArticleSearch(
                 query = searchQuery,
+                start = { viewModel.startSearch() },
                 clear = { viewModel.clearSearch() },
                 update = viewModel::updateSearch,
+                state = searchState,
             ),
-            searchResults = viewModel.searchResults
         )
     }
 }

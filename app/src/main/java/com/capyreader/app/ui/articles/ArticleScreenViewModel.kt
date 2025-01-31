@@ -7,13 +7,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
 import com.capyreader.app.R
 import com.capyreader.app.common.AfterReadAllBehavior
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.toast
 import com.capyreader.app.notifications.NotificationHelper
 import com.capyreader.app.sync.Sync
+import com.capyreader.app.ui.components.SearchState
 import com.jocmp.capy.Account
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
@@ -53,7 +53,9 @@ class ArticleScreenViewModel(
 
     val filter = appPreferences.filter.stateIn(viewModelScope)
 
-    private val _searchQuery = MutableStateFlow<String?>(null)
+    private val _searchQuery = MutableStateFlow("")
+
+    private val _searchState = MutableStateFlow(SearchState.INACTIVE)
 
     private var _article by mutableStateOf<Article?>(null)
 
@@ -74,7 +76,7 @@ class ArticleScreenViewModel(
         filter: ArticleFilter,
         sort: UnreadSortOrder,
         since: OffsetDateTime,
-        query: String = ""
+        query: String = "",
     ) =
         account.buildArticlePager(
             filter = filter,
@@ -82,19 +84,6 @@ class ArticleScreenViewModel(
             unreadSort = sort,
             since = since
         )
-
-    val searchResults: Flow<PagingData<Article>> =
-        combine(
-            filter,
-            _searchQuery,
-            articlesSince,
-        ) { filter, query, since ->
-            account.buildArticlePager(
-                filter = filter,
-                query = query,
-                since = since
-            ).flow
-        }.flatMapLatest { it }
 
     val folders: Flow<List<Folder>> = combine(
         account.folders,
@@ -142,8 +131,11 @@ class ArticleScreenViewModel(
     val article: Article?
         get() = _article
 
-    val searchQuery: Flow<String?>
+    val searchQuery: Flow<String>
         get() = _searchQuery
+
+    val searchState: Flow<SearchState>
+        get() = _searchState
 
     val nextFilter: Flow<NextFilter?>
         get() = _nextFilter
@@ -335,11 +327,20 @@ class ArticleScreenViewModel(
         appPreferences.articleID.delete()
     }
 
+    fun startSearch() {
+        _searchState.value = SearchState.ACTIVE
+    }
+
     fun clearSearch() {
-        _searchQuery.value = null
+        if (_searchQuery.value.isNotBlank()) {
+            clearArticle()
+        }
+        _searchQuery.value = ""
+        _searchState.value = SearchState.INACTIVE
     }
 
     fun updateSearch(query: String) {
+        clearArticle()
         _searchQuery.value = query
     }
 

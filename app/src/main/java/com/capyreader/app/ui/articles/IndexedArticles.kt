@@ -6,7 +6,6 @@ import androidx.paging.compose.LazyPagingItems
 import com.jocmp.capy.Article
 
 data class IndexedArticles(
-    val isValidIndex: Boolean,
     val index: Int,
     private val next: Int,
     private val previous: Int,
@@ -46,7 +45,6 @@ fun rememberIndexedArticles(
         }
 
         IndexedArticles(
-            isValidIndex = isValidIndex,
             index = if (isValidIndex) {
                 index
             } else {
