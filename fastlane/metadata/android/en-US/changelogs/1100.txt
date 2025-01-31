@@ -1,3 +1,2 @@
 • Horizontal navigation in the reader! Swipe left to right to navigate between articles.
 • Update translations for Bulgarian, Spanish, Estonian, Russian, and Chinese thanks to volunteers.
-
