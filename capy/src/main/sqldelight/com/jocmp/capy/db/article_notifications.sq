@@ -1,4 +1,4 @@
-allNotifications:
+activeNotifications:
 SELECT
     article_id,
     articles.title,
@@ -7,7 +7,8 @@ SELECT
     feeds.favicon_url AS feed_favicon_url
 FROM article_notifications
 JOIN articles ON article_notifications.article_id = articles.id
-JOIN feeds ON articles.feed_id = feeds.id;
+JOIN feeds ON articles.feed_id = feeds.id
+AND article_notifications.dismissed_at IS NULL;
 
 createNotification:
 INSERT INTO article_notifications(
@@ -22,8 +23,9 @@ count:
 SELECT COUNT(*)
 FROM article_notifications;
 
-deleteNotifications:
-DELETE FROM article_notifications WHERE article_id IN :ids;
+dismissNotifications:
+UPDATE article_notifications SET
+dismissed_at = :deleted_at WHERE article_id IN :ids;
 
 articlesToNotify:
 SELECT
@@ -31,6 +33,8 @@ SELECT
 FROM articles
 JOIN article_statuses ON articles.id = article_statuses.article_id
 JOIN feeds ON articles.feed_id = feeds.id
+LEFT JOIN article_notifications ON article_notifications.article_id = articles.id
 WHERE article_statuses.updated_at >= :since
 AND article_statuses.read = 0
-AND feeds.enable_notifications = 1;
+AND feeds.enable_notifications = 1
+AND article_notifications.dismissed_at IS NULL;

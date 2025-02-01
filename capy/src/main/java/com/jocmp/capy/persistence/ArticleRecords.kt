@@ -95,12 +95,12 @@ internal class ArticleRecords internal constructor(
             }
         }
 
-        return allNotifications()
+        return activeNotifications()
     }
 
-    private suspend fun allNotifications(): List<ArticleNotification> {
+    private suspend fun activeNotifications(): List<ArticleNotification> {
         return notificationQueries
-            .allNotifications(mapper = ::articleNotificationMapper)
+            .activeNotifications(mapper = ::articleNotificationMapper)
             .asFlow()
             .mapToList(Dispatchers.IO)
             .firstOrNull()
@@ -113,8 +113,11 @@ internal class ArticleRecords internal constructor(
             .executeAsOneOrNull() ?: 0
     }
 
-    internal fun deleteNotification(ids: List<String>) {
-        notificationQueries.deleteNotifications(ids = ids)
+    internal fun dismissNotifications(ids: List<String>) {
+        notificationQueries.dismissNotifications(
+            ids = ids,
+            deleted_at = nowUTC().toEpochSecond()
+        )
     }
 
     fun deleteAllArticles() {
