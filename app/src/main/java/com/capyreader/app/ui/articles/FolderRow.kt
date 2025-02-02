@@ -12,8 +12,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.rounded.ArrowDropDown
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.IconButtonDefaults
@@ -94,9 +95,11 @@ private fun DropdownButton(
 
     FolderIconButton(onClick = { onExpanded(!expanded) }) {
         Icon(
-            imageVector = Icons.Filled.ArrowDropDown,
+            imageVector = Icons.Rounded.ArrowDropDown,
             contentDescription = null,
-            modifier = Modifier.rotate(rotation)
+            modifier = Modifier
+                .size(30.dp)
+                .rotate(rotation)
         )
     }
 }
