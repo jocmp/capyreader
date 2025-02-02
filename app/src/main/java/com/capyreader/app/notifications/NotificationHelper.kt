@@ -43,7 +43,7 @@ class NotificationHelper(
     }
 
     fun dismissNotifications(ids: List<String>) {
-        account.deleteNotifications(ids)
+        account.dismissNotifications(ids)
 
         val notificationManager = NotificationManagerCompat.from(applicationContext)
 

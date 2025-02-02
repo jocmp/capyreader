@@ -14,8 +14,9 @@ internal class FeedFixture(
         feedID: String = randomID(),
         feedURL: String = "https://example.com",
         title: String = "My Feed",
+        enableNotifications: Boolean = false,
     ): Feed = runBlocking {
-        records.upsert(
+        val feed = records.upsert(
             feedID = feedID,
             subscriptionID = randomID(),
             title = title,
@@ -23,6 +24,12 @@ internal class FeedFixture(
             siteURL = feedURL,
             faviconURL = null,
         )!!
+
+        if (enableNotifications) {
+            records.enableNotifications(feed.id, enabled = true)
+        }
+
+        records.find(feed.id)!!
     }
 
     private fun randomID() = SecureRandom.getInstanceStrong().nextInt().toString()

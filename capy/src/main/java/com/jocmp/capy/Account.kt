@@ -232,8 +232,8 @@ data class Account(
         return articleRecords.countNotifications()
     }
 
-    fun deleteNotifications(ids: List<String>) {
-        articleRecords.deleteNotification(ids)
+    fun dismissNotifications(ids: List<String>) {
+        articleRecords.dismissNotifications(ids)
     }
 
     suspend fun import(inputStream: InputStream, onProgress: (ImportProgress) -> Unit) {
