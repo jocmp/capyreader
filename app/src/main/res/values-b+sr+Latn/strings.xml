@@ -211,4 +211,18 @@
     <string name="settings_enable_high_contrast_dark_theme">Omogućite tamnu temu visokog kontrasta</string>
     <string name="settings_gestures_reader_tap_to_page_title">E Mastilo dodirnite za pomeranje</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Dodirnite donje uglove da biste se kretali po sadržaju članka</string>
+    <string name="full_content_error_missing_response">Preuzimanje članka nije uspelo</string>
+    <string name="after_read_all_behavior_open_next_feed">Otvorite sledeći izvor</string>
+    <string name="auth_fields_username">Korisničko ime</string>
+    <string name="nav_headline_saved_searches">Pretrage</string>
+    <string name="article_actions_copy_link">Kopiraj vezu</string>
+    <string name="settings_donate_button">Donirajte</string>
+    <string name="article_vertical_open_article_in_browser">Otvorite članak u web pretraživaču</string>
+    <string name="after_read_all_behavior_label">Nakon čitanja svih</string>
+    <string name="after_read_all_behavior_default">Podrazumevano</string>
+    <string name="feed_nav_drawer_title">Izvori</string>
+    <string name="search_bar_placeholder">Pretraga</string>
+    <string name="end_of_feed_text">Sve pregledano!</string>
+    <string name="full_content_error_generic">Raščlanjivanje članka nije uspelo</string>
+    <string name="after_read_all_behavior_open_drawer">Otvorite fioku za navigaciju</string>
 </resources>
