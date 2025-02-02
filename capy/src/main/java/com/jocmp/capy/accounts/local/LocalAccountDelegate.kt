@@ -37,7 +37,11 @@ internal class LocalAccountDelegate(
     private val taggingRecords = TaggingRecords(database)
 
     override suspend fun refresh(filter: ArticleFilter, cutoffDate: ZonedDateTime?): Result<Unit> {
-        refreshFeeds(cutoffDate)
+        when (filter) {
+            is ArticleFilter.Feeds -> refreshFeedFilter(filter, cutoffDate = cutoffDate)
+            is ArticleFilter.Folders -> refreshFolderFilter(filter, cutoffDate = cutoffDate)
+            else -> refreshArticleFilter(cutoffDate)
+        }
 
         return Result.success(Unit)
     }
@@ -140,21 +144,47 @@ internal class LocalAccountDelegate(
         return Result.success(Unit)
     }
 
-    private suspend fun refreshFeeds(cutoffDate: ZonedDateTime?) {
-        try {
-            val feeds = feedRecords.feeds().firstOrNull() ?: return
-
-            coroutineScope {
-                feeds.forEach { feed ->
-                    launch {
-                        feedFinder.fetch(feed.feedURL).onSuccess { channel ->
-                            saveArticles(channel.items, cutoffDate = cutoffDate, feed = feed)
-                        }
-                    }
+    private suspend fun refreshFeeds(feeds: List<Feed>, cutoffDate: ZonedDateTime?) {
+        coroutineScope {
+            feeds.forEach { feed ->
+                launch {
+                    refreshFeed(feed, cutoffDate = cutoffDate)
                 }
             }
+        }
+    }
+
+    private suspend fun refreshArticleFilter(cutoffDate: ZonedDateTime?) {
+        val feeds = feedRecords.feeds().firstOrNull() ?: return
+
+        refreshFeeds(feeds, cutoffDate = cutoffDate)
+    }
+
+    private suspend fun refreshFolderFilter(
+        filter: ArticleFilter.Folders,
+        cutoffDate: ZonedDateTime?
+    ) {
+        val folder = feedRecords.findFolder(title = filter.folderTitle) ?: return
+
+        refreshFeeds(folder.feeds, cutoffDate = cutoffDate)
+    }
+
+    private suspend fun refreshFeedFilter(
+        filter: ArticleFilter.Feeds,
+        cutoffDate: ZonedDateTime?
+    ) {
+        val feed = feedRecords.find(id = filter.feedID) ?: return
+
+        refreshFeed(feed, cutoffDate = cutoffDate)
+    }
+
+    private suspend fun refreshFeed(feed: Feed, cutoffDate: ZonedDateTime?) {
+        try {
+            feedFinder.fetch(feed.feedURL).onSuccess { channel ->
+                saveArticles(channel.items, cutoffDate = cutoffDate, feed = feed)
+            }
         } catch (e: Throwable) {
-            // continue
+            CapyLog.error("refresh", e)
         }
     }
 
