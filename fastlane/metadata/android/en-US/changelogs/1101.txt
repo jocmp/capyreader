@@ -1,0 +1,17 @@
+Added
+
+• Horizontal navigation in the reader!
+• Added initial support to fetch FreshRSS user labels
+
+Updated
+
+• Make article status filters more visible and easier to reach
+• Improved performance when fetching individual local feeds and folders
+• Update translations thanks to volunteers
+• Updated custom content extractors for various sites
+
+Fixed
+
+• Fix visual bugs in articles with YouTube embeds
+• Fix local feed persistence bug where item URLs were not unique
+• Even more bug fixes
