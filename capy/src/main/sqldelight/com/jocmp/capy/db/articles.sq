@@ -358,6 +358,11 @@ deleteAllArticles {
   WHERE article_id NOT IN (
     SELECT article_id FROM article_statuses
   );
+
+  DELETE FROM article_notifications
+  WHERE article_id NOT IN (
+   SELECT article_id FROM article_statuses
+  );
 }
 
 deleteArticles {
@@ -370,6 +375,11 @@ deleteArticles {
   DELETE FROM articles
   WHERE id NOT IN (
     SELECT article_id FROM article_statuses
+  );
+
+  DELETE FROM article_notifications
+  WHERE article_id NOT IN (
+   SELECT article_id FROM article_statuses
   );
 
   DELETE FROM saved_search_articles
