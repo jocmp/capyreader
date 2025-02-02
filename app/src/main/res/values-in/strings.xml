@@ -216,4 +216,8 @@
     <string name="settings_notifications_select_none">Tidak ada pilihan</string>
     <string name="article_list_row_swipe_open_externally">Buka Bacaan di Peramban</string>
     <string name="settings_section_browser">Peramban</string>
+    <string name="feed_nav_drawer_title">Umpan</string>
+    <string name="article_vertical_open_article_in_browser">Buka artikel di browser</string>
+    <string name="search_bar_placeholder">Mencari</string>
+    <string name="nav_headline_saved_searches">Pencarian</string>
 </resources>

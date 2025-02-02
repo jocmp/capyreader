@@ -223,4 +223,7 @@
     <string name="after_read_all_behavior_open_next_feed">打開下個源</string>
     <string name="article_actions_copy_link">複製連結</string>
     <string name="feed_nav_drawer_title">源</string>
+    <string name="article_vertical_open_article_in_browser">在瀏覽器中打開文章</string>
+    <string name="search_bar_placeholder">搜尋</string>
+    <string name="nav_headline_saved_searches">搜尋</string>
 </resources>
