@@ -29,7 +29,7 @@ class ArticleRenderer(
 
         val substitutions = colors + mapOf(
             "external_link" to article.externalLink(),
-            "title" to article.title,
+            "title" to title(article.title),
             "byline" to byline,
             "feed_name" to article.feedName,
             "font_size" to "${textSize.get()}px",
@@ -71,11 +71,23 @@ class ArticleRenderer(
         }
     }
 
+    private fun title(articleTitle: String): String {
+        return if (articleTitle.isBlank()) {
+            ""
+        } else {
+            """
+            <div class="article__title">
+                <h1>${articleTitle}</h1>
+            </div>
+            """.trimIndent()
+        }
+    }
+
     private fun fontPreload(fontFamily: FontOption): String {
         return when (fontFamily) {
             FontOption.SYSTEM_DEFAULT -> ""
             else -> """
-                    <link rel="preload" href="https://appassets.androidplatform.net/res/font/${fontFamily.slug}.ttf" as="font" type="font/ttf" crossorigin>
+                <link rel="preload" href="https://appassets.androidplatform.net/res/font/${fontFamily.slug}.ttf" as="font" type="font/ttf" crossorigin>
                 """.trimIndent()
         }
     }

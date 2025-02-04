@@ -104,10 +104,12 @@ fun ArticleRow(
         ) {
             ArticleListItem(
                 headlineContent = {
-                    Text(
-                        article.title,
-                        fontWeight = FontWeight.Bold,
-                    )
+                    if (article.title.isNotBlank()) {
+                        Text(
+                            article.title,
+                            fontWeight = FontWeight.Bold,
+                        )
+                    }
                 },
                 overlineContent = {
                     Row(
