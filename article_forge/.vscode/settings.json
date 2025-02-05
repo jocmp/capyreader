@@ -1,9 +1,0 @@
-{
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[liquid]": {
-    "editor.defaultFormatter": "Shopify.theme-check-vscode"
-  }
-}
