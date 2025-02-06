@@ -214,8 +214,11 @@ ul:has(img) {
 }
 
 .article__title {
+  margin: 0;
   padding-bottom: 0.5rem;
-  h1 {
+
+  &:empty {
+    padding: 0;
     margin: 0;
   }
 }

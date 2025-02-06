@@ -8,6 +8,8 @@ require "liquid"
 
 js_context = nil
 
+article_cache = {}
+
 configure do
   Sinatra::Application.reset!
   StyleMinifier.minify
@@ -25,7 +27,9 @@ get "/articles" do
   font_family = FontPicker.pick(params["font_family"])
 
   article_url = params["article_url"]
-  article_content = JSON.parse(`cd ../../mercury-parser && npx mercury-parser #{article_url}`)
+  article_content = article_cache[article_url] || JSON.parse(`cd ../../mercury-parser && npx mercury-parser #{article_url}`)
+
+  article_cache[article_url] = article_content
 
   liquid :template, locals: {
     title: article_content["title"],

@@ -29,7 +29,7 @@ class ArticleRenderer(
 
         val substitutions = colors + mapOf(
             "external_link" to article.externalLink(),
-            "title" to title(article.title),
+            "title" to article.title,
             "byline" to byline,
             "feed_name" to article.feedName,
             "font_size" to "${textSize.get()}px",
@@ -68,18 +68,6 @@ class ArticleRenderer(
             "0px"
         } else {
             "64px"
-        }
-    }
-
-    private fun title(articleTitle: String): String {
-        return if (articleTitle.isBlank()) {
-            ""
-        } else {
-            """
-            <div class="article__title">
-                <h1>${articleTitle}</h1>
-            </div>
-            """.trimIndent()
         }
     }
 
