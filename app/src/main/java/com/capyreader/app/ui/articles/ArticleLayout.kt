@@ -135,7 +135,12 @@ fun ArticleLayout(
     fun scrollToArticle(index: Int) {
         coroutineScope.launch {
             if (index > -1) {
-                listState.animateScrollToItem(index)
+                val visibleItemsInfo = listState.layoutInfo.visibleItemsInfo
+                val isItemVisible = visibleItemsInfo.any { it.index == index }
+
+                if (!isItemVisible) {
+                    listState.animateScrollToItem(index)
+                }
             }
         }
     }
