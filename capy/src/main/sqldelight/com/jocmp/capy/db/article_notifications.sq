@@ -2,6 +2,7 @@ activeNotifications:
 SELECT
     article_id,
     articles.title,
+    articles.summary,
     feeds.id AS feed_id,
     feeds.title AS feed_title,
     feeds.favicon_url AS feed_favicon_url
@@ -19,9 +20,10 @@ VALUES (
 )
 ON CONFLICT(article_id) DO NOTHING;
 
-count:
+countActive:
 SELECT COUNT(*)
-FROM article_notifications;
+FROM article_notifications
+WHERE dismissed_at IS NULL;
 
 dismissNotifications:
 UPDATE article_notifications SET

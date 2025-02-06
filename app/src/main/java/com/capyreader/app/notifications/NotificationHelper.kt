@@ -51,7 +51,7 @@ class NotificationHelper(
             notificationManager.cancel(it.hashCode())
         }
 
-        if (account.countNotifications() == 0L) {
+        if (account.countActiveNotifications() == 0L) {
             notificationManager.cancel(Notifications.FEED_UPDATE_GROUP_NOTIFICATION_ID)
         }
     }

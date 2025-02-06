@@ -107,9 +107,9 @@ internal class ArticleRecords internal constructor(
             .orEmpty()
     }
 
-    internal fun countNotifications(): Long {
+    internal fun countActiveNotifications(): Long {
         return notificationQueries
-            .count()
+            .countActive()
             .executeAsOneOrNull() ?: 0
     }
 

@@ -228,8 +228,8 @@ data class Account(
         return articleRecords.createNotifications(since = since)
     }
 
-    fun countNotifications(): Long {
-        return articleRecords.countNotifications()
+    fun countActiveNotifications(): Long {
+        return articleRecords.countActiveNotifications()
     }
 
     fun dismissNotifications(ids: List<String>) {
