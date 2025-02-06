@@ -2,11 +2,9 @@ package com.capyreader.app.ui.components
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
-import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
-import android.webkit.WebView.VisualStateCallback
 import android.webkit.WebViewClient
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -70,16 +68,6 @@ class AccompanistWebViewClient(
 
     private val appPreferences by inject<AppPreferences>()
 
-    override fun onPageStarted(view: WebView, url: String?, favicon: Bitmap?) {
-        super.onPageStarted(view, url, favicon)
-
-        view.postVisualStateCallback(0, object : VisualStateCallback() {
-            override fun onComplete(requestId: Long) {
-                view.visibility = View.VISIBLE
-            }
-        })
-    }
-
     override fun shouldInterceptRequest(
         view: WebView,
         request: WebResourceRequest
@@ -133,21 +121,11 @@ class WebViewState(
     private val scope: CoroutineScope,
     internal val webView: WebView,
 ) {
-    private var htmlId: String? = null
-
     init {
         loadEmpty()
     }
 
     fun loadHtml(article: Article, showImages: Boolean) {
-        val id = article.id
-
-        if (htmlId == null || id != htmlId) {
-            webView.visibility = View.INVISIBLE
-        }
-
-        htmlId = id
-
         scope.launch {
             withContext(Dispatchers.IO) {
                 val html = renderer.render(
@@ -171,7 +149,6 @@ class WebViewState(
     }
 
     fun reset() {
-        htmlId = null
         loadEmpty()
     }
 
