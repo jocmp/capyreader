@@ -107,10 +107,16 @@ object {
 }
 
 figure {
+  margin-bottom: 1em;
+  line-height: 1.2em;
   font-size: calc(var(--article-font-size) * 0.75);
   color: var(--color-on-surface-variant);
-  line-height: 1.2em;
-  margin-bottom: 1em;
+
+  blockquote {
+    font-size: var(--article-font-size);
+    color: var(--color-on-surface);
+    line-height: normal;
+  }
 }
 
 .iframe-embed {
