@@ -185,7 +185,7 @@
     <string name="settings_notifications_select_all">Tout sélectionner</string>
     <string name="settings_notifications_select_none">Ne rien sélectionner</string>
     <string name="settings_gestures_list_back_navigation_action">Action de navigation retour</string>
-    <string name="settings_confirm_mark_all_read">Confirmer tout marquer comme lu</string>
+    <string name="settings_confirm_mark_all_read">Demander confirmation avant de tout marquer comme lu</string>
     <string name="notifications_permission_disabled_title">L’autorisation de notification est désactivée</string>
     <string name="auth_fields_api_url">Serveur</string>
     <string name="account_source_freshrss">FreshRSS</string>
@@ -222,4 +222,7 @@
     <string name="after_read_all_behavior_label">Après avoir tout lu</string>
     <string name="article_actions_copy_link">Copier le lien</string>
     <string name="feed_nav_drawer_title">Flux</string>
+    <string name="article_vertical_open_article_in_browser">Ouvrir l\'article dans le navigateur</string>
+    <string name="search_bar_placeholder">Rechercher</string>
+    <string name="nav_headline_saved_searches">Recherches</string>
 </resources>
