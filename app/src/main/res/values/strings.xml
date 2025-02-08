@@ -238,4 +238,5 @@
     <string name="media_save_failure">Failed to save image</string>
     <string name="media_share_failure">Failed to share image</string>
     <string name="media_share">Share</string>
+    <string name="feed_nav_drawer_refresh_all">Refresh all</string>
 </resources>

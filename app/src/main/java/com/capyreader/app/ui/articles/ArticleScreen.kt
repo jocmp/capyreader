@@ -77,7 +77,9 @@ fun ArticleScreen(
             onInitialized = { completion ->
                 viewModel.initialize(onComplete = completion)
             },
-            onFeedRefresh = viewModel::refreshFeed,
+            onRefresh = { filter, completion ->
+                viewModel.refresh(filter, completion)
+            },
             drawerState = drawerState,
             onSelectFolder = viewModel::selectFolder,
             onSelectFeed = viewModel::selectFeed,

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -42,6 +43,7 @@ fun FeedList(
     savedSearches: List<SavedSearch> = emptyList(),
     onFilterSelect: () -> Unit,
     onSelectSavedSearch: (search: SavedSearch) -> Unit,
+    onRefreshAll: (completion: () -> Unit) -> Unit,
     onSelectFolder: (folder: Folder) -> Unit,
     onSelectFeed: (feed: Feed, folderTitle: String?) -> Unit,
     onFeedAdded: (feedID: String) -> Unit,
@@ -50,6 +52,10 @@ fun FeedList(
 ) {
     val scrollState = rememberScrollState()
     val articleStatus = filter.status
+
+    val refreshAll = {
+        onRefreshAll {}
+    }
 
     Column(
         Modifier.fillMaxSize()
@@ -84,6 +90,12 @@ fun FeedList(
                        Icon(
                            imageVector = Icons.Rounded.Settings,
                            contentDescription = stringResource(R.string.settings)
+                       )
+                   }
+                   IconButton(onClick = { refreshAll() }) {
+                       Icon(
+                           imageVector = Icons.Rounded.Refresh,
+                           contentDescription = stringResource(R.string.feed_nav_drawer_refresh_all)
                        )
                    }
                    AddFeedButton(
@@ -195,6 +207,7 @@ fun FeedListPreview() {
         onSelectFolder = {},
         onSelectFeed = { _, _ -> },
         onNavigateToSettings = {},
+        onRefreshAll = {},
         onFilterSelect = {},
         filter = ArticleFilter.default(),
         statusCount = 10,
