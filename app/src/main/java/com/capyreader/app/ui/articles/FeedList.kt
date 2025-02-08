@@ -1,5 +1,10 @@
 package com.capyreader.app.ui.articles
 
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,8 +24,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,11 +39,14 @@ import com.capyreader.app.R
 import com.capyreader.app.ui.fixtures.FeedSample
 import com.capyreader.app.ui.fixtures.FolderPreviewFixture
 import com.capyreader.app.ui.navigationTitle
+import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.SavedSearch
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun FeedList(
@@ -53,8 +67,21 @@ fun FeedList(
     val scrollState = rememberScrollState()
     val articleStatus = filter.status
 
+    var refreshing by remember { mutableStateOf(false) }
+    val angle by rememberInfiniteTransition(label = "").animateFloat(
+        initialValue = 0F,
+        targetValue = 360F,
+        animationSpec = infiniteRepeatable(
+            animation = tween(1000, easing = LinearEasing)
+        ),
+        label = ""
+    )
+
     val refreshAll = {
-        onRefreshAll {}
+        refreshing = true
+        onRefreshAll {
+            refreshing = false
+        }
     }
 
     Column(
@@ -82,29 +109,32 @@ fun FeedList(
                             horizontal = 12.dp
                         ),
                 )
-               Row(
-                   horizontalArrangement = Arrangement.spacedBy(8.dp),
-                   verticalAlignment = Alignment.CenterVertically
-               ) {
-                   IconButton(onClick = { onNavigateToSettings() }) {
-                       Icon(
-                           imageVector = Icons.Rounded.Settings,
-                           contentDescription = stringResource(R.string.settings)
-                       )
-                   }
-                   IconButton(onClick = { refreshAll() }) {
-                       Icon(
-                           imageVector = Icons.Rounded.Refresh,
-                           contentDescription = stringResource(R.string.feed_nav_drawer_refresh_all)
-                       )
-                   }
-                   AddFeedButton(
-                       iconOnly = true,
-                       onComplete = {
-                           onFeedAdded(it)
-                       }
-                   )
-               }
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    IconButton(onClick = { onNavigateToSettings() }) {
+                        Icon(
+                            imageVector = Icons.Rounded.Settings,
+                            contentDescription = stringResource(R.string.settings)
+                        )
+                    }
+                    IconButton(onClick = { refreshAll() }) {
+                        Icon(
+                            imageVector = Icons.Rounded.Refresh,
+                            contentDescription = stringResource(R.string.feed_nav_drawer_refresh_all),
+                            modifier = Modifier.graphicsLayer {
+                                rotationZ = if (refreshing) angle else 0f
+                            }
+                        )
+                    }
+                    AddFeedButton(
+                        iconOnly = true,
+                        onComplete = {
+                            onFeedAdded(it)
+                        }
+                    )
+                }
             }
             NavigationDrawerItem(
                 icon = { ArticleStatusIcon(status = articleStatus) },
@@ -200,19 +230,31 @@ private fun FeedListDivider() {
 fun FeedListPreview() {
     val folders = FolderPreviewFixture().values.take(2).toList()
     val feeds = FeedSample().values.take(2).toList()
+    val coroutineScope = rememberCoroutineScope()
 
-    FeedList(
-        folders = folders,
-        feeds = feeds,
-        onSelectFolder = {},
-        onSelectFeed = { _, _ -> },
-        onNavigateToSettings = {},
-        onRefreshAll = {},
-        onFilterSelect = {},
-        filter = ArticleFilter.default(),
-        statusCount = 10,
-        onFeedAdded = {},
-        onSelectStatus = {},
-        onSelectSavedSearch = {}
-    )
+    fun onRefresh(completion: () -> Unit) {
+        coroutineScope.launch {
+            delay(1500)
+            completion()
+        }
+    }
+
+    CapyTheme {
+        FeedList(
+            folders = folders,
+            feeds = feeds,
+            onSelectFolder = {},
+            onSelectFeed = { _, _ -> },
+            onNavigateToSettings = {},
+            onRefreshAll = {
+                onRefresh(it)
+            },
+            onFilterSelect = {},
+            filter = ArticleFilter.default(),
+            statusCount = 10,
+            onFeedAdded = {},
+            onSelectStatus = {},
+            onSelectSavedSearch = {}
+        )
+    }
 }
