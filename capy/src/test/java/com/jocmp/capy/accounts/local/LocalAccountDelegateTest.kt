@@ -5,6 +5,7 @@ import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.FakeFaviconFetcher
+import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.FeedFixture
 import com.jocmp.capy.logging.CapyLog
@@ -111,6 +112,30 @@ class LocalAccountDelegateTest {
 
         assertEquals(expected = 1, actual = feeds.size)
         assertEquals(expected = 2, actual = articlesCount)
+    }
+
+    @Test
+    fun refreshAll_doesNotChangeUpdatedAtTimestamp() = runTest {
+        val mockNow = ZonedDateTime.parse("2024-12-25T09:00:00-00:00")
+        mockkObject(TimeHelpers)
+        coEvery { feedFinder.fetch(url = any()) }.returns(Result.success(channel))
+        every { TimeHelpers.nowUTC() }.returns(mockNow)
+
+        FeedFixture(database).create(feedID = channel.link!!)
+
+        delegate.refresh(ArticleFilter.default())
+
+        var article = ArticleRecords(database).find(articleID =  item.link!!)!!
+
+        val firstUpdatedAt = article.updatedAt
+        assertEquals(expected = mockNow, actual = firstUpdatedAt)
+
+        val futureNow = ZonedDateTime.parse("2025-12-25T09:00:00-00:00")
+        every { TimeHelpers.nowUTC() }.returns(futureNow)
+        delegate.refresh(ArticleFilter.default())
+        article = ArticleRecords(database).find(articleID =  item.link!!)!!
+
+        assertEquals(expected = firstUpdatedAt, actual = article.updatedAt)
     }
 
 
