@@ -1,13 +1,13 @@
 package com.capyreader.app.ui.articles.detail
 
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -83,12 +83,6 @@ fun ArticleReader(
     }
 
     ArticleStyleListener(webView = webViewState.webView)
-
-    DisposableEffect(article.id) {
-        onDispose {
-            webViewState.reset()
-        }
-    }
 }
 
 @Composable

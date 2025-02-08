@@ -31,10 +31,6 @@ import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
 import com.jocmp.capy.common.windowOrigin
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.koin.compose.koinInject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -118,41 +114,24 @@ class AccompanistWebViewClient(
 class WebViewState(
     private val renderer: ArticleRenderer,
     private val colors: Map<String, String>,
-    private val scope: CoroutineScope,
     internal val webView: WebView,
 ) {
-    init {
-        loadEmpty()
-    }
-
     fun loadHtml(article: Article, showImages: Boolean) {
-        scope.launch {
-            withContext(Dispatchers.IO) {
-                val html = renderer.render(
-                    article,
-                    hideImages = !showImages,
-                    byline = article.byline(context = webView.context),
-                    colors = colors
-                )
+        val html = renderer.render(
+            article,
+            hideImages = !showImages,
+            byline = article.byline(context = webView.context),
+            colors = colors
+        )
 
-                withContext(Dispatchers.Main) {
-                    webView.loadDataWithBaseURL(
-                        windowOrigin(article.url),
-                        html,
-                        null,
-                        "UTF-8",
-                        null,
-                    )
-                }
-            }
-        }
+        webView.loadDataWithBaseURL(
+            windowOrigin(article.url),
+            html,
+            null,
+            "UTF-8",
+            null,
+        )
     }
-
-    fun reset() {
-        loadEmpty()
-    }
-
-    private fun loadEmpty() = webView.loadUrl("about:blank")
 }
 
 @SuppressLint("SetJavaScriptEnabled")
@@ -195,7 +174,7 @@ fun rememberWebViewState(
             webViewClient = client
         }
 
-        WebViewState(renderer, colors, scope, webView).also {
+        WebViewState(renderer, colors, webView).also {
             client.state = it
         }
     }
