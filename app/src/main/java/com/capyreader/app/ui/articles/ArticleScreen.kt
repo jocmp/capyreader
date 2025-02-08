@@ -78,8 +78,8 @@ fun ArticleScreen(
             article = viewModel.article,
             statusCount = statusCount,
             refreshInterval = appPreferences.refreshInterval.get(),
-            onInitialized = {
-                viewModel.initialize()
+            onInitialized = { completion ->
+                viewModel.initialize(onComplete = completion)
             },
             onRefresh = { filter, completion ->
                 viewModel.refresh(filter, completion)
