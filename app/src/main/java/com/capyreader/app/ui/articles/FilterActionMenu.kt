@@ -84,22 +84,19 @@ fun FeedActions(
                 )
             }
 
-            if (isEditDialogOpen) {
-                EditFeedDialog(
-                    feed = feed,
-                    onSubmit = {
-                        setEditDialogOpen(false)
-                        onFeedEdited()
-                    },
-                    onCancel = {
-                        setEditDialogOpen(false)
-                    },
-                    onFailure = {
-                        setEditDialogOpen(false)
-                        onEditFailure(editErrorMessage)
-                    }
-                )
-            }
+            EditFeedDialog(
+                isOpen = isEditDialogOpen,
+                feed = feed,
+                onSuccess = {
+                    onFeedEdited()
+                },
+                onDismiss = {
+                    setEditDialogOpen(false)
+                },
+                onFailure = {
+                    onEditFailure(editErrorMessage)
+                }
+            )
         }
     }
 }

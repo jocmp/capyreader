@@ -1,5 +1,6 @@
 package com.capyreader.app.ui.articles
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,11 +11,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.Card
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MenuAnchorType.Companion.PrimaryNotEditable
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -34,7 +39,6 @@ import com.capyreader.app.R
 import com.capyreader.app.common.RowItem
 import com.capyreader.app.ui.components.DialogHorizontalDivider
 import com.capyreader.app.ui.components.FormSection
-import com.capyreader.app.ui.components.TextSwitch
 import com.capyreader.app.ui.fixtures.FeedSample
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.EditFeedFormEntry
@@ -124,14 +128,12 @@ fun EditFeedView(
                     modifier = Modifier.padding(bottom = 16.dp),
                     title = stringResource(R.string.edit_feed_tags_section)
                 ) {
-                    RowItem {
-                        FolderMultiselect(
-                            addedFolder = addedFolder,
-                            onUpdateAddedFolder = setAddedFolder,
-                            folders = displaySwitchFolders,
-                            switchFolders = switchFolders,
-                        )
-                    }
+                    FolderMultiselect(
+                        addedFolder = addedFolder,
+                        onUpdateAddedFolder = setAddedFolder,
+                        folders = displaySwitchFolders,
+                        switchFolders = switchFolders,
+                    )
                 }
             } else {
                 Column(
@@ -214,32 +216,42 @@ private fun FolderMultiselect(
     folders: SortedMap<String, Boolean>,
     switchFolders: MutableMap<String, Boolean>,
 ) {
-    OutlinedTextField(
-        value = addedFolder,
-        onValueChange = onUpdateAddedFolder,
-        label = { Text(stringResource(id = R.string.add_feed_new_folder_title)) },
-        keyboardOptions = KeyboardOptions(
-            capitalization = KeyboardCapitalization.Words,
-            autoCorrectEnabled = false
-        ),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 8.dp)
-    )
     RowItem {
+        OutlinedTextField(
+            value = addedFolder,
+            onValueChange = onUpdateAddedFolder,
+            label = { Text(stringResource(id = R.string.add_feed_new_folder_title)) },
+            keyboardOptions = KeyboardOptions(
+                capitalization = KeyboardCapitalization.Words,
+                autoCorrectEnabled = false
+            ),
+            trailingIcon = { Icon(Icons.Rounded.Add, contentDescription = null) },
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
+    Column {
         folders.forEach { (folderTitle, checked) ->
-            TextSwitch(
-                onCheckedChange = { switchFolders[folderTitle] = it },
-                checked = checked,
-                title = {
-                    Text(
-                        text = folderTitle,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.padding(end = 8.dp)
-                    )
-                }
-            )
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        switchFolders[folderTitle] = !checked
+                    }
+            ) {
+                Checkbox(
+                    checked = checked,
+                    onCheckedChange = { switchFolders[folderTitle] = it },
+                    modifier = Modifier.padding(start = 8.dp)
+                )
+                Text(
+                    text = folderTitle,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.padding(end = 16.dp)
+                )
+            }
         }
     }
 }
