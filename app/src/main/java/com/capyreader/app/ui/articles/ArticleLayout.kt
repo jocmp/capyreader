@@ -514,10 +514,15 @@ fun ArticleLayout(
     }
 
     ArticleListBackHandler(
-        enabled = isFeedActive(media, article, search)
-    ) {
-        toggleDrawer()
-    }
+        enabled = isFeedActive(media, article, search),
+        isDrawerOpen = drawerState.isOpen,
+        toggleDrawer = {
+            toggleDrawer()
+        },
+        closeDrawer = {
+            closeDrawer()
+        }
+    )
 
     LayoutNavigationHandler(
         enabled = article == null
