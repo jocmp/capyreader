@@ -96,7 +96,7 @@ class ArticleScreenViewModel(
 
     val savedSearches = account.savedSearches
 
-    val allFeeds = account.allFeeds
+    val allFeeds = account.taggedFeeds
 
     val allFolders = account.folders
 
