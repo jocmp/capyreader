@@ -250,11 +250,11 @@ class ArticleScreenViewModel(
         }
     }
 
-    fun initialize(onComplete: () -> Unit) {
+    fun initialize(filter: ArticleFilter = latestFilter, onComplete: () -> Unit = {}) {
         refreshJob?.cancel()
 
         refreshJob = viewModelScope.launch(Dispatchers.IO) {
-            account.refresh(latestFilter).onFailure { throwable ->
+            account.refresh(filter).onFailure { throwable ->
                 if (throwable is UnauthorizedError && _showUnauthorizedMessage == UnauthorizedMessageState.HIDE) {
                     _showUnauthorizedMessage = UnauthorizedMessageState.SHOW
                 }
@@ -264,8 +264,8 @@ class ArticleScreenViewModel(
         }
     }
 
-    fun refreshFeed(onComplete: () -> Unit) {
-        initialize {
+    fun refresh(filter: ArticleFilter, onComplete: () -> Unit) {
+        initialize(filter) {
             updateArticlesSince()
             onComplete()
         }

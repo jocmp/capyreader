@@ -46,8 +46,8 @@ import com.capyreader.app.common.Saver
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
+import com.capyreader.app.ui.articles.list.ArticleListTopBar
 import com.capyreader.app.ui.articles.list.EmptyOnboardingView
-import com.capyreader.app.ui.articles.list.FeedListTopBar
 import com.capyreader.app.ui.articles.list.PullToNextFeedBox
 import com.capyreader.app.ui.articles.list.resetScrollBehaviorListener
 import com.capyreader.app.ui.articles.media.ArticleMediaView
@@ -82,7 +82,7 @@ fun ArticleLayout(
     statusCount: Long,
     refreshInterval: RefreshInterval,
     onInitialized: (completion: () -> Unit) -> Unit,
-    onFeedRefresh: (completion: () -> Unit) -> Unit,
+    onRefresh: (filter: ArticleFilter, completion: () -> Unit) -> Unit,
     onSelectFolder: (folderTitle: String) -> Unit,
     onSelectSavedSearch: (savedSearchID: String) -> Unit,
     onSelectFeed: (feedID: String, folderTitle: String?) -> Unit,
@@ -205,7 +205,7 @@ fun ArticleLayout(
 
     fun refreshFeeds() {
         isRefreshing = true
-        onFeedRefresh {
+        onRefresh(filter) {
             isRefreshing = false
             refreshPagination()
         }
@@ -326,6 +326,9 @@ fun ArticleLayout(
                 onSelectSavedSearch = ::selectSavedSearch,
                 onNavigateToSettings = onNavigateToSettings,
                 onFilterSelect = ::selectFilter,
+                onRefreshAll = { completion ->
+                    onRefresh(ArticleFilter.default(), completion)
+                },
                 filter = filter,
                 statusCount = statusCount,
                 onSelectStatus = ::selectStatus
@@ -351,7 +354,7 @@ fun ArticleLayout(
                         }
                     }),
                 topBar = {
-                    FeedListTopBar(
+                    ArticleListTopBar(
                         onRequestJumpToTop = {
                             scrollToTop()
                         },
