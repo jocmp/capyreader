@@ -250,7 +250,7 @@ class ArticleScreenViewModel(
         }
     }
 
-    fun initialize(filter: ArticleFilter = latestFilter, onComplete: () -> Unit = {}) {
+    fun initialize(filter: ArticleFilter = latestFilter, onComplete: () -> Unit) {
         refreshJob?.cancel()
 
         refreshJob = viewModelScope.launch(Dispatchers.IO) {
@@ -260,7 +260,7 @@ class ArticleScreenViewModel(
                 }
             }
 
-            onComplete()
+                onComplete()
         }
     }
 
