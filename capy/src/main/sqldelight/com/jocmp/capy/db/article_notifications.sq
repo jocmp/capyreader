@@ -1,4 +1,4 @@
-activeNotifications:
+notificationsByID:
 SELECT
     article_id,
     articles.title,
@@ -9,7 +9,7 @@ SELECT
 FROM article_notifications
 JOIN articles ON article_notifications.article_id = articles.id
 JOIN feeds ON articles.feed_id = feeds.id
-AND article_notifications.dismissed_at IS NULL;
+WHERE articles.id IN :article_ids;
 
 createNotification:
 INSERT INTO article_notifications(
@@ -39,4 +39,4 @@ LEFT JOIN article_notifications ON article_notifications.article_id = articles.i
 WHERE article_statuses.updated_at >= :since
 AND article_statuses.read = 0
 AND feeds.enable_notifications = 1
-AND article_notifications.dismissed_at IS NULL;
+AND article_notifications.article_id IS NULL;
