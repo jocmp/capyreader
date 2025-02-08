@@ -155,7 +155,7 @@ internal class LocalAccountDelegate(
     }
 
     private suspend fun refreshArticleFilter(cutoffDate: ZonedDateTime?) {
-        val feeds = feedRecords.feeds().firstOrNull() ?: return
+        val feeds = feedRecords.taggedFeeds().firstOrNull() ?: return
 
         refreshFeeds(feeds, cutoffDate = cutoffDate)
     }

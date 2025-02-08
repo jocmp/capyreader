@@ -86,9 +86,16 @@ internal class FeedRecords(private val database: Database) {
         return Folder(title = title, feeds = feeds)
     }
 
-    internal fun feeds(): Flow<List<Feed>> {
+    internal fun taggedFeeds(): Flow<List<Feed>> {
         return database.feedsQueries
             .tagged(mapper = ::feedMapper)
+            .asFlow()
+            .mapToList(Dispatchers.IO)
+    }
+
+    internal fun feeds(): Flow<List<Feed>> {
+        return database.feedsQueries
+            .all(mapper = ::feedMapper)
             .asFlow()
             .mapToList(Dispatchers.IO)
     }
