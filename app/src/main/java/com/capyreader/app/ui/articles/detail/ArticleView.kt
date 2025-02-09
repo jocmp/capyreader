@@ -49,6 +49,7 @@ import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.NEXT_ARTICLE
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWSER
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.PREVIOUS_ARTICLE
 import com.jocmp.capy.Article
+import com.jocmp.capy.logging.CapyLog
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -142,15 +143,30 @@ fun ArticleView(
     )
 
     LaunchedEffect(pagerState.currentPage) {
+        if (!articles.canScroll) {
+            return@LaunchedEffect
+        }
+
         val currentArticle = articles.find(pagerState.currentPage) ?: return@LaunchedEffect
 
         if (currentArticle.id != article.id) {
+            CapyLog.info(
+                "req_article",
+                mapOf(
+                    "can_scroll" to articles.canScroll.toString(),
+                    "current_id" to currentArticle.id,
+                    "paged_id" to article.id
+                )
+            )
             onRequestArticle(currentArticle.id)
         }
     }
 
-    LaunchedEffect(articles.index) {
-        pagerState.scrollToPage(articles.index)
+    LaunchedEffect(articles) {
+        if (articles.canScroll) {
+            CapyLog.info("pager_scroll", mapOf("page" to articles.index.toString()))
+            pagerState.scrollToPage(articles.index)
+        }
     }
 
     BackHandler(enableBackHandler) {
@@ -206,7 +222,6 @@ fun ArticlePullRefresh(
     val triggerThreshold = {
         haptics.performHapticFeedback(HapticFeedbackType.LongPress)
     }
-
 
     val enableTopSwipe = topSwipe.enabled &&
             (topSwipe != PREVIOUS_ARTICLE || (topSwipe.openArticle && articles.hasPrevious()))

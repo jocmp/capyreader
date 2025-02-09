@@ -61,6 +61,7 @@ import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.common.launchUI
+import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
@@ -435,8 +436,7 @@ fun ArticleLayout(
                     CapyPlaceholder()
                 }
             } else if (article != null) {
-                val indexedArticles =
-                    rememberIndexedArticles(article = article, articles = articles)
+                val indexedArticles = rememberIndexedArticles(article = article, articles = articles)
 
                 ArticleView(
                     article = article,
@@ -458,8 +458,9 @@ fun ArticleLayout(
                     },
                 )
 
-                LaunchedEffect(article.id, indexedArticles.index) {
-                    if (hasMultipleColumns) {
+                LaunchedEffect(article.id, indexedArticles) {
+                    if (hasMultipleColumns && indexedArticles.canScroll) {
+                        CapyLog.info("list_scroll", mapOf("page" to indexedArticles.index.toString()))
                         scrollToArticle(indexedArticles.index)
                     }
                 }
