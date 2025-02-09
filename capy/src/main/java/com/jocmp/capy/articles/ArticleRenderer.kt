@@ -12,6 +12,7 @@ class ArticleRenderer(
     private val textSize: Preference<Int>,
     private val fontOption: Preference<FontOption>,
     private val hideTopMargin: Preference<Boolean>,
+    private val enableHorizontalScroll: Preference<Boolean>,
 ) {
     private val template by lazy {
         context.resources.openRawResource(CapyRes.raw.template)
@@ -35,7 +36,8 @@ class ArticleRenderer(
             "font_size" to "${textSize.get()}px",
             "font_family" to fontFamily.slug,
             "font_preload" to fontPreload(fontFamily),
-            "top_margin" to topMargin()
+            "top_margin" to topMargin(),
+            "pre_white_space" to preWhiteSpace(),
         )
 
         val html = MacroProcessor(
@@ -68,6 +70,14 @@ class ArticleRenderer(
             "0px"
         } else {
             "64px"
+        }
+    }
+
+    private fun preWhiteSpace(): String {
+        return if (enableHorizontalScroll.get()) {
+            "pre-wrap"
+        } else {
+            "pre"
         }
     }
 

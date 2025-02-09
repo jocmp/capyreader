@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
@@ -141,7 +140,6 @@ fun rememberWebViewState(
     onNavigateToMedia: (media: Media) -> Unit,
 ): WebViewState {
     val colors = articleTemplateColors()
-    val scope = rememberCoroutineScope()
     val context = LocalContext.current
 
     val client = remember {

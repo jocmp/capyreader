@@ -101,6 +101,9 @@ class AppPreferences(context: Context) {
 
         val enablePagingTapGesture: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_enable_paging_tap_gesture", false)
+
+        val enableHorizontaPagination: Preference<Boolean>
+            get() = preferenceStore.getBoolean("article_enable_horizontal_pagination", true)
     }
 
     class ArticleListOptions(private val preferenceStore: PreferenceStore) {

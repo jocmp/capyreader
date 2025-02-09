@@ -211,6 +211,8 @@
     <string name="settings_confirm_mark_all_read">Confirm marking all as read</string>
     <string name="settings_mark_read_on_scroll">Mark as read on scroll</string>
     <string name="settings_gestures_reader_tap_to_page_title">E Ink tap to scroll</string>
+    <string name="settings_gestures_enable_horizontal_pagination_title">Enable horizontal scroll</string>
+    <string name="settings_gestures_enable_horizontal_pagination_subtitle">Swipe left or right to navigate articles</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Tap bottom corners to navigate article content</string>
     <string name="settings_enable_high_contrast_dark_theme">Enable high contrast dark theme</string>
     <string name="settings_section_mark_all_as_read">Mark All As Read</string>

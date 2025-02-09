@@ -92,6 +92,7 @@ code {
 }
 
 pre {
+  white-space: var(--pre-white-space);
   overflow-x: scroll;
   padding: 1em;
 }
