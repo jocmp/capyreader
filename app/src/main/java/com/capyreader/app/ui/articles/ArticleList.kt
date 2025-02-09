@@ -33,7 +33,6 @@ import com.jocmp.capy.MarkRead
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 import java.time.LocalDateTime
 
@@ -51,12 +50,6 @@ fun ArticleList(
     val currentTime = rememberCurrentTime()
     val localDensity = LocalDensity.current
     var listHeight by remember { mutableStateOf(0.dp) }
-
-    val selectArticle = { articleID: String ->
-        composableScope.launch {
-            onSelect(articleID)
-        }
-    }
 
     LazyScrollbar(state = listState) {
         LazyColumn(
@@ -77,7 +70,9 @@ fun ArticleList(
                         ArticleRow(
                             article = item,
                             selected = selectedArticleKey == item.id,
-                            onSelect = { selectArticle(it) },
+                            onSelect = {
+                                onSelect(it)
+                            },
                             onMarkAllRead = onMarkAllRead,
                             currentTime = currentTime,
                             options = articleOptions

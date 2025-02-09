@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Article
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
@@ -37,17 +37,15 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
+import androidx.paging.compose.LazyPagingItems
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.openLink
-import com.capyreader.app.ui.articles.IndexedArticles
 import com.capyreader.app.ui.articles.LocalFullContent
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.LOAD_FULL_CONTENT
-import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.NEXT_ARTICLE
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWSER
-import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.PREVIOUS_ARTICLE
 import com.jocmp.capy.Article
 import com.jocmp.capy.logging.CapyLog
 import org.koin.compose.koinInject
@@ -56,29 +54,19 @@ import org.koin.compose.koinInject
 @Composable
 fun ArticleView(
     article: Article,
+    pagerState: PagerState,
+    pagerInitialized: Boolean,
     onNavigateToMedia: (media: Media) -> Unit,
-    articles: IndexedArticles,
+    articles: LazyPagingItems<Article>,
     onBackPressed: () -> Unit,
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
     enableBackHandler: Boolean = false,
-    onRequestArticle: (id: String) -> Unit,
+    onRequestArticle: (index: Int, articleID: String) -> Unit,
 ) {
     val fullContent = LocalFullContent.current
 
     val openLink = articleOpenLink(article)
-
-    fun selectArticle(relation: () -> Article?) {
-        relation()?.let { onRequestArticle(it.id) }
-    }
-
-    val onRequestPrevious = {
-        selectArticle { articles.previous() }
-    }
-
-    val onRequestNext = {
-        selectArticle { articles.next() }
-    }
 
     val onToggleFullContent = {
         if (article.fullContent == Article.FullContentState.LOADED) {
@@ -90,22 +78,13 @@ fun ArticleView(
 
     val onSwipe = { swipe: ArticleVerticalSwipe ->
         when (swipe) {
-            PREVIOUS_ARTICLE -> onRequestPrevious()
-            NEXT_ARTICLE -> onRequestNext()
             LOAD_FULL_CONTENT -> onToggleFullContent()
             OPEN_ARTICLE_IN_BROWSER -> openLink()
-            ArticleVerticalSwipe.DISABLED -> {}
+            else -> {}
         }
     }
 
     val toolbars = rememberToolbarPreferences(articleID = article.id)
-
-    val pagerState = rememberPagerState(
-        initialPage = articles.index,
-        pageCount = {
-            articles.size
-        }
-    )
 
     ArticleViewScaffold(
         topBar = {
@@ -122,7 +101,6 @@ fun ArticleView(
             ArticlePullRefresh(
                 toolbars.show && !toolbars.pinned,
                 onSwipe = onSwipe,
-                articles = articles,
             ) {
                 HorizontalPager(
                     state = pagerState,
@@ -130,7 +108,7 @@ fun ArticleView(
                         .fillMaxWidth()
                         .wrapContentHeight()
                 ) { page ->
-                    articles.find(page)?.let { pagedArticle ->
+                    articles[page]?.let { pagedArticle ->
                         ArticleReader(
                             article = currentArticle(article, pagedArticle),
                             onNavigateToMedia = onNavigateToMedia,
@@ -142,30 +120,16 @@ fun ArticleView(
         toolbarPreferences = toolbars
     )
 
-    LaunchedEffect(pagerState.currentPage) {
-        if (!articles.canScroll) {
+    LaunchedEffect(pagerInitialized, pagerState.currentPage) {
+        if (!pagerInitialized) {
             return@LaunchedEffect
         }
 
-        val currentArticle = articles.find(pagerState.currentPage) ?: return@LaunchedEffect
+        val currentArticle = articles[pagerState.currentPage]
 
-        if (currentArticle.id != article.id) {
-            CapyLog.info(
-                "req_article",
-                mapOf(
-                    "can_scroll" to articles.canScroll.toString(),
-                    "current_id" to currentArticle.id,
-                    "paged_id" to article.id
-                )
-            )
-            onRequestArticle(currentArticle.id)
-        }
-    }
-
-    LaunchedEffect(articles) {
-        if (articles.canScroll) {
-            CapyLog.info("pager_scroll", mapOf("page" to articles.index.toString()))
-            pagerState.scrollToPage(articles.index)
+        if (currentArticle != null) {
+            CapyLog.info("scroll_to", mapOf("page" to pagerState.currentPage.toString(), "article_id" to currentArticle.id))
+            onRequestArticle(pagerState.currentPage, currentArticle.id)
         }
     }
 
@@ -213,7 +177,6 @@ private fun ArticleViewScaffold(
 fun ArticlePullRefresh(
     includePadding: Boolean,
     onSwipe: (swipe: ArticleVerticalSwipe) -> Unit,
-    articles: IndexedArticles,
     content: @Composable () -> Unit,
 ) {
     val (topSwipe, bottomSwipe) = rememberSwipePreferences()
@@ -223,11 +186,9 @@ fun ArticlePullRefresh(
         haptics.performHapticFeedback(HapticFeedbackType.LongPress)
     }
 
-    val enableTopSwipe = topSwipe.enabled &&
-            (topSwipe != PREVIOUS_ARTICLE || (topSwipe.openArticle && articles.hasPrevious()))
+    val enableTopSwipe = topSwipe.enabled
 
-    val enableBottomSwipe = bottomSwipe.enabled &&
-            (bottomSwipe != NEXT_ARTICLE || (bottomSwipe.openArticle && articles.hasNext()))
+    val enableBottomSwipe = bottomSwipe.enabled
 
     SwipeRefresh(
         onRefresh = { onSwipe(topSwipe) },

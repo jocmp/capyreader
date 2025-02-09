@@ -9,6 +9,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -60,7 +61,9 @@ import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
+import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
+import com.jocmp.capy.common.withUIContext
 import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
@@ -117,6 +120,7 @@ fun ArticleLayout(
     val hasMultipleColumns = scaffoldNavigator.scaffoldDirective.maxHorizontalPartitions > 1
     var isRefreshing by remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
+
     val snackbarHost = remember { SnackbarHostState() }
     val addFeedSuccessMessage = stringResource(R.string.add_feed_success)
     val currentFeed = findCurrentFeed(filter, allFeeds)
@@ -132,6 +136,7 @@ fun ArticleLayout(
     suspend fun navigateToDetail() {
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
     }
+
 
     fun scrollToArticle(index: Int) {
         coroutineScope.launch {
@@ -316,8 +321,8 @@ fun ArticleLayout(
         }
     }
 
-    ArticleHandler {
-        selectArticle(it)
+    ArticleHandler(article) { articleID ->
+        selectArticle(articleID)
     }
 
     ArticleScaffold(
@@ -425,7 +430,9 @@ fun ArticleLayout(
                                     onMarkAllRead = { range ->
                                         onMarkAllRead(range)
                                     },
-                                    onSelect = ::selectArticle,
+                                    onSelect = { articleID ->
+                                        selectArticle(articleID)
+                                    },
                                 )
                             }
                         }
@@ -442,34 +449,47 @@ fun ArticleLayout(
                 ) {
                     CapyPlaceholder()
                 }
-            } else if (article != null) {
-                val indexedArticles =
-                    rememberIndexedArticles(article = article, articles = articles)
+            } else if (article != null && articles.itemCount > 0) {
+                val lookup = LocalArticleLookup.current
+                var pagerInitialized by remember { mutableStateOf(false) }
+                val pagerState = rememberPagerState(
+                    initialPage = 0,
+                    pageCount = {
+                        articles.itemCount
+                    }
+                )
 
                 ArticleView(
                     article = article,
+                    pagerState = pagerState,
+                    pagerInitialized = pagerInitialized,
                     onNavigateToMedia = { media = it },
-                    articles = indexedArticles,
+                    articles = articles,
                     onBackPressed = {
                         clearArticle()
                     },
                     onToggleRead = onToggleArticleRead,
                     onToggleStar = onToggleArticleStar,
                     enableBackHandler = media == null,
-                    onRequestArticle = { id ->
-                        coroutineScope.launchUI {
-                            onSelectArticle(id)
-                        }
-                    },
+                    onRequestArticle = { index, articleID ->
+                        CapyLog.info(
+                            "request",
+                            mapOf("index" to index.toString(), "articleID" to articleID)
+                        )
+                        selectArticle(articleID)
+                        scrollToArticle(index)
+                    }
                 )
 
-                LaunchedEffect(article.id, indexedArticles.index) {
-                    if (indexedArticles.canScroll) {
-                        CapyLog.info(
-                            "list_scroll",
-                            mapOf("page" to indexedArticles.index.toString())
-                        )
-                        scrollToArticle(indexedArticles.index)
+                LaunchedEffect(article.id) {
+                    launchIO {
+                        val index = lookup.findIndex(article.id)
+
+                        withUIContext {
+                            scrollToArticle(index)
+                            pagerState.scrollToPage(index)
+                            pagerInitialized = true
+                        }
                     }
                 }
             }
