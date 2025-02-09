@@ -56,7 +56,6 @@ import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.PREVIOUS_ARTIC
 import com.jocmp.capy.Article
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.withUIContext
-import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.Job
 import org.koin.compose.koinInject
 
@@ -169,26 +168,12 @@ fun ArticleView(
         val currentArticle = articles[pagerState.currentPage]
 
         if (currentArticle != null) {
-            CapyLog.info(
-                "scroll_to",
-                mapOf(
-                    "page" to pagerState.currentPage.toString(),
-                    "article_id" to currentArticle.id
-                )
-            )
             onRequestArticle(pagerState.currentPage, currentArticle.id)
         }
     }
 
     LaunchedEffect(article.id, articles.itemCount) {
         scrollToArticleJob?.cancel()
-        CapyLog.info(
-            "init_start",
-            mapOf(
-                "item_count" to articles.itemCount.toString(),
-                "article_id" to article.id
-            )
-        )
 
         scrollToArticleJob = launchIO {
             val index = lookup.findIndex(article.id)
@@ -197,14 +182,6 @@ fun ArticleView(
                 pagerState.scrollToPage(index)
                 onScrollToArticle(index)
                 pagerInitialized = true
-                CapyLog.info(
-                    "init_done",
-                    mapOf(
-                        "index" to index.toString(),
-                        "item_count" to articles.itemCount.toString(),
-                        "article_id" to article.id
-                    )
-                )
             }
         }
     }
