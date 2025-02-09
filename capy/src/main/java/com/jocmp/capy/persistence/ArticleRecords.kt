@@ -7,6 +7,7 @@ import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleNotification
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.MarkRead
+import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.toDateTimeFromSeconds
 import com.jocmp.capy.common.transactionWithErrorHandling
@@ -18,6 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
+import java.time.OffsetDateTime
 import java.time.ZonedDateTime
 
 internal class ArticleRecords internal constructor(
@@ -32,6 +34,27 @@ internal class ArticleRecords internal constructor(
             articleID = articleID,
             mapper = ::articleMapper
         ).executeAsOneOrNull()
+    }
+
+    fun findIndex(
+        articleID: String,
+        filter: ArticleFilter,
+        query: String?,
+        unreadSort: UnreadSortOrder,
+        since: OffsetDateTime
+    ): Long {
+        return when (filter) {
+            is ArticleFilter.Articles -> byStatus.findIndex(
+                articleID = articleID,
+                status = filter.articleStatus,
+                query = query,
+                unreadSort = unreadSort,
+                since = since
+            )
+            is ArticleFilter.Feeds -> TODO()
+            is ArticleFilter.Folders -> TODO()
+            is ArticleFilter.SavedSearches -> TODO()
+        }
     }
 
     /**

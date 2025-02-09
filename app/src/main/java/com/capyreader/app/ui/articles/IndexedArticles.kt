@@ -1,10 +1,13 @@
 package com.capyreader.app.ui.articles
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.paging.compose.LazyPagingItems
 import com.jocmp.capy.Article
-import com.jocmp.capy.logging.CapyLog
 
 data class IndexedArticles(
     val canScroll: Boolean,
@@ -32,29 +35,32 @@ data class IndexedArticles(
 
 @Composable
 fun rememberIndexedArticles(
-    article: Article,
-    articles: LazyPagingItems<Article>
-): IndexedArticles {
+    article: Article, articles: LazyPagingItems<Article>): IndexedArticles {
+    val lookup = LocalArticleLookup.current
     val snapshot = articles.itemSnapshotList
 
-    return remember(article, snapshot.size) {
-        val index = snapshot.indexOfFirst { it?.id == article.id }
-        val isValidIndex = index > -1
+    var indexedArticles by remember { mutableStateOf(nullIndexedArticles()) }
 
-        CapyLog.info(
-            "remember", mapOf(
-                "article_id" to article.id,
-                "snapshot_size" to snapshot.size.toString(),
-                "index" to index.toString(),
-            )
-        )
+    LaunchedEffect(article.id, snapshot.size) {
+        val index = lookup.findIndex(article.id)
+        val isValidIndex = index >= 0
 
-        IndexedArticles(
-            canScroll = articles.loadState.isIdle && isValidIndex,
-            index = if (isValidIndex) index else 0,
+        indexedArticles = IndexedArticles(
+            canScroll = isValidIndex,
+            index = if (isValidIndex) index else -1,
             previous = index - 1,
             next = index + 1,
             articles = snapshot
         )
     }
+
+    return indexedArticles
 }
+
+fun nullIndexedArticles() = IndexedArticles(
+    canScroll = false,
+    index = 0,
+    previous = 0,
+    next = 0,
+    articles = emptyList()
+)

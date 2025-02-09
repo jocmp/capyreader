@@ -64,4 +64,27 @@ class ByArticleStatus(private val database: Database) {
             lastReadAt = mapLastRead(read, since)
         )
     }
+
+    fun findIndex(
+        articleID: String,
+        status: ArticleStatus,
+        query: String?,
+        unreadSort: UnreadSortOrder,
+        since: OffsetDateTime
+    ): Long {
+        val (read, starred) = status.toStatusPair
+        val newestFirst = status != ArticleStatus.UNREAD ||
+                unreadSort == UnreadSortOrder.NEWEST_FIRST
+
+        return database.articlesByStatusQueries
+            .findIndex(
+                articleID = articleID,
+                read = read,
+                starred = starred,
+                lastReadAt = mapLastRead(read, since),
+                query = query,
+                newestFirst = newestFirst,
+            )
+            .executeAsOneOrNull() ?: -1
+    }
 }

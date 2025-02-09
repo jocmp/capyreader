@@ -30,6 +30,7 @@ import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
 import com.jocmp.capy.countAll
+import com.jocmp.capy.findArticleIndex
 import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -570,6 +571,16 @@ class ArticleScreenViewModel(
             }
             onArticlesCleared()
         }
+    }
+
+    fun findArticleIndex(articleID: String): Int {
+        return account.findArticleIndex(
+            articleID = articleID,
+            filter = latestFilter,
+            query = _searchQuery.value,
+            unreadSort = unreadSort.value,
+            since = articlesSince.value
+        ).toInt()
     }
 
     private val latestFilter: ArticleFilter

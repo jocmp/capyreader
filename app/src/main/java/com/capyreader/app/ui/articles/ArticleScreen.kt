@@ -60,7 +60,10 @@ fun ArticleScreen(
     CompositionLocalProvider(
         LocalFullContent provides fullContent,
         LocalArticleActions provides articleActions,
-        LocalConnectivity provides connectivity
+        LocalConnectivity provides connectivity,
+        LocalArticleLookup provides ArticleLookup(
+            viewModel::findArticleIndex,
+        ),
     ) {
         ArticleLayout(
             filter = filter,

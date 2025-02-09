@@ -219,6 +219,13 @@ fun ArticleLayout(
         }
     }
 
+    fun clearArticle() {
+        coroutineScope.launchUI {
+            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
+        }
+        onRequestClearArticle()
+    }
+
     val toggleDrawer = {
         coroutineScope.launch {
             if (drawerState.isOpen) {
@@ -436,17 +443,15 @@ fun ArticleLayout(
                     CapyPlaceholder()
                 }
             } else if (article != null) {
-                val indexedArticles = rememberIndexedArticles(article = article, articles = articles)
+                val indexedArticles =
+                    rememberIndexedArticles(article = article, articles = articles)
 
                 ArticleView(
                     article = article,
                     onNavigateToMedia = { media = it },
                     articles = indexedArticles,
                     onBackPressed = {
-                        coroutineScope.launchUI {
-                            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
-                        }
-                        onRequestClearArticle()
+                        clearArticle()
                     },
                     onToggleRead = onToggleArticleRead,
                     onToggleStar = onToggleArticleStar,
@@ -458,9 +463,12 @@ fun ArticleLayout(
                     },
                 )
 
-                LaunchedEffect(article.id, indexedArticles) {
-                    if (hasMultipleColumns && indexedArticles.canScroll) {
-                        CapyLog.info("list_scroll", mapOf("page" to indexedArticles.index.toString()))
+                LaunchedEffect(article.id, indexedArticles.index) {
+                    if (indexedArticles.canScroll) {
+                        CapyLog.info(
+                            "list_scroll",
+                            mapOf("page" to indexedArticles.index.toString())
+                        )
                         scrollToArticle(indexedArticles.index)
                     }
                 }
