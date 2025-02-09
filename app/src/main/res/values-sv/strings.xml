@@ -217,4 +217,7 @@
     <string name="full_content_error_generic">Artikelinläsning misslyckad</string>
     <string name="add_feed_network_error">Kunde inte hitta flöde. Kontrollera din uppkoppling.</string>
     <string name="feed_nav_drawer_title">Flöden</string>
+    <string name="nav_headline_saved_searches">Sökningar</string>
+    <string name="search_bar_placeholder">Sök</string>
+    <string name="article_vertical_open_article_in_browser">Öppna artikel i webbläsare</string>
 </resources>
