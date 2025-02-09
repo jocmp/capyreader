@@ -226,4 +226,7 @@
     <string name="after_read_all_behavior_open_drawer">Открыть боковое меню</string>
     <string name="article_actions_copy_link">Копировать ссылку</string>
     <string name="feed_nav_drawer_title">Ленты</string>
+    <string name="article_vertical_open_article_in_browser">Открыть статью в браузере</string>
+    <string name="search_bar_placeholder">Поиск</string>
+    <string name="nav_headline_saved_searches">Поиски</string>
 </resources>
