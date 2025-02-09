@@ -9,7 +9,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -61,10 +60,7 @@ import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
-import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
-import com.jocmp.capy.common.withUIContext
-import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
@@ -109,7 +105,7 @@ fun ArticleLayout(
 ) {
     val skipInitialRefresh = refreshInterval == RefreshInterval.MANUALLY_ONLY
 
-    val (isInitialized, setInitialized) = rememberSaveable {
+    val (isRefreshInitialized, setRefreshInitialized) = rememberSaveable {
         mutableStateOf(skipInitialRefresh)
     }
     val (isUpdatePasswordDialogOpen, setUpdatePasswordDialogOpen) = rememberSaveable {
@@ -203,8 +199,8 @@ fun ArticleLayout(
         onInitialized {
             isRefreshing = false
             refreshPagination()
-            if (!isInitialized) {
-                setInitialized(true)
+            if (!isRefreshInitialized) {
+                setRefreshInitialized(true)
             }
         }
     }
@@ -391,7 +387,7 @@ fun ArticleLayout(
             ) { innerPadding ->
                 ArticleListScaffold(
                     padding = innerPadding,
-                    showOnboarding = isInitialized && !isRefreshing && allFeeds.isEmpty(),
+                    showOnboarding = isRefreshInitialized && allFeeds.isEmpty(),
                     onboarding = {
                         EmptyOnboardingView {
                             AddFeedButton(
@@ -450,19 +446,8 @@ fun ArticleLayout(
                     CapyPlaceholder()
                 }
             } else if (article != null && articles.itemCount > 0) {
-                val lookup = LocalArticleLookup.current
-                var pagerInitialized by remember { mutableStateOf(false) }
-                val pagerState = rememberPagerState(
-                    initialPage = 0,
-                    pageCount = {
-                        articles.itemCount
-                    }
-                )
-
                 ArticleView(
                     article = article,
-                    pagerState = pagerState,
-                    pagerInitialized = pagerInitialized,
                     onNavigateToMedia = { media = it },
                     articles = articles,
                     onBackPressed = {
@@ -472,26 +457,13 @@ fun ArticleLayout(
                     onToggleStar = onToggleArticleStar,
                     enableBackHandler = media == null,
                     onRequestArticle = { index, articleID ->
-                        CapyLog.info(
-                            "request",
-                            mapOf("index" to index.toString(), "articleID" to articleID)
-                        )
                         selectArticle(articleID)
+                        scrollToArticle(index)
+                    },
+                    onScrollToArticle = { index ->
                         scrollToArticle(index)
                     }
                 )
-
-                LaunchedEffect(article.id) {
-                    launchIO {
-                        val index = lookup.findIndex(article.id)
-
-                        withUIContext {
-                            scrollToArticle(index)
-                            pagerState.scrollToPage(index)
-                            pagerInitialized = true
-                        }
-                    }
-                }
             }
         }
     )
@@ -529,7 +501,7 @@ fun ArticleLayout(
     }
 
     LaunchedEffect(Unit) {
-        if (!isInitialized) {
+        if (!isRefreshInitialized) {
             initialize()
         }
     }

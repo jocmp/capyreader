@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Article
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
@@ -28,8 +28,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -41,6 +44,7 @@ import androidx.paging.compose.LazyPagingItems
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.openLink
+import com.capyreader.app.ui.articles.LocalArticleLookup
 import com.capyreader.app.ui.articles.LocalFullContent
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe
@@ -50,15 +54,16 @@ import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.NEXT_ARTICLE
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWSER
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.PREVIOUS_ARTICLE
 import com.jocmp.capy.Article
+import com.jocmp.capy.common.launchIO
+import com.jocmp.capy.common.withUIContext
 import com.jocmp.capy.logging.CapyLog
+import kotlinx.coroutines.Job
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArticleView(
     article: Article,
-    pagerState: PagerState,
-    pagerInitialized: Boolean,
     onNavigateToMedia: (media: Media) -> Unit,
     articles: LazyPagingItems<Article>,
     onBackPressed: () -> Unit,
@@ -66,7 +71,18 @@ fun ArticleView(
     onToggleStar: () -> Unit,
     enableBackHandler: Boolean = false,
     onRequestArticle: (index: Int, articleID: String) -> Unit,
+    onScrollToArticle: (index: Int) -> Unit,
 ) {
+    val lookup = LocalArticleLookup.current
+    var scrollToArticleJob by remember { mutableStateOf<Job?>(null) }
+    var pagerInitialized by remember { mutableStateOf(false) }
+    val pagerState = rememberPagerState(
+        initialPage = 0,
+        pageCount = {
+            articles.itemCount
+        }
+    )
+
     val fullContent = LocalFullContent.current
     val openLink = articleOpenLink(article)
 
@@ -161,6 +177,35 @@ fun ArticleView(
                 )
             )
             onRequestArticle(pagerState.currentPage, currentArticle.id)
+        }
+    }
+
+    LaunchedEffect(article.id, articles.itemCount) {
+        scrollToArticleJob?.cancel()
+        CapyLog.info(
+            "init_start",
+            mapOf(
+                "item_count" to articles.itemCount.toString(),
+                "article_id" to article.id
+            )
+        )
+
+        scrollToArticleJob = launchIO {
+            val index = lookup.findIndex(article.id)
+
+            withUIContext {
+                pagerState.scrollToPage(index)
+                onScrollToArticle(index)
+                pagerInitialized = true
+                CapyLog.info(
+                    "init_done",
+                    mapOf(
+                        "index" to index.toString(),
+                        "item_count" to articles.itemCount.toString(),
+                        "article_id" to article.id
+                    )
+                )
+            }
         }
     }
 
