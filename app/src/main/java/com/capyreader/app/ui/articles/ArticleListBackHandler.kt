@@ -11,12 +11,18 @@ import org.koin.compose.koinInject
 @Composable
 fun ArticleListBackHandler(
     appPreferences: AppPreferences = koinInject(),
+    closeDrawer: () -> Unit,
+    toggleDrawer: () -> Unit,
     enabled: Boolean,
-    onBack: () -> Unit,
+    isDrawerOpen: Boolean,
 ) {
     val backAction by appPreferences.articleListOptions.backAction.asState()
 
     BackHandler(enabled && backAction != BackAction.SYSTEM_BACK) {
-        onBack()
+        toggleDrawer()
+    }
+
+    BackHandler(enabled && isDrawerOpen && backAction == BackAction.SYSTEM_BACK) {
+        closeDrawer()
     }
 }

@@ -78,7 +78,13 @@ internal fun listMapper(
         url = url,
         feedTitle = feedTitle,
         imageURL = imageURL,
-        summary = summary ?: "",
+        summary = if (!summary.isNullOrBlank()) {
+           summary
+        } else if (title.isNullOrBlank()) {
+            url.orEmpty()
+        } else {
+            ""
+        },
         updatedAt = updatedAt,
         read = read ?: false,
         starred = starred ?: false,

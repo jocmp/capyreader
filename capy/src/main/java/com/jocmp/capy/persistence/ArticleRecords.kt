@@ -95,12 +95,15 @@ internal class ArticleRecords internal constructor(
             }
         }
 
-        return activeNotifications()
+        return notifications(articleIDs)
     }
 
-    private suspend fun activeNotifications(): List<ArticleNotification> {
+    private suspend fun notifications(articleIDs: List<String>): List<ArticleNotification> {
         return notificationQueries
-            .activeNotifications(mapper = ::articleNotificationMapper)
+            .notificationsByID(
+                article_ids = articleIDs,
+                mapper = ::articleNotificationMapper
+            )
             .asFlow()
             .mapToList(Dispatchers.IO)
             .firstOrNull()

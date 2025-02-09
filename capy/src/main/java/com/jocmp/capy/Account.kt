@@ -68,6 +68,10 @@ data class Account(
 
     private val articleContent = ArticleContent(httpClient = localHttpClient)
 
+    val taggedFeeds = feedRecords.taggedFeeds().map {
+        it.sortedByTitle()
+    }
+
     val allFeeds = feedRecords.feeds().map {
         it.sortedByTitle()
     }
@@ -76,12 +80,12 @@ data class Account(
         it.sortedByName()
     }
 
-    val feeds: Flow<List<Feed>> = allFeeds.map { all ->
+    val feeds: Flow<List<Feed>> = taggedFeeds.map { all ->
         all.filter { it.folderName.isBlank() }
             .sortedByTitle()
     }
 
-    val folders: Flow<List<Folder>> = allFeeds.map { ungrouped ->
+    val folders: Flow<List<Folder>> = taggedFeeds.map { ungrouped ->
         ungrouped
             .filter { it.folderName.isNotBlank() }
             .groupBy { it.folderName }

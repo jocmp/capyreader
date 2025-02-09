@@ -11,7 +11,6 @@ import com.jocmp.capy.fixtures.ArticleFixture
 import com.jocmp.capy.fixtures.FeedFixture
 import com.jocmp.capy.reload
 import com.jocmp.capy.repeated
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -437,7 +436,7 @@ class ArticleRecordsTest {
     }
 
     @Test
-    fun createNotifications_ignoresDeletedNotifications() = runBlocking {
+    fun createNotifications_ignoresDeletedNotifications() = runTest {
         val feed = FeedFixture(database).create(enableNotifications = true)
         val article = articleFixture.create(feed = feed, read = false)
         val since = article.publishedAt.minusMinutes(15)
@@ -446,6 +445,20 @@ class ArticleRecordsTest {
         assertEquals(actual = notifications.size, expected = 1)
 
         articleRecords.dismissNotifications(listOf(article.id))
+        val refreshedNotifications = articleRecords.createNotifications(since = since)
+
+        assertEquals(actual = refreshedNotifications.size, expected = 0)
+    }
+
+    @Test
+    fun createNotifications_ignoresCreatedNotifications() = runTest {
+        val feed = FeedFixture(database).create(enableNotifications = true)
+        val article = articleFixture.create(feed = feed, read = false)
+        val since = article.publishedAt.minusMinutes(15)
+
+        val notifications = articleRecords.createNotifications(since = since)
+        assertEquals(actual = notifications.size, expected = 1)
+
         val refreshedNotifications = articleRecords.createNotifications(since = since)
 
         assertEquals(actual = refreshedNotifications.size, expected = 0)
