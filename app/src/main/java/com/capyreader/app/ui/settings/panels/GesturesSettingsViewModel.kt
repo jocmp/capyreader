@@ -30,6 +30,9 @@ class GesturesSettingsViewModel(
     var enablePagingTapGesture by mutableStateOf(readerOptions.enablePagingTapGesture.get())
         private set
 
+    var enableHorizontalPagination by mutableStateOf(readerOptions.enableHorizontaPagination.get())
+        private set
+
     fun updateBackAction(action: BackAction) {
         backAction = action
 
@@ -52,6 +55,12 @@ class GesturesSettingsViewModel(
         rowSwipeStart = swipe
 
         listOptions.swipeStart.set(swipe)
+    }
+
+    fun updateHorizontalPagination(scroll: Boolean) {
+        enableHorizontalPagination = scroll
+
+        readerOptions.enableHorizontaPagination.set(scroll)
     }
 
     fun updateRowSwipeEnd(swipe: RowSwipeOption) {

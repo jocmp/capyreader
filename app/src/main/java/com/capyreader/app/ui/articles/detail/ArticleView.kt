@@ -46,6 +46,7 @@ import com.capyreader.app.common.Media
 import com.capyreader.app.common.openLink
 import com.capyreader.app.ui.articles.LocalArticleLookup
 import com.capyreader.app.ui.articles.LocalFullContent
+import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.DISABLED
@@ -71,6 +72,7 @@ fun ArticleView(
     enableBackHandler: Boolean = false,
     onRequestArticle: (index: Int, articleID: String) -> Unit,
     onScrollToArticle: (index: Int) -> Unit,
+    appPreferences: AppPreferences = koinInject()
 ) {
     val lookup = LocalArticleLookup.current
     var scrollToArticleJob by remember { mutableStateOf<Job?>(null) }
@@ -81,6 +83,11 @@ fun ArticleView(
             articles.itemCount
         }
     )
+
+    val userScrollEnabled by appPreferences
+        .readerOptions
+        .enableHorizontaPagination
+        .collectChangesWithDefault()
 
     val fullContent = LocalFullContent.current
     val openLink = articleOpenLink(article)
@@ -143,6 +150,7 @@ fun ArticleView(
                 hasNextArticle = nextIndex < articles.itemCount
             ) {
                 HorizontalPager(
+                    userScrollEnabled = userScrollEnabled,
                     state = pagerState,
                     modifier = Modifier
                         .fillMaxWidth()

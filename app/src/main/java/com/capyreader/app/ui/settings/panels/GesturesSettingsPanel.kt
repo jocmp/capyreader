@@ -32,6 +32,8 @@ fun GesturesSettingPanel(
         updateReaderTopSwipe = viewModel::updateReaderTopSwipe,
         updateRowSwipeEnd = viewModel::updateRowSwipeEnd,
         updateRowSwipeStart = viewModel::updateRowSwipeStart,
+        updateHorizontalPagination = viewModel::updateHorizontalPagination,
+        enableHorizontalPagination = viewModel.enableHorizontalPagination,
         backAction = viewModel.backAction,
         bottomSwipe = viewModel.readerBottomSwipe,
         enablePagingTapGesture = viewModel.enablePagingTapGesture,
@@ -49,6 +51,8 @@ private fun GesturesSettingsPanelView(
     updateReaderTopSwipe: (swipe: ArticleVerticalSwipe) -> Unit,
     updateRowSwipeEnd: (swipe: RowSwipeOption) -> Unit,
     updateRowSwipeStart: (swipe: RowSwipeOption) -> Unit,
+    updateHorizontalPagination: (enable: Boolean) -> Unit,
+    enableHorizontalPagination: Boolean,
     backAction: BackAction,
     bottomSwipe: ArticleVerticalSwipe,
     enablePagingTapGesture: Boolean,
@@ -81,6 +85,16 @@ private fun GesturesSettingsPanelView(
                     disabledOption = ArticleVerticalSwipe.DISABLED,
                     optionText = { stringResource(it.translationKey) }
                 )
+
+                RowItem {
+                    TextSwitch(
+                        onCheckedChange = updateHorizontalPagination,
+                        checked = enableHorizontalPagination,
+                        title = { Text(stringResource(R.string.settings_gestures_enable_horizontal_pagination_title)) },
+                        subtitle = stringResource(R.string.settings_gestures_enable_horizontal_pagination_subtitle)
+                    )
+                }
+
                 RowItem {
                     TextSwitch(
                         onCheckedChange = updatePagingTapGesture,
@@ -135,12 +149,14 @@ fun GesturesSettingsPanelPreview() {
             updateReaderTopSwipe = {},
             updateReaderBottomSwipe = {},
             updatePagingTapGesture = {},
+            updateHorizontalPagination = {},
             backAction = BackAction.OPEN_DRAWER,
             topSwipe = ArticleVerticalSwipe.PREVIOUS_ARTICLE,
             bottomSwipe = ArticleVerticalSwipe.NEXT_ARTICLE,
             rowSwipeStart = RowSwipeOption.TOGGLE_READ,
             rowSwipeEnd = RowSwipeOption.TOGGLE_STARRED,
             enablePagingTapGesture = true,
+            enableHorizontalPagination = true,
         )
     }
 }
