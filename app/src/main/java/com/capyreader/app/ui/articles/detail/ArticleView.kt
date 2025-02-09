@@ -44,8 +44,11 @@ import com.capyreader.app.common.openLink
 import com.capyreader.app.ui.articles.LocalFullContent
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe
+import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.DISABLED
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.LOAD_FULL_CONTENT
+import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.NEXT_ARTICLE
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWSER
+import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.PREVIOUS_ARTICLE
 import com.jocmp.capy.Article
 import com.jocmp.capy.logging.CapyLog
 import org.koin.compose.koinInject
@@ -65,8 +68,26 @@ fun ArticleView(
     onRequestArticle: (index: Int, articleID: String) -> Unit,
 ) {
     val fullContent = LocalFullContent.current
-
     val openLink = articleOpenLink(article)
+
+    val previousIndex = pagerState.currentPage - 1;
+    val nextIndex = pagerState.currentPage + 1
+
+    fun selectArticleByIndex(index: Int) {
+        if (index > -1 && index < articles.itemCount) {
+            articles[index]?.let {
+                onRequestArticle(index, it.id)
+            }
+        }
+    }
+
+    fun selectPrevious() {
+        selectArticleByIndex(previousIndex)
+    }
+
+    fun selectNext() {
+        selectArticleByIndex(nextIndex)
+    }
 
     val onToggleFullContent = {
         if (article.fullContent == Article.FullContentState.LOADED) {
@@ -80,7 +101,9 @@ fun ArticleView(
         when (swipe) {
             LOAD_FULL_CONTENT -> onToggleFullContent()
             OPEN_ARTICLE_IN_BROWSER -> openLink()
-            else -> {}
+            PREVIOUS_ARTICLE -> selectPrevious()
+            NEXT_ARTICLE -> selectNext()
+            DISABLED -> {}
         }
     }
 
@@ -101,6 +124,8 @@ fun ArticleView(
             ArticlePullRefresh(
                 toolbars.show && !toolbars.pinned,
                 onSwipe = onSwipe,
+                hasPreviousArticle = previousIndex > -1,
+                hasNextArticle = nextIndex < articles.itemCount
             ) {
                 HorizontalPager(
                     state = pagerState,
@@ -128,7 +153,13 @@ fun ArticleView(
         val currentArticle = articles[pagerState.currentPage]
 
         if (currentArticle != null) {
-            CapyLog.info("scroll_to", mapOf("page" to pagerState.currentPage.toString(), "article_id" to currentArticle.id))
+            CapyLog.info(
+                "scroll_to",
+                mapOf(
+                    "page" to pagerState.currentPage.toString(),
+                    "article_id" to currentArticle.id
+                )
+            )
             onRequestArticle(pagerState.currentPage, currentArticle.id)
         }
     }
@@ -176,6 +207,8 @@ private fun ArticleViewScaffold(
 @Composable
 fun ArticlePullRefresh(
     includePadding: Boolean,
+    hasNextArticle: Boolean,
+    hasPreviousArticle: Boolean,
     onSwipe: (swipe: ArticleVerticalSwipe) -> Unit,
     content: @Composable () -> Unit,
 ) {
@@ -186,9 +219,11 @@ fun ArticlePullRefresh(
         haptics.performHapticFeedback(HapticFeedbackType.LongPress)
     }
 
-    val enableTopSwipe = topSwipe.enabled
+    val enableTopSwipe = topSwipe.enabled &&
+            (topSwipe != PREVIOUS_ARTICLE || (topSwipe.openArticle && hasPreviousArticle))
 
-    val enableBottomSwipe = bottomSwipe.enabled
+    val enableBottomSwipe = bottomSwipe.enabled &&
+            (bottomSwipe != NEXT_ARTICLE || (bottomSwipe.openArticle && hasNextArticle))
 
     SwipeRefresh(
         onRefresh = { onSwipe(topSwipe) },

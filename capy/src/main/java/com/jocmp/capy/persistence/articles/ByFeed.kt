@@ -68,4 +68,29 @@ class ByFeed(private val database: Database) {
             lastReadAt = mapLastRead(read, since)
         )
     }
+
+    fun findIndex(
+        articleID: String,
+        feedIDs: List<String>,
+        status: ArticleStatus,
+        query: String?,
+        unreadSort: UnreadSortOrder,
+        since: OffsetDateTime
+    ): Long {
+        val (read, starred) = status.toStatusPair
+        val newestFirst = status != ArticleStatus.UNREAD ||
+                unreadSort == UnreadSortOrder.NEWEST_FIRST
+
+        return database.articlesByFeedQueries
+            .findIndex(
+                articleID = articleID,
+                feedIDs = feedIDs,
+                read = read,
+                starred = starred,
+                lastReadAt = mapLastRead(read, since),
+                query = query,
+                newestFirst = newestFirst,
+            )
+            .executeAsOneOrNull() ?: -1
+    }
 }

@@ -51,9 +51,30 @@ internal class ArticleRecords internal constructor(
                 unreadSort = unreadSort,
                 since = since
             )
-            is ArticleFilter.Feeds -> TODO()
-            is ArticleFilter.Folders -> TODO()
-            is ArticleFilter.SavedSearches -> TODO()
+            is ArticleFilter.Feeds -> byFeed.findIndex(
+                articleID = articleID,
+                feedIDs = listOf(filter.feedID),
+                status = filter.status,
+                query = query,
+                unreadSort = unreadSort,
+                since = since
+            )
+            is ArticleFilter.Folders -> byFeed.findIndex(
+                articleID = articleID,
+                feedIDs = folderFeedIDs(filter),
+                status = filter.status,
+                query = query,
+                unreadSort = unreadSort,
+                since = since
+            )
+            is ArticleFilter.SavedSearches -> bySavedSearch.findIndex(
+                articleID = articleID,
+                savedSearchID = filter.savedSearchID,
+                status = filter.status,
+                query = query,
+                unreadSort = unreadSort,
+                since = since
+            )
         }
     }
 

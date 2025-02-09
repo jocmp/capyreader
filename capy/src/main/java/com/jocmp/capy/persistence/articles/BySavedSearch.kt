@@ -52,6 +52,32 @@ class BySavedSearch(private val database: Database) {
         )
     }
 
+    fun findIndex(
+        articleID: String,
+        savedSearchID: String,
+        status: ArticleStatus,
+        query: String?,
+        unreadSort: UnreadSortOrder,
+        since: OffsetDateTime
+    ): Long {
+        val (read, starred) = status.toStatusPair
+        val newestFirst = status != ArticleStatus.UNREAD ||
+                unreadSort == UnreadSortOrder.NEWEST_FIRST
+
+        return database.articlesBySavedSearchQueries
+            .findIndex(
+                articleID = articleID,
+                savedSearchID = savedSearchID,
+                read = read,
+                starred = starred,
+                lastReadAt = mapLastRead(read, since),
+                query = query,
+                newestFirst = newestFirst,
+            )
+            .executeAsOneOrNull() ?: -1
+    }
+
+
     fun count(
         savedSearchID: String,
         status: ArticleStatus,
