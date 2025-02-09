@@ -1,6 +1,5 @@
 package com.jocmp.capy.persistence
 
-import app.cash.sqldelight.Query
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.jocmp.capy.Article
@@ -13,6 +12,9 @@ import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.toDateTimeFromSeconds
 import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.db.Database
+import com.jocmp.capy.persistence.articles.ByArticleStatus
+import com.jocmp.capy.persistence.articles.ByFeed
+import com.jocmp.capy.persistence.articles.BySavedSearch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
@@ -23,7 +25,7 @@ import java.time.ZonedDateTime
 internal class ArticleRecords internal constructor(
     private val database: Database
 ) {
-    val byStatus = ByStatus(database)
+    val byStatus = ByArticleStatus(database)
     val byFeed = ByFeed(database)
     val bySavedSearch = BySavedSearch(database)
 
@@ -32,6 +34,48 @@ internal class ArticleRecords internal constructor(
             articleID = articleID,
             mapper = ::articleMapper
         ).executeAsOneOrNull()
+    }
+
+    fun findIndex(
+        articleID: String,
+        filter: ArticleFilter,
+        query: String?,
+        unreadSort: UnreadSortOrder,
+        since: OffsetDateTime
+    ): Long {
+        return when (filter) {
+            is ArticleFilter.Articles -> byStatus.findIndex(
+                articleID = articleID,
+                status = filter.articleStatus,
+                query = query,
+                unreadSort = unreadSort,
+                since = since
+            )
+            is ArticleFilter.Feeds -> byFeed.findIndex(
+                articleID = articleID,
+                feedIDs = listOf(filter.feedID),
+                status = filter.status,
+                query = query,
+                unreadSort = unreadSort,
+                since = since
+            )
+            is ArticleFilter.Folders -> byFeed.findIndex(
+                articleID = articleID,
+                feedIDs = folderFeedIDs(filter),
+                status = filter.status,
+                query = query,
+                unreadSort = unreadSort,
+                since = since
+            )
+            is ArticleFilter.SavedSearches -> bySavedSearch.findIndex(
+                articleID = articleID,
+                savedSearchID = filter.savedSearchID,
+                status = filter.status,
+                query = query,
+                unreadSort = unreadSort,
+                since = since
+            )
+        }
     }
 
     /**
@@ -262,200 +306,10 @@ internal class ArticleRecords internal constructor(
             .executeAsList()
     }
 
-    class ByFeed(private val database: Database) {
-        fun all(
-            feedIDs: List<String>,
-            status: ArticleStatus,
-            query: String? = null,
-            since: OffsetDateTime,
-            limit: Long,
-            unreadSort: UnreadSortOrder,
-            offset: Long,
-        ): Query<Article> {
-            val (read, starred) = status.toStatusPair
-
-            return database.articlesQueries.allByFeeds(
-                feedIDs = feedIDs,
-                query = query,
-                read = read,
-                starred = starred,
-                limit = limit,
-                offset = offset,
-                lastReadAt = mapLastRead(read, since),
-                newestFirst = isDescendingOrder(status, unreadSort),
-                mapper = ::listMapper
-            )
-        }
-
-        fun unreadArticleIDs(
-            status: ArticleStatus,
-            feedIDs: List<String>,
-            range: MarkRead,
-        ): Query<String> {
-            val (_, starred) = status.toStatusPair
-
-            val (afterArticleID, beforeArticleID) = range.toPair
-
-            return database.articlesQueries.findArticleIDsByFeeds(
-                feedIDs = feedIDs,
-                starred = starred,
-                afterArticleID = afterArticleID,
-                beforeArticleID = beforeArticleID,
-            )
-        }
-
-        fun count(
-            feedIDs: List<String>,
-            status: ArticleStatus,
-            query: String?,
-            since: OffsetDateTime
-        ): Query<Long> {
-            val (read, starred) = status.toStatusPair
-
-            return database.articlesQueries.countAllByFeeds(
-                feedIDs = feedIDs,
-                query = query,
-                read = read,
-                starred = starred,
-                lastReadAt = mapLastRead(read, since)
-            )
-        }
-    }
-
-    class ByStatus(private val database: Database) {
-        fun all(
-            status: ArticleStatus,
-            query: String? = null,
-            limit: Long,
-            offset: Long,
-            unreadSort: UnreadSortOrder,
-            since: OffsetDateTime? = null
-        ): Query<Article> {
-            val (read, starred) = status.toStatusPair
-            val newestFirst = status != ArticleStatus.UNREAD ||
-                    unreadSort == UnreadSortOrder.NEWEST_FIRST
-
-            return database.articlesQueries.allByStatus(
-                read = read,
-                starred = starred,
-                limit = limit,
-                offset = offset,
-                lastReadAt = mapLastRead(read, since),
-                query = query,
-                newestFirst = newestFirst,
-                mapper = ::listMapper
-            )
-        }
-
-        fun unreadArticleIDs(status: ArticleStatus, range: MarkRead): Query<String> {
-            val (_, starred) = status.toStatusPair
-            val (afterArticleID, beforeArticleID) = range.toPair
-
-            return database.articlesQueries.findArticleIDsByStatus(
-                starred = starred,
-                afterArticleID = afterArticleID,
-                beforeArticleID = beforeArticleID
-            )
-        }
-
-        fun maxArrivedAt(): Long? {
-            return database.articlesQueries.lastUpdatedAt().executeAsOne().MAX
-        }
-
-        fun count(
-            status: ArticleStatus,
-            query: String? = null,
-            since: OffsetDateTime? = null
-        ): Query<Long> {
-            val (read, starred) = status.toStatusPair
-
-            return database.articlesQueries.countAllByStatus(
-                read = read,
-                starred = starred,
-                query = query,
-                lastReadAt = mapLastRead(read, since)
-            )
-        }
-    }
-
-
-    class BySavedSearch(private val database: Database) {
-        fun all(
-            savedSearchID: String,
-            status: ArticleStatus,
-            query: String? = null,
-            since: OffsetDateTime,
-            limit: Long,
-            unreadSort: UnreadSortOrder,
-            offset: Long,
-        ): Query<Article> {
-            val (read, starred) = status.toStatusPair
-
-            return database.articlesQueries.allBySavedSearch(
-                savedSearchID = savedSearchID,
-                query = query,
-                read = read,
-                starred = starred,
-                limit = limit,
-                offset = offset,
-                lastReadAt = mapLastRead(read, since),
-                newestFirst = isDescendingOrder(status, unreadSort),
-                mapper = ::listMapper
-            )
-        }
-
-        fun unreadArticleIDs(
-            status: ArticleStatus,
-            savedSearchID: String,
-            range: MarkRead,
-        ): Query<String> {
-            val (_, starred) = status.toStatusPair
-
-            val (afterArticleID, beforeArticleID) = range.toPair
-
-            return database.articlesQueries.findArticleIDsBySavedSearch(
-                savedSearchID = savedSearchID,
-                starred = starred,
-                afterArticleID = afterArticleID,
-                beforeArticleID = beforeArticleID,
-            )
-        }
-
-        fun count(
-            savedSearchID: String,
-            status: ArticleStatus,
-            query: String?,
-            since: OffsetDateTime
-        ): Query<Long> {
-            val (read, starred) = status.toStatusPair
-
-            return database.articlesQueries.countAllBySavedSearch(
-                savedSearchID = savedSearchID,
-                query = query,
-                read = read,
-                starred = starred,
-                lastReadAt = mapLastRead(read, since)
-            )
-        }
-    }
-
     private fun cutoffDate(): ZonedDateTime {
         return nowUTC().minusMonths(3)
     }
 
     private val notificationQueries
         get() = database.article_notificationsQueries
-}
-
-
-private fun isDescendingOrder(status: ArticleStatus, unreadSort: UnreadSortOrder) =
-    status != ArticleStatus.UNREAD ||
-            unreadSort == UnreadSortOrder.NEWEST_FIRST
-
-private fun mapLastRead(read: Boolean?, value: OffsetDateTime?): Long? {
-    if (read != null) {
-        return value?.toEpochSecond()
-    }
-
-    return null
 }

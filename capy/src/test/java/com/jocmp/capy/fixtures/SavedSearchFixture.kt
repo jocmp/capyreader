@@ -22,5 +22,15 @@ internal class SavedSearchFixture(
         records.find(id)!!
     }
 
+    fun createSavedSearchArticle(
+        articleID: String,
+        id: String = randomID(),
+        name: String = "My Saved Search",
+    ) {
+        create(id, name)
+
+        records.upsertArticle(articleID = articleID, id = id)
+    }
+
     private fun randomID() = SecureRandom.getInstanceStrong().nextInt().toString()
 }

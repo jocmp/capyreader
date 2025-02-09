@@ -11,7 +11,7 @@ navigation-compose = "2.8.6"
 okhttp = "4.12.0"
 retrofit = "2.11.0"
 paging-compose = "3.3.5"
-sqldelight = "2.0.2"
+sqldelight = "2.1.0-SNAPSHOT"
 zoomable = "0.12.1"
 
 [libraries]

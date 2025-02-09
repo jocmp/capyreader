@@ -28,8 +28,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -37,18 +40,23 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
+import androidx.paging.compose.LazyPagingItems
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.openLink
-import com.capyreader.app.ui.articles.IndexedArticles
+import com.capyreader.app.ui.articles.LocalArticleLookup
 import com.capyreader.app.ui.articles.LocalFullContent
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe
+import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.DISABLED
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.LOAD_FULL_CONTENT
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.NEXT_ARTICLE
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWSER
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.PREVIOUS_ARTICLE
 import com.jocmp.capy.Article
+import com.jocmp.capy.common.launchIO
+import com.jocmp.capy.common.withUIContext
+import kotlinx.coroutines.Job
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,27 +64,44 @@ import org.koin.compose.koinInject
 fun ArticleView(
     article: Article,
     onNavigateToMedia: (media: Media) -> Unit,
-    articles: IndexedArticles,
+    articles: LazyPagingItems<Article>,
     onBackPressed: () -> Unit,
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
     enableBackHandler: Boolean = false,
-    onRequestArticle: (id: String) -> Unit,
+    onRequestArticle: (index: Int, articleID: String) -> Unit,
+    onScrollToArticle: (index: Int) -> Unit,
 ) {
-    val fullContent = LocalFullContent.current
+    val lookup = LocalArticleLookup.current
+    var scrollToArticleJob by remember { mutableStateOf<Job?>(null) }
+    var pagerInitialized by remember { mutableStateOf(false) }
+    val pagerState = rememberPagerState(
+        initialPage = 0,
+        pageCount = {
+            articles.itemCount
+        }
+    )
 
+    val fullContent = LocalFullContent.current
     val openLink = articleOpenLink(article)
 
-    fun selectArticle(relation: () -> Article?) {
-        relation()?.let { onRequestArticle(it.id) }
+    val previousIndex = pagerState.currentPage - 1;
+    val nextIndex = pagerState.currentPage + 1
+
+    fun selectArticleByIndex(index: Int) {
+        if (index > -1 && index < articles.itemCount) {
+            articles[index]?.let {
+                onRequestArticle(index, it.id)
+            }
+        }
     }
 
-    val onRequestPrevious = {
-        selectArticle { articles.previous() }
+    fun selectPrevious() {
+        selectArticleByIndex(previousIndex)
     }
 
-    val onRequestNext = {
-        selectArticle { articles.next() }
+    fun selectNext() {
+        selectArticleByIndex(nextIndex)
     }
 
     val onToggleFullContent = {
@@ -89,22 +114,15 @@ fun ArticleView(
 
     val onSwipe = { swipe: ArticleVerticalSwipe ->
         when (swipe) {
-            PREVIOUS_ARTICLE -> onRequestPrevious()
-            NEXT_ARTICLE -> onRequestNext()
             LOAD_FULL_CONTENT -> onToggleFullContent()
             OPEN_ARTICLE_IN_BROWSER -> openLink()
-            ArticleVerticalSwipe.DISABLED -> {}
+            PREVIOUS_ARTICLE -> selectPrevious()
+            NEXT_ARTICLE -> selectNext()
+            DISABLED -> {}
         }
     }
 
     val toolbars = rememberToolbarPreferences(articleID = article.id)
-
-    val pagerState = rememberPagerState(
-        initialPage = articles.index,
-        pageCount = {
-            articles.size
-        }
-    )
 
     ArticleViewScaffold(
         topBar = {
@@ -121,7 +139,8 @@ fun ArticleView(
             ArticlePullRefresh(
                 toolbars.show && !toolbars.pinned,
                 onSwipe = onSwipe,
-                articles = articles,
+                hasPreviousArticle = previousIndex > -1,
+                hasNextArticle = nextIndex < articles.itemCount
             ) {
                 HorizontalPager(
                     state = pagerState,
@@ -129,7 +148,7 @@ fun ArticleView(
                         .fillMaxWidth()
                         .wrapContentHeight()
                 ) { page ->
-                    articles.find(page)?.let { pagedArticle ->
+                    articles[page]?.let { pagedArticle ->
                         ArticleReader(
                             article = currentArticle(article, pagedArticle),
                             onNavigateToMedia = onNavigateToMedia,
@@ -141,16 +160,30 @@ fun ArticleView(
         toolbarPreferences = toolbars
     )
 
-    LaunchedEffect(pagerState.currentPage) {
-        val currentArticle = articles.find(pagerState.currentPage) ?: return@LaunchedEffect
+    LaunchedEffect(pagerInitialized, pagerState.currentPage) {
+        if (!pagerInitialized) {
+            return@LaunchedEffect
+        }
 
-        if (currentArticle.id != article.id) {
-            onRequestArticle(currentArticle.id)
+        val currentArticle = articles[pagerState.currentPage]
+
+        if (currentArticle != null) {
+            onRequestArticle(pagerState.currentPage, currentArticle.id)
         }
     }
 
-    LaunchedEffect(articles.index) {
-        pagerState.scrollToPage(articles.index)
+    LaunchedEffect(article.id, articles.itemCount) {
+        scrollToArticleJob?.cancel()
+
+        scrollToArticleJob = launchIO {
+            val index = lookup.findIndex(article.id)
+
+            withUIContext {
+                pagerState.scrollToPage(index)
+                onScrollToArticle(index)
+                pagerInitialized = true
+            }
+        }
     }
 
     BackHandler(enableBackHandler) {
@@ -196,8 +229,9 @@ private fun ArticleViewScaffold(
 @Composable
 fun ArticlePullRefresh(
     includePadding: Boolean,
+    hasNextArticle: Boolean,
+    hasPreviousArticle: Boolean,
     onSwipe: (swipe: ArticleVerticalSwipe) -> Unit,
-    articles: IndexedArticles,
     content: @Composable () -> Unit,
 ) {
     val (topSwipe, bottomSwipe) = rememberSwipePreferences()
@@ -207,12 +241,11 @@ fun ArticlePullRefresh(
         haptics.performHapticFeedback(HapticFeedbackType.LongPress)
     }
 
-
     val enableTopSwipe = topSwipe.enabled &&
-            (topSwipe != PREVIOUS_ARTICLE || (topSwipe.openArticle && articles.hasPrevious()))
+            (topSwipe != PREVIOUS_ARTICLE || (topSwipe.openArticle && hasPreviousArticle))
 
     val enableBottomSwipe = bottomSwipe.enabled &&
-            (bottomSwipe != NEXT_ARTICLE || (bottomSwipe.openArticle && articles.hasNext()))
+            (bottomSwipe != NEXT_ARTICLE || (bottomSwipe.openArticle && hasNextArticle))
 
     SwipeRefresh(
         onRefresh = { onSwipe(topSwipe) },

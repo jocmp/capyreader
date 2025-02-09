@@ -18,7 +18,7 @@ fun Account.buildArticlePager(
             prefetchDistance = 10,
         ),
         pagingSourceFactory = {
-            ArticlePagerFactory(database).find(
+            ArticlePagerFactory(database).findArticles(
                 filter = filter,
                 query = query,
                 unreadSort = unreadSort,

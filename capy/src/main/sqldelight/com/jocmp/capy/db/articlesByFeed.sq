@@ -1,0 +1,83 @@
+all:
+SELECT
+  articles.id,
+  articles.feed_id,
+  articles.title,
+  articles.author,
+  articles.content_html,
+  articles.extracted_content_url,
+  articles.url,
+  articles.summary,
+  articles.image_url,
+  articles.published_at,
+  feeds.title AS feed_title,
+  feeds.favicon_url,
+  feeds.enable_sticky_full_content,
+  article_statuses.updated_at,
+  article_statuses.starred,
+  article_statuses.read
+FROM articles
+JOIN feeds ON articles.feed_id = feeds.id
+JOIN article_statuses ON articles.id = article_statuses.article_id
+WHERE articles.feed_id IN :feedIDs
+AND ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
+AND (article_statuses.starred = :starred OR :starred IS NULL)
+AND (articles.title LIKE '%' || :query || '%' OR articles.summary  LIKE '%' || :query || '%' OR :query IS NULL)
+GROUP BY articles.id
+ORDER BY CASE WHEN :newestFirst THEN articles.published_at ELSE (-1 * articles.published_at) END DESC
+LIMIT :limit OFFSET :offset;
+
+findIndex:
+WITH RECURSIVE article_indices(article_page, article_id) AS (
+    SELECT
+      ROW_NUMBER() OVER(ORDER BY CASE WHEN :newestFirst THEN articles.published_at ELSE (-1 * articles.published_at) END DESC),
+      articles.id
+    FROM articles
+    JOIN feeds ON articles.feed_id = feeds.id
+    JOIN article_statuses ON articles.id = article_statuses.article_id
+    WHERE articles.feed_id IN :feedIDs
+    AND ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
+    AND (article_statuses.starred = :starred OR :starred IS NULL)
+    AND (articles.title LIKE '%' || :query || '%' OR articles.summary  LIKE '%' || :query || '%' OR :query IS NULL)
+    GROUP BY articles.id
+    ORDER BY CASE WHEN :newestFirst THEN articles.published_at ELSE (-1 * articles.published_at) END DESC
+)
+SELECT
+  article_page - 1
+ FROM article_indices
+ WHERE article_id = :articleID;
+
+countAll:
+SELECT COUNT(*)
+FROM articles
+JOIN article_statuses ON articles.id = article_statuses.article_id
+WHERE articles.feed_id IN :feedIDs
+AND ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
+AND (articles.title LIKE '%' || :query || '%' OR articles.summary  LIKE '%' || :query || '%' OR :query IS NULL)
+AND (article_statuses.starred = :starred OR :starred IS NULL);
+
+findArticleIDs:
+SELECT articles.id
+FROM articles
+JOIN article_statuses ON articles.id = article_statuses.article_id
+WHERE articles.feed_id IN :feedIDs
+AND read != 1
+AND (article_statuses.starred = :starred OR :starred IS NULL)
+AND (
+  :afterArticleID IS NULL
+  OR articles.published_at >= (
+      SELECT published_at
+      FROM articles
+      WHERE articles.id = :afterArticleID
+      LIMIT 1
+  )
+)
+AND (:beforeArticleID IS NULL OR
+  :beforeArticleID IS NULL
+  OR articles.published_at <= (
+      SELECT published_at
+      FROM articles
+      WHERE articles.id = :beforeArticleID
+      LIMIT 1
+  )
+);

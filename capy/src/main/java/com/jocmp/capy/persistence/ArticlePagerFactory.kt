@@ -12,7 +12,7 @@ import java.time.OffsetDateTime
 class ArticlePagerFactory(private val database: Database) {
     private val articles = ArticleRecords(database)
 
-    fun find(
+    fun findArticles(
         filter: ArticleFilter,
         query: String?,
         unreadSort: UnreadSortOrder,

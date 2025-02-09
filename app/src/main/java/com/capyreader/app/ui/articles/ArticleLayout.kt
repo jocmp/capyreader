@@ -105,7 +105,7 @@ fun ArticleLayout(
 ) {
     val skipInitialRefresh = refreshInterval == RefreshInterval.MANUALLY_ONLY
 
-    val (isInitialized, setInitialized) = rememberSaveable {
+    val (isRefreshInitialized, setRefreshInitialized) = rememberSaveable {
         mutableStateOf(skipInitialRefresh)
     }
     val (isUpdatePasswordDialogOpen, setUpdatePasswordDialogOpen) = rememberSaveable {
@@ -116,6 +116,7 @@ fun ArticleLayout(
     val hasMultipleColumns = scaffoldNavigator.scaffoldDirective.maxHorizontalPartitions > 1
     var isRefreshing by remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
+
     val snackbarHost = remember { SnackbarHostState() }
     val addFeedSuccessMessage = stringResource(R.string.add_feed_success)
     val currentFeed = findCurrentFeed(filter, allFeeds)
@@ -131,6 +132,7 @@ fun ArticleLayout(
     suspend fun navigateToDetail() {
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
     }
+
 
     fun scrollToArticle(index: Int) {
         coroutineScope.launch {
@@ -197,8 +199,8 @@ fun ArticleLayout(
         onInitialized {
             isRefreshing = false
             refreshPagination()
-            if (!isInitialized) {
-                setInitialized(true)
+            if (!isRefreshInitialized) {
+                setRefreshInitialized(true)
             }
         }
     }
@@ -216,6 +218,13 @@ fun ArticleLayout(
             drawerState.close()
             openNextStatus(action)
         }
+    }
+
+    fun clearArticle() {
+        coroutineScope.launchUI {
+            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
+        }
+        onRequestClearArticle()
     }
 
     val toggleDrawer = {
@@ -308,8 +317,8 @@ fun ArticleLayout(
         }
     }
 
-    ArticleHandler {
-        selectArticle(it)
+    ArticleHandler(article) { articleID ->
+        selectArticle(articleID)
     }
 
     ArticleScaffold(
@@ -378,7 +387,7 @@ fun ArticleLayout(
             ) { innerPadding ->
                 ArticleListScaffold(
                     padding = innerPadding,
-                    showOnboarding = isInitialized && !isRefreshing && allFeeds.isEmpty(),
+                    showOnboarding = isRefreshInitialized && allFeeds.isEmpty(),
                     onboarding = {
                         EmptyOnboardingView {
                             AddFeedButton(
@@ -417,7 +426,9 @@ fun ArticleLayout(
                                     onMarkAllRead = { range ->
                                         onMarkAllRead(range)
                                     },
-                                    onSelect = ::selectArticle,
+                                    onSelect = { articleID ->
+                                        selectArticle(articleID)
+                                    },
                                 )
                             }
                         }
@@ -434,35 +445,25 @@ fun ArticleLayout(
                 ) {
                     CapyPlaceholder()
                 }
-            } else if (article != null) {
-                val indexedArticles =
-                    rememberIndexedArticles(article = article, articles = articles)
-
+            } else if (article != null && articles.itemCount > 0) {
                 ArticleView(
                     article = article,
                     onNavigateToMedia = { media = it },
-                    articles = indexedArticles,
+                    articles = articles,
                     onBackPressed = {
-                        coroutineScope.launchUI {
-                            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
-                        }
-                        onRequestClearArticle()
+                        clearArticle()
                     },
                     onToggleRead = onToggleArticleRead,
                     onToggleStar = onToggleArticleStar,
                     enableBackHandler = media == null,
-                    onRequestArticle = { id ->
-                        coroutineScope.launchUI {
-                            onSelectArticle(id)
-                        }
+                    onRequestArticle = { index, articleID ->
+                        selectArticle(articleID)
+                        scrollToArticle(index)
                     },
-                )
-
-                LaunchedEffect(article.id, indexedArticles.index) {
-                    if (hasMultipleColumns) {
-                        scrollToArticle(indexedArticles.index)
+                    onScrollToArticle = { index ->
+                        scrollToArticle(index)
                     }
-                }
+                )
             }
         }
     )
@@ -500,7 +501,7 @@ fun ArticleLayout(
     }
 
     LaunchedEffect(Unit) {
-        if (!isInitialized) {
+        if (!isRefreshInitialized) {
             initialize()
         }
     }
