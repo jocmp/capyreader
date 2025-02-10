@@ -25,12 +25,10 @@ import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.WebViewInterface
 import com.capyreader.app.common.openLink
-import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
 import com.jocmp.capy.common.windowOrigin
-import org.koin.compose.koinInject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.io.ByteArrayInputStream
@@ -40,17 +38,20 @@ import java.io.InputStream
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun WebView(
-    state: WebViewState,
-    onDispose: (WebView) -> Unit,
+    webView: WebView,
+    update: (WebView) -> Unit,
+    onRelease: (WebView) -> Unit,
 ) {
     AndroidView(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight(),
-        factory = { state.webView },
-        onRelease = {
-            onDispose(it)
-        }
+        update = update,
+        factory = { webView },
+        onReset = {
+            it.loadUrl("about:blank")
+        },
+        onRelease = onRelease
     )
 }
 
@@ -110,36 +111,13 @@ class AccompanistWebViewClient(
 }
 
 @Stable
-class WebViewState(
-    private val renderer: ArticleRenderer,
-    private val colors: Map<String, String>,
-    internal val webView: WebView,
-) {
-    fun loadHtml(article: Article, showImages: Boolean) {
-        val html = renderer.render(
-            article,
-            hideImages = !showImages,
-            byline = article.byline(context = webView.context),
-            colors = colors
-        )
-
-        webView.loadDataWithBaseURL(
-            windowOrigin(article.url),
-            html,
-            null,
-            "UTF-8",
-            null,
-        )
-    }
-}
+class WebViewState(internal val webView: WebView)
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun rememberWebViewState(
-    renderer: ArticleRenderer = koinInject(),
     onNavigateToMedia: (media: Media) -> Unit,
-): WebViewState {
-    val colors = articleTemplateColors()
+): WebView {
     val context = LocalContext.current
 
     val client = remember {
@@ -152,7 +130,7 @@ fun rememberWebViewState(
     }
 
     return remember {
-        val webView = WebView(context).apply {
+        WebView(context).apply {
             settings.apply {
                 javaScriptEnabled = true
                 mediaPlaybackRequiresUserGesture = false
@@ -171,10 +149,6 @@ fun rememberWebViewState(
 
             webViewClient = client
         }
-
-        WebViewState(renderer, colors, webView).also {
-            client.state = it
-        }
     }
 }
 
@@ -185,4 +159,26 @@ private fun jpegStream(
     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
     val bitmapData = byteArrayOutputStream.toByteArray()
     return ByteArrayInputStream(bitmapData)
+}
+
+fun WebView.loadHtml(
+    article: Article,
+    showImages: Boolean,
+    renderer: ArticleRenderer,
+    colors: Map<String, String>,
+) {
+    val html = renderer.render(
+        article,
+        hideImages = !showImages,
+        byline = article.byline(context = context),
+        colors = colors
+    )
+
+    loadDataWithBaseURL(
+        windowOrigin(article.url),
+        html,
+        null,
+        "UTF-8",
+        null,
+    )
 }
