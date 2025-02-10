@@ -2,40 +2,48 @@ package com.capyreader.app.ui.articles
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.capyreader.app.ui.components.DialogCard
 import com.jocmp.capy.EditFeedFormEntry
 import com.jocmp.capy.Feed
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
-import java.util.UUID
 
 @Composable
 fun EditFeedDialog(
     feed: Feed,
+    isOpen: Boolean,
     form: EditFeedViewModel = koinViewModel(),
-    onSubmit: () -> Unit,
+    onSuccess: () -> Unit,
     onFailure: () -> Unit,
-    onCancel: () -> Unit
+    onDismiss: () -> Unit
 ) {
-    val allFolders by form.folders.collectAsStateWithLifecycle(emptyList())
-    val folders = remember(UUID.randomUUID()) {
-        allFolders
-    }
-    val submit = { entry: EditFeedFormEntry ->
-        form.submit(entry, onSubmit, onFailure)
+    val folders by form.folders.collectAsStateWithLifecycle(emptyList())
+    val coroutineScope = rememberCoroutineScope()
+
+    fun submit(entry: EditFeedFormEntry) {
+        coroutineScope.launch {
+            onDismiss()
+
+            form.submit(entry)
+                .onSuccess { onSuccess() }
+                .onFailure { onFailure() }
+        }
     }
 
-    Dialog(onDismissRequest = onCancel) {
-        DialogCard {
-            EditFeedView(
-                feed = feed,
-                folders = folders,
-                showMultiselect = form.showMultiselect,
-                onSubmit = submit,
-                onCancel = onCancel
-            )
+    if (isOpen) {
+        Dialog(onDismissRequest = onDismiss) {
+            DialogCard {
+                EditFeedView(
+                    feed = feed,
+                    folders = folders,
+                    showMultiselect = form.showMultiselect,
+                    onSubmit = ::submit,
+                    onCancel = onDismiss
+                )
+            }
         }
     }
 }
