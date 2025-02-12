@@ -439,9 +439,9 @@ class ArticleScreenViewModel(
     private fun updateFilter(filter: ArticleFilter) {
         appPreferences.filter.set(filter)
 
-        updateArticlesSince()
-
         clearArticle()
+
+        updateArticlesSince()
     }
 
     private fun updateArticlesSince() {
