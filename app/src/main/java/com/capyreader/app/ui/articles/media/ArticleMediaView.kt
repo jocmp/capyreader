@@ -170,7 +170,7 @@ private fun CaptionOverlay(text: String) {
     Box(
         Modifier
             .fillMaxWidth()
-            .background(Color.Black.copy(alpha = 0.6f))
+            .background(Color.Black.copy(alpha = 0.8f))
     ) {
         Box(
             Modifier
@@ -185,7 +185,7 @@ private fun CaptionOverlay(text: String) {
         ) {
             Text(
                 text,
-                color = Color.White.copy(0.8f),
+                color = MediaColors.textColor,
                 modifier = Modifier
                     .padding(16.dp)
             )
