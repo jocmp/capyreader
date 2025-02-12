@@ -265,7 +265,7 @@ class ArticleScreenViewModel(
                 }
             }
 
-                onComplete()
+            onComplete()
         }
     }
 
