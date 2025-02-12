@@ -187,9 +187,13 @@ fun ArticleView(
             val index = lookup.findIndex(article.id)
 
             withUIContext {
-                pagerState.scrollToPage(index)
-                onScrollToArticle(index)
-                pagerInitialized = true
+                if (index < 0) {
+                    onBackPressed()
+                } else {
+                    pagerState.scrollToPage(index)
+                    onScrollToArticle(index)
+                    pagerInitialized = true
+                }
             }
         }
     }
