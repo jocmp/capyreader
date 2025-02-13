@@ -228,4 +228,6 @@
     <string name="article_vertical_open_article_in_browser">Apri l\'articolo nel browser</string>
     <string name="search_bar_placeholder">Cerca</string>
     <string name="nav_headline_saved_searches">Ricerche</string>
+    <string name="settings_gestures_enable_horizontal_pagination_title">Abilita lo scorrimento orizzontale</string>
+    <string name="settings_gestures_enable_horizontal_pagination_subtitle">Scorrere a sinistra o a destra per navigare tra gli articoli</string>
 </resources>
