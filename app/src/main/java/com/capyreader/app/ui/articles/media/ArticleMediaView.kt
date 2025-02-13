@@ -7,7 +7,10 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -64,9 +67,7 @@ fun ArticleMediaView(
         onDismissRequest = onDismissRequest,
         showOverlay = showOverlay,
         footer = {
-            if (caption != null) {
-                CaptionOverlay(caption)
-            }
+            CaptionOverlay(caption)
         }
     ) {
         ZoomableAsyncImage(
@@ -166,29 +167,43 @@ fun MediaScaffold(
 }
 
 @Composable
-private fun CaptionOverlay(text: String) {
-    Box(
-        Modifier
+private fun CaptionOverlay(text: String?) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalAlignment = if (isCompact()) {
+            Alignment.Start
+        } else {
+            Alignment.CenterHorizontally
+        },
+        modifier = Modifier
             .fillMaxWidth()
             .background(Color.Black.copy(alpha = 0.8f))
+            .padding(vertical = 8.dp, horizontal = 16.dp)
     ) {
-        Box(
-            Modifier
-                .align(
-                    if (isCompact()) {
-                        Alignment.TopStart
-                    } else {
-                        Alignment.TopCenter
-                    }
+        if (!text.isNullOrBlank()) {
+            Box(
+                Modifier
+                    .then(
+                        if (isCompact()) {
+                            Modifier.fillMaxWidth()
+                        } else {
+                            Modifier.widthIn(max = 600.dp)
+                        }
+                    )
+            ) {
+                Text(
+                    text,
+                    color = MediaColors.textColor,
+                    modifier = Modifier
+                        .padding(top = 8.dp)
                 )
-                .widthIn(max = 600.dp)
+            }
+        }
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            Text(
-                text,
-                color = MediaColors.textColor,
-                modifier = Modifier
-                    .padding(16.dp)
-            )
+            MediaSaveButton()
+            MediaShareButton()
         }
     }
 }
