@@ -226,4 +226,6 @@
     <string name="article_vertical_open_article_in_browser">在浏览器中打开文章</string>
     <string name="search_bar_placeholder">搜索</string>
     <string name="nav_headline_saved_searches">搜索</string>
+    <string name="settings_gestures_enable_horizontal_pagination_title">启用水平滚动</string>
+    <string name="settings_gestures_enable_horizontal_pagination_subtitle">左右滑动来查看文章</string>
 </resources>
