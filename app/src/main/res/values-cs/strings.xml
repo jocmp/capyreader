@@ -67,7 +67,7 @@
     <string name="settings_section_version">Verze</string>
     <string name="settings_option_copy_version">Kopírovat verzi</string>
     <string name="settings_option_full_content_title">Pamatovat volbu načítání úplného obsahu</string>
-    <string name="settings_option_full_content_subtitle">Pamatovat volbu pro načítání pro načítání celého článku</string>
+    <string name="settings_option_full_content_subtitle">Pamatovat volbu pro načítání celého článku</string>
     <string name="refresh_on_start">Po otevření</string>
     <string name="empty_onboarding_title">Žádné kanály</string>
     <string name="empty_onboarding_prompt">Začněte přidáním kanálu</string>
@@ -221,4 +221,10 @@
     <string name="full_content_error_generic">Chyba při zpracování článku</string>
     <string name="after_read_all_behavior_label">Po přečtení všeho</string>
     <string name="article_actions_copy_link">Kopírovat odkaz</string>
+    <string name="nav_headline_saved_searches">Vyhledávání</string>
+    <string name="settings_gestures_enable_horizontal_pagination_title">Horizontální skrolování</string>
+    <string name="settings_gestures_enable_horizontal_pagination_subtitle">Procházet články přetažením v levo či v pravo</string>
+    <string name="feed_nav_drawer_title">Kanály</string>
+    <string name="search_bar_placeholder">Hledat</string>
+    <string name="article_vertical_open_article_in_browser">Otevřít článek v prohlížeči</string>
 </resources>
