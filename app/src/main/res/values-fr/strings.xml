@@ -225,4 +225,6 @@
     <string name="article_vertical_open_article_in_browser">Ouvrir l\'article dans le navigateur</string>
     <string name="search_bar_placeholder">Rechercher</string>
     <string name="nav_headline_saved_searches">Recherches</string>
+    <string name="settings_gestures_enable_horizontal_pagination_title">Activer le défilement horizontal</string>
+    <string name="settings_gestures_enable_horizontal_pagination_subtitle">Glisser à gauche ou droite pour changer d\'article</string>
 </resources>
