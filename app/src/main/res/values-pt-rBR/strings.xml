@@ -220,4 +220,9 @@
     <string name="full_content_error_generic">Falha ao analisar artigo</string>
     <string name="settings_donate_button">Doar</string>
     <string name="after_read_all_behavior_default">Padrão</string>
+    <string name="feed_nav_drawer_title">Feeds</string>
+    <string name="article_vertical_open_article_in_browser">Abrir artigo no navegador</string>
+    <string name="search_bar_placeholder">Pesquisar</string>
+    <string name="nav_headline_saved_searches">Pesquisas</string>
+    <string name="article_actions_copy_link">Copiar link</string>
 </resources>
