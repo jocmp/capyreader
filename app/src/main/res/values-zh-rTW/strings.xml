@@ -199,8 +199,8 @@
     <string name="add_account_feedbin_signup_link_text">立即建立。</string>
     <string name="add_account_freshrss_signup_link_text">了解更多。</string>
     <string name="edit_feed_tag_section">標簽</string>
-    <string name="settings_gestures_reader_tap_to_page_subtitle">點擊底部角落快速翻頁</string>
-    <string name="settings_gestures_reader_tap_to_page_title">電子墨水屏翻頁</string>
+    <string name="settings_gestures_reader_tap_to_page_subtitle">點擊底部角落上下翻頁</string>
+    <string name="settings_gestures_reader_tap_to_page_title">電子墨水屏手勢</string>
     <string name="settings_enable_high_contrast_dark_theme">高對比度深色主題</string>
     <string name="settings_mark_read_on_scroll">滾動時標為已讀</string>
     <string name="settings_section_mark_all_as_read">閲讀操作</string>
@@ -226,4 +226,6 @@
     <string name="article_vertical_open_article_in_browser">在瀏覽器中打開文章</string>
     <string name="search_bar_placeholder">搜尋</string>
     <string name="nav_headline_saved_searches">搜尋</string>
+    <string name="settings_gestures_enable_horizontal_pagination_subtitle">向左右滑動切換文章</string>
+    <string name="settings_gestures_enable_horizontal_pagination_title">水平滑動</string>
 </resources>
