@@ -227,4 +227,6 @@
     <string name="nav_headline_saved_searches">Varasemad otsingud</string>
     <string name="search_bar_placeholder">Otsi</string>
     <string name="article_vertical_open_article_in_browser">Ava artikkel veebibrauseris</string>
+    <string name="settings_gestures_enable_horizontal_pagination_subtitle">Artiklite vahel liikumiseks viipa vasakule ja paremale</string>
+    <string name="settings_gestures_enable_horizontal_pagination_title">Kasuta rõhtset kerimist</string>
 </resources>
