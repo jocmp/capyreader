@@ -227,4 +227,6 @@
     <string name="nav_headline_saved_searches">Търсения</string>
     <string name="article_vertical_open_article_in_browser">Отвори статията в браузъра</string>
     <string name="search_bar_placeholder">Търсене</string>
+    <string name="settings_gestures_enable_horizontal_pagination_subtitle">Плъзнете наляво или надясно, за да навигирате в статиите</string>
+    <string name="settings_gestures_enable_horizontal_pagination_title">Активирай хоризонтално превъртане</string>
 </resources>
