@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
         enableStrictModeOnDebug()
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        NotificationHelper.handleResult(intent, appPreferences = appPreferences)
+        NotificationHelper.openArticle(intent, appPreferences = appPreferences)
 
         val theme = appPreferences.theme
 
@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        NotificationHelper.handleResult(intent, appPreferences = appPreferences)
+        NotificationHelper.openArticle(intent, appPreferences = appPreferences)
     }
 
     private fun startDestination(): Route {

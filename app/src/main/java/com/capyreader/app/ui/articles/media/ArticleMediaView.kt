@@ -15,14 +15,21 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -40,6 +47,7 @@ import com.capyreader.app.ui.components.LoadingView
 import com.capyreader.app.ui.components.Swiper
 import com.capyreader.app.ui.components.rememberSwiperState
 import com.capyreader.app.ui.isCompact
+import com.capyreader.app.ui.settings.LocalSnackbarHost
 import com.capyreader.app.ui.theme.CapyTheme
 import me.saket.telephoto.zoomable.ZoomSpec
 import me.saket.telephoto.zoomable.coil.ZoomableAsyncImage
@@ -67,7 +75,10 @@ fun ArticleMediaView(
         onDismissRequest = onDismissRequest,
         showOverlay = showOverlay,
         footer = {
-            CaptionOverlay(caption)
+            CaptionOverlay(
+                caption = caption,
+                imageUrl = url
+            )
         }
     ) {
         ZoomableAsyncImage(
@@ -132,42 +143,64 @@ fun MediaScaffold(
     )
 
     val isOverlayVisible = showOverlay && swiperState.progress == 0f
+    val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
         containerColor = Color.Black.copy(alpha = 1f - swiperState.progress),
         modifier = Modifier
-            .fillMaxSize()
-    ) { paddingValues ->
-        Box(
-            Modifier.padding(paddingValues)
-        ) {
-            Swiper(
-                state = swiperState,
-                modifier = Modifier.fillMaxSize()
+            .fillMaxSize(),
+        snackbarHost = {
+            Box(
+                contentAlignment = Alignment.TopCenter,
+                modifier = Modifier
+                    .statusBarsPadding()
+                    .fillMaxSize(),
             ) {
-                content()
-            }
-
-            Box(Modifier.align(Alignment.BottomStart)) {
-                AnimatedVisibility(
-                    isOverlayVisible,
-                    enter = fadeIn() + expandVertically(),
-                    exit = shrinkVertically() + fadeOut(),
-                ) {
-                    footer()
+                SnackbarHost(snackbarHostState) { data ->
+                    val darkColors = darkColorScheme()
+                    Snackbar(
+                        data,
+                        containerColor = darkColors.inverseSurface,
+                        contentColor = darkColors.inverseOnSurface,
+                    )
                 }
             }
+        }
+    ) { paddingValues ->
+        CompositionLocalProvider(
+            LocalSnackbarHost provides snackbarHostState,
+        ) {
+            Box(
+                Modifier.padding(paddingValues)
+            ) {
+                Swiper(
+                    state = swiperState,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    content()
+                }
 
-            CloseButton(
-                onClick = { onDismissRequest() },
-                visible = isOverlayVisible
-            )
+                Box(Modifier.align(Alignment.BottomStart)) {
+                    AnimatedVisibility(
+                        isOverlayVisible,
+                        enter = fadeIn() + expandVertically(),
+                        exit = shrinkVertically() + fadeOut(),
+                    ) {
+                        footer()
+                    }
+                }
+
+                CloseButton(
+                    onClick = { onDismissRequest() },
+                    visible = isOverlayVisible
+                )
+            }
         }
     }
 }
 
 @Composable
-private fun CaptionOverlay(text: String?) {
+private fun CaptionOverlay(caption: String?, imageUrl: String) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalAlignment = if (isCompact()) {
@@ -180,7 +213,7 @@ private fun CaptionOverlay(text: String?) {
             .background(Color.Black.copy(alpha = 0.8f))
             .padding(vertical = 8.dp, horizontal = 16.dp)
     ) {
-        if (!text.isNullOrBlank()) {
+        if (!caption.isNullOrBlank()) {
             Box(
                 Modifier
                     .then(
@@ -192,7 +225,7 @@ private fun CaptionOverlay(text: String?) {
                     )
             ) {
                 Text(
-                    text,
+                    caption,
                     color = MediaColors.textColor,
                     modifier = Modifier
                         .padding(top = 8.dp)
@@ -202,8 +235,8 @@ private fun CaptionOverlay(text: String?) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            MediaSaveButton()
-            MediaShareButton()
+            MediaSaveButton(imageUrl)
+            MediaShareButton(imageUrl)
         }
     }
 }
@@ -233,7 +266,8 @@ private fun ArticleMediaViewPreview_Foldable() {
         ) {
             Box(Modifier.align(Alignment.BottomStart)) {
                 CaptionOverlay(
-                    "A description of the picture you're taking a look at"
+                    "A description of the picture you're taking a look at",
+                    "http://example.com/test.jpg"
                 )
             }
         }
@@ -251,7 +285,8 @@ private fun ArticleMediaViewPreview_Phone() {
         ) {
             Box(Modifier.align(Alignment.BottomStart)) {
                 CaptionOverlay(
-                    "A description"
+                    "A description",
+                    "http://example.com/test.jpg"
                 )
             }
         }
@@ -270,7 +305,8 @@ private fun ArticleMediaViewPreview_Tablet() {
         ) {
             Box(Modifier.align(Alignment.BottomStart)) {
                 CaptionOverlay(
-                    "A description of the picture you're taking a look at"
+                    "A description of the picture you're taking a look at",
+                    "http://example.com/test.jpg"
                 )
             }
         }

@@ -122,7 +122,7 @@ class NotificationHelper(
             }
         }
 
-        fun handleResult(intent: Intent, appPreferences: AppPreferences) {
+        fun openArticle(intent: Intent, appPreferences: AppPreferences) {
             val articleID = intent.getStringExtra(ARTICLE_ID_KEY) ?: return
             val feedID = intent.getStringExtra(FEED_ID_KEY) ?: return
             intent.replaceExtras(Bundle())
