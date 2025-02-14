@@ -9,11 +9,23 @@ import java.io.File
 fun Context.fileURI(file: File): Uri =
     FileProvider.getUriForFile(this, "${BuildConfig.APPLICATION_ID}.fileprovider", file)
 
-fun Context.createCacheFile(name: String): File {
-    val file = File(externalCacheDir, name)
-    if (file.exists()) {
-        file.delete()
+fun Context.externalImageCacheFile(name: String): File {
+    val imageCache = File(externalCacheDir, "images").apply {
+        if (!exists()) {
+            mkdir()
+        }
     }
-    file.createNewFile()
-    return file
+
+    return File(imageCache, name).apply {
+        createNewFile()
+    }
+}
+
+fun Context.createCacheFile(name: String): File {
+    return File(externalCacheDir, name).apply {
+       if (exists()) {
+           delete()
+       }
+        createNewFile()
+    }
 }

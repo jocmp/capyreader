@@ -3,7 +3,12 @@
     <files-path
         name="transfers"
         path="transfers/" />
+
     <external-cache-path
         name="external-cache"
         path="." />
+
+    <external-cache-path
+        name="external-cache-images"
+        path="images/" />
 </paths>
