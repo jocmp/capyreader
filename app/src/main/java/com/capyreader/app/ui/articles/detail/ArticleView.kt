@@ -46,7 +46,6 @@ import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.NEXT_ARTICLE
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWSER
 import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.PREVIOUS_ARTICLE
 import com.jocmp.capy.Article
-import com.jocmp.capy.logging.CapyLog
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -125,14 +124,6 @@ fun ArticleView(
     )
 
     LaunchedEffect(pagination.index) {
-        CapyLog.info(
-            "launched",
-            mapOf(
-                "article_id" to article.id,
-                "size" to pagination.pages.size.toString(),
-                "article_idx" to pagination.index.toString(),
-            ),
-        )
         if (pagination.index > -1) {
             onScrollToArticle(pagination.index)
         }
