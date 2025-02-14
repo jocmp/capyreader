@@ -5,6 +5,7 @@ import app.cash.sqldelight.coroutines.mapToList
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleNotification
+import com.jocmp.capy.ArticlePages
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.articles.UnreadSortOrder
@@ -36,22 +37,22 @@ internal class ArticleRecords internal constructor(
         ).executeAsOneOrNull()
     }
 
-    fun findIndex(
+    fun findPages(
         articleID: String,
         filter: ArticleFilter,
         query: String?,
         unreadSort: UnreadSortOrder,
         since: OffsetDateTime
-    ): Long {
+    ): Flow<ArticlePages?> {
         return when (filter) {
-            is ArticleFilter.Articles -> byStatus.findIndex(
+            is ArticleFilter.Articles -> byStatus.findPages(
                 articleID = articleID,
                 status = filter.articleStatus,
                 query = query,
                 unreadSort = unreadSort,
                 since = since
             )
-            is ArticleFilter.Feeds -> byFeed.findIndex(
+            is ArticleFilter.Feeds -> byFeed.findPages(
                 articleID = articleID,
                 feedIDs = listOf(filter.feedID),
                 status = filter.status,
@@ -59,7 +60,7 @@ internal class ArticleRecords internal constructor(
                 unreadSort = unreadSort,
                 since = since
             )
-            is ArticleFilter.Folders -> byFeed.findIndex(
+            is ArticleFilter.Folders -> byFeed.findPages(
                 articleID = articleID,
                 feedIDs = folderFeedIDs(filter),
                 status = filter.status,
@@ -67,7 +68,7 @@ internal class ArticleRecords internal constructor(
                 unreadSort = unreadSort,
                 since = since
             )
-            is ArticleFilter.SavedSearches -> bySavedSearch.findIndex(
+            is ArticleFilter.SavedSearches -> bySavedSearch.findPages(
                 articleID = articleID,
                 savedSearchID = filter.savedSearchID,
                 status = filter.status,

@@ -1,13 +1,13 @@
 package com.capyreader.app.ui.articles.detail
 
 import androidx.compose.foundation.ScrollState
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -20,20 +20,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.common.AppPreferences
-import com.capyreader.app.common.Media
 import com.capyreader.app.common.ReaderImageVisibility
 import com.capyreader.app.ui.ConnectivityType
 import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.articles.ColumnScrollbar
 import com.capyreader.app.ui.components.WebView
-import com.capyreader.app.ui.components.rememberWebViewState
+import com.capyreader.app.ui.components.WebViewState
 import com.jocmp.capy.Article
 import org.koin.compose.koinInject
 
 @Composable
 fun ArticleReader(
     article: Article,
-    onNavigateToMedia: (media: Media) -> Unit,
+    webViewState: WebViewState,
 ) {
     val showImages = rememberImageVisibility()
     var maxHeight by remember { mutableFloatStateOf(0f) }
@@ -43,11 +42,7 @@ fun ArticleReader(
 
     var lastScrollY by rememberSaveable { mutableIntStateOf(0) }
 
-    val webViewState = rememberWebViewState(
-        onNavigateToMedia = onNavigateToMedia,
-    )
-
-    ReaderPagingBox(
+    CornerTapGestureScroll(
         maxArticleHeight = maxHeight,
         scrollState = scrollState,
     ) {
@@ -83,6 +78,12 @@ fun ArticleReader(
     }
 
     ArticleStyleListener(webView = webViewState.webView)
+
+    DisposableEffect(article.id) {
+        onDispose {
+            webViewState.reset()
+        }
+    }
 }
 
 @Composable

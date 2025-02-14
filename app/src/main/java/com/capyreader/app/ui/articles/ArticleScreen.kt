@@ -61,11 +61,7 @@ fun ArticleScreen(
         LocalFullContent provides fullContent,
         LocalArticleActions provides articleActions,
         LocalConnectivity provides connectivity,
-        LocalArticleLookup provides ArticleLookup(
-            findIndex = {
-                viewModel.findArticleIndex(it)
-            },
-        ),
+        LocalArticleLookup provides ArticleLookup(viewModel::findArticlePages),
     ) {
         ArticleLayout(
             filter = filter,

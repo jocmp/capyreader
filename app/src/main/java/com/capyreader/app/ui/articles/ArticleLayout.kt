@@ -46,6 +46,7 @@ import com.capyreader.app.common.Saver
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
+import com.capyreader.app.ui.articles.detail.rememberArticlePagination
 import com.capyreader.app.ui.articles.list.EmptyOnboardingView
 import com.capyreader.app.ui.articles.list.FeedListTopBar
 import com.capyreader.app.ui.articles.list.PullToNextFeedBox
@@ -53,6 +54,7 @@ import com.capyreader.app.ui.articles.list.resetScrollBehaviorListener
 import com.capyreader.app.ui.articles.media.ArticleMediaView
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.ArticleSearch
+import com.capyreader.app.ui.components.rememberWebViewState
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
@@ -437,6 +439,10 @@ fun ArticleLayout(
             }
         },
         detailPane = {
+            val webViewState = rememberWebViewState(
+                onNavigateToMedia = { media = it },
+            )
+
             if (article == null && hasMultipleColumns) {
                 Box(
                     contentAlignment = Alignment.Center,
@@ -445,21 +451,24 @@ fun ArticleLayout(
                 ) {
                     CapyPlaceholder()
                 }
-            } else if (article != null && articles.itemCount > 0) {
+            } else if (article != null) {
+                val pagination = rememberArticlePagination(
+                    article,
+                    onSelectArticle = { index, articleID ->
+                        selectArticle(articleID)
+                        scrollToArticle(index)
+                    }
+                )
                 ArticleView(
                     article = article,
-                    onNavigateToMedia = { media = it },
-                    articles = articles,
+                    webViewState = webViewState,
+                    pagination = pagination,
                     onBackPressed = {
                         clearArticle()
                     },
                     onToggleRead = onToggleArticleRead,
                     onToggleStar = onToggleArticleStar,
                     enableBackHandler = media == null,
-                    onRequestArticle = { index, articleID ->
-                        selectArticle(articleID)
-                        scrollToArticle(index)
-                    },
                     onScrollToArticle = { index ->
                         scrollToArticle(index)
                     }

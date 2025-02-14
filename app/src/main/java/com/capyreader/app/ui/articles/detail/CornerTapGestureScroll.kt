@@ -27,7 +27,7 @@ import com.jocmp.capy.common.launchUI
 import org.koin.compose.koinInject
 
 @Composable
-fun ReaderPagingBox(
+fun CornerTapGestureScroll(
     maxArticleHeight: Float,
     scrollState: ScrollState,
     appPreferences: AppPreferences = koinInject(),

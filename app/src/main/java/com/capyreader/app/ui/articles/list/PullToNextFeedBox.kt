@@ -1,5 +1,7 @@
 package com.capyreader.app.ui.articles.list
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,6 +27,7 @@ fun PullToNextFeedBox(
         swipeEnabled = enabled,
         onTriggerThreshold = { triggerThreshold() },
         indicatorAlignment = Alignment.BottomCenter,
+        icon = Icons.Rounded.KeyboardArrowDown,
         modifier = modifier,
     ) {
         content()

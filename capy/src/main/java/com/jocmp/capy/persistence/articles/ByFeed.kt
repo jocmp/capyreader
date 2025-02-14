@@ -1,13 +1,19 @@
 package com.jocmp.capy.persistence.articles
 
 import app.cash.sqldelight.Query
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.jocmp.capy.Article
+import com.jocmp.capy.ArticlePages
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.db.Database
+import com.jocmp.capy.persistence.articlePageMapper
 import com.jocmp.capy.persistence.listMapper
 import com.jocmp.capy.persistence.toStatusPair
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import java.time.OffsetDateTime
 
 class ByFeed(private val database: Database) {
@@ -69,20 +75,20 @@ class ByFeed(private val database: Database) {
         )
     }
 
-    fun findIndex(
+    fun findPages(
         articleID: String,
         feedIDs: List<String>,
         status: ArticleStatus,
         query: String?,
         unreadSort: UnreadSortOrder,
         since: OffsetDateTime
-    ): Long {
+    ): Flow<ArticlePages?> {
         val (read, starred) = status.toStatusPair
         val newestFirst = status != ArticleStatus.UNREAD ||
                 unreadSort == UnreadSortOrder.NEWEST_FIRST
 
         return database.articlesByFeedQueries
-            .findIndex(
+            .findPages(
                 articleID = articleID,
                 feedIDs = feedIDs,
                 read = read,
@@ -90,7 +96,9 @@ class ByFeed(private val database: Database) {
                 lastReadAt = mapLastRead(read, since),
                 query = query,
                 newestFirst = newestFirst,
+                mapper = ::articlePageMapper,
             )
-            .executeAsOneOrNull() ?: -1
+            .asFlow()
+            .mapToOneOrNull(Dispatchers.IO)
     }
 }

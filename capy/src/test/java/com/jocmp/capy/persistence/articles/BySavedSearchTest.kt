@@ -9,10 +9,13 @@ import com.jocmp.capy.fixtures.ArticleFixture
 import com.jocmp.capy.fixtures.SavedSearchFixture
 import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.capy.repeated
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import java.time.OffsetDateTime
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 class BySavedSearchTest {
     private lateinit var database: Database
@@ -29,11 +32,12 @@ class BySavedSearchTest {
     }
 
     @Test
-    fun findIndex() {
+    fun findIndex() = runTest {
         val publishedAt = TimeHelpers.nowUTC()
         val search = savedSearchFixture.create()
-        val articles = 5.repeated { index ->
+        val articles = 6.repeated { index ->
             articleFixture.create(
+                id = "id:${index + 1}",
                 publishedAt = publishedAt.minusMinutes(index.toLong()).toEpochSecond(),
             ).apply {
                 savedSearchFixture.createSavedSearchArticle(articleID = id, id = search.id)
@@ -43,25 +47,30 @@ class BySavedSearchTest {
 
         val article = articles[lookupIndex]
 
-        val index = BySavedSearch(database)
-            .findIndex(
+        val pages = BySavedSearch(database)
+            .findPages(
                 articleID = article.id,
                 savedSearchID = search.id,
                 status = ArticleStatus.ALL,
                 unreadSort = UnreadSortOrder.NEWEST_FIRST,
                 since = OffsetDateTime.now().minusDays(7),
                 query = null,
-            )
+            ).firstOrNull()!!
 
-        assertEquals(expected = lookupIndex, actual = index.toInt())
+        assertEquals(expected = "id:4", actual = pages.previousID)
+        assertEquals(expected = lookupIndex, actual = pages.current)
+        assertEquals(expected = "id:6", actual = pages.nextID)
+        assertEquals(expected = 6, actual = pages.size)
     }
 
     @Test
-    fun findIndex_oldestFirst() {
+    fun findIndex_oldestFirst() = runTest {
         val search = savedSearchFixture.create()
         val publishedAt = TimeHelpers.nowUTC().minusDays(1)
-        val articles = 5.repeated { index ->
+        val total = 5
+        val articles = total.repeated { index ->
             articleFixture.create(
+                id = "id:${total - index}",
                 publishedAt = publishedAt.plusMinutes(index.toLong()).toEpochSecond(),
             ).apply {
                 savedSearchFixture.createSavedSearchArticle(articleID = id, id = search.id)
@@ -71,33 +80,36 @@ class BySavedSearchTest {
 
         val article = articles[lookupIndex]
 
-        val index = BySavedSearch(database)
-            .findIndex(
+        val pages = BySavedSearch(database)
+            .findPages(
                 articleID = article.id,
                 savedSearchID = search.id,
                 status = ArticleStatus.ALL,
                 unreadSort = UnreadSortOrder.NEWEST_FIRST,
                 since = OffsetDateTime.now().minusDays(7),
                 query = null,
-            )
+            ).firstOrNull()!!
 
-        assertEquals(expected = lookupIndex, actual = index.toInt())
+        assertEquals(expected = "id:2", actual = pages.previousID)
+        assertEquals(expected = lookupIndex, actual = pages.current)
+        assertEquals(expected = "id:4", actual = pages.nextID)
+        assertEquals(expected = total, actual = pages.size)
     }
 
     @Test
-    fun findIndex_missingArticle() {
+    fun findIndex_missingArticle() = runTest {
         val search = savedSearchFixture.create()
 
-        val index = BySavedSearch(database)
-            .findIndex(
+        val pages = BySavedSearch(database)
+            .findPages(
                 articleID = "bogus",
                 savedSearchID = search.id,
                 status = ArticleStatus.ALL,
                 unreadSort = UnreadSortOrder.NEWEST_FIRST,
                 since = OffsetDateTime.now().minusDays(1),
                 query = null,
-            )
+            ).firstOrNull()
 
-        assertEquals(expected = -1, actual = index.toInt())
+        assertNull(pages)
     }
 }
