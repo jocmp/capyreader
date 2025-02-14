@@ -47,6 +47,7 @@ fun SwipeableActionsBox(
   endActions: List<SwipeAction> = emptyList(),
   swipeThreshold: Dp = 40.dp,
   backgroundUntilSwipeThreshold: Color = Color.DarkGray,
+  disableRipple: Boolean = false,
   content: @Composable BoxScope.() -> Unit
 ) = Box(modifier) {
   state.also {
@@ -79,7 +80,13 @@ fun SwipeableActionsBox(
     modifier = Modifier
       .onSizeChanged { state.layoutWidth = it.width }
       .absoluteOffset { IntOffset(x = state.offset.value.roundToInt(), y = 0) }
-      .drawOverContent { state.ripple.draw(scope = this) }
+      .then(
+        if (disableRipple) {
+          Modifier
+        } else {
+          Modifier.drawOverContent { state.ripple.draw(scope = this) }
+        }
+      )
       .horizontalDraggable(
         enabled = !state.isResettingOnRelease,
         onDragStopped = {

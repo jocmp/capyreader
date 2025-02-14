@@ -10,10 +10,13 @@ import com.jocmp.capy.fixtures.ArticleFixture
 import com.jocmp.capy.fixtures.FeedFixture
 import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.capy.repeated
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import java.time.OffsetDateTime
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 class ByArticleStatusTest {
     private lateinit var database: Database
@@ -30,11 +33,12 @@ class ByArticleStatusTest {
     }
 
     @Test
-    fun findIndex() {
+    fun findPages() = runTest {
         val feed = feedFixture.create(feedURL = "https://example.com/${RandomUUID.generate()}")
         val publishedAt = TimeHelpers.nowUTC()
         val articles = 5.repeated { index ->
             articleFixture.create(
+                id = "id:$index",
                 publishedAt = publishedAt.minusMinutes(index.toLong()).toEpochSecond(),
                 feed = feed
             )
@@ -43,24 +47,29 @@ class ByArticleStatusTest {
 
         val article = articles[lookupIndex]
 
-        val index = ByArticleStatus(database)
-            .findIndex(
+        val pages = ByArticleStatus(database)
+            .findPages(
                 articleID = article.id,
                 status = ArticleStatus.ALL,
                 unreadSort = UnreadSortOrder.NEWEST_FIRST,
                 since = OffsetDateTime.now().minusDays(7),
                 query = null,
-            )
+            ).firstOrNull()!!
 
-        assertEquals(expected = lookupIndex, actual = index.toInt())
+        assertEquals(expected = "id:3", actual = pages.previousID)
+        assertEquals(expected = lookupIndex, actual = pages.current)
+        assertEquals(expected = null, actual = pages.nextID)
+        assertEquals(expected = 5, actual = pages.size)
     }
 
     @Test
-    fun findIndex_oldestFirst() {
+    fun findPages_oldestFirst() = runTest {
         val feed = feedFixture.create(feedURL = "https://example.com/${RandomUUID.generate()}")
         val publishedAt = TimeHelpers.nowUTC().minusDays(1)
-        val articles = 5.repeated { index ->
+        val total = 5
+        val articles = total.repeated { index ->
             articleFixture.create(
+                id = "id:${total - index}",
                 publishedAt = publishedAt.plusMinutes(index.toLong()).toEpochSecond(),
                 feed = feed
             )
@@ -69,31 +78,32 @@ class ByArticleStatusTest {
 
         val article = articles[lookupIndex]
 
-        val index = ByArticleStatus(database)
-            .findIndex(
+        val pages = ByArticleStatus(database)
+            .findPages(
                 articleID = article.id,
                 status = ArticleStatus.ALL,
                 unreadSort = UnreadSortOrder.OLDEST_FIRST,
                 since = OffsetDateTime.now().minusDays(7),
                 query = null,
-            )
+            ).firstOrNull()!!
 
-        assertEquals(expected = lookupIndex, actual = index.toInt())
+        assertEquals(expected = "id:2", actual = pages.previousID)
+        assertEquals(expected = lookupIndex, actual = pages.current)
+        assertEquals(expected = "id:4", actual = pages.nextID)
+        assertEquals(expected = total, actual = pages.size)
     }
 
     @Test
-    fun findIndex_missingArticle() {
-        val feed = feedFixture.create(feedURL = "https://example.com/${RandomUUID.generate()}")
-
-        val index = ByArticleStatus(database)
-            .findIndex(
+    fun findPages_missingArticle() = runTest {
+        val pages = ByArticleStatus(database)
+            .findPages(
                 articleID = "bogus",
                 status = ArticleStatus.ALL,
                 unreadSort = UnreadSortOrder.NEWEST_FIRST,
                 since = OffsetDateTime.now().minusDays(1),
                 query = null,
-            )
+            ).firstOrNull()
 
-        assertEquals(expected = -1, actual = index.toInt())
+        assertNull(pages)
     }
 }

@@ -27,11 +27,18 @@ GROUP BY articles.id
 ORDER BY CASE WHEN :newestFirst THEN articles.published_at ELSE (-1 * articles.published_at) END DESC
 LIMIT :limit OFFSET :offset;
 
-findIndex:
-WITH RECURSIVE article_indices(article_page, article_id) AS (
+findPages:
+WITH RECURSIVE article_indices(
+    previous_article_id,
+    article_page,
+    article_id,
+    next_article_id
+) AS (
     SELECT
+      LAG(articles.id) OVER(ORDER BY CASE WHEN :newestFirst THEN articles.published_at ELSE (-1 * articles.published_at) END DESC),
       ROW_NUMBER() OVER(ORDER BY CASE WHEN :newestFirst THEN articles.published_at ELSE (-1 * articles.published_at) END DESC),
-      articles.id
+      articles.id,
+      LEAD(articles.id) OVER(ORDER BY CASE WHEN :newestFirst THEN articles.published_at ELSE (-1 * articles.published_at) END DESC)
     FROM articles
     JOIN feeds ON articles.feed_id = feeds.id
     JOIN article_statuses ON articles.id = article_statuses.article_id
@@ -43,7 +50,10 @@ WITH RECURSIVE article_indices(article_page, article_id) AS (
     ORDER BY CASE WHEN :newestFirst THEN articles.published_at ELSE (-1 * articles.published_at) END DESC
 )
 SELECT
-  article_page - 1
+  previous_article_id,
+  article_page -1 AS current_index,
+  next_article_id,
+  (SELECT COUNT(*) FROM article_indices) AS total_count
  FROM article_indices
  WHERE article_id = :articleID;
 
