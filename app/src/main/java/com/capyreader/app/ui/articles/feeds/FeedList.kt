@@ -1,10 +1,5 @@
-package com.capyreader.app.ui.articles
+package com.capyreader.app.ui.articles.feeds
 
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,11 +19,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
@@ -36,6 +27,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
+import com.capyreader.app.ui.articles.AddFeedButton
+import com.capyreader.app.ui.articles.ArticleStatusBar
+import com.capyreader.app.ui.articles.ArticleStatusIcon
+import com.capyreader.app.ui.articles.CountBadge
+import com.capyreader.app.ui.articles.ListHeadline
+import com.capyreader.app.ui.articles.ListTitle
+import com.capyreader.app.ui.articles.SavedSearchRow
 import com.capyreader.app.ui.fixtures.FeedSample
 import com.capyreader.app.ui.fixtures.FolderPreviewFixture
 import com.capyreader.app.ui.navigationTitle
@@ -64,25 +62,9 @@ fun FeedList(
     onSelectStatus: (status: ArticleStatus) -> Unit,
     onNavigateToSettings: () -> Unit,
 ) {
-    val scrollState = rememberScrollState()
     val articleStatus = filter.status
-
-    var refreshing by remember { mutableStateOf(false) }
-    val angle by rememberInfiniteTransition(label = "").animateFloat(
-        initialValue = 0F,
-        targetValue = 360F,
-        animationSpec = infiniteRepeatable(
-            animation = tween(1000, easing = LinearEasing)
-        ),
-        label = ""
-    )
-
-    val refreshAll = {
-        refreshing = true
-        onRefreshAll {
-            refreshing = false
-        }
-    }
+    val scrollState = rememberScrollState()
+    val buttonState = rememberRefreshButtonState(onRefreshAll)
 
     Column(
         Modifier.fillMaxSize()
@@ -119,12 +101,12 @@ fun FeedList(
                             contentDescription = stringResource(R.string.settings)
                         )
                     }
-                    IconButton(onClick = { refreshAll() }) {
+                    IconButton(onClick = { buttonState.refresh() }) {
                         Icon(
                             imageVector = Icons.Rounded.Refresh,
                             contentDescription = stringResource(R.string.feed_nav_drawer_refresh_all),
                             modifier = Modifier.graphicsLayer {
-                                rotationZ = if (refreshing) angle else 0f
+                                rotationZ = buttonState.iconRotation
                             }
                         )
                     }

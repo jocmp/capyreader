@@ -1,4 +1,4 @@
-package com.capyreader.app.ui.articles
+package com.capyreader.app.ui.articles.feeds
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
@@ -32,6 +32,8 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.capyreader.app.ui.articles.CountBadge
+import com.capyreader.app.ui.articles.ListTitle
 import com.capyreader.app.ui.fixtures.FolderPreviewFixture
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
