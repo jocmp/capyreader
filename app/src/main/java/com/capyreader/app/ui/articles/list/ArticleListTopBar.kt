@@ -42,7 +42,7 @@ import com.jocmp.capy.SavedSearch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FeedListTopBar(
+fun ArticleListTopBar(
     onRequestJumpToTop: () -> Unit,
     onNavigateToDrawer: () -> Unit,
     onRequestSnackbar: (message: String) -> Unit,
@@ -176,7 +176,7 @@ fun FeedListTopBar(
 @Composable
 private fun FeedListTopBarPreview() {
     val scrollBehavior = pinnedScrollBehavior()
-    FeedListTopBar(
+    ArticleListTopBar(
         onRequestJumpToTop = { },
         onNavigateToDrawer = { },
         onRequestSnackbar = {},

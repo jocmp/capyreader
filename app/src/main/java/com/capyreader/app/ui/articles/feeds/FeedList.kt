@@ -1,4 +1,4 @@
-package com.capyreader.app.ui.articles
+package com.capyreader.app.ui.articles.feeds
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -18,20 +19,32 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
+import com.capyreader.app.ui.articles.AddFeedButton
+import com.capyreader.app.ui.articles.ArticleStatusBar
+import com.capyreader.app.ui.articles.ArticleStatusIcon
+import com.capyreader.app.ui.articles.CountBadge
+import com.capyreader.app.ui.articles.ListHeadline
+import com.capyreader.app.ui.articles.ListTitle
+import com.capyreader.app.ui.articles.SavedSearchRow
 import com.capyreader.app.ui.fixtures.FeedSample
 import com.capyreader.app.ui.fixtures.FolderPreviewFixture
 import com.capyreader.app.ui.navigationTitle
+import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.SavedSearch
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun FeedList(
@@ -42,14 +55,16 @@ fun FeedList(
     savedSearches: List<SavedSearch> = emptyList(),
     onFilterSelect: () -> Unit,
     onSelectSavedSearch: (search: SavedSearch) -> Unit,
+    onRefreshAll: (completion: () -> Unit) -> Unit,
     onSelectFolder: (folder: Folder) -> Unit,
     onSelectFeed: (feed: Feed, folderTitle: String?) -> Unit,
     onFeedAdded: (feedID: String) -> Unit,
     onSelectStatus: (status: ArticleStatus) -> Unit,
     onNavigateToSettings: () -> Unit,
 ) {
-    val scrollState = rememberScrollState()
     val articleStatus = filter.status
+    val scrollState = rememberScrollState()
+    val buttonState = rememberRefreshButtonState(onRefreshAll)
 
     Column(
         Modifier.fillMaxSize()
@@ -76,23 +91,32 @@ fun FeedList(
                             horizontal = 12.dp
                         ),
                 )
-               Row(
-                   horizontalArrangement = Arrangement.spacedBy(8.dp),
-                   verticalAlignment = Alignment.CenterVertically
-               ) {
-                   IconButton(onClick = { onNavigateToSettings() }) {
-                       Icon(
-                           imageVector = Icons.Rounded.Settings,
-                           contentDescription = stringResource(R.string.settings)
-                       )
-                   }
-                   AddFeedButton(
-                       iconOnly = true,
-                       onComplete = {
-                           onFeedAdded(it)
-                       }
-                   )
-               }
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    IconButton(onClick = { onNavigateToSettings() }) {
+                        Icon(
+                            imageVector = Icons.Rounded.Settings,
+                            contentDescription = stringResource(R.string.settings)
+                        )
+                    }
+                    IconButton(onClick = { buttonState.refresh() }) {
+                        Icon(
+                            imageVector = Icons.Rounded.Refresh,
+                            contentDescription = stringResource(R.string.feed_nav_drawer_refresh_all),
+                            modifier = Modifier.graphicsLayer {
+                                rotationZ = buttonState.iconRotation
+                            }
+                        )
+                    }
+                    AddFeedButton(
+                        iconOnly = true,
+                        onComplete = {
+                            onFeedAdded(it)
+                        }
+                    )
+                }
             }
             NavigationDrawerItem(
                 icon = { ArticleStatusIcon(status = articleStatus) },
@@ -188,18 +212,31 @@ private fun FeedListDivider() {
 fun FeedListPreview() {
     val folders = FolderPreviewFixture().values.take(2).toList()
     val feeds = FeedSample().values.take(2).toList()
+    val coroutineScope = rememberCoroutineScope()
 
-    FeedList(
-        folders = folders,
-        feeds = feeds,
-        onSelectFolder = {},
-        onSelectFeed = { _, _ -> },
-        onNavigateToSettings = {},
-        onFilterSelect = {},
-        filter = ArticleFilter.default(),
-        statusCount = 10,
-        onFeedAdded = {},
-        onSelectStatus = {},
-        onSelectSavedSearch = {}
-    )
+    fun onRefresh(completion: () -> Unit) {
+        coroutineScope.launch {
+            delay(1500)
+            completion()
+        }
+    }
+
+    CapyTheme {
+        FeedList(
+            folders = folders,
+            feeds = feeds,
+            onSelectFolder = {},
+            onSelectFeed = { _, _ -> },
+            onNavigateToSettings = {},
+            onRefreshAll = {
+                onRefresh(it)
+            },
+            onFilterSelect = {},
+            filter = ArticleFilter.default(),
+            statusCount = 10,
+            onFeedAdded = {},
+            onSelectStatus = {},
+            onSelectSavedSearch = {}
+        )
+    }
 }

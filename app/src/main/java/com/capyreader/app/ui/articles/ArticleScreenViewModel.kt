@@ -269,8 +269,8 @@ class ArticleScreenViewModel(
         }
     }
 
-    fun refreshFeed(onComplete: () -> Unit) {
-        initialize(latestFilter) {
+    fun refresh(filter: ArticleFilter, onComplete: () -> Unit) {
+        initialize(filter) {
             updateArticlesSince()
             onComplete()
         }

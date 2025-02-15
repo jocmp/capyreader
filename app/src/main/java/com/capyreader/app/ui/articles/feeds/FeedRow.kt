@@ -1,9 +1,12 @@
-package com.capyreader.app.ui.articles
+package com.capyreader.app.ui.articles.feeds
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.capyreader.app.ui.articles.CountBadge
+import com.capyreader.app.ui.articles.FaviconBadge
+import com.capyreader.app.ui.articles.ListTitle
 import com.capyreader.app.ui.fixtures.FeedSample
 import com.jocmp.capy.Feed
 
