@@ -64,6 +64,13 @@ class NotificationHelper(
             PendingIntent.FLAG_IMMUTABLE
         )
 
+        val markReadIntent = PendingIntent.getBroadcast(
+            applicationContext,
+            notification.id,
+            markReadIntent(notification.articleID, context = applicationContext),
+            PendingIntent.FLAG_IMMUTABLE
+        )
+
         val builder = NotificationCompat.Builder(
             applicationContext,
             Notifications.FEED_UPDATE.channelID
@@ -80,6 +87,11 @@ class NotificationHelper(
             .setAutoCancel(true)
             .setDeleteIntent(clearNotificationIntent)
             .setContentIntent(notification.contentIntent(applicationContext))
+            .addAction(
+                R.drawable.icon_circle_filled,
+                applicationContext.getString(R.string.notification_mark_as_read_action),
+                markReadIntent,
+            )
 
         NotificationManagerCompat.from(applicationContext)
             .tryNotify(notification.id, builder.build())
@@ -118,6 +130,13 @@ class NotificationHelper(
         fun dismissNotificationIntent(articleID: String, context: Context): Intent {
             return Intent(context, ArticleStatusBroadcastReceiver::class.java).apply {
                 action = ArticleStatusBroadcastReceiver.ACTION_DISMISS_NOTIFICATION
+                putExtra(ArticleStatusBroadcastReceiver.ARTICLE_ID, articleID)
+            }
+        }
+
+        fun markReadIntent(articleID: String, context: Context): Intent {
+            return Intent(context, ArticleStatusBroadcastReceiver::class.java).apply {
+                action = ArticleStatusBroadcastReceiver.ACTION_MARK_AS_READ
                 putExtra(ArticleStatusBroadcastReceiver.ARTICLE_ID, articleID)
             }
         }
