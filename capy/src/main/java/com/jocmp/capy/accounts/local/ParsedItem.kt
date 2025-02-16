@@ -10,7 +10,7 @@ import java.net.URL
 internal class ParsedItem(private val item: RssItem, private val siteURL: String?) {
     val url: String? = articleURL()
 
-    val id: String? = item.guid ?: url
+    val id: String? = item.guid.orEmpty().ifBlank { url?.ifBlank { null } }
 
     val contentHTML: String?
         get() {
