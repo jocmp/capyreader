@@ -81,6 +81,33 @@ class ParsedItemTest {
         assertEquals(expected = id, actual = parsedItem.id)
     }
 
+
+    @Test
+    fun id_whenGuidIsBlank() {
+        val id = ""
+        val url = "https://example.com/article"
+        val item = RssItem.Builder()
+            .guid(id)
+            .link(url)
+            .build()
+        val parsedItem = ParsedItem(item, siteURL = "")
+
+        assertEquals(expected = url, actual = parsedItem.id)
+    }
+
+    @Test
+    fun id_whenGuidIsBlankAndURLIsMissing() {
+        val id = ""
+        val url = ""
+        val item = RssItem.Builder()
+            .guid(id)
+            .link(url)
+            .build()
+        val parsedItem = ParsedItem(item, siteURL = "")
+
+        assertNull(parsedItem.id)
+    }
+
     @Test
     fun id_whenUrlIsMissing() {
         val id = "https://example.com/article"
