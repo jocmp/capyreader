@@ -45,7 +45,6 @@ fun ArticleList(
     onMarkAllRead: (range: MarkRead) -> Unit = {},
     enableMarkReadOnScroll: Boolean = false,
 ) {
-    val composableScope = rememberCoroutineScope()
     val articleOptions = rememberArticleOptions()
     val currentTime = rememberCurrentTime()
     val localDensity = LocalDensity.current

@@ -40,12 +40,13 @@ fun ArticleScreen(
     val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle("")
     val searchState by viewModel.searchState.collectAsStateWithLifecycle(SearchState.INACTIVE)
     val nextFilter by viewModel.nextFilter.collectAsStateWithLifecycle(initialValue = null)
-    val canSwipeToNextFeed = nextFilter != null
     val afterReadAll by viewModel.afterReadAll.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
     val refreshInterval by appPreferences
         .refreshInterval
         .collectChangesWithDefault(appPreferences.refreshInterval.get())
+
+    val canSwipeToNextFeed = nextFilter != null
 
     val fullContent = rememberFullContent(viewModel)
     val articleActions = rememberArticleActions(viewModel)

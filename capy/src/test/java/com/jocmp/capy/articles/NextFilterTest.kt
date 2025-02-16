@@ -113,11 +113,11 @@ class NextFilterTest {
     fun `findSwipeDestination on a folder filter with a feed`() {
         val folderTitle = "My Folder"
         val folderFeeds = 2.repeated { index ->
-            feedFixture.create(title = "${index + 1} My Title")
+            feedFixture.create(title = "${index + 1} My Title").copy(folderExpanded = true)
         }
         val folder = Folder(
             title = folderTitle,
-            feeds = folderFeeds
+            feeds = folderFeeds,
         )
         val anotherFolder = Folder(title = "Bad folder")
         val filter = ArticleFilter.Folders(
@@ -136,6 +136,33 @@ class NextFilterTest {
         assertTrue(next is NextFilter.FeedFilter)
         assertEquals(actual = next.feedID, expected = expectedFeed.id)
         assertEquals(actual = next.folderTitle, expected = folder.title)
+    }
+
+    @Test
+    fun `findSwipeDestination on a folder filter with a feed that's not expanded`() {
+        val folderTitle = "My Folder"
+        val folderFeeds = 2.repeated { index ->
+            feedFixture.create(title = "${index + 1} My Title")
+        }
+        val folder = Folder(
+            title = folderTitle,
+            feeds = folderFeeds,
+        )
+        val anotherFolder = Folder(title = "Next folder")
+        val filter = ArticleFilter.Folders(
+            folderTitle = folder.title,
+            folderStatus = ArticleStatus.UNREAD
+        )
+
+        val next = NextFilter.findSwipeDestination(
+            filter,
+            feeds = emptyList(),
+            folders = listOf(folder, anotherFolder),
+            searches = emptyList(),
+        )!!
+
+        assertTrue(next is NextFilter.FolderFilter)
+        assertEquals(actual = next.folderTitle, expected = anotherFolder.title)
     }
 
     @Test

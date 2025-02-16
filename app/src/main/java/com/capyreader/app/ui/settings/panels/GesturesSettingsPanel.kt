@@ -13,9 +13,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
-import com.capyreader.app.preferences.BackAction
 import com.capyreader.app.common.RowItem
+import com.capyreader.app.preferences.ArticleListVerticalSwipe
 import com.capyreader.app.preferences.ArticleVerticalSwipe
+import com.capyreader.app.preferences.BackAction
 import com.capyreader.app.preferences.RowSwipeOption
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.components.TextSwitch
@@ -32,15 +33,17 @@ fun GesturesSettingPanel(
         updatePagingTapGesture = viewModel::updatePagingTapGesture,
         updateReaderBottomSwipe = viewModel::updateReaderBottomSwipe,
         updateReaderTopSwipe = viewModel::updateReaderTopSwipe,
-        updateRowSwipeEnd = viewModel::updateRowSwipeEnd,
         updateRowSwipeStart = viewModel::updateRowSwipeStart,
+        updateRowSwipeEnd = viewModel::updateRowSwipeEnd,
+        updateListSwipeBottom = viewModel::updateListSwipeBottom,
         updateHorizontalPagination = viewModel::updateHorizontalPagination,
         enableHorizontalPagination = viewModel.enableHorizontalPagination,
         backAction = viewModel.backAction,
         bottomSwipe = viewModel.readerBottomSwipe,
         enablePagingTapGesture = viewModel.enablePagingTapGesture,
-        rowSwipeEnd = viewModel.rowSwipeEnd,
         rowSwipeStart = viewModel.rowSwipeStart,
+        rowSwipeEnd = viewModel.rowSwipeEnd,
+        listSwipeBottom = viewModel.listSwipeBottom,
         topSwipe = viewModel.readerTopSwipe,
     )
 }
@@ -51,15 +54,17 @@ private fun GesturesSettingsPanelView(
     updatePagingTapGesture: (enabled: Boolean) -> Unit,
     updateReaderBottomSwipe: (swipe: ArticleVerticalSwipe) -> Unit,
     updateReaderTopSwipe: (swipe: ArticleVerticalSwipe) -> Unit,
-    updateRowSwipeEnd: (swipe: RowSwipeOption) -> Unit,
     updateRowSwipeStart: (swipe: RowSwipeOption) -> Unit,
+    updateRowSwipeEnd: (swipe: RowSwipeOption) -> Unit,
+    updateListSwipeBottom: (swipe: ArticleListVerticalSwipe) -> Unit,
     updateHorizontalPagination: (enable: Boolean) -> Unit,
     enableHorizontalPagination: Boolean,
     backAction: BackAction,
     bottomSwipe: ArticleVerticalSwipe,
     enablePagingTapGesture: Boolean,
-    rowSwipeEnd: RowSwipeOption,
     rowSwipeStart: RowSwipeOption,
+    rowSwipeEnd: RowSwipeOption,
+    listSwipeBottom: ArticleListVerticalSwipe,
     topSwipe: ArticleVerticalSwipe,
 ) {
     Column(
@@ -127,6 +132,16 @@ private fun GesturesSettingsPanelView(
                     disabledOption = RowSwipeOption.DISABLED,
                     optionText = { stringResource(it.translationKey) }
                 )
+
+                PreferenceSelect(
+                    selected = listSwipeBottom,
+                    update = updateListSwipeBottom,
+                    options = ArticleListVerticalSwipe.entries,
+                    label = R.string.settings_gestures_list_swipe_up,
+                    disabledOption = ArticleListVerticalSwipe.DISABLED,
+                    optionText = { stringResource(it.translationKey) }
+                )
+
                 PreferenceSelect(
                     selected = backAction,
                     update = updateBackAction,
@@ -152,6 +167,7 @@ fun GesturesSettingsPanelPreview() {
             updateReaderBottomSwipe = {},
             updatePagingTapGesture = {},
             updateHorizontalPagination = {},
+            updateListSwipeBottom = {},
             backAction = BackAction.OPEN_DRAWER,
             topSwipe = ArticleVerticalSwipe.PREVIOUS_ARTICLE,
             bottomSwipe = ArticleVerticalSwipe.NEXT_ARTICLE,
@@ -159,6 +175,7 @@ fun GesturesSettingsPanelPreview() {
             rowSwipeEnd = RowSwipeOption.TOGGLE_STARRED,
             enablePagingTapGesture = true,
             enableHorizontalPagination = true,
+            listSwipeBottom = ArticleListVerticalSwipe.NEXT_FEED,
         )
     }
 }
