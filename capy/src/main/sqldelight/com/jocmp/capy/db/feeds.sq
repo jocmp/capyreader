@@ -3,11 +3,15 @@ SELECT *
 FROM feeds;
 
 tagged:
-SELECT feeds.*, taggings.name
+SELECT
+    feeds.*,
+    taggings.name,
+    folders.expanded
 FROM feeds
 LEFT JOIN taggings ON taggings.feed_id = feeds.id
+LEFT JOIN folders ON taggings.name = folders.name
 LEFT JOIN articles ON articles.feed_id = feeds.id
-GROUP BY feeds.id, taggings.name
+GROUP BY feeds.id, taggings.name, folders.expanded
 ORDER BY taggings.name;
 
 find:

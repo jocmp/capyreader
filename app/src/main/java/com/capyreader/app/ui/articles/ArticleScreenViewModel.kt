@@ -587,6 +587,10 @@ class ArticleScreenViewModel(
         }
     }
 
+    fun expandFolder(folderName: String, expanded: Boolean) {
+        account.expandFolder(folderName, expanded = expanded)
+    }
+
     private val latestFilter: ArticleFilter
         get() = filter.value
 

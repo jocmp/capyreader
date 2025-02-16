@@ -114,7 +114,7 @@ internal class FeedRecords(private val database: Database) {
         enableStickyFullContent: Boolean = false,
         enableNotifications: Boolean = false,
         folderName: String? = "",
-        articleCount: Long = 0,
+        expanded: Boolean? = false,
     ) = Feed(
         id = id,
         subscriptionID = subscriptionID,
@@ -123,8 +123,9 @@ internal class FeedRecords(private val database: Database) {
         siteURL = siteURL.orEmpty(),
         faviconURL = faviconURL,
         folderName = folderName.orEmpty(),
-        count = articleCount,
+        count = 0,
         enableStickyFullContent = enableStickyFullContent,
-        enableNotifications = enableNotifications
+        enableNotifications = enableNotifications,
+        folderExpanded = expanded ?: false
     )
 }

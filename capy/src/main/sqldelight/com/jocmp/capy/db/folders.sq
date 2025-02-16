@@ -1,0 +1,13 @@
+all:
+SELECT *
+FROM folders;
+
+upsert:
+INSERT OR REPLACE INTO folders(
+    name,
+    expanded
+)
+VALUES (
+    :name,
+    :expanded
+);
