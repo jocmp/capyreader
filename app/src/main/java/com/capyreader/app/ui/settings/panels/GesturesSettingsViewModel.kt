@@ -4,8 +4,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.capyreader.app.common.AppPreferences
-import com.capyreader.app.common.BackAction
+import com.capyreader.app.preferences.AppPreferences
+import com.capyreader.app.preferences.ArticleVerticalSwipe
+import com.capyreader.app.preferences.BackAction
+import com.capyreader.app.preferences.RowSwipeOption
 import com.jocmp.capy.Account
 
 class GesturesSettingsViewModel(

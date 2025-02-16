@@ -33,7 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.capyreader.app.common.LayoutPreference
+import com.capyreader.app.preferences.LayoutPreference
 import com.capyreader.app.ui.isAtMostMedium
 import com.capyreader.app.ui.rememberLayoutPreference
 import com.capyreader.app.ui.theme.CapyTheme

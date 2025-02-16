@@ -2,7 +2,7 @@ package com.capyreader.app.ui.articles.list
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
-import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.common.asState
 import org.koin.compose.koinInject
 

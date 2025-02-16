@@ -17,8 +17,8 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.capyreader.app.common.AppPreferences
-import com.capyreader.app.common.ThemeOption
+import com.capyreader.app.preferences.AppPreferences
+import com.capyreader.app.preferences.ThemeOption
 import org.koin.compose.koinInject
 
 private val DarkColorScheme = darkColorScheme(

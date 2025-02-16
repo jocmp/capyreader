@@ -6,7 +6,7 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.preferences.AppPreferences
 
 class RefreshScheduler(
     private val context: Context,

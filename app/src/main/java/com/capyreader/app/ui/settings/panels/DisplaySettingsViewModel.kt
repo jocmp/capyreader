@@ -4,11 +4,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.common.ImagePreview
-import com.capyreader.app.common.LayoutPreference
-import com.capyreader.app.common.ReaderImageVisibility
-import com.capyreader.app.common.ThemeOption
+import com.capyreader.app.preferences.LayoutPreference
+import com.capyreader.app.preferences.ReaderImageVisibility
+import com.capyreader.app.preferences.ThemeOption
 import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.jocmp.capy.Account
 

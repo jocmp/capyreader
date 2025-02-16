@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.capyreader.app.common.ThemeOption
+import com.capyreader.app.preferences.ThemeOption
 import com.capyreader.app.ui.accounts.accountsGraph
 import com.capyreader.app.ui.articles.articleGraph
 import com.capyreader.app.ui.theme.CapyTheme

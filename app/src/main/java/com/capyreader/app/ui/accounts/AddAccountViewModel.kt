@@ -3,7 +3,7 @@ package com.capyreader.app.ui.accounts
 import androidx.lifecycle.ViewModel
 import com.jocmp.capy.AccountManager
 import com.jocmp.capy.accounts.Source
-import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.loadAccountModules
 
 class AddAccountViewModel(

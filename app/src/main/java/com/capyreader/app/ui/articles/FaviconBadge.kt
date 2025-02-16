@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.capyreader.app.R
-import com.capyreader.app.common.ThemeOption
+import com.capyreader.app.preferences.ThemeOption
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.logging.CapyLog
 

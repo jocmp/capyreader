@@ -4,8 +4,8 @@ import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.window.core.layout.WindowWidthSizeClass.Companion.EXPANDED
-import com.capyreader.app.common.AppPreferences
-import com.capyreader.app.common.LayoutPreference
+import com.capyreader.app.preferences.AppPreferences
+import com.capyreader.app.preferences.LayoutPreference
 import com.capyreader.app.common.asState
 import org.koin.compose.koinInject
 

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
+import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.logging.CapyLog
 import java.net.URL
 

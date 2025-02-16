@@ -34,6 +34,7 @@ sealed class NextFilter {
                         null
                     }
                 }
+
                 is ArticleFilter.SavedSearches -> {
                     val index = searches.indexOfFirst { it.id == filter.savedSearchID }
                     val nextSearch = searches.getOrNull(index + 1)
@@ -50,6 +51,7 @@ sealed class NextFilter {
                         null
                     }
                 }
+
                 else -> null
             }
         }
@@ -101,9 +103,13 @@ sealed class NextFilter {
                         ?.firstOrNull()
 
                     val nextFeed = feeds.firstOrNull()
+                    val folderIndex = folders.indexOfFirst { it.title == filter.folderTitle }
+                    val nextFolder = folders.getOrNull(folderIndex + 1)
 
-                    if (firstFolderFeed != null) {
+                    if (firstFolderFeed != null && firstFolderFeed.folderExpanded) {
                         FeedFilter(feedID = firstFolderFeed.id, folderTitle = filter.folderTitle)
+                    } else if (nextFolder != null) {
+                        FolderFilter(nextFolder.title)
                     } else if (nextFeed != null) {
                         FeedFilter(feedID = nextFeed.id, folderTitle = null)
                     } else {

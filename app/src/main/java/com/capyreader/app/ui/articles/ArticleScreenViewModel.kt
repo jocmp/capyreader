@@ -8,8 +8,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.capyreader.app.R
-import com.capyreader.app.common.AfterReadAllBehavior
-import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.preferences.AfterReadAllBehavior
+import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.common.toast
 import com.capyreader.app.notifications.NotificationHelper
 import com.capyreader.app.sync.Sync

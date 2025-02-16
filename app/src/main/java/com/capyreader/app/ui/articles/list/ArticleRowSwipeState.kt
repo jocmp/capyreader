@@ -13,14 +13,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
-import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.common.asState
 import com.capyreader.app.common.openLinkExternally
 import com.capyreader.app.ui.articles.LocalArticleActions
 import com.capyreader.app.ui.components.ArticleAction
 import com.capyreader.app.ui.components.readAction
 import com.capyreader.app.ui.components.starAction
-import com.capyreader.app.ui.settings.panels.RowSwipeOption
+import com.capyreader.app.preferences.RowSwipeOption
 import com.jocmp.capy.Article
 import me.saket.swipe.SwipeAction
 import org.koin.compose.koinInject
