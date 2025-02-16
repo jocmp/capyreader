@@ -47,8 +47,14 @@ fun FolderRow(
     onFolderSelect: (folder: Folder) -> Unit,
     onFeedSelect: (feed: Feed) -> Unit,
 ) {
+    val actions = LocalFolderActions.current
     val isFolderSelected = filter.isFolderSelect(folder)
-    val (expanded, setExpanded) = rememberSaveable(folder.title) { mutableStateOf(false) }
+    val (expanded, setExpanded) = rememberSaveable(folder.title) { mutableStateOf(folder.expanded) }
+
+    fun onExpanded(expand: Boolean) {
+        setExpanded(expand)
+        actions.updateExpanded(folder.title, expand)
+    }
 
     Column {
         NavigationDrawerItem(
@@ -58,7 +64,9 @@ fun FolderRow(
             icon = {
                 DropdownButton(
                     expanded = expanded,
-                    onExpanded = setExpanded,
+                    onExpanded = {
+                        onExpanded(it)
+                    },
                 )
             },
             label = {

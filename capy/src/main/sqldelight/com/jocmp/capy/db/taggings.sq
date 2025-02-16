@@ -10,11 +10,31 @@ VALUES (
   :name
 );
 
-deleteOrphanedTags:
-DELETE FROM taggings WHERE id NOT IN :excludedIDs;
+deleteOrphanedTags {
+    DELETE FROM taggings WHERE id NOT IN :excludedIDs;
 
-deleteTaggings:
-DELETE FROM taggings WHERE id IN :ids;
+    DELETE FROM folders
+    WHERE name IN (
+        SELECT folders.name
+        FROM folders
+        LEFT JOIN taggings ON folders.name = taggings.name
+        GROUP BY folders.name
+        HAVING COUNT(taggings.id) = 0
+    );
+}
+
+deleteTaggings {
+    DELETE FROM taggings WHERE id IN :ids;
+    
+    DELETE FROM folders
+    WHERE name IN (
+        SELECT folders.name
+        FROM folders
+        LEFT JOIN taggings ON folders.name = taggings.name
+        GROUP BY folders.name
+        HAVING COUNT(taggings.id) = 0
+    );
+}
 
 findFeedTaggingsToDelete:
 SELECT id

@@ -1,0 +1,7 @@
+import kotlin.Boolean;
+
+-- Folders represent configuration for many taggings
+CREATE TABLE folders (
+  name TEXT NOT NULL PRIMARY KEY,
+  expanded INTEGER AS Boolean NOT NULL DEFAULT 0
+);

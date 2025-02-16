@@ -20,6 +20,7 @@ import com.jocmp.capy.opml.ImportProgress
 import com.jocmp.capy.opml.OPMLImporter
 import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.capy.persistence.FeedRecords
+import com.jocmp.capy.persistence.FolderRecords
 import com.jocmp.capy.persistence.SavedSearchRecords
 import com.jocmp.feedbinclient.Feedbin
 import kotlinx.coroutines.flow.Flow
@@ -64,6 +65,7 @@ data class Account(
 ) {
     internal val articleRecords: ArticleRecords = ArticleRecords(database)
     private val feedRecords: FeedRecords = FeedRecords(database)
+    private val folderRecords: FolderRecords = FolderRecords(database)
     private val savedSearchRecords = SavedSearchRecords(database)
 
     private val articleContent = ArticleContent(httpClient = localHttpClient)
@@ -93,6 +95,7 @@ data class Account(
                 Folder(
                     title = it.key,
                     feeds = it.value.sortedByTitle(),
+                    expanded = it.value.firstOrNull()?.folderExpanded ?: false
                 )
             }
             .sortedByTitle()
@@ -258,6 +261,10 @@ data class Account(
 
     fun toggleAllFeedNotifications(enabled: Boolean) {
         feedRecords.toggleAllNotifications(enabled)
+    }
+
+    fun expandFolder(folderName: String, expanded: Boolean) {
+        folderRecords.expand(folderName, expanded)
     }
 
     fun disableStickyContent(feedID: String) {

@@ -12,6 +12,8 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.common.AfterReadAllBehavior
 import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.ui.LocalConnectivity
+import com.capyreader.app.ui.articles.feeds.FolderActions
+import com.capyreader.app.ui.articles.feeds.LocalFolderActions
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.SearchState
@@ -47,6 +49,7 @@ fun ArticleScreen(
 
     val fullContent = rememberFullContent(viewModel)
     val articleActions = rememberArticleActions(viewModel)
+    val folderActions = rememberFolderActions(viewModel)
     val connectivity = rememberLocalConnectivity()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
 
@@ -64,6 +67,7 @@ fun ArticleScreen(
     CompositionLocalProvider(
         LocalFullContent provides fullContent,
         LocalArticleActions provides articleActions,
+        LocalFolderActions provides folderActions,
         LocalConnectivity provides connectivity,
         LocalArticleLookup provides ArticleLookup(viewModel::findArticlePages),
     ) {
@@ -133,6 +137,15 @@ fun rememberArticleActions(viewModel: ArticleScreenViewModel): ArticleActions {
             markUnread = viewModel::markUnreadAsync,
             star = viewModel::addStarAsync,
             unstar = viewModel::removeStarAsync,
+        )
+    }
+}
+
+@Composable
+fun rememberFolderActions(viewModel: ArticleScreenViewModel): FolderActions {
+    return remember {
+        FolderActions(
+            updateExpanded = viewModel::expandFolder,
         )
     }
 }
