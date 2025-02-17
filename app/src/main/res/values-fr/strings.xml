@@ -40,7 +40,7 @@
     <string name="settings_reader_title">Lecteur</string>
     <string name="settings_options_reader_pin_toolbars">Épingler les barres d’outils</string>
     <string name="article_bottom_bar_next_article">Passer au prochain article</string>
-    <string name="settings_gestures_reader_swipe_down">Balayer vers le bas</string>
+    <string name="settings_gestures_reader_swipe_down">Glisser vers le bas</string>
     <string name="article_vertical_swipe_full_content">Charger le contenu complet</string>
     <string name="article_view_mark_as_unread">Marquer comme non lu</string>
     <string name="article_view_star">Favori</string>
@@ -121,7 +121,7 @@
     <string name="settings_support_button">Assistance</string>
     <string name="settings_article_list_title">Liste d’articles</string>
     <string name="opml_exporter_success">Export terminé</string>
-    <string name="settings_gestures_reader_swipe_up">Balayer vers le haut</string>
+    <string name="settings_gestures_reader_swipe_up">Glisser vers le haut</string>
     <string name="article_vertical_swipe_previous_article">Article précédent</string>
     <string name="article_vertical_swipe_next_article">Article suivant</string>
     <string name="article_list_row_swipe_toggle_read">Marquer comme lu/non lu</string>
@@ -161,8 +161,8 @@
     <string name="settings_about_title">À propos</string>
     <string name="settings_auto_delete_option_keep_for_two_week">2 semaines</string>
     <string name="settings_auto_delete_option_keep_for_three_month">3 mois</string>
-    <string name="settings_gestures_list_row_swipe_start">Balayer à droite</string>
-    <string name="settings_gestures_list_row_swipe_end">Balayer à gauche</string>
+    <string name="settings_gestures_list_row_swipe_start">Glisser vers la droite</string>
+    <string name="settings_gestures_list_row_swipe_end">Glisser vers la gauche</string>
     <string name="article_vertical_swipe_disabled">Désactivé</string>
     <string name="article_list_row_swipe_disabled">Désactivé</string>
     <string name="article_list_row_swipe_toggle_starred">Ajouter/Retirer des favoris</string>
@@ -227,4 +227,14 @@
     <string name="nav_headline_saved_searches">Recherches</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">Activer le défilement horizontal</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Glisser à gauche ou droite pour changer d\'article</string>
+    <string name="settings_gestures_list_swipe_up">Glisser vers le haut</string>
+    <string name="article_list_swipe_next_feed">Aller au flux suivant</string>
+    <string name="article_list_swipe_disabled">Désactivé</string>
+    <string name="media_save">Sauvegarder</string>
+    <string name="media_save_success">Image enregistrée</string>
+    <string name="media_save_failure">Impossible d\'enregistrer l\'image</string>
+    <string name="media_share_failure">Impossible de partager l\'image</string>
+    <string name="feed_nav_drawer_refresh_all">Tout actualiser</string>
+    <string name="media_share">Partager</string>
+    <string name="notification_mark_as_read_action">Marquer comme lu</string>
 </resources>
