@@ -16,12 +16,14 @@ import com.jocmp.capy.common.withResult
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.capy.persistence.FeedRecords
+import com.jocmp.capy.persistence.SavedSearchRecords
 import com.jocmp.capy.persistence.TaggingRecords
 import com.jocmp.feedbinclient.CreateSubscriptionRequest
 import com.jocmp.feedbinclient.CreateTaggingRequest
 import com.jocmp.feedbinclient.Entry
 import com.jocmp.feedbinclient.Feedbin
 import com.jocmp.feedbinclient.Icon
+import com.jocmp.feedbinclient.SavedSearch
 import com.jocmp.feedbinclient.StarredEntriesRequest
 import com.jocmp.feedbinclient.Subscription
 import com.jocmp.feedbinclient.UnreadEntriesRequest
@@ -41,11 +43,13 @@ internal class FeedbinAccountDelegate(
     private val articleRecords = ArticleRecords(database)
     private val feedRecords = FeedRecords(database)
     private val taggingRecords = TaggingRecords(database)
+    private val savedSearchRecords = SavedSearchRecords(database)
 
     override suspend fun refresh(filter: ArticleFilter, cutoffDate: ZonedDateTime?): Result<Unit> {
         return try {
             refreshFeeds()
             refreshTaggings()
+            refreshSavedSearches()
             refreshArticles(since = maxArrivedAt())
 
             Result.success(Unit)
@@ -254,6 +258,40 @@ internal class FeedbinAccountDelegate(
         }
     }
 
+    private suspend fun refreshSavedSearches() {
+        withResult(feedbin.savedSearches()) { savedSearches ->
+            database.transactionWithErrorHandling {
+                savedSearches.forEach {
+                    upsertSavedSearch(it)
+                }
+
+                savedSearchRecords.deleteOrphaned(
+                    excludedIDs = savedSearches.map { it.id.toString() }
+                )
+            }
+        }
+
+        coroutineScope {
+            savedSearchRecords.allIDs()
+                .forEach { savedSearchID ->
+                    launch {
+                        fetchSavedSearchArticles(savedSearchID = savedSearchID)
+                    }
+                }
+        }
+    }
+
+    private suspend fun fetchSavedSearchArticles(savedSearchID: String) {
+        val ids = feedbin.savedSearchEntries(savedSearchID = savedSearchID).body() ?: return
+
+        ids.chunked(MAX_ENTRY_LIMIT).map { chunkedIDs ->
+            fetchPaginatedEntries(
+                ids = chunkedIDs,
+                savedSearchID = savedSearchID
+            )
+        }
+    }
+
     private suspend fun refreshAllArticles(since: String) {
         fetchPaginatedEntries(since = since)
     }
@@ -273,7 +311,8 @@ internal class FeedbinAccountDelegate(
     private suspend fun fetchPaginatedEntries(
         since: String? = null,
         nextPage: Int? = 1,
-        ids: List<Long>? = null
+        ids: List<Long>? = null,
+        savedSearchID: String? = null,
     ) {
         nextPage ?: return
 
@@ -285,7 +324,7 @@ internal class FeedbinAccountDelegate(
         val entries = response.body()
 
         if (entries != null) {
-            saveEntries(entries)
+            saveEntries(entries, savedSearchID = savedSearchID)
         }
 
         fetchPaginatedEntries(
@@ -295,13 +334,17 @@ internal class FeedbinAccountDelegate(
         )
     }
 
-    private fun saveEntries(entries: List<Entry>) {
+    private fun saveEntries(
+        entries: List<Entry>,
+        savedSearchID: String? = null,
+    ) {
         database.transactionWithErrorHandling {
             entries.forEach { entry ->
                 val updated = TimeHelpers.nowUTC()
+                val articleID = entry.id.toString()
 
                 database.articlesQueries.create(
-                    id = entry.id.toString(),
+                    id = articleID,
                     feed_id = entry.feed_id.toString(),
                     title = entry.title?.let { Jsoup.parse(it).text() },
                     author = entry.author,
@@ -314,12 +357,27 @@ internal class FeedbinAccountDelegate(
                 )
 
                 articleRecords.createStatus(
-                    articleID = entry.id.toString(),
+                    articleID = articleID,
                     updatedAt = updated,
                     read = true
                 )
+
+                if (savedSearchID != null) {
+                    savedSearchRecords.upsertArticle(
+                        articleID = articleID,
+                        savedSearchID = savedSearchID,
+                    )
+                }
             }
         }
+    }
+
+    private fun upsertSavedSearch(savedSearch: SavedSearch) {
+        savedSearchRecords.upsert(
+            id = savedSearch.id.toString(),
+            name = savedSearch.name,
+            query = savedSearch.query
+        )
     }
 
     private fun maxArrivedAt() = articleRecords.maxArrivedAt().toString()

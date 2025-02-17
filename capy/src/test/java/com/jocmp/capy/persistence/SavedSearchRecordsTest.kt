@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import kotlin.test.Test
+import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
@@ -15,6 +16,8 @@ class SavedSearchRecordsTest {
     private lateinit var database: Database
     private lateinit var savedSearchRecords: SavedSearchRecords
     private lateinit var savedSearchFixture: SavedSearchFixture
+
+    suspend fun allRecords() = savedSearchRecords.all().first()
 
     @Before
     fun setup() {
@@ -33,7 +36,6 @@ class SavedSearchRecordsTest {
         assertEquals(expected = ids, actual = actualIDs)
     }
 
-
     @Test
     fun find() = runTest {
         val search = savedSearchFixture.create()
@@ -48,5 +50,17 @@ class SavedSearchRecordsTest {
         val result = savedSearchRecords.find(savedSearchID = "bogus")
 
         assertNull(result)
+    }
+
+    @Test
+    fun deleteOrphaned() = runTest {
+        val searches = 3.repeated { savedSearchFixture.create() }
+        val keep = searches.last()
+
+        assertContentEquals(actual = allRecords().map { it.id }.sorted(), expected = searches.map { it.id }.sorted())
+
+        savedSearchRecords.deleteOrphaned(excludedIDs = listOf(keep.id))
+
+        assertContentEquals(actual = allRecords().map { it.id }, expected = listOf(keep.id))
     }
 }

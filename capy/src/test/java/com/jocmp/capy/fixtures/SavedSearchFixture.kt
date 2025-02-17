@@ -29,7 +29,7 @@ internal class SavedSearchFixture(
     ) {
         create(id, name)
 
-        records.upsertArticle(articleID = articleID, id = id)
+        records.upsertArticle(articleID = articleID, savedSearchID = id)
     }
 
     private fun randomID() = SecureRandom.getInstanceStrong().nextInt().toString()
