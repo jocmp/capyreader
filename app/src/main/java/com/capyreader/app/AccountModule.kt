@@ -1,6 +1,6 @@
 package com.capyreader.app
 
-import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.notifications.NotificationHelper
 import com.jocmp.capy.Account
 import com.jocmp.capy.AccountManager

@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalHapticFeedback
-import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.jocmp.capy.common.launchUI
 import org.koin.compose.koinInject

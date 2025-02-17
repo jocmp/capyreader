@@ -12,7 +12,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.capyreader.app.ArticleStatusBroadcastReceiver
 import com.capyreader.app.MainActivity
 import com.capyreader.app.R
-import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.notifications.NotificationHelper.Companion.ARTICLE_ID_KEY
 import com.capyreader.app.notifications.NotificationHelper.Companion.FEED_ID_KEY
 import com.jocmp.capy.Account

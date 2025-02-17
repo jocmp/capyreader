@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.dp
 import com.capyreader.app.BuildConfig
 import com.capyreader.app.notifications.Notifications
 import com.capyreader.app.R
-import com.capyreader.app.common.AfterReadAllBehavior
+import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.common.RowItem
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.setupCommonModules

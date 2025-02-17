@@ -34,17 +34,17 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
-import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.common.openLink
 import com.capyreader.app.ui.articles.LocalFullContent
 import com.capyreader.app.ui.components.WebViewState
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
-import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe
-import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.DISABLED
-import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.LOAD_FULL_CONTENT
-import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.NEXT_ARTICLE
-import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWSER
-import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe.PREVIOUS_ARTICLE
+import com.capyreader.app.preferences.ArticleVerticalSwipe
+import com.capyreader.app.preferences.ArticleVerticalSwipe.DISABLED
+import com.capyreader.app.preferences.ArticleVerticalSwipe.LOAD_FULL_CONTENT
+import com.capyreader.app.preferences.ArticleVerticalSwipe.NEXT_ARTICLE
+import com.capyreader.app.preferences.ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWSER
+import com.capyreader.app.preferences.ArticleVerticalSwipe.PREVIOUS_ARTICLE
 import com.jocmp.capy.Article
 import org.koin.compose.koinInject
 

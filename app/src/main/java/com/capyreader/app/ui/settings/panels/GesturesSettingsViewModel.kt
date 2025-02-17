@@ -4,12 +4,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.capyreader.app.common.AppPreferences
-import com.capyreader.app.common.BackAction
-import com.jocmp.capy.Account
+import com.capyreader.app.preferences.AppPreferences
+import com.capyreader.app.preferences.ArticleListVerticalSwipe
+import com.capyreader.app.preferences.ArticleVerticalSwipe
+import com.capyreader.app.preferences.BackAction
+import com.capyreader.app.preferences.RowSwipeOption
 
 class GesturesSettingsViewModel(
-    private val account: Account,
     private val appPreferences: AppPreferences
 ) : ViewModel() {
     var backAction by mutableStateOf(listOptions.backAction.get())
@@ -22,6 +23,9 @@ class GesturesSettingsViewModel(
         private set
 
     var rowSwipeEnd by mutableStateOf(listOptions.swipeEnd.get())
+        private set
+
+    var listSwipeBottom by mutableStateOf(listOptions.swipeBottom.get())
         private set
 
     var readerBottomSwipe by mutableStateOf(readerOptions.bottomSwipeGesture.get())
@@ -67,6 +71,12 @@ class GesturesSettingsViewModel(
         rowSwipeEnd = swipe
 
         listOptions.swipeEnd.set(swipe)
+    }
+
+    fun updateListSwipeBottom(swipe: ArticleListVerticalSwipe) {
+        listSwipeBottom = swipe
+
+        listOptions.swipeBottom.set(swipe)
     }
 
     fun updatePagingTapGesture(enabled: Boolean) {

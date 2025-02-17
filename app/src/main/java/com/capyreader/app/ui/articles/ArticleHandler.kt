@@ -2,7 +2,7 @@ package com.capyreader.app.ui.articles
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.Article
 import org.koin.compose.koinInject
 

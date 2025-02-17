@@ -40,7 +40,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.paging.compose.LazyPagingItems
 import com.capyreader.app.R
-import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.Saver
 import com.capyreader.app.refresher.RefreshInterval

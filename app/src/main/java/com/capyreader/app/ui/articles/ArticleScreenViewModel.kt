@@ -8,10 +8,11 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.capyreader.app.R
-import com.capyreader.app.common.AfterReadAllBehavior
-import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.common.toast
 import com.capyreader.app.notifications.NotificationHelper
+import com.capyreader.app.preferences.AfterReadAllBehavior
+import com.capyreader.app.preferences.AppPreferences
+import com.capyreader.app.preferences.ArticleListVerticalSwipe
 import com.capyreader.app.sync.Sync
 import com.capyreader.app.ui.components.SearchState
 import com.jocmp.capy.Account
@@ -54,6 +55,8 @@ class ArticleScreenViewModel(
     private var refreshJob: Job? = null
 
     val filter = appPreferences.filter.stateIn(viewModelScope)
+
+    private val listSwipeBottom = appPreferences.articleListOptions.swipeBottom.stateIn(viewModelScope)
 
     private val _searchQuery = MutableStateFlow("")
 
@@ -112,7 +115,17 @@ class ArticleScreenViewModel(
     }
 
     private val nextFilterListener: Flow<NextFilter?> =
-        combine(savedSearches, feeds, folders, filter) { savedSearches, feeds, folders, filter ->
+        combine(
+            listSwipeBottom,
+            savedSearches,
+            feeds,
+            folders,
+            filter
+        ) { swipeBottom, savedSearches, feeds, folders, filter ->
+            if (swipeBottom == ArticleListVerticalSwipe.DISABLED) {
+                return@combine  null
+            }
+
             NextFilter.findSwipeDestination(
                 filter,
                 searches = savedSearches,

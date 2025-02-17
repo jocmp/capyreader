@@ -9,8 +9,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.capyreader.app.common.AfterReadAllBehavior
-import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.preferences.AfterReadAllBehavior
+import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.articles.feeds.FolderActions
 import com.capyreader.app.ui.articles.feeds.LocalFolderActions
@@ -40,12 +40,13 @@ fun ArticleScreen(
     val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle("")
     val searchState by viewModel.searchState.collectAsStateWithLifecycle(SearchState.INACTIVE)
     val nextFilter by viewModel.nextFilter.collectAsStateWithLifecycle(initialValue = null)
-    val canSwipeToNextFeed = nextFilter != null
     val afterReadAll by viewModel.afterReadAll.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
     val refreshInterval by appPreferences
         .refreshInterval
         .collectChangesWithDefault(appPreferences.refreshInterval.get())
+
+    val canSwipeToNextFeed = nextFilter != null
 
     val fullContent = rememberFullContent(viewModel)
     val articleActions = rememberArticleActions(viewModel)

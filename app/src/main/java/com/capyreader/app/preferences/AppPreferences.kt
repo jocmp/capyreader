@@ -1,11 +1,10 @@
-package com.capyreader.app.common
+package com.capyreader.app.preferences
 
 import android.content.Context
 import androidx.preference.PreferenceManager
+import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.ArticleListFontScale
-import com.capyreader.app.ui.settings.panels.ArticleVerticalSwipe
-import com.capyreader.app.ui.settings.panels.RowSwipeOption
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.articles.FontOption
 import com.jocmp.capy.articles.FontSize
@@ -139,6 +138,9 @@ class AppPreferences(context: Context) {
 
         val swipeEnd: Preference<RowSwipeOption>
             get() = preferenceStore.getEnum("article_list_swipe_end", RowSwipeOption.default)
+
+        val swipeBottom: Preference<ArticleListVerticalSwipe>
+            get() = preferenceStore.getEnum("article_list_swipe_bottom", ArticleListVerticalSwipe.default)
 
         val confirmMarkAllRead: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_list_confirm_mark_all_read", true)

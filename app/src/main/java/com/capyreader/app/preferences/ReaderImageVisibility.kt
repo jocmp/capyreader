@@ -1,4 +1,4 @@
-package com.capyreader.app.common
+package com.capyreader.app.preferences
 
 import com.capyreader.app.R
 

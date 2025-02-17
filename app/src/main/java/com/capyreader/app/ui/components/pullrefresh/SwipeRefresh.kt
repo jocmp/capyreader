@@ -1,6 +1,5 @@
 package com.capyreader.app.ui.components.pullrefresh
 
-import android.util.Log
 import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.MutatePriority
 import androidx.compose.foundation.MutatorMutex

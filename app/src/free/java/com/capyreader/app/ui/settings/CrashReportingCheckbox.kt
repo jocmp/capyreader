@@ -4,7 +4,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import com.capyreader.app.common.AppPreferences
 import com.capyreader.app.setupCommonModules
 import com.capyreader.app.ui.theme.CapyTheme
 import org.koin.android.ext.koin.androidContext

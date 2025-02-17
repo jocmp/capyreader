@@ -1,7 +1,7 @@
 package com.capyreader.app.ui.articles
 
 import androidx.lifecycle.ViewModel
-import com.capyreader.app.common.AppPreferences
+import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.Account
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.EditFeedFormEntry
