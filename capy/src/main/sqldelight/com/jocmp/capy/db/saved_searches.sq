@@ -22,11 +22,13 @@ WHERE id = :id;
 upsert:
 INSERT OR REPLACE INTO saved_searches(
     id,
-    name
+    name,
+    query_text
 )
 VALUES (
   :id,
-  :name
+  :name,
+  :query_text
 );
 
 upsertArticle:

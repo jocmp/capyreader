@@ -23,13 +23,17 @@ internal class SavedSearchRecords(private val database: Database) {
         return savedSearchQueries.find(savedSearchID, mapper = ::mapper).executeAsOneOrNull()
     }
 
-    internal fun upsert(id: String, name: String) {
-        savedSearchQueries.upsert(id = id, name = name)
+    internal fun upsert(
+        id: String,
+        name: String,
+        query: String? = null
+    ) {
+        savedSearchQueries.upsert(id = id, name = name, query_text = query)
     }
 
-    internal fun upsertArticle(articleID: String, id: String) {
+    internal fun upsertArticle(articleID: String, savedSearchID: String) {
         savedSearchQueries.upsertArticle(
-            saved_search_id = id,
+            saved_search_id = savedSearchID,
             article_id = articleID
         )
     }

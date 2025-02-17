@@ -10,9 +10,11 @@ import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.FeedFixture
 import com.jocmp.capy.persistence.ArticleRecords
+import com.jocmp.capy.randomID
 import com.jocmp.feedbinclient.CreateSubscriptionRequest
 import com.jocmp.feedbinclient.Entry
 import com.jocmp.feedbinclient.Feedbin
+import com.jocmp.feedbinclient.SavedSearch
 import com.jocmp.feedbinclient.StarredEntriesRequest
 import com.jocmp.feedbinclient.Subscription
 import com.jocmp.feedbinclient.Tagging
@@ -46,19 +48,19 @@ class FeedbinAccountDelegateTest {
     private val subscriptions = listOf(
         Subscription(
             id = 1,
-            created_at = "2024-01-30T19:42:44.851265Z",
-            feed_id = 1,
-            title = "Ed Zitron",
-            feed_url = "http://wheresyoured.at/feed",
-            site_url = "http://wheresyoured.at"
-        ),
-        Subscription(
-            id = 2,
             created_at = "2022-04-27T22:06:16.639772Z",
             feed_id = 2,
             title = "Ars Technica",
             feed_url = "https://feeds.arstechnica.com/arstechnica/index",
             site_url = "http://wheresyoured.at"
+        ),
+        Subscription(
+            id = 2,
+            created_at = "2024-01-30T19:42:44.851265Z",
+            feed_id = 5,
+            title = "The Verge",
+            feed_url = "https://www.theverge.com/rss/index.xml",
+            site_url = "http://theverge.com"
         ),
     )
 
@@ -70,25 +72,45 @@ class FeedbinAccountDelegateTest {
         )
     )
 
-    private val entries = listOf(
-        Entry(
-            id = 4375836222,
-            feed_id = 2,
-            title = "Reddit admits more moderator protests could hurt its business",
-            summary = "Enlarge (credit: Jakub Porzycki/NurPhoto via Getty Images) Reddit filed to go public on Thursday (PDF), revealing various details of the social media company's inner workings. Among the revelations, Reddit acknowledged the threat of future user protests",
-            content = "<p>Reddit filed to go public on Thursday (PDF), revealing various details of the social media company's inner workings. Among the revelations, Reddit acknowledged the threat of future user protests</p>",
-            url = "https://arstechnica.com/?p=2005526",
-            published = "2024-02-23T17:42:38.000000Z",
-            created_at = "2024-02-23T17:47:45.708056Z",
-            extracted_content_url = "https://extract.feedbin.com/parser/feedbin/fa2d8d34c403421a766dbec46c58738c36ff359e?base64_url=aHR0cHM6Ly9hcnN0ZWNobmljYS5jb20vP3A9MjAwNTUyNg==",
-            author = "Scharon Harding",
-            images = Entry.Images(
-                original_url = "https://cdn.arstechnica.net/wp-content/uploads/2024/02/GettyImages-2023785321-800x534.jpg",
-                size_1 = Entry.Images.SizeOne(
-                    cdn_url = "https://cdn.arstechnica.net/wp-content/uploads/2024/02/GettyImages-2023785321-800x534.jpg"
-                ),
+    private val arsTechnicaArticle = Entry(
+        id = 4375836222,
+        feed_id = 2,
+        title = "Reddit admits more moderator protests could hurt its business",
+        summary = "Enlarge (credit: Jakub Porzycki/NurPhoto via Getty Images) Reddit filed to go public on Thursday (PDF), revealing various details of the social media company's inner workings. Among the revelations, Reddit acknowledged the threat of future user protests",
+        content = "<p>Reddit filed to go public on Thursday (PDF), revealing various details of the social media company's inner workings. Among the revelations, Reddit acknowledged the threat of future user protests</p>",
+        url = "https://arstechnica.com/?p=2005526",
+        published = "2024-02-23T17:42:38.000000Z",
+        created_at = "2024-02-23T17:47:45.708056Z",
+        extracted_content_url = "https://extract.feedbin.com/parser/feedbin/...",
+        author = "Scharon Harding",
+        images = Entry.Images(
+            original_url = "https://cdn.arstechnica.net/wp-content/uploads/2024/02/GettyImages-2023785321-800x534.jpg",
+            size_1 = Entry.Images.SizeOne(
+                cdn_url = "https://cdn.arstechnica.net/wp-content/uploads/2024/02/GettyImages-2023785321-800x534.jpg"
             ),
-        )
+        ),
+    )
+
+    private val entries = listOf(arsTechnicaArticle)
+
+    private val vergeArticle = Entry(
+        id = 4718104685,
+        feed_id = 5,
+        title = "Amazfit Active 2 review: outsized bang for your buck",
+        summary = "This $130 smartwatch certainly doesn't look it. | Photo by Amelia Holowaty Krales / The Verge A common reader request I get goes something like this: what should I buy if I don't want a smartwatch but want basic fitness tracking? When I suggest",
+        content = "<figure>\n\n<img alt=\"Close-up view of the Amazfit Active 2's screen,...",
+        url = "https://www.theverge.com/smartwatch-review/608342/amazfit-active-2-review-budget-smartwatch-wearables-fitness-tracker",
+        published = "2025-02-09T14:00:00.000000Z",
+        created_at = "2025-02-09T14:02:28.994289Z",
+        extracted_content_url = "https://extract.feedbin.com/...",
+        author = "Victoria Song",
+        images = null
+    )
+
+    private val savedSearch = SavedSearch(
+        id = randomID(),
+        name = "Pebble",
+        query = "Pebble",
     )
 
     @BeforeTest
@@ -104,17 +126,35 @@ class FeedbinAccountDelegateTest {
     @Test
     fun refresh_updatesEntries() = runTest {
         coEvery { feedbin.subscriptions() }.returns(Response.success(subscriptions))
-        coEvery { feedbin.unreadEntries() }.returns(Response.success(entries.map { it.id }))
+        coEvery { feedbin.unreadEntries() }.returns(
+            Response.success(
+                listOf(
+                    arsTechnicaArticle.id,
+                    vergeArticle.id
+                )
+            )
+        )
         coEvery { feedbin.starredEntries() }.returns(Response.success(emptyList()))
         coEvery { feedbin.taggings() }.returns(Response.success(taggings))
+        coEvery { feedbin.savedSearches() }.returns(Response.success(listOf(savedSearch)))
+        coEvery { feedbin.savedSearchEntries(any()) }.returns(Response.success(listOf(vergeArticle.id)))
         coEvery {
             feedbin.entries(
                 since = any(),
                 perPage = any(),
                 page = any(),
-                ids = any(),
+                ids = null,
             )
         }.returns(Response.success(entries))
+
+        coEvery {
+            feedbin.entries(
+                since = any(),
+                perPage = any(),
+                page = any(),
+                ids = vergeArticle.id.toString(),
+            )
+        }.returns(Response.success(listOf(vergeArticle)))
 
         delegate.refresh(ArticleFilter.default())
 
@@ -138,7 +178,7 @@ class FeedbinAccountDelegateTest {
 
         assertEquals(expected = listOf(null, "Gadgets"), actual = taggedNames)
 
-        assertEquals(expected = 1, actual = articles.size)
+        assertEquals(expected = 2, actual = articles.size)
     }
 
     @Test
@@ -197,6 +237,7 @@ class FeedbinAccountDelegateTest {
         coEvery { feedbin.unreadEntries() }.returns(Response.success(listOf(unreadEntry.id)))
         coEvery { feedbin.starredEntries() }.returns(Response.success(starredEntries.map { it.id }))
         coEvery { feedbin.taggings() }.returns(Response.success(taggings))
+        coEvery { feedbin.savedSearches() }.returns(Response.success(emptyList()))
         coEvery {
             feedbin.entries(
                 since = null,
@@ -314,7 +355,11 @@ class FeedbinAccountDelegateTest {
             )
         }.returns(Response.success(emptyList()))
 
-        val result = delegate.addFeed(url = url, folderTitles = emptyList(), title = "") as AddFeedResult.Success
+        val result = delegate.addFeed(
+            url = url,
+            folderTitles = emptyList(),
+            title = ""
+        ) as AddFeedResult.Success
         val feed = result.feed
 
         assertEquals(

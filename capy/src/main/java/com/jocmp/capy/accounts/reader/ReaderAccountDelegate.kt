@@ -429,7 +429,7 @@ internal class ReaderAccountDelegate(
                     if (labels.contains(category)) {
                         savedSearchRecords.upsertArticle(
                             articleID = item.hexID,
-                            id = category,
+                            savedSearchID = category,
                         )
                     }
                 }

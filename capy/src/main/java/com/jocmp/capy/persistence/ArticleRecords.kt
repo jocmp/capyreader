@@ -52,6 +52,7 @@ internal class ArticleRecords internal constructor(
                 unreadSort = unreadSort,
                 since = since
             )
+
             is ArticleFilter.Feeds -> byFeed.findPages(
                 articleID = articleID,
                 feedIDs = listOf(filter.feedID),
@@ -60,6 +61,7 @@ internal class ArticleRecords internal constructor(
                 unreadSort = unreadSort,
                 since = since
             )
+
             is ArticleFilter.Folders -> byFeed.findPages(
                 articleID = articleID,
                 feedIDs = folderFeedIDs(filter),
@@ -68,6 +70,7 @@ internal class ArticleRecords internal constructor(
                 unreadSort = unreadSort,
                 since = since
             )
+
             is ArticleFilter.SavedSearches -> bySavedSearch.findPages(
                 articleID = articleID,
                 savedSearchID = filter.savedSearchID,

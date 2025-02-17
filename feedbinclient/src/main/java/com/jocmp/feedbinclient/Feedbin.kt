@@ -36,6 +36,12 @@ interface Feedbin {
     @GET("v2/icons.json")
     suspend fun icons(): Response<List<Icon>>
 
+    @GET("v2/saved_searches.json")
+    suspend fun savedSearches(): Response<List<SavedSearch>>
+
+    @GET("v2/saved_searches/{savedSearchID}.json")
+    suspend fun savedSearchEntries(@Path("savedSearchID") savedSearchID: String): Response<List<Long>>
+
     @Headers("Cache-Control: no-cache")
     @GET("v2/subscriptions.json")
     suspend fun subscriptions(): Response<List<Subscription>>
