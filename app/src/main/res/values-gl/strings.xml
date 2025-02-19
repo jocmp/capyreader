@@ -222,4 +222,14 @@
     <string name="nav_headline_saved_searches">Buscas</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">Activar desprazamento horizonal</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Desprazar á esquerdar ou dereita para cambiar de artigo</string>
+    <string name="feed_nav_drawer_refresh_all">Actualizar todo</string>
+    <string name="settings_gestures_list_swipe_up">Desprazar Arriba</string>
+    <string name="article_list_swipe_disabled">Desactivado</string>
+    <string name="media_save">Gardar</string>
+    <string name="media_save_success">imaxe gardada</string>
+    <string name="media_save_failure">Fallo ao gardar a imaxe</string>
+    <string name="notification_mark_as_read_action">Marcar como lido</string>
+    <string name="media_share_failure">Fallo ao compartir a imaxe</string>
+    <string name="article_list_swipe_next_feed">Ir á seguinte canle</string>
+    <string name="media_share">Compartir</string>
 </resources>

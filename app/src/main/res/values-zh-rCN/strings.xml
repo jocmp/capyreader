@@ -228,4 +228,14 @@
     <string name="nav_headline_saved_searches">搜索</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">启用水平滚动</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">左右滑动来查看文章</string>
+    <string name="notification_mark_as_read_action">标记为已读</string>
+    <string name="article_list_swipe_next_feed">转到下个源</string>
+    <string name="media_share">分享</string>
+    <string name="media_save_success">图片已保存</string>
+    <string name="settings_gestures_list_swipe_up">上滑</string>
+    <string name="article_list_swipe_disabled">已停用</string>
+    <string name="media_save">保存</string>
+    <string name="media_save_failure">保存图片失败</string>
+    <string name="media_share_failure">分享图片失败</string>
+    <string name="feed_nav_drawer_refresh_all">刷新全部</string>
 </resources>
