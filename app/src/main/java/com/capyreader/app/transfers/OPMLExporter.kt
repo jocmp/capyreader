@@ -18,8 +18,6 @@ class OPMLExporter(
 
         val result = runCatching {
             withContext(Dispatchers.IO) {
-                val exports = File(context.filesDir, "transfers")
-                exports.mkdirs()
                 val source = account.opmlDocument().toByteArray()
 
                 context.contentResolver.openFileDescriptor(target, "w")?.use { descriptor ->
