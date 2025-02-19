@@ -222,7 +222,7 @@
     <string name="after_read_all_behavior_default">Predefinito</string>
     <string name="after_read_all_behavior_label">Dopo aver letto tutto</string>
     <string name="full_content_error_missing_response">Impossibile recuperare l\'articolo</string>
-    <string name="after_read_all_behavior_open_next_feed">Vai al prossimo feed</string>
+    <string name="after_read_all_behavior_open_next_feed">Apri il prossimo feed</string>
     <string name="article_actions_copy_link">Copia il link</string>
     <string name="feed_nav_drawer_title">Feed</string>
     <string name="article_vertical_open_article_in_browser">Apri l\'articolo nel browser</string>
@@ -230,4 +230,14 @@
     <string name="nav_headline_saved_searches">Ricerche</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">Abilita lo scorrimento orizzontale</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Scorrere a sinistra o a destra per navigare tra gli articoli</string>
+    <string name="media_share">Condividi</string>
+    <string name="media_save_success">Immagine salvata</string>
+    <string name="notification_mark_as_read_action">Segna come letto</string>
+    <string name="settings_gestures_list_swipe_up">Scorri verso l\'alto</string>
+    <string name="article_list_swipe_next_feed">Vai al prossimo feed</string>
+    <string name="article_list_swipe_disabled">Disabilitato</string>
+    <string name="media_save">Salva</string>
+    <string name="media_save_failure">Impossibile salvare l\'immagine</string>
+    <string name="media_share_failure">Impossibile condividere l\'immagine</string>
+    <string name="feed_nav_drawer_refresh_all">Aggiorna tutto</string>
 </resources>
