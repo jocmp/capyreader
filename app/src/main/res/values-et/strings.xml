@@ -229,4 +229,14 @@
     <string name="article_vertical_open_article_in_browser">Ava artikkel veebibrauseris</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Artiklite vahel liikumiseks viipa vasakule ja paremale</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">Kasuta rõhtset kerimist</string>
+    <string name="notification_mark_as_read_action">Märgi loetuks</string>
+    <string name="settings_gestures_list_swipe_up">Viibates üles</string>
+    <string name="article_list_swipe_next_feed">Mine järgmise uudisvoo juurde</string>
+    <string name="article_list_swipe_disabled">Ära tee midagi</string>
+    <string name="media_save">Salvesta</string>
+    <string name="media_save_success">Pilt on salvestatud</string>
+    <string name="media_save_failure">Pildi salvestamine ei õnnestu</string>
+    <string name="media_share_failure">Pildi jagamine ei õnnestu</string>
+    <string name="media_share">Jaga</string>
+    <string name="feed_nav_drawer_refresh_all">Uuenda kõik</string>
 </resources>
