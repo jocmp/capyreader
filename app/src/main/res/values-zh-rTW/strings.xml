@@ -8,7 +8,7 @@
     <string name="settings_remove_account_title_local">刪除帳戶</string>
     <string name="settings_remove_account_message_local">您确定要刪除帳戶嗎？此操作不可撤銷。</string>
     <string name="settings_remove_account_confirm_local">確認</string>
-    <string name="account_settings_save_name">名稱已保存</string>
+    <string name="account_settings_save_name">名稱已儲存</string>
     <string name="article_view_mark_as_read">標為已讀</string>
     <string name="article_view_star">星標</string>
     <string name="refresh_manually_only">僅手動</string>
@@ -21,7 +21,7 @@
     <string name="nav_headline_feeds">源</string>
     <string name="nav_add_feed">添加源</string>
     <string name="add_feed_feed_not_error">無法找到源</string>
-    <string name="add_feed_save_error">無法保存源</string>
+    <string name="add_feed_save_error">無法儲存源</string>
     <string name="add_feed_network_error">無法找到源，請檢查您的連接。</string>
     <string name="edit_feed_error">儲存源出錯</string>
     <string name="app_name">Capy Reader</string>
@@ -48,7 +48,7 @@
     <string name="settings_remove_account_button_service">登出</string>
     <string name="settings_remove_account_title_service">登出</string>
     <string name="article_font_scale_label">字體大小</string>
-    <string name="opml_exporter_failure">匯出出錯</string>
+    <string name="opml_exporter_failure">匯出失敗</string>
     <string name="opml_exporter_success">匯出完成</string>
     <string name="article_list_row_swipe_open_externally">在瀏覽器中打開文章</string>
     <string name="article_view_open_externally">外部打開</string>
@@ -228,4 +228,14 @@
     <string name="nav_headline_saved_searches">搜尋</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">向左右滑動切換文章</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">水平滑動</string>
+    <string name="media_share_failure">分享圖片失敗</string>
+    <string name="notification_mark_as_read_action">標為已讀</string>
+    <string name="settings_gestures_list_swipe_up">向上滑動</string>
+    <string name="article_list_swipe_disabled">停用</string>
+    <string name="feed_nav_drawer_refresh_all">重整全部</string>
+    <string name="media_save_failure">儲存圖片失敗</string>
+    <string name="media_save_success">圖片已儲存</string>
+    <string name="media_save">儲存</string>
+    <string name="article_list_swipe_next_feed">轉到下個源</string>
+    <string name="media_share">分享</string>
 </resources>
