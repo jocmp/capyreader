@@ -1,0 +1,17 @@
+Added
+
+• Add button to navigation drawer to refresh all feeds
+• Add save and share buttons to the article media viewer
+• Add "Mark as read" button to notifications
+• Display saved search collections for Feedbin
+• And more!
+
+Updated
+
+• Persist folder dropdown expanded state
+• Fix error message when adding a feed when offline
+• Update translations for Arabic, Bulgarian, Estonian, French, Galician, Italian and Chinese thanks to volunteers.
+
+Fixed
+
+• Tweak wait time when marking read as scroll
