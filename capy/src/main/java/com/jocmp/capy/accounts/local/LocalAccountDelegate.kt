@@ -13,7 +13,6 @@ import com.jocmp.capy.db.Database
 import com.jocmp.capy.logging.CapyLog
 import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.capy.persistence.FeedRecords
-import com.jocmp.capy.persistence.SavedSearchRecords
 import com.jocmp.capy.persistence.TaggingRecords
 import com.jocmp.feedfinder.DefaultFeedFinder
 import com.jocmp.feedfinder.FeedFinder
@@ -58,15 +57,21 @@ internal class LocalAccountDelegate(
             val feeds = response.getOrDefault(emptyList())
 
             if (feeds.isEmpty()) {
+                val exception  = response.exceptionOrNull()
                 CapyLog.warn(
                     tag("find"),
                     data = mapOf(
-                        "error_message" to response.exceptionOrNull()?.message,
+                        "error_type" to exception?.javaClass.toString(),
+                        "error_message" to exception?.message,
                         "feed_url" to url
                     )
                 )
 
-                return AddFeedResult.Failure(AddFeedResult.Error.FeedNotFound())
+                if (exception != null && exception is UnknownHostException) {
+                    return AddFeedResult.connectionError()
+                }
+
+                return AddFeedResult.feedNotFound()
             }
 
             if (feeds.size > 1) {
@@ -88,12 +93,12 @@ internal class LocalAccountDelegate(
 
                     AddFeedResult.Success(feed)
                 } else {
-                    AddFeedResult.Failure(AddFeedResult.Error.SaveFailure())
+                    AddFeedResult.saveFailure()
                 }
             }
         } catch (e: UnknownHostException) {
             CapyLog.error(tag("find"), e)
-            return AddFeedResult.Failure(AddFeedResult.Error.NetworkError())
+            return AddFeedResult.networkError()
         }
     }
 

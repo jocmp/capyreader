@@ -4,6 +4,7 @@ import com.jocmp.capy.Feed
 
 sealed class AddFeedResult {
     sealed class Error : Throwable() {
+        class ConnectionError : Error()
         class FeedNotFound : Error()
         class NetworkError : Error()
         class SaveFailure : Error()
@@ -16,6 +17,8 @@ sealed class AddFeedResult {
     data class Failure(val error: Error) : AddFeedResult()
 
     companion object {
+        fun connectionError() = Failure(Error.ConnectionError())
+
         fun networkError() = Failure(Error.NetworkError())
 
         fun feedNotFound() = Failure(Error.FeedNotFound())
