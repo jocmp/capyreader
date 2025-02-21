@@ -4,14 +4,13 @@ Added
 • Add save and share buttons to the article media viewer
 • Add "Mark as read" button to notifications
 • Display saved search collections for Feedbin
-• And more!
 
 Updated
 
 • Persist folder dropdown expanded state
-• Fix error message when adding a feed when offline
-• Update translations for Arabic, Bulgarian, Estonian, French, Galician, Italian and Chinese thanks to volunteers.
+• Update translations for Arabic, Bulgarian, Estonian, French, Galician, Italian, Polish and Chinese thanks to volunteers.
 
 Fixed
 
 • Tweak wait time when marking read as scroll
+• Handle invalid content type for local feeds
