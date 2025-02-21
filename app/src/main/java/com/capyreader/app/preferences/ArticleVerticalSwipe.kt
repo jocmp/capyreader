@@ -35,6 +35,7 @@ enum class ArticleVerticalSwipe {
             DISABLED,
             OPEN_ARTICLE_IN_BROWSER,
             NEXT_ARTICLE,
+            LOAD_FULL_CONTENT,
         )
     }
 }

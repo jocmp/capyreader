@@ -29,22 +29,23 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
-import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.common.openLink
-import com.capyreader.app.ui.articles.LocalFullContent
-import com.capyreader.app.ui.components.WebViewState
-import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
+import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleVerticalSwipe
 import com.capyreader.app.preferences.ArticleVerticalSwipe.DISABLED
 import com.capyreader.app.preferences.ArticleVerticalSwipe.LOAD_FULL_CONTENT
 import com.capyreader.app.preferences.ArticleVerticalSwipe.NEXT_ARTICLE
 import com.capyreader.app.preferences.ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWSER
 import com.capyreader.app.preferences.ArticleVerticalSwipe.PREVIOUS_ARTICLE
+import com.capyreader.app.ui.articles.LocalFullContent
+import com.capyreader.app.ui.components.WebViewState
+import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.jocmp.capy.Article
 import org.koin.compose.koinInject
 
@@ -193,11 +194,10 @@ fun ArticlePullRefresh(
     SwipeRefresh(
         onRefresh = { onSwipe(topSwipe) },
         swipeEnabled = enableTopSwipe,
-        icon = if (topSwipe == LOAD_FULL_CONTENT) {
-            Icons.AutoMirrored.Rounded.Article
-        } else {
-            Icons.Rounded.KeyboardArrowUp
-        },
+        icon = swipeIcon(
+            topSwipe,
+            relatedArticleIcon = Icons.Rounded.KeyboardArrowUp
+        ),
         indicatorPadding = PaddingValues(
             top = if (includePadding) {
                 TopBarOffset
@@ -210,11 +210,10 @@ fun ArticlePullRefresh(
         SwipeRefresh(
             onRefresh = { onSwipe(bottomSwipe) },
             swipeEnabled = enableBottomSwipe,
-            icon = if (bottomSwipe == OPEN_ARTICLE_IN_BROWSER) {
-                Icons.AutoMirrored.Rounded.OpenInNew
-            } else {
-                Icons.Rounded.KeyboardArrowDown
-            },
+            icon = swipeIcon(
+                bottomSwipe,
+                relatedArticleIcon = Icons.Rounded.KeyboardArrowDown
+            ),
             onTriggerThreshold = { triggerThreshold() },
             indicatorPadding = PaddingValues(
                 bottom = if (includePadding) {
@@ -227,6 +226,17 @@ fun ArticlePullRefresh(
         ) {
             content()
         }
+    }
+}
+
+fun swipeIcon(
+    swipe: ArticleVerticalSwipe,
+    relatedArticleIcon: ImageVector
+): ImageVector {
+    return when (swipe) {
+        LOAD_FULL_CONTENT -> Icons.AutoMirrored.Rounded.Article
+        OPEN_ARTICLE_IN_BROWSER -> Icons.AutoMirrored.Rounded.OpenInNew
+        else -> relatedArticleIcon
     }
 }
 
