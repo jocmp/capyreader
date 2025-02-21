@@ -229,4 +229,16 @@
     <string name="article_vertical_open_article_in_browser">Открыть статью в браузере</string>
     <string name="search_bar_placeholder">Поиск</string>
     <string name="nav_headline_saved_searches">Поиски</string>
+    <string name="notification_mark_as_read_action">Отметить как прочитанное</string>
+    <string name="media_save_failure">Не удалось сохранить изображение</string>
+    <string name="settings_gestures_enable_horizontal_pagination_title">Включить горизонтальную прокрутку</string>
+    <string name="settings_gestures_enable_horizontal_pagination_subtitle">Смахните влево или вправо, чтобы пролистывать статьи</string>
+    <string name="settings_gestures_list_swipe_up">Проведите пальцем вверх</string>
+    <string name="article_list_swipe_next_feed">Перейти к следующей ленте</string>
+    <string name="article_list_swipe_disabled">Отключено</string>
+    <string name="media_save">Сохранить</string>
+    <string name="media_save_success">Изображение сохранено</string>
+    <string name="media_share_failure">Не удалось поделиться изображением</string>
+    <string name="media_share">Поделиться</string>
+    <string name="feed_nav_drawer_refresh_all">Обновить все</string>
 </resources>
