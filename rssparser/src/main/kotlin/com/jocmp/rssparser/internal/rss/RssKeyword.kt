@@ -45,6 +45,7 @@ internal sealed class RssKeyword(val value: String) {
         data object Content : RssKeyword("content:encoded")
         data object PubDate : RssKeyword("pubDate")
         data object Time : RssKeyword("time")
+        data object DCDate : RssKeyword("dc:date")
         data object Type : RssKeyword("type")
         data object Guid : RssKeyword("guid")
         data object Source : RssKeyword("source")
