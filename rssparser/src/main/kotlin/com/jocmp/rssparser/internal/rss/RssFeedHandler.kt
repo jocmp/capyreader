@@ -130,7 +130,11 @@ internal class RssFeedHandler(val document: Document) : FeedHandler {
                     channelFactory.articleBuilder.sourceUrl(sourceUrl)
                 }
 
-                RssKeyword.Item.Time.value -> channelFactory.articleBuilder.pubDate(node.text())
+                RssKeyword.Item.Time.value,
+                RssKeyword.Item.DCDate.value -> {
+                    channelFactory.articleBuilder.pubDate(node.text())
+                }
+
                 RssKeyword.Item.Guid.value -> channelFactory.articleBuilder.guid(node.text())
                 RssKeyword.Item.Content.value -> {
                     channelFactory.articleBuilder.content(node.text())
