@@ -35,7 +35,7 @@ import com.capyreader.app.common.shareArticle
 import com.capyreader.app.ui.articles.FullContentLoadingIcon
 import com.capyreader.app.ui.components.TopBarTooltip
 import com.capyreader.app.ui.fixtures.ArticleSample
-import com.capyreader.app.ui.fixtures.InjectedCapyTheme
+import com.capyreader.app.ui.fixtures.PreviewKoinApplication
 import com.jocmp.capy.Article
 import com.jocmp.capy.Article.FullContentState.ERROR
 import com.jocmp.capy.Article.FullContentState.LOADED
@@ -189,7 +189,7 @@ fun ArticleNavigationIcon(onClick: () -> Unit) {
 @Preview
 @Composable
 private fun ArticleTopBarPreview(@PreviewParameter(ArticleSample::class) article: Article) {
-    InjectedCapyTheme {
+    PreviewKoinApplication {
         ArticleTopBar(
             article = article.copy(
                 extractedContentURL = URL("https://example.com"),
@@ -207,7 +207,7 @@ private fun ArticleTopBarPreview(@PreviewParameter(ArticleSample::class) article
 @Preview
 @Composable
 private fun ArticleTopBarPreviewError(@PreviewParameter(ArticleSample::class) article: Article) {
-    InjectedCapyTheme {
+    PreviewKoinApplication {
         ArticleTopBar(
             article = article.copy(
                 extractedContentURL = URL("https://example.com"),
