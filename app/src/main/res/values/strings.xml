@@ -121,6 +121,7 @@
     <string name="opml_import_notification_cancel">Stop</string>
     <string name="image_preview_menu_option_none">None</string>
     <string name="image_preview_menu_option_small">Small</string>
+    <string name="image_preview_menu_option_medium">Medium</string>
     <string name="image_preview_menu_option_large">Large</string>
     <string name="image_preview_label">Image Preview</string>
     <string name="settings_article_list_feed_name">Feed Name</string>
