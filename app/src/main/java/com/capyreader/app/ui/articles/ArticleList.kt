@@ -129,8 +129,7 @@ fun MarkReadOnScroll(
 
     LaunchedEffect(listState) {
         snapshotFlow { listState.firstVisibleItemIndex }
-            .distinctUntilChanged()
-            .debounce(2_000)
+            .debounce(500)
             .collect { firstVisibleIndex ->
                 val index = firstVisibleIndex - 1
 
