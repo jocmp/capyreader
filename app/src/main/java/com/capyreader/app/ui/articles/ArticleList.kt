@@ -30,10 +30,10 @@ import com.capyreader.app.R
 import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.Article
 import com.jocmp.capy.MarkRead
+import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.distinctUntilChanged
 import org.koin.compose.koinInject
 import java.time.LocalDateTime
 
@@ -131,13 +131,23 @@ fun MarkReadOnScroll(
         snapshotFlow { listState.firstVisibleItemIndex }
             .debounce(500)
             .collect { firstVisibleIndex ->
-                val index = firstVisibleIndex - 1
+                CapyLog.info("collect", mapOf("index" to firstVisibleIndex.toString()))
 
-                if (index < 0 || articles.itemCount == 0) {
+                if (firstVisibleIndex < 0 || articles.itemCount == 0) {
                     return@collect
                 }
 
-                articles.getOrNull(index)?.let { onRead(MarkRead.After(it.id)) }
+                articles.getOrNull(firstVisibleIndex)?.let {
+                    CapyLog.info(
+                        "getOrNull",
+                        mapOf(
+                            "index" to firstVisibleIndex.toString(),
+                            "read" to it.read.toString(),
+                            "title" to it.title.split(" ").take(6).joinToString(),
+                        )
+                    )
+                    onRead(MarkRead.After(it.id))
+                }
             }
     }
 }
