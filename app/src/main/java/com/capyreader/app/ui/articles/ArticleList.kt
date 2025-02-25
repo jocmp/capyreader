@@ -30,7 +30,6 @@ import com.capyreader.app.R
 import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.Article
 import com.jocmp.capy.MarkRead
-import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.debounce
@@ -132,23 +131,12 @@ fun MarkReadOnScroll(
             .debounce(500)
             .collect { firstVisibleIndex ->
                 val offscreenIndex = firstVisibleIndex - 1
-                CapyLog.info("collect", mapOf("index" to offscreenIndex.toString()))
 
                 if (offscreenIndex < 0 || articles.itemCount == 0) {
                     return@collect
                 }
 
-                articles.getOrNull(offscreenIndex)?.let {
-                    CapyLog.info(
-                        "getOrNull",
-                        mapOf(
-                            "index" to offscreenIndex.toString(),
-                            "read" to it.read.toString(),
-                            "title" to it.title.split(" ").take(6).joinToString(),
-                        )
-                    )
-                    onRead(MarkRead.After(it.id))
-                }
+                articles.getOrNull(offscreenIndex)?.let { onRead(MarkRead.After(it.id)) }
             }
     }
 }
