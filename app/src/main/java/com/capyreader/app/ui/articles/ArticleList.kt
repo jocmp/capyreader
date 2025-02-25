@@ -131,17 +131,18 @@ fun MarkReadOnScroll(
         snapshotFlow { listState.firstVisibleItemIndex }
             .debounce(500)
             .collect { firstVisibleIndex ->
-                CapyLog.info("collect", mapOf("index" to firstVisibleIndex.toString()))
+                val offscreenIndex = firstVisibleIndex - 1
+                CapyLog.info("collect", mapOf("index" to offscreenIndex.toString()))
 
-                if (firstVisibleIndex < 0 || articles.itemCount == 0) {
+                if (offscreenIndex < 0 || articles.itemCount == 0) {
                     return@collect
                 }
 
-                articles.getOrNull(firstVisibleIndex)?.let {
+                articles.getOrNull(offscreenIndex)?.let {
                     CapyLog.info(
                         "getOrNull",
                         mapOf(
-                            "index" to firstVisibleIndex.toString(),
+                            "index" to offscreenIndex.toString(),
                             "read" to it.read.toString(),
                             "title" to it.title.split(" ").take(6).joinToString(),
                         )

@@ -26,8 +26,7 @@ class ByArticleStatus(private val database: Database) {
         since: OffsetDateTime? = null
     ): Query<Article> {
         val (read, starred) = status.toStatusPair
-        val newestFirst = status != ArticleStatus.UNREAD ||
-                unreadSort == UnreadSortOrder.NEWEST_FIRST
+        val newestFirst = isNewestFirst(status, unreadSort)
 
         return database.articlesByStatusQueries.all(
             read = read,
@@ -41,14 +40,15 @@ class ByArticleStatus(private val database: Database) {
         )
     }
 
-    fun unreadArticleIDs(status: ArticleStatus, range: MarkRead): Query<String> {
+    fun unreadArticleIDs(status: ArticleStatus, range: MarkRead, unreadSort: UnreadSortOrder): Query<String> {
         val (_, starred) = status.toStatusPair
         val (afterArticleID, beforeArticleID) = range.toPair
 
         return database.articlesByStatusQueries.findArticleIDs(
             starred = starred,
             afterArticleID = afterArticleID,
-            beforeArticleID = beforeArticleID
+            beforeArticleID = beforeArticleID,
+            newestFirst = isNewestFirst(status, unreadSort),
         )
     }
 

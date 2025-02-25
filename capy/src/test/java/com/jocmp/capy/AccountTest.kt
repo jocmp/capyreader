@@ -60,7 +60,12 @@ class AccountTest {
         articleFixture.create() // read article
 
         val unreadArticleIDs = 3
-            .repeated { articleFixture.create(read = false) }
+            .repeated { offset ->
+                articleFixture.create(
+                    id = "id:${offset + 1}",
+                    read = false
+                )
+            }
             .map { it.id }
 
         val ids = account.unreadArticleIDs(
