@@ -86,6 +86,7 @@ class AccountTest {
         val unreadArticleIDs = 3
             .repeated { offset ->
                 articleFixture.create(
+                    id = "id:${offset + 1}",
                     read = false,
                     publishedAt = time.minusDays(offset.toLong()).toEpochSecond()
                 )
@@ -100,7 +101,7 @@ class AccountTest {
 
         val result = unreadArticleIDs.takeLast(2)
 
-        assertEquals(result, ids)
+        assertEquals(expected = result, actual = ids)
     }
 
     /**
@@ -117,6 +118,7 @@ class AccountTest {
         val unreadArticleIDs = 3
             .repeated { offset ->
                 articleFixture.create(
+                    id = "id:${offset + 1}",
                     read = false,
                     publishedAt = time.minusDays(offset.toLong()).toEpochSecond()
                 )
