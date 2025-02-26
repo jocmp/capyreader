@@ -216,11 +216,13 @@ internal class ArticleRecords internal constructor(
     fun markAllRead(articleIDs: List<String>, lastReadAt: ZonedDateTime = nowUTC()) {
         val updated = lastReadAt.toEpochSecond()
 
-        database.articlesQueries.markRead(
-            articleIDs = articleIDs,
-            read = true,
-            lastReadAt = updated,
-        )
+        database.transactionWithErrorHandling {
+            database.articlesQueries.markRead(
+                articleIDs = articleIDs,
+                read = true,
+                lastReadAt = updated,
+            )
+        }
     }
 
     fun markUnread(articleID: String) {
@@ -272,7 +274,11 @@ internal class ArticleRecords internal constructor(
         return max.toDateTimeFromSeconds
     }
 
-    fun unreadArticleIDs(filter: ArticleFilter, range: MarkRead, unreadSort: UnreadSortOrder): List<String> {
+    fun unreadArticleIDs(
+        filter: ArticleFilter,
+        range: MarkRead,
+        unreadSort: UnreadSortOrder
+    ): List<String> {
         val ids = when (filter) {
             is ArticleFilter.Articles -> byStatus.unreadArticleIDs(
                 filter.articleStatus,

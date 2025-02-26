@@ -99,6 +99,9 @@ internal class LocalAccountDelegate(
         } catch (e: UnknownHostException) {
             CapyLog.error(tag("find"), e)
             return AddFeedResult.networkError()
+        } catch (e: Throwable) {
+            CapyLog.error(tag("find"), e)
+            return AddFeedResult.saveFailure()
         }
     }
 
