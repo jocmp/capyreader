@@ -463,6 +463,22 @@ class ArticleRecordsTest {
 
         assertEquals(actual = refreshedNotifications.size, expected = 0)
     }
+
+    @Test
+    fun dismissStaleNotifications_deletesAllUndeletedNotifications() = runTest {
+        val feed = FeedFixture(database).create(enableNotifications = true)
+        val articles = 3.repeated { articleFixture.create(feed = feed, read = false) }
+        val since = articles.first().publishedAt.minusMinutes(15)
+
+        articleRecords.createNotifications(since = since)
+        val activeCount = articleRecords.countActiveNotifications()
+        assertEquals(actual = activeCount, expected = 3)
+
+        articleRecords.dismissStaleNotifications()
+
+        val updatedCount = articleRecords.countActiveNotifications()
+        assertEquals(actual = updatedCount, expected = 0)
+    }
 }
 
 fun sortedMessage(expected: List<Article>, actual: List<Article>): String {

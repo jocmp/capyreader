@@ -227,6 +227,10 @@ data class Account(
         return articleRecords.createNotifications(since = since)
     }
 
+    fun dismissStaleNotifications() {
+        articleRecords.dismissStaleNotifications()
+    }
+
     fun countActiveNotifications(): Long {
         return articleRecords.countActiveNotifications()
     }

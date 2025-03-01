@@ -164,6 +164,10 @@ internal class ArticleRecords internal constructor(
             .executeAsOneOrNull() ?: 0
     }
 
+    internal fun dismissStaleNotifications() {
+        notificationQueries.dismissStaleNotifications(deleted_at = nowUTC().toEpochSecond())
+    }
+
     internal fun dismissNotifications(ids: List<String>) {
         notificationQueries.dismissNotifications(
             ids = ids,
