@@ -84,6 +84,8 @@ internal class AtomFeedHandler(val atom: Element) : FeedHandler {
                     }
                 }
 
+                Entry.YouTubeVideoID() -> channelFactory.articleBuilder.youtubeVideoID(node.text())
+
                 Entry.Media.Group() -> media(node)
             }
         }
@@ -97,7 +99,7 @@ internal class AtomFeedHandler(val atom: Element) : FeedHandler {
                 Entry.Media.Title() -> channelFactory.articleMediaBuilder.title(node.text())
                 Entry.Media.Content() -> channelFactory.articleMediaBuilder.contentUrl(node.attr("url").ifBlank { null })
                 Entry.Media.Thumbnail() -> channelFactory.articleMediaBuilder.thumbnailUrl(node.attr("url").ifBlank { null })
-                Entry.Media.Description() -> channelFactory.articleMediaBuilder.description(node.text())
+                Entry.Media.Description() -> channelFactory.articleMediaBuilder.description(node.wholeText())
             }
         }
     }

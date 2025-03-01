@@ -42,6 +42,7 @@ abstract class BaseParserTest(
     val articleItunesData: ItunesItemData? = null,
     val charset: Charset? = null,
     val media: Media? = null,
+    val youtubeVideoID: String? = null,
 ) {
 
     private lateinit var channel: RssChannel
@@ -291,5 +292,10 @@ abstract class BaseParserTest(
     @Test
     fun articleMediaDescription_isCorrect() {
         assertEquals(media?.description, article.media?.description)
+    }
+
+    @Test
+    fun articleYouTubeVideoID_isCorrect() {
+        assertEquals(youtubeVideoID, article.youtubeVideoID)
     }
 }

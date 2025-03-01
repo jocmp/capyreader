@@ -19,6 +19,7 @@ fun rssItemFixture(
     sourceUrl: String? = null,
     categories: MutableList<String> = mutableListOf(),
     itunesItemData: ItunesItemData? = null,
+    youtubeVideoID: String? = null,
     media: Media? = null,
     commentUrl: String? = null,
 ) = RssItem(
@@ -37,5 +38,6 @@ fun rssItemFixture(
     categories,
     itunesItemData,
     media,
+    youtubeVideoID,
     commentUrl,
 )

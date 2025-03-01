@@ -12,6 +12,7 @@ class XmlParserAtomYouTube : BaseParserTest(
     articleLink = "https://www.youtube.com/watch?v=W_S7iKZZdHw",
     articleAuthor = "Digital Foundry",
     articleGuid = "yt:video:W_S7iKZZdHw",
+    youtubeVideoID = "W_S7iKZZdHw",
     media = Media(
         title = "Digital Foundry Games of 2024: The Oliver Mackenzie Collection!",
         contentUrl = "https://www.youtube.com/v/W_S7iKZZdHw?version=3",

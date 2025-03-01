@@ -32,6 +32,8 @@ internal sealed class AtomKeyword(val value: String) {
 
         data object Email : AtomKeyword("email")
 
+        data object YouTubeVideoID: AtomKeyword("yt:videoId")
+
         data object Media {
             data object Group : AtomKeyword("media:group")
             data object Title : AtomKeyword("media:title")
