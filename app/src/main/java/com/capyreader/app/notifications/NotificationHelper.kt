@@ -12,9 +12,9 @@ import androidx.core.app.NotificationManagerCompat
 import com.capyreader.app.ArticleStatusBroadcastReceiver
 import com.capyreader.app.MainActivity
 import com.capyreader.app.R
-import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.notifications.NotificationHelper.Companion.ARTICLE_ID_KEY
 import com.capyreader.app.notifications.NotificationHelper.Companion.FEED_ID_KEY
+import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.Account
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleNotification
@@ -28,6 +28,8 @@ class NotificationHelper(
 ) {
     suspend fun notify(since: ZonedDateTime) {
         createChannel()
+
+        dismissStaleNotifications()
 
         val notifications = account.createNotifications(since = since)
 
@@ -45,13 +47,11 @@ class NotificationHelper(
     fun dismissNotifications(ids: List<String>) {
         account.dismissNotifications(ids)
 
-        val notificationManager = NotificationManagerCompat.from(applicationContext)
-
         ids.forEach {
             notificationManager.cancel(it.hashCode())
         }
 
-        if (account.countActiveNotifications() == 0L) {
+        if (activeNotifications.isEmpty() || account.countActiveNotifications() == 0L) {
             notificationManager.cancel(Notifications.FEED_UPDATE_GROUP_NOTIFICATION_ID)
         }
     }
@@ -118,9 +118,20 @@ class NotificationHelper(
             NotificationManager.IMPORTANCE_DEFAULT
         )
 
-        NotificationManagerCompat.from(applicationContext)
-            .createNotificationChannel(channel)
+        notificationManager.createNotificationChannel(channel)
     }
+
+    private fun dismissStaleNotifications() {
+        if (activeNotifications.isEmpty()) {
+            account.dismissStaleNotifications()
+        }
+    }
+
+    private val activeNotifications
+        get() = notificationManager.activeNotifications
+
+    private val notificationManager
+        get() = NotificationManagerCompat.from(applicationContext)
 
     companion object {
         const val ARTICLE_ID_KEY = "article_id"
