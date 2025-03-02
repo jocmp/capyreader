@@ -782,6 +782,9 @@ fun rememberFeedActions(viewModel: ArticleScreenViewModel): FeedActions {
             toggleUnreadBadge = { feedID, show ->
                 viewModel.toggleFeedUnreadBadge(feedID, show)
             },
+            reloadIcon = { feedID ->
+                viewModel.reloadFavicon(feedID)
+            }
         )
     }
 }

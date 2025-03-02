@@ -13,6 +13,7 @@
     <string name="feed_action_unsubscribe">Leiratkozás</string>
     <string name="filter_action_menu_description">Szerkesztés</string>
     <string name="feed_action_edit">Hírfolyam szerkesztése</string>
+    <string name="feed_action_reload_icon">Ikon újratöltése</string>
     <string name="feed_action_unsubscribe_message">Biztosan le szeretne iratkozni a(z) \"%1$s\" hírfolyamról?</string>
     <string name="feed_action_unsubscribe_confirm">Leiratkozás</string>
     <string name="edit_feed_submit">Mentés</string>

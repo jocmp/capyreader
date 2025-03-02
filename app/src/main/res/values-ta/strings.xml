@@ -10,6 +10,7 @@
     <string name="feed_action_unsubscribe">குழுவிலகவும்</string>
     <string name="filter_action_menu_description">தொகு</string>
     <string name="feed_action_edit">ஊட்டத்தைத் திருத்து</string>
+    <string name="feed_action_reload_icon">சின்னத்தை மீண்டும் ஏற்று</string>
     <string name="feed_action_unsubscribe_message">\"%1$s\" இலிருந்து குழுவிலக விரும்புகிறீர்களா?</string>
     <string name="feed_action_unsubscribe_confirm">குழுவிலகவும்</string>
     <string name="edit_feed_submit">சேமி</string>

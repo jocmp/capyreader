@@ -98,6 +98,7 @@
     <string name="opml_import_notification_cancel">Stop</string>
     <string name="filter_action_menu_description">Modifică</string>
     <string name="feed_action_edit">Modifică flux</string>
+    <string name="feed_action_reload_icon">Reîncarcă pictograma</string>
     <string name="update_auth_success_message">Conectare cu succes</string>
     <string name="account_source_freshrss">FreshRSS</string>
     <string name="settings_section_privacy">Confidențialitate</string>

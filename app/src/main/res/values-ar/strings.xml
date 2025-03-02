@@ -8,6 +8,7 @@
     <string name="filter_all">الكل</string>
     <string name="feed_action_unsubscribe">إلغاء الإشتراك</string>
     <string name="feed_action_edit">تعديل الموجز</string>
+    <string name="feed_action_reload_icon">إعادة تحميل الأيقونة</string>
     <string name="add_feed_success">تمت إضافة الموجز بنجاح</string>
     <string name="feed_action_unsubscribe_message">هل أنت متأكد أنك تريد إلغاء الإشتراك في \"%1$s\" ؟</string>
     <string name="feed_action_unsubscribe_confirm">إلغاء الإشتراك</string>

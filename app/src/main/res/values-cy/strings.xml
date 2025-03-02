@@ -136,6 +136,7 @@
     <string name="feed_action_unsubscribe">Dad-danysgrifio</string>
     <string name="filter_action_menu_description">Golygu</string>
     <string name="feed_action_edit">Golygu\'r ffrwd</string>
+    <string name="feed_action_reload_icon">Ail-lwytho\'r eicon</string>
     <string name="feed_action_unsubscribe_message">Ydych chi\'n siŵr eich bod chi am ddad-danysgrifio o \"%1$s\"?</string>
     <string name="edit_feed_submit">Cadw</string>
     <string name="dialog_cancel">Diddymu</string>
