@@ -6,6 +6,7 @@ import com.jocmp.capy.ArticleStatus.UNREAD
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.accounts.FaviconFetcher
+import com.jocmp.capy.accounts.FaviconFinder
 import com.jocmp.capy.accounts.LocalOkHttpClient
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.asOPML
@@ -16,6 +17,7 @@ import com.jocmp.capy.accounts.reader.buildReaderDelegate
 import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
+import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.sortedByName
 import com.jocmp.capy.common.sortedByTitle
 import com.jocmp.capy.common.transactionWithErrorHandling
@@ -34,6 +36,7 @@ import com.jocmp.feedbinclient.Feedbin
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -123,7 +126,11 @@ data class Account(
             url = url,
             title = title,
             folderTitles = folderTitles
-        )
+        ).also {
+            if (it is AddFeedResult.Success) {
+                findFavicon(it.feed)
+            }
+        }
     }
 
     suspend fun editFeed(form: EditFeedFormEntry): Result<Feed> {
@@ -379,6 +386,20 @@ data class Account(
 
     suspend fun clearStickyFullContent() {
         feedRecords.clearStickyFullContent()
+    }
+
+    suspend fun reloadFavicon(feedID: String) {
+        findFeed(feedID)?.let { findFavicon(it) }
+    }
+
+    private suspend fun findFavicon(feed: Feed) {
+        coroutineScope {
+            launchIO {
+                FaviconFinder(localHttpClient, faviconFetcher).find(feed)?.let {
+                    feedRecords.updateFavicon(feed.id, it)
+                }
+            }
+        }
     }
 
     val supportsMultiFolderFeeds: Boolean

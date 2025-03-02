@@ -107,6 +107,7 @@
     <string name="refresh_every_day">Jeden Tag</string>
     <string name="feed_form_feed_url_title">Feed URL</string>
     <string name="feed_action_edit">Feed bearbeiten</string>
+    <string name="feed_action_reload_icon">Symbol neu laden</string>
     <string name="add_feed_url_title">Feed oder Website URL</string>
     <string name="filter_unread">Ungelesen</string>
     <string name="settings_remove_account_message_service">Sind Sie sicher, dass Sie sich abmelden möchten?</string>

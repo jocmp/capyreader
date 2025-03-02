@@ -12,6 +12,7 @@
     <string name="feed_action_unsubscribe">Відписатися</string>
     <string name="filter_action_menu_description">Редагувати</string>
     <string name="feed_action_edit">Редагувати стрічку</string>
+    <string name="feed_action_reload_icon">Перезавантажити іконку</string>
     <string name="feed_action_unsubscribe_message">Точно відписатися від «%1$s»?</string>
     <string name="feed_action_unsubscribe_confirm">Відписатися</string>
     <string name="edit_feed_submit">Зберегти</string>

@@ -32,6 +32,13 @@ fun FeedActionMenu(
         }
     }
 
+    fun onReloadIcon() {
+        onDismissMenuRequest()
+        scope.launchUI {
+            actions.reloadIcon(feed.id)
+        }
+    }
+
     DropdownMenu(
         expanded = expanded,
         onDismissRequest = onDismissMenuRequest,
@@ -39,6 +46,7 @@ fun FeedActionMenu(
         FeedActionMenuItems(
             feed = feed,
             onEdit = { setEditDialogOpen(true) },
+            onReloadIcon = { onReloadIcon() },
             onRemoveRequest = { setRemoveDialogOpen(true) },
             onMenuClose = onDismissMenuRequest,
             onToggleOpenInBrowser = {

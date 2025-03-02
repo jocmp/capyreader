@@ -22,6 +22,7 @@ fun FeedActionMenuItems(
     onMenuClose: () -> Unit,
     onRemoveRequest: () -> Unit,
     onEdit: () -> Unit,
+    onReloadIcon: () -> Unit,
     onToggleOpenInBrowser: () -> Unit,
 ) {
     DropdownMenuItem(
@@ -31,6 +32,15 @@ fun FeedActionMenuItems(
         onClick = {
             onMenuClose()
             onEdit()
+        }
+    )
+    DropdownMenuItem(
+        text = {
+            Text(stringResource(R.string.feed_action_reload_icon))
+        },
+        onClick = {
+            onMenuClose()
+            onReloadIcon()
         }
     )
     DropdownMenuItem(
@@ -67,6 +77,7 @@ fun FeedActionMenuPreview(@PreviewParameter(FeedSample::class) feed: Feed) {
             feed = feed,
             onMenuClose = {},
             onEdit = {},
+            onReloadIcon = {},
             onRemoveRequest = {},
             onToggleOpenInBrowser = {}
         )

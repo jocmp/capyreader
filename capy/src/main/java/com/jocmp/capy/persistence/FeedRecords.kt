@@ -49,6 +49,10 @@ internal class FeedRecords(private val database: Database) {
         database.feedsQueries.updateFavicon(faviconURL = null, feedID = feedID)
     }
 
+    fun updateFavicon(feedID: String, faviconURL: String) {
+        database.feedsQueries.updateFavicon(faviconURL = faviconURL, feedID = feedID)
+    }
+
     suspend fun isFullContentEnabled(feedID: String): Boolean = withIOContext {
         database.feedsQueries.isFullContentEnabled(feedID).executeAsOneOrNull() ?: false
     }

@@ -9,6 +9,7 @@
     <string name="filter_all">Semua</string>
     <string name="feed_action_unsubscribe">Berhenti berlangganan</string>
     <string name="feed_action_edit">Sunting Umpan</string>
+    <string name="feed_action_reload_icon">Muat ulang ikon</string>
     <string name="feed_action_unsubscribe_confirm">Berhenti berlangganan</string>
     <string name="edit_feed_submit">Simpan</string>
     <string name="dialog_cancel">Batal</string>

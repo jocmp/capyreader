@@ -61,7 +61,7 @@ internal class LocalAccountDelegate(
             val feeds = response.getOrDefault(emptyList())
 
             if (feeds.isEmpty()) {
-                val exception = response.exceptionOrNull()
+                val exception  = response.exceptionOrNull()
                 CapyLog.warn(
                     tag("find"),
                     data = mapOf(

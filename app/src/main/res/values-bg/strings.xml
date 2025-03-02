@@ -54,6 +54,7 @@
     <string name="feed_action_unsubscribe">Отписване</string>
     <string name="filter_action_menu_description">Редактирай</string>
     <string name="feed_action_edit">Редактиране на емисия</string>
+    <string name="feed_action_reload_icon">Презареждане на иконата</string>
     <string name="feed_action_unsubscribe_confirm">Отписване</string>
     <string name="edit_feed_submit">Запази</string>
     <string name="dialog_cancel">Отказ</string>

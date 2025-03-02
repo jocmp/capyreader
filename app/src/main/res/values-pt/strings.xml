@@ -18,6 +18,7 @@
     <string name="feed_action_unsubscribe">Cancelar inscrição</string>
     <string name="filter_action_menu_description">Editar</string>
     <string name="feed_action_edit">Editar Feed</string>
+    <string name="feed_action_reload_icon">Recarregar ícone</string>
     <string name="settings_remove_account_title_service">Sair da sessão</string>
     <string name="refresh_minutes">Cada %1$d minuto(s)</string>
     <string name="refresh_feeds_menu_label">Atualizar Feeds</string>

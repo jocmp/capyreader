@@ -729,6 +729,9 @@ fun rememberFeedActions(viewModel: ArticleScreenViewModel): FeedActions {
             },
             removeFeed = { feedID ->
                 viewModel.removeFeed(feedID)
+            },
+            reloadIcon = { feedID ->
+                viewModel.reloadFavicon(feedID)
             }
         )
     }

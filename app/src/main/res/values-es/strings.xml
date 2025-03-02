@@ -12,6 +12,7 @@
     <string name="feed_action_unsubscribe">Cancelar suscripción</string>
     <string name="filter_action_menu_description">Editar</string>
     <string name="feed_action_edit">Editar feed</string>
+    <string name="feed_action_reload_icon">Recargar icono</string>
     <string name="feed_action_unsubscribe_message">¿Seguro que quieres cancelar la suscripción de \"%1$s\"?</string>
     <string name="feed_action_unsubscribe_confirm">Cancelar suscripción</string>
     <string name="edit_feed_submit">Guardar</string>

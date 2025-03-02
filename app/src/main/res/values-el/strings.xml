@@ -6,6 +6,7 @@
     <string name="feed_action_unsubscribe">Απεγγραφή</string>
     <string name="filter_action_menu_description">Επεξεργασία</string>
     <string name="feed_action_edit">Επεξεργασία Ροής</string>
+    <string name="feed_action_reload_icon">Επαναφόρτωση εικονιδίου</string>
     <string name="feed_action_unsubscribe_message">Σίγουρα θες να απεγγραφείς από το «%1$s»;</string>
     <string name="feed_action_unsubscribe_confirm">Απεγγραφή</string>
     <string name="edit_feed_submit">Αποθήκευση</string>

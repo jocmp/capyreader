@@ -127,6 +127,7 @@
     <string name="add_feed_success">Kanal lagt til</string>
     <string name="folder_action_edit">Gi nytt navn</string>
     <string name="feed_action_edit">Rediger kanal</string>
+    <string name="feed_action_reload_icon">Last inn ikon på nytt</string>
     <string name="refresh_feeds_menu_label">Oppdater kanaler</string>
     <string name="nav_headline_feeds">Kanaler</string>
     <string name="nav_add_feed">Legg til kanal</string>

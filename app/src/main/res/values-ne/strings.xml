@@ -8,6 +8,7 @@
     <string name="feed_action_unsubscribe">सदस्यता रद्द गर्नुहोस्</string>
     <string name="filter_action_menu_description">सम्पादन गर्नुहोस्</string>
     <string name="feed_action_edit">फिड सम्पादन गर्नुहोस्</string>
+    <string name="feed_action_reload_icon">आइकन पुन: लोड गर्नुहोस्</string>
     <string name="feed_action_unsubscribe_confirm">सदस्यता रद्द गर्नुहोस्</string>
     <string name="dialog_cancel">रद्द गर्नुहोस्</string>
     <string name="folder_action_edit">पुन: नामाकरण गर्नुहोस्</string>

@@ -66,6 +66,7 @@
     <string name="filter_starred">Oznaczone gwiazdką</string>
     <string name="filter_action_menu_description">Edytuj</string>
     <string name="feed_action_edit">Edytuj kanał</string>
+    <string name="feed_action_reload_icon">Przeładuj ikonę</string>
     <string name="feed_action_unsubscribe_confirm">Anuluj subskrypcję</string>
     <string name="feed_action_unsubscribe_title">Anuluj subskrypcję</string>
     <string name="settings_remove_account_button_service">Wyloguj się</string>

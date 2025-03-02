@@ -15,6 +15,7 @@
     <string name="feed_action_unsubscribe">Avprenumerera</string>
     <string name="filter_action_menu_description">Redigera</string>
     <string name="feed_action_edit">Redigera flöde</string>
+    <string name="feed_action_reload_icon">Ladda om ikon</string>
     <string name="feed_action_unsubscribe_message">Är du säker på att du vill avprenumerera från \"%1$s\"?</string>
     <string name="feed_action_unsubscribe_confirm">Avprenumerera</string>
     <string name="edit_feed_submit">Spara</string>

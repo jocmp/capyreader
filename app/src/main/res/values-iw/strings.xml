@@ -9,6 +9,7 @@
     <string name="filter_starred">מסומן בכוכב</string>
     <string name="feed_form_cancel">ביטול</string>
     <string name="feed_action_edit">ערוך פיד</string>
+    <string name="feed_action_reload_icon">טען מחדש סמל</string>
     <string name="feed_action_unsubscribe_message">האם אתה בטוח שברצונך לבטל את המנוי שלך ל-\"%1$s\"?</string>
     <string name="feed_action_unsubscribe_confirm">ביטול מינוי</string>
     <string name="edit_feed_submit">שמור</string>

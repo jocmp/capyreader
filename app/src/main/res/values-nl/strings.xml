@@ -12,6 +12,7 @@
     <string name="feed_action_unsubscribe">Abonnement opzeggen</string>
     <string name="filter_action_menu_description">Bewerken</string>
     <string name="feed_action_edit">Feed bewerken</string>
+    <string name="feed_action_reload_icon">Pictogram herladen</string>
     <string name="feed_action_unsubscribe_message">Weet je zeker dat je je “%1$s”-abonnement wil opzeggen?</string>
     <string name="feed_action_unsubscribe_confirm">Uitschrijven</string>
     <string name="edit_feed_submit">Opslaan</string>

@@ -53,6 +53,7 @@
     <string name="feed_form_cancel">Vazgeç</string>
     <string name="relative_time_days">%1$dgün</string>
     <string name="feed_action_edit">Yayını Düzenle</string>
+    <string name="feed_action_reload_icon">Simgeyi yeniden yükle</string>
     <string name="filter_unread">Okunmamış</string>
     <string name="settings_remove_account_title_local">Hesabı Sil</string>
     <string name="filter_all">Hepsi</string>

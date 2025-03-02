@@ -128,6 +128,7 @@
     <string name="feed_action_unsubscribe">Se désinscrire</string>
     <string name="filter_action_menu_description">Modifier</string>
     <string name="feed_action_edit">Modifier le flux</string>
+    <string name="feed_action_reload_icon">Recharger l\'icône</string>
     <string name="feed_action_unsubscribe_title">Se désinscrire</string>
     <string name="settings">Ouvrir les paramètres</string>
     <string name="article_view_mark_as_read">Marquer comme lu</string>

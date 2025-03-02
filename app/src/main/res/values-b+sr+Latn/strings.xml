@@ -12,6 +12,7 @@
     <string name="feed_action_unsubscribe">Ukloni Izvor</string>
     <string name="filter_action_menu_description">Uredi</string>
     <string name="feed_action_edit">Uredi Izvor</string>
+    <string name="feed_action_reload_icon">Ponovo učitaj ikonu</string>
     <string name="feed_action_unsubscribe_message">Da li ste sigurni da želite da uklonite Izvor „%1$s“?</string>
     <string name="feed_action_unsubscribe_confirm">Ukloni Izvor</string>
     <string name="edit_feed_submit">Sačuvaj</string>

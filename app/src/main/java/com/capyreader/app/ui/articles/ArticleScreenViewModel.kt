@@ -678,6 +678,12 @@ class ArticleScreenViewModel(
         }
     }
 
+    fun reloadFavicon(feedID: String) {
+        viewModelScope.launchIO {
+            account.reloadFavicon(feedID)
+        }
+    }
+
     private val latestFilter: ArticleFilter
         get() = filter.value
 

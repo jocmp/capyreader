@@ -12,6 +12,7 @@
     <string name="feed_action_unsubscribe">Loobu tellimusest</string>
     <string name="filter_action_menu_description">Muuda</string>
     <string name="feed_action_edit">Muuda uudisvoogu</string>
+    <string name="feed_action_reload_icon">Laadi ikoon uuesti</string>
     <string name="feed_action_unsubscribe_message">Kas sa oled kindel et soovid loobuda „%1$s“ tellimusest?</string>
     <string name="edit_feed_submit">Salvesta</string>
     <string name="feed_action_unsubscribe_title">Loobu tellimusest</string>
