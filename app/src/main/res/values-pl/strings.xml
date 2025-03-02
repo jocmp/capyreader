@@ -28,7 +28,7 @@
     <string name="feed_action_unsubscribe_success">Usunięto kanał</string>
     <string name="settings_remove_account_title_service">Wyloguj się</string>
     <string name="settings_remove_account_confirm_service">Wyloguj się</string>
-    <string name="settings_remove_account_confirm_local">Potwierdż</string>
+    <string name="settings_remove_account_confirm_local">Potwierdź</string>
     <string name="nav_headline_tags">Tagi</string>
     <string name="relative_time_days">%1$dd</string>
     <string name="account_source_feedbin">Feedbin</string>
@@ -48,7 +48,7 @@
     <string name="settings_reader_title">Czytnik</string>
     <string name="article_vertical_swipe_disabled">Wyłączono</string>
     <string name="account_source_local">Lokalne</string>
-    <string name="mark_all_read_dialog_submit">Potwierdż</string>
+    <string name="mark_all_read_dialog_submit">Potwierdź</string>
     <string name="auth_fields_password">Hasło</string>
     <string name="settings_section_refresh">Odśwież</string>
     <string name="theme_menu_option_light">Jasny</string>
@@ -195,7 +195,7 @@
     <string name="feed_list_top_bar_close_search">Zamknij wyszukiwanie</string>
     <string name="article_list_row_swipe_open_externally">Otwórz artykuł w przeglądarce</string>
     <string name="article_list_row_swipe_toggle_starred">Dodaj/usuń gwiazdkę</string>
-    <string name="article_list_row_swipe_toggle_read">Przeczytane/nieprzeczytane</string>
+    <string name="article_list_row_swipe_toggle_read">Oznacz jako przeczytane/nieprzeczytane</string>
     <string name="settings_mark_read_on_scroll">Oznacz jako przeczytane podczas przewijania</string>
     <string name="settings_section_mark_all_as_read">Oznacz wszystkie jako przeczytane</string>
     <string name="nav_headline_saved_searches">Wyszukiwania</string>
@@ -208,7 +208,7 @@
     <string name="media_save_failure">Nie udało się zapisać obrazu</string>
     <string name="notification_mark_as_read_action">Oznacz jako przeczytane</string>
     <string name="feed_form_copy_feed_url_to_clipboard">Skopiuj adres kanału do schowka</string>
-    <string name="settings_gestures_list_swipe_up">Przeciągnięcie w górę</string>
+    <string name="settings_gestures_list_swipe_up">Przesunięcie w górę</string>
     <string name="article_vertical_open_article_in_browser">Otwórz artykuł w przeglądarce</string>
     <string name="article_list_swipe_next_feed">Następny kanał</string>
     <string name="article_list_swipe_disabled">Wyłączone</string>
@@ -228,4 +228,10 @@
     <string name="settings_gestures_enable_horizontal_pagination_title">Włącz przewijanie w poziomie</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Przesuń w lewo lub w prawo, aby zmienić artykuł</string>
     <string name="after_read_all_behavior_open_drawer">Otwórz menu nawigacji</string>
+    <string name="article_actions_open_menu">Otwórz opcje artykułu</string>
+    <string name="add_account_reader_subtitle">Samodzielnie hostowany interfejs API Google Reader</string>
+    <string name="settings_gestures_list_back_navigation_action">Przycisk wstecz</string>
+    <string name="end_of_feed_text">Wszystko przeczytane!</string>
+    <string name="settings_enable_refresh_call_to_action">Najpierw włącz cykliczne odświeżanie</string>
+    <string name="settings_gestures_reader_tap_to_page_title">Dotknij, aby przewinąć (wyświetlacz E Ink)</string>
 </resources>
