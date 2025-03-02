@@ -29,6 +29,10 @@ dismissNotifications:
 UPDATE article_notifications SET
 dismissed_at = :deleted_at WHERE article_id IN :ids;
 
+dismissStaleNotifications:
+UPDATE article_notifications SET
+dismissed_at = :deleted_at WHERE dismissed_at IS NULL;
+
 articlesToNotify:
 SELECT
     articles.id AS article_id

@@ -10,7 +10,7 @@ internal fun cleanLinks(element: Element) {
     }
 
     element.select("img[data-src]").forEach { child ->
-        child.attr("src", child.absUrl("data-src"))
+        child.attr("src", child.attr("data-src"))
     }
 
     extractChildImages(element)

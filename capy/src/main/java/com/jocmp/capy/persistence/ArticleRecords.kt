@@ -164,6 +164,10 @@ internal class ArticleRecords internal constructor(
             .executeAsOneOrNull() ?: 0
     }
 
+    internal fun dismissStaleNotifications() {
+        notificationQueries.dismissStaleNotifications(deleted_at = nowUTC().toEpochSecond())
+    }
+
     internal fun dismissNotifications(ids: List<String>) {
         notificationQueries.dismissNotifications(
             ids = ids,
@@ -272,31 +276,35 @@ internal class ArticleRecords internal constructor(
         return max.toDateTimeFromSeconds
     }
 
-    fun unreadArticleIDs(filter: ArticleFilter, range: MarkRead): List<String> {
+    fun unreadArticleIDs(filter: ArticleFilter, range: MarkRead, unreadSort: UnreadSortOrder): List<String> {
         val ids = when (filter) {
             is ArticleFilter.Articles -> byStatus.unreadArticleIDs(
                 filter.articleStatus,
-                range = range
+                range = range,
+                unreadSort = unreadSort,
             )
 
             is ArticleFilter.Feeds -> byFeed.unreadArticleIDs(
                 filter.feedStatus,
                 feedIDs = listOf(filter.feedID),
-                range = range
+                range = range,
+                unreadSort = unreadSort,
             )
 
             is ArticleFilter.Folders -> {
                 byFeed.unreadArticleIDs(
                     filter.status,
                     feedIDs = folderFeedIDs(filter),
-                    range = range
+                    range = range,
+                    unreadSort = unreadSort,
                 )
             }
 
             is ArticleFilter.SavedSearches -> bySavedSearch.unreadArticleIDs(
                 filter.status,
                 savedSearchID = filter.savedSearchID,
-                range = range
+                range = range,
+                unreadSort = unreadSort,
             )
         }
 

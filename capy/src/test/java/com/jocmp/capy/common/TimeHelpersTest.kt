@@ -1,6 +1,7 @@
 package com.jocmp.capy.common
 
 
+import com.jocmp.capy.common.TimeHelpers.nowUTC
 import org.junit.Test
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
@@ -80,8 +81,28 @@ class TimeHelpersTest {
     }
 
     @Test
+    fun `published handles Z offset in ISO 8601 format`() {
+        val timestamp = "2025-02-21T16:00:00Z"
+
+        val result = TimeHelpers.published(timestamp, fallback = nowUTC())
+
+        val expected = ZonedDateTime.of(
+            2025,
+            2,
+            21,
+            16,
+            0,
+            0,
+            0,
+            ZoneOffset.UTC
+        )
+
+        assertEquals(expected = expected, actual = result)
+    }
+
+    @Test
     fun `published clamps future time`() {
-        val now = TimeHelpers.nowUTC()
+        val now = nowUTC()
 
         val futureTime = now.plusHours(1).format(DateTimeFormatter.RFC_1123_DATE_TIME)
 
@@ -110,7 +131,7 @@ class TimeHelpersTest {
 
     @Test
     fun `RFC1123 with timezone abbreviation`() {
-        val result =  "Sun, 22 Dec 2024 08:18:56 EDT".toDateTime
+        val result = "Sun, 22 Dec 2024 08:18:56 EDT".toDateTime
 
         val expected = ZonedDateTime.of(
             2024,
@@ -131,7 +152,7 @@ class TimeHelpersTest {
     fun `RFC1123 with timezone abbreviation non-US locale`() {
         Locale.setDefault(Locale("en", "AU"))
 
-        val result =  "Sun, 22 Dec 2024 08:18:56 EDT".toDateTime
+        val result = "Sun, 22 Dec 2024 08:18:56 EDT".toDateTime
 
         val expected = ZonedDateTime.of(
             2024,
@@ -151,7 +172,7 @@ class TimeHelpersTest {
     fun `RFC1123 with timezone abbreviation non-English locale`() {
         Locale.setDefault(Locale("es", "US"))
 
-        val result =  "Sun, 22 Dec 2024 08:18:56 EDT".toDateTime
+        val result = "Sun, 22 Dec 2024 08:18:56 EDT".toDateTime
 
         val expected = ZonedDateTime.of(
             2024,

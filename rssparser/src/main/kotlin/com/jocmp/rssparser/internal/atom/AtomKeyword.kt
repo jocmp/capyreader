@@ -1,6 +1,8 @@
 package com.jocmp.rssparser.internal.atom
 
 internal sealed class AtomKeyword(val value: String) {
+    operator fun invoke() = value
+
     data object Atom : AtomKeyword("feed")
     data object Title : AtomKeyword("title")
     data object Icon : AtomKeyword("icon")
@@ -29,5 +31,15 @@ internal sealed class AtomKeyword(val value: String) {
         }
 
         data object Email : AtomKeyword("email")
+
+        data object YouTubeVideoID: AtomKeyword("yt:videoId")
+
+        data object Media {
+            data object Group : AtomKeyword("media:group")
+            data object Title : AtomKeyword("media:title")
+            data object Content : AtomKeyword("media:content")
+            data object Thumbnail : AtomKeyword("media:thumbnail")
+            data object Description : AtomKeyword("media:description")
+        }
     }
 }

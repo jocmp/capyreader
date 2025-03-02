@@ -25,7 +25,9 @@ android {
                 packageName.set("com.jocmp.capy.db")
                 verifyMigrations.set(true)
                 deriveSchemaFromMigrations.set(true)
-                dialect("app.cash.sqldelight:sqlite-3-38-dialect:$sqldelightVersion")
+                // Explicitly set API 30's version
+                // https://developer.android.com/reference/android/database/sqlite/package-summary
+                dialect("app.cash.sqldelight:sqlite-3-25-dialect:$sqldelightVersion")
             }
         }
     }

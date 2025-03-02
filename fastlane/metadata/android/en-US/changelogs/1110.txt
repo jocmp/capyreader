@@ -1,0 +1,1 @@
+- Fix database compatibility bug on Android 13 and below

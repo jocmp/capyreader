@@ -33,7 +33,6 @@ import com.jocmp.capy.MarkRead
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.distinctUntilChanged
 import org.koin.compose.koinInject
 import java.time.LocalDateTime
 
@@ -129,16 +128,15 @@ fun MarkReadOnScroll(
 
     LaunchedEffect(listState) {
         snapshotFlow { listState.firstVisibleItemIndex }
-            .distinctUntilChanged()
-            .debounce(2_000)
+            .debounce(500)
             .collect { firstVisibleIndex ->
-                val index = firstVisibleIndex - 1
+                val offscreenIndex = firstVisibleIndex - 1
 
-                if (index < 0 || articles.itemCount == 0) {
+                if (offscreenIndex < 0 || articles.itemCount == 0) {
                     return@collect
                 }
 
-                articles.getOrNull(index)?.let { onRead(MarkRead.After(it.id)) }
+                articles.getOrNull(offscreenIndex)?.let { onRead(MarkRead.After(it.id)) }
             }
     }
 }

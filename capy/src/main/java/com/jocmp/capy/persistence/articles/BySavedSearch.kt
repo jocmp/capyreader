@@ -45,6 +45,7 @@ class BySavedSearch(private val database: Database) {
         status: ArticleStatus,
         savedSearchID: String,
         range: MarkRead,
+        unreadSort: UnreadSortOrder,
     ): Query<String> {
         val (_, starred) = status.toStatusPair
 
@@ -55,6 +56,7 @@ class BySavedSearch(private val database: Database) {
             starred = starred,
             afterArticleID = afterArticleID,
             beforeArticleID = beforeArticleID,
+            newestFirst = isNewestFirst(status, unreadSort),
         )
     }
 

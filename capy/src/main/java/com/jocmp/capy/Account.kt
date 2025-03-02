@@ -190,18 +190,10 @@ data class Account(
         range: MarkRead,
         unreadSort: UnreadSortOrder,
     ): List<String> {
-        val flipRange = filter.status == ArticleStatus.UNREAD &&
-                unreadSort == UnreadSortOrder.OLDEST_FIRST
-
-        val orderedRange = if (flipRange) {
-            range.reversed()
-        } else {
-            range
-        }
-
         return articleRecords.unreadArticleIDs(
             filter = filter,
-            range = orderedRange,
+            range = range,
+            unreadSort = unreadSort
         )
     }
 
@@ -233,6 +225,10 @@ data class Account(
 
     suspend fun createNotifications(since: ZonedDateTime): List<ArticleNotification> {
         return articleRecords.createNotifications(since = since)
+    }
+
+    fun dismissStaleNotifications() {
+        articleRecords.dismissStaleNotifications()
     }
 
     fun countActiveNotifications(): Long {

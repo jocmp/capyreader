@@ -55,6 +55,7 @@ import com.capyreader.app.ui.articles.list.ArticleActionMenu
 import com.capyreader.app.ui.articles.list.ArticleListItem
 import com.capyreader.app.ui.articles.list.ArticleRowSwipeBox
 import com.capyreader.app.ui.fixtures.ArticleSample
+import com.capyreader.app.ui.fixtures.PreviewKoinApplication
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.Article
 import com.jocmp.capy.MarkRead
@@ -63,8 +64,6 @@ import java.net.URL
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
-
-private val THUMBNAIL_SIZE = 56.dp
 
 data class ArticleRowOptions(
     val showIcon: Boolean = true,
@@ -174,7 +173,7 @@ fun ArticleRow(
                     null
                 },
 
-                trailingContent = if (imageURL != null && options.imagePreview == ImagePreview.SMALL) {
+                trailingContent = if (imageURL != null && options.imagePreview.showInline()) {
                     {
                         ArticleImage(
                             imageURL = imageURL,
@@ -207,13 +206,21 @@ private fun ArticleImage(
     imageURL: String,
     imagePreview: ImagePreview
 ) {
-    val sizeModifier = if (imagePreview == ImagePreview.SMALL) {
-        Modifier.size(THUMBNAIL_SIZE)
-    } else {
-        Modifier
-            .fillMaxWidth()
-            .aspectRatio(3 / 2f)
-            .clip(RoundedCornerShape(8.dp))
+    val sizeModifier = when (imagePreview) {
+        ImagePreview.SMALL -> {
+            Modifier.size(SMALL_IMAGE_SIZE)
+        }
+
+        ImagePreview.MEDIUM -> {
+            Modifier.size(MEDIUM_IMAGE_SIZE)
+        }
+
+        else -> {
+            Modifier
+                .fillMaxWidth()
+                .aspectRatio(3 / 2f)
+                .clip(RoundedCornerShape(8.dp))
+        }
     }
 
     AsyncImage(
@@ -240,11 +247,16 @@ fun PlaceholderArticleRow(imagePreview: ImagePreview = ImagePreview.NONE) {
             }
         },
         trailingContent = {
-            if (imagePreview == ImagePreview.SMALL) {
+            if (imagePreview.showInline()) {
                 Box(
                     Modifier
-                        .size(THUMBNAIL_SIZE)
                         .background(colorScheme.surfaceContainer)
+                        .size(
+                            when (imagePreview) {
+                                ImagePreview.MEDIUM -> MEDIUM_IMAGE_SIZE
+                                else -> SMALL_IMAGE_SIZE
+                            }
+                        )
                 )
             }
         },
@@ -314,6 +326,9 @@ private fun ArticleBox(
     }
 }
 
+private val SMALL_IMAGE_SIZE = 56.dp
+private val MEDIUM_IMAGE_SIZE = 84.dp
+
 @Preview(
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
@@ -336,17 +351,34 @@ fun ArticleRowPreview_Selected_DarkMode() {
         feedName = "9to5Google - Google news, Pixel, Android, Home, Chrome OS, more"
     )
 
-    CapyTheme {
-        Column {
+    PreviewKoinApplication {
+        CapyTheme {
+            Column {
+                ArticleRow(
+                    article = article,
+                    selected = true,
+                    onSelect = {},
+                    currentTime = LocalDateTime.now(),
+                )
+                ArticleRow(
+                    article = article.copy(read = false),
+                    selected = false,
+                    onSelect = {},
+                    currentTime = LocalDateTime.now(),
+                )
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun ArticleRowPreview_Selected(@PreviewParameter(ArticleSample::class) article: Article) {
+    PreviewKoinApplication {
+        CapyTheme {
             ArticleRow(
                 article = article,
                 selected = true,
-                onSelect = {},
-                currentTime = LocalDateTime.now(),
-            )
-            ArticleRow(
-                article = article.copy(read = false),
-                selected = false,
                 onSelect = {},
                 currentTime = LocalDateTime.now(),
             )
@@ -356,47 +388,57 @@ fun ArticleRowPreview_Selected_DarkMode() {
 
 @Preview
 @Composable
-fun ArticleRowPreview_Selected(@PreviewParameter(ArticleSample::class) article: Article) {
-    CapyTheme {
-        ArticleRow(
-            article = article,
-            selected = true,
-            onSelect = {},
-            currentTime = LocalDateTime.now(),
-        )
+fun ArticleRowPreview_Large(@PreviewParameter(ArticleSample::class) article: Article) {
+    PreviewKoinApplication {
+        CapyTheme {
+            ArticleRow(
+                article = article.copy(imageURL = "http://example.com"),
+                selected = true,
+                onSelect = {},
+                currentTime = LocalDateTime.now(),
+                options = ArticleRowOptions(
+                    imagePreview = ImagePreview.LARGE
+                )
+            )
+        }
     }
 }
 
+
 @Preview
 @Composable
-fun ArticleRowPreview_Large(@PreviewParameter(ArticleSample::class) article: Article) {
-    CapyTheme {
-        ArticleRow(
-            article = article.copy(imageURL = "http://example.com"),
-            selected = true,
-            onSelect = {},
-            currentTime = LocalDateTime.now(),
-            options = ArticleRowOptions(
-                imagePreview = ImagePreview.LARGE
+fun ArticleRowPreview_Medium(@PreviewParameter(ArticleSample::class) article: Article) {
+    PreviewKoinApplication {
+        CapyTheme {
+            ArticleRow(
+                article = article.copy(imageURL = "http://example.com"),
+                selected = true,
+                onSelect = {},
+                currentTime = LocalDateTime.now(),
+                options = ArticleRowOptions(
+                    imagePreview = ImagePreview.MEDIUM
+                )
             )
-        )
+        }
     }
 }
 
 @Preview
 @Composable
 fun ArticleRowPreview_LargeText(@PreviewParameter(ArticleSample::class) article: Article) {
-    CapyTheme {
-        ArticleRow(
-            article = article.copy(imageURL = "http://example.com"),
-            selected = true,
-            onSelect = {},
-            currentTime = LocalDateTime.now(),
-            options = ArticleRowOptions(
-                imagePreview = ImagePreview.LARGE,
-                fontScale = ArticleListFontScale.MEDIUM
-            ),
-        )
+    PreviewKoinApplication {
+        CapyTheme {
+            ArticleRow(
+                article = article.copy(imageURL = "http://example.com"),
+                selected = true,
+                onSelect = {},
+                currentTime = LocalDateTime.now(),
+                options = ArticleRowOptions(
+                    imagePreview = ImagePreview.LARGE,
+                    fontScale = ArticleListFontScale.MEDIUM
+                ),
+            )
+        }
     }
 }
 

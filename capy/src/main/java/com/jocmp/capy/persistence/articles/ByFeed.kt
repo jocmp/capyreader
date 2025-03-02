@@ -45,9 +45,9 @@ class ByFeed(private val database: Database) {
         status: ArticleStatus,
         feedIDs: List<String>,
         range: MarkRead,
+        unreadSort: UnreadSortOrder,
     ): Query<String> {
         val (_, starred) = status.toStatusPair
-
         val (afterArticleID, beforeArticleID) = range.toPair
 
         return database.articlesByFeedQueries.findArticleIDs(
@@ -55,6 +55,7 @@ class ByFeed(private val database: Database) {
             starred = starred,
             afterArticleID = afterArticleID,
             beforeArticleID = beforeArticleID,
+            newestFirst = isNewestFirst(status, unreadSort)
         )
     }
 

@@ -1,0 +1,5 @@
+• Add "Load full content" as a swipe up option
+• Update Mercury Parser for lebensmittelwarnung.de
+• Fix handling for dates in some feeds
+• Fix image cleaner for non-standard attributes
+• Undo timing change for "Mark as read on scroll"

@@ -34,6 +34,8 @@ data class RssItem(
     val sourceUrl: String?,
     val categories: List<String>,
     val itunesItemData: ItunesItemData?,
+    val media: Media?,
+    val youtubeVideoID: String?,
     val commentsUrl: String?,
 ) {
     data class Builder(
@@ -51,6 +53,8 @@ data class RssItem(
         private var sourceUrl: String? = null,
         private val categories: MutableList<String> = mutableListOf(),
         private var itunesItemData: ItunesItemData? = null,
+        private var media: Media? = null,
+        private var youtubeVideoID: String? = null,
         private var commentUrl: String? = null,
     ) {
         fun guid(guid: String?) = apply { this.guid = guid }
@@ -100,7 +104,11 @@ data class RssItem(
         fun itunesArticleData(itunesItemData: ItunesItemData?) =
             apply { this.itunesItemData = itunesItemData }
 
+        fun media(media: Media?) = apply { this.media = media }
+
         fun commentUrl(url: String?) = apply { this.commentUrl = url }
+
+        fun youtubeVideoID(id: String?) = apply { this.youtubeVideoID = id }
 
         fun build() = RssItem(
             guid = guid,
@@ -118,6 +126,8 @@ data class RssItem(
             categories = categories,
             itunesItemData = itunesItemData,
             commentsUrl = commentUrl,
+            media = media,
+            youtubeVideoID = youtubeVideoID,
         )
     }
 }

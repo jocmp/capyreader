@@ -70,28 +70,42 @@ AND (articles.title LIKE '%' || :query || '%' OR articles.summary  LIKE '%' || :
 AND (article_statuses.starred = :starred OR :starred IS NULL);
 
 findArticleIDs:
-SELECT articles.id
-FROM articles
-JOIN article_statuses ON articles.id = article_statuses.article_id
-JOIN saved_search_articles ON articles.id = saved_search_articles.article_id
-WHERE saved_search_id = :savedSearchID
-AND read != 1
-AND (article_statuses.starred = :starred OR :starred IS NULL)
+WITH RECURSIVE article_indices(
+    article_index,
+    article_id,
+    read
+) AS (
+    SELECT
+      ROW_NUMBER() OVER(ORDER BY CASE WHEN :newestFirst THEN articles.published_at ELSE (-1 * articles.published_at) END DESC) - 1,
+      articles.id,
+      read
+    FROM articles
+    JOIN feeds ON articles.feed_id = feeds.id
+    JOIN article_statuses ON articles.id = article_statuses.article_id
+    JOIN saved_search_articles ON articles.id = saved_search_articles.article_id
+    WHERE (article_statuses.starred = :starred OR :starred IS NULL)
+    AND saved_search_id = :savedSearchID
+    GROUP BY articles.id
+    ORDER BY CASE WHEN :newestFirst THEN articles.published_at ELSE (-1 * articles.published_at) END DESC
+)
+SELECT article_id
+FROM article_indices
+WHERE read != 1
 AND (
   :afterArticleID IS NULL
-  OR articles.published_at >= (
-      SELECT published_at
-      FROM articles
-      WHERE articles.id = :afterArticleID
+  OR article_indices.article_index <= (
+      SELECT article_index
+      FROM article_indices
+      WHERE article_id = :afterArticleID
       LIMIT 1
   )
 )
-AND (:beforeArticleID IS NULL OR
+AND (
   :beforeArticleID IS NULL
-  OR articles.published_at <= (
-      SELECT published_at
-      FROM articles
-      WHERE articles.id = :beforeArticleID
+  OR article_index >= (
+      SELECT article_index
+      FROM article_indices
+      WHERE article_id = :beforeArticleID
       LIMIT 1
   )
 );

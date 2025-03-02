@@ -1,6 +1,7 @@
 package com.jocmp.capy
 
 import com.jocmp.rssparser.model.ItunesItemData
+import com.jocmp.rssparser.model.Media
 import com.jocmp.rssparser.model.RssItem
 
 fun rssItemFixture(
@@ -18,6 +19,8 @@ fun rssItemFixture(
     sourceUrl: String? = null,
     categories: MutableList<String> = mutableListOf(),
     itunesItemData: ItunesItemData? = null,
+    youtubeVideoID: String? = null,
+    media: Media? = null,
     commentUrl: String? = null,
 ) = RssItem(
     guid,
@@ -34,5 +37,7 @@ fun rssItemFixture(
     sourceUrl,
     categories,
     itunesItemData,
-    commentUrl
+    media,
+    youtubeVideoID,
+    commentUrl,
 )
