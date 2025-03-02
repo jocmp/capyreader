@@ -53,6 +53,8 @@ class LocalAccountDelegateTest {
         sourceUrl = null,
         categories = emptyList(),
         itunesItemData = null,
+        media = null,
+        youtubeVideoID = null,
         commentsUrl = null,
     )
 

@@ -14,11 +14,15 @@ internal class ParsedItem(private val item: RssItem, private val siteURL: String
 
     val contentHTML: String?
         get() {
-            val currentContent = item.content.orEmpty().ifBlank {
-                item.description.orEmpty()
+            val mediaContent = RichMedia.parse(item)
+
+            if (mediaContent != null) {
+                return mediaContent
             }
 
-            if (currentContent.isBlank()) {
+            val currentContent = item.content?.ifBlank { item.description }
+
+            if (currentContent.isNullOrBlank()) {
                 return null
             }
 
@@ -42,7 +46,7 @@ internal class ParsedItem(private val item: RssItem, private val siteURL: String
         }
 
     val imageURL: String?
-        get() = cleanedURL(item.image)?.toString()
+        get() = item.media?.thumbnailUrl ?: cleanedURL(item.image)?.toString()
 
     private fun articleURL(): String? {
         val link = cleanedURL(item.link) ?: return null
