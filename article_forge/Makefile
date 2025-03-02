@@ -5,7 +5,6 @@ TEMPLATE_OUT = ./dist/template.html
 TEMPLATE_RES ?= ../capy/src/main/res/raw/template.html
 MEDIA_LISTENERS_JS_SRC = ./public/assets/media.js
 FULL_CONTENT_JS_SRC = ./public/assets/full-content.js
-CUSTOM_EXTRACTOR_JS_RES := ../capy/src/main/assets/custom-extractors.js
 MEDIA_LISTENERS_JS_RES := ../capy/src/main/assets/media.js
 MERCURY_JS_RES = ../capy/src/main/assets/mercury-parser.js
 FULL_CONTENT_JS_RES = ../capy/src/main/assets/full-content.js
@@ -14,7 +13,7 @@ SHELL:=/usr/bin/env bash
 
 .PHONY: forge clean
 
-build: $(TEMPLATE_RES) $(FULL_CONTENT_JS_RES) $(STYLE_RES) $(MERCURY_JS_RES) $(MEDIA_LISTENERS_JS_RES) $(CUSTOM_EXTRACTOR_JS_RES)
+build: $(TEMPLATE_RES) $(FULL_CONTENT_JS_RES) $(STYLE_RES) $(MERCURY_JS_RES) $(MEDIA_LISTENERS_JS_RES)
 
 $(STYLE_OUT): style/stylesheet.scss
 	@echo "Style..."
@@ -29,10 +28,6 @@ $(TEMPLATE_OUT): ./views/template.liquid
 
 $(TEMPLATE_RES): $(TEMPLATE_OUT)
 	cp $(TEMPLATE_OUT) $(TEMPLATE_RES)
-
-$(CUSTOM_EXTRACTOR_JS_RES): ./public/assets/custom-extractors.js
-	@echo 'Custom extractors...'
-	cp ./public/assets/custom-extractors.js $(CUSTOM_EXTRACTOR_JS_RES)
 
 $(MEDIA_LISTENERS_JS_RES): $(MEDIA_LISTENERS_JS_SRC)
 	@echo 'Media script...'
