@@ -57,7 +57,7 @@ internal class LocalAccountDelegate(
             val feeds = response.getOrDefault(emptyList())
 
             if (feeds.isEmpty()) {
-                val exception = response.exceptionOrNull()
+                val exception  = response.exceptionOrNull()
                 CapyLog.warn(
                     tag("find"),
                     data = mapOf(
@@ -271,20 +271,18 @@ internal class LocalAccountDelegate(
     }
 
     private suspend fun verifyFavicon(feed: Feed) {
-        if (feed.faviconURL == null) {
-            val faviconURL = faviconFetcher.findFaviconURL(feed) ?: return
-
-            feedRecords.updateFavicon(feed.id, faviconURL = faviconURL)
-        } else if (!faviconFetcher.isValid(feed.faviconURL)) {
-            CapyLog.warn(
-                tag("favicon"), data = mapOf(
-                    "invalid_favicon_url" to feed.faviconURL,
-                    "feed_url" to feed.feedURL,
-                )
-            )
-
-            feedRecords.clearFavicon(feed.id)
+        if (faviconFetcher.isValid(feed.faviconURL)) {
+            return
         }
+
+        CapyLog.warn(
+            tag("favicon"), data = mapOf(
+                "invalid_favicon_url" to feed.faviconURL,
+                "feed_url" to feed.feedURL,
+            )
+        )
+
+        feedRecords.clearFavicon(feed.id)
     }
 
     companion object {
