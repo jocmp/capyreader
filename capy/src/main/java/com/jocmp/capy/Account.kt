@@ -3,6 +3,7 @@ package com.jocmp.capy
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.accounts.FaviconFetcher
+import com.jocmp.capy.accounts.FaviconFinder
 import com.jocmp.capy.accounts.LocalOkHttpClient
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.asOPML
@@ -13,6 +14,7 @@ import com.jocmp.capy.accounts.reader.buildReaderDelegate
 import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
+import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.sortedByName
 import com.jocmp.capy.common.sortedByTitle
 import com.jocmp.capy.db.Database
@@ -23,6 +25,7 @@ import com.jocmp.capy.persistence.FeedRecords
 import com.jocmp.capy.persistence.FolderRecords
 import com.jocmp.capy.persistence.SavedSearchRecords
 import com.jocmp.feedbinclient.Feedbin
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -59,7 +62,7 @@ data class Account(
             source = source,
             database = database,
             path = cacheDirectory,
-            preferences = preferences
+            preferences = preferences,
         )
     }
 ) {
@@ -110,7 +113,11 @@ data class Account(
             url = url,
             title = title,
             folderTitles = folderTitles
-        )
+        ).also {
+            if (it is AddFeedResult.Success) {
+                findFavicon(it.feed)
+            }
+        }
     }
 
     suspend fun editFeed(form: EditFeedFormEntry): Result<Feed> {
@@ -273,6 +280,16 @@ data class Account(
 
     fun clearStickyFullContent() {
         feedRecords.clearStickyFullContent()
+    }
+
+    private suspend fun findFavicon(feed: Feed) {
+        coroutineScope {
+            launchIO {
+                FaviconFinder(localHttpClient, faviconFetcher).favicon(feed)?.let {
+                    feedRecords.updateFavicon(feed.id, it)
+                }
+            }
+        }
     }
 
     val supportsMultiFolderFeeds: Boolean
