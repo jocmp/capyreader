@@ -237,4 +237,5 @@
     <string name="feed_nav_drawer_refresh_all">Tout actualiser</string>
     <string name="media_share">Partager</string>
     <string name="notification_mark_as_read_action">Marquer comme lu</string>
+    <string name="image_preview_menu_option_medium">Moyenne</string>
 </resources>
