@@ -44,7 +44,6 @@ import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.EditFeedFormEntry
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
-import java.util.SortedMap
 
 @Composable
 fun EditFeedView(
@@ -74,8 +73,6 @@ fun EditFeedView(
             .map { it.title to feedFolderTitles.contains(it.title) }
             .toMutableStateMap()
     }
-
-    val displaySwitchFolders = switchFolders.toSortedMap(String.CASE_INSENSITIVE_ORDER)
 
     fun submitFeed() {
         val existingFolderNames = switchFolders.filter { it.value }.keys
@@ -129,9 +126,8 @@ fun EditFeedView(
                     title = stringResource(R.string.edit_feed_tags_section)
                 ) {
                     FolderMultiselect(
-                        addedFolder = addedFolder,
                         onUpdateAddedFolder = setAddedFolder,
-                        folders = displaySwitchFolders,
+                        addedFolder = addedFolder,
                         switchFolders = switchFolders,
                     )
                 }
@@ -213,7 +209,6 @@ private fun FolderSelect(
 private fun FolderMultiselect(
     onUpdateAddedFolder: (title: String) -> Unit,
     addedFolder: String,
-    folders: SortedMap<String, Boolean>,
     switchFolders: MutableMap<String, Boolean>,
 ) {
     RowItem {
@@ -230,7 +225,7 @@ private fun FolderMultiselect(
         )
     }
     Column {
-        folders.forEach { (folderTitle, checked) ->
+        switchFolders.forEach { (folderTitle, checked) ->
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically,
