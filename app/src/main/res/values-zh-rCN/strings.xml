@@ -238,4 +238,5 @@
     <string name="media_save_failure">保存图片失败</string>
     <string name="media_share_failure">分享图片失败</string>
     <string name="feed_nav_drawer_refresh_all">刷新全部</string>
+    <string name="image_preview_menu_option_medium">中等</string>
 </resources>

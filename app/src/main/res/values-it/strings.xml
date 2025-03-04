@@ -240,4 +240,5 @@
     <string name="media_save_failure">Impossibile salvare l\'immagine</string>
     <string name="media_share_failure">Impossibile condividere l\'immagine</string>
     <string name="feed_nav_drawer_refresh_all">Aggiorna tutto</string>
+    <string name="image_preview_menu_option_medium">Medio</string>
 </resources>
