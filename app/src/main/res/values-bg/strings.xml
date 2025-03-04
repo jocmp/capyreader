@@ -5,7 +5,7 @@
     <string name="nav_headline_tags">Категории</string>
     <string name="app_name">Capy Reader</string>
     <string name="add_account_title">Добави профил</string>
-    <string name="transfers_export_subscriptions">Изнаси абонаменти</string>
+    <string name="transfers_export_subscriptions">Изнеси абонаменти</string>
     <string name="opml_import_button_text">Внасяне от файл</string>
     <string name="settings_import_progress">Внасяне на абонаменти %1$d от %2$d</string>
     <string name="account_source_feedbin">Feedbin</string>
@@ -103,7 +103,7 @@
     <string name="opml_import_notification_title">Внасяне на абонаменти…</string>
     <string name="notifications_channel_title_opml_import">Внасяне на абонаменти</string>
     <string name="settings_section_privacy">Поверителност</string>
-    <string name="settings_section_refresh">Обнови</string>
+    <string name="settings_section_refresh">Обновяване</string>
     <string name="opml_export_button_text">Изнасяне в OPML</string>
     <string name="opml_import_progress_content_text_start">Внасянето започва</string>
     <string name="settings_import_progress_placeholder">Внасяне на абонаменти…</string>
@@ -173,7 +173,7 @@
     <string name="settings_gestures_list_back_navigation_system_back">По подразбиране</string>
     <string name="crash_log_export_item_title">Сподели дневници за срив</string>
     <string name="action_share">Сподели</string>
-    <string name="refresh_feeds_menu_label">Обнови емисии</string>
+    <string name="refresh_feeds_menu_label">Обновяване на емисии</string>
     <string name="notifications_channel_title_feed_update">Актуализации на емисия</string>
     <string name="settings_notifications_select_all">Избери всичко</string>
     <string name="settings_notifications_select_none">Не избрано</string>
@@ -220,18 +220,18 @@
     <string name="after_read_all_behavior_open_next_feed">Отвори следваща емисия</string>
     <string name="full_content_error_missing_response">Неуспешно извличане на статия</string>
     <string name="full_content_error_generic">Неуспешно анализиране на статия</string>
-    <string name="settings_donate_button">Дарете</string>
+    <string name="settings_donate_button">Дарение</string>
     <string name="after_read_all_behavior_default">По подразбиране</string>
     <string name="article_actions_copy_link">Копирай връзката</string>
     <string name="feed_nav_drawer_title">Емисии</string>
     <string name="nav_headline_saved_searches">Търсения</string>
-    <string name="article_vertical_open_article_in_browser">Отвори статията в браузъра</string>
+    <string name="article_vertical_open_article_in_browser">Отвори статия в браузъра</string>
     <string name="search_bar_placeholder">Търсене</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Плъзнете наляво или надясно, за да навигирате в статиите</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">Активирай хоризонтално превъртане</string>
     <string name="media_save_success">Запазено изображение</string>
     <string name="notification_mark_as_read_action">Маркирай като прочетено</string>
-    <string name="feed_nav_drawer_refresh_all">Обнови всички</string>
+    <string name="feed_nav_drawer_refresh_all">Обновяване на всички</string>
     <string name="settings_gestures_list_swipe_up">Плъзнете нагоре</string>
     <string name="article_list_swipe_next_feed">Отиди на следваща емисия</string>
     <string name="article_list_swipe_disabled">Деактивирано</string>
@@ -239,4 +239,5 @@
     <string name="media_save_failure">Неуспешно запазване на изображение</string>
     <string name="media_share_failure">Неуспешно споделяне на изображение</string>
     <string name="media_share">Сподели</string>
+    <string name="image_preview_menu_option_medium">Средно</string>
 </resources>
