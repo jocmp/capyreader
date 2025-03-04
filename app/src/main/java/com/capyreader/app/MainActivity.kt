@@ -9,8 +9,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import com.capyreader.app.preferences.AppPreferences
+import com.capyreader.app.common.SecurityUpdater
 import com.capyreader.app.notifications.NotificationHelper
+import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.App
 import com.capyreader.app.ui.Route
 import org.koin.android.ext.android.get
@@ -24,6 +25,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         NotificationHelper.openArticle(intent, appPreferences = appPreferences)
+        SecurityUpdater().updateAsync(applicationContext)
 
         val theme = appPreferences.theme
 
