@@ -54,9 +54,12 @@ class ArticleScreenViewModel(
 ) : AndroidViewModel(application) {
     private var refreshJob: Job? = null
 
+    private var fullContentJob: Job? = null
+
     val filter = appPreferences.filter.stateIn(viewModelScope)
 
-    private val listSwipeBottom = appPreferences.articleListOptions.swipeBottom.stateIn(viewModelScope)
+    private val listSwipeBottom =
+        appPreferences.articleListOptions.swipeBottom.stateIn(viewModelScope)
 
     private val _searchQuery = MutableStateFlow("")
 
@@ -123,7 +126,7 @@ class ArticleScreenViewModel(
             filter
         ) { swipeBottom, savedSearches, feeds, folders, filter ->
             if (swipeBottom == ArticleListVerticalSwipe.DISABLED) {
-                return@combine  null
+                return@combine null
             }
 
             NextFilter.findSwipeDestination(
@@ -301,7 +304,9 @@ class ArticleScreenViewModel(
             markRead(articleID)
 
             if (article.fullContent == Article.FullContentState.LOADING) {
-                viewModelScope.launch(Dispatchers.IO) { fetchFullContent(article) }
+                fullContentJob?.cancel()
+
+                fullContentJob = viewModelScope.launch(Dispatchers.IO) { fetchFullContent(article) }
             }
 
             appPreferences.articleID.set(articleID)
@@ -550,6 +555,9 @@ class ArticleScreenViewModel(
                     }
                 },
                 onFailure = {
+                    if (_article?.id != article.id) {
+                        return
+                    }
                     _article = article.copy(
                         content = article.defaultContent,
                         fullContent = Article.FullContentState.ERROR
