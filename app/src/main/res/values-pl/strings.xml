@@ -234,4 +234,5 @@
     <string name="end_of_feed_text">Wszystko przeczytane!</string>
     <string name="settings_enable_refresh_call_to_action">Najpierw włącz cykliczne odświeżanie</string>
     <string name="settings_gestures_reader_tap_to_page_title">Dotknij, aby przewinąć (wyświetlacz E Ink)</string>
+    <string name="image_preview_menu_option_medium">Średni</string>
 </resources>
