@@ -6,10 +6,12 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.jocmp.capy.logging.CapyLog
 
 
 data class RefreshButtonState(
@@ -22,7 +24,23 @@ data class RefreshButtonState(
 fun rememberRefreshButtonState(
     onRefresh: (completion: () -> Unit) -> Unit
 ): RefreshButtonState {
-    var refreshing by remember { mutableStateOf(false) }
+    var refreshState by remember { mutableStateOf(AngleRefreshState.DEFAULT) }
+    val refreshing = refreshState != AngleRefreshState.DEFAULT
+
+    val refresh = {
+        refreshState = AngleRefreshState.RUNNING
+        onRefresh {
+            refreshState = AngleRefreshState.SETTLING
+        }
+    }
+
+    if (refreshState == AngleRefreshState.DEFAULT) {
+        return RefreshButtonState(
+            refreshing,
+            refresh,
+            0f,
+        )
+    }
 
     val angle by rememberInfiniteTransition(label = "").animateFloat(
         initialValue = 0F,
@@ -35,10 +53,13 @@ fun rememberRefreshButtonState(
 
     val iconRotation = if (refreshing) angle else 0f
 
-    val refresh = {
-        refreshing = true
-        onRefresh {
-            refreshing = false
+    LaunchedEffect(refreshState, angle) {
+        CapyLog.info(
+            "angle",
+            mapOf("value" to angle.toString(), "state" to refreshState.toString())
+        )
+        if (refreshState == AngleRefreshState.SETTLING && angle > 350) {
+            refreshState = AngleRefreshState.DEFAULT
         }
     }
 
@@ -47,4 +68,10 @@ fun rememberRefreshButtonState(
         refresh,
         iconRotation,
     )
+}
+
+enum class AngleRefreshState {
+    DEFAULT,
+    RUNNING,
+    SETTLING,
 }
