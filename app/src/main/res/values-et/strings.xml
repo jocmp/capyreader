@@ -239,4 +239,5 @@
     <string name="media_share_failure">Pildi jagamine ei õnnestu</string>
     <string name="media_share">Jaga</string>
     <string name="feed_nav_drawer_refresh_all">Uuenda kõik</string>
+    <string name="image_preview_menu_option_medium">Keskmised pildid</string>
 </resources>

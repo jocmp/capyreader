@@ -217,4 +217,25 @@
     <string name="after_read_all_behavior_default">Por defecto</string>
     <string name="article_actions_copy_link">Copiar enlace</string>
     <string name="article_vertical_open_article_in_browser">Abrir artículo en el navegador</string>
+    <string name="nav_headline_saved_searches">Búsquedas</string>
+    <string name="image_preview_menu_option_medium">Medio</string>
+    <string name="settings_gestures_list_swipe_up">Deslizar hacia arriba</string>
+    <string name="article_list_swipe_next_feed">Ir al próximo feed</string>
+    <string name="article_list_swipe_disabled">Deshabilitado</string>
+    <string name="settings_gestures_enable_horizontal_pagination_title">Habilitar desplazamiento horizontal</string>
+    <string name="notification_mark_as_read_action">Marcar como leído</string>
+    <string name="after_read_all_behavior_open_next_feed">Abrir siguiente feed</string>
+    <string name="media_save_failure">Fallo al guardar imagen</string>
+    <string name="media_save">Guardar</string>
+    <string name="media_save_success">Imagen guardada</string>
+    <string name="media_share_failure">Falló al compartir imágen</string>
+    <string name="media_share">Compartir</string>
+    <string name="feed_nav_drawer_refresh_all">Refrescar todo</string>
+    <string name="settings_gestures_enable_horizontal_pagination_subtitle">Desliza a la izquierda o a la derecha para navegar por los articulos</string>
+    <string name="after_read_all_behavior_label">Despues de leer todo</string>
+    <string name="feed_nav_drawer_title">Feeds</string>
+    <string name="search_bar_placeholder">Buscar</string>
+    <string name="full_content_error_missing_response">Falló al obtener el artículo</string>
+    <string name="after_read_all_behavior_open_drawer">Abrir el cajón de navegación</string>
+    <string name="full_content_error_generic">Falló al analizar el artículo</string>
 </resources>
