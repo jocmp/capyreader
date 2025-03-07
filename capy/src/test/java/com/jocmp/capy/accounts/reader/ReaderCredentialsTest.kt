@@ -18,7 +18,14 @@ internal class ReaderCredentialsTest {
     private val username = "alice"
     private val password = "its-a-secret-to-everybody"
     private val url = "http://selfhosted.example.com/greader.php"
-    private val credentials = ReaderCredentials(username, password, url, Source.FRESHRSS)
+    private val clientCertAlias = "alice@homelab"
+    private val credentials = ReaderCredentials(
+        username = username,
+        secret = password,
+        url = url,
+        clientCertAlias = clientCertAlias,
+        source = Source.FRESHRSS
+    )
     lateinit var googleReader: GoogleReader
     private val auth = "alice/8e6845e089457af25303abc6f53356eb60bdb5f8"
 
@@ -43,7 +50,7 @@ internal class ReaderCredentialsTest {
             )
         }.returns(Response.success(successResponse))
 
-        val result = credentials.verify().getOrNull()!!
+        val result = credentials.verify(mockk()).getOrNull()!!
 
         assertEquals(actual = result.username, expected = username)
         assertEquals(actual = result.secret, expected = auth)
@@ -58,7 +65,7 @@ internal class ReaderCredentialsTest {
             )
         )
 
-        val result = credentials.verify()
+        val result = credentials.verify(mockk())
 
         assertTrue(result.isFailure)
         assertEquals(result.exceptionOrNull()!!.message, "Unauthorized!")
@@ -73,7 +80,7 @@ internal class ReaderCredentialsTest {
             )
         )
 
-        val result = credentials.verify()
+        val result = credentials.verify(mockk())
 
         assertTrue(result.isFailure)
     }
