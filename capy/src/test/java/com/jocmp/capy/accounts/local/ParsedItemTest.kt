@@ -187,4 +187,31 @@ class ParsedItemTest {
 
         assertEquals(expected = articleURL, actual = parsedItem.url)
     }
+
+    @Test
+    fun contentHTML() {
+        val content = "Hello world"
+        val item = RssItem.Builder().content(content).build()
+        val parsedItem = ParsedItem(item, siteURL = "https://example.com")
+
+        assertEquals(expected = content, actual = parsedItem.contentHTML)
+    }
+
+    @Test
+    fun contentHTML_whenNull() {
+        val summary = "Hello world"
+        val item = RssItem.Builder().description(summary).build()
+        val parsedItem = ParsedItem(item, siteURL = "https://example.com")
+
+        assertEquals(expected = summary, actual = parsedItem.contentHTML)
+    }
+
+    @Test
+    fun contentHTML_whenEmpty() {
+        val summary = "Hello world"
+        val item = RssItem.Builder().content("").description(summary).build()
+        val parsedItem = ParsedItem(item, siteURL = "https://example.com")
+
+        assertEquals(expected = summary, actual = parsedItem.contentHTML)
+    }
 }
