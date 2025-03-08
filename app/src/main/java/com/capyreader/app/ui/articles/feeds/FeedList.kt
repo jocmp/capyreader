@@ -19,7 +19,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
@@ -62,9 +66,19 @@ fun FeedList(
     onSelectStatus: (status: ArticleStatus) -> Unit,
     onNavigateToSettings: () -> Unit,
 ) {
+    var refreshState by remember { mutableStateOf(AngleRefreshState.STOPPED) }
+
+    fun refresh() {
+        refreshState = AngleRefreshState.RUNNING
+
+        onRefreshAll {
+            refreshState = AngleRefreshState.SETTLING
+        }
+    }
+
     val articleStatus = filter.status
     val scrollState = rememberScrollState()
-    val buttonState = rememberRefreshButtonState(onRefreshAll)
+    val buttonState = rememberRefreshButtonState(refreshState)
 
     Column(
         Modifier.fillMaxSize()
@@ -101,7 +115,11 @@ fun FeedList(
                             contentDescription = stringResource(R.string.settings)
                         )
                     }
-                    IconButton(onClick = { buttonState.refresh() }) {
+                    IconButton(onClick = {
+                        if (refreshState != AngleRefreshState.RUNNING) {
+                            refresh()
+                        }
+                    }) {
                         Icon(
                             imageVector = Icons.Rounded.Refresh,
                             contentDescription = stringResource(R.string.feed_nav_drawer_refresh_all),

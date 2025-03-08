@@ -6,31 +6,16 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 
 data class RefreshButtonState(
-    val refreshing: Boolean,
-    val refresh: () -> Unit,
     val iconRotation: Float,
 )
 
 @Composable
 fun rememberRefreshButtonState(
-    onRefresh: (completion: () -> Unit) -> Unit
+    refreshState: AngleRefreshState,
 ): RefreshButtonState {
-    var refreshState by remember { mutableStateOf(AngleRefreshState.STOPPED) }
-    val refreshing = refreshState != AngleRefreshState.STOPPED
-
-    val refresh = {
-        refreshState = AngleRefreshState.RUNNING
-        onRefresh {
-            refreshState = AngleRefreshState.SETTLING
-        }
-    }
-
     val angle = remember {
         Animatable(0f)
     }
@@ -60,7 +45,7 @@ fun rememberRefreshButtonState(
             return@LaunchedEffect
         }
 
-        val result = angle.animateTo(
+        angle.animateTo(
             360f,
             animationSpec = tween(
                 RotationDuration - (angle.value.toInt() * MillisPerDegree),
@@ -72,8 +57,6 @@ fun rememberRefreshButtonState(
     }
 
     return RefreshButtonState(
-        refreshing,
-        refresh,
         angle.value,
     )
 }
