@@ -20,13 +20,13 @@ internal class ParsedItem(private val item: RssItem, private val siteURL: String
                 return mediaContent
             }
 
-            val currentContent = item.content?.ifBlank { item.description }
+            val itemContent = item.content
 
-            if (currentContent.isNullOrBlank()) {
-                return null
+            if (itemContent.isNullOrBlank()) {
+                return item.description
             }
 
-            return currentContent
+            return itemContent
         }
 
     val summary: String?
