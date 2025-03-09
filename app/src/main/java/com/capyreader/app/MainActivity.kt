@@ -9,8 +9,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.notifications.NotificationHelper
+import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.App
 import com.capyreader.app.ui.Route
 import org.koin.android.ext.android.get
@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
         val theme = appPreferences.theme
 
         setContent {
-            val themeState by theme.changes().collectAsState(initial = theme.get())
+            val themeState by appPreferences.theme.changes().collectAsState(initial = theme.get())
 
             App(
                 startDestination = startDestination(),

@@ -8,3 +8,8 @@ import com.jocmp.capy.preferences.Preference
 @Composable
 fun <T> Preference<T>.collectChangesWithDefault(initial: T = defaultValue()): State<T> =
     changes().collectAsState(initial = initial)
+
+
+@Composable
+fun <T> Preference<T>.collectChangesWithCurrent(initial: T = get()): State<T> =
+    changes().collectAsState(initial = initial)
