@@ -11,11 +11,7 @@ internal val articlesModule = module {
     factory {
         AddFeedViewModel(
             account = get<Account>(parameters = { parametersOf(get<AppPreferences>().accountID.get()) }),
-        )
-    }
-    factory {
-        AddFeedViewModel(
-            account = get<Account>(parameters = { parametersOf(get<AppPreferences>().accountID.get()) }),
+            appPreferences = get()
         )
     }
     single {
