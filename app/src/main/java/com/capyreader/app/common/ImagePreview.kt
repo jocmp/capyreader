@@ -21,7 +21,7 @@ enum class ImagePreview {
     }
 
     companion object {
-        val default = SMALL
+        val default = MEDIUM
 
         val sorted: List<ImagePreview>
             get() = listOf(
