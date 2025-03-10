@@ -31,6 +31,7 @@ import com.jocmp.capy.buildArticlePager
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
+import com.jocmp.capy.common.withUIContext
 import com.jocmp.capy.countAll
 import com.jocmp.capy.findArticlePages
 import com.jocmp.capy.logging.CapyLog
@@ -43,6 +44,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import java.io.IOException
 import java.time.OffsetDateTime
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -275,21 +277,35 @@ class ArticleScreenViewModel(
         refreshJob?.cancel()
 
         refreshJob = viewModelScope.launch(Dispatchers.IO) {
-            account.refresh(filter).onFailure { throwable ->
-                if (throwable is UnauthorizedError && _showUnauthorizedMessage == UnauthorizedMessageState.HIDE) {
-                    _showUnauthorizedMessage = UnauthorizedMessageState.SHOW
-                }
-            }
+            val result = account.refresh(filter)
 
-            onComplete()
+            withUIContext {
+                result.onFailure { throwable ->
+                    if (throwable is UnauthorizedError && _showUnauthorizedMessage == UnauthorizedMessageState.HIDE) {
+                        _showUnauthorizedMessage = UnauthorizedMessageState.SHOW
+                    } else {
+                        val res = when (throwable) {
+                            is IOException -> R.string.refresh_failure_network_error
+                            else -> R.string.refresh_failure_fallback
+                        }
+
+                        context.toast(res)
+                    }
+                }
+
+                onComplete()
+            }
         }
     }
 
     fun refresh(filter: ArticleFilter, onComplete: () -> Unit) {
-        initialize(filter) {
-            updateArticlesSince()
-            onComplete()
-        }
+        initialize(
+            filter,
+            onComplete = {
+                updateArticlesSince()
+                onComplete()
+            }
+        )
     }
 
     fun selectArticle(articleID: String) {
