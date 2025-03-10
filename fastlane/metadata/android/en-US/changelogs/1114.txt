@@ -3,4 +3,4 @@
 • Improve notification cleanup on "Mark as read"
 • Improve drawer refresh button animation
 • Fix letter casing bug when editing multiple tags with the same name
-• Update translations for Bulgarian, Spanish, Estonian, French, Galician, Italian, Polish, Russian and Chinese thanks to volunteers.
+• Update translations for Bulgarian, Czech, Spanish, Estonian, French, Galician, Italian, Polish, Russian and Chinese thanks to volunteers.
