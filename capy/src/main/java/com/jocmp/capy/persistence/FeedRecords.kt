@@ -15,7 +15,7 @@ internal class FeedRecords(private val database: Database) {
         return database.feedsQueries.find(id, mapper = ::feedMapper).executeAsOneOrNull()
     }
 
-    suspend fun upsert(
+    fun upsert(
         feedID: String,
         subscriptionID: String,
         title: String,
@@ -44,6 +44,10 @@ internal class FeedRecords(private val database: Database) {
 
     fun clearFavicon(feedID: String) {
         database.feedsQueries.updateFavicon(faviconURL = null, feedID = feedID)
+    }
+
+    fun updateFavicon(feedID: String, faviconURL: String) {
+        database.feedsQueries.updateFavicon(faviconURL = faviconURL, feedID = feedID)
     }
 
     fun isFullContentEnabled(feedID: String): Boolean {
