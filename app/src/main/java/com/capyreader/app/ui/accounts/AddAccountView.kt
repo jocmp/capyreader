@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.setupCommonModules
 import com.capyreader.app.ui.CrashReporting
-import com.capyreader.app.ui.Spacing
+import com.capyreader.app.ui.components.Spacing
 import com.capyreader.app.ui.components.safeEdgePadding
 import com.capyreader.app.ui.components.widthMaxSingleColumn
 import com.capyreader.app.ui.isAtMostMedium

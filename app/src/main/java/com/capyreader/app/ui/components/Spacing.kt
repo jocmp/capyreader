@@ -1,4 +1,4 @@
-package com.capyreader.app.ui
+package com.capyreader.app.ui.components
 
 import androidx.compose.ui.unit.dp
 

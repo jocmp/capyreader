@@ -16,6 +16,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.typography
@@ -38,7 +39,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
-import com.capyreader.app.ui.components.DialogCard
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.FeedOption
 
@@ -46,11 +46,13 @@ import com.jocmp.capy.accounts.FeedOption
 fun AddFeedView(
     feedChoices: List<FeedOption>,
     onAddFeed: (url: String) -> Unit,
-    onCancel: () -> Unit,
+    onCancel: () -> Unit = {},
     loading: Boolean,
     error: AddFeedResult.Error?,
+    condensed: Boolean = true,
+    defaultQueryURL: String = "",
 ) {
-    val (queryURL, setQueryURL) = rememberSaveable { mutableStateOf("") }
+    val (queryURL, setQueryURL) = rememberSaveable { mutableStateOf(defaultQueryURL) }
     val (selectedOption, selectOption) = remember { mutableStateOf<FeedOption?>(null) }
     val focusManager = LocalFocusManager.current
     val keyboard = LocalSoftwareKeyboardController.current
@@ -67,64 +69,64 @@ fun AddFeedView(
         }
     }
 
-    DialogCard {
-        Column(Modifier.padding(top = 16.dp)) {
-            OutlinedTextField(
-                value = queryURL,
-                onValueChange = setQueryURL,
-                leadingIcon = {
-                    Icon(Icons.Filled.Add, contentDescription = null)
-                },
-                label = {
-                    Text(stringResource(id = R.string.add_feed_url_title))
-                },
-                isError = isError,
-                supportingText = {
-                    error?.let {
-                        val resource = when (it) {
-                            is AddFeedResult.Error.FeedNotFound -> R.string.add_feed_feed_not_error
-                            is AddFeedResult.Error.ConnectionError -> R.string.add_feed_network_error
-                            is AddFeedResult.Error.NetworkError -> R.string.add_feed_network_error
-                            is AddFeedResult.Error.SaveFailure -> R.string.add_feed_save_error
-                        }
+    Column(Modifier.padding(top = 16.dp)) {
+        OutlinedTextField(
+            value = queryURL,
+            onValueChange = setQueryURL,
+            leadingIcon = {
+                Icon(Icons.Filled.Add, contentDescription = null)
+            },
+            label = {
+                Text(stringResource(id = R.string.add_feed_url_title))
+            },
+            isError = isError,
+            supportingText = {
+                error?.let {
+                    val resource = when (it) {
+                        is AddFeedResult.Error.FeedNotFound -> R.string.add_feed_feed_not_error
+                        is AddFeedResult.Error.ConnectionError -> R.string.add_feed_network_error
+                        is AddFeedResult.Error.NetworkError -> R.string.add_feed_network_error
+                        is AddFeedResult.Error.SaveFailure -> R.string.add_feed_save_error
+                    }
 
-                        Text(stringResource(resource))
-                    }
-                },
-                singleLine = true,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                keyboardOptions = KeyboardOptions(
-                    autoCorrectEnabled = false,
-                    keyboardType = KeyboardType.Uri,
-                    imeAction = ImeAction.Done
-                ),
-                keyboardActions = KeyboardActions(
-                    onDone = { addFeed() }
-                ),
-                trailingIcon = {
-                    if (loading) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.size(24.dp)
-                        )
-                    }
+                    Text(stringResource(resource))
                 }
-            )
-            if (feedChoices.isNotEmpty()) {
-                Row(
-                    Modifier
-                        .weight(0.1f, fill = false)
-                        .heightIn(max = 300.dp)
-                        .padding(top = 8.dp)
-                ) {
-                    FeedOptions(
-                        options = feedChoices,
-                        selectedOption = selectedOption,
-                        onOptionSelect = selectOption
+            },
+            singleLine = true,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            keyboardOptions = KeyboardOptions(
+                autoCorrectEnabled = false,
+                keyboardType = KeyboardType.Uri,
+                imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = { addFeed() }
+            ),
+            trailingIcon = {
+                if (loading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(24.dp)
                     )
                 }
             }
+        )
+        if (feedChoices.isNotEmpty()) {
+            Row(
+                Modifier
+                    .weight(0.1f, fill = false)
+                    .heightIn(max = 300.dp)
+                    .padding(top = 8.dp)
+            ) {
+                FeedOptions(
+                    options = feedChoices,
+                    selectedOption = selectedOption,
+                    onOptionSelect = selectOption
+                )
+            }
+        }
+        if (condensed) {
             Row(
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically,
@@ -138,11 +140,21 @@ fun AddFeedView(
                 }
                 TextButton(
                     onClick = { addFeed() },
+                    enabled = !loading,
                     modifier = Modifier.padding(8.dp),
-                    enabled = !loading
                 ) {
                     Text(stringResource(R.string.add_feed_submit))
                 }
+            }
+        } else {
+            Button(
+                onClick = { addFeed() },
+                enabled = !loading,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+            ) {
+                Text(stringResource(R.string.add_feed_submit))
             }
         }
     }
@@ -211,5 +223,27 @@ fun AddFeedViewPreview() {
         onCancel = {},
         loading = false,
         error = null,
+    )
+}
+
+@Preview
+@Composable
+fun AddFeedViewPreview_FullScreen() {
+    AddFeedView(
+        feedChoices = listOf(
+            FeedOption(
+                feedURL = "9to5google.com/feed/index",
+                title = "The Verge - All Feeds"
+            ),
+            FeedOption(
+                feedURL = "9to5google.com/feed/comments",
+                title = "9to5Google - Comments"
+            ),
+        ),
+        onAddFeed = {},
+        onCancel = {},
+        loading = false,
+        error = null,
+        condensed = false
     )
 }
