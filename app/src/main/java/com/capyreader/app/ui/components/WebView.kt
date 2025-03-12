@@ -24,10 +24,10 @@ import androidx.webkit.WebViewAssetLoader.ResourcesPathHandler
 import coil.executeBlocking
 import coil.imageLoader
 import coil.request.ImageRequest
-import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.WebViewInterface
 import com.capyreader.app.common.openLink
+import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
@@ -210,6 +210,8 @@ fun rememberWebViewState(
             }
             isVerticalScrollBarEnabled = false
             isHorizontalScrollBarEnabled = false
+
+            setOnLongClickListener { true }
 
             addJavascriptInterface(
                 WebViewInterface(

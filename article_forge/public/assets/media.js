@@ -32,6 +32,12 @@ function addEmbedListeners() {
       div.replaceWith(iframe);
     });
   });
+
+  [...document.querySelectorAll('a')].forEach((anchor) => {
+    longPress(anchor, (event) => {
+      console.log("Long press detected!", event.target);
+    }, 500);
+  });
 }
 
 /**
@@ -117,9 +123,27 @@ const YOUTUBE_DOMAINS = [
   /.*?\/\/youtu\.be\/(.*?)(\?|$)/
 ];
 
-window.addEventListener("DOMContentLoaded", () => {
-  cleanEmbeds()
-});
+function longPress(element, callback, duration = 500) {
+  let timer;
+
+  const start = (event) => {
+    timer = setTimeout(() => {
+      callback(event);
+    }, duration);
+  };
+
+  const stop = () => {
+    clearTimeout(timer);
+  };
+
+  element.addEventListener("mousedown", start);
+  element.addEventListener("mouseup", stop);
+  element.addEventListener("mouseleave", stop);
+
+  element.addEventListener("touchstart", start);
+  element.addEventListener("touchend", stop);
+  element.addEventListener("touchcancel", stop);
+}
 
 window.onload = () => {
   addImageClickListeners();
