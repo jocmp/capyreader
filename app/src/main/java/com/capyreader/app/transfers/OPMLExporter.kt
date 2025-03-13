@@ -2,12 +2,11 @@ package com.capyreader.app.transfers
 
 import android.content.Context
 import android.net.Uri
-import android.widget.Toast
 import com.capyreader.app.R
+import com.capyreader.app.common.toast
 import com.jocmp.capy.Account
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.io.File
 import java.io.FileOutputStream
 
 class OPMLExporter(
@@ -33,7 +32,7 @@ class OPMLExporter(
             onFailure = { R.string.opml_exporter_failure }
         )
 
-        Toast.makeText(context, context.getString(messageRes), Toast.LENGTH_SHORT).show()
+        context.toast(messageRes)
     }
 
     companion object {

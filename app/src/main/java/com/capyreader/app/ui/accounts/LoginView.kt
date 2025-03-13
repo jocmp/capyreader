@@ -31,9 +31,9 @@ import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.common.titleKey
 import com.capyreader.app.setupCommonModules
-import com.capyreader.app.ui.Spacing
+import com.capyreader.app.ui.components.Spacing
 import com.capyreader.app.ui.components.safeEdgePadding
-import com.capyreader.app.ui.components.widthMaxSingleColumn
+import com.capyreader.app.widthMaxSingleColumn
 import com.jocmp.capy.accounts.Source
 import org.koin.android.ext.koin.androidContext
 import org.koin.compose.KoinApplication

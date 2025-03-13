@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
@@ -43,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import coil.request.ImageRequest
 import com.capyreader.app.common.Media
+import com.capyreader.app.preferredMaxWidth
 import com.capyreader.app.ui.components.LoadingView
 import com.capyreader.app.ui.components.Swiper
 import com.capyreader.app.ui.components.rememberSwiperState
@@ -216,13 +216,7 @@ private fun CaptionOverlay(caption: String?, imageUrl: String) {
         if (!caption.isNullOrBlank()) {
             Box(
                 Modifier
-                    .then(
-                        if (isCompact()) {
-                            Modifier.fillMaxWidth()
-                        } else {
-                            Modifier.widthIn(max = 600.dp)
-                        }
-                    )
+                    .preferredMaxWidth()
             ) {
                 Text(
                     caption,
