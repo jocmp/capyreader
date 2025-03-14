@@ -233,7 +233,7 @@
     <string name="media_share">Condividi</string>
     <string name="media_save_success">Immagine salvata</string>
     <string name="notification_mark_as_read_action">Segna come letto</string>
-    <string name="settings_gestures_list_swipe_up">Scorri verso l\'alto</string>
+    <string name="settings_gestures_list_swipe_up">Scorrimento verso l\'alto</string>
     <string name="article_list_swipe_next_feed">Vai al prossimo feed</string>
     <string name="article_list_swipe_disabled">Disabilitato</string>
     <string name="media_save">Salva</string>

@@ -70,7 +70,7 @@
     <string name="crash_log_export_item_subtitle">Сохраняет отчеты о сбоях в файл для передачи разработчику</string>
     <string name="notifications_permission_disabled_title">Разрешение на уведомления отключено</string>
     <string name="edit_feed_error">Ошибка при сохранении ленты</string>
-    <string name="action_mark_all_read">Отметить все как прочитанное</string>
+    <string name="action_mark_all_read">Отметить всё как прочитанное</string>
     <string name="unsubscribe_error">Ошибка при отписке от ленты</string>
     <string name="mark_all_read_dialog_submit">Подтвердить</string>
     <string name="article_actions_mark_after_as_read">Отметить выше как прочитанное</string>
@@ -206,7 +206,7 @@
     <string name="settings_enable_high_contrast_dark_theme">Включить высококонтрастную темную тему</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Коснитесь нижних углов, чтобы перемещаться по содержимому статьи</string>
     <string name="settings_mark_read_on_scroll">Отметить как прочитанное при прокрутке</string>
-    <string name="settings_section_mark_all_as_read">Отметить все как прочитанное</string>
+    <string name="settings_section_mark_all_as_read">Отметить всё как прочитанное</string>
     <string name="settings_section_browser">Браузер</string>
     <string name="reader_image_visibility_show_on_wifi">Показывать только при Wi-Fi</string>
     <string name="reader_image_visibility_always_hide">Блочные картинки</string>
@@ -241,4 +241,5 @@
     <string name="media_share_failure">Не удалось поделиться изображением</string>
     <string name="media_share">Поделиться</string>
     <string name="feed_nav_drawer_refresh_all">Обновить все</string>
+    <string name="image_preview_menu_option_medium">Средний</string>
 </resources>
