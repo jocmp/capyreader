@@ -1,0 +1,3 @@
+• Add ability to add a feed from other apps using the share sheet
+• Update translations for Italian and Russian thanks to volunteers
+• Update custom parsers for engadget.com and tarnkappe.info
