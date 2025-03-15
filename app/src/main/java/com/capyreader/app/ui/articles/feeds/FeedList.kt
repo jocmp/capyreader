@@ -4,8 +4,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -31,15 +33,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
+import com.capyreader.app.common.FeedGroup
 import com.capyreader.app.ui.articles.AddFeedButton
 import com.capyreader.app.ui.articles.ArticleStatusBar
 import com.capyreader.app.ui.articles.ArticleStatusIcon
 import com.capyreader.app.ui.articles.CountBadge
-import com.capyreader.app.ui.articles.ListHeadline
 import com.capyreader.app.ui.articles.ListTitle
 import com.capyreader.app.ui.articles.SavedSearchRow
 import com.capyreader.app.ui.fixtures.FeedSample
 import com.capyreader.app.ui.fixtures.FolderPreviewFixture
+import com.capyreader.app.ui.fixtures.PreviewKoinApplication
 import com.capyreader.app.ui.navigationTitle
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.ArticleFilter
@@ -150,51 +153,50 @@ fun FeedList(
                 }
             )
 
+            Spacer(Modifier.height(8.dp))
+
             if (savedSearches.isNotEmpty()) {
                 FeedListDivider()
-                ListHeadline(text = stringResource(R.string.nav_headline_saved_searches))
-
-                savedSearches.forEach {
-                    SavedSearchRow(
-                        onSelect = onSelectSavedSearch,
-                        selected = filter.isSavedSearchSelected(it),
-                        savedSearch = it,
-                    )
+                FeedGroupList(FeedGroup.SAVED_SEARCHES) {
+                    savedSearches.forEach {
+                        SavedSearchRow(
+                            onSelect = onSelectSavedSearch,
+                            selected = filter.isSavedSearchSelected(it),
+                            savedSearch = it,
+                        )
+                    }
                 }
             }
 
             if (folders.isNotEmpty()) {
                 FeedListDivider()
-                ListHeadline(text = stringResource(R.string.nav_headline_tags))
-            }
-
-            folders.forEach { folder ->
-                FolderRow(
-                    folder = folder,
-                    onFolderSelect = onSelectFolder,
-                    onFeedSelect = { feed ->
-                        onSelectFeed(feed, folder.title)
-                    },
-                    filter = filter
-                )
-            }
-
-            if (folders.isNotEmpty() && feeds.isNotEmpty()) {
-                FeedListDivider()
+                FeedGroupList(FeedGroup.FOLDERS) {
+                    folders.forEach { folder ->
+                        FolderRow(
+                            folder = folder,
+                            onFolderSelect = onSelectFolder,
+                            onFeedSelect = { feed ->
+                                onSelectFeed(feed, folder.title)
+                            },
+                            filter = filter
+                        )
+                    }
+                }
             }
 
             if (feeds.isNotEmpty()) {
-                ListHeadline(text = stringResource(R.string.nav_headline_feeds))
-            }
-
-            feeds.forEach { feed ->
-                FeedRow(
-                    feed = feed,
-                    onSelect = {
-                        onSelectFeed(it, null)
-                    },
-                    selected = filter.isFeedSelected(feed),
-                )
+                FeedListDivider()
+                FeedGroupList(FeedGroup.FEEDS) {
+                    feeds.forEach { feed ->
+                        FeedRow(
+                            feed = feed,
+                            onSelect = {
+                                onSelectFeed(it, null)
+                            },
+                            selected = filter.isFeedSelected(feed),
+                        )
+                    }
+                }
             }
 
             Box(Modifier.padding(vertical = 16.dp))
@@ -218,11 +220,7 @@ fun FeedList(
 
 @Composable
 private fun FeedListDivider() {
-    HorizontalDivider(
-        Modifier
-            .padding(horizontal = 16.dp)
-            .padding(top = 8.dp)
-    )
+    HorizontalDivider(Modifier.padding(horizontal = 16.dp))
 }
 
 @Preview
@@ -239,22 +237,24 @@ fun FeedListPreview() {
         }
     }
 
-    CapyTheme {
-        FeedList(
-            folders = folders,
-            feeds = feeds,
-            onSelectFolder = {},
-            onSelectFeed = { _, _ -> },
-            onNavigateToSettings = {},
-            onRefreshAll = {
-                onRefresh(it)
-            },
-            onFilterSelect = {},
-            filter = ArticleFilter.default(),
-            statusCount = 10,
-            onFeedAdded = {},
-            onSelectStatus = {},
-            onSelectSavedSearch = {}
-        )
+    PreviewKoinApplication {
+        CapyTheme {
+            FeedList(
+                folders = folders,
+                feeds = feeds,
+                onSelectFolder = {},
+                onSelectFeed = { _, _ -> },
+                onNavigateToSettings = {},
+                onRefreshAll = {
+                    onRefresh(it)
+                },
+                onFilterSelect = {},
+                filter = ArticleFilter.default(),
+                statusCount = 10,
+                onFeedAdded = {},
+                onSelectStatus = {},
+                onSelectSavedSearch = {}
+            )
+        }
     }
 }
