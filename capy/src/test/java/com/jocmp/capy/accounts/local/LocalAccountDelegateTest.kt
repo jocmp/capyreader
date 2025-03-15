@@ -1,6 +1,7 @@
 package com.jocmp.capy.accounts.local
 
 import com.jocmp.capy.AccountDelegate
+import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.accounts.AddFeedResult
@@ -77,9 +78,12 @@ class LocalAccountDelegateTest {
         updatePeriod = null
     )
 
+    private lateinit var accountPreferences: AccountPreferences
+
     @Before
     fun setup() {
         mockkObject(CapyLog)
+        accountPreferences = mockk()
         every { CapyLog.warn(any(), any()) }.returns(Unit)
 
         database = InMemoryDatabaseProvider.build(accountID)
@@ -89,7 +93,8 @@ class LocalAccountDelegateTest {
             database,
             httpClient,
             feedFinder = feedFinder,
-            faviconFetcher = FakeFaviconFetcher
+            faviconFetcher = FakeFaviconFetcher,
+            preferences = accountPreferences
         )
     }
 

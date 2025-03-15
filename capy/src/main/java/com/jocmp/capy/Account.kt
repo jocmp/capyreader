@@ -45,6 +45,7 @@ data class Account(
             database = database,
             httpClient = localHttpClient,
             faviconFetcher = faviconFetcher,
+            preferences = preferences,
         )
 
         Source.FEEDBIN -> FeedbinAccountDelegate(
