@@ -14,9 +14,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.common.ImagePreview
+import com.capyreader.app.common.RowItem
 import com.capyreader.app.preferences.LayoutPreference
 import com.capyreader.app.preferences.ReaderImageVisibility
-import com.capyreader.app.common.RowItem
 import com.capyreader.app.preferences.ThemeOption
 import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.capyreader.app.ui.components.FormSection

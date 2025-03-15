@@ -12,6 +12,7 @@ import com.capyreader.app.refresher.RefreshScheduler
 import com.jocmp.capy.Account
 import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.articles.UnreadSortOrder
+import com.jocmp.capy.preferences.getAndSet
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -20,6 +21,8 @@ class GeneralSettingsViewModel(
     val account: Account,
     private val appPreferences: AppPreferences
 ) : ViewModel() {
+    val source = account.source
+
     var refreshInterval by mutableStateOf(refreshScheduler.refreshInterval)
         private set
 
@@ -43,6 +46,11 @@ class GeneralSettingsViewModel(
 
     var enableStickyFullContent by mutableStateOf(appPreferences.enableStickyFullContent.get())
         private set
+
+    val keywordBlocklist = account
+        .preferences
+        .keywordBlocklist
+        .stateIn(viewModelScope)
 
     fun updateRefreshInterval(interval: RefreshInterval) {
         refreshScheduler.update(interval)
@@ -100,5 +108,17 @@ class GeneralSettingsViewModel(
 
     fun clearAllArticles() {
         account.clearAllArticles()
+    }
+
+    fun addBlockedKeyword(keyword: String) {
+        account.preferences.keywordBlocklist.getAndSet { list ->
+            list.toMutableSet().apply { add(keyword) }
+        }
+    }
+
+    fun removeBlockedKeyword(keyword: String) {
+        account.preferences.keywordBlocklist.getAndSet { list ->
+            list.toMutableSet().apply { remove(keyword) }
+        }
     }
 }

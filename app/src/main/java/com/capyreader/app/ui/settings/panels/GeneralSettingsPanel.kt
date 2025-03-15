@@ -27,6 +27,8 @@ import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -35,6 +37,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.capyreader.app.BuildConfig
 import com.capyreader.app.notifications.Notifications
 import com.capyreader.app.R
@@ -48,42 +51,61 @@ import com.capyreader.app.ui.components.TextSwitch
 import com.capyreader.app.ui.settings.CrashReportingCheckbox
 import com.capyreader.app.ui.settings.LocalSnackbarHost
 import com.capyreader.app.ui.settings.PreferenceSelect
+import com.capyreader.app.ui.settings.keywordblocklist.BlockedKeywords
+import com.capyreader.app.ui.settings.keywordblocklist.KeywordBlocklistItem
+import com.capyreader.app.ui.settings.keywordblocklist.LocalBlockedKeywords
 import com.jocmp.capy.accounts.AutoDelete
+import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.common.launchUI
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.KoinApplication
+import java.lang.String.CASE_INSENSITIVE_ORDER
 
 @Composable
 fun GeneralSettingsPanel(
     viewModel: GeneralSettingsViewModel = koinViewModel(),
     onNavigateToNotifications: () -> Unit,
 ) {
-    GeneralSettingsPanelView(
-        onNavigateToNotifications = onNavigateToNotifications,
-        refreshInterval = viewModel.refreshInterval,
-        updateRefreshInterval = viewModel::updateRefreshInterval,
-        canOpenLinksInternally = viewModel.canOpenLinksInternally,
-        updateOpenLinksInternally = viewModel::updateOpenLinksInternally,
-        updateAutoDelete = viewModel::updateAutoDelete,
-        autoDelete = viewModel.autoDelete,
-        onClearArticles = viewModel::clearAllArticles,
-        updateUnreadSort = viewModel::updateUnreadSort,
-        unreadSort = viewModel.unreadSort,
-        updateConfirmMarkAllRead = viewModel::updateConfirmMarkAllRead,
-        updateMarkReadOnScroll = viewModel::updateMarkReadOnScroll,
-        confirmMarkAllRead = viewModel.confirmMarkAllRead,
-        markReadOnScroll = viewModel.markReadOnScroll,
-        afterReadAll = viewModel.afterReadAll,
-        updateAfterReadAll = viewModel::updateAfterReadAll,
-        updateStickyFullContent = viewModel::updateStickyFullContent,
-        enableStickyFullContent = viewModel.enableStickyFullContent,
+    val keywords by viewModel.keywordBlocklist.collectAsStateWithLifecycle()
+
+    val blockedKeywords = BlockedKeywords(
+        keywords = keywords.toList().sortedWith(compareBy(CASE_INSENSITIVE_ORDER) { it }),
+        remove = viewModel::removeBlockedKeyword,
+        add = viewModel::addBlockedKeyword,
     )
+
+    CompositionLocalProvider(
+        LocalBlockedKeywords provides blockedKeywords
+    ) {
+        GeneralSettingsPanelView(
+            source = viewModel.source,
+            onNavigateToNotifications = onNavigateToNotifications,
+            refreshInterval = viewModel.refreshInterval,
+            updateRefreshInterval = viewModel::updateRefreshInterval,
+            canOpenLinksInternally = viewModel.canOpenLinksInternally,
+            updateOpenLinksInternally = viewModel::updateOpenLinksInternally,
+            updateAutoDelete = viewModel::updateAutoDelete,
+            autoDelete = viewModel.autoDelete,
+            onClearArticles = viewModel::clearAllArticles,
+            updateUnreadSort = viewModel::updateUnreadSort,
+            unreadSort = viewModel.unreadSort,
+            updateConfirmMarkAllRead = viewModel::updateConfirmMarkAllRead,
+            updateMarkReadOnScroll = viewModel::updateMarkReadOnScroll,
+            confirmMarkAllRead = viewModel.confirmMarkAllRead,
+            markReadOnScroll = viewModel.markReadOnScroll,
+            afterReadAll = viewModel.afterReadAll,
+            updateAfterReadAll = viewModel::updateAfterReadAll,
+            updateStickyFullContent = viewModel::updateStickyFullContent,
+            enableStickyFullContent = viewModel.enableStickyFullContent,
+        )
+    }
 }
 
 @Composable
 fun GeneralSettingsPanelView(
+    source: Source,
     onNavigateToNotifications: () -> Unit,
     onClearArticles: () -> Unit,
     refreshInterval: RefreshInterval,
@@ -102,8 +124,7 @@ fun GeneralSettingsPanelView(
     updateAfterReadAll: (behavior: AfterReadAllBehavior) -> Unit,
     confirmMarkAllRead: Boolean,
     markReadOnScroll: Boolean,
-
-    ) {
+) {
     val (isClearArticlesDialogOpen, setClearArticlesDialogOpen) = remember { mutableStateOf(false) }
 
     val onClearArticlesCancel = {
@@ -134,6 +155,9 @@ fun GeneralSettingsPanelView(
                     onNavigate = onNavigateToNotifications,
                     refreshInterval = refreshInterval,
                 )
+                if (source == Source.LOCAL) {
+                    KeywordBlocklistItem()
+                }
             }
         }
 
@@ -326,6 +350,7 @@ private fun GeneralSettingsPanelPreview() {
         }
     ) {
         GeneralSettingsPanelView(
+            source = Source.LOCAL,
             refreshInterval = RefreshInterval.EVERY_HOUR,
             updateRefreshInterval = {},
             canOpenLinksInternally = false,

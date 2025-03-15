@@ -244,4 +244,8 @@
     <string name="media_share_failure">Failed to share image</string>
     <string name="media_share">Share</string>
     <string name="feed_nav_drawer_refresh_all">Refresh all</string>
+    <string name="blocked_keywords">Blocklist</string>
+    <string name="blocked_keywords_supporting_text">Remove articles with title or content keyword matches</string>
+    <string name="blocked_keywords_remove_keyword">Remove keyword</string>
+    <string name="blocked_keywords_add_keyword">Add keyword</string>
 </resources>
