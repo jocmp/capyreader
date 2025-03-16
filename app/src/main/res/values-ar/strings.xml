@@ -135,7 +135,7 @@
     <string name="auth_fields_log_in_button">تسجيل الدخول</string>
     <string name="update_auth_success_message">تم تسجيل الدخول بنجاح</string>
     <string name="settings_panel_general_title">عام</string>
-    <string name="settings_auto_delete_articles_title">إستمر في قراءة المقالات</string>
+    <string name="settings_auto_delete_articles_title">إحتفظ بالمقالات المقروءة</string>
     <string name="settings_account_title">الحساب</string>
     <string name="settings_about_title">حول</string>
     <string name="settings_list_top_bar_title">الإعدادات</string>
@@ -230,4 +230,15 @@
     <string name="settings_gestures_enable_horizontal_pagination_title">تمكين التمرير الأفقي</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">مرر لليسار أو لليمين لتنقل بين المقالات</string>
     <string name="search_bar_placeholder">بحث</string>
+    <string name="feed_nav_drawer_refresh_all">تحديث الكل</string>
+    <string name="media_save">حفظ</string>
+    <string name="media_save_success">تم حفظ الصورة</string>
+    <string name="media_share_failure">فشلت مشاركة الصورة</string>
+    <string name="media_save_failure">فشل حفظ الصورة</string>
+    <string name="media_share">مشاركة</string>
+    <string name="image_preview_menu_option_medium">وسط</string>
+    <string name="settings_gestures_list_swipe_up">السحب لأعلى</string>
+    <string name="article_list_swipe_next_feed">إنتقل إلى الموجز التالي</string>
+    <string name="article_list_swipe_disabled">تعطيل</string>
+    <string name="notification_mark_as_read_action">وضع علامة كمقروءة</string>
 </resources>

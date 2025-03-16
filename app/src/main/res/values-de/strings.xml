@@ -220,4 +220,15 @@
     <string name="full_content_error_generic">Artikel verarbeiten fehlgeschlagen</string>
     <string name="after_read_all_behavior_default">Standard</string>
     <string name="article_actions_copy_link">Link kopieren</string>
+    <string name="media_share">Teilen</string>
+    <string name="nav_headline_saved_searches">Suchanfragen</string>
+    <string name="article_vertical_open_article_in_browser">Artikel im Browser öffnen</string>
+    <string name="settings_gestures_list_swipe_up">Nach oben wischen</string>
+    <string name="article_list_swipe_disabled">Deaktiviert</string>
+    <string name="settings_gestures_enable_horizontal_pagination_title">Horizontales Scrollen aktivieren</string>
+    <string name="media_save">Speichern</string>
+    <string name="media_save_success">Bild gespeichert</string>
+    <string name="settings_gestures_enable_horizontal_pagination_subtitle">Nach links oder rechts wischen, um durch Artikel zu navigieren</string>
+    <string name="search_bar_placeholder">Suchen</string>
+    <string name="notification_mark_as_read_action">Als gelesen markieren</string>
 </resources>
