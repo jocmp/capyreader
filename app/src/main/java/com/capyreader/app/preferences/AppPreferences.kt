@@ -2,6 +2,7 @@ package com.capyreader.app.preferences
 
 import android.content.Context
 import androidx.preference.PreferenceManager
+import com.capyreader.app.common.FeedGroup
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.ArticleListFontScale
@@ -65,6 +66,10 @@ class AppPreferences(context: Context) {
 
     val layout: Preference<LayoutPreference>
         get() = preferenceStore.getEnum("layout_preference", LayoutPreference.RESPONSIVE)
+
+    fun pinFeedGroup(type: FeedGroup): Preference<Boolean> {
+        return preferenceStore.getBoolean("feed_group_${type.toString().lowercase()}", true)
+    }
 
     fun clearAll() {
         preferenceStore.clearAll()
@@ -140,7 +145,10 @@ class AppPreferences(context: Context) {
             get() = preferenceStore.getEnum("article_list_swipe_end", RowSwipeOption.default)
 
         val swipeBottom: Preference<ArticleListVerticalSwipe>
-            get() = preferenceStore.getEnum("article_list_swipe_bottom", ArticleListVerticalSwipe.default)
+            get() = preferenceStore.getEnum(
+                "article_list_swipe_bottom",
+                ArticleListVerticalSwipe.default
+            )
 
         val confirmMarkAllRead: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_list_confirm_mark_all_read", true)

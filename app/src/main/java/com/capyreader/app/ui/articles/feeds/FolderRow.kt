@@ -1,35 +1,19 @@
 package com.capyreader.app.ui.articles.feeds
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowDropDown
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButtonColors
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationDrawerItem
-import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.ui.articles.CountBadge
@@ -62,11 +46,9 @@ fun FolderRow(
             onClick = { onFolderSelect(folder) },
             badge = { CountBadge(count = folder.count) },
             icon = {
-                DropdownButton(
+                IconDropdown(
                     expanded = expanded,
-                    onExpanded = {
-                        onExpanded(it)
-                    },
+                    onClick = { onExpanded(!expanded) }
                 )
             },
             label = {
@@ -93,55 +75,6 @@ fun FolderRow(
     }
 }
 
-@Composable
-private fun DropdownButton(
-    expanded: Boolean,
-    onExpanded: (expanded: Boolean) -> Unit,
-) {
-    val rotation by animateFloatAsState(
-        targetValue = if (expanded) 0f else -90f,
-        label = "DropdownRotation"
-    )
-
-    FolderIconButton(onClick = { onExpanded(!expanded) }) {
-        Icon(
-            imageVector = Icons.Rounded.ArrowDropDown,
-            contentDescription = null,
-            modifier = Modifier
-                .size(30.dp)
-                .rotate(rotation)
-        )
-    }
-}
-
-@Composable
-fun FolderIconButton(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    enabled: Boolean = true,
-    colors: IconButtonColors = IconButtonDefaults.iconButtonColors(),
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    content: @Composable () -> Unit
-) {
-    val size = 40.dp
-    Box(
-        modifier = modifier
-            .background(color = colors.containerColor)
-            .clickable(
-                onClick = onClick,
-                enabled = enabled,
-                role = Role.Button,
-                interactionSource = interactionSource,
-                indication = ripple(
-                    bounded = false,
-                    radius = size / 2
-                )
-            ),
-        contentAlignment = Alignment.Center
-    ) {
-        content()
-    }
-}
 
 @Preview
 @Composable
