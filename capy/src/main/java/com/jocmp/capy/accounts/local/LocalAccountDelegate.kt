@@ -1,6 +1,7 @@
 package com.jocmp.capy.accounts.local
 
 import com.jocmp.capy.AccountDelegate
+import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
@@ -31,6 +32,7 @@ internal class LocalAccountDelegate(
     private val httpClient: OkHttpClient,
     private val faviconFetcher: FaviconFetcher,
     private val feedFinder: FeedFinder = DefaultFeedFinder(httpClient),
+    private val preferences: AccountPreferences,
 ) : AccountDelegate {
     private val feedRecords = FeedRecords(database)
     private val articleRecords = ArticleRecords(database)
@@ -57,7 +59,7 @@ internal class LocalAccountDelegate(
             val feeds = response.getOrDefault(emptyList())
 
             if (feeds.isEmpty()) {
-                val exception  = response.exceptionOrNull()
+                val exception = response.exceptionOrNull()
                 CapyLog.warn(
                     tag("find"),
                     data = mapOf(
@@ -200,6 +202,8 @@ internal class LocalAccountDelegate(
         cutoffDate: ZonedDateTime?,
         updatedAt: ZonedDateTime = nowUTC()
     ) {
+        val blocklist = preferences.keywordBlocklist.get()
+
         database.transactionWithErrorHandling {
             items.forEach { item ->
                 val publishedAt = published(item.pubDate, fallback = updatedAt).toEpochSecond()
@@ -209,8 +213,9 @@ internal class LocalAccountDelegate(
                 )
 
                 val withinCutoff = cutoffDate == null || publishedAt > cutoffDate.toEpochSecond()
+                val blocked = containsBlockedText(parsedItem, blocklist)
 
-                if (parsedItem.id != null && withinCutoff) {
+                if (parsedItem.id != null && withinCutoff && !blocked) {
                     database.articlesQueries.create(
                         id = parsedItem.id,
                         feed_id = feed.id,
@@ -231,6 +236,14 @@ internal class LocalAccountDelegate(
                     )
                 }
             }
+        }
+    }
+
+    private fun containsBlockedText(parsedItem: ParsedItem, blocklist: Set<String>): Boolean {
+        return blocklist.any { keyword ->
+            parsedItem.title.contains(keyword, ignoreCase = true) ||
+                    parsedItem.summary.orEmpty().contains(keyword, ignoreCase = true) ||
+                    parsedItem.contentHTML.orEmpty().contains(keyword, ignoreCase = true)
         }
     }
 

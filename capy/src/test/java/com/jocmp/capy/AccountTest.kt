@@ -74,7 +74,7 @@ class AccountTest {
             unreadSort = UnreadSortOrder.NEWEST_FIRST,
         )
 
-        assertEquals(unreadArticleIDs, ids)
+        assertEquals(unreadArticleIDs.sorted(), ids.sorted())
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.jocmp.capy.accounts.local
 
 import com.jocmp.capy.AccountDelegate
+import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.accounts.AddFeedResult
@@ -10,6 +11,7 @@ import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.FeedFixture
 import com.jocmp.capy.logging.CapyLog
 import com.jocmp.capy.persistence.ArticleRecords
+import com.jocmp.capy.preferences.Preference
 import com.jocmp.capy.rssItemFixture
 import com.jocmp.feedfinder.FeedFinder
 import com.jocmp.feedfinder.parser.Feed
@@ -59,6 +61,8 @@ class LocalAccountDelegateTest {
     )
 
     private val oldItem = item.copy(
+        description = "Placeholder content",
+        content = "Placeholder content",
         link = "https://www.wheresyoured.at/untitled2/",
         pubDate = "Wed, 15 Mar 2023 18:30:00 GMT"
     )
@@ -77,9 +81,15 @@ class LocalAccountDelegateTest {
         updatePeriod = null
     )
 
+    private lateinit var accountPreferences: AccountPreferences
+
     @Before
     fun setup() {
         mockkObject(CapyLog)
+        accountPreferences = mockk()
+        val blocklist = mockk<Preference<Set<String>>>()
+        every { blocklist.get() }.returns(emptySet())
+        every { accountPreferences.keywordBlocklist }.returns(blocklist)
         every { CapyLog.warn(any(), any()) }.returns(Unit)
 
         database = InMemoryDatabaseProvider.build(accountID)
@@ -89,7 +99,8 @@ class LocalAccountDelegateTest {
             database,
             httpClient,
             feedFinder = feedFinder,
-            faviconFetcher = FakeFaviconFetcher
+            faviconFetcher = FakeFaviconFetcher,
+            preferences = accountPreferences
         )
     }
 
@@ -117,6 +128,32 @@ class LocalAccountDelegateTest {
     }
 
     @Test
+    fun refreshAll_updatesEntries_filteredByBlocklist() = runTest {
+        val blocklist = mockk<Preference<Set<String>>>()
+        every { blocklist.get() }.returns(setOf("Apple Intelligence"))
+        every { accountPreferences.keywordBlocklist }.returns(blocklist)
+        coEvery { feedFinder.fetch(url = any()) }.returns(Result.success(channel))
+
+        FeedFixture(database).create(feedID = channel.link!!)
+
+        delegate.refresh(ArticleFilter.default())
+
+        val articlesCount = database
+            .articlesQueries
+            .countAll(read = false, starred = false)
+            .executeAsOne()
+            .COUNT
+
+        val feeds = database
+            .feedsQueries
+            .all()
+            .executeAsList()
+
+        assertEquals(expected = 1, actual = feeds.size)
+        assertEquals(expected = 1, actual = articlesCount)
+    }
+
+    @Test
     fun refreshAll_doesNotChangeUpdatedAtTimestamp() = runTest {
         val mockNow = ZonedDateTime.parse("2024-12-25T09:00:00-00:00")
         mockkObject(TimeHelpers)
@@ -127,7 +164,7 @@ class LocalAccountDelegateTest {
 
         delegate.refresh(ArticleFilter.default())
 
-        var article = ArticleRecords(database).find(articleID =  item.link!!)!!
+        var article = ArticleRecords(database).find(articleID = item.link!!)!!
 
         val firstUpdatedAt = article.updatedAt
         assertEquals(expected = mockNow, actual = firstUpdatedAt)
@@ -135,7 +172,7 @@ class LocalAccountDelegateTest {
         val futureNow = ZonedDateTime.parse("2025-12-25T09:00:00-00:00")
         every { TimeHelpers.nowUTC() }.returns(futureNow)
         delegate.refresh(ArticleFilter.default())
-        article = ArticleRecords(database).find(articleID =  item.link!!)!!
+        article = ArticleRecords(database).find(articleID = item.link!!)!!
 
         assertEquals(expected = firstUpdatedAt, actual = article.updatedAt)
     }

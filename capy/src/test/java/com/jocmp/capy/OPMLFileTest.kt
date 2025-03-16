@@ -37,7 +37,8 @@ class OPMLFileTest {
             database = database,
             httpClient = httpClient,
             feedFinder = MockFeedFinder(),
-            faviconFetcher = FakeFaviconFetcher
+            faviconFetcher = FakeFaviconFetcher,
+            preferences = AccountPreferences(InMemoryDataStore()),
         )
 
         account = AccountFixture.create(

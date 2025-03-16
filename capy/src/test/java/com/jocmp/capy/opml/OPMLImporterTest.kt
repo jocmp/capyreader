@@ -1,6 +1,8 @@
 package com.jocmp.capy.opml
 
 import com.jocmp.capy.Account
+import com.jocmp.capy.AccountPreferences
+import com.jocmp.capy.InMemoryDataStore
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.MockFeedFinder
 import com.jocmp.capy.accounts.FakeFaviconFetcher
@@ -51,7 +53,8 @@ class OPMLImporterTest {
             database = database,
             httpClient = httpClient,
             feedFinder = finder,
-            faviconFetcher = FakeFaviconFetcher
+            faviconFetcher = FakeFaviconFetcher,
+            preferences = AccountPreferences(InMemoryDataStore()),
         )
 
         account = AccountFixture.create(
