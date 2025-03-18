@@ -238,4 +238,8 @@
     <string name="media_share">Partager</string>
     <string name="notification_mark_as_read_action">Marquer comme lu</string>
     <string name="image_preview_menu_option_medium">Moyenne</string>
+    <string name="blocked_keywords">Liste de blocage</string>
+    <string name="blocked_keywords_supporting_text">Supprimer les articles dont le titre ou le contenu correspondent à des mots-clés</string>
+    <string name="blocked_keywords_add_keyword">Ajouter un mot-clé</string>
+    <string name="blocked_keywords_remove_keyword">Supprimer le mot-clé</string>
 </resources>
