@@ -34,7 +34,7 @@
     <string name="auth_fields_email">E-pasta adrese</string>
     <string name="auth_fields_username">Lietotājvārds</string>
     <string name="auth_fields_api_url">Serveris</string>
-    <string name="auth_fields_hide_password">Sēpt paroli</string>
+    <string name="auth_fields_hide_password">Slēpt paroli</string>
     <string name="auth_fields_show_password">Rādīt paroli</string>
     <string name="settings_top_bar_title">Iestatījumi</string>
     <string name="account_source_reader">Lasītājs</string>
@@ -61,10 +61,12 @@
     <string name="account_source_feedbin">Feedbin</string>
     <string name="theme_menu_option_light">Gaišs</string>
     <string name="settings_article_list_feed_name">Ziņu plūsmas nosaukums</string>
-    <string name="settings_option_full_content_subtitle">Atcerēties ielādēt visu (pilnu) raksta saturu</string>
+    <string name="settings_option_full_content_subtitle">Atcerēties ielādēt visu (pilnu) raksta
+        saturu</string>
     <string name="article_list_swipe_disabled">Atspējots</string>
     <string name="feed_action_unsubscribe_message">Vai tiešām vēlaties izbeigt \"%1$s\" abonementu?</string>
-    <string name="settings_remove_account_message_local">Vai tiešām vēlaties izdzēst savu kontu? Šo darbību nevar atcelt.</string>
+    <string name="settings_remove_account_message_local">Vai tiešām vēlaties izdzēst savu kontu? Šo
+        darbību nevar atcelt.</string>
     <string name="account_settings_save_name">Vārds saglabāts</string>
     <string name="article_view_star">Pievienot atzīmētiem</string>
     <string name="article_view_unstar">Noņemt no atzīmētiem</string>
@@ -72,7 +74,8 @@
     <string name="nav_headline_saved_searches">Meklējumi</string>
     <string name="add_feed_feed_not_error">Neizdevās atrast ziņu plūsmu</string>
     <string name="add_feed_save_error">Neizdevās saglabāt ziņu plūsmu</string>
-    <string name="add_feed_network_error">Neizdevās atrast ziņu plūsmu. Lūdzu, pārbaudiet savienojumu.</string>
+    <string name="add_feed_network_error">Neizdevās atrast ziņu plūsmu. Lūdzu, pārbaudiet
+        savienojumu.</string>
     <string name="edit_feed_error">Kļūda, saglabājot ziņu plūsmu</string>
     <string name="relative_time_minutes">%1$dm</string>
     <string name="relative_time_hours">%1$ds</string>
@@ -120,7 +123,8 @@
     <string name="image_error_text">Attēla ielādes kļūda</string>
     <string name="article_byline_date_only">%1$s publicēts %2$s</string>
     <string name="article_byline">%1$s publicēts %2$s pateicoties %3$s</string>
-    <string name="settings_option_auto_delete_articles_subtitle">Dzēst lasītos, neatzīmētos rakstus, kas vecāki par 3 mēnešiem</string>
+    <string name="settings_option_auto_delete_articles_subtitle">Dzēst lasītos, neatzīmētos rakstus,
+        kas vecāki par 3 mēnešiem</string>
     <string name="settings_option_auto_delete_articles_title">Automātiski dzēst rakstus</string>
     <string name="refresh_every_day">Katru dienu</string>
     <string name="settings_panel_general_title">Vispārīgie</string>
@@ -138,7 +142,8 @@
     <string name="settings_auto_delete_option_keep_for_three_month">3 mēnešus</string>
     <string name="settings_section_advanced">Papildus</string>
     <string name="settings_clear_all_articles_confirm">Apstiprināt</string>
-    <string name="settings_clear_all_articles_text">Vai tiešām vēlaties izdzēst visus lasītos, neatzīmētos rakstus no ierīces? Šo darbību nevar atcelt.</string>
+    <string name="settings_clear_all_articles_text">Vai tiešām vēlaties izdzēst visus lasītos,
+        neatzīmētos rakstus no ierīces? Šo darbību nevar atcelt.</string>
     <string name="settings_clear_all_articles_button">Dzēst visus rakstus</string>
     <string name="settings_support_button">Atbalsts</string>
     <string name="settings_donate_button">Ziedot</string>
@@ -168,7 +173,8 @@
     <string name="settings_gestures_list_back_navigation_open_drawer">Atvērt navigācijas paneli</string>
     <string name="action_share">Dalīties</string>
     <string name="crash_log_export_item_title">Dalīties ar avārijas žurnālu</string>
-    <string name="crash_log_export_item_subtitle">Saglabā avārijas notikumus failā, lai dalītos ar to ar izstrādātāju</string>
+    <string name="crash_log_export_item_subtitle">Saglabā avārijas notikumus failā, lai dalītos ar
+        to ar izstrādātāju</string>
     <string name="edit_feed_tags_section">Birkas</string>
     <string name="edit_feed_tag_section">Birka</string>
     <string name="edit_feed_notifications_title">Iespējot paziņojumus</string>
@@ -177,9 +183,11 @@
     <string name="notifications_permission_disabled_title">Paziņojuma atļauja ir atspējota</string>
     <string name="article_list_row_swipe_open_externally">Atvērt rakstu pārlūkā</string>
     <string name="article_view_open_externally">Atvērt ārēji</string>
-    <string name="settings_confirm_mark_all_read">Pieprasīt apstiprinājumu, kad atzīmē visus rakstus kā lasītus</string>
+    <string name="settings_confirm_mark_all_read">Pieprasīt apstiprinājumu, kad atzīmē visus rakstus
+        kā lasītus</string>
     <string name="settings_mark_read_on_scroll">Atzīmēt, kā lasītu, ritinot</string>
-    <string name="settings_gestures_enable_horizontal_pagination_title">Iespējot horizontālu ritināšanu</string>
+    <string name="settings_gestures_enable_horizontal_pagination_title">Iespējot horizontālu
+        ritināšanu</string>
     <string name="end_of_feed_text">Visi raksti izlasīti!</string>
     <string name="settings_section_browser">Pārlūks</string>
     <string name="reader_image_visibility_show_on_wifi">Rādīt attēlus tikai ar Wi-Fi savienojumu</string>
@@ -207,7 +215,8 @@
     <string name="feed_form_feed_url_title">Ziņu plūsmas URL</string>
     <string name="feed_list_top_bar_close_search">Pārtraukt meklēšanu</string>
     <string name="settings_gestures_list_back_navigation_action">Atpakaļ navigācijas darbība</string>
-    <string name="settings_enable_refresh_call_to_action">Vispirms jaiespējo regulārā atsvaidzināšana</string>
+    <string name="settings_enable_refresh_call_to_action">Vispirms jaiespējo regulārā
+        atsvaidzināšana</string>
     <string name="settings_notifications_select_none">Atlasīt nevienu</string>
     <string name="after_read_all_behavior_open_next_feed">Atvērt nākamo ziņu plūsmu</string>
     <string name="feed_nav_drawer_title">Ziņu plūsmas</string>
