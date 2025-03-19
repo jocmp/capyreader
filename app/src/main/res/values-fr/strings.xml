@@ -145,10 +145,10 @@
     <string name="transfers_export_subscriptions">Exporter les abonnements</string>
     <string name="opml_import_toast_failed">Importation échouée</string>
     <string name="edit_feed_tags">Étiquettes</string>
-    <string name="image_preview_menu_option_none">Aucune</string>
-    <string name="image_preview_menu_option_large">Grande</string>
+    <string name="image_preview_menu_option_none">Aucun</string>
+    <string name="image_preview_menu_option_large">Grand</string>
     <string name="settings_section_version">Version</string>
-    <string name="image_preview_menu_option_small">Petite</string>
+    <string name="image_preview_menu_option_small">Petit</string>
     <string name="feed_form_feed_url_title">URL du flux</string>
     <string name="settings_option_full_content_subtitle">Mémoriser le choix de chargement du contenu complet de l’article</string>
     <string name="empty_onboarding_title">Aucun flux pour l’instant</string>
@@ -169,7 +169,7 @@
     <string name="article_list_unread_sort_newest_first">Plus récents d’abord</string>
     <string name="article_list_unread_sort_oldest_first">Plus anciens d’abord</string>
     <string name="article_list_unread_sort_title">Trier par non lu</string>
-    <string name="settings_gestures_list_back_navigation_system_back">Défaut</string>
+    <string name="settings_gestures_list_back_navigation_system_back">Par défaut</string>
     <string name="action_share">Partager</string>
     <string name="crash_log_export_item_title">Partager les rapports de plantage</string>
     <string name="crash_log_export_item_subtitle">Sauvegarder les rapports de plantage dans un fichier pour partager avec le développeur</string>
@@ -199,9 +199,9 @@
     <string name="settings_gestures_reader_tap_to_page_subtitle">Appuyez sur les coins inférieurs pour parcourir le contenu de l\'article</string>
     <string name="add_account_feedbin_signup_prompt">Vous n’avez pas de compte Feedbin ?</string>
     <string name="add_account_freshrss_signup_prompt">Vous n’avez pas d’instance FreshRSS ?</string>
-    <string name="settings_gestures_reader_tap_to_page_title">E Ink appuyer pour faire défiler</string>
+    <string name="settings_gestures_reader_tap_to_page_title">Appuyer pour faire défiler (mode E Ink)</string>
     <string name="settings_enable_high_contrast_dark_theme">Activer le thème sombre à contraste élevé</string>
-    <string name="reader_image_visibility_show_on_wifi">Afficher les images uniquement sur Wi-Fi</string>
+    <string name="reader_image_visibility_show_on_wifi">Afficher uniquement sur Wi-Fi</string>
     <string name="reader_image_visibility_always_hide">Bloquer les images</string>
     <string name="reader_image_visibility_always_show">Toujours afficher les images</string>
     <string name="layout_preference_responsive">Adaptatif</string>
@@ -237,7 +237,7 @@
     <string name="feed_nav_drawer_refresh_all">Tout actualiser</string>
     <string name="media_share">Partager</string>
     <string name="notification_mark_as_read_action">Marquer comme lu</string>
-    <string name="image_preview_menu_option_medium">Moyenne</string>
+    <string name="image_preview_menu_option_medium">Moyen</string>
     <string name="blocked_keywords">Liste de blocage</string>
     <string name="blocked_keywords_supporting_text">Supprimer les articles dont le titre ou le contenu correspondent à des mots-clés</string>
     <string name="blocked_keywords_add_keyword">Ajouter un mot-clé</string>

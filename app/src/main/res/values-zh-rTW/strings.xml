@@ -239,4 +239,8 @@
     <string name="article_list_swipe_next_feed">轉到下個源</string>
     <string name="media_share">分享</string>
     <string name="image_preview_menu_option_medium">中</string>
+    <string name="blocked_keywords_supporting_text">移除標題或內容中與關鍵字相符的文章</string>
+    <string name="blocked_keywords_remove_keyword">移除關鍵字</string>
+    <string name="blocked_keywords_add_keyword">添加關鍵字</string>
+    <string name="blocked_keywords">封鎖清單</string>
 </resources>

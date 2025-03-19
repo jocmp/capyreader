@@ -206,7 +206,7 @@
     <string name="settings_mark_read_on_scroll">滚动时标记为已读</string>
     <string name="settings_section_browser">浏览器</string>
     <string name="reader_image_visibility_show_on_wifi">仅在 Wi-Fi 连接下显示图片</string>
-    <string name="reader_image_visibility_always_hide">拦截图片</string>
+    <string name="reader_image_visibility_always_hide">屏蔽图片</string>
     <string name="reader_image_visibility_always_show">始终显示图片</string>
     <string name="reader_image_visibility_label">图片</string>
     <string name="layout_preference_responsive">响应式</string>
@@ -239,4 +239,8 @@
     <string name="media_share_failure">分享图片失败</string>
     <string name="feed_nav_drawer_refresh_all">刷新全部</string>
     <string name="image_preview_menu_option_medium">中等</string>
+    <string name="blocked_keywords_supporting_text">移除标题或内容中与关键词匹配的文章</string>
+    <string name="blocked_keywords_remove_keyword">移除关键词</string>
+    <string name="blocked_keywords_add_keyword">添加关键词</string>
+    <string name="blocked_keywords">屏蔽列表</string>
 </resources>
