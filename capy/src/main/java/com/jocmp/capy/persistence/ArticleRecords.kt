@@ -276,6 +276,10 @@ internal class ArticleRecords internal constructor(
         return max.toDateTimeFromSeconds
     }
 
+    fun filterUnreadStatuses(ids: List<String>): List<String> {
+       return database.articlesQueries.filterUnreadStatuses(ids).executeAsList()
+    }
+
     fun unreadArticleIDs(filter: ArticleFilter, range: MarkRead, unreadSort: UnreadSortOrder): List<String> {
         val ids = when (filter) {
             is ArticleFilter.Articles -> byStatus.unreadArticleIDs(

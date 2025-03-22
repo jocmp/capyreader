@@ -199,15 +199,15 @@ data class Account(
     }
 
     suspend fun markAllRead(articleIDs: List<String>): Result<Unit> {
-        articleRecords.markAllRead(articleIDs)
+        val changesetIDs = articleRecords.filterUnreadStatuses(articleIDs)
 
-        return delegate.markRead(articleIDs)
+        articleRecords.markAllRead(changesetIDs)
+
+        return delegate.markRead(changesetIDs)
     }
 
     suspend fun markRead(articleID: String): Result<Unit> {
-        articleRecords.markAllRead(listOf(articleID))
-
-        return delegate.markRead(listOf(articleID))
+        return markAllRead(listOf(articleID))
     }
 
     suspend fun markUnread(articleID: String): Result<Unit> {
