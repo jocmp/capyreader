@@ -40,9 +40,9 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.paging.compose.LazyPagingItems
 import com.capyreader.app.R
-import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.Saver
+import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
@@ -280,7 +280,7 @@ fun ArticleLayout(
         }
     }
 
-    fun selectFilter() {
+    val selectFilter = {
         if (!filter.hasArticlesSelected()) {
             openNextList { onSelectArticleFilter() }
         } else {
@@ -288,23 +288,21 @@ fun ArticleLayout(
         }
     }
 
-    fun selectStatus(status: ArticleStatus) {
+    val selectStatus = { status: ArticleStatus ->
         coroutineScope.launchUI {
             openNextStatus { onSelectStatus(status) }
         }
     }
 
-    fun selectFeed(feed: Feed, folderTitle: String?) {
-        coroutineScope.launch {
-            if (!filter.isFeedSelected(feed)) {
-                openNextList { onSelectFeed(feed.id, folderTitle) }
-            } else {
-                closeDrawer()
-            }
+    val selectFeed = { feed: Feed, folderTitle: String? ->
+        if (!filter.isFeedSelected(feed)) {
+            openNextList { onSelectFeed(feed.id, folderTitle) }
+        } else {
+            closeDrawer()
         }
     }
 
-    fun selectFolder(folder: Folder) {
+    val selectFolder = { folder: Folder ->
         if (!filter.isFolderSelect(folder)) {
             openNextList { onSelectFolder(folder.title) }
         } else {
@@ -312,7 +310,7 @@ fun ArticleLayout(
         }
     }
 
-    fun selectSavedSearch(savedSearch: SavedSearch) {
+    val selectSavedSearch = { savedSearch: SavedSearch ->
         if (!filter.isSavedSearchSelected(savedSearch)) {
             openNextList { onSelectSavedSearch(savedSearch.id) }
         } else {
@@ -331,19 +329,19 @@ fun ArticleLayout(
             FeedList(
                 folders = folders,
                 feeds = feeds,
-                onSelectFolder = ::selectFolder,
-                onSelectFeed = ::selectFeed,
+                onSelectFolder = selectFolder,
+                onSelectFeed = selectFeed,
                 onFeedAdded = { onFeedAdded(it) },
                 savedSearches = savedSearches,
-                onSelectSavedSearch = ::selectSavedSearch,
+                onSelectSavedSearch = selectSavedSearch,
                 onNavigateToSettings = onNavigateToSettings,
-                onFilterSelect = ::selectFilter,
+                onFilterSelect = selectFilter,
                 onRefreshAll = { completion ->
                     onRefresh(ArticleFilter.default(), completion)
                 },
                 filter = filter,
                 statusCount = statusCount,
-                onSelectStatus = ::selectStatus
+                onSelectStatus = { selectStatus(it) }
             )
         },
         listPane = {
