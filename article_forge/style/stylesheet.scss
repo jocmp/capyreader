@@ -181,10 +181,11 @@ ul:has(img) {
 }
 
 .table__wrapper {
-  overflow-x: auto;
   width: 100%;
 
   table {
+    table-layout: fixed;
+    width: 100%;
     border-spacing: 0;
   }
 
@@ -196,10 +197,9 @@ ul:has(img) {
   td,
   th {
     border: 1px solid #999;
-    padding: 0.5rem;
+    padding: 0.2rem;
     text-align: left;
     word-wrap: break-word;
-    overflow-x: auto;
   }
 
   td:has(pre) {

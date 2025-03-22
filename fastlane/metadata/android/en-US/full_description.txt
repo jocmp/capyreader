@@ -9,3 +9,4 @@ Some features include:
 • Full content mode
 • Dark mode
 • Big screen support
+• Import and export your saved feeds
