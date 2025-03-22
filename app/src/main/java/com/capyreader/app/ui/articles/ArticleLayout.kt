@@ -40,9 +40,9 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.paging.compose.LazyPagingItems
 import com.capyreader.app.R
-import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.Saver
+import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
@@ -294,13 +294,11 @@ fun ArticleLayout(
         }
     }
 
-    fun selectFeed(feed: Feed, folderTitle: String?) {
-        coroutineScope.launch {
-            if (!filter.isFeedSelected(feed)) {
-                openNextList { onSelectFeed(feed.id, folderTitle) }
-            } else {
-                closeDrawer()
-            }
+    val selectFeed = { feed: Feed, folderTitle: String? ->
+        if (!filter.isFeedSelected(feed)) {
+            openNextList { onSelectFeed(feed.id, folderTitle) }
+        } else {
+            closeDrawer()
         }
     }
 
@@ -332,7 +330,7 @@ fun ArticleLayout(
                 folders = folders,
                 feeds = feeds,
                 onSelectFolder = ::selectFolder,
-                onSelectFeed = ::selectFeed,
+                onSelectFeed = selectFeed,
                 onFeedAdded = { onFeedAdded(it) },
                 savedSearches = savedSearches,
                 onSelectSavedSearch = ::selectSavedSearch,
