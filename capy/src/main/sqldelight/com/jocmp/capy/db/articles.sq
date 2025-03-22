@@ -35,6 +35,12 @@ FROM article_statuses
 LEFT OUTER JOIN articles ON article_statuses.article_id = articles.id
 WHERE articles.id IS NULL;
 
+filterUnreadStatuses:
+SELECT article_id
+FROM article_statuses
+WHERE article_statuses.read = 0
+AND article_statuses.article_id IN :articleIDs;
+
 create:
 INSERT INTO articles(
     id,
