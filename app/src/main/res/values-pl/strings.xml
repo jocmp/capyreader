@@ -160,8 +160,8 @@
     <string name="settings_panel_display_title">Wyświetlanie i wygląd</string>
     <string name="settings_auto_delete_articles_title">Zachowuj przeczytane artykuły</string>
     <string name="settings_clear_all_articles_button">Usuń wszystkie artykuły</string>
-    <string name="settings_gestures_reader_swipe_down">Przeciągnięcie w dół</string>
-    <string name="settings_gestures_reader_swipe_up">Przeciągnięcie w górę</string>
+    <string name="settings_gestures_reader_swipe_down">Przesunięcie w dół</string>
+    <string name="settings_gestures_reader_swipe_up">Przesunięcie w górę</string>
     <string name="article_bottom_bar_next_article">Przejdź do następnego artykułu</string>
     <string name="settings_gestures_list_row_swipe_start">Przesunięcie w prawo</string>
     <string name="settings_gestures_list_row_swipe_end">Przesunięcie w lewo</string>
@@ -230,9 +230,13 @@
     <string name="after_read_all_behavior_open_drawer">Otwórz menu nawigacji</string>
     <string name="article_actions_open_menu">Otwórz opcje artykułu</string>
     <string name="add_account_reader_subtitle">Samodzielnie hostowany interfejs API Google Reader</string>
-    <string name="settings_gestures_list_back_navigation_action">Przycisk wstecz</string>
+    <string name="settings_gestures_list_back_navigation_action">Działanie przycisku wstecz</string>
     <string name="end_of_feed_text">Wszystko przeczytane!</string>
     <string name="settings_enable_refresh_call_to_action">Najpierw włącz cykliczne odświeżanie</string>
     <string name="settings_gestures_reader_tap_to_page_title">Dotknij, aby przewinąć (wyświetlacz E Ink)</string>
     <string name="image_preview_menu_option_medium">Średni</string>
+    <string name="blocked_keywords_supporting_text">Usuń artykuły, których tytuł lub treść pasują do słów kluczowych</string>
+    <string name="blocked_keywords">Lista zablokowanych</string>
+    <string name="blocked_keywords_remove_keyword">Usuń słowo kluczowe</string>
+    <string name="blocked_keywords_add_keyword">Dodaj słowo kluczowe</string>
 </resources>
