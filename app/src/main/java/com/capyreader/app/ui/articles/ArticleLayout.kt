@@ -280,7 +280,7 @@ fun ArticleLayout(
         }
     }
 
-    fun selectFilter() {
+    val selectFilter = {
         if (!filter.hasArticlesSelected()) {
             openNextList { onSelectArticleFilter() }
         } else {
@@ -288,7 +288,7 @@ fun ArticleLayout(
         }
     }
 
-    fun selectStatus(status: ArticleStatus) {
+    val selectStatus = { status: ArticleStatus ->
         coroutineScope.launchUI {
             openNextStatus { onSelectStatus(status) }
         }
@@ -302,7 +302,7 @@ fun ArticleLayout(
         }
     }
 
-    fun selectFolder(folder: Folder) {
+    val selectFolder = { folder: Folder ->
         if (!filter.isFolderSelect(folder)) {
             openNextList { onSelectFolder(folder.title) }
         } else {
@@ -310,7 +310,7 @@ fun ArticleLayout(
         }
     }
 
-    fun selectSavedSearch(savedSearch: SavedSearch) {
+    val selectSavedSearch = { savedSearch: SavedSearch ->
         if (!filter.isSavedSearchSelected(savedSearch)) {
             openNextList { onSelectSavedSearch(savedSearch.id) }
         } else {
@@ -329,19 +329,19 @@ fun ArticleLayout(
             FeedList(
                 folders = folders,
                 feeds = feeds,
-                onSelectFolder = ::selectFolder,
+                onSelectFolder = selectFolder,
                 onSelectFeed = selectFeed,
                 onFeedAdded = { onFeedAdded(it) },
                 savedSearches = savedSearches,
-                onSelectSavedSearch = ::selectSavedSearch,
+                onSelectSavedSearch = selectSavedSearch,
                 onNavigateToSettings = onNavigateToSettings,
-                onFilterSelect = ::selectFilter,
+                onFilterSelect = selectFilter,
                 onRefreshAll = { completion ->
                     onRefresh(ArticleFilter.default(), completion)
                 },
                 filter = filter,
                 statusCount = statusCount,
-                onSelectStatus = ::selectStatus
+                onSelectStatus = { selectStatus(it) }
             )
         },
         listPane = {
