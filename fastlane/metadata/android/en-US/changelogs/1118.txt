@@ -1,0 +1,4 @@
+• Make tables in articles full width to avoid clipping
+• Fix selection bug when reopening a previously selected feed
+• Fix Miniflux bug where read articles are marked as unread when reselected
+• 
