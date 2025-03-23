@@ -21,7 +21,6 @@
     <string name="folder_action_edit">Rename</string>
     <string name="feed_action_unsubscribe_title">Unsubscribe</string>
     <string name="feed_action_edit_success">Feed updated</string>
-    <string name="feed_action_unsubscribe_success">Unsubscribed</string>
     <string name="settings">Open settings</string>
     <string name="settings_remove_account_button_service">Log Out</string>
     <string name="settings_remove_account_title_service">Log Out</string>
@@ -53,6 +52,7 @@
     <string name="add_feed_network_error">Couldn\'t find feed. Check your connection.</string>
     <string name="edit_feed_error">Error saving feed</string>
     <string name="unsubscribe_error">Error unsubscribing from feed</string>
+    <string name="delete_tag_error">Error deleting tag</string>
     <string name="relative_time_just_now">Just now</string>
     <string name="relative_time_minutes">%1$dm</string>
     <string name="relative_time_hours">%1$dh</string>
@@ -204,7 +204,7 @@
     <string name="crash_log_export_item_title">Share crash logs</string>
     <string name="crash_log_export_item_subtitle">Saves crash logs to a file to share with the developer</string>
     <string name="edit_feed_tags_section">Tags</string>
-    <string name="edit_feed_tag_section">Tag</string>
+    <string name="edit_feed_tag_section">Add or Select Tag</string>
     <string name="edit_feed_notifications_title">Enable notifications</string>
     <string name="notifications_permissions_disabled_call_to_action">Settings</string>
     <string name="notifications_permission_disabled_title">Notification permission is disabled</string>
@@ -248,4 +248,7 @@
     <string name="blocked_keywords_supporting_text">Remove articles with title or content keyword matches</string>
     <string name="blocked_keywords_remove_keyword">Remove keyword</string>
     <string name="blocked_keywords_add_keyword">Add keyword</string>
+    <string name="tag_action_delete_title">Delete</string>
+    <string name="tag_action_delete_message">Are you sure you want to delete tag \"%1$s\"?</string>
+    <string name="tag_action_delete_confirm">Delete</string>
 </resources>

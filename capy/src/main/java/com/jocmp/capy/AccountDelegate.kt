@@ -27,4 +27,6 @@ interface AccountDelegate {
     ): Result<Feed>
 
     suspend fun removeFeed(feed: Feed): Result<Unit>
+
+    suspend fun removeFolder(folderTitle: String): Result<Unit>
 }

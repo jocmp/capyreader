@@ -20,6 +20,7 @@ import com.jocmp.capy.persistence.SavedSearchRecords
 import com.jocmp.capy.persistence.TaggingRecords
 import com.jocmp.feedbinclient.CreateSubscriptionRequest
 import com.jocmp.feedbinclient.CreateTaggingRequest
+import com.jocmp.feedbinclient.DeleteTagRequest
 import com.jocmp.feedbinclient.Entry
 import com.jocmp.feedbinclient.Feedbin
 import com.jocmp.feedbinclient.Icon
@@ -188,6 +189,12 @@ internal class FeedbinAccountDelegate(
 
     override suspend fun removeFeed(feed: Feed): Result<Unit> = withErrorHandling {
         feedbin.deleteSubscription(subscriptionID = feed.subscriptionID)
+
+        Unit
+    }
+
+    override suspend fun removeFolder(folderTitle: String): Result<Unit> = withErrorHandling {
+        feedbin.deleteTag(DeleteTagRequest(name = folderTitle))
 
         Unit
     }

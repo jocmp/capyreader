@@ -252,17 +252,33 @@ class ArticleScreenViewModel(
 
     fun removeFeed(
         feedID: String,
-        onSuccess: () -> Unit,
-        onFailure: () -> Unit
+        completion: (result: Result<Unit>) -> Unit
     ) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launchIO {
             account.removeFeed(feedID = feedID).fold(
                 onSuccess = {
                     resetToDefaultFilter()
-                    onSuccess()
+                    completion(Result.success(Unit))
                 },
                 onFailure = {
-                    onFailure()
+                    completion(Result.failure(it))
+                }
+            )
+        }
+    }
+
+    fun removeFolder(
+        folderTitle: String,
+        completion: (result: Result<Unit>) -> Unit
+    ) {
+        viewModelScope.launchIO {
+            account.removeFolder(folderTitle).fold(
+                onSuccess = {
+                    resetToDefaultFilter()
+                    completion(Result.success(Unit))
+                },
+                onFailure = {
+                    completion(Result.failure(it))
                 }
             )
         }

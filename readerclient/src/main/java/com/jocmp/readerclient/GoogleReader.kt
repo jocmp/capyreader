@@ -55,6 +55,13 @@ interface GoogleReader {
     ): Response<String>
 
     @FormUrlEncoded
+    @POST("reader/api/0/disable-tag")
+    suspend fun disableTag(
+        @Field("s") streamID: String,
+        @Field("T") postToken: String?
+    ): Response<String>
+
+    @FormUrlEncoded
     @POST("reader/api/0/subscription/quickadd")
     suspend fun quickAddSubscription(
         @Field("quickadd") url: String,

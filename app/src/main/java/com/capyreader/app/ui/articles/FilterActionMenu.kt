@@ -5,35 +5,38 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.rounded.Search
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.capyreader.app.R
+import com.capyreader.app.ui.articles.list.FeedActionMenu
+import com.capyreader.app.ui.articles.list.FolderActionMenu
 import com.capyreader.app.ui.articles.list.MarkAllReadButton
 import com.capyreader.app.ui.fixtures.FeedSample
+import com.jocmp.capy.ArticleFilter
+import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 
 @Composable
-fun FeedActions(
+fun FilterActionMenu(
+    filter: ArticleFilter,
+    currentFeed: Feed?,
     onMarkAllRead: () -> Unit,
-    onFeedEdited: () -> Unit,
-    onRemoveFeed: (feedID: String) -> Unit,
-    onEditFailure: (message: String) -> Unit,
+    onRemoveFeed: (feedID: String, completion: (result: Result<Unit>) -> Unit) -> Unit,
+    onRemoveFolder: (folderTitle: String, completion: (result: Result<Unit>) -> Unit) -> Unit,
     onRequestSearch: () -> Unit,
     hideSearchIcon: Boolean,
-    feed: Feed?,
 ) {
-    val (expanded, setMenuExpanded) = remember { mutableStateOf(false) }
-    val (isEditDialogOpen, setEditDialogOpen) = rememberSaveable { mutableStateOf(false) }
-    val (isRemoveDialogOpen, setRemoveDialogOpen) = remember { mutableStateOf(false) }
-    val editErrorMessage = stringResource(R.string.edit_feed_error)
+    val (expanded, setMenuExpanded) = remember(filter) { mutableStateOf(false) }
+
+    val closeMenu = {
+        setMenuExpanded(false)
+    }
 
     Box {
         Row {
@@ -46,57 +49,38 @@ fun FeedActions(
                 }
             }
 
-
             MarkAllReadButton(
                 onMarkAllRead = onMarkAllRead,
             )
 
-            if (feed != null) {
-                IconButton(onClick = { setMenuExpanded(true) }) {
-                    Icon(
-                        imageVector = Icons.Filled.MoreVert,
-                        contentDescription = stringResource(R.string.filter_action_menu_description)
+            Box {
+                if (currentFeed != null || filter is ArticleFilter.Folders) {
+                    IconButton(onClick = { setMenuExpanded(true) }) {
+                        Icon(
+                            imageVector = Icons.Filled.MoreVert,
+                            contentDescription = stringResource(R.string.filter_action_menu_description)
+                        )
+                    }
+                }
+
+                if (currentFeed != null) {
+                    FeedActionMenu(
+                        expanded = expanded,
+                        feed = currentFeed,
+                        onDismissMenuRequest = { closeMenu() },
+                        onRemoveRequest = onRemoveFeed,
+                    )
+                }
+
+                if (filter is ArticleFilter.Folders) {
+                    FolderActionMenu(
+                        expanded = expanded,
+                        folderTitle = filter.folderTitle,
+                        onDismissMenuRequest = { closeMenu() },
+                        onRemoveRequest = onRemoveFolder,
                     )
                 }
             }
-        }
-
-        if (feed != null) {
-            DropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { setMenuExpanded(false) },
-            ) {
-                FeedActionMenuItems(
-                    onEdit = { setEditDialogOpen(true) },
-                    onRemoveRequest = { setRemoveDialogOpen(true) },
-                    onMenuClose = { setMenuExpanded(false) },
-                )
-            }
-
-            if (isRemoveDialogOpen) {
-                RemoveDialog(
-                    feed = feed,
-                    onConfirm = {
-                        setRemoveDialogOpen(false)
-                        onRemoveFeed(feed.id)
-                    },
-                    onDismissRequest = { setRemoveDialogOpen(false) }
-                )
-            }
-
-            EditFeedDialog(
-                isOpen = isEditDialogOpen,
-                feed = feed,
-                onSuccess = {
-                    onFeedEdited()
-                },
-                onDismiss = {
-                    setEditDialogOpen(false)
-                },
-                onFailure = {
-                    onEditFailure(editErrorMessage)
-                }
-            )
         }
     }
 }
@@ -104,13 +88,17 @@ fun FeedActions(
 @Preview
 @Composable
 fun FeedActionsPreview(@PreviewParameter(FeedSample::class) feed: Feed) {
-    FeedActions(
-        onFeedEdited = {},
-        onRemoveFeed = {},
-        onEditFailure = {},
+    FilterActionMenu(
+        onRemoveFeed = { _, _ -> },
+        onRemoveFolder = { _, _ -> },
         onMarkAllRead = {},
         onRequestSearch = {},
-        feed = feed,
+        currentFeed = feed,
+        filter = ArticleFilter.Feeds(
+            feedID = feed.id,
+            folderTitle = null,
+            feedStatus = ArticleStatus.ALL
+        ),
         hideSearchIcon = false,
     )
 }

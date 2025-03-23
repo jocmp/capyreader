@@ -36,6 +36,12 @@ deleteTaggings {
     );
 }
 
+deleteByFolderTitle {
+    DELETE FROM taggings WHERE taggings.name = :folderTitle;
+
+    DELETE FROM folders WHERE folders.name = :folderTitle;
+}
+
 findFeedTaggingsToDelete:
 SELECT id
 FROM taggings

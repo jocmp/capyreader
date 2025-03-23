@@ -114,6 +114,7 @@ fun ArticleScreen(
                 )
             },
             onRemoveFeed = viewModel::removeFeed,
+            onRemoveFolder = viewModel::removeFolder,
             showUnauthorizedMessage = viewModel.showUnauthorizedMessage,
             onUnauthorizedDismissRequest = viewModel::dismissUnauthorizedMessage,
             onRequestNextFeed = viewModel::requestNextFeed,

@@ -188,6 +188,21 @@ internal class ReaderAccountDelegate(
         }
     }
 
+    override suspend fun removeFolder(folderTitle: String): Result<Unit> {
+        return withErrorHandling {
+            val response = withPostToken {
+                googleReader.disableTag(
+                    streamID = Stream.Label(folderTitle).id,
+                    postToken = postToken.get()
+                )
+            }
+
+            if (!response.isSuccessful) {
+                throw ValidationError(response.message())
+            }
+        }
+    }
+
     private suspend fun refreshFeeds() {
         withResult(googleReader.subscriptionList()) { result ->
             val subscriptions = result.subscriptions

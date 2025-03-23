@@ -11,6 +11,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
+import java.io.IOException
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -182,5 +183,35 @@ class AccountTest {
         account.enableStickyContent(feed.id)
 
         assertTrue(account.isFullContentEnabled(feed.id))
+    }
+
+    @Test
+    fun removeFolder_onSuccess() = runTest {
+        val folderTitle = "Tech"
+        coEvery { account.delegate.removeFolder(folderTitle) }.returns(Result.success(Unit))
+
+        val feed = FeedFixture(account.database).create(folderNames = listOf(folderTitle, "News"))
+
+        assertNotNull(account.findFolder(folderTitle))
+
+        account.removeFolder(folderTitle)
+
+        assertNull(account.findFolder(folderTitle))
+        assertNotNull(account.findFeed(feed.id))
+    }
+
+    @Test
+    fun removeFolder_onFailure() = runTest {
+        val folderTitle = "Tech"
+        coEvery { account.delegate.removeFolder(folderTitle) }.returns(Result.failure(IOException("Sorry Charlie")))
+
+        val feed = FeedFixture(account.database).create(folderNames = listOf(folderTitle, "News"))
+
+        assertNotNull(account.findFolder(folderTitle))
+
+        account.removeFolder(folderTitle)
+
+        assertNotNull(account.findFolder(folderTitle))
+        assertNotNull(account.findFeed(feed.id))
     }
 }
