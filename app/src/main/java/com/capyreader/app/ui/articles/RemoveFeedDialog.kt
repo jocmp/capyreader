@@ -6,25 +6,23 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.jocmp.capy.Feed
 import com.capyreader.app.R
+import com.jocmp.capy.Feed
 
 @Composable
-fun RemoveDialog(
+fun RemoveFeedDialog(
     feed: Feed,
     onConfirm: () -> Unit,
     onDismissRequest: () -> Unit
 ) {
-    val state = RemoveDialogState(
-        title = stringResource(R.string.feed_action_unsubscribe_title),
-        message = stringResource(R.string.feed_action_unsubscribe_message, feed.title),
-        confirmText = stringResource(R.string.feed_action_unsubscribe_confirm)
-    )
+    val title = stringResource(R.string.feed_action_unsubscribe_title)
+    val message = stringResource(R.string.feed_action_unsubscribe_message, feed.title)
+    val confirmText = stringResource(R.string.feed_action_unsubscribe_confirm)
 
     AlertDialog(
         onDismissRequest = onDismissRequest,
-        title = { Text(state.title) },
-        text = { Text(state.message) },
+        title = { Text(title) },
+        text = { Text(message) },
         dismissButton = {
             TextButton(onClick = onDismissRequest) {
                 Text(stringResource(R.string.dialog_cancel))
@@ -32,15 +30,8 @@ fun RemoveDialog(
         },
         confirmButton = {
             TextButton(onClick = onConfirm) {
-                Text(state.confirmText)
+                Text(confirmText)
             }
         }
     )
 }
-
-
-data class RemoveDialogState(
-    val title: String,
-    val message: String,
-    val confirmText: String,
-)

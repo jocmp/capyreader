@@ -152,6 +152,11 @@ internal class LocalAccountDelegate(
         return Result.success(Unit)
     }
 
+    override suspend fun removeFolder(folderTitle: String): Result<Unit> {
+        // no-op
+        return Result.success(Unit)
+    }
+
     private suspend fun refreshFeeds(feeds: List<Feed>, cutoffDate: ZonedDateTime?) {
         coroutineScope {
             feeds.forEach { feed ->

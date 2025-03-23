@@ -14,6 +14,10 @@ internal class TaggingRecords(
         database.taggingsQueries.deleteTaggings(taggingIDs)
     }
 
+    fun deleteByFolderName(folderTitle: String) {
+        database.taggingsQueries.deleteByFolderTitle(folderTitle)
+    }
+
     fun deleteOrphaned(excludedIDs: List<String>) {
         database.taggingsQueries.deleteOrphanedTags(excludedIDs = excludedIDs)
     }

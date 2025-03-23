@@ -22,6 +22,7 @@ import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.capy.persistence.FeedRecords
 import com.jocmp.capy.persistence.FolderRecords
 import com.jocmp.capy.persistence.SavedSearchRecords
+import com.jocmp.capy.persistence.TaggingRecords
 import com.jocmp.feedbinclient.Feedbin
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -67,6 +68,7 @@ data class Account(
     internal val articleRecords: ArticleRecords = ArticleRecords(database)
     private val feedRecords: FeedRecords = FeedRecords(database)
     private val folderRecords: FolderRecords = FolderRecords(database)
+    private val taggingRecords: TaggingRecords = TaggingRecords(database)
     private val savedSearchRecords = SavedSearchRecords(database)
 
     private val articleContent = ArticleContent(httpClient = localHttpClient)
@@ -130,6 +132,18 @@ data class Account(
         return delegate.removeFeed(feed = feed).fold(
             onSuccess = {
                 feedRecords.removeFeed(feedID = feed.id)
+                Result.success(Unit)
+            },
+            onFailure = {
+                Result.failure(it)
+            }
+        )
+    }
+
+    suspend fun removeFolder(folderTitle: String): Result<Unit> {
+        return delegate.removeFolder(folderTitle).fold(
+            onSuccess = {
+                taggingRecords.deleteByFolderName(folderTitle)
                 Result.success(Unit)
             },
             onFailure = {

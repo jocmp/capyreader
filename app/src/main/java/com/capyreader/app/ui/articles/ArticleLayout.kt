@@ -22,6 +22,7 @@ import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -56,6 +57,7 @@ import com.capyreader.app.ui.articles.media.ArticleMediaView
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.rememberWebViewState
+import com.capyreader.app.ui.settings.LocalSnackbarHost
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
@@ -98,7 +100,8 @@ fun ArticleLayout(
     onToggleArticleStar: () -> Unit,
     onMarkAllRead: (range: MarkRead) -> Unit,
     onRequestNextFeed: () -> Unit,
-    onRemoveFeed: (feedID: String, onSuccess: () -> Unit, onFailure: () -> Unit) -> Unit,
+    onRemoveFeed: (feedID: String, completion: (result: Result<Unit>) -> Unit) -> Unit,
+    onRemoveFolder: (folderTitle: String, completion: (result: Result<Unit>) -> Unit) -> Unit,
     drawerState: DrawerState,
     showUnauthorizedMessage: Boolean,
     onUnauthorizedDismissRequest: () -> Unit,
@@ -120,9 +123,9 @@ fun ArticleLayout(
     var isRefreshing by remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
 
-    val snackbarHost = remember { SnackbarHostState() }
+    val snackbarHostState = remember { SnackbarHostState() }
     val addFeedSuccessMessage = stringResource(R.string.add_feed_success)
-    val currentFeed = findCurrentFeed(filter, allFeeds)
+    val currentFeed = rememberCurrentFeed(filter, allFeeds)
     val scrollBehavior = rememberArticleTopBar(filter)
     var media by rememberSaveable(saver = Media.Saver) { mutableStateOf(null) }
     val focusManager = LocalFocusManager.current
@@ -254,7 +257,7 @@ fun ArticleLayout(
 
     val showSnackbar = { message: String ->
         coroutineScope.launch {
-            snackbarHost.showSnackbar(
+            snackbarHostState.showSnackbar(
                 message,
                 withDismissAction = true,
                 duration = SnackbarDuration.Short
@@ -322,162 +325,167 @@ fun ArticleLayout(
         selectArticle(articleID)
     }
 
-    ArticleScaffold(
-        drawerState = drawerState,
-        scaffoldNavigator = scaffoldNavigator,
-        drawerPane = {
-            FeedList(
-                folders = folders,
-                feeds = feeds,
-                onSelectFolder = selectFolder,
-                onSelectFeed = selectFeed,
-                onFeedAdded = { onFeedAdded(it) },
-                savedSearches = savedSearches,
-                onSelectSavedSearch = selectSavedSearch,
-                onNavigateToSettings = onNavigateToSettings,
-                onFilterSelect = selectFilter,
-                onRefreshAll = { completion ->
-                    onRefresh(ArticleFilter.default(), completion)
-                },
-                filter = filter,
-                statusCount = statusCount,
-                onSelectStatus = { selectStatus(it) }
-            )
-        },
-        listPane = {
-            val keyboardManager = LocalSoftwareKeyboardController.current
-
-            Scaffold(
-                modifier = Modifier
-                    .nestedScroll(scrollBehavior.nestedScrollConnection)
-                    .nestedScroll(object : NestedScrollConnection {
-                        override fun onPostScroll(
-                            consumed: Offset,
-                            available: Offset,
-                            source: NestedScrollSource
-                        ): Offset {
-                            if (search.isActive) {
-                                keyboardManager?.hide()
-                            }
-
-                            return Offset.Zero
-                        }
-                    }),
-                topBar = {
-                    ArticleListTopBar(
-                        onRequestJumpToTop = {
-                            scrollToTop()
-                        },
-                        onNavigateToDrawer = {
-                            openDrawer()
-                        },
-                        onRequestSnackbar = { showSnackbar(it) },
-                        onRemoveFeed = onRemoveFeed,
-                        scrollBehavior = scrollBehavior,
-                        onMarkAllRead = {
-                            markAllRead(it)
-                        },
-                        search = search,
-                        filter = filter,
-                        currentFeed = currentFeed,
-                        feeds = allFeeds,
-                        savedSearches = savedSearches,
-                        folders = allFolders
-                    )
-                },
-                snackbarHost = {
-                    SnackbarHost(hostState = snackbarHost)
-                },
-            ) { innerPadding ->
-                ArticleListScaffold(
-                    padding = innerPadding,
-                    showOnboarding = isRefreshInitialized && allFeeds.isEmpty(),
-                    onboarding = {
-                        EmptyOnboardingView {
-                            AddFeedButton(
-                                onComplete = {
-                                    onFeedAdded(it)
-                                }
-                            )
-                        }
+    CompositionLocalProvider(
+        LocalSnackbarHost provides snackbarHostState,
+    ) {
+        ArticleScaffold(
+            drawerState = drawerState,
+            scaffoldNavigator = scaffoldNavigator,
+            drawerPane = {
+                FeedList(
+                    folders = folders,
+                    feeds = feeds,
+                    onSelectFolder = selectFolder,
+                    onSelectFeed = selectFeed,
+                    onFeedAdded = { onFeedAdded(it) },
+                    savedSearches = savedSearches,
+                    onSelectSavedSearch = selectSavedSearch,
+                    onNavigateToSettings = onNavigateToSettings,
+                    onFilterSelect = selectFilter,
+                    onRefreshAll = { completion ->
+                        onRefresh(ArticleFilter.default(), completion)
                     },
-                ) {
-                    PullToRefreshBox(
-                        isRefreshing = isRefreshing,
-                        onRefresh = {
-                            refreshFeeds()
-                        },
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        PullToNextFeedBox(
-                            modifier = Modifier.fillMaxSize(),
-                            enabled = canSwipeToNextFeed,
-                            onRequestNext = {
-                                requestNextFeed()
+                    filter = filter,
+                    statusCount = statusCount,
+                    onSelectStatus = { selectStatus(it) }
+                )
+            },
+            listPane = {
+                val keyboardManager = LocalSoftwareKeyboardController.current
+
+
+                Scaffold(
+                    modifier = Modifier
+                        .nestedScroll(scrollBehavior.nestedScrollConnection)
+                        .nestedScroll(object : NestedScrollConnection {
+                            override fun onPostScroll(
+                                consumed: Offset,
+                                available: Offset,
+                                source: NestedScrollSource
+                            ): Offset {
+                                if (search.isActive) {
+                                    keyboardManager?.hide()
+                                }
+
+                                return Offset.Zero
+                            }
+                        }),
+                    topBar = {
+                        ArticleListTopBar(
+                            onRequestJumpToTop = {
+                                scrollToTop()
                             },
-                        ) {
-                            Crossfade(
-                                articles,
-                                animationSpec = tween(500),
-                                modifier = Modifier.fillMaxSize(),
-                                label = "",
-                            ) {
-                                ArticleList(
-                                    articles = it,
-                                    selectedArticleKey = article?.id,
-                                    listState = listState,
-                                    enableMarkReadOnScroll = enableMarkReadOnScroll,
-                                    onMarkAllRead = { range ->
-                                        onMarkAllRead(range)
-                                    },
-                                    onSelect = { articleID ->
-                                        selectArticle(articleID)
-                                    },
+                            onNavigateToDrawer = {
+                                openDrawer()
+                            },
+                            onRemoveFeed = onRemoveFeed,
+                            onRemoveFolder = onRemoveFolder,
+                            scrollBehavior = scrollBehavior,
+                            onMarkAllRead = {
+                                markAllRead(it)
+                            },
+                            search = search,
+                            filter = filter,
+                            currentFeed = currentFeed,
+                            feeds = allFeeds,
+                            savedSearches = savedSearches,
+                            folders = allFolders
+                        )
+                    },
+                    snackbarHost = {
+                        SnackbarHost(hostState = snackbarHostState)
+                    },
+                ) { innerPadding ->
+                    ArticleListScaffold(
+                        padding = innerPadding,
+                        showOnboarding = isRefreshInitialized && allFeeds.isEmpty(),
+                        onboarding = {
+                            EmptyOnboardingView {
+                                AddFeedButton(
+                                    onComplete = {
+                                        onFeedAdded(it)
+                                    }
                                 )
                             }
+                        },
+                    ) {
+                        PullToRefreshBox(
+                            isRefreshing = isRefreshing,
+                            onRefresh = {
+                                refreshFeeds()
+                            },
+                            modifier = Modifier.fillMaxSize()
+                        ) {
+                            PullToNextFeedBox(
+                                modifier = Modifier.fillMaxSize(),
+                                enabled = canSwipeToNextFeed,
+                                onRequestNext = {
+                                    requestNextFeed()
+                                },
+                            ) {
+                                Crossfade(
+                                    articles,
+                                    animationSpec = tween(500),
+                                    modifier = Modifier.fillMaxSize(),
+                                    label = "",
+                                ) {
+                                    ArticleList(
+                                        articles = it,
+                                        selectedArticleKey = article?.id,
+                                        listState = listState,
+                                        enableMarkReadOnScroll = enableMarkReadOnScroll,
+                                        onMarkAllRead = { range ->
+                                            onMarkAllRead(range)
+                                        },
+                                        onSelect = { articleID ->
+                                            selectArticle(articleID)
+                                        },
+                                    )
+                                }
+                            }
                         }
                     }
                 }
-            }
-        },
-        detailPane = {
-            val webViewState = rememberWebViewState(
-                onNavigateToMedia = { media = it },
-            )
+            },
+            detailPane = {
+                val webViewState = rememberWebViewState(
+                    onNavigateToMedia = { media = it },
+                )
 
-            if (article == null && hasMultipleColumns) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .fillMaxSize()
-                ) {
-                    CapyPlaceholder()
+                if (article == null && hasMultipleColumns) {
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
+                        CapyPlaceholder()
+                    }
+                } else if (article != null) {
+                    val pagination = rememberArticlePagination(
+                        article,
+                        onSelectArticle = { index, articleID ->
+                            selectArticle(articleID)
+                            scrollToArticle(index)
+                        }
+                    )
+                    ArticleView(
+                        article = article,
+                        webViewState = webViewState,
+                        pagination = pagination,
+                        onBackPressed = {
+                            clearArticle()
+                        },
+                        onToggleRead = onToggleArticleRead,
+                        onToggleStar = onToggleArticleStar,
+                        enableBackHandler = media == null,
+                        onScrollToArticle = { index ->
+                            scrollToArticle(index)
+                        }
+                    )
                 }
-            } else if (article != null) {
-                val pagination = rememberArticlePagination(
-                    article,
-                    onSelectArticle = { index, articleID ->
-                        selectArticle(articleID)
-                        scrollToArticle(index)
-                    }
-                )
-                ArticleView(
-                    article = article,
-                    webViewState = webViewState,
-                    pagination = pagination,
-                    onBackPressed = {
-                        clearArticle()
-                    },
-                    onToggleRead = onToggleArticleRead,
-                    onToggleStar = onToggleArticleStar,
-                    enableBackHandler = media == null,
-                    onScrollToArticle = { index ->
-                        scrollToArticle(index)
-                    }
-                )
             }
-        }
-    )
+        )
+    }
 
     AnimatedVisibility(
         enter = fadeIn(),
@@ -560,12 +568,15 @@ fun isFeedActive(
             !search.isActive
 }
 
-fun findCurrentFeed(filter: ArticleFilter, feeds: List<Feed>): Feed? {
-    if (filter is ArticleFilter.Feeds) {
-        return feeds.find { it.id == filter.feedID }
-    }
-
-    return null
+@Composable
+fun rememberCurrentFeed(filter: ArticleFilter, feeds: List<Feed>): Feed? {
+   return remember(filter, feeds) {
+       if (filter is ArticleFilter.Feeds) {
+           feeds.find { it.id == filter.feedID }
+       } else {
+           null
+       }
+   }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

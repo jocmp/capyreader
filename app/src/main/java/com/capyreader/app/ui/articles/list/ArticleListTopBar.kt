@@ -29,7 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.preferences.LayoutPreference
-import com.capyreader.app.ui.articles.FeedActions
+import com.capyreader.app.ui.articles.FilterActionMenu
 import com.capyreader.app.ui.articles.FilterAppBarTitle
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.SearchTextField
@@ -45,8 +45,8 @@ import com.jocmp.capy.SavedSearch
 fun ArticleListTopBar(
     onRequestJumpToTop: () -> Unit,
     onNavigateToDrawer: () -> Unit,
-    onRequestSnackbar: (message: String) -> Unit,
-    onRemoveFeed: (feedID: String, onSuccess: () -> Unit, onFailure: () -> Unit) -> Unit,
+    onRemoveFeed: (feedID: String, completion: (result: Result<Unit>) -> Unit) -> Unit,
+    onRemoveFolder: (folderTitle: String, completion: (result: Result<Unit>) -> Unit) -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
     onMarkAllRead: (MarkRead) -> Unit,
     search: ArticleSearch,
@@ -56,9 +56,6 @@ fun ArticleListTopBar(
     savedSearches: List<SavedSearch>,
     folders: List<Folder>,
 ) {
-    val editSuccessMessage = stringResource(R.string.feed_action_edit_success)
-    val unsubscribeMessage = stringResource(R.string.feed_action_unsubscribe_success)
-    val unsubscribeErrorMessage = stringResource(R.string.unsubscribe_error)
     val enableSearch = search.isActive
     val layout = rememberLayoutPreference()
 
@@ -144,28 +141,16 @@ fun ArticleListTopBar(
             }
         },
         actions = {
-            FeedActions(
+            FilterActionMenu(
+                filter = filter,
+                currentFeed = currentFeed,
                 onMarkAllRead = {
                     onMarkAllRead(MarkRead.All)
                 },
-                onFeedEdited = {
-                    onRequestSnackbar(editSuccessMessage)
-                },
-                onRemoveFeed = { feedID ->
-                    onRemoveFeed(
-                        feedID,
-                        {
-                            onRequestSnackbar(unsubscribeMessage)
-                        },
-                        {
-                            onRequestSnackbar(unsubscribeErrorMessage)
-                        }
-                    )
-                },
-                onEditFailure = onRequestSnackbar,
-                onRequestSearch = { search.start( )},
+                onRemoveFeed = onRemoveFeed,
+                onRemoveFolder = onRemoveFolder,
+                onRequestSearch = { search.start() },
                 hideSearchIcon = enableSearch,
-                feed = currentFeed,
             )
         }
     )
@@ -179,8 +164,8 @@ private fun FeedListTopBarPreview() {
     ArticleListTopBar(
         onRequestJumpToTop = { },
         onNavigateToDrawer = { },
-        onRequestSnackbar = {},
-        onRemoveFeed = { _, _, _ -> },
+        onRemoveFeed = { _, _ -> },
+        onRemoveFolder = { _, _ -> },
         scrollBehavior = scrollBehavior,
         onMarkAllRead = {},
         search = ArticleSearch(),
