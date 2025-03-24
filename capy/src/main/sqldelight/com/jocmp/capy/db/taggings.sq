@@ -10,6 +10,22 @@ VALUES (
   :name
 );
 
+updateTitle {
+    UPDATE taggings SET name = :title WHERE taggings.name = :previousTitle;
+
+    DELETE FROM folders WHERE name = :previousTitle;
+
+    INSERT OR REPLACE INTO folders(
+        name,
+        expanded
+    )
+    VALUES (
+        :title,
+        :expanded
+    )
+    ON CONFLICT(name) DO NOTHING;
+}
+
 deleteOrphanedTags {
     DELETE FROM taggings WHERE id NOT IN :excludedIDs;
 

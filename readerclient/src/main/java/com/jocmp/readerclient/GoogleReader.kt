@@ -55,6 +55,14 @@ interface GoogleReader {
     ): Response<String>
 
     @FormUrlEncoded
+    @POST("reader/api/0/rename-tag")
+    suspend fun renameTag(
+        @Field("s") streamID: String,
+        @Field("dest") destination: String,
+        @Field("T") postToken: String?
+    ): Response<String>
+
+    @FormUrlEncoded
     @POST("reader/api/0/disable-tag")
     suspend fun disableTag(
         @Field("s") streamID: String,

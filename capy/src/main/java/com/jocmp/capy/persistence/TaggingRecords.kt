@@ -48,4 +48,17 @@ internal class TaggingRecords(
                 name = name
             )
     }
+
+    fun updateTitle(
+        previousTitle: String,
+        title: String,
+    ) {
+        val expanded = database.foldersQueries.find(previousTitle).executeAsOneOrNull() ?: false
+
+        database.taggingsQueries.updateTitle(
+            previousTitle = previousTitle,
+            title = title,
+            expanded = expanded,
+        )
+    }
 }

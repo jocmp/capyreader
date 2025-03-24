@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 sealed class ArticleFilter(open val status: ArticleStatus) {
-    fun isFolderSelect(folder: Folder): Boolean {
+    fun isFolderSelected(folder: Folder): Boolean {
         return this is Folders && this.folderTitle == folder.title
     }
 

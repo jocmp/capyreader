@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import com.capyreader.app.R
+import com.capyreader.app.ui.articles.EditFolderDialog
 import com.capyreader.app.ui.articles.RemoveFolderDialog
 import com.capyreader.app.ui.settings.localSnackbarDisplay
 
@@ -18,10 +19,13 @@ fun FolderActionMenu(
     onRemoveRequest: (folderTitle: String, completion: (result: Result<Unit>) -> Unit) -> Unit,
     expanded: Boolean,
 ) {
+    val editSuccessMessage = stringResource(R.string.tag_action_edit_success)
+    val editErrorMessage = stringResource(R.string.tag_action_edit_error)
     val deleteErrorMessage = stringResource(R.string.delete_tag_error)
     val showSnackbar = localSnackbarDisplay()
 
     val (isRemoveDialogOpen, setRemoveDialogOpen) = remember { mutableStateOf(false) }
+    val (isEditDialogOpen, setEditDialogOpen) = remember { mutableStateOf(false) }
 
     val onRemoveComplete = { result: Result<Unit> ->
         if (result.isFailure) {
@@ -33,6 +37,15 @@ fun FolderActionMenu(
         expanded = expanded,
         onDismissRequest = onDismissMenuRequest,
     ) {
+        DropdownMenuItem(
+            text = {
+                Text(stringResource(R.string.tag_action_edit))
+            },
+            onClick = {
+                onDismissMenuRequest()
+                setEditDialogOpen(true)
+            }
+        )
         DropdownMenuItem(
             text = {
                 Text(stringResource(R.string.tag_action_delete_title))
@@ -54,6 +67,23 @@ fun FolderActionMenu(
                 }
             },
             onDismissRequest = { setRemoveDialogOpen(false) }
+        )
+    }
+
+    EditFolderDialog(
+        folderTitle = folderTitle,
+        isOpen = isEditDialogOpen,
+        onDismiss = {
+            setEditDialogOpen(false)
+        }
+    ) { result ->
+        result.fold(
+            onSuccess = {
+                showSnackbar(editSuccessMessage)
+            },
+            onFailure = {
+                showSnackbar(editErrorMessage)
+            }
         )
     }
 }
