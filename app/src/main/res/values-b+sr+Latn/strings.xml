@@ -21,7 +21,6 @@
     <string name="folder_action_edit">Preimenuj</string>
     <string name="feed_action_unsubscribe_title">Ukloni Izvor</string>
     <string name="feed_action_edit_success">Izvor je ažuriran</string>
-    <string name="feed_action_unsubscribe_success">Izvor je uspešno uklonjen</string>
     <string name="settings">Otvori podešavanja</string>
     <string name="settings_remove_account_button_service">Odjavi se</string>
     <string name="settings_remove_account_title_service">Odjavi se</string>

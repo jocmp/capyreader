@@ -67,7 +67,6 @@
     <string name="feed_action_unsubscribe_message">Tes certeza de querer retirar a subscrición a «%1$s»?</string>
     <string name="folder_action_delete_title">Eliminar Etiqueta</string>
     <string name="folder_action_edit">Cambiar nome</string>
-    <string name="feed_action_unsubscribe_success">Retirouse a subscrición</string>
     <string name="settings">Abrir axustes</string>
     <string name="settings_remove_account_button_service">Saír</string>
     <string name="account_settings_save_name">Gardouse o nome</string>

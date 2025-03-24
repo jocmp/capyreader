@@ -42,7 +42,6 @@
     <string name="dialog_cancel">取消</string>
     <string name="folder_action_delete_title">刪除標籤</string>
     <string name="feed_action_edit_success">源已更新</string>
-    <string name="feed_action_unsubscribe_success">已退訂</string>
     <string name="settings">打開設置</string>
     <string name="settings_remove_account_message_service">确定要登出嗎？</string>
     <string name="settings_remove_account_button_service">登出</string>

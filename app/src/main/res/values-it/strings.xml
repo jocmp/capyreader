@@ -11,7 +11,6 @@
     <string name="folder_action_edit">Rinomina</string>
     <string name="feed_action_unsubscribe_title">Annulla l\'iscrizione</string>
     <string name="feed_action_edit_success">Feed aggiornato</string>
-    <string name="feed_action_unsubscribe_success">Non iscritto</string>
     <string name="settings">Apri le impostazioni</string>
     <string name="settings_remove_account_button_service">Logout</string>
     <string name="feed_action_edit">Modifica il feed</string>

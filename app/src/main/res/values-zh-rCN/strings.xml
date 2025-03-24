@@ -18,7 +18,6 @@
     <string name="edit_feed_submit">保存</string>
     <string name="folder_action_delete_title">删除标签</string>
     <string name="folder_action_edit">重命名</string>
-    <string name="feed_action_unsubscribe_success">取消订阅</string>
     <string name="settings_remove_account_confirm_service">退出登录</string>
     <string name="settings_remove_account_button_local">删除账户</string>
     <string name="settings_remove_account_message_local">您确定要删除帐户吗？此操作无法撤消。</string>
