@@ -11,3 +11,8 @@ VALUES (
     :name,
     :expanded
 );
+
+find:
+SELECT expanded
+FROM folders
+WHERE name = :name;

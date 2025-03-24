@@ -26,6 +26,11 @@ interface AccountDelegate {
         folderTitles: List<String>,
     ): Result<Feed>
 
+    suspend fun updateFolder(
+        oldTitle: String,
+        newTitle: String
+    ): Result<Unit>
+
     suspend fun removeFeed(feed: Feed): Result<Unit>
 
     suspend fun removeFolder(folderTitle: String): Result<Unit>

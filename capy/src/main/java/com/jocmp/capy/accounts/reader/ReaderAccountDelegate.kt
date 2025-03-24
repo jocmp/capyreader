@@ -171,6 +171,22 @@ internal class ReaderAccountDelegate(
         }
     }
 
+    override suspend fun updateFolder(oldTitle: String, newTitle: String): Result<Unit> {
+        return withErrorHandling {
+            val response = withPostToken {
+                googleReader.renameTag(
+                    streamID = Stream.Label(oldTitle).id,
+                    destination = Stream.Label(newTitle).id,
+                    postToken = postToken.get()
+                )
+            }
+
+            if (!response.isSuccessful) {
+                throw ValidationError(response.message())
+            }
+        }
+    }
+
     override suspend fun removeFeed(feed: Feed): Result<Unit> {
         return withErrorHandling {
             val response = withPostToken {

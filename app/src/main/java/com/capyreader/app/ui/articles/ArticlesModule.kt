@@ -39,4 +39,10 @@ internal val articlesModule = module {
             appPreferences = get()
         )
     }
+    viewModel {
+        EditFolderViewModel(
+            account = get(),
+            appPreferences = get()
+        )
+    }
 }

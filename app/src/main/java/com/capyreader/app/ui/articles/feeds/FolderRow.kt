@@ -32,7 +32,7 @@ fun FolderRow(
     onFeedSelect: (feed: Feed) -> Unit,
 ) {
     val actions = LocalFolderActions.current
-    val isFolderSelected = filter.isFolderSelect(folder)
+    val isFolderSelected = filter.isFolderSelected(folder)
     val (expanded, setExpanded) = rememberSaveable(folder.title) { mutableStateOf(folder.expanded) }
 
     fun onExpanded(expand: Boolean) {

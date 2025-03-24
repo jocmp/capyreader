@@ -67,6 +67,10 @@ interface Feedbin {
     @DELETE("v2/taggings/{taggingID}.json")
     suspend fun deleteTagging(@Path("taggingID") taggingID: String): Response<Void>
 
+
+    @POST("v2/tags.json")
+    suspend fun updateTag(@Body body: UpdateTagRequest): Response<List<Tagging>>
+
     @HTTP(method = "DELETE", path = "v2/tags.json", hasBody = true)
     suspend fun deleteTag(@Body body: DeleteTagRequest): Response<List<Tagging>>
 

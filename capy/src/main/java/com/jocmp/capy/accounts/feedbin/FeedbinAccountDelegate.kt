@@ -29,6 +29,7 @@ import com.jocmp.feedbinclient.StarredEntriesRequest
 import com.jocmp.feedbinclient.Subscription
 import com.jocmp.feedbinclient.UnreadEntriesRequest
 import com.jocmp.feedbinclient.UpdateSubscriptionRequest
+import com.jocmp.feedbinclient.UpdateTagRequest
 import com.jocmp.feedbinclient.pagingInfo
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
@@ -185,6 +186,15 @@ internal class FeedbinAccountDelegate(
         }
 
         feedRecords.find(feed.id)
+    }
+
+    override suspend fun updateFolder(
+        oldTitle: String,
+        newTitle: String
+    ): Result<Unit> = withErrorHandling {
+        feedbin.updateTag(UpdateTagRequest(old_name = oldTitle, new_name = newTitle))
+
+        Unit
     }
 
     override suspend fun removeFeed(feed: Feed): Result<Unit> = withErrorHandling {

@@ -306,7 +306,7 @@ fun ArticleLayout(
     }
 
     val selectFolder = { folder: Folder ->
-        if (!filter.isFolderSelect(folder)) {
+        if (!filter.isFolderSelected(folder)) {
             openNextList { onSelectFolder(folder.title) }
         } else {
             closeDrawer()

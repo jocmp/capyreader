@@ -129,6 +129,12 @@ internal class LocalAccountDelegate(
         return Result.success(updatedFeed)
     }
 
+    override suspend fun updateFolder(oldTitle: String, newTitle: String): Result<Unit> {
+        // no-op
+        return Result.success(Unit)
+    }
+
+
     override suspend fun addStar(articleIDs: List<String>): Result<Unit> {
         return Result.success(Unit)
     }

@@ -15,6 +15,7 @@ import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.sortedByName
 import com.jocmp.capy.common.sortedByTitle
+import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.opml.ImportProgress
 import com.jocmp.capy.opml.OPMLImporter
@@ -126,8 +127,31 @@ data class Account(
         )
     }
 
+    suspend fun editFolder(form: EditFolderFormEntry): Result<Folder> {
+        delegate.updateFolder(
+            oldTitle = form.previousTitle,
+            newTitle = form.folderTitle
+        ).fold(
+            onSuccess = {
+                database.transactionWithErrorHandling {
+                    taggingRecords.updateTitle(
+                        previousTitle = form.previousTitle,
+                        title = form.folderTitle
+                    )
+                }
+
+                return findFolder(form.folderTitle)?.let { Result.success(it) }
+                    ?: missingFolderError()
+            },
+            onFailure = {
+                return Result.failure(it)
+            }
+        )
+    }
+
     suspend fun removeFeed(feedID: String): Result<Unit> {
-        val feed = feedRecords.find(feedID) ?: return Result.failure(Throwable("Feed not found"))
+        val feed =
+            feedRecords.find(feedID) ?: return Result.failure(Throwable("Feed not found"))
 
         return delegate.removeFeed(feed = feed).fold(
             onSuccess = {
@@ -254,7 +278,10 @@ data class Account(
         articleRecords.dismissNotifications(ids)
     }
 
-    suspend fun import(inputStream: InputStream, onProgress: (ImportProgress) -> Unit) {
+    suspend fun import(
+        inputStream: InputStream,
+        onProgress: (ImportProgress) -> Unit
+    ) {
         OPMLImporter(this).import(onProgress, inputStream)
     }
 
@@ -307,6 +334,8 @@ data class Account(
         return opml
     }
 }
+
+private fun <T> missingFolderError() = Result.failure<T>(Throwable("Folder not found"))
 
 private fun Feedbin.Companion.forAccount(path: URI, preferences: AccountPreferences) =
     create(client = FeedbinOkHttpClient.forAccount(path, preferences))

@@ -251,4 +251,8 @@
     <string name="tag_action_delete_title">Delete</string>
     <string name="tag_action_delete_message">Are you sure you want to delete tag \"%1$s\"?</string>
     <string name="tag_action_delete_confirm">Delete</string>
+    <string name="tag_name_title">Name</string>
+    <string name="tag_action_edit_success">Tag updated</string>
+    <string name="tag_action_edit_error">Error updating tag</string>
+    <string name="tag_action_edit">Edit Tag</string>
 </resources>
