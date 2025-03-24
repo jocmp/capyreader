@@ -17,7 +17,6 @@
     <string name="edit_feed_submit">Salvesta</string>
     <string name="feed_action_unsubscribe_title">Loobu tellimusest</string>
     <string name="feed_action_edit_success">Uudisvoog on muudetud</string>
-    <string name="feed_action_unsubscribe_success">Oled tellimusest loobunud</string>
     <string name="settings">Ava seadistused</string>
     <string name="settings_remove_account_button_service">Logi välja</string>
     <string name="settings_remove_account_title_service">Logi välja</string>

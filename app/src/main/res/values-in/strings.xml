@@ -20,7 +20,6 @@
     <string name="app_name">Capy Reader</string>
     <string name="add_feed_new_folder_title">Tag Baru</string>
     <string name="folder_action_delete_title">Hapus Tag</string>
-    <string name="feed_action_unsubscribe_success">Berhenti berlangganan</string>
     <string name="settings">Buka pengaturan</string>
     <string name="settings_remove_account_button_service">Keluar</string>
     <string name="settings_remove_account_title_service">Keluar</string>

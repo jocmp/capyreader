@@ -60,7 +60,6 @@
     <string name="edit_feed_submit">Запази</string>
     <string name="dialog_cancel">Отказ</string>
     <string name="feed_action_edit_success">Актуализирана емисия</string>
-    <string name="feed_action_unsubscribe_success">Отменен абонамент</string>
     <string name="settings">Отвори настройки</string>
     <string name="settings_remove_account_title_service">Излезте</string>
     <string name="settings_remove_account_confirm_service">Излезте</string>

@@ -18,7 +18,6 @@
     <string name="folder_action_edit">மறுபெயரிடுங்கள்</string>
     <string name="feed_action_unsubscribe_title">குழுவிலகவும்</string>
     <string name="feed_action_edit_success">ஊட்டம் புதுப்பிக்கப்பட்டது</string>
-    <string name="feed_action_unsubscribe_success">குழுவிலகப்பட்டது</string>
     <string name="settings">திறந்த அமைப்புகள்</string>
     <string name="settings_remove_account_button_service">விடுபதிகை</string>
     <string name="settings_remove_account_title_service">விடுபதிகை</string>

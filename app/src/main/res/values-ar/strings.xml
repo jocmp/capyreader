@@ -15,7 +15,6 @@
     <string name="dialog_cancel">إلغاء</string>
     <string name="folder_action_delete_title">حذف المجلد</string>
     <string name="folder_action_edit">إعادة تسمية</string>
-    <string name="feed_action_unsubscribe_success">تم إلغاء الإشتراك</string>
     <string name="settings">فتح الإعدادات</string>
     <string name="settings_remove_account_button_service">‌تسجيل الخروج</string>
     <string name="settings_remove_account_title_service">تسجيل الخروج</string>

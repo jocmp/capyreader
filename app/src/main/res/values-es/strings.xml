@@ -21,7 +21,6 @@
     <string name="folder_action_edit">Cambiar nombre</string>
     <string name="feed_action_unsubscribe_title">Cancelar suscripción</string>
     <string name="feed_action_edit_success">Feed actualizado</string>
-    <string name="feed_action_unsubscribe_success">Darse de baja</string>
     <string name="settings">Abrir los ajustes</string>
     <string name="settings_remove_account_button_service">Cerrar sesión</string>
     <string name="settings_remove_account_title_service">Cerrar sesión</string>

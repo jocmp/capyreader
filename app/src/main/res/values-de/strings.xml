@@ -18,7 +18,6 @@
     <string name="folder_action_edit">Umbenennen</string>
     <string name="feed_action_unsubscribe_title">Abonnement beenden</string>
     <string name="feed_action_edit_success">Feed aktualisieren</string>
-    <string name="feed_action_unsubscribe_success">Abonnement beendet</string>
     <string name="settings">Einstellungen öffnen</string>
     <string name="settings_remove_account_button_service">Ausloggen</string>
     <string name="settings_remove_account_title_service">Ausloggen</string>
