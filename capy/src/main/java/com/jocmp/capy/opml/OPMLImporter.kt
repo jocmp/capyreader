@@ -3,7 +3,6 @@ package com.jocmp.capy.opml
 import com.jocmp.capy.Account
 import java.io.InputStream
 import java.net.URL
-import kotlin.math.roundToInt
 
 internal class OPMLImporter(private val account: Account) {
     internal suspend fun import(
@@ -24,7 +23,7 @@ internal class OPMLImporter(private val account: Account) {
             val folderTitles = forms.flatMap { it.folderTitles }.distinct()
             val title = forms.first().title
 
-            account.addFeed(url = feedURL, title = title, folderTitles = folderTitles)
+            account.importFeed(url = feedURL, title = title, folderTitles = folderTitles)
             counter += 1
 
             onProgress(

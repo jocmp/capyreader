@@ -104,6 +104,41 @@ internal class LocalAccountDelegate(
         }
     }
 
+    override suspend fun importFeed(
+        url: String,
+        title: String?,
+        folderTitles: List<String>?
+    ): Result<Unit> {
+        try {
+            val feedTitle = if (title.isNullOrBlank()) {
+                url
+            } else {
+                title
+            }
+
+            database.feedsQueries.upsert(
+                id = url,
+                subscription_id = url,
+                title = feedTitle,
+                feed_url = url,
+                site_url = null,
+                favicon_url = null
+            )
+
+            feedFinder.fetch(url).onSuccess { channel ->
+                feedRecords.importFeed(
+                    url,
+                    siteURL = channel.link,
+                    faviconURL = channel.image?.url
+                )
+            }
+
+            return Result.success(Unit)
+        } catch (e: Throwable) {
+            return Result.failure(e)
+        }
+    }
+
     override suspend fun updateFeed(
         feed: Feed,
         title: String,

@@ -14,6 +14,12 @@ interface AccountDelegate {
 
     suspend fun removeStar(articleIDs: List<String>): Result<Unit>
 
+    suspend fun importFeed(
+        url: String,
+        title: String?,
+        folderTitles: List<String>?
+    ): Result<Unit>
+
     suspend fun addFeed(
         url: String,
         title: String?,

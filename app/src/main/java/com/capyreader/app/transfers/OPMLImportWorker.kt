@@ -22,6 +22,8 @@ import androidx.work.workDataOf
 import com.capyreader.app.R
 import com.capyreader.app.common.notificationManager
 import com.capyreader.app.notifications.Notifications
+import com.capyreader.app.preferences.AppPreferences
+import com.capyreader.app.refresher.RefreshInterval
 import com.jocmp.capy.Account
 import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.Dispatchers
@@ -41,6 +43,8 @@ class OPMLImportWorker(
     private val account by inject<Account>()
 
     private val channelID = Notifications.OPML_IMPORT.channelID
+
+    private val appPreferences by inject<AppPreferences>()
 
     private val notificationManager = context.notificationManager
 
@@ -88,7 +92,9 @@ class OPMLImportWorker(
 
         coroutineScope {
             launch {
-                account.refresh()
+                if (appPreferences.refreshInterval.get() != RefreshInterval.MANUALLY_ONLY) {
+                    account.refresh()
+                }
             }
         }
     }

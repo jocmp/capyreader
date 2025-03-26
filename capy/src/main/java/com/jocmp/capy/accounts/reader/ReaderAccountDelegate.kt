@@ -80,6 +80,15 @@ internal class ReaderAccountDelegate(
         return editTag(ids = articleIDs, removeTag = Stream.Starred())
     }
 
+    override suspend fun importFeed(
+        url: String,
+        title: String?,
+        folderTitles: List<String>?
+    ): Result<Unit> {
+        // no-op
+        return Result.success(Unit)
+    }
+
     override suspend fun addFeed(
         url: String,
         title: String?,

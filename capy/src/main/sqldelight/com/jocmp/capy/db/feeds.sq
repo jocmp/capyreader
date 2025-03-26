@@ -56,6 +56,10 @@ update:
 UPDATE feeds SET
 title = :title WHERE feeds.id = :feedID;
 
+updateSiteURL:
+UPDATE feeds SET
+site_url = :siteURL WHERE feeds.id = :feedID;
+
 updateFavicon:
 UPDATE feeds SET
 favicon_url = :faviconURL WHERE feeds.id = :feedID;

@@ -4,6 +4,7 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
+import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.db.Database
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -40,6 +41,18 @@ internal class FeedRecords(private val database: Database) {
             feedID = feedID,
             title = title,
         )
+    }
+
+    fun importFeed(feedID: String, siteURL: String?, faviconURL: String?) {
+        database.transactionWithErrorHandling {
+            if (siteURL != null) {
+                database.feedsQueries.updateSiteURL(feedID = feedID, siteURL = siteURL)
+            }
+
+            if (faviconURL != null) {
+                database.feedsQueries.updateFavicon(feedID = feedID, faviconURL = faviconURL)
+            }
+        }
     }
 
     fun clearFavicon(feedID: String) {

@@ -117,6 +117,18 @@ data class Account(
         )
     }
 
+    suspend fun importFeed(
+        url: String,
+        title: String? = null,
+        folderTitles: List<String>? = null
+    ): Result<Unit> {
+        return delegate.importFeed(
+            url = url,
+            title = title,
+            folderTitles = folderTitles
+        )
+    }
+
     suspend fun editFeed(form: EditFeedFormEntry): Result<Feed> {
         val feed = findFeed(form.feedID) ?: return Result.failure(Throwable("Feed not found"))
 
