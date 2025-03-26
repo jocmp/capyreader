@@ -123,6 +123,7 @@ internal class RssFeedHandler(val document: Document) : FeedHandler {
         item.children().forEach { node ->
             when (node.tagName()) {
                 RssKeyword.Item.Author.value -> channelFactory.articleBuilder.author(node.text())
+                RssKeyword.Item.DCAuthor.value -> channelFactory.articleBuilder.author(node.text())
                 RssKeyword.Item.Category.value -> channelFactory.articleBuilder.addCategory(node.text())
                 RssKeyword.Item.Source.value -> {
                     channelFactory.articleBuilder.sourceName(node.text())

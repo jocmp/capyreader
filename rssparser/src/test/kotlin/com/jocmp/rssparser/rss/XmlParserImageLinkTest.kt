@@ -32,4 +32,5 @@ class XmlParserImageLinkTest : BaseParserTest(
     articleCommentsUrl = "https://bleacherreport.com/articles/10077424-orange-cassidy-retains-aew-international-title-at-double-or-nothing-2023",
     articleDescription = "Orange Cassidy won a 21-man Blackjack Battle Royal at Double or Nothing on Sunday to retain the AEW International Championship. The action-packed opener ended…",
     articleCategories = listOf("Breaking News", "All Elite Wrestling", "BNT MISC", "Orange Cassidy"),
+    articleAuthor = "Mike Chiari",
 )

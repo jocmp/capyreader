@@ -13,7 +13,7 @@ class XmlParserMultipleImageAndVideo : BaseParserTest(
     channelItunesData = null,
     articleGuid = null,
     articleTitle = "Kia сомневается в перспективах Stinger второго поколения",
-    articleAuthor = null,
+    articleAuthor = "Александр Пономарев",
     articleLink = "https://motor.ru/news/kia-stinger-future-25-04-2020.htm",
     articlePubDate = "Sat, 25 Apr 2020 10:00:00 +0300",
     articleDescription = "Планируемый рестайлинг Kia Stinger окажется весьма масштабным, но появление второго поколения модели находится под большим вопросом.",
