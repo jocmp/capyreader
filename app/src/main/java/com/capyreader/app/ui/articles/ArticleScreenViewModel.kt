@@ -303,7 +303,7 @@ class ArticleScreenViewModel(
 
     fun refresh(filter: ArticleFilter, onComplete: () -> Unit) {
         initialize(filter) {
-            updateArticlesSince()
+            updateArticleTimeSince()
             onComplete()
         }
     }
@@ -476,10 +476,10 @@ class ArticleScreenViewModel(
 
         clearArticle()
 
-        updateArticlesSince()
+        updateArticleTimeSince()
     }
 
-    private fun updateArticlesSince() {
+    fun updateArticleTimeSince() {
         articlesSince.value = OffsetDateTime.now().plusSeconds(1)
     }
 
@@ -597,7 +597,7 @@ class ArticleScreenViewModel(
     private fun clearArticlesOnAllRead(
         onArticlesCleared: () -> Unit,
     ) {
-        updateArticlesSince()
+        updateArticleTimeSince()
         onArticlesCleared()
     }
 
