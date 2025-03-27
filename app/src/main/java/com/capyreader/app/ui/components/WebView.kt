@@ -2,15 +2,14 @@ package com.capyreader.app.ui.components
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
-import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
-import android.webkit.WebView.VisualStateCallback
 import android.webkit.WebViewClient
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -24,10 +23,10 @@ import androidx.webkit.WebViewAssetLoader.ResourcesPathHandler
 import coil.executeBlocking
 import coil.imageLoader
 import coil.request.ImageRequest
-import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.WebViewInterface
 import com.capyreader.app.common.openLink
+import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
@@ -73,11 +72,11 @@ class AccompanistWebViewClient(
     override fun onPageStarted(view: WebView, url: String?, favicon: Bitmap?) {
         super.onPageStarted(view, url, favicon)
 
-        view.postVisualStateCallback(0, object : VisualStateCallback() {
-            override fun onComplete(requestId: Long) {
-                view.visibility = View.VISIBLE
-            }
-        })
+//        view.postVisualStateCallback(0, object : VisualStateCallback() {
+//            override fun onComplete(requestId: Long) {
+//                view.visibility = View.VISIBLE
+//            }
+//        })
     }
 
     override fun shouldInterceptRequest(
@@ -140,14 +139,6 @@ class WebViewState(
     }
 
     fun loadHtml(article: Article, showImages: Boolean) {
-        val id = article.id
-
-        if (htmlId == null || id != htmlId) {
-            webView.visibility = View.INVISIBLE
-        }
-
-        htmlId = id
-
         scope.launch {
             withContext(Dispatchers.IO) {
                 val html = renderer.render(
@@ -171,7 +162,6 @@ class WebViewState(
     }
 
     fun reset() {
-        htmlId = null
         loadEmpty()
     }
 
@@ -181,6 +171,7 @@ class WebViewState(
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun rememberWebViewState(
+    key: String?,
     renderer: ArticleRenderer = koinInject(),
     onNavigateToMedia: (media: Media) -> Unit,
 ): WebViewState {
