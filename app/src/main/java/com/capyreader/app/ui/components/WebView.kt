@@ -32,6 +32,7 @@ import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
+import com.jocmp.capy.common.optionalFile
 import com.jocmp.capy.common.windowOrigin
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -92,6 +93,10 @@ class AccompanistWebViewClient(
             asset.responseHeaders = headers
 
             return asset
+        }
+
+        if (isAnimated(request.url.toString())) {
+            return null
         }
 
         return try {
@@ -232,3 +237,14 @@ private fun jpegStream(
     val bitmapData = byteArrayOutputStream.toByteArray()
     return ByteArrayInputStream(bitmapData)
 }
+
+private fun isAnimated(url: String?): Boolean {
+    val extension = optionalFile(url)?.extension ?: return false
+
+    return animatedFileTypes.contains(extension)
+}
+
+val animatedFileTypes = listOf(
+    "gif",
+    "webp",
+)
