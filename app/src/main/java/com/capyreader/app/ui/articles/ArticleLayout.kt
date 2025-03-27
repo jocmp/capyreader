@@ -449,6 +449,7 @@ fun ArticleLayout(
             },
             detailPane = {
                 val webViewState = rememberWebViewState(
+                    key = article?.id,
                     onNavigateToMedia = { media = it },
                 )
 
