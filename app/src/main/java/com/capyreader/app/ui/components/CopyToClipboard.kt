@@ -8,9 +8,7 @@ import androidx.compose.ui.text.AnnotatedString
 fun buildCopyToClipboard(text: String): () -> Unit {
     val clipboardManager = LocalClipboardManager.current
 
-    fun copy() {
+    return {
         clipboardManager.setText(AnnotatedString(text))
     }
-
-    return ::copy
 }

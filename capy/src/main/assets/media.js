@@ -1,12 +1,14 @@
+// @ts-check
+
 function configureVideoTags() {
   [...document.getElementsByTagName("video")].forEach((v) => {
     v.setAttribute("preload", "auto");
-    v.setAttribute("playsinline", true);
-    v.setAttribute("controls", true);
+    v.setAttribute("playsinline", "true");
+    v.setAttribute("controls", "true");
     v.setAttribute("controlslist", "nofullscreen nodownload noremoteplayback");
 
     if (v.classList.contains("article__video-autoplay--looped")) {
-      v.setAttribute("loop", true);
+      v.setAttribute("loop", "true");
       v.play();
     }
   });
@@ -28,8 +30,14 @@ function addEmbedListeners() {
   [...document.querySelectorAll("div.iframe-embed")].forEach((div) => {
     div.addEventListener("click", () => {
       const iframe = document.createElement("iframe");
-      iframe.src = div.getAttribute("data-iframe-src");
+      iframe.src = div.getAttribute("data-iframe-src") || '';
       div.replaceWith(iframe);
+    });
+  });
+
+  [...document.querySelectorAll('a')].forEach((anchor) => {
+    longPress(anchor, () => {
+      Android.showLinkDialog(anchor.href, anchor.text)
     });
   });
 }
@@ -43,6 +51,10 @@ function cleanEmbeds(element = document) {
 
   for (const embed of embeds) {
     const src = embed.getAttribute("src");
+    if (!src) {
+      continue;
+    }
+
     const youtubeID = findYouTubeMatch(src);
 
     if (youtubeID !== null) {
@@ -117,9 +129,31 @@ const YOUTUBE_DOMAINS = [
   /.*?\/\/youtu\.be\/(.*?)(\?|$)/
 ];
 
-window.addEventListener("DOMContentLoaded", () => {
-  cleanEmbeds()
-});
+/**
+ * @param {HTMLElement} element
+ * @param {(event: Event) => void} callback
+ */
+function longPress(element, callback) {
+  let timer;
+
+  const start = (/** @type {Event} */ event) => {
+    timer = setTimeout(() => {
+      callback(event);
+    }, 500);
+  };
+
+  const stop = () => {
+    clearTimeout(timer);
+  };
+
+  element.addEventListener("mousedown", start);
+  element.addEventListener("mouseup", stop);
+  element.addEventListener("mouseleave", stop);
+
+  element.addEventListener("touchstart", start);
+  element.addEventListener("touchend", stop);
+  element.addEventListener("touchcancel", stop);
+}
 
 window.onload = () => {
   addImageClickListeners();
