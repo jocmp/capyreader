@@ -249,4 +249,7 @@
     <string name="tag_action_delete_message">Confermi di voler eliminare il tag \"%1$s\"?</string>
     <string name="tag_action_delete_confirm">Elimina</string>
     <string name="tag_name_title">Nome</string>
+    <string name="tag_action_edit_success">Tag aggiornato</string>
+    <string name="tag_action_edit_error">Errore nell\'aggiornamento del tag</string>
+    <string name="tag_action_edit">Modifica tag</string>
 </resources>
