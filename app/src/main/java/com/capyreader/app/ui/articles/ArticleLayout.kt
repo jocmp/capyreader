@@ -534,6 +534,9 @@ fun ArticleLayout(
     }
 
     ArticleListBackHandler(
+        filter,
+        onRequestFilter = selectFilter,
+        onRequestFolder = selectFolder,
         enabled = isFeedActive(media, article, search),
         isDrawerOpen = drawerState.isOpen,
         toggleDrawer = {
