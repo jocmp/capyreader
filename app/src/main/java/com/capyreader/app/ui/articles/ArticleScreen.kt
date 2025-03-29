@@ -63,7 +63,7 @@ fun ArticleScreen(
         )
     }
 
-    val articles = pager.flow.collectAsLazyPagingItems()
+    val articles = viewModel.articles.collectAsLazyPagingItems()
 
     CompositionLocalProvider(
         LocalFullContent provides fullContent,

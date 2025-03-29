@@ -2,8 +2,6 @@ package com.capyreader.app.ui.articles
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.Crossfade
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
@@ -82,6 +80,7 @@ fun ArticleLayout(
     allFeeds: List<Feed>,
     allFolders: List<Folder>,
     articles: LazyPagingItems<Article>,
+//    pagedArticles: Flow<PagingData<Article>>,
     article: Article?,
     search: ArticleSearch,
     statusCount: Long,
@@ -121,6 +120,7 @@ fun ArticleLayout(
     val scaffoldNavigator = rememberArticleScaffoldNavigator()
     val hasMultipleColumns = scaffoldNavigator.scaffoldDirective.maxHorizontalPartitions > 1
     var isRefreshing by remember { mutableStateOf(false) }
+
     val listState = rememberLazyListState()
 
     val snackbarHostState = remember { SnackbarHostState() }
@@ -138,7 +138,6 @@ fun ArticleLayout(
     suspend fun navigateToDetail() {
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
     }
-
 
     fun scrollToArticle(index: Int) {
         coroutineScope.launch {
@@ -423,25 +422,25 @@ fun ArticleLayout(
                                     requestNextFeed()
                                 },
                             ) {
-                                Crossfade(
-                                    articles,
-                                    animationSpec = tween(500),
-                                    modifier = Modifier.fillMaxSize(),
-                                    label = "",
-                                ) {
-                                    ArticleList(
-                                        articles = it,
-                                        selectedArticleKey = article?.id,
-                                        listState = listState,
-                                        enableMarkReadOnScroll = enableMarkReadOnScroll,
-                                        onMarkAllRead = { range ->
-                                            onMarkAllRead(range)
-                                        },
-                                        onSelect = { articleID ->
-                                            selectArticle(articleID)
-                                        },
-                                    )
-                                }
+//                                Crossfade(
+//                                    articles,
+//                                    animationSpec = tween(500),
+//                                    modifier = Modifier.fillMaxSize(),
+//                                    label = "",
+//                                ) {
+                                ArticleList(
+                                    articles = articles,
+                                    selectedArticleKey = article?.id,
+                                    listState = listState,
+                                    enableMarkReadOnScroll = enableMarkReadOnScroll,
+                                    onMarkAllRead = { range ->
+                                        onMarkAllRead(range)
+                                    },
+                                    onSelect = { articleID ->
+                                        selectArticle(articleID)
+                                    },
+                                )
+//                                }
                             }
                         }
                     }
@@ -570,13 +569,13 @@ fun isFeedActive(
 
 @Composable
 fun rememberCurrentFeed(filter: ArticleFilter, feeds: List<Feed>): Feed? {
-   return remember(filter, feeds) {
-       if (filter is ArticleFilter.Feeds) {
-           feeds.find { it.id == filter.feedID }
-       } else {
-           null
-       }
-   }
+    return remember(filter, feeds) {
+        if (filter is ArticleFilter.Feeds) {
+            feeds.find { it.id == filter.feedID }
+        } else {
+            null
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

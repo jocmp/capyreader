@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import com.capyreader.app.R
 import com.capyreader.app.common.toast
 import com.capyreader.app.notifications.NotificationHelper
@@ -79,6 +80,21 @@ class ArticleScreenViewModel(
     private val _counts = filter.flatMapLatest { latestFilter ->
         account.countAll(latestFilter.status)
     }
+
+    val articles: Flow<PagingData<Article>> =
+        combine(
+            filter,
+            _searchQuery,
+            articlesSince,
+            unreadSort
+        ) { filter, query, since, sort ->
+            account.buildArticlePager(
+                filter = filter,
+                query = query,
+                unreadSort = sort,
+                since = since
+            ).flow
+        }.flatMapLatest { it }
 
     fun pager(
         filter: ArticleFilter,
