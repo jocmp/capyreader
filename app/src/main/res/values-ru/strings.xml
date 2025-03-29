@@ -200,7 +200,7 @@
     <string name="add_account_feedbin_signup_link_text">Создайте его здесь.</string>
     <string name="add_account_freshrss_signup_prompt">У вас нет экземпляра FreshRSS?</string>
     <string name="add_account_local_subtitle">На вашем устройстве</string>
-    <string name="edit_feed_tag_section">Тег</string>
+    <string name="edit_feed_tag_section">Добавить или выбрать тег</string>
     <string name="settings_gestures_reader_tap_to_page_title">Прокрутка касанием (для E-ink)</string>
     <string name="settings_enable_high_contrast_dark_theme">Включить высококонтрастную темную тему</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Коснитесь нижних углов, чтобы перемещаться по содержимому статьи</string>
@@ -241,4 +241,16 @@
     <string name="media_share">Поделиться</string>
     <string name="feed_nav_drawer_refresh_all">Обновить все</string>
     <string name="image_preview_menu_option_medium">Средний</string>
+    <string name="delete_tag_error">Ошибка при удалении тега</string>
+    <string name="tag_action_delete_title">Удалить</string>
+    <string name="tag_action_delete_confirm">Удалить</string>
+    <string name="tag_name_title">Имя</string>
+    <string name="tag_action_edit_success">Тег обновлен</string>
+    <string name="tag_action_edit_error">Ошибка при обновлении тега</string>
+    <string name="tag_action_edit">Изменить тег</string>
+    <string name="blocked_keywords">Черный список</string>
+    <string name="blocked_keywords_supporting_text">Удалите статьи с совпадением ключевых слов в названии или содержании</string>
+    <string name="blocked_keywords_remove_keyword">Убрать ключевое слово</string>
+    <string name="blocked_keywords_add_keyword">Добавить ключевое слово</string>
+    <string name="tag_action_delete_message">Вы уверены, что хотите удалить тег \"%1$s\"?</string>
 </resources>

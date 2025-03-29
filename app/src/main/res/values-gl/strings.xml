@@ -166,7 +166,7 @@
     <string name="crash_log_export_item_title">Compartir informe de fallos</string>
     <string name="crash_log_export_item_subtitle">Garda un informe do fallo nun ficheiro para compartilo coas desenvolvedoras</string>
     <string name="edit_feed_tags_section">Etiquetas</string>
-    <string name="edit_feed_tag_section">Etiqueta</string>
+    <string name="edit_feed_tag_section">Engadir ou Seleccionar etiqueta</string>
     <string name="edit_feed_notifications_title">Activar notificacións</string>
     <string name="settings_enable_refresh_call_to_action">Primeiro debes activar a actualización periódica</string>
     <string name="settings_notifications_select_none">Sen selección</string>
@@ -236,4 +236,12 @@
     <string name="blocked_keywords">Lista de bloqueo</string>
     <string name="blocked_keywords_add_keyword">Engadir palabra clave</string>
     <string name="blocked_keywords_supporting_text">Retirar artigos que teñen determinada palabra no título ou contido</string>
+    <string name="tag_action_delete_message">Tes certeza de querer eliminar «%1$s»?</string>
+    <string name="tag_name_title">Nome</string>
+    <string name="tag_action_edit">Editar etiqueta</string>
+    <string name="tag_action_delete_confirm">Eliminar</string>
+    <string name="delete_tag_error">Erro ao eliminar a etiqueta</string>
+    <string name="tag_action_edit_success">Actulizouse a etiqueta</string>
+    <string name="tag_action_edit_error">Erro ao actualizar a etiqueta</string>
+    <string name="tag_action_delete_title">Eliminar</string>
 </resources>

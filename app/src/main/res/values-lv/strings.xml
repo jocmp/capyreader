@@ -76,7 +76,7 @@
     <string name="relative_time_minutes">%1$dm</string>
     <string name="relative_time_hours">%1$ds</string>
     <string name="relative_time_days">%1$dd</string>
-    <string name="article_share">Kopīgot rakstu</string>
+    <string name="article_share">Dalīties ar rakstu</string>
     <string name="extract_full_content">Izvilkt pilnu saturu</string>
     <string name="action_mark_all_read">Atzīmēt visus kā lasītus</string>
     <string name="mark_all_read_dialog_description">Atzīmēt visus rakstus kā lasītus?</string>
@@ -169,7 +169,7 @@
     <string name="crash_log_export_item_title">Kopīgot avārijas pierakstus</string>
     <string name="crash_log_export_item_subtitle">Saglabā avārijas pierakstus failā, lai kopīgotu tos ar izstrādātāju</string>
     <string name="edit_feed_tags_section">Birkas</string>
-    <string name="edit_feed_tag_section">Birka</string>
+    <string name="edit_feed_tag_section">Pievienot vai atlasīt birku</string>
     <string name="edit_feed_notifications_title">Iespējot paziņojumus</string>
     <string name="settings_notifications_select_all">Atlasīt visu</string>
     <string name="notifications_permissions_disabled_call_to_action">Iestatījumi</string>
@@ -177,13 +177,13 @@
     <string name="article_list_row_swipe_open_externally">Atvērt rakstu pārlūkā</string>
     <string name="article_view_open_externally">Atvērt ārēji</string>
     <string name="settings_confirm_mark_all_read">Pieprasīt apstiprinājumu, kad atzīmē visus rakstus kā lasītus</string>
-    <string name="settings_mark_read_on_scroll">Atzīmēt, kā lasītu, ritinot</string>
-    <string name="settings_gestures_enable_horizontal_pagination_title">Iespējot horizontālu ritināšanu</string>
+    <string name="settings_mark_read_on_scroll">Atzīmēt rakstu kā lasītu, to ritinot</string>
+    <string name="settings_gestures_enable_horizontal_pagination_title">Iespējot horizontālo ritināšanu</string>
     <string name="end_of_feed_text">Visi raksti izlasīti!</string>
     <string name="settings_section_browser">Pārlūks</string>
     <string name="reader_image_visibility_show_on_wifi">Rādīt attēlus tikai, kad izmanto Wi-Fi</string>
-    <string name="reader_image_visibility_always_hide">Nekad nerādīt attēlus (Bloķēt attēlus)</string>
-    <string name="reader_image_visibility_always_show">Vienmēr rādīt attēlus</string>
+    <string name="reader_image_visibility_always_hide">Nerādīt attēlus</string>
+    <string name="reader_image_visibility_always_show">Rādīt attēlus</string>
     <string name="reader_image_visibility_label">Attēli</string>
     <string name="layout_preference_responsive">Atsaucīgs</string>
     <string name="layout_preference_single">Viena kolonna</string>
@@ -237,4 +237,12 @@
     <string name="blocked_keywords">Atslēgvārdu melnais saraksts</string>
     <string name="blocked_keywords_supporting_text">Noņemt rakstus, kuru virsraksts vai saturs satur atslēgvārdus</string>
     <string name="blocked_keywords_remove_keyword">Noņemt atslēgvārdu</string>
+    <string name="delete_tag_error">Birkas dzēšanas kļūda</string>
+    <string name="tag_action_delete_title">Dzēst</string>
+    <string name="tag_action_delete_message">Vai tiešām vēlaties dzēst \"%1$s\" birku?</string>
+    <string name="tag_action_delete_confirm">Dzēst</string>
+    <string name="tag_name_title">Nosaukums</string>
+    <string name="tag_action_edit_success">Birkas nosaukums veiksmīgi atjaunināts</string>
+    <string name="tag_action_edit_error">Birkas atjaunināšanas kļūda</string>
+    <string name="tag_action_edit">Rediģēt birku</string>
 </resources>

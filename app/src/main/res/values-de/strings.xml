@@ -186,7 +186,7 @@
     <string name="settings_notifications_select_all">Alles ausgewählt</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">Navigationsübersicht öffnen</string>
     <string name="add_account_local_subtitle">Auf Ihrem Gerät</string>
-    <string name="edit_feed_tag_section">Schlagwort</string>
+    <string name="edit_feed_tag_section">Bezeichnung hinzufügen oder auswählen</string>
     <string name="auth_fields_api_url">Server</string>
     <string name="settings_section_account_server">Server</string>
     <string name="account_source_reader">Reader</string>
@@ -230,4 +230,22 @@
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Nach links oder rechts wischen, um durch Artikel zu navigieren</string>
     <string name="search_bar_placeholder">Suchen</string>
     <string name="notification_mark_as_read_action">Als gelesen markieren</string>
+    <string name="image_preview_menu_option_medium">Mittel</string>
+    <string name="article_list_swipe_next_feed">Gehe zum nächsten Feed</string>
+    <string name="media_save_failure">Bild speichern fehlgeschlagen</string>
+    <string name="media_share_failure">Bild teilen fehlgeschlagen</string>
+    <string name="feed_nav_drawer_refresh_all">Alle aktualisieren</string>
+    <string name="delete_tag_error">Fehler beim Löschen</string>
+    <string name="tag_action_delete_title">Löschen</string>
+    <string name="tag_action_delete_message">Bist Du sicher, dass Du \"%1$s\" löschen möchtest?</string>
+    <string name="tag_name_title">Name</string>
+    <string name="tag_action_edit_success">Bezeichnung aktualisiert</string>
+    <string name="tag_action_edit_error">Fehler bei der Aktualisierung der Bezeichnung</string>
+    <string name="tag_action_edit">Bezeichnung bearbeiten</string>
+    <string name="tag_action_delete_confirm">Löschen</string>
+    <string name="feed_nav_drawer_title">Feeds</string>
+    <string name="blocked_keywords_supporting_text">Artikel entfernen welche dieses Schlagwort im Titel oder Inhalt enthalten</string>
+    <string name="blocked_keywords_remove_keyword">Schlagwort entfernen</string>
+    <string name="blocked_keywords">Blocklist</string>
+    <string name="blocked_keywords_add_keyword">Schlagwort hinzufügen</string>
 </resources>
