@@ -43,7 +43,7 @@
     <string name="folder_action_delete_title">刪除標籤</string>
     <string name="feed_action_edit_success">源已更新</string>
     <string name="settings">打開設置</string>
-    <string name="settings_remove_account_message_service">确定要登出嗎？</string>
+    <string name="settings_remove_account_message_service">您确定要登出嗎？</string>
     <string name="settings_remove_account_button_service">登出</string>
     <string name="settings_remove_account_title_service">登出</string>
     <string name="article_font_scale_label">字體大小</string>
@@ -197,7 +197,7 @@
     <string name="add_account_freshrss_signup_prompt">沒有 FreshRSS 實例？</string>
     <string name="add_account_feedbin_signup_link_text">立即建立。</string>
     <string name="add_account_freshrss_signup_link_text">了解更多。</string>
-    <string name="edit_feed_tag_section">標簽</string>
+    <string name="edit_feed_tag_section">添加或選擇標簽</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">點擊底部角落上下翻頁</string>
     <string name="settings_gestures_reader_tap_to_page_title">電子墨水屏手勢</string>
     <string name="settings_enable_high_contrast_dark_theme">高對比度深色主題</string>
@@ -242,4 +242,12 @@
     <string name="blocked_keywords_remove_keyword">移除關鍵字</string>
     <string name="blocked_keywords_add_keyword">添加關鍵字</string>
     <string name="blocked_keywords">封鎖清單</string>
+    <string name="delete_tag_error">標簽刪除出錯</string>
+    <string name="tag_name_title">名稱</string>
+    <string name="tag_action_delete_message">您确定要刪除標簽\"%1$s\"嗎？</string>
+    <string name="tag_action_delete_confirm">刪除</string>
+    <string name="tag_action_edit_success">標簽已更新</string>
+    <string name="tag_action_edit_error">更新標簽出錯</string>
+    <string name="tag_action_edit">編輯標簽</string>
+    <string name="tag_action_delete_title">刪除</string>
 </resources>
