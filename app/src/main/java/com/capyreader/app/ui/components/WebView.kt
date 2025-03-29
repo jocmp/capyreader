@@ -188,6 +188,7 @@ class WebViewState(
 fun rememberWebViewState(
     renderer: ArticleRenderer = koinInject(),
     onNavigateToMedia: (media: Media) -> Unit,
+    onRequestLinkDialog: (link: ShareLink) -> Unit,
 ): WebViewState {
     val colors = articleTemplateColors()
     val scope = rememberCoroutineScope()
@@ -215,7 +216,8 @@ fun rememberWebViewState(
 
             addJavascriptInterface(
                 WebViewInterface(
-                    navigateToMedia = { onNavigateToMedia(it) }
+                    navigateToMedia = { onNavigateToMedia(it) },
+                    onRequestLinkDialog = onRequestLinkDialog,
                 ),
                 WebViewInterface.INTERFACE_NAME
             )

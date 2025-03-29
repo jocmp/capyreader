@@ -255,4 +255,6 @@
     <string name="tag_action_edit_success">Tag updated</string>
     <string name="tag_action_edit_error">Error updating tag</string>
     <string name="tag_action_edit">Edit Tag</string>
+    <string name="actions_copy_link">Copy link</string>
+    <string name="actions_share_link">Share link</string>
 </resources>

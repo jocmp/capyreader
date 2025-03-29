@@ -47,6 +47,7 @@ import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
+import com.capyreader.app.ui.articles.detail.ShareLinkDialog
 import com.capyreader.app.ui.articles.detail.rememberArticlePagination
 import com.capyreader.app.ui.articles.feeds.FeedList
 import com.capyreader.app.ui.articles.list.ArticleListTopBar
@@ -56,6 +57,7 @@ import com.capyreader.app.ui.articles.list.resetScrollBehaviorListener
 import com.capyreader.app.ui.articles.media.ArticleMediaView
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.ArticleSearch
+import com.capyreader.app.ui.components.rememberSaveableShareLink
 import com.capyreader.app.ui.components.rememberWebViewState
 import com.capyreader.app.ui.settings.LocalSnackbarHost
 import com.jocmp.capy.Article
@@ -119,7 +121,7 @@ fun ArticleLayout(
     }
     val coroutineScope = rememberCoroutineScope()
     val scaffoldNavigator = rememberArticleScaffoldNavigator()
-    val hasMultipleColumns = scaffoldNavigator.scaffoldDirective.maxHorizontalPartitions > 1
+    val showMultipleColumns = scaffoldNavigator.scaffoldDirective.maxHorizontalPartitions > 1
     var isRefreshing by remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
 
@@ -448,11 +450,14 @@ fun ArticleLayout(
                 }
             },
             detailPane = {
+                val (shareLink, setShareLink) = rememberSaveableShareLink()
+
                 val webViewState = rememberWebViewState(
                     onNavigateToMedia = { media = it },
+                    onRequestLinkDialog = { setShareLink(it) }
                 )
 
-                if (article == null && hasMultipleColumns) {
+                if (article == null && showMultipleColumns) {
                     Box(
                         contentAlignment = Alignment.Center,
                         modifier = Modifier
@@ -481,6 +486,15 @@ fun ArticleLayout(
                         onScrollToArticle = { index ->
                             scrollToArticle(index)
                         }
+                    )
+                }
+
+                if (shareLink != null) {
+                    ShareLinkDialog(
+                        onClose = {
+                            setShareLink(null)
+                        },
+                        link = shareLink,
                     )
                 }
             }
