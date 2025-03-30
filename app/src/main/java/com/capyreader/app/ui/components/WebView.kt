@@ -8,8 +8,6 @@ import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebView.VisualStateCallback
 import android.webkit.WebViewClient
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
@@ -27,6 +25,7 @@ import coil.request.ImageRequest
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.WebViewInterface
 import com.capyreader.app.common.openLink
+import com.capyreader.app.common.rememberVerticalGestures
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
@@ -48,13 +47,12 @@ import java.io.InputStream
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun WebView(
+    modifier: Modifier,
     state: WebViewState,
-    onDispose: (WebView) -> Unit,
+    onDispose: (WebView) -> Unit = {},
 ) {
     AndroidView(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight(),
+        modifier = modifier,
         factory = { state.webView },
         onRelease = {
             onDispose(it)
@@ -136,6 +134,7 @@ class WebViewState(
     private val renderer: ArticleRenderer,
     private val colors: Map<String, String>,
     private val scope: CoroutineScope,
+    private val isVerticalScrollBarEnabled: Boolean,
     internal val webView: WebView,
 ) {
     private var htmlId: String? = null
@@ -170,6 +169,7 @@ class WebViewState(
                         "UTF-8",
                         null,
                     )
+                    webView.isVerticalScrollBarEnabled = isVerticalScrollBarEnabled
                 }
             }
         }
@@ -190,11 +190,12 @@ fun rememberWebViewState(
     onNavigateToMedia: (media: Media) -> Unit,
     onRequestLinkDialog: (link: ShareLink) -> Unit,
 ): WebViewState {
+    val verticalGesturesEnabled = rememberVerticalGestures()
     val colors = articleTemplateColors()
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
 
-    val client = remember {
+    val client = remember(verticalGesturesEnabled) {
         AccompanistWebViewClient(
             assetLoader = WebViewAssetLoader.Builder()
                 .addPathHandler("/assets/", AssetsPathHandler(context))
@@ -227,7 +228,13 @@ fun rememberWebViewState(
             webViewClient = client
         }
 
-        WebViewState(renderer, colors, scope, webView).also {
+        WebViewState(
+            renderer,
+            colors,
+            scope,
+            isVerticalScrollBarEnabled = !verticalGesturesEnabled,
+            webView,
+        ).also {
             client.state = it
         }
     }
