@@ -197,7 +197,7 @@
     <string name="auth_fields_api_url_freshrss_placeholder">https://example.com/</string>
     <string name="add_account_reader_subtitle">Самостоятелно хостван Google Reader API</string>
     <string name="add_account_feedbin_signup_link_text">Създайте такъв тук.</string>
-    <string name="edit_feed_tag_section">Категоерия</string>
+    <string name="edit_feed_tag_section">Добавяне или избиране на етикет</string>
     <string name="add_account_freshrss_signup_prompt">Нямате FreshRSS инстанция?</string>
     <string name="settings_gestures_reader_tap_to_page_title">Докоснете за превъртане (за E-ink)</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Докоснете долните ъгли, за да навигирате в съдържанието на статията</string>
@@ -243,4 +243,12 @@
     <string name="blocked_keywords_add_keyword">Добавяне на ключова дума</string>
     <string name="blocked_keywords_supporting_text">Премахване на статии със заглавие или съдържание, които съвпадат с ключова дума</string>
     <string name="blocked_keywords_remove_keyword">Премахване на ключова дума</string>
+    <string name="tag_action_delete_title">Изтриване</string>
+    <string name="tag_action_delete_confirm">Изтриване</string>
+    <string name="tag_name_title">Име</string>
+    <string name="tag_action_edit_success">Етикетът е актуализиран</string>
+    <string name="tag_action_edit">Редактиране на етикет</string>
+    <string name="tag_action_edit_error">Грешка при актуализиране на етикет</string>
+    <string name="delete_tag_error">Грешка при изтриване на етикет</string>
+    <string name="tag_action_delete_message">Сигурни ли сте, че искате да изтриете етикета \"%1$s\"?</string>
 </resources>

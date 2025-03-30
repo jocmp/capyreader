@@ -34,7 +34,7 @@
     <string name="account_source_freshrss">FreshRSS</string>
     <string name="article_list_row_swipe_disabled">Wyłączono</string>
     <string name="action_share">Udostępnij</string>
-    <string name="edit_feed_tag_section">Tag</string>
+    <string name="edit_feed_tag_section">Dodaj lub wybierz tag</string>
     <string name="reader_image_visibility_label">Obrazy</string>
     <string name="auth_fields_username">Nazwa uzytkownika</string>
     <string name="settings_section_account">Konto</string>
@@ -179,7 +179,7 @@
     <string name="layout_preference_responsive">Dostosowany</string>
     <string name="layout_preference_single">Jedna kolumna</string>
     <string name="layout_preference_label">Preferowany układ</string>
-    <string name="reader_image_visibility_always_show">Zawsze ładuj obrazy</string>
+    <string name="reader_image_visibility_always_show">Zawsze wyświetlaj obrazy</string>
     <string name="settings_donate_button">Wspomóż finansowo</string>
     <string name="after_read_all_behavior_default">Domyślne</string>
     <string name="mark_all_read_dialog_description">Oznaczyć wszystkie artykuły jako przeczytane?</string>
@@ -238,4 +238,12 @@
     <string name="blocked_keywords">Lista zablokowanych</string>
     <string name="blocked_keywords_remove_keyword">Usuń słowo kluczowe</string>
     <string name="blocked_keywords_add_keyword">Dodaj słowo kluczowe</string>
+    <string name="delete_tag_error">Błąd podczas usuwania tagu</string>
+    <string name="tag_action_delete_title">Usuń</string>
+    <string name="tag_action_delete_message">Na pewno chcesz usunąć tag \"%1$s\"?</string>
+    <string name="tag_action_delete_confirm">Usuń</string>
+    <string name="tag_name_title">Nazwa</string>
+    <string name="tag_action_edit_success">Tag zaktualizowany</string>
+    <string name="tag_action_edit_error">Błąd podczas aktualizacji tagu</string>
+    <string name="tag_action_edit">Edytuj tag</string>
 </resources>

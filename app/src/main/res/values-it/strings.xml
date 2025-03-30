@@ -197,7 +197,7 @@
     <string name="add_account_feedbin_signup_prompt">Non hai un account Feedbin?</string>
     <string name="add_account_feedbin_signup_link_text">Creane uno qui.</string>
     <string name="add_account_freshrss_signup_prompt">Non hai un\'istanza FreshRSS?</string>
-    <string name="edit_feed_tag_section">Tag</string>
+    <string name="edit_feed_tag_section">Aggiungi o Seleziona Tag</string>
     <string name="add_account_feedbin_subtitle">feedbin.com</string>
     <string name="add_account_freshrss_signup_link_text">Per saperne di più.</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Tocca gli angoli inferiori per navigare nel contenuto dell\'articolo</string>
@@ -244,4 +244,12 @@
     <string name="blocked_keywords_add_keyword">Aggiungi parola chiave</string>
     <string name="blocked_keywords_remove_keyword">Rimuovi parola chiave</string>
     <string name="blocked_keywords_supporting_text">Rimuovi gli articoli che hanno una corrispondenza con le parole chiave del titolo o del contenuto</string>
+    <string name="delete_tag_error">Errore nell\'eliminazione del tag</string>
+    <string name="tag_action_delete_title">Elimina</string>
+    <string name="tag_action_delete_message">Confermi di voler eliminare il tag \"%1$s\"?</string>
+    <string name="tag_action_delete_confirm">Elimina</string>
+    <string name="tag_name_title">Nome</string>
+    <string name="tag_action_edit_success">Tag aggiornato</string>
+    <string name="tag_action_edit_error">Errore nell\'aggiornamento del tag</string>
+    <string name="tag_action_edit">Modifica tag</string>
 </resources>
