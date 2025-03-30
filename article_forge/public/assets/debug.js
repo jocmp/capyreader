@@ -6,7 +6,12 @@ function android() {
     window.open(`/image?src=${btoa(src)}&caption=${caption || ""}`);
   }
 
+  function showLinkDialog(href, text) {
+    console.log('link=', href, "text=", text);
+  }
+
   return {
+    showLinkDialog,
     openImage,
   };
 }

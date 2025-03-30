@@ -3,13 +3,18 @@ package com.capyreader.app.ui.articles
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import com.capyreader.app.common.asState
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.BackAction
-import com.capyreader.app.common.asState
+import com.jocmp.capy.ArticleFilter
+import com.jocmp.capy.Folder
 import org.koin.compose.koinInject
 
 @Composable
 fun ArticleListBackHandler(
+    filter: ArticleFilter,
+    onRequestFilter: () -> Unit,
+    onRequestFolder: (folder: Folder) -> Unit,
     appPreferences: AppPreferences = koinInject(),
     closeDrawer: () -> Unit,
     toggleDrawer: () -> Unit,
@@ -18,11 +23,29 @@ fun ArticleListBackHandler(
 ) {
     val backAction by appPreferences.articleListOptions.backAction.asState()
 
-    BackHandler(enabled && backAction != BackAction.SYSTEM_BACK) {
+    if (!enabled) {
+        return
+    }
+
+    BackHandler(backAction == BackAction.OPEN_DRAWER) {
         toggleDrawer()
     }
 
-    BackHandler(enabled && isDrawerOpen && backAction == BackAction.SYSTEM_BACK) {
+    BackHandler(backAction != BackAction.OPEN_DRAWER && isDrawerOpen) {
         closeDrawer()
+    }
+
+    BackHandler(backAction == BackAction.NAVIGATE_TO_PARENT && filter !is ArticleFilter.Articles) {
+        when(filter) {
+            is ArticleFilter.Feeds -> {
+                val folderTitle = filter.folderTitle
+                if (folderTitle != null) {
+                    onRequestFolder(Folder(folderTitle))
+                } else {
+                    onRequestFilter()
+                }
+            }
+            else -> onRequestFilter()
+        }
     }
 }
