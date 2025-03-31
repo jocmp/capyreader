@@ -83,5 +83,16 @@
                 <action android:name="com.capyreader.ACTION_DISMISS_NOTIFICATION" />
             </intent-filter>
         </receiver>
+
+        <receiver
+            android:name=".ui.widget.HeadlinesWidgetReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/headlines_widget" />
+        </receiver>
     </application>
 </manifest>

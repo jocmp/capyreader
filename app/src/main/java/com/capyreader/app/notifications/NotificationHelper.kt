@@ -160,7 +160,7 @@ class NotificationHelper(
             appPreferences.filter.set(
                 ArticleFilter.Feeds(
                     feedID,
-                    feedStatus = ArticleStatus.UNREAD,
+                    feedStatus = ArticleStatus.ALL,
                     folderTitle = null
                 )
             )
