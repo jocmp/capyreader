@@ -194,7 +194,7 @@
     <string name="add_account_reader_subtitle">API Google Reader auto-hébergée</string>
     <string name="add_account_feedbin_signup_link_text">Créez-en un ici.</string>
     <string name="add_account_freshrss_signup_link_text">En savoir plus.</string>
-    <string name="edit_feed_tag_section">Étiquette</string>
+    <string name="edit_feed_tag_section">Ajouter ou sélectionner une étiquette</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Appuyez sur les coins inférieurs pour parcourir le contenu de l\'article</string>
     <string name="add_account_feedbin_signup_prompt">Vous n’avez pas de compte Feedbin ?</string>
     <string name="add_account_freshrss_signup_prompt">Vous n’avez pas d’instance FreshRSS ?</string>
@@ -241,4 +241,15 @@
     <string name="blocked_keywords_supporting_text">Supprimer les articles dont le titre ou le contenu correspondent à des mots-clés</string>
     <string name="blocked_keywords_add_keyword">Ajouter un mot-clé</string>
     <string name="blocked_keywords_remove_keyword">Supprimer le mot-clé</string>
+    <string name="delete_tag_error">Erreur de suppression de l\'étiquette</string>
+    <string name="tag_action_delete_title">Supprimer</string>
+    <string name="tag_action_delete_message">Êtes-vous sûr de vouloir supprimer l\'étiquette « %1$s » ?</string>
+    <string name="tag_action_delete_confirm">Supprimer</string>
+    <string name="tag_name_title">Nom</string>
+    <string name="tag_action_edit_success">Étiquette mise à jour</string>
+    <string name="tag_action_edit_error">Erreur lors de la mise à jour de l\'étiquette</string>
+    <string name="tag_action_edit">Modifier l\'étiquette</string>
+    <string name="settings_gestures_list_back_navigation_navigate_to_parent">Retour à l\'écran parent</string>
+    <string name="actions_share_link">Partager le lien</string>
+    <string name="actions_copy_link">Copier le lien</string>
 </resources>
