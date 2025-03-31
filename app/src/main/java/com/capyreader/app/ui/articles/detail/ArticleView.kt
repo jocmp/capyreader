@@ -24,7 +24,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -112,12 +111,12 @@ fun ArticleView(
                         pagination.selectNext()
                     },
                 ) {
-                    key(article.id) {
+//                    key(article.id) {
                         ArticleReader(
                             article = article,
                             webViewState = webViewState,
                         )
-                    }
+//                    }
                 }
             }
         },
