@@ -250,4 +250,7 @@
     <string name="tag_action_edit">编辑标签</string>
     <string name="tag_action_delete_confirm">删除</string>
     <string name="delete_tag_error">删除标签时出错</string>
+    <string name="settings_gestures_list_back_navigation_navigate_to_parent">导航至上级</string>
+    <string name="actions_copy_link">复制链接</string>
+    <string name="actions_share_link">分享链接</string>
 </resources>

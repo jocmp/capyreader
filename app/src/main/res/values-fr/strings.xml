@@ -249,4 +249,7 @@
     <string name="tag_action_edit_success">Étiquette mise à jour</string>
     <string name="tag_action_edit_error">Erreur lors de la mise à jour de l\'étiquette</string>
     <string name="tag_action_edit">Modifier l\'étiquette</string>
+    <string name="settings_gestures_list_back_navigation_navigate_to_parent">Retour à l\'écran parent</string>
+    <string name="actions_share_link">Partager le lien</string>
+    <string name="actions_copy_link">Copier le lien</string>
 </resources>

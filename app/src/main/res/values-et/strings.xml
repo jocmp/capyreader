@@ -251,4 +251,7 @@
     <string name="tag_action_edit_error">Viga sildi uuendamisel</string>
     <string name="tag_action_edit">Muuda silti</string>
     <string name="tag_action_delete_message">Kas oled kindel, et soovid kustutada „%1$s“ sildi?</string>
+    <string name="actions_copy_link">Kopeeri link</string>
+    <string name="actions_share_link">Jaga linki</string>
+    <string name="settings_gestures_list_back_navigation_navigate_to_parent">Mine ülemise objekti juurde</string>
 </resources>
