@@ -195,14 +195,14 @@
     <string name="add_account_feedbin_signup_link_text">在这里创建一个。</string>
     <string name="add_account_freshrss_signup_prompt">没有 FreshRSS 实例？</string>
     <string name="add_account_freshrss_signup_link_text">了解更多。</string>
-    <string name="edit_feed_tag_section">标签</string>
+    <string name="edit_feed_tag_section">添加或选择标签</string>
     <string name="add_account_freshrss_subtitle">freshrss.org</string>
     <string name="add_account_reader_subtitle">自托管的 Google Reader API</string>
     <string name="settings_gestures_reader_tap_to_page_title">电子墨水屏设备轻按滚动</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">轻按底部角落上下滚动文章内容</string>
     <string name="settings_enable_high_contrast_dark_theme">启用高对比度深色主题</string>
     <string name="settings_section_mark_all_as_read">标记全部为已读</string>
-    <string name="settings_mark_read_on_scroll">滚动时标记为已读</string>
+    <string name="settings_mark_read_on_scroll">滚动时自动标记为已读</string>
     <string name="settings_section_browser">浏览器</string>
     <string name="reader_image_visibility_show_on_wifi">仅在 Wi-Fi 连接下显示图片</string>
     <string name="reader_image_visibility_always_hide">屏蔽图片</string>
@@ -242,4 +242,15 @@
     <string name="blocked_keywords_remove_keyword">移除关键词</string>
     <string name="blocked_keywords_add_keyword">添加关键词</string>
     <string name="blocked_keywords">屏蔽列表</string>
+    <string name="tag_action_delete_title">删除</string>
+    <string name="tag_action_delete_message">是否确定要删除标签“%1$s”？</string>
+    <string name="tag_name_title">名称</string>
+    <string name="tag_action_edit_success">标签已更新</string>
+    <string name="tag_action_edit_error">更新标签时出错</string>
+    <string name="tag_action_edit">编辑标签</string>
+    <string name="tag_action_delete_confirm">删除</string>
+    <string name="delete_tag_error">删除标签时出错</string>
+    <string name="settings_gestures_list_back_navigation_navigate_to_parent">导航至上级</string>
+    <string name="actions_copy_link">复制链接</string>
+    <string name="actions_share_link">分享链接</string>
 </resources>
