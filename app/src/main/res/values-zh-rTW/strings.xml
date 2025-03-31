@@ -252,4 +252,5 @@
     <string name="tag_action_delete_title">刪除</string>
     <string name="actions_share_link">分享連結</string>
     <string name="actions_copy_link">複製連結</string>
+    <string name="settings_gestures_list_back_navigation_navigate_to_parent">導覽到上一階</string>
 </resources>
