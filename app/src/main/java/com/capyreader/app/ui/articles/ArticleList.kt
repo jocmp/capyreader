@@ -88,6 +88,12 @@ fun ArticleList(
         }
     }
 
+    LaunchedEffect(articles.itemCount) {
+        if (articles.itemCount > 0) {
+            listState.scrollToItem(0)
+        }
+    }
+
     MarkReadOnScroll(
         enabled = enableMarkReadOnScroll,
         articles = articles,

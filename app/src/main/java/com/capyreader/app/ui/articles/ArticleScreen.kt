@@ -54,16 +54,16 @@ fun ArticleScreen(
     val connectivity = rememberLocalConnectivity()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
 
-    val pager = remember(filter, unreadSort, articlesSince, searchQuery) {
-        viewModel.pager(
-            filter,
-            unreadSort,
-            articlesSince,
-            searchQuery,
-        )
-    }
+//    val pager = remember(filter, unreadSort, articlesSince, searchQuery) {
+//        viewModel.pager(
+//            filter,
+//            unreadSort,
+//            articlesSince,
+//            searchQuery,
+//        )
+//    }
 
-    val articles = pager.flow.collectAsLazyPagingItems()
+    val articles = viewModel.articles.collectAsLazyPagingItems()
 
     CompositionLocalProvider(
         LocalFullContent provides fullContent,
