@@ -244,4 +244,7 @@
     <string name="tag_action_edit_success">Actulizouse a etiqueta</string>
     <string name="tag_action_edit_error">Erro ao actualizar a etiqueta</string>
     <string name="tag_action_delete_title">Eliminar</string>
+    <string name="actions_share_link">Compartir ligazón</string>
+    <string name="settings_gestures_list_back_navigation_navigate_to_parent">Ir ao cartafol nai</string>
+    <string name="actions_copy_link">Copiar ligazón</string>
 </resources>

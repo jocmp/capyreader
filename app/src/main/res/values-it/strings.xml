@@ -252,4 +252,7 @@
     <string name="tag_action_edit_success">Tag aggiornato</string>
     <string name="tag_action_edit_error">Errore nell\'aggiornamento del tag</string>
     <string name="tag_action_edit">Modifica tag</string>
+    <string name="actions_copy_link">Copia il link</string>
+    <string name="settings_gestures_list_back_navigation_navigate_to_parent">Vai al livello superiore</string>
+    <string name="actions_share_link">Condividi il link</string>
 </resources>
