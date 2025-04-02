@@ -6,6 +6,7 @@ import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
+import android.webkit.WebView.HitTestResult.SRC_ANCHOR_TYPE
 import android.webkit.WebView.VisualStateCallback
 import android.webkit.WebViewClient
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -212,7 +213,9 @@ fun rememberWebViewState(
             isVerticalScrollBarEnabled = false
             isHorizontalScrollBarEnabled = false
 
-            setOnLongClickListener { true }
+            setOnLongClickListener {
+                hitTestResult.type == SRC_ANCHOR_TYPE
+            }
 
             addJavascriptInterface(
                 WebViewInterface(
