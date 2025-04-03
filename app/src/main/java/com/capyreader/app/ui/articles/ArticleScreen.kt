@@ -18,6 +18,7 @@ import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.SearchState
 import com.capyreader.app.ui.rememberLocalConnectivity
+import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.common.launchUI
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
@@ -88,6 +89,11 @@ fun ArticleScreen(
             },
             onRefresh = { filter, completion ->
                 viewModel.refresh(filter, completion)
+            },
+            onDrawerOpen = {
+                if (filter.status == ArticleStatus.UNREAD) {
+                    viewModel.updateArticleTimeSince()
+                }
             },
             drawerState = drawerState,
             onSelectFolder = viewModel::selectFolder,
