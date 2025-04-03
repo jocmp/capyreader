@@ -42,8 +42,8 @@ data class Item(
 
     @JsonClass(generateAdapter = true)
     data class Enclosure(
-        val href: String,
-        val type: String,
+        val href: String?,
+        val type: String?,
     )
 
     @JsonClass(generateAdapter = true)
@@ -52,7 +52,7 @@ data class Item(
     )
 
     val image: Enclosure?
-        get() = enclosure?.find { it.type.startsWith("image") }
+        get() = enclosure?.find { it.type?.startsWith("image") == true }
 }
 
 /** open for testing */
