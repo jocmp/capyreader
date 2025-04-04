@@ -1,8 +1,8 @@
 package com.jocmp.capy.articles
 
 object FontSize {
-    val MIN = 10
-    val MAX = 30
+    private const val MIN = 12
+    private const val MAX = 32
 
     val scale: List<Int>
         get() = (MIN..MAX step 2).toList()
