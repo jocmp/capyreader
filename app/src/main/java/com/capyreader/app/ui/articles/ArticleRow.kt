@@ -106,6 +106,8 @@ fun ArticleRow(
                     if (article.title.isNotBlank()) {
                         Text(
                             article.title,
+                            maxLines = 3,
+                            overflow = TextOverflow.Ellipsis,
                             fontWeight = FontWeight.Bold,
                         )
                     }
