@@ -239,7 +239,7 @@
     <string name="media_share_failure">Неуспешно споделяне на изображение</string>
     <string name="media_share">Сподели</string>
     <string name="image_preview_menu_option_medium">Средно</string>
-    <string name="blocked_keywords">Блокиран списък</string>
+    <string name="blocked_keywords">Списък с блокирани</string>
     <string name="blocked_keywords_add_keyword">Добавяне на ключова дума</string>
     <string name="blocked_keywords_supporting_text">Премахване на статии със заглавие или съдържание, които съвпадат с ключова дума</string>
     <string name="blocked_keywords_remove_keyword">Премахване на ключова дума</string>
