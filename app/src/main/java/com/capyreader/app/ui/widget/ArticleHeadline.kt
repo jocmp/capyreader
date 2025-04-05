@@ -1,64 +1,92 @@
 package com.capyreader.app.ui.widget
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
-import androidx.glance.ExperimentalGlanceApi
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.LocalContext
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.action.actionStartActivity
+import androidx.glance.appwidget.cornerRadius
 import androidx.glance.background
+import androidx.glance.layout.Column
 import androidx.glance.layout.Row
+import androidx.glance.layout.Spacer
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.padding
+import androidx.glance.layout.width
 import androidx.glance.preview.ExperimentalGlancePreviewApi
 import androidx.glance.preview.Preview
 import androidx.glance.text.Text
+import androidx.glance.text.TextStyle
 import com.capyreader.app.MainActivity
 import com.capyreader.app.notifications.NotificationHelper.Companion.ARTICLE_ID_KEY
 import com.capyreader.app.notifications.NotificationHelper.Companion.FEED_ID_KEY
 import com.jocmp.capy.Article
+import com.jocmp.capy.articles.relativeTime
 import java.net.URL
+import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
 
-//
-//private val articleKey = ActionParameters.Key<String>(
-//    ARTICLE_ID_KEY
-//)
-//
-//private val feedKey = ActionParameters.Key<String>(
-//    FEED_ID_KEY
-//)
-
-@OptIn(ExperimentalGlanceApi::class)
 @Composable
-fun ArticleHeadline(article: Article) {
+fun ArticleHeadline(article: Article, currentTime: LocalDateTime) {
     val context = LocalContext.current
-    Row(
+
+    Column(
         modifier = GlanceModifier
-            .background(GlanceTheme.colors.background)
+            .clickable(context.openArticle(article))
+            .background(GlanceTheme.colors.primaryContainer)
             .padding(horizontal = 16.dp, vertical = 8.dp)
-            .clickable(
-                actionStartActivity(
-                    Intent(context, MainActivity::class.java).apply {
-                        putExtra(ARTICLE_ID_KEY, article.id)
-                        putExtra(FEED_ID_KEY, article.feedID)
-                        data = uniqueUri(article)
-                        setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    })
-            )
+            .cornerRadius(16.dp)
             .fillMaxWidth()
     ) {
-        Text(article.title)
+        Text(
+            article.title.ifBlank { article.summary },
+            maxLines = 2
+        )
+
+        Row {
+            Text(
+                article.feedName,
+                maxLines = 1,
+                style = TextStyle(
+                    fontSize = 12.sp,
+                ),
+                modifier = GlanceModifier
+                    .defaultWeight()
+                    .padding(top = 8.dp)
+            )
+            Spacer(GlanceModifier.width(8.dp))
+            Text(
+                relativeTime(
+                    time = article.publishedAt,
+                    currentTime = currentTime,
+                ),
+                style = TextStyle(
+                    fontSize = 12.sp,
+                    color = GlanceTheme.colors.onSurfaceVariant,
+                ),
+            )
+        }
     }
 }
 
-fun uniqueUri(article: Article): Uri {
+private fun Context.openArticle(article: Article) =
+    actionStartActivity(
+        Intent(this, MainActivity::class.java).apply {
+            putExtra(ARTICLE_ID_KEY, article.id)
+            putExtra(FEED_ID_KEY, article.feedID)
+            data = uniqueUri(article)
+            setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        })
+
+private fun uniqueUri(article: Article): Uri {
     val fallbackUri = "https://capyreader.com/${article.id}".toUri()
     val url = article.url
 
@@ -91,6 +119,6 @@ fun ArticleHeadlinePreview() {
     )
 
     GlanceTheme {
-        ArticleHeadline(article)
+        ArticleHeadline(article, currentTime = LocalDateTime.now())
     }
 }
