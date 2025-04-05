@@ -3,6 +3,7 @@ package com.capyreader.app.ui.articles.detail
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -29,7 +30,7 @@ import org.koin.compose.koinInject
 @Composable
 fun CornerTapGestureScroll(
     maxArticleHeight: Float,
-    scrollState: ScrollState,
+    scrollState: ScrollableState,
     appPreferences: AppPreferences = koinInject(),
     content: @Composable () -> Unit,
 ) {
@@ -61,7 +62,7 @@ fun CornerTapGestureScroll(
 @Composable
 private fun BoxScope.ReaderPagingButton(
     direction: ReaderPagingButtonModel,
-    scrollState: ScrollState,
+    scrollState: ScrollableState,
 ) {
     val scope = rememberCoroutineScope()
     val haptics = LocalHapticFeedback.current
@@ -84,9 +85,13 @@ private fun BoxScope.ReaderPagingButton(
                     }
                 },
                 onLongClick = {
-                    performHaptic()
-                    scope.launchUI {
-                        scrollState.scrollTo(direction.scrollTo)
+                    val state = scrollState as? ScrollState
+
+                    if (state != null) {
+                        performHaptic()
+                        scope.launchUI {
+                            state.scrollTo(direction.scrollTo)
+                        }
                     }
                 },
             )

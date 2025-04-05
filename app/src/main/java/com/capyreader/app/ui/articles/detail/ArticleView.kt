@@ -2,7 +2,6 @@
 
 package com.capyreader.app.ui.articles.detail
 
-import android.net.Uri
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,6 +34,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import com.capyreader.app.common.openLink
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleVerticalSwipe
@@ -300,7 +300,7 @@ fun articleOpenLink(
     fun open() {
         val link = article.url?.toString() ?: return
 
-        context.openLink(Uri.parse(link), appPreferences)
+        context.openLink(link.toUri(), appPreferences)
     }
 
     return ::open

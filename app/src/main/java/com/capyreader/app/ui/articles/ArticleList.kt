@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -28,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import com.capyreader.app.R
 import com.capyreader.app.preferences.AppPreferences
+import com.capyreader.app.ui.articles.detail.CornerTapGestureScroll
 import com.jocmp.capy.Article
 import com.jocmp.capy.MarkRead
 import kotlinx.coroutines.FlowPreview
@@ -48,41 +50,48 @@ fun ArticleList(
     val articleOptions = rememberArticleOptions()
     val currentTime = rememberCurrentTime()
     val localDensity = LocalDensity.current
+    var maxHeight by remember { mutableFloatStateOf(0f) }
     var listHeight by remember { mutableStateOf(0.dp) }
 
-    LazyScrollbar(state = listState) {
-        LazyColumn(
-            state = listState,
-            modifier = Modifier
-                .fillMaxSize()
-                .onGloballyPositioned { coordinates ->
-                    listHeight = with(localDensity) { coordinates.size.height.toDp() }
-                }
-        ) {
-            items(count = articles.itemCount) { index ->
-                val item = articles[index]
+    CornerTapGestureScroll(
+        maxArticleHeight = maxHeight,
+        scrollState = listState,
+    ) {
+        LazyScrollbar(state = listState) {
+            LazyColumn(
+                state = listState,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .onGloballyPositioned { coordinates ->
+                        maxHeight = coordinates.size.height.toFloat()
+                        listHeight = with(localDensity) { maxHeight.toDp() }
+                    }
+            ) {
+                items(count = articles.itemCount) { index ->
+                    val item = articles[index]
 
-                Box {
-                    if (item == null) {
-                        PlaceholderArticleRow(articleOptions.imagePreview)
-                    } else {
-                        ArticleRow(
-                            article = item,
-                            selected = selectedArticleKey == item.id,
-                            onSelect = {
-                                onSelect(it)
-                            },
-                            onMarkAllRead = onMarkAllRead,
-                            currentTime = currentTime,
-                            options = articleOptions
-                        )
+                    Box {
+                        if (item == null) {
+                            PlaceholderArticleRow(articleOptions.imagePreview)
+                        } else {
+                            ArticleRow(
+                                article = item,
+                                selected = selectedArticleKey == item.id,
+                                onSelect = {
+                                    onSelect(it)
+                                },
+                                onMarkAllRead = onMarkAllRead,
+                                currentTime = currentTime,
+                                options = articleOptions
+                            )
+                        }
                     }
                 }
-            }
 
-            if (enableMarkReadOnScroll && articles.itemCount > 0) {
-                item {
-                    FeedOverScrollBox(height = listHeight)
+                if (enableMarkReadOnScroll && articles.itemCount > 0) {
+                    item {
+                        FeedOverScrollBox(height = listHeight)
+                    }
                 }
             }
         }

@@ -13,7 +13,7 @@ import my.nanihadesuka.compose.ScrollbarSettings
 fun ColumnScrollbar(state: ScrollState, content: @Composable () -> Unit) {
     ColumnScrollbar(
         state = state,
-        settings = settings()
+        settings = settings(),
     ) {
         content()
     }
