@@ -253,4 +253,7 @@
     <string name="blocked_keywords_remove_keyword">Убрать ключевое слово</string>
     <string name="blocked_keywords_add_keyword">Добавить ключевое слово</string>
     <string name="tag_action_delete_message">Вы уверены, что хотите удалить тег \"%1$s\"?</string>
+    <string name="settings_gestures_list_back_navigation_navigate_to_parent">На уровень выше</string>
+    <string name="actions_copy_link">Копировать ссылку</string>
+    <string name="actions_share_link">Поделиться ссылкой</string>
 </resources>
