@@ -1,0 +1,1 @@
+This small update adds a headlines widget! The widget displays your latest unread headlines for all feeds.
