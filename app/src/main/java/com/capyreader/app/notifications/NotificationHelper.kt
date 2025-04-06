@@ -136,6 +136,8 @@ class NotificationHelper(
     companion object {
         const val ARTICLE_ID_KEY = "article_id"
         const val FEED_ID_KEY = "feed_id"
+        const val UNREAD_ONLY_KEY = "unread_only"
+
         private const val ARTICLE_REFRESH_GROUP = "article_refresh"
 
         fun dismissNotificationIntent(articleID: String, context: Context): Intent {
@@ -152,19 +154,31 @@ class NotificationHelper(
             }
         }
 
-        fun openArticle(intent: Intent, appPreferences: AppPreferences) {
-            val articleID = intent.getStringExtra(ARTICLE_ID_KEY) ?: return
-            val feedID = intent.getStringExtra(FEED_ID_KEY) ?: return
-            intent.replaceExtras(Bundle())
+        fun openFromIntent(intent: Intent, appPreferences: AppPreferences) {
+            val showUnreadOnly = intent.getBooleanExtra(UNREAD_ONLY_KEY, false)
+            val articleID = intent.getStringExtra(ARTICLE_ID_KEY)
+            val feedID = intent.getStringExtra(FEED_ID_KEY)
 
-            appPreferences.filter.set(
-                ArticleFilter.Feeds(
-                    feedID,
-                    feedStatus = ArticleStatus.UNREAD,
-                    folderTitle = null
+            if (showUnreadOnly) {
+                intent.replaceExtras(Bundle())
+
+                appPreferences.filter.set(
+                    ArticleFilter.Articles(articleStatus = ArticleStatus.UNREAD)
                 )
-            )
-            appPreferences.articleID.set(articleID)
+                appPreferences.articleID.delete()
+
+            } else if (articleID != null && feedID != null) {
+                intent.replaceExtras(Bundle())
+
+                appPreferences.filter.set(
+                    ArticleFilter.Feeds(
+                        feedID,
+                        feedStatus = ArticleStatus.ALL,
+                        folderTitle = null
+                    )
+                )
+                appPreferences.articleID.set(articleID)
+            }
         }
     }
 }
