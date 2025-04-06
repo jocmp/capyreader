@@ -258,4 +258,8 @@
     <string name="tag_action_edit">Edit Tag</string>
     <string name="actions_copy_link">Copy link</string>
     <string name="actions_share_link">Share link</string>
+    <string name="widget_receiver_headlines_title">Headlines</string>
+    <string name="widget_headlines_title">Latest Headlines</string>
+    <string name="widget_headlines_see_more_button">See more articles</string>
+    <string name="widget_headlines_account_error">Add an account first</string>
 </resources>

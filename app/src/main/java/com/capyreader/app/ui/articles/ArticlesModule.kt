@@ -1,16 +1,14 @@
 package com.capyreader.app.ui.articles
 
 import com.capyreader.app.preferences.AppPreferences
-import com.jocmp.capy.Account
 import com.jocmp.capy.articles.ArticleRenderer
 import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
 
 internal val articlesModule = module {
     factory {
         AddFeedViewModel(
-            account = get<Account>(parameters = { parametersOf(get<AppPreferences>().accountID.get()) }),
+            account = get(),
             appPreferences = get()
         )
     }
@@ -27,7 +25,7 @@ internal val articlesModule = module {
         val appPreferences = get<AppPreferences>()
 
         ArticleScreenViewModel(
-            account = get<Account>(parameters = { parametersOf(appPreferences.accountID.get()) }),
+            account = get(),
             appPreferences = appPreferences,
             notificationHelper = get(),
             application = get(),

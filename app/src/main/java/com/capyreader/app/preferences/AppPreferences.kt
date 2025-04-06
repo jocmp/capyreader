@@ -26,6 +26,9 @@ class AppPreferences(context: Context) {
 
     val articleListOptions = ArticleListOptions(preferenceStore)
 
+    val isLoggedIn
+        get() = accountID.get().isNotBlank()
+
     val accountID: Preference<String>
         get() = preferenceStore.getString("account_id")
 
