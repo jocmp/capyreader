@@ -17,7 +17,7 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        NotificationHelper.openFromIntent(intent, appPreferences = appPreferences)
+        NotificationHelper.openArticle(intent, appPreferences = appPreferences)
 
         val theme = appPreferences.theme
 
@@ -33,7 +33,7 @@ class MainActivity : BaseActivity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        NotificationHelper.openFromIntent(intent, appPreferences = appPreferences)
+        NotificationHelper.openArticle(intent, appPreferences = appPreferences)
     }
 
     private fun startDestination(): Route {

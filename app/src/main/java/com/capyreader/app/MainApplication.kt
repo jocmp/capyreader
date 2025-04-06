@@ -25,7 +25,7 @@ class MainApplication : Application(), ImageLoaderFactory {
             setupCommonModules()
         }
 
-        if (get<AppPreferences>().isLoggedIn) {
+        if (get<AppPreferences>().accountID.get().isNotBlank()) {
             loadAccountModules()
         }
     }

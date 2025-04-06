@@ -15,7 +15,6 @@ import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleListVerticalSwipe
 import com.capyreader.app.sync.Sync
 import com.capyreader.app.ui.components.SearchState
-import com.capyreader.app.ui.widget.WidgetUpdater
 import com.jocmp.capy.Account
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
@@ -296,10 +295,6 @@ class ArticleScreenViewModel(
                 if (throwable is UnauthorizedError && _showUnauthorizedMessage == UnauthorizedMessageState.HIDE) {
                     _showUnauthorizedMessage = UnauthorizedMessageState.SHOW
                 }
-            }
-
-            launchIO {
-                WidgetUpdater.update(context)
             }
 
             onComplete()
