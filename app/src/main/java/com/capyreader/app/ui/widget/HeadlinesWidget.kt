@@ -15,6 +15,7 @@ import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.text.Text
+import androidx.glance.text.TextStyle
 import com.capyreader.app.R
 import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.Account
@@ -48,7 +49,10 @@ class HeadlinesWidget : GlanceAppWidget() {
                     .fillMaxSize()
                     .background(GlanceTheme.colors.background)
             ) {
-                Text(context.getString(R.string.widget_headlines_account_error))
+                Text(
+                    context.getString(R.string.widget_headlines_account_error),
+                    style = TextStyle(color = GlanceTheme.colors.onSurface)
+                )
             }
         }
     }

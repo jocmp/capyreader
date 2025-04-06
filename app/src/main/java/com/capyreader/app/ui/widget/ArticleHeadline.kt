@@ -3,6 +3,7 @@ package com.capyreader.app.ui.widget
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -20,6 +21,7 @@ import androidx.glance.layout.Spacer
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.padding
 import androidx.glance.layout.width
+import androidx.glance.material3.ColorProviders
 import androidx.glance.preview.ExperimentalGlancePreviewApi
 import androidx.glance.preview.Preview
 import androidx.glance.text.Text
@@ -48,6 +50,9 @@ fun ArticleHeadline(article: Article, currentTime: LocalDateTime) {
     ) {
         Text(
             article.title.ifBlank { article.summary },
+            style = TextStyle(
+                color = GlanceTheme.colors.onSurface
+            ),
             maxLines = 2
         )
 
@@ -57,6 +62,7 @@ fun ArticleHeadline(article: Article, currentTime: LocalDateTime) {
                 maxLines = 1,
                 style = TextStyle(
                     fontSize = 12.sp,
+                    color = GlanceTheme.colors.onSurface
                 ),
                 modifier = GlanceModifier
                     .defaultWeight()
@@ -119,6 +125,37 @@ fun ArticleHeadlinePreview() {
     )
 
     GlanceTheme {
+        ArticleHeadline(article, currentTime = LocalDateTime.now())
+    }
+}
+
+@OptIn(ExperimentalGlancePreviewApi::class)
+@Preview
+@Composable
+fun ArticleHeadlineDarkPreview() {
+    val article = Article(
+        id = "288",
+        feedID = "123",
+        title = "How to use the Galaxy S24's AI photo editing tool",
+        author = "Andrew Romero",
+        contentHTML = "<div>Test</div>",
+        extractedContentURL = null,
+        imageURL = "https://example.com",
+        summary = "The Galaxy S24 series, while bringing little physical change, packs a lot of AI narrative. One of the biggest Galaxy S24 features is the AI Generative Edit",
+        url = URL("https://9to5google.com/?p=605559"),
+        updatedAt = ZonedDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneOffset.UTC),
+        publishedAt = ZonedDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneOffset.UTC),
+        read = true,
+        starred = false,
+        feedName = "9to5Google - Google news, Pixel, Android, Home, Chrome OS, more"
+    )
+
+    GlanceTheme(
+        colors = ColorProviders(
+            light = darkColorScheme(),
+            dark = darkColorScheme(),
+        ),
+    ) {
         ArticleHeadline(article, currentTime = LocalDateTime.now())
     }
 }

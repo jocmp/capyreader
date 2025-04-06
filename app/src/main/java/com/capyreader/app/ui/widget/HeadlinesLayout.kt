@@ -2,6 +2,7 @@ package com.capyreader.app.ui.widget
 
 import android.content.Context
 import android.content.Intent
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
@@ -27,9 +28,9 @@ import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.padding
 import androidx.glance.layout.size
 import androidx.glance.layout.width
+import androidx.glance.material3.ColorProviders
 import androidx.glance.preview.ExperimentalGlancePreviewApi
 import androidx.glance.preview.Preview
-import androidx.glance.text.FontStyle
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import com.capyreader.app.MainActivity
@@ -88,9 +89,6 @@ fun HeadlinesLayout(articles: List<Article>) {
                 ) {
                     Button(
                         context.getString(R.string.widget_headlines_see_more_button),
-                        style = TextStyle(
-                            fontStyle = FontStyle.Normal,
-                        ),
                         onClick = context.openUnread()
                     )
                 }
@@ -128,6 +126,37 @@ fun HeadlinesLayoutPreview() {
     )
 
     GlanceTheme {
+        HeadlinesLayout(listOf(article))
+    }
+}
+
+@OptIn(ExperimentalGlancePreviewApi::class)
+@Preview
+@Composable
+fun HeadlinesLayoutDarkPreview() {
+    val article = Article(
+        id = "288",
+        feedID = "123",
+        title = "How to use the Galaxy S24's AI photo editing tool",
+        author = "Andrew Romero",
+        contentHTML = "<div>Test</div>",
+        extractedContentURL = null,
+        imageURL = "https://example.com",
+        summary = "The Galaxy S24 series, while bringing little physical change, packs a lot of AI narrative. One of the biggest Galaxy S24 features is the AI Generative Edit",
+        url = URL("https://9to5google.com/?p=605559"),
+        updatedAt = ZonedDateTime.of(2025, 4, 6, 8, 33, 0, 0, ZoneOffset.UTC),
+        publishedAt = ZonedDateTime.of(2025, 4, 6, 8, 33, 0, 0, ZoneOffset.UTC),
+        read = true,
+        starred = false,
+        feedName = "9to5Google - Google news, Pixel, Android, Home, Chrome OS, more"
+    )
+
+    GlanceTheme(
+        colors = ColorProviders(
+            light = darkColorScheme(),
+            dark = darkColorScheme(),
+        ),
+    ) {
         HeadlinesLayout(listOf(article))
     }
 }
