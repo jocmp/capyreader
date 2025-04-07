@@ -8,6 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.Button
+import androidx.glance.ButtonDefaults
 import androidx.glance.ColorFilter
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
@@ -51,7 +52,7 @@ fun HeadlinesLayout(articles: List<Article>) {
     Column(
         GlanceModifier
             .fillMaxSize()
-            .background(GlanceTheme.colors.background)
+            .background(GlanceTheme.colors.widgetBackground)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -63,7 +64,7 @@ fun HeadlinesLayout(articles: List<Article>) {
             Image(
                 provider = ImageProvider(R.drawable.capy_icon_inline),
                 contentDescription = null,
-                colorFilter = ColorFilter.tint(GlanceTheme.colors.onSurface),
+                colorFilter = ColorFilter.tint(GlanceTheme.colors.secondary),
                 modifier = GlanceModifier
                     .size(24.dp)
             )
@@ -78,7 +79,7 @@ fun HeadlinesLayout(articles: List<Article>) {
         }
         LazyColumn {
             items(articles) { article ->
-                Box(GlanceModifier.padding(horizontal = 8.dp, vertical = 4.dp)) {
+                Box(GlanceModifier.padding(horizontal = 16.dp, vertical = 4.dp)) {
                     ArticleHeadline(article, currentTime = currentTime)
                 }
             }
@@ -91,7 +92,11 @@ fun HeadlinesLayout(articles: List<Article>) {
                 ) {
                     Button(
                         context.getString(R.string.widget_headlines_see_more_button),
-                        onClick = context.openUnread()
+                        onClick = context.openUnread(),
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = GlanceTheme.colors.secondary,
+                            contentColor = GlanceTheme.colors.onSecondary
+                        )
                     )
                 }
             }

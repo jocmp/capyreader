@@ -43,7 +43,7 @@ fun ArticleHeadline(article: Article, currentTime: LocalDateTime) {
     Column(
         modifier = GlanceModifier
             .clickable(context.openArticle(article))
-            .background(GlanceTheme.colors.primaryContainer)
+            .background(GlanceTheme.colors.secondaryContainer)
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .cornerRadius(16.dp)
             .fillMaxWidth()
