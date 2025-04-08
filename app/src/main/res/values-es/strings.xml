@@ -134,7 +134,7 @@
     <string name="settings_panel_general_title">General</string>
     <string name="settings_about_title">Acerca de</string>
     <string name="settings_list_top_bar_title">Ajustes</string>
-    <string name="settings_auto_delete_articles_title">Segir leyendo los artículos</string>
+    <string name="settings_auto_delete_articles_title">Seguir leyendo los artículos</string>
     <string name="settings_auto_delete_option_keep_forever">Para siempre</string>
     <string name="settings_auto_delete_option_keep_for_one_week">1 semana</string>
     <string name="settings_auto_delete_option_keep_for_two_week">2 semanas</string>
@@ -227,7 +227,7 @@
     <string name="media_save_failure">Fallo al guardar imagen</string>
     <string name="media_save">Guardar</string>
     <string name="media_save_success">Imagen guardada</string>
-    <string name="media_share_failure">Falló al compartir imágen</string>
+    <string name="media_share_failure">Falló al compartir imagen</string>
     <string name="media_share">Compartir</string>
     <string name="feed_nav_drawer_refresh_all">Refrescar todo</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Desliza a la izquierda o a la derecha para navegar por los articulos</string>
