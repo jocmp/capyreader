@@ -251,4 +251,8 @@
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">Eine Ebene höher</string>
     <string name="actions_share_link">Link teilen</string>
     <string name="actions_copy_link">Link kopieren</string>
+    <string name="widget_headlines_see_more_button">Mehr Artikel anzeigen</string>
+    <string name="widget_headlines_account_error">Erst einen Account hinzufügen</string>
+    <string name="widget_headlines_title">Neueste Schlagzeilen</string>
+    <string name="widget_receiver_headlines_title">Schlagzeilen</string>
 </resources>
