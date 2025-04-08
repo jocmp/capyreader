@@ -254,4 +254,8 @@
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">Преминаване към източник</string>
     <string name="actions_copy_link">Копирай връзката</string>
     <string name="actions_share_link">Сподели връзката</string>
+    <string name="widget_headlines_title">Последни заглавия</string>
+    <string name="widget_headlines_see_more_button">Вижте още статии</string>
+    <string name="widget_headlines_account_error">Първо добавете акаунт</string>
+    <string name="widget_receiver_headlines_title">Заглавия</string>
 </resources>
