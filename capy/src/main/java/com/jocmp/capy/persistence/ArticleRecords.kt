@@ -169,10 +169,12 @@ internal class ArticleRecords internal constructor(
     }
 
     internal fun dismissNotifications(ids: List<String>) {
-        notificationQueries.dismissNotifications(
-            ids = ids,
-            deleted_at = nowUTC().toEpochSecond()
-        )
+        ids.chunked(500).forEach { batchIDs ->
+            notificationQueries.dismissNotifications(
+                articleIDs = batchIDs,
+                deleted_at = nowUTC().toEpochSecond()
+            )
+        }
     }
 
     fun deleteAllArticles() {
@@ -218,13 +220,15 @@ internal class ArticleRecords internal constructor(
     }
 
     fun markAllRead(articleIDs: List<String>, lastReadAt: ZonedDateTime = nowUTC()) {
-        val updated = lastReadAt.toEpochSecond()
+        database.transactionWithErrorHandling {
+            val updated = lastReadAt.toEpochSecond()
 
-        database.articlesQueries.markRead(
-            articleIDs = articleIDs,
-            read = true,
-            lastReadAt = updated,
-        )
+            database.articlesQueries.markRead(
+                articleIDs = articleIDs,
+                read = true,
+                lastReadAt = updated,
+            )
+        }
     }
 
     fun markUnread(articleID: String) {
@@ -277,10 +281,14 @@ internal class ArticleRecords internal constructor(
     }
 
     fun filterUnreadStatuses(ids: List<String>): List<String> {
-       return database.articlesQueries.filterUnreadStatuses(ids).executeAsList()
+        return database.articlesQueries.filterUnreadStatuses(ids).executeAsList()
     }
 
-    fun unreadArticleIDs(filter: ArticleFilter, range: MarkRead, unreadSort: UnreadSortOrder): List<String> {
+    fun unreadArticleIDs(
+        filter: ArticleFilter,
+        range: MarkRead,
+        unreadSort: UnreadSortOrder
+    ): List<String> {
         val ids = when (filter) {
             is ArticleFilter.Articles -> byStatus.unreadArticleIDs(
                 filter.articleStatus,
