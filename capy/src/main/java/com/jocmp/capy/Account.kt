@@ -16,6 +16,7 @@ import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.sortedByName
 import com.jocmp.capy.common.sortedByTitle
 import com.jocmp.capy.common.transactionWithErrorHandling
+import com.jocmp.capy.common.withIOContext
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.opml.ImportProgress
 import com.jocmp.capy.opml.OPMLImporter
@@ -25,6 +26,8 @@ import com.jocmp.capy.persistence.FolderRecords
 import com.jocmp.capy.persistence.SavedSearchRecords
 import com.jocmp.capy.persistence.TaggingRecords
 import com.jocmp.feedbinclient.Feedbin
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -87,22 +90,17 @@ data class Account(
     }
 
     val feeds: Flow<List<Feed>> = taggedFeeds.map { all ->
-        all.filter { it.folderName.isBlank() }
-            .sortedByTitle()
+        all.filter { it.folderName.isBlank() }.sortedByTitle()
     }
 
     val folders: Flow<List<Folder>> = taggedFeeds.map { ungrouped ->
-        ungrouped
-            .filter { it.folderName.isNotBlank() }
-            .groupBy { it.folderName }
-            .map {
-                Folder(
-                    title = it.key,
-                    feeds = it.value.sortedByTitle(),
-                    expanded = it.value.firstOrNull()?.folderExpanded ?: false
-                )
-            }
-            .sortedByTitle()
+        ungrouped.filter { it.folderName.isNotBlank() }.groupBy { it.folderName }.map {
+            Folder(
+                title = it.key,
+                feeds = it.value.sortedByTitle(),
+                expanded = it.value.firstOrNull()?.folderExpanded ?: false
+            )
+        }.sortedByTitle()
     }
 
     suspend fun addFeed(
@@ -145,23 +143,21 @@ data class Account(
             },
             onFailure = {
                 return Result.failure(it)
-            }
-        )
+            })
     }
 
     suspend fun removeFeed(feedID: String): Result<Unit> {
-        val feed =
-            feedRecords.find(feedID) ?: return Result.failure(Throwable("Feed not found"))
+        val feed = feedRecords.find(feedID) ?: return Result.failure(Throwable("Feed not found"))
 
-        return delegate.removeFeed(feed = feed).fold(
-            onSuccess = {
-                feedRecords.removeFeed(feedID = feed.id)
-                Result.success(Unit)
-            },
-            onFailure = {
-                Result.failure(it)
-            }
-        )
+        return delegate.removeFeed(feed = feed)
+            .fold(
+                onSuccess = {
+                    feedRecords.removeFeed(feedID = feed.id)
+                    Result.success(Unit)
+                },
+                onFailure = {
+                    Result.failure(it)
+                })
     }
 
     suspend fun removeFolder(folderTitle: String): Result<Unit> {
@@ -172,8 +168,7 @@ data class Account(
             },
             onFailure = {
                 Result.failure(it)
-            }
-        )
+            })
     }
 
     suspend fun refresh(filter: ArticleFilter = ArticleFilter.default()): Result<Unit> {
@@ -230,18 +225,31 @@ data class Account(
         unreadSort: UnreadSortOrder,
     ): List<String> {
         return articleRecords.unreadArticleIDs(
-            filter = filter,
-            range = range,
-            unreadSort = unreadSort
+            filter = filter, range = range, unreadSort = unreadSort
         )
     }
 
-    suspend fun markAllRead(articleIDs: List<String>): Result<Unit> {
-        val changesetIDs = articleRecords.filterUnreadStatuses(articleIDs)
+    suspend fun markAllRead(articleIDs: List<String>, batchSize: Int = 500): Result<Unit> {
+        val result = withIOContext {
+            articleIDs.chunked(batchSize).map { batchIDs ->
+                async {
+                    val changesetIDs = articleRecords.filterUnreadStatuses(batchIDs)
 
-        articleRecords.markAllRead(changesetIDs)
+                    articleRecords.markAllRead(changesetIDs)
 
-        return delegate.markRead(changesetIDs)
+                    delegate.markRead(changesetIDs)
+                }
+            }.awaitAll()
+        }
+
+        if (result.all { it.isSuccess }) {
+            return Result.success(Unit)
+        } else {
+            val failure =
+                result.firstNotNullOfOrNull { it.exceptionOrNull() } ?: Throwable("Unknown error")
+
+            return Result.failure(failure)
+        }
     }
 
     suspend fun markRead(articleID: String): Result<Unit> {

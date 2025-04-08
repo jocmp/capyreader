@@ -7,6 +7,7 @@ import com.jocmp.capy.fixtures.AccountFixture
 import com.jocmp.capy.fixtures.ArticleFixture
 import com.jocmp.capy.fixtures.FeedFixture
 import io.mockk.coEvery
+import io.mockk.coVerify
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -172,6 +173,36 @@ class AccountTest {
         val result = unreadArticleIDs.takeLast(2)
 
         assertEquals(result, ids)
+    }
+
+    @Test
+    fun markAllRead() = runTest {
+        coEvery { account.delegate.markRead(any()) }.returns(Result.success(Unit))
+        var articles = 10.repeated { ArticleFixture(account.database).create(read = false) }
+
+        assertFalse(articles.all { it.read })
+
+        val articleIDs = articles.map { it.id }
+        account.markAllRead(articleIDs, batchSize = 5)
+
+        articles = articles.map { account.database.reload(it)!! }
+
+        assertTrue(articles.all { it.read })
+        coVerify(exactly = 2) { account.delegate.markRead(any()) } // 10 articles / 5 per batch => 2 calls
+    }
+
+    @Test
+    fun markAllRead_onFailure() = runTest {
+        coEvery { account.delegate.markRead(any()) }.returns(Result.failure(Throwable("Failure!!")))
+        val articles = 10.repeated { ArticleFixture(account.database).create(read = false) }
+
+        assertFalse(articles.all { it.read })
+
+        val articleIDs = articles.map { it.id }
+        val result = account.markAllRead(articleIDs, batchSize = 5)
+
+        coVerify(exactly = 2) { account.delegate.markRead(any()) }
+        assertTrue(result.isFailure)
     }
 
     @Test
