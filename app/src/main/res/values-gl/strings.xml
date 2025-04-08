@@ -247,4 +247,8 @@
     <string name="actions_share_link">Compartir ligazón</string>
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">Ir ao cartafol nai</string>
     <string name="actions_copy_link">Copiar ligazón</string>
+    <string name="widget_headlines_account_error">Primeiro engade unha conta</string>
+    <string name="widget_receiver_headlines_title">Titulares</string>
+    <string name="widget_headlines_title">Últimos titulares</string>
+    <string name="widget_headlines_see_more_button">Ver máis artigos</string>
 </resources>
