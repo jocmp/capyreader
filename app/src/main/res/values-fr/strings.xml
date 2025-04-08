@@ -252,4 +252,8 @@
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">Retour à l\'écran parent</string>
     <string name="actions_share_link">Partager le lien</string>
     <string name="actions_copy_link">Copier le lien</string>
+    <string name="widget_headlines_title">Derniers titres</string>
+    <string name="widget_headlines_see_more_button">Voir plus d\'articles</string>
+    <string name="widget_headlines_account_error">Ajoutez d\'abord un compte</string>
+    <string name="widget_receiver_headlines_title">Titres</string>
 </resources>
