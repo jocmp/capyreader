@@ -253,4 +253,8 @@
     <string name="actions_share_link">分享連結</string>
     <string name="actions_copy_link">複製連結</string>
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">導覽到上一階</string>
+    <string name="widget_receiver_headlines_title">頭條</string>
+    <string name="widget_headlines_title">最新頭條</string>
+    <string name="widget_headlines_see_more_button">查看更多文章</string>
+    <string name="widget_headlines_account_error">先添加一個賬戶</string>
 </resources>

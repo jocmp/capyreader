@@ -255,4 +255,8 @@
     <string name="actions_copy_link">Copia il link</string>
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">Vai al livello superiore</string>
     <string name="actions_share_link">Condividi il link</string>
+    <string name="widget_headlines_see_more_button">Vedi altri articoli</string>
+    <string name="widget_headlines_account_error">Aggiungi prima un account</string>
+    <string name="widget_headlines_title">Ultimi titoli</string>
+    <string name="widget_receiver_headlines_title">Titoli</string>
 </resources>
