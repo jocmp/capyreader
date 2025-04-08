@@ -19,7 +19,7 @@
     <string name="folder_action_delete_title">删除标签</string>
     <string name="folder_action_edit">重命名</string>
     <string name="settings_remove_account_confirm_service">退出登录</string>
-    <string name="settings_remove_account_button_local">删除账户</string>
+    <string name="settings_remove_account_button_local">删除账号</string>
     <string name="settings_remove_account_message_local">您确定要删除帐户吗？此操作无法撤消。</string>
     <string name="article_view_star">星标</string>
     <string name="refresh_manually_only">仅手动</string>
@@ -49,9 +49,9 @@
     <string name="crash_reporting_checkbox_title">启用崩溃报告</string>
     <string name="account_source_feedbin">Feedbin</string>
     <string name="account_source_local">本地</string>
-    <string name="add_account_title">添加账户</string>
+    <string name="add_account_title">添加账号</string>
     <string name="transfers_export_subscriptions">导出订阅</string>
-    <string name="settings_section_account">账户</string>
+    <string name="settings_section_account">账号</string>
     <string name="settings_section_import">导入</string>
     <string name="opml_import_notification_title">导入订阅…</string>
     <string name="notifications_channel_title_opml_import">导入订阅</string>
@@ -88,7 +88,7 @@
     <string name="feed_action_unsubscribe_confirm">取消订阅</string>
     <string name="settings_remove_account_button_service">退出登录</string>
     <string name="dialog_cancel">取消</string>
-    <string name="settings_remove_account_title_local">删除账户</string>
+    <string name="settings_remove_account_title_local">删除账号</string>
     <string name="settings_section_privacy">隐私</string>
     <string name="feed_action_edit_success">源已更新</string>
     <string name="settings">打开设置</string>
@@ -134,7 +134,7 @@
     <string name="article_bottom_bar_next_article">下一篇</string>
     <string name="settings_reader_title">阅读页面</string>
     <string name="settings_panel_general_title">通用</string>
-    <string name="settings_account_title">账户</string>
+    <string name="settings_account_title">账号</string>
     <string name="settings_about_title">关于</string>
     <string name="settings_list_top_bar_title">设置</string>
     <string name="settings_auto_delete_articles_title">保留已读文章</string>
@@ -253,4 +253,8 @@
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">导航至上级</string>
     <string name="actions_copy_link">复制链接</string>
     <string name="actions_share_link">分享链接</string>
+    <string name="widget_headlines_account_error">先添加账号</string>
+    <string name="widget_headlines_see_more_button">查看更多文章</string>
+    <string name="widget_receiver_headlines_title">头条</string>
+    <string name="widget_headlines_title">最新头条</string>
 </resources>
