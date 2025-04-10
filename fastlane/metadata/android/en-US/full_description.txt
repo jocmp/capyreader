@@ -5,6 +5,7 @@ Some features include:
 • Syncing via Feedbin, FreshRSS, or directly to your device
 • Track read and starred articles
 • Article search
+• Headlines widget
 • Notifications
 • Full content mode
 • Dark mode
