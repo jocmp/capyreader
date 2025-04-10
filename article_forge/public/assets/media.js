@@ -155,6 +155,10 @@ function longPress(element, callback) {
   element.addEventListener("touchcancel", stop);
 }
 
+window.addEventListener("DOMContentLoaded", () => {
+  cleanEmbeds()
+});
+
 window.onload = () => {
   addImageClickListeners();
   addEmbedListeners();
