@@ -256,4 +256,8 @@
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">На уровень выше</string>
     <string name="actions_copy_link">Копировать ссылку</string>
     <string name="actions_share_link">Поделиться ссылкой</string>
+    <string name="widget_receiver_headlines_title">Рубрики</string>
+    <string name="widget_headlines_title">Последние рубрики</string>
+    <string name="widget_headlines_see_more_button">См. ещё статьи</string>
+    <string name="widget_headlines_account_error">Сперва добавьте аккаунт</string>
 </resources>

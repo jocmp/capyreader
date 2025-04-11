@@ -254,4 +254,8 @@
     <string name="actions_copy_link">Kopeeri link</string>
     <string name="actions_share_link">Jaga linki</string>
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">Mine ülemise objekti juurde</string>
+    <string name="widget_receiver_headlines_title">Koondpealkirjad</string>
+    <string name="widget_headlines_title">Viimased koondpealkirjad</string>
+    <string name="widget_headlines_see_more_button">Vaata veel artikleid</string>
+    <string name="widget_headlines_account_error">Esmalt palun lisa kasutajakonto</string>
 </resources>
