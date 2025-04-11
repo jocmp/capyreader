@@ -35,8 +35,8 @@
     <string name="settings_option_full_content_title">Yapışkan Tam İçerik</string>
     <string name="settings_option_full_content_subtitle">Tam makale içeriğini yükleme seçeneğini hatırla</string>
     <string name="article_style_options">Yazı tipi stili seçenekleri</string>
-    <string name="empty_onboarding_title">Henüz besleme yok</string>
-    <string name="empty_onboarding_prompt">Bir besleme ekleyerek başlayın</string>
+    <string name="empty_onboarding_title">Henüz yayın yok</string>
+    <string name="empty_onboarding_prompt">Bir yayın ekleyerek başlayın</string>
     <string name="font_option_vollkorn">Vollkorn</string>
     <string name="article_byline">%1$s %2$s\'de %3$s tarafından</string>
     <string name="font_option_atkinson_hyperlegible">Atkinson Hyperlegible</string>
@@ -192,7 +192,7 @@
     <string name="article_vertical_open_article_in_browser">Makaleyi tarayıcıda aç</string>
     <string name="edit_feed_tag_section">Etiket Ekle ya da Seç</string>
     <string name="settings_mark_read_on_scroll">Kaydırınca okundu olarak işaretle</string>
-    <string name="settings_enable_high_contrast_dark_theme">Yüksek karşıtlık karanlık temayı etkinleştir</string>
+    <string name="settings_enable_high_contrast_dark_theme">Yüksek karşıtlıklı karanlık temayı etkinleştir</string>
     <string name="settings_section_mark_all_as_read">Tümünü Okundu Olarak İşaretle</string>
     <string name="layout_preference_responsive">Duyarlı</string>
     <string name="article_actions_copy_link">Bağlantıyı kopyala</string>
@@ -252,4 +252,6 @@
     <string name="settings_section_browser">Tarayıcı</string>
     <string name="reader_image_visibility_show_on_wifi">Sadece Wi-Fi üzerinde görselleri göster</string>
     <string name="notification_mark_as_read_action">Okundu olarak işaretle</string>
+    <string name="account_source_reader">Reader</string>
+    <string name="after_read_all_behavior_open_drawer">Gezinme Çekmecesini Aç</string>
 </resources>
