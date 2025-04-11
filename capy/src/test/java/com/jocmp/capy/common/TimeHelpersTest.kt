@@ -205,4 +205,40 @@ class TimeHelpersTest {
 
         assertEquals(expected = expected, actual = result)
     }
+
+    @Test
+    fun `date only ISO`() {
+        val result = "2025-04-10".toDateTime
+
+        val expected = ZonedDateTime.of(
+            2025,
+            4,
+            10,
+            0,
+            0,
+            0,
+            0,
+            ZoneOffset.UTC
+        )
+
+        assertEquals(expected = expected, actual = result)
+    }
+
+    @Test
+    fun `RFC822 format`() {
+        val result = "27 Feb 25 10:08 UTC".toDateTime
+
+        val expected = ZonedDateTime.of(
+            2025,
+            2,
+            27,
+            10,
+            8,
+            0,
+            0,
+            ZoneOffset.UTC
+        )
+
+        assertEquals(expected = expected, actual = result)
+    }
 }
