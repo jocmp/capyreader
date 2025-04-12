@@ -18,13 +18,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.core.graphics.drawable.toBitmap
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewAssetLoader.AssetsPathHandler
 import androidx.webkit.WebViewAssetLoader.ResourcesPathHandler
-import coil.executeBlocking
-import coil.imageLoader
-import coil.request.ImageRequest
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.WebViewInterface
 import com.capyreader.app.common.openLink
@@ -33,7 +29,6 @@ import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
-import com.jocmp.capy.common.optionalFile
 import com.jocmp.capy.common.windowOrigin
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -42,9 +37,6 @@ import kotlinx.coroutines.withContext
 import org.koin.compose.koinInject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
-import java.io.InputStream
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
@@ -86,39 +78,13 @@ class AccompanistWebViewClient(
         view: WebView,
         request: WebResourceRequest
     ): WebResourceResponse? {
-        val asset = assetLoader.shouldInterceptRequest(request.url)
+        val asset = assetLoader.shouldInterceptRequest(request.url) ?: return null
 
-        if (asset != null) {
-            val headers = asset.responseHeaders ?: mutableMapOf()
-            headers["Access-Control-Allow-Origin"] = "*"
-            asset.responseHeaders = headers
+        val headers = asset.responseHeaders ?: mutableMapOf()
+        headers["Access-Control-Allow-Origin"] = "*"
+        asset.responseHeaders = headers
 
-            return asset
-        }
-
-        if (isAnimated(request.url.toString())) {
-            return null
-        }
-
-        return try {
-            val imageRequest = ImageRequest.Builder(view.context)
-                .data(request.url)
-                .build()
-            val bitmap =
-                view.context.imageLoader.executeBlocking(imageRequest).drawable?.toBitmap()
-
-            if (bitmap != null) {
-                return WebResourceResponse(
-                    "image/jpg",
-                    "UTF-8",
-                    jpegStream(bitmap)
-                )
-            }
-
-            null
-        } catch (exception: Exception) {
-            null
-        }
+        return asset
     }
 
     override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
@@ -235,23 +201,3 @@ fun rememberWebViewState(
         }
     }
 }
-
-private fun jpegStream(
-    bitmap: Bitmap,
-): InputStream {
-    val byteArrayOutputStream = ByteArrayOutputStream()
-    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
-    val bitmapData = byteArrayOutputStream.toByteArray()
-    return ByteArrayInputStream(bitmapData)
-}
-
-private fun isAnimated(url: String?): Boolean {
-    val extension = optionalFile(url)?.extension ?: return false
-
-    return animatedFileTypes.contains(extension)
-}
-
-val animatedFileTypes = listOf(
-    "gif",
-    "webp",
-)
