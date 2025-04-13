@@ -262,4 +262,6 @@
     <string name="widget_headlines_title">Latest Headlines</string>
     <string name="widget_headlines_see_more_button">See more articles</string>
     <string name="widget_headlines_account_error">Add an account first</string>
+    <string name="settings_gestures_improve_talkback_title">Improve TalkBack</string>
+    <string name="settings_gestures_improve_talkback_subtitle">Disables some settings to improve TalkBack text-to-speech</string>
 </resources>

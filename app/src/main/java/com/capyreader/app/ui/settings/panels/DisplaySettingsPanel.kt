@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -36,6 +35,7 @@ fun DisplaySettingsPanel(
         updateHighContrastDarkTheme = viewModel::updateHighContrastDarkTheme,
         updatePinArticleBars = viewModel::updatePinArticleBars,
         pinArticleBars = viewModel.pinArticleBars,
+        enablePinArticleBars = viewModel.enablePinArticleBars,
         updateImageVisibility = viewModel::updateImageVisibility,
         imageVisibility = viewModel.imageVisibility,
         layout = viewModel.layout,
@@ -62,6 +62,7 @@ fun DisplaySettingsPanelView(
     updateHighContrastDarkTheme: (enabled: Boolean) -> Unit,
     updatePinArticleBars: (enable: Boolean) -> Unit,
     pinArticleBars: Boolean,
+    enablePinArticleBars: Boolean,
     imageVisibility: ReaderImageVisibility,
     layout: LayoutPreference,
     updateLayoutPreference: (layout: LayoutPreference) -> Unit,
@@ -88,9 +89,7 @@ fun DisplaySettingsPanelView(
                 TextSwitch(
                     onCheckedChange = updateHighContrastDarkTheme,
                     checked = enableHighContrastDarkTheme,
-                    title = {
-                        Text(stringResource(R.string.settings_enable_high_contrast_dark_theme))
-                    }
+                    title = stringResource(R.string.settings_enable_high_contrast_dark_theme)
                 )
             }
         }
@@ -110,6 +109,7 @@ fun DisplaySettingsPanelView(
         ) {
             RowItem {
                 TextSwitch(
+                    enabled = enablePinArticleBars,
                     checked = pinArticleBars,
                     onCheckedChange = updatePinArticleBars,
                     title = stringResource(R.string.settings_options_reader_pin_toolbars),
@@ -165,6 +165,7 @@ private fun DisplaySettingsPanelViewPreview() {
             pinArticleBars = false,
             updateImageVisibility = {},
             imageVisibility = ReaderImageVisibility.ALWAYS_SHOW,
+            enablePinArticleBars = false
         )
     }
 }

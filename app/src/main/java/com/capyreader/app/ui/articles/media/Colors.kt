@@ -11,3 +11,6 @@ object MediaColors {
 
     val buttonContainerColor = Color.Transparent
 }
+
+
+const val ListItemDisabledLabelTextOpacity = 0.38f

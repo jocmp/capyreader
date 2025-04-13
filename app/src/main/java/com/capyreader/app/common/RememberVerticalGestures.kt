@@ -8,7 +8,7 @@ import com.capyreader.app.ui.collectChangesWithDefault
 import org.koin.compose.koinInject
 
 @Composable
-fun rememberVerticalGestures(appPreferences: AppPreferences = koinInject()): Boolean {
+fun rememberTalkbackPreference(appPreferences: AppPreferences = koinInject()): Boolean {
     val topSwipeGesture by appPreferences.readerOptions.topSwipeGesture.collectChangesWithDefault()
     val bottomSwipeGesture by appPreferences.readerOptions.bottomSwipeGesture.collectChangesWithDefault()
     val pagingTapGesture by appPreferences.readerOptions.enablePagingTapGesture.collectChangesWithDefault()

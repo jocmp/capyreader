@@ -21,7 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
-import com.capyreader.app.common.rememberVerticalGestures
+import com.capyreader.app.common.rememberTalkbackPreference
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ReaderImageVisibility
 import com.capyreader.app.ui.ConnectivityType
@@ -38,7 +38,7 @@ fun ArticleReader(
     webViewState: WebViewState,
 ) {
     val showImages = rememberImageVisibility()
-    val enableGestures = rememberVerticalGestures()
+    val enableGestures = rememberTalkbackPreference()
 
     if (enableGestures) {
        ScrollableWebView(webViewState)

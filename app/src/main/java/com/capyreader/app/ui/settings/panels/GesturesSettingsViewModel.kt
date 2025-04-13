@@ -37,10 +37,28 @@ class GesturesSettingsViewModel(
     var enableHorizontalPagination by mutableStateOf(readerOptions.enableHorizontaPagination.get())
         private set
 
+    var improveTalkback by mutableStateOf(readerOptions.improveTalkback.get())
+        private set
+
     fun updateBackAction(action: BackAction) {
         backAction = action
 
         listOptions.backAction.set(action)
+    }
+
+    fun updateImproveTalkback(improve: Boolean) {
+        improveTalkback = improve
+
+        readerOptions.improveTalkback.set(improve)
+
+        if (improve) {
+            readerOptions.pinToolbars.set(false)
+            updateReaderTopSwipe(ArticleVerticalSwipe.DISABLED)
+            updateReaderBottomSwipe(ArticleVerticalSwipe.DISABLED)
+        } else {
+            updateReaderTopSwipe(ArticleVerticalSwipe.topSwipeDefault)
+            updateReaderBottomSwipe(ArticleVerticalSwipe.bottomSwipeDefault)
+        }
     }
 
     fun updateReaderTopSwipe(swipe: ArticleVerticalSwipe) {

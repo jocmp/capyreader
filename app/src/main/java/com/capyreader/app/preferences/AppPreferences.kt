@@ -91,13 +91,13 @@ class AppPreferences(context: Context) {
         val topSwipeGesture: Preference<ArticleVerticalSwipe>
             get() = preferenceStore.getEnum(
                 "article_top_swipe_gesture",
-                ArticleVerticalSwipe.LOAD_FULL_CONTENT
+                ArticleVerticalSwipe.topSwipeDefault
             )
 
         val bottomSwipeGesture: Preference<ArticleVerticalSwipe>
             get() = preferenceStore.getEnum(
                 "article_bottom_swipe_gesture",
-                ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWSER
+                ArticleVerticalSwipe.bottomSwipeDefault
             )
 
         val imageVisibility: Preference<ReaderImageVisibility>
@@ -111,6 +111,10 @@ class AppPreferences(context: Context) {
 
         val enableHorizontaPagination: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_enable_horizontal_pagination", true)
+
+        val improveTalkback: Preference<Boolean>
+            get() = preferenceStore.getBoolean("article_improve_talkback", false)
+
     }
 
     class ArticleListOptions(private val preferenceStore: PreferenceStore) {

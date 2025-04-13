@@ -22,7 +22,7 @@ import androidx.webkit.WebViewAssetLoader.ResourcesPathHandler
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.WebViewInterface
 import com.capyreader.app.common.openLink
-import com.capyreader.app.common.rememberVerticalGestures
+import com.capyreader.app.common.rememberTalkbackPreference
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
@@ -157,12 +157,12 @@ fun rememberWebViewState(
     onNavigateToMedia: (media: Media) -> Unit,
     onRequestLinkDialog: (link: ShareLink) -> Unit,
 ): WebViewState {
-    val verticalGesturesEnabled = rememberVerticalGestures()
+    val enableNativeScroll = rememberTalkbackPreference()
     val colors = articleTemplateColors()
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
 
-    val client = remember(verticalGesturesEnabled) {
+    val client = remember {
         AccompanistWebViewClient(
             assetLoader = WebViewAssetLoader.Builder()
                 .addPathHandler("/assets/", AssetsPathHandler(context))
@@ -171,7 +171,7 @@ fun rememberWebViewState(
         )
     }
 
-    return remember {
+    return remember(enableNativeScroll) {
         val webView = WebView(context).apply {
             settings.apply {
                 javaScriptEnabled = true
@@ -201,7 +201,7 @@ fun rememberWebViewState(
             renderer,
             colors,
             scope,
-            isVerticalScrollBarEnabled = !verticalGesturesEnabled,
+            isVerticalScrollBarEnabled = enableNativeScroll,
             webView,
         ).also {
             client.state = it
