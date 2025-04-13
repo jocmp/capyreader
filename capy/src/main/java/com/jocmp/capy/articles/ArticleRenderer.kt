@@ -27,12 +27,25 @@ class ArticleRenderer(
         hideImages: Boolean,
     ): String {
         val fontFamily = fontOption.get()
+        val showPlaceholderTitle = article.title.isBlank()
+
+        val title = if (showPlaceholderTitle) {
+            article.feedName
+        } else {
+            article.title
+        }
+
+        val feedName = if (showPlaceholderTitle) {
+            ""
+        } else {
+            article.feedName
+        }
 
         val substitutions = colors + mapOf(
             "external_link" to article.externalLink(),
-            "title" to article.title,
+            "title" to title,
             "byline" to byline,
-            "feed_name" to article.feedName,
+            "feed_name" to feedName,
             "font_size" to "${textSize.get()}px",
             "font_family" to fontFamily.slug,
             "font_preload" to fontPreload(fontFamily),
