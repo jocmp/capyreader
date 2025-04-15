@@ -46,8 +46,7 @@ class DisplaySettingsViewModel(
     var enableHighContrastDarkTheme by mutableStateOf(appPreferences.enableHighContrastDarkTheme.get())
         private set
 
-    var pinArticleBars by mutableStateOf(appPreferences.readerOptions.pinToolbars.get())
-        private set
+    val pinArticleBars = appPreferences.readerOptions.pinToolbars
 
     var imageVisibility by mutableStateOf(appPreferences.readerOptions.imageVisibility.get())
         private set
@@ -55,7 +54,7 @@ class DisplaySettingsViewModel(
     var layout by mutableStateOf(appPreferences.layout.get())
         private set
 
-    val enablePinArticleBars = !appPreferences.readerOptions.improveTalkback.get()
+    val improveTalkback = appPreferences.readerOptions.improveTalkback
 
     fun updateTheme(theme: ThemeOption) {
         appPreferences.theme.set(theme)
@@ -71,8 +70,6 @@ class DisplaySettingsViewModel(
 
     fun updatePinArticleBars(pinBars: Boolean) {
         appPreferences.readerOptions.pinToolbars.set(pinBars)
-
-        this.pinArticleBars = pinBars
     }
 
     fun updateFontScale(fontScale: ArticleListFontScale) {

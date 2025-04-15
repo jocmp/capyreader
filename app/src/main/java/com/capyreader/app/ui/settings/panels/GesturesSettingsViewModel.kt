@@ -52,7 +52,7 @@ class GesturesSettingsViewModel(
         readerOptions.improveTalkback.set(improve)
 
         if (improve) {
-            readerOptions.pinToolbars.set(false)
+            readerOptions.pinToolbars.set(true)
             updateReaderTopSwipe(ArticleVerticalSwipe.DISABLED)
             updateReaderBottomSwipe(ArticleVerticalSwipe.DISABLED)
         } else {

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,6 +19,7 @@ import com.capyreader.app.preferences.LayoutPreference
 import com.capyreader.app.preferences.ReaderImageVisibility
 import com.capyreader.app.preferences.ThemeOption
 import com.capyreader.app.ui.articles.ArticleListFontScale
+import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.components.TextSwitch
 import com.capyreader.app.ui.settings.PreferenceSelect
@@ -28,14 +30,17 @@ import org.koin.androidx.compose.koinViewModel
 fun DisplaySettingsPanel(
     viewModel: DisplaySettingsViewModel = koinViewModel(),
 ) {
+    val pinArticleBars by viewModel.pinArticleBars.collectChangesWithCurrent()
+    val improveTalkback by viewModel.improveTalkback.collectChangesWithCurrent()
+
     DisplaySettingsPanelView(
         onUpdateTheme = viewModel::updateTheme,
         theme = viewModel.theme,
         enableHighContrastDarkTheme = viewModel.enableHighContrastDarkTheme,
         updateHighContrastDarkTheme = viewModel::updateHighContrastDarkTheme,
         updatePinArticleBars = viewModel::updatePinArticleBars,
-        pinArticleBars = viewModel.pinArticleBars,
-        enablePinArticleBars = viewModel.enablePinArticleBars,
+        pinArticleBars = pinArticleBars,
+        enablePinArticleBars = !improveTalkback,
         updateImageVisibility = viewModel::updateImageVisibility,
         imageVisibility = viewModel.imageVisibility,
         layout = viewModel.layout,
