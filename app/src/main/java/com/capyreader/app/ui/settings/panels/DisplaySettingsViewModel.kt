@@ -55,6 +55,8 @@ class DisplaySettingsViewModel(
     var layout by mutableStateOf(appPreferences.layout.get())
         private set
 
+    val enablePinArticleBars = !appPreferences.readerOptions.improveTalkback.get()
+
     fun updateTheme(theme: ThemeOption) {
         appPreferences.theme.set(theme)
 

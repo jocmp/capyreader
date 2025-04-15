@@ -9,8 +9,6 @@ import android.webkit.WebView
 import android.webkit.WebView.HitTestResult.SRC_ANCHOR_TYPE
 import android.webkit.WebView.VisualStateCallback
 import android.webkit.WebViewClient
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
@@ -18,22 +16,18 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.core.graphics.drawable.toBitmap
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewAssetLoader.AssetsPathHandler
 import androidx.webkit.WebViewAssetLoader.ResourcesPathHandler
-import coil.executeBlocking
-import coil.imageLoader
-import coil.request.ImageRequest
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.WebViewInterface
 import com.capyreader.app.common.openLink
+import com.capyreader.app.common.rememberTalkbackPreference
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
-import com.jocmp.capy.common.optionalFile
 import com.jocmp.capy.common.windowOrigin
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -42,20 +36,16 @@ import kotlinx.coroutines.withContext
 import org.koin.compose.koinInject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
-import java.io.InputStream
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun WebView(
+    modifier: Modifier,
     state: WebViewState,
-    onDispose: (WebView) -> Unit,
+    onDispose: (WebView) -> Unit = {},
 ) {
     AndroidView(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight(),
+        modifier = modifier,
         factory = { state.webView },
         onRelease = {
             onDispose(it)
@@ -86,39 +76,13 @@ class AccompanistWebViewClient(
         view: WebView,
         request: WebResourceRequest
     ): WebResourceResponse? {
-        val asset = assetLoader.shouldInterceptRequest(request.url)
+        val asset = assetLoader.shouldInterceptRequest(request.url) ?: return null
 
-        if (asset != null) {
-            val headers = asset.responseHeaders ?: mutableMapOf()
-            headers["Access-Control-Allow-Origin"] = "*"
-            asset.responseHeaders = headers
+        val headers = asset.responseHeaders ?: mutableMapOf()
+        headers["Access-Control-Allow-Origin"] = "*"
+        asset.responseHeaders = headers
 
-            return asset
-        }
-
-        if (isAnimated(request.url.toString())) {
-            return null
-        }
-
-        return try {
-            val imageRequest = ImageRequest.Builder(view.context)
-                .data(request.url)
-                .build()
-            val bitmap =
-                view.context.imageLoader.executeBlocking(imageRequest).drawable?.toBitmap()
-
-            if (bitmap != null) {
-                return WebResourceResponse(
-                    "image/jpg",
-                    "UTF-8",
-                    jpegStream(bitmap)
-                )
-            }
-
-            null
-        } catch (exception: Exception) {
-            null
-        }
+        return asset
     }
 
     override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
@@ -137,6 +101,7 @@ class WebViewState(
     private val renderer: ArticleRenderer,
     private val colors: Map<String, String>,
     private val scope: CoroutineScope,
+    private val isVerticalScrollBarEnabled: Boolean,
     internal val webView: WebView,
 ) {
     private var htmlId: String? = null
@@ -171,6 +136,7 @@ class WebViewState(
                         "UTF-8",
                         null,
                     )
+                    webView.isVerticalScrollBarEnabled = isVerticalScrollBarEnabled
                 }
             }
         }
@@ -191,6 +157,7 @@ fun rememberWebViewState(
     onNavigateToMedia: (media: Media) -> Unit,
     onRequestLinkDialog: (link: ShareLink) -> Unit,
 ): WebViewState {
+    val enableNativeScroll = rememberTalkbackPreference()
     val colors = articleTemplateColors()
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -204,7 +171,7 @@ fun rememberWebViewState(
         )
     }
 
-    return remember {
+    return remember(enableNativeScroll) {
         val webView = WebView(context).apply {
             settings.apply {
                 javaScriptEnabled = true
@@ -230,28 +197,14 @@ fun rememberWebViewState(
             webViewClient = client
         }
 
-        WebViewState(renderer, colors, scope, webView).also {
+        WebViewState(
+            renderer,
+            colors,
+            scope,
+            isVerticalScrollBarEnabled = enableNativeScroll,
+            webView,
+        ).also {
             client.state = it
         }
     }
 }
-
-private fun jpegStream(
-    bitmap: Bitmap,
-): InputStream {
-    val byteArrayOutputStream = ByteArrayOutputStream()
-    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
-    val bitmapData = byteArrayOutputStream.toByteArray()
-    return ByteArrayInputStream(bitmapData)
-}
-
-private fun isAnimated(url: String?): Boolean {
-    val extension = optionalFile(url)?.extension ?: return false
-
-    return animatedFileTypes.contains(extension)
-}
-
-val animatedFileTypes = listOf(
-    "gif",
-    "webp",
-)

@@ -177,13 +177,6 @@ fun SwipeRefreshIndicator(
                 imageVector = icon,
                 contentDescription = null,
                 tint = contentColor,
-//                modifier = Modifier.rotate(
-//                    if (clockwise) {
-//                        0f
-//                    } else {
-//                        180f
-//                    }
-//                )
             )
         }
     }

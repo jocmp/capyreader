@@ -14,6 +14,8 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemColors
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
@@ -24,12 +26,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.capyreader.app.R
+import com.capyreader.app.ui.articles.media.ListItemDisabledLabelTextOpacity
 import com.capyreader.app.ui.components.DialogCard
 import com.capyreader.app.ui.theme.CapyTheme
 
@@ -40,20 +44,30 @@ fun <T> PreferenceSelect(
     options: List<T>,
     disabledOption: T? = null,
     optionText: @Composable (T) -> String,
+    enabled: Boolean = true,
     @StringRes label: Int,
 ) {
     val (isOpen, setOpen) = remember { mutableStateOf(false) }
 
     val dismiss = { setOpen(false) }
+    val defaults = ListItemDefaults.colors()
+    val colors = ListItemDefaults.colors(
+        headlineColor = if (enabled) defaults.headlineColor else defaults.disabledHeadlineColor,
+        supportingColor = if (enabled) defaults.supportingTextColor else defaults.disabledSupportingTextColor
+    )
 
     Box(
-        Modifier.clickable {
-            setOpen(true)
-        }
+        Modifier
+            .clickable {
+                setOpen(true)
+            }
     ) {
         ListItem(
+            colors = colors,
             headlineContent = { Text(stringResource(label)) },
-            supportingContent = { Text(optionText(selected)) }
+            supportingContent = {
+                Text(optionText(selected))
+            }
         )
     }
 
@@ -61,7 +75,8 @@ fun <T> PreferenceSelect(
         Dialog(onDismissRequest = dismiss) {
             DialogCard {
                 Column(
-                    Modifier.verticalScroll(rememberScrollState())
+                    Modifier
+                        .verticalScroll(rememberScrollState())
                         .padding(bottom = 16.dp)
                 ) {
                     Text(
@@ -129,3 +144,8 @@ private fun PreferenceSelectPreview() {
         }
     }
 }
+
+private val ListItemColors.disabledSupportingTextColor: Color
+    get() = supportingTextColor.copy(
+        alpha = ListItemDisabledLabelTextOpacity
+    )
