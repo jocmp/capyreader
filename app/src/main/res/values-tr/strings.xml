@@ -21,7 +21,7 @@
     <string name="settings_option_in_app_browser">Uygulama içi tarayıcıyı kullan</string>
     <string name="opml_import_notification_cancel">Durdur</string>
     <string name="article_font_scale_label">Metin boyutu</string>
-    <string name="image_error_text">Resim yüklenirken hata oluştu</string>
+    <string name="image_error_text">Görüntü yükleme hatası</string>
     <string name="settings_import_progress_placeholder">Abonelikler içe aktarılıyor…</string>
     <string name="opml_import_toast_complete">İçe aktarım tamamlandı</string>
     <string name="theme_menu_option_light">Açık</string>
@@ -31,16 +31,16 @@
     <string name="image_preview_menu_option_small">Küçük</string>
     <string name="settings_article_list_feed_icons">Yayın İkonu</string>
     <string name="settings_article_list_summary">Özet</string>
-    <string name="settings_option_copy_version">Kopya versiyonu</string>
+    <string name="settings_option_copy_version">Kopya sürümü</string>
     <string name="settings_option_full_content_title">Yapışkan Tam İçerik</string>
     <string name="settings_option_full_content_subtitle">Tam makale içeriğini yükleme seçeneğini hatırla</string>
     <string name="article_style_options">Yazı tipi stili seçenekleri</string>
-    <string name="empty_onboarding_title">Henüz besleme yok</string>
-    <string name="empty_onboarding_prompt">Bir besleme ekleyerek başlayın</string>
+    <string name="empty_onboarding_title">Henüz yayın yok</string>
+    <string name="empty_onboarding_prompt">Bir yayın ekleyerek başlayın</string>
     <string name="font_option_vollkorn">Vollkorn</string>
     <string name="article_byline">%1$s %2$s\'de %3$s tarafından</string>
     <string name="font_option_atkinson_hyperlegible">Atkinson Hyperlegible</string>
-    <string name="article_font_menu_label">Font</string>
+    <string name="article_font_menu_label">Yazı tipi</string>
     <string name="font_option_poppins">Poppins</string>
     <string name="article_byline_date_only">%1$s %2$s\'de</string>
     <string name="feed_form_feed_url_title">Yayın URL</string>
@@ -49,7 +49,7 @@
     <string name="refresh_every_day">Hergün</string>
     <string name="relative_time_hours">%1$dsaat</string>
     <string name="app_name">Capy Reader</string>
-    <string name="add_feed_name_title">İsim</string>
+    <string name="add_feed_name_title">Ad</string>
     <string name="feed_form_cancel">Vazgeç</string>
     <string name="relative_time_days">%1$dgün</string>
     <string name="feed_action_edit">Yayını Düzenle</string>
@@ -69,7 +69,7 @@
     <string name="refresh_feeds_menu_label">Yayınları Yenile</string>
     <string name="settings_remove_account_title_service">Çıkış Yap</string>
     <string name="article_view_mark_as_read">Okundu olarak işaretle</string>
-    <string name="refresh_manually_only">Sadece Manuel</string>
+    <string name="refresh_manually_only">Sadece elle</string>
     <string name="relative_time_minutes">%1$ddakika</string>
     <string name="extract_full_content">Tam İçeriği Çıkar</string>
     <string name="action_mark_all_read">Tümünü Okundu Olarak İşaretle</string>
@@ -84,7 +84,7 @@
     <string name="unauthorized_dialog_confirm_text">Giriş Yap</string>
     <string name="auth_fields_hide_password">Parolayı gizle</string>
     <string name="settings_top_bar_title">Ayarlar</string>
-    <string name="account_source_feedbin">Feedin</string>
+    <string name="account_source_feedbin">Feedbin</string>
     <string name="account_source_local">Yerel</string>
     <string name="font_option_system_default">Sistem varsayılanı</string>
     <string name="refresh_on_start">Başlangıçta</string>
@@ -98,8 +98,8 @@
     <string name="theme_menu_label">Tema</string>
     <string name="image_preview_menu_option_large">Büyük</string>
     <string name="image_preview_label">Görüntü önizlemesi</string>
-    <string name="settings_article_list_feed_name">Yayın İsmi</string>
-    <string name="settings_section_version">Versiyon</string>
+    <string name="settings_article_list_feed_name">Yayın Adı</string>
+    <string name="settings_section_version">Sürüm</string>
     <string name="feed_form_copy_feed_url_to_clipboard">Yayın URL\'sini panoya kopyala</string>
     <string name="feed_action_unsubscribe_confirm">Abonelikten çık</string>
     <string name="edit_feed_submit">Kaydet</string>
@@ -123,8 +123,8 @@
     <string name="dialog_cancel">Vazgeç</string>
     <string name="folder_action_edit">Yeniden Adlandır</string>
     <string name="settings_remove_account_message_local">Hesabınızı silmek istediğinizden emin misiniz? Bu geri alınamaz.</string>
-    <string name="account_settings_save_name">İsim kaydedildi</string>
-    <string name="add_feed_feed_not_error">Yayın Bulunamadı</string>
+    <string name="account_settings_save_name">Ad kaydedildi</string>
+    <string name="add_feed_feed_not_error">Yayın bulunamadı</string>
     <string name="crash_reporting_checkbox_title">Çökme raporunu etkinleştir</string>
     <string name="add_feed_save_error">Yayın kaydedilemedi</string>
     <string name="filter_action_menu_search_articles">Makale ara</string>
@@ -162,7 +162,7 @@
     <string name="article_view_mark_as_unread">Okunmadı olarak işaretle</string>
     <string name="settings_gestures_list_row_swipe_start">Sağa Kaydır</string>
     <string name="settings_gestures_list_row_swipe_end">Sola Kaydır</string>
-    <string name="article_list_row_swipe_disabled">Devre Dışı</string>
+    <string name="article_list_row_swipe_disabled">Devre dışı</string>
     <string name="article_list_row_swipe_toggle_read">Okunduyu Değiştir</string>
     <string name="article_list_unread_sort_title">Okunmayanları Sırala</string>
     <string name="article_list_unread_sort_newest_first">Önce En Yeni</string>
@@ -192,7 +192,7 @@
     <string name="article_vertical_open_article_in_browser">Makaleyi tarayıcıda aç</string>
     <string name="edit_feed_tag_section">Etiket Ekle ya da Seç</string>
     <string name="settings_mark_read_on_scroll">Kaydırınca okundu olarak işaretle</string>
-    <string name="settings_enable_high_contrast_dark_theme">Yüksek karşıtlık karanlık temayı etkinleştir</string>
+    <string name="settings_enable_high_contrast_dark_theme">Yüksek karşıtlıklı karanlık temayı etkinleştir</string>
     <string name="settings_section_mark_all_as_read">Tümünü Okundu Olarak İşaretle</string>
     <string name="layout_preference_responsive">Duyarlı</string>
     <string name="article_actions_copy_link">Bağlantıyı kopyala</string>
@@ -230,7 +230,7 @@
     <string name="tag_action_delete_confirm">Sil</string>
     <string name="tag_action_delete_title">Sil</string>
     <string name="tag_action_delete_message">\"%1$s\" etiketini silmek istediğinizden emin misiniz?</string>
-    <string name="tag_name_title">İsim</string>
+    <string name="tag_name_title">Ad</string>
     <string name="tag_action_edit">Etiketi Düzenle</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">Yatay kaydırmayı etkinleştir</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Makaleler arasında gezinmek için sağa ya da sola kaydırın</string>
@@ -252,4 +252,7 @@
     <string name="settings_section_browser">Tarayıcı</string>
     <string name="reader_image_visibility_show_on_wifi">Sadece Wi-Fi üzerinde görselleri göster</string>
     <string name="notification_mark_as_read_action">Okundu olarak işaretle</string>
+    <string name="account_source_reader">Reader</string>
+    <string name="after_read_all_behavior_open_drawer">Gezinme Çekmecesini Aç</string>
+    <string name="add_account_reader_subtitle">Kendi kendine barındırılan Google Reader API</string>
 </resources>
