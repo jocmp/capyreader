@@ -165,15 +165,15 @@ class NotificationHelper(
                 appPreferences.filter.set(
                     ArticleFilter.Articles(articleStatus = ArticleStatus.UNREAD)
                 )
-                appPreferences.articleID.delete()
 
+                appPreferences.articleID.delete()
             } else if (articleID != null && feedID != null) {
                 intent.replaceExtras(Bundle())
 
                 appPreferences.filter.set(
                     ArticleFilter.Feeds(
                         feedID,
-                        feedStatus = ArticleStatus.ALL,
+                        feedStatus = ArticleStatus.UNREAD,
                         folderTitle = null
                     )
                 )
