@@ -453,6 +453,7 @@ fun ArticleLayout(
                 val (shareLink, setShareLink) = rememberSaveableShareLink()
 
                 val webViewState = rememberWebViewState(
+                    key = article?.id,
                     onNavigateToMedia = { media = it },
                     onRequestLinkDialog = { setShareLink(it) }
                 )

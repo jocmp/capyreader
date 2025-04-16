@@ -11,6 +11,7 @@ import android.webkit.WebView.VisualStateCallback
 import android.webkit.WebViewClient
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -101,7 +102,7 @@ class WebViewState(
     private val renderer: ArticleRenderer,
     private val colors: Map<String, String>,
     private val scope: CoroutineScope,
-    private val isVerticalScrollBarEnabled: Boolean,
+    private val enableNativeScroll: Boolean,
     internal val webView: WebView,
 ) {
     private var htmlId: String? = null
@@ -115,6 +116,7 @@ class WebViewState(
 
         if (htmlId == null || id != htmlId) {
             webView.visibility = View.INVISIBLE
+            webView.isVerticalScrollBarEnabled = enableNativeScroll
         }
 
         htmlId = id
@@ -136,7 +138,6 @@ class WebViewState(
                         "UTF-8",
                         null,
                     )
-                    webView.isVerticalScrollBarEnabled = isVerticalScrollBarEnabled
                 }
             }
         }
@@ -156,11 +157,18 @@ fun rememberWebViewState(
     renderer: ArticleRenderer = koinInject(),
     onNavigateToMedia: (media: Media) -> Unit,
     onRequestLinkDialog: (link: ShareLink) -> Unit,
+    key: String? = null,
 ): WebViewState {
-    val enableNativeScroll = rememberTalkbackPreference()
+    val enableNativeScroll by rememberTalkbackPreference()
     val colors = articleTemplateColors()
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
+
+    val reset = if (enableNativeScroll) {
+        key
+    } else {
+        null
+    }
 
     val client = remember {
         AccompanistWebViewClient(
@@ -171,7 +179,7 @@ fun rememberWebViewState(
         )
     }
 
-    return remember(enableNativeScroll) {
+    return remember(reset, enableNativeScroll) {
         val webView = WebView(context).apply {
             settings.apply {
                 javaScriptEnabled = true
@@ -201,7 +209,7 @@ fun rememberWebViewState(
             renderer,
             colors,
             scope,
-            isVerticalScrollBarEnabled = enableNativeScroll,
+            enableNativeScroll = enableNativeScroll,
             webView,
         ).also {
             client.state = it

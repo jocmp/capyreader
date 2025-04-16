@@ -114,7 +114,6 @@ class AppPreferences(context: Context) {
 
         val improveTalkback: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_improve_talkback", false)
-
     }
 
     class ArticleListOptions(private val preferenceStore: PreferenceStore) {

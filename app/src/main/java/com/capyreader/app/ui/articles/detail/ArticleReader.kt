@@ -38,17 +38,19 @@ fun ArticleReader(
     webViewState: WebViewState,
 ) {
     val showImages = rememberImageVisibility()
-    val enableGestures = rememberTalkbackPreference()
+    val improveTalkback by rememberTalkbackPreference()
 
-    if (enableGestures) {
-       ScrollableWebView(webViewState)
-    } else {
-        Column {
+    if (improveTalkback) {
+        Column(
+            Modifier.fillMaxSize()
+        ) {
             WebView(
                 modifier = Modifier.fillMaxSize(),
                 state = webViewState,
             )
         }
+    } else {
+        ScrollableWebView(webViewState)
     }
 
     LaunchedEffect(article.id, article.content) {
