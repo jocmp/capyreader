@@ -251,4 +251,6 @@
     <string name="widget_receiver_headlines_title">Titulares</string>
     <string name="widget_headlines_title">Últimos titulares</string>
     <string name="widget_headlines_see_more_button">Ver máis artigos</string>
+    <string name="settings_gestures_improve_talkback_title">Mellorar TalkBack</string>
+    <string name="settings_gestures_improve_talkback_subtitle">Desactiva algúns axustes para mellorar o texto-a-palabra de TalkBack</string>
 </resources>

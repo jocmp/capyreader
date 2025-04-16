@@ -257,4 +257,6 @@
     <string name="widget_headlines_title">最新頭條</string>
     <string name="widget_headlines_see_more_button">查看更多文章</string>
     <string name="widget_headlines_account_error">先添加一個賬戶</string>
+    <string name="settings_gestures_improve_talkback_subtitle">停用某些設置以改善 TalkBack 文字轉語音功能</string>
+    <string name="settings_gestures_improve_talkback_title">改善 TalkBack</string>
 </resources>

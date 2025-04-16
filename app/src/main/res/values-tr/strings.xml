@@ -72,7 +72,7 @@
     <string name="refresh_manually_only">Sadece elle</string>
     <string name="relative_time_minutes">%1$ddakika</string>
     <string name="extract_full_content">Tam İçeriği Çıkar</string>
-    <string name="action_mark_all_read">Tümünü Okundu Olarak İşaretle</string>
+    <string name="action_mark_all_read">Tümünü okundu olarak işaretle</string>
     <string name="article_share">Makaleyi Paylaş</string>
     <string name="article_actions_mark_below_as_read">Aşağıyı okundu olarak işaretleyin</string>
     <string name="mark_all_read_dialog_submit">Onayla</string>
@@ -255,4 +255,6 @@
     <string name="account_source_reader">Reader</string>
     <string name="after_read_all_behavior_open_drawer">Gezinme Çekmecesini Aç</string>
     <string name="add_account_reader_subtitle">Kendi kendine barındırılan Google Reader API</string>
+    <string name="settings_gestures_improve_talkback_subtitle">Talkback metnini iyileştirmek için bazı ayarları devre dışı bırakır</string>
+    <string name="settings_gestures_improve_talkback_title">Talkback\'i iyileştir</string>
 </resources>
