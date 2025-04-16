@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.ui.articles.media.ListItemDisabledLabelTextOpacity
 import com.capyreader.app.ui.theme.CapyTheme
@@ -58,6 +59,7 @@ fun TextSwitch(
             checked = checked,
             onCheckedChange = onCheckedChange,
             enabled = enabled,
+            modifier = Modifier.padding(start = 8.dp)
         )
     }
 }
@@ -84,7 +86,7 @@ private fun TextSwitchDisabledPreview() {
             checked = true,
             onCheckedChange = {},
             title = "Enable feature",
-            subtitle = "Some important context",
+            subtitle = LoremIpsum(words = 8).values.first(),
             enabled = false
         )
     }
