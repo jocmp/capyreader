@@ -258,4 +258,5 @@
     <string name="widget_receiver_headlines_title">头条</string>
     <string name="widget_headlines_title">最新头条</string>
     <string name="settings_gestures_improve_talkback_subtitle">禁用部分设置以改进 TalkBack 文本转语音功能</string>
+    <string name="settings_gestures_improve_talkback_title">改进 TalkBack</string>
 </resources>
