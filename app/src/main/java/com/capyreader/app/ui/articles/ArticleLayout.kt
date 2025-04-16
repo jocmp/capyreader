@@ -96,6 +96,7 @@ fun ArticleLayout(
     onSelectArticleFilter: () -> Unit,
     onSelectStatus: (status: ArticleStatus) -> Unit,
     onSelectArticle: (articleID: String) -> Unit,
+    onDrawerOpen: () -> Unit,
     onNavigateToSettings: () -> Unit,
     onRequestClearArticle: () -> Unit,
     onToggleArticleRead: () -> Unit,
@@ -254,6 +255,7 @@ fun ArticleLayout(
     fun openDrawer() {
         coroutineScope.launchUI {
             drawerState.open()
+            onDrawerOpen()
         }
     }
 
