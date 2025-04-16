@@ -95,7 +95,7 @@
     <string name="article_style_options">Schriftart</string>
     <string name="font_option_vollkorn">Vollkorn</string>
     <string name="font_option_atkinson_hyperlegible">Atkinson Hyperlegible</string>
-    <string name="font_option_system_default">System standard</string>
+    <string name="font_option_system_default">Systemstandard</string>
     <string name="article_font_menu_label">Schriftart</string>
     <string name="font_option_poppins">Poppins</string>
     <string name="article_font_scale_label">Schriftgröße</string>
@@ -180,7 +180,7 @@
     <string name="action_share">Teilen</string>
     <string name="settings_gestures_list_back_navigation_action">Aktion bei Zurück Geste</string>
     <string name="settings_gestures_list_back_navigation_system_back">Standard</string>
-    <string name="crash_log_export_item_subtitle">Speichert Absturzberichte in Datei um sie mit dem Entwickler zu teilen</string>
+    <string name="crash_log_export_item_subtitle">Speichert Absturzberichte in Datei, um sie mit dem Entwickler zu teilen</string>
     <string name="edit_feed_tags_section">Schlagwörter</string>
     <string name="settings_notifications_select_none">Nichts ausgewählt</string>
     <string name="settings_notifications_select_all">Alles ausgewählt</string>
@@ -199,12 +199,12 @@
     <string name="settings_section_mark_all_as_read">Alles als gelesen markieren</string>
     <string name="settings_mark_read_on_scroll">Beim Scrollen als gelesen markieren</string>
     <string name="settings_section_browser">Browser</string>
-    <string name="reader_image_visibility_show_on_wifi">Bilder nur bei Wi-Fi Verbindung zeigen</string>
+    <string name="reader_image_visibility_show_on_wifi">Bilder nur bei WLAN-Verbindung zeigen</string>
     <string name="reader_image_visibility_always_hide">Bilder niemals anzeigen</string>
     <string name="reader_image_visibility_always_show">Bilder immer anzeigen</string>
     <string name="reader_image_visibility_label">Bilder</string>
-    <string name="settings_gestures_reader_tap_to_page_subtitle">Tippen auf die unteren Ecken um innerhalb eines Artikels zu navigieren</string>
-    <string name="settings_gestures_reader_tap_to_page_title">Tippen um zu Scrollen</string>
+    <string name="settings_gestures_reader_tap_to_page_subtitle">Tippen auf die unteren Ecken, um innerhalb eines Artikels zu navigieren</string>
+    <string name="settings_gestures_reader_tap_to_page_title">Tippen, um zu scrollen</string>
     <string name="settings_enable_high_contrast_dark_theme">Dunkles Theme mit hohem Kontrast aktivieren</string>
     <string name="layout_preference_single">Eine Spalte</string>
     <string name="layout_preference_responsive">Automatisch</string>
@@ -255,4 +255,6 @@
     <string name="widget_headlines_account_error">Erst einen Account hinzufügen</string>
     <string name="widget_headlines_title">Neueste Schlagzeilen</string>
     <string name="widget_receiver_headlines_title">Schlagzeilen</string>
+    <string name="settings_gestures_improve_talkback_title">TalkBack verbessern</string>
+    <string name="settings_gestures_improve_talkback_subtitle">Deaktiviert manche Einstellungen, um TalkBeck Text-zu-Sprache zu verbessern</string>
 </resources>
