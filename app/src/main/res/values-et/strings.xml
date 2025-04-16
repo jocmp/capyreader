@@ -258,4 +258,6 @@
     <string name="widget_headlines_title">Viimased koondpealkirjad</string>
     <string name="widget_headlines_see_more_button">Vaata veel artikleid</string>
     <string name="widget_headlines_account_error">Esmalt palun lisa kasutajakonto</string>
+    <string name="settings_gestures_improve_talkback_title">Paranda TalkBacki toimimist</string>
+    <string name="settings_gestures_improve_talkback_subtitle">Parandamaks TalkBacki kõnesünteesi toimimist, lülita välja mõned seadistused</string>
 </resources>
