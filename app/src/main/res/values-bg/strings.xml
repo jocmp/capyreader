@@ -258,4 +258,6 @@
     <string name="widget_headlines_see_more_button">Вижте още статии</string>
     <string name="widget_headlines_account_error">Първо добавете акаунт</string>
     <string name="widget_receiver_headlines_title">Заглавия</string>
+    <string name="settings_gestures_improve_talkback_title">Подобряване на TalkBack</string>
+    <string name="settings_gestures_improve_talkback_subtitle">Деактивира някои настройки за подобряване на преобразуването на текст в реч на TalkBack</string>
 </resources>
