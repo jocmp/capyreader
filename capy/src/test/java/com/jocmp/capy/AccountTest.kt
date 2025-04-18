@@ -6,8 +6,10 @@ import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.fixtures.AccountFixture
 import com.jocmp.capy.fixtures.ArticleFixture
 import com.jocmp.capy.fixtures.FeedFixture
+import com.jocmp.capy.logging.CapyLog
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.mockkObject
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -29,6 +31,7 @@ class AccountTest {
 
     @Before
     fun setup() {
+        mockkObject(CapyLog::class)
         account = AccountFixture.create(parentFolder = folder)
         coEvery { account.delegate.refresh(any(), any()) }.returns(Result.success(Unit))
     }

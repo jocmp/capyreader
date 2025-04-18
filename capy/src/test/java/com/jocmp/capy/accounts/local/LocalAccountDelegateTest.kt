@@ -85,7 +85,7 @@ class LocalAccountDelegateTest {
 
     @Before
     fun setup() {
-        mockkObject(CapyLog)
+        mockkObject(CapyLog::class)
         accountPreferences = mockk()
         val blocklist = mockk<Preference<Set<String>>>()
         every { blocklist.get() }.returns(emptySet())
