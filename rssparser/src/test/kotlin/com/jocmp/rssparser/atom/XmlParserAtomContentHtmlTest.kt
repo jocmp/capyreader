@@ -12,5 +12,5 @@ class XmlParserAtomContentHtmlTest : BaseParserTest(
     articlePubDate = "2021-11-11T00:00:00+00:00",
     articleLink = "https://code.cash.app/the-state-of-managing-state-with-compose",
     articleGuid = "https://jakewharton.com/the-state-of-managing-state-with-compose",
-    articleContent = "This post was published externally on Cash App Code Blog. Read it at https://code.cash.app/the-state-of-managing-state-with-compose."
+    articleContent = "This post was published externally on Cash App Code Blog. Read it at <a href=\"https://code.cash.app/the-state-of-managing-state-with-compose\">https://code.cash.app/the-state-of-managing-state-with-compose</a>."
 )

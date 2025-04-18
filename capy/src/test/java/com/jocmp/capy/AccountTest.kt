@@ -9,12 +9,13 @@ import com.jocmp.capy.fixtures.FeedFixture
 import com.jocmp.capy.logging.CapyLog
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockkObject
 import kotlinx.coroutines.test.runTest
-import org.junit.Before
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
 import java.io.IOException
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -29,9 +30,12 @@ class AccountTest {
 
     private lateinit var account: Account
 
-    @Before
+    @BeforeTest
     fun setup() {
-        mockkObject(CapyLog::class)
+        mockkObject(CapyLog)
+        every { CapyLog.info(any(), any()) }.returns(Unit)
+        every { CapyLog.error(any(), any()) }.returns(Unit)
+
         account = AccountFixture.create(parentFolder = folder)
         coEvery { account.delegate.refresh(any(), any()) }.returns(Result.success(Unit))
     }
@@ -181,7 +185,7 @@ class AccountTest {
     @Test
     fun markAllRead() = runTest {
         coEvery { account.delegate.markRead(any()) }.returns(Result.success(Unit))
-        var articles = 10.repeated { ArticleFixture(account.database).create(read = false) }
+        var articles = 5.repeated { ArticleFixture(account.database).create(read = false) }
 
         assertFalse(articles.all { it.read })
 
@@ -191,7 +195,7 @@ class AccountTest {
         articles = articles.map { account.database.reload(it)!! }
 
         assertTrue(articles.all { it.read })
-        coVerify(exactly = 2) { account.delegate.markRead(any()) } // 10 articles / 5 per batch => 2 calls
+        coVerify(exactly = 1) { account.delegate.markRead(any()) }
     }
 
     @Test

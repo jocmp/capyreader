@@ -158,6 +158,7 @@ class ReaderAccountDelegateTest {
     @BeforeTest
     fun setup() {
         mockkObject(CapyLog)
+        every { CapyLog.info(any(), any()) }.returns(Unit)
         every { CapyLog.warn(any(), any()) }.returns(Unit)
 
         database = InMemoryDatabaseProvider.build(accountID)

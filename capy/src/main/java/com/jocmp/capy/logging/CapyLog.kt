@@ -8,7 +8,7 @@ object CapyLog : Logging {
     }
 
     override fun warn(tag: String, data: Map<String, String?>) {
-        Log.i(appTag(tag), serializeData(data))
+        Log.w(appTag(tag), serializeData(data))
     }
 
     override fun error(tag: String, error: Throwable) {

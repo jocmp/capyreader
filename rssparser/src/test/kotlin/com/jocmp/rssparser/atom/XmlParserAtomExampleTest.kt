@@ -14,5 +14,9 @@ class XmlParserAtomExampleTest: BaseParserTest(
     articleLink = "http://example.org/2003/12/13/atom03.html",
     articlePubDate = "2003-12-13T18:30:02Z",
     articleDescription = "Some text.",
-    articleContent = "This is the entry content.",
+    articleContent = """
+        <div xmlns="http://www.w3.org/1999/xhtml">
+                        <p>This is the entry content.</p>
+                    </div>
+    """.trimIndent(),
 )
