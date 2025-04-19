@@ -156,7 +156,6 @@
     <string name="article_list_unread_sort_newest_first">Nyast först</string>
     <string name="article_list_unread_sort_oldest_first">Äldst först</string>
     <string name="settings_reader_title">Läsare</string>
-    <string name="settings_options_reader_pin_toolbars">Fäst verktygsfält</string>
     <string name="article_list_row_swipe_disabled">Avaktiverat</string>
     <string name="settings_gestures_list_back_navigation_action">Åtgärd för tillbakanavigering</string>
     <string name="settings_gestures_list_back_navigation_system_back">Standard</string>

@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBarTooltip(
+fun ToolbarTooltip(
     message: String,
     content: @Composable () -> Unit,
 ) {

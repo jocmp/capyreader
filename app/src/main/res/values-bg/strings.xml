@@ -155,7 +155,6 @@
     <string name="opml_exporter_success">Изнасянето завърши</string>
     <string name="opml_exporter_failure">Неуспешно изнасяне</string>
     <string name="settings_reader_title">Четец</string>
-    <string name="settings_options_reader_pin_toolbars">Закачи лента с инструменти</string>
     <string name="article_bottom_bar_next_article">Отиди на следваща статия</string>
     <string name="settings_gestures_reader_swipe_down">Плъзнете надолу</string>
     <string name="settings_gestures_list_row_swipe_start">Плъзнете надясно</string>

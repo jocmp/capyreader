@@ -171,7 +171,6 @@
     <string name="settings_section_advanced">Avançado</string>
     <string name="edit_feed_tag_section">Etiqueta</string>
     <string name="settings_confirm_mark_all_read">Confirmar ao marcar todos como lido</string>
-    <string name="settings_options_reader_pin_toolbars">Fixar Barra de Ferramentas</string>
     <string name="article_bottom_bar_next_article">Ir para próximo artigo</string>
     <string name="settings_section_browser">Navegador</string>
     <string name="action_share">Compartilhar</string>

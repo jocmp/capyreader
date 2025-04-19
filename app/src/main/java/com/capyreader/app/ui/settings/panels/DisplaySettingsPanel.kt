@@ -117,7 +117,7 @@ fun DisplaySettingsPanelView(
                     enabled = enablePinArticleBars,
                     checked = pinArticleBars,
                     onCheckedChange = updatePinArticleBars,
-                    title = stringResource(R.string.settings_options_reader_pin_toolbars),
+                    title = stringResource(R.string.settings_options_reader_pin_top_toolbar),
                 )
             }
             PreferenceSelect(

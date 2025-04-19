@@ -136,7 +136,6 @@
     <string name="settings_support_button">Поддержка</string>
     <string name="opml_exporter_success">Экспорт завершен</string>
     <string name="settings_reader_title">Читалка</string>
-    <string name="settings_options_reader_pin_toolbars">Закрепить приборную панель</string>
     <string name="article_vertical_swipe_previous_article">Предыдущая статья</string>
     <string name="article_vertical_swipe_next_article">Следующая статья</string>
     <string name="article_vertical_swipe_disabled">Отключено</string>

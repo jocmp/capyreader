@@ -172,7 +172,6 @@
     <string name="settings_gestures_list_back_navigation_action">Navigovat zpátky</string>
     <string name="article_bottom_bar_next_article">Jít na další článek</string>
     <string name="settings_reader_title">Čtečka</string>
-    <string name="settings_options_reader_pin_toolbars">Připnout lišty</string>
     <string name="settings_panel_general_title">Obecné</string>
     <string name="notifications_channel_title_feed_update">Aktualizace zdroje</string>
     <string name="article_view_open_externally">Otevřít externě</string>

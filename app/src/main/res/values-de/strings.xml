@@ -136,7 +136,6 @@
     <string name="settings_auto_delete_option_keep_for_one_month">1 Monat</string>
     <string name="settings_auto_delete_option_keep_for_three_month">3 Monate</string>
     <string name="opml_exporter_failure">Export fehlgeschlagen</string>
-    <string name="settings_options_reader_pin_toolbars">Toolbar immer anzeigen</string>
     <string name="article_bottom_bar_next_article">Nächster Artikel</string>
     <string name="settings_gestures_reader_swipe_down">Nach unten Wischen</string>
     <string name="settings_gestures_reader_swipe_up">Nach oben Wischen</string>
