@@ -258,4 +258,6 @@
     <string name="widget_headlines_account_error">Aggiungi prima un account</string>
     <string name="widget_headlines_title">Ultimi titoli</string>
     <string name="widget_receiver_headlines_title">Titoli</string>
+    <string name="settings_gestures_improve_talkback_title">Migliora il talkback</string>
+    <string name="settings_gestures_improve_talkback_subtitle">Disattiva alcune impostazioni per migliorare la sintesi vocale di TalkBack.</string>
 </resources>
