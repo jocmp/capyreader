@@ -66,7 +66,7 @@ internal class AtomFeedHandler(val atom: Element) : FeedHandler {
 
                 Entry.Guid() -> channelFactory.articleBuilder.guid(node.text())
                 Entry.Content() -> {
-                    val text = node.wholeText()
+                    val text = node.data().ifBlank { node.html() }
 
                     channelFactory.articleBuilder.content(text.trim())
                     channelFactory.setImageFromContent(node)

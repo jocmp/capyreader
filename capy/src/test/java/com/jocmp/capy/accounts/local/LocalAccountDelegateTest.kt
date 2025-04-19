@@ -86,11 +86,14 @@ class LocalAccountDelegateTest {
     @Before
     fun setup() {
         mockkObject(CapyLog)
+
         accountPreferences = mockk()
         val blocklist = mockk<Preference<Set<String>>>()
         every { blocklist.get() }.returns(emptySet())
         every { accountPreferences.keywordBlocklist }.returns(blocklist)
         every { CapyLog.warn(any(), any()) }.returns(Unit)
+        every { CapyLog.error(any(), any()) }.returns(Unit)
+        every { CapyLog.info(any(), any()) }.returns(Unit)
 
         database = InMemoryDatabaseProvider.build(accountID)
         feedFixture = FeedFixture(database)
