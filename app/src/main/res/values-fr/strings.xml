@@ -37,7 +37,6 @@
     <string name="empty_onboarding_prompt">Commencer en ajoutant un flux</string>
     <string name="opml_exporter_failure">Export échoué</string>
     <string name="settings_reader_title">Lecteur</string>
-    <string name="settings_options_reader_pin_toolbars">Épingler les barres d’outils</string>
     <string name="article_bottom_bar_next_article">Passer au prochain article</string>
     <string name="settings_gestures_reader_swipe_down">Glisser vers le bas</string>
     <string name="article_vertical_swipe_full_content">Charger le contenu complet</string>

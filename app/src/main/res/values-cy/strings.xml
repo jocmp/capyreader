@@ -125,7 +125,6 @@
     <string name="opml_exporter_success">Wedi cwblhau allforio</string>
     <string name="opml_exporter_failure">Wedi methu allforio</string>
     <string name="settings_reader_title">Darllenydd</string>
-    <string name="settings_options_reader_pin_toolbars">Pinio\'r bariau offer</string>
     <string name="article_list_unread_sort_newest_first">Diweddaraf yn gyntaf</string>
     <string name="article_list_unread_sort_oldest_first">Hynaf yn gyntaf</string>
     <string name="settings_gestures_list_back_navigation_system_back">Rhagosodiad</string>

@@ -150,7 +150,6 @@
     <string name="opml_exporter_failure">Exportación fallida</string>
     <string name="article_bottom_bar_next_article">Ir al siguiente artículo</string>
     <string name="settings_reader_title">Lector</string>
-    <string name="settings_options_reader_pin_toolbars">Fijar la barra de herramientas</string>
     <string name="article_vertical_swipe_previous_article">Artículo anterior</string>
     <string name="article_vertical_swipe_disabled">Desactivado</string>
     <string name="article_vertical_swipe_full_content">Cargar el contenido entero</string>

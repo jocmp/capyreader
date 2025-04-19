@@ -144,7 +144,6 @@
     <string name="settings_article_list_title">Lista dos Artigos</string>
     <string name="opml_exporter_success">Exportación completa</string>
     <string name="opml_exporter_failure">Fallou a exportación</string>
-    <string name="settings_options_reader_pin_toolbars">Fixar barra ferramentas</string>
     <string name="article_bottom_bar_next_article">Ir ao seguinte artigo</string>
     <string name="settings_gestures_reader_swipe_down">Desprazar Abaixo</string>
     <string name="settings_gestures_reader_swipe_up">Desprazar Arriba</string>

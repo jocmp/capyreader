@@ -175,7 +175,6 @@
     <string name="opml_exporter_success">Exportação completa</string>
     <string name="opml_exporter_failure">Exportação falhou</string>
     <string name="settings_reader_title">Leitor</string>
-    <string name="settings_options_reader_pin_toolbars">Fixar Barra de Ferramentas</string>
     <string name="article_bottom_bar_next_article">Ir para próximo artigo</string>
     <string name="settings_gestures_reader_swipe_down">Deslizar para Baixo</string>
     <string name="settings_gestures_reader_swipe_up">Deslizar para Cima</string>

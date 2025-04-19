@@ -130,7 +130,6 @@
     <string name="opml_exporter_failure">导出错误</string>
     <string name="filter_action_menu_search_articles">搜索文章</string>
     <string name="feed_list_top_bar_close_search">取消搜索</string>
-    <string name="settings_options_reader_pin_toolbars">固定工具栏</string>
     <string name="article_bottom_bar_next_article">下一篇</string>
     <string name="settings_reader_title">阅读页面</string>
     <string name="settings_panel_general_title">通用</string>

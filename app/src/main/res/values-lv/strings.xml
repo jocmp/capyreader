@@ -145,7 +145,6 @@
     <string name="opml_exporter_success">Eksportēšana pabeigta</string>
     <string name="opml_exporter_failure">Eksportēšana neizdevās</string>
     <string name="settings_reader_title">Lasītājs</string>
-    <string name="settings_options_reader_pin_toolbars">Vienmēr rādīt rīkjoslu</string>
     <string name="article_bottom_bar_next_article">Doties uz nākamo rakstu</string>
     <string name="settings_gestures_reader_swipe_down">Pavelkot uz leju</string>
     <string name="settings_gestures_reader_swipe_up">Pavelkot uz augšu</string>

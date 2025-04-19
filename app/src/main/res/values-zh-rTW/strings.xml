@@ -182,7 +182,6 @@
     <string name="feed_form_copy_feed_url_to_clipboard">複製源URL到剪貼簿</string>
     <string name="filter_action_menu_search_articles">搜尋文章</string>
     <string name="feed_list_top_bar_close_search">取消搜尋</string>
-    <string name="settings_options_reader_pin_toolbars">固定工具列</string>
     <string name="article_bottom_bar_next_article">下一篇文章</string>
     <string name="account_source_freshrss">FreshRSS</string>
     <string name="settings_section_account_server">伺服器</string>

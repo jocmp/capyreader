@@ -125,7 +125,6 @@
     <string name="settings_article_list_title">Lista artykułów</string>
     <string name="opml_exporter_success">Eksportowanie zakończone</string>
     <string name="opml_exporter_failure">Eksport nie powiódł się</string>
-    <string name="settings_options_reader_pin_toolbars">Przypnij pasek narzędzi</string>
     <string name="article_vertical_swipe_previous_article">Poprzedni artykuł</string>
     <string name="article_vertical_swipe_next_article">Następny artykuł</string>
     <string name="opml_import_toast_failed">Importowanie nie powiodło się</string>

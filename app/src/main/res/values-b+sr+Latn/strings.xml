@@ -152,7 +152,6 @@
     <string name="article_vertical_swipe_disabled">Onemogućeno</string>
     <string name="opml_exporter_failure">Izvoz nije uspeo</string>
     <string name="settings_reader_title">Čitalac</string>
-    <string name="settings_options_reader_pin_toolbars">Zakačite trake sa alatkama</string>
     <string name="article_bottom_bar_next_article">Idi na sledeći članak</string>
     <string name="settings_panel_general_title">Opšte</string>
     <string name="settings_account_title">Nalog</string>

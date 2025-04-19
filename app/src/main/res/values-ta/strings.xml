@@ -147,7 +147,6 @@
     <string name="opml_exporter_success">ஏற்றுமதி முடிந்தது</string>
     <string name="opml_exporter_failure">ஏற்றுமதி தோல்வியடைந்தது</string>
     <string name="settings_reader_title">வாசகர்</string>
-    <string name="settings_options_reader_pin_toolbars">முள் கருவிப்பட்டிகள்</string>
     <string name="article_bottom_bar_next_article">அடுத்த கட்டுரைக்குச் செல்லுங்கள்</string>
     <string name="settings_gestures_reader_swipe_down">கீழே ச்வைப் செய்யவும்</string>
     <string name="settings_gestures_reader_swipe_up">ச்வைப் செய்யுங்கள்</string>

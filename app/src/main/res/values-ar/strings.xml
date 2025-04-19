@@ -175,7 +175,6 @@
     <string name="crash_log_export_item_title">مشاركة سجلات الأعطال</string>
     <string name="crash_log_export_item_subtitle">يحفظ سجلات الأعطال في ملف لمشاركتها مع المطور</string>
     <string name="settings_reader_title">القارئ</string>
-    <string name="settings_options_reader_pin_toolbars">تثبيت شريط الأدوات</string>
     <string name="article_bottom_bar_next_article">إنتقل إلى المقال التالي</string>
     <string name="edit_feed_tags_section">المجلدات</string>
     <string name="edit_feed_notifications_title">تمكين الإشعارات</string>
