@@ -42,7 +42,7 @@ import java.net.URL
 
 @Composable
 fun ArticleBottomBar(
-    article: Article?,
+    article: Article,
     scrollBehavior: BottomAppBarScrollBehavior = exitAlwaysScrollBehavior(),
     onToggleExtractContent: () -> Unit,
     onToggleRead: () -> Unit,
@@ -54,69 +54,67 @@ fun ArticleBottomBar(
     BottomAppBar(
         scrollBehavior = scrollBehavior,
         actions = {
-            if (article != null) {
-                ToolbarTooltip(
-                    message = stringResource(R.string.article_view_mark_as_read)
+            ToolbarTooltip(
+                message = stringResource(R.string.article_share)
+            ) {
+                IconButton(
+                    onClick = { context.shareArticle(article = article) },
                 ) {
-                    IconButton(
-                        onClick = { onToggleRead() },
-                    ) {
-                        Icon(
-                            readIcon(article),
-                            contentDescription = stringResource(R.string.article_view_mark_as_read)
-                        )
-                    }
+                    Icon(
+                        Icons.Rounded.Share,
+                        contentDescription = stringResource(R.string.article_share)
+                    )
                 }
-                ToolbarTooltip(
-                    message = stringResource(R.string.article_view_star)
+            }
+            ToolbarTooltip(
+                message = stringResource(R.string.article_style_options)
+            ) {
+                IconButton(
+                    onClick = { setStyleSheetOpen(true) },
                 ) {
-                    IconButton(
-                        onClick = { onToggleStar() },
+                    Icon(
+                        Icons.Outlined.FormatSize,
+                        stringResource(R.string.article_style_options)
+                    )
+                }
+            }
+            ToolbarTooltip(
+                message = stringResource(R.string.article_view_mark_as_read)
+            ) {
+                IconButton(
+                    onClick = { onToggleRead() },
+                ) {
+                    Icon(
+                        readIcon(article),
+                        contentDescription = stringResource(R.string.article_view_mark_as_read)
+                    )
+                }
+            }
+            ToolbarTooltip(
+                message = stringResource(R.string.article_view_star)
+            ) {
+                IconButton(
+                    onClick = { onToggleStar() },
 
-                        ) {
-                        Icon(
-                            starredIcon(article),
-                            contentDescription = stringResource(R.string.article_view_star)
-                        )
-                    }
-                }
-                ToolbarTooltip(
-                    message = stringResource(R.string.extract_full_content)
-                ) {
-                    IconButton(
-                        onClick = { onToggleExtractContent() },
                     ) {
-                        if (article.fullContent == LOADING) {
-                            FullContentLoadingIcon()
-                        } else {
-                            Icon(
-                                painterResource(id = extractIcon(article.fullContent)),
-                                contentDescription = stringResource(R.string.extract_full_content)
-                            )
-                        }
-                    }
+                    Icon(
+                        starredIcon(article),
+                        contentDescription = stringResource(R.string.article_view_star)
+                    )
                 }
-                ToolbarTooltip(
-                    message = stringResource(R.string.article_style_options)
+            }
+            ToolbarTooltip(
+                message = stringResource(R.string.extract_full_content)
+            ) {
+                IconButton(
+                    onClick = { onToggleExtractContent() },
                 ) {
-                    IconButton(
-                        onClick = { setStyleSheetOpen(true) },
-                    ) {
+                    if (article.fullContent == LOADING) {
+                        FullContentLoadingIcon()
+                    } else {
                         Icon(
-                            Icons.Outlined.FormatSize,
-                            stringResource(R.string.article_style_options)
-                        )
-                    }
-                }
-                ToolbarTooltip(
-                    message = stringResource(R.string.article_share)
-                ) {
-                    IconButton(
-                        onClick = { context.shareArticle(article = article) },
-                    ) {
-                        Icon(
-                            Icons.Rounded.Share,
-                            contentDescription = stringResource(R.string.article_share)
+                            painterResource(id = extractIcon(article.fullContent)),
+                            contentDescription = stringResource(R.string.extract_full_content)
                         )
                     }
                 }
