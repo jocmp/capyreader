@@ -32,6 +32,7 @@ fun DisplaySettingsPanel(
 ) {
     val pinArticleBars by viewModel.pinArticleBars.collectChangesWithCurrent()
     val improveTalkback by viewModel.improveTalkback.collectChangesWithCurrent()
+    val enableBottomBarActions by viewModel.enableBottomBarActions.collectChangesWithCurrent()
 
     DisplaySettingsPanelView(
         onUpdateTheme = viewModel::updateTheme,
@@ -39,6 +40,8 @@ fun DisplaySettingsPanel(
         enableHighContrastDarkTheme = viewModel.enableHighContrastDarkTheme,
         updateHighContrastDarkTheme = viewModel::updateHighContrastDarkTheme,
         updatePinArticleBars = viewModel::updatePinArticleBars,
+        updateBottomBarActions = viewModel::updateBottomBarActions,
+        enableBottomBarActions = enableBottomBarActions,
         pinArticleBars = pinArticleBars,
         enablePinArticleBars = !improveTalkback,
         updateImageVisibility = viewModel::updateImageVisibility,
@@ -66,7 +69,9 @@ fun DisplaySettingsPanelView(
     enableHighContrastDarkTheme: Boolean,
     updateHighContrastDarkTheme: (enabled: Boolean) -> Unit,
     updatePinArticleBars: (enable: Boolean) -> Unit,
+    updateBottomBarActions: (enable: Boolean) -> Unit,
     pinArticleBars: Boolean,
+    enableBottomBarActions: Boolean,
     enablePinArticleBars: Boolean,
     imageVisibility: ReaderImageVisibility,
     layout: LayoutPreference,
@@ -112,14 +117,6 @@ fun DisplaySettingsPanelView(
         FormSection(
             title = stringResource(R.string.settings_reader_title)
         ) {
-            RowItem {
-                TextSwitch(
-                    enabled = enablePinArticleBars,
-                    checked = pinArticleBars,
-                    onCheckedChange = updatePinArticleBars,
-                    title = stringResource(R.string.settings_options_reader_pin_top_toolbar),
-                )
-            }
             PreferenceSelect(
                 selected = imageVisibility,
                 update = updateImageVisibility,
@@ -129,6 +126,21 @@ fun DisplaySettingsPanelView(
                     stringResource(it.translationKey)
                 }
             )
+            RowItem {
+                TextSwitch(
+                    enabled = enablePinArticleBars,
+                    checked = pinArticleBars,
+                    onCheckedChange = updatePinArticleBars,
+                    title = stringResource(R.string.settings_options_reader_pin_top_toolbar),
+                )
+            }
+            RowItem {
+                TextSwitch(
+                    checked = enableBottomBarActions,
+                    onCheckedChange = updateBottomBarActions,
+                    title = stringResource(R.string.settings_options_reader_show_bottom_toolbar),
+                )
+            }
         }
 
         FormSection(
@@ -169,8 +181,10 @@ private fun DisplaySettingsPanelViewPreview() {
             updatePinArticleBars = {},
             pinArticleBars = false,
             updateImageVisibility = {},
+            updateBottomBarActions = {},
             imageVisibility = ReaderImageVisibility.ALWAYS_SHOW,
-            enablePinArticleBars = false
+            enablePinArticleBars = false,
+            enableBottomBarActions = false,
         )
     }
 }

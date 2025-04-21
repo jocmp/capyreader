@@ -82,6 +82,9 @@ class AppPreferences(context: Context) {
         val pinTopToolbar: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_pin_top_bar", true)
 
+        val bottomBarActions: Preference<Boolean>
+            get() = preferenceStore.getBoolean("article_bottom_bar_actions", false)
+
         val fontSize: Preference<Int>
             get() = preferenceStore.getInt("article_font_size", FontSize.DEFAULT)
 
