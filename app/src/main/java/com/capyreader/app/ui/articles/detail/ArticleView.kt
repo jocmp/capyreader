@@ -15,6 +15,7 @@ import androidx.compose.material.icons.automirrored.rounded.Article
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults.exitAlwaysScrollBehavior
 import androidx.compose.material3.BottomAppBarScrollBehavior
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,6 +26,7 @@ import androidx.compose.material3.TopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
@@ -87,23 +89,39 @@ fun ArticleView(
 
     val topToolbarPreference = rememberTopToolbarPreference(articleID = article.id)
     val bottomScrollBehavior = exitAlwaysScrollBehavior()
+    val enableBottomBar by rememberBottomBarPreference()
 
     ArticleViewScaffold(
         bottomScrollBehavior = bottomScrollBehavior,
+        enableBottomBar = enableBottomBar,
         topToolbarPreference = topToolbarPreference,
         topBar = {
             ArticleTopBar(
                 scrollBehavior = topToolbarPreference.scrollBehavior,
-                onClose = onBackPressed
+                onClose = onBackPressed,
+                actions = {
+                    if (!enableBottomBar) {
+                        ArticleActions(
+                            article = article,
+                            onToggleExtractContent = onToggleFullContent,
+                            onToggleRead = onToggleRead,
+                            onToggleStar = onToggleStar,
+                        )
+                    }
+                }
             )
         },
         bottomBar = {
-            ArticleBottomBar(
-                article = article,
+            BottomAppBar(
                 scrollBehavior = bottomScrollBehavior,
-                onToggleExtractContent = onToggleFullContent,
-                onToggleRead = onToggleRead,
-                onToggleStar = onToggleStar,
+                actions = {
+                    ArticleActions(
+                        article = article,
+                        onToggleExtractContent = onToggleFullContent,
+                        onToggleRead = onToggleRead,
+                        onToggleStar = onToggleStar,
+                    )
+                }
             )
         },
         reader = {
@@ -148,6 +166,7 @@ fun ArticleView(
 @Composable
 private fun ArticleViewScaffold(
     topBar: @Composable () -> Unit,
+    enableBottomBar: Boolean,
     bottomBar: @Composable () -> Unit,
     reader: @Composable () -> Unit,
     bottomScrollBehavior: BottomAppBarScrollBehavior,
@@ -181,12 +200,14 @@ private fun ArticleViewScaffold(
                 topBar()
             }
 
-            Box(
-                Modifier
-                    .align(Alignment.BottomStart)
-                    .fillMaxWidth()
-            ) {
-                bottomBar()
+            if (enableBottomBar) {
+                Box(
+                    Modifier
+                        .align(Alignment.BottomStart)
+                        .fillMaxWidth()
+                ) {
+                    bottomBar()
+                }
             }
         }
     }
@@ -267,6 +288,13 @@ private val TopBarOffset = 56.dp
 private val BottomBarOffset = 44.dp
 
 @Composable
+fun rememberBottomBarPreference(appPreferences: AppPreferences = koinInject()): State<Boolean> {
+    return appPreferences.readerOptions.bottomBarActions
+        .stateIn(rememberCoroutineScope())
+        .collectAsState()
+}
+
+@Composable
 fun rememberTopToolbarPreference(
     articleID: String,
     appPreferences: AppPreferences = koinInject(),
@@ -275,12 +303,10 @@ fun rememberTopToolbarPreference(
         TopAppBarState(0f, 0f, 0f)
     }
 
-    val pinToolbars = appPreferences.readerOptions.pinTopToolbar
-        .stateIn(rememberCoroutineScope())
+    val pinTopToolbar by appPreferences.readerOptions.pinTopToolbar.stateIn(rememberCoroutineScope())
         .collectAsState()
-        .value
 
-    val scrollBehavior = if (pinToolbars) {
+    val scrollBehavior = if (pinTopToolbar) {
         TopAppBarDefaults.pinnedScrollBehavior(state = topBarState)
     } else {
         TopAppBarDefaults.enterAlwaysScrollBehavior(state = topBarState)
@@ -288,7 +314,7 @@ fun rememberTopToolbarPreference(
 
     val showToolbars = scrollBehavior.state.collapsedFraction == 0f
 
-    return ToolbarPreferences(scrollBehavior, showToolbars, pinToolbars)
+    return ToolbarPreferences(scrollBehavior, showToolbars, pinTopToolbar)
 }
 
 @Stable
