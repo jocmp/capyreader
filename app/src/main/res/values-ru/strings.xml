@@ -247,7 +247,7 @@
     <string name="tag_action_edit_success">Тег обновлен</string>
     <string name="tag_action_edit_error">Ошибка при обновлении тега</string>
     <string name="tag_action_edit">Изменить тег</string>
-    <string name="blocked_keywords">Черный список</string>
+    <string name="blocked_keywords">Чёрный список</string>
     <string name="blocked_keywords_supporting_text">Удалите статьи с совпадением ключевых слов в названии или содержании</string>
     <string name="blocked_keywords_remove_keyword">Убрать ключевое слово</string>
     <string name="blocked_keywords_add_keyword">Добавить ключевое слово</string>
@@ -259,4 +259,6 @@
     <string name="widget_headlines_title">Последние рубрики</string>
     <string name="widget_headlines_see_more_button">См. ещё статьи</string>
     <string name="widget_headlines_account_error">Сперва добавьте аккаунт</string>
+    <string name="settings_gestures_improve_talkback_title">Улучшить озвучку элементов на экране</string>
+    <string name="settings_gestures_improve_talkback_subtitle">Отключает некоторые настройки для улучшения озвучки элементов на экране</string>
 </resources>

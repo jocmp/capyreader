@@ -252,4 +252,6 @@
     <string name="widget_headlines_account_error">Najpierw dodaj konto</string>
     <string name="widget_headlines_see_more_button">Zobacz więcej artykułów</string>
     <string name="widget_headlines_title">Najnowsze tytuły</string>
+    <string name="settings_gestures_improve_talkback_title">Ulepsz TalkBack</string>
+    <string name="settings_gestures_improve_talkback_subtitle">Wyłącza niektóre ustawienia aby poprawić zamianę tekstu na mowę TalkBack</string>
 </resources>
