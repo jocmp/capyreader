@@ -4,9 +4,11 @@ package com.capyreader.app.ui.articles.detail
 
 import android.net.Uri
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -114,7 +116,11 @@ fun ArticleView(
         bottomBar = {
             BottomAppBar(
                 scrollBehavior = bottomScrollBehavior,
-                actions = {
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    modifier = Modifier.weight(1f),
+                ) {
                     ArticleActions(
                         article = article,
                         onToggleExtractContent = onToggleFullContent,
@@ -122,7 +128,7 @@ fun ArticleView(
                         onToggleStar = onToggleStar,
                     )
                 }
-            )
+            }
         },
         reader = {
             ArticlePullRefresh(
