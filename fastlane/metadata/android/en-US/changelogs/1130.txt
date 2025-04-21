@@ -1,0 +1,1 @@
+• Fix parsing for local Atom feeds

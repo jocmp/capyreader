@@ -66,7 +66,12 @@ internal class AtomFeedHandler(val atom: Element) : FeedHandler {
 
                 Entry.Guid() -> channelFactory.articleBuilder.guid(node.text())
                 Entry.Content() -> {
-                    val text = node.data().ifBlank { node.html() }
+                    val type = node.attr("type")
+
+                    val text = when {
+                        type == "xhtml" -> node.html()
+                        else -> node.data().ifBlank { node.wholeText() }
+                    }
 
                     channelFactory.articleBuilder.content(text.trim())
                     channelFactory.setImageFromContent(node)
@@ -97,8 +102,14 @@ internal class AtomFeedHandler(val atom: Element) : FeedHandler {
         mediaGroup.children().forEach { node ->
             when (node.tagName()) {
                 Entry.Media.Title() -> channelFactory.articleMediaBuilder.title(node.text())
-                Entry.Media.Content() -> channelFactory.articleMediaBuilder.contentUrl(node.attr("url").ifBlank { null })
-                Entry.Media.Thumbnail() -> channelFactory.articleMediaBuilder.thumbnailUrl(node.attr("url").ifBlank { null })
+                Entry.Media.Content() -> channelFactory.articleMediaBuilder.contentUrl(
+                    node.attr("url").ifBlank { null })
+
+                Entry.Media.Thumbnail() -> channelFactory.articleMediaBuilder.thumbnailUrl(
+                    node.attr(
+                        "url"
+                    ).ifBlank { null })
+
                 Entry.Media.Description() -> channelFactory.articleMediaBuilder.description(node.wholeText())
             }
         }
