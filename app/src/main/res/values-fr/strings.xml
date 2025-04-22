@@ -258,4 +258,5 @@
     <string name="settings_gestures_improve_talkback_subtitle">Désactive certains paramètres pour améliorer la synthèse vocale de TalkBack</string>
     <string name="settings_gestures_improve_talkback_title">Améliorer TalkBack</string>
     <string name="settings_options_reader_pin_top_toolbar">Épingler la barre d\'outils supérieure</string>
+    <string name="settings_options_reader_show_bottom_toolbar">Afficher les actions dans la barre d\'outils inférieure</string>
 </resources>
