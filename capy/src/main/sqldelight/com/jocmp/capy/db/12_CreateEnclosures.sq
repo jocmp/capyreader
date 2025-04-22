@@ -1,0 +1,8 @@
+CREATE TABLE enclosures (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  article_id INTEGER NOT NULL REFERENCES articles(id),
+  enclosure_url TEXT NOT NULL,
+  enclosure_type TEXT NOT NULL,
+  itunes_duration TEXT NOT NULL,
+  itunes_image TEXT NOT NULL
+);

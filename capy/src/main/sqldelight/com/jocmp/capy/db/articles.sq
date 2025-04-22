@@ -177,6 +177,11 @@ deleteAllArticles {
   WHERE article_id NOT IN (
    SELECT article_id FROM article_statuses
   );
+
+  DELETE FROM enclosures
+  WHERE article_id IN (
+    SELECT article_id FROM article_statuses
+  );
 }
 
 deleteArticles {
@@ -198,6 +203,11 @@ deleteArticles {
 
   DELETE FROM saved_search_articles
   WHERE article_id NOT IN (
+    SELECT article_id FROM article_statuses
+  );
+
+  DELETE FROM enclosures
+  WHERE article_id IN (
     SELECT article_id FROM article_statuses
   );
 }
