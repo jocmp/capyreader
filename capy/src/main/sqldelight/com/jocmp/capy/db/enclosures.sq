@@ -1,0 +1,22 @@
+findByArticleID:
+SELECT *
+FROM enclosures
+JOIN articles ON articles.id = enclosures.article_id
+WHERE articles.id = :articleID;
+
+create:
+INSERT INTO enclosures(
+     url,
+     article_id,
+     type,
+     itunes_duration_seconds,
+     itunes_image
+)
+VALUES (
+:url,
+:article_id,
+:type,
+:itunes_duration_seconds,
+:itunes_image
+)
+ON CONFLICT(url) DO NOTHING;

@@ -15,6 +15,7 @@ import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.common.withResult
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.persistence.ArticleRecords
+import com.jocmp.capy.persistence.EnclosureRecords
 import com.jocmp.capy.persistence.FeedRecords
 import com.jocmp.capy.persistence.SavedSearchRecords
 import com.jocmp.capy.persistence.TaggingRecords
@@ -43,6 +44,7 @@ internal class FeedbinAccountDelegate(
     private val feedbin: Feedbin
 ) : AccountDelegate {
     private val articleRecords = ArticleRecords(database)
+    private val enclosureRecords = EnclosureRecords(database)
     private val feedRecords = FeedRecords(database)
     private val taggingRecords = TaggingRecords(database)
     private val savedSearchRecords = SavedSearchRecords(database)
@@ -378,6 +380,16 @@ internal class FeedbinAccountDelegate(
                     updatedAt = updated,
                     read = true
                 )
+
+                entry.enclosure?.let {
+                    enclosureRecords.create(
+                        url = it.enclosure_url,
+                        type = it.enclosure_type,
+                        articleID = articleID,
+                        itunesDurationSeconds = it.itunes_duration,
+                        itunesImage = it.itunes_image,
+                    )
+                }
 
                 if (savedSearchID != null) {
                     savedSearchRecords.upsertArticle(
