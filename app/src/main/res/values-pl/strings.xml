@@ -254,4 +254,6 @@
     <string name="widget_headlines_title">Najnowsze tytuły</string>
     <string name="settings_gestures_improve_talkback_title">Ulepsz TalkBack</string>
     <string name="settings_gestures_improve_talkback_subtitle">Wyłącza niektóre ustawienia aby poprawić zamianę tekstu na mowę TalkBack</string>
+    <string name="settings_options_reader_pin_top_toolbar">Przypnij górny pasek narzędzi</string>
+    <string name="settings_options_reader_show_bottom_toolbar">Pokaż opcje na dolnym pasku narzędzi</string>
 </resources>
