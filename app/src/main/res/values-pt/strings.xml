@@ -226,4 +226,33 @@
     <string name="after_read_all_behavior_open_next_feed">Abrir Próximo Feed</string>
     <string name="feed_nav_drawer_title">Feeds</string>
     <string name="search_bar_placeholder">Pesquisar</string>
+    <string name="delete_tag_error">Erro ao excluir etiqueta</string>
+    <string name="edit_feed_tag_section">Adicionar ou Selecionar Etiqueta</string>
+    <string name="settings_options_reader_pin_top_toolbar">Fixar no topo a barra de ferramentas</string>
+    <plurals name="refresh_hours">
+        <item quantity="one">A cada hora</item>
+        <item quantity="many">A cada %d horas</item>
+        <item quantity="other">A cada %d horas</item>
+    </plurals>
+    <string name="settings_options_reader_show_bottom_toolbar">Mostrar ações na barra de ferramentas inferior</string>
+    <string name="blocked_keywords">Lista de bloqueio</string>
+    <string name="blocked_keywords_supporting_text">Remover artigos em que o título ou conteúdo batem com palavras-chave</string>
+    <string name="blocked_keywords_remove_keyword">Remover palavras-chave</string>
+    <string name="blocked_keywords_add_keyword">Adicionar palavras-chave</string>
+    <string name="tag_action_delete_message">Você têm certeza que quer exluir a etiqueta \"%1$s\"?</string>
+    <string name="tag_action_delete_title">Excluir</string>
+    <string name="settings_gestures_list_back_navigation_navigate_to_parent">Navegar para Pai</string>
+    <string name="tag_action_delete_confirm">Excluir</string>
+    <string name="tag_action_edit_success">Etiqueta atualizada</string>
+    <string name="tag_action_edit_error">Erro ao atualizar etiqueta</string>
+    <string name="tag_action_edit">Editar etiqueta</string>
+    <string name="actions_copy_link">Copiar link</string>
+    <string name="settings_gestures_improve_talkback_title">Melhorar o TalkBack</string>
+    <string name="settings_gestures_improve_talkback_subtitle">Desativa algumas configurações para melhorar o TalkBack text-to-speech</string>
+    <string name="widget_receiver_headlines_title">Títulos</string>
+    <string name="widget_headlines_account_error">Adicionar uma conta primeiro</string>
+    <string name="widget_headlines_see_more_button">Ver mais artigos</string>
+    <string name="widget_headlines_title">Títulos mais recentes</string>
+    <string name="actions_share_link">Compartilhar link</string>
+    <string name="tag_name_title">Nome</string>
 </resources>
