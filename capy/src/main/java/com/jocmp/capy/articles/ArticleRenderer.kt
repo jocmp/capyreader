@@ -74,10 +74,10 @@ class ArticleRenderer(
 
             HtmlPostProcessor.clean(document, hideImages = hideImages)
         }
-//
-//        article.audioEnclosure?.let {
-//            document.content?.prepend(it)
-//        }
+
+        article.audioEnclosure?.let {
+            document.content?.prepend(it)
+        }
 
         return document.html()
     }
