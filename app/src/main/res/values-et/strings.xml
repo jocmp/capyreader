@@ -259,4 +259,6 @@
     <string name="widget_headlines_account_error">Esmalt palun lisa kasutajakonto</string>
     <string name="settings_gestures_improve_talkback_title">Paranda TalkBacki toimimist</string>
     <string name="settings_gestures_improve_talkback_subtitle">Parandamaks TalkBacki kõnesünteesi toimimist, lülita välja mõned seadistused</string>
+    <string name="settings_options_reader_pin_top_toolbar">Kinnita ülemisele tööriistaribale</string>
+    <string name="settings_options_reader_show_bottom_toolbar">Näita alumisel tööriistaribal tegevusi</string>
 </resources>
