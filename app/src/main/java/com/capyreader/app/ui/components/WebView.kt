@@ -29,11 +29,9 @@ import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
+import com.jocmp.capy.common.launchUI
 import com.jocmp.capy.common.windowOrigin
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.koin.compose.koinInject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -121,25 +119,21 @@ class WebViewState(
 
         htmlId = id
 
-        scope.launch {
-            withContext(Dispatchers.IO) {
-                val html = renderer.render(
-                    article,
-                    hideImages = !showImages,
-                    byline = article.byline(context = webView.context),
-                    colors = colors
-                )
+        scope.launchUI {
+            val html = renderer.render(
+                article,
+                hideImages = !showImages,
+                byline = article.byline(context = webView.context),
+                colors = colors
+            )
 
-                withContext(Dispatchers.Main) {
-                    webView.loadDataWithBaseURL(
-                        windowOrigin(article.url),
-                        html,
-                        null,
-                        "UTF-8",
-                        null,
-                    )
-                }
-            }
+            webView.loadDataWithBaseURL(
+                windowOrigin(article.url),
+                html,
+                null,
+                "UTF-8",
+                null,
+            )
         }
     }
 
