@@ -1,5 +1,9 @@
 findByArticleID:
-SELECT *
+SELECT
+    enclosures.url,
+    enclosures.type,
+    enclosures.itunes_duration_seconds,
+    enclosures.itunes_image
 FROM enclosures
 JOIN articles ON articles.id = enclosures.article_id
 WHERE articles.id = :articleID;

@@ -3,6 +3,7 @@ package com.jocmp.capy.persistence
 import com.jocmp.capy.Enclosure
 import com.jocmp.capy.common.optionalURL
 import com.jocmp.capy.db.Database
+import java.net.URL
 
 internal class EnclosureRecords internal constructor(
     private val database: Database
@@ -11,8 +12,8 @@ internal class EnclosureRecords internal constructor(
         url: String,
         type: String,
         articleID: String,
-        itunesDurationSeconds: String?,
-        itunesImage: String?,
+        itunesDurationSeconds: String? = null,
+        itunesImage: String? = null,
     ) {
         val parsedURL = optionalURL(url)?.toString() ?: return
 
@@ -20,12 +21,29 @@ internal class EnclosureRecords internal constructor(
             url = parsedURL,
             type = type,
             article_id = articleID,
-            itunes_duration_seconds = itunesDurationSeconds,
+            itunes_duration_seconds = itunesDurationSeconds?.toLongOrNull(),
             itunes_image = optionalURL(itunesImage)?.toString(),
         )
     }
 
     fun byArticle(id: String): List<Enclosure> {
-        return emptyList()
+        return database
+            .enclosuresQueries
+            .findByArticleID(id, ::mapper)
+            .executeAsList()
+    }
+
+    fun mapper(
+        url: String,
+        type: String,
+        itunesDurationSeconds: Long?,
+        itunesImage: String?
+    ): Enclosure {
+        return Enclosure(
+            url = URL(url),
+            type = type,
+            itunesDurationSeconds = itunesDurationSeconds,
+            itunesImage = itunesImage,
+        )
     }
 }

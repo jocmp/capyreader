@@ -12,6 +12,7 @@ import com.jocmp.capy.fixtures.FeedFixture
 import com.jocmp.capy.fixtures.FolderFixture
 import com.jocmp.capy.logging.CapyLog
 import com.jocmp.capy.persistence.ArticleRecords
+import com.jocmp.capy.persistence.EnclosureRecords
 import com.jocmp.readerclient.Category
 import com.jocmp.readerclient.GoogleReader
 import com.jocmp.readerclient.Item
@@ -116,6 +117,12 @@ class ReaderAccountDelegateTest {
         ),
         summary = Summary("Summary - Welcome to Edition 7.07 of the Rocket Report! SpaceX has not missed a beat since the Federal Aviation Administration gave the company a green light to resume Falcon 9 launches after a failure last month."),
         content = Item.Content("Content - Welcome to Edition 7.07 of the Rocket Report! SpaceX has not missed a beat since the Federal Aviation Administration gave the company a green light to resume Falcon 9 launches after a failure last month."),
+        enclosure = listOf(
+            Item.Enclosure(
+                href = "https://example.com/enclosure.jpg",
+                type = "image/jpeg"
+            )
+        )
     )
 
     private val items = listOf(unreadItem)
@@ -204,6 +211,9 @@ class ReaderAccountDelegateTest {
         assertEquals(expected = listOf("All", "Gadgets"), actual = taggedNames)
 
         assertEquals(expected = 1, actual = articles.size)
+
+        val enclosures = EnclosureRecords(database).byArticle("0000000000000010")
+        assertEquals(expected = 1, actual = enclosures.size)
     }
 
     @Test

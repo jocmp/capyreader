@@ -1,4 +1,4 @@
-package com.capyreader.app.ui.articles
+package com.capyreader.app.ui.articles.feeds.edit
 
 import androidx.lifecycle.ViewModel
 import com.capyreader.app.preferences.AppPreferences

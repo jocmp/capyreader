@@ -7,7 +7,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.res.stringResource
 import com.capyreader.app.R
-import com.capyreader.app.ui.articles.EditFeedDialog
+import com.capyreader.app.ui.articles.feeds.edit.EditFeedDialog
 import com.capyreader.app.ui.articles.FeedActionMenuItems
 import com.capyreader.app.ui.articles.RemoveFeedDialog
 import com.capyreader.app.ui.settings.localSnackbarDisplay

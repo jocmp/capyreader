@@ -10,8 +10,10 @@ import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.FeedFixture
 import com.jocmp.capy.persistence.ArticleRecords
+import com.jocmp.capy.persistence.EnclosureRecords
 import com.jocmp.capy.randomID
 import com.jocmp.feedbinclient.CreateSubscriptionRequest
+import com.jocmp.feedbinclient.Enclosure
 import com.jocmp.feedbinclient.Entry
 import com.jocmp.feedbinclient.Feedbin
 import com.jocmp.feedbinclient.SavedSearch
@@ -104,7 +106,14 @@ class FeedbinAccountDelegateTest {
         created_at = "2025-02-09T14:02:28.994289Z",
         extracted_content_url = "https://extract.feedbin.com/...",
         author = "Victoria Song",
-        images = null
+        images = null,
+        enclosure = Enclosure(
+            enclosure_url = "https://www.podtrac.com/pts/redirect.mp3/pdst.fm/e/chtbl.com/track/524GE/traffic.megaphone.fm/VMP2413819050.mp3?updated=1725568071",
+            enclosure_type = "audio/mpeg",
+            enclosure_length = "0",
+            itunes_duration = "3000",
+            itunes_image = "https://megaphone.imgix.net/podcasts/61bb0bc2-3d4b-11ef-b6cd-7b25b6cb2486/image/4f33aa95b74cece19e7d86d0ce61328f.png?ixlib=rails-4.3.1&max-w=3000&max-h=3000&fit=crop&auto=format,compress"
+        )
     )
 
     private val savedSearch = SavedSearch(
@@ -179,6 +188,9 @@ class FeedbinAccountDelegateTest {
         assertEquals(expected = listOf(null, "Gadgets"), actual = taggedNames)
 
         assertEquals(expected = 2, actual = articles.size)
+
+        val enclosures = EnclosureRecords(database).byArticle(vergeArticle.id.toString())
+        assertEquals(expected = 1, actual = enclosures.size)
     }
 
     @Test

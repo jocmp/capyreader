@@ -15,6 +15,7 @@ import com.jocmp.capy.common.withResult
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.logging.CapyLog
 import com.jocmp.capy.persistence.ArticleRecords
+import com.jocmp.capy.persistence.EnclosureRecords
 import com.jocmp.capy.persistence.FeedRecords
 import com.jocmp.capy.persistence.SavedSearchRecords
 import com.jocmp.capy.persistence.TaggingRecords
@@ -47,6 +48,7 @@ internal class ReaderAccountDelegate(
     private var postToken = AtomicReference<String?>(null)
     private val articleRecords = ArticleRecords(database)
     private val feedRecords = FeedRecords(database)
+    private val enclosureRecords = EnclosureRecords(database)
     private val taggingRecords = TaggingRecords(database)
     private val savedSearchRecords = SavedSearchRecords(database)
 
@@ -445,7 +447,7 @@ internal class ReaderAccountDelegate(
                     extracted_content_url = null,
                     summary = Jsoup.parse(item.summary.content).text(),
                     url = item.canonical.firstOrNull()?.href,
-                    image_url = parsedImageURL(item),
+                    image_url = EnclosureParsing.parsedImageURL(item),
                     published_at = item.published
                 )
 
@@ -463,6 +465,14 @@ internal class ReaderAccountDelegate(
                             savedSearchID = category,
                         )
                     }
+                }
+
+                EnclosureParsing.validEnclosures(item).forEach {
+                    enclosureRecords.create(
+                        url = it.url.toString(),
+                        type = it.type,
+                        articleID = item.hexID,
+                    )
                 }
             }
         }
