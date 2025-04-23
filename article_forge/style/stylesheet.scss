@@ -222,7 +222,7 @@ ul:has(img) {
 
 .article__title {
   margin: 0;
-  padding-bottom: 0.6rem;
+  padding-bottom: 0.5rem;
 
   &:empty {
     padding: 0;
@@ -241,63 +241,6 @@ ul:has(img) {
 
   img {
     background-color: var(--color-surface-container-highest);
-  }
-}
-
-.audio-enclosure {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  background: var(--color-surface-container-highest);
-  border-radius: var(--corner-radius);
-  align-items: center;
-  margin: 0;
-  gap: 0.6rem;
-  padding: 1rem;
-
-  div {
-    margin: 0;
-  }
-
-  .audio-enclosure__details {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 0.6rem;
-    flex-shrink: 1;
-    min-width: 0;
-  }
-
-  .audio-enclosure__details-text {
-    display: block;
-    line-height: 1.2em;
-    min-width: 0;
-
-    div {
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
-    }
-  }
-
-  .audio-enclosure__feed-title {
-    font-weight: 600;
-  }
-
-  .audio-enclosure__image {
-    background-color: var(--color-surface-container-highest);
-    border-radius: var(--corner-radius);
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-  }
-
-  .audio-enclosure__actions {
-    display: flex;
-    height: 100%;
-    flex-direction: row;
-    gap: 0.6rem;
   }
 }
 
