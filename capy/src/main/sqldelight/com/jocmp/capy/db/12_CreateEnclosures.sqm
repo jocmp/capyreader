@@ -1,0 +1,7 @@
+CREATE TABLE enclosures (
+  url TEXT PRIMARY KEY NOT NULL,
+  article_id TEXT NOT NULL REFERENCES articles(id),
+  type TEXT NOT NULL,
+  itunes_duration_seconds INTEGER,
+  itunes_image TEXT
+);

@@ -21,6 +21,7 @@ import com.jocmp.capy.db.Database
 import com.jocmp.capy.opml.ImportProgress
 import com.jocmp.capy.opml.OPMLImporter
 import com.jocmp.capy.persistence.ArticleRecords
+import com.jocmp.capy.persistence.EnclosureRecords
 import com.jocmp.capy.persistence.FeedRecords
 import com.jocmp.capy.persistence.FolderRecords
 import com.jocmp.capy.persistence.SavedSearchRecords
@@ -69,10 +70,11 @@ data class Account(
         )
     }
 ) {
-    internal val articleRecords: ArticleRecords = ArticleRecords(database)
-    private val feedRecords: FeedRecords = FeedRecords(database)
-    private val folderRecords: FolderRecords = FolderRecords(database)
-    private val taggingRecords: TaggingRecords = TaggingRecords(database)
+    internal val articleRecords = ArticleRecords(database)
+    private val enclosureRecords = EnclosureRecords(database)
+    private val feedRecords = FeedRecords(database)
+    private val folderRecords = FolderRecords(database)
+    private val taggingRecords = TaggingRecords(database)
     private val savedSearchRecords = SavedSearchRecords(database)
 
     private val articleContent = ArticleContent(httpClient = localHttpClient)
@@ -204,7 +206,8 @@ data class Account(
             return null
         }
 
-        return articleRecords.find(articleID = articleID)
+        val enclosures = enclosureRecords.byArticle(articleID)
+        return articleRecords.find(articleID = articleID)?.copy(enclosures = enclosures)
     }
 
     suspend fun addStar(articleID: String): Result<Unit> {

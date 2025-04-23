@@ -1,4 +1,4 @@
-package com.capyreader.app.ui.articles
+package com.capyreader.app.ui.articles.feeds.edit
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box

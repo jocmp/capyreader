@@ -1,4 +1,4 @@
-package com.capyreader.app.ui.articles
+package com.capyreader.app.ui.articles.feeds.edit
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue

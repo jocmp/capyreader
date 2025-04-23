@@ -15,6 +15,7 @@ data class Entry(
     val published: String,
     val created_at: String,
     val images: Images? = null,
+    val enclosure: Enclosure? = null,
 ) {
     @JsonClass(generateAdapter = true)
     class Images(

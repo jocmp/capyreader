@@ -5,6 +5,7 @@ import com.jocmp.capy.Article
 import com.jocmp.capy.MacroProcessor
 import com.jocmp.capy.preferences.Preference
 import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
 import com.jocmp.capy.R as CapyRes
 
 class ArticleRenderer(
@@ -67,12 +68,15 @@ class ArticleRenderer(
 
             HtmlPostProcessor.clean(contentHTML, hideImages = hideImages)
 
-            document.getElementById("article-body-content")
-                ?.append(parseHtml(article, contentHTML, hideImages = hideImages))
+            document.content?.append(parseHtml(article, contentHTML, hideImages = hideImages))
         } else {
-            document.getElementById("article-body-content")?.append(article.content)
+            document.content?.append(article.content)
 
             HtmlPostProcessor.clean(document, hideImages = hideImages)
+        }
+
+        article.imageEnclosures()?.let {
+            document.content?.appendChild(it)
         }
 
         return document.html()
@@ -103,6 +107,9 @@ class ArticleRenderer(
         }
     }
 }
+
+private val Document.content
+    get() = getElementById("article-body-content")
 
 private fun Article.externalLink(): String {
     val potentialURL = url ?: siteURL

@@ -24,6 +24,7 @@ data class Article(
     val enableStickyFullContent: Boolean = false,
     val fullContent: FullContentState = FullContentState.NONE,
     val content: String = contentHTML.ifBlank { summary },
+    val enclosures: List<Enclosure> = emptyList(),
 ) {
     val defaultContent = contentHTML.ifBlank { summary }
 

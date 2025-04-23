@@ -51,8 +51,8 @@ data class Item(
         val href: String
     )
 
-    val image: Enclosure?
-        get() = enclosure?.find { it.type?.startsWith("image") == true }
+    val images: List<Enclosure>
+        get() = enclosure?.filter { it.type?.startsWith("image") == true }.orEmpty()
 }
 
 /** open for testing */
