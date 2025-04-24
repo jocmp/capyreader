@@ -13,14 +13,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
-import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.common.asState
 import com.capyreader.app.common.openLinkExternally
+import com.capyreader.app.preferences.AppPreferences
+import com.capyreader.app.preferences.RowSwipeOption
+import com.capyreader.app.ui.articles.ArticleActions
 import com.capyreader.app.ui.articles.LocalArticleActions
 import com.capyreader.app.ui.components.ArticleAction
 import com.capyreader.app.ui.components.readAction
 import com.capyreader.app.ui.components.starAction
-import com.capyreader.app.preferences.RowSwipeOption
 import com.jocmp.capy.Article
 import me.saket.swipe.SwipeAction
 import org.koin.compose.koinInject
@@ -60,7 +61,7 @@ private fun swipeActions(article: Article, option: RowSwipeOption): List<SwipeAc
 
     val action = when (option) {
         RowSwipeOption.TOGGLE_STARRED -> starAction(article, actions)
-        RowSwipeOption.OPEN_EXTERNALLY -> openExternally(context, article)
+        RowSwipeOption.OPEN_EXTERNALLY -> context.openExternally(article, actions)
         else -> readAction(article, actions)
     }
 
@@ -81,12 +82,14 @@ private fun swipeActions(article: Article, option: RowSwipeOption): List<SwipeAc
 }
 
 
-private fun openExternally(context: Context, article: Article) =
+private fun Context.openExternally(article: Article, actions: ArticleActions) =
     ArticleAction(
         R.drawable.icon_open_in_new,
         R.string.article_view_open_externally,
     ) {
         val url = article.url ?: return@ArticleAction
 
-        context.openLinkExternally(url)
+        actions.markRead(article.id)
+
+        openLinkExternally(url)
     }
