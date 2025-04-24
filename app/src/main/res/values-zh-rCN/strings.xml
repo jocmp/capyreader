@@ -259,4 +259,5 @@
     <string name="settings_gestures_improve_talkback_subtitle">禁用部分设置以改进 TalkBack 文本转语音功能</string>
     <string name="settings_gestures_improve_talkback_title">改进 TalkBack</string>
     <string name="settings_options_reader_pin_top_toolbar">固定顶部工具栏</string>
+    <string name="settings_options_reader_show_bottom_toolbar">在底部工具栏上显示操作</string>
 </resources>
