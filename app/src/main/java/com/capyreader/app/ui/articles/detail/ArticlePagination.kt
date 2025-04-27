@@ -13,7 +13,7 @@ data class ArticlePagination(
     val onSelectArticle: (index: Int, id: String) -> Unit,
 ) {
     val hasPrevious = pages.previous > -1
-    val hasNext = pages.next < pages.size
+    val hasNext = pages.next > -1 && pages.next < pages.size
     val index = pages.current
 
     fun selectPrevious() {
