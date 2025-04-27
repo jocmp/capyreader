@@ -287,13 +287,15 @@ internal class ArticleRecords internal constructor(
     fun unreadArticleIDs(
         filter: ArticleFilter,
         range: MarkRead,
-        unreadSort: UnreadSortOrder
+        unreadSort: UnreadSortOrder,
+        query: String?,
     ): List<String> {
         val ids = when (filter) {
             is ArticleFilter.Articles -> byStatus.unreadArticleIDs(
                 filter.articleStatus,
                 range = range,
                 unreadSort = unreadSort,
+                query = query,
             )
 
             is ArticleFilter.Feeds -> byFeed.unreadArticleIDs(
@@ -301,6 +303,7 @@ internal class ArticleRecords internal constructor(
                 feedIDs = listOf(filter.feedID),
                 range = range,
                 unreadSort = unreadSort,
+                query = query,
             )
 
             is ArticleFilter.Folders -> {
@@ -309,6 +312,7 @@ internal class ArticleRecords internal constructor(
                     feedIDs = folderFeedIDs(filter),
                     range = range,
                     unreadSort = unreadSort,
+                    query = query,
                 )
             }
 
@@ -317,6 +321,7 @@ internal class ArticleRecords internal constructor(
                 savedSearchID = filter.savedSearchID,
                 range = range,
                 unreadSort = unreadSort,
+                query = query,
             )
         }
 

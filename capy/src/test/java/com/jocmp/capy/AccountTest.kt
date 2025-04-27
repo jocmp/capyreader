@@ -81,6 +81,7 @@ class AccountTest {
             filter = ArticleFilter.Articles(ArticleStatus.ALL),
             range = MarkRead.All,
             unreadSort = UnreadSortOrder.NEWEST_FIRST,
+            query = null,
         )
 
         assertEquals(unreadArticleIDs.sorted(), ids.sorted())
@@ -111,6 +112,7 @@ class AccountTest {
             filter = ArticleFilter.Articles(ArticleStatus.UNREAD),
             range = MarkRead.Before(unreadArticleIDs[1]),
             unreadSort = UnreadSortOrder.NEWEST_FIRST,
+            query = null,
         )
 
         val result = unreadArticleIDs.takeLast(2)
@@ -143,6 +145,7 @@ class AccountTest {
             filter = ArticleFilter.Articles(ArticleStatus.UNREAD),
             range = MarkRead.After(unreadArticleIDs[1]),
             unreadSort = UnreadSortOrder.NEWEST_FIRST,
+            query = null,
         )
 
         val result = unreadArticleIDs.take(2)
@@ -175,6 +178,7 @@ class AccountTest {
             filter = ArticleFilter.Articles(ArticleStatus.UNREAD),
             range = MarkRead.Before(unreadArticleIDs[1]),
             unreadSort = UnreadSortOrder.OLDEST_FIRST,
+            query = null,
         )
 
         val result = unreadArticleIDs.takeLast(2)
