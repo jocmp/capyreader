@@ -226,9 +226,13 @@ data class Account(
         filter: ArticleFilter,
         range: MarkRead,
         unreadSort: UnreadSortOrder,
+        query: String?,
     ): List<String> {
         return articleRecords.unreadArticleIDs(
-            filter = filter, range = range, unreadSort = unreadSort
+            filter = filter,
+            range = range,
+            unreadSort = unreadSort,
+            query = query,
         )
     }
 

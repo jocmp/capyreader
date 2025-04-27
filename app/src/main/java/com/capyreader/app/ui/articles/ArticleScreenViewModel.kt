@@ -228,7 +228,8 @@ class ArticleScreenViewModel(
             val articleIDs = account.unreadArticleIDs(
                 filter = latestFilter,
                 range = range,
-                unreadSort = unreadSort.value
+                unreadSort = unreadSort.value,
+                query = _searchQuery.value,
             )
 
             account.markAllRead(articleIDs).onFailure {
