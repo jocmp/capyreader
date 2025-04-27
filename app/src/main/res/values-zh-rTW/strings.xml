@@ -259,4 +259,5 @@
     <string name="settings_gestures_improve_talkback_subtitle">停用某些設置以改善 TalkBack 文字轉語音功能</string>
     <string name="settings_gestures_improve_talkback_title">改善 TalkBack</string>
     <string name="settings_options_reader_pin_top_toolbar">固定頂部工具列</string>
+    <string name="settings_options_reader_show_bottom_toolbar">在底部工具列上顯示操作</string>
 </resources>
