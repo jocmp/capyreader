@@ -256,4 +256,6 @@
     <string name="widget_headlines_account_error">Añade una cuenta primero</string>
     <string name="settings_gestures_improve_talkback_title">Mejorar TalkBack</string>
     <string name="settings_gestures_improve_talkback_subtitle">Desactiva algunas configuraciones para mejorar el texto a voz de TalkBack</string>
+    <string name="settings_options_reader_pin_top_toolbar">Fijar la barra de herramientas superior</string>
+    <string name="settings_options_reader_show_bottom_toolbar">Mostrar acciones en la barra de herramientas inferior</string>
 </resources>
