@@ -1,6 +1,6 @@
 package com.jocmp.capy.common
 
-import java.net.UnknownHostException
+import java.net.IOException
 
 val Throwable.isNetworkError
-    get() = this is UnknownHostException
+    get() = this is IOException
