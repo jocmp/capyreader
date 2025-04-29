@@ -11,8 +11,8 @@ object CapyLog : Logging {
         Log.w(appTag(tag), serializeData(data))
     }
 
-    override fun error(tag: String, error: Throwable) {
-        Log.e(appTag(tag), "handled_exception", error)
+    override fun error(tag: String, error: Throwable, data: Map<String, String?>) {
+        Log.e(appTag(tag), serializeData(data), error)
     }
 
     private fun serializeData(data: Map<String, String?>): String {

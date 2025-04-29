@@ -1,6 +1,7 @@
 package com.jocmp.capy.common
 
-import java.net.IOException
+import java.io.IOException
 
-val Throwable.isNetworkError
+
+val Throwable.isIOError
     get() = this is IOException

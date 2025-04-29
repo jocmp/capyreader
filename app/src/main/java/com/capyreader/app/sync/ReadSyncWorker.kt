@@ -1,11 +1,10 @@
 package com.capyreader.app.sync
 
-import com.jocmp.capy.Account
-import com.jocmp.capy.common.isNetworkError
-
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.jocmp.capy.Account
+import com.jocmp.capy.common.isIOError
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -34,7 +33,13 @@ class ReadSyncWorker(
             .fold(
                 onSuccess = { Result.success() },
                 onFailure = {
-                    return if (it.isNetworkError) {
+                    SyncLogger.logError(
+                        error = it,
+                        value = markRead,
+                        workType = "read",
+                        articleIDs = articleIDs
+                    )
+                    return if (it.isIOError) {
                         Result.retry()
                     } else {
                         Result.failure()
