@@ -5,5 +5,5 @@ interface Logging {
 
     fun warn(tag: String, data: Map<String, String?> = emptyMap())
 
-    fun error(tag: String, error: Throwable)
+    fun error(tag: String, error: Throwable, data: Map<String, String?> = emptyMap())
 }
