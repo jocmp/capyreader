@@ -4,6 +4,7 @@ import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -53,6 +54,7 @@ fun ArticleScreen(
     val folderActions = rememberFolderActions(viewModel)
     val connectivity = rememberLocalConnectivity()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
+    val showOnboarding by viewModel.showOnboarding.collectAsState(false)
 
     val pager = remember(filter, unreadSort, articlesSince, searchQuery) {
         viewModel.pager(
@@ -120,6 +122,7 @@ fun ArticleScreen(
             onRequestNextFeed = viewModel::requestNextFeed,
             canSwipeToNextFeed = canSwipeToNextFeed,
             openNextFeedOnReadAll = afterReadAll == AfterReadAllBehavior.OPEN_NEXT_FEED,
+            showOnboarding = showOnboarding,
             search = ArticleSearch(
                 query = searchQuery,
                 start = { viewModel.startSearch() },

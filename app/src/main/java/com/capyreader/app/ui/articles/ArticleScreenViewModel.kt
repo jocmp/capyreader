@@ -107,6 +107,8 @@ class ArticleScreenViewModel(
 
     val allFeeds = account.taggedFeeds
 
+    val showOnboarding = allFeeds.map { it.isEmpty() }
+
     val allFolders = account.folders
 
     val feeds = combine(
