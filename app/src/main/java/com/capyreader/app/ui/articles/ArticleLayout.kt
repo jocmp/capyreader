@@ -109,6 +109,7 @@ fun ArticleLayout(
     onUnauthorizedDismissRequest: () -> Unit,
     canSwipeToNextFeed: Boolean,
     openNextFeedOnReadAll: Boolean,
+    showOnboarding: Boolean,
     appPreferences: AppPreferences = koinInject()
 ) {
     val skipInitialRefresh = refreshInterval == RefreshInterval.MANUALLY_ONLY
@@ -400,7 +401,7 @@ fun ArticleLayout(
                 ) { innerPadding ->
                     ArticleListScaffold(
                         padding = innerPadding,
-                        showOnboarding = isRefreshInitialized && allFeeds.isEmpty(),
+                        showOnboarding = showOnboarding,
                         onboarding = {
                             EmptyOnboardingView {
                                 AddFeedButton(
