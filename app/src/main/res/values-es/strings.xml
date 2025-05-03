@@ -121,7 +121,7 @@
     <string name="article_font_menu_label">Fuente</string>
     <string name="article_font_scale_label">Tamaño del texto</string>
     <string name="image_error_text">Error al cargar la imagen</string>
-    <string name="article_byline">%1$s en %2$s por %3$s</string>
+    <string name="article_byline">%1$s a las %2$s por %3$s</string>
     <string name="article_byline_date_only">%1$s a las %2$s</string>
     <string name="settings_option_auto_delete_articles_subtitle">Borrar artículos leídos y no marcados como favorito con más de 3 meses de antigüedad</string>
     <string name="settings_option_auto_delete_articles_title">Borrado automático de los artículos</string>
