@@ -207,7 +207,7 @@
     <string name="settings_section_mark_all_as_read">Отметить всё как прочитанное</string>
     <string name="settings_section_browser">Браузер</string>
     <string name="reader_image_visibility_show_on_wifi">Показывать только при Wi-Fi</string>
-    <string name="reader_image_visibility_always_hide">Блочные картинки</string>
+    <string name="reader_image_visibility_always_hide">Блокировать изображения</string>
     <string name="reader_image_visibility_always_show">Всегда выводите картинки</string>
     <string name="reader_image_visibility_label">Картинки</string>
     <string name="layout_preference_single">Один столбец</string>
@@ -261,4 +261,6 @@
     <string name="widget_headlines_account_error">Сперва добавьте аккаунт</string>
     <string name="settings_gestures_improve_talkback_title">Улучшить озвучку элементов на экране</string>
     <string name="settings_gestures_improve_talkback_subtitle">Отключает некоторые настройки для улучшения озвучки элементов на экране</string>
+    <string name="settings_options_reader_pin_top_toolbar">Прикрепить на верхнюю панель инструментов</string>
+    <string name="settings_options_reader_show_bottom_toolbar">Показывать действия на нижней панели инструментов</string>
 </resources>
