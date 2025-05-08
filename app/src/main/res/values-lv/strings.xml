@@ -165,8 +165,8 @@
     <string name="article_list_unread_sort_oldest_first">Vecākos augšgalā</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">Atvērt navigācijas paneli</string>
     <string name="action_share">Dalīties</string>
-    <string name="crash_log_export_item_title">Kopīgot avārijas pierakstus</string>
-    <string name="crash_log_export_item_subtitle">Saglabā avārijas pierakstus failā, lai kopīgotu tos ar izstrādātāju</string>
+    <string name="crash_log_export_item_title">Dalīties ar avārijas pierakstiem</string>
+    <string name="crash_log_export_item_subtitle">Saglabā avārijas pierakstus datnē, lai nosūtītu to izstrādātājam</string>
     <string name="edit_feed_tags_section">Birkas</string>
     <string name="edit_feed_tag_section">Pievienot vai atlasīt birku</string>
     <string name="edit_feed_notifications_title">Iespējot paziņojumus</string>
@@ -174,7 +174,7 @@
     <string name="notifications_permissions_disabled_call_to_action">Iestatījumi</string>
     <string name="notifications_permission_disabled_title">Paziņojuma atļauja ir atspējota</string>
     <string name="article_list_row_swipe_open_externally">Atvērt rakstu pārlūkā</string>
-    <string name="article_view_open_externally">Atvērt ārēji</string>
+    <string name="article_view_open_externally">Atvērt ar citu lietotni</string>
     <string name="settings_confirm_mark_all_read">Pieprasīt apstiprinājumu, kad atzīmē visus rakstus kā lasītus</string>
     <string name="settings_mark_read_on_scroll">Atzīmēt rakstu kā lasītu, to ritinot</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">Iespējot horizontālo ritināšanu</string>
@@ -231,10 +231,10 @@
     <string name="media_save_success">Attēls saglabāts</string>
     <string name="media_save_failure">Neizdevās saglabāt attēlu</string>
     <string name="search_bar_placeholder">Meklēt</string>
-    <string name="media_share_failure">Neizdevās kopīgot attēlu</string>
-    <string name="media_share">Kopīgot</string>
+    <string name="media_share_failure">Neizdevās dalīties ar attēlu</string>
+    <string name="media_share">Dalīties</string>
     <string name="blocked_keywords">Atslēgvārdu melnais saraksts</string>
-    <string name="blocked_keywords_supporting_text">Noņemt rakstus, kuru virsraksts vai saturs satur atslēgvārdus</string>
+    <string name="blocked_keywords_supporting_text">Noņem rakstus, kuru virsraksts vai saturs satur atslēgvārdu melnajā sarakstā</string>
     <string name="blocked_keywords_remove_keyword">Noņemt atslēgvārdu</string>
     <string name="delete_tag_error">Birkas dzēšanas kļūda</string>
     <string name="tag_action_delete_title">Dzēst</string>
@@ -244,4 +244,14 @@
     <string name="tag_action_edit_success">Birkas nosaukums veiksmīgi atjaunināts</string>
     <string name="tag_action_edit_error">Birkas atjaunināšanas kļūda</string>
     <string name="tag_action_edit">Rediģēt birku</string>
+    <string name="settings_gestures_list_back_navigation_navigate_to_parent">Doties augšup par vienu līmeni</string>
+    <string name="settings_options_reader_show_bottom_toolbar">Rādīt darbības apakšējā rīkjoslā</string>
+    <string name="actions_copy_link">Kopēt saiti</string>
+    <string name="widget_headlines_see_more_button">Skatīt vairāk rakstus</string>
+    <string name="widget_headlines_account_error">Vispirms pievienojiet kontu</string>
+    <string name="settings_gestures_improve_talkback_title">Uzlabot ekrānā redzamo teksta elementu pārveidošanu runā (TalkBack)</string>
+    <string name="actions_share_link">Nosūtīt saiti</string>
+    <string name="widget_receiver_headlines_title">Rakstu virsraksti</string>
+    <string name="widget_headlines_title">Svaigie rakstu virsraksti</string>
+    <string name="settings_gestures_improve_talkback_subtitle">Atspējo dažus iestatījumus, lai uzlabotu ekrānā redzamo teksta elementu pārveidošanu runā (TalkBack)</string>
 </resources>
