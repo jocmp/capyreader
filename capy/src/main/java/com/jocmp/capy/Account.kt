@@ -18,6 +18,7 @@ import com.jocmp.capy.common.sortedByTitle
 import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.common.withIOContext
 import com.jocmp.capy.db.Database
+import com.jocmp.capy.logging.CapyLog
 import com.jocmp.capy.opml.ImportProgress
 import com.jocmp.capy.opml.OPMLImporter
 import com.jocmp.capy.persistence.ArticleRecords
@@ -185,6 +186,7 @@ data class Account(
 
             result
         } catch (e: Throwable) {
+            CapyLog.error("refresh", e)
             Result.failure(e)
         }
     }
