@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 data class Enclosure(
     val enclosure_url: String,
     val enclosure_type: String,
-    val enclosure_length: String,
-    val itunes_duration: String,
-    val itunes_image: String,
+    val enclosure_length: String?,
+    val itunes_duration: String?,
+    val itunes_image: String?,
 )
