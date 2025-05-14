@@ -150,6 +150,10 @@ internal class RssFeedHandler(val document: Document) : FeedHandler {
                 RssKeyword.Item.MediaContent.value -> {
                     val url = node.attr(RssKeyword.Url.value)
                     channelFactory.articleBuilder.image(url)
+
+                    val type = node.attr(RssKeyword.Item.Type.value)
+
+                    channelFactory.articleBuilder.addEnclosure(url = url, type = type)
                 }
 
                 RssKeyword.Item.Thumbnail.value -> {
