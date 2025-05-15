@@ -4,7 +4,7 @@ import com.jocmp.readerclient.Item
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class EnclosureParsingTest {
+class ReaderEnclosureParsingTest {
     @Test
     fun validEnclosures() {
         val href =
@@ -27,7 +27,7 @@ class EnclosureParsingTest {
 
         val item = ItemFixtures.item.copy(enclosure = enclosures)
 
-        val results = EnclosureParsing.validEnclosures(item)
+        val results = ReaderEnclosureParsing.validEnclosures(item)
         assertEquals(expected = 1, actual = results.size)
         val enclosure = results.first()
 

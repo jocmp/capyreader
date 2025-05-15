@@ -6,6 +6,7 @@ import com.jocmp.rssparser.model.Media
 import com.jocmp.rssparser.model.RssChannel
 import com.jocmp.rssparser.model.RssImage
 import com.jocmp.rssparser.model.RssItem
+import com.jocmp.rssparser.model.RssItemEnclosure
 import kotlinx.coroutines.test.runTest
 import java.nio.charset.Charset
 import kotlin.test.BeforeTest
@@ -38,6 +39,7 @@ abstract class BaseParserTest(
     val articleSourceName: String? = null,
     val articleSourceUrl: String? = null,
     val articleCategories: List<String> = emptyList(),
+    val articleEnclosures: List<RssItemEnclosure> = emptyList(),
     val articleCommentsUrl: String? = null,
     val articleItunesData: ItunesItemData? = null,
     val charset: Charset? = null,
@@ -214,6 +216,11 @@ abstract class BaseParserTest(
     @Test
     fun articleCategories_isCorrect() {
         assertEquals(articleCategories, article.categories)
+    }
+
+    @Test
+    fun articleEnclosures_areCorrect() {
+        assertEquals(articleEnclosures, article.enclosures)
     }
 
     @Test

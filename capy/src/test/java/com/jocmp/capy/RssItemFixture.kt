@@ -40,4 +40,5 @@ fun rssItemFixture(
     media,
     youtubeVideoID,
     commentUrl,
+    emptyList(),
 )

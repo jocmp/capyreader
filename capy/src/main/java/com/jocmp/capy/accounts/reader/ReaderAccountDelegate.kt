@@ -447,7 +447,7 @@ internal class ReaderAccountDelegate(
                     extracted_content_url = null,
                     summary = Jsoup.parse(item.summary.content).text(),
                     url = item.canonical.firstOrNull()?.href,
-                    image_url = EnclosureParsing.parsedImageURL(item),
+                    image_url = ReaderEnclosureParsing.parsedImageURL(item),
                     published_at = item.published
                 )
 
@@ -467,7 +467,7 @@ internal class ReaderAccountDelegate(
                     }
                 }
 
-                EnclosureParsing.validEnclosures(item).forEach {
+                ReaderEnclosureParsing.validEnclosures(item).forEach {
                     enclosureRecords.create(
                         url = it.url.toString(),
                         type = it.type,

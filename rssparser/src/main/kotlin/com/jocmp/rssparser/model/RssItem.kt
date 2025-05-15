@@ -37,6 +37,7 @@ data class RssItem(
     val media: Media?,
     val youtubeVideoID: String?,
     val commentsUrl: String?,
+    val enclosures: List<RssItemEnclosure>
 ) {
     data class Builder(
         private var guid: String? = null,
@@ -55,6 +56,7 @@ data class RssItem(
         private var itunesItemData: ItunesItemData? = null,
         private var media: Media? = null,
         private var youtubeVideoID: String? = null,
+        private var enclosures: MutableList<RssItemEnclosure> = mutableListOf(),
         private var commentUrl: String? = null,
     ) {
         fun guid(guid: String?) = apply { this.guid = guid }
@@ -95,9 +97,16 @@ data class RssItem(
 
         fun sourceName(sourceName: String?) = apply { this.sourceName = sourceName }
         fun sourceUrl(sourceUrl: String?) = apply { this.sourceUrl = sourceUrl }
+
         fun addCategory(category: String?) = apply {
             if (category != null) {
                 this.categories.add(category)
+            }
+        }
+
+        fun addEnclosure(url: String, type: String) = apply {
+            if (url.isNotBlank() && type.isNotBlank()) {
+                this.enclosures.add(RssItemEnclosure(url = url, type = type))
             }
         }
 
@@ -127,6 +136,7 @@ data class RssItem(
             itunesItemData = itunesItemData,
             commentsUrl = commentUrl,
             media = media,
+            enclosures = enclosures,
             youtubeVideoID = youtubeVideoID,
         )
     }

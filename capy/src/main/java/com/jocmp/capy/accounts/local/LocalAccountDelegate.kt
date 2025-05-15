@@ -13,6 +13,7 @@ import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.logging.CapyLog
 import com.jocmp.capy.persistence.ArticleRecords
+import com.jocmp.capy.persistence.EnclosureRecords
 import com.jocmp.capy.persistence.FeedRecords
 import com.jocmp.capy.persistence.TaggingRecords
 import com.jocmp.feedfinder.DefaultFeedFinder
@@ -37,6 +38,7 @@ internal class LocalAccountDelegate(
     private val feedRecords = FeedRecords(database)
     private val articleRecords = ArticleRecords(database)
     private val taggingRecords = TaggingRecords(database)
+    private val enclosureRecords = EnclosureRecords(database)
 
     override suspend fun refresh(filter: ArticleFilter, cutoffDate: ZonedDateTime?): Result<Unit> {
         when (filter) {
@@ -245,6 +247,14 @@ internal class LocalAccountDelegate(
                         updatedAt = updatedAt,
                         read = false
                     )
+
+                    parsedItem.enclosures.forEach {
+                        enclosureRecords.create(
+                            url = it.url.toString(),
+                            type = it.type,
+                            articleID = parsedItem.id,
+                        )
+                    }
                 }
             }
         }

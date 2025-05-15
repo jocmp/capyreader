@@ -58,6 +58,7 @@ class LocalAccountDelegateTest {
         media = null,
         youtubeVideoID = null,
         commentsUrl = null,
+        enclosures = emptyList(),
     )
 
     private val oldItem = item.copy(
