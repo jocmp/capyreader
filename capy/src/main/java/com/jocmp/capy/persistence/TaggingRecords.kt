@@ -1,5 +1,6 @@
 package com.jocmp.capy.persistence
 
+import app.cash.sqldelight.db.QueryResult
 import com.jocmp.capy.Feed
 import com.jocmp.capy.db.Database
 
@@ -39,7 +40,7 @@ internal class TaggingRecords(
         id: String,
         feedID: String,
         name: String,
-    ) {
+    ): QueryResult<Long> {
         return database
             .taggingsQueries
             .upsert(
