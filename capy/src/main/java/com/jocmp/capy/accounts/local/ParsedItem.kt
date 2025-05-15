@@ -1,6 +1,10 @@
 package com.jocmp.capy.accounts.local
 
+import com.jocmp.capy.Enclosure
+import com.jocmp.capy.common.optionalURL
+import com.jocmp.capy.common.unescapingHTMLCharacters
 import com.jocmp.rssparser.model.RssItem
+import com.jocmp.rssparser.model.RssItemEnclosure
 import org.jsoup.Jsoup
 import org.jsoup.safety.Cleaner
 import org.jsoup.safety.Safelist
@@ -11,6 +15,8 @@ internal class ParsedItem(private val item: RssItem, private val siteURL: String
     val url: String? = articleURL()
 
     val id: String? = item.guid.orEmpty().ifBlank { url?.ifBlank { null } }
+
+    val enclosures = item.enclosures.mapNotNull { it.toEnclosure() }
 
     val contentHTML: String?
         get() {
@@ -73,4 +79,10 @@ internal class ParsedItem(private val item: RssItem, private val siteURL: String
             null
         }
     }
+}
+
+private fun RssItemEnclosure.toEnclosure(): Enclosure? {
+    val url = optionalURL(url.unescapingHTMLCharacters) ?: return null
+
+    return Enclosure(url = url, type = type, itunesDurationSeconds = null, itunesImage = null)
 }

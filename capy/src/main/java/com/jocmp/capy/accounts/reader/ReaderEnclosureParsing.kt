@@ -6,7 +6,7 @@ import com.jocmp.capy.common.unescapingHTMLCharacters
 import com.jocmp.readerclient.Item
 import org.jsoup.Jsoup
 
-internal object EnclosureParsing {
+internal object ReaderEnclosureParsing {
     internal fun parsedImageURL(item: Item): String? {
         val imageHref = item.images.firstOrNull()?.href
 
