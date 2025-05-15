@@ -179,7 +179,7 @@ deleteAllArticles {
   );
 
   DELETE FROM enclosures
-  WHERE article_id IN (
+  WHERE article_id NOT IN (
     SELECT article_id FROM article_statuses
   );
 }
@@ -207,7 +207,7 @@ deleteArticles {
   );
 
   DELETE FROM enclosures
-  WHERE article_id IN (
+  WHERE article_id NOT IN (
     SELECT article_id FROM article_statuses
   );
 }
