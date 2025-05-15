@@ -1,0 +1,2 @@
+• Add support for image enclosures on local accounts
+• Update dependencies
