@@ -70,13 +70,13 @@ class ArticleRenderer(
 
             document.content?.append(parseHtml(article, contentHTML, hideImages = hideImages))
         } else {
+            article.imageEnclosures()?.let {
+                document.content?.appendChild(it)
+            }
+
             document.content?.append(article.content)
 
             HtmlPostProcessor.clean(document, hideImages = hideImages)
-        }
-
-        article.imageEnclosures()?.let {
-            document.content?.appendChild(it)
         }
 
         return document.html()
