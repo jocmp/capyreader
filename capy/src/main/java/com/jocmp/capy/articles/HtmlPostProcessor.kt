@@ -5,10 +5,10 @@ import org.jsoup.nodes.Document
 object HtmlPostProcessor {
     fun clean(document: Document, hideImages: Boolean) {
         cleanStyles(document)
-        cleanLinks(document)
         if (hideImages) {
             removeImages(document)
         }
+        cleanLinks(document)
         wrapTables(document)
     }
 }

@@ -203,14 +203,6 @@ fun ArticleLayout(
         }
     }
 
-    val (shareLink, setShareLink) = rememberSaveableShareLink()
-
-    val webViewState = rememberWebViewState(
-        key = article?.id,
-        onNavigateToMedia = { media = it },
-        onRequestLinkDialog = { setShareLink(it) }
-    )
-
     fun initialize() {
         isRefreshing = true
         onInitialized {
@@ -459,6 +451,14 @@ fun ArticleLayout(
                 }
             },
             detailPane = {
+                val (shareLink, setShareLink) = rememberSaveableShareLink()
+
+                val webViewState = rememberWebViewState(
+                    key = article?.id,
+                    onNavigateToMedia = { media = it },
+                    onRequestLinkDialog = { setShareLink(it) }
+                )
+
                 if (article == null && showMultipleColumns) {
                     Box(
                         contentAlignment = Alignment.Center,
