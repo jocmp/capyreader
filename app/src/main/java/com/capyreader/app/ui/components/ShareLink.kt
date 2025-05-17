@@ -27,4 +27,4 @@ val ShareLink.Companion.Saver
 
 @Composable
 fun rememberSaveableShareLink() =
-    rememberSaveable(saver = ShareLink.Saver) { mutableStateOf<ShareLink?>(null) }
+    rememberSaveable(saver = ShareLink.Saver) { mutableStateOf(null) }
