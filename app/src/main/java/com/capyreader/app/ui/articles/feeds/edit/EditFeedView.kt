@@ -44,7 +44,6 @@ import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.EditFeedFormEntry
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
-import com.jocmp.capy.common.sortedByTitle
 
 @Composable
 fun EditFeedView(
@@ -56,7 +55,6 @@ fun EditFeedView(
 ) {
     val feedFolderTitles = folders
         .filter { folder -> folder.feeds.any { it.id == feed.id } }
-        .sortedByTitle()
         .map { it.title }
 
     fun defaultFolder(): String {
@@ -130,6 +128,7 @@ fun EditFeedView(
                     FolderMultiselect(
                         onUpdateAddedFolder = setAddedFolder,
                         addedFolder = addedFolder,
+                        folders = folders,
                         switchFolders = switchFolders,
                     )
                 }
@@ -211,6 +210,7 @@ private fun FolderSelect(
 private fun FolderMultiselect(
     onUpdateAddedFolder: (title: String) -> Unit,
     addedFolder: String,
+    folders: List<Folder>,
     switchFolders: MutableMap<String, Boolean>,
 ) {
     RowItem {
@@ -227,23 +227,25 @@ private fun FolderMultiselect(
         )
     }
     Column {
-        switchFolders.forEach { (folderTitle, checked) ->
+        folders.forEach { folder ->
+            val checked = switchFolders.getOrDefault(folder.title, false)
+
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
-                        switchFolders[folderTitle] = !checked
+                        switchFolders[folder.title] = !checked
                     }
             ) {
                 Checkbox(
                     checked = checked,
-                    onCheckedChange = { switchFolders[folderTitle] = it },
+                    onCheckedChange = { switchFolders[folder.title] = it },
                     modifier = Modifier.padding(start = 8.dp)
                 )
                 Text(
-                    text = folderTitle,
+                    text = folder.title,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.padding(end = 16.dp)
