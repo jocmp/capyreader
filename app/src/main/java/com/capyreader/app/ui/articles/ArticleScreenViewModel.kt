@@ -325,15 +325,17 @@ class ArticleScreenViewModel(
             val article = buildArticle(articleID) ?: return@launchIO
             _article = article
 
-            markRead(articleID)
+            appPreferences.articleID.set(articleID)
+
+            launchIO {
+                markRead(articleID)
+            }
 
             if (article.fullContent == Article.FullContentState.LOADING) {
                 fullContentJob?.cancel()
 
                 fullContentJob = viewModelScope.launch(Dispatchers.IO) { fetchFullContent(article) }
             }
-
-            appPreferences.articleID.set(articleID)
         }
     }
 

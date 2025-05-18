@@ -4,7 +4,9 @@ import org.jsoup.nodes.Element
 
 internal fun cleanLinks(element: Element) {
     element.getElementsByTag("img").forEachIndexed { index, child ->
-        if (index > 0) {
+        if (index == 0) {
+            child.attr("fetchpriority", "high")
+        } else {
             child.attr("loading", "lazy")
         }
     }
