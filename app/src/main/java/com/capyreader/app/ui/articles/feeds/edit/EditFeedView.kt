@@ -44,6 +44,7 @@ import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.EditFeedFormEntry
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
+import com.jocmp.capy.common.sortedByTitle
 
 @Composable
 fun EditFeedView(
@@ -55,6 +56,7 @@ fun EditFeedView(
 ) {
     val feedFolderTitles = folders
         .filter { folder -> folder.feeds.any { it.id == feed.id } }
+        .sortedByTitle()
         .map { it.title }
 
     fun defaultFolder(): String {
