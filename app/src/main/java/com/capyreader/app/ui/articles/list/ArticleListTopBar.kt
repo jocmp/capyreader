@@ -144,9 +144,6 @@ fun ArticleListTopBar(
             FilterActionMenu(
                 filter = filter,
                 currentFeed = currentFeed,
-                onMarkAllRead = {
-                    onMarkAllRead(MarkRead.All)
-                },
                 onRemoveFeed = onRemoveFeed,
                 onRemoveFolder = onRemoveFolder,
                 onRequestSearch = { search.start() },
