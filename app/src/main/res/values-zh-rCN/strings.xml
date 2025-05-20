@@ -155,7 +155,7 @@
     <string name="article_vertical_swipe_previous_article">上一篇</string>
     <string name="article_vertical_swipe_next_article">下一篇</string>
     <string name="article_vertical_swipe_disabled">禁用</string>
-    <string name="article_view_mark_as_unread">标记为已读</string>
+    <string name="article_view_mark_as_unread">标记为未读</string>
     <string name="article_view_unstar">删除星标</string>
     <string name="settings_gestures_list_row_swipe_end">向左滑动</string>
     <string name="article_list_row_swipe_disabled">已停用</string>
