@@ -20,6 +20,7 @@ import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleNotification
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.logging.CapyLog
+import com.jocmp.capy.preferences.getAndSet
 import java.time.ZonedDateTime
 
 class NotificationHelper(
@@ -155,11 +156,11 @@ class NotificationHelper(
         }
 
         fun openFromIntent(intent: Intent, appPreferences: AppPreferences) {
-            val showUnreadOnly = intent.getBooleanExtra(UNREAD_ONLY_KEY, false)
+            val openFromShowMore = intent.getBooleanExtra(UNREAD_ONLY_KEY, false)
             val articleID = intent.getStringExtra(ARTICLE_ID_KEY)
             val feedID = intent.getStringExtra(FEED_ID_KEY)
 
-            if (showUnreadOnly) {
+            if (openFromShowMore) {
                 intent.replaceExtras(Bundle())
 
                 appPreferences.filter.set(
@@ -170,13 +171,14 @@ class NotificationHelper(
             } else if (articleID != null && feedID != null) {
                 intent.replaceExtras(Bundle())
 
-                appPreferences.filter.set(
+                appPreferences.filter.getAndSet { currentFilter ->
                     ArticleFilter.Feeds(
                         feedID,
-                        feedStatus = ArticleStatus.UNREAD,
+                        feedStatus = currentFilter.status,
                         folderTitle = null
                     )
-                )
+                }
+
                 appPreferences.articleID.set(articleID)
             }
         }
