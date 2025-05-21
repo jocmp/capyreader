@@ -16,7 +16,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.capyreader.app.R
 import com.capyreader.app.ui.articles.list.FeedActionMenu
 import com.capyreader.app.ui.articles.list.FolderActionMenu
-import com.capyreader.app.ui.articles.list.MarkAllReadButton
 import com.capyreader.app.ui.fixtures.FeedSample
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
@@ -26,7 +25,7 @@ import com.jocmp.capy.Feed
 fun FilterActionMenu(
     filter: ArticleFilter,
     currentFeed: Feed?,
-    onMarkAllRead: () -> Unit,
+//    onMarkAllRead: () -> Unit,
     onRemoveFeed: (feedID: String, completion: (result: Result<Unit>) -> Unit) -> Unit,
     onRemoveFolder: (folderTitle: String, completion: (result: Result<Unit>) -> Unit) -> Unit,
     onRequestSearch: () -> Unit,
@@ -48,10 +47,6 @@ fun FilterActionMenu(
                     )
                 }
             }
-
-            MarkAllReadButton(
-                onMarkAllRead = onMarkAllRead,
-            )
 
             Box {
                 if (currentFeed != null || filter is ArticleFilter.Folders) {
@@ -91,7 +86,7 @@ fun FeedActionsPreview(@PreviewParameter(FeedSample::class) feed: Feed) {
     FilterActionMenu(
         onRemoveFeed = { _, _ -> },
         onRemoveFolder = { _, _ -> },
-        onMarkAllRead = {},
+//        onMarkAllRead = {},
         onRequestSearch = {},
         currentFeed = feed,
         filter = ArticleFilter.Feeds(
