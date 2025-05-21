@@ -1,6 +1,7 @@
 package com.capyreader.app.ui.articles
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -83,6 +84,10 @@ fun ArticleList(
             if (enableMarkReadOnScroll && articles.itemCount > 0) {
                 item {
                     FeedOverScrollBox(height = listHeight)
+                }
+            } else {
+                item {
+                    Spacer(Modifier.height(120.dp))
                 }
             }
         }

@@ -1,9 +1,10 @@
 package com.capyreader.app.ui.articles.list
 
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,7 +26,8 @@ fun MarkAllReadButton(
         setDialogOpen(false)
     }
 
-    IconButton(
+    FloatingActionButton(
+        shape = CircleShape,
         onClick = {
             if (confirmationEnabled) {
                 setDialogOpen(true)

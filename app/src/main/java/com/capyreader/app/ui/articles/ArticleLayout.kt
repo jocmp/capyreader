@@ -52,6 +52,7 @@ import com.capyreader.app.ui.articles.detail.rememberArticlePagination
 import com.capyreader.app.ui.articles.feeds.FeedList
 import com.capyreader.app.ui.articles.list.ArticleListTopBar
 import com.capyreader.app.ui.articles.list.EmptyOnboardingView
+import com.capyreader.app.ui.articles.list.MarkAllReadButton
 import com.capyreader.app.ui.articles.list.PullToNextFeedBox
 import com.capyreader.app.ui.articles.list.resetScrollBehaviorListener
 import com.capyreader.app.ui.articles.media.ArticleMediaView
@@ -398,6 +399,13 @@ fun ArticleLayout(
                     snackbarHost = {
                         SnackbarHost(hostState = snackbarHostState)
                     },
+                    floatingActionButton = {
+                        MarkAllReadButton(
+                            onMarkAllRead = {
+                                markAllRead(MarkRead.All)
+                            },
+                        )
+                    }
                 ) { innerPadding ->
                     ArticleListScaffold(
                         padding = innerPadding,
@@ -589,13 +597,13 @@ fun isFeedActive(
 
 @Composable
 fun rememberCurrentFeed(filter: ArticleFilter, feeds: List<Feed>): Feed? {
-   return remember(filter, feeds) {
-       if (filter is ArticleFilter.Feeds) {
-           feeds.find { it.id == filter.feedID }
-       } else {
-           null
-       }
-   }
+    return remember(filter, feeds) {
+        if (filter is ArticleFilter.Feeds) {
+            feeds.find { it.id == filter.feedID }
+        } else {
+            null
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
