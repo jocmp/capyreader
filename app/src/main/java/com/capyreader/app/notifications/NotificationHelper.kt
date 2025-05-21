@@ -174,7 +174,11 @@ class NotificationHelper(
                 appPreferences.filter.getAndSet { currentFilter ->
                     ArticleFilter.Feeds(
                         feedID,
-                        feedStatus = currentFilter.status,
+                        feedStatus = if (currentFilter.status != ArticleStatus.STARRED) {
+                            currentFilter.status
+                        } else {
+                            ArticleStatus.UNREAD
+                        },
                         folderTitle = null
                     )
                 }

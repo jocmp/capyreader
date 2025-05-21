@@ -19,6 +19,7 @@ fun TestNotificationRow(account: Account = koinInject()) {
 
     fun notify() {
         scope.launchIO {
+            account.refresh()
             NotificationHelper(account = account, context).notify(
                 since = ZonedDateTime.now().minusHours(24)
             )
