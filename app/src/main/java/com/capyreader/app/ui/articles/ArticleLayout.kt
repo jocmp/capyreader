@@ -2,13 +2,11 @@ package com.capyreader.app.ui.articles
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.Crossfade
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -25,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -125,7 +124,6 @@ fun ArticleLayout(
     val scaffoldNavigator = rememberArticleScaffoldNavigator()
     val showMultipleColumns = scaffoldNavigator.scaffoldDirective.maxHorizontalPartitions > 1
     var isRefreshing by remember { mutableStateOf(false) }
-    val listState = rememberLazyListState()
 
     val snackbarHostState = remember { SnackbarHostState() }
     val addFeedSuccessMessage = stringResource(R.string.add_feed_success)
@@ -143,6 +141,9 @@ fun ArticleLayout(
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
     }
 
+    val listState = rememberSaveable(filter, saver = LazyListState.Saver) {
+        LazyListState(0, 0)
+    }
 
     fun scrollToArticle(index: Int) {
         coroutineScope.launch {
@@ -434,14 +435,9 @@ fun ArticleLayout(
                                     requestNextFeed()
                                 },
                             ) {
-                                Crossfade(
-                                    articles,
-                                    animationSpec = tween(500),
-                                    modifier = Modifier.fillMaxSize(),
-                                    label = "",
-                                ) {
+                                key(filter) {
                                     ArticleList(
-                                        articles = it,
+                                        articles = articles,
                                         selectedArticleKey = article?.id,
                                         listState = listState,
                                         enableMarkReadOnScroll = enableMarkReadOnScroll,
@@ -575,6 +571,10 @@ fun ArticleLayout(
         enabled = article == null
     ) {
         scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
+    }
+
+    LaunchedEffect(filter) {
+        resetScrollBehaviorOffset()
     }
 }
 

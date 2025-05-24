@@ -36,8 +36,6 @@ fun ArticleScreen(
     val savedSearches by viewModel.savedSearches.collectAsStateWithLifecycle(initialValue = emptyList())
     val statusCount by viewModel.statusCount.collectAsStateWithLifecycle(initialValue = 0)
     val filter by viewModel.filter.collectAsStateWithLifecycle(appPreferences.filter.get())
-    val articlesSince by viewModel.articlesSince.collectAsStateWithLifecycle()
-    val unreadSort by viewModel.unreadSort.collectAsStateWithLifecycle()
     val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle("")
     val searchState by viewModel.searchState.collectAsStateWithLifecycle(SearchState.INACTIVE)
     val nextFilter by viewModel.nextFilter.collectAsStateWithLifecycle(initialValue = null)
@@ -56,16 +54,7 @@ fun ArticleScreen(
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val showOnboarding by viewModel.showOnboarding.collectAsState(false)
 
-    val pager = remember(filter, unreadSort, articlesSince, searchQuery) {
-        viewModel.pager(
-            filter,
-            unreadSort,
-            articlesSince,
-            searchQuery,
-        )
-    }
-
-    val articles = pager.flow.collectAsLazyPagingItems()
+    val articles = viewModel.articles.collectAsLazyPagingItems()
 
     CompositionLocalProvider(
         LocalFullContent provides fullContent,
