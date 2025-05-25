@@ -26,6 +26,7 @@ import com.capyreader.app.ui.settings.panels.GesturesSettingPanel
 import com.capyreader.app.ui.settings.panels.NotificationsSettingsPanel
 import com.capyreader.app.ui.settings.panels.SettingsPanel
 import com.capyreader.app.ui.settings.panels.SettingsViewModel
+import com.capyreader.app.ui.settings.panels.SharingPanel
 import com.jocmp.capy.common.launchUI
 import org.koin.android.ext.koin.androidContext
 import org.koin.compose.KoinApplication
@@ -97,6 +98,7 @@ fun SettingsView(
                             SettingsPanel.Gestures -> GesturesSettingPanel()
                             SettingsPanel.Account -> AccountSettingsPanel(onRemoveAccount = onRemoveAccount)
                             SettingsPanel.About -> AboutSettingsPanel()
+                            SettingsPanel.Sharing -> SharingPanel()
                         }
                     }
                 }

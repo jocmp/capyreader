@@ -9,6 +9,7 @@ import androidx.compose.material.icons.rounded.Gesture
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material.icons.rounded.Palette
+import androidx.compose.material.icons.rounded.Share
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.capyreader.app.R
 import kotlinx.parcelize.Parcelize
@@ -47,6 +48,11 @@ sealed class SettingsPanel(@StringRes val title: Int) {
         override fun icon() = Icons.Rounded.Info
     }
 
+    @Parcelize
+    data object Sharing : SettingsPanel(title = R.string.settings_sharing_title), Parcelable {
+        override fun icon() = Icons.Rounded.Share
+    }
+
     fun isNested() = !items.contains(this)
 
     companion object {
@@ -55,6 +61,7 @@ sealed class SettingsPanel(@StringRes val title: Int) {
                 General,
                 Display,
                 Gestures,
+                Sharing,
                 Account,
                 About,
             )

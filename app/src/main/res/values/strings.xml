@@ -265,4 +265,5 @@
     <string name="widget_headlines_account_error">Add an account first</string>
     <string name="settings_gestures_improve_talkback_title">Improve TalkBack</string>
     <string name="settings_gestures_improve_talkback_subtitle">Disables some settings to improve TalkBack text-to-speech</string>
+    <string name="settings_sharing_title">Sharing</string>
 </resources>
