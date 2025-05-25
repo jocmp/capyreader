@@ -15,13 +15,14 @@ internal class FeedRecords(private val database: Database) {
         return database.feedsQueries.find(id, mapper = ::feedMapper).executeAsOneOrNull()
     }
 
-    suspend fun upsert(
+    fun upsert(
         feedID: String,
         subscriptionID: String,
         title: String,
         feedURL: String,
         siteURL: String?,
-        faviconURL: String?
+        faviconURL: String?,
+        priority: String? = null,
     ): Feed? {
         database.feedsQueries.upsert(
             id = feedID,
@@ -30,6 +31,7 @@ internal class FeedRecords(private val database: Database) {
             feed_url = feedURL,
             site_url = siteURL,
             favicon_url = faviconURL,
+            priority = priority,
         )
 
         return find(feedID)
