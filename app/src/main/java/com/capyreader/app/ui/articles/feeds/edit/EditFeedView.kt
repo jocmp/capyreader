@@ -11,15 +11,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MenuAnchorType.Companion.PrimaryNotEditable
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -217,13 +214,17 @@ private fun FolderMultiselect(
         OutlinedTextField(
             value = addedFolder,
             onValueChange = onUpdateAddedFolder,
-            label = { Text(stringResource(id = R.string.add_feed_new_folder_title)) },
+            label = {
+                Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                    Text(stringResource(id = R.string.add_feed_new_folder_title))
+                }
+            },
             keyboardOptions = KeyboardOptions(
                 capitalization = KeyboardCapitalization.Words,
-                autoCorrectEnabled = false
+                autoCorrectEnabled = false,
             ),
-            trailingIcon = { Icon(Icons.Rounded.Add, contentDescription = null) },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
         )
     }
     Column {
