@@ -2,6 +2,7 @@ package com.capyreader.app.ui.articles
 
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.articles.feeds.edit.EditFeedViewModel
+import com.capyreader.app.ui.articles.list.ArticleListDetailViewModel
 import com.jocmp.capy.articles.ArticleRenderer
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -31,6 +32,9 @@ internal val articlesModule = module {
             notificationHelper = get(),
             application = get(),
         )
+    }
+    viewModel {
+        ArticleListDetailViewModel(get())
     }
     viewModel {
         EditFeedViewModel(
