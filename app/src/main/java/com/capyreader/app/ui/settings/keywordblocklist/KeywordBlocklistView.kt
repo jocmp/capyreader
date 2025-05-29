@@ -53,12 +53,7 @@ fun KeywordBlocklistView(
         }
     }
 
-    Column(
-        Modifier
-            .background(containerColor)
-            .heightIn(max = 450.dp)
-            .imePadding()
-    ) {
+    Column {
         Text(
             stringResource(R.string.blocked_keywords),
             style = typography.headlineSmall,
@@ -68,64 +63,75 @@ fun KeywordBlocklistView(
         )
         Column(
             Modifier
-                .verticalScroll(rememberScrollState())
-//                .padding(start = 16.dp)
-                .heightIn(min = 200.dp)
-                .weight(0.1f)
+                .background(containerColor)
+                .heightIn(max = 450.dp)
+                .imePadding()
         ) {
-            keywords.forEach { keyword ->
-                ListItem(
-                    colors = ListItemDefaults.colors(containerColor = containerColor),
-                    headlineContent = { Text(keyword) },
-                    trailingContent = {
-                        IconButton(
-                            onClick = {
-                                onRemove(keyword)
+            Column(
+                Modifier
+                    .verticalScroll(rememberScrollState())
+                    .heightIn(min = 200.dp)
+                    .weight(0.1f)
+            ) {
+                keywords.forEach { keyword ->
+                    ListItem(
+                        colors = ListItemDefaults.colors(containerColor = containerColor),
+                        headlineContent = { Text(keyword) },
+                        trailingContent = {
+                            IconButton(
+                                onClick = {
+                                    onRemove(keyword)
+                                }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Rounded.Close,
+                                    contentDescription = stringResource(R.string.blocked_keywords_remove_keyword)
+                                )
                             }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Rounded.Close,
-                                contentDescription = stringResource(R.string.blocked_keywords_remove_keyword)
-                            )
                         }
-                    }
-                )
+                    )
+                }
             }
-        }
-        HorizontalDivider()
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(top = 16.dp, bottom = 16.dp, start = 16.dp, end = 8.dp)
-        ) {
-            OutlinedTextField(
-                value = text,
-                singleLine = true,
-                onValueChange = updateText,
-                placeholder = { Text(stringResource(R.string.blocked_keywords_add_keyword)) },
-                keyboardOptions = KeyboardOptions(
-                    autoCorrectEnabled = false,
-                    imeAction = ImeAction.Default,
-                ),
-                keyboardActions = KeyboardActions(
-                    onAny = {
+            HorizontalDivider()
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(
+                    top = 16.dp,
+                    bottom = 16.dp,
+                    start = 16.dp,
+                    end = 8.dp
+                )
+            ) {
+                OutlinedTextField(
+                    value = text,
+                    singleLine = true,
+                    onValueChange = updateText,
+                    placeholder = { Text(stringResource(R.string.blocked_keywords_add_keyword)) },
+                    keyboardOptions = KeyboardOptions(
+                        autoCorrectEnabled = false,
+                        imeAction = ImeAction.Default,
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onAny = {
+                            addKeyword()
+                        }
+                    ),
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                )
+
+                IconButton(
+                    onClick = {
                         addKeyword()
                     }
-                ),
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-            )
-
-            IconButton(
-                onClick = {
-                    addKeyword()
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.Add,
+                        contentDescription = stringResource(R.string.blocked_keywords_add_keyword)
+                    )
                 }
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.Add,
-                    contentDescription = stringResource(R.string.blocked_keywords_add_keyword)
-                )
             }
         }
     }
