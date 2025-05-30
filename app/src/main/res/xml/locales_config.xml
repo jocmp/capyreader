@@ -5,6 +5,7 @@
     <locale android:name="cs" />
     <locale android:name="cy" />
     <locale android:name="de" />
+    <locale android:name="el" />
     <locale android:name="en" />
     <locale android:name="es" />
     <locale android:name="et" />
@@ -19,6 +20,7 @@
     <locale android:name="pl" />
     <locale android:name="pt-BR" />
     <locale android:name="pt" />
+    <locale android:name="ro" />
     <locale android:name="ru" />
     <locale android:name="sr-Latn" />
     <locale android:name="sv" />
