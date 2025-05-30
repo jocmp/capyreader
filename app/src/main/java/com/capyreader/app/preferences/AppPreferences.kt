@@ -14,8 +14,7 @@ import com.jocmp.capy.preferences.AndroidPreferenceStore
 import com.jocmp.capy.preferences.Preference
 import com.jocmp.capy.preferences.PreferenceStore
 import com.jocmp.capy.preferences.getEnum
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import com.jocmp.capy.preferences.getJSONObject
 
 class AppPreferences(context: Context) {
     private val preferenceStore: PreferenceStore = AndroidPreferenceStore(
@@ -33,17 +32,9 @@ class AppPreferences(context: Context) {
         get() = preferenceStore.getString("account_id")
 
     val filter: Preference<ArticleFilter>
-        get() = preferenceStore.getObject(
+        get() = preferenceStore.getJSONObject(
             key = "article_filter",
             defaultValue = ArticleFilter.default(),
-            serializer = { Json.encodeToString(it) },
-            deserializer = {
-                try {
-                    Json.decodeFromString(it)
-                } catch (e: Throwable) {
-                    ArticleFilter.default()
-                }
-            }
         )
 
     val refreshInterval: Preference<RefreshInterval>
@@ -168,12 +159,7 @@ class AppPreferences(context: Context) {
         val afterReadAllBehavior: Preference<AfterReadAllBehavior>
             get() = preferenceStore.getEnum(
                 "after_read_all_behavior",
-                AfterReadAllBehavior.withPreviousPref(openNextFeedOnReadAll.get())
+                AfterReadAllBehavior.NOTHING,
             )
-
-        /** @deprecated */
-        private val openNextFeedOnReadAll: Preference<Boolean>
-            get() = preferenceStore.getBoolean("open_next_feed_on_read_all", false)
-
     }
 }

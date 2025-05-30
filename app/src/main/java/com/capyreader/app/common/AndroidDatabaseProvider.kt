@@ -2,9 +2,11 @@ package com.capyreader.app.common
 
 import android.content.Context
 import androidx.sqlite.db.SupportSQLiteDatabase
+import app.cash.sqldelight.EnumColumnAdapter
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.jocmp.capy.DatabaseProvider
 import com.jocmp.capy.db.Database
+import com.jocmp.capy.db.Sharing_services
 import com.jocmp.capy.logging.CapyLog
 
 class AndroidDatabaseProvider(private val context: Context) : DatabaseProvider {
@@ -34,7 +36,12 @@ class AndroidDatabaseProvider(private val context: Context) : DatabaseProvider {
             }
         )
 
-        return Database(driver)
+        return Database(
+            driver,
+            sharing_servicesAdapter = Sharing_services.Adapter(
+                service_idAdapter = EnumColumnAdapter()
+            )
+        )
     }
 
     override fun delete(accountID: String) {

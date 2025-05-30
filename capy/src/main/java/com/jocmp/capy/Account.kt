@@ -27,6 +27,7 @@ import com.jocmp.capy.persistence.FeedRecords
 import com.jocmp.capy.persistence.FolderRecords
 import com.jocmp.capy.persistence.SavedSearchRecords
 import com.jocmp.capy.persistence.TaggingRecords
+import com.jocmp.capy.sharing.SharingRecords
 import com.jocmp.feedbinclient.Feedbin
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -77,6 +78,7 @@ data class Account(
     private val folderRecords = FolderRecords(database)
     private val taggingRecords = TaggingRecords(database)
     private val savedSearchRecords = SavedSearchRecords(database)
+    val sharing = SharingRecords(database)
 
     private val articleContent = ArticleContent(httpClient = localHttpClient)
 

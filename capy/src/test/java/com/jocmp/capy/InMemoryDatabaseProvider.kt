@@ -1,7 +1,9 @@
 package com.jocmp.capy
 
+import app.cash.sqldelight.EnumColumnAdapter
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import com.jocmp.capy.db.Database
+import com.jocmp.capy.db.Sharing_services
 import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.capy.persistence.FeedRecords
 
@@ -9,7 +11,13 @@ object InMemoryDatabaseProvider : DatabaseProvider {
     override fun build(accountID: String): Database {
         val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
         Database.Schema.create(driver)
-        return Database(driver)
+
+        return Database(
+            driver,
+            sharing_servicesAdapter = Sharing_services.Adapter(
+                service_idAdapter = EnumColumnAdapter()
+            )
+        )
     }
 
     override fun delete(accountID: String) {

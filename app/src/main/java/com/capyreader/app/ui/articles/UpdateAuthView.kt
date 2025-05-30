@@ -17,7 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.common.titleKey
-import com.capyreader.app.ui.accounts.AuthFields
+import com.capyreader.app.ui.accounts.AccountAuthFields
 import com.capyreader.app.ui.components.DialogCard
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.accounts.Source
@@ -58,7 +58,7 @@ fun UpdateAuthView(
                 .padding(horizontal = 16.dp)
                 .padding(bottom = 16.dp)
         ) {
-            AuthFields(
+            AccountAuthFields(
                 onPasswordChange = onPasswordChange,
                 onSubmit = onSubmit,
                 username = username,
@@ -66,7 +66,7 @@ fun UpdateAuthView(
                 readOnlyUsername = true,
                 loading = loading,
                 errorMessage = errorMessage,
-                source = source
+                source = source,
             )
         }
     }

@@ -13,7 +13,6 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalAutofill
 import androidx.compose.ui.platform.LocalAutofillTree
 
-@OptIn(ExperimentalComposeUiApi::class)
 fun Modifier.autofill(
     autofillTypes: List<AutofillType>,
     onFill: ((String) -> Unit),

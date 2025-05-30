@@ -1,0 +1,18 @@
+active:
+SELECT *
+FROM sharing_services
+ORDER BY service_id;
+
+upsert:
+INSERT OR REPLACE INTO sharing_services(
+   service_id,
+   settings_json
+)
+VALUES (
+    :service_id,
+    :settings_json
+);
+
+delete:
+DELETE FROM sharing_services
+WHERE service_id = :service_id;
