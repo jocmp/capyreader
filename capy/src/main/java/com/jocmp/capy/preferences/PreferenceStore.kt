@@ -1,5 +1,8 @@
 package com.jocmp.capy.preferences
 
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+
 interface PreferenceStore {
 
     fun getString(key: String, defaultValue: String = ""): Preference<String>
@@ -35,6 +38,24 @@ inline fun <reified T : Enum<T>> PreferenceStore.getEnum(
         deserializer = {
             try {
                 enumValueOf(it)
+            } catch (e: IllegalArgumentException) {
+                defaultValue
+            }
+        },
+    )
+}
+
+inline fun <reified T> PreferenceStore.getJSONObject(
+    key: String,
+    defaultValue: T,
+): Preference<T> {
+    return getObject(
+        key = key,
+        defaultValue = defaultValue,
+        serializer = { Json.encodeToString(it) },
+        deserializer = {
+            try {
+                Json.decodeFromString(it)
             } catch (e: IllegalArgumentException) {
                 defaultValue
             }

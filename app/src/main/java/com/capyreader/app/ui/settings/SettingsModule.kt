@@ -6,6 +6,7 @@ import com.capyreader.app.ui.settings.panels.DisplaySettingsViewModel
 import com.capyreader.app.ui.settings.panels.GeneralSettingsViewModel
 import com.capyreader.app.ui.settings.panels.GesturesSettingsViewModel
 import com.capyreader.app.ui.settings.panels.SettingsViewModel
+import com.capyreader.app.ui.settings.sharing.ReadeckLoginViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.workmanager.dsl.worker
 import org.koin.dsl.module
@@ -41,6 +42,9 @@ val settingsModule = module {
        SettingsViewModel(
            account = get()
        )
+    }
+    viewModel {
+        ReadeckLoginViewModel(account = get())
     }
     worker { OPMLImportWorker(get(), get()) }
 }

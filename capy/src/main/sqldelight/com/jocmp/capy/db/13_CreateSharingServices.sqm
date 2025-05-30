@@ -1,0 +1,6 @@
+import com.jocmp.capy.sharing.SharingService.ServiceID;
+
+CREATE TABLE sharing_services (
+    service_id TEXT AS ServiceID NOT NULL PRIMARY KEY,
+    settings_json TEXT NOT NULL
+);
