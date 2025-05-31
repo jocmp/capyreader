@@ -17,7 +17,7 @@
     <string name="update_auth_success_message">Успешно влизане</string>
     <string name="settings_option_full_content_subtitle">Запомни избора за зареждане на пълно съдържание на статия</string>
     <string name="font_option_poppins">Poppins</string>
-    <string name="settings_option_auto_delete_articles_subtitle">Изтрий прочетени, без звезда статии по-стари от 3 месеца</string>
+    <string name="settings_option_auto_delete_articles_subtitle">Изтриване на прочетени и неозначени със звезда статии, по-стари от 3 месеца</string>
     <string name="settings_list_top_bar_title">Настройки</string>
     <string name="settings_auto_delete_option_keep_forever">Завинаги</string>
     <string name="settings_auto_delete_option_keep_for_one_week">1 седмица</string>
@@ -67,7 +67,7 @@
     <string name="settings_remove_account_button_service">Излезте</string>
     <string name="article_view_star">Звезда</string>
     <string name="article_view_unstar">Премахни звезда</string>
-    <string name="refresh_manually_only">Само ръчно</string>
+    <string name="refresh_manually_only">Ръчно</string>
     <string name="refresh_minutes">На всеки %1$d минути</string>
     <plurals name="refresh_hours">
         <item quantity="one">Всеки час</item>
@@ -148,7 +148,7 @@
     <string name="settings_auto_delete_option_keep_for_one_month">1 месец</string>
     <string name="settings_section_advanced">Разширени</string>
     <string name="settings_clear_all_articles_confirm">Потвърди</string>
-    <string name="settings_clear_all_articles_text">Сигурни ли сте, че искате да изтриете всички прочетени, без звезда статии от устройството си? Това действие не може да бъде отменено.</string>
+    <string name="settings_clear_all_articles_text">Наистина ли искате да изтриете всички прочетени и неозначени със звезда статии от устройството си? Това действие не може да бъде отменено.</string>
     <string name="settings_clear_all_articles_button">Изчисти всички статии</string>
     <string name="settings_support_button">Поддръжка</string>
     <string name="settings_article_list_title">Списък със статии</string>
@@ -179,7 +179,7 @@
     <string name="notifications_permission_disabled_title">Разрешението за известие е деактивирано</string>
     <string name="edit_feed_tags_section">Категории</string>
     <string name="settings_panel_notifications_title">Известия</string>
-    <string name="settings_enable_refresh_call_to_action">Първо трябва да се активира периодично обновяване</string>
+    <string name="settings_enable_refresh_call_to_action">Първо трябва да се активира периодичното обновяване</string>
     <string name="notifications_permissions_disabled_call_to_action">Настройки</string>
     <string name="article_view_open_externally">Отвори външно</string>
     <string name="article_list_row_swipe_open_externally">Отвори статия в браузъра</string>
@@ -192,7 +192,7 @@
     <string name="add_account_freshrss_subtitle">freshrss.org</string>
     <string name="add_account_feedbin_signup_prompt">Нямате Feedbin профил?</string>
     <string name="add_account_freshrss_signup_link_text">Научете повече.</string>
-    <string name="account_source_reader">Четец</string>
+    <string name="account_source_reader">Google Четец</string>
     <string name="auth_fields_api_url_freshrss_placeholder">https://example.com/</string>
     <string name="add_account_reader_subtitle">Самостоятелно хостван Google Reader API</string>
     <string name="add_account_feedbin_signup_link_text">Създайте такъв тук.</string>
