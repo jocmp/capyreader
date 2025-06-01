@@ -205,7 +205,7 @@
     <string name="settings_gestures_reader_tap_to_page_subtitle">Tippen auf die unteren Ecken, um innerhalb eines Artikels zu navigieren</string>
     <string name="settings_gestures_reader_tap_to_page_title">Tippen, um zu scrollen</string>
     <string name="settings_enable_high_contrast_dark_theme">Dunkles Theme mit hohem Kontrast aktivieren</string>
-    <string name="layout_preference_single">Eine Spalte</string>
+    <string name="layout_preference_single">Einzelne Spalte</string>
     <string name="layout_preference_responsive">Automatisch</string>
     <string name="layout_preference_label">Bevorzugte Ansicht</string>
     <string name="end_of_feed_text">Alles erledigt!</string>
