@@ -42,7 +42,7 @@
     <string name="settings_support_button">Wsparcie</string>
     <string name="settings_top_bar_title">Ustawienia</string>
     <string name="theme_menu_label">Motyw</string>
-    <string name="account_source_reader">Czytnik</string>
+    <string name="account_source_reader">Czytnik Google</string>
     <string name="settings_section_export">Eksport</string>
     <string name="settings_reader_title">Czytnik</string>
     <string name="article_vertical_swipe_disabled">Wyłączono</string>
@@ -72,7 +72,7 @@
     <string name="settings_remove_account_button_local">Usuń konto</string>
     <string name="article_view_star">Dodaj gwiazdkę</string>
     <string name="article_view_unstar">Usuń gwiazdkę</string>
-    <string name="refresh_manually_only">Tylko ręcznie</string>
+    <string name="refresh_manually_only">Ręcznie</string>
     <string name="refresh_minutes">Co %1$d minut</string>
     <string name="nav_headline_feeds">Kanały</string>
     <string name="add_feed_feed_not_error">Nie można znaleźć kanału</string>
@@ -130,7 +130,7 @@
     <string name="opml_import_toast_failed">Importowanie nie powiodło się</string>
     <string name="theme_menu_option_system_default">Domyślne ustawienie systemowe</string>
     <string name="filter_action_menu_search_articles">Przeszukaj artykuły</string>
-    <string name="add_feed_url_title">Adres URL do strony internetowej lub kanału RSS</string>
+    <string name="add_feed_url_title">Adres URL strony internetowej lub kanału RSS</string>
     <string name="feed_action_unsubscribe_message">Czy na pewno chcesz anulować subskrypcję \"%1$s\"?</string>
     <string name="add_feed_network_error">Nie można znaleźć kanału. Sprawdź połączenie z internetem.</string>
     <string name="edit_feed_error">Błąd podczas zapisywania kanału</string>
@@ -188,7 +188,7 @@
     <string name="article_byline">%1$s o %2$s autorstwa %3$s</string>
     <string name="add_account_freshrss_signup_prompt">Nie posiadasz instancji FreshRSS?</string>
     <string name="article_actions_copy_link">Kopiuj link</string>
-    <string name="settings_option_auto_delete_articles_subtitle">Usuń przeczytane, niezapisane artykuły starsze niż 3 miesiące</string>
+    <string name="settings_option_auto_delete_articles_subtitle">Usuń przeczytane i niezapisane artykuły starsze niż 3 miesiące</string>
     <string name="media_share_failure">Nie udało się udostępnić obrazu</string>
     <string name="feed_list_top_bar_close_search">Zamknij wyszukiwanie</string>
     <string name="article_list_row_swipe_open_externally">Otwórz artykuł w przeglądarce</string>
@@ -212,7 +212,7 @@
     <string name="article_list_swipe_disabled">Wyłączone</string>
     <string name="feed_nav_drawer_refresh_all">Odśwież wszystkie</string>
     <string name="media_share">Udostępnij</string>
-    <string name="settings_clear_all_articles_text">Na pewno chcesz usunąć wszystkie przeczytane, niezapisane artykuły ze swojego urządzenia? Nie można tego cofnąć.</string>
+    <string name="settings_clear_all_articles_text">Czy na pewno chcesz usunąć wszystkie przeczytane i niezapisane artykuły ze swojego urządzenia? Nie można tego cofnąć.</string>
     <string name="settings_confirm_mark_all_read">Potwierdź oznaczenie wszystkich jako przeczytane</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Dotknij dolnych rogów, aby poruszać się po treści artykułu</string>
     <string name="reader_image_visibility_show_on_wifi">Wyświetlaj obrazy tylko przez Wi-Fi</string>
