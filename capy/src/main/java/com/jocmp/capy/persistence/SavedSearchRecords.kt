@@ -42,6 +42,10 @@ internal class SavedSearchRecords(private val database: Database) {
         savedSearchQueries.deleteOrphaned(excludedIDs = excludedIDs)
     }
 
+    internal fun deleteOrphanedEntries(savedSearchID: String, excludedIDs: List<String>) {
+        savedSearchQueries.deleteOrphanedEntries(savedSearchID, excludedIDs = excludedIDs)
+    }
+
     private fun mapper(
         id: String,
         name: String,

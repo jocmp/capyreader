@@ -303,6 +303,11 @@ internal class FeedbinAccountDelegate(
     private suspend fun fetchSavedSearchArticles(savedSearchID: String) {
         val ids = feedbin.savedSearchEntries(savedSearchID = savedSearchID).body() ?: return
 
+        savedSearchRecords.deleteOrphanedEntries(
+            savedSearchID,
+            excludedIDs = ids.map { it.toString() }
+        )
+
         ids.chunked(MAX_ENTRY_LIMIT).map { chunkedIDs ->
             fetchPaginatedEntries(
                 ids = chunkedIDs,

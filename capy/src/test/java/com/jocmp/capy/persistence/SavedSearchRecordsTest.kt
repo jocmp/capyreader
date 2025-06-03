@@ -2,6 +2,7 @@ package com.jocmp.capy.persistence
 
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.db.Database
+import com.jocmp.capy.fixtures.ArticleFixture
 import com.jocmp.capy.fixtures.SavedSearchFixture
 import com.jocmp.capy.repeated
 import kotlinx.coroutines.flow.first
@@ -57,10 +58,39 @@ class SavedSearchRecordsTest {
         val searches = 3.repeated { savedSearchFixture.create() }
         val keep = searches.last()
 
-        assertContentEquals(actual = allRecords().map { it.id }.sorted(), expected = searches.map { it.id }.sorted())
+        assertContentEquals(
+            actual = allRecords().map { it.id }.sorted(),
+            expected = searches.map { it.id }.sorted()
+        )
 
         savedSearchRecords.deleteOrphaned(excludedIDs = listOf(keep.id))
 
         assertContentEquals(actual = allRecords().map { it.id }, expected = listOf(keep.id))
+    }
+
+    @Test
+    fun deleteOrphanedEntries() = runTest {
+        val search = savedSearchFixture.create()
+        val articleIDs = 3.repeated { ArticleFixture(database).create() }.map { it.id }
+        val keepArticleID = articleIDs.last()
+
+        articleIDs.forEach { articleID ->
+            savedSearchRecords.upsertArticle(articleID = articleID, savedSearchID = search.id)
+        }
+
+        val allArticleIDs =
+            database.saved_searchesQueries.articlesBySavedSearchID(search.id).executeAsList()
+
+        assertEquals(actual = allArticleIDs.sorted(), expected = articleIDs.sorted())
+
+        savedSearchRecords.deleteOrphanedEntries(
+            savedSearchID = search.id,
+            excludedIDs = listOf(keepArticleID)
+        )
+
+        val remainingArticleIDs =
+            database.saved_searchesQueries.articlesBySavedSearchID(search.id).executeAsList()
+
+        assertEquals(actual = remainingArticleIDs.sorted(), expected = listOf(keepArticleID))
     }
 }
