@@ -28,7 +28,7 @@
     <string name="relative_time_just_now">Solo ora</string>
     <string name="relative_time_minutes">%1$dm</string>
     <string name="relative_time_hours">%1$dh</string>
-    <string name="article_share">Condividi articolo</string>
+    <string name="article_share">Condividi l\'articolo</string>
     <string name="extract_full_content">Estrai il contenuto completo</string>
     <string name="mark_all_read_dialog_description">Contrassegno tutte le voci come lette?</string>
     <string name="mark_all_read_dialog_submit">Conferma</string>
@@ -102,7 +102,7 @@
     <string name="article_view_mark_as_read">Contrassegna come letto</string>
     <string name="refresh_minutes">Ogni %1$d minuti</string>
     <string name="article_view_star">Stella</string>
-    <string name="refresh_manually_only">Manualmente</string>
+    <string name="refresh_manually_only">Solo Manualmente</string>
     <plurals name="refresh_hours">
         <item quantity="one">Ogni ora</item>
         <item quantity="many">Ogni %d ore</item>
@@ -113,13 +113,13 @@
     <string name="settings_top_bar_title">Impostazioni</string>
     <string name="crash_reporting_checkbox_title">Abilitare la segnalazione dei problemi</string>
     <string name="account_source_local">Locale</string>
-    <string name="add_account_title">Aggiungi account</string>
-    <string name="transfers_export_subscriptions">Esporta sottoscrizioni</string>
+    <string name="add_account_title">Aggiungi un account</string>
+    <string name="transfers_export_subscriptions">Esporta le sottoscrizioni</string>
     <string name="settings_section_account">Account</string>
     <string name="settings_section_import">Importare</string>
     <string name="settings_section_export">Esportare</string>
     <string name="opml_import_notification_title">Importazione delle sottoscrizioni…</string>
-    <string name="notifications_channel_title_opml_import">Importazione sottoscrizione</string>
+    <string name="notifications_channel_title_opml_import">Importazione della sottoscrizione</string>
     <string name="opml_import_button_text">Importazione da file</string>
     <string name="settings_section_privacy">Privacy</string>
     <string name="settings_section_refresh">Aggiornare</string>
@@ -128,8 +128,8 @@
     <string name="settings_option_auto_delete_articles_title">Eliminazione automatica degli articoli</string>
     <string name="feed_form_copy_feed_url_to_clipboard">Copia l\'URL del feed negli appunti</string>
     <string name="feed_form_feed_url_title">URL del feed</string>
-    <string name="settings_remove_account_title_local">Cancella account</string>
-    <string name="settings_remove_account_button_local">Cancella account</string>
+    <string name="settings_remove_account_title_local">Rimuovi l\'account</string>
+    <string name="settings_remove_account_button_local">Rimuovi l\'account</string>
     <string name="settings_clear_all_articles_button">Cancella tutti gli articoli</string>
     <string name="settings_support_button">Supporto</string>
     <string name="settings_clear_all_articles_confirm">Conferma</string>
@@ -189,7 +189,7 @@
     <string name="settings_section_account_server">Server</string>
     <string name="auth_fields_api_url">Server</string>
     <string name="auth_fields_api_url_freshrss_placeholder">https://example.com/</string>
-    <string name="account_source_reader">Google Reader</string>
+    <string name="account_source_reader">Lettore</string>
     <string name="add_account_local_subtitle">Sul tuo dispositivo</string>
     <string name="add_account_freshrss_subtitle">freshrss.org</string>
     <string name="add_account_reader_subtitle">API di Google Reader in self-hosting</string>

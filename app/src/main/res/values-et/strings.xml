@@ -28,9 +28,9 @@
     <string name="settings_remove_account_confirm_local">Kinnita</string>
     <string name="account_settings_save_name">Nimi on salvestatud</string>
     <string name="article_view_mark_as_read">Märgi loetuks</string>
-    <string name="refresh_manually_only">Käsitsi</string>
+    <string name="refresh_manually_only">Vaid käsitsi</string>
     <string name="refresh_minutes">Iga %1$d minuti järel</string>
-    <string name="refresh_feeds_menu_label">Uuenda uudisvooge</string>
+    <string name="refresh_feeds_menu_label">Uuenda uudisvood</string>
     <string name="nav_headline_tags">Sildid</string>
     <string name="nav_headline_feeds">Uudisvood</string>
     <string name="nav_add_feed">Lisa uudisvoog</string>
@@ -193,7 +193,7 @@
     <string name="add_account_feedbin_signup_link_text">Saad selle siin luua.</string>
     <string name="add_account_freshrss_signup_link_text">Lisateavet leiad siit.</string>
     <string name="auth_fields_api_url_freshrss_placeholder">https://example.com/</string>
-    <string name="account_source_reader">Google\'i uudistelugeja</string>
+    <string name="account_source_reader">Uudistelugeja</string>
     <string name="add_account_reader_subtitle">Oma serveris asuv Google Readeri API</string>
     <string name="edit_feed_tag_section">Lisa või vali silt</string>
     <string name="add_account_feedbin_signup_prompt">Kas sul pole Feedbin kontot?</string>
