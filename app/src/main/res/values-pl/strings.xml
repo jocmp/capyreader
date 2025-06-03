@@ -42,7 +42,7 @@
     <string name="settings_support_button">Wsparcie</string>
     <string name="settings_top_bar_title">Ustawienia</string>
     <string name="theme_menu_label">Motyw</string>
-    <string name="account_source_reader">Czytnik Google</string>
+    <string name="account_source_reader">Czytnik</string>
     <string name="settings_section_export">Eksport</string>
     <string name="settings_reader_title">Czytnik</string>
     <string name="article_vertical_swipe_disabled">Wyłączono</string>

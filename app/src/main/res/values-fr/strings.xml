@@ -188,7 +188,7 @@
     <string name="auth_fields_api_url">Serveur</string>
     <string name="account_source_freshrss">FreshRSS</string>
     <string name="settings_section_account_server">Serveur</string>
-    <string name="account_source_reader">Google Reader</string>
+    <string name="account_source_reader">Reader</string>
     <string name="add_account_local_subtitle">Sur votre appareil</string>
     <string name="add_account_reader_subtitle">API Google Reader auto-hébergée</string>
     <string name="add_account_feedbin_signup_link_text">Créez-en un ici.</string>

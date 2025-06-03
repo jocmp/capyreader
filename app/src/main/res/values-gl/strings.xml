@@ -90,7 +90,7 @@
     <string name="auth_fields_username">Identificador</string>
     <string name="auth_fields_log_in_button">Acceder</string>
     <string name="settings_top_bar_title">Axustes</string>
-    <string name="account_source_reader">Google Reader</string>
+    <string name="account_source_reader">Reader</string>
     <string name="account_source_local">Local</string>
     <string name="add_account_title">Engadir conta</string>
     <string name="add_account_feedbin_signup_link_text">Crea unha aquí.</string>

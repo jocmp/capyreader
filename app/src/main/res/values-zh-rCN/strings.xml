@@ -187,7 +187,7 @@
     <string name="account_source_freshrss">FreshRSS</string>
     <string name="settings_section_account_server">服务器</string>
     <string name="auth_fields_api_url_freshrss_placeholder">https://example.com/</string>
-    <string name="account_source_reader">Google Reader</string>
+    <string name="account_source_reader">Reader</string>
     <string name="add_account_local_subtitle">在设备上</string>
     <string name="add_account_feedbin_subtitle">feedbin.com</string>
     <string name="add_account_feedbin_signup_prompt">没有 Feedbin 账号？</string>

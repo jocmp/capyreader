@@ -95,7 +95,7 @@
     <string name="settings_top_bar_title">Ρυθμίσεις</string>
     <string name="crash_reporting_checkbox_title">Ενεργοποίηση αναφορών σφάλματος</string>
     <string name="account_source_freshrss">FreshRSS</string>
-    <string name="account_source_reader">Google Reader</string>
+    <string name="account_source_reader">Reader</string>
     <string name="account_source_local">Τοπικό</string>
     <string name="add_account_title">Προσθήκη λογαριασμού</string>
     <string name="add_account_local_subtitle">Στη συσκευή σου</string>

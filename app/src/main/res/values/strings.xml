@@ -81,8 +81,8 @@
     <string name="settings_top_bar_title">Settings</string>
     <string name="update_auth_success_message">Successfully logged in</string>
     <string name="crash_reporting_checkbox_title">Enable crash reporting</string>
-    <string name="account_source_feedbin">Feedbin</string>
-    <string name="account_source_freshrss">FreshRSS</string>
+    <string name="account_source_feedbin" translatable="false">Feedbin</string>
+    <string name="account_source_freshrss" translatable="false">FreshRSS</string>
     <string name="account_source_reader">Reader</string>
     <string name="account_source_local">Local</string>
     <string name="add_account_title">Add Account</string>
