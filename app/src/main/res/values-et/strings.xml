@@ -28,7 +28,7 @@
     <string name="settings_remove_account_confirm_local">Kinnita</string>
     <string name="account_settings_save_name">Nimi on salvestatud</string>
     <string name="article_view_mark_as_read">Märgi loetuks</string>
-    <string name="refresh_manually_only">Käsitsi</string>
+    <string name="refresh_manually_only">Vaid käsitsi</string>
     <string name="refresh_minutes">Iga %1$d minuti järel</string>
     <string name="refresh_feeds_menu_label">Uuenda uudisvooge</string>
     <string name="nav_headline_tags">Sildid</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Capy Reader</string>
-    <string name="add_feed_url_title">URL du flux ou du site web</string>
+    <string name="add_feed_url_title">URL du flux ou du site Web</string>
     <string name="add_feed_name_title">Nom</string>
     <string name="add_feed_new_folder_title">Nouvelle étiquette</string>
     <string name="add_feed_submit">Ajouter</string>
@@ -114,7 +114,7 @@
     <string name="settings_auto_delete_option_keep_for_one_week">1 semaine</string>
     <string name="settings_section_advanced">Avancés</string>
     <string name="settings_clear_all_articles_confirm">Confirmer</string>
-    <string name="settings_clear_all_articles_text">Voulez-vous vraiment supprimer tous les articles lus et non favoris de votre appareil ? Cette action est irréversible.</string>
+    <string name="settings_clear_all_articles_text">Voulez-vous vraiment supprimer tous les articles lus et non favoris de votre appareil ? Cette action est irréversible.</string>
     <string name="settings_clear_all_articles_button">Supprimer tous les articles</string>
     <string name="settings_support_button">Assistance</string>
     <string name="settings_article_list_title">Liste d’articles</string>

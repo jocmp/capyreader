@@ -19,9 +19,9 @@
     <string name="feed_action_unsubscribe_title">Abonnement beenden</string>
     <string name="feed_action_edit_success">Feed aktualisieren</string>
     <string name="settings">Einstellungen öffnen</string>
-    <string name="settings_remove_account_button_service">Ausloggen</string>
-    <string name="settings_remove_account_title_service">Ausloggen</string>
-    <string name="settings_remove_account_confirm_service">Ausloggen</string>
+    <string name="settings_remove_account_button_service">Abmelden</string>
+    <string name="settings_remove_account_title_service">Abmelden</string>
+    <string name="settings_remove_account_confirm_service">Abmelden</string>
     <string name="settings_remove_account_button_local">Benutzerkonto löschen</string>
     <string name="settings_remove_account_title_local">Benutzerkonto löschen</string>
     <string name="settings_remove_account_confirm_local">Bestätigen</string>
@@ -58,7 +58,7 @@
     <string name="auth_fields_password">Passwort</string>
     <string name="auth_fields_hide_password">Passwort ausblenden</string>
     <string name="auth_fields_show_password">Passwort anzeigen</string>
-    <string name="auth_fields_log_in_button">Einloggen</string>
+    <string name="auth_fields_log_in_button">Anmelden</string>
     <string name="settings_top_bar_title">Einstellungen</string>
     <string name="update_auth_success_message">Sie wurden erfolgreich eingeloggt</string>
     <string name="crash_reporting_checkbox_title">Fehlerberichterstattung einschalten</string>
@@ -109,7 +109,7 @@
     <string name="feed_action_edit">Feed bearbeiten</string>
     <string name="add_feed_url_title">Feed oder Website URL</string>
     <string name="filter_unread">Ungelesen</string>
-    <string name="settings_remove_account_message_service">Sind Sie sicher, dass Sie sich ausloggen möchten?</string>
+    <string name="settings_remove_account_message_service">Sind Sie sicher, dass Sie sich abmelden möchten?</string>
     <string name="settings_remove_account_message_local">Sind Sie sicher, dass Sie dieses Benutzerkonto löschen möchten? Dies kann nicht rückgängig gemacht werden.</string>
     <string name="opml_export_button_text">Als OPML exportieren</string>
     <string name="settings_section_privacy">Privatsphäre</string>
