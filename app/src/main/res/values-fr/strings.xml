@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Capy Reader</string>
-    <string name="add_feed_url_title">URL du flux ou du site web</string>
+    <string name="add_feed_url_title">URL du flux ou du site Web</string>
     <string name="add_feed_name_title">Nom</string>
     <string name="add_feed_new_folder_title">Nouvelle étiquette</string>
     <string name="add_feed_submit">Ajouter</string>
