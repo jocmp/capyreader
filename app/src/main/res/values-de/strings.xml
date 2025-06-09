@@ -182,7 +182,7 @@
     <string name="crash_log_export_item_subtitle">Speichert Absturzberichte in Datei, um sie mit dem Entwickler zu teilen</string>
     <string name="edit_feed_tags_section">Schlagwörter</string>
     <string name="settings_notifications_select_none">Nichts ausgewählt</string>
-    <string name="settings_notifications_select_all">Alles ausgewählt</string>
+    <string name="settings_notifications_select_all">Alles auswählen</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">Navigationsübersicht öffnen</string>
     <string name="add_account_local_subtitle">Auf Ihrem Gerät</string>
     <string name="edit_feed_tag_section">Bezeichnung hinzufügen oder auswählen</string>
