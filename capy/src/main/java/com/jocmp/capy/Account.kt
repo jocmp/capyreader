@@ -78,7 +78,7 @@ data class Account(
     private val taggingRecords = TaggingRecords(database)
     private val savedSearchRecords = SavedSearchRecords(database)
 
-    private val articleContent = ArticleContent(httpClient = localHttpClient)
+    private val articleContent = ArticleContent(localHttpClient)
 
     val taggedFeeds = feedRecords.taggedFeeds().map {
         it.sortedByTitle()
