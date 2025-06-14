@@ -38,6 +38,13 @@ internal class SavedSearchRecords(private val database: Database) {
         )
     }
 
+    internal fun removeArticleBySavedSearchIDs(articleID: String, excludedIDs: List<String>) {
+        savedSearchQueries.deleteEntryBySavedSearchIDs(
+            articleID = articleID,
+            excludedIDs = excludedIDs,
+        )
+    }
+
     internal fun deleteOrphaned(excludedIDs: List<String>) {
         savedSearchQueries.deleteOrphaned(excludedIDs = excludedIDs)
     }

@@ -467,6 +467,13 @@ internal class ReaderAccountDelegate(
                     }
                 }
 
+                item.categories?.let { categories ->
+                    savedSearchRecords.removeArticleBySavedSearchIDs(
+                        articleID = item.hexID,
+                        excludedIDs = categories
+                    )
+                }
+
                 ReaderEnclosureParsing.validEnclosures(item).forEach {
                     enclosureRecords.create(
                         url = it.url.toString(),

@@ -69,6 +69,36 @@ class SavedSearchRecordsTest {
     }
 
     @Test
+    fun removeArticleBySavedSearchIDs() = runTest {
+        val oldSearch = savedSearchFixture.create()
+        val latestSearch = savedSearchFixture.create()
+        val article = ArticleFixture(database).create()
+
+        savedSearchRecords.upsertArticle(articleID = article.id, savedSearchID = oldSearch.id)
+        savedSearchRecords.upsertArticle(articleID = article.id, savedSearchID = latestSearch.id)
+
+        var oldSearchRecords =
+            database.saved_searchesQueries.articlesBySavedSearchID(oldSearch.id).executeAsList()
+
+        var latestSearchRecords =
+            database.saved_searchesQueries.articlesBySavedSearchID(latestSearch.id).executeAsList()
+
+        assertEquals(expected = 1, oldSearchRecords.size)
+        assertEquals(expected = 1, latestSearchRecords.size)
+
+        savedSearchRecords.removeArticleBySavedSearchIDs(articleID = article.id, excludedIDs = listOf(latestSearch.id))
+
+        oldSearchRecords =
+            database.saved_searchesQueries.articlesBySavedSearchID(oldSearch.id).executeAsList()
+
+        latestSearchRecords =
+            database.saved_searchesQueries.articlesBySavedSearchID(latestSearch.id).executeAsList()
+
+        assertEquals(expected = 0, oldSearchRecords.size)
+        assertEquals(expected = 1, latestSearchRecords.size)
+    }
+
+    @Test
     fun deleteOrphanedEntries() = runTest {
         val search = savedSearchFixture.create()
         val articleIDs = 3.repeated { ArticleFixture(database).create() }.map { it.id }
