@@ -331,14 +331,18 @@ class ArticleRecordsTest {
     fun markAllUnread() {
         val articleIDs = 3.repeated { RandomUUID.generate() }
         val articleRecords = ArticleRecords(database)
+        val readArticle = articleFixture.create(read = false)
+
+        articleIDs.forEach { id ->
+            articleFixture.create(id = id, read = true)
+        }
 
         articleRecords.markAllUnread(articleIDs)
 
-        val articles = articleIDs.map { id ->
-            articleFixture.create(id = id)
-        }
+        val articles = articleIDs.map { articleRecords.find(it)!! }
 
         assertTrue(articles.none { it.read })
+        assertTrue(articleRecords.find(readArticle.id)!!.read)
     }
 
     @Test

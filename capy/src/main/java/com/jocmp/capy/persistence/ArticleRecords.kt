@@ -193,14 +193,14 @@ internal class ArticleRecords internal constructor(
         val updated = updatedAt.toEpochSecond()
 
         database.transactionWithErrorHandling {
-            database.articlesQueries.updateStaleUnreads(excludedIDs = articleIDs)
-
             articleIDs.forEach { articleID ->
                 database.articlesQueries.upsertUnread(
                     articleID = articleID,
                     updatedAt = updated
                 )
             }
+
+            database.articlesQueries.updateStaleUnreads()
         }
     }
 
@@ -208,14 +208,14 @@ internal class ArticleRecords internal constructor(
         val updated = updatedAt.toEpochSecond()
 
         database.transactionWithErrorHandling {
-            database.articlesQueries.updateStaleStars(excludedIDs = articleIDs)
-
             articleIDs.forEach { articleID ->
                 database.articlesQueries.upsertStarred(
                     articleID = articleID,
                     updatedAt = updated
                 )
             }
+
+            database.articlesQueries.updateStaleStars()
         }
     }
 
