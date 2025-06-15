@@ -114,44 +114,72 @@ last_read_at = last_read_at,
 read = excluded.read,
 starred = excluded.starred;
 
-upsertUnread:
-INSERT INTO article_statuses(
-  article_id,
-  updated_at,
-  read,
-  last_read_at
-)
-VALUES (
-  :articleID,
-  :updatedAt,
-  0,
-  NULL
-)
-ON CONFLICT(article_id) DO UPDATE
-SET
-last_read_at = excluded.last_read_at,
-read = excluded.read;
+upsertUnread {
+    INSERT INTO article_statuses(
+      article_id,
+      updated_at,
+      read,
+      last_read_at
+    )
+    VALUES (
+      :articleID,
+      :updatedAt,
+      0,
+      NULL
+    )
+    ON CONFLICT(article_id) DO UPDATE
+    SET
+    last_read_at = excluded.last_read_at,
+    read = excluded.read;
 
-updateStaleUnreads:
-UPDATE article_statuses SET read = 1 WHERE article_id NOT IN :excludedIDs;
+    INSERT INTO excluded_statuses(
+        article_id,
+        type
+    )
+    VALUES (
+        :articleID,
+        'unread'
+    );
+}
 
-updateStaleStars:
-UPDATE article_statuses SET starred = 0 WHERE article_id NOT IN :excludedIDs;
+updateStaleUnreads {
+    UPDATE article_statuses SET read = 1
+    WHERE article_id NOT IN (SELECT article_id FROM excluded_statuses WHERE type = 'unread');
 
-upsertStarred:
-INSERT INTO article_statuses(
-  article_id,
-  updated_at,
-  starred
-)
-VALUES (
-  :articleID,
-  :updatedAt,
-  1
-)
-ON CONFLICT(article_id) DO UPDATE
-SET
-starred = excluded.starred;
+    DELETE FROM excluded_statuses WHERE type = 'unread';
+}
+
+updateStaleStars {
+    UPDATE article_statuses SET starred = 0
+    WHERE article_id NOT IN (SELECT article_id FROM excluded_statuses WHERE type = 'starred');
+
+    DELETE FROM excluded_statuses WHERE type = 'starred';
+}
+
+upsertStarred {
+    INSERT INTO article_statuses(
+      article_id,
+      updated_at,
+      starred
+    )
+    VALUES (
+      :articleID,
+      :updatedAt,
+      1
+    )
+    ON CONFLICT(article_id) DO UPDATE
+    SET
+    starred = excluded.starred;
+
+    INSERT INTO excluded_statuses(
+        article_id,
+        type
+    )
+    VALUES (
+        :articleID,
+        'starred'
+    );
+}
 
 markRead:
 UPDATE article_statuses SET read = :read, last_read_at = :lastReadAt
