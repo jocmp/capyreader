@@ -224,4 +224,13 @@
     <string name="nav_headline_saved_searches">Pesquisas</string>
     <string name="article_actions_copy_link">Copiar link</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">Ativar rolagem horizontal</string>
+    <string name="image_preview_menu_option_medium">Médio</string>
+    <string name="settings_gestures_list_swipe_up">Deslizar para Cima</string>
+    <string name="article_list_swipe_disabled">Desabilitado</string>
+    <string name="delete_tag_error">Erro ao excluir etiqueta</string>
+    <string name="settings_options_reader_pin_top_toolbar">Fixar na barra superior</string>
+    <string name="settings_gestures_list_back_navigation_navigate_to_parent">Navegar para o Pai</string>
+    <string name="settings_options_reader_show_bottom_toolbar">Mostrar Ações na Barra Inferior</string>
+    <string name="article_list_swipe_next_feed">Ir para o próximo feed</string>
+    <string name="notification_mark_as_read_action">Marcar como lido</string>
 </resources>
