@@ -100,7 +100,7 @@ fun LoginView(
                                 url = url,
                                 placeholder = {
                                     if (source == Source.FRESHRSS) {
-                                        Text(stringResource(R.string.auth_fields_api_url_freshrss_placeholder))
+                                        Text(stringResource(R.string.auth_fields_api_url_placeholder))
                                     }
                                 }
                             )

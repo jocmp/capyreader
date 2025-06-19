@@ -189,7 +189,7 @@
     <string name="settings_section_account_server">Сервер</string>
     <string name="auth_fields_api_url">Сервер</string>
     <string name="account_source_freshrss">FreshRSS</string>
-    <string name="auth_fields_api_url_freshrss_placeholder">https://example.com/</string>
+    <string name="auth_fields_api_url_placeholder">https://example.com/</string>
     <string name="account_source_reader">Читалка</string>
     <string name="add_account_feedbin_subtitle">feedbin.com</string>
     <string name="add_account_freshrss_subtitle">freshrss.org</string>

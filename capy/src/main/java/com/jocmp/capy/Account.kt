@@ -63,7 +63,9 @@ data class Account(
             )
         )
 
-        Source.FRESHRSS, Source.READER -> buildReaderDelegate(
+        Source.FRESHRSS,
+        Source.MINIFLUX,
+        Source.READER -> buildReaderDelegate(
             source = source,
             database = database,
             path = cacheDirectory,

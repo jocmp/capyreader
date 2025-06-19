@@ -16,6 +16,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.common.titleKey
+import com.capyreader.app.preferences.ThemeOption
+import com.capyreader.app.ui.fixtures.PreviewKoinApplication
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.accounts.Source
 
@@ -67,13 +69,19 @@ private fun buildItem(source: Source): SourceModel {
                 subtitle = stringResource(R.string.add_account_freshrss_subtitle),
             )
 
+        Source.MINIFLUX ->
+            SourceModel(
+                title = stringResource(source.titleKey),
+                iconID = R.drawable.miniflux_logo,
+                subtitle = stringResource(R.string.add_account_miniflux_subtitle)
+            )
+
         Source.READER ->
             SourceModel(
                 title = stringResource(source.titleKey),
                 iconID = R.drawable.rss_logo,
                 subtitle = stringResource(R.string.add_account_reader_subtitle),
             )
-
     }
 }
 
@@ -90,6 +98,20 @@ private fun AccountRowPreview() {
         Column {
             Source.entries.forEach {
                 AccountRow(source = it)
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun AccountRowPreview_Dark() {
+    PreviewKoinApplication {
+        CapyTheme(theme = ThemeOption.DARK) {
+            Column {
+                Source.entries.forEach {
+                    AccountRow(source = it)
+                }
             }
         }
     }
