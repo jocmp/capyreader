@@ -73,5 +73,5 @@ private class ArticlesRepository : KoinComponent {
     private val account by inject<Account>()
 
     val articles
-        get() = account.latestArticles
+        get() = account.latestArticles()
 }
