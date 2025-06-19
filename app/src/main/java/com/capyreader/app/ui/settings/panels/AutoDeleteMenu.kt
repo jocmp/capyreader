@@ -9,9 +9,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
-import com.capyreader.app.preferences.ThemeOption
+import com.capyreader.app.ui.fixtures.PreviewKoinApplication
 import com.capyreader.app.ui.settings.PreferenceSelect
-import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.accounts.AutoDelete
 
 @Composable
@@ -36,7 +35,7 @@ fun AutoDeleteMenu(
 
 @Composable
 private fun translationKey(autoDelete: AutoDelete): String {
-    val resource = when(autoDelete) {
+    val resource = when (autoDelete) {
         AutoDelete.DISABLED -> R.string.settings_auto_delete_option_keep_forever
         AutoDelete.WEEKLY -> R.string.settings_auto_delete_option_keep_for_one_week
         AutoDelete.EVERY_TWO_WEEKS -> R.string.settings_auto_delete_option_keep_for_two_week
@@ -50,7 +49,7 @@ private fun translationKey(autoDelete: AutoDelete): String {
 @Preview
 @Composable
 fun AutoDeletePreview() {
-    CapyTheme(theme = ThemeOption.DARK) {
+    PreviewKoinApplication {
         Surface {
             AutoDeleteMenu(
                 autoDelete = AutoDelete.EVERY_THREE_MONTHS,

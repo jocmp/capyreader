@@ -21,7 +21,9 @@ interface Credentials {
         ): Credentials {
             return when (source) {
                 Source.FEEDBIN -> FeedbinCredentials(username, password)
-                Source.FRESHRSS, Source.READER -> ReaderCredentials(
+                Source.FRESHRSS,
+                Source.MINIFLUX,
+                Source.READER -> ReaderCredentials(
                     username,
                     password,
                     url = normalizeURL(url),
