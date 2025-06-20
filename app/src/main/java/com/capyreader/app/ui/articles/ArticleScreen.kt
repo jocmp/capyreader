@@ -386,7 +386,12 @@ fun ArticleScreen(
                     onNavigateToSettings = onNavigateToSettings,
                     onFilterSelect = selectFilter,
                     onRefreshAll = { completion ->
-                        viewModel.refresh(ArticleFilter.default(), completion)
+                        viewModel.refresh(ArticleFilter.default()) {
+                            if (enableMarkReadOnScroll) {
+                                scrollToTop()
+                            }
+                            completion()
+                        }
                     },
                     filter = filter,
                     statusCount = statusCount,
