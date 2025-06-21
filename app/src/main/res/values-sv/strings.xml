@@ -218,4 +218,6 @@
     <string name="nav_headline_saved_searches">Sökningar</string>
     <string name="search_bar_placeholder">Sök</string>
     <string name="article_vertical_open_article_in_browser">Öppna artikel i webbläsare</string>
+    <string name="article_list_swipe_disabled">Inaktiverad</string>
+    <string name="notification_mark_as_read_action">Markera som läst</string>
 </resources>
