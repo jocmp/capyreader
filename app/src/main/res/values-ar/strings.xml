@@ -262,4 +262,6 @@
     <string name="settings_gestures_improve_talkback_title">تحسين TalkBack</string>
     <string name="settings_gestures_improve_talkback_subtitle">يعطل بعض الإعدادات لتحسين تحويل النص إلى كلام من TalkBack</string>
     <string name="settings_options_reader_show_bottom_toolbar">اعرض الإجراءات على شريط الأدوات السفلي</string>
+    <string name="add_account_miniflux_signup_link_text">اكتشف المزيد.</string>
+    <string name="add_account_miniflux_signup_prompt">أليس لديك نسخة Miniflux؟</string>
 </resources>

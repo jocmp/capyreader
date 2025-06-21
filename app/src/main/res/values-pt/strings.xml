@@ -255,4 +255,6 @@
     <string name="widget_headlines_title">Títulos mais recentes</string>
     <string name="actions_share_link">Compartilhar link</string>
     <string name="tag_name_title">Nome</string>
+    <string name="add_account_miniflux_signup_link_text">Saiba mais.</string>
+    <string name="add_account_miniflux_signup_prompt">Não tem uma instância do Miniflux?</string>
 </resources>

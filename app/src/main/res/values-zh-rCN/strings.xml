@@ -260,4 +260,6 @@
     <string name="settings_gestures_improve_talkback_title">改进 TalkBack</string>
     <string name="settings_options_reader_pin_top_toolbar">固定顶部工具栏</string>
     <string name="settings_options_reader_show_bottom_toolbar">在底部工具栏上显示操作</string>
+    <string name="add_account_miniflux_signup_link_text">了解更多。</string>
+    <string name="add_account_miniflux_signup_prompt">没有 Miniflux 实例？</string>
 </resources>

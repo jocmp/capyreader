@@ -43,7 +43,7 @@
     <string name="article_view_mark_as_unread">Marquer comme non lu</string>
     <string name="article_view_star">Favori</string>
     <string name="article_view_unstar">Enlever des favoris</string>
-    <string name="refresh_manually_only">Manuellement</string>
+    <string name="refresh_manually_only">Seulement manuellement</string>
     <string name="refresh_minutes">Toutes les %1$d minutes</string>
     <plurals name="refresh_hours">
         <item quantity="one">Toutes les heures</item>
@@ -114,7 +114,7 @@
     <string name="settings_auto_delete_option_keep_for_one_week">1 semaine</string>
     <string name="settings_section_advanced">Avancés</string>
     <string name="settings_clear_all_articles_confirm">Confirmer</string>
-    <string name="settings_clear_all_articles_text">Voulez-vous vraiment supprimer tous les articles lus et non favoris de votre appareil ? Cette action est irréversible.</string>
+    <string name="settings_clear_all_articles_text">Voulez-vous vraiment supprimer tous les articles lus et non favoris de votre appareil ? Cette action est irréversible.</string>
     <string name="settings_clear_all_articles_button">Supprimer tous les articles</string>
     <string name="settings_support_button">Assistance</string>
     <string name="settings_article_list_title">Liste d’articles</string>
@@ -259,4 +259,6 @@
     <string name="settings_gestures_improve_talkback_title">Améliorer TalkBack</string>
     <string name="settings_options_reader_pin_top_toolbar">Épingler la barre d\'outils supérieure</string>
     <string name="settings_options_reader_show_bottom_toolbar">Afficher les actions dans la barre d\'outils inférieure</string>
+    <string name="add_account_miniflux_signup_link_text">En savoir plus.</string>
+    <string name="add_account_miniflux_signup_prompt">Vous n\'avez pas d\'instance Miniflux ?</string>
 </resources>
