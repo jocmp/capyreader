@@ -259,4 +259,6 @@
     <string name="blocked_keywords_add_keyword">Adicionar palavra-chave</string>
     <string name="blocked_keywords_remove_keyword">Remover palavra-chave</string>
     <string name="media_share">Compartilhar</string>
+    <string name="add_account_miniflux_signup_link_text">Saiba mais.</string>
+    <string name="add_account_miniflux_signup_prompt">Não tem um instância Miniflux?</string>
 </resources>
