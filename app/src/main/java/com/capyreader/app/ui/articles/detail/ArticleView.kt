@@ -42,6 +42,8 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.capyreader.app.common.Media
 import com.capyreader.app.common.openLink
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleVerticalSwipe
@@ -50,32 +52,58 @@ import com.capyreader.app.preferences.ArticleVerticalSwipe.LOAD_FULL_CONTENT
 import com.capyreader.app.preferences.ArticleVerticalSwipe.NEXT_ARTICLE
 import com.capyreader.app.preferences.ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWSER
 import com.capyreader.app.preferences.ArticleVerticalSwipe.PREVIOUS_ARTICLE
-import com.capyreader.app.ui.articles.LocalFullContent
-import com.capyreader.app.ui.components.WebViewState
+import com.capyreader.app.ui.articles.rememberFullContent
+import com.capyreader.app.ui.articles.showFullContentErrorToast
+import com.capyreader.app.ui.components.ShareLink
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
+import com.capyreader.app.ui.components.rememberWebViewState
+import com.jocmp.capy.Account
 import com.jocmp.capy.Article
+import com.jocmp.capy.common.launchIO
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArticleView(
-    article: Article,
+    articleID: String,
     pagination: ArticlePagination,
     onBackPressed: () -> Unit,
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
     enableBackHandler: Boolean = false,
     onScrollToArticle: (index: Int) -> Unit,
-    webViewState: WebViewState,
+    onNavigateToMedia: (media: Media) -> Unit,
+    onShareLink: (link: ShareLink) -> Unit,
+    account: Account = koinInject()
 ) {
-    val fullContent = LocalFullContent.current
-    val openLink = articleOpenLink(article)
+    val baseArticle = account.findArticle(articleID)
+        .collectAsStateWithLifecycle(null)
+        .value ?: return
 
-    val onToggleFullContent = {
+    val context = LocalContext.current
+    val fullContent = rememberFullContent(baseArticle) {
+        context.showFullContentErrorToast(it)
+    }
+    val article by fullContent.article
+
+    val openLink = articleOpenLink(article)
+    val scope = rememberCoroutineScope()
+
+    val webViewState = rememberWebViewState(
+        key = article.id,
+        onNavigateToMedia = onNavigateToMedia,
+        onRequestLinkDialog = onShareLink
+    )
+
+    fun onToggleFullContent() {
         if (article.fullContent == Article.FullContentState.LOADED) {
-            fullContent.reset()
+            scope.launchIO {
+                fullContent.reset()
+            }
         } else if (article.fullContent != Article.FullContentState.LOADING) {
-            fullContent.fetch()
+            scope.launchIO {
+                fullContent.fetch()
+            }
         }
     }
 
@@ -105,7 +133,7 @@ fun ArticleView(
                     if (!enableBottomBar) {
                         ArticleActions(
                             article = article,
-                            onToggleExtractContent = onToggleFullContent,
+                            onToggleExtractContent = { onToggleFullContent() },
                             onToggleRead = onToggleRead,
                             onToggleStar = onToggleStar,
                         )
@@ -123,7 +151,7 @@ fun ArticleView(
                 ) {
                     ArticleActions(
                         article = article,
-                        onToggleExtractContent = onToggleFullContent,
+                        onToggleExtractContent = { onToggleFullContent() },
                         onToggleRead = onToggleRead,
                         onToggleStar = onToggleStar,
                     )

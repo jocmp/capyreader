@@ -168,7 +168,7 @@ class LocalAccountDelegateTest {
 
         delegate.refresh(ArticleFilter.default())
 
-        var article = ArticleRecords(database).find(articleID = item.link!!)!!
+        var article = ArticleRecords(database).findArticleBlocking(articleID = item.link!!)!!
 
         val firstUpdatedAt = article.updatedAt
         assertEquals(expected = mockNow, actual = firstUpdatedAt)
@@ -176,7 +176,7 @@ class LocalAccountDelegateTest {
         val futureNow = ZonedDateTime.parse("2025-12-25T09:00:00-00:00")
         every { TimeHelpers.nowUTC() }.returns(futureNow)
         delegate.refresh(ArticleFilter.default())
-        article = ArticleRecords(database).find(articleID = item.link!!)!!
+        article = ArticleRecords(database).findArticleBlocking(articleID = item.link!!)!!
 
         assertEquals(expected = firstUpdatedAt, actual = article.updatedAt)
     }
@@ -206,7 +206,7 @@ class LocalAccountDelegateTest {
 
         assertEquals(expected = 1, actual = feeds.size)
         assertEquals(expected = 1, actual = articlesCount)
-        assertNotNull(ArticleRecords(database).find(articleID = item.link!!))
+        assertNotNull(ArticleRecords(database).findArticleBlocking(articleID = item.link!!))
     }
 
 

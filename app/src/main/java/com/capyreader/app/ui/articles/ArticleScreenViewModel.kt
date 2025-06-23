@@ -55,7 +55,7 @@ class ArticleScreenViewModel(
 ) : AndroidViewModel(application) {
     private var refreshJob: Job? = null
 
-    private var fullContentJob: Job? = null
+//    private var fullContentJob: Job? = null
 
     val filter = appPreferences.filter.stateIn(viewModelScope)
 
@@ -66,7 +66,7 @@ class ArticleScreenViewModel(
 
     private val _searchState = MutableStateFlow(SearchState.INACTIVE)
 
-    private var _article by mutableStateOf<Article?>(null)
+    var _article by mutableStateOf<Article?>(null)
 
     var refreshingAll by mutableStateOf(false)
         private set
@@ -116,6 +116,17 @@ class ArticleScreenViewModel(
 
     val allFolders = account.folders
 
+    val article: Flow<Article?> = appPreferences.articleID.changes().map { articleID ->
+
+//        if (article.fullContent == Article.FullContentState.LOADING) {
+//            fullContentJob?.cancel()
+//        }
+//
+//        fullContentJob = viewModelScope.launch(Dispatchers.IO) { fetchFullContent(article) }
+
+        buildArticle(articleID)
+    }
+
     val feeds = combine(
         account.feeds,
         _counts,
@@ -153,9 +164,6 @@ class ArticleScreenViewModel(
 
     val showUnauthorizedMessage: Boolean
         get() = _showUnauthorizedMessage == UnauthorizedMessageState.SHOW
-
-    val article: Article?
-        get() = _article
 
     val searchQuery: Flow<String>
         get() = _searchQuery
@@ -334,25 +342,9 @@ class ArticleScreenViewModel(
     }
 
     fun selectArticle(articleID: String) {
-        if (_article?.id == articleID) {
-            return
-        }
-
         viewModelScope.launchIO {
-            val article = buildArticle(articleID) ?: return@launchIO
-            _article = article
-
             appPreferences.articleID.set(articleID)
-
-            launchIO {
-                markRead(articleID)
-            }
-
-            if (article.fullContent == Article.FullContentState.LOADING) {
-                fullContentJob?.cancel()
-
-                fullContentJob = viewModelScope.launch(Dispatchers.IO) { fetchFullContent(article) }
-            }
+            markRead(articleID)
         }
     }
 
@@ -528,52 +520,9 @@ class ArticleScreenViewModel(
     }
 
     private fun buildArticle(articleID: String): Article? {
-        val article = account.findArticle(articleID = articleID) ?: return null
+        val article = account.findArticleBlocking(articleID = articleID) ?: return null
 
-        val fullContent = if (enableStickyFullContent && article.enableStickyFullContent) {
-            Article.FullContentState.LOADING
-        } else {
-            Article.FullContentState.NONE
-        }
-
-        val content = if (fullContent == Article.FullContentState.LOADING) {
-            ""
-        } else {
-            article.defaultContent
-        }
-
-        return article.copy(
-            read = true,
-            content = content,
-            fullContent = fullContent
-        )
-    }
-
-    fun fetchFullContentAsync(article: Article? = _article) {
-        article ?: return
-
-        viewModelScope.launchIO {
-            if (enableStickyFullContent && !account.isFullContentEnabled(feedID = article.feedID)) {
-                account.enableStickyContent(article.feedID)
-            }
-
-            _article = article.copy(fullContent = Article.FullContentState.LOADING)
-
-            _article?.let { fetchFullContent(it) }
-        }
-    }
-
-    fun resetFullContent() {
-        val article = _article ?: return
-
-        _article = article.copy(
-            content = article.defaultContent,
-            fullContent = Article.FullContentState.NONE
-        )
-
-        if (enableStickyFullContent) {
-            account.disableStickyContent(article.feedID)
-        }
+        return article.copy(read = true)
     }
 
     fun findArticlePages(articleID: String): Flow<ArticlePages?> {
