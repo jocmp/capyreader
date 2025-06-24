@@ -386,7 +386,7 @@ fun ArticleScreen(
                     onNavigateToSettings = onNavigateToSettings,
                     onFilterSelect = selectFilter,
                     onRefreshAll = { completion ->
-                        viewModel.refresh(ArticleFilter.default()) {
+                        viewModel.refreshAll(ArticleFilter.default()) {
                             if (enableMarkReadOnScroll) {
                                 scrollToTop()
                             }
@@ -493,6 +493,7 @@ fun ArticleScreen(
                                         selectedArticleKey = article?.id,
                                         listState = listState,
                                         enableMarkReadOnScroll = enableMarkReadOnScroll,
+                                        refreshingAll = viewModel.refreshingAll,
                                         onMarkAllRead = { range ->
                                             onMarkAllRead(range)
                                         },
