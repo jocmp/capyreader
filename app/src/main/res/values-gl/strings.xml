@@ -254,4 +254,6 @@
     <string name="settings_gestures_improve_talkback_subtitle">Desactiva algúns axustes para mellorar o texto-a-palabra de TalkBack</string>
     <string name="settings_options_reader_pin_top_toolbar">Fixar na barra superior</string>
     <string name="settings_options_reader_show_bottom_toolbar">Mostrar accións na barra inferior</string>
+    <string name="add_account_miniflux_signup_prompt">Non tes unha instancia Miniflux?</string>
+    <string name="add_account_miniflux_signup_link_text">Coñece máis.</string>
 </resources>
