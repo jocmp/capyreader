@@ -68,6 +68,9 @@ class ArticleScreenViewModel(
 
     private var _article by mutableStateOf<Article?>(null)
 
+    var refreshingAll by mutableStateOf(false)
+        private set
+
     val articlesSince = MutableStateFlow<OffsetDateTime>(OffsetDateTime.now())
 
     private var _showUnauthorizedMessage by mutableStateOf(UnauthorizedMessageState.HIDE)
@@ -315,6 +318,18 @@ class ArticleScreenViewModel(
         initialize(filter) {
             updateArticlesSince()
             onComplete()
+        }
+    }
+
+    fun refreshAll(filter: ArticleFilter, onComplete: () -> Unit) {
+        refreshingAll = true
+
+        refresh(filter) {
+            onComplete()
+
+            refreshJob?.invokeOnCompletion {
+                refreshingAll = false
+            }
         }
     }
 
