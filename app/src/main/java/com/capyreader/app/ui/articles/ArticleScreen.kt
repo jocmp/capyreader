@@ -51,8 +51,6 @@ import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
-import com.capyreader.app.ui.articles.detail.ShareLinkDialog
-import com.capyreader.app.ui.articles.detail.rememberArticlePagination
 import com.capyreader.app.ui.articles.feeds.FeedList
 import com.capyreader.app.ui.articles.feeds.FolderActions
 import com.capyreader.app.ui.articles.feeds.LocalFolderActions
@@ -65,7 +63,6 @@ import com.capyreader.app.ui.articles.media.ArticleMediaView
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.SearchState
-import com.capyreader.app.ui.components.rememberSaveableShareLink
 import com.capyreader.app.ui.rememberLocalConnectivity
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
@@ -125,6 +122,15 @@ fun ArticleScreen(
         )
     }
 
+    val scaffoldNavigator = rememberArticleScaffoldNavigator<String>()
+    val articleID = scaffoldNavigator.currentDestination?.contentKey
+
+    val navigateToList = {
+        scope.launchUI {
+            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
+        }
+    }
+
     val onInitialized = { completion: () -> Unit ->
         viewModel.initialize(onComplete = completion)
     }
@@ -132,8 +138,16 @@ fun ArticleScreen(
     val search = ArticleSearch(
         query = searchQuery,
         start = { viewModel.startSearch() },
-        clear = { viewModel.clearSearch() },
-        update = viewModel::updateSearch,
+        clear = {
+            navigateToList()
+            viewModel.clearSearch()
+        },
+        update = {
+            if (articleID != null) {
+                navigateToList()
+            }
+            viewModel.updateSearch(it)
+        },
         state = searchState,
     )
 
@@ -145,7 +159,6 @@ fun ArticleScreen(
             findArticlePages = viewModel::findArticlePages
         ),
     ) {
-
         val openNextFeedOnReadAll = afterReadAll == AfterReadAllBehavior.OPEN_NEXT_FEED
 
         val skipInitialRefresh = refreshInterval == RefreshInterval.MANUALLY_ONLY
@@ -156,9 +169,6 @@ fun ArticleScreen(
         val (isUpdatePasswordDialogOpen, setUpdatePasswordDialogOpen) = rememberSaveable {
             mutableStateOf(false)
         }
-        val coroutineScope = rememberCoroutineScope()
-        val scaffoldNavigator = rememberArticleScaffoldNavigator<String>()
-        val articleID = scaffoldNavigator.currentDestination?.contentKey
         val showMultipleColumns = scaffoldNavigator.scaffoldDirective.maxHorizontalPartitions > 1
         var isRefreshing by remember { mutableStateOf(false) }
 
@@ -179,7 +189,7 @@ fun ArticleScreen(
         }
 
         fun scrollToArticle(index: Int) {
-            coroutineScope.launch {
+            scope.launch {
                 if (index > -1) {
                     val visibleItemsInfo = listState.layoutInfo.visibleItemsInfo
                     val isItemVisible = visibleItemsInfo.any { it.index == index }
@@ -202,7 +212,7 @@ fun ArticleScreen(
         }
 
         fun requestNextFeed() {
-            coroutineScope.launchUI {
+            scope.launchUI {
                 openNextStatus {
                     viewModel.requestNextFeed()
                 }
@@ -215,7 +225,7 @@ fun ArticleScreen(
                     canOpenNextFeed(filter, range)
 
             if (animateMarkRead) {
-                coroutineScope.launchUI {
+                scope.launchUI {
                     openNextStatus {
                         onMarkAllRead(range)
                     }
@@ -226,14 +236,14 @@ fun ArticleScreen(
         }
 
         val scrollToTop = {
-            coroutineScope.launch {
+            scope.launch {
                 listState.scrollToItem(0)
                 resetScrollBehaviorOffset()
             }
         }
 
         val refreshPagination = {
-            coroutineScope.launch {
+            scope.launch {
                 resetScrollBehaviorOffset()
             }
         }
@@ -259,21 +269,21 @@ fun ArticleScreen(
         }
 
         fun openNextList(action: suspend () -> Unit) {
-            coroutineScope.launchUI {
+            scope.launchUI {
                 drawerState.close()
                 openNextStatus(action)
             }
         }
 
         fun clearArticle() {
-            coroutineScope.launchUI {
+            scope.launchUI {
                 scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
             }
             viewModel.clearArticle()
         }
 
         val toggleDrawer = {
-            coroutineScope.launch {
+            scope.launch {
                 if (drawerState.isOpen) {
                     drawerState.close()
                 } else {
@@ -283,19 +293,19 @@ fun ArticleScreen(
         }
 
         fun closeDrawer() {
-            coroutineScope.launchUI {
+            scope.launchUI {
                 drawerState.close()
             }
         }
 
         fun openDrawer() {
-            coroutineScope.launchUI {
+            scope.launchUI {
                 drawerState.open()
             }
         }
 
         val showSnackbar = { message: String ->
-            coroutineScope.launch {
+            scope.launch {
                 snackbarHostState.showSnackbar(
                     message,
                     withDismissAction = true,
@@ -305,7 +315,7 @@ fun ArticleScreen(
         }
 
         val onFeedAdded = { feedID: String ->
-            coroutineScope.launch {
+            scope.launch {
                 openNextList { viewModel.selectFeed(feedID) }
 
                 showSnackbar(addFeedSuccessMessage)
@@ -317,7 +327,7 @@ fun ArticleScreen(
                 focusManager.clearFocus()
             }
 
-            coroutineScope.launchUI {
+            scope.launchUI {
                 viewModel.selectArticle(articleID)
                 scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail, articleID)
             }
@@ -332,7 +342,7 @@ fun ArticleScreen(
         }
 
         val selectStatus = { status: ArticleStatus ->
-            coroutineScope.launchUI {
+            scope.launchUI {
                 openNextStatus { viewModel.selectStatus(status) }
             }
         }
@@ -360,10 +370,6 @@ fun ArticleScreen(
                 closeDrawer()
             }
         }
-//
-//        ArticleHandler(articleID) { id ->
-//            selectArticle(id)
-//        }
 
         ArticleScaffold(
             drawerState = drawerState,
@@ -502,8 +508,6 @@ fun ArticleScreen(
                 }
             },
             detailPane = {
-                val (shareLink, setShareLink) = rememberSaveableShareLink()
-
                 if (articleID.isNullOrBlank() && showMultipleColumns) {
                     Box(
                         contentAlignment = Alignment.Center,
@@ -513,40 +517,22 @@ fun ArticleScreen(
                         CapyPlaceholder()
                     }
                 } else if (articleID != null) {
-                    val pagination = rememberArticlePagination(
-                        articleID,
-                        onSelectArticle = { index, articleID ->
-                            selectArticle(articleID)
-                            scrollToArticle(index)
-                        }
-                    )
                     ArticleView(
                         articleID = articleID,
-                        pagination = pagination,
                         onBackPressed = {
                             clearArticle()
                         },
-                        onToggleRead = viewModel::toggleArticleRead,
-                        onToggleStar = viewModel::toggleArticleStar,
                         enableBackHandler = media == null,
+                        onSelectArticle = { index, articleID ->
+                            selectArticle(articleID)
+                            scrollToArticle(index)
+                        },
                         onScrollToArticle = { index ->
                             scrollToArticle(index)
                         },
                         onNavigateToMedia = {
                             media = it
-                        },
-                        onShareLink = {
-                            setShareLink(it)
-                        },
-                    )
-                }
-
-                if (shareLink != null) {
-                    ShareLinkDialog(
-                        onClose = {
-                            setShareLink(null)
-                        },
-                        link = shareLink,
+                        }
                     )
                 }
             }
@@ -584,7 +570,6 @@ fun ArticleScreen(
             )
         }
 
-
         LaunchedEffect(Unit) {
             if (!isRefreshInitialized) {
                 initialize()
@@ -621,6 +606,10 @@ fun ArticleScreen(
 
         LaunchedEffect(filter) {
             resetScrollBehaviorOffset()
+        }
+
+        ArticleHandler(articleID) { id ->
+            selectArticle(id)
         }
     }
 }
