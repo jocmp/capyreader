@@ -71,10 +71,6 @@ fun AddAccountView(
                 )
                 SyncServiceRow(
                     onSelectService,
-                    source = Source.MINIFLUX,
-                )
-                SyncServiceRow(
-                    onSelectService,
                     source = Source.READER
                 )
             }
