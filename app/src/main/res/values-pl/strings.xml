@@ -256,4 +256,6 @@
     <string name="settings_gestures_improve_talkback_subtitle">Wyłącza niektóre ustawienia aby poprawić zamianę tekstu na mowę TalkBack</string>
     <string name="settings_options_reader_pin_top_toolbar">Przypnij górny pasek narzędzi</string>
     <string name="settings_options_reader_show_bottom_toolbar">Pokaż opcje na dolnym pasku narzędzi</string>
+    <string name="add_account_miniflux_signup_link_text">Dowiedz się więcej.</string>
+    <string name="add_account_miniflux_signup_prompt">Nie masz instancji Miniflux?</string>
 </resources>
