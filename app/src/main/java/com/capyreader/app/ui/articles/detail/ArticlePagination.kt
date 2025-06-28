@@ -5,7 +5,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.capyreader.app.ui.articles.LocalArticleLookup
-import com.jocmp.capy.Article
 import com.jocmp.capy.ArticlePages
 
 data class ArticlePagination(
@@ -33,12 +32,12 @@ data class ArticlePagination(
 
 @Composable
 fun rememberArticlePagination(
-    article: Article,
+    articleID: String,
     onSelectArticle: (index: Int, id: String) -> Unit,
 ): ArticlePagination {
     val lookup = LocalArticleLookup.current
-    val pages by remember(article.id) {
-        lookup.findArticlePages(article.id)
+    val pages by remember(articleID) {
+        lookup.findArticlePages(articleID)
     }.collectAsStateWithLifecycle(null)
 
     return remember(pages, onSelectArticle) {

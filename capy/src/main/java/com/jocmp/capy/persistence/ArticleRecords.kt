@@ -2,6 +2,7 @@ package com.jocmp.capy.persistence
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
+import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleNotification
@@ -30,7 +31,17 @@ internal class ArticleRecords internal constructor(
     val byFeed = ByFeed(database)
     val bySavedSearch = BySavedSearch(database)
 
-    fun find(articleID: String): Article? {
+    fun findArticle(articleID: String): Flow<Article?> {
+        return database.articlesQueries
+            .findBy(
+                articleID = articleID,
+                mapper = ::articleMapper
+            )
+            .asFlow()
+            .mapToOneOrNull(Dispatchers.IO)
+    }
+
+    fun findArticleBlocking(articleID: String): Article? {
         return database.articlesQueries.findBy(
             articleID = articleID,
             mapper = ::articleMapper
