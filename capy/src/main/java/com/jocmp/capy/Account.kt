@@ -205,26 +205,13 @@ data class Account(
         return feedRecords.findFolder(title = title)
     }
 
-    /** @deprecated use findArticle */
-    fun findArticleBlocking(articleID: String): Article? {
+    fun findArticle(articleID: String): Article? {
         if (articleID.isBlank()) {
             return null
         }
 
         val enclosures = enclosureRecords.byArticle(articleID)
-        return articleRecords.findArticleBlocking(articleID = articleID)
-            ?.copy(enclosures = enclosures)
-    }
-
-    fun findArticle(articleID: String): Flow<Article?> {
-        return articleRecords.findArticle(articleID)
-            .map { article ->
-                article ?: return@map null
-
-                val enclosures = enclosureRecords.byArticle(article.id)
-
-                return@map article.copy(enclosures = enclosures)
-            }
+        return articleRecords.find(articleID = articleID)?.copy(enclosures = enclosures)
     }
 
     suspend fun addStar(articleID: String): Result<Unit> {
