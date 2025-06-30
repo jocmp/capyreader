@@ -68,6 +68,7 @@ class ReaderAccountDelegateTest {
         url = "https://feeds.arstechnica.com/arstechnica/index",
         htmlUrl = "https://arstechnica.com",
         iconUrl = "",
+        frssPriority = "main",
     )
 
     private val techTag = Tag(
@@ -94,6 +95,7 @@ class ReaderAccountDelegateTest {
             url = "https://www.theverge.com/rss/index.xml",
             htmlUrl = "https://theverge.com",
             iconUrl = "",
+            frssPriority = "main",
         ),
     )
 
@@ -474,6 +476,7 @@ class ReaderAccountDelegateTest {
             url = "https://www.404media.co/rss/",
             htmlUrl = "https://www.404media.co/",
             iconUrl = "",
+            frssPriority = "main",
         )
 
         stubSubscriptions(subscriptions + listOf(subscription))
