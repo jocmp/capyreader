@@ -3,26 +3,25 @@ package com.capyreader.app.ui.articles
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import com.capyreader.app.preferences.AppPreferences
-import com.jocmp.capy.logging.CapyLog
+import com.jocmp.capy.Article
 import org.koin.compose.koinInject
 
 @Composable
 fun ArticleHandler(
-    articleID: String?,
+    article: Article?,
     appPreferences: AppPreferences = koinInject(),
     onRequestArticle: (articleID: String) -> Unit,
 ) {
-    LaunchedEffect(articleID) {
-        if (!articleID.isNullOrBlank()) {
+    LaunchedEffect(article?.id) {
+        if (article != null) {
             return@LaunchedEffect
         }
 
-        val id = appPreferences.articleID.get()
+        val articleID = appPreferences.articleID.get()
 
-        if (id.isNotBlank()) {
-            CapyLog.info("handler", mapOf("article_id" to id))
+        if (articleID.isNotBlank()) {
             appPreferences.articleID.delete()
-            onRequestArticle(id)
+            onRequestArticle(articleID)
         }
     }
 }

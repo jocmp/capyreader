@@ -32,7 +32,6 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -43,8 +42,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.capyreader.app.common.Media
 import com.capyreader.app.common.openLink
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleVerticalSwipe
@@ -53,80 +50,32 @@ import com.capyreader.app.preferences.ArticleVerticalSwipe.LOAD_FULL_CONTENT
 import com.capyreader.app.preferences.ArticleVerticalSwipe.NEXT_ARTICLE
 import com.capyreader.app.preferences.ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWSER
 import com.capyreader.app.preferences.ArticleVerticalSwipe.PREVIOUS_ARTICLE
-import com.capyreader.app.ui.articles.LocalArticleActions
-import com.capyreader.app.ui.articles.rememberFullContent
-import com.capyreader.app.ui.articles.showFullContentErrorToast
+import com.capyreader.app.ui.articles.LocalFullContent
+import com.capyreader.app.ui.components.WebViewState
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
-import com.capyreader.app.ui.components.rememberSaveableShareLink
-import com.capyreader.app.ui.components.rememberWebViewState
-import com.jocmp.capy.Account
 import com.jocmp.capy.Article
-import com.jocmp.capy.common.launchIO
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArticleView(
-    articleID: String,
-    onSelectArticle: (index: Int, id: String) -> Unit,
+    article: Article,
+    pagination: ArticlePagination,
     onBackPressed: () -> Unit,
+    onToggleRead: () -> Unit,
+    onToggleStar: () -> Unit,
     enableBackHandler: Boolean = false,
     onScrollToArticle: (index: Int) -> Unit,
-    onNavigateToMedia: (media: Media) -> Unit,
-    account: Account = koinInject()
+    webViewState: WebViewState,
 ) {
-    val (shareLink, setShareLink) = rememberSaveableShareLink()
-
-    val pagination = rememberArticlePagination(
-        articleID,
-        onSelectArticle = onSelectArticle,
-    )
-
-    val baseArticle = account.findArticle(articleID)
-        .collectAsStateWithLifecycle(null)
-        .value ?: return
-
-    val context = LocalContext.current
-
-    val onError = { error: Throwable ->
-        context.showFullContentErrorToast(error)
-    }
-
-    val fullContent = rememberFullContent(baseArticle, onError)
-
-    val article = remember(
-        baseArticle.id,
-        baseArticle.starred,
-        baseArticle.read,
-        fullContent.status,
-        fullContent.text
-    ) {
-        baseArticle.copy(
-            content = fullContent.text,
-            fullContent = fullContent.status,
-        )
-    }
-
+    val fullContent = LocalFullContent.current
     val openLink = articleOpenLink(article)
-    val scope = rememberCoroutineScope()
-    val toggleStar = toggleStarAction(article)
-    val toggleRead = toggleReadAction(article)
 
-    val webViewState = rememberWebViewState(
-        key = article.id,
-        onNavigateToMedia = onNavigateToMedia,
-        onRequestLinkDialog = setShareLink
-    )
-
-    fun onToggleFullContent() {
+    val onToggleFullContent = {
         if (article.fullContent == Article.FullContentState.LOADED) {
-            scope.launchIO {
-                fullContent.reset(article)
-            }
+            fullContent.reset()
         } else if (article.fullContent != Article.FullContentState.LOADING) {
-            scope.launchIO {
-                fullContent.fetch(article, onError)
-            }
+            fullContent.fetch()
         }
     }
 
@@ -156,9 +105,9 @@ fun ArticleView(
                     if (!enableBottomBar) {
                         ArticleActions(
                             article = article,
-                            onToggleExtractContent = { onToggleFullContent() },
-                            onToggleRead = toggleRead,
-                            onToggleStar = toggleStar,
+                            onToggleExtractContent = onToggleFullContent,
+                            onToggleRead = onToggleRead,
+                            onToggleStar = onToggleStar,
                         )
                     }
                 }
@@ -174,9 +123,9 @@ fun ArticleView(
                 ) {
                     ArticleActions(
                         article = article,
-                        onToggleExtractContent = { onToggleFullContent() },
-                        onToggleRead = toggleRead,
-                        onToggleStar = toggleStar,
+                        onToggleExtractContent = onToggleFullContent,
+                        onToggleRead = onToggleRead,
+                        onToggleStar = onToggleStar,
                     )
                 }
             }
@@ -217,41 +166,6 @@ fun ArticleView(
 
     BackHandler(enableBackHandler) {
         onBackPressed()
-    }
-
-    if (shareLink != null) {
-        ShareLinkDialog(
-            onClose = {
-                setShareLink(null)
-            },
-            link = shareLink,
-        )
-    }
-}
-
-@Composable
-fun toggleStarAction(article: Article): () -> Unit {
-    val actions = LocalArticleActions.current
-
-    return {
-        if (article.starred) {
-            actions.unstar(article.id)
-        } else {
-            actions.star(article.id)
-        }
-    }
-}
-
-@Composable
-fun toggleReadAction(article: Article): () -> Unit {
-    val actions = LocalArticleActions.current
-
-    return {
-        if (article.read) {
-            actions.markUnread(article.id)
-        } else {
-            actions.markRead(article.id)
-        }
     }
 }
 
