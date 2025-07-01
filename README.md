@@ -43,11 +43,15 @@ When this happens, please submit a separate feature request to support full cont
 
 Check out the [project roadmap](https://github.com/users/jocmp/projects/3) to see what's currently in progress and on deck.
 
-## Translations
+## Contributing
 
-Translations are hosted on [Weblate](https://hosted.weblate.org/projects/capy-reader). Feel free to add or update translations.
+### Translations
 
-If you don't see your language, please [submit a request](https://github.com/jocmp/capyreader/discussions) in Discussions.
+Translations are hosted on [Weblate](https://hosted.weblate.org/projects/capy-reader) and are open to everyone to add or update translations. If you don't see your language, feel free to add it!
+
+### Pull Requests
+
+If you want to create a pull request **please ask first.** This will save time in review, and save your time writing code if it doesn't fit for the app.
 
 ## Building the app
 
