@@ -51,9 +51,11 @@ import com.capyreader.app.preferences.ArticleVerticalSwipe.NEXT_ARTICLE
 import com.capyreader.app.preferences.ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWSER
 import com.capyreader.app.preferences.ArticleVerticalSwipe.PREVIOUS_ARTICLE
 import com.capyreader.app.ui.articles.LocalFullContent
+import com.capyreader.app.ui.articles.audio.AudioEmbedView
 import com.capyreader.app.ui.components.WebViewState
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.jocmp.capy.Article
+import com.jocmp.capy.articles.podcast
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -97,6 +99,11 @@ fun ArticleView(
         bottomScrollBehavior = bottomScrollBehavior,
         enableBottomBar = enableBottomBar,
         topToolbarPreference = topToolbarPreference,
+        audioPlayer = {
+            article.podcast()?.let {
+                AudioEmbedView(podcast = it)
+            }
+        },
         topBar = {
             ArticleTopBar(
                 scrollBehavior = topToolbarPreference.scrollBehavior,
@@ -169,11 +176,13 @@ fun ArticleView(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ArticleViewScaffold(
     topBar: @Composable () -> Unit,
     enableBottomBar: Boolean,
     bottomBar: @Composable () -> Unit,
+    audioPlayer: @Composable () -> Unit,
     reader: @Composable () -> Unit,
     bottomScrollBehavior: BottomAppBarScrollBehavior,
     topToolbarPreference: ToolbarPreferences,
@@ -206,13 +215,19 @@ private fun ArticleViewScaffold(
                 topBar()
             }
 
-            if (enableBottomBar) {
-                Box(
-                    Modifier
-                        .align(Alignment.BottomStart)
-                        .fillMaxWidth()
-                ) {
-                    bottomBar()
+            Column(
+                Modifier
+                    .align(Alignment.BottomStart)
+            ) {
+                audioPlayer()
+
+                if (enableBottomBar) {
+                    Box(
+                        Modifier
+                            .fillMaxWidth()
+                    ) {
+                        bottomBar()
+                    }
                 }
             }
         }
