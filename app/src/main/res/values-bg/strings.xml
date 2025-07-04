@@ -81,7 +81,7 @@
     <string name="relative_time_minutes">%1$dм</string>
     <string name="relative_time_hours">%1$dч</string>
     <string name="relative_time_days">%1$dд</string>
-    <string name="article_share">Сподели статия</string>
+    <string name="article_share">Споделяне на статия</string>
     <string name="extract_full_content">Извличане на пълно съдържание</string>
     <string name="mark_all_read_dialog_description">Маркирай всички елементи като прочетени?</string>
     <string name="mark_all_read_dialog_submit">Потвърди</string>
