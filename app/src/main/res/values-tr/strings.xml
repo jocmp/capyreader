@@ -258,4 +258,6 @@
     <string name="settings_gestures_improve_talkback_title">Talkback\'i iyileştir</string>
     <string name="settings_options_reader_pin_top_toolbar">Üst araç çubuğunu sabitle</string>
     <string name="settings_options_reader_show_bottom_toolbar">Eylemleri alt araç çubuğunda göster</string>
+    <string name="add_account_miniflux_signup_prompt">Miniflux örneğiniz yok mu?</string>
+    <string name="add_account_miniflux_signup_link_text">Daha fazlasını öğrenin.</string>
 </resources>
