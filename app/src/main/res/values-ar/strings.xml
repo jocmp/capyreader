@@ -47,7 +47,7 @@
     <string name="relative_time_minutes">%1$d د</string>
     <string name="relative_time_hours">%1$d س</string>
     <string name="relative_time_days">%1$d ي</string>
-    <string name="article_share">مشاركة المقالة</string>
+    <string name="article_share">شارك المقالة</string>
     <string name="extract_full_content">الحصول على المحتوى بالكامل</string>
     <string name="action_mark_all_read">وضع علامة كمقروء على الكل</string>
     <string name="mark_all_read_dialog_submit">تأكيد</string>

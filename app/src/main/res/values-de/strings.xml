@@ -255,7 +255,7 @@
     <string name="widget_headlines_title">Neueste Schlagzeilen</string>
     <string name="widget_receiver_headlines_title">Schlagzeilen</string>
     <string name="settings_gestures_improve_talkback_title">TalkBack verbessern</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Deaktiviert manche Einstellungen, um TalkBeck Text-zu-Sprache zu verbessern</string>
+    <string name="settings_gestures_improve_talkback_subtitle">Deaktiviert manche Einstellungen, um TalkBack Text-zu-Sprache zu verbessern</string>
     <string name="settings_options_reader_pin_top_toolbar">Obere Werkzeugleiste anpinnen</string>
     <string name="settings_options_reader_show_bottom_toolbar">Aktionen in unterer Werkzeugleiste anzeigen</string>
     <string name="add_account_miniflux_signup_prompt">Sie haben keine Miniflux-Instanz?</string>
