@@ -15,6 +15,10 @@ class StarSyncWorker(
     private val account by inject<Account>()
 
     override suspend fun doWork(): Result {
+        if (SyncWorkers.isMaxAttemptMet(runAttemptCount)) {
+            return Result.failure()
+        }
+
         val articleID = inputData.getString(ARTICLE_KEY) ?: return Result.failure()
         val addStar = inputData.getBoolean(ADD_STAR_KEY, false)
 
