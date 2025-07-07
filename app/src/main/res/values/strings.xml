@@ -269,4 +269,8 @@
     <string name="widget_headlines_account_error">Add an account first</string>
     <string name="settings_gestures_improve_talkback_title">Improve TalkBack</string>
     <string name="settings_gestures_improve_talkback_subtitle">Disables some settings to improve TalkBack text-to-speech</string>
+    <string name="mark_read_position_toolbar">Toolbar</string>
+    <string name="mark_read_position_floating_action_button">Floating Action Button</string>
+    <string name="mark_all_read_button_position">Mark All Read Button Position</string>
+    <string name="settings_display_miscellaneous_title">Miscellaneous</string>
 </resources>
