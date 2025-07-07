@@ -252,7 +252,7 @@ class ArticleScreenViewModel(
             }
 
             if (afterReadAll.value == AfterReadAllBehavior.OPEN_DRAWER) {
-                clearArticlesOnAllRead(onArticlesCleared)
+                onArticlesCleared()
             } else if (afterReadAll.value == AfterReadAllBehavior.OPEN_NEXT_FEED) {
                 openNextFeedOnAllRead(onArticlesCleared, searches, folders, feeds)
             }
@@ -316,7 +316,6 @@ class ArticleScreenViewModel(
 
     fun refresh(filter: ArticleFilter, onComplete: () -> Unit) {
         initialize(filter) {
-            updateArticlesSince()
             onComplete()
         }
     }
@@ -507,7 +506,7 @@ class ArticleScreenViewModel(
     }
 
     private fun updateArticlesSince() {
-        articlesSince.value = OffsetDateTime.now().plusSeconds(1)
+        articlesSince.value = OffsetDateTime.now()
     }
 
     private fun copyFolderCounts(
@@ -619,13 +618,6 @@ class ArticleScreenViewModel(
                     }
                 }
             )
-    }
-
-    private fun clearArticlesOnAllRead(
-        onArticlesCleared: () -> Unit,
-    ) {
-        updateArticlesSince()
-        onArticlesCleared()
     }
 
     private fun openNextFeedOnAllRead(
