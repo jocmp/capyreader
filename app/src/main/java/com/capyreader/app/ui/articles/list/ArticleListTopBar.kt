@@ -37,7 +37,6 @@ import com.capyreader.app.ui.rememberLayoutPreference
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
-import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -48,7 +47,7 @@ fun ArticleListTopBar(
     onRemoveFeed: (feedID: String, completion: (result: Result<Unit>) -> Unit) -> Unit,
     onRemoveFolder: (folderTitle: String, completion: (result: Result<Unit>) -> Unit) -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
-    onMarkAllRead: (MarkRead) -> Unit,
+    onMarkAllRead: () -> Unit,
     search: ArticleSearch,
     filter: ArticleFilter,
     currentFeed: Feed?,
@@ -147,6 +146,7 @@ fun ArticleListTopBar(
                 onRemoveFeed = onRemoveFeed,
                 onRemoveFolder = onRemoveFolder,
                 onRequestSearch = { search.start() },
+                onMarkAllRead = { onMarkAllRead() },
                 hideSearchIcon = enableSearch,
             )
         }

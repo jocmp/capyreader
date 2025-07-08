@@ -10,6 +10,7 @@ import com.capyreader.app.preferences.LayoutPreference
 import com.capyreader.app.preferences.ReaderImageVisibility
 import com.capyreader.app.preferences.ThemeOption
 import com.capyreader.app.ui.articles.ArticleListFontScale
+import com.capyreader.app.ui.articles.MarkReadPosition
 import com.jocmp.capy.Account
 
 class DisplaySettingsViewModel(
@@ -57,6 +58,8 @@ class DisplaySettingsViewModel(
         private set
 
     val improveTalkback = appPreferences.readerOptions.improveTalkback
+
+    val markReadButtonPosition = appPreferences.articleListOptions.markReadButtonPosition
 
     fun updateTheme(theme: ThemeOption) {
         appPreferences.theme.set(theme)
@@ -106,6 +109,10 @@ class DisplaySettingsViewModel(
         appPreferences.layout.set(layout)
 
         this.layout = layout
+    }
+
+    fun updateMarkReadButtonPosition(position: MarkReadPosition) {
+        appPreferences.articleListOptions.markReadButtonPosition.set(position)
     }
 
     fun updateFeedIcons(show: Boolean) {

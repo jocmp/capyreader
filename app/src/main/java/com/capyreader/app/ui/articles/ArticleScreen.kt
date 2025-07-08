@@ -49,6 +49,7 @@ import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.LocalConnectivity
+import com.capyreader.app.ui.LocalMarkAllReadButtonPosition
 import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
 import com.capyreader.app.ui.articles.detail.ShareLinkDialog
@@ -62,6 +63,7 @@ import com.capyreader.app.ui.articles.list.MarkAllReadButton
 import com.capyreader.app.ui.articles.list.PullToNextFeedBox
 import com.capyreader.app.ui.articles.list.resetScrollBehaviorListener
 import com.capyreader.app.ui.articles.media.ArticleMediaView
+import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.SearchState
@@ -111,6 +113,10 @@ fun ArticleScreen(
     val connectivity = rememberLocalConnectivity()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val showOnboarding by viewModel.showOnboarding.collectAsState(false)
+    val markAllReadButtonPosition by appPreferences
+        .articleListOptions
+        .markReadButtonPosition
+        .collectChangesWithCurrent()
 
     val articles = viewModel.articles.collectAsLazyPagingItems()
 
@@ -148,6 +154,7 @@ fun ArticleScreen(
         LocalFolderActions provides folderActions,
         LocalConnectivity provides connectivity,
         LocalArticleLookup provides ArticleLookup(viewModel::findArticlePages),
+        LocalMarkAllReadButtonPosition provides markAllReadButtonPosition
     ) {
 
         val openNextFeedOnReadAll = afterReadAll == AfterReadAllBehavior.OPEN_NEXT_FEED
@@ -400,6 +407,7 @@ fun ArticleScreen(
             },
             listPane = {
                 val keyboardManager = LocalSoftwareKeyboardController.current
+                val markReadPosition = LocalMarkAllReadButtonPosition.current
 
                 Scaffold(
                     modifier = Modifier
@@ -439,7 +447,7 @@ fun ArticleScreen(
                             },
                             scrollBehavior = scrollBehavior,
                             onMarkAllRead = {
-                                markAllRead(it)
+                                markAllRead(MarkRead.All)
                             },
                             search = search,
                             filter = filter,
@@ -453,11 +461,14 @@ fun ArticleScreen(
                         SnackbarHost(hostState = snackbarHostState)
                     },
                     floatingActionButton = {
-                        MarkAllReadButton(
-                            onMarkAllRead = {
-                                markAllRead(MarkRead.All)
-                            },
-                        )
+                        if (markReadPosition == MarkReadPosition.FLOATING_ACTION_BUTTON) {
+                            MarkAllReadButton(
+                                onMarkAllRead = {
+                                    markAllRead(MarkRead.All)
+                                },
+                                position = MarkReadPosition.FLOATING_ACTION_BUTTON,
+                            )
+                        }
                     }
                 ) { innerPadding ->
                     ArticleListScaffold(

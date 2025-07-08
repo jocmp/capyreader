@@ -14,8 +14,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.capyreader.app.R
+import com.capyreader.app.ui.LocalMarkAllReadButtonPosition
 import com.capyreader.app.ui.articles.list.FeedActionMenu
 import com.capyreader.app.ui.articles.list.FolderActionMenu
+import com.capyreader.app.ui.articles.list.MarkAllReadButton
 import com.capyreader.app.ui.fixtures.FeedSample
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
@@ -25,12 +27,13 @@ import com.jocmp.capy.Feed
 fun FilterActionMenu(
     filter: ArticleFilter,
     currentFeed: Feed?,
-//    onMarkAllRead: () -> Unit,
+    onMarkAllRead: () -> Unit,
     onRemoveFeed: (feedID: String, completion: (result: Result<Unit>) -> Unit) -> Unit,
     onRemoveFolder: (folderTitle: String, completion: (result: Result<Unit>) -> Unit) -> Unit,
     onRequestSearch: () -> Unit,
     hideSearchIcon: Boolean,
 ) {
+    val markReadPosition = LocalMarkAllReadButtonPosition.current
     val (expanded, setMenuExpanded) = remember(filter) { mutableStateOf(false) }
 
     val closeMenu = {
@@ -46,6 +49,14 @@ fun FilterActionMenu(
                         contentDescription = stringResource(R.string.filter_action_menu_search_articles)
                     )
                 }
+            }
+
+            if (markReadPosition == MarkReadPosition.TOOLBAR) {
+                MarkAllReadButton(
+                    onMarkAllRead = {
+                        onMarkAllRead()
+                    },
+                )
             }
 
             Box {
@@ -86,7 +97,7 @@ fun FeedActionsPreview(@PreviewParameter(FeedSample::class) feed: Feed) {
     FilterActionMenu(
         onRemoveFeed = { _, _ -> },
         onRemoveFolder = { _, _ -> },
-//        onMarkAllRead = {},
+        onMarkAllRead = {},
         onRequestSearch = {},
         currentFeed = feed,
         filter = ArticleFilter.Feeds(

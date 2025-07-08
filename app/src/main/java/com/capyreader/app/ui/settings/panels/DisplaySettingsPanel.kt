@@ -19,6 +19,7 @@ import com.capyreader.app.preferences.LayoutPreference
 import com.capyreader.app.preferences.ReaderImageVisibility
 import com.capyreader.app.preferences.ThemeOption
 import com.capyreader.app.ui.articles.ArticleListFontScale
+import com.capyreader.app.ui.articles.MarkReadPosition
 import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.components.TextSwitch
@@ -33,6 +34,7 @@ fun DisplaySettingsPanel(
     val pinArticleBars by viewModel.pinArticleBars.collectChangesWithCurrent()
     val improveTalkback by viewModel.improveTalkback.collectChangesWithCurrent()
     val enableBottomBarActions by viewModel.enableBottomBarActions.collectChangesWithCurrent()
+    val markReadButtonPosition by viewModel.markReadButtonPosition.collectChangesWithCurrent()
 
     DisplaySettingsPanelView(
         onUpdateTheme = viewModel::updateTheme,
@@ -48,6 +50,8 @@ fun DisplaySettingsPanel(
         imageVisibility = viewModel.imageVisibility,
         layout = viewModel.layout,
         updateLayoutPreference = viewModel::updateLayoutPreference,
+        markReadButtonPosition = markReadButtonPosition,
+        updateMarkReadButtonPosition = viewModel::updateMarkReadButtonPosition,
         articleListOptions = ArticleListOptions(
             imagePreview = viewModel.imagePreview,
             showSummary = viewModel.showSummary,
@@ -75,8 +79,10 @@ fun DisplaySettingsPanelView(
     enablePinArticleBars: Boolean,
     imageVisibility: ReaderImageVisibility,
     layout: LayoutPreference,
+    markReadButtonPosition: MarkReadPosition,
     updateLayoutPreference: (layout: LayoutPreference) -> Unit,
     updateImageVisibility: (option: ReaderImageVisibility) -> Unit,
+    updateMarkReadButtonPosition: (position: MarkReadPosition) -> Unit,
     theme: ThemeOption,
     articleListOptions: ArticleListOptions,
 ) {
@@ -102,17 +108,6 @@ fun DisplaySettingsPanelView(
                     title = stringResource(R.string.settings_enable_high_contrast_dark_theme)
                 )
             }
-        }
-        FormSection {
-            PreferenceSelect(
-                selected = layout,
-                update = updateLayoutPreference,
-                options = LayoutPreference.entries,
-                label = R.string.layout_preference_label,
-                optionText = {
-                    stringResource(it.translationKey)
-                }
-            )
         }
         FormSection(
             title = stringResource(R.string.settings_reader_title)
@@ -146,8 +141,30 @@ fun DisplaySettingsPanelView(
         FormSection(
             title = stringResource(R.string.settings_article_list_title)
         ) {
+
             ArticleListSettings(
                 options = articleListOptions
+            )
+        }
+
+        FormSection(title = stringResource(R.string.settings_display_miscellaneous_title)) {
+            PreferenceSelect(
+                selected = layout,
+                update = updateLayoutPreference,
+                options = LayoutPreference.entries,
+                label = R.string.layout_preference_label,
+                optionText = {
+                    stringResource(it.translationKey)
+                }
+            )
+            PreferenceSelect(
+                selected = markReadButtonPosition,
+                update = updateMarkReadButtonPosition,
+                options = MarkReadPosition.entries,
+                label = R.string.mark_all_read_button_position,
+                optionText = {
+                    stringResource(it.translationKey)
+                }
             )
         }
 
@@ -185,6 +202,8 @@ private fun DisplaySettingsPanelViewPreview() {
             imageVisibility = ReaderImageVisibility.ALWAYS_SHOW,
             enablePinArticleBars = false,
             enableBottomBarActions = false,
+            markReadButtonPosition = MarkReadPosition.TOOLBAR,
+            updateMarkReadButtonPosition = {}
         )
     }
 }
