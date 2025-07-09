@@ -326,9 +326,7 @@ class ArticleScreenViewModel(
         refresh(filter) {
             onComplete()
 
-            refreshJob?.invokeOnCompletion {
-                refreshingAll = false
-            }
+            refreshingAll = false
         }
     }
 

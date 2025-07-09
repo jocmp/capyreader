@@ -52,8 +52,6 @@ import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.LocalMarkAllReadButtonPosition
 import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
-import com.capyreader.app.ui.articles.detail.ShareLinkDialog
-import com.capyreader.app.ui.articles.detail.rememberArticlePagination
 import com.capyreader.app.ui.articles.feeds.FeedList
 import com.capyreader.app.ui.articles.feeds.FolderActions
 import com.capyreader.app.ui.articles.feeds.LocalFolderActions
@@ -67,8 +65,6 @@ import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.SearchState
-import com.capyreader.app.ui.components.rememberSaveableShareLink
-import com.capyreader.app.ui.components.rememberWebViewState
 import com.capyreader.app.ui.rememberLocalConnectivity
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
@@ -168,7 +164,7 @@ fun ArticleScreen(
             mutableStateOf(false)
         }
         val coroutineScope = rememberCoroutineScope()
-        val scaffoldNavigator = rememberArticleScaffoldNavigator()
+        val scaffoldNavigator = rememberArticleScaffoldNavigator<String>()
         val showMultipleColumns = scaffoldNavigator.scaffoldDirective.maxHorizontalPartitions > 1
         var isRefreshing by remember { mutableStateOf(false) }
 
@@ -184,8 +180,8 @@ fun ArticleScreen(
         }
         val enableMarkReadOnScroll by appPreferences.articleListOptions.markReadOnScroll.collectChangesWithDefault()
 
-        suspend fun navigateToDetail() {
-            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
+        suspend fun navigateToDetail(articleID: String) {
+            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail, articleID)
         }
 
         val listState = rememberSaveable(filter, saver = LazyListState.Saver) {
@@ -327,12 +323,11 @@ fun ArticleScreen(
         }
 
         fun selectArticle(articleID: String) {
-            viewModel.selectArticle(articleID)
             if (search.isActive) {
                 focusManager.clearFocus()
             }
             coroutineScope.launch {
-                navigateToDetail()
+                navigateToDetail(articleID)
             }
         }
 
@@ -519,13 +514,13 @@ fun ArticleScreen(
                 }
             },
             detailPane = {
-                val (shareLink, setShareLink) = rememberSaveableShareLink()
+                val articleID = scaffoldNavigator.currentDestination?.contentKey
 
-                val webViewState = rememberWebViewState(
-                    key = article?.id,
-                    onNavigateToMedia = { media = it },
-                    onRequestLinkDialog = { setShareLink(it) }
-                )
+                LaunchedEffect(articleID) {
+                    if (articleID != null) {
+                        viewModel.selectArticle(articleID)
+                    }
+                }
 
                 if (article == null && showMultipleColumns) {
                     Box(
@@ -536,35 +531,24 @@ fun ArticleScreen(
                         CapyPlaceholder()
                     }
                 } else if (article != null) {
-                    val pagination = rememberArticlePagination(
-                        article,
-                        onSelectArticle = { index, articleID ->
-                            selectArticle(articleID)
-                            scrollToArticle(index)
-                        }
-                    )
                     ArticleView(
                         article = article,
-                        webViewState = webViewState,
-                        pagination = pagination,
                         onBackPressed = {
                             clearArticle()
                         },
                         onToggleRead = viewModel::toggleArticleRead,
                         onToggleStar = viewModel::toggleArticleStar,
                         enableBackHandler = media == null,
+                        onNavigateToMedia = {
+                            media = it
+                        },
                         onScrollToArticle = { index ->
                             scrollToArticle(index)
-                        }
-                    )
-                }
-
-                if (shareLink != null) {
-                    ShareLinkDialog(
-                        onClose = {
-                            setShareLink(null)
                         },
-                        link = shareLink,
+                        onSelectArticle = { index, id ->
+                            selectArticle(id)
+                            scrollToArticle(index)
+                        }
                     )
                 }
             }
