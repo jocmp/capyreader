@@ -108,6 +108,7 @@
     <string name="image_preview_menu_option_none">Ingen</string>
     <string name="add_account_reader_subtitle">Självhanterad hosting av Google Reader API</string>
     <string name="settings_article_list_summary">Sammanfattning</string>
+    <string name="settings_article_list_shorten_titles">Förkorta titlar</string>
     <string name="settings_option_copy_version">Kopiera version</string>
     <string name="empty_onboarding_title">Inga flöden än</string>
     <string name="empty_onboarding_prompt">Kom igång genom att lägga till ett flöde</string>

@@ -149,6 +149,7 @@
     <string name="opml_import_toast_complete">匯入完成</string>
     <string name="theme_menu_label">主題</string>
     <string name="settings_article_list_summary">摘要</string>
+    <string name="settings_article_list_shorten_titles">縮短標題</string>
     <string name="settings_section_version">版本</string>
     <string name="settings_option_full_content_title">保持全文加載</string>
     <string name="refresh_on_start">啓動時</string>

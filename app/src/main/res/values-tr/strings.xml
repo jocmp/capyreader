@@ -31,6 +31,7 @@
     <string name="image_preview_menu_option_small">Küçük</string>
     <string name="settings_article_list_feed_icons">Yayın İkonu</string>
     <string name="settings_article_list_summary">Özet</string>
+    <string name="settings_article_list_shorten_titles">Başlıkları kısalt</string>
     <string name="settings_option_copy_version">Kopya sürümü</string>
     <string name="settings_option_full_content_title">Yapışkan Tam İçerik</string>
     <string name="settings_option_full_content_subtitle">Tam makale içeriğini yükleme seçeneğini hatırla</string>

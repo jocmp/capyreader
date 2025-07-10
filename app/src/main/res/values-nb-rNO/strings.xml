@@ -62,7 +62,8 @@
     <string name="theme_menu_option_light">Lyst</string>
     <string name="theme_menu_option_dark">Mørkt</string>
     <string name="image_preview_menu_option_large">Stor</string>
-    <string name="settings_article_list_summary">Oppsummering</string>
+    <string name="settings_article_list_summary">Sammendrag</string>
+    <string name="settings_article_list_shorten_titles">Forkort titler</string>
     <string name="settings_section_version">Versjon</string>
     <string name="settings_option_copy_version">Kopier versjonsnummer</string>
     <string name="edit_feed_tags">Etiketter</string>

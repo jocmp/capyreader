@@ -85,6 +85,7 @@
     <string name="settings_article_list_feed_name">Feed Name</string>
     <string name="settings_article_list_feed_icons">Feed Icons</string>
     <string name="settings_article_list_summary">Zusammenfassung</string>
+    <string name="settings_article_list_shorten_titles">Titel kürzen</string>
     <string name="settings_section_version">Version</string>
     <string name="settings_option_copy_version">Version kopieren</string>
     <string name="settings_option_full_content_title">Permanent vollständigen Text zeigen</string>
