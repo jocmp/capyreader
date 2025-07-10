@@ -142,6 +142,9 @@ class AppPreferences(context: Context) {
         val imagePreview: Preference<ImagePreview>
             get() = preferenceStore.getEnum("article_display_image_preview", ImagePreview.default)
 
+        val shortenTitles: Preference<Boolean>
+            get() = preferenceStore.getBoolean("article_display_shorten_titles", true)
+
         val fontScale: Preference<ArticleListFontScale>
             get() = preferenceStore.getEnum(
                 "article_display_font_scale",
