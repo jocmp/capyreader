@@ -53,7 +53,7 @@
     <string name="relative_time_minutes">%1$dm</string>
     <string name="relative_time_hours">%1$dh</string>
     <string name="relative_time_days">%1$dd</string>
-    <string name="article_share">Compartilhar Artigo</string>
+    <string name="article_share">Compartilhar artigo</string>
     <string name="extract_full_content">Extrair Conteúdo Completo</string>
     <string name="action_mark_all_read">Marcar todos como lido</string>
     <string name="mark_all_read_dialog_description">Marcar todos os itens como lido?</string>
