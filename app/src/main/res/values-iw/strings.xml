@@ -61,6 +61,5 @@
     <string name="nav_add_feed">הוסף פיד</string>
     <string name="add_feed_network_error">לא ניתן למצוא את הפיד. בדוק את החיבור שלך.</string>
     <string name="edit_feed_error">שגיאה בשמירת הפיד</string>
-    <string name="settings_article_list_summary">סיכום</string>
     <string name="settings_article_list_shorten_titles">קצר כותרות</string>
 </resources>
