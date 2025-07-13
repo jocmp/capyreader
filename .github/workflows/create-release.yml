@@ -13,6 +13,7 @@ jobs:
   build:
     name: Create Release
     runs-on: ubuntu-latest
+    environment: production
     permissions:
       contents: write
     steps:
