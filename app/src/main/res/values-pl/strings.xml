@@ -12,6 +12,7 @@
     <string name="relative_time_hours">%1$dh</string>
     <string name="settings_remove_account_title_local">Usuń konto</string>
     <string name="settings_article_list_summary">Podsumowanie</string>
+    <string name="settings_article_list_shorten_titles">Skróć tytuły</string>
     <string name="settings_panel_notifications_title">Powiadomienia</string>
     <string name="settings_about_title">O aplikacji</string>
     <string name="settings_clear_all_articles_confirm">Potwierdź</string>

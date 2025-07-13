@@ -134,6 +134,7 @@
     <string name="settings_section_refresh">Segarkan</string>
     <string name="opml_import_toast_failed">Impor gagal</string>
     <string name="settings_article_list_summary">Ringkasan</string>
+    <string name="settings_article_list_shorten_titles">Perpendek judul</string>
     <string name="settings_section_version">Versi</string>
     <string name="settings_option_copy_version">Salin versi</string>
     <string name="empty_onboarding_prompt">Mulai dengan menambahkan umpan</string>

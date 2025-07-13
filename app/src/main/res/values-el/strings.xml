@@ -73,6 +73,7 @@
     <string name="filter_action_menu_search_articles">Αναζήτηση άρθρων</string>
     <string name="settings_auto_delete_option_keep_for_three_month">3 μήνες</string>
     <string name="settings_article_list_summary">Σύνοψη</string>
+    <string name="settings_article_list_shorten_titles">Συντόμευση τίτλων</string>
     <string name="settings_section_version">Έκδοση</string>
     <string name="font_option_system_default">Προεπιλογή συστήματος</string>
     <string name="article_font_menu_label">Γραμματοσειρά</string>

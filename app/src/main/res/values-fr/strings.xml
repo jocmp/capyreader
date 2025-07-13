@@ -90,6 +90,7 @@
     <string name="settings_article_list_feed_name">Nom du flux</string>
     <string name="settings_article_list_feed_icons">Icônes du flux</string>
     <string name="settings_article_list_summary">Résumé</string>
+    <string name="settings_article_list_shorten_titles">Raccourcir les titres</string>
     <string name="settings_option_copy_version">Copier la version</string>
     <string name="settings_option_full_content_title">Maintenir l\'affichage complet</string>
     <string name="refresh_on_start">Au démarrage</string>

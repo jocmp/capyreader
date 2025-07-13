@@ -161,6 +161,7 @@
     <string name="image_preview_menu_option_large">Mare</string>
     <string name="image_preview_label">Previzualizare imagine</string>
     <string name="settings_article_list_summary">Rezumat</string>
+    <string name="settings_article_list_shorten_titles">Scurtează titlurile</string>
     <string name="settings_option_copy_version">Copiază versiunea</string>
     <string name="empty_onboarding_prompt">Începe prin a adăuga un flux</string>
     <string name="article_style_options">Opțiuni pentru stilul de font</string>

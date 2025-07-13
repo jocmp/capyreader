@@ -70,7 +70,8 @@ data class ArticleRowOptions(
     val showSummary: Boolean = true,
     val showFeedName: Boolean = true,
     val imagePreview: ImagePreview = ImagePreview.default,
-    val fontScale: ArticleListFontScale = ArticleListFontScale.MEDIUM
+    val fontScale: ArticleListFontScale = ArticleListFontScale.MEDIUM,
+    val shortenTitles: Boolean = true,
 )
 
 @Composable
@@ -106,7 +107,7 @@ fun ArticleRow(
                     if (article.title.isNotBlank()) {
                         Text(
                             article.title,
-                            maxLines = 3,
+                            maxLines = if (options.shortenTitles) 3 else Int.MAX_VALUE,
                             overflow = TextOverflow.Ellipsis,
                             fontWeight = FontWeight.Bold,
                         )

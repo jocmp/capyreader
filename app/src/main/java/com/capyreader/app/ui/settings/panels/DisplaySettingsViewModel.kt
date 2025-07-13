@@ -29,6 +29,8 @@ class DisplaySettingsViewModel(
     private val _showFeedIcons =
         mutableStateOf(appPreferences.articleListOptions.showFeedIcons.get())
 
+    private val _shortenTitles = mutableStateOf(appPreferences.articleListOptions.shortenTitles.get())
+
     var fontScale by mutableStateOf(appPreferences.articleListOptions.fontScale.get())
         private set
 
@@ -45,6 +47,9 @@ class DisplaySettingsViewModel(
 
     val showFeedIcons: Boolean
         get() = _showFeedIcons.value
+
+    val shortenTitles: Boolean
+        get() = _shortenTitles.value
 
     var enableHighContrastDarkTheme by mutableStateOf(appPreferences.enableHighContrastDarkTheme.get())
         private set
@@ -125,5 +130,11 @@ class DisplaySettingsViewModel(
         appPreferences.articleListOptions.showFeedName.set(show)
 
         _showFeedName.value = show
+    }
+
+    fun updateShortenTitles(shortenTitles: Boolean) {
+        appPreferences.articleListOptions.shortenTitles.set(shortenTitles)
+
+        _shortenTitles.value = shortenTitles
     }
 }

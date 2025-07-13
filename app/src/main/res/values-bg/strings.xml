@@ -119,6 +119,7 @@
     <string name="settings_article_list_feed_name">Име на емисия</string>
     <string name="settings_article_list_feed_icons">Икони на емисия</string>
     <string name="settings_article_list_summary">Резюме</string>
+    <string name="settings_article_list_shorten_titles">Съкращаване на заглавията</string>
     <string name="settings_section_version">Версия</string>
     <string name="settings_option_full_content_title">Приложи пълно съдържание</string>
     <string name="refresh_on_start">При стартиране</string>

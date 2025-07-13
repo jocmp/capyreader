@@ -98,6 +98,7 @@
     <string name="settings_article_list_feed_name">إسم الموجز</string>
     <string name="settings_article_list_feed_icons">أيقونة الموجز</string>
     <string name="settings_article_list_summary">ملخص من المقال</string>
+    <string name="settings_article_list_shorten_titles">تقصير العناوين</string>
     <string name="settings_section_version">الإصدار</string>
     <string name="settings_option_copy_version">نسخ الإصدار</string>
     <string name="settings_option_full_content_title">تحميل المحتوى الكامل دائماً</string>
