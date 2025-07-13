@@ -105,12 +105,12 @@ private fun ArticleListSettingsPreview() {
             showFeedIcons = true,
             fontScale = ArticleListFontScale.LARGE,
             showFeedName = false,
+            shortenTitles = true,
             updateImagePreview = {},
             updateSummary = {},
             updateFeedName = {},
             updateFeedIcons = {},
             updateFontScale = {},
-            shortenTitles = true,
             updateShortenTitles = {},
         )
     )
