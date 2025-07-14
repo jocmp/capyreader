@@ -48,11 +48,11 @@ coil-gif = { module = "io.coil-kt:coil-gif", version.ref = "coil" }
 coil-svg = { module = "io.coil-kt:coil-svg", version.ref = "coil" }
 converter-scalars = { module = "com.squareup.retrofit2:converter-scalars", version.ref = "retrofit" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics", version = "19.4.4" }
-jsoup = { module = "org.jsoup:jsoup", version = "1.17.1" }
+jsoup = { module = "org.jsoup:jsoup", version = "1.21.1" }
 koin-android = { module = "io.insert-koin:koin-android" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose" }
 koin-androidx-workmanager = { module = "io.insert-koin:koin-androidx-workmanager" }
-koin-bom = { module = "io.insert-koin:koin-bom", version = "3.5.6" }
+koin-bom = { module = "io.insert-koin:koin-bom", version = "4.1.0" }
 koin-core = { module = "io.insert-koin:koin-core" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
