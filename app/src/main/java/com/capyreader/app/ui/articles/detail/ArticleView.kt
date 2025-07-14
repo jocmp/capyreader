@@ -41,6 +41,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
+import com.capyreader.app.common.Media
 import com.capyreader.app.common.openLink
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleVerticalSwipe
@@ -50,8 +51,9 @@ import com.capyreader.app.preferences.ArticleVerticalSwipe.NEXT_ARTICLE
 import com.capyreader.app.preferences.ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWSER
 import com.capyreader.app.preferences.ArticleVerticalSwipe.PREVIOUS_ARTICLE
 import com.capyreader.app.ui.articles.LocalFullContent
-import com.capyreader.app.ui.components.WebViewState
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
+import com.capyreader.app.ui.components.rememberSaveableShareLink
+import com.capyreader.app.ui.components.rememberWebViewState
 import com.jocmp.capy.Article
 import org.koin.compose.koinInject
 
@@ -65,10 +67,17 @@ fun ArticleView(
     onToggleStar: () -> Unit,
     enableBackHandler: Boolean = false,
     onScrollToArticle: (index: Int) -> Unit,
-    webViewState: WebViewState,
+    onNavigateToMedia: (media: Media) -> Unit,
 ) {
     val fullContent = LocalFullContent.current
     val openLink = articleOpenLink(article)
+    val (shareLink, setShareLink) = rememberSaveableShareLink()
+
+    val webViewState = rememberWebViewState(
+        key = article.id,
+        onNavigateToMedia = onNavigateToMedia,
+        onRequestLinkDialog = { setShareLink(it) }
+    )
 
     val onToggleFullContent = {
         if (article.fullContent == Article.FullContentState.LOADED) {
@@ -163,6 +172,15 @@ fun ArticleView(
 
     BackHandler(enableBackHandler) {
         onBackPressed()
+    }
+
+    if (shareLink != null) {
+        ShareLinkDialog(
+            onClose = {
+                setShareLink(null)
+            },
+            link = shareLink,
+        )
     }
 }
 
