@@ -264,4 +264,8 @@
     <string name="settings_options_reader_show_bottom_toolbar">اعرض الإجراءات على شريط الأدوات السفلي</string>
     <string name="add_account_miniflux_signup_link_text">اكتشف المزيد.</string>
     <string name="add_account_miniflux_signup_prompt">أليس لديك نسخة Miniflux؟</string>
+    <string name="mark_read_position_toolbar">شريط اﻷدوات</string>
+    <string name="mark_read_position_floating_action_button">زر الإجراء العائم</string>
+    <string name="mark_all_read_button_position">موضع زر وضع علامة \"قراءة الكل\"</string>
+    <string name="settings_display_miscellaneous_title">متفرقات</string>
 </resources>
