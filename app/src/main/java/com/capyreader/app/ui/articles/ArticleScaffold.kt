@@ -40,9 +40,9 @@ import com.capyreader.app.ui.theme.CapyTheme
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
-fun ArticleScaffold(
+fun <T> ArticleScaffold(
     drawerState: DrawerState = rememberDrawerState(DrawerValue.Closed),
-    scaffoldNavigator: ThreePaneScaffoldNavigator<Any> = rememberArticleScaffoldNavigator(),
+    scaffoldNavigator: ThreePaneScaffoldNavigator<T> = rememberArticleScaffoldNavigator(),
     drawerPane: @Composable () -> Unit,
     listPane: @Composable () -> Unit,
     detailPane: @Composable () -> Unit,
@@ -120,11 +120,11 @@ private fun <S, T : PaneScaffoldValue<S>> ExtendedPaneScaffoldPaneScope<S, T>.Ar
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
-fun rememberArticleScaffoldNavigator(): ThreePaneScaffoldNavigator<Any> {
+fun <T> rememberArticleScaffoldNavigator(): ThreePaneScaffoldNavigator<T> {
     val layout = rememberLayoutPreference()
 
     if (layout == LayoutPreference.SINGLE) {
-        return rememberListDetailPaneScaffoldNavigator(
+        return rememberListDetailPaneScaffoldNavigator<T>(
             scaffoldDirective = PaneScaffoldDirective(
                 maxHorizontalPartitions = 1,
                 horizontalPartitionSpacerSize = 0.dp,
@@ -137,7 +137,7 @@ fun rememberArticleScaffoldNavigator(): ThreePaneScaffoldNavigator<Any> {
     }
     val directive = calculatePaneScaffoldDirective(currentWindowAdaptiveInfo())
 
-    return rememberListDetailPaneScaffoldNavigator(
+    return rememberListDetailPaneScaffoldNavigator<T>(
         scaffoldDirective = directive.copy(horizontalPartitionSpacerSize = 0.dp)
     )
 }
@@ -147,7 +147,7 @@ fun rememberArticleScaffoldNavigator(): ThreePaneScaffoldNavigator<Any> {
 @Composable
 fun ArticlesLayoutPreview() {
     CapyTheme {
-        ArticleScaffold(
+        ArticleScaffold<String>(
             drawerPane = {
                 Text("List here!")
             },
