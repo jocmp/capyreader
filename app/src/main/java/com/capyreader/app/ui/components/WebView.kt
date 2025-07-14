@@ -113,7 +113,6 @@ class WebViewState(
         val id = article.id
 
         if (htmlId == null || id != htmlId) {
-            webView.visibility = View.INVISIBLE
             webView.isVerticalScrollBarEnabled = enableNativeScroll
         }
 

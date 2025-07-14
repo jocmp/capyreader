@@ -168,7 +168,7 @@ fun ArticleScreen(
             mutableStateOf(false)
         }
         val coroutineScope = rememberCoroutineScope()
-        val scaffoldNavigator = rememberArticleScaffoldNavigator()
+        val scaffoldNavigator = rememberArticleScaffoldNavigator<String>()
         val showMultipleColumns = scaffoldNavigator.scaffoldDirective.maxHorizontalPartitions > 1
         var isRefreshing by remember { mutableStateOf(false) }
 
@@ -184,8 +184,8 @@ fun ArticleScreen(
         }
         val enableMarkReadOnScroll by appPreferences.articleListOptions.markReadOnScroll.collectChangesWithDefault()
 
-        suspend fun navigateToDetail() {
-            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
+        suspend fun navigateToDetail(id: String) {
+            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail, id)
         }
 
         val listState = rememberSaveable(filter, saver = LazyListState.Saver) {
@@ -332,7 +332,7 @@ fun ArticleScreen(
                 focusManager.clearFocus()
             }
             coroutineScope.launch {
-                navigateToDetail()
+                navigateToDetail(articleID)
             }
         }
 
@@ -520,14 +520,15 @@ fun ArticleScreen(
             },
             detailPane = {
                 val (shareLink, setShareLink) = rememberSaveableShareLink()
+                val id = scaffoldNavigator.currentDestination?.contentKey
 
                 val webViewState = rememberWebViewState(
-                    key = article?.id,
+                    key = id,
                     onNavigateToMedia = { media = it },
                     onRequestLinkDialog = { setShareLink(it) }
                 )
 
-                if (article == null && showMultipleColumns) {
+                if (id == null && showMultipleColumns) {
                     Box(
                         contentAlignment = Alignment.Center,
                         modifier = Modifier
@@ -535,7 +536,7 @@ fun ArticleScreen(
                     ) {
                         CapyPlaceholder()
                     }
-                } else if (article != null) {
+                } else if (id != null && article?.id == id) {
                     val pagination = rememberArticlePagination(
                         article,
                         onSelectArticle = { index, articleID ->
