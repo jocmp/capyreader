@@ -74,7 +74,7 @@
     <string name="relative_time_minutes">%1$ddakika</string>
     <string name="extract_full_content">Tam İçeriği Çıkar</string>
     <string name="action_mark_all_read">Tümünü okundu olarak işaretle</string>
-    <string name="article_share">Makaleyi Paylaş</string>
+    <string name="article_share">Makaleyi paylaş</string>
     <string name="article_actions_mark_below_as_read">Aşağıyı okundu olarak işaretleyin</string>
     <string name="mark_all_read_dialog_submit">Onayla</string>
     <string name="article_actions_open_menu">Makale eylemlerini aç</string>
