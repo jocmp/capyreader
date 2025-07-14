@@ -70,14 +70,14 @@
     <string name="settings_article_list_shorten_titles">缩短标题</string>
     <string name="settings_section_version">版本</string>
     <string name="settings_option_copy_version">复制版本</string>
-    <string name="settings_option_full_content_title">固定显示全文内容</string>
+    <string name="settings_option_full_content_title">固定显示完整内容</string>
     <string name="font_option_poppins">Poppins</string>
     <string name="font_option_system_default">系统默认</string>
     <string name="article_font_menu_label">字体</string>
-    <string name="article_font_scale_label">文本大小</string>
+    <string name="article_font_scale_label">字体比例</string>
     <string name="image_error_text">加载图片错误</string>
-    <string name="article_byline">%1$s 于 %2$s %3$s</string>
-    <string name="article_byline_date_only">%1$s 于 %2$s</string>
+    <string name="article_byline">%1$s %2$s %3$s</string>
+    <string name="article_byline_date_only">%1$s %2$s</string>
     <string name="settings_option_auto_delete_articles_subtitle">删除超过 3 个月的已读、未加星标的文章</string>
     <string name="settings_option_auto_delete_articles_title">自动删除文章</string>
     <string name="settings_article_list_feed_name">订阅源名称‌</string>
@@ -99,7 +99,7 @@
     <string name="settings_remove_account_confirm_local">确认</string>
     <string name="account_settings_save_name">名称已保存</string>
     <string name="article_view_mark_as_read">标记为已读</string>
-    <string name="extract_full_content">提取全文内容</string>
+    <string name="extract_full_content">提取完整内容</string>
     <string name="mark_all_read_dialog_submit">确认</string>
     <string name="empty_onboarding_prompt">请添加订阅源以开始</string>
     <plurals name="refresh_hours">
@@ -124,7 +124,7 @@
     <string name="image_preview_label">图片预览</string>
     <string name="font_option_vollkorn">Vollkorn</string>
     <string name="font_option_atkinson_hyperlegible">Atkinson Hyperlegible</string>
-    <string name="settings_option_full_content_subtitle">记住加载完整文章内容的选项</string>
+    <string name="settings_option_full_content_subtitle">记住选择以加载完整文章内容</string>
     <string name="refresh_on_start">启动时</string>
     <string name="article_style_options">字体样式选项</string>
     <string name="opml_exporter_success">导出完成</string>
@@ -150,7 +150,7 @@
     <string name="settings_article_list_title">文章列表</string>
     <string name="settings_clear_all_articles_text">是否确定要从设备中删除所有已读、未加星标的文章？此操作无法撤销。</string>
     <string name="settings_gestures_reader_swipe_up">向上滑动</string>
-    <string name="article_vertical_swipe_full_content">加载全文</string>
+    <string name="article_vertical_swipe_full_content">加载完整内容</string>
     <string name="settings_panel_gestures_title">手势</string>
     <string name="settings_gestures_reader_swipe_down">向下滑动</string>
     <string name="article_vertical_swipe_previous_article">上一篇</string>
@@ -255,12 +255,16 @@
     <string name="actions_share_link">分享链接</string>
     <string name="widget_headlines_account_error">先添加账号</string>
     <string name="widget_headlines_see_more_button">查看更多文章</string>
-    <string name="widget_receiver_headlines_title">头条</string>
-    <string name="widget_headlines_title">最新头条</string>
+    <string name="widget_receiver_headlines_title">标题</string>
+    <string name="widget_headlines_title">最新标题</string>
     <string name="settings_gestures_improve_talkback_subtitle">禁用部分设置以改进 TalkBack 文本转语音功能</string>
     <string name="settings_gestures_improve_talkback_title">改进 TalkBack</string>
     <string name="settings_options_reader_pin_top_toolbar">固定顶部工具栏</string>
     <string name="settings_options_reader_show_bottom_toolbar">在底部工具栏上显示操作</string>
     <string name="add_account_miniflux_signup_link_text">了解更多。</string>
     <string name="add_account_miniflux_signup_prompt">没有 Miniflux 实例？</string>
+    <string name="mark_read_position_toolbar">工具栏</string>
+    <string name="mark_read_position_floating_action_button">浮动操作按钮</string>
+    <string name="mark_all_read_button_position">标记全部已读按钮位置</string>
+    <string name="settings_display_miscellaneous_title">其他</string>
 </resources>
