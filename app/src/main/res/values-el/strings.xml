@@ -41,7 +41,7 @@
     <string name="relative_time_just_now">Μόλις τώρα</string>
     <string name="relative_time_hours">%1$dώ</string>
     <string name="relative_time_days">%1$dη</string>
-    <string name="article_share">Κοινοποίηση Άρθρου</string>
+    <string name="article_share">Κοινοποίηση άρθρου</string>
     <string name="extract_full_content">Εξαγωγή Πλήρους Περιεχομένου</string>
     <string name="action_mark_all_read">Επισήμανση Όλων ως Αναγνωσμένα</string>
     <string name="mark_all_read_dialog_description">Επισήμανση όλων των αντικειμένων ως αναγνωσμένα;</string>
@@ -257,4 +257,8 @@
     <string name="actions_copy_link">Αντιγραφή συνδέσμου</string>
     <string name="actions_share_link">Κοινοποίηση συνδέσμου</string>
     <string name="widget_receiver_headlines_title">Επικεφαλίδες</string>
+    <string name="mark_read_position_toolbar">Γραμμή εργαλείων</string>
+    <string name="mark_read_position_floating_action_button">Αιωρούμενο Κουμπί Ενέργειας</string>
+    <string name="mark_all_read_button_position">Θέση Κουμπιού Επισήμανση Όλων ως Αναγνωσμένα</string>
+    <string name="settings_display_miscellaneous_title">Διάφορα</string>
 </resources>
