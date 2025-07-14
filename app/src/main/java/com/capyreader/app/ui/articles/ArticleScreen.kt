@@ -52,7 +52,6 @@ import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.LocalMarkAllReadButtonPosition
 import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
-import com.capyreader.app.ui.articles.detail.ShareLinkDialog
 import com.capyreader.app.ui.articles.detail.rememberArticlePagination
 import com.capyreader.app.ui.articles.feeds.FeedList
 import com.capyreader.app.ui.articles.feeds.FolderActions
@@ -67,8 +66,6 @@ import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.SearchState
-import com.capyreader.app.ui.components.rememberSaveableShareLink
-import com.capyreader.app.ui.components.rememberWebViewState
 import com.capyreader.app.ui.rememberLocalConnectivity
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
@@ -519,14 +516,8 @@ fun ArticleScreen(
                 }
             },
             detailPane = {
-                val (shareLink, setShareLink) = rememberSaveableShareLink()
                 val id = scaffoldNavigator.currentDestination?.contentKey
 
-                val webViewState = rememberWebViewState(
-                    key = id,
-                    onNavigateToMedia = { media = it },
-                    onRequestLinkDialog = { setShareLink(it) }
-                )
 
                 if (id == null && showMultipleColumns) {
                     Box(
@@ -546,7 +537,6 @@ fun ArticleScreen(
                     )
                     ArticleView(
                         article = article,
-                        webViewState = webViewState,
                         pagination = pagination,
                         onBackPressed = {
                             clearArticle()
@@ -556,16 +546,10 @@ fun ArticleScreen(
                         enableBackHandler = media == null,
                         onScrollToArticle = { index ->
                             scrollToArticle(index)
-                        }
-                    )
-                }
-
-                if (shareLink != null) {
-                    ShareLinkDialog(
-                        onClose = {
-                            setShareLink(null)
                         },
-                        link = shareLink,
+                        onNavigateToMedia = {
+                            media = it
+                        }
                     )
                 }
             }
