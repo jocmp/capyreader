@@ -263,4 +263,8 @@
     <string name="settings_options_reader_show_bottom_toolbar">Näita alumisel tööriistaribal tegevusi</string>
     <string name="add_account_miniflux_signup_prompt">Sul pole Minifluxi serverit?</string>
     <string name="add_account_miniflux_signup_link_text">Lisateavet leiad siit.</string>
+    <string name="mark_read_position_toolbar">Tööriistariba</string>
+    <string name="mark_read_position_floating_action_button">Ujuv tegevuste nupp</string>
+    <string name="mark_all_read_button_position">Kõige loetuks märkimise nupu asukoht</string>
+    <string name="settings_display_miscellaneous_title">Varia</string>
 </resources>
