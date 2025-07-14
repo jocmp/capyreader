@@ -256,4 +256,8 @@
     <string name="settings_options_reader_show_bottom_toolbar">Mostrar accións na barra inferior</string>
     <string name="add_account_miniflux_signup_prompt">Non tes unha instancia Miniflux?</string>
     <string name="add_account_miniflux_signup_link_text">Coñece máis.</string>
+    <string name="mark_read_position_toolbar">Barra de ferramentas</string>
+    <string name="mark_read_position_floating_action_button">Botón flotante de acción</string>
+    <string name="mark_all_read_button_position">Posición do botón para marcar todo lido</string>
+    <string name="settings_display_miscellaneous_title">Varios</string>
 </resources>
