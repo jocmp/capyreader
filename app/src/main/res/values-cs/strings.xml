@@ -118,6 +118,7 @@
     <string name="opml_import_toast_complete">Import dokončen</string>
     <string name="opml_import_notification_cancel">Stop</string>
     <string name="settings_article_list_summary">Souhrn</string>
+    <string name="settings_article_list_shorten_titles">Zkrátit názvy</string>
     <string name="article_style_options">Nastavení fontu</string>
     <string name="font_option_vollkorn">Vollkorn</string>
     <string name="font_option_atkinson_hyperlegible">Atkinson Hyperlegible</string>

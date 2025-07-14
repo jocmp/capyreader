@@ -169,6 +169,7 @@
     <string name="notifications_channel_title_feed_update">Обновления ленты</string>
     <string name="theme_menu_option_system_default">Системная по умолчанию</string>
     <string name="settings_article_list_summary">Резюме</string>
+    <string name="settings_article_list_shorten_titles">Сокращать заголовки</string>
     <string name="settings_option_full_content_title">Закрепить полное содержание</string>
     <string name="font_option_atkinson_hyperlegible">Atkinson Hyperlegible</string>
     <string name="font_option_poppins">Poppins</string>

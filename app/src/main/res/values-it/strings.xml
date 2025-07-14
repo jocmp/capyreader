@@ -69,6 +69,7 @@
     <string name="settings_article_list_feed_name">Nome del feed</string>
     <string name="settings_article_list_feed_icons">Icone dei feed</string>
     <string name="settings_article_list_summary">Sommario</string>
+    <string name="settings_article_list_shorten_titles">Accorciare i titoli</string>
     <string name="settings_panel_display_title">Visualizzazione e aspetto</string>
     <string name="settings_section_version">Versione</string>
     <string name="image_preview_menu_option_large">Grande</string>
