@@ -264,4 +264,8 @@
     <string name="settings_options_reader_show_bottom_toolbar">Покажи действия в долната лента с инструменти</string>
     <string name="add_account_miniflux_signup_prompt">Не разполагате с инстанция на Miniflux?</string>
     <string name="add_account_miniflux_signup_link_text">Научете повече.</string>
+    <string name="mark_read_position_toolbar">Лента с инструменти</string>
+    <string name="mark_read_position_floating_action_button">Плаващ бутон за действие</string>
+    <string name="mark_all_read_button_position">Позиция на бутона „Маркирай всички прочетени“</string>
+    <string name="settings_display_miscellaneous_title">Разни</string>
 </resources>
