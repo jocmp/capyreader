@@ -26,7 +26,6 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.TopAppBarState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
@@ -66,7 +65,6 @@ fun ArticleView(
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
     enableBackHandler: Boolean = false,
-    onScrollToArticle: (index: Int) -> Unit,
     onNavigateToMedia: (media: Media) -> Unit,
 ) {
     val fullContent = LocalFullContent.current
@@ -163,12 +161,6 @@ fun ArticleView(
             }
         },
     )
-
-    LaunchedEffect(pagination.index) {
-        if (pagination.index > -1) {
-            onScrollToArticle(pagination.index)
-        }
-    }
 
     BackHandler(enableBackHandler) {
         onBackPressed()
