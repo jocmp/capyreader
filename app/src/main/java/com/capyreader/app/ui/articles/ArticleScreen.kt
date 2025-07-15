@@ -2,6 +2,7 @@ package com.capyreader.app.ui.articles
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.Crossfade
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
@@ -373,7 +374,7 @@ fun ArticleScreen(
                 )
             },
             listPane = {
-                key(filter) {
+                key(filter) { // Key ensures that the scrollbar will reset between filters
                     val articles = viewModel.articles.collectAsLazyPagingItems()
 
                     val listState = rememberSaveable(
