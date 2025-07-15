@@ -60,6 +60,7 @@ import com.capyreader.app.ui.articles.list.ArticleListTopBar
 import com.capyreader.app.ui.articles.list.EmptyOnboardingView
 import com.capyreader.app.ui.articles.list.MarkAllReadButton
 import com.capyreader.app.ui.articles.list.PullToNextFeedBox
+import com.capyreader.app.ui.articles.list.resetScrollBehaviorListener
 import com.capyreader.app.ui.articles.media.ArticleMediaView
 import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.collectChangesWithDefault
@@ -181,21 +182,14 @@ fun ArticleScreen(
             scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail, id)
         }
 
-        val listState = rememberSaveable(filter, saver = LazyListState.Saver) {
-            LazyListState(0, 0)
-        }
+        var articleIndex by remember { mutableStateOf<Int?>(null) }
 
         fun scrollToArticle(index: Int) {
-            coroutineScope.launch {
-                if (index > -1) {
-                    val visibleItemsInfo = listState.layoutInfo.visibleItemsInfo
-                    val isItemVisible = visibleItemsInfo.any { it.index == index }
+            articleIndex = index
+        }
 
-                    if (!isItemVisible) {
-                        listState.animateScrollToItem(index)
-                    }
-                }
-            }
+        val resetScrollToIndex = {
+            articleIndex = null
         }
 
         suspend fun openNextStatus(action: suspend () -> Unit) {
@@ -224,12 +218,6 @@ fun ArticleScreen(
                 }
             } else {
                 onMarkAllRead(range)
-            }
-        }
-
-        val scrollToTop = {
-            coroutineScope.launch {
-                listState.scrollToItem(0)
             }
         }
 
@@ -374,7 +362,7 @@ fun ArticleScreen(
                     onRefreshAll = { completion ->
                         viewModel.refreshAll(ArticleFilter.default()) {
                             if (enableMarkReadOnScroll) {
-                                scrollToTop()
+                                scrollToArticle(index = 0)
                             }
                             completion()
                         }
@@ -385,13 +373,29 @@ fun ArticleScreen(
                 )
             },
             listPane = {
-                val articles = viewModel.articles.collectAsLazyPagingItems()
-
                 key(filter) {
+                    val articles = viewModel.articles.collectAsLazyPagingItems()
+
+                    val listState = rememberSaveable(
+                        filter,
+                        saver = LazyListState.Saver
+                    ) {
+                        LazyListState(0, 0)
+                    }
+
                     val scrollBehavior = rememberArticleTopBar(filter)
 
                     val keyboardManager = LocalSoftwareKeyboardController.current
                     val markReadPosition = LocalMarkAllReadButtonPosition.current
+
+                    val resetScrollBehavior = resetScrollBehaviorListener(listState, scrollBehavior)
+
+                    val scrollToTop = {
+                        coroutineScope.launch {
+                            listState.scrollToItem(0)
+                            resetScrollBehavior()
+                        }
+                    }
 
                     Scaffold(
                         modifier = Modifier
@@ -499,6 +503,21 @@ fun ArticleScreen(
                             }
                         }
                     }
+
+                    LaunchedEffect(articleIndex) {
+                        val index = articleIndex ?: return@LaunchedEffect
+
+                        if (index > -1) {
+                            val visibleItemsInfo = listState.layoutInfo.visibleItemsInfo
+                            val isItemVisible = visibleItemsInfo.any { it.index == index }
+
+                            if (!isItemVisible) {
+                                listState.animateScrollToItem(index)
+                            }
+                        }
+
+                        resetScrollToIndex()
+                    }
                 }
             },
             detailPane = {
@@ -513,7 +532,7 @@ fun ArticleScreen(
                     ) {
                         CapyPlaceholder()
                     }
-                } else if (id != null && article?.id == id) {
+                } else if (article != null) {
                     val pagination = rememberArticlePagination(
                         article,
                         onSelectArticle = { index, articleID ->
@@ -530,9 +549,6 @@ fun ArticleScreen(
                         onToggleRead = viewModel::toggleArticleRead,
                         onToggleStar = viewModel::toggleArticleStar,
                         enableBackHandler = media == null,
-                        onScrollToArticle = { index ->
-                            scrollToArticle(index)
-                        },
                         onNavigateToMedia = {
                             media = it
                         }
