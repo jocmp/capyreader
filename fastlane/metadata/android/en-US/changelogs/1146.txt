@@ -3,3 +3,4 @@
 • Fix image loading for some sites
 • Update custom full content extractors for notebookcheck.net, sg.news.yahoo.com, and futura-sciences.com
 • Update external dependencies
+• Update translations for Arabic, Bulgarian, Greek, Estonian, French, Galician, Portuguese (Brazil), Turkish, and Chinese (Simplified) thanks to volunteers!
