@@ -50,7 +50,7 @@ class CleanLinksTest {
         val document = html (
             """
             <img src="https://example.com/1.png">
-            <a href=""https://example.com/nested.png">
+            <a href="https://example.com/nested.png">
                 <img src="https://example.com/nested.png">
             </a>
             """
@@ -60,9 +60,8 @@ class CleanLinksTest {
 
         HtmlHelpers.assertEquals(document) {
             """
-            <img src="https://example.com/1.png" fetchpriority="high">
-            <img src="https://example.com/nested.png" loading="lazy">
-            """.trimIndent().lines().joinToString(" ")
+            <img src="https://example.com/1.png" fetchpriority="high">  <img src="https://example.com/nested.png" loading="lazy">
+            """.trimIndent()
         }
     }
 
