@@ -267,4 +267,5 @@
     <string name="mark_read_position_floating_action_button">Ujuv tegevuste nupp</string>
     <string name="mark_all_read_button_position">Kõige loetuks märkimise nupu asukoht</string>
     <string name="settings_display_miscellaneous_title">Varia</string>
+    <string name="settings_article_list_shorten_titles">Lühenda pealkirju</string>
 </resources>
