@@ -316,6 +316,7 @@ class ArticleScreenViewModel(
 
     fun refresh(filter: ArticleFilter, onComplete: () -> Unit) {
         initialize(filter) {
+            updateArticlesSince()
             onComplete()
         }
     }
@@ -506,7 +507,7 @@ class ArticleScreenViewModel(
     }
 
     private fun updateArticlesSince() {
-        articlesSince.value = OffsetDateTime.now()
+        articlesSince.value = OffsetDateTime.now().plusSeconds(1)
     }
 
     private fun copyFolderCounts(
