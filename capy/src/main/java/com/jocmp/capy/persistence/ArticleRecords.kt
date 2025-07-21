@@ -138,9 +138,7 @@ internal class ArticleRecords internal constructor(
             notificationQueries.articlesToNotify(since = since.toEpochSecond()).executeAsList()
 
         articleIDs.forEach {
-            database.transactionWithErrorHandling {
-                notificationQueries.createNotification(article_id = it)
-            }
+            notificationQueries.createNotification(article_id = it)
         }
 
         return notifications(articleIDs)
