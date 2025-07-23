@@ -47,7 +47,7 @@ import kotlinx.coroutines.launch
 import java.time.OffsetDateTime
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class ArticleScreenViewModel(
+class OldArticleScreenViewModel(
     private val account: Account,
     private val appPreferences: AppPreferences,
     private val application: Application,
@@ -528,7 +528,7 @@ class ArticleScreenViewModel(
     }
 
     private fun buildArticle(articleID: String): Article? {
-        val article = account.findArticle(articleID = articleID) ?: return null
+        val article = account.findArticleImmediate(articleID = articleID) ?: return null
 
         val fullContent = if (enableStickyFullContent && article.enableStickyFullContent) {
             Article.FullContentState.LOADING

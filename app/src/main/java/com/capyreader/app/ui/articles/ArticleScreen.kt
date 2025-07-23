@@ -2,7 +2,6 @@ package com.capyreader.app.ui.articles
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.Crossfade
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
@@ -82,9 +81,10 @@ import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun ArticleScreen(
-    viewModel: ArticleScreenViewModel = koinViewModel(),
+fun OldArticlesScreen(
+    viewModel: OldArticleScreenViewModel = koinViewModel(),
     appPreferences: AppPreferences = koinInject(),
+    onNavigateToArticle: (id: String) -> Unit,
     onNavigateToSettings: () -> Unit,
 ) {
     val feeds by viewModel.feeds.collectAsStateWithLifecycle(initialValue = emptyList())
@@ -144,6 +144,13 @@ fun ArticleScreen(
         state = searchState,
     )
 
+    val listState = rememberSaveable(
+        filter,
+        saver = LazyListState.Saver
+    ) {
+        LazyListState(0, 0)
+    }
+
     CompositionLocalProvider(
         LocalFullContent provides fullContent,
         LocalArticleActions provides articleActions,
@@ -152,7 +159,6 @@ fun ArticleScreen(
         LocalArticleLookup provides ArticleLookup(viewModel::findArticlePages),
         LocalMarkAllReadButtonPosition provides markAllReadButtonPosition
     ) {
-
         val openNextFeedOnReadAll = afterReadAll == AfterReadAllBehavior.OPEN_NEXT_FEED
 
         val skipInitialRefresh = refreshInterval == RefreshInterval.MANUALLY_ONLY
@@ -180,7 +186,8 @@ fun ArticleScreen(
         val enableMarkReadOnScroll by appPreferences.articleListOptions.markReadOnScroll.collectChangesWithDefault()
 
         suspend fun navigateToDetail(id: String) {
-            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail, id)
+//            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail, id)
+            onNavigateToArticle(id)
         }
 
         var articleIndex by remember { mutableStateOf<Int?>(null) }
@@ -376,13 +383,6 @@ fun ArticleScreen(
             listPane = {
                 key(filter) { // Key ensures that the scrollbar will reset between filters
                     val articles = viewModel.articles.collectAsLazyPagingItems()
-
-                    val listState = rememberSaveable(
-                        filter,
-                        saver = LazyListState.Saver
-                    ) {
-                        LazyListState(0, 0)
-                    }
 
                     val scrollBehavior = rememberArticleTopBar(filter)
 
@@ -628,7 +628,7 @@ fun ArticleScreen(
 }
 
 @Composable
-fun rememberArticleActions(viewModel: ArticleScreenViewModel): ArticleActions {
+fun rememberArticleActions(viewModel: OldArticleScreenViewModel): ArticleActions {
     return remember {
         ArticleActions(
             markRead = viewModel::markReadAsync,
@@ -640,7 +640,7 @@ fun rememberArticleActions(viewModel: ArticleScreenViewModel): ArticleActions {
 }
 
 @Composable
-fun rememberFolderActions(viewModel: ArticleScreenViewModel): FolderActions {
+fun rememberFolderActions(viewModel: OldArticleScreenViewModel): FolderActions {
     return remember {
         FolderActions(
             updateExpanded = viewModel::expandFolder,
@@ -649,7 +649,7 @@ fun rememberFolderActions(viewModel: ArticleScreenViewModel): FolderActions {
 }
 
 @Composable
-fun rememberFullContent(viewModel: ArticleScreenViewModel): FullContentFetcher {
+fun rememberFullContent(viewModel: OldArticleScreenViewModel): FullContentFetcher {
     return remember {
         FullContentFetcher(
             fetch = viewModel::fetchFullContentAsync,

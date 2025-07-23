@@ -205,13 +205,17 @@ data class Account(
         return feedRecords.findFolder(title = title)
     }
 
-    fun findArticle(articleID: String): Article? {
+    fun findArticleImmediate(articleID: String): Article? {
         if (articleID.isBlank()) {
             return null
         }
 
         val enclosures = enclosureRecords.byArticle(articleID)
-        return articleRecords.find(articleID = articleID)?.copy(enclosures = enclosures)
+        return articleRecords.findImmediate(articleID = articleID)?.copy(enclosures = enclosures)
+    }
+
+    fun findArticle(articleID: String): Flow<Article?> {
+        return articleRecords.find(articleID)
     }
 
     suspend fun addStar(articleID: String): Result<Unit> {

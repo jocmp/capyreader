@@ -298,7 +298,7 @@ class ArticleRecordsTest {
 
         articleRecords.markUnread(articleID = article.id)
 
-        val reloaded = articleRecords.find(articleID = article.id)!!
+        val reloaded = articleRecords.findImmediate(articleID = article.id)!!
 
         assertFalse(reloaded.read)
     }
@@ -310,7 +310,7 @@ class ArticleRecordsTest {
 
         articleRecords.addStar(articleID = article.id)
 
-        val reloaded = articleRecords.find(articleID = article.id)!!
+        val reloaded = articleRecords.findImmediate(articleID = article.id)!!
 
         assertTrue(reloaded.starred)
     }
@@ -322,7 +322,7 @@ class ArticleRecordsTest {
 
         articleRecords.removeStar(articleID = article.id)
 
-        val reloaded = articleRecords.find(articleID = article.id)!!
+        val reloaded = articleRecords.findImmediate(articleID = article.id)!!
 
         assertFalse(reloaded.starred)
     }
@@ -339,10 +339,10 @@ class ArticleRecordsTest {
 
         articleRecords.markAllUnread(articleIDs)
 
-        val articles = articleIDs.map { articleRecords.find(it)!! }
+        val articles = articleIDs.map { articleRecords.findImmediate(it)!! }
 
         assertTrue(articles.none { it.read })
-        assertTrue(articleRecords.find(readArticle.id)!!.read)
+        assertTrue(articleRecords.findImmediate(readArticle.id)!!.read)
     }
 
     @Test
@@ -355,7 +355,7 @@ class ArticleRecordsTest {
         val newArticle = articleFixture.create()
         val oldStarredArticle = articleFixture.create(publishedAt = oldPublishedAt).run {
             articleRecords.markAllStarred(listOf(id))
-            articleRecords.find(id)!!
+            articleRecords.findImmediate(id)!!
         }
 
         assertNotNull(articleRecords.reload(newArticle))
@@ -381,7 +381,7 @@ class ArticleRecordsTest {
         val newReadArticle = articleFixture.create()
         val oldStarredArticle = articleFixture.create(publishedAt = oldPublishedAt).run {
             articleRecords.markAllStarred(listOf(id))
-            articleRecords.find(id)!!
+            articleRecords.findImmediate(id)!!
         }
 
         assertNotNull(articleRecords.reload(newReadArticle))

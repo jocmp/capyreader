@@ -14,5 +14,11 @@ sealed class Route {
     data object Settings : Route()
 
     @Serializable
-    data object Articles : Route()
+    data object OldArticleIndex : Route()
+
+    @Serializable
+    data object Articles: Route()
+
+    @Serializable
+    data class Article(val id: String) : Route()
 }

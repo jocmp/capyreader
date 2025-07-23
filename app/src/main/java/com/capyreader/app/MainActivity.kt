@@ -44,7 +44,7 @@ class MainActivity : BaseActivity() {
         return if (accountID.isBlank()) {
             Route.AddAccount
         } else {
-            Route.Articles
+            Route.OldArticleIndex
         }
     }
 }
