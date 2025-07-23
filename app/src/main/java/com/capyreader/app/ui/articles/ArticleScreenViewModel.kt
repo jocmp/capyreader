@@ -528,7 +528,7 @@ class ArticleScreenViewModel(
     }
 
     private fun buildArticle(articleID: String): Article? {
-        val article = account.findArticle(articleID = articleID) ?: return null
+        val article = account.findArticleImmediate(articleID = articleID) ?: return null
 
         val fullContent = if (enableStickyFullContent && article.enableStickyFullContent) {
             Article.FullContentState.LOADING

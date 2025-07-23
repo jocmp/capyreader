@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.Intent
 import com.jocmp.capy.Article
 
-fun Context.shareArticle(article: Article) {
-    val url = article.url ?: return
+fun Context.shareArticle(article: Article?) {
+    val url = article?.url ?: return
 
     val share = Intent.createChooser(Intent().apply {
         type = "text/plain"

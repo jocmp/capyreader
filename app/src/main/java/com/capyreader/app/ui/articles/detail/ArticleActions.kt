@@ -32,7 +32,7 @@ import com.jocmp.capy.Article.FullContentState.LOADING
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArticleActions(
-    article: Article,
+    article: Article?,
     onToggleExtractContent: () -> Unit,
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
@@ -71,11 +71,11 @@ fun ArticleActions(
         IconButton(
             onClick = { onToggleExtractContent() },
         ) {
-            if (article.fullContent == LOADING) {
+            if (article?.fullContent == LOADING) {
                 FullContentLoadingIcon()
             } else {
                 Icon(
-                    painterResource(id = extractIcon(article.fullContent)),
+                    painterResource(id = extractIcon(article?.fullContent)),
                     contentDescription = stringResource(R.string.extract_full_content)
                 )
             }
@@ -121,23 +121,23 @@ fun ArticleActions(
 }
 
 @Composable
-private fun readIcon(article: Article) =
-    if (article.read) {
+private fun readIcon(article: Article?) =
+    if (article != null && article.read) {
         Icons.Outlined.Circle
     } else {
         Icons.Rounded.Circle
     }
 
 @Composable
-private fun starredIcon(article: Article) =
-    if (article.starred) {
+private fun starredIcon(article: Article?) =
+    if (article != null && article.starred) {
         Icons.Rounded.Star
     } else {
         Icons.Rounded.StarOutline
     }
 
 @Composable
-private fun extractIcon(fullContentState: Article.FullContentState) = when (fullContentState) {
+private fun extractIcon(fullContentState: Article.FullContentState?) = when (fullContentState) {
     LOADED -> R.drawable.icon_article_filled
     Article.FullContentState.ERROR -> R.drawable.icon_article_error
     else -> R.drawable.icon_article_empty

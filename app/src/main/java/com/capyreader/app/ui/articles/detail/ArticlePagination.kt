@@ -9,8 +9,8 @@ import com.jocmp.capy.Article
 import com.jocmp.capy.ArticlePages
 
 data class ArticlePagination(
-    val pages: ArticlePages,
-    val onSelectArticle: (index: Int, id: String) -> Unit,
+    val pages: ArticlePages = ArticlePages(),
+    val onSelectArticle: (index: Int, id: String) -> Unit = { _, _ -> },
 ) {
     val hasPrevious = pages.previous > -1
     val hasNext = pages.next > -1 && pages.next < pages.size
@@ -33,9 +33,11 @@ data class ArticlePagination(
 
 @Composable
 fun rememberArticlePagination(
-    article: Article,
+    article: Article?,
     onSelectArticle: (index: Int, id: String) -> Unit,
 ): ArticlePagination {
+    article ?: return ArticlePagination()
+
     val lookup = LocalArticleLookup.current
     val pages by remember(article.id) {
         lookup.findArticlePages(article.id)

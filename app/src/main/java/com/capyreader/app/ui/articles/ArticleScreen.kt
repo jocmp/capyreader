@@ -2,7 +2,6 @@ package com.capyreader.app.ui.articles
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.Crossfade
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
@@ -53,7 +52,6 @@ import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.LocalMarkAllReadButtonPosition
 import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
-import com.capyreader.app.ui.articles.detail.rememberArticlePagination
 import com.capyreader.app.ui.articles.feeds.FeedList
 import com.capyreader.app.ui.articles.feeds.FolderActions
 import com.capyreader.app.ui.articles.feeds.LocalFolderActions
@@ -522,10 +520,10 @@ fun ArticleScreen(
                 }
             },
             detailPane = {
-                val id = scaffoldNavigator.currentDestination?.contentKey
+                val articleID = scaffoldNavigator.currentDestination?.contentKey
 
 
-                if (id == null && showMultipleColumns) {
+                if (articleID == null && showMultipleColumns) {
                     Box(
                         contentAlignment = Alignment.Center,
                         modifier = Modifier
@@ -533,17 +531,9 @@ fun ArticleScreen(
                     ) {
                         CapyPlaceholder()
                     }
-                } else if (article != null) {
-                    val pagination = rememberArticlePagination(
-                        article,
-                        onSelectArticle = { index, articleID ->
-                            selectArticle(articleID)
-                            scrollToArticle(index)
-                        }
-                    )
+                } else if (articleID != null) {
                     ArticleView(
-                        article = article,
-                        pagination = pagination,
+                        articleID = articleID,
                         onBackPressed = {
                             clearArticle()
                         },
@@ -552,6 +542,10 @@ fun ArticleScreen(
                         enableBackHandler = media == null,
                         onNavigateToMedia = {
                             media = it
+                        },
+                        onSelectArticle = { index, id ->
+                            selectArticle(id)
+                            scrollToArticle(index)
                         }
                     )
                 }

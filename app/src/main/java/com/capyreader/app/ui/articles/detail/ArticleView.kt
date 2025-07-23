@@ -53,31 +53,44 @@ import com.capyreader.app.ui.articles.LocalFullContent
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.capyreader.app.ui.components.rememberSaveableShareLink
 import com.capyreader.app.ui.components.rememberWebViewState
+import com.jocmp.capy.Account
 import com.jocmp.capy.Article
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArticleView(
-    article: Article,
-    pagination: ArticlePagination,
+    articleID: String,
+//    pagination: ArticlePagination,
+    onSelectArticle: (index: Int, id: String) -> Unit,
     onBackPressed: () -> Unit,
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
     enableBackHandler: Boolean = false,
     onNavigateToMedia: (media: Media) -> Unit,
+    account: Account = koinInject()
 ) {
+    val state by account.findArticle(articleID).collectAsState(null)
+    val article = state
+
+    val pagination = rememberArticlePagination(
+        article,
+        onSelectArticle = onSelectArticle
+    )
+
     val fullContent = LocalFullContent.current
     val openLink = articleOpenLink(article)
     val (shareLink, setShareLink) = rememberSaveableShareLink()
 
     val webViewState = rememberWebViewState(
-        key = article.id,
+        key = article?.id,
         onNavigateToMedia = onNavigateToMedia,
         onRequestLinkDialog = { setShareLink(it) }
     )
 
-    val onToggleFullContent = {
+    fun onToggleFullContent() {
+        article ?: return
+
         if (article.fullContent == Article.FullContentState.LOADED) {
             fullContent.reset()
         } else if (article.fullContent != Article.FullContentState.LOADING) {
@@ -95,7 +108,7 @@ fun ArticleView(
         }
     }
 
-    val topToolbarPreference = rememberTopToolbarPreference(articleID = article.id)
+    val topToolbarPreference = rememberTopToolbarPreference(articleID = article?.id)
     val bottomScrollBehavior = exitAlwaysScrollBehavior()
     val enableBottomBar by rememberBottomBarPreference()
 
@@ -111,7 +124,7 @@ fun ArticleView(
                     if (!enableBottomBar) {
                         ArticleActions(
                             article = article,
-                            onToggleExtractContent = onToggleFullContent,
+                            onToggleExtractContent = { onToggleFullContent() },
                             onToggleRead = onToggleRead,
                             onToggleStar = onToggleStar,
                         )
@@ -129,7 +142,7 @@ fun ArticleView(
                 ) {
                     ArticleActions(
                         article = article,
-                        onToggleExtractContent = onToggleFullContent,
+                        onToggleExtractContent = { onToggleFullContent() },
                         onToggleRead = onToggleRead,
                         onToggleStar = onToggleStar,
                     )
@@ -153,10 +166,12 @@ fun ArticleView(
                         pagination.selectNext()
                     },
                 ) {
-                    ArticleReader(
-                        article = article,
-                        webViewState = webViewState,
-                    )
+                    if (article != null) {
+                        ArticleReader(
+                            article = article,
+                            webViewState = webViewState,
+                        )
+                    }
                 }
             }
         },
@@ -309,7 +324,7 @@ fun rememberBottomBarPreference(appPreferences: AppPreferences = koinInject()): 
 
 @Composable
 fun rememberTopToolbarPreference(
-    articleID: String,
+    articleID: String?,
     appPreferences: AppPreferences = koinInject(),
 ): ToolbarPreferences {
     val topBarState = rememberSaveable(articleID, saver = TopAppBarState.Saver) {
@@ -353,13 +368,13 @@ private fun rememberSwipePreferences(appPreferences: AppPreferences = koinInject
 
 @Composable
 fun articleOpenLink(
-    article: Article,
+    article: Article?,
     appPreferences: AppPreferences = koinInject()
 ): () -> Unit {
     val context = LocalContext.current
 
     fun open() {
-        val link = article.url?.toString() ?: return
+        val link = article?.url?.toString() ?: return
 
         context.openLink(Uri.parse(link), appPreferences)
     }
