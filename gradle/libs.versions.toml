@@ -1,19 +1,19 @@
 [versions]
 androidx-paging = "3.3.6"
 coil = "2.7.0"
-coroutines = "1.9.0"
+coroutines = "1.10.2"
 glance-material3 = "1.1.1"
-kotlin = "2.1.0"
-ksp = "2.1.0-1.0.29"
-androidx-lifecycle-runtime = "2.9.1"
+kotlin = "2.2.0"
+ksp = "2.2.0-2.0.2"
+androidx-lifecycle-runtime = "2.9.2"
 androidx-adaptive = "1.1.0"
-mockk = "1.14.2"
-navigation-compose = "2.9.0"
-okhttp = "4.12.0"
-retrofit = "2.11.0"
+mockk = "1.14.5"
+navigation-compose = "2.9.2"
+okhttp = "5.1.0"
+retrofit = "3.0.0"
 paging-compose = "3.3.6"
 sqldelight = "2.1.0"
-zoomable = "0.15.1"
+zoomable = "0.16.0"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version = "1.10.1" }
@@ -21,7 +21,7 @@ androidx-adaptive = { module = "androidx.compose.material3.adaptive:adaptive", v
 androidx-adaptive-layout = { module = "androidx.compose.material3.adaptive:adaptive-layout", version.ref = "androidx-adaptive" }
 androidx-adaptive-navigation = { module = "androidx.compose.material3.adaptive:adaptive-navigation", version.ref = "androidx-adaptive" }
 androidx-browser = { module = "androidx.browser:browser", version = "1.8.0" }
-androidx-compose-bom = { module = "androidx.compose:compose-bom", version = "2025.06.01" }
+androidx-compose-bom = { module = "androidx.compose:compose-bom", version = "2025.07.00" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version = "1.16.0" }
 androidx-glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = "glance-material3" }
 androidx-glance-appwidget-preview = { module = "androidx.glance:glance-appwidget-preview", version.ref = "glance-material3" }
@@ -47,7 +47,7 @@ coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 coil-gif = { module = "io.coil-kt:coil-gif", version.ref = "coil" }
 coil-svg = { module = "io.coil-kt:coil-svg", version.ref = "coil" }
 converter-scalars = { module = "com.squareup.retrofit2:converter-scalars", version.ref = "retrofit" }
-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics", version = "19.4.4" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics", version = "20.0.0" }
 jsoup = { module = "org.jsoup:jsoup", version = "1.21.1" }
 koin-android = { module = "io.insert-koin:koin-android" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose" }
@@ -56,11 +56,11 @@ koin-bom = { module = "io.insert-koin:koin-bom", version = "4.1.0" }
 koin-core = { module = "io.insert-koin:koin-core" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.7.3" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.9.0" }
 lazycolumnscrollbar = { module = "com.github.nanihadesuka:LazyColumnScrollbar", version = "2.2.0" }
-moshi = { module = "com.squareup.moshi:moshi", version = "1.15.1" }
-moshi-converter = { module = "com.squareup.retrofit2:converter-moshi", version = "2.11.0" }
-moshi-kotlin-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version = "1.14.0" }
+moshi = { module = "com.squareup.moshi:moshi", version = "1.15.2" }
+moshi-converter = { module = "com.squareup.retrofit2:converter-moshi", version = "3.0.0" }
+moshi-kotlin-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version = "1.15.2" }
 okhttp-brotli = { module = "com.squareup.okhttp3:okhttp-brotli", version.ref = "okhttp" }
 okhttp-client = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 retrofit2-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
@@ -77,7 +77,7 @@ tests-kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-
 tests-mockk-agent = { module = "io.mockk:mockk-agent", version.ref = "mockk" }
 tests-mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
 tests-mockk-mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
-tests-okhttp-mock = { module = "com.github.gmazzo.okhttp.mock:mock-client", version = "2.0.0" }
+tests-okhttp-mock = { module = "com.github.gmazzo.okhttp.mock:mock-client", version = "2.1.0" }
 zoomable = { module = "me.saket.telephoto:zoomable", version.ref = "zoomable" }
 zoomable-image-coil = { module = "me.saket.telephoto:zoomable-image-coil", version.ref = "zoomable" }
 
