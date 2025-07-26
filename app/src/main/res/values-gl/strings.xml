@@ -260,4 +260,5 @@
     <string name="mark_read_position_floating_action_button">Botón flotante de acción</string>
     <string name="mark_all_read_button_position">Posición do botón para marcar todo lido</string>
     <string name="settings_display_miscellaneous_title">Varios</string>
+    <string name="settings_article_list_shorten_titles">Acurtar títulos</string>
 </resources>

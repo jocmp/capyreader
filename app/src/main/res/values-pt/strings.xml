@@ -76,7 +76,7 @@
     <string name="relative_time_minutes">%1$dm</string>
     <string name="relative_time_hours">%1$dh</string>
     <string name="relative_time_days">%1$dd</string>
-    <string name="article_share">Partilhar Artigo</string>
+    <string name="article_share">Partilhar artigo</string>
     <string name="unauthorized_dialog_description">Houve um problema ao conectar à sua conta. Faça login novamente.</string>
     <string name="unauthorized_dialog_dismiss_text">Depois</string>
     <string name="extract_full_content">Extrair Conteúdo Completo</string>
@@ -257,4 +257,9 @@
     <string name="tag_name_title">Nome</string>
     <string name="add_account_miniflux_signup_link_text">Saiba mais.</string>
     <string name="add_account_miniflux_signup_prompt">Não tem uma instância do Miniflux?</string>
+    <string name="settings_article_list_shorten_titles">Encurtar títulos</string>
+    <string name="mark_read_position_toolbar">Barra de ferramentas</string>
+    <string name="mark_read_position_floating_action_button">Botão de ação flutuante</string>
+    <string name="mark_all_read_button_position">Posição do botão \"Marcar todos como lido\"</string>
+    <string name="settings_display_miscellaneous_title">Diversos</string>
 </resources>
