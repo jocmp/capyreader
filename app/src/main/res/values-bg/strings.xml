@@ -61,10 +61,10 @@
     <string name="dialog_cancel">Отказ</string>
     <string name="feed_action_edit_success">Актуализирана емисия</string>
     <string name="settings">Отвори настройки</string>
-    <string name="settings_remove_account_title_service">Излезте</string>
-    <string name="settings_remove_account_confirm_service">Излезте</string>
+    <string name="settings_remove_account_title_service">Излизане</string>
+    <string name="settings_remove_account_confirm_service">Излизане</string>
     <string name="settings_remove_account_title_local">Изтриване на профил</string>
-    <string name="settings_remove_account_button_service">Излезте</string>
+    <string name="settings_remove_account_button_service">Излизане</string>
     <string name="article_view_star">Звезда</string>
     <string name="article_view_unstar">Премахни звезда</string>
     <string name="refresh_manually_only">Само ръчно</string>
@@ -94,7 +94,7 @@
     <string name="auth_fields_password">Парола</string>
     <string name="auth_fields_email">Имейл</string>
     <string name="auth_fields_show_password">Покажи паролата</string>
-    <string name="auth_fields_log_in_button">Влезте</string>
+    <string name="auth_fields_log_in_button">Влизане</string>
     <string name="crash_reporting_checkbox_title">Активирай отчет за срив</string>
     <string name="settings_section_account">Профил</string>
     <string name="settings_section_import">Внасяне</string>
@@ -260,7 +260,7 @@
     <string name="widget_receiver_headlines_title">Заглавия</string>
     <string name="settings_gestures_improve_talkback_title">Подобряване на TalkBack</string>
     <string name="settings_gestures_improve_talkback_subtitle">Деактивира някои настройки за подобряване на преобразуването на текст в реч на TalkBack</string>
-    <string name="settings_options_reader_pin_top_toolbar">Закачане на горната лента с инструменти</string>
+    <string name="settings_options_reader_pin_top_toolbar">Фиксирана горна лента с инструменти</string>
     <string name="settings_options_reader_show_bottom_toolbar">Покажи действия в долната лента с инструменти</string>
     <string name="add_account_miniflux_signup_prompt">Не разполагате с инстанция на Miniflux?</string>
     <string name="add_account_miniflux_signup_link_text">Научете повече.</string>
