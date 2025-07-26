@@ -4,11 +4,13 @@ import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.unit.dp
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.LocalContext
 import androidx.glance.appwidget.GlanceAppWidget
+import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.provideContent
 import androidx.glance.background
 import androidx.glance.layout.Alignment
@@ -36,23 +38,29 @@ class HeadlinesWidget : GlanceAppWidget() {
 
     @Composable
     private fun Content() {
-        if (viewModel.isLoggedIn) {
-            val articles by viewModel.articles.collectAsState(emptyList())
+        Box(
+            GlanceModifier
+                .fillMaxSize()
+                .cornerRadius(16.dp)
+        ) {
+            if (viewModel.isLoggedIn) {
+                val articles by viewModel.articles.collectAsState(emptyList())
 
-            HeadlinesLayout(articles)
-        } else {
-            val context = LocalContext.current
+                HeadlinesLayout(articles)
+            } else {
+                val context = LocalContext.current
 
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = GlanceModifier
-                    .fillMaxSize()
-                    .background(GlanceTheme.colors.background)
-            ) {
-                Text(
-                    context.getString(R.string.widget_headlines_account_error),
-                    style = TextStyle(color = GlanceTheme.colors.onSurface)
-                )
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = GlanceModifier
+                        .fillMaxSize()
+                        .background(GlanceTheme.colors.background)
+                ) {
+                    Text(
+                        context.getString(R.string.widget_headlines_account_error),
+                        style = TextStyle(color = GlanceTheme.colors.onSurface)
+                    )
+                }
             }
         }
     }
