@@ -258,4 +258,11 @@
     <string name="settings_gestures_improve_talkback_subtitle">Analluogi gosodiadau i wella testun-i-leferydd TalkBack</string>
     <string name="widget_receiver_headlines_title">Penawdau</string>
     <string name="blocked_keywords">Rhestr rhwystro</string>
+    <string name="add_account_miniflux_signup_link_text">Dysgu mwy.</string>
+    <string name="settings_article_list_shorten_titles">Byrhau teitlau</string>
+    <string name="mark_read_position_toolbar">Bar offer</string>
+    <string name="mark_read_position_floating_action_button">Botwm Gweithred Arnofiol</string>
+    <string name="settings_display_miscellaneous_title">Amrywiol</string>
+    <string name="mark_all_read_button_position">Lleoliad y botwm i nodi\'r cwbl fel eu darllen</string>
+    <string name="add_account_miniflux_signup_prompt">Nad oes gennych gweinydd Miniflux?</string>
 </resources>
