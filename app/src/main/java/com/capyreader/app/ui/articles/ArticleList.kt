@@ -52,6 +52,16 @@ fun ArticleList(
     val localDensity = LocalDensity.current
     var listHeight by remember { mutableStateOf(0.dp) }
 
+    val key = { index: Int ->
+        val article = articles[index]
+
+        if (article != null) {
+            "${article.id}:${article.read}:${article.starred}"
+        } else {
+            index
+        }
+    }
+
     LazyScrollbar(state = listState) {
         LazyColumn(
             state = listState,
@@ -61,7 +71,7 @@ fun ArticleList(
                     listHeight = with(localDensity) { coordinates.size.height.toDp() }
                 }
         ) {
-            items(count = articles.itemCount) { index ->
+            items(count = articles.itemCount, key = { key(it) }) { index ->
                 val item = articles[index]
 
                 Box {
