@@ -4,13 +4,12 @@ import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.unit.dp
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
+import androidx.glance.ImageProvider
 import androidx.glance.LocalContext
 import androidx.glance.appwidget.GlanceAppWidget
-import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.provideContent
 import androidx.glance.background
 import androidx.glance.layout.Alignment
@@ -41,7 +40,7 @@ class HeadlinesWidget : GlanceAppWidget() {
         Box(
             GlanceModifier
                 .fillMaxSize()
-                .cornerRadius(16.dp)
+                .background(ImageProvider(R.drawable.background_widget))
         ) {
             if (viewModel.isLoggedIn) {
                 val articles by viewModel.articles.collectAsState(emptyList())
@@ -54,7 +53,6 @@ class HeadlinesWidget : GlanceAppWidget() {
                     contentAlignment = Alignment.Center,
                     modifier = GlanceModifier
                         .fillMaxSize()
-                        .background(GlanceTheme.colors.background)
                 ) {
                     Text(
                         context.getString(R.string.widget_headlines_account_error),

@@ -19,7 +19,6 @@ import androidx.glance.action.clickable
 import androidx.glance.appwidget.action.actionStartActivity
 import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.lazy.items
-import androidx.glance.background
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
 import androidx.glance.layout.Column
@@ -50,9 +49,7 @@ fun HeadlinesLayout(articles: List<Article>) {
     val currentTime = remember { LocalDateTime.now() }
 
     Column(
-        GlanceModifier
-            .fillMaxSize()
-            .background(GlanceTheme.colors.widgetBackground)
+        GlanceModifier.fillMaxSize()
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,

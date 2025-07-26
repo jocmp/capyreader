@@ -13,7 +13,6 @@ import androidx.glance.GlanceTheme
 import androidx.glance.LocalContext
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.action.actionStartActivity
-import androidx.glance.appwidget.cornerRadius
 import androidx.glance.background
 import androidx.glance.layout.Column
 import androidx.glance.layout.Row
@@ -45,7 +44,6 @@ fun ArticleHeadline(article: Article, currentTime: LocalDateTime) {
             .clickable(context.openArticle(article))
             .background(GlanceTheme.colors.secondaryContainer)
             .padding(horizontal = 16.dp, vertical = 8.dp)
-            .cornerRadius(16.dp)
             .fillMaxWidth()
     ) {
         Text(
