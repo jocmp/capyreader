@@ -259,4 +259,8 @@
     <string name="settings_options_reader_show_bottom_toolbar">Pokaż opcje na dolnym pasku narzędzi</string>
     <string name="add_account_miniflux_signup_link_text">Dowiedz się więcej.</string>
     <string name="add_account_miniflux_signup_prompt">Nie masz instancji Miniflux?</string>
+    <string name="mark_read_position_toolbar">Pasek narzędzi</string>
+    <string name="mark_read_position_floating_action_button">Pływający przycisk akcji</string>
+    <string name="mark_all_read_button_position">Pozycja przycisku \"oznacz wszystko jako przeczytane\"</string>
+    <string name="settings_display_miscellaneous_title">Różne</string>
 </resources>
