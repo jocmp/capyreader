@@ -1,0 +1,3 @@
+• Add various performance tweaks on the article list to decrease latency
+• Update translations for Bulgarian, Galician, Italian, Polish, Portuguese, Welsh, and Chinese (Traditional) thanks to volunteers
+• Update external dependencies
