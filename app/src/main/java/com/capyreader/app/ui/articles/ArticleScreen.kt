@@ -119,8 +119,6 @@ fun ArticleScreen(
         .markReadButtonPosition
         .collectChangesWithCurrent()
 
-    val articles = viewModel.articles.collectAsLazyPagingItems()
-
     val onMarkAllRead = { range: MarkRead ->
         viewModel.markAllRead(
             onArticlesCleared = {
@@ -192,6 +190,20 @@ fun ArticleScreen(
         val listState = rememberSaveable(filter, saver = LazyListState.Saver) {
             LazyListState(0, 0)
         }
+
+        val articlesSince by viewModel.articlesSince.collectAsStateWithLifecycle()
+        val unreadSort by viewModel.unreadSort.collectAsStateWithLifecycle()
+
+        val pager = remember(filter, unreadSort, articlesSince, searchQuery) {
+            viewModel.pager(
+                filter,
+                unreadSort,
+                articlesSince,
+                searchQuery,
+            )
+        }
+
+        val articles = pager.flow.collectAsLazyPagingItems()
 
         fun scrollToArticle(index: Int) {
             coroutineScope.launch {
