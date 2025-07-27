@@ -26,10 +26,12 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.TopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -40,7 +42,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
-import com.capyreader.app.common.Media
 import com.capyreader.app.common.openLink
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleVerticalSwipe
@@ -50,9 +51,8 @@ import com.capyreader.app.preferences.ArticleVerticalSwipe.NEXT_ARTICLE
 import com.capyreader.app.preferences.ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWSER
 import com.capyreader.app.preferences.ArticleVerticalSwipe.PREVIOUS_ARTICLE
 import com.capyreader.app.ui.articles.LocalFullContent
+import com.capyreader.app.ui.components.WebViewState
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
-import com.capyreader.app.ui.components.rememberSaveableShareLink
-import com.capyreader.app.ui.components.rememberWebViewState
 import com.jocmp.capy.Article
 import org.koin.compose.koinInject
 
@@ -65,17 +65,11 @@ fun ArticleView(
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
     enableBackHandler: Boolean = false,
-    onNavigateToMedia: (media: Media) -> Unit,
+    onScrollToArticle: (index: Int) -> Unit,
+    webViewState: WebViewState,
 ) {
     val fullContent = LocalFullContent.current
     val openLink = articleOpenLink(article)
-    val (shareLink, setShareLink) = rememberSaveableShareLink()
-
-    val webViewState = rememberWebViewState(
-        key = article.id,
-        onNavigateToMedia = onNavigateToMedia,
-        onRequestLinkDialog = { setShareLink(it) }
-    )
 
     val onToggleFullContent = {
         if (article.fullContent == Article.FullContentState.LOADED) {
@@ -153,26 +147,25 @@ fun ArticleView(
                         pagination.selectNext()
                     },
                 ) {
-                    ArticleReader(
-                        article = article,
-                        webViewState = webViewState,
-                    )
+                    key(article.id) {
+                        ArticleReader(
+                            article = article,
+                            webViewState = webViewState,
+                        )
+                    }
                 }
             }
         },
     )
 
-    BackHandler(enableBackHandler) {
-        onBackPressed()
+    LaunchedEffect(pagination.index) {
+        if (pagination.index > -1) {
+            onScrollToArticle(pagination.index)
+        }
     }
 
-    if (shareLink != null) {
-        ShareLinkDialog(
-            onClose = {
-                setShareLink(null)
-            },
-            link = shareLink,
-        )
+    BackHandler(enableBackHandler) {
+        onBackPressed()
     }
 }
 

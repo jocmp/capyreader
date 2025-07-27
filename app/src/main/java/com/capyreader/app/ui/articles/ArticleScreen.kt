@@ -2,7 +2,6 @@ package com.capyreader.app.ui.articles
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.Crossfade
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
@@ -53,6 +52,7 @@ import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.LocalMarkAllReadButtonPosition
 import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
+import com.capyreader.app.ui.articles.detail.ShareLinkDialog
 import com.capyreader.app.ui.articles.detail.rememberArticlePagination
 import com.capyreader.app.ui.articles.feeds.FeedList
 import com.capyreader.app.ui.articles.feeds.FolderActions
@@ -67,6 +67,8 @@ import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.SearchState
+import com.capyreader.app.ui.components.rememberSaveableShareLink
+import com.capyreader.app.ui.components.rememberWebViewState
 import com.capyreader.app.ui.rememberLocalConnectivity
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
@@ -116,6 +118,8 @@ fun ArticleScreen(
         .markReadButtonPosition
         .collectChangesWithCurrent()
 
+    val articles = viewModel.articles.collectAsLazyPagingItems()
+
     val onMarkAllRead = { range: MarkRead ->
         viewModel.markAllRead(
             onArticlesCleared = {
@@ -164,13 +168,14 @@ fun ArticleScreen(
             mutableStateOf(false)
         }
         val coroutineScope = rememberCoroutineScope()
-        val scaffoldNavigator = rememberArticleScaffoldNavigator<String>()
+        val scaffoldNavigator = rememberArticleScaffoldNavigator()
         val showMultipleColumns = scaffoldNavigator.scaffoldDirective.maxHorizontalPartitions > 1
         var isRefreshing by remember { mutableStateOf(false) }
 
         val snackbarHostState = remember { SnackbarHostState() }
         val addFeedSuccessMessage = stringResource(R.string.add_feed_success)
         val currentFeed = rememberCurrentFeed(filter, allFeeds)
+        val scrollBehavior = rememberArticleTopBar(filter)
         var media by rememberSaveable(saver = Media.Saver) { mutableStateOf(null) }
         val focusManager = LocalFocusManager.current
         val openUpdatePasswordDialog = {
@@ -179,19 +184,31 @@ fun ArticleScreen(
         }
         val enableMarkReadOnScroll by appPreferences.articleListOptions.markReadOnScroll.collectChangesWithDefault()
 
-        suspend fun navigateToDetail(id: String) {
-            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail, id)
+        suspend fun navigateToDetail() {
+            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
         }
 
-        var articleIndex by remember { mutableStateOf<Int?>(null) }
+        val listState = rememberSaveable(filter, saver = LazyListState.Saver) {
+            LazyListState(0, 0)
+        }
 
         fun scrollToArticle(index: Int) {
-            articleIndex = index
+            coroutineScope.launch {
+                if (index > -1) {
+                    val visibleItemsInfo = listState.layoutInfo.visibleItemsInfo
+                    val isItemVisible = visibleItemsInfo.any { it.index == index }
+
+                    if (!isItemVisible) {
+                        listState.animateScrollToItem(index)
+                    }
+                }
+            }
         }
 
-        val resetScrollToIndex = {
-            articleIndex = null
-        }
+        val resetScrollBehaviorOffset = resetScrollBehaviorListener(
+            listState = listState,
+            scrollBehavior = scrollBehavior
+        )
 
         suspend fun openNextStatus(action: suspend () -> Unit) {
             action()
@@ -222,10 +239,24 @@ fun ArticleScreen(
             }
         }
 
+        val scrollToTop = {
+            coroutineScope.launch {
+                listState.scrollToItem(0)
+                resetScrollBehaviorOffset()
+            }
+        }
+
+        val refreshPagination = {
+            coroutineScope.launch {
+                resetScrollBehaviorOffset()
+            }
+        }
+
         fun initialize() {
             isRefreshing = true
             onInitialized {
                 isRefreshing = false
+                refreshPagination()
                 if (!isRefreshInitialized) {
                     setRefreshInitialized(true)
                 }
@@ -237,6 +268,7 @@ fun ArticleScreen(
 
             viewModel.refresh(filter) {
                 isRefreshing = false
+                refreshPagination()
             }
         }
 
@@ -300,7 +332,7 @@ fun ArticleScreen(
                 focusManager.clearFocus()
             }
             coroutineScope.launch {
-                navigateToDetail(articleID)
+                navigateToDetail()
             }
         }
 
@@ -363,7 +395,7 @@ fun ArticleScreen(
                     onRefreshAll = { completion ->
                         viewModel.refreshAll(ArticleFilter.default()) {
                             if (enableMarkReadOnScroll) {
-                                scrollToArticle(index = 0)
+                                scrollToTop()
                             }
                             completion()
                         }
@@ -374,119 +406,99 @@ fun ArticleScreen(
                 )
             },
             listPane = {
-                key(filter) { // Key ensures that the scrollbar will reset between filters
-                    val articles = viewModel.articles.collectAsLazyPagingItems()
+                val keyboardManager = LocalSoftwareKeyboardController.current
+                val markReadPosition = LocalMarkAllReadButtonPosition.current
 
-                    val listState = rememberSaveable(
-                        filter,
-                        saver = LazyListState.Saver
-                    ) {
-                        LazyListState(0, 0)
-                    }
-
-                    val scrollBehavior = rememberArticleTopBar(filter)
-
-                    val keyboardManager = LocalSoftwareKeyboardController.current
-                    val markReadPosition = LocalMarkAllReadButtonPosition.current
-
-                    val resetScrollBehavior = resetScrollBehaviorListener(listState, scrollBehavior)
-
-                    val scrollToTop = {
-                        coroutineScope.launch {
-                            listState.scrollToItem(0)
-                            resetScrollBehavior()
-                        }
-                    }
-
-                    Scaffold(
-                        modifier = Modifier
-                            .nestedScroll(scrollBehavior.nestedScrollConnection)
-                            .nestedScroll(object : NestedScrollConnection {
-                                override fun onPostScroll(
-                                    consumed: Offset,
-                                    available: Offset,
-                                    source: NestedScrollSource
-                                ): Offset {
-                                    if (search.isActive) {
-                                        keyboardManager?.hide()
-                                    }
-
-                                    return Offset.Zero
+                Scaffold(
+                    modifier = Modifier
+                        .nestedScroll(scrollBehavior.nestedScrollConnection)
+                        .nestedScroll(object : NestedScrollConnection {
+                            override fun onPostScroll(
+                                consumed: Offset,
+                                available: Offset,
+                                source: NestedScrollSource
+                            ): Offset {
+                                if (search.isActive) {
+                                    keyboardManager?.hide()
                                 }
-                            }),
-                        topBar = {
-                            ArticleListTopBar(
-                                onRequestJumpToTop = {
-                                    scrollToTop()
-                                },
-                                onNavigateToDrawer = {
-                                    openDrawer()
-                                },
-                                onRemoveFeed = { feedID, completion ->
-                                    viewModel.removeFeed(
-                                        feedID,
-                                        completion
-                                    )
-                                },
-                                onRemoveFolder = { folderTitle, completion ->
-                                    viewModel.removeFolder(
-                                        folderTitle,
-                                        completion
-                                    )
-                                },
-                                scrollBehavior = scrollBehavior,
+
+                                return Offset.Zero
+                            }
+                        }),
+                    topBar = {
+                        ArticleListTopBar(
+                            onRequestJumpToTop = {
+                                scrollToTop()
+                            },
+                            onNavigateToDrawer = {
+                                openDrawer()
+                            },
+                            onRemoveFeed = { feedID, completion ->
+                                viewModel.removeFeed(
+                                    feedID,
+                                    completion
+                                )
+                            },
+                            onRemoveFolder = { folderTitle, completion ->
+                                viewModel.removeFolder(
+                                    folderTitle,
+                                    completion
+                                )
+                            },
+                            scrollBehavior = scrollBehavior,
+                            onMarkAllRead = {
+                                markAllRead(MarkRead.All)
+                            },
+                            search = search,
+                            filter = filter,
+                            currentFeed = currentFeed,
+                            feeds = allFeeds,
+                            savedSearches = savedSearches,
+                            folders = allFolders
+                        )
+                    },
+                    snackbarHost = {
+                        SnackbarHost(hostState = snackbarHostState)
+                    },
+                    floatingActionButton = {
+                        if (markReadPosition == MarkReadPosition.FLOATING_ACTION_BUTTON) {
+                            MarkAllReadButton(
                                 onMarkAllRead = {
                                     markAllRead(MarkRead.All)
                                 },
-                                search = search,
-                                filter = filter,
-                                currentFeed = currentFeed,
-                                feeds = allFeeds,
-                                savedSearches = savedSearches,
-                                folders = allFolders
+                                position = MarkReadPosition.FLOATING_ACTION_BUTTON,
                             )
-                        },
-                        snackbarHost = {
-                            SnackbarHost(hostState = snackbarHostState)
-                        },
-                        floatingActionButton = {
-                            if (markReadPosition == MarkReadPosition.FLOATING_ACTION_BUTTON) {
-                                MarkAllReadButton(
-                                    onMarkAllRead = {
-                                        markAllRead(MarkRead.All)
-                                    },
-                                    position = MarkReadPosition.FLOATING_ACTION_BUTTON,
+                        }
+                    }
+                ) { innerPadding ->
+                    ArticleListScaffold(
+                        padding = innerPadding,
+                        showOnboarding = showOnboarding,
+                        onboarding = {
+                            EmptyOnboardingView {
+                                AddFeedButton(
+                                    onComplete = {
+                                        onFeedAdded(it)
+                                    }
                                 )
                             }
-                        }
-                    ) { innerPadding ->
-                        ArticleListScaffold(
-                            padding = innerPadding,
-                            showOnboarding = showOnboarding,
-                            onboarding = {
-                                EmptyOnboardingView {
-                                    AddFeedButton(
-                                        onComplete = {
-                                            onFeedAdded(it)
-                                        }
-                                    )
-                                }
+                        },
+                    ) {
+                        PullToRefreshBox(
+                            isRefreshing = isRefreshing,
+                            onRefresh = {
+                                refreshFeeds()
                             },
+                            modifier = Modifier.fillMaxSize()
                         ) {
-                            PullToRefreshBox(
-                                isRefreshing = isRefreshing,
-                                onRefresh = {
-                                    refreshFeeds()
+                            PullToNextFeedBox(
+                                modifier = Modifier.fillMaxSize(),
+                                enabled = canSwipeToNextFeed,
+                                onRequestNext = {
+                                    requestNextFeed()
                                 },
-                                modifier = Modifier.fillMaxSize()
                             ) {
-                                PullToNextFeedBox(
-                                    modifier = Modifier.fillMaxSize(),
-                                    enabled = canSwipeToNextFeed,
-                                    onRequestNext = {
-                                        requestNextFeed()
-                                    },
-                                ) {
+                                key(filter) {
                                     ArticleList(
                                         articles = articles,
                                         selectedArticleKey = article?.id,
@@ -504,28 +516,18 @@ fun ArticleScreen(
                             }
                         }
                     }
-
-                    LaunchedEffect(articleIndex) {
-                        val index = articleIndex ?: return@LaunchedEffect
-
-                        if (index > -1) {
-                            val visibleItemsInfo = listState.layoutInfo.visibleItemsInfo
-                            val isItemVisible = visibleItemsInfo.any { it.index == index }
-
-                            if (!isItemVisible) {
-                                listState.animateScrollToItem(index)
-                            }
-                        }
-
-                        resetScrollToIndex()
-                    }
                 }
             },
             detailPane = {
-                val id = scaffoldNavigator.currentDestination?.contentKey
+                val (shareLink, setShareLink) = rememberSaveableShareLink()
 
+                val webViewState = rememberWebViewState(
+                    key = article?.id,
+                    onNavigateToMedia = { media = it },
+                    onRequestLinkDialog = { setShareLink(it) }
+                )
 
-                if (id == null && showMultipleColumns) {
+                if (article == null && showMultipleColumns) {
                     Box(
                         contentAlignment = Alignment.Center,
                         modifier = Modifier
@@ -543,6 +545,7 @@ fun ArticleScreen(
                     )
                     ArticleView(
                         article = article,
+                        webViewState = webViewState,
                         pagination = pagination,
                         onBackPressed = {
                             clearArticle()
@@ -550,9 +553,18 @@ fun ArticleScreen(
                         onToggleRead = viewModel::toggleArticleRead,
                         onToggleStar = viewModel::toggleArticleStar,
                         enableBackHandler = media == null,
-                        onNavigateToMedia = {
-                            media = it
+                        onScrollToArticle = { index ->
+                            scrollToArticle(index)
                         }
+                    )
+                }
+
+                if (shareLink != null) {
+                    ShareLinkDialog(
+                        onClose = {
+                            setShareLink(null)
+                        },
+                        link = shareLink,
                     )
                 }
             }
@@ -623,6 +635,10 @@ fun ArticleScreen(
             enabled = article == null
         ) {
             scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
+        }
+
+        LaunchedEffect(filter) {
+            resetScrollBehaviorOffset()
         }
     }
 }
