@@ -386,13 +386,16 @@ internal class FeedbinAccountDelegate(
                     read = true
                 )
 
-                entry.enclosure?.let {
+                val enclosure = entry.enclosure
+                val enclosureType = enclosure?.enclosure_type
+
+                if (enclosure != null && enclosureType != null) {
                     enclosureRecords.create(
-                        url = it.enclosure_url,
-                        type = it.enclosure_type,
+                        url = enclosure.enclosure_url,
+                        type = enclosureType,
                         articleID = articleID,
-                        itunesDurationSeconds = it.itunes_duration,
-                        itunesImage = it.itunes_image,
+                        itunesDurationSeconds = enclosure.itunes_duration,
+                        itunesImage = enclosure.itunes_image,
                     )
                 }
 
