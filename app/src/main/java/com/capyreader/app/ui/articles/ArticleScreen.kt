@@ -77,6 +77,7 @@ import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
+import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
@@ -117,8 +118,6 @@ fun ArticleScreen(
         .articleListOptions
         .markReadButtonPosition
         .collectChangesWithCurrent()
-
-    val articles = viewModel.articles.collectAsLazyPagingItems()
 
     val onMarkAllRead = { range: MarkRead ->
         viewModel.markAllRead(
@@ -192,6 +191,20 @@ fun ArticleScreen(
             LazyListState(0, 0)
         }
 
+        val articlesSince by viewModel.articlesSince.collectAsStateWithLifecycle()
+        val unreadSort by viewModel.unreadSort.collectAsStateWithLifecycle()
+
+        val pager = remember(filter, unreadSort, articlesSince, searchQuery) {
+            viewModel.pager(
+                filter,
+                unreadSort,
+                articlesSince,
+                searchQuery,
+            )
+        }
+
+        val articles = pager.flow.collectAsLazyPagingItems()
+
         fun scrollToArticle(index: Int) {
             coroutineScope.launch {
                 if (index > -1) {
@@ -211,7 +224,7 @@ fun ArticleScreen(
         )
 
         suspend fun openNextStatus(action: suspend () -> Unit) {
-            action()
+            scope.launchIO { action() }
             scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
         }
 
