@@ -1,0 +1,13 @@
+Assim como o nome sugere, Capy Reader (de 'capivara') é um pequeno leitor de RSS focado em ser amigável e em simplicidade.
+
+Alguns recursos incluem:
+
+• Sincronização via Feedbin, FreshRSS ou diretamente em seu dispositivo
+• Controle artigos lidos e favoritados
+• Pesquisa de artigos
+• Widget de manchetes
+• Notificações
+• Modo de conteúdo completo
+• Modo escuro
+• Suporte para tela grande
+• Importar e exportar seus feeds salvos
