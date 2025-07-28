@@ -1,0 +1,13 @@
+Capy Reader on väike RSS-uudisvoogude lugeja, mille eesmärgiks on olla lihtne ja kergeltkasutatav.
+
+Mõned funktsionaalsused:
+
+• Sünkroniseerimine Feedbini ja FreshRSSi teenuste kaudu või otse nutiseadmest
+• Artiklite loetuks ja lemmikuks märkimine
+• Artiklite otsing
+• Ülevaatlike pealkirjade vidin
+• Teavitused
+• Täissisuvaade
+• Tume kujundus
+• Suurte ekraanide tugi
+• Salvestatud uudisvoogude eksport ja import

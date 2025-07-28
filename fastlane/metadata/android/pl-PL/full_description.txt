@@ -1,0 +1,13 @@
+Capy Reader to mały czytnik RSS skupiony na dostępności i prostocie.
+
+Kilka z funkcji:
+
+• Synchronizacja za pomocą Feedbin, FreshRSS lub bezpośrednio na urządzeniu
+• Śledzenie przeczytanych i oznaczonych gwiazdką artykułów
+• Wyszukiwanie artykułów
+• Widżet z tytułami
+• Powiadomienia
+• Tryb pełnej zawartości
+• Ciemny motyw
+• Obsługa dużych ekranów
+• Import i eksport zapisanych kanałów
