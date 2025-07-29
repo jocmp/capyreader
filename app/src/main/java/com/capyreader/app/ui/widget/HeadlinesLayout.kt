@@ -17,6 +17,7 @@ import androidx.glance.ImageProvider
 import androidx.glance.LocalContext
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.action.actionStartActivity
+import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.lazy.items
 import androidx.glance.background
@@ -53,6 +54,7 @@ fun HeadlinesLayout(articles: List<Article>) {
         GlanceModifier
             .fillMaxSize()
             .background(GlanceTheme.colors.widgetBackground)
+            .cornerRadius(16.dp)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
