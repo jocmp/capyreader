@@ -10,19 +10,20 @@ internal fun articleMapper(
     title: String?,
     author: String?,
     contentHtml: String?,
-    extractedContentURL: String?,
+    extractedContentURL: String? = null,
     url: String?,
     summary: String?,
     imageURL: String?,
     publishedAt: Long?,
     feedTitle: String?,
     faviconURL: String?,
-    enableStickyContent: Boolean = false,
+    enableStickyContent: Boolean,
+    openInBrowser: Boolean,
     feedURL: String?,
     siteURL: String?,
     updatedAt: Long?,
-    starred: Boolean?,
-    read: Boolean?,
+    starred: Boolean,
+    read: Boolean,
 ): Article {
     return Article(
         id = id,
@@ -31,7 +32,6 @@ internal fun articleMapper(
         title = title ?: "",
         author = author,
         contentHTML = contentHtml ?: "",
-        extractedContentURL = optionalURL(extractedContentURL),
         url = optionalURL(url),
         imageURL = imageURL,
         feedURL = feedURL,
@@ -39,10 +39,11 @@ internal fun articleMapper(
         summary = summary ?: "",
         updatedAt = updatedAt!!.toDateTimeFromSeconds,
         publishedAt = publishedAt!!.toDateTimeFromSeconds,
-        read = read ?: false,
-        starred = starred ?: false,
+        read = read,
+        starred = starred,
         feedName = feedTitle ?: "",
-        enableStickyFullContent = enableStickyContent
+        enableStickyFullContent = enableStickyContent,
+        openInBrowser = openInBrowser
     )
 }
 
@@ -57,6 +58,7 @@ internal fun listMapper(
     publishedAt: Long?,
     feedTitle: String?,
     faviconURL: String?,
+    openInBrowser: Boolean,
     updatedAt: Long?,
     starred: Boolean?,
     read: Boolean?,
@@ -68,7 +70,6 @@ internal fun listMapper(
         title = title ?: "",
         author = author,
         contentHtml = "",
-        extractedContentURL = null,
         enableStickyContent = false,
         feedURL = null,
         siteURL = null,
@@ -76,7 +77,7 @@ internal fun listMapper(
         feedTitle = feedTitle,
         imageURL = imageURL,
         summary = if (!summary.isNullOrBlank()) {
-           summary
+            summary
         } else if (title.isNullOrBlank()) {
             url.orEmpty()
         } else {
@@ -86,5 +87,6 @@ internal fun listMapper(
         read = read ?: false,
         starred = starred ?: false,
         publishedAt = publishedAt,
+        openInBrowser = openInBrowser ?: false,
     )
 }

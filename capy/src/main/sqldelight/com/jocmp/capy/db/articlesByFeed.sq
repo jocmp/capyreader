@@ -10,6 +10,7 @@ SELECT
   articles.published_at,
   feeds.title AS feed_title,
   feeds.favicon_url,
+  feeds.open_articles_in_browser,
   article_statuses.updated_at,
   article_statuses.starred,
   article_statuses.read

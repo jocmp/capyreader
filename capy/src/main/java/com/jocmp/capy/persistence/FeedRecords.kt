@@ -57,6 +57,13 @@ internal class FeedRecords(private val database: Database) {
         )
     }
 
+    fun updateOpenInBrowser(feedID: String, enabled: Boolean) {
+        database.feedsQueries.updateOpenInBrowser(
+            enabled = enabled,
+            feedID = feedID
+        )
+    }
+
     fun enableNotifications(feedID: String, enabled: Boolean) {
         database.feedsQueries.enableNotifications(
             enabled = enabled,
@@ -113,6 +120,7 @@ internal class FeedRecords(private val database: Database) {
         faviconURL: String?,
         enableStickyFullContent: Boolean = false,
         enableNotifications: Boolean = false,
+        openArticlesInBrowser: Boolean = false,
         folderName: String? = "",
         expanded: Boolean? = false,
     ) = Feed(
@@ -126,6 +134,7 @@ internal class FeedRecords(private val database: Database) {
         count = 0,
         enableStickyFullContent = enableStickyFullContent,
         enableNotifications = enableNotifications,
+        openArticlesInBrowser = openArticlesInBrowser,
         folderExpanded = expanded ?: false
     )
 }

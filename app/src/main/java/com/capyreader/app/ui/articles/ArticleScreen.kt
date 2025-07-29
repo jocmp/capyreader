@@ -54,8 +54,10 @@ import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
 import com.capyreader.app.ui.articles.detail.ShareLinkDialog
 import com.capyreader.app.ui.articles.detail.rememberArticlePagination
+import com.capyreader.app.ui.articles.feeds.FeedActions
 import com.capyreader.app.ui.articles.feeds.FeedList
 import com.capyreader.app.ui.articles.feeds.FolderActions
+import com.capyreader.app.ui.articles.feeds.LocalFeedActions
 import com.capyreader.app.ui.articles.feeds.LocalFolderActions
 import com.capyreader.app.ui.articles.list.ArticleListTopBar
 import com.capyreader.app.ui.articles.list.EmptyOnboardingView
@@ -79,6 +81,7 @@ import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
+import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
@@ -90,7 +93,7 @@ fun ArticleScreen(
     appPreferences: AppPreferences = koinInject(),
     onNavigateToSettings: () -> Unit,
 ) {
-    val feeds by viewModel.feeds.collectAsStateWithLifecycle(initialValue = emptyList())
+    val feeds by viewModel.topLevelFeeds.collectAsStateWithLifecycle(initialValue = emptyList())
     val allFeeds by viewModel.allFeeds.collectAsStateWithLifecycle(initialValue = emptyList())
     val allFolders by viewModel.allFolders.collectAsStateWithLifecycle(initialValue = emptyList())
     val folders by viewModel.folders.collectAsStateWithLifecycle(initialValue = emptyList())
@@ -111,6 +114,7 @@ fun ArticleScreen(
     val fullContent = rememberFullContent(viewModel)
     val articleActions = rememberArticleActions(viewModel)
     val folderActions = rememberFolderActions(viewModel)
+    val feedActions = rememberFeedActions(viewModel)
     val connectivity = rememberLocalConnectivity()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val showOnboarding by viewModel.showOnboarding.collectAsState(false)
@@ -151,6 +155,7 @@ fun ArticleScreen(
         LocalFullContent provides fullContent,
         LocalArticleActions provides articleActions,
         LocalFolderActions provides folderActions,
+        LocalFeedActions provides feedActions,
         LocalConnectivity provides connectivity,
         LocalArticleLookup provides ArticleLookup(viewModel::findArticlePages),
         LocalMarkAllReadButtonPosition provides markAllReadButtonPosition
@@ -173,7 +178,7 @@ fun ArticleScreen(
 
         val snackbarHostState = remember { SnackbarHostState() }
         val addFeedSuccessMessage = stringResource(R.string.add_feed_success)
-        val currentFeed = rememberCurrentFeed(filter, allFeeds)
+        val currentFeed by viewModel.currentFeed.collectAsStateWithLifecycle(null)
         val scrollBehavior = rememberArticleTopBar(filter)
         var media by rememberSaveable(saver = Media.Saver) { mutableStateOf(null) }
         val focusManager = LocalFocusManager.current
@@ -204,6 +209,14 @@ fun ArticleScreen(
         }
 
         val articles = pager.flow.collectAsLazyPagingItems()
+
+        LaunchedEffect(currentFeed?.title) {
+            val feed = currentFeed
+
+            if (feed != null) {
+                CapyLog.info("feed", mapOf("title" to feed.title))
+            }
+        }
 
         fun scrollToArticle(index: Int) {
             coroutineScope.launch {
@@ -678,6 +691,17 @@ fun rememberFolderActions(viewModel: ArticleScreenViewModel): FolderActions {
 }
 
 @Composable
+fun rememberFeedActions(viewModel: ArticleScreenViewModel): FeedActions{
+    return remember {
+        FeedActions(
+            updateOpenInBrowser = { feedID, openInBrowser ->
+                viewModel.updateOpenInBrowser(feedID, openInBrowser)
+            },
+        )
+    }
+}
+
+@Composable
 fun rememberFullContent(viewModel: ArticleScreenViewModel): FullContentFetcher {
     return remember {
         FullContentFetcher(
@@ -702,17 +726,6 @@ fun isFeedActive(
     return media == null &&
             article == null &&
             !search.isActive
-}
-
-@Composable
-fun rememberCurrentFeed(filter: ArticleFilter, feeds: List<Feed>): Feed? {
-    return remember(filter, feeds) {
-        if (filter is ArticleFilter.Feeds) {
-            feeds.find { it.id == filter.feedID }
-        } else {
-            null
-        }
-    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -324,6 +324,10 @@ data class Account(
         folderRecords.expand(folderName, expanded)
     }
 
+    fun updateOpenInBrowser(feedID: String, enabled: Boolean) {
+        feedRecords.updateOpenInBrowser(feedID, enabled)
+    }
+
     fun disableStickyContent(feedID: String) {
         feedRecords.updateStickyFullContent(enabled = false, feedID = feedID)
     }
