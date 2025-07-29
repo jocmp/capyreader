@@ -6,7 +6,6 @@ import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
 import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.logging.CapyLog
-import java.net.URL
 
 fun Context.openLink(url: Uri, appPreferences: AppPreferences? = null) {
     try {
@@ -24,11 +23,12 @@ fun Context.openLink(url: Uri, appPreferences: AppPreferences? = null) {
     }
 }
 
-fun Context.openLinkExternally(url: URL) {
-    openLinkExternally(Uri.parse(url.toString()))
-}
-
-private fun Context.openLinkExternally(url: Uri) {
-    val intent = Intent(Intent.ACTION_VIEW, url)
-    startActivity(intent)
+fun Context.openLinkExternally(url: Uri) {
+    Intent(Intent.ACTION_VIEW)
+        .apply {
+            data = url
+            addFlags(Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or Intent.FLAG_ACTIVITY_NEW_TASK)
+        }.also { intent ->
+            startActivity(intent)
+        }
 }

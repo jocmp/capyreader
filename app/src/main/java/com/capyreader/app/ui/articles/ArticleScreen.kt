@@ -37,14 +37,17 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.R
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.Saver
+import com.capyreader.app.common.openLink
 import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.refresher.RefreshInterval
@@ -110,6 +113,7 @@ fun ArticleScreen(
         .collectChangesWithDefault(appPreferences.refreshInterval.get())
 
     val canSwipeToNextFeed = nextFilter != null
+    val context = LocalContext.current
 
     val fullContent = rememberFullContent(viewModel)
     val articleActions = rememberArticleActions(viewModel)
@@ -160,7 +164,6 @@ fun ArticleScreen(
         LocalArticleLookup provides ArticleLookup(viewModel::findArticlePages),
         LocalMarkAllReadButtonPosition provides markAllReadButtonPosition
     ) {
-
         val openNextFeedOnReadAll = afterReadAll == AfterReadAllBehavior.OPEN_NEXT_FEED
 
         val skipInitialRefresh = refreshInterval == RefreshInterval.MANUALLY_ONLY
@@ -352,13 +355,25 @@ fun ArticleScreen(
             }
         }
 
+        fun setArticle(articleID: String, onComplete: (article: Article) -> Unit = {}) {
+            viewModel.selectArticle(articleID, onComplete)
+        }
+
         fun selectArticle(articleID: String) {
-            viewModel.selectArticle(articleID)
-            if (search.isActive) {
-                focusManager.clearFocus()
-            }
-            coroutineScope.launch {
-                navigateToDetail()
+            setArticle(articleID) { nextArticle ->
+                if (search.isActive) {
+                    focusManager.clearFocus()
+                }
+
+                val url = nextArticle.url
+                if (nextArticle.openInBrowser && url != null) {
+                    clearArticle()
+                    context.openLink(url.toString().toUri(), appPreferences)
+                } else {
+                    coroutineScope.launch {
+                        navigateToDetail()
+                    }
+                }
             }
         }
 
@@ -565,7 +580,7 @@ fun ArticleScreen(
                     val pagination = rememberArticlePagination(
                         article,
                         onSelectArticle = { index, articleID ->
-                            selectArticle(articleID)
+                            setArticle(articleID)
                             scrollToArticle(index)
                         }
                     )
@@ -691,7 +706,7 @@ fun rememberFolderActions(viewModel: ArticleScreenViewModel): FolderActions {
 }
 
 @Composable
-fun rememberFeedActions(viewModel: ArticleScreenViewModel): FeedActions{
+fun rememberFeedActions(viewModel: ArticleScreenViewModel): FeedActions {
     return remember {
         FeedActions(
             updateOpenInBrowser = { feedID, openInBrowser ->

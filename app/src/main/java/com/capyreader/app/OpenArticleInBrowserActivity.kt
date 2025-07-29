@@ -1,16 +1,16 @@
 package com.capyreader.app
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
+import com.capyreader.app.common.openLinkExternally
 import com.capyreader.app.notifications.NotificationHelper
 import com.capyreader.app.notifications.NotificationHelper.Companion.ARTICLE_ID_KEY
 import com.capyreader.app.ui.widget.WidgetUpdater
 import kotlinx.coroutines.launch
 
-class OpenArticleInBrowserActivity: AppCompatActivity() {
+class OpenArticleInBrowserActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -26,8 +26,7 @@ class OpenArticleInBrowserActivity: AppCompatActivity() {
         }
 
         if (articleUrl != null) {
-            val browserIntent = Intent(Intent.ACTION_VIEW, articleUrl.toUri())
-            startActivity(browserIntent)
+            openLinkExternally(articleUrl.toUri())
         }
 
         finish()

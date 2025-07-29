@@ -338,7 +338,7 @@ class ArticleScreenViewModel(
         }
     }
 
-    fun selectArticle(articleID: String) {
+    fun selectArticle(articleID: String, onComplete: (article: Article) -> Unit = {}) {
         if (_article?.id == articleID) {
             return
         }
@@ -351,6 +351,10 @@ class ArticleScreenViewModel(
 
             launchIO {
                 markRead(articleID)
+            }
+
+            launchUI {
+                onComplete(article)
             }
 
             if (article.fullContent == Article.FullContentState.LOADING) {
