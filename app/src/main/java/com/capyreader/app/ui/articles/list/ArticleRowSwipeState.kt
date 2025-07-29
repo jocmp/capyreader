@@ -12,6 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import com.capyreader.app.R
 import com.capyreader.app.common.asState
 import com.capyreader.app.common.openLinkExternally
@@ -81,7 +82,6 @@ private fun swipeActions(article: Article, option: RowSwipeOption): List<SwipeAc
     )
 }
 
-
 private fun Context.openExternally(article: Article, actions: ArticleActions) =
     ArticleAction(
         R.drawable.icon_open_in_new,
@@ -91,5 +91,5 @@ private fun Context.openExternally(article: Article, actions: ArticleActions) =
 
         actions.markRead(article.id)
 
-        openLinkExternally(url)
+        openLinkExternally(url.toString().toUri())
     }

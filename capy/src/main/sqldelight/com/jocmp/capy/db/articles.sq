@@ -4,6 +4,7 @@ SELECT
   feeds.title AS feed_title,
   feeds.favicon_url,
   feeds.enable_sticky_full_content,
+  feeds.open_articles_in_browser,
   feeds.feed_url,
   feeds.site_url,
   article_statuses.updated_at,

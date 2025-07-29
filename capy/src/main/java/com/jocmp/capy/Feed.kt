@@ -15,5 +15,6 @@ data class Feed(
     override val count: Long = 0,
     val enableStickyFullContent: Boolean = false,
     val enableNotifications: Boolean = false,
+    val openArticlesInBrowser: Boolean = false,
     val folderExpanded: Boolean = false,
 ): Countable

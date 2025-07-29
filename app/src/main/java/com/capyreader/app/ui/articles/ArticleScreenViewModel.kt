@@ -35,7 +35,6 @@ import com.jocmp.capy.common.launchUI
 import com.jocmp.capy.countAll
 import com.jocmp.capy.findArticlePages
 import com.jocmp.capy.logging.CapyLog
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -114,7 +113,7 @@ class ArticleScreenViewModel(
 
     val allFolders = account.folders
 
-    val feeds = combine(
+    val topLevelFeeds = combine(
         account.feeds,
         _counts,
         filter,
@@ -123,11 +122,19 @@ class ArticleScreenViewModel(
             .withPositiveCount(filter.status)
     }
 
+    val currentFeed: Flow<Feed?> = combine(allFeeds, filter) { feeds, filter ->
+        if (filter is ArticleFilter.Feeds) {
+            feeds.find { it.id == filter.feedID }
+        } else {
+            null
+        }
+    }
+
     private val nextFilterListener: Flow<NextFilter?> =
         combine(
             listSwipeBottom,
             savedSearches,
-            feeds,
+            topLevelFeeds,
             folders,
             filter
         ) { swipeBottom, savedSearches, feeds, folders, filter ->
@@ -185,8 +192,8 @@ class ArticleScreenViewModel(
     }
 
     fun selectFeed(feedID: String, folderTitle: String? = null) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val feed = account.findFeed(feedID) ?: return@launch
+        viewModelScope.launchIO {
+            val feed = account.findFeed(feedID) ?: return@launchIO
             val feedFilter = ArticleFilter.Feeds(
                 feedID = feed.id,
                 folderTitle = folderTitle,
@@ -198,8 +205,8 @@ class ArticleScreenViewModel(
     }
 
     fun selectSavedSearch(savedSearchID: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val savedSearch = account.findSavedSearch(savedSearchID) ?: return@launch
+        viewModelScope.launchIO {
+            val savedSearch = account.findSavedSearch(savedSearchID) ?: return@launchIO
             val searchFilter = ArticleFilter.SavedSearches(
                 savedSearch.id,
                 savedSearchStatus = latestFilter.status
@@ -210,8 +217,8 @@ class ArticleScreenViewModel(
     }
 
     fun selectFolder(title: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val folder = account.findFolder(title) ?: return@launch
+        viewModelScope.launchIO {
+            val folder = account.findFolder(title) ?: return@launchIO
             val feedFilter =
                 ArticleFilter.Folders(
                     folderTitle = folder.title,
@@ -297,7 +304,7 @@ class ArticleScreenViewModel(
     ) {
         refreshJob?.cancel()
 
-        refreshJob = viewModelScope.launch(Dispatchers.IO) {
+        refreshJob = viewModelScope.launchIO {
             account.refresh(filter).onFailure { throwable ->
                 if (throwable is UnauthorizedError && _showUnauthorizedMessage == UnauthorizedMessageState.HIDE) {
                     _showUnauthorizedMessage = UnauthorizedMessageState.SHOW
@@ -331,7 +338,7 @@ class ArticleScreenViewModel(
         }
     }
 
-    fun selectArticle(articleID: String) {
+    fun selectArticle(articleID: String, onComplete: (article: Article) -> Unit = {}) {
         if (_article?.id == articleID) {
             return
         }
@@ -346,10 +353,14 @@ class ArticleScreenViewModel(
                 markRead(articleID)
             }
 
+            launchUI {
+                onComplete(article)
+            }
+
             if (article.fullContent == Article.FullContentState.LOADING) {
                 fullContentJob?.cancel()
 
-                fullContentJob = viewModelScope.launch(Dispatchers.IO) { fetchFullContent(article) }
+                fullContentJob = viewModelScope.launchIO { fetchFullContent(article) }
             }
         }
     }
@@ -643,7 +654,16 @@ class ArticleScreenViewModel(
     }
 
     fun expandFolder(folderName: String, expanded: Boolean) {
-        account.expandFolder(folderName, expanded = expanded)
+        viewModelScope.launchIO {
+            account.expandFolder(folderName, expanded = expanded)
+        }
+    }
+
+    fun updateOpenInBrowser(feedID: String, enabled: Boolean) {
+        viewModelScope.launchIO {
+            account.updateOpenInBrowser(feedID, enabled = enabled)
+            WidgetUpdater.update(context = application.applicationContext)
+        }
     }
 
     private val latestFilter: ArticleFilter

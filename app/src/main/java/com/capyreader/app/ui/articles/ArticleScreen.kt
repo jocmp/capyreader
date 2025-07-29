@@ -37,14 +37,17 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.R
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.Saver
+import com.capyreader.app.common.openLink
 import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.refresher.RefreshInterval
@@ -54,8 +57,10 @@ import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
 import com.capyreader.app.ui.articles.detail.ShareLinkDialog
 import com.capyreader.app.ui.articles.detail.rememberArticlePagination
+import com.capyreader.app.ui.articles.feeds.FeedActions
 import com.capyreader.app.ui.articles.feeds.FeedList
 import com.capyreader.app.ui.articles.feeds.FolderActions
+import com.capyreader.app.ui.articles.feeds.LocalFeedActions
 import com.capyreader.app.ui.articles.feeds.LocalFolderActions
 import com.capyreader.app.ui.articles.list.ArticleListTopBar
 import com.capyreader.app.ui.articles.list.EmptyOnboardingView
@@ -79,6 +84,7 @@ import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
+import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
@@ -90,7 +96,7 @@ fun ArticleScreen(
     appPreferences: AppPreferences = koinInject(),
     onNavigateToSettings: () -> Unit,
 ) {
-    val feeds by viewModel.feeds.collectAsStateWithLifecycle(initialValue = emptyList())
+    val feeds by viewModel.topLevelFeeds.collectAsStateWithLifecycle(initialValue = emptyList())
     val allFeeds by viewModel.allFeeds.collectAsStateWithLifecycle(initialValue = emptyList())
     val allFolders by viewModel.allFolders.collectAsStateWithLifecycle(initialValue = emptyList())
     val folders by viewModel.folders.collectAsStateWithLifecycle(initialValue = emptyList())
@@ -107,10 +113,12 @@ fun ArticleScreen(
         .collectChangesWithDefault(appPreferences.refreshInterval.get())
 
     val canSwipeToNextFeed = nextFilter != null
+    val context = LocalContext.current
 
     val fullContent = rememberFullContent(viewModel)
     val articleActions = rememberArticleActions(viewModel)
     val folderActions = rememberFolderActions(viewModel)
+    val feedActions = rememberFeedActions(viewModel)
     val connectivity = rememberLocalConnectivity()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val showOnboarding by viewModel.showOnboarding.collectAsState(false)
@@ -151,11 +159,11 @@ fun ArticleScreen(
         LocalFullContent provides fullContent,
         LocalArticleActions provides articleActions,
         LocalFolderActions provides folderActions,
+        LocalFeedActions provides feedActions,
         LocalConnectivity provides connectivity,
         LocalArticleLookup provides ArticleLookup(viewModel::findArticlePages),
         LocalMarkAllReadButtonPosition provides markAllReadButtonPosition
     ) {
-
         val openNextFeedOnReadAll = afterReadAll == AfterReadAllBehavior.OPEN_NEXT_FEED
 
         val skipInitialRefresh = refreshInterval == RefreshInterval.MANUALLY_ONLY
@@ -173,7 +181,7 @@ fun ArticleScreen(
 
         val snackbarHostState = remember { SnackbarHostState() }
         val addFeedSuccessMessage = stringResource(R.string.add_feed_success)
-        val currentFeed = rememberCurrentFeed(filter, allFeeds)
+        val currentFeed by viewModel.currentFeed.collectAsStateWithLifecycle(null)
         val scrollBehavior = rememberArticleTopBar(filter)
         var media by rememberSaveable(saver = Media.Saver) { mutableStateOf(null) }
         val focusManager = LocalFocusManager.current
@@ -204,6 +212,14 @@ fun ArticleScreen(
         }
 
         val articles = pager.flow.collectAsLazyPagingItems()
+
+        LaunchedEffect(currentFeed?.title) {
+            val feed = currentFeed
+
+            if (feed != null) {
+                CapyLog.info("feed", mapOf("title" to feed.title))
+            }
+        }
 
         fun scrollToArticle(index: Int) {
             coroutineScope.launch {
@@ -339,13 +355,25 @@ fun ArticleScreen(
             }
         }
 
+        fun setArticle(articleID: String, onComplete: (article: Article) -> Unit = {}) {
+            viewModel.selectArticle(articleID, onComplete)
+        }
+
         fun selectArticle(articleID: String) {
-            viewModel.selectArticle(articleID)
-            if (search.isActive) {
-                focusManager.clearFocus()
-            }
-            coroutineScope.launch {
-                navigateToDetail()
+            setArticle(articleID) { nextArticle ->
+                if (search.isActive) {
+                    focusManager.clearFocus()
+                }
+
+                val url = nextArticle.url
+                if (nextArticle.openInBrowser && url != null) {
+                    clearArticle()
+                    context.openLink(url.toString().toUri(), appPreferences)
+                } else {
+                    coroutineScope.launch {
+                        navigateToDetail()
+                    }
+                }
             }
         }
 
@@ -552,7 +580,7 @@ fun ArticleScreen(
                     val pagination = rememberArticlePagination(
                         article,
                         onSelectArticle = { index, articleID ->
-                            selectArticle(articleID)
+                            setArticle(articleID)
                             scrollToArticle(index)
                         }
                     )
@@ -678,6 +706,17 @@ fun rememberFolderActions(viewModel: ArticleScreenViewModel): FolderActions {
 }
 
 @Composable
+fun rememberFeedActions(viewModel: ArticleScreenViewModel): FeedActions {
+    return remember {
+        FeedActions(
+            updateOpenInBrowser = { feedID, openInBrowser ->
+                viewModel.updateOpenInBrowser(feedID, openInBrowser)
+            },
+        )
+    }
+}
+
+@Composable
 fun rememberFullContent(viewModel: ArticleScreenViewModel): FullContentFetcher {
     return remember {
         FullContentFetcher(
@@ -702,17 +741,6 @@ fun isFeedActive(
     return media == null &&
             article == null &&
             !search.isActive
-}
-
-@Composable
-fun rememberCurrentFeed(filter: ArticleFilter, feeds: List<Feed>): Feed? {
-    return remember(filter, feeds) {
-        if (filter is ArticleFilter.Feeds) {
-            feeds.find { it.id == filter.feedID }
-        } else {
-            null
-        }
-    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -1,0 +1,4 @@
+import kotlin.Boolean;
+
+ALTER TABLE feeds
+ADD COLUMN open_articles_in_browser INTEGER AS Boolean NOT NULL DEFAULT 0;

@@ -66,6 +66,9 @@ SELECT enable_sticky_full_content FROM feeds WHERE feeds.id = :feedID LIMIT 1;
 updateStickyFullContent:
 UPDATE feeds SET enable_sticky_full_content = :enabled WHERE feeds.id = :feedID;
 
+updateOpenInBrowser:
+UPDATE feeds SET open_articles_in_browser = :enabled WHERE feeds.id = :feedID;
+
 clearStickyFullContent:
 UPDATE feeds SET enable_sticky_full_content = 0;
 

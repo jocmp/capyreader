@@ -17,7 +17,6 @@ class ArticleSample : PreviewParameterProvider<Article> {
                 title = "How to use the Galaxy S24's AI photo editing tool",
                 author = "Andrew Romero",
                 contentHTML = "<div>Test</div>",
-                extractedContentURL = null,
                 imageURL = null,
                 summary = "Test article here",
                 url = URL("https://9to5google.com/?p=605559"),

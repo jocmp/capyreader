@@ -51,6 +51,12 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".OpenArticleInBrowserActivity"
+            android:exported="false"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -86,8 +92,8 @@
 
         <receiver
             android:name=".ui.widget.HeadlinesWidgetReceiver"
-            android:label="@string/widget_receiver_headlines_title"
-            android:exported="true">
+            android:exported="true"
+            android:label="@string/widget_receiver_headlines_title">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
