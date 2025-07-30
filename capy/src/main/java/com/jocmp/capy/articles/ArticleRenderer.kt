@@ -42,6 +42,10 @@ class ArticleRenderer(
             article.feedName
         }
 
+        val characters = article.content.length;
+        val charactersPerMinute = if (isCJK(article.content)) 265 else 500
+        val readingTime = (characters + charactersPerMinute - 1) / charactersPerMinute; // Round up
+
         val substitutions = colors + mapOf(
             "external_link" to article.externalLink(),
             "title" to title,
@@ -52,6 +56,7 @@ class ArticleRenderer(
             "font_preload" to fontPreload(fontFamily),
             "top_margin" to topMargin(),
             "pre_white_space" to preWhiteSpace(),
+            "reading_time" to "$readingTime min read"
         )
 
         val html = MacroProcessor(
@@ -105,6 +110,23 @@ class ArticleRenderer(
                 <link rel="preload" href="https://appassets.androidplatform.net/res/font/${fontFamily.slug}.ttf" as="font" type="font/ttf" crossorigin>
                 """.trimIndent()
         }
+    }
+
+    fun isCJK(text: String): Boolean {
+        for (ch in text) {
+            val code = ch.code
+            if (
+                (code in 0x4E00..0x9FFF) ||
+                (code in 0x3400..0x4DBF) ||
+                (code in 0x20000..0x2A6DF) ||
+                (code in 0x3040..0x309F) ||
+                (code in 0x30A0..0x30FF) ||
+                (code in 0xAC00..0xD7AF)
+            ) {
+                return true
+            }
+        }
+        return false
     }
 }
 

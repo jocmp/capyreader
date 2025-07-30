@@ -1,6 +1,6 @@
 package com.capyreader.app.ui.accounts
 
-import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 val loginModule = module {
