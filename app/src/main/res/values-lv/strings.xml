@@ -84,7 +84,7 @@
     <string name="crash_reporting_checkbox_title">Ieslēgt avārijas ziņošanu</string>
     <string name="account_source_local">Vietējais (lokālais)</string>
     <string name="add_account_local_subtitle">Jūsu ierīcē</string>
-    <string name="add_account_reader_subtitle">Google Reader API personīgā mitināšana</string>
+    <string name="add_account_reader_subtitle">Pašmitināts Google Reader API</string>
     <string name="add_account_feedbin_signup_prompt">Nav Feedbin konta?</string>
     <string name="add_account_feedbin_signup_link_text">Izveidojiet to šeit.</string>
     <string name="add_account_freshrss_signup_prompt">Nav FreshRSS kopija?</string>
