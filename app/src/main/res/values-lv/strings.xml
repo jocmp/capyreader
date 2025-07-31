@@ -56,7 +56,7 @@
     <string name="add_feed_new_folder_title">Jauna birka</string>
     <string name="article_actions_copy_link">Kopēt saiti</string>
     <string name="article_view_mark_as_read">Atzīmēt kā lasītu</string>
-    <string name="opml_import_button_text">Ievietot no faila</string>
+    <string name="opml_import_button_text">Ievietot no datnes</string>
     <string name="account_source_feedbin">Feedbin</string>
     <string name="theme_menu_option_light">Gaišs</string>
     <string name="settings_article_list_feed_name">Ziņu plūsmas nosaukums</string>
@@ -84,7 +84,7 @@
     <string name="crash_reporting_checkbox_title">Ieslēgt avārijas ziņošanu</string>
     <string name="account_source_local">Vietējais (lokālais)</string>
     <string name="add_account_local_subtitle">Jūsu ierīcē</string>
-    <string name="add_account_reader_subtitle">Google Reader API personīgā mitināšana</string>
+    <string name="add_account_reader_subtitle">Pašmitināts Google Reader API</string>
     <string name="add_account_feedbin_signup_prompt">Nav Feedbin konta?</string>
     <string name="add_account_feedbin_signup_link_text">Izveidojiet to šeit.</string>
     <string name="add_account_freshrss_signup_prompt">Nav FreshRSS kopija?</string>
@@ -92,7 +92,7 @@
     <string name="opml_import_notification_title">Ievieto abonementus…</string>
     <string name="notifications_channel_title_feed_update">Ziņu plūsmas atjauninājumi</string>
     <string name="notification_mark_as_read_action">Atzīmēt kā lasītu</string>
-    <string name="opml_export_button_text">Izgūt kā OPML failu</string>
+    <string name="opml_export_button_text">Izgūt kā OPML datni</string>
     <string name="opml_import_toast_complete">Ievietošana pabeigta</string>
     <string name="opml_import_toast_failed">Neizdevās ievietot</string>
     <string name="theme_menu_label">Motīvs</string>
@@ -212,7 +212,7 @@
     <string name="feed_nav_drawer_refresh_all">Atsvaidzināt visu</string>
     <string name="blocked_keywords_add_keyword">Pievienot atslēgvārdu</string>
     <string name="unauthorized_dialog_description">Veidojot savienojumu ar jūsu kontu, radās problēma. Lūdzu, atkārtojiet autorizāciju.</string>
-    <string name="unauthorized_dialog_title">Jūs esat atslēdzies</string>
+    <string name="unauthorized_dialog_title">Jūs esiet atslēgušies</string>
     <string name="update_auth_success_message">Veiksmīgi autorizējušies</string>
     <string name="notifications_channel_title_opml_import">Ievietot abonementus</string>
     <string name="settings_import_progress">Ievietoti %1$d no %2$d abonementiem</string>
@@ -254,4 +254,12 @@
     <string name="widget_receiver_headlines_title">Rakstu virsraksti</string>
     <string name="widget_headlines_title">Svaigie rakstu virsraksti</string>
     <string name="settings_gestures_improve_talkback_subtitle">Atspējo dažus iestatījumus, lai uzlabotu ekrānā redzamo teksta elementu pārveidošanu runā (TalkBack)</string>
+    <string name="settings_article_list_shorten_titles">Saīsināt virsrakstus</string>
+    <string name="mark_all_read_button_position">Pogas \"Atzīmēt visus kā lasītus\" pozīcija</string>
+    <string name="mark_read_position_toolbar">Rīkjosla</string>
+    <string name="mark_read_position_floating_action_button">Peldoša darbības poga</string>
+    <string name="settings_display_miscellaneous_title">Dažādi</string>
+    <string name="add_account_miniflux_signup_prompt">Ja jums vēl nav Miniflux instances?</string>
+    <string name="add_account_miniflux_signup_link_text">Vairāk informācijas.</string>
+    <string name="settings_options_reader_pin_top_toolbar">Piespraust augšējo rīkjoslu</string>
 </resources>
