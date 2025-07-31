@@ -55,7 +55,7 @@
             android:name=".OpenArticleInBrowserActivity"
             android:exported="false"
             android:noHistory="true"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+            android:theme="@android:style/Theme.NoDisplay" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

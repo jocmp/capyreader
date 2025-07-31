@@ -27,9 +27,11 @@ import androidx.glance.preview.ExperimentalGlancePreviewApi
 import androidx.glance.preview.Preview
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
+import com.capyreader.app.MainActivity
 import com.capyreader.app.OpenArticleInBrowserActivity
 import com.capyreader.app.OpenArticleInBrowserActivity.Companion.ARTICLE_URL_KEY
 import com.capyreader.app.notifications.NotificationHelper.Companion.ARTICLE_ID_KEY
+import com.capyreader.app.notifications.NotificationHelper.Companion.FEED_ID_KEY
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.relativeTime
 import java.net.URL
@@ -85,22 +87,22 @@ fun ArticleHeadline(article: Article, currentTime: LocalDateTime) {
 }
 
 private fun Context.openArticle(article: Article): Action {
-//    return if (article.openInBrowser && article.url != null) {
+    return if (article.openInBrowser && article.url != null) {
         return actionStartActivity(
             Intent(this, OpenArticleInBrowserActivity::class.java).apply {
                 putExtra(ARTICLE_ID_KEY, article.id)
                 putExtra(ARTICLE_URL_KEY, article.url.toString())
             }
         )
-//    } else {
-//        actionStartActivity(
-//            Intent(this, MainActivity::class.java).apply {
-//                putExtra(ARTICLE_ID_KEY, article.id)
-//                putExtra(FEED_ID_KEY, article.feedID)
-//                data = uniqueUri(article)
-//                setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-//            })
-//    }
+    } else {
+        actionStartActivity(
+            Intent(this, MainActivity::class.java).apply {
+                putExtra(ARTICLE_ID_KEY, article.id)
+                putExtra(FEED_ID_KEY, article.feedID)
+                data = uniqueUri(article)
+                setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            })
+    }
 }
 
 

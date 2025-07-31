@@ -1,10 +1,10 @@
 package com.capyreader.app
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
-import com.capyreader.app.common.openLinkExternally
 import com.capyreader.app.notifications.NotificationHelper
 import com.capyreader.app.notifications.NotificationHelper.Companion.ARTICLE_ID_KEY
 import com.capyreader.app.ui.widget.WidgetUpdater
@@ -26,7 +26,13 @@ class OpenArticleInBrowserActivity : AppCompatActivity() {
         }
 
         if (articleUrl != null) {
-            openLinkExternally(articleUrl.toUri())
+            Intent(Intent.ACTION_VIEW)
+                .apply {
+                    data = articleUrl.toUri()
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }.also { intent ->
+                    startActivity(intent)
+                }
         }
 
         finish()
