@@ -262,4 +262,8 @@
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">Un nivel más alto</string>
     <string name="add_account_miniflux_signup_link_text">Más información.</string>
     <string name="add_account_miniflux_signup_prompt">¿No tienes una instancia de Miniflux?</string>
+    <string name="mark_read_position_toolbar">Barra de herramientas</string>
+    <string name="mark_read_position_floating_action_button">Botón de Acción Flotante</string>
+    <string name="mark_all_read_button_position">Posición del Botón Marcar Todo Leido</string>
+    <string name="settings_display_miscellaneous_title">Misceláneo</string>
 </resources>
