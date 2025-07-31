@@ -113,20 +113,33 @@ class ArticleRenderer(
     }
 
     fun isCJK(text: String): Boolean {
-        for (ch in text) {
-            val code = ch.code
-            if (
-                (code in 0x4E00..0x9FFF) ||
-                (code in 0x3400..0x4DBF) ||
-                (code in 0x20000..0x2A6DF) ||
-                (code in 0x3040..0x309F) ||
-                (code in 0x30A0..0x30FF) ||
-                (code in 0xAC00..0xD7AF)
+        var totalCJK = 0
+        var totalChecked = 0
+
+        for (r in text) {
+            if (totalChecked >= 50) break
+            totalChecked++
+
+            val block = Character.UnicodeBlock.of(r)
+            if (block == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS ||
+                block == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A ||
+                block == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_B ||
+                block == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS ||
+                block == Character.UnicodeBlock.CJK_COMPATIBILITY_FORMS ||
+                block == Character.UnicodeBlock.HIRAGANA ||
+                block == Character.UnicodeBlock.KATAKANA ||
+                block == Character.UnicodeBlock.HANGUL_SYLLABLES ||
+                block == Character.UnicodeBlock.HANGUL_JAMO ||
+                block == Character.UnicodeBlock.HANGUL_COMPATIBILITY_JAMO ||
+                block == Character.UnicodeBlock.BOPOMOFO ||
+                block == Character.UnicodeBlock.YI_SYLLABLES ||
+                block == Character.UnicodeBlock.YI_RADICALS
             ) {
-                return true
+                totalCJK++
             }
         }
-        return false
+
+        return totalChecked > 0 && totalCJK * 2 >= totalChecked
     }
 }
 
