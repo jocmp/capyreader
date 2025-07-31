@@ -198,14 +198,12 @@ fun ArticleScreen(
             LazyListState(0, 0)
         }
 
-        val articlesSince by viewModel.articlesSince.collectAsStateWithLifecycle()
         val unreadSort by viewModel.unreadSort.collectAsStateWithLifecycle()
 
-        val pager = remember(filter, unreadSort, articlesSince, searchQuery) {
+        val pager = remember(filter, unreadSort, searchQuery) {
             viewModel.pager(
                 filter,
                 unreadSort,
-                articlesSince,
                 searchQuery,
             )
         }
@@ -288,6 +286,7 @@ fun ArticleScreen(
 
             viewModel.refresh(filter) {
                 isRefreshing = false
+                articles.refresh()
                 refreshPagination()
             }
         }
@@ -429,6 +428,7 @@ fun ArticleScreen(
                             if (enableMarkReadOnScroll) {
                                 scrollToTop()
                             }
+                            articles.refresh()
                             completion()
                         }
                     },
