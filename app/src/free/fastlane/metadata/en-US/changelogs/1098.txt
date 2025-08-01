@@ -1,0 +1,4 @@
+• Fix error when adding feeds with bad favicon
+• Fix incorrect styling for articles with multiple YouTube embeds
+• Make article status filters more visible and easier to reach
+• Update translations for Bulgarian, Indonesian, Nepali, Polish and Swedish thanks to volunteers.

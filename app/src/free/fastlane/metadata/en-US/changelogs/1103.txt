@@ -1,0 +1,13 @@
+Bugfix release:
+
+• Add fallback behavior for article titles
+• Only autoscroll list view when necessary
+• Updated custom parsers for bsky.app and se.pl
+• Fix clipped articles when paging
+• Make horizontal scroll optional
+• Fix article selection when app is reopened
+• Display URL if title and summary are empty
+• Skip already created notifications on notify
+• Deduplicate feeds in notification settings
+• Update translations for Italian, French, Russian, and Swedish thanks to volunteers
+• And more!

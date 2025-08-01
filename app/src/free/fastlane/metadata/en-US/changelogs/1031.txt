@@ -1,0 +1,2 @@
+• Improve refresh speed when fetching local feeds
+• Adds new translations for Czech, German, and Turkish

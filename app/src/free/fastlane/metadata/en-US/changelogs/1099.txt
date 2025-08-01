@@ -1,0 +1,4 @@
+• Fix local feed persistence bug where item URLs were not unique
+• Fix custom extractor for androidauthority.com
+• Add initial support to fetch FreshRSS user labels
+• Update translations for Bulgarian, Czech, Estonian, French, Galician, Italian, Nepali, Swedish, and Chinese thanks to volunteers.

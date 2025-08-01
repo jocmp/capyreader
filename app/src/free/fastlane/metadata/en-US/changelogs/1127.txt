@@ -1,0 +1,2 @@
+• Fix empty reader view on TalkBack setting
+• Update translations for Bulgarian, German, Estonian, French, Galician, Turkish, and Chinese

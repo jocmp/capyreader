@@ -1,0 +1,16 @@
+Added
+
+• Option to mark read on scroll
+• Option to hide images in articles
+• Option to move next feed when marking all as read
+• Option for single-column layouts on big screens
+• End-of-feed swipe gesture to move to the next feed
+
+Updated
+
+• Updated translations for Arabic, Bulgarian, Chinese, Estonian, German, Italian, Tamil, Norwegian, Russian, Serbian, and Spanish thanks to volunteers
+
+Fixed
+
+• Improve FreshRSS login wording
+• Other small bugfixes

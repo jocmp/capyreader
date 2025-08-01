@@ -1,3 +1,0 @@
-• Dodaj opcję "Otwórz w przeglądarce" dla każdego kanału
-• Zapewnij zaokrąglone rogi widżetu na Androidzie 12 dzięki wolontariuszowi!
-• Zaktualizuj tłumaczenia dla bułgarskiego, galicyjskiego, włoskiego, łotewskiego, polskiego, portugalskiego, hiszpańskiego, walijskiego i chińskiego (tradycyjnego) dzięki wolontariuszom

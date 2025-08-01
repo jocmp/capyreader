@@ -1,0 +1,4 @@
+#!/bin/bash
+
+rm -r app/src/free/fastlane/metadata/en-US
+cp -R fastlane/metadata/android/en-US/ app/src/free/fastlane/metadata/en-US/

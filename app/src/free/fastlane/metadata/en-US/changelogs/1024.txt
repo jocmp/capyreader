@@ -1,0 +1,1 @@
+Add full-screen article image viewer

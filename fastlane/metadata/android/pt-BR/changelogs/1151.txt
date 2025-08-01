@@ -1,3 +1,0 @@
-• Adicionar uma opção "Abrir no navegador" por feed
-• Garantir que os cantos do widget sejam arredondados no Android 12 graças a um voluntário!
-• Atualizar traduções para búlgaro, galego, italiano, letão, polonês, português, espanhol, galês e chinês (tradicional) graças aos voluntários

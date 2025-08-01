@@ -1,0 +1,2 @@
+- Add stop button to import notification
+- Add option to open links in default browser

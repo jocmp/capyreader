@@ -1,0 +1,16 @@
+Added
+
+• Added "Tap to page article" gesture option for E-Ink readers
+• Show alt text with their images in the media viewer
+• Added high contrast dark theme
+
+Updated
+
+• Added new font options Jost, Inter, and Literata
+• Updated Bulgarian, Estonian, German, Spanish, French, Italian, Indonesian, Chinese translations thanks to volunteers
+
+Fixed
+
+• Feed fixes around favicons and preview images
+• Fixed formatting for code blocks in HTML tables
+• Fixed article image bug causing app crashes

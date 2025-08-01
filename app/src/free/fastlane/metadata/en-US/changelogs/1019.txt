@@ -1,0 +1,2 @@
+- Reworks full content mode to remember your last preference for each feed
+- Fixes a bug where RSS feeds missing a link could not be added

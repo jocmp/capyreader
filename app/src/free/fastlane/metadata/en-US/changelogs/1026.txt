@@ -1,0 +1,3 @@
+• Automatically delete read, unstarred articles after 3 months
+• Fix image viewer for some feeds
+
