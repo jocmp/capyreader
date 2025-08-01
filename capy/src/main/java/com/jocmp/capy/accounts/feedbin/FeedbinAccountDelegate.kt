@@ -211,6 +211,13 @@ internal class FeedbinAccountDelegate(
         Unit
     }
 
+    override suspend fun createPage(url: String, title: String?): Result<Unit> = withErrorHandling {
+        val request = CreatePageRequest(url = url, title = title)
+        feedbin.createPage(request)
+        
+        Unit
+    }
+
     private suspend fun refreshArticles(since: String = maxArrivedAt()) {
         refreshStarredEntries()
         refreshUnreadEntries()

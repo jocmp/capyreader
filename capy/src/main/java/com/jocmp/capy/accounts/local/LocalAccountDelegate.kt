@@ -165,6 +165,10 @@ internal class LocalAccountDelegate(
         return Result.success(Unit)
     }
 
+    override suspend fun createPage(url: String, title: String?): Result<Unit> {
+        return Result.failure(NotImplementedError())
+    }
+
     private suspend fun refreshFeeds(feeds: List<Feed>, cutoffDate: ZonedDateTime?) {
         coroutineScope {
             feeds.forEach { feed ->

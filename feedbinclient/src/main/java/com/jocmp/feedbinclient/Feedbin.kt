@@ -95,6 +95,9 @@ interface Feedbin {
     @GET
     suspend fun fetchExtractedContent(@Url url: String): Response<ExtractedContent>
 
+    @POST("v2/pages.json")
+    suspend fun createPage(@Body body: CreatePageRequest): Response<Entry>
+
     companion object {
         private const val DEFAULT_URL = "https://api.feedbin.com/"
 

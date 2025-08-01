@@ -34,4 +34,6 @@ interface AccountDelegate {
     suspend fun removeFeed(feed: Feed): Result<Unit>
 
     suspend fun removeFolder(folderTitle: String): Result<Unit>
+
+    suspend fun createPage(url: String, title: String? = null): Result<Unit>
 }

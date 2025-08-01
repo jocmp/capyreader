@@ -221,6 +221,10 @@ internal class ReaderAccountDelegate(
         }
     }
 
+    override suspend fun createPage(url: String, title: String?): Result<Unit> {
+        return Result.failure(NotImplementedError())
+    }
+
     private suspend fun refreshFeeds() {
         withResult(googleReader.subscriptionList()) { result ->
             val subscriptions = result.subscriptions
