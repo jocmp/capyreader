@@ -1,0 +1,4 @@
+• Update notifications to include full article title
+• Fix link enclosure handling in Atom feeds
+• Add option to disable "Mark all as read" confirmation dialog
+• Update translations for Arabic, Turkish, Chinese, Italian, French, Estonian and Bulgarian thanks to volunteers

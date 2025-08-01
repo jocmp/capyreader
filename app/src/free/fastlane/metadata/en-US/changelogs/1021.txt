@@ -1,0 +1,2 @@
+• Add full screen view for video in articles
+• Clean up Feedbin login page UI

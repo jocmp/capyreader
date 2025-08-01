@@ -1,0 +1,13 @@
+Added
+
+• Swipe gestures to navigate from article to article
+• Added button to go to the next article
+
+Updated
+
+• Translations for Spanish, Italian and Turkish thanks to volunteers
+
+Fixed
+
+• Improved formatting for code blocks in articles
+• Fixed crash and improved speed when opening large articles

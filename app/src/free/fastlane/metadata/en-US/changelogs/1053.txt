@@ -1,0 +1,3 @@
+• Add swipe actions to article list items
+• Add option to sort unread feeds from oldest to newest
+• Fix bug when adding http feeds

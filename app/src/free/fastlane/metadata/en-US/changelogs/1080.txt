@@ -1,0 +1,4 @@
+∙ Added support to fetch read articles from FreshRSS
+∙ Updated translations for Arabic, Bulgarian, German, Spanish, Estonian, Italian, Russian, and Chinese thanks to volunteers
+∙ Updated the full content parser to better support lead images and custom parsing
+∙ Fixed scroll position bug when switching between feeds

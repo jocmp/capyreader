@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Create changelog directories for each language in fastlane metadata
+for lang_dir in fastlane/metadata/android/*/; do
+    lang=$(basename "$lang_dir")
+    changelog_dir="fastlane/metadata/android/${lang}/changelogs"
+    
+    if [ ! -d "$changelog_dir" ]; then
+        mkdir -p "$changelog_dir"
+        echo "Created changelog directory for $lang"
+    else
+        echo "Changelog directory already exists for $lang"
+    fi
+done
+
+echo "Done setting up changelog directories"

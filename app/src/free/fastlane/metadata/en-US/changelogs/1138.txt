@@ -1,0 +1,4 @@
+• Move "Mark all as read" to a floating action button
+• Remove crossfade animation to avoid jutter when switching feeds
+• Open notifications to the last filter used instead of "Unread"
+• Update translations thanks to volunteers

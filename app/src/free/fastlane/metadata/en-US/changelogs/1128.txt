@@ -1,0 +1,2 @@
+• [Local] Fix rich text on feeds like the GrapheneOS release notes
+• Move article actions to a Material bottom bar for easier access

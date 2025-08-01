@@ -1,0 +1,3 @@
+- Adds option to open articles in full content by default
+- Adds setting to refresh "On start." The existing "Manually only" now requires a swipe to refresh.
+- Fixes a bug that caused the app to crash in the background or when opening a link

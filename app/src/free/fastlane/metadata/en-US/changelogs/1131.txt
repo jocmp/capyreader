@@ -1,0 +1,5 @@
+• Add support for FreshRSS image enclosures
+• Mark articles as on swipe-to-open from list
+• Fix feed selection when app is refreshing
+• Prevent "mark all read" from marking entire list as read on search filter
+• Update translations for Bulgarian, German, Spanish, Estonian, French, Galician, Italian, Polish, Tamil, and Chinese thanks to volunteers

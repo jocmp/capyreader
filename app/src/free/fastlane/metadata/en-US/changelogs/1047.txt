@@ -1,0 +1,2 @@
+• Unpin article top bar on scroll
+• Fix timestamps for some feeds

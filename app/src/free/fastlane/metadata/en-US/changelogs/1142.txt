@@ -1,0 +1,4 @@
+• Fix mark read on scroll bug when refreshing all
+• Make Miniflux a separate option on account screen
+• Increase widget articles from 10 to 30
+• Update translations for Arabic, Bulgarian, German, Greek, Spanish, Estonian, French, Galician, Portuguese (Brazil), Portuguese, Swedish, and Chinese thanks to volunteers!

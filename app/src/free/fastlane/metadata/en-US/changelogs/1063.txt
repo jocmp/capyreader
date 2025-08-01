@@ -1,0 +1,13 @@
+Added
+
+• Added article notifications
+• Added a swipe option to open links in browser
+
+Updated
+
+• Updated translations including new options for Bulgarian and Russian thanks to volunteers.
+
+Fixed
+
+• Improved sync speed for Feedbin accounts with many feeds
+• Fixed a bug that chose the reverse order when marking entries read
