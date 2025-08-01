@@ -14,9 +14,7 @@ platform :android do
   desc "Deploy a new version to the Google Play"
   lane :production do
     build_release_bundle
-    upload_to_play_store(
-      sync_image_upload: true
-    )
+    upload_to_play_store
   end
 
   lane :github_release do
