@@ -221,7 +221,7 @@ internal class ReaderAccountDelegate(
         }
     }
 
-    override suspend fun createPage(url: String, title: String?): Result<Unit> {
+    override suspend fun createPage(url: String): Result<Unit> {
         return Result.failure(NotImplementedError())
     }
 

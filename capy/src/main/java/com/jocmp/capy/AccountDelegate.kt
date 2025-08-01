@@ -35,5 +35,5 @@ interface AccountDelegate {
 
     suspend fun removeFolder(folderTitle: String): Result<Unit>
 
-    suspend fun createPage(url: String, title: String? = null): Result<Unit>
+    suspend fun createPage(url: String): Result<Unit>
 }

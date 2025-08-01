@@ -19,6 +19,7 @@ import com.jocmp.capy.persistence.EnclosureRecords
 import com.jocmp.capy.persistence.FeedRecords
 import com.jocmp.capy.persistence.SavedSearchRecords
 import com.jocmp.capy.persistence.TaggingRecords
+import com.jocmp.feedbinclient.CreatePageRequest
 import com.jocmp.feedbinclient.CreateSubscriptionRequest
 import com.jocmp.feedbinclient.CreateTaggingRequest
 import com.jocmp.feedbinclient.DeleteTagRequest
@@ -211,11 +212,22 @@ internal class FeedbinAccountDelegate(
         Unit
     }
 
-    override suspend fun createPage(url: String, title: String?): Result<Unit> = withErrorHandling {
-        val request = CreatePageRequest(url = url, title = title)
-        feedbin.createPage(request)
-        
-        Unit
+    override suspend fun createPage(url: String): Result<Unit> {
+        val result = try {
+            feedbin.createPage(CreatePageRequest(url = url, title = null))
+        } catch (e: Throwable) {
+            return Result.failure(e)
+        }
+
+        val entry = result.body()
+
+        return if (entry != null) {
+            saveEntries(listOf(entry), read = false)
+
+            Result.success(Unit)
+        } else {
+            Result.failure(Throwable())
+        }
     }
 
     private suspend fun refreshArticles(since: String = maxArrivedAt()) {
@@ -368,6 +380,7 @@ internal class FeedbinAccountDelegate(
     private fun saveEntries(
         entries: List<Entry>,
         savedSearchID: String? = null,
+        read: Boolean = true,
     ) {
         database.transactionWithErrorHandling {
             entries.forEach { entry ->
@@ -390,7 +403,7 @@ internal class FeedbinAccountDelegate(
                 articleRecords.createStatus(
                     articleID = articleID,
                     updatedAt = updated,
-                    read = true
+                    read = read
                 )
 
                 val enclosure = entry.enclosure
