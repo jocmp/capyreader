@@ -1,0 +1,3 @@
+• Her besleme için "Tarayıcıda aç" seçeneği ekle
+• Android 12'de widget köşelerinin yuvarlatılmasını sağla, bir gönüllüye teşekkürler!
+• Bulgarca, Galiçyaca, İtalyanca, Letonca, Lehçe, Portekizce, İspanyolca, Galce ve Çince (Geleneksel) için çevirileri güncelle, gönüllülere teşekkürler
