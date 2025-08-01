@@ -1,0 +1,2 @@
+• Update Greek translations thanks to a volunteer!
+• Remove crossfade animation to avoid jutter when switching feeds

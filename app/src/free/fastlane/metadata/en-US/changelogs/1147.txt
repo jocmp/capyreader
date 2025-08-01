@@ -1,0 +1,2 @@
+• Readd behavior to clear articles on refresh for the unread filter
+• Update translations for Estonian thanks to a volunteer

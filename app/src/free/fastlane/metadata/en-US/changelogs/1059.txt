@@ -1,0 +1,5 @@
+A small update with a handful of improvements
+
+• Update external libraries to their latest versions
+• Fix networking crash for Feedbin on bad networks
+• Fix layout bug that occurs when app restarts after an article is selected

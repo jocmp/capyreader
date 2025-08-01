@@ -1,0 +1,7 @@
+• Fall back to summary in notifications if title is missing
+• Hide title in list view when title is missing
+• Attempt to fix clipped articles by reconfiguring the reader view
+• Fix blockquote size inside figures
+• Updated custom parser for bsky.app and se.pl
+• Only autoscroll list view when necessary (thanks to a volunteer!)
+• Update translations for Italian and French thanks to volunteers

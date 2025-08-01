@@ -1,0 +1,18 @@
+Added
+
+• Add swipe actions to article list items
+• Adds back navigation option to open the drawer
+• Add option to sort unread feeds from oldest to newest
+• Add a scrollbar to the article list
+• Adds translations for French and Estonian thanks to volunteers
+
+Updated
+
+• Updates translations for Serbian, German, Spanish, Italian, Turkish and Chinese thanks to volunteers
+
+Fixed
+
+• Fix bug when adding http feeds
+
+
+

@@ -1,0 +1,3 @@
+• Add dropdowns for tags, saved searches, and top-level feeds
+• Add ability to block keywords for local accounts under General settings
+• Updated translations for Arabic, Latvian, and German thanks to volunteers

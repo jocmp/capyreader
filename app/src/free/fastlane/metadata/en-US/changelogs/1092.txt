@@ -1,0 +1,1 @@
+• Simplify Capy Reader's user-agent string to avoid getting caught by bad bot detection policies.

@@ -1,0 +1,3 @@
+• Update article parser for some sites
+• Fixed an issue to ensure YouTube videos don't autoplay on swipe
+• Update translations for Italian (thanks!)

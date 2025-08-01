@@ -1,0 +1,1 @@
+• Fix position of feed name and date to ensure vertical consistency

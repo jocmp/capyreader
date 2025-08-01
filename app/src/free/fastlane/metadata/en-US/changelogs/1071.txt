@@ -1,0 +1,7 @@
+Added
+
+• Add initial support for FreshRSS and Google Reader API
+
+Fixed
+
+• Fixed missing images on some articles

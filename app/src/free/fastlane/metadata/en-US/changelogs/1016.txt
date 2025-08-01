@@ -1,0 +1,2 @@
+- Tweak subheadings for some article headers
+- Fix refresh bug when adding a feed

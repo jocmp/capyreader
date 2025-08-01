@@ -1,0 +1,4 @@
+• Adds Galician and Polish translations to the app. Thanks!
+• Adds end-of-list behavior when marking items as read on scroll
+• Allow adding empty feeds
+• Updated translations for Bulgarian, Estonian, Russian and Chinese thanks to volunteers

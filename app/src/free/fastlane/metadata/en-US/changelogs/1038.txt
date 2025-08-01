@@ -1,0 +1,4 @@
+Added
+
+• Translations for Arabic and Italian thanks to volunteers
+• Improved transition to article page
