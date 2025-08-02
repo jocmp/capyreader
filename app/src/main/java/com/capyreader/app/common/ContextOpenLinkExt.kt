@@ -27,7 +27,7 @@ fun Context.openLinkExternally(url: Uri) {
     Intent(Intent.ACTION_VIEW)
         .apply {
             data = url
-            addFlags(Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or Intent.FLAG_ACTIVITY_NEW_TASK)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }.also { intent ->
             startActivity(intent)
         }
