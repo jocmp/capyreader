@@ -1,0 +1,1 @@
+• Fix share sheet jump bug on Xiaomi/MIUI 14 devices
