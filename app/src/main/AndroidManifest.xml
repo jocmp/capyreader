@@ -52,6 +52,21 @@
         </activity>
 
         <activity
+            android:name=".CreatePageActivity"
+            android:exported="false"
+            android:finishOnTaskLaunch="true"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            android:parentActivityName=".MainActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter android:label="Save Page">
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".OpenArticleInBrowserActivity"
             android:exported="false"
             android:noHistory="true"
