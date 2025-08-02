@@ -43,6 +43,7 @@ import androidx.core.view.WindowCompat
 import coil.request.ImageRequest
 import com.capyreader.app.common.Media
 import com.capyreader.app.preferredMaxWidth
+import com.capyreader.app.ui.EdgeToEdgeHelper.isEdgeToEdgeAvailable
 import com.capyreader.app.ui.components.LoadingView
 import com.capyreader.app.ui.components.Swiper
 import com.capyreader.app.ui.components.rememberSwiperState
@@ -111,6 +112,7 @@ fun ArticleMediaView(
         val window = (view.context as Activity).window
 
         window.navigationBarColor = Color.Black.toArgb()
+        window.statusBarColor = Color.Black.toArgb()
         WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = false
     }
 
@@ -118,11 +120,21 @@ fun ArticleMediaView(
         val window = (view.context as Activity).window
 
         val previousColor = window.navigationBarColor
+
+        var previousStatusBarColor: Int? = null
+
+        if (!isEdgeToEdgeAvailable()) {
+            previousStatusBarColor = window.statusBarColor
+        }
+
         val previousAppearanceLightStatusBars =
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars
 
         onDispose {
             window.navigationBarColor = previousColor
+            previousStatusBarColor?.let {
+                window.statusBarColor = it
+            }
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
                 previousAppearanceLightStatusBars
         }

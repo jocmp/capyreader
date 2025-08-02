@@ -19,6 +19,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ThemeOption
+import com.capyreader.app.ui.EdgeToEdgeHelper.isEdgeToEdgeAvailable
 import org.koin.compose.koinInject
 
 private val DarkColorScheme = darkColorScheme(
@@ -90,7 +91,11 @@ fun CapyTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.navigationBarColor = colorScheme.background.toArgb()
+
+            if (!isEdgeToEdgeAvailable()) {
+                window.statusBarColor = colorScheme.surfaceContainer.toArgb()
+            }
+
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
                 showAppearanceLightStatusBars
         }
