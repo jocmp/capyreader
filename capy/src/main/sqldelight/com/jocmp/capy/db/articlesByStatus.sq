@@ -5,7 +5,7 @@ SELECT
   articles.title,
   articles.author,
   articles.url,
-  articles.summary,
+  SUBSTR(articles.summary, 1, 250),
   articles.image_url,
   articles.published_at,
   feeds.title AS feed_title,
