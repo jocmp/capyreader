@@ -60,7 +60,11 @@ fun FilterActionMenu(
             }
 
             Box {
-                if (currentFeed != null || filter is ArticleFilter.Folders) {
+                val showIcon =
+                    currentFeed != null && currentFeed.editable ||
+                            filter is ArticleFilter.Folders
+
+                if (showIcon) {
                     IconButton(onClick = { setMenuExpanded(true) }) {
                         Icon(
                             imageVector = Icons.Filled.MoreVert,
