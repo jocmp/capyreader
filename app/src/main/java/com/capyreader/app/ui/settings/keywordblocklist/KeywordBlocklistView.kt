@@ -69,7 +69,6 @@ fun KeywordBlocklistView(
         Column(
             Modifier
                 .verticalScroll(rememberScrollState())
-//                .padding(start = 16.dp)
                 .heightIn(min = 200.dp)
                 .weight(0.1f)
         ) {
