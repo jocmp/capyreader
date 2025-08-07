@@ -19,4 +19,5 @@ dependencies {
     testImplementation(kotlin("test"))
     testImplementation(libs.tests.junit)
     testImplementation(libs.tests.kotlinx.coroutines)
+    testImplementation(libs.mockwebserver3)
 }
