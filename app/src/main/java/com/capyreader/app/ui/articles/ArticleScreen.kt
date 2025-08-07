@@ -270,6 +270,16 @@ fun ArticleScreen(
             }
         }
 
+        val refreshArticleList = {
+            articles.refresh()
+
+            if (enableMarkReadOnScroll) {
+                scrollToTop()
+            }
+
+            refreshPagination()
+        }
+
         fun initialize() {
             isRefreshing = true
             onInitialized {
@@ -286,8 +296,7 @@ fun ArticleScreen(
 
             viewModel.refresh(filter) {
                 isRefreshing = false
-                articles.refresh()
-                refreshPagination()
+                refreshArticleList()
             }
         }
 
@@ -425,10 +434,7 @@ fun ArticleScreen(
                     onFilterSelect = selectFilter,
                     onRefreshAll = { completion ->
                         viewModel.refreshAll(ArticleFilter.default()) {
-                            if (enableMarkReadOnScroll) {
-                                scrollToTop()
-                            }
-                            articles.refresh()
+                            refreshArticleList()
                             completion()
                         }
                     },
