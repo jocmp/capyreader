@@ -32,6 +32,34 @@ class BySavedSearchTest {
     }
 
     @Test
+    fun all_summaryTruncation() = runTest {
+        val summary = """
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent turpis nisi, hendrerit in lobortis ac, cursus quis odio. Etiam gravida lacinia sodales. Ut sodales orci a auctor blandit. Pellentesque ultrices faucibus magna sed rhoncus. Praesent vulputate finibus auctor. Sed a neque nec odio imperdiet finibus vitae ac ipsum. Cras mollis tincidunt suscipit. Donec quis dui eget sem ultrices faucibus eget efficitur lorem. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;
+        """.trimIndent()
+
+        val search = savedSearchFixture.create()
+        val article = articleFixture.create(summary = summary)
+            .apply {
+                savedSearchFixture.createSavedSearchArticle(articleID = id, id = search.id)
+            }
+
+        val expectedSummary = summary.take(250)
+
+        val articles = BySavedSearch(database)
+            .all(
+                savedSearchID = search.id,
+                status = ArticleStatus.ALL,
+                unreadSort = UnreadSortOrder.NEWEST_FIRST,
+                since = OffsetDateTime.now().minusDays(7),
+                query = null,
+                limit = 1,
+                offset = 0,
+            ).executeAsList()
+
+        assertEquals(expected = expectedSummary, actual = articles[0].summary)
+    }
+
+    @Test
     fun findIndex() = runTest {
         val publishedAt = TimeHelpers.nowUTC()
         val search = savedSearchFixture.create()

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -20,6 +21,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MenuAnchorType.Companion.PrimaryNotEditable
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -31,6 +33,7 @@ import androidx.compose.runtime.toMutableStateMap
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -67,19 +70,20 @@ fun EditFeedView(
 
     val scrollState = rememberScrollState()
     val (name, setName) = remember { mutableStateOf(feed.title) }
-    val (addedFolder, setAddedFolder) = remember { mutableStateOf(defaultFolder()) }
-    val switchFolders = remember(folders) {
+    val (selectedFolder, setSelectedFolder) = remember { mutableStateOf(defaultFolder()) }
+    val switchFolders = remember {
         folders
             .map { it.title to feedFolderTitles.contains(it.title) }
             .toMutableStateMap()
     }
 
     fun submitFeed() {
-        val existingFolderNames = switchFolders.filter { it.value }.keys
         val folderNames = if (showMultiselect) {
-            collectFolders(existingFolderNames, addedFolder)
+            val existingFolderNames = switchFolders.filter { it.value }.keys
+
+            collectFolders(existingFolderNames, selectedFolder)
         } else {
-            listOf(addedFolder)
+            listOf(selectedFolder)
         }
 
         onSubmit(
@@ -126,10 +130,14 @@ fun EditFeedView(
                     title = stringResource(R.string.edit_feed_tags_section)
                 ) {
                     FolderMultiselect(
-                        onUpdateAddedFolder = setAddedFolder,
-                        addedFolder = addedFolder,
-                        folders = folders,
+                        folders,
+                        onUpdateNewFolder = setSelectedFolder,
+                        newFolder = selectedFolder,
                         switchFolders = switchFolders,
+                        onAddFolder = {
+                            switchFolders[selectedFolder] = true
+                            setSelectedFolder("")
+                        }
                     )
                 }
             } else {
@@ -139,8 +147,8 @@ fun EditFeedView(
                         .padding(bottom = 16.dp)
                 ) {
                     FolderSelect(
-                        onChange = setAddedFolder,
-                        value = addedFolder,
+                        onChange = setSelectedFolder,
+                        value = selectedFolder,
                         options = folders.map { it.title }
                     )
                 }
@@ -208,50 +216,93 @@ private fun FolderSelect(
 
 @Composable
 private fun FolderMultiselect(
-    onUpdateAddedFolder: (title: String) -> Unit,
-    addedFolder: String,
     folders: List<Folder>,
+    onUpdateNewFolder: (title: String) -> Unit,
+    newFolder: String,
+    onAddFolder: () -> Unit,
     switchFolders: MutableMap<String, Boolean>,
 ) {
     RowItem {
-        OutlinedTextField(
-            value = addedFolder,
-            onValueChange = onUpdateAddedFolder,
-            label = { Text(stringResource(id = R.string.add_feed_new_folder_title)) },
-            keyboardOptions = KeyboardOptions(
-                capitalization = KeyboardCapitalization.Words,
-                autoCorrectEnabled = false
-            ),
-            trailingIcon = { Icon(Icons.Rounded.Add, contentDescription = null) },
-            modifier = Modifier.fillMaxWidth()
-        )
-    }
-    Column {
-        folders.forEach { folder ->
-            val checked = switchFolders.getOrDefault(folder.title, false)
-
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically,
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            OutlinedTextField(
+                value = newFolder,
+                onValueChange = onUpdateNewFolder,
+                label = { Text(stringResource(id = R.string.add_feed_new_folder_title)) },
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Words,
+                    autoCorrectEnabled = false,
+                    imeAction = ImeAction.Done
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = { onAddFolder() }
+                ),
                 modifier = Modifier
+                    .weight(1f)
                     .fillMaxWidth()
-                    .clickable {
-                        switchFolders[folder.title] = !checked
-                    }
+            )
+            IconButton(
+                modifier = Modifier.padding(top = 8.dp),
+                onClick = {
+                    onAddFolder()
+                }
             ) {
-                Checkbox(
-                    checked = checked,
-                    onCheckedChange = { switchFolders[folder.title] = it },
-                    modifier = Modifier.padding(start = 8.dp)
-                )
-                Text(
-                    text = folder.title,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.padding(end = 16.dp)
+                Icon(
+                    imageVector = Icons.Rounded.Add,
+                    contentDescription = stringResource(R.string.blocked_keywords_add_keyword)
                 )
             }
         }
+    }
+    Column {
+        val addedFolders =
+            switchFolders
+                .filter { switch -> folders.find { it.title == switch.key } == null }
+                .map { it.key }
+
+        addedFolders.forEach { title ->
+            val checked = switchFolders.getOrDefault(title, false)
+
+            CheckboxRow(title, checked = checked) { value ->
+                switchFolders[title] = value
+            }
+        }
+
+        folders.forEach { folder ->
+            val checked = switchFolders.getOrDefault(folder.title, false)
+
+            CheckboxRow(folder.title, checked = checked) { value ->
+                switchFolders[folder.title] = value
+            }
+        }
+    }
+}
+
+@Composable
+private fun CheckboxRow(title: String, checked: Boolean, onCheck: (value: Boolean) -> Unit) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                onCheck(!checked)
+            }
+    ) {
+        Checkbox(
+            checked = checked,
+            onCheckedChange = { onCheck(it) },
+            modifier = Modifier.padding(start = 8.dp)
+        )
+        Text(
+            text = title,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.padding(end = 16.dp)
+        )
     }
 }
 
