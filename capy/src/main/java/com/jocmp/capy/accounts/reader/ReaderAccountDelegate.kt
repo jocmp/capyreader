@@ -267,7 +267,8 @@ internal class ReaderAccountDelegate(
             favicon_url = subscription.iconUrl.ifBlank {
                 CapyLog.warn(tag("blank_icon"), mapOf("feed_url" to subscription.url))
                 null
-            }
+            },
+            priority = subscription.frssPriority
         )
 
         upsertTaggings(subscription)
@@ -562,7 +563,8 @@ private val SubscriptionQuickAddResult.toSubscription: Subscription?
             categories = emptyList(),
             url = url,
             htmlUrl = "",
-            iconUrl = ""
+            iconUrl = "",
+            frssPriority = null
         )
     }
 

@@ -34,7 +34,6 @@ import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
-import com.jocmp.capy.countAll
 import com.jocmp.capy.findArticlePages
 import com.jocmp.capy.logging.CapyLog
 import com.jocmp.capy.persistence.ArticlePagerFactory
@@ -167,8 +166,8 @@ class ArticleScreenViewModel(
 
     private val _nextFilter = MutableStateFlow<NextFilter?>(null)
 
-    val statusCount: Flow<Long> = _counts.map {
-        it.values.sum()
+    val statusCount: Flow<Long> = filter.flatMapLatest { latestFilter ->
+        account.countAllByStatus(latestFilter.status)
     }
 
     val showUnauthorizedMessage: Boolean
