@@ -217,8 +217,8 @@ internal class LocalAccountDelegate(
     ) {
         val blocklist = preferences.keywordBlocklist.get()
 
-        items.forEach { item ->
-            database.transactionWithErrorHandling {
+        database.transactionWithErrorHandling {
+            items.forEach { item ->
                 val publishedAt = published(item.pubDate, fallback = updatedAt).toEpochSecond()
                 val parsedItem = ParsedItem(
                     item,
