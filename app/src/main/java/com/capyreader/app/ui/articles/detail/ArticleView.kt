@@ -51,6 +51,7 @@ import com.capyreader.app.preferences.ArticleVerticalSwipe.NEXT_ARTICLE
 import com.capyreader.app.preferences.ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWSER
 import com.capyreader.app.preferences.ArticleVerticalSwipe.PREVIOUS_ARTICLE
 import com.capyreader.app.ui.articles.LocalFullContent
+import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.WebViewState
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.jocmp.capy.Article
@@ -67,7 +68,9 @@ fun ArticleView(
     enableBackHandler: Boolean = false,
     onScrollToArticle: (index: Int) -> Unit,
     webViewState: WebViewState,
+    appPreferences: AppPreferences = koinInject()
 ) {
+    val enableHorizontalPager by appPreferences.readerOptions.enableHorizontaPagination.collectChangesWithDefault()
     val fullContent = LocalFullContent.current
     val openLink = articleOpenLink(article)
 
@@ -138,6 +141,7 @@ fun ArticleView(
                 hasNextArticle = pagination.hasNext
             ) {
                 HorizontalReaderPager(
+                    enabled = enableHorizontalPager,
                     enablePrevious = pagination.hasPrevious,
                     enableNext = pagination.hasNext,
                     onSelectPrevious = {

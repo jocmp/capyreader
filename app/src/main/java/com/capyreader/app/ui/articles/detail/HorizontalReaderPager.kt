@@ -8,18 +8,17 @@ import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.preferences.AppPreferences
-import com.capyreader.app.ui.collectChangesWithDefault
 import me.saket.swipe.SwipeAction
 import me.saket.swipe.SwipeableActionsBox
 import org.koin.compose.koinInject
 
 @Composable
 fun HorizontalReaderPager(
+    enabled: Boolean,
     enablePrevious: Boolean,
     enableNext: Boolean,
     onSelectPrevious: () -> Unit,
@@ -27,8 +26,6 @@ fun HorizontalReaderPager(
     appPreferences: AppPreferences = koinInject(),
     content: @Composable () -> Unit,
 ) {
-    val enabled by appPreferences.readerOptions.enableHorizontaPagination.collectChangesWithDefault()
-
     if (!enabled) {
         return content()
     }
