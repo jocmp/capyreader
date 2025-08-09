@@ -17,4 +17,9 @@ data class Feed(
     val enableNotifications: Boolean = false,
     val openArticlesInBrowser: Boolean = false,
     val folderExpanded: Boolean = false,
-): Countable
+) : Countable {
+    val editable: Boolean
+        get() = siteURL != PAGES_SITE_URL
+}
+
+const val PAGES_SITE_URL = "http://pages.feedbinusercontent.com"

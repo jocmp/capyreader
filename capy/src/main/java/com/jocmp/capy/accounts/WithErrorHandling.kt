@@ -22,3 +22,4 @@ internal suspend fun <T> withErrorHandling(func: suspend () -> T?): Result<T> {
         return Result.failure(e)
     }
 }
+
