@@ -11,10 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.capyreader.app.preferences.AppPreferences
 import me.saket.swipe.SwipeAction
 import me.saket.swipe.SwipeableActionsBox
-import org.koin.compose.koinInject
 
 @Composable
 fun HorizontalReaderPager(
@@ -23,7 +21,6 @@ fun HorizontalReaderPager(
     enableNext: Boolean,
     onSelectPrevious: () -> Unit,
     onSelectNext: () -> Unit,
-    appPreferences: AppPreferences = koinInject(),
     content: @Composable () -> Unit,
 ) {
     if (!enabled) {
