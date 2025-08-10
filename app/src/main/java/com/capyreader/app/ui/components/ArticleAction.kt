@@ -2,13 +2,6 @@ package com.capyreader.app.ui.components
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Circle
-import androidx.compose.material.icons.rounded.Circle
-import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material.icons.rounded.StarOutline
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
 import com.capyreader.app.R
 import com.capyreader.app.ui.articles.ArticleActions
 import com.jocmp.capy.Article

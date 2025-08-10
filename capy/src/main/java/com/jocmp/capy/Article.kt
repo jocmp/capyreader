@@ -22,18 +22,21 @@ data class Article(
     val siteURL: String? = null,
     val enableStickyFullContent: Boolean = false,
     val openInBrowser: Boolean = false,
-    val fullContent: FullContentState = FullContentState.NONE,
+    val fullContent: FullContent = FullContent.None,
     val content: String = contentHTML.ifBlank { summary },
     val enclosures: List<Enclosure> = emptyList(),
 ) {
     val defaultContent = contentHTML.ifBlank { summary }
 
-    val parseFullContent = fullContent == FullContentState.LOADED
+    val parseFullContent = fullContent is FullContent.Loaded
+}
 
-    enum class FullContentState {
-        NONE,
-        LOADING,
-        LOADED,
-        ERROR,
-    }
+sealed class FullContent {
+    object None : FullContent()
+
+    class Loading(val articleID: String) : FullContent()
+
+    class Loaded(val articleID: String, val content: String) : FullContent()
+
+    class Error(val articleID: String) : FullContent()
 }

@@ -26,8 +26,7 @@ import com.capyreader.app.common.shareArticle
 import com.capyreader.app.ui.articles.FullContentLoadingIcon
 import com.capyreader.app.ui.components.ToolbarTooltip
 import com.jocmp.capy.Article
-import com.jocmp.capy.Article.FullContentState.LOADED
-import com.jocmp.capy.Article.FullContentState.LOADING
+import com.jocmp.capy.FullContent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -71,7 +70,7 @@ fun ArticleActions(
         IconButton(
             onClick = { onToggleExtractContent() },
         ) {
-            if (article.fullContent == LOADING) {
+            if (article.fullContent is FullContent.Loading) {
                 FullContentLoadingIcon()
             } else {
                 Icon(
@@ -137,8 +136,8 @@ private fun starredIcon(article: Article) =
     }
 
 @Composable
-private fun extractIcon(fullContentState: Article.FullContentState) = when (fullContentState) {
-    LOADED -> R.drawable.icon_article_filled
-    Article.FullContentState.ERROR -> R.drawable.icon_article_error
+private fun extractIcon(fullContentState: FullContent) = when (fullContentState) {
+    is FullContent.Loaded -> R.drawable.icon_article_filled
+    is FullContent.Error -> R.drawable.icon_article_error
     else -> R.drawable.icon_article_empty
 }

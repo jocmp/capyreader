@@ -32,6 +32,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -42,6 +43,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
+import androidx.paging.compose.LazyPagingItems
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.openLink
 import com.capyreader.app.preferences.AppPreferences
@@ -55,29 +57,37 @@ import com.capyreader.app.ui.articles.LocalFullContent
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.jocmp.capy.Article
+import com.jocmp.capy.FullContent
+import com.jocmp.capy.logging.CapyLog
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArticleView(
-    article: Article,
+    initialArticle: Article,
     pagination: ArticlePagination,
     onBackPressed: () -> Unit,
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
     enableBackHandler: Boolean = false,
-    onScrollToArticle: (index: Int) -> Unit,
+    onScrollToArticle: (index: Int, id: String) -> Unit,
     onSelectMedia: (media: Media) -> Unit,
+    articles: LazyPagingItems<Article>,
     appPreferences: AppPreferences = koinInject()
 ) {
     val enableHorizontalPager by appPreferences.readerOptions.enableHorizontaPagination.collectChangesWithDefault()
     val fullContent = LocalFullContent.current
+    val article = rememberArticleWithFullContent(initialArticle)
     val openLink = articleOpenLink(article)
 
+    LaunchedEffect(initialArticle) {
+        CapyLog.info("id", mapOf("value" to initialArticle.id))
+    }
+
     val onToggleFullContent = {
-        if (article.fullContent == Article.FullContentState.LOADED) {
+        if (article.fullContent is FullContent.Loaded) {
             fullContent.reset()
-        } else if (article.fullContent != Article.FullContentState.LOADING) {
+        } else if (article.fullContent !is FullContent.Loading) {
             fullContent.fetch()
         }
     }
@@ -134,26 +144,41 @@ fun ArticleView(
             }
         },
         reader = {
+            LaunchedEffect(articles.itemCount, pagination) {
+                CapyLog.info("total", mapOf("value" to articles.itemCount.toString()))
+//                CapyLog.info("pagination", mapOf("value" to pagination.toString()))
+            }
             ArticlePullRefresh(
                 topToolbarPreference.show && !topToolbarPreference.pinned,
                 onSwipe = onSwipe,
                 hasPreviousArticle = pagination.hasPrevious,
                 hasNextArticle = pagination.hasNext
             ) {
-                HorizontalReaderPager(
-                    enabled = enableHorizontalPager,
-                    enablePrevious = pagination.hasPrevious,
-                    enableNext = pagination.hasNext,
-                    onSelectPrevious = {
-                        pagination.selectPrevious()
-                    },
-                    onSelectNext = {
-                        pagination.selectNext()
-                    },
-                ) {
+                if (enableHorizontalPager) {
+                    HorizontalReaderPager(
+                        initialIndex = pagination.index,
+                        enablePrevious = pagination.hasPrevious,
+                        enableNext = pagination.hasNext,
+                        onSelectPrevious = {
+                            pagination.selectPrevious()
+                        },
+                        articles = articles,
+                        onSelectArticle = { index, id ->
+                            onScrollToArticle(index, id)
+                        },
+                        onSelectNext = {
+                            pagination.selectNext()
+                        },
+                    ) { current ->
+                        ArticleReader(
+                            current,
+                            onSelectMedia = onSelectMedia,
+                        )
+                    }
+                } else {
                     key(article.id) {
                         ArticleReader(
-                            article = article,
+                            article,
                             onSelectMedia = onSelectMedia,
                         )
                     }
@@ -162,11 +187,11 @@ fun ArticleView(
         },
     )
 
-    LaunchedEffect(pagination.index) {
-        if (pagination.index > -1) {
-            onScrollToArticle(pagination.index)
-        }
-    }
+//    LaunchedEffect(pagination.index) {
+//        if (pagination.index > -1) {
+//            onScrollToArticle(pagination.index)
+//        }
+//    }
 
     BackHandler(enableBackHandler) {
         onBackPressed()
@@ -369,3 +394,33 @@ private data class SwipePreferences(
     val topSwipe: ArticleVerticalSwipe,
     val bottomSwipe: ArticleVerticalSwipe,
 )
+
+@Composable
+fun rememberArticleWithFullContent(initialArticle: Article): Article {
+    val fullContent = LocalFullContent.current.value
+
+    return remember(initialArticle.id, initialArticle.defaultContent, fullContent) {
+        return@remember when (fullContent) {
+            is FullContent.Loaded -> {
+                CapyLog.info(
+                    "content",
+                    mapOf("status" to "Loaded", "value" to fullContent.articleID)
+                )
+                if (initialArticle.id == fullContent.articleID) {
+                    initialArticle.copy(content = fullContent.content, fullContent = fullContent)
+                } else {
+                    initialArticle.copy(
+                        content = initialArticle.defaultContent,
+                        fullContent = fullContent
+                    )
+                }
+            }
+
+            else -> {
+                CapyLog.info("content", mapOf("status" to fullContent.toString()))
+
+                initialArticle.copy(fullContent = fullContent)
+            }
+        }
+    }
+}

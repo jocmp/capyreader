@@ -9,7 +9,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import androidx.paging.PagingSource
 import com.capyreader.app.R
 import com.capyreader.app.common.toast
 import com.capyreader.app.notifications.NotificationHelper
@@ -26,6 +25,7 @@ import com.jocmp.capy.ArticlePages
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
+import com.jocmp.capy.FullContent
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.articles.ArticleContent
@@ -73,7 +73,7 @@ class ArticleScreenViewModel(
     var refreshingAll by mutableStateOf(false)
         private set
 
-    var pagerSource: PagingSource<Int, Article>? = null
+    var fullContent by mutableStateOf<FullContent>(FullContent.None)
 
     val articlesSince = MutableStateFlow<OffsetDateTime>(OffsetDateTime.now())
 
@@ -372,7 +372,14 @@ class ArticleScreenViewModel(
                 onComplete(article)
             }
 
-            if (article.fullContent == Article.FullContentState.LOADING) {
+
+            fullContent = if (enableStickyFullContent && article.enableStickyFullContent) {
+                FullContent.Loading(article.id)
+            } else {
+                FullContent.None
+            }
+
+            if (fullContent is FullContent.Loading) {
                 fullContentJob?.cancel()
 
                 fullContentJob = viewModelScope.launchIO { fetchFullContent(article) }
@@ -554,22 +561,8 @@ class ArticleScreenViewModel(
     private fun buildArticle(articleID: String): Article? {
         val article = account.findArticle(articleID = articleID) ?: return null
 
-        val fullContent = if (enableStickyFullContent && article.enableStickyFullContent) {
-            Article.FullContentState.LOADING
-        } else {
-            Article.FullContentState.NONE
-        }
-
-        val content = if (fullContent == Article.FullContentState.LOADING) {
-            ""
-        } else {
-            article.defaultContent
-        }
-
         return article.copy(
             read = true,
-            content = content,
-            fullContent = fullContent
         )
     }
 
@@ -581,7 +574,7 @@ class ArticleScreenViewModel(
                 account.enableStickyContent(article.feedID)
             }
 
-            _article = article.copy(fullContent = Article.FullContentState.LOADING)
+            fullContent = FullContent.Loading(article.id)
 
             _article?.let { fetchFullContent(it) }
         }
@@ -590,10 +583,7 @@ class ArticleScreenViewModel(
     fun resetFullContent() {
         val article = _article ?: return
 
-        _article = article.copy(
-            content = article.defaultContent,
-            fullContent = Article.FullContentState.NONE
-        )
+        fullContent = FullContent.None
 
         if (enableStickyFullContent) {
             account.disableStickyContent(article.feedID)
@@ -614,21 +604,19 @@ class ArticleScreenViewModel(
         account.fetchFullContent(article)
             .fold(
                 onSuccess = { value ->
-                    if (_article?.id == article.id) {
-                        _article = article.copy(
-                            content = value,
-                            fullContent = Article.FullContentState.LOADED
-                        )
-                    }
+                    fullContent =
+                        if (_article?.id == article.id) {
+                            FullContent.Loaded(article.id, value)
+                        } else {
+                            FullContent.None
+                        }
                 },
                 onFailure = {
                     if (_article?.id != article.id) {
                         return
                     }
-                    _article = article.copy(
-                        content = article.defaultContent,
-                        fullContent = Article.FullContentState.ERROR
-                    )
+
+                    fullContent = FullContent.Error(article.id)
 
                     CapyLog.warn(
                         "full_content",

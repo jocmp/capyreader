@@ -37,9 +37,10 @@ import org.koin.compose.koinInject
 
 @Composable
 fun ArticleReader(
-    article: Article,
+    initialArticle: Article,
     onSelectMedia: (media: Media) -> Unit,
 ) {
+    val article = rememberArticleWithFullContent(initialArticle)
     val (shareLink, setShareLink) = rememberSaveableShareLink()
 
     val webViewState = rememberWebViewState(
