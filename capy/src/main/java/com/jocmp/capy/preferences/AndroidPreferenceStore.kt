@@ -1,6 +1,7 @@
 package com.jocmp.capy.preferences
 
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import com.jocmp.capy.preferences.AndroidPreference.BooleanPrimitive
 import com.jocmp.capy.preferences.AndroidPreference.FloatPrimitive
 import com.jocmp.capy.preferences.AndroidPreference.IntPrimitive
@@ -57,7 +58,7 @@ class AndroidPreferenceStore(
     }
 
     override fun clearAll() {
-        sharedPreferences.edit().clear().apply()
+        sharedPreferences.edit(commit = true) { clear() }
     }
 }
 
