@@ -3,7 +3,6 @@ package com.jocmp.capy.preferences
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
 import androidx.core.content.edit
-import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -34,7 +33,7 @@ sealed class AndroidPreference<T>(
     }
 
     override fun set(value: T) {
-        preferences.edit(commit = true, action = write(key, value))
+        preferences.edit(action = write(key, value))
     }
 
     override fun isSet(): Boolean {
@@ -164,10 +163,8 @@ sealed class AndroidPreference<T>(
         override fun read(preferences: SharedPreferences, key: String, defaultValue: T): T {
             return try {
                 preferences.getString(key, null)?.let(deserializer) ?: defaultValue
-            } catch (error: Exception) {
-                CapyLog.error("prefs", error, mapOf("method" to "read", "key" to key))
-
-                return defaultValue
+            } catch (e: Exception) {
+                defaultValue
             }
         }
 
