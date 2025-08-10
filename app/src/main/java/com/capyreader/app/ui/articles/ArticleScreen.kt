@@ -571,7 +571,7 @@ fun ArticleScreen(
                         }
                     )
                     ArticleView(
-                        article = article,
+                        article,
                         pagination = pagination,
                         onBackPressed = {
                             clearArticle()
@@ -580,8 +580,10 @@ fun ArticleScreen(
                         onToggleStar = viewModel::toggleArticleStar,
                         enableBackHandler = media == null,
                         onSelectMedia = { media = it },
-                        onScrollToArticle = { index ->
+                        articles = articles,
+                        onScrollToArticle = { index, id ->
                             scrollToArticle(index)
+                            setArticle(id)
                         }
                     )
                 }
@@ -695,8 +697,11 @@ fun rememberFeedActions(viewModel: ArticleScreenViewModel): FeedActions {
 
 @Composable
 fun rememberFullContent(viewModel: ArticleScreenViewModel): FullContentFetcher {
-    return remember {
+    val fullContent = viewModel.fullContent
+
+    return remember(fullContent) {
         FullContentFetcher(
+            value = fullContent,
             fetch = viewModel::fetchFullContentAsync,
             reset = viewModel::resetFullContent,
         )
