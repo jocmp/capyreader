@@ -1,7 +1,5 @@
 package com.jocmp.capy.preferences
 
-import com.jocmp.capy.logging.CapyLog
-
 interface PreferenceStore {
 
     fun getString(key: String, defaultValue: String = ""): Preference<String>
@@ -38,8 +36,6 @@ inline fun <reified T : Enum<T>> PreferenceStore.getEnum(
             try {
                 enumValueOf(it)
             } catch (error: Throwable) {
-                CapyLog.error("prefs", error, mapOf("type" to "enum", "key" to key))
-
                 defaultValue
             }
         },
