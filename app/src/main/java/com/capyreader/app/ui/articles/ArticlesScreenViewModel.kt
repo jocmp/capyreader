@@ -49,7 +49,7 @@ import kotlinx.coroutines.launch
 import java.time.OffsetDateTime
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class ArticleScreenViewModel(
+class ArticlesScreenViewModel(
     private val account: Account,
     private val appPreferences: AppPreferences,
     private val application: Application,

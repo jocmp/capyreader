@@ -9,11 +9,21 @@ fun NavGraphBuilder.articleGraph(
     navController: NavController,
 ) {
     composable<Route.Articles> {
-        ArticleScreen(
+        ArticlesScreen(
             onNavigateToSettings = {
                 navController.navigate(Route.Settings) {
                     launchSingleTop = true
                 }
+            }
+        )
+    }
+    composable<Route.Article> {
+        ArticleScreen(
+            onNavigateUp = {
+                navController.navigateUp()
+            },
+            onSelectArticle = { id ->
+                navController.navigate(Route.Article(id))
             }
         )
     }
