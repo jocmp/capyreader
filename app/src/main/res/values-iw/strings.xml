@@ -46,7 +46,7 @@
     <string name="add_feed_save_error">לא ניתן לשמור פיד</string>
     <string name="delete_tag_error">שגיאה במחיקת התגית</string>
     <string name="relative_time_hours">%1$dש</string>
-    <string name="article_share">שתף מאמר</string>
+    <string name="article_share">שיתוף מאמר</string>
     <string name="action_mark_all_read">סמן הכל כנקרא</string>
     <string name="mark_all_read_dialog_description">לסמן את כל הפריטים כנקראו?</string>
     <string name="mark_all_read_dialog_submit">אישור</string>
@@ -257,4 +257,7 @@
     <string name="mark_read_position_floating_action_button">כפתור פעולה מרחף</string>
     <string name="mark_all_read_button_position">מיקום כפתור סמן הכל כנקרא</string>
     <string name="settings_display_miscellaneous_title">שונות</string>
+    <string name="article_byline">%1$s ב-%2$s על ידי %3$s</string>
+    <string name="article_byline_date_only">%1$s ב- %2$s</string>
+    <string name="settings_gestures_reader_tap_to_page_title">הקש בדיו אלקטרוני כדי לגלול</string>
 </resources>
