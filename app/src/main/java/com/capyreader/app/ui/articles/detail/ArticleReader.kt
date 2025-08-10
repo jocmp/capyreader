@@ -21,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
+import com.capyreader.app.common.Media
 import com.capyreader.app.common.rememberTalkbackPreference
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ReaderImageVisibility
@@ -29,14 +30,24 @@ import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.articles.ColumnScrollbar
 import com.capyreader.app.ui.components.WebView
 import com.capyreader.app.ui.components.WebViewState
+import com.capyreader.app.ui.components.rememberSaveableShareLink
+import com.capyreader.app.ui.components.rememberWebViewState
 import com.jocmp.capy.Article
 import org.koin.compose.koinInject
 
 @Composable
 fun ArticleReader(
     article: Article,
-    webViewState: WebViewState,
+    onSelectMedia: (media: Media) -> Unit,
 ) {
+    val (shareLink, setShareLink) = rememberSaveableShareLink()
+
+    val webViewState = rememberWebViewState(
+        key = article.id,
+        onNavigateToMedia = onSelectMedia,
+        onRequestLinkDialog = { setShareLink(it) }
+    )
+
     val showImages = rememberImageVisibility()
     val improveTalkback by rememberTalkbackPreference()
 
@@ -63,6 +74,15 @@ fun ArticleReader(
         onDispose {
             webViewState.reset()
         }
+    }
+
+    if (shareLink != null) {
+        ShareLinkDialog(
+            onClose = {
+                setShareLink(null)
+            },
+            link = shareLink,
+        )
     }
 }
 
