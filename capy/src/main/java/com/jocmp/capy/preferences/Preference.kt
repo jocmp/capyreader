@@ -10,11 +10,9 @@ interface Preference<T> {
 
     fun get(): T
 
-    fun set(value: T)
+    suspend  fun set(value: T)
 
-    fun isSet(): Boolean
-
-    fun delete()
+    suspend fun delete()
 
     fun defaultValue(): T
 
@@ -23,4 +21,4 @@ interface Preference<T> {
     fun stateIn(scope: CoroutineScope): StateFlow<T>
 }
 
-inline fun <reified T, R : T> Preference<T>.getAndSet(crossinline block: (T) -> R) = set(block(get()))
+suspend inline fun <reified T, R : T> Preference<T>.getAndSet(crossinline block: (T) -> R) = set(block(get()))

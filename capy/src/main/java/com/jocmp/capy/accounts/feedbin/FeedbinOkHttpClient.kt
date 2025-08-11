@@ -1,8 +1,9 @@
 package com.jocmp.capy.accounts.feedbin
 
 import com.jocmp.capy.AccountPreferences
-import com.jocmp.capy.accounts.httpClientBuilder
 import com.jocmp.capy.accounts.BasicAuthInterceptor
+import com.jocmp.capy.accounts.httpClientBuilder
+import kotlinx.coroutines.runBlocking
 import okhttp3.Credentials
 import okhttp3.OkHttpClient
 import java.net.URI
@@ -12,8 +13,8 @@ internal object FeedbinOkHttpClient {
         return httpClientBuilder(cachePath = path)
             .addInterceptor(
                 BasicAuthInterceptor {
-                    val username = preferences.username.get()
-                    val password = preferences.password.get()
+                    val username = runBlocking { preferences.username.get() }
+                    val password = runBlocking { preferences.password.get() }
 
                     Credentials.basic(username, password)
                 }

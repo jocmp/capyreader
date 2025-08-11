@@ -1,13 +1,14 @@
 package com.capyreader.app.common
 
 import android.content.Context
-import android.content.Context.MODE_PRIVATE
-import android.content.SharedPreferences
-import androidx.core.content.edit
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
 import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.PreferenceStoreProvider
 import com.jocmp.capy.preferences.AndroidPreferenceStore
-
+import java.io.File
 
 class SharedPreferenceStoreProvider(
     private val context: Context
@@ -15,21 +16,26 @@ class SharedPreferenceStoreProvider(
     override fun build(accountID: String): AccountPreferences {
         return AccountPreferences(
             AndroidPreferenceStore(
-                buildPreferences(context, accountID)
+                buildDataStore(context, accountID)
             )
         )
     }
 
-    override fun delete(accountID: String) {
-        val preferences = buildPreferences(context, accountID)
+    override suspend fun delete(accountID: String) {
+        val dataStore = buildDataStore(context, accountID)
 
-        preferences.edit(commit = true) {
-            clear()
+        dataStore.edit { preferences ->
+            preferences.clear()
         }
     }
 }
 
-private fun buildPreferences(context: Context, accountID: String) =
-    context.getSharedPreferences(accountPrefs(accountID), MODE_PRIVATE)
+private fun buildDataStore(context: Context, accountID: String): DataStore<Preferences> {
+    return PreferenceDataStoreFactory.create(
+        produceFile = {
+            File(context.filesDir, "datastore/${accountPrefs(accountID)}.preferences_pb")
+        }
+    )
+}
 
 private fun accountPrefs(accountID: String) = "account_$accountID"

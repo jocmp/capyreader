@@ -12,6 +12,7 @@ import com.capyreader.app.refresher.RefreshScheduler
 import com.jocmp.capy.Account
 import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.articles.UnreadSortOrder
+import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.preferences.getAndSet
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -53,43 +54,57 @@ class GeneralSettingsViewModel(
         .stateIn(viewModelScope)
 
     fun updateRefreshInterval(interval: RefreshInterval) {
-        refreshScheduler.update(interval)
+        viewModelScope.launchIO {
+            refreshScheduler.update(interval)
+        }
 
         this.refreshInterval = interval
     }
 
     fun updateUnreadSort(sort: UnreadSortOrder) {
-        appPreferences.articleListOptions.unreadSort.set(sort)
+        viewModelScope.launchIO {
+            appPreferences.articleListOptions.unreadSort.set(sort)
+        }
 
         this.unreadSort = sort
     }
 
     fun updateAutoDelete(autoDelete: AutoDelete) {
-        account.preferences.autoDelete.set(autoDelete)
+        viewModelScope.launchIO {
+            account.preferences.autoDelete.set(autoDelete)
+        }
 
         this.autoDelete = autoDelete
     }
 
     fun updateOpenLinksInternally(openLinksInternally: Boolean) {
-        appPreferences.openLinksInternally.set(openLinksInternally)
+        viewModelScope.launchIO {
+            appPreferences.openLinksInternally.set(openLinksInternally)
+        }
 
         this.canOpenLinksInternally = openLinksInternally
     }
 
     fun updateConfirmMarkAllRead(confirm: Boolean) {
-        appPreferences.articleListOptions.confirmMarkAllRead.set(confirm)
+        viewModelScope.launchIO {
+            appPreferences.articleListOptions.confirmMarkAllRead.set(confirm)
+        }
 
         confirmMarkAllRead = confirm
     }
 
     fun updateAfterReadAll(behavior: AfterReadAllBehavior) {
-        appPreferences.articleListOptions.afterReadAllBehavior.set(behavior)
+        viewModelScope.launchIO {
+            appPreferences.articleListOptions.afterReadAllBehavior.set(behavior)
+        }
 
         afterReadAll = behavior
     }
 
     fun updateStickyFullContent(enable: Boolean) {
-        appPreferences.enableStickyFullContent.set(enable)
+        viewModelScope.launchIO {
+            appPreferences.enableStickyFullContent.set(enable)
+        }
 
         enableStickyFullContent = enable
 
@@ -101,7 +116,9 @@ class GeneralSettingsViewModel(
     }
 
     fun updateMarkReadOnScroll(enable: Boolean) {
-        appPreferences.articleListOptions.markReadOnScroll.set(enable)
+        viewModelScope.launchIO {
+            appPreferences.articleListOptions.markReadOnScroll.set(enable)
+        }
 
         markReadOnScroll = enable
     }
@@ -111,14 +128,18 @@ class GeneralSettingsViewModel(
     }
 
     fun addBlockedKeyword(keyword: String) {
-        account.preferences.keywordBlocklist.getAndSet { list ->
-            list.toMutableSet().apply { add(keyword) }
+        viewModelScope.launchIO {
+            account.preferences.keywordBlocklist.getAndSet { list ->
+                list.toMutableSet().apply { add(keyword) }
+            }
         }
     }
 
     fun removeBlockedKeyword(keyword: String) {
-        account.preferences.keywordBlocklist.getAndSet { list ->
-            list.toMutableSet().apply { remove(keyword) }
+        viewModelScope.launchIO {
+            account.preferences.keywordBlocklist.getAndSet { list ->
+                list.toMutableSet().apply { remove(keyword) }
+            }
         }
     }
 }

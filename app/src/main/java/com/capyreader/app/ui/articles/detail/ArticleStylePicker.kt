@@ -16,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,6 +32,8 @@ import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.components.LabelStyle
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.articles.FontSize
+import com.jocmp.capy.common.launchIO
+import kotlinx.coroutines.runBlocking
 import org.koin.compose.koinInject
 import kotlin.math.roundToInt
 
@@ -40,6 +43,7 @@ fun ArticleStylePicker(
     onChange: () -> Unit = {}
 ) {
     val textSizes = FontSize.scale
+    val scope = rememberCoroutineScope()
 
     var fontFamily by remember { mutableStateOf(appPreferences.readerOptions.fontFamily.get()) }
     val fontSize by appPreferences.readerOptions.fontSize.collectChangesWithCurrent()
@@ -55,7 +59,9 @@ fun ArticleStylePicker(
         ArticleFontMenu(
             updateFontFamily = { font ->
                 fontFamily = font
-                appPreferences.readerOptions.fontFamily.set(font)
+                scope.launchIO {
+                    appPreferences.readerOptions.fontFamily.set(font)
+                }
                 onChange()
             },
             fontOption = fontFamily
@@ -78,7 +84,9 @@ fun ArticleStylePicker(
                         onValueChange = {
                             sliderPosition = it
                             FontSize.scale.getOrNull(it.roundToInt())?.let { size ->
-                                appPreferences.readerOptions.fontSize.set(size)
+                                scope.launchIO {
+                                    appPreferences.readerOptions.fontSize.set(size)
+                                }
                             }
                             onChange()
                         }
@@ -104,7 +112,9 @@ fun ArticleStylePicker(
 private fun ArticleStyleBottomSheetPreview() {
     val context = LocalContext.current
     val preferences = AppPreferences(context).apply {
-        readerOptions.fontSize.set(16)
+        runBlocking {
+            readerOptions.fontSize.set(16)
+        }
     }
 
     CapyTheme {

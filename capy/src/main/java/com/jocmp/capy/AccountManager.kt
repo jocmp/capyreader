@@ -24,7 +24,7 @@ class AccountManager(
         return buildAccount(existingAccount, database, faviconFetcher)
     }
 
-    fun createAccount(
+    suspend fun createAccount(
         username: String,
         password: String,
         url: String,
@@ -41,7 +41,7 @@ class AccountManager(
         return accountID
     }
 
-    fun createAccount(source: Source): String {
+    suspend fun createAccount(source: Source): String {
         val accountID = UUID.randomUUID().toString()
 
         accountFolder().apply {
@@ -57,7 +57,7 @@ class AccountManager(
         return accountID
     }
 
-    fun removeAccount(accountID: String) {
+    suspend fun removeAccount(accountID: String) {
         val accountFile = findAccountFile(accountID)
 
         accountFile?.deleteRecursively()

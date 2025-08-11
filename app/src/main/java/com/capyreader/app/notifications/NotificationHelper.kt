@@ -155,7 +155,7 @@ class NotificationHelper(
             }
         }
 
-        fun openFromIntent(intent: Intent, appPreferences: AppPreferences) {
+        suspend fun openFromIntent(intent: Intent, appPreferences: AppPreferences) {
             val openFromShowMore = intent.getBooleanExtra(UNREAD_ONLY_KEY, false)
             val articleID = intent.getStringExtra(ARTICLE_ID_KEY)
             val feedID = intent.getStringExtra(FEED_ID_KEY)

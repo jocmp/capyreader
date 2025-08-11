@@ -2,6 +2,7 @@ package com.capyreader.app.ui.settings
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -13,6 +14,7 @@ import com.capyreader.app.ui.components.TextSwitch
 import com.capyreader.app.ui.theme.CapyTheme
 import com.google.firebase.Firebase
 import com.google.firebase.crashlytics.crashlytics
+import com.jocmp.capy.common.launchIO
 import org.koin.android.ext.koin.androidContext
 import org.koin.compose.KoinApplication
 import org.koin.compose.koinInject
@@ -21,6 +23,8 @@ import org.koin.compose.koinInject
 fun CrashReportingCheckbox(
     appPreferences: AppPreferences = koinInject()
 ) {
+    val scope = rememberCoroutineScope()
+
     val (enableCrashReporting, setCrashReportingEnabled) = rememberSaveable {
         mutableStateOf(appPreferences.crashReporting.get())
     }
@@ -28,12 +32,15 @@ fun CrashReportingCheckbox(
     val updateCrashReporting = { enabled: Boolean ->
         setCrashReportingEnabled(enabled)
         Firebase.crashlytics.isCrashlyticsCollectionEnabled = enabled
-        appPreferences.crashReporting.set(enabled)
+
+        scope.launchIO {
+            appPreferences.crashReporting.set(enabled)
+        }
     }
 
     TextSwitch(
         checked = enableCrashReporting,
-        onCheckedChange = updateCrashReporting,
+        onCheckedChange = { updateCrashReporting(it) },
         title = stringResource(R.string.crash_reporting_checkbox_title)
     )
 }

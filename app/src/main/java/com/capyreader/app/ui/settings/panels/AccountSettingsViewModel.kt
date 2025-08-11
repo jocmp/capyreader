@@ -17,6 +17,7 @@ import com.capyreader.app.transfers.OPMLImportWorker.Companion.PROGRESS_TOTAL
 import com.jocmp.capy.Account
 import com.jocmp.capy.AccountManager
 import com.jocmp.capy.accounts.Source
+import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.opml.ImportProgress
 import kotlinx.coroutines.launch
 
@@ -37,7 +38,9 @@ class AccountSettingsViewModel(
 
     fun removeAccount() {
         appPreferences.clearAll()
-        accountManager.removeAccount(accountID = account.id)
+        viewModelScope.launchIO {
+            accountManager.removeAccount(accountID = account.id)
+        }
     }
 
     fun startOPMLImport(uri: Uri?) {

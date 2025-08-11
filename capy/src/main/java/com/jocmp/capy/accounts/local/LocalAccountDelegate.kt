@@ -209,7 +209,7 @@ internal class LocalAccountDelegate(
         }
     }
 
-    private fun saveArticles(
+    private suspend fun saveArticles(
         items: List<RssItem>,
         feed: Feed,
         cutoffDate: ZonedDateTime?,
