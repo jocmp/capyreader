@@ -2,8 +2,8 @@ package com.capyreader.app
 
 import com.capyreader.app.common.AndroidDatabaseProvider
 import com.capyreader.app.common.AppFaviconFetcher
-import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.common.SharedPreferenceStoreProvider
+import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.AccountManager
 import com.jocmp.capy.DatabaseProvider
 import com.jocmp.capy.PreferenceStoreProvider

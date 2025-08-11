@@ -59,10 +59,9 @@ class ArticleScreenViewModel(
 
     private var fullContentJob: Job? = null
 
-    val filter = appPreferences.filter.stateIn(viewModelScope)
+    val filter = appPreferences.settings.map { it.filter }
 
-    private val listSwipeBottom =
-        appPreferences.articleListOptions.swipeBottom.stateIn(viewModelScope)
+    private val listSwipeBottom = appPreferences.settings.map { it.swipeBottom }
 
     private val _searchQuery = MutableStateFlow("")
 

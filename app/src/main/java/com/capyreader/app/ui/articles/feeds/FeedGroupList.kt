@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -28,10 +29,10 @@ import com.capyreader.app.R
 import com.capyreader.app.common.FeedGroup
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.articles.ListHeadline
-import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.fixtures.PreviewKoinApplication
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.common.launchIO
+import kotlinx.coroutines.flow.map
 import org.koin.compose.koinInject
 
 @Composable
@@ -41,12 +42,23 @@ fun FeedGroupList(
     content: @Composable () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
-    val pinPreference = appPreferences.pinFeedGroup(type)
-    val expanded by pinPreference.collectChangesWithCurrent()
+    val expanded by appPreferences.settings.map {
+        when (type) {
+            FeedGroup.FEEDS -> it.pinTopLevelFeeds
+            FeedGroup.FOLDERS -> it.pinTags
+            FeedGroup.SAVED_SEARCHES -> it.pinSearches
+        }
+    }.collectAsState(false)
 
     val toggle = {
+        val nextValue = !expanded
+
         scope.launchIO {
-            pinPreference.set(!expanded)
+            when (type) {
+                FeedGroup.FEEDS -> appPreferences.update { it.copy(pinTopLevelFeeds = nextValue) }
+                FeedGroup.FOLDERS -> appPreferences.update { it.copy(pinTags = nextValue) }
+                FeedGroup.SAVED_SEARCHES -> appPreferences.update { it.copy(pinSearches = nextValue) }
+            }
         }
     }
 

@@ -11,11 +11,11 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -34,6 +34,7 @@ import com.jocmp.capy.MarkRead
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.map
 import org.koin.compose.koinInject
 import java.time.LocalDateTime
 
@@ -47,7 +48,7 @@ fun ArticleList(
     refreshingAll: Boolean,
     enableMarkReadOnScroll: Boolean = false,
 ) {
-    val articleOptions = rememberArticleOptions()
+    val articleOptions by rememberArticleOptions()
     val currentTime = rememberCurrentTime()
     val localDensity = LocalDensity.current
     var listHeight by remember { mutableStateOf(0.dp) }
@@ -168,27 +169,17 @@ fun rememberCurrentTime(): LocalDateTime {
 }
 
 @Composable
-fun rememberArticleOptions(appPreferences: AppPreferences = koinInject()): ArticleRowOptions {
-    val scope = rememberCoroutineScope()
-
-    val showSummary by appPreferences.articleListOptions.showSummary.stateIn(scope).collectAsState()
-    val showIcon by appPreferences.articleListOptions.showFeedIcons.stateIn(scope).collectAsState()
-    val showFeedName by appPreferences.articleListOptions.showFeedName.stateIn(scope)
-        .collectAsState()
-    val imagePreview by appPreferences.articleListOptions.imagePreview.stateIn(scope)
-        .collectAsState()
-    val fontScale by appPreferences.articleListOptions.fontScale.stateIn(scope).collectAsState()
-    val shortenTitles by appPreferences.articleListOptions.shortenTitles.stateIn(scope)
-        .collectAsState()
-
-    return ArticleRowOptions(
-        showSummary = showSummary,
-        showIcon = showIcon,
-        showFeedName = showFeedName,
-        imagePreview = imagePreview,
-        fontScale = fontScale,
-        shortenTitles = shortenTitles,
-    )
+fun rememberArticleOptions(appPreferences: AppPreferences = koinInject()): State<ArticleRowOptions> {
+    return appPreferences.settings.map {
+        ArticleRowOptions(
+            showSummary = it.showSummary,
+            showIcon = it.showFeedIcons,
+            showFeedName = it.showFeedName,
+            imagePreview = it.imagePreview,
+            fontScale = it.fontScale,
+            shortenTitles = it.shortenTitles,
+        )
+    }.collectAsState(ArticleRowOptions())
 }
 
 private fun <T : Any> LazyPagingItems<T>.getOrNull(index: Int): T? {
