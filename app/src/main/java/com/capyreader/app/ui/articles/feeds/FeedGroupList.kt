@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -30,6 +31,7 @@ import com.capyreader.app.ui.articles.ListHeadline
 import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.fixtures.PreviewKoinApplication
 import com.capyreader.app.ui.theme.CapyTheme
+import com.jocmp.capy.common.launchIO
 import org.koin.compose.koinInject
 
 @Composable
@@ -38,11 +40,14 @@ fun FeedGroupList(
     appPreferences: AppPreferences = koinInject(),
     content: @Composable () -> Unit,
 ) {
+    val scope = rememberCoroutineScope()
     val pinPreference = appPreferences.pinFeedGroup(type)
     val expanded by pinPreference.collectChangesWithCurrent()
 
     val toggle = {
-        pinPreference.set(!expanded)
+        scope.launchIO {
+            pinPreference.set(!expanded)
+        }
     }
 
     Column(
@@ -57,7 +62,7 @@ fun FeedGroupList(
                 Modifier
                     .weight(1f)
                     .clickable(
-                        onClick = toggle,
+                        onClick = { toggle() },
                         role = Role.Button,
                         interactionSource = remember { MutableInteractionSource() },
                         indication = null
@@ -65,7 +70,7 @@ fun FeedGroupList(
             ) {
                 ListHeadline(text = stringResource(type.translationKey))
             }
-            IconDropdown(expanded, onClick = toggle)
+            IconDropdown(expanded, onClick = { toggle() })
             Spacer(Modifier.width(16.dp))
         }
 

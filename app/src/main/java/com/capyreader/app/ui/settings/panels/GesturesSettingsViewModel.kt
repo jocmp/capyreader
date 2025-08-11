@@ -4,11 +4,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleListVerticalSwipe
 import com.capyreader.app.preferences.ArticleVerticalSwipe
 import com.capyreader.app.preferences.BackAction
 import com.capyreader.app.preferences.RowSwipeOption
+import com.jocmp.capy.common.launchIO
 
 class GesturesSettingsViewModel(
     private val appPreferences: AppPreferences
@@ -43,64 +45,84 @@ class GesturesSettingsViewModel(
     fun updateBackAction(action: BackAction) {
         backAction = action
 
-        listOptions.backAction.set(action)
+        viewModelScope.launchIO {
+            listOptions.backAction.set(action)
+        }
     }
 
     fun updateImproveTalkback(improve: Boolean) {
         improveTalkback = improve
 
-        readerOptions.improveTalkback.set(improve)
+        viewModelScope.launchIO {
+            readerOptions.improveTalkback.set(improve)
 
-        if (improve) {
-            readerOptions.pinTopToolbar.set(true)
-            updateReaderTopSwipe(ArticleVerticalSwipe.DISABLED)
-            updateReaderBottomSwipe(ArticleVerticalSwipe.DISABLED)
-        } else {
-            updateReaderTopSwipe(ArticleVerticalSwipe.topSwipeDefault)
-            updateReaderBottomSwipe(ArticleVerticalSwipe.bottomSwipeDefault)
+            if (improve) {
+                readerOptions.pinTopToolbar.set(true)
+                updateReaderTopSwipe(ArticleVerticalSwipe.DISABLED)
+                updateReaderBottomSwipe(ArticleVerticalSwipe.DISABLED)
+            } else {
+                updateReaderTopSwipe(ArticleVerticalSwipe.topSwipeDefault)
+                updateReaderBottomSwipe(ArticleVerticalSwipe.bottomSwipeDefault)
+            }
         }
     }
 
     fun updateReaderTopSwipe(swipe: ArticleVerticalSwipe) {
         readerTopSwipe = swipe
 
-        readerOptions.topSwipeGesture.set(swipe)
+        viewModelScope.launchIO {
+
+            readerOptions.topSwipeGesture.set(swipe)
+        }
     }
 
     fun updateReaderBottomSwipe(swipe: ArticleVerticalSwipe) {
         readerBottomSwipe = swipe
 
-        readerOptions.bottomSwipeGesture.set(swipe)
+        viewModelScope.launchIO {
+            readerOptions.bottomSwipeGesture.set(swipe)
+        }
     }
 
     fun updateRowSwipeStart(swipe: RowSwipeOption) {
         rowSwipeStart = swipe
 
-        listOptions.swipeStart.set(swipe)
+        viewModelScope.launchIO {
+            listOptions.swipeStart.set(swipe)
+        }
     }
+
 
     fun updateHorizontalPagination(scroll: Boolean) {
         enableHorizontalPagination = scroll
 
-        readerOptions.enableHorizontaPagination.set(scroll)
+        viewModelScope.launchIO {
+            readerOptions.enableHorizontaPagination.set(scroll)
+        }
     }
 
     fun updateRowSwipeEnd(swipe: RowSwipeOption) {
         rowSwipeEnd = swipe
 
-        listOptions.swipeEnd.set(swipe)
+        viewModelScope.launchIO {
+            listOptions.swipeEnd.set(swipe)
+        }
     }
 
     fun updateListSwipeBottom(swipe: ArticleListVerticalSwipe) {
         listSwipeBottom = swipe
 
-        listOptions.swipeBottom.set(swipe)
+        viewModelScope.launchIO {
+            listOptions.swipeBottom.set(swipe)
+        }
     }
 
     fun updatePagingTapGesture(enabled: Boolean) {
         enablePagingTapGesture = enabled
 
-        readerOptions.enablePagingTapGesture.set(enabled)
+        viewModelScope.launchIO {
+            readerOptions.enablePagingTapGesture.set(enabled)
+        }
     }
 
     private val readerOptions: AppPreferences.ReaderOptions

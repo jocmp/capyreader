@@ -15,7 +15,7 @@ class RefreshScheduler(
     val refreshInterval
         get() = appPreferences.refreshInterval.get()
 
-    fun update(interval: RefreshInterval) {
+    suspend fun update(interval: RefreshInterval) {
         if (interval == refreshInterval) {
             return
         }

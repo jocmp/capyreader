@@ -5,10 +5,12 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.lifecycleScope
 import com.capyreader.app.notifications.NotificationHelper
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.App
 import com.capyreader.app.ui.Route
+import com.jocmp.capy.common.launchIO
 import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
 
@@ -17,7 +19,9 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        NotificationHelper.openFromIntent(intent, appPreferences = appPreferences)
+        lifecycleScope.launchIO {
+            NotificationHelper.openFromIntent(intent, appPreferences = appPreferences)
+        }
 
         val theme = appPreferences.theme
 
@@ -33,7 +37,10 @@ class MainActivity : BaseActivity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        NotificationHelper.openFromIntent(intent, appPreferences = appPreferences)
+
+        lifecycleScope.launchIO {
+            NotificationHelper.openFromIntent(intent, appPreferences = appPreferences)
+        }
     }
 
     private fun startDestination(): Route {

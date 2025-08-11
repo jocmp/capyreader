@@ -2,7 +2,7 @@ package com.capyreader.app.preferences
 
 import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.core.MultiProcessDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import com.capyreader.app.common.FeedGroup
 import com.capyreader.app.common.ImagePreview
@@ -17,8 +17,8 @@ import com.jocmp.capy.preferences.AndroidPreferenceStore
 import com.jocmp.capy.preferences.Preference
 import com.jocmp.capy.preferences.PreferenceStore
 import com.jocmp.capy.preferences.getEnum
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.serializer
 import java.io.File
 
 class AppPreferences(context: Context) {
@@ -181,20 +181,16 @@ class AppPreferences(context: Context) {
         val afterReadAllBehavior: Preference<AfterReadAllBehavior>
             get() = preferenceStore.getEnum(
                 "after_read_all_behavior",
-                AfterReadAllBehavior.withPreviousPref(openNextFeedOnReadAll.get())
+                AfterReadAllBehavior.NOTHING,
             )
-
-        /** @deprecated */
-        private val openNextFeedOnReadAll: Preference<Boolean>
-            get() = preferenceStore.getBoolean("open_next_feed_on_read_all", false)
-
     }
 }
 
 private fun createAppDataStore(context: Context): DataStore<Preferences> {
-    return PreferenceDataStoreFactory.create(
+    return MultiProcessDataStoreFactory.create(
+        serializer =,
         produceFile = {
-            File(context.filesDir, "datastore/app_preferences.preferences_pb")
-        }
+            File(context.filesDir, "datastore/app.preferences_pb")
+        },
     )
 }

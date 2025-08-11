@@ -10,12 +10,17 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.runBlocking
 
 sealed class AndroidPreference<T>(
     protected val dataStore: DataStore<Preferences>,
@@ -33,11 +38,13 @@ sealed class AndroidPreference<T>(
         return key
     }
 
-    override suspend fun get(): T {
-        return dataStore.data
-            .catch { emit(emptyPreferences()) }
-            .map { preferences -> read(preferences, key, defaultValue) }
-            .first()
+    override fun get(): T {
+        return runBlocking {
+            dataStore.data
+                .catch { emit(emptyPreferences()) }
+                .map { preferences -> read(preferences, key, defaultValue) }
+                .first()
+        }
     }
 
     override suspend fun set(value: T) {
@@ -64,6 +71,10 @@ sealed class AndroidPreference<T>(
             .map { preferences -> read(preferences, key, defaultValue) }
             .onStart { emit(get()) }
             .conflate()
+    }
+
+    override fun stateIn(scope: CoroutineScope): StateFlow<T> {
+        return changes().stateIn(scope, SharingStarted.Eagerly, get())
     }
 
     class StringPrimitive(

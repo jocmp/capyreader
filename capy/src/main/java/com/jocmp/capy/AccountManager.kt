@@ -15,7 +15,7 @@ class AccountManager(
     private val preferenceStoreProvider: PreferenceStoreProvider,
     private val faviconFetcher: FaviconFetcher,
 ) {
-    suspend fun findByID(
+    fun findByID(
         id: String,
         database: Database = databaseProvider.build(id),
     ): Account? {
@@ -71,7 +71,7 @@ class AccountManager(
 
     private fun accountFolder() = File(rootFolder.path, DIRECTORY_NAME)
 
-    private suspend fun buildAccount(
+    private fun buildAccount(
         path: File,
         database: Database,
         faviconFetcher: FaviconFetcher,

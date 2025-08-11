@@ -66,7 +66,9 @@ class UpdateLoginViewModel(
         )
 
     private fun updateAccount(result: Credentials) {
-        account.preferences.password.set(result.secret)
+        viewModelScope.launchIO {
+            account.preferences.password.set(result.secret)
+        }
     }
 
     private fun loginError() = Error("Error logging in")

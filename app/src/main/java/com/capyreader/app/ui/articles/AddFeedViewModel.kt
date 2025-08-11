@@ -56,8 +56,10 @@ class AddFeedViewModel(
     }
 
     fun selectFeed(id: String) {
-        appPreferences.filter.getAndSet {
-            ArticleFilter.Feeds(feedID = id, folderTitle = null, it.status)
+        viewModelScope.launchIO {
+            appPreferences.filter.getAndSet {
+                ArticleFilter.Feeds(feedID = id, folderTitle = null, it.status)
+            }
         }
     }
 }
