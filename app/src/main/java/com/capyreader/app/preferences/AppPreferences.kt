@@ -1,8 +1,11 @@
 package com.capyreader.app.preferences
 
 import android.content.Context
+import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.MultiProcessDataStoreFactory
+import androidx.datastore.core.Serializer
+import androidx.datastore.preferences.SharedPreferencesMigration
 import androidx.datastore.preferences.core.Preferences
 import com.capyreader.app.common.FeedGroup
 import com.capyreader.app.common.ImagePreview
@@ -13,51 +16,59 @@ import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.articles.FontOption
 import com.jocmp.capy.articles.FontSize
 import com.jocmp.capy.articles.UnreadSortOrder
+import com.jocmp.capy.common.withIOContext
 import com.jocmp.capy.preferences.AndroidPreferenceStore
 import com.jocmp.capy.preferences.Preference
 import com.jocmp.capy.preferences.PreferenceStore
 import com.jocmp.capy.preferences.getEnum
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.serializer
 import java.io.File
+import java.io.InputStream
+import java.io.OutputStream
 
-class AppPreferences(context: Context) {
-    private val preferenceStore: PreferenceStore = AndroidPreferenceStore(
-        dataStore = createAppDataStore(context)
-    )
-
-    val readerOptions = ReaderOptions(preferenceStore)
-
-    val articleListOptions = ArticleListOptions(preferenceStore)
-
+@Serializable
+data class AppPreferences(
+    @SerialName("article_filter")
+    val filter: ArticleFilter,
+    @SerialName("account_id")
+    val accountID: String,
+    @SerialName("refresh_interval")
+    val refreshInterval: RefreshInterval,
+    @SerialName("article_id")
+    val articleID: String,
+    @SerialName("enable_crash_reporting")
+    val crashReporting: Boolean,
+    @SerialName("article_pin_top_bar")
+    val pinTopToolbar: Boolean,
+) {
     val isLoggedIn
-        get() = accountID.get().isNotBlank()
+        get() = accountID.isNotBlank()
 
-    val accountID: Preference<String>
-        get() = preferenceStore.getString("account_id")
+//    val filter: Preference<ArticleFilter>
+//        get() = preferenceStore.getObject(
+//            key = "article_filter",
+//            defaultValue = ArticleFilter.default(),
+//            serializer = { Json.encodeToString(it) },
+//            deserializer = {
+//                try {
+//                    Json.decodeFromString(it)
+//                } catch (e: Throwable) {
+//                    ArticleFilter.default()
+//                }
+//            }
+//        )
+//
+//    val refreshInterval: Preference<RefreshInterval>
+//        get() = preferenceStore.getEnum("refresh_interval", RefreshInterval.default)
+//
+//    val articleID: Preference<String>
+//        get() = preferenceStore.getString("article_id")
 
-    val filter: Preference<ArticleFilter>
-        get() = preferenceStore.getObject(
-            key = "article_filter",
-            defaultValue = ArticleFilter.default(),
-            serializer = { Json.encodeToString(it) },
-            deserializer = {
-                try {
-                    Json.decodeFromString(it)
-                } catch (e: Throwable) {
-                    ArticleFilter.default()
-                }
-            }
-        )
-
-    val refreshInterval: Preference<RefreshInterval>
-        get() = preferenceStore.getEnum("refresh_interval", RefreshInterval.default)
-
-    val articleID: Preference<String>
-        get() = preferenceStore.getString("article_id")
-
-    val crashReporting: Preference<Boolean>
-        get() = preferenceStore.getBoolean("enable_crash_reporting", false)
+//    val crashReporting: Preference<Boolean>
+//        get() = preferenceStore.getBoolean("enable_crash_reporting", false)
 
     val theme: Preference<ThemeOption>
         get() = preferenceStore.getEnum("theme", ThemeOption.default)
@@ -83,8 +94,8 @@ class AppPreferences(context: Context) {
     }
 
     class ReaderOptions(private val preferenceStore: PreferenceStore) {
-        val pinTopToolbar: Preference<Boolean>
-            get() = preferenceStore.getBoolean("article_pin_top_bar", true)
+//        val pinTopToolbar: Preference<Boolean>
+//            get() = preferenceStore.getBoolean("article_pin_top_bar", true)
 
         val bottomBarActions: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_bottom_bar_actions", false)
@@ -186,11 +197,39 @@ class AppPreferences(context: Context) {
     }
 }
 
-private fun createAppDataStore(context: Context): DataStore<Preferences> {
+private fun createAppDataStore(context: Context): DataStore<AppPreferences> {
     return MultiProcessDataStoreFactory.create(
-        serializer =,
+        serializer = AppPreferencesSerializer(),
+//        migrations = listOf(SharedPreferencesMigration())
         produceFile = {
             File(context.filesDir, "datastore/app.preferences_pb")
         },
     )
+}
+
+class AppPreferencesSerializer : Serializer<AppPreferences> {
+    override val defaultValue = AppPreferences(
+        filter = ArticleFilter.default(),
+        accountID = "",
+        refreshInterval = RefreshInterval.default,
+        articleID = "",
+        crashReporting = false,
+        pinTopToolbar = true,
+    )
+
+    override suspend fun readFrom(input: InputStream): AppPreferences =
+        try {
+            Json.decodeFromString(input.readBytes().decodeToString())
+        } catch (serialization: SerializationException) {
+            throw CorruptionException("Unable to read Settings", serialization)
+        }
+
+    override suspend fun writeTo(t: AppPreferences, output: OutputStream) {
+        withIOContext {
+            output.write(
+                Json.encodeToString(t)
+                    .encodeToByteArray()
+            )
+        }
+    }
 }
