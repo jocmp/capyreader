@@ -1,48 +1,56 @@
 package com.jocmp.capy.preferences
 
-import android.content.SharedPreferences
-import android.content.SharedPreferences.Editor
-import androidx.core.content.edit
-import kotlinx.coroutines.CoroutineScope
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.core.floatPreferencesKey
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.stringSetPreferencesKey
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.conflate
-import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.stateIn
 
 sealed class AndroidPreference<T>(
-    private val preferences: SharedPreferences,
-    private val keyFlow: Flow<String?>,
-    private val key: String,
+    protected val dataStore: DataStore<Preferences>,
+    protected val key: String,
     private val defaultValue: T,
 ) : Preference<T> {
 
-    abstract fun read(preferences: SharedPreferences, key: String, defaultValue: T): T
+    abstract fun read(preferences: Preferences, key: String, defaultValue: T): T
 
-    abstract fun write(key: String, value: T): Editor.() -> Unit
+    abstract suspend fun write(value: T): Preferences.() -> Preferences
+
+    abstract fun getPreferenceKey(key: String): Preferences.Key<*>
 
     override fun key(): String {
         return key
     }
 
-    override fun get(): T {
-        return read(preferences, key, defaultValue)
+    override suspend fun get(): T {
+        return dataStore.data
+            .catch { emit(emptyPreferences()) }
+            .map { preferences -> read(preferences, key, defaultValue) }
+            .first()
     }
 
-    override fun set(value: T) {
-        preferences.edit(action = write(key, value))
+    override suspend fun set(value: T) {
+        dataStore.edit { preferences ->
+            write(value)(preferences)
+        }
     }
 
-    override fun isSet(): Boolean {
-        return preferences.contains(key)
-    }
-
-    override fun delete() {
-        preferences.edit {
-            remove(key)
+    override suspend fun delete() {
+        dataStore.edit { preferences ->
+            preferences.toMutablePreferences().apply {
+                remove(getPreferenceKey(key))
+            }
         }
     }
 
@@ -51,125 +59,160 @@ sealed class AndroidPreference<T>(
     }
 
     override fun changes(): Flow<T> {
-        return keyFlow
-            .filter { it == key || it == null }
-            .onStart { emit("ignition") }
-            .map { get() }
+        return dataStore.data
+            .catch { emit(emptyPreferences()) }
+            .map { preferences -> read(preferences, key, defaultValue) }
+            .onStart { emit(get()) }
             .conflate()
     }
 
-    override fun stateIn(scope: CoroutineScope): StateFlow<T> {
-        return changes().stateIn(scope, SharingStarted.Eagerly, get())
-    }
-
     class StringPrimitive(
-        preferences: SharedPreferences,
-        keyFlow: Flow<String?>,
+        dataStore: DataStore<Preferences>,
         key: String,
         defaultValue: String,
-    ) : AndroidPreference<String>(preferences, keyFlow, key, defaultValue) {
-        override fun read(preferences: SharedPreferences, key: String, defaultValue: String): String {
-            return preferences.getString(key, defaultValue) ?: defaultValue
+    ) : AndroidPreference<String>(dataStore, key, defaultValue) {
+        override fun read(preferences: Preferences, key: String, defaultValue: String): String {
+            return preferences[stringPreferencesKey(key)] ?: defaultValue
         }
 
-        override fun write(key: String, value: String): Editor.() -> Unit = {
-            putString(key, value)
+        override suspend fun write(value: String): Preferences.() -> Preferences = {
+            toMutablePreferences().apply {
+                set(stringPreferencesKey(key), value)
+            }
+        }
+
+        override fun getPreferenceKey(key: String): Preferences.Key<String> {
+            return stringPreferencesKey(key)
         }
     }
 
     class LongPrimitive(
-        preferences: SharedPreferences,
-        keyFlow: Flow<String?>,
+        dataStore: DataStore<Preferences>,
         key: String,
         defaultValue: Long,
-    ) : AndroidPreference<Long>(preferences, keyFlow, key, defaultValue) {
-        override fun read(preferences: SharedPreferences, key: String, defaultValue: Long): Long {
-            return preferences.getLong(key, defaultValue)
+    ) : AndroidPreference<Long>(dataStore, key, defaultValue) {
+        override fun read(preferences: Preferences, key: String, defaultValue: Long): Long {
+            return preferences[longPreferencesKey(key)] ?: defaultValue
         }
 
-        override fun write(key: String, value: Long): Editor.() -> Unit = {
-            putLong(key, value)
+        override suspend fun write(value: Long): Preferences.() -> Preferences = {
+            toMutablePreferences().apply {
+                set(longPreferencesKey(key), value)
+            }
+        }
+
+        override fun getPreferenceKey(key: String): Preferences.Key<Long> {
+            return longPreferencesKey(key)
         }
     }
 
     class IntPrimitive(
-        preferences: SharedPreferences,
-        keyFlow: Flow<String?>,
+        dataStore: DataStore<Preferences>,
         key: String,
         defaultValue: Int,
-    ) : AndroidPreference<Int>(preferences, keyFlow, key, defaultValue) {
-        override fun read(preferences: SharedPreferences, key: String, defaultValue: Int): Int {
-            return preferences.getInt(key, defaultValue)
+    ) : AndroidPreference<Int>(dataStore, key, defaultValue) {
+        override fun read(preferences: Preferences, key: String, defaultValue: Int): Int {
+            return preferences[intPreferencesKey(key)] ?: defaultValue
         }
 
-        override fun write(key: String, value: Int): Editor.() -> Unit = {
-            putInt(key, value)
+        override suspend fun write(value: Int): Preferences.() -> Preferences = {
+            toMutablePreferences().apply {
+                set(intPreferencesKey(key), value)
+            }
+        }
+
+        override fun getPreferenceKey(key: String): Preferences.Key<Int> {
+            return intPreferencesKey(key)
         }
     }
 
     class FloatPrimitive(
-        preferences: SharedPreferences,
-        keyFlow: Flow<String?>,
+        dataStore: DataStore<Preferences>,
         key: String,
         defaultValue: Float,
-    ) : AndroidPreference<Float>(preferences, keyFlow, key, defaultValue) {
-        override fun read(preferences: SharedPreferences, key: String, defaultValue: Float): Float {
-            return preferences.getFloat(key, defaultValue)
+    ) : AndroidPreference<Float>(dataStore, key, defaultValue) {
+        override fun read(preferences: Preferences, key: String, defaultValue: Float): Float {
+            return preferences[floatPreferencesKey(key)] ?: defaultValue
         }
 
-        override fun write(key: String, value: Float): Editor.() -> Unit = {
-            putFloat(key, value)
+        override suspend fun write(value: Float): Preferences.() -> Preferences = {
+            toMutablePreferences().apply {
+                set(floatPreferencesKey(key), value)
+            }
+        }
+
+        override fun getPreferenceKey(key: String): Preferences.Key<Float> {
+            return floatPreferencesKey(key)
         }
     }
 
     class BooleanPrimitive(
-        preferences: SharedPreferences,
-        keyFlow: Flow<String?>,
+        dataStore: DataStore<Preferences>,
         key: String,
         defaultValue: Boolean,
-    ) : AndroidPreference<Boolean>(preferences, keyFlow, key, defaultValue) {
-        override fun read(preferences: SharedPreferences, key: String, defaultValue: Boolean): Boolean {
-            return preferences.getBoolean(key, defaultValue)
+    ) : AndroidPreference<Boolean>(dataStore, key, defaultValue) {
+        override fun read(preferences: Preferences, key: String, defaultValue: Boolean): Boolean {
+            return preferences[booleanPreferencesKey(key)] ?: defaultValue
         }
 
-        override fun write(key: String, value: Boolean): Editor.() -> Unit = {
-            putBoolean(key, value)
+        override suspend fun write(value: Boolean): Preferences.() -> Preferences = {
+            toMutablePreferences().apply {
+                set(booleanPreferencesKey(key), value)
+            }
+        }
+
+        override fun getPreferenceKey(key: String): Preferences.Key<Boolean> {
+            return booleanPreferencesKey(key)
         }
     }
 
     class StringSetPrimitive(
-        preferences: SharedPreferences,
-        keyFlow: Flow<String?>,
+        dataStore: DataStore<Preferences>,
         key: String,
         defaultValue: Set<String>,
-    ) : AndroidPreference<Set<String>>(preferences, keyFlow, key, defaultValue) {
-        override fun read(preferences: SharedPreferences, key: String, defaultValue: Set<String>): Set<String> {
-            return preferences.getStringSet(key, defaultValue) ?: defaultValue
+    ) : AndroidPreference<Set<String>>(dataStore, key, defaultValue) {
+        override fun read(
+            preferences: Preferences,
+            key: String,
+            defaultValue: Set<String>
+        ): Set<String> {
+            return preferences[stringSetPreferencesKey(key)] ?: defaultValue
         }
 
-        override fun write(key: String, value: Set<String>): Editor.() -> Unit = {
-            putStringSet(key, value)
+        override suspend fun write(value: Set<String>): Preferences.() -> Preferences = {
+            toMutablePreferences().apply {
+                set(stringSetPreferencesKey(key), value)
+            }
+        }
+
+        override fun getPreferenceKey(key: String): Preferences.Key<Set<String>> {
+            return stringSetPreferencesKey(key)
         }
     }
 
     class Object<T>(
-        preferences: SharedPreferences,
-        keyFlow: Flow<String?>,
+        dataStore: DataStore<Preferences>,
         key: String,
         defaultValue: T,
         val serializer: (T) -> String,
         val deserializer: (String) -> T,
-    ) : AndroidPreference<T>(preferences, keyFlow, key, defaultValue) {
-        override fun read(preferences: SharedPreferences, key: String, defaultValue: T): T {
+    ) : AndroidPreference<T>(dataStore, key, defaultValue) {
+        override fun read(preferences: Preferences, key: String, defaultValue: T): T {
             return try {
-                preferences.getString(key, null)?.let(deserializer) ?: defaultValue
+                preferences[stringPreferencesKey(key)]?.let(deserializer) ?: defaultValue
             } catch (e: Exception) {
                 defaultValue
             }
         }
 
-        override fun write(key: String, value: T): Editor.() -> Unit = {
-            putString(key, serializer(value))
+        override suspend fun write(value: T): Preferences.() -> Preferences = {
+            toMutablePreferences().apply {
+                set(stringPreferencesKey(key), serializer(value))
+            }
+        }
+
+        override fun getPreferenceKey(key: String): Preferences.Key<String> {
+            return stringPreferencesKey(key)
         }
     }
 }

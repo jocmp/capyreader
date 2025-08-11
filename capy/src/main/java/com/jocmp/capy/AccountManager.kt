@@ -15,7 +15,7 @@ class AccountManager(
     private val preferenceStoreProvider: PreferenceStoreProvider,
     private val faviconFetcher: FaviconFetcher,
 ) {
-    fun findByID(
+    suspend fun findByID(
         id: String,
         database: Database = databaseProvider.build(id),
     ): Account? {
@@ -24,7 +24,7 @@ class AccountManager(
         return buildAccount(existingAccount, database, faviconFetcher)
     }
 
-    fun createAccount(
+    suspend fun createAccount(
         username: String,
         password: String,
         url: String,
@@ -41,7 +41,7 @@ class AccountManager(
         return accountID
     }
 
-    fun createAccount(source: Source): String {
+    suspend fun createAccount(source: Source): String {
         val accountID = UUID.randomUUID().toString()
 
         accountFolder().apply {
@@ -57,7 +57,7 @@ class AccountManager(
         return accountID
     }
 
-    fun removeAccount(accountID: String) {
+    suspend fun removeAccount(accountID: String) {
         val accountFile = findAccountFile(accountID)
 
         accountFile?.deleteRecursively()
@@ -71,7 +71,7 @@ class AccountManager(
 
     private fun accountFolder() = File(rootFolder.path, DIRECTORY_NAME)
 
-    private fun buildAccount(
+    private suspend fun buildAccount(
         path: File,
         database: Database,
         faviconFetcher: FaviconFetcher,

@@ -102,19 +102,21 @@ class LoginViewModel(
         )
 
     private fun createAccount(credentials: Credentials) {
-        val accountID = accountManager.createAccount(
-            username = credentials.username,
-            password = credentials.secret,
-            url = credentials.url,
-            source = credentials.source
-        )
+       viewModelScope.launchIO {
+           val accountID = accountManager.createAccount(
+               username = credentials.username,
+               password = credentials.secret,
+               url = credentials.url,
+               source = credentials.source
+           )
 
-        selectAccount(accountID)
+           selectAccount(accountID)
 
-        loadAccountModules()
+           loadAccountModules()
+       }
     }
 
-    private fun selectAccount(id: String) {
+    private suspend fun selectAccount(id: String) {
         appPreferences.accountID.set(id)
     }
 

@@ -1,7 +1,9 @@
 package com.capyreader.app.preferences
 
 import android.content.Context
-import androidx.preference.PreferenceManager
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
 import com.capyreader.app.common.FeedGroup
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.refresher.RefreshInterval
@@ -17,10 +19,11 @@ import com.jocmp.capy.preferences.PreferenceStore
 import com.jocmp.capy.preferences.getEnum
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import java.io.File
 
 class AppPreferences(context: Context) {
     private val preferenceStore: PreferenceStore = AndroidPreferenceStore(
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        dataStore = createAppDataStore(context)
     )
 
     val readerOptions = ReaderOptions(preferenceStore)
@@ -186,4 +189,12 @@ class AppPreferences(context: Context) {
             get() = preferenceStore.getBoolean("open_next_feed_on_read_all", false)
 
     }
+}
+
+private fun createAppDataStore(context: Context): DataStore<Preferences> {
+    return PreferenceDataStoreFactory.create(
+        produceFile = {
+            File(context.filesDir, "datastore/app_preferences.preferences_pb")
+        }
+    )
 }

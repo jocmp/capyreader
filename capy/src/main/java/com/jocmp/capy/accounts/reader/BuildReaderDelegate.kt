@@ -7,7 +7,7 @@ import com.jocmp.capy.db.Database
 import com.jocmp.readerclient.GoogleReader
 import java.net.URI
 
-internal fun buildReaderDelegate(
+internal suspend fun buildReaderDelegate(
     source: Source,
     database: Database,
     path: URI,
