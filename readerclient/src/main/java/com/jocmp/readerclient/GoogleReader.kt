@@ -113,6 +113,7 @@ interface GoogleReader {
                 .baseUrl(baseURL)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
+
                 .build()
                 .create()
         }
@@ -121,8 +122,10 @@ interface GoogleReader {
             username: String,
             password: String,
             baseURL: String,
-            client: OkHttpClient = OkHttpClient(),
+            client: OkHttpClient,
         ): Response<String> {
+            client.newBuilder()
+
             val googleReader = create(client = client, baseURL = baseURL)
 
             return googleReader.clientLogin(email = username, password = password)
