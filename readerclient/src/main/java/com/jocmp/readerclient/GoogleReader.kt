@@ -87,10 +87,11 @@ interface GoogleReader {
         @Field("T") postToken: String?,
     ): Response<String>
 
+    @FormUrlEncoded
     @POST("accounts/ClientLogin")
     suspend fun clientLogin(
-        @Query("Email") email: String,
-        @Query("Passwd") password: String
+        @Field("Email") email: String,
+        @Field("Passwd") password: String
     ): Response<String>
 
     @GET("reader/api/0/token")
