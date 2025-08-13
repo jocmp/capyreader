@@ -1,0 +1,3 @@
+• Use form-encoded body instead of query params for Google Reader login
+• Update translations for Hebrew thanks to volunteers
+
