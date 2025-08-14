@@ -141,7 +141,7 @@ fun ArticleScreen(
         viewModel.initialize(onComplete = completion)
     }
 
-    val article = viewModel.article
+    val article = viewModel.article.collectAsState(null).value
 
     val search = ArticleSearch(
         query = searchQuery,
@@ -576,10 +576,11 @@ fun ArticleScreen(
                         onBackPressed = {
                             clearArticle()
                         },
-                        onToggleRead = viewModel::toggleArticleRead,
-                        onToggleStar = viewModel::toggleArticleStar,
                         enableBackHandler = media == null,
                         onSelectMedia = { media = it },
+                        articleFinder = {
+                            viewModel.findArticle(it)
+                        },
                         onScrollToArticle = { index ->
                             scrollToArticle(index)
                         }
