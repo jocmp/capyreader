@@ -37,9 +37,7 @@ fun rememberArticlePagination(
     onSelectArticle: (index: Int, id: String) -> Unit,
 ): ArticlePagination {
     val lookup = LocalArticleLookup.current
-    val pages by remember(article.id) {
-        lookup.findArticlePages(article.id)
-    }.collectAsStateWithLifecycle(null)
+    val pages by lookup.findArticlePages(article.id).collectAsStateWithLifecycle(null)
 
     return remember(pages, onSelectArticle) {
         val pagesWithDefault = pages ?: ArticlePages(current = -2, size = 0)
