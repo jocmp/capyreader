@@ -1,3 +1,3 @@
 • Use form-encoded body instead of query params for Google Reader login
-• Update translations for Hebrew thanks to volunteers
-
+• Skip refresh on app open unless "On Start" is selected
+• Update translations for Hebrew thanks to volunteers!
