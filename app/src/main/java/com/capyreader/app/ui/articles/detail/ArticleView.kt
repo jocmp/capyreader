@@ -51,28 +51,46 @@ import com.capyreader.app.preferences.ArticleVerticalSwipe.LOAD_FULL_CONTENT
 import com.capyreader.app.preferences.ArticleVerticalSwipe.NEXT_ARTICLE
 import com.capyreader.app.preferences.ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWSER
 import com.capyreader.app.preferences.ArticleVerticalSwipe.PREVIOUS_ARTICLE
+import com.capyreader.app.ui.articles.LocalArticleActions
 import com.capyreader.app.ui.articles.LocalFullContent
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.jocmp.capy.Article
+import kotlinx.coroutines.flow.Flow
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArticleView(
     article: Article,
+    articleFinder: (id: String) -> Flow<Article?>,
     pagination: ArticlePagination,
     onBackPressed: () -> Unit,
-    onToggleRead: () -> Unit,
-    onToggleStar: () -> Unit,
     enableBackHandler: Boolean = false,
     onScrollToArticle: (index: Int) -> Unit,
     onSelectMedia: (media: Media) -> Unit,
-    appPreferences: AppPreferences = koinInject()
+    appPreferences: AppPreferences = koinInject(),
 ) {
     val enableHorizontalPager by appPreferences.readerOptions.enableHorizontaPagination.collectChangesWithDefault()
     val fullContent = LocalFullContent.current
     val openLink = articleOpenLink(article)
+    val actions = LocalArticleActions.current
+
+    val onToggleRead = {
+       if (article.read) {
+          actions.markUnread(article.id)
+       } else {
+           actions.markRead(article.id)
+       }
+    }
+
+    val onToggleStar = {
+        if (article.starred) {
+            actions.unstar(article.id)
+        } else {
+            actions.star(article.id)
+        }
+    }
 
     val onToggleFullContent = {
         if (article.fullContent == Article.FullContentState.LOADED) {
