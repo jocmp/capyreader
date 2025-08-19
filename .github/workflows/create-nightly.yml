@@ -43,4 +43,4 @@ jobs:
           draft: false
           prerelease: true
           files: |
-            app/build/outputs/apk/free/release/app-free-nightly.apk
+            app/build/outputs/apk/free/nightly/app-free-nightly.apk
