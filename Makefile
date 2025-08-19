@@ -33,6 +33,9 @@ deploy-production: release-secrets
 deploy-github-release: shared-release-secrets
 	$(FASTLANE) github_release
 
+deploy-free-nightly: shared-release-secrets
+	$(FASTLANE) free_nightly
+
 .SILENT:
 release-secrets: shared-release-secrets
 	echo ${ENCODED_GOOGLE_PLAY_CREDENTIALS} | base64 --decode > ./google-play-service-account.json

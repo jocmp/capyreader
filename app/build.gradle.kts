@@ -85,6 +85,12 @@ android {
         debug {
             applicationIdSuffix = ".debug"
         }
+        create("nightly") {
+            initWith(getByName("release"))
+            applicationIdSuffix = ".nightly"
+            // https://developer.android.com/build/build-variants#resolve_matching_errors
+            matchingFallbacks += "release"
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
