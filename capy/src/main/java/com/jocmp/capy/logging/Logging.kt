@@ -1,7 +1,7 @@
 package com.jocmp.capy.logging
 
 interface Logging {
-    fun info(tag: String, data: Map<String, String?> = emptyMap())
+    fun info(tag: String, data: Map<String, Any?> = emptyMap())
 
     fun warn(tag: String, data: Map<String, String?> = emptyMap())
 
