@@ -15,6 +15,7 @@ import com.jocmp.capy.preferences.AndroidPreferenceStore
 import com.jocmp.capy.preferences.Preference
 import com.jocmp.capy.preferences.PreferenceStore
 import com.jocmp.capy.preferences.getEnum
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 class AppPreferences(context: Context) {
@@ -48,6 +49,9 @@ class AppPreferences(context: Context) {
 
     val refreshInterval: Preference<RefreshInterval>
         get() = preferenceStore.getEnum("refresh_interval", RefreshInterval.default)
+
+    val articleID: Preference<String>
+        get() = preferenceStore.getString("article_id")
 
     val crashReporting: Preference<Boolean>
         get() = preferenceStore.getBoolean("enable_crash_reporting", false)

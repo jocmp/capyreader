@@ -6,9 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.toRoute
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingSource
@@ -19,7 +17,6 @@ import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleListVerticalSwipe
 import com.capyreader.app.sync.Sync
-import com.capyreader.app.ui.Route
 import com.capyreader.app.ui.components.SearchState
 import com.capyreader.app.ui.widget.WidgetUpdater
 import com.jocmp.capy.Account
@@ -53,7 +50,6 @@ import java.time.OffsetDateTime
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ArticleScreenViewModel(
-    handle: SavedStateHandle,
     private val account: Account,
     private val appPreferences: AppPreferences,
     private val application: Application,
@@ -191,10 +187,6 @@ class ArticleScreenViewModel(
         get() = _nextFilter
 
     init {
-        handle.toRoute<Route.Articles>().articleID?.let {
-            selectArticle(it)
-        }
-
         viewModelScope.launch {
             nextFilterListener.collect {
                 _nextFilter.value = it
@@ -370,6 +362,8 @@ class ArticleScreenViewModel(
             val article = buildArticle(articleID) ?: return@launchIO
             _article = article
 
+            appPreferences.articleID.set(articleID)
+
             launchIO {
                 markRead(articleID)
             }
@@ -420,6 +414,7 @@ class ArticleScreenViewModel(
 
     fun clearArticle() {
         _article = null
+        appPreferences.articleID.delete()
     }
 
     fun startSearch() {

@@ -1,28 +1,27 @@
 package com.capyreader.app.ui.articles
 
-import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
-import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
-import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.Article
-import com.jocmp.capy.logging.CapyLog
+import org.koin.compose.koinInject
 
-@OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
-fun <T> ArticleHandler(
+fun ArticleHandler(
     article: Article?,
-    scaffoldNavigator: ThreePaneScaffoldNavigator<T>,
-    onNavigateToArticle: (article: Article) -> Unit,
+    appPreferences: AppPreferences = koinInject(),
+    onRequestArticle: (articleID: String) -> Unit,
 ) {
-    val state = scaffoldNavigator.currentDestination
+    LaunchedEffect(article?.id) {
+        if (article != null) {
+            return@LaunchedEffect
+        }
 
-    LaunchedEffect(article?.id, state) {
-        if (article != null && state?.pane != ThreePaneScaffoldRole.Primary) {
-            CapyLog.info("launch", mapOf("id" to article.id))
-            onNavigateToArticle(article)
-        } else {
-            CapyLog.info("skip", mapOf("id" to article?.id, "state" to state?.pane))
+        val articleID = appPreferences.articleID.get()
+
+        if (articleID.isNotBlank()) {
+            appPreferences.articleID.delete()
+            onRequestArticle(articleID)
         }
     }
 }

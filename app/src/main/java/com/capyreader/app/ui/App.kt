@@ -31,7 +31,7 @@ fun App(
             ) {
                 accountsGraph(
                     onAddSuccess = {
-                        navController.navigate(Route.Articles()) {
+                        navController.navigate(Route.Articles) {
                             launchSingleTop = true
 
                             popUpTo(Route.AddAccount) {
@@ -47,7 +47,7 @@ fun App(
                     },
                     onRemoveAccount = {
                         navController.navigate(Route.AddAccount) {
-                            popUpTo(Route.Articles()) {
+                            popUpTo(Route.Articles) {
                                 inclusive = true
                             }
                         }
