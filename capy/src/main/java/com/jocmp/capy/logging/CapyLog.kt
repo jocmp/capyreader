@@ -7,6 +7,10 @@ object CapyLog : Logging {
         Log.d(TAG, serializeData(event, data))
     }
 
+    override fun info(tag: String, data: Map<String, Any?>) {
+        Log.i(appTag(tag), serializeData(data))
+    }
+
     override fun info(event: String, data: Map<String, Any?>) {
         Log.i(TAG, serializeData(event, data))
     }
