@@ -17,7 +17,7 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        NotificationHelper.openFromIntent(intent, appPreferences = appPreferences)
+        val articleID = NotificationHelper.openFromIntent(intent, appPreferences = appPreferences)
 
         val theme = appPreferences.theme
 
@@ -25,7 +25,7 @@ class MainActivity : BaseActivity() {
             val themeState by appPreferences.theme.changes().collectAsState(initial = theme.get())
 
             App(
-                startDestination = startDestination(),
+                startDestination = startDestination(articleID),
                 theme = themeState
             )
         }
@@ -36,7 +36,7 @@ class MainActivity : BaseActivity() {
         NotificationHelper.openFromIntent(intent, appPreferences = appPreferences)
     }
 
-    private fun startDestination(): Route {
+    private fun startDestination(articleID: String?): Route {
         val appPreferences = get<AppPreferences>()
 
         val accountID = appPreferences.accountID.get()
@@ -44,7 +44,7 @@ class MainActivity : BaseActivity() {
         return if (accountID.isBlank()) {
             Route.AddAccount
         } else {
-            Route.Articles
+            Route.Articles(articleID)
         }
     }
 }
