@@ -19,6 +19,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4.2.1
         with:
+          ssh-key: ${{ secrets.RELEASE_SSH_KEY }}
           fetch-depth: 0
 
       - name: Get latest nightly tag
@@ -55,6 +56,12 @@ jobs:
         run: |
           echo "No changes detected since last nightly tag. Exiting without creating new nightly."
           exit 0
+
+      - name: Configure Git user
+        if: steps.check-changes.outputs.has_changes == 'true'
+        run: |
+          git config user.name "jocmp"
+          git config user.email "9521010+jocmp@users.noreply.github.com"
 
       - name: Create nightly tag
         if: steps.check-changes.outputs.has_changes == 'true'
