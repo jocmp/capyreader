@@ -1,20 +1,19 @@
 on:
   push:
     tags:
-      - "*"
-      - "!*-nightly"
+      - "*-nightly"
 
-name: Create Release
+name: Create Nightly
 
 concurrency:
-  group: production
+  group: nightly
   cancel-in-progress: true
 
 jobs:
   build:
-    name: Create Release
+    name: Create Nightly
     runs-on: ubuntu-latest
-    environment: production
+    environment: nightly
     permissions:
       contents: write
     steps:
@@ -34,14 +33,14 @@ jobs:
           ENCODED_GOOGLE_SERVICES: ${{ secrets.ENCODED_GOOGLE_SERVICES }}
           ENCODED_RELEASE_KEYSTORE: ${{ secrets.ENCODED_RELEASE_KEYSTORE }}
           ENCODED_SECRETS_PROPERTIES: ${{ secrets.ENCODED_SECRETS_PROPERTIES }}
-        run: make deploy-github-release
-      - name: Create Release
+        run: make deploy-free-nightly
+      - name: Create Nightly
         uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           generate_release_notes: true
           draft: false
-          prerelease: false
+          prerelease: true
           files: |
-            app/build/outputs/apk/free/release/app-free-release.apk
+            app/build/outputs/apk/free/release/app-free-nightly.apk

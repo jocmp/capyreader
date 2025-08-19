@@ -1,46 +1,65 @@
 on:
-  # schedule:
-  #   - cron: "0 6 * * *"
-  workflow_dispatch
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * *" # UTC
 
-name: Nightly
+name: Deploy Nightly
 
 concurrency:
   group: nightly
   cancel-in-progress: true
 
 jobs:
-  build:
-    name: Create Release
+  check-and-deploy:
+    name: Check Changes and Deploy Nightly
     runs-on: ubuntu-latest
-    environment: nightly
     permissions:
       contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.2.1
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
         with:
-          bundler-cache: true
-      - name: Set up Java
-        uses: actions/setup-java@v4.4.0
-        with:
-          distribution: "zulu"
-          java-version: "21"
-      - name: Build APK
-        env:
-          ENCODED_GOOGLE_SERVICES: ${{ secrets.ENCODED_GOOGLE_SERVICES }}
-          ENCODED_RELEASE_KEYSTORE: ${{ secrets.ENCODED_RELEASE_KEYSTORE }}
-          ENCODED_SECRETS_PROPERTIES: ${{ secrets.ENCODED_SECRETS_PROPERTIES }}
-        run: make deploy-free-nightly
-      - name: Create Release
-        uses: softprops/action-gh-release@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          generate_release_notes: true
-          draft: false
-          prerelease: true
-          files: |
-            app/build/outputs/apk/free/release/app-free-nightly.apk
+          fetch-depth: 0
+
+      - name: Get latest nightly tag
+        id: latest-nightly
+        run: |
+          LATEST_NIGHTLY=$(git tag -l "*-nightly" --sort=-version:refname | head -n 1)
+          echo "latest_nightly=${LATEST_NIGHTLY}" >> $GITHUB_OUTPUT
+          echo "Latest nightly tag: ${LATEST_NIGHTLY}"
+
+      - name: Check for changes since last nightly
+        id: check-changes
+        run: |
+          LATEST_NIGHTLY="${{ steps.latest-nightly.outputs.latest_nightly }}"
+
+          if [ -z "$LATEST_NIGHTLY" ]; then
+            echo "No previous nightly tag found, proceeding with deployment"
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          else
+            # Check if there are any commits since the last nightly tag
+            COMMITS_SINCE=$(git rev-list --count ${LATEST_NIGHTLY}..HEAD)
+            echo "Commits since ${LATEST_NIGHTLY}: ${COMMITS_SINCE}"
+
+            if [ "$COMMITS_SINCE" -eq "0" ]; then
+              echo "No changes since last nightly tag"
+              echo "has_changes=false" >> $GITHUB_OUTPUT
+            else
+              echo "Found ${COMMITS_SINCE} commits since last nightly tag"
+              echo "has_changes=true" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+      - name: Exit if no changes
+        if: steps.check-changes.outputs.has_changes == 'false'
+        run: |
+          echo "No changes detected since last nightly tag. Exiting without creating new nightly."
+          exit 0
+
+      - name: Create nightly tag
+        if: steps.check-changes.outputs.has_changes == 'true'
+        run: |
+          NIGHTLY_TAG="$(date +'%Y.%m.%d')-nightly"
+          echo "Creating nightly tag: ${NIGHTLY_TAG}"
+          git tag "${NIGHTLY_TAG}"
+          git push origin ${NIGHTLY_TAG}
