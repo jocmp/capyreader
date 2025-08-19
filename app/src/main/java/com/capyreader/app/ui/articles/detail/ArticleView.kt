@@ -57,8 +57,6 @@ import com.capyreader.app.ui.articles.LocalFullContent
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.jocmp.capy.Article
-import com.jocmp.capy.logging.CapyLog
-import kotlinx.coroutines.delay
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -66,13 +64,12 @@ import org.koin.compose.koinInject
 fun ArticleView(
     article: Article,
     articles: LazyPagingItems<Article>,
-//    pagination: ArticlePagination,
     onBackPressed: () -> Unit,
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
     enableBackHandler: Boolean = false,
     onScrollToArticle: (index: Int) -> Unit,
-    onSelectArticle: (index: Int, id: String) -> Unit,
+    onSelectArticle: (id: String) -> Unit,
     onSelectMedia: (media: Media) -> Unit,
     appPreferences: AppPreferences = koinInject()
 ) {
@@ -88,24 +85,44 @@ fun ArticleView(
         }
     }
 
+    val index = remember(
+        article.id,
+        articles.itemCount,
+    ) {
+        articles.itemSnapshotList.indexOfFirst { it?.id == article.id }
+    }
+
+    val previousIndex = index - 1
+    val nextIndex = index + 1
+
+    val hasPrevious = previousIndex > -1 && articles[index - 1] != null
+    val hasNext = nextIndex < articles.itemCount && articles[index + 1] != null
+
+    fun selectPrevious() {
+        articles[previousIndex]?.let {
+            onSelectArticle(it.id)
+        }
+    }
+
+    fun selectNext() {
+        articles[nextIndex]?.let {
+            onSelectArticle(it.id)
+        }
+    }
+
     val onSwipe = { swipe: ArticleVerticalSwipe ->
         when (swipe) {
             LOAD_FULL_CONTENT -> onToggleFullContent()
             OPEN_ARTICLE_IN_BROWSER -> openLink()
-//            PREVIOUS_ARTICLE -> pagination.selectPrevious()
-//            NEXT_ARTICLE -> pagination.selectNext()
+            PREVIOUS_ARTICLE -> selectPrevious()
+            NEXT_ARTICLE -> selectNext()
             DISABLED -> {}
-            else -> {}
         }
     }
 
     val topToolbarPreference = rememberTopToolbarPreference(articleID = article.id)
     val bottomScrollBehavior = exitAlwaysScrollBehavior()
     val enableBottomBar by rememberBottomBarPreference()
-    val index = remember(article.id, articles.itemCount) { articles.itemSnapshotList.indexOfFirst { it?.id == article.id } }
-
-    val hasPrevious = index - 1 > -1 && articles[index - 1] != null
-    val hasNext = index + 1 < articles.itemCount && articles[index + 1] != null
 
     ArticleViewScaffold(
         bottomScrollBehavior = bottomScrollBehavior,
@@ -156,17 +173,10 @@ fun ArticleView(
                     enablePrevious = hasPrevious,
                     enableNext = hasNext,
                     onSelectPrevious = {
-                        val idx = index - 1
-                        articles[idx]?.let {
-                            onSelectArticle(idx, it.id)
-                        }
+                        selectPrevious()
                     },
                     onSelectNext = {
-                        val idx = index + 1
-
-                        articles[idx]?.let {
-                            onSelectArticle(idx, it.id)
-                        }
+                        selectNext()
                     },
                 ) {
                     key(article.id) {
@@ -180,15 +190,9 @@ fun ArticleView(
         },
     )
 
-    LaunchedEffect(index, articles.itemCount) {
-        CapyLog.info("index", mapOf("index" to index, "count" to articles.itemCount))
+    LaunchedEffect(index) {
         if (index > -1) {
             onScrollToArticle(index)
-        }
-
-        delay(200)
-        articles[index + 1]?.let {
-            onSelectArticle(index + 1, it.id)
         }
     }
 

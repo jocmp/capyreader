@@ -563,14 +563,9 @@ fun ArticleScreen(
                         CapyPlaceholder()
                     }
                 } else if (article != null) {
-//                    val pagination = rememberArticlePagination(
-//                        article,
-//
-//                    )
                     ArticleView(
                         article = article,
                         articles = articles,
-//                        pagination = pagination,
                         onBackPressed = {
                             clearArticle()
                         },
@@ -578,9 +573,8 @@ fun ArticleScreen(
                         onToggleStar = viewModel::toggleArticleStar,
                         enableBackHandler = media == null,
                         onSelectMedia = { media = it },
-                        onSelectArticle = { index, articleID ->
+                        onSelectArticle = { articleID ->
                             setArticle(articleID)
-                            scrollToArticle(index)
                         },
                         onScrollToArticle = { index ->
                             scrollToArticle(index)
