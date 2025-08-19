@@ -32,6 +32,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -42,6 +43,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
+import androidx.paging.compose.LazyPagingItems
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.openLink
 import com.capyreader.app.preferences.AppPreferences
@@ -55,18 +57,22 @@ import com.capyreader.app.ui.articles.LocalFullContent
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.jocmp.capy.Article
+import com.jocmp.capy.logging.CapyLog
+import kotlinx.coroutines.delay
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArticleView(
     article: Article,
-    pagination: ArticlePagination,
+    articles: LazyPagingItems<Article>,
+//    pagination: ArticlePagination,
     onBackPressed: () -> Unit,
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
     enableBackHandler: Boolean = false,
     onScrollToArticle: (index: Int) -> Unit,
+    onSelectArticle: (index: Int, id: String) -> Unit,
     onSelectMedia: (media: Media) -> Unit,
     appPreferences: AppPreferences = koinInject()
 ) {
@@ -86,15 +92,20 @@ fun ArticleView(
         when (swipe) {
             LOAD_FULL_CONTENT -> onToggleFullContent()
             OPEN_ARTICLE_IN_BROWSER -> openLink()
-            PREVIOUS_ARTICLE -> pagination.selectPrevious()
-            NEXT_ARTICLE -> pagination.selectNext()
+//            PREVIOUS_ARTICLE -> pagination.selectPrevious()
+//            NEXT_ARTICLE -> pagination.selectNext()
             DISABLED -> {}
+            else -> {}
         }
     }
 
     val topToolbarPreference = rememberTopToolbarPreference(articleID = article.id)
     val bottomScrollBehavior = exitAlwaysScrollBehavior()
     val enableBottomBar by rememberBottomBarPreference()
+    val index = remember(article.id, articles.itemCount) { articles.itemSnapshotList.indexOfFirst { it?.id == article.id } }
+
+    val hasPrevious = index - 1 > -1 && articles[index - 1] != null
+    val hasNext = index + 1 < articles.itemCount && articles[index + 1] != null
 
     ArticleViewScaffold(
         bottomScrollBehavior = bottomScrollBehavior,
@@ -137,18 +148,25 @@ fun ArticleView(
             ArticlePullRefresh(
                 topToolbarPreference.show && !topToolbarPreference.pinned,
                 onSwipe = onSwipe,
-                hasPreviousArticle = pagination.hasPrevious,
-                hasNextArticle = pagination.hasNext
+                hasPreviousArticle = hasPrevious,
+                hasNextArticle = hasNext
             ) {
                 HorizontalReaderPager(
                     enabled = enableHorizontalPager,
-                    enablePrevious = pagination.hasPrevious,
-                    enableNext = pagination.hasNext,
+                    enablePrevious = hasPrevious,
+                    enableNext = hasNext,
                     onSelectPrevious = {
-                        pagination.selectPrevious()
+                        val idx = index - 1
+                        articles[idx]?.let {
+                            onSelectArticle(idx, it.id)
+                        }
                     },
                     onSelectNext = {
-                        pagination.selectNext()
+                        val idx = index + 1
+
+                        articles[idx]?.let {
+                            onSelectArticle(idx, it.id)
+                        }
                     },
                 ) {
                     key(article.id) {
@@ -162,9 +180,15 @@ fun ArticleView(
         },
     )
 
-    LaunchedEffect(pagination.index) {
-        if (pagination.index > -1) {
-            onScrollToArticle(pagination.index)
+    LaunchedEffect(index, articles.itemCount) {
+        CapyLog.info("index", mapOf("index" to index, "count" to articles.itemCount))
+        if (index > -1) {
+            onScrollToArticle(index)
+        }
+
+        delay(200)
+        articles[index + 1]?.let {
+            onSelectArticle(index + 1, it.id)
         }
     }
 
