@@ -1,6 +1,5 @@
 • Add support for basic auth in local feeds
   - Add a feed such as "https://admin:123@example.com" where "admin" is the username, and "123" is the password.
-• Update custom parser for hardwarezone.com.sg
 • Undo database handling for local feeds for performance
 • Fix missing scroll-to-top behavior for Mark Read on Scroll
 • Use form-encoded body instead of query params for Google Reader login
