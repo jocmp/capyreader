@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "274059433914",
     "project_id": "capy-reader-debug",
-    "storage_bucket": "capy-reader-debug.appspot.com"
+    "storage_bucket": "capy-reader-debug.firebasestorage.app"
   },
   "client": [
     {
@@ -29,6 +29,25 @@
         "mobilesdk_app_id": "1:274059433914:android:e09bf2c22c689399c52f83",
         "android_client_info": {
           "package_name": "com.capyreader.app.debug"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuMQpqtiSry6g2ecznF7cdCWgkxYN3nW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:274059433914:android:af96a696d188f4d1c52f83",
+        "android_client_info": {
+          "package_name": "com.capyreader.app.nightly"
         }
       },
       "oauth_client": [],
