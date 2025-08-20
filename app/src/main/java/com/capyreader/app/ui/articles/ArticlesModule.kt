@@ -26,7 +26,6 @@ internal val articlesModule = module {
         val appPreferences = get<AppPreferences>()
 
         ArticleScreenViewModel(
-            handle = get(),
             account = get(),
             appPreferences = appPreferences,
             notificationHelper = get(),

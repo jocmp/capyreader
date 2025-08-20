@@ -355,26 +355,21 @@ fun ArticleScreen(
             viewModel.selectArticle(articleID, onComplete)
         }
 
-        fun navigateToArticle(nextArticle: Article) {
-            val url = nextArticle.url
-
-            if (nextArticle.openInBrowser && url != null) {
-                clearArticle()
-                context.openLink(url.toString().toUri(), appPreferences)
-            } else {
-                coroutineScope.launch {
-                    navigateToDetail()
-                }
-            }
-        }
-
         fun selectArticle(articleID: String) {
             setArticle(articleID) { nextArticle ->
                 if (search.isActive) {
                     focusManager.clearFocus()
                 }
 
-                navigateToArticle(nextArticle)
+                val url = nextArticle.url
+                if (nextArticle.openInBrowser && url != null) {
+                    clearArticle()
+                    context.openLink(url.toString().toUri(), appPreferences)
+                } else {
+                    coroutineScope.launch {
+                        navigateToDetail()
+                    }
+                }
             }
         }
 
@@ -416,8 +411,8 @@ fun ArticleScreen(
             }
         }
 
-        ArticleHandler(article, scaffoldNavigator) { article ->
-            navigateToArticle(article)
+        ArticleHandler(article) { articleID ->
+            selectArticle(articleID)
         }
 
         ArticleScaffold(
