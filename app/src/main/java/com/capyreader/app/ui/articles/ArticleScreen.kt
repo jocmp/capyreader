@@ -79,8 +79,8 @@ import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
+import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
-import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
@@ -215,8 +215,16 @@ fun ArticleScreen(
             scrollBehavior = scrollBehavior
         )
 
+
+        val scrollToTop = {
+            coroutineScope.launch {
+                listState.scrollToItem(0)
+                resetScrollBehaviorOffset()
+            }
+        }
+
         suspend fun openNextStatus(action: suspend () -> Unit) {
-            action()
+            scope.launchIO { action() }
             scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
         }
 
@@ -244,13 +252,6 @@ fun ArticleScreen(
             }
         }
 
-        val scrollToTop = {
-            coroutineScope.launch {
-                listState.scrollToItem(0)
-                resetScrollBehaviorOffset()
-            }
-        }
-
         val refreshPagination = {
             coroutineScope.launch {
                 resetScrollBehaviorOffset()
@@ -258,8 +259,6 @@ fun ArticleScreen(
         }
 
         val refreshArticleList = {
-            articles.refresh()
-
             if (enableMarkReadOnScroll) {
                 scrollToTop()
             }
@@ -422,9 +421,6 @@ fun ArticleScreen(
                     onRefreshAll = { completion ->
                         viewModel.refreshAll(ArticleFilter.default()) {
                             refreshArticleList()
-                            if (enableMarkReadOnScroll) {
-                                scrollToTop()
-                            }
                             completion()
                         }
                     },
