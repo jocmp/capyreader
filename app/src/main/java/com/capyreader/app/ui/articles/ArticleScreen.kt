@@ -81,6 +81,7 @@ import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
+import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
@@ -195,17 +196,27 @@ fun ArticleScreen(
             LazyListState(0, 0)
         }
 
+        val articlesSince by viewModel.articlesSince.collectAsStateWithLifecycle()
         val unreadSort by viewModel.unreadSort.collectAsStateWithLifecycle()
 
-        val pager = remember(filter, unreadSort, searchQuery) {
+        val pager = remember(filter, unreadSort, articlesSince, searchQuery) {
             viewModel.pager(
                 filter,
                 unreadSort,
+                articlesSince,
                 searchQuery,
             )
         }
 
         val articles = pager.flow.collectAsLazyPagingItems()
+
+        LaunchedEffect(currentFeed?.title) {
+            val feed = currentFeed
+
+            if (feed != null) {
+                CapyLog.info("feed", mapOf("title" to feed.title))
+            }
+        }
 
         fun scrollToArticle(index: Int) {
             coroutineScope.launch {
@@ -432,6 +443,9 @@ fun ArticleScreen(
                     onRefreshAll = { completion ->
                         viewModel.refreshAll(ArticleFilter.default()) {
                             refreshArticleList()
+                            if (enableMarkReadOnScroll) {
+                                scrollToTop()
+                            }
                             completion()
                         }
                     },
