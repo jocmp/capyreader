@@ -55,7 +55,11 @@ fun ArticleList(
     val key = { index: Int ->
         val article = articles[index]
 
-        article?.id ?: index
+        if (article != null) {
+            "${article.id}:${article.read}:${article.starred}"
+        } else {
+            index
+        }
     }
 
     LazyScrollbar(state = listState) {

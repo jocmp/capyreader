@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import com.capyreader.app.R
 import com.capyreader.app.common.toast
 import com.capyreader.app.notifications.NotificationHelper
@@ -27,7 +28,6 @@ import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.articles.NextFilter
-import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.buildArticlePager
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
@@ -83,18 +83,20 @@ class ArticleScreenViewModel(
         account.countAll(latestFilter.status)
     }
 
-    fun pager(
-        filter: ArticleFilter,
-        sort: UnreadSortOrder,
-        since: OffsetDateTime,
-        query: String = "",
-    ) =
-        account.buildArticlePager(
-            filter = filter,
-            query = query,
-            unreadSort = sort,
-            since = since
-        )
+    val articles: Flow<PagingData<Article>> =
+        combine(
+            filter,
+            _searchQuery,
+            articlesSince,
+            unreadSort
+        ) { filter, query, since, sort ->
+            account.buildArticlePager(
+                filter = filter,
+                query = query,
+                unreadSort = sort,
+                since = since
+            ).flow
+        }.flatMapLatest { it }
 
     val folders: Flow<List<Folder>> = combine(
         account.folders,
