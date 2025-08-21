@@ -31,6 +31,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -81,6 +82,8 @@ import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
+import com.jocmp.capy.logging.CapyLog
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
@@ -221,6 +224,16 @@ fun ArticleScreen(
                 listState.scrollToItem(0)
                 resetScrollBehaviorOffset()
             }
+        }
+
+        LaunchedEffect(listState) {
+            snapshotFlow { "$filter:${listState.layoutInfo.totalItemsCount}" }
+                .distinctUntilChanged()
+                .collect {
+                    CapyLog.info("list", mapOf("count" to it))
+                    scrollToTop()
+                    resetScrollBehaviorOffset()
+                }
         }
 
         suspend fun openNextStatus(action: suspend () -> Unit) {
@@ -644,8 +657,14 @@ fun ArticleScreen(
             scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
         }
 
-        LaunchedEffect(filter) {
-            resetScrollBehaviorOffset()
+        LaunchedEffect(listState) {
+            snapshotFlow { "$filter:${listState.layoutInfo.totalItemsCount}" }
+                .distinctUntilChanged()
+                .collect {
+                    CapyLog.info("list", mapOf("count" to it))
+                    scrollToTop()
+                    resetScrollBehaviorOffset()
+                }
         }
     }
 }
