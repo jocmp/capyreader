@@ -2,14 +2,15 @@ package com.jocmp.capy.persistence
 
 import androidx.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
+import com.jocmp.capy.Account
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.articles.UnreadSortOrder
-import com.jocmp.capy.db.Database
 import kotlinx.coroutines.Dispatchers
 import java.time.OffsetDateTime
 
-class ArticlePagerFactory(private val database: Database) {
+class ArticlePagerFactory(account: Account) {
+    private val database = account.database
     private val articles = ArticleRecords(database)
 
     fun findArticles(

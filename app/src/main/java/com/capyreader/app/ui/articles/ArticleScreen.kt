@@ -31,7 +31,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -82,8 +81,6 @@ import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
-import com.jocmp.capy.logging.CapyLog
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
@@ -125,8 +122,6 @@ fun ArticleScreen(
         .articleListOptions
         .markReadButtonPosition
         .collectChangesWithCurrent()
-
-    val articles = viewModel.articles.collectAsLazyPagingItems()
 
     val onMarkAllRead = { range: MarkRead ->
         viewModel.markAllRead(
@@ -200,6 +195,18 @@ fun ArticleScreen(
             LazyListState(0, 0)
         }
 
+        val unreadSort by viewModel.unreadSort.collectAsStateWithLifecycle()
+
+        val pager = remember(filter, unreadSort, searchQuery) {
+            viewModel.pager(
+                filter,
+                unreadSort,
+                searchQuery,
+            )
+        }
+
+        val articles = pager.flow.collectAsLazyPagingItems()
+
         fun scrollToArticle(index: Int) {
             coroutineScope.launch {
                 if (index > -1) {
@@ -217,24 +224,6 @@ fun ArticleScreen(
             listState = listState,
             scrollBehavior = scrollBehavior
         )
-
-
-        val scrollToTop = {
-            coroutineScope.launch {
-                listState.scrollToItem(0)
-                resetScrollBehaviorOffset()
-            }
-        }
-
-        LaunchedEffect(listState) {
-            snapshotFlow { "$filter:${listState.layoutInfo.totalItemsCount}" }
-                .distinctUntilChanged()
-                .collect {
-                    CapyLog.info("list", mapOf("count" to it))
-                    scrollToTop()
-                    resetScrollBehaviorOffset()
-                }
-        }
 
         suspend fun openNextStatus(action: suspend () -> Unit) {
             scope.launchIO { action() }
@@ -265,6 +254,13 @@ fun ArticleScreen(
             }
         }
 
+        val scrollToTop = {
+            coroutineScope.launch {
+                listState.scrollToItem(0)
+                resetScrollBehaviorOffset()
+            }
+        }
+
         val refreshPagination = {
             coroutineScope.launch {
                 resetScrollBehaviorOffset()
@@ -272,6 +268,8 @@ fun ArticleScreen(
         }
 
         val refreshArticleList = {
+            articles.refresh()
+
             if (enableMarkReadOnScroll) {
                 scrollToTop()
             }
@@ -283,6 +281,7 @@ fun ArticleScreen(
             isRefreshing = true
             onInitialized {
                 isRefreshing = false
+                articles.refresh()
                 refreshPagination()
                 if (!isRefreshInitialized) {
                     setRefreshInitialized(true)
@@ -657,14 +656,8 @@ fun ArticleScreen(
             scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
         }
 
-        LaunchedEffect(listState) {
-            snapshotFlow { "$filter:${listState.layoutInfo.totalItemsCount}" }
-                .distinctUntilChanged()
-                .collect {
-                    CapyLog.info("list", mapOf("count" to it))
-                    scrollToTop()
-                    resetScrollBehaviorOffset()
-                }
+        LaunchedEffect(filter) {
+            resetScrollBehaviorOffset()
         }
     }
 }
