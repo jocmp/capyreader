@@ -27,7 +27,6 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.itemKey
 import com.capyreader.app.R
 import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.Article
@@ -53,6 +52,12 @@ fun ArticleList(
     val localDensity = LocalDensity.current
     var listHeight by remember { mutableStateOf(0.dp) }
 
+    val key = { index: Int ->
+        val article = articles[index]
+
+        article?.id ?: index
+    }
+
     LazyScrollbar(state = listState) {
         LazyColumn(
             state = listState,
@@ -62,7 +67,7 @@ fun ArticleList(
                     listHeight = with(localDensity) { coordinates.size.height.toDp() }
                 }
         ) {
-            items(count = articles.itemCount, key = articles.itemKey { it.id }) { index ->
+            items(count = articles.itemCount, key = { key(it) }) { index ->
                 val item = articles[index]
 
                 Box {
