@@ -59,12 +59,18 @@ class ArticleRenderer(
             substitutions = substitutions
         ).renderedText
 
-        val document = Jsoup.parse(html).apply {
-            article.siteURL?.let { setBaseUri(it) }
-        }
+        val document = Jsoup.parse(html)
 
         if (article.parseFullContent) {
             val contentHTML = Jsoup.parse(article.content)
+
+            val baseUri = contentHTML.baseUri()
+
+            if (baseUri.isNotBlank()) {
+                document.setBaseUri(baseUri)
+            } else {
+                article.siteURL?.let { document.setBaseUri(it) }
+            }
 
             HtmlPostProcessor.clean(contentHTML, hideImages = hideImages)
 

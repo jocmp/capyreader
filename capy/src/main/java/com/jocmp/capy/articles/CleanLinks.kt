@@ -9,6 +9,8 @@ internal fun cleanLinks(element: Element) {
         } else {
             child.attr("loading", "lazy")
         }
+
+        child.attr("src", child.attr("abs:src"))
     }
 
     element.select("img[data-src]").forEach { child ->
