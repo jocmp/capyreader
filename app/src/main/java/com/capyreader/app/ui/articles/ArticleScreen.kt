@@ -281,6 +281,7 @@ fun ArticleScreen(
             isRefreshing = true
             onInitialized {
                 isRefreshing = false
+                articles.refresh()
                 refreshPagination()
                 if (!isRefreshInitialized) {
                     setRefreshInitialized(true)
