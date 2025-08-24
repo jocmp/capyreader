@@ -28,7 +28,6 @@ import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
 import com.jocmp.capy.common.launchUI
-import com.jocmp.capy.common.windowOrigin
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import org.koin.compose.koinInject
@@ -117,7 +116,7 @@ class WebViewState(
             )
 
             webView.loadDataWithBaseURL(
-                windowOrigin(article.url),
+                null,
                 html,
                 null,
                 "UTF-8",
