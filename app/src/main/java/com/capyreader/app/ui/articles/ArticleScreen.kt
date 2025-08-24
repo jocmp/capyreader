@@ -55,7 +55,6 @@ import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.LocalMarkAllReadButtonPosition
 import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
-import com.capyreader.app.ui.articles.detail.rememberArticlePagination
 import com.capyreader.app.ui.articles.feeds.FeedActions
 import com.capyreader.app.ui.articles.feeds.FeedList
 import com.capyreader.app.ui.articles.feeds.FolderActions
@@ -564,16 +563,9 @@ fun ArticleScreen(
                         CapyPlaceholder()
                     }
                 } else if (article != null) {
-                    val pagination = rememberArticlePagination(
-                        article,
-                        onSelectArticle = { index, articleID ->
-                            setArticle(articleID)
-                            scrollToArticle(index)
-                        }
-                    )
                     ArticleView(
                         article = article,
-                        pagination = pagination,
+                        articles = articles,
                         onBackPressed = {
                             clearArticle()
                         },
@@ -581,6 +573,9 @@ fun ArticleScreen(
                         onToggleStar = viewModel::toggleArticleStar,
                         enableBackHandler = media == null,
                         onSelectMedia = { media = it },
+                        onSelectArticle = { articleID ->
+                            setArticle(articleID)
+                        },
                         onScrollToArticle = { index ->
                             scrollToArticle(index)
                         }
