@@ -135,7 +135,7 @@ fun MarkReadOnScroll(
 
     LaunchedEffect(listState) {
         snapshotFlow { listState.firstVisibleItemIndex }
-            .debounce(500)
+            .debounce(2_000)
             .collect { firstVisibleIndex ->
                 val offscreenIndex = firstVisibleIndex - 1
 
