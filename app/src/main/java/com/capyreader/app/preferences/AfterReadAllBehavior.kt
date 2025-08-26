@@ -15,12 +15,7 @@ enum class AfterReadAllBehavior {
         }
 
     companion object {
-        fun withPreviousPref(openNextFeedOnReadAll: Boolean): AfterReadAllBehavior {
-            return if (openNextFeedOnReadAll) {
-                OPEN_NEXT_FEED
-            } else {
-                NOTHING
-            }
-        }
+        val default
+            get() = NOTHING
     }
 }
