@@ -9,7 +9,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import androidx.paging.PagingSource
 import com.capyreader.app.R
 import com.capyreader.app.common.toast
 import com.capyreader.app.notifications.NotificationHelper
@@ -29,6 +28,7 @@ import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.articles.ArticleContent
+import com.jocmp.capy.articles.FullContentParserType
 import com.jocmp.capy.articles.NextFilter
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.common.UnauthorizedError
@@ -684,7 +684,6 @@ class ArticleScreenViewModel(
 
     private val enableStickyFullContent: Boolean
         get() = appPreferences.enableStickyFullContent.get()
-
     private val context: Context
         get() = application.applicationContext
 

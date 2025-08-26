@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
+import com.jocmp.capy.articles.FullContentParserType
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.refresher.RefreshScheduler
 import com.jocmp.capy.Account
@@ -51,6 +52,8 @@ class GeneralSettingsViewModel(
         .preferences
         .keywordBlocklist
         .stateIn(viewModelScope)
+
+    val fullContentParser = appPreferences.fullContentParser.stateIn(viewModelScope)
 
     fun updateRefreshInterval(interval: RefreshInterval) {
         refreshScheduler.update(interval)
@@ -98,6 +101,10 @@ class GeneralSettingsViewModel(
                 account.clearStickyFullContent()
             }
         }
+    }
+
+    fun updateFullContentParser(type: FullContentParserType) {
+        appPreferences.fullContentParser.set(type)
     }
 
     fun updateMarkReadOnScroll(enable: Boolean) {
