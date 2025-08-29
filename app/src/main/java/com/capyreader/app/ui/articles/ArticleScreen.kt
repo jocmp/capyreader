@@ -55,6 +55,7 @@ import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.LocalMarkAllReadButtonPosition
 import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
+import com.capyreader.app.ui.articles.feeds.AngleRefreshState
 import com.capyreader.app.ui.articles.feeds.FeedActions
 import com.capyreader.app.ui.articles.feeds.FeedList
 import com.capyreader.app.ui.articles.feeds.FolderActions
@@ -136,10 +137,6 @@ fun ArticleScreen(
         )
     }
 
-    val onInitialized = { completion: () -> Unit ->
-        viewModel.initialize(onComplete = completion)
-    }
-
     val article = viewModel.article
 
     val search = ArticleSearch(
@@ -166,13 +163,15 @@ fun ArticleScreen(
         val (isRefreshInitialized, setRefreshInitialized) = rememberSaveable {
             mutableStateOf(skipInitialRefresh)
         }
+        var refreshAllState by remember { mutableStateOf(AngleRefreshState.STOPPED) }
+
         val (isUpdatePasswordDialogOpen, setUpdatePasswordDialogOpen) = rememberSaveable {
             mutableStateOf(false)
         }
         val coroutineScope = rememberCoroutineScope()
         val scaffoldNavigator = rememberArticleScaffoldNavigator()
         val showMultipleColumns = scaffoldNavigator.scaffoldDirective.maxHorizontalPartitions > 1
-        var isRefreshing by remember { mutableStateOf(false) }
+        var isPullToRefreshing by remember { mutableStateOf(false) }
 
         val snackbarHostState = remember { SnackbarHostState() }
         val addFeedSuccessMessage = stringResource(R.string.add_feed_success)
@@ -268,20 +267,21 @@ fun ArticleScreen(
 
         val refreshArticleList = {
             articles.refresh()
-
-            if (enableMarkReadOnScroll) {
-                scrollToTop()
-            }
-
             refreshPagination()
         }
 
-        fun initialize() {
-            isRefreshing = true
-            onInitialized {
-                isRefreshing = false
-                articles.refresh()
-                refreshPagination()
+        fun refreshAll() {
+            if (refreshAllState == AngleRefreshState.RUNNING) {
+                return
+            }
+
+            refreshAllState = AngleRefreshState.RUNNING
+
+            viewModel.refreshAll {
+                refreshAllState = AngleRefreshState.SETTLING
+
+                refreshArticleList()
+
                 if (!isRefreshInitialized) {
                     setRefreshInitialized(true)
                 }
@@ -289,10 +289,10 @@ fun ArticleScreen(
         }
 
         fun refreshFeeds() {
-            isRefreshing = true
+            isPullToRefreshing = true
 
             viewModel.refresh(filter) {
-                isRefreshing = false
+                isPullToRefreshing = false
                 refreshArticleList()
             }
         }
@@ -429,11 +429,9 @@ fun ArticleScreen(
                     onSelectSavedSearch = selectSavedSearch,
                     onNavigateToSettings = onNavigateToSettings,
                     onFilterSelect = selectFilter,
-                    onRefreshAll = { completion ->
-                        viewModel.refreshAll(ArticleFilter.default()) {
-                            refreshArticleList()
-                            completion()
-                        }
+                    refreshState = refreshAllState,
+                    onRefresh = {
+                        refreshAll()
                     },
                     filter = filter,
                     statusCount = statusCount,
@@ -520,7 +518,7 @@ fun ArticleScreen(
                         },
                     ) {
                         PullToRefreshBox(
-                            isRefreshing = isRefreshing,
+                            isRefreshing = isPullToRefreshing,
                             onRefresh = {
                                 refreshFeeds()
                             },
@@ -619,7 +617,7 @@ fun ArticleScreen(
 
         LaunchedEffect(Unit) {
             if (!isRefreshInitialized) {
-                initialize()
+                refreshAll()
             }
         }
 
