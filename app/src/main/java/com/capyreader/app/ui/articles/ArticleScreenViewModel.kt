@@ -332,6 +332,8 @@ class ArticleScreenViewModel(
     }
 
     fun refresh(filter: ArticleFilter, onComplete: () -> Unit) {
+        updateArticlesSince()
+
         refreshFilter(filter) {
             updateArticlesSince()
             onComplete()

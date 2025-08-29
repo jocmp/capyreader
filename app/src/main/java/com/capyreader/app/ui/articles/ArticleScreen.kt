@@ -194,6 +194,7 @@ fun ArticleScreen(
         }
 
         val unreadSort by viewModel.unreadSort.collectAsStateWithLifecycle()
+        val since by viewModel.articlesSince.collectAsStateWithLifecycle()
 
         val pager = remember(filter, unreadSort, searchQuery) {
             viewModel.pager(
@@ -204,6 +205,10 @@ fun ArticleScreen(
         }
 
         val articles = pager.flow.collectAsLazyPagingItems()
+
+        LaunchedEffect(since) {
+            articles.refresh()
+        }
 
         fun scrollToArticle(index: Int) {
             coroutineScope.launch {
@@ -265,10 +270,6 @@ fun ArticleScreen(
             }
         }
 
-        val refreshArticleList = {
-            articles.refresh()
-            refreshPagination()
-        }
 
         fun refreshAll() {
             if (refreshAllState == AngleRefreshState.RUNNING) {
@@ -279,8 +280,7 @@ fun ArticleScreen(
 
             viewModel.refreshAll {
                 refreshAllState = AngleRefreshState.SETTLING
-
-                refreshArticleList()
+                refreshPagination()
 
                 if (!isRefreshInitialized) {
                     setRefreshInitialized(true)
@@ -293,7 +293,7 @@ fun ArticleScreen(
 
             viewModel.refresh(filter) {
                 isPullToRefreshing = false
-                refreshArticleList()
+                refreshPagination()
             }
         }
 
