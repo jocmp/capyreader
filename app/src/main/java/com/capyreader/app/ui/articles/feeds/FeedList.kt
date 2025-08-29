@@ -21,11 +21,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
@@ -50,8 +45,6 @@ import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.SavedSearch
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @Composable
 fun FeedList(
@@ -62,23 +55,14 @@ fun FeedList(
     savedSearches: List<SavedSearch> = emptyList(),
     onFilterSelect: () -> Unit,
     onSelectSavedSearch: (search: SavedSearch) -> Unit,
-    onRefreshAll: (completion: () -> Unit) -> Unit,
+    refreshState: AngleRefreshState,
+    onRefresh: () -> Unit,
     onSelectFolder: (folder: Folder) -> Unit,
     onSelectFeed: (feed: Feed, folderTitle: String?) -> Unit,
     onFeedAdded: (feedID: String) -> Unit,
     onSelectStatus: (status: ArticleStatus) -> Unit,
     onNavigateToSettings: () -> Unit,
 ) {
-    var refreshState by remember { mutableStateOf(AngleRefreshState.STOPPED) }
-
-    fun refresh() {
-        refreshState = AngleRefreshState.RUNNING
-
-        onRefreshAll {
-            refreshState = AngleRefreshState.SETTLING
-        }
-    }
-
     val articleStatus = filter.status
     val scrollState = rememberScrollState()
     val buttonState = rememberRefreshButtonState(refreshState)
@@ -119,9 +103,7 @@ fun FeedList(
                         )
                     }
                     IconButton(onClick = {
-                        if (refreshState != AngleRefreshState.RUNNING) {
-                            refresh()
-                        }
+                        onRefresh()
                     }) {
                         Icon(
                             imageVector = Icons.Rounded.Refresh,
@@ -228,14 +210,6 @@ private fun FeedListDivider() {
 fun FeedListPreview() {
     val folders = FolderPreviewFixture().values.take(2).toList()
     val feeds = FeedSample().values.take(2).toList()
-    val coroutineScope = rememberCoroutineScope()
-
-    fun onRefresh(completion: () -> Unit) {
-        coroutineScope.launch {
-            delay(1500)
-            completion()
-        }
-    }
 
     PreviewKoinApplication {
         CapyTheme {
@@ -245,15 +219,14 @@ fun FeedListPreview() {
                 onSelectFolder = {},
                 onSelectFeed = { _, _ -> },
                 onNavigateToSettings = {},
-                onRefreshAll = {
-                    onRefresh(it)
-                },
+                onRefresh = {},
                 onFilterSelect = {},
                 filter = ArticleFilter.default(),
                 statusCount = 10,
                 onFeedAdded = {},
                 onSelectStatus = {},
-                onSelectSavedSearch = {}
+                onSelectSavedSearch = {},
+                refreshState = AngleRefreshState.STOPPED,
             )
         }
     }

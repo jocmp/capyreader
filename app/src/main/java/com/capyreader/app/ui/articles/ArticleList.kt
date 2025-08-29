@@ -32,6 +32,7 @@ import com.capyreader.app.R
 import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.Article
 import com.jocmp.capy.MarkRead
+import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.debounce
@@ -96,7 +97,8 @@ fun ArticleList(
     }
 
     MarkReadOnScroll(
-        enabled = enableMarkReadOnScroll && !refreshingAll,
+        enabled = enableMarkReadOnScroll,
+        refreshingAll = refreshingAll,
         articles = articles,
         listState
     ) { range ->
@@ -125,6 +127,7 @@ fun FeedOverScrollBox(height: Dp) {
 @Composable
 fun MarkReadOnScroll(
     enabled: Boolean,
+    refreshingAll: Boolean,
     articles: LazyPagingItems<Article>,
     listState: LazyListState,
     onRead: (range: MarkRead) -> Unit
@@ -133,13 +136,25 @@ fun MarkReadOnScroll(
         return
     }
 
+    LaunchedEffect(articles.loadState.isIdle, refreshingAll) {
+        if (refreshingAll) {
+            CapyLog.info("refresh", mapOf("idle" to articles.loadState.isIdle))
+            listState.scrollToItem(0)
+        } else {
+            CapyLog.info("skip_refresh", mapOf("idle" to articles.loadState.isIdle))
+        }
+    }
+
     LaunchedEffect(listState) {
         snapshotFlow { listState.firstVisibleItemIndex }
             .debounce(2_000)
             .collect { firstVisibleIndex ->
                 val offscreenIndex = firstVisibleIndex - 1
+                val skipMarkRead = offscreenIndex < 1 || articles.itemCount == 0
 
-                if (offscreenIndex < 0 || articles.itemCount == 0) {
+                CapyLog.info("index", mapOf("index" to firstVisibleIndex, "markRead" to !skipMarkRead))
+
+                if (skipMarkRead) {
                     return@collect
                 }
 

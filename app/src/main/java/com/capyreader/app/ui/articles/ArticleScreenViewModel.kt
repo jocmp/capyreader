@@ -28,7 +28,6 @@ import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.articles.ArticleContent
-import com.jocmp.capy.articles.FullContentParserType
 import com.jocmp.capy.articles.NextFilter
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.common.UnauthorizedError
@@ -311,8 +310,8 @@ class ArticleScreenViewModel(
         }
     }
 
-    fun initialize(
-        filter: ArticleFilter = ArticleFilter.default(),
+    private fun refreshFilter(
+        filter: ArticleFilter,
         onComplete: () -> Unit,
     ) {
         refreshJob?.cancel()
@@ -333,16 +332,16 @@ class ArticleScreenViewModel(
     }
 
     fun refresh(filter: ArticleFilter, onComplete: () -> Unit) {
-        initialize(filter) {
+        refreshFilter(filter) {
             updateArticlesSince()
             onComplete()
         }
     }
 
-    fun refreshAll(filter: ArticleFilter, onComplete: () -> Unit) {
+    fun refreshAll(onComplete: () -> Unit) {
         refreshingAll = true
 
-        refresh(filter) {
+        refresh(ArticleFilter.default()) {
             onComplete()
 
             refreshJob?.invokeOnCompletion {
