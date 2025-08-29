@@ -1,0 +1,1 @@
+• Refactor "mark read on scroll" logic
