@@ -21,7 +21,6 @@ Capy Reader is free across all sources. It is available for devices running Andr
 
 - Google Play releases happen every week or so depending on new features, bugfixes and translations.
 - GitHub releases are marked with a "-dev" suffix and happen more frequently. They are always stable, tested builds.
-- Nightly releases are a separate package marked with a "-nightly" suffix. These are unstable, untested builds.
 
 ## Reporting a bug
 
