@@ -10,12 +10,12 @@ import com.capyreader.app.ui.articles.MarkReadPosition
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.articles.FontOption
 import com.jocmp.capy.articles.FontSize
+import com.jocmp.capy.articles.FullContentParserType
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.preferences.AndroidPreferenceStore
 import com.jocmp.capy.preferences.Preference
 import com.jocmp.capy.preferences.PreferenceStore
 import com.jocmp.capy.preferences.getEnum
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 class AppPreferences(context: Context) {
@@ -74,6 +74,9 @@ class AppPreferences(context: Context) {
     fun pinFeedGroup(type: FeedGroup): Preference<Boolean> {
         return preferenceStore.getBoolean("feed_group_${type.toString().lowercase()}", true)
     }
+
+    val fullContentParser: Preference<FullContentParserType>
+        get() = preferenceStore.getEnum("full_content_parser_type", FullContentParserType.default)
 
     fun clearAll() {
         preferenceStore.clearAll()
@@ -178,12 +181,7 @@ class AppPreferences(context: Context) {
         val afterReadAllBehavior: Preference<AfterReadAllBehavior>
             get() = preferenceStore.getEnum(
                 "after_read_all_behavior",
-                AfterReadAllBehavior.withPreviousPref(openNextFeedOnReadAll.get())
+                AfterReadAllBehavior.default
             )
-
-        /** @deprecated */
-        private val openNextFeedOnReadAll: Preference<Boolean>
-            get() = preferenceStore.getBoolean("open_next_feed_on_read_all", false)
-
     }
 }

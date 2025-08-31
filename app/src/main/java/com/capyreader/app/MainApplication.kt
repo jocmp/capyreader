@@ -8,6 +8,7 @@ import coil.decode.SvgDecoder
 import com.capyreader.app.preferences.AppPreferences
 import com.google.android.material.color.DynamicColors
 import com.jocmp.capy.UserAgentInterceptor
+import com.jocmp.capy.accounts.baseHttpClient
 import okhttp3.OkHttpClient
 import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
@@ -37,9 +38,7 @@ class MainApplication : Application(), ImageLoaderFactory {
                 add(SvgDecoder.Factory())
             }
             .okHttpClient {
-                OkHttpClient.Builder()
-                    .addInterceptor(UserAgentInterceptor())
-                    .build()
+                baseHttpClient()
             }
             .build()
     }

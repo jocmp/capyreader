@@ -30,14 +30,14 @@ function addEmbedListeners() {
   [...document.querySelectorAll("div.iframe-embed")].forEach((div) => {
     div.addEventListener("click", () => {
       const iframe = document.createElement("iframe");
-      iframe.src = div.getAttribute("data-iframe-src") || '';
+      iframe.src = div.getAttribute("data-iframe-src") || "";
       div.replaceWith(iframe);
     });
   });
 
-  [...document.querySelectorAll('a')].forEach((anchor) => {
+  [...document.querySelectorAll("a")].forEach((anchor) => {
     longPress(anchor, () => {
-      Android.showLinkDialog(anchor.href, anchor.text)
+      Android.showLinkDialog(anchor.href, anchor.text);
     });
   });
 }
@@ -47,6 +47,14 @@ function addEmbedListeners() {
  * @returns boolean
  */
 function cleanEmbeds(element = document) {
+  const imgs = element.querySelectorAll("img");
+
+  for (const img of imgs) {
+    if (!img.src) {
+      img.remove();
+    }
+  }
+
   const embeds = element.querySelectorAll("iframe");
 
   for (const embed of embeds) {
@@ -126,7 +134,7 @@ const YOUTUBE_DOMAINS = [
   /.*?\/\/www\.youtube\.com\/watch\?(?:.*?&)?v=([^&#]*)(?:&|#|$)/,
   /.*?\/\/youtube-nocookie\.com\/embed\/(.*?)(\?|$)/,
   /.*?\/\/youtube\.com\/embed\/(.*?)(\?|$)/,
-  /.*?\/\/youtu\.be\/(.*?)(\?|$)/
+  /.*?\/\/youtu\.be\/(.*?)(\?|$)/,
 ];
 
 /**
@@ -156,7 +164,7 @@ function longPress(element, callback) {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  cleanEmbeds()
+  cleanEmbeds();
 });
 
 window.onload = () => {

@@ -9,7 +9,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import androidx.paging.PagingSource
 import com.capyreader.app.R
 import com.capyreader.app.common.toast
 import com.capyreader.app.notifications.NotificationHelper
@@ -72,8 +71,6 @@ class ArticleScreenViewModel(
 
     var refreshingAll by mutableStateOf(false)
         private set
-
-    var pagerSource: PagingSource<Int, Article>? = null
 
     val articlesSince = MutableStateFlow<OffsetDateTime>(OffsetDateTime.now())
 
@@ -313,8 +310,8 @@ class ArticleScreenViewModel(
         }
     }
 
-    fun initialize(
-        filter: ArticleFilter = ArticleFilter.default(),
+    private fun refreshFilter(
+        filter: ArticleFilter,
         onComplete: () -> Unit,
     ) {
         refreshJob?.cancel()
@@ -335,16 +332,18 @@ class ArticleScreenViewModel(
     }
 
     fun refresh(filter: ArticleFilter, onComplete: () -> Unit) {
-        initialize(filter) {
+        updateArticlesSince()
+
+        refreshFilter(filter) {
             updateArticlesSince()
             onComplete()
         }
     }
 
-    fun refreshAll(filter: ArticleFilter, onComplete: () -> Unit) {
+    fun refreshAll(onComplete: () -> Unit) {
         refreshingAll = true
 
-        refresh(filter) {
+        refresh(ArticleFilter.default()) {
             onComplete()
 
             refreshJob?.invokeOnCompletion {
@@ -686,7 +685,6 @@ class ArticleScreenViewModel(
 
     private val enableStickyFullContent: Boolean
         get() = appPreferences.enableStickyFullContent.get()
-
     private val context: Context
         get() = application.applicationContext
 

@@ -1,9 +1,9 @@
 package com.jocmp.capy.opml
 
 import com.jocmp.capy.Account
+import com.jocmp.capy.common.optionalURL
 import java.io.InputStream
 import java.net.URL
-import kotlin.math.roundToInt
 
 internal class OPMLImporter(private val account: Account) {
     internal suspend fun import(
@@ -42,11 +42,12 @@ internal class OPMLImporter(private val account: Account) {
         outlines.forEach { outline ->
             if (outline is Outline.FeedOutline) {
                 val feed = outline.feed
+                val xmlURL = optionalURL(feed.xmlUrl)
 
-                if (!feed.xmlUrl.isNullOrBlank()) {
+                if (xmlURL != null) {
                     feedEntries.add(
                         AddFeedForm(
-                            url = URL(feed.xmlUrl),
+                            url = xmlURL,
                             title = feed.title.orEmpty()
                         )
                     )
@@ -55,10 +56,12 @@ internal class OPMLImporter(private val account: Account) {
                 val feeds = flattenFolder(outline.folder)
 
                 feeds.forEach {
-                    if (!it.xmlUrl.isNullOrBlank()) {
+                    val xmlURL = optionalURL(it.xmlUrl)
+
+                    if (xmlURL != null) {
                         feedEntries.add(
                             AddFeedForm(
-                                url = URL(it.xmlUrl),
+                                url = xmlURL,
                                 title = it.title.orEmpty(),
                                 folderTitles = folderTitle(outline.title)
                             )

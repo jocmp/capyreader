@@ -274,4 +274,8 @@
     <string name="mark_read_position_floating_action_button">Floating Action Button</string>
     <string name="mark_all_read_button_position">Mark All Read Button Position</string>
     <string name="settings_display_miscellaneous_title">Miscellaneous</string>
+    <string name="full_content_parser_defuddle" translatable="false">Defuddle</string>
+    <string name="full_content_parser_mercury_parser" translatable="false">Mercury Parser</string>
+    <string name="settings_full_content_parser">Full Content Parser (Experimental)</string>
+    <string name="open_articles_in_browser">Open Articles In Browser</string>
 </resources>

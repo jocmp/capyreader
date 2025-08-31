@@ -23,8 +23,8 @@ android {
         applicationId = "com.capyreader.app"
         minSdk = 30
         targetSdk = 35
-        versionCode = 1153
-        versionName = "2025.08.1153"
+        versionCode = 1161
+        versionName = "2025.08.1161-dev"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -84,6 +84,12 @@ android {
         }
         debug {
             applicationIdSuffix = ".debug"
+        }
+        create("nightly") {
+            initWith(getByName("release"))
+            applicationIdSuffix = ".nightly"
+            // https://developer.android.com/build/build-variants#resolve_matching_errors
+            matchingFallbacks += "release"
         }
     }
     compileOptions {

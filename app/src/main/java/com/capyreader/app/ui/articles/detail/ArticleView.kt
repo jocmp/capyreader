@@ -32,6 +32,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -42,6 +43,8 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
+import androidx.paging.compose.LazyPagingItems
+import com.capyreader.app.common.Media
 import com.capyreader.app.common.openLink
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleVerticalSwipe
@@ -51,7 +54,7 @@ import com.capyreader.app.preferences.ArticleVerticalSwipe.NEXT_ARTICLE
 import com.capyreader.app.preferences.ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWSER
 import com.capyreader.app.preferences.ArticleVerticalSwipe.PREVIOUS_ARTICLE
 import com.capyreader.app.ui.articles.LocalFullContent
-import com.capyreader.app.ui.components.WebViewState
+import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.jocmp.capy.Article
 import org.koin.compose.koinInject
@@ -60,14 +63,17 @@ import org.koin.compose.koinInject
 @Composable
 fun ArticleView(
     article: Article,
-    pagination: ArticlePagination,
+    articles: LazyPagingItems<Article>,
     onBackPressed: () -> Unit,
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
     enableBackHandler: Boolean = false,
     onScrollToArticle: (index: Int) -> Unit,
-    webViewState: WebViewState,
+    onSelectArticle: (id: String) -> Unit,
+    onSelectMedia: (media: Media) -> Unit,
+    appPreferences: AppPreferences = koinInject()
 ) {
+    val enableHorizontalPager by appPreferences.readerOptions.enableHorizontaPagination.collectChangesWithDefault()
     val fullContent = LocalFullContent.current
     val openLink = articleOpenLink(article)
 
@@ -79,12 +85,37 @@ fun ArticleView(
         }
     }
 
+    val index = remember(
+        article.id,
+        articles.itemCount,
+    ) {
+        articles.itemSnapshotList.indexOfFirst { it?.id == article.id }
+    }
+
+    val previousIndex = index - 1
+    val nextIndex = index + 1
+
+    val hasPrevious = previousIndex > -1 && articles[index - 1] != null
+    val hasNext = nextIndex < articles.itemCount && articles[index + 1] != null
+
+    fun selectPrevious() {
+        articles[previousIndex]?.let {
+            onSelectArticle(it.id)
+        }
+    }
+
+    fun selectNext() {
+        articles[nextIndex]?.let {
+            onSelectArticle(it.id)
+        }
+    }
+
     val onSwipe = { swipe: ArticleVerticalSwipe ->
         when (swipe) {
             LOAD_FULL_CONTENT -> onToggleFullContent()
             OPEN_ARTICLE_IN_BROWSER -> openLink()
-            PREVIOUS_ARTICLE -> pagination.selectPrevious()
-            NEXT_ARTICLE -> pagination.selectNext()
+            PREVIOUS_ARTICLE -> selectPrevious()
+            NEXT_ARTICLE -> selectNext()
             DISABLED -> {}
         }
     }
@@ -134,23 +165,24 @@ fun ArticleView(
             ArticlePullRefresh(
                 topToolbarPreference.show && !topToolbarPreference.pinned,
                 onSwipe = onSwipe,
-                hasPreviousArticle = pagination.hasPrevious,
-                hasNextArticle = pagination.hasNext
+                hasPreviousArticle = hasPrevious,
+                hasNextArticle = hasNext
             ) {
                 HorizontalReaderPager(
-                    enablePrevious = pagination.hasPrevious,
-                    enableNext = pagination.hasNext,
+                    enabled = enableHorizontalPager,
+                    enablePrevious = hasPrevious,
+                    enableNext = hasNext,
                     onSelectPrevious = {
-                        pagination.selectPrevious()
+                        selectPrevious()
                     },
                     onSelectNext = {
-                        pagination.selectNext()
+                        selectNext()
                     },
                 ) {
                     key(article.id) {
                         ArticleReader(
                             article = article,
-                            webViewState = webViewState,
+                            onSelectMedia = onSelectMedia,
                         )
                     }
                 }
@@ -158,9 +190,9 @@ fun ArticleView(
         },
     )
 
-    LaunchedEffect(pagination.index) {
-        if (pagination.index > -1) {
-            onScrollToArticle(pagination.index)
+    LaunchedEffect(index) {
+        if (index > -1) {
+            onScrollToArticle(index)
         }
     }
 

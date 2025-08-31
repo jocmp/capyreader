@@ -12,6 +12,7 @@
 .idea/codeStyles/*
 .idea/other.xml
 .idea/androidTestResultsUserPreferences.xml
+.idea/deviceManager.xml
 
 .DS_Store
 /build
@@ -36,3 +37,4 @@ app/gplay/release/
 # Cruft
 technotes/.obsidian/
 .idea/runConfigurations.xml
+.kotlin/sessions/

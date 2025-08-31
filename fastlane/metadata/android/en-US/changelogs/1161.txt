@@ -1,0 +1,2 @@
+• Rework "mark read on scroll" listener to follow list index and "refresh all" state
+• Fix local import crash on non-HTTP URL schemes
