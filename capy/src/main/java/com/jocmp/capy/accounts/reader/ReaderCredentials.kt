@@ -2,6 +2,7 @@ package com.jocmp.capy.accounts.reader
 
 import com.jocmp.capy.accounts.Credentials
 import com.jocmp.capy.accounts.Source
+import com.jocmp.capy.accounts.baseHttpClient
 import com.jocmp.readerclient.GoogleReader
 import com.jocmp.readerclient.GoogleReader.Companion.UNAUTHORIZED_MESSAGE
 
@@ -16,7 +17,8 @@ data class ReaderCredentials(
             val response = GoogleReader.verifyCredentials(
                 username = username,
                 password = secret,
-                baseURL = url
+                baseURL = url,
+                client = baseHttpClient()
             )
 
             val responseBody = response.body()

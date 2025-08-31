@@ -30,7 +30,7 @@ fun ArticleStyleListener(webView: WebView?, appPreferences: AppPreferences = koi
 private fun updateFontSize(webView: WebView, fontSize: Int) {
     webView.evaluateJavascript(
         """
-        (function() {         
+        (function() {
           document.documentElement.style.setProperty("--article-font-size", "${fontSize}px");
         })();
         """.trimIndent()
@@ -41,12 +41,15 @@ private fun updateFontSize(webView: WebView, fontSize: Int) {
 private fun updateFontFamily(webView: WebView, fontOption: FontOption) {
     webView.evaluateJavascript(
         """
-        (function() {         
+        (function() {
           let slug = "${fontOption.slug}";
           let articleBody = document.getElementsByClassName("article__body")[0];
-          const classes = articleBody.className.split(" ").filter(c => !c.startsWith("article__body--font"));
-          
-          articleBody.className = classes.join(" ").trim() + " article__body--font-" + slug;
+
+          if (articleBody) {
+            const classes = articleBody.className.split(" ").filter(c => !c.startsWith("article__body--font"));
+
+            articleBody.className = classes.join(" ").trim() + " article__body--font-" + slug;
+          }
         })();
         """.trimIndent()
     ) {

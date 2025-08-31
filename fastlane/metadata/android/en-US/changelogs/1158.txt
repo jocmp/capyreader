@@ -1,0 +1,3 @@
+• Skip base URI in webview for better caching
+• Rework horizontal pagination for better performance in long lists
+• Wait 2 seconds to mark-all-read on scroll instead of 500ms

@@ -22,6 +22,10 @@ platform :android do
   lane :github_release do
     build_apk_release
   end
+
+  lane :free_nightly do
+    gradle(task: 'clean assembleFreeNightly')
+  end
 end
 
 def build_release_bundle

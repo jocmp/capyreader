@@ -39,7 +39,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
-import com.capyreader.app.common.RowItem
 import com.capyreader.app.ui.components.DialogHorizontalDivider
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.fixtures.FeedSample
@@ -135,8 +134,10 @@ fun EditFeedView(
                         newFolder = selectedFolder,
                         switchFolders = switchFolders,
                         onAddFolder = {
-                            switchFolders[selectedFolder] = true
-                            setSelectedFolder("")
+                            if (selectedFolder.isNotBlank()) {
+                                switchFolders[selectedFolder] = true
+                                setSelectedFolder("")
+                            }
                         }
                     )
                 }
@@ -222,39 +223,38 @@ private fun FolderMultiselect(
     onAddFolder: () -> Unit,
     switchFolders: MutableMap<String, Boolean>,
 ) {
-    RowItem {
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            OutlinedTextField(
-                value = newFolder,
-                onValueChange = onUpdateNewFolder,
-                label = { Text(stringResource(id = R.string.add_feed_new_folder_title)) },
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(
-                    capitalization = KeyboardCapitalization.Words,
-                    autoCorrectEnabled = false,
-                    imeAction = ImeAction.Done
-                ),
-                keyboardActions = KeyboardActions(
-                    onDone = { onAddFolder() }
-                ),
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-            )
-            IconButton(
-                modifier = Modifier.padding(top = 8.dp),
-                onClick = {
-                    onAddFolder()
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.Add,
-                    contentDescription = stringResource(R.string.blocked_keywords_add_keyword)
-                )
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        OutlinedTextField(
+            value = newFolder,
+            onValueChange = onUpdateNewFolder,
+            label = { Text(stringResource(id = R.string.add_feed_new_folder_title)) },
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(
+                capitalization = KeyboardCapitalization.Words,
+                autoCorrectEnabled = false,
+                imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = { onAddFolder() }
+            ),
+            modifier = Modifier
+                .weight(1f)
+                .padding(start = 16.dp)
+                .fillMaxWidth()
+        )
+        IconButton(
+            modifier = Modifier.padding(top = 8.dp, end = 8.dp),
+            onClick = {
+                onAddFolder()
             }
+        ) {
+            Icon(
+                imageVector = Icons.Rounded.Add,
+                contentDescription = stringResource(R.string.blocked_keywords_add_keyword)
+            )
         }
     }
     Column {

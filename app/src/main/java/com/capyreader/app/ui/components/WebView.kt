@@ -1,13 +1,11 @@
 package com.capyreader.app.ui.components
 
 import android.annotation.SuppressLint
-import android.graphics.Bitmap
 import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebView.HitTestResult.SRC_ANCHOR_TYPE
-import android.webkit.WebView.VisualStateCallback
 import android.webkit.WebViewClient
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -30,8 +28,8 @@ import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
 import com.jocmp.capy.common.launchUI
-import com.jocmp.capy.common.windowOrigin
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import org.koin.compose.koinInject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -60,16 +58,6 @@ class AccompanistWebViewClient(
         internal set
 
     private val appPreferences by inject<AppPreferences>()
-
-    override fun onPageStarted(view: WebView, url: String?, favicon: Bitmap?) {
-        super.onPageStarted(view, url, favicon)
-
-        view.postVisualStateCallback(0, object : VisualStateCallback() {
-            override fun onComplete(requestId: Long) {
-                view.visibility = View.VISIBLE
-            }
-        })
-    }
 
     override fun shouldInterceptRequest(
         view: WebView,
@@ -128,12 +116,15 @@ class WebViewState(
             )
 
             webView.loadDataWithBaseURL(
-                windowOrigin(article.url),
+                null,
                 html,
                 null,
                 "UTF-8",
                 null,
             )
+
+            delay(50)
+            webView.visibility = View.VISIBLE
         }
     }
 
