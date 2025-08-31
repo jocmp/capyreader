@@ -53,7 +53,7 @@ fun FeedActionMenuItems(
     DropdownMenuItem(
         trailingIcon = trailingIcon,
         text = {
-            Text("Open Articles In Browser")
+            Text(stringResource(R.string.open_articles_in_browser))
         },
         onClick = onToggleOpenInBrowser
     )
