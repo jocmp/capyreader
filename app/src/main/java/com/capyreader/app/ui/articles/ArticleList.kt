@@ -12,12 +12,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -35,7 +35,6 @@ import com.jocmp.capy.MarkRead
 import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.debounce
 import org.koin.compose.koinInject
 import java.time.LocalDateTime
 
@@ -100,7 +99,7 @@ fun ArticleList(
         enabled = enableMarkReadOnScroll,
         refreshingAll = refreshingAll,
         articles = articles,
-        listState
+        listState = listState
     ) { range ->
         onMarkAllRead(range)
     }
@@ -136,30 +135,30 @@ fun MarkReadOnScroll(
         return
     }
 
-    LaunchedEffect(articles.loadState.isIdle, refreshingAll) {
+    val firstVisibleIndex by remember { derivedStateOf { listState.firstVisibleItemIndex } }
+
+    LaunchedEffect(firstVisibleIndex, refreshingAll) {
+        val offscreenIndex = firstVisibleIndex - 1
+        val markAsRead = !refreshingAll && offscreenIndex > 1
+        CapyLog.info(
+            "index",
+            mapOf(
+                "index" to firstVisibleIndex,
+                "refreshing" to refreshingAll,
+                "markRead" to markAsRead
+            )
+        )
+
         if (refreshingAll) {
-            CapyLog.info("refresh", mapOf("idle" to articles.loadState.isIdle))
+            CapyLog.info("scroll", mapOf("index" to firstVisibleIndex))
             listState.scrollToItem(0)
         } else {
-            CapyLog.info("skip_refresh", mapOf("idle" to articles.loadState.isIdle))
+            CapyLog.info("scrollSkip", mapOf("index" to firstVisibleIndex))
         }
-    }
 
-    LaunchedEffect(listState) {
-        snapshotFlow { listState.firstVisibleItemIndex }
-            .debounce(2_000)
-            .collect { firstVisibleIndex ->
-                val offscreenIndex = firstVisibleIndex - 1
-                val skipMarkRead = offscreenIndex < 1 || articles.itemCount == 0
-
-                CapyLog.info("index", mapOf("index" to firstVisibleIndex, "markRead" to !skipMarkRead))
-
-                if (skipMarkRead) {
-                    return@collect
-                }
-
-                articles.getOrNull(offscreenIndex)?.let { onRead(MarkRead.After(it.id)) }
-            }
+        if (markAsRead) {
+            articles.getOrNull(offscreenIndex)?.let { onRead(MarkRead.After(it.id)) }
+        }
     }
 }
 
