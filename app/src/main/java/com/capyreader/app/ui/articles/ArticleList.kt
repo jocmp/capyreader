@@ -12,12 +12,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -35,6 +35,7 @@ import com.jocmp.capy.MarkRead
 import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.debounce
 import org.koin.compose.koinInject
 import java.time.LocalDateTime
 
@@ -52,6 +53,7 @@ fun ArticleList(
     val currentTime = rememberCurrentTime()
     val localDensity = LocalDensity.current
     var listHeight by remember { mutableStateOf(0.dp) }
+
 
     LazyScrollbar(state = listState) {
         LazyColumn(
@@ -96,10 +98,9 @@ fun ArticleList(
     }
 
     MarkReadOnScroll(
-        enabled = enableMarkReadOnScroll,
-        refreshingAll = refreshingAll,
+        enabled = enableMarkReadOnScroll && !refreshingAll,
         articles = articles,
-        listState = listState
+        listState
     ) { range ->
         onMarkAllRead(range)
     }
@@ -126,7 +127,6 @@ fun FeedOverScrollBox(height: Dp) {
 @Composable
 fun MarkReadOnScroll(
     enabled: Boolean,
-    refreshingAll: Boolean,
     articles: LazyPagingItems<Article>,
     listState: LazyListState,
     onRead: (range: MarkRead) -> Unit
@@ -135,30 +135,28 @@ fun MarkReadOnScroll(
         return
     }
 
-    val firstVisibleIndex by remember { derivedStateOf { listState.firstVisibleItemIndex } }
+    LaunchedEffect(listState) {
+        snapshotFlow { listState.firstVisibleItemIndex }
+            .debounce(500)
+            .collect { firstVisibleIndex ->
+                val offscreenIndex = firstVisibleIndex - 1
+                val markAsRead = offscreenIndex > 1 && articles.itemCount > 0
 
-    LaunchedEffect(firstVisibleIndex, refreshingAll) {
-        val offscreenIndex = firstVisibleIndex - 1
-        val markAsRead = !refreshingAll && offscreenIndex > 1
-        CapyLog.info(
-            "index",
-            mapOf(
-                "index" to firstVisibleIndex,
-                "refreshing" to refreshingAll,
-                "markRead" to markAsRead
-            )
-        )
+                CapyLog.info(
+                    "index",
+                    mapOf(
+                        "index" to firstVisibleIndex,
+                        "enabled" to enabled,
+                        "markRead" to markAsRead
+                    )
+                )
 
-        if (refreshingAll && !listState.isScrollInProgress) {
-            CapyLog.info("scroll", mapOf("index" to firstVisibleIndex))
-            listState.scrollToItem(0)
-        } else {
-            CapyLog.info("scrollSkip", mapOf("index" to firstVisibleIndex))
-        }
+                if (!markAsRead) {
+                    return@collect
+                }
 
-        if (markAsRead) {
-            articles.getOrNull(offscreenIndex)?.let { onRead(MarkRead.After(it.id)) }
-        }
+                articles.getOrNull(offscreenIndex)?.let { onRead(MarkRead.After(it.id)) }
+            }
     }
 }
 
