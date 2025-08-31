@@ -149,7 +149,7 @@ fun MarkReadOnScroll(
             )
         )
 
-        if (refreshingAll) {
+        if (refreshingAll && !listState.isScrollInProgress) {
             CapyLog.info("scroll", mapOf("index" to firstVisibleIndex))
             listState.scrollToItem(0)
         } else {
