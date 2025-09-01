@@ -266,4 +266,6 @@
     <string name="mark_read_position_floating_action_button">Bouton d\'action flottant</string>
     <string name="mark_all_read_button_position">Position du bouton \"Tout marquer comme lu\"</string>
     <string name="settings_display_miscellaneous_title">Divers</string>
+    <string name="settings_full_content_parser">Analyseur de contenu complet (expérimental)</string>
+    <string name="open_articles_in_browser">Ouvrir les articles dans le navigateur</string>
 </resources>
