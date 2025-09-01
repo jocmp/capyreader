@@ -8,6 +8,7 @@ import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
 import androidx.compose.material3.adaptive.navigation.BackNavigationBehavior
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -16,8 +17,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.capyreader.app.setupCommonModules
+import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
 import com.capyreader.app.ui.isCompact
+import com.capyreader.app.ui.provideLinkOpener
 import com.capyreader.app.ui.settings.panels.AboutSettingsPanel
 import com.capyreader.app.ui.settings.panels.AccountSettingsPanel
 import com.capyreader.app.ui.settings.panels.DisplaySettingsPanel
@@ -55,54 +58,60 @@ fun SettingsView(
         }
     }
 
-    SettingsScaffold(
-        scaffoldNavigator = navigator,
-        listPane = {
-            SettingsList(
-                selected = currentPanel,
-                onNavigate = { navigateToPanel(it) },
-                onNavigateBack = onNavigateBack
-            )
-        },
-        detailPane = {
-            if (currentPanel == null && !isCompact()) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .fillMaxSize()
-                ) {
-                    CapyPlaceholder()
-                }
-            } else if (currentPanel != null) {
-                SettingsPanelScaffold(
-                    panel = currentPanel,
-                    onBack = {
-                        navigateBack()
-                    },
-                ) {
-                    Box(contentAlignment = Alignment.Center) {
-                        when (currentPanel) {
-                            SettingsPanel.General -> GeneralSettingsPanel(
-                                onNavigateToNotifications = {
-                                    navigateToPanel(SettingsPanel.Notifications)
-                                }
-                            )
-                            SettingsPanel.Notifications -> NotificationsSettingsPanel(
-                                onSelectNone = viewModel::deselectAllFeedNotifications,
-                                onSelectAll = viewModel::selectAllFeedNotifications,
-                                onToggleNotifications = viewModel::toggleNotifications,
-                                feeds = feeds,
-                            )
-                            SettingsPanel.Display -> DisplaySettingsPanel()
-                            SettingsPanel.Gestures -> GesturesSettingPanel()
-                            SettingsPanel.Account -> AccountSettingsPanel(onRemoveAccount = onRemoveAccount)
-                            SettingsPanel.About -> AboutSettingsPanel()
+    CompositionLocalProvider(
+        LocalLinkOpener provides provideLinkOpener()
+    ) {
+        SettingsScaffold(
+            scaffoldNavigator = navigator,
+            listPane = {
+                SettingsList(
+                    selected = currentPanel,
+                    onNavigate = { navigateToPanel(it) },
+                    onNavigateBack = onNavigateBack
+                )
+            },
+            detailPane = {
+                if (currentPanel == null && !isCompact()) {
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
+                        CapyPlaceholder()
+                    }
+                } else if (currentPanel != null) {
+                    SettingsPanelScaffold(
+                        panel = currentPanel,
+                        onBack = {
+                            navigateBack()
+                        },
+                    ) {
+                        Box(contentAlignment = Alignment.Center) {
+                            when (currentPanel) {
+                                SettingsPanel.General -> GeneralSettingsPanel(
+                                    onNavigateToNotifications = {
+                                        navigateToPanel(SettingsPanel.Notifications)
+                                    }
+                                )
+
+                                SettingsPanel.Notifications -> NotificationsSettingsPanel(
+                                    onSelectNone = viewModel::deselectAllFeedNotifications,
+                                    onSelectAll = viewModel::selectAllFeedNotifications,
+                                    onToggleNotifications = viewModel::toggleNotifications,
+                                    feeds = feeds,
+                                )
+
+                                SettingsPanel.Display -> DisplaySettingsPanel()
+                                SettingsPanel.Gestures -> GesturesSettingPanel()
+                                SettingsPanel.Account -> AccountSettingsPanel(onRemoveAccount = onRemoveAccount)
+                                SettingsPanel.About -> AboutSettingsPanel()
+                            }
                         }
                     }
                 }
             }
-        }
-    )
+        )
+    }
 
     BackHandler(navigator.canNavigateBack(BackNavigationBehavior.PopLatest)) {
         navigateBack()

@@ -27,6 +27,7 @@ import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ReaderImageVisibility
 import com.capyreader.app.ui.ConnectivityType
 import com.capyreader.app.ui.LocalConnectivity
+import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.articles.ColumnScrollbar
 import com.capyreader.app.ui.components.WebView
 import com.capyreader.app.ui.components.WebViewState
@@ -41,11 +42,13 @@ fun ArticleReader(
     onSelectMedia: (media: Media) -> Unit,
 ) {
     val (shareLink, setShareLink) = rememberSaveableShareLink()
+    val linkOpener = LocalLinkOpener.current
 
     val webViewState = rememberWebViewState(
         key = article.id,
         onNavigateToMedia = onSelectMedia,
-        onRequestLinkDialog = { setShareLink(it) }
+        onRequestLinkDialog = { setShareLink(it) },
+        onOpenLink = { linkOpener.open(it) }
     )
 
     val showImages = rememberImageVisibility()
