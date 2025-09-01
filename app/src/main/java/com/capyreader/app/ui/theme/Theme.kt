@@ -77,9 +77,7 @@ fun CapyTheme(
     theme: ThemeOption = ThemeOption.SYSTEM_DEFAULT,
     content: @Composable () -> Unit
 ) {
-    val showAppearanceLightStatusBars =
-        !(theme == ThemeOption.DARK ||
-                theme == ThemeOption.SYSTEM_DEFAULT && isSystemInDarkTheme())
+    val showAppearanceLightStatusBars = theme.showAppearanceLightStatusBars()
 
     val colorScheme = when (theme) {
         ThemeOption.LIGHT -> lightScheme()
@@ -107,6 +105,13 @@ fun CapyTheme(
         content = content
     )
 }
+
+@Composable
+fun ThemeOption.showAppearanceLightStatusBars(): Boolean {
+    return !(this == ThemeOption.DARK ||
+            this == ThemeOption.SYSTEM_DEFAULT && isSystemInDarkTheme())
+}
+
 
 @Composable
 private fun lightScheme(): ColorScheme {
