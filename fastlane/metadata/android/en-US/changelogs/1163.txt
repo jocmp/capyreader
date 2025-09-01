@@ -1,0 +1,2 @@
+• Open links adjacent to app on tablets and foldables
+• Clean up unused code and debug logging
