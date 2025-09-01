@@ -159,7 +159,7 @@ fun ArticleScreen(
         LocalFolderActions provides folderActions,
         LocalFeedActions provides feedActions,
         LocalConnectivity provides connectivity,
-        LocalLinkOpener provides provideLinkOpener(),
+        LocalLinkOpener provides provideLinkOpener(context),
         LocalMarkAllReadButtonPosition provides markAllReadButtonPosition
     ) {
         val openNextFeedOnReadAll = afterReadAll == AfterReadAllBehavior.OPEN_NEXT_FEED

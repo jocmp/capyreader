@@ -41,6 +41,7 @@ fun SettingsView(
     onNavigateBack: () -> Unit,
     onRemoveAccount: () -> Unit,
 ) {
+    val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val navigator = rememberListDetailPaneScaffoldNavigator<SettingsPanel>()
     val currentPanel = navigator.currentDestination?.contentKey
@@ -59,7 +60,7 @@ fun SettingsView(
     }
 
     CompositionLocalProvider(
-        LocalLinkOpener provides provideLinkOpener()
+        LocalLinkOpener provides provideLinkOpener(context)
     ) {
         SettingsScaffold(
             scaffoldNavigator = navigator,
