@@ -82,7 +82,6 @@ import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
-import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
@@ -228,7 +227,6 @@ fun ArticleScreen(
             snapshotFlow { "$filter:${listState.layoutInfo.totalItemsCount}" }
                 .distinctUntilChanged()
                 .collect {
-                    CapyLog.info("list", mapOf("count" to it))
                     scrollToTop()
                     resetScrollBehaviorOffset()
                 }
@@ -657,7 +655,6 @@ fun ArticleScreen(
             snapshotFlow { "$filter:${listState.layoutInfo.totalItemsCount}" }
                 .distinctUntilChanged()
                 .collect {
-                    CapyLog.info("list", mapOf("count" to it))
                     scrollToTop()
                     resetScrollBehaviorOffset()
                 }
