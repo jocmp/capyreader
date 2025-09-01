@@ -1,2 +1,3 @@
 • Open links adjacent to app on tablets and foldables
 • Clean up unused code and debug logging
+• Fix bug where background refresher was not cancelled when switching to manual or on start from timed option
