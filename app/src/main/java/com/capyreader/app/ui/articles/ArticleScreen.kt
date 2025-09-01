@@ -48,11 +48,11 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.R
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.Saver
-import com.capyreader.app.common.openLink
 import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.LocalConnectivity
+import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.LocalMarkAllReadButtonPosition
 import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
@@ -72,6 +72,7 @@ import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.SearchState
+import com.capyreader.app.ui.provideLinkOpener
 import com.capyreader.app.ui.rememberLocalConnectivity
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
@@ -157,7 +158,7 @@ fun ArticleScreen(
         LocalFolderActions provides folderActions,
         LocalFeedActions provides feedActions,
         LocalConnectivity provides connectivity,
-        LocalArticleLookup provides ArticleLookup(viewModel::findArticlePages),
+        LocalLinkOpener provides provideLinkOpener(context),
         LocalMarkAllReadButtonPosition provides markAllReadButtonPosition
     ) {
         val openNextFeedOnReadAll = afterReadAll == AfterReadAllBehavior.OPEN_NEXT_FEED
@@ -357,6 +358,8 @@ fun ArticleScreen(
             viewModel.selectArticle(articleID, onComplete)
         }
 
+        val linkOpener = LocalLinkOpener.current
+
         fun selectArticle(articleID: String) {
             setArticle(articleID) { nextArticle ->
                 if (search.isActive) {
@@ -366,7 +369,7 @@ fun ArticleScreen(
                 val url = nextArticle.url
                 if (nextArticle.openInBrowser && url != null) {
                     clearArticle()
-                    context.openLink(url.toString().toUri(), appPreferences)
+                    linkOpener.open(url.toString().toUri())
                 } else {
                     coroutineScope.launch {
                         navigateToDetail()
