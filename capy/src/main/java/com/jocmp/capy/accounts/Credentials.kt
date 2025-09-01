@@ -1,6 +1,6 @@
 package com.jocmp.capy.accounts
 
-import android.content.Context
+import com.jocmp.capy.ClientCertManager
 import com.jocmp.capy.accounts.feedbin.FeedbinCredentials
 import com.jocmp.capy.accounts.reader.ReaderCredentials
 import com.jocmp.capy.common.optionalURL
@@ -12,7 +12,7 @@ interface Credentials {
     val clientCertAlias: String
     val source: Source
 
-    suspend fun verify(context: Context): Result<Credentials>
+    suspend fun verify(clientCertManager: ClientCertManager): Result<Credentials>
 
     companion object {
         fun from(

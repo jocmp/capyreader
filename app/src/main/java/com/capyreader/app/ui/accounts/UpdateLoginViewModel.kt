@@ -1,12 +1,12 @@
 package com.capyreader.app.ui.accounts
 
-import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jocmp.capy.Account
+import com.jocmp.capy.ClientCertManager
 import com.jocmp.capy.accounts.Credentials
 import com.jocmp.capy.common.Async
 import com.jocmp.capy.common.launchIO
@@ -15,6 +15,7 @@ import kotlinx.coroutines.withContext
 
 class UpdateLoginViewModel(
     private val account: Account,
+    private val clientCertManager: ClientCertManager,
 ) : ViewModel() {
     val username = account.preferences.username.get()
     val source = account.source
@@ -37,7 +38,7 @@ class UpdateLoginViewModel(
         _password = password
     }
 
-    fun submit(context: Context, onSuccess: () -> Unit) {
+    fun submit(onSuccess: () -> Unit) {
         if (password.isBlank()) {
             _result = Async.Failure(loginError())
         }
@@ -45,7 +46,7 @@ class UpdateLoginViewModel(
         viewModelScope.launchIO {
             _result = Async.Loading
 
-            credentials.verify(context)
+            credentials.verify(clientCertManager)
                 .onSuccess { result ->
                     updateAccount(result)
 

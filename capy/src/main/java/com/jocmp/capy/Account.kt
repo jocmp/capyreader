@@ -1,6 +1,5 @@
 package com.jocmp.capy
 
-import android.content.Context
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.accounts.FaviconFetcher
@@ -40,7 +39,6 @@ import java.net.URI
 import java.time.ZonedDateTime
 
 data class Account(
-    val context: Context,
     val id: String,
     val path: URI,
     val cacheDirectory: URI,
@@ -48,6 +46,7 @@ data class Account(
     val preferences: AccountPreferences,
     val source: Source = Source.LOCAL,
     val faviconFetcher: FaviconFetcher,
+    private val clientCertManager: ClientCertManager,
     private val localHttpClient: OkHttpClient = LocalOkHttpClient.forAccount(path = cacheDirectory),
     val delegate: AccountDelegate = when (source) {
         Source.LOCAL -> LocalAccountDelegate(
@@ -68,11 +67,11 @@ data class Account(
         Source.FRESHRSS,
         Source.MINIFLUX,
         Source.READER -> buildReaderDelegate(
-            context = context,
             source = source,
             database = database,
             path = cacheDirectory,
-            preferences = preferences
+            preferences = preferences,
+            clientCertManager = clientCertManager,
         )
     }
 ) {

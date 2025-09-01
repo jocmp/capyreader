@@ -1,7 +1,5 @@
 package com.capyreader.app.ui.accounts
 
-import android.app.Activity
-import android.security.KeyChain
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Arrangement
@@ -51,9 +49,9 @@ fun LoginView(
     onUsernameChange: (username: String) -> Unit = {},
     onPasswordChange: (password: String) -> Unit = {},
     onUrlChange: (url: String) -> Unit = {},
-    onClientCertAliasChange: (clientCertAlias: String) -> Unit = {},
     onSubmit: () -> Unit = {},
     onNavigateBack: () -> Unit = {},
+    onChooseClientCert: () -> Unit = {},
     url: String,
     clientCertAlias: String,
     username: String,
@@ -113,7 +111,7 @@ fun LoginView(
                                 }
                             )
                             CertificateField(
-                                onChange = onClientCertAliasChange,
+                                onChooseClientCert = onChooseClientCert,
                                 certAlias = clientCertAlias,
                             )
                         }
@@ -162,13 +160,12 @@ fun UrlField(
 
 @Composable
 fun CertificateField(
-    onChange: (certAlias: String) -> Unit,
+    onChooseClientCert: () -> Unit,
     certAlias: String,
 ) {
-    val context = LocalContext.current
     TextField(
         value = certAlias,
-        onValueChange = onChange,
+        onValueChange = {},
         singleLine = true,
         label = {
             Text(stringResource(R.string.auth_fields_client_certificate))
@@ -181,9 +178,7 @@ fun CertificateField(
                 LaunchedEffect(interactionSource) {
                     interactionSource.interactions.collect {
                         if (it is PressInteraction.Release) {
-                            KeyChain.choosePrivateKeyAlias(context as Activity, { alias ->
-                                onChange(alias ?: "")
-                            }, null, null, null, null)
+                            onChooseClientCert()
                         }
                     }
                 }

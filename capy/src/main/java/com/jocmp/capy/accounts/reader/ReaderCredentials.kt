@@ -1,6 +1,6 @@
 package com.jocmp.capy.accounts.reader
 
-import android.content.Context
+import com.jocmp.capy.ClientCertManager
 import com.jocmp.capy.accounts.Credentials
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.baseHttpClient
@@ -15,7 +15,7 @@ data class ReaderCredentials(
     override val clientCertAlias: String,
     override val source: Source
 ) : Credentials {
-    override suspend fun verify(context: Context): Result<Credentials> {
+    override suspend fun verify(clientCertManager: ClientCertManager): Result<Credentials> {
         try {
             val response = GoogleReader.verifyCredentials(
                 username = username,
@@ -23,7 +23,7 @@ data class ReaderCredentials(
                 baseURL = url,
                 client = baseHttpClient()
                     .newBuilder()
-                    .clientCertAlias(context, clientCertAlias)
+                    .clientCertAlias(clientCertManager, clientCertAlias)
                     .build()
             )
 

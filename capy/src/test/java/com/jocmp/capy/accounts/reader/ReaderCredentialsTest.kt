@@ -1,5 +1,6 @@
 package com.jocmp.capy.accounts.reader
 
+import com.jocmp.capy.FakeClientCertManager
 import com.jocmp.capy.accounts.Source
 import com.jocmp.readerclient.GoogleReader
 import io.mockk.coEvery
@@ -50,7 +51,7 @@ internal class ReaderCredentialsTest {
             )
         }.returns(Response.success(successResponse))
 
-        val result = credentials.verify(mockk()).getOrNull()!!
+        val result = credentials.verify(FakeClientCertManager).getOrNull()!!
 
         assertEquals(actual = result.username, expected = username)
         assertEquals(actual = result.secret, expected = auth)
@@ -65,7 +66,7 @@ internal class ReaderCredentialsTest {
             )
         )
 
-        val result = credentials.verify(mockk())
+        val result = credentials.verify(FakeClientCertManager)
 
         assertTrue(result.isFailure)
         assertEquals(result.exceptionOrNull()!!.message, "Unauthorized!")
@@ -80,7 +81,7 @@ internal class ReaderCredentialsTest {
             )
         )
 
-        val result = credentials.verify(mockk())
+        val result = credentials.verify(FakeClientCertManager)
 
         assertTrue(result.isFailure)
     }

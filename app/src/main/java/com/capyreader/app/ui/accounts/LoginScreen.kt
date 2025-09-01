@@ -1,7 +1,7 @@
 package com.capyreader.app.ui.accounts
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -10,19 +10,21 @@ fun LoginScreen(
     onNavigateBack: () -> Unit,
     onSuccess: () -> Unit,
 ) {
-    val context = LocalContext.current
+    val activity = LocalActivity.current
     LoginView(
         source = viewModel.source,
         onUsernameChange = viewModel::setUsername,
         onPasswordChange = viewModel::setPassword,
         onUrlChange = viewModel::setURL,
-        onClientCertAliasChange = viewModel::setClientCertAlias,
         onSubmit = {
-            viewModel.submit(context) {
+            viewModel.submit {
                 onSuccess()
             }
         },
         onNavigateBack = onNavigateBack,
+        onChooseClientCert = {
+            activity?.let(viewModel::chooseClientCert)
+        },
         url = viewModel.url,
         clientCertAlias = viewModel.clientCertAlias,
         username = viewModel.username,

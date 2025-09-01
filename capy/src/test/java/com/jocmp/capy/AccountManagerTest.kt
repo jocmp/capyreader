@@ -2,7 +2,6 @@ package com.jocmp.capy
 
 import com.jocmp.capy.accounts.FakeFaviconFetcher
 import com.jocmp.capy.accounts.Source
-import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.Rule
 import org.junit.Test
@@ -18,12 +17,12 @@ class AccountManagerTest {
 
     private fun buildManager(): AccountManager {
         return AccountManager(
-            context = mockk(),
             rootFolder = rootFolder.newFolder().toURI(),
             preferenceStoreProvider = InMemoryPreferencesProvider(),
             cacheDirectory = rootFolder.newFolder().toURI(),
             databaseProvider = InMemoryDatabaseProvider,
-            faviconFetcher = FakeFaviconFetcher
+            faviconFetcher = FakeFaviconFetcher,
+            clientCertManager = FakeClientCertManager,
         )
     }
 

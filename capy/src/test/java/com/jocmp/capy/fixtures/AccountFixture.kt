@@ -3,6 +3,7 @@ package com.jocmp.capy.fixtures
 import com.jocmp.capy.Account
 import com.jocmp.capy.AccountDelegate
 import com.jocmp.capy.AccountPreferences
+import com.jocmp.capy.FakeClientCertManager
 import com.jocmp.capy.InMemoryDataStore
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.RandomUUID
@@ -19,14 +20,14 @@ object AccountFixture {
         accountDelegate: AccountDelegate = mockk()
     ): Account {
         return Account(
-            context = mockk(),
             id = id,
             path = parentFolder.newFile().toURI(),
             database = database,
             cacheDirectory = parentFolder.newFile().toURI(),
             preferences = AccountPreferences(InMemoryDataStore()),
             delegate = accountDelegate,
-            faviconFetcher = FakeFaviconFetcher
+            faviconFetcher = FakeFaviconFetcher,
+            clientCertManager = FakeClientCertManager,
         )
     }
 }

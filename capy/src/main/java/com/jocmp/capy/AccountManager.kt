@@ -1,6 +1,5 @@
 package com.jocmp.capy
 
-import android.content.Context
 import com.jocmp.capy.accounts.FaviconFetcher
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.db.Database
@@ -10,12 +9,12 @@ import java.net.URI
 import java.util.UUID
 
 class AccountManager(
-    private val context: Context,
     val rootFolder: URI,
     private val cacheDirectory: URI,
     private val databaseProvider: DatabaseProvider,
     private val preferenceStoreProvider: PreferenceStoreProvider,
     private val faviconFetcher: FaviconFetcher,
+    private val clientCertManager: ClientCertManager,
 ) {
     fun findByID(
         id: String,
@@ -23,7 +22,7 @@ class AccountManager(
     ): Account? {
         val existingAccount = findAccountFile(id) ?: return null
 
-        return buildAccount(context, existingAccount, database, faviconFetcher)
+        return buildAccount(existingAccount, database)
     }
 
     fun createAccount(
@@ -76,10 +75,8 @@ class AccountManager(
     private fun accountFolder() = File(rootFolder.path, DIRECTORY_NAME)
 
     private fun buildAccount(
-        context: Context,
         path: File,
         database: Database,
-        faviconFetcher: FaviconFetcher,
         preferences: AccountPreferences = preferenceStoreProvider.build(path.name)
     ): Account {
         val id = path.name
@@ -87,7 +84,6 @@ class AccountManager(
         val cacheDirectory = File(cacheDirectory.path, id).toURI()
 
         return Account(
-            context = context,
             id = id,
             path = pathURI,
             cacheDirectory = cacheDirectory,
@@ -95,6 +91,7 @@ class AccountManager(
             source = preferences.source.get(),
             preferences = preferences,
             faviconFetcher = faviconFetcher,
+            clientCertManager = clientCertManager,
         )
     }
 

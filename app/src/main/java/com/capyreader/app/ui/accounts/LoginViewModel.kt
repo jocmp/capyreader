@@ -1,6 +1,6 @@
 package com.capyreader.app.ui.accounts
 
-import android.content.Context
+import android.app.Activity
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -12,6 +12,7 @@ import com.capyreader.app.loadAccountModules
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.Route
 import com.jocmp.capy.AccountManager
+import com.jocmp.capy.ClientCertManager
 import com.jocmp.capy.accounts.Credentials
 import com.jocmp.capy.accounts.withFreshRSSPath
 import com.jocmp.capy.common.Async
@@ -25,6 +26,7 @@ class LoginViewModel(
     handle: SavedStateHandle,
     private val accountManager: AccountManager,
     private val appPreferences: AppPreferences,
+    private val clientCertManager: ClientCertManager,
 ) : ViewModel() {
     private var _username by mutableStateOf("")
     private var _password by mutableStateOf("")
@@ -63,11 +65,13 @@ class LoginViewModel(
         _url = url
     }
 
-    fun setClientCertAlias(clientCertAlias: String) {
-        _clientCertAlias = clientCertAlias
+    fun chooseClientCert(activity: Activity) {
+        clientCertManager.chooseClientCert(activity) { alias ->
+            _clientCertAlias = alias
+        }
     }
 
-    fun submit(context: Context, onSuccess: () -> Unit) {
+    fun submit(onSuccess: () -> Unit) {
         if (username.isBlank() || password.isBlank()) {
             _result = Async.Failure(loginError())
         }
@@ -77,7 +81,7 @@ class LoginViewModel(
         viewModelScope.launchIO {
             _result = Async.Loading
 
-            credentials.verify(context)
+            credentials.verify(clientCertManager)
                 .onSuccess { result ->
                     createAccount(result)
 
