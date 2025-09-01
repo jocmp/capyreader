@@ -1,0 +1,3 @@
+• Fix missing translation for "Open article in browser"
+• Fix media viewer status bar color for Android 14 and below
+• Undo article list changes to previous, stable version from July 2025
