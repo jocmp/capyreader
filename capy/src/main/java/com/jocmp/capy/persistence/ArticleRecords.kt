@@ -5,7 +5,6 @@ import app.cash.sqldelight.coroutines.mapToList
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleNotification
-import com.jocmp.capy.ArticlePages
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.articles.UnreadSortOrder
@@ -20,7 +19,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
-import java.time.OffsetDateTime
 import java.time.ZonedDateTime
 
 internal class ArticleRecords internal constructor(
@@ -35,51 +33,6 @@ internal class ArticleRecords internal constructor(
             articleID = articleID,
             mapper = ::articleMapper
         ).executeAsOneOrNull()
-    }
-
-    fun findPages(
-        articleID: String,
-        filter: ArticleFilter,
-        query: String?,
-        unreadSort: UnreadSortOrder,
-        since: OffsetDateTime
-    ): Flow<ArticlePages?> {
-        return when (filter) {
-            is ArticleFilter.Articles -> byStatus.findPages(
-                articleID = articleID,
-                status = filter.articleStatus,
-                query = query,
-                unreadSort = unreadSort,
-                since = since
-            )
-
-            is ArticleFilter.Feeds -> byFeed.findPages(
-                articleID = articleID,
-                feedIDs = listOf(filter.feedID),
-                status = filter.status,
-                query = query,
-                unreadSort = unreadSort,
-                since = since
-            )
-
-            is ArticleFilter.Folders -> byFeed.findPages(
-                articleID = articleID,
-                feedIDs = folderFeedIDs(filter),
-                status = filter.status,
-                query = query,
-                unreadSort = unreadSort,
-                since = since
-            )
-
-            is ArticleFilter.SavedSearches -> bySavedSearch.findPages(
-                articleID = articleID,
-                savedSearchID = filter.savedSearchID,
-                status = filter.status,
-                query = query,
-                unreadSort = unreadSort,
-                since = since
-            )
-        }
     }
 
     /**
