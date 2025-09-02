@@ -1,5 +1,6 @@
 package com.capyreader.app.ui.accounts
 
+import android.app.Activity
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -20,13 +21,16 @@ class UpdateLoginViewModel(
     val username = account.preferences.username.get()
     val source = account.source
     private val url = account.preferences.url.get()
-    private val clientCertAlias = account.preferences.clientCertAlias.get()
 
     private var _password by mutableStateOf("")
+    private var _clientCertAlias by mutableStateOf("")
     private var _result by mutableStateOf<Async<Unit>>(Async.Uninitialized)
 
     val password: String
         get() = _password
+
+    val clientCertAlias: String
+        get() = _clientCertAlias
 
     val loading: Boolean
         get() = _result is Async.Loading
@@ -36,6 +40,12 @@ class UpdateLoginViewModel(
 
     fun setPassword(password: String) {
         _password = password
+    }
+
+    fun chooseClientCert(activity: Activity) {
+        clientCertManager.chooseClientCert(activity) { alias ->
+            _clientCertAlias = alias
+        }
     }
 
     fun submit(onSuccess: () -> Unit) {

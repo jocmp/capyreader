@@ -1,6 +1,8 @@
 package com.capyreader.app.ui.accounts
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,7 +22,9 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -53,6 +57,8 @@ fun AuthFields(
     errorMessage: String? = null,
     prompt: (@Composable () -> Unit)? = null,
     source: Source,
+    onChooseClientCert: () -> Unit = {},
+    clientCertAlias: String,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -140,6 +146,12 @@ fun AuthFields(
                 }
             }
         )
+        if (source.hasCustomURL) {
+            CertificateField(
+                onChooseClientCert = onChooseClientCert,
+                certAlias = clientCertAlias,
+            )
+        }
         errorMessage?.let { message ->
             ErrorAlert(message = message)
         }
@@ -157,6 +169,34 @@ fun AuthFields(
 
         prompt?.invoke()
     }
+}
+
+@Composable
+fun CertificateField(
+    onChooseClientCert: () -> Unit,
+    certAlias: String,
+) {
+    TextField(
+        value = certAlias,
+        onValueChange = {},
+        singleLine = true,
+        label = {
+            Text(stringResource(R.string.auth_fields_client_certificate))
+        },
+        modifier = Modifier
+            .fillMaxWidth(),
+        readOnly = true,
+        interactionSource = remember { MutableInteractionSource() }
+            .also { interactionSource ->
+                LaunchedEffect(interactionSource) {
+                    interactionSource.interactions.collect {
+                        if (it is PressInteraction.Release) {
+                            onChooseClientCert()
+                        }
+                    }
+                }
+            }
+    )
 }
 
 @Composable
@@ -189,13 +229,13 @@ private val Source.usernameKey
 private fun AuthFieldsPreview() {
     CapyTheme {
         AuthFields(
-            onUsernameChange = {},
             onPasswordChange = {},
             onSubmit = {},
             username = "test@example.com",
             password = "its a secret to everyone",
+            clientCertAlias = "test",
             loading = true,
-            source = Source.FRESHRSS
+            source = Source.FRESHRSS,
         )
     }
 }
