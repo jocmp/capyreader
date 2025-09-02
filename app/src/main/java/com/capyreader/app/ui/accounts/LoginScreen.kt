@@ -25,6 +25,7 @@ fun LoginScreen(
         onChooseClientCert = {
             activity?.let(viewModel::chooseClientCert)
         },
+        onClearClientCert = viewModel::clearClientCert,
         url = viewModel.url,
         username = viewModel.username,
         password = viewModel.password,

@@ -30,6 +30,7 @@ fun UpdateAuthView(
     onSubmit: () -> Unit = {},
     onNavigateBack: () -> Unit = {},
     onChooseClientCert: () -> Unit = {},
+    onClearClientCert: () -> Unit = {},
     username: String,
     password: String,
     clientCertAlias: String,
@@ -70,6 +71,7 @@ fun UpdateAuthView(
                 errorMessage = errorMessage,
                 source = source,
                 onChooseClientCert = onChooseClientCert,
+                onClearClientCert = onClearClientCert,
                 clientCertAlias = clientCertAlias,
             )
         }

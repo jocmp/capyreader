@@ -31,6 +31,7 @@ fun UpdateAuthDialog(
                 onChooseClientCert = {
                     activity?.let(viewModel::chooseClientCert)
                 },
+                onClearClientCert = viewModel::clearClientCert,
                 onSubmit = {
                     viewModel.submit {
                         onSuccess(successMessage)

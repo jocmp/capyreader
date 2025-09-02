@@ -13,9 +13,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.RemoveCircleOutline
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme.colorScheme
@@ -31,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.autofill.AutofillType.EmailAddress
 import androidx.compose.ui.autofill.AutofillType.Password
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -58,6 +61,7 @@ fun AuthFields(
     prompt: (@Composable () -> Unit)? = null,
     source: Source,
     onChooseClientCert: () -> Unit = {},
+    onClearClientCert: () -> Unit = {},
     clientCertAlias: String,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -149,6 +153,7 @@ fun AuthFields(
         if (source.hasCustomURL) {
             CertificateField(
                 onChooseClientCert = onChooseClientCert,
+                onClearClientCert = onClearClientCert,
                 certAlias = clientCertAlias,
             )
         }
@@ -171,9 +176,11 @@ fun AuthFields(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CertificateField(
     onChooseClientCert: () -> Unit,
+    onClearClientCert: () -> Unit,
     certAlias: String,
 ) {
     TextField(
@@ -184,8 +191,18 @@ fun CertificateField(
             Text(stringResource(R.string.auth_fields_client_certificate))
         },
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .focusProperties { canFocus = false },
         readOnly = true,
+        trailingIcon = {
+            if (certAlias.isNotBlank()) {
+                IconButton(
+                    onClick = onClearClientCert
+                ) {
+                    Icon(imageVector = Icons.Filled.RemoveCircleOutline, stringResource(R.string.auth_fields_remove_client_cert))
+                }
+            }
+        },
         interactionSource = remember { MutableInteractionSource() }
             .also { interactionSource ->
                 LaunchedEffect(interactionSource) {
@@ -233,7 +250,7 @@ private fun AuthFieldsPreview() {
             onSubmit = {},
             username = "test@example.com",
             password = "its a secret to everyone",
-            clientCertAlias = "test",
+            clientCertAlias = "test certificate",
             loading = true,
             source = Source.FRESHRSS,
         )

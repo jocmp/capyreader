@@ -48,6 +48,7 @@ fun LoginView(
     onSubmit: () -> Unit = {},
     onNavigateBack: () -> Unit = {},
     onChooseClientCert: () -> Unit = {},
+    onClearClientCert: () -> Unit = {},
     url: String,
     username: String,
     password: String,
@@ -120,6 +121,7 @@ fun LoginView(
                             },
                             source = source,
                             onChooseClientCert = onChooseClientCert,
+                            onClearClientCert = onClearClientCert,
                             clientCertAlias = clientCertAlias,
                         )
                     }

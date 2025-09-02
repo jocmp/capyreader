@@ -48,6 +48,10 @@ class UpdateLoginViewModel(
         }
     }
 
+    fun clearClientCert() {
+        _clientCertAlias = ""
+    }
+
     fun submit(onSuccess: () -> Unit) {
         if (password.isBlank()) {
             _result = Async.Failure(loginError())
