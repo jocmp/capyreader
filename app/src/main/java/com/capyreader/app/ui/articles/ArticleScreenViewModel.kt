@@ -7,8 +7,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.capyreader.app.R
 import com.capyreader.app.common.toast
@@ -22,7 +20,6 @@ import com.capyreader.app.ui.widget.WidgetUpdater
 import com.jocmp.capy.Account
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
-import com.jocmp.capy.ArticlePages
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
@@ -35,7 +32,6 @@ import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
 import com.jocmp.capy.countAll
-import com.jocmp.capy.findArticlePages
 import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
@@ -589,16 +585,6 @@ class ArticleScreenViewModel(
         if (enableStickyFullContent) {
             account.disableStickyContent(article.feedID)
         }
-    }
-
-    fun findArticlePages(articleID: String): Flow<ArticlePages?> {
-        return account.findArticlePages(
-            articleID = articleID,
-            filter = latestFilter,
-            query = _searchQuery.value,
-            unreadSort = unreadSort.value,
-            since = articlesSince.value
-        )
     }
 
     private suspend fun fetchFullContent(article: Article) {

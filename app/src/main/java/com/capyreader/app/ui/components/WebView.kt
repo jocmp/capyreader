@@ -1,6 +1,7 @@
 package com.capyreader.app.ui.components
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
@@ -20,9 +21,7 @@ import androidx.webkit.WebViewAssetLoader.AssetsPathHandler
 import androidx.webkit.WebViewAssetLoader.ResourcesPathHandler
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.WebViewInterface
-import com.capyreader.app.common.openLink
 import com.capyreader.app.common.rememberTalkbackPreference
-import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
@@ -32,7 +31,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import org.koin.compose.koinInject
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
@@ -52,12 +50,11 @@ fun WebView(
 
 class AccompanistWebViewClient(
     private val assetLoader: WebViewAssetLoader,
+    private val onOpenLink: (url: Uri) -> Unit,
 ) : WebViewClient(),
     KoinComponent {
     lateinit var state: WebViewState
         internal set
-
-    private val appPreferences by inject<AppPreferences>()
 
     override fun shouldInterceptRequest(
         view: WebView,
@@ -75,8 +72,8 @@ class AccompanistWebViewClient(
     override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
         val url = request?.url
 
-        if (view != null && url != null) {
-            view.context.openLink(url, appPreferences)
+        if (url != null) {
+            onOpenLink(url)
         }
 
         return true
@@ -142,6 +139,7 @@ fun rememberWebViewState(
     renderer: ArticleRenderer = koinInject(),
     onNavigateToMedia: (media: Media) -> Unit,
     onRequestLinkDialog: (link: ShareLink) -> Unit,
+    onOpenLink: (url: Uri) -> Unit,
     key: String? = null,
 ): WebViewState {
     val enableNativeScroll by rememberTalkbackPreference()
@@ -161,6 +159,7 @@ fun rememberWebViewState(
                 .addPathHandler("/assets/", AssetsPathHandler(context))
                 .addPathHandler("/res/", ResourcesPathHandler(context))
                 .build(),
+            onOpenLink = onOpenLink,
         )
     }
 
