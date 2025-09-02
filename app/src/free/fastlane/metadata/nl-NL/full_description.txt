@@ -1,0 +1,13 @@
+Net als zijn naamgenoot is Capy Reader een kleine RSS-lezer gericht op toegankelijkheid en eenvoud.
+
+Enkele functies zijn:
+
+• Synchroniseren via Feedbin, FreshRSS of direct op je apparaat
+• Bijhouden van gelezen en favoriete artikelen
+• Artikelen doorzoeken
+• Hoofdpunten-widget
+• Meldingen
+• Volledige inhoudsmodus
+• Donkere modus
+• Ondersteuning voor grote schermen
+• Importeren en exporteren van je opgeslagen feeds
