@@ -269,4 +269,6 @@
     <string name="mark_read_position_floating_action_button">زر الإجراء العائم</string>
     <string name="mark_all_read_button_position">موضع زر وضع علامة \"قراءة الكل\"</string>
     <string name="settings_display_miscellaneous_title">متفرقات</string>
+    <string name="settings_full_content_parser">محلّل المحتوى الكامل (تجريبي)</string>
+    <string name="open_articles_in_browser">افتح المقالات في المتصفح</string>
 </resources>
