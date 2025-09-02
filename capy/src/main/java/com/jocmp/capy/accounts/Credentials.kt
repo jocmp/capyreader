@@ -12,7 +12,7 @@ interface Credentials {
     val clientCertAlias: String
     val source: Source
 
-    suspend fun verify(clientCertManager: ClientCertManager): Result<Credentials>
+    suspend fun verify(): Result<Credentials>
 
     companion object {
         fun from(
@@ -21,6 +21,7 @@ interface Credentials {
             password: String,
             url: String,
             clientCertAlias: String,
+            clientCertManager: ClientCertManager,
         ): Credentials {
             return when (source) {
                 Source.FEEDBIN -> FeedbinCredentials(username, password)
@@ -31,7 +32,8 @@ interface Credentials {
                     password,
                     url = normalizeURL(url),
                     clientCertAlias = clientCertAlias,
-                    source = source
+                    source = source,
+                    clientCertManager = clientCertManager,
                 )
 
                 Source.LOCAL -> throw UnsupportedOperationException()

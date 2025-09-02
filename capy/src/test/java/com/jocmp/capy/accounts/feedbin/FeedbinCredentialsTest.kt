@@ -30,7 +30,7 @@ internal class FeedbinCredentialsTest {
     fun verify_onSuccess_shouldReturnCredentials() = runTest {
         coEvery { feedbin.authentication(authentication = any()) }.returns(Response.success(null))
 
-        val result = credentials.verify(mockk()).getOrNull()!!
+        val result = credentials.verify().getOrNull()!!
 
         assertEquals(actual = result.username, expected = username)
         assertEquals(actual = result.secret, expected = password)
@@ -45,7 +45,7 @@ internal class FeedbinCredentialsTest {
             )
         )
 
-        val result = credentials.verify(mockk())
+        val result = credentials.verify()
 
         assertTrue(result.isFailure)
     }

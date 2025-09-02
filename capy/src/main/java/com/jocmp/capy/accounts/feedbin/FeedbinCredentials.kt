@@ -1,6 +1,5 @@
 package com.jocmp.capy.accounts.feedbin
 
-import com.jocmp.capy.ClientCertManager
 import com.jocmp.capy.accounts.Credentials
 import com.jocmp.capy.accounts.Source
 import com.jocmp.feedbinclient.Feedbin
@@ -14,7 +13,7 @@ internal data class FeedbinCredentials(
 
     override val source: Source = Source.FEEDBIN
 
-    override suspend fun verify(clientCertManager: ClientCertManager): Result<Credentials> {
+    override suspend fun verify(): Result<Credentials> {
         val response = Feedbin.verifyCredentials(
             username = username,
             password = secret

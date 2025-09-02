@@ -13,9 +13,10 @@ data class ReaderCredentials(
     override val secret: String,
     override val url: String,
     override val clientCertAlias: String,
-    override val source: Source
+    override val source: Source,
+    private val clientCertManager: ClientCertManager,
 ) : Credentials {
-    override suspend fun verify(clientCertManager: ClientCertManager): Result<Credentials> {
+    override suspend fun verify(): Result<Credentials> {
         try {
             val response = GoogleReader.verifyCredentials(
                 username = username,

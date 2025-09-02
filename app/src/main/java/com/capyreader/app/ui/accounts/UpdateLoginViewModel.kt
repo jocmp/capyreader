@@ -46,7 +46,7 @@ class UpdateLoginViewModel(
         viewModelScope.launchIO {
             _result = Async.Loading
 
-            credentials.verify(clientCertManager)
+            credentials.verify()
                 .onSuccess { result ->
                     updateAccount(result)
 
@@ -67,6 +67,7 @@ class UpdateLoginViewModel(
             password = password,
             url = url,
             clientCertAlias = clientCertAlias,
+            clientCertManager = clientCertManager,
         )
 
     private fun updateAccount(result: Credentials) {

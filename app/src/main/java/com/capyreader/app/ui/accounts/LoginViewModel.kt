@@ -81,7 +81,7 @@ class LoginViewModel(
         viewModelScope.launchIO {
             _result = Async.Loading
 
-            credentials.verify(clientCertManager)
+            credentials.verify()
                 .onSuccess { result ->
                     createAccount(result)
 
@@ -113,6 +113,7 @@ class LoginViewModel(
             password = password,
             url = url,
             clientCertAlias = clientCertAlias,
+            clientCertManager = clientCertManager,
         )
 
     private fun createAccount(credentials: Credentials) {
