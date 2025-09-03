@@ -37,14 +37,10 @@ import org.koin.core.component.KoinComponent
 fun WebView(
     modifier: Modifier,
     state: WebViewState,
-    onDispose: (WebView) -> Unit = {},
 ) {
     AndroidView(
         modifier = modifier,
         factory = { state.webView },
-        onRelease = {
-            onDispose(it)
-        }
     )
 }
 
