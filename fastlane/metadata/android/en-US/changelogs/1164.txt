@@ -1,0 +1,8 @@
+• Open links adjacent to app on tablets and foldables
+• UI tweaks in feed edit dialog
+• Update translations thanks to volunteers!
+• Rework horizontal pagination for better performance in long lists
+• Fix "mark read on scroll" read state bug
+• Fix importer crash on non-HTTP URL schemes
+• Fix status bar color in media viewer for older versions of Android
+• Fix bug where background refresher was not cancelled when switching to manual or on start from timed option
