@@ -1,5 +1,6 @@
 package com.jocmp.capy.accounts
 
+import com.jocmp.capy.ClientCertManager
 import com.jocmp.capy.accounts.feedbin.FeedbinCredentials
 import com.jocmp.capy.accounts.reader.ReaderCredentials
 import com.jocmp.capy.common.optionalURL
@@ -8,6 +9,7 @@ interface Credentials {
     val username: String
     val secret: String
     val url: String
+    val clientCertAlias: String
     val source: Source
 
     suspend fun verify(): Result<Credentials>
@@ -18,6 +20,8 @@ interface Credentials {
             username: String,
             password: String,
             url: String,
+            clientCertAlias: String,
+            clientCertManager: ClientCertManager,
         ): Credentials {
             return when (source) {
                 Source.FEEDBIN -> FeedbinCredentials(username, password)
@@ -27,7 +31,9 @@ interface Credentials {
                     username,
                     password,
                     url = normalizeURL(url),
-                    source = source
+                    clientCertAlias = clientCertAlias,
+                    source = source,
+                    clientCertManager = clientCertManager,
                 )
 
                 Source.LOCAL -> throw UnsupportedOperationException()

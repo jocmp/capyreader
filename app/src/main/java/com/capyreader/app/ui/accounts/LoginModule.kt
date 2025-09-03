@@ -14,12 +14,14 @@ val loginModule = module {
         LoginViewModel(
             handle = get(),
             accountManager = get(),
-            appPreferences = get()
+            appPreferences = get(),
+            clientCertManager = get(),
         )
     }
     viewModel {
         UpdateLoginViewModel(
-            account = get()
+            account = get(),
+            clientCertManager = get(),
         )
     }
 }

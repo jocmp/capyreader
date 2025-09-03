@@ -47,9 +47,12 @@ fun LoginView(
     onUrlChange: (url: String) -> Unit = {},
     onSubmit: () -> Unit = {},
     onNavigateBack: () -> Unit = {},
+    onChooseClientCert: () -> Unit = {},
+    onClearClientCert: () -> Unit = {},
     url: String,
     username: String,
     password: String,
+    clientCertAlias: String,
     loading: Boolean = false,
     errorMessage: String? = null,
 ) {
@@ -106,17 +109,20 @@ fun LoginView(
                             )
                         }
                         AuthFields(
-                            username = username,
-                            password = password,
                             onUsernameChange = onUsernameChange,
                             onPasswordChange = onPasswordChange,
                             onSubmit = onSubmit,
+                            username = username,
+                            password = password,
                             loading = loading,
                             errorMessage = errorMessage,
-                            source = source,
                             prompt = {
                                 ServiceSignup(source)
-                            }
+                            },
+                            source = source,
+                            onChooseClientCert = onChooseClientCert,
+                            onClearClientCert = onClearClientCert,
+                            clientCertAlias = clientCertAlias,
                         )
                     }
                 }
@@ -162,6 +168,7 @@ private fun LoginViewPreview() {
         LoginView(
             source = Source.FEEDBIN,
             url = "",
+            clientCertAlias = "",
             username = "test@example.com",
             password = "",
         )

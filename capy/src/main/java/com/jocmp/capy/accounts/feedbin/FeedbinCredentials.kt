@@ -9,6 +9,7 @@ internal data class FeedbinCredentials(
     override val secret: String,
 ) : Credentials {
     override val url = ""
+    override val clientCertAlias: String = ""
 
     override val source: Source = Source.FEEDBIN
 
