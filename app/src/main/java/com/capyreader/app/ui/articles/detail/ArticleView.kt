@@ -2,7 +2,6 @@
 
 package com.capyreader.app.ui.articles.detail
 
-import android.net.Uri
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -40,12 +39,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.paging.compose.LazyPagingItems
 import com.capyreader.app.common.Media
-import com.capyreader.app.common.openLink
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleVerticalSwipe
 import com.capyreader.app.preferences.ArticleVerticalSwipe.DISABLED
@@ -53,6 +51,7 @@ import com.capyreader.app.preferences.ArticleVerticalSwipe.LOAD_FULL_CONTENT
 import com.capyreader.app.preferences.ArticleVerticalSwipe.NEXT_ARTICLE
 import com.capyreader.app.preferences.ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWSER
 import com.capyreader.app.preferences.ArticleVerticalSwipe.PREVIOUS_ARTICLE
+import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.articles.LocalFullContent
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
@@ -379,14 +378,13 @@ private fun rememberSwipePreferences(appPreferences: AppPreferences = koinInject
 @Composable
 fun articleOpenLink(
     article: Article,
-    appPreferences: AppPreferences = koinInject()
 ): () -> Unit {
-    val context = LocalContext.current
+    val linkOpener = LocalLinkOpener.current
 
     fun open() {
         val link = article.url?.toString() ?: return
 
-        context.openLink(Uri.parse(link), appPreferences)
+        linkOpener.open(link.toUri())
     }
 
     return ::open
