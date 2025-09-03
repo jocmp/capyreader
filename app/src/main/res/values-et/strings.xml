@@ -268,4 +268,6 @@
     <string name="mark_all_read_button_position">Kõige loetuks märkimise nupu asukoht</string>
     <string name="settings_display_miscellaneous_title">Varia</string>
     <string name="settings_article_list_shorten_titles">Lühenda pealkirju</string>
+    <string name="open_articles_in_browser">Ava artiklid veebibrauseris</string>
+    <string name="settings_full_content_parser">Täismahuline sisemine brauser (katseline)</string>
 </resources>
