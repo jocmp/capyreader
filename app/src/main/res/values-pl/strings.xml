@@ -264,4 +264,5 @@
     <string name="mark_all_read_button_position">Pozycja przycisku \"oznacz wszystko jako przeczytane\"</string>
     <string name="settings_display_miscellaneous_title">Różne</string>
     <string name="open_articles_in_browser">Otwieraj artykuły w przeglądarce</string>
+    <string name="settings_full_content_parser">Parsowanie pełnej zawartości (eksperymentalne)</string>
 </resources>
