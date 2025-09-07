@@ -6,7 +6,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -83,6 +83,8 @@ import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
+import com.jocmp.capy.common.withUIContext
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
@@ -194,9 +196,7 @@ fun ArticleScreen(
             scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
         }
 
-        val listState = rememberSaveable(filter, saver = LazyListState.Saver) {
-            LazyListState(0, 0)
-        }
+        val listState = rememberLazyListState()
 
         fun scrollToArticle(index: Int) {
             coroutineScope.launch {
@@ -216,7 +216,6 @@ fun ArticleScreen(
             scrollBehavior = scrollBehavior
         )
 
-
         val scrollToTop = {
             coroutineScope.launch {
                 listState.scrollToItem(0)
@@ -224,17 +223,35 @@ fun ArticleScreen(
             }
         }
 
+        var listVisible by remember { mutableStateOf(true) }
+
         LaunchedEffect(listState) {
             snapshotFlow { "$filter:${listState.layoutInfo.totalItemsCount}" }
                 .distinctUntilChanged()
                 .collect {
-                    scrollToTop()
+                    listState.scrollToItem(0)
                     resetScrollBehaviorOffset()
                 }
         }
 
+        LaunchedEffect(listState) {
+            snapshotFlow { listState.layoutInfo.totalItemsCount }
+                .distinctUntilChanged()
+                .collect {
+                    listVisible = true
+                }
+        }
+
         suspend fun openNextStatus(action: suspend () -> Unit) {
-            scope.launchIO { action() }
+            listVisible = false
+            scope.launchIO {
+                delay(100)
+                action()
+                delay(300)
+                withUIContext {
+                    listVisible = true
+                }
+            }
             scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
         }
 
@@ -536,20 +553,25 @@ fun ArticleScreen(
                                     requestNextFeed()
                                 },
                             ) {
-                                key(filter) {
-                                    ArticleList(
-                                        articles = articles,
-                                        selectedArticleKey = article?.id,
-                                        listState = listState,
-                                        enableMarkReadOnScroll = enableMarkReadOnScroll,
-                                        refreshingAll = viewModel.refreshingAll,
-                                        onMarkAllRead = { range ->
-                                            onMarkAllRead(range)
-                                        },
-                                        onSelect = { articleID ->
-                                            selectArticle(articleID)
-                                        },
-                                    )
+                                AnimatedVisibility(
+                                    listVisible,
+                                    modifier = Modifier.fillMaxSize()
+                                ) {
+                                    key(filter) {
+                                        ArticleList(
+                                            articles = articles,
+                                            selectedArticleKey = article?.id,
+                                            listState = listState,
+                                            enableMarkReadOnScroll = enableMarkReadOnScroll,
+                                            refreshingAll = viewModel.refreshingAll,
+                                            onMarkAllRead = { range ->
+                                                onMarkAllRead(range)
+                                            },
+                                            onSelect = { articleID ->
+                                                selectArticle(articleID)
+                                            },
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -652,15 +674,6 @@ fun ArticleScreen(
             enabled = article == null
         ) {
             scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
-        }
-
-        LaunchedEffect(listState) {
-            snapshotFlow { "$filter:${listState.layoutInfo.totalItemsCount}" }
-                .distinctUntilChanged()
-                .collect {
-                    scrollToTop()
-                    resetScrollBehaviorOffset()
-                }
         }
     }
 }
