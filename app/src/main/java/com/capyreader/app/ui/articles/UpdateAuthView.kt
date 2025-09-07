@@ -29,8 +29,11 @@ fun UpdateAuthView(
     onPasswordChange: (password: String) -> Unit = {},
     onSubmit: () -> Unit = {},
     onNavigateBack: () -> Unit = {},
+    onChooseClientCert: () -> Unit = {},
+    onClearClientCert: () -> Unit = {},
     username: String,
     password: String,
+    clientCertAlias: String,
     loading: Boolean = false,
     errorMessage: String? = null
 ) {
@@ -62,11 +65,14 @@ fun UpdateAuthView(
                 onPasswordChange = onPasswordChange,
                 onSubmit = onSubmit,
                 username = username,
-                password = password,
                 readOnlyUsername = true,
+                password = password,
                 loading = loading,
                 errorMessage = errorMessage,
-                source = source
+                source = source,
+                onChooseClientCert = onChooseClientCert,
+                onClearClientCert = onClearClientCert,
+                clientCertAlias = clientCertAlias,
             )
         }
     }
@@ -79,7 +85,8 @@ private fun UpdateAuthViewPreview() {
         UpdateAuthView(
             source = Source.FRESHRSS,
             username = "test@example.com",
-            password = "secrets"
+            password = "secrets",
+            clientCertAlias = "test",
         )
     }
 }
