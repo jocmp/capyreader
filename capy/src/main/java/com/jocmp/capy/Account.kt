@@ -46,6 +46,7 @@ data class Account(
     val preferences: AccountPreferences,
     val source: Source = Source.LOCAL,
     val faviconFetcher: FaviconFetcher,
+    private val clientCertManager: ClientCertManager,
     private val localHttpClient: OkHttpClient = LocalOkHttpClient.forAccount(path = cacheDirectory),
     val delegate: AccountDelegate = when (source) {
         Source.LOCAL -> LocalAccountDelegate(
@@ -69,7 +70,8 @@ data class Account(
             source = source,
             database = database,
             path = cacheDirectory,
-            preferences = preferences
+            preferences = preferences,
+            clientCertManager = clientCertManager,
         )
     }
 ) {

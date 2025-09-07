@@ -1,5 +1,6 @@
 package com.capyreader.app.ui.accounts
 
+import android.app.Activity
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -11,6 +12,7 @@ import com.capyreader.app.loadAccountModules
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.Route
 import com.jocmp.capy.AccountManager
+import com.jocmp.capy.ClientCertManager
 import com.jocmp.capy.accounts.Credentials
 import com.jocmp.capy.accounts.withFreshRSSPath
 import com.jocmp.capy.common.Async
@@ -24,10 +26,12 @@ class LoginViewModel(
     handle: SavedStateHandle,
     private val accountManager: AccountManager,
     private val appPreferences: AppPreferences,
+    private val clientCertManager: ClientCertManager,
 ) : ViewModel() {
     private var _username by mutableStateOf("")
     private var _password by mutableStateOf("")
     private var _url by mutableStateOf("")
+    private var _clientCertAlias by mutableStateOf("")
     private var _result by mutableStateOf<Async<Unit>>(Async.Uninitialized)
     val source = handle.toRoute<Route.Login>().source
 
@@ -39,6 +43,9 @@ class LoginViewModel(
 
     val url
         get() = _url
+
+    val clientCertAlias
+        get() = _clientCertAlias
 
     val loading: Boolean
         get() = _result is Async.Loading
@@ -56,6 +63,16 @@ class LoginViewModel(
 
     fun setURL(url: String) {
         _url = url
+    }
+
+    fun chooseClientCert(activity: Activity) {
+        clientCertManager.chooseClientCert(activity) { alias ->
+            _clientCertAlias = alias
+        }
+    }
+
+    fun clearClientCert() {
+        _clientCertAlias = ""
     }
 
     fun submit(onSuccess: () -> Unit) {
@@ -98,7 +115,9 @@ class LoginViewModel(
             source = source,
             username = username,
             password = password,
-            url = _url
+            url = url,
+            clientCertAlias = clientCertAlias,
+            clientCertManager = clientCertManager,
         )
 
     private fun createAccount(credentials: Credentials) {
@@ -106,6 +125,7 @@ class LoginViewModel(
             username = credentials.username,
             password = credentials.secret,
             url = credentials.url,
+            clientCertAlias = credentials.clientCertAlias,
             source = credentials.source
         )
 

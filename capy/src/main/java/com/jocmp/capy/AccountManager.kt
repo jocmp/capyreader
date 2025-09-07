@@ -14,6 +14,7 @@ class AccountManager(
     private val databaseProvider: DatabaseProvider,
     private val preferenceStoreProvider: PreferenceStoreProvider,
     private val faviconFetcher: FaviconFetcher,
+    private val clientCertManager: ClientCertManager,
 ) {
     fun findByID(
         id: String,
@@ -21,13 +22,14 @@ class AccountManager(
     ): Account? {
         val existingAccount = findAccountFile(id) ?: return null
 
-        return buildAccount(existingAccount, database, faviconFetcher)
+        return buildAccount(existingAccount, database)
     }
 
     fun createAccount(
         username: String,
         password: String,
         url: String,
+        clientCertAlias: String,
         source: Source
     ): String {
         val accountID = createAccount(source = source)
@@ -36,6 +38,7 @@ class AccountManager(
             preferences.username.set(username)
             preferences.password.set(password)
             preferences.url.set(url)
+            preferences.clientCertAlias.set(clientCertAlias)
         }
 
         return accountID
@@ -74,7 +77,6 @@ class AccountManager(
     private fun buildAccount(
         path: File,
         database: Database,
-        faviconFetcher: FaviconFetcher,
         preferences: AccountPreferences = preferenceStoreProvider.build(path.name)
     ): Account {
         val id = path.name
@@ -89,6 +91,7 @@ class AccountManager(
             source = preferences.source.get(),
             preferences = preferences,
             faviconFetcher = faviconFetcher,
+            clientCertManager = clientCertManager,
         )
     }
 

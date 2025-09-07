@@ -21,7 +21,8 @@ class AccountManagerTest {
             preferenceStoreProvider = InMemoryPreferencesProvider(),
             cacheDirectory = rootFolder.newFolder().toURI(),
             databaseProvider = InMemoryDatabaseProvider,
-            faviconFetcher = FakeFaviconFetcher
+            faviconFetcher = FakeFaviconFetcher,
+            clientCertManager = FakeClientCertManager,
         )
     }
 
@@ -29,14 +30,14 @@ class AccountManagerTest {
     fun addAccount() {
         val manager = buildManager()
 
-        assertNotNull(manager.createAccount("foo", "bar", "", Source.LOCAL))
+        assertNotNull(manager.createAccount("foo", "bar", "", "", Source.LOCAL))
     }
 
     @Test
     fun findById() = runBlocking {
         val manager = buildManager()
 
-        val accountID = manager.createAccount("foo", "bar", "", Source.LOCAL)
+        val accountID = manager.createAccount("foo", "bar", "", "", Source.LOCAL)
 
         val account = manager.findByID(accountID)
 
