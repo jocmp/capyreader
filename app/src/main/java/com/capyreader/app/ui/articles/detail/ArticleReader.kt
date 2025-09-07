@@ -116,19 +116,20 @@ fun ScrollableWebView(webViewState: WebViewState) {
                         .fillMaxWidth()
                         .wrapContentHeight(),
                     state = webViewState,
-                    onDispose = {
-                        lastScrollY = scrollState.value
-                    },
                 )
                 Spacer(modifier = Modifier.height(120.dp))
             }
         }
     }
 
-    LaunchedEffect(lastScrollY, scrollState.maxValue) {
-        if (scrollState.maxValue > 0 && lastScrollY > 0) {
+    LaunchedEffect(scrollState.value) {
+        if (scrollState.value > 0) {
+            lastScrollY = scrollState.value
+        }
+    }
+    LaunchedEffect(scrollState.maxValue) {
+        if (scrollState.maxValue > 0) {
             scrollState.scrollTo(lastScrollY)
-            lastScrollY = 0
         }
     }
 }
