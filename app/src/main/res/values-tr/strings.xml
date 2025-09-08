@@ -62,8 +62,6 @@
     <string name="feed_action_unsubscribe_message">\"%1$s\" aboneliğinizi iptal etmek istediğinizden emin misiniz?</string>
     <string name="folder_action_delete_title">Etiketi Sil</string>
     <string name="feed_action_unsubscribe_title">Abonelikten çık</string>
-    <string name="feed_action_edit_success">Yayın güncellendi</string>
-    <string name="unsubscribe_error">Yayın aboneliği iptal etme hatası</string>
     <string name="relative_time_just_now">Şimdi</string>
     <string name="settings_remove_account_button_service">Çıkış Yap</string>
     <string name="article_view_star">Yıldız</string>
@@ -120,7 +118,6 @@
     <string name="notifications_channel_title_opml_import">Abonelik İçeri Aktarma</string>
     <string name="settings_section_privacy">Gizlilik</string>
     <string name="add_feed_success">Yayın eklendi</string>
-    <string name="edit_feed_error">Yayın kaydedilirken hata oluştu</string>
     <string name="dialog_cancel">Vazgeç</string>
     <string name="folder_action_edit">Yeniden Adlandır</string>
     <string name="settings_remove_account_message_local">Hesabınızı silmek istediğinizden emin misiniz? Bu geri alınamaz.</string>

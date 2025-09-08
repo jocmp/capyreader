@@ -14,7 +14,6 @@
     <string name="dialog_cancel">Batal</string>
     <string name="folder_action_edit">Ganti Nama</string>
     <string name="feed_action_unsubscribe_title">Berhenti berlangganan</string>
-    <string name="feed_action_edit_success">Umpan diperbarui</string>
     <string name="add_feed_url_title">Umpan atau Situs Web</string>
     <string name="feed_action_unsubscribe_message">Anda yakin ingin berhenti berlangganan dari \"%1$s\"?</string>
     <string name="app_name">Capy Reader</string>
@@ -40,11 +39,9 @@
     <string name="add_feed_feed_not_error">Umpan tidak ditemukan</string>
     <string name="add_feed_save_error">Umpan tidak dapat disimpan</string>
     <string name="add_feed_network_error">Umpan tidak dapat ditemukan. Periksa koneksi Anda.</string>
-    <string name="edit_feed_error">Kesalahan saat menyimpan umpan</string>
     <string name="relative_time_just_now">Baru saja</string>
     <string name="relative_time_hours">%1$dj</string>
     <string name="relative_time_days">%1$dh</string>
-    <string name="unsubscribe_error">Kesalahan saat berhenti berlangganan dari umpan</string>
     <string name="article_share">Bagikan Artikel</string>
     <string name="extract_full_content">Ekstrak Konten Lengkap</string>
     <string name="action_mark_all_read">Tandai Semua Sudah Dibaca</string>

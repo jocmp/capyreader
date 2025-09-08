@@ -16,7 +16,6 @@
     <string name="feed_action_unsubscribe_message">Kas sa oled kindel et soovid loobuda „%1$s“ tellimusest?</string>
     <string name="edit_feed_submit">Salvesta</string>
     <string name="feed_action_unsubscribe_title">Loobu tellimusest</string>
-    <string name="feed_action_edit_success">Uudisvoog on muudetud</string>
     <string name="settings">Ava seadistused</string>
     <string name="settings_remove_account_button_service">Logi välja</string>
     <string name="settings_remove_account_title_service">Logi välja</string>
@@ -36,8 +35,6 @@
     <string name="nav_add_feed">Lisa uudisvoog</string>
     <string name="add_feed_feed_not_error">Uudisvoogu ei õnnestunud leida</string>
     <string name="add_feed_network_error">Uudisvoogu ei õnnestunud leida. Kontrolli oma nutiseadme võrguühendust.</string>
-    <string name="edit_feed_error">Viga uudisvoo salvestamisel</string>
-    <string name="unsubscribe_error">Viga uudisvoo tellimusest loobumisel</string>
     <string name="relative_time_just_now">Just nüüd</string>
     <string name="relative_time_minutes">%1$d min</string>
     <string name="relative_time_hours">%1$d t</string>

@@ -10,7 +10,6 @@
     <string name="edit_feed_submit">Salva</string>
     <string name="folder_action_edit">Rinomina</string>
     <string name="feed_action_unsubscribe_title">Annulla l\'iscrizione</string>
-    <string name="feed_action_edit_success">Feed aggiornato</string>
     <string name="settings">Apri le impostazioni</string>
     <string name="settings_remove_account_button_service">Esci</string>
     <string name="feed_action_edit">Modifica il feed</string>
@@ -23,8 +22,6 @@
     <string name="nav_headline_feeds">Feed</string>
     <string name="settings_remove_account_message_local">Vuoi davvero eliminare il tuo account? Non è possibile annullare questa operazione.</string>
     <string name="add_feed_network_error">Impossibile trovare il feed. Controllare la connessione.</string>
-    <string name="edit_feed_error">Errore nel salvataggio del feed</string>
-    <string name="unsubscribe_error">Errore nell\'annullamento dell\'iscrizione al feed</string>
     <string name="relative_time_just_now">Solo ora</string>
     <string name="relative_time_minutes">%1$dm</string>
     <string name="relative_time_hours">%1$dh</string>

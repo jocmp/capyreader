@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="edit_feed_error">Грешка при запазване на емисия</string>
-    <string name="unsubscribe_error">Грешка при отписване от емисия</string>
     <string name="nav_headline_tags">Категории</string>
     <string name="app_name">Capy Reader</string>
     <string name="add_account_title">Добавяне на профил</string>
@@ -59,7 +57,6 @@
     <string name="feed_action_unsubscribe_confirm">Отписване</string>
     <string name="edit_feed_submit">Запази</string>
     <string name="dialog_cancel">Отказ</string>
-    <string name="feed_action_edit_success">Актуализирана емисия</string>
     <string name="settings">Отвори настройки</string>
     <string name="settings_remove_account_title_service">Излизане</string>
     <string name="settings_remove_account_confirm_service">Излизане</string>

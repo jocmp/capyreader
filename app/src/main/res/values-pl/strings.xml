@@ -68,7 +68,6 @@
     <string name="feed_action_edit">Edytuj kanał</string>
     <string name="feed_action_unsubscribe_confirm">Anuluj subskrypcję</string>
     <string name="feed_action_unsubscribe_title">Anuluj subskrypcję</string>
-    <string name="feed_action_edit_success">Kanał zaktualizowany</string>
     <string name="settings_remove_account_button_service">Wyloguj się</string>
     <string name="settings_remove_account_button_local">Usuń konto</string>
     <string name="article_view_star">Dodaj gwiazdkę</string>
@@ -134,8 +133,6 @@
     <string name="add_feed_url_title">Adres URL strony internetowej lub kanału RSS</string>
     <string name="feed_action_unsubscribe_message">Czy na pewno chcesz anulować subskrypcję \"%1$s\"?</string>
     <string name="add_feed_network_error">Nie można znaleźć kanału. Sprawdź połączenie z internetem.</string>
-    <string name="edit_feed_error">Błąd podczas zapisywania kanału</string>
-    <string name="unsubscribe_error">Błąd podczas anulowania subskrypcji kanału</string>
     <string name="extract_full_content">Pobierz całą zawartość</string>
     <string name="action_mark_all_read">Oznacz wszystkie jako przeczytane</string>
     <string name="article_actions_mark_below_as_read">Oznacz poniższe jako przeczytane</string>

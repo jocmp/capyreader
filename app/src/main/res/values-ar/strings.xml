@@ -41,8 +41,6 @@
         <item quantity="many">كل %d ساعة</item>
         <item quantity="other">ساعة</item>
     </plurals>
-    <string name="edit_feed_error">حدث خطأ أثناء حفظ الموجز</string>
-    <string name="unsubscribe_error">حدث خطأ أثناء إلغاء الإشتراك من الموجز</string>
     <string name="relative_time_just_now">الآن</string>
     <string name="relative_time_minutes">%1$d د</string>
     <string name="relative_time_hours">%1$d س</string>
@@ -129,7 +127,6 @@
     <string name="filter_action_menu_description">تعديل</string>
     <string name="settings_remove_account_message_service">هل أنت متأكد أنك تريد تسجيل الخروج؟</string>
     <string name="article_view_star">نجمة</string>
-    <string name="feed_action_edit_success">تم تحديث الموجز</string>
     <string name="feed_action_unsubscribe_title">إلغاء الإشتراك</string>
     <string name="add_feed_network_error">تعذر العثور على الموجز. تحقق من اتصالك.</string>
     <string name="auth_fields_log_in_button">تسجيل الدخول</string>

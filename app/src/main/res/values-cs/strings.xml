@@ -26,7 +26,6 @@
         <item quantity="other">Každých %d hodin</item>
     </plurals>
     <string name="nav_headline_tags">Štítky</string>
-    <string name="unsubscribe_error">Chyby při rušení odběru kanálu</string>
     <string name="relative_time_just_now">Právě teď</string>
     <string name="relative_time_minutes">%1$dmin</string>
     <string name="relative_time_hours">%1$dhod</string>
@@ -89,7 +88,6 @@
     <string name="dialog_cancel">Zrušit</string>
     <string name="feed_action_unsubscribe_title">Zrušit odběr</string>
     <string name="settings">Otevřít nastavení</string>
-    <string name="feed_action_edit_success">Kanál aktualizován</string>
     <string name="settings_remove_account_title_local">Odstranit účet</string>
     <string name="refresh_feeds_menu_label">Aktualizovat kanály</string>
     <string name="nav_headline_feeds">Kanály</string>
@@ -97,7 +95,6 @@
     <string name="add_feed_feed_not_error">Nelze najít kanál</string>
     <string name="add_feed_save_error">Nelze uložit kanál</string>
     <string name="add_feed_network_error">Nelze najít kanál. Zkontrolujte své připojení.</string>
-    <string name="edit_feed_error">Chyba při ukládání kanálu</string>
     <string name="extract_full_content">Vypsat celý obsah</string>
     <string name="action_mark_all_read">Označit vše jako přečtené</string>
     <string name="mark_all_read_dialog_submit">Potvrdit</string>

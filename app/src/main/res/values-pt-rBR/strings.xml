@@ -20,7 +20,6 @@
     <string name="folder_action_delete_title">Excluir Etiqueta</string>
     <string name="folder_action_edit">Renomear</string>
     <string name="feed_action_unsubscribe_title">Cancelar inscrição</string>
-    <string name="feed_action_edit_success">Feed atualizado</string>
     <string name="settings">Abrir configurações</string>
     <string name="settings_remove_account_button_service">Deslogar</string>
     <string name="settings_remove_account_title_service">Deslogar</string>
@@ -47,8 +46,6 @@
     <string name="add_feed_feed_not_error">Não foi possível encontrar o feed</string>
     <string name="add_feed_save_error">Não foi possível salvar o feed</string>
     <string name="add_feed_network_error">Feed não encontrado. Verifique sua conexão.</string>
-    <string name="edit_feed_error">Erro ao salvar o feed</string>
-    <string name="unsubscribe_error">Erro ao cancelar inscrição do feed</string>
     <string name="relative_time_just_now">Agora</string>
     <string name="relative_time_minutes">%1$dm</string>
     <string name="relative_time_hours">%1$dh</string>

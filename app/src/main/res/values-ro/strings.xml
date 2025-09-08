@@ -32,7 +32,6 @@
     <string name="feed_action_unsubscribe_confirm">Dezabonează-te</string>
     <string name="edit_feed_submit">Salvează</string>
     <string name="folder_action_edit">Redenumește</string>
-    <string name="feed_action_edit_success">Flux actualizat</string>
     <string name="settings">Deschide setările</string>
     <string name="settings_remove_account_button_service">Deconectează-te</string>
     <string name="settings_remove_account_title_service">Deconectează-te</string>
@@ -51,8 +50,6 @@
     <string name="add_feed_feed_not_error">Nu s-a putut găsi un flux</string>
     <string name="add_feed_save_error">Nu s-a putut salva fluxul</string>
     <string name="add_feed_network_error">Nu am găsit niciun flux. Verifică conexiunea.</string>
-    <string name="edit_feed_error">Eroare la salvarea fluxului</string>
-    <string name="unsubscribe_error">Eroare la dezabonare</string>
     <string name="delete_tag_error">Eroare la ștergerea etichetei</string>
     <string name="relative_time_days">%1$dz</string>
     <string name="article_share">Distribuie articol</string>
