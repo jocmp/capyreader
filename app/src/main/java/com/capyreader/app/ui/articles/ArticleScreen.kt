@@ -471,12 +471,6 @@ fun ArticleScreen(
                             onNavigateToDrawer = {
                                 openDrawer()
                             },
-                            onRemoveFeed = { feedID, completion ->
-                                viewModel.removeFeed(
-                                    feedID,
-                                    completion
-                                )
-                            },
                             onRemoveFolder = { folderTitle, completion ->
                                 viewModel.removeFolder(
                                     folderTitle,
@@ -693,6 +687,9 @@ fun rememberFeedActions(viewModel: ArticleScreenViewModel): FeedActions {
             updateOpenInBrowser = { feedID, openInBrowser ->
                 viewModel.updateOpenInBrowser(feedID, openInBrowser)
             },
+            removeFeed = { feedID ->
+                viewModel.removeFeed(feedID)
+            }
         )
     }
 }

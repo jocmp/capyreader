@@ -28,7 +28,6 @@ fun FilterActionMenu(
     filter: ArticleFilter,
     currentFeed: Feed?,
     onMarkAllRead: () -> Unit,
-    onRemoveFeed: (feedID: String, completion: (result: Result<Unit>) -> Unit) -> Unit,
     onRemoveFolder: (folderTitle: String, completion: (result: Result<Unit>) -> Unit) -> Unit,
     onRequestSearch: () -> Unit,
     hideSearchIcon: Boolean,
@@ -74,7 +73,6 @@ fun FilterActionMenu(
                         expanded = expanded,
                         feed = currentFeed,
                         onDismissMenuRequest = { closeMenu() },
-                        onRemoveRequest = onRemoveFeed,
                     )
                 }
 
@@ -95,7 +93,6 @@ fun FilterActionMenu(
 @Composable
 fun FeedActionsPreview(@PreviewParameter(FeedSample::class) feed: Feed) {
     FilterActionMenu(
-        onRemoveFeed = { _, _ -> },
         onRemoveFolder = { _, _ -> },
         onMarkAllRead = {},
         onRequestSearch = {},

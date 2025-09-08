@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -23,6 +22,7 @@ import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
+import com.jocmp.capy.logging.CapyLog
 
 @Composable
 fun FolderRow(
@@ -41,9 +41,10 @@ fun FolderRow(
     }
 
     Column {
-        NavigationDrawerItem(
+        DrawerItem(
             selected = isFolderSelected,
             onClick = { onFolderSelect(folder) },
+            onLongClick = { CapyLog.info("long click ${folder.title}") },
             badge = { CountBadge(count = folder.count) },
             icon = {
                 IconDropdown(
@@ -53,7 +54,7 @@ fun FolderRow(
             },
             label = {
                 ListTitle(folder.title)
-            }
+            },
         )
         AnimatedVisibility(
             expanded,
@@ -94,3 +95,4 @@ fun FolderRowPreview() {
         )
     }
 }
+

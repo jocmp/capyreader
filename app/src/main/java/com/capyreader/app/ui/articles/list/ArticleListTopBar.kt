@@ -44,7 +44,6 @@ import com.jocmp.capy.SavedSearch
 fun ArticleListTopBar(
     onRequestJumpToTop: () -> Unit,
     onNavigateToDrawer: () -> Unit,
-    onRemoveFeed: (feedID: String, completion: (result: Result<Unit>) -> Unit) -> Unit,
     onRemoveFolder: (folderTitle: String, completion: (result: Result<Unit>) -> Unit) -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
     onMarkAllRead: () -> Unit,
@@ -143,7 +142,6 @@ fun ArticleListTopBar(
             FilterActionMenu(
                 filter = filter,
                 currentFeed = currentFeed,
-                onRemoveFeed = onRemoveFeed,
                 onRemoveFolder = onRemoveFolder,
                 onRequestSearch = { search.start() },
                 onMarkAllRead = { onMarkAllRead() },
@@ -161,7 +159,6 @@ private fun FeedListTopBarPreview() {
     ArticleListTopBar(
         onRequestJumpToTop = { },
         onNavigateToDrawer = { },
-        onRemoveFeed = { _, _ -> },
         onRemoveFolder = { _, _ -> },
         scrollBehavior = scrollBehavior,
         onMarkAllRead = {},
