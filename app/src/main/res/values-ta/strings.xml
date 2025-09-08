@@ -17,7 +17,6 @@
     <string name="folder_action_delete_title">குறிச்சொல்லை நீக்கு</string>
     <string name="folder_action_edit">மறுபெயரிடுங்கள்</string>
     <string name="feed_action_unsubscribe_title">குழுவிலகவும்</string>
-    <string name="feed_action_edit_success">ஊட்டம் புதுப்பிக்கப்பட்டது</string>
     <string name="settings">திறந்த அமைப்புகள்</string>
     <string name="settings_remove_account_button_service">விடுபதிகை</string>
     <string name="settings_remove_account_title_service">விடுபதிகை</string>
@@ -45,8 +44,6 @@
     <string name="add_feed_feed_not_error">ஊட்டத்தைக் கண்டுபிடிக்க முடியவில்லை</string>
     <string name="add_feed_save_error">தீவனத்தை சேமிக்க முடியவில்லை</string>
     <string name="add_feed_network_error">ஊட்டத்தைக் கண்டுபிடிக்க முடியவில்லை. உங்கள் இணைப்பைச் சரிபார்க்கவும்.</string>
-    <string name="edit_feed_error">பிழை சேமிப்பு ஊட்டம்</string>
-    <string name="unsubscribe_error">ஊட்டத்திலிருந்து குழுவிலகும் பிழை</string>
     <string name="relative_time_just_now">இப்போது</string>
     <string name="relative_time_minutes">%1$dm</string>
     <string name="relative_time_hours">%1$dh</string>

@@ -50,7 +50,6 @@
     <string name="notifications_channel_title_opml_import">Importación das subscricións</string>
     <string name="add_feed_name_title">Nome</string>
     <string name="feed_action_unsubscribe">Retirar subscrición</string>
-    <string name="feed_action_edit_success">Canle actualizada</string>
     <string name="mark_all_read_dialog_submit">Confirmar</string>
     <string name="image_preview_menu_option_none">Nada</string>
     <string name="add_feed_url_title">Canle ou URL da web</string>
@@ -75,8 +74,6 @@
     <string name="refresh_feeds_menu_label">Actualizar canles</string>
     <string name="add_feed_save_error">Non se puido gardar a canle</string>
     <string name="add_feed_network_error">Non se atopou a canle. Comproba a conexión.</string>
-    <string name="edit_feed_error">Erro ao gardar a canle</string>
-    <string name="unsubscribe_error">Error ao retirar a subscrición</string>
     <string name="relative_time_just_now">Xusto agora</string>
     <string name="relative_time_minutes">%1$dm</string>
     <string name="relative_time_hours">%1$dh</string>

@@ -128,7 +128,6 @@
     <string name="add_feed_success">Kanal lagt til</string>
     <string name="folder_action_edit">Gi nytt navn</string>
     <string name="feed_action_edit">Rediger kanal</string>
-    <string name="feed_action_edit_success">Kanal oppdatert</string>
     <string name="refresh_feeds_menu_label">Oppdater kanaler</string>
     <string name="nav_headline_feeds">Kanaler</string>
     <string name="nav_add_feed">Legg til kanal</string>
@@ -140,7 +139,6 @@
     <string name="extract_full_content">Hent fullt innhold</string>
     <string name="relative_time_minutes">%1$dmin</string>
     <string name="relative_time_days">%1$dd</string>
-    <string name="edit_feed_error">Feil ved lagring av kanal</string>
     <string name="unauthorized_dialog_title">Du er logget ut</string>
     <string name="unauthorized_dialog_confirm_text">Logg inn</string>
     <string name="update_auth_success_message">Logget inn</string>
@@ -187,7 +185,6 @@
     <string name="filter_starred">Stjernemerket</string>
     <string name="article_view_star">Stjernemerk</string>
     <string name="article_view_unstar">Fjern stjernemerke</string>
-    <string name="unsubscribe_error">Kunne ikke stoppe abonnement av kanal</string>
     <string name="article_actions_open_menu">Åpne artikkelhandlinger</string>
     <string name="article_actions_mark_below_as_read">Merk alle under som lest</string>
     <string name="article_actions_mark_after_as_read">Merk alle over som lest</string>

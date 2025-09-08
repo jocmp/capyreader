@@ -23,7 +23,6 @@
     <string name="add_feed_feed_not_error">無法找到訂閱源</string>
     <string name="add_feed_save_error">無法儲存訂閱源</string>
     <string name="add_feed_network_error">無法找到訂閱源，請檢查您的連線。</string>
-    <string name="edit_feed_error">儲存訂閱源時發生錯誤</string>
     <string name="app_name">Capy Reader</string>
     <string name="add_feed_url_title">訂閱源或網站 URL</string>
     <string name="add_feed_submit">新增</string>
@@ -41,7 +40,6 @@
     <string name="feed_action_unsubscribe_confirm">取消訂閱</string>
     <string name="dialog_cancel">取消</string>
     <string name="folder_action_delete_title">刪除標籤</string>
-    <string name="feed_action_edit_success">訂閱源已更新</string>
     <string name="settings">開啟設定</string>
     <string name="settings_remove_account_message_service">您確定要登出嗎？</string>
     <string name="settings_remove_account_button_service">登出</string>
@@ -128,7 +126,6 @@
     <string name="article_share">分享文章</string>
     <string name="extract_full_content">加載全文</string>
     <string name="action_mark_all_read">全部標為已讀</string>
-    <string name="unsubscribe_error">取消訂閲源時發生錯誤</string>
     <string name="mark_all_read_dialog_description">將全部文章標爲已讀？</string>
     <string name="transfers_export_subscriptions">匯出訂閲</string>
     <string name="settings_section_export">匯出</string>

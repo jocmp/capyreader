@@ -10,7 +10,6 @@
     <string name="filter_unread">Heb eu darllen</string>
     <string name="feed_action_unsubscribe_confirm">Dad-danysgrifio</string>
     <string name="feed_action_unsubscribe_title">Dad-danysgrifio</string>
-    <string name="feed_action_edit_success">Wedi diweddaru\'r ffrwd</string>
     <string name="settings_remove_account_button_service">Allgofnodi</string>
     <string name="settings_remove_account_title_service">Allgofnodi</string>
     <string name="settings_remove_account_message_service">Ydych chi\'n siŵr eich bod chi am allgofnodi?</string>
@@ -41,9 +40,7 @@
     <string name="add_feed_feed_not_error">Methu dod o hyd y ffrwd</string>
     <string name="add_feed_save_error">Methu cadw\'r ffrwd</string>
     <string name="add_feed_network_error">Methu dod o hyd y ffrwd. Gwiriwch eich cysylltiad.</string>
-    <string name="edit_feed_error">Bu gwall wrth gadw\'r ffrwd</string>
     <string name="relative_time_days">%1$d diwrnod</string>
-    <string name="unsubscribe_error">Bu gwall wrth ddad-danysgrifio o\'r ffrwd</string>
     <string name="relative_time_minutes">%1$d munud</string>
     <string name="relative_time_hours">%1$d awr</string>
     <string name="article_share">Rhannu\'r erthygl</string>

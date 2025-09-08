@@ -28,7 +28,6 @@
     <string name="add_feed_feed_not_error">Não foi possível encontrar o feed</string>
     <string name="add_feed_save_error">Não foi possível gravar o feed</string>
     <string name="add_feed_network_error">Feed não encontrado. Verifique a sua conexão.</string>
-    <string name="edit_feed_error">Erro ao gravar o feed</string>
     <string name="notification_mark_as_read_action">Marcar como lido</string>
     <string name="settings_import_progress">A importar inscrições %1$d de %2$d</string>
     <string name="opml_import_toast_complete">Importação completa</string>
@@ -57,7 +56,6 @@
     <string name="feed_nav_drawer_refresh_all">Atualizar tudo</string>
     <string name="article_view_mark_as_read">Marcar como lido</string>
     <string name="feed_action_unsubscribe_title">Desinscrever</string>
-    <string name="feed_action_edit_success">Feed atualizado</string>
     <string name="settings">Abrir configurações</string>
     <string name="settings_remove_account_button_service">Sair da sessão</string>
     <string name="settings_remove_account_message_service">Tem certeza que quer deslogar?</string>
@@ -71,7 +69,6 @@
     <string name="article_view_star">Favorito</string>
     <string name="article_view_unstar">Remover favorito</string>
     <string name="refresh_manually_only">Apenas manualmente</string>
-    <string name="unsubscribe_error">Erro ao desinscrever do feed</string>
     <string name="relative_time_just_now">Agora</string>
     <string name="relative_time_minutes">%1$dm</string>
     <string name="relative_time_hours">%1$dh</string>

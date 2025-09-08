@@ -30,8 +30,6 @@
     <string name="add_feed_feed_not_error">找不到订阅源</string>
     <string name="add_feed_save_error">无法保存订阅源</string>
     <string name="add_feed_network_error">找不到订阅源，请检查您的连接。</string>
-    <string name="edit_feed_error">保存订阅源时出错</string>
-    <string name="unsubscribe_error">取消订阅源时出错</string>
     <string name="relative_time_minutes">%1$d分</string>
     <string name="relative_time_hours">%1$d小时</string>
     <string name="relative_time_days">%1$d天</string>
@@ -91,7 +89,6 @@
     <string name="dialog_cancel">取消</string>
     <string name="settings_remove_account_title_local">删除账号</string>
     <string name="settings_section_privacy">隐私</string>
-    <string name="feed_action_edit_success">订阅源已更新</string>
     <string name="settings">打开设置</string>
     <string name="settings_remove_account_title_service">登出</string>
     <string name="settings_remove_account_message_service">是否确定要登出？</string>

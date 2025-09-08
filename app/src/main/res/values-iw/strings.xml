@@ -14,7 +14,6 @@
     <string name="edit_feed_submit">שמור</string>
     <string name="folder_action_delete_title">מחק תג</string>
     <string name="folder_action_edit">שנה שם</string>
-    <string name="feed_action_edit_success">פיד עודכן</string>
     <string name="settings_remove_account_button_service">התנתקות</string>
     <string name="filter_action_menu_description">ערוך</string>
     <string name="feed_action_unsubscribe_title">ביטול מינוי</string>
@@ -51,7 +50,6 @@
     <string name="mark_all_read_dialog_description">לסמן את כל הפריטים כנקראו?</string>
     <string name="mark_all_read_dialog_submit">אישור</string>
     <string name="nav_headline_saved_searches">חיפושים</string>
-    <string name="unsubscribe_error">שגיאה בביטול המנוי מהפיד</string>
     <string name="refresh_manually_only">ידני בלבד</string>
     <string name="article_view_unstar">הסר כוכב</string>
     <string name="relative_time_minutes">%1$dד</string>
@@ -60,7 +58,6 @@
     <string name="relative_time_days">%1$dי</string>
     <string name="nav_add_feed">הוסף פיד</string>
     <string name="add_feed_network_error">לא ניתן למצוא את הפיד. בדוק את החיבור שלך.</string>
-    <string name="edit_feed_error">שגיאה בשמירת הפיד</string>
     <string name="settings_article_list_shorten_titles">קצר כותרות</string>
     <string name="article_actions_open_menu">פתיחת פעולות מאמר</string>
     <string name="article_actions_mark_below_as_read">סמן מאמר תחתון כנקרא</string>

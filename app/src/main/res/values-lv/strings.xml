@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="feed_action_edit_success">Ziņu plūsma veiksmīgi rediģēta</string>
     <string name="edit_feed_submit">Saglabāt</string>
     <string name="add_feed_name_title">Nosaukums</string>
     <string name="add_feed_submit">Pievienot</string>
@@ -72,7 +71,6 @@
     <string name="add_feed_feed_not_error">Neizdevās atrast ziņu plūsmu</string>
     <string name="add_feed_save_error">Neizdevās saglabāt ziņu plūsmu</string>
     <string name="add_feed_network_error">Neizdevās atrast ziņu plūsmu. Lūdzu, pārbaudiet savienojumu.</string>
-    <string name="edit_feed_error">Kļūda, saglabājot ziņu plūsmu</string>
     <string name="relative_time_minutes">%1$dm</string>
     <string name="relative_time_hours">%1$ds</string>
     <string name="relative_time_days">%1$dd</string>
@@ -194,7 +192,6 @@
     <string name="settings_remove_account_title_service">Iziet</string>
     <string name="settings_remove_account_message_service">Vai tiešām vēlaties iziet?</string>
     <string name="settings_remove_account_confirm_service">Iziet</string>
-    <string name="unsubscribe_error">Kļūda, pārtraucot ziņu plūsmas abonēšanu</string>
     <string name="article_actions_mark_below_as_read">Atzīmēt visus apakšējos rakstus kā lasītus</string>
     <string name="unauthorized_dialog_confirm_text">Ieiet</string>
     <string name="auth_fields_log_in_button">Ieiet</string>
