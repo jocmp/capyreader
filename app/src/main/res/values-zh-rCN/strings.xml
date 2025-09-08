@@ -269,4 +269,6 @@
     <string name="settings_display_miscellaneous_title">其他</string>
     <string name="settings_full_content_parser">完整内容解析器（实验性）</string>
     <string name="open_articles_in_browser">在浏览器中打开文章</string>
+    <string name="auth_fields_client_certificate">客户端证书（可选）</string>
+    <string name="auth_fields_remove_client_cert">移除客户端证书</string>
 </resources>
