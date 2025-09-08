@@ -6,7 +6,6 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -73,6 +72,7 @@ import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.SearchState
 import com.capyreader.app.ui.provideLinkOpener
+import com.capyreader.app.ui.rememberLazyListState
 import com.capyreader.app.ui.rememberLocalConnectivity
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
@@ -84,6 +84,7 @@ import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
@@ -194,9 +195,7 @@ fun ArticleScreen(
             scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
         }
 
-        val listState = rememberSaveable(filter, saver = LazyListState.Saver) {
-            LazyListState(0, 0)
-        }
+        val listState = articles.rememberLazyListState()
 
         fun scrollToArticle(index: Int) {
             coroutineScope.launch {
@@ -226,10 +225,10 @@ fun ArticleScreen(
 
         LaunchedEffect(listState) {
             snapshotFlow { "$filter:${listState.layoutInfo.totalItemsCount}" }
+                .drop(if (enableMarkReadOnScroll) 0 else 1)
                 .distinctUntilChanged()
                 .collect {
                     scrollToTop()
-                    resetScrollBehaviorOffset()
                 }
         }
 
@@ -530,7 +529,7 @@ fun ArticleScreen(
                                     requestNextFeed()
                                 },
                             ) {
-                                key(filter) {
+                                key(filter, articles.itemCount) {
                                     ArticleList(
                                         articles = articles,
                                         selectedArticleKey = article?.id,
@@ -646,15 +645,6 @@ fun ArticleScreen(
             enabled = article == null
         ) {
             scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
-        }
-
-        LaunchedEffect(listState) {
-            snapshotFlow { "$filter:${listState.layoutInfo.totalItemsCount}" }
-                .distinctUntilChanged()
-                .collect {
-                    scrollToTop()
-                    resetScrollBehaviorOffset()
-                }
         }
     }
 }
