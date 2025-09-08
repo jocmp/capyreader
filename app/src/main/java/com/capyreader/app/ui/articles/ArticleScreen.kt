@@ -469,7 +469,11 @@ fun ArticleScreen(
                                 scrollToTop()
                             },
                             onNavigateToDrawer = {
-                                openDrawer()
+                                if (drawerState.isOpen) {
+                                    closeDrawer()
+                                } else {
+                                    openDrawer()
+                                }
                             },
                             onRemoveFolder = { folderTitle, completion ->
                                 viewModel.removeFolder(

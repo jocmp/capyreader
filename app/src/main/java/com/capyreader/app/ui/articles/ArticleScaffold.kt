@@ -13,6 +13,8 @@ import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.PermanentDrawerSheet
+import androidx.compose.material3.PermanentNavigationDrawer
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
@@ -35,6 +37,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.preferences.LayoutPreference
 import com.capyreader.app.ui.isAtMostMedium
+import com.capyreader.app.ui.isExpanded
 import com.capyreader.app.ui.rememberLayoutPreference
 import com.capyreader.app.ui.theme.CapyTheme
 
@@ -81,13 +84,11 @@ fun ArticleScaffold(
             }
         )
     } else {
-        ModalNavigationDrawer(
+        NavDrawer(
             drawerState = drawerState,
             gesturesEnabled = enableGesture,
             drawerContent = {
-                ModalDrawerSheet {
-                    drawerPane()
-                }
+                drawerPane()
             },
         ) {
             ListDetailPaneScaffold(
@@ -105,6 +106,36 @@ fun ArticleScaffold(
                 }
             )
         }
+    }
+}
+
+@Composable
+fun NavDrawer(
+    drawerState: DrawerState,
+    gesturesEnabled: Boolean,
+    drawerContent: @Composable () -> Unit,
+    content: @Composable () -> Unit,
+) {
+    if (isExpanded()) {
+        PermanentNavigationDrawer(
+            drawerContent = {
+                PermanentDrawerSheet {
+                    drawerContent()
+                }
+            },
+            content = content
+        )
+    } else {
+        ModalNavigationDrawer(
+            drawerState = drawerState,
+            gesturesEnabled = gesturesEnabled,
+            drawerContent = {
+                ModalDrawerSheet {
+                    drawerContent()
+                }
+            },
+            content = content
+        )
     }
 }
 
