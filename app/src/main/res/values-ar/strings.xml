@@ -281,4 +281,6 @@
     <string name="theme_yotsuba">يوتسوبا</string>
     <string name="theme_monochrome">أحادي اللون</string>
     <string name="settings_pure_black_dark_mode">الوضع المظلم الأسود النقي</string>
+    <string name="auth_fields_client_certificate">شهادة العميل (اختياري)</string>
+    <string name="auth_fields_remove_client_cert">أزِل شهادة العميل</string>
 </resources>
