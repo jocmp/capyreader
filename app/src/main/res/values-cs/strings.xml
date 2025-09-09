@@ -234,8 +234,6 @@
     <string name="media_share">Sdílet</string>
     <string name="feed_nav_drawer_refresh_all">Obnovit vše</string>
     <string name="notification_mark_as_read_action">Označit jako přečtené</string>
-    
-    <!-- Theme strings -->
     <string name="theme_dynamic">Dynamický</string>
     <string name="theme_green_apple">Zelené jablko</string>
     <string name="theme_lavender">Levandule</string>

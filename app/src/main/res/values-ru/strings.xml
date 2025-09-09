@@ -267,8 +267,6 @@
     <string name="mark_read_position_floating_action_button">Плавающая кнопка действия</string>
     <string name="mark_all_read_button_position">Положение кнопки «Отметить всё прочитанным»</string>
     <string name="settings_display_miscellaneous_title">Разное</string>
-    
-    <!-- Theme strings -->
     <string name="theme_dynamic">Динамическая</string>
     <string name="theme_green_apple">Зеленое яблоко</string>
     <string name="theme_lavender">Лаванда</string>

@@ -263,8 +263,6 @@
     <string name="mark_read_position_floating_action_button">Botão de Ação Flutuante</string>
     <string name="mark_all_read_button_position">Posição do Botão \"Marcar Todos como Lidos\"</string>
     <string name="settings_display_miscellaneous_title">Diversos</string>
-    
-    <!-- Theme strings -->
     <string name="theme_dynamic">Dinâmico</string>
     <string name="theme_green_apple">Maçã verde</string>
     <string name="theme_lavender">Lavanda</string>

@@ -268,8 +268,6 @@
     <string name="open_articles_in_browser">在浏览器中打开文章</string>
     <string name="auth_fields_client_certificate">客户端证书（可选）</string>
     <string name="auth_fields_remove_client_cert">移除客户端证书</string>
-    
-    <!-- Theme strings -->
     <string name="theme_dynamic">动态</string>
     <string name="theme_green_apple">青苹果</string>
     <string name="theme_lavender">薰衣草</string>
