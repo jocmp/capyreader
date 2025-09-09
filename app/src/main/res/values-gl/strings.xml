@@ -260,4 +260,6 @@
     <string name="settings_article_list_shorten_titles">Acurtar títulos</string>
     <string name="settings_full_content_parser">Procesador do contido completo (experimental)</string>
     <string name="open_articles_in_browser">Abrir artigos no navegador</string>
+    <string name="auth_fields_client_certificate">Certificado cliente (optativo)</string>
+    <string name="auth_fields_remove_client_cert">Retirar certificado cliente</string>
 </resources>
