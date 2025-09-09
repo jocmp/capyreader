@@ -268,4 +268,6 @@
     <string name="settings_display_miscellaneous_title">Varie</string>
     <string name="settings_full_content_parser">Analizzatore del contenuto completo (sperimentale)</string>
     <string name="open_articles_in_browser">Apri gli articoli nel browser</string>
+    <string name="auth_fields_client_certificate">Certificato del client (opzionale)</string>
+    <string name="auth_fields_remove_client_cert">Rimuovi il certificato client</string>
 </resources>
