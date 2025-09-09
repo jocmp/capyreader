@@ -267,4 +267,6 @@
     <string name="settings_article_list_shorten_titles">Lühenda pealkirju</string>
     <string name="open_articles_in_browser">Ava artiklid veebibrauseris</string>
     <string name="settings_full_content_parser">Täismahuline sisemine brauser (katseline)</string>
+    <string name="auth_fields_client_certificate">Kliendi sertifikaat (valikuline)</string>
+    <string name="auth_fields_remove_client_cert">Eemalda kliendi sertifikaat</string>
 </resources>
