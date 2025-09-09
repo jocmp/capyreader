@@ -267,4 +267,6 @@
     <string name="settings_display_miscellaneous_title">Разни</string>
     <string name="settings_full_content_parser">Пълен анализатор на съдържание (Експериментално)</string>
     <string name="open_articles_in_browser">Отваряне на статии в браузъра</string>
+    <string name="auth_fields_client_certificate">Клиентски сертификат (по избор)</string>
+    <string name="auth_fields_remove_client_cert">Премахване на клиентски сертификат</string>
 </resources>
