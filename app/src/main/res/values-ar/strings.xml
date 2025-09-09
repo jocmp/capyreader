@@ -268,4 +268,6 @@
     <string name="settings_display_miscellaneous_title">متفرقات</string>
     <string name="settings_full_content_parser">محلّل المحتوى الكامل (تجريبي)</string>
     <string name="open_articles_in_browser">افتح المقالات في المتصفح</string>
+    <string name="auth_fields_client_certificate">شهادة العميل (اختياري)</string>
+    <string name="auth_fields_remove_client_cert">أزِل شهادة العميل</string>
 </resources>
