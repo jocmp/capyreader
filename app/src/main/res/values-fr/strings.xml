@@ -32,7 +32,7 @@
     <string name="settings_section_privacy">Confidentialité</string>
     <string name="opml_export_button_text">Exporter en OPML</string>
     <string name="theme_menu_label">Thème</string>
-    <string name="theme_monet">Dynamique</string>
+    <string name="theme_dynamic">Dynamique</string>
     <string name="theme_green_apple">Pomme verte</string>
     <string name="theme_lavender">Lavande</string>
     <string name="theme_midnight_dusk">Crépuscule de minuit</string>

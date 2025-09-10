@@ -120,7 +120,7 @@
     <string name="theme_mode_light">Light</string>
     <string name="theme_mode_dark">Dark</string>
     <string name="theme_default">Default</string>
-    <string name="theme_monet">Dynamic</string>
+    <string name="theme_dynamic">Dynamic</string>
     <string name="theme_green_apple">Green Apple</string>
     <string name="theme_lavender">Lavender</string>
     <string name="theme_midnight_dusk">Midnight Dusk</string>
@@ -129,10 +129,10 @@
     <string name="theme_tako">Tako</string>
     <string name="theme_teal_turquoise">Teal &amp; Turquoise</string>
     <string name="theme_tidal_wave">Tidal Wave</string>
-    <string name="theme_yin_yang">Yin Yang</string>
+    <string name="theme_yin_yang">Yin &amp; Yang</string>
     <string name="theme_yotsuba">Yotsuba</string>
     <string name="theme_monochrome">Monochrome</string>
-    <string name="theme_pure_black_dark_mode">Pure black dark mode</string>
+    <string name="settings_pure_black_dark_mode">Pure black dark mode</string>
     <string name="theme_menu_option_light">Light</string>
     <string name="theme_menu_option_dark">Dark</string>
     <string name="theme_menu_option_system_default">System default</string>

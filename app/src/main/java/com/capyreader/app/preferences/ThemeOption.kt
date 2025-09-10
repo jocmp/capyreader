@@ -37,7 +37,7 @@ enum class AppTheme {
     val translationKey: Int
         get() = when(this) {
             DEFAULT -> R.string.theme_default
-            MONET -> R.string.theme_monet
+            MONET -> R.string.theme_dynamic
             GREEN_APPLE -> R.string.theme_green_apple
             LAVENDER -> R.string.theme_lavender
             MIDNIGHT_DUSK -> R.string.theme_midnight_dusk

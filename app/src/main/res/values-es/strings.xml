@@ -93,7 +93,7 @@
     <string name="theme_menu_option_light">Claro</string>
     <string name="theme_menu_option_dark">Oscuro</string>
     <string name="theme_menu_option_system_default">Predeterminado del sistema</string>
-    <string name="theme_monet">Dinámico</string>
+    <string name="theme_dynamic">Dinámico</string>
     <string name="theme_green_apple">Manzana verde</string>
     <string name="theme_lavender">Lavanda</string>
     <string name="theme_midnight_dusk">Crepúsculo de medianoche</string>

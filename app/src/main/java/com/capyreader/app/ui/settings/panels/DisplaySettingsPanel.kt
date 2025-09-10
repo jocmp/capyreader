@@ -141,7 +141,7 @@ fun DisplaySettingsPanelView(
                     TextSwitch(
                         onCheckedChange = updatePureBlackDarkMode,
                         checked = pureBlackDarkMode,
-                        title = stringResource(R.string.theme_pure_black_dark_mode)
+                        title = stringResource(R.string.settings_pure_black_dark_mode)
                     )
                 }
             }
