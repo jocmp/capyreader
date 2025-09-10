@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.common.titleKey
-import com.capyreader.app.preferences.ThemeOption
+import com.capyreader.app.preferences.ThemeMode
 import com.capyreader.app.ui.fixtures.PreviewKoinApplication
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.accounts.Source
@@ -107,7 +107,7 @@ private fun AccountRowPreview() {
 @Composable
 private fun AccountRowPreview_Dark() {
     PreviewKoinApplication {
-        CapyTheme(theme = ThemeOption.DARK) {
+        CapyTheme(themeMode = ThemeMode.DARK) {
             Column {
                 Source.entries.forEach {
                     AccountRow(source = it)

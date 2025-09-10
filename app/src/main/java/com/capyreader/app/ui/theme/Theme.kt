@@ -1,89 +1,44 @@
 package com.capyreader.app.ui.theme
 
 import android.app.Activity
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.capyreader.app.preferences.AppPreferences
-import com.capyreader.app.preferences.ThemeOption
+import com.capyreader.app.preferences.AppTheme
+import com.capyreader.app.preferences.ThemeMode
 import com.capyreader.app.ui.EdgeToEdgeHelper.isEdgeToEdgeAvailable
-import org.koin.compose.koinInject
-
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
-)
-
-private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-)
-
-private val highContrastDarkColorScheme = darkColorScheme(
-    primary = primaryDarkHighContrast,
-    onPrimary = onPrimaryDarkHighContrast,
-    primaryContainer = primaryContainerDarkHighContrast,
-    onPrimaryContainer = onPrimaryContainerDarkHighContrast,
-    secondary = secondaryDarkHighContrast,
-    onSecondary = onSecondaryDarkHighContrast,
-    secondaryContainer = secondaryContainerDarkHighContrast,
-    onSecondaryContainer = onSecondaryContainerDarkHighContrast,
-    tertiary = tertiaryDarkHighContrast,
-    onTertiary = onTertiaryDarkHighContrast,
-    tertiaryContainer = tertiaryContainerDarkHighContrast,
-    onTertiaryContainer = onTertiaryContainerDarkHighContrast,
-    error = errorDarkHighContrast,
-    onError = onErrorDarkHighContrast,
-    errorContainer = errorContainerDarkHighContrast,
-    onErrorContainer = onErrorContainerDarkHighContrast,
-    background = backgroundDarkHighContrast,
-    onBackground = onBackgroundDarkHighContrast,
-    surface = surfaceDarkHighContrast,
-    onSurface = onSurfaceDarkHighContrast,
-    surfaceVariant = surfaceVariantDarkHighContrast,
-    onSurfaceVariant = onSurfaceVariantDarkHighContrast,
-    outline = outlineDarkHighContrast,
-    outlineVariant = outlineVariantDarkHighContrast,
-    scrim = scrimDarkHighContrast,
-    inverseSurface = inverseSurfaceDarkHighContrast,
-    inverseOnSurface = inverseOnSurfaceDarkHighContrast,
-    inversePrimary = inversePrimaryDarkHighContrast,
-    surfaceDim = surfaceDimDarkHighContrast,
-    surfaceBright = surfaceBrightDarkHighContrast,
-    surfaceContainerLowest = surfaceContainerLowestDarkHighContrast,
-    surfaceContainerLow = surfaceContainerLowDarkHighContrast,
-    surfaceContainer = surfaceContainerDarkHighContrast,
-    surfaceContainerHigh = surfaceContainerHighDarkHighContrast,
-    surfaceContainerHighest = surfaceContainerHighestDarkHighContrast,
-)
+import com.capyreader.app.ui.theme.colorschemes.BaseColorScheme
+import com.capyreader.app.ui.theme.colorschemes.GreenAppleColorScheme
+import com.capyreader.app.ui.theme.colorschemes.LavenderColorScheme
+import com.capyreader.app.ui.theme.colorschemes.MidnightDuskColorScheme
+import com.capyreader.app.ui.theme.colorschemes.MonetColorScheme
+import com.capyreader.app.ui.theme.colorschemes.MonochromeColorScheme
+import com.capyreader.app.ui.theme.colorschemes.NordColorScheme
+import com.capyreader.app.ui.theme.colorschemes.StrawberryColorScheme
+import com.capyreader.app.ui.theme.colorschemes.TachiyomiColorScheme
+import com.capyreader.app.ui.theme.colorschemes.TakoColorScheme
+import com.capyreader.app.ui.theme.colorschemes.TealTurqoiseColorScheme
+import com.capyreader.app.ui.theme.colorschemes.TidalWaveColorScheme
+import com.capyreader.app.ui.theme.colorschemes.YinYangColorScheme
+import com.capyreader.app.ui.theme.colorschemes.YotsubaColorScheme
 
 @Composable
 fun CapyTheme(
-    theme: ThemeOption = ThemeOption.SYSTEM_DEFAULT,
-    content: @Composable () -> Unit
+    appTheme: AppTheme = AppTheme.DEFAULT,
+    themeMode: ThemeMode = ThemeMode.default,
+    pureBlack: Boolean = false,
+    content: @Composable () -> Unit,
 ) {
-    val showAppearanceLightStatusBars = theme.showAppearanceLightStatusBars()
+    val showAppearanceLightStatusBars = themeMode.showAppearanceLightStatusBars()
 
-    val colorScheme = when (theme) {
-        ThemeOption.LIGHT -> lightScheme()
-        ThemeOption.DARK -> darkScheme()
-        ThemeOption.SYSTEM_DEFAULT -> systemDefaultScheme()
-    }
+    val colorScheme = getThemeColorScheme(appTheme, themeMode, pureBlack)
 
     val view = LocalView.current
     if (!view.isInEditMode) {
@@ -100,54 +55,53 @@ fun CapyTheme(
     }
 
     MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
+        colorScheme =colorScheme,
+        content = content,
     )
 }
 
 @Composable
-fun ThemeOption.showAppearanceLightStatusBars(): Boolean {
-    return !(this == ThemeOption.DARK ||
-            this == ThemeOption.SYSTEM_DEFAULT && isSystemInDarkTheme())
+@ReadOnlyComposable
+private fun getThemeColorScheme(
+    appTheme: AppTheme,
+    themeMode: ThemeMode,
+    pureBlack: Boolean,
+): ColorScheme {
+    val colorScheme = if (appTheme == AppTheme.MONET) {
+        MonetColorScheme(LocalContext.current)
+    } else {
+        colorSchemes.getOrDefault(appTheme, TachiyomiColorScheme)
+    }
+
+    val isDark = when (themeMode) {
+        ThemeMode.SYSTEM -> isSystemInDarkTheme()
+        ThemeMode.LIGHT -> false
+        ThemeMode.DARK -> true
+    }
+
+    return colorScheme.getColorScheme(
+        isDark = isDark,
+        pureBlack,
+    )
 }
 
+private val colorSchemes: Map<AppTheme, BaseColorScheme> = mapOf(
+    AppTheme.DEFAULT to TachiyomiColorScheme,
+    AppTheme.GREEN_APPLE to GreenAppleColorScheme,
+    AppTheme.LAVENDER to LavenderColorScheme,
+    AppTheme.MIDNIGHT_DUSK to MidnightDuskColorScheme,
+    AppTheme.MONOCHROME to MonochromeColorScheme,
+    AppTheme.NORD to NordColorScheme,
+    AppTheme.STRAWBERRY_DAIQUIRI to StrawberryColorScheme,
+    AppTheme.TAKO to TakoColorScheme,
+    AppTheme.TEAL_TURQUOISE to TealTurqoiseColorScheme,
+    AppTheme.TIDAL_WAVE to TidalWaveColorScheme,
+    AppTheme.YIN_YANG to YinYangColorScheme,
+    AppTheme.YOTSUBA to YotsubaColorScheme,
+)
 
 @Composable
-private fun lightScheme(): ColorScheme {
-    val context = LocalContext.current
-
-    return if (supportsDynamicColor()) {
-        dynamicLightColorScheme(context)
-    } else {
-        LightColorScheme
-    }
+fun ThemeMode.showAppearanceLightStatusBars(): Boolean {
+    return !(this == ThemeMode.DARK ||
+            this == ThemeMode.SYSTEM && isSystemInDarkTheme())
 }
-
-@Composable
-private fun darkScheme(appPreferences: AppPreferences = koinInject()): ColorScheme {
-    val context = LocalContext.current
-    val enableTrueBlack by appPreferences.enableHighContrastDarkTheme
-        .changes()
-        .collectAsState(appPreferences.enableHighContrastDarkTheme.get())
-
-    return if (enableTrueBlack) {
-        highContrastDarkColorScheme
-    } else if (supportsDynamicColor()) {
-        dynamicDarkColorScheme(context)
-    } else {
-        DarkColorScheme
-    }
-}
-
-@Composable
-fun systemDefaultScheme(): ColorScheme {
-    return if (isSystemInDarkTheme()) {
-        darkScheme()
-    } else {
-        lightScheme()
-    }
-}
-
-
-fun supportsDynamicColor() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S

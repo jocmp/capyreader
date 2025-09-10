@@ -113,8 +113,8 @@ fun ArticleMediaView(
     }
 
     val colorScheme = MaterialTheme.colorScheme
-    val theme by appPreferences.theme.collectChangesWithCurrent()
-    val showAppearanceLightStatusBars = theme.showAppearanceLightStatusBars()
+    val themeMode by appPreferences.themeMode.collectChangesWithCurrent()
+    val showAppearanceLightStatusBars = themeMode.showAppearanceLightStatusBars()
 
     DisposableEffect(url) {
         val window = (view.context as Activity).window
