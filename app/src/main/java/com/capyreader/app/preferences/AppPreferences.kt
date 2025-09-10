@@ -56,8 +56,14 @@ class AppPreferences(context: Context) {
     val crashReporting: Preference<Boolean>
         get() = preferenceStore.getBoolean("enable_crash_reporting", false)
 
-    val theme: Preference<ThemeOption>
-        get() = preferenceStore.getEnum("theme", ThemeOption.default)
+    val themeMode: Preference<ThemeMode>
+        get() = preferenceStore.getEnum("theme_mode", ThemeMode.default)
+    
+    val appTheme: Preference<AppTheme>
+        get() = preferenceStore.getEnum("app_theme", AppTheme.default)
+    
+    val pureBlackDarkMode: Preference<Boolean>
+        get() = preferenceStore.getBoolean("pure_black_dark_mode", false)
 
     val openLinksInternally: Preference<Boolean>
         get() = preferenceStore.getBoolean("open_links_internally", true)
@@ -65,8 +71,6 @@ class AppPreferences(context: Context) {
     val enableStickyFullContent: Preference<Boolean>
         get() = preferenceStore.getBoolean("enable_sticky_full_content", false)
 
-    val enableHighContrastDarkTheme: Preference<Boolean>
-        get() = preferenceStore.getBoolean("enable_high_contrast_dark_theme", false)
 
     val layout: Preference<LayoutPreference>
         get() = preferenceStore.getEnum("layout_preference", LayoutPreference.RESPONSIVE)

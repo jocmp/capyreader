@@ -264,4 +264,19 @@
     <string name="settings_display_miscellaneous_title">雜類</string>
     <string name="mark_all_read_button_position">全部標為已讀按鈕位置</string>
     <string name="mark_read_position_floating_action_button">浮動操作按鈕</string>
+    
+    <!-- Theme strings -->
+    <string name="theme_dynamic">動態</string>
+    <string name="theme_green_apple">青蘋果</string>
+    <string name="theme_lavender">薰衣草</string>
+    <string name="theme_midnight_dusk">午夜黃昏</string>
+    <string name="theme_nord">Nord</string>
+    <string name="theme_strawberry_daiquiri">草莓代基里</string>
+    <string name="theme_tako">Tako</string>
+    <string name="theme_teal_turquoise">青綠 &amp; 綠松石</string>
+    <string name="theme_tidal_wave">潮汐波浪</string>
+    <string name="theme_yin_yang">陰 &amp; 陽</string>
+    <string name="theme_yotsuba">四葉</string>
+    <string name="theme_monochrome">單色</string>
+    <string name="settings_pure_black_dark_mode">純黑暗模式</string>
 </resources>

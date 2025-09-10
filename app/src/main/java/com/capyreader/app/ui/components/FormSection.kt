@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.capyreader.app.preferences.ThemeOption
+import com.capyreader.app.preferences.ThemeMode
 import com.capyreader.app.ui.theme.CapyTheme
 
 @Composable
@@ -55,7 +55,7 @@ private fun LabelStyle.textStyle() = when (this) {
 @Preview
 @Composable
 private fun FormSectionPreview() {
-    CapyTheme(theme = ThemeOption.DARK) {
+    CapyTheme(themeMode = ThemeMode.DARK) {
         Surface {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 FormSection(title = "My Title") {

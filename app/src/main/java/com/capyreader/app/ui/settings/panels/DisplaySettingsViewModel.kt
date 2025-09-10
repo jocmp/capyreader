@@ -8,7 +8,8 @@ import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.LayoutPreference
 import com.capyreader.app.preferences.ReaderImageVisibility
-import com.capyreader.app.preferences.ThemeOption
+import com.capyreader.app.preferences.ThemeMode
+import com.capyreader.app.preferences.AppTheme
 import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.capyreader.app.ui.articles.MarkReadPosition
 import com.jocmp.capy.Account
@@ -17,7 +18,13 @@ class DisplaySettingsViewModel(
     val account: Account,
     val appPreferences: AppPreferences,
 ) : ViewModel() {
-    var theme by mutableStateOf(appPreferences.theme.get())
+    var themeMode by mutableStateOf(appPreferences.themeMode.get())
+        private set
+    
+    var appTheme by mutableStateOf(appPreferences.appTheme.get())
+        private set
+    
+    var pureBlackDarkMode by mutableStateOf(appPreferences.pureBlackDarkMode.get())
         private set
 
     private val _imagePreview = mutableStateOf(appPreferences.articleListOptions.imagePreview.get())
@@ -51,9 +58,6 @@ class DisplaySettingsViewModel(
     val shortenTitles: Boolean
         get() = _shortenTitles.value
 
-    var enableHighContrastDarkTheme by mutableStateOf(appPreferences.enableHighContrastDarkTheme.get())
-        private set
-
     val pinArticleBars = appPreferences.readerOptions.pinTopToolbar
 
     var imageVisibility by mutableStateOf(appPreferences.readerOptions.imageVisibility.get())
@@ -66,16 +70,19 @@ class DisplaySettingsViewModel(
 
     val markReadButtonPosition = appPreferences.articleListOptions.markReadButtonPosition
 
-    fun updateTheme(theme: ThemeOption) {
-        appPreferences.theme.set(theme)
-
-        this.theme = theme
+    fun updateThemeMode(themeMode: ThemeMode) {
+        appPreferences.themeMode.set(themeMode)
+        this.themeMode = themeMode
     }
 
-    fun updateHighContrastDarkTheme(enable: Boolean) {
-        appPreferences.enableHighContrastDarkTheme.set(enable)
+    fun updateAppTheme(appTheme: AppTheme) {
+        appPreferences.appTheme.set(appTheme)
+        this.appTheme = appTheme
+    }
 
-        this.enableHighContrastDarkTheme = enable
+    fun updatePureBlackDarkMode(enable: Boolean) {
+        appPreferences.pureBlackDarkMode.set(enable)
+        this.pureBlackDarkMode = enable
     }
 
     fun updatePinArticleBars(pinBars: Boolean) {

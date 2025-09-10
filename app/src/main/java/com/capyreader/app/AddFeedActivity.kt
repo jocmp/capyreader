@@ -25,9 +25,11 @@ class AddFeedActivity : BaseActivity() {
         val defaultQueryURL = intent.getStringExtra(Intent.EXTRA_TEXT) ?: ""
 
         setContent {
-            val theme by appPreferences.theme.collectChangesWithCurrent()
+            val themeMode by appPreferences.themeMode.collectChangesWithCurrent()
+            val appTheme by appPreferences.appTheme.collectChangesWithCurrent()
+            val pureBlackDarkMode by appPreferences.pureBlackDarkMode.collectChangesWithCurrent()
 
-            CapyTheme(theme = theme) {
+            CapyTheme(themeMode = themeMode, appTheme = appTheme, pureBlack = pureBlackDarkMode) {
                 AddFeedScreen(
                     defaultQueryURL = defaultQueryURL,
                     onComplete = {

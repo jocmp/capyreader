@@ -19,14 +19,16 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         NotificationHelper.openFromIntent(intent, appPreferences = appPreferences)
 
-        val theme = appPreferences.theme
-
         setContent {
-            val themeState by appPreferences.theme.changes().collectAsState(initial = theme.get())
+            val themeMode by appPreferences.themeMode.changes().collectAsState(initial = appPreferences.themeMode.get())
+            val appTheme by appPreferences.appTheme.changes().collectAsState(initial = appPreferences.appTheme.get())
+            val pureBlackDarkMode by appPreferences.pureBlackDarkMode.changes().collectAsState(initial = appPreferences.pureBlackDarkMode.get())
 
             App(
                 startDestination = startDestination(),
-                theme = themeState
+                themeMode = themeMode,
+                appTheme = appTheme,
+                pureBlackDarkMode = pureBlackDarkMode
             )
         }
     }
