@@ -268,8 +268,6 @@
     <string name="settings_display_miscellaneous_title">Varie</string>
     <string name="settings_full_content_parser">Analizzatore del contenuto completo (sperimentale)</string>
     <string name="open_articles_in_browser">Apri gli articoli nel browser</string>
-    
-    <!-- Theme strings -->
     <string name="theme_dynamic">Dinamico</string>
     <string name="theme_green_apple">Mela verde</string>
     <string name="theme_lavender">Lavanda</string>
@@ -283,4 +281,6 @@
     <string name="theme_yotsuba">Yotsuba</string>
     <string name="theme_monochrome">Monocromatico</string>
     <string name="settings_pure_black_dark_mode">Modalità scura nera pura</string>
+    <string name="auth_fields_client_certificate">Certificato del client (opzionale)</string>
+    <string name="auth_fields_remove_client_cert">Rimuovi il certificato client</string>
 </resources>

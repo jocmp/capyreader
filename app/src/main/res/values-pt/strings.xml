@@ -261,8 +261,6 @@
     <string name="settings_display_miscellaneous_title">Diversos</string>
     <string name="settings_full_content_parser">Analisador de conteúdo completo (Experimental)</string>
     <string name="open_articles_in_browser">Abrir artigos no navegador</string>
-    
-    <!-- Theme strings -->
     <string name="theme_dynamic">Dinâmico</string>
     <string name="theme_green_apple">Maçã verde</string>
     <string name="theme_lavender">Lavanda</string>
