@@ -151,38 +151,54 @@ fun AppThemePreviewItem(
                 }
             }
         }
-
-        // Cover
+        Row(
+            modifier = Modifier
+                .padding(horizontal = 8.dp, vertical = 4.dp)
+                .height(16.dp)
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(5.dp)),
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.primary),
+            )
+        }
         Box(
             modifier = Modifier
-                .padding(start = 8.dp, top = 2.dp)
+                .padding(horizontal = 8.dp)
                 .background(
                     color = DividerDefaults.color,
                     shape = MaterialTheme.shapes.small,
                 )
-                .fillMaxWidth(0.5f)
-                .aspectRatio(2 / 3f),
-        ) {
-            Row(
-                modifier = Modifier
-                    .padding(4.dp)
-                    .size(width = 24.dp, height = 16.dp)
-                    .clip(RoundedCornerShape(5.dp)),
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .width(12.dp)
-                        .background(MaterialTheme.colorScheme.tertiary),
-                )
-                Box(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .width(12.dp)
-                        .background(MaterialTheme.colorScheme.secondary),
-                )
-            }
-        }
+                .aspectRatio(16 / 9f),
+        )
+        Box(
+            modifier = Modifier
+                .padding(top = 6.dp)
+                .padding(horizontal = 8.dp)
+                .height(6.dp)
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(5.dp))
+                .background(MaterialTheme.colorScheme.onSurface),
+        )
+        Box(
+            modifier = Modifier
+                .padding(horizontal = 8.dp, vertical = 2.dp)
+                .height(6.dp)
+                .fillMaxWidth(0.75f)
+                .clip(RoundedCornerShape(5.dp))
+                .background(MaterialTheme.colorScheme.onSurface),
+        )
+        Box(
+            modifier = Modifier
+                .padding(horizontal = 8.dp)
+                .height(6.dp)
+                .fillMaxWidth(0.9f)
+                .clip(RoundedCornerShape(5.dp))
+                .background(MaterialTheme.colorScheme.onSurface),
+        )
 
         Box(
             modifier = Modifier
@@ -191,7 +207,7 @@ fun AppThemePreviewItem(
             contentAlignment = Alignment.BottomCenter,
         ) {
             Surface(
-                color = MaterialTheme.colorScheme.surfaceContainer,
+                color = MaterialTheme.colorScheme.surfaceContainerHigh,
             ) {
                 Row(
                     modifier = Modifier

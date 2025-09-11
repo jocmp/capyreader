@@ -6,6 +6,7 @@ import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -39,6 +40,7 @@ fun MarkAllReadButton(
 
     if (position == MarkReadPosition.FLOATING_ACTION_BUTTON) {
         FloatingActionButton(
+            containerColor = MaterialTheme.colorScheme.primary,
             shape = CircleShape,
             onClick = {
                 onClick()

@@ -3,7 +3,6 @@ package com.capyreader.app.ui.theme.colorschemes
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
-import com.capyreader.app.ui.theme.colorschemes.BaseColorScheme
 
 /**
  * Colors for Teal Turqoise theme
@@ -61,7 +60,6 @@ internal object TealTurqoiseColorScheme : BaseColorScheme() {
         onSurface = Color(0xFF050505),
         surfaceVariant = Color(0xFFEBF3F1), // Navigation bar background (ThemePrefWidget)
         onSurfaceVariant = Color(0xFF050505),
-        surfaceTint = Color(0xFFBFDFDF),
         inverseSurface = Color(0xFF050505),
         inverseOnSurface = Color(0xFFFAFAFA),
         outline = Color(0xFF6F7977),
