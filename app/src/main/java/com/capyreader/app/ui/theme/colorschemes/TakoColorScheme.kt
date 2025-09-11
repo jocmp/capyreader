@@ -3,7 +3,6 @@ package com.capyreader.app.ui.theme.colorschemes
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
-import com.capyreader.app.ui.theme.colorschemes.BaseColorScheme
 
 /**
  * Colors for Tako theme
@@ -38,7 +37,6 @@ internal object TakoColorScheme : BaseColorScheme() {
         onSurface = Color(0xFFE3E0F2),
         surfaceVariant = Color(0xFF2A2A3C), // Navigation bar background (ThemePrefWidget)
         onSurfaceVariant = Color(0xFFCBC4CE),
-        surfaceTint = Color(0xFF66577E),
         inverseSurface = Color(0xFFE5E1E6),
         inverseOnSurface = Color(0xFF1B1B1E),
         outline = Color(0xFF958F99),

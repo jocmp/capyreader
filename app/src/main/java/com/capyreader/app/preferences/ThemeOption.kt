@@ -1,5 +1,6 @@
 package com.capyreader.app.preferences
 
+import android.os.Build
 import com.capyreader.app.R
 
 enum class ThemeMode {
@@ -8,7 +9,7 @@ enum class ThemeMode {
     DARK;
 
     val translationKey: Int
-        get() = when(this) {
+        get() = when (this) {
             SYSTEM -> R.string.theme_mode_system
             LIGHT -> R.string.theme_mode_light
             DARK -> R.string.theme_mode_dark
@@ -35,7 +36,7 @@ enum class AppTheme {
     MONOCHROME;
 
     val translationKey: Int
-        get() = when(this) {
+        get() = when (this) {
             DEFAULT -> R.string.theme_default
             MONET -> R.string.theme_dynamic
             GREEN_APPLE -> R.string.theme_green_apple
@@ -52,24 +53,7 @@ enum class AppTheme {
         }
 
     companion object {
-        val default = DEFAULT
-        
-        val sorted: List<AppTheme>
-            get() = listOf(
-                DEFAULT,
-                MONET,
-                GREEN_APPLE,
-                LAVENDER,
-                MIDNIGHT_DUSK,
-                NORD,
-                STRAWBERRY_DAIQUIRI,
-                TAKO,
-                TEAL_TURQUOISE,
-                TIDAL_WAVE,
-                YIN_YANG,
-                YOTSUBA,
-                MONOCHROME
-            )
+        val default = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) DEFAULT else MONET
     }
 }
 

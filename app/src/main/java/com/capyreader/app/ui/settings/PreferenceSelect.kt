@@ -16,6 +16,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemColors
 import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
@@ -53,7 +54,8 @@ fun <T> PreferenceSelect(
     val defaults = ListItemDefaults.colors()
     val colors = ListItemDefaults.colors(
         headlineColor = if (enabled) defaults.headlineColor else defaults.disabledHeadlineColor,
-        supportingColor = if (enabled) defaults.supportingTextColor else defaults.disabledSupportingTextColor
+        supportingColor = if (enabled) defaults.supportingTextColor else defaults.disabledSupportingTextColor,
+        containerColor = MaterialTheme.colorScheme.background,
     )
 
     Box(
