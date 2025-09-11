@@ -11,20 +11,22 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MultiChoiceSegmentedButtonRow
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.common.RowItem
+import com.capyreader.app.preferences.AppTheme
 import com.capyreader.app.preferences.LayoutPreference
 import com.capyreader.app.preferences.ReaderImageVisibility
 import com.capyreader.app.preferences.ThemeMode
-import com.capyreader.app.preferences.AppTheme
 import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.capyreader.app.ui.articles.MarkReadPosition
 import com.capyreader.app.ui.collectChangesWithCurrent
@@ -209,42 +211,46 @@ fun DisplaySettingsPanelView(
     }
 }
 
+
+@PreviewLightDark
 @Preview
 @Composable
 private fun DisplaySettingsPanelViewPreview() {
-    CapyTheme {
-        DisplaySettingsPanelView(
-            onUpdateThemeMode = {},
-            themeMode = ThemeMode.SYSTEM,
-            onUpdateAppTheme = {},
-            appTheme = AppTheme.DEFAULT,
-            pureBlackDarkMode = false,
-            updatePureBlackDarkMode = {},
-            layout = LayoutPreference.RESPONSIVE,
-            updateLayoutPreference = {},
-            articleListOptions = ArticleListOptions(
-                imagePreview = ImagePreview.default,
-                showSummary = true,
-                fontScale = ArticleListFontScale.MEDIUM,
-                showFeedIcons = true,
-                showFeedName = false,
-                shortenTitles = true,
-                updateImagePreview = {},
-                updateSummary = {},
-                updateFeedName = {},
-                updateFeedIcons = {},
-                updateFontScale = {},
-                updateShortenTitles = {},
-            ),
-            updatePinArticleBars = {},
-            pinArticleBars = false,
-            updateImageVisibility = {},
-            updateBottomBarActions = {},
-            imageVisibility = ReaderImageVisibility.ALWAYS_SHOW,
-            enablePinArticleBars = false,
-            enableBottomBarActions = false,
-            markReadButtonPosition = MarkReadPosition.TOOLBAR,
-            updateMarkReadButtonPosition = {}
-        )
+    CapyTheme(appTheme = AppTheme.TAKO, pureBlack = true) {
+        Surface {
+            DisplaySettingsPanelView(
+                onUpdateThemeMode = {},
+                themeMode = ThemeMode.SYSTEM,
+                onUpdateAppTheme = {},
+                appTheme = AppTheme.DEFAULT,
+                pureBlackDarkMode = false,
+                updatePureBlackDarkMode = {},
+                layout = LayoutPreference.RESPONSIVE,
+                updateLayoutPreference = {},
+                articleListOptions = ArticleListOptions(
+                    imagePreview = ImagePreview.default,
+                    showSummary = true,
+                    fontScale = ArticleListFontScale.MEDIUM,
+                    showFeedIcons = true,
+                    showFeedName = false,
+                    shortenTitles = true,
+                    updateImagePreview = {},
+                    updateSummary = {},
+                    updateFeedName = {},
+                    updateFeedIcons = {},
+                    updateFontScale = {},
+                    updateShortenTitles = {},
+                ),
+                updatePinArticleBars = {},
+                pinArticleBars = false,
+                updateImageVisibility = {},
+                updateBottomBarActions = {},
+                imageVisibility = ReaderImageVisibility.ALWAYS_SHOW,
+                enablePinArticleBars = false,
+                enableBottomBarActions = false,
+                markReadButtonPosition = MarkReadPosition.TOOLBAR,
+                updateMarkReadButtonPosition = {}
+            )
+        }
     }
 }

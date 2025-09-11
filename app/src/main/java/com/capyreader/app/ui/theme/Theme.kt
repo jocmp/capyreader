@@ -28,34 +28,35 @@ import com.capyreader.app.ui.theme.colorschemes.TealTurqoiseColorScheme
 import com.capyreader.app.ui.theme.colorschemes.TidalWaveColorScheme
 import com.capyreader.app.ui.theme.colorschemes.YinYangColorScheme
 import com.capyreader.app.ui.theme.colorschemes.YotsubaColorScheme
+import com.jocmp.capy.logging.CapyLog
 
 @Composable
 fun CapyTheme(
     appTheme: AppTheme = AppTheme.DEFAULT,
     themeMode: ThemeMode = ThemeMode.default,
     pureBlack: Boolean = false,
+    preview: Boolean = false,
     content: @Composable () -> Unit,
 ) {
-    val showAppearanceLightStatusBars = themeMode.showAppearanceLightStatusBars()
+    val isDark = when (themeMode) {
+        ThemeMode.SYSTEM -> isSystemInDarkTheme()
+        ThemeMode.LIGHT -> false
+        ThemeMode.DARK -> true
+    }
 
-    val colorScheme = getThemeColorScheme(appTheme, themeMode, pureBlack)
-
+    val colorScheme = getThemeColorScheme(
+        appTheme = appTheme,
+        isDark = isDark,
+        pureBlack = pureBlack,
+    )
     val view = LocalView.current
-    if (!view.isInEditMode) {
-        SideEffect {
-            val window = (view.context as Activity).window
 
-            if (!isEdgeToEdgeAvailable()) {
-                window.statusBarColor = colorScheme.surfaceContainer.toArgb()
-            }
-
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
-                showAppearanceLightStatusBars
-        }
+    if (!(preview || view.isInEditMode)) {
+        StatusBarColorListener(themeMode)
     }
 
     MaterialTheme(
-        colorScheme =colorScheme,
+        colorScheme = colorScheme,
         content = content,
     )
 }
@@ -64,19 +65,13 @@ fun CapyTheme(
 @ReadOnlyComposable
 private fun getThemeColorScheme(
     appTheme: AppTheme,
-    themeMode: ThemeMode,
+    isDark: Boolean,
     pureBlack: Boolean,
 ): ColorScheme {
     val colorScheme = if (appTheme == AppTheme.MONET) {
         MonetColorScheme(LocalContext.current)
     } else {
         colorSchemes.getOrDefault(appTheme, TachiyomiColorScheme)
-    }
-
-    val isDark = when (themeMode) {
-        ThemeMode.SYSTEM -> isSystemInDarkTheme()
-        ThemeMode.LIGHT -> false
-        ThemeMode.DARK -> true
     }
 
     return colorScheme.getColorScheme(
@@ -104,4 +99,26 @@ private val colorSchemes: Map<AppTheme, BaseColorScheme> = mapOf(
 fun ThemeMode.showAppearanceLightStatusBars(): Boolean {
     return !(this == ThemeMode.DARK ||
             this == ThemeMode.SYSTEM && isSystemInDarkTheme())
+}
+
+@Composable
+fun StatusBarColorListener(themeMode: ThemeMode) {
+    val view = LocalView.current
+    val colorScheme = MaterialTheme.colorScheme
+
+    val isAppearanceLightStatusBars = themeMode.showAppearanceLightStatusBars()
+
+    if (!view.isInEditMode) {
+        SideEffect {
+            val window = (view.context as Activity).window
+
+            if (!isEdgeToEdgeAvailable()) {
+                window.statusBarColor = colorScheme.surfaceContainer.toArgb()
+            }
+
+            CapyLog.info("bars", mapOf("light" to isAppearanceLightStatusBars, "mode" to themeMode))
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
+                isAppearanceLightStatusBars
+        }
+    }
 }

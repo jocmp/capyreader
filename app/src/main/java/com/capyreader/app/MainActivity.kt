@@ -3,12 +3,12 @@ package com.capyreader.app
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.capyreader.app.notifications.NotificationHelper
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.App
 import com.capyreader.app.ui.Route
+import com.capyreader.app.ui.collectChangesWithCurrent
 import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
 
@@ -20,9 +20,9 @@ class MainActivity : BaseActivity() {
         NotificationHelper.openFromIntent(intent, appPreferences = appPreferences)
 
         setContent {
-            val themeMode by appPreferences.themeMode.changes().collectAsState(initial = appPreferences.themeMode.get())
-            val appTheme by appPreferences.appTheme.changes().collectAsState(initial = appPreferences.appTheme.get())
-            val pureBlackDarkMode by appPreferences.pureBlackDarkMode.changes().collectAsState(initial = appPreferences.pureBlackDarkMode.get())
+            val themeMode by appPreferences.themeMode.collectChangesWithCurrent()
+            val appTheme by appPreferences.appTheme.collectChangesWithCurrent()
+            val pureBlackDarkMode by appPreferences.pureBlackDarkMode.collectChangesWithCurrent()
 
             App(
                 startDestination = startDestination(),
