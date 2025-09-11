@@ -123,18 +123,18 @@ fun ArticleMediaView(
         window.navigationBarColor = Color.Black.toArgb()
         if (!isEdgeToEdgeAvailable()) {
             window.statusBarColor = Color.Black.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = false
         }
+        WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = false
 
         onDispose {
             window.navigationBarColor = previousNavigationBarColor
 
             if (!isEdgeToEdgeAvailable()) {
                 window.statusBarColor = colorScheme.surfaceContainer.toArgb()
-                WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
-                    showAppearanceLightStatusBars
-
             }
+
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
+                showAppearanceLightStatusBars
         }
     }
 }

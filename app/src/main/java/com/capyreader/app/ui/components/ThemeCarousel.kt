@@ -71,6 +71,7 @@ fun ThemeCarousel(
                 CapyTheme(
                     appTheme = appTheme,
                     pureBlack = pureBlackDarkMode,
+                    preview = true,
                 ) {
                     AppThemePreviewItem(
                         selected = currentTheme == appTheme,
