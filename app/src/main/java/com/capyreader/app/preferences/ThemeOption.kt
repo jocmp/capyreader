@@ -21,8 +21,11 @@ enum class ThemeMode {
 }
 
 enum class AppTheme {
-    DEFAULT,
     MONET,
+    DEFAULT,
+    SUNSET,
+    YIN_YANG,
+    MONOCHROME,
     GREEN_APPLE,
     LAVENDER,
     MIDNIGHT_DUSK,
@@ -31,14 +34,15 @@ enum class AppTheme {
     TAKO,
     TEAL_TURQUOISE,
     TIDAL_WAVE,
-    YIN_YANG,
-    YOTSUBA,
-    MONOCHROME;
+    YOTSUBA;
 
     val translationKey: Int
         get() = when (this) {
-            DEFAULT -> R.string.theme_default
             MONET -> R.string.theme_dynamic
+            DEFAULT -> R.string.theme_default
+            SUNSET -> R.string.theme_sunset
+            YIN_YANG -> R.string.theme_yin_yang
+            MONOCHROME -> R.string.theme_monochrome
             GREEN_APPLE -> R.string.theme_green_apple
             LAVENDER -> R.string.theme_lavender
             MIDNIGHT_DUSK -> R.string.theme_midnight_dusk
@@ -47,13 +51,20 @@ enum class AppTheme {
             TAKO -> R.string.theme_tako
             TEAL_TURQUOISE -> R.string.theme_teal_turquoise
             TIDAL_WAVE -> R.string.theme_tidal_wave
-            YIN_YANG -> R.string.theme_yin_yang
             YOTSUBA -> R.string.theme_yotsuba
-            MONOCHROME -> R.string.theme_monochrome
         }
 
+    /** On the off chance someone has selected MONET on an older version, default them */
+    fun normalized(): AppTheme {
+        return if (this === MONET && Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            DEFAULT
+        } else {
+            this
+        }
+    }
+
     companion object {
-        val default = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) DEFAULT else MONET
+        val default = MONET.normalized()
     }
 }
 
