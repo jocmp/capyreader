@@ -1,0 +1,6 @@
+• Add mTLS client certificate support for FreshRSS and Google Reader API accounts thanks to a volunteer!
+• Add new theming system
+• Add long press settings to feeds in nav list
+• Display preview from widget picker on Android 15 and above
+• Fix lost article scroll position when switching between apps thanks to a volunteer
+• Update translations for Arabic, Bulgarian, Estonian, French, Galician, Italian and Polish thanks to volunteers!
