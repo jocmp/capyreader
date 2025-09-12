@@ -1,0 +1,3 @@
+• Add new theming system
+• Add long press settings to feeds in nav list
+• Update translations for Arabic, Bulgarian, Estonian, French, Galician, Italian and Polish thanks to volunteers!
