@@ -24,7 +24,7 @@ enum class AppTheme {
     MONET,
     DEFAULT,
     SUNSET,
-    YIN_YANG,
+    NEWSPRINT,
     MONOCHROME,
     GREEN_APPLE,
     LAVENDER,
@@ -41,7 +41,7 @@ enum class AppTheme {
             MONET -> R.string.theme_dynamic
             DEFAULT -> R.string.theme_default
             SUNSET -> R.string.theme_sunset
-            YIN_YANG -> R.string.theme_yin_yang
+            NEWSPRINT -> R.string.theme_newsprint
             MONOCHROME -> R.string.theme_monochrome
             GREEN_APPLE -> R.string.theme_green_apple
             LAVENDER -> R.string.theme_lavender
