@@ -6,6 +6,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.SideEffect
@@ -21,13 +22,14 @@ import com.capyreader.app.ui.theme.colorschemes.GreenAppleColorScheme
 import com.capyreader.app.ui.theme.colorschemes.LavenderColorScheme
 import com.capyreader.app.ui.theme.colorschemes.MidnightDuskColorScheme
 import com.capyreader.app.ui.theme.colorschemes.MonochromeColorScheme
+import com.capyreader.app.ui.theme.colorschemes.NewsprintColorScheme
 import com.capyreader.app.ui.theme.colorschemes.NordColorScheme
 import com.capyreader.app.ui.theme.colorschemes.StrawberryColorScheme
+import com.capyreader.app.ui.theme.colorschemes.SunsetColorScheme
 import com.capyreader.app.ui.theme.colorschemes.TachiyomiColorScheme
 import com.capyreader.app.ui.theme.colorschemes.TakoColorScheme
 import com.capyreader.app.ui.theme.colorschemes.TealTurqoiseColorScheme
 import com.capyreader.app.ui.theme.colorschemes.TidalWaveColorScheme
-import com.capyreader.app.ui.theme.colorschemes.YinYangColorScheme
 import com.capyreader.app.ui.theme.colorschemes.YotsubaColorScheme
 import com.jocmp.capy.logging.CapyLog
 
@@ -72,7 +74,11 @@ private fun getThemeColorScheme(
     val theme = appTheme.normalized()
 
     return if (theme == AppTheme.MONET && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        dynamicDarkColorScheme(LocalContext.current)
+        if (isDark) {
+            dynamicDarkColorScheme(LocalContext.current)
+        } else {
+            dynamicLightColorScheme(LocalContext.current)
+        }
     } else {
         colorSchemes
             .getOrDefault(theme, TachiyomiColorScheme)
@@ -85,6 +91,7 @@ private fun getThemeColorScheme(
 
 private val colorSchemes: Map<AppTheme, BaseColorScheme> = mapOf(
     AppTheme.DEFAULT to TachiyomiColorScheme,
+    AppTheme.SUNSET to SunsetColorScheme,
     AppTheme.GREEN_APPLE to GreenAppleColorScheme,
     AppTheme.LAVENDER to LavenderColorScheme,
     AppTheme.MIDNIGHT_DUSK to MidnightDuskColorScheme,
@@ -94,7 +101,7 @@ private val colorSchemes: Map<AppTheme, BaseColorScheme> = mapOf(
     AppTheme.TAKO to TakoColorScheme,
     AppTheme.TEAL_TURQUOISE to TealTurqoiseColorScheme,
     AppTheme.TIDAL_WAVE to TidalWaveColorScheme,
-    AppTheme.YIN_YANG to YinYangColorScheme,
+    AppTheme.NEWSPRINT to NewsprintColorScheme,
     AppTheme.YOTSUBA to YotsubaColorScheme,
 )
 
