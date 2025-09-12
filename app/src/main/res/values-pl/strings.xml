@@ -275,4 +275,6 @@
     <string name="theme_yotsuba">Yotsuba</string>
     <string name="theme_monochrome">Monochromatyczny</string>
     <string name="settings_pure_black_dark_mode">Tryb czarny</string>
+    <string name="auth_fields_client_certificate">Certyfikat klienta (opcjonalnie)</string>
+    <string name="auth_fields_remove_client_cert">Usuń certyfikat klienta</string>
 </resources>
