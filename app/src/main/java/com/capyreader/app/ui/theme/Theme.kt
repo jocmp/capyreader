@@ -1,9 +1,11 @@
 package com.capyreader.app.ui.theme
 
 import android.app.Activity
+import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.SideEffect
@@ -18,7 +20,6 @@ import com.capyreader.app.ui.theme.colorschemes.BaseColorScheme
 import com.capyreader.app.ui.theme.colorschemes.GreenAppleColorScheme
 import com.capyreader.app.ui.theme.colorschemes.LavenderColorScheme
 import com.capyreader.app.ui.theme.colorschemes.MidnightDuskColorScheme
-import com.capyreader.app.ui.theme.colorschemes.MonetColorScheme
 import com.capyreader.app.ui.theme.colorschemes.MonochromeColorScheme
 import com.capyreader.app.ui.theme.colorschemes.NordColorScheme
 import com.capyreader.app.ui.theme.colorschemes.StrawberryColorScheme
@@ -68,16 +69,18 @@ private fun getThemeColorScheme(
     isDark: Boolean,
     pureBlack: Boolean,
 ): ColorScheme {
-    val colorScheme = if (appTheme == AppTheme.MONET) {
-        MonetColorScheme(LocalContext.current)
-    } else {
-        colorSchemes.getOrDefault(appTheme, TachiyomiColorScheme)
-    }
+    val theme = appTheme.normalized()
 
-    return colorScheme.getColorScheme(
-        isDark = isDark,
-        pureBlack,
-    )
+    return if (theme == AppTheme.MONET && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        dynamicDarkColorScheme(LocalContext.current)
+    } else {
+        colorSchemes
+            .getOrDefault(theme, TachiyomiColorScheme)
+            .getColorScheme(
+                isDark = isDark,
+                pureBlack,
+            )
+    }
 }
 
 private val colorSchemes: Map<AppTheme, BaseColorScheme> = mapOf(
