@@ -270,4 +270,17 @@
     <string name="settings_options_reader_show_bottom_toolbar">Aktionen in unterer Werkzeugleiste anzeigen</string>
     <string name="add_account_miniflux_signup_prompt">Sie haben keine Miniflux-Instanz?</string>
     <string name="add_account_miniflux_signup_link_text">Mehr erfahren.</string>
+    <string name="auth_fields_client_certificate">Client-Zertifikat (optional)</string>
+    <string name="auth_fields_remove_client_cert">Client-Zertifikat entfernen</string>
+    <string name="theme_mode_system">System</string>
+    <string name="theme_mode_light">Hell</string>
+    <string name="theme_mode_dark">Dunkel</string>
+    <string name="theme_default">Standard</string>
+    <string name="settings_pure_black_dark_mode">Reiner schwarzer Dunkelmodus</string>
+    <string name="mark_read_position_toolbar">Werkzeugleiste</string>
+    <string name="mark_read_position_floating_action_button">Schwebender Aktionsknopf</string>
+    <string name="mark_all_read_button_position">Schaltfläche „Alle als gelesen markieren“ Position</string>
+    <string name="settings_display_miscellaneous_title">Verschiedenes</string>
+    <string name="open_articles_in_browser">Artikel im Browser öffnen</string>
+    <string name="selected">Ausgewählt</string>
 </resources>
