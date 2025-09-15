@@ -1,3 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="add_feed_url_title">Feed of Website URL</string>
+    <string name="add_feed_name_title">Naam</string>
+    <string name="add_feed_new_folder_title">Nieuwe Tag</string>
+    <string name="filter_starred">Favorieten</string>
+    <string name="filter_unread">Ongelezen</string>
 </resources>
