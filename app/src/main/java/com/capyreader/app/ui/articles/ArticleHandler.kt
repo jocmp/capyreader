@@ -5,6 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.Article
 import org.koin.compose.koinInject
+import com.jocmp.capy.logging.CapyLog
 
 @Composable
 fun ArticleHandler(
@@ -12,16 +13,12 @@ fun ArticleHandler(
     appPreferences: AppPreferences = koinInject(),
     onRequestArticle: (articleID: String) -> Unit,
 ) {
-    LaunchedEffect(article?.id) {
-        if (article != null) {
-            return@LaunchedEffect
-        }
-
-        val articleID = appPreferences.articleID.get()
-
-        if (articleID.isNotBlank()) {
-            appPreferences.articleID.delete()
-            onRequestArticle(articleID)
+    LaunchedEffect(article?.id, state) {
+        if (article != null && state?.pane != ThreePaneScaffoldRole.Primary) {
+            CapyLog.info("launch", mapOf("id" to article.id))
+            onNavigateToArticle(article)
+        } else {
+            CapyLog.info("skip", mapOf("id" to article?.id, "state" to state?.pane))
         }
     }
 }
