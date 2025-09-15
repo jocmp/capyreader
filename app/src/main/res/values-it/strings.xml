@@ -236,7 +236,7 @@
     <string name="media_save_failure">Impossibile salvare l\'immagine</string>
     <string name="media_share_failure">Impossibile condividere l\'immagine</string>
     <string name="feed_nav_drawer_refresh_all">Aggiorna tutto</string>
-    <string name="image_preview_menu_option_medium">Medio</string>
+    <string name="image_preview_menu_option_medium">Media</string>
     <string name="blocked_keywords">Lista nera</string>
     <string name="blocked_keywords_add_keyword">Aggiungi parola chiave</string>
     <string name="blocked_keywords_remove_keyword">Rimuovi parola chiave</string>
@@ -271,16 +271,22 @@
     <string name="theme_dynamic">Dinamico</string>
     <string name="theme_green_apple">Mela verde</string>
     <string name="theme_lavender">Lavanda</string>
-    <string name="theme_midnight_dusk">Dusk di mezzanotte</string>
+    <string name="theme_midnight_dusk">Crepuscolo di mezzanotte</string>
     <string name="theme_nord">Nord</string>
-    <string name="theme_strawberry_daiquiri">Daiquiri di fragole</string>
+    <string name="theme_strawberry_daiquiri">Daiquiri alla fragola</string>
     <string name="theme_tako">Tako</string>
     <string name="theme_teal_turquoise">Verde acqua e turchese</string>
     <string name="theme_tidal_wave">Onda di marea</string>
-    <string name="theme_newsprint">Carta da giornale</string>
+    <string name="theme_newsprint">Carta di giornale</string>
     <string name="theme_yotsuba">Yotsuba</string>
     <string name="theme_monochrome">Monocromatico</string>
-    <string name="settings_pure_black_dark_mode">Modalità scura nera pura</string>
+    <string name="settings_pure_black_dark_mode">Modalità scura nero puro</string>
     <string name="auth_fields_client_certificate">Certificato del client (opzionale)</string>
     <string name="auth_fields_remove_client_cert">Rimuovi il certificato client</string>
+    <string name="theme_mode_system">Sistema</string>
+    <string name="theme_mode_light">Chiaro</string>
+    <string name="theme_mode_dark">Scuro</string>
+    <string name="theme_default">Predefinito</string>
+    <string name="theme_sunset">Tramonto</string>
+    <string name="selected">Selezionato</string>
 </resources>
