@@ -56,7 +56,7 @@ $font-families: (
 }
 
 ::selection {
-  background-color: var(--color-primary-container);
+  background-color: rgb(from var(--color-secondary) r g b / 60%);
 }
 
 /* #region Base */

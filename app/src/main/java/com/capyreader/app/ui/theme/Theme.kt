@@ -18,19 +18,10 @@ import com.capyreader.app.preferences.AppTheme
 import com.capyreader.app.preferences.ThemeMode
 import com.capyreader.app.ui.EdgeToEdgeHelper.isEdgeToEdgeAvailable
 import com.capyreader.app.ui.theme.colorschemes.BaseColorScheme
-import com.capyreader.app.ui.theme.colorschemes.GreenAppleColorScheme
-import com.capyreader.app.ui.theme.colorschemes.LavenderColorScheme
-import com.capyreader.app.ui.theme.colorschemes.MidnightDuskColorScheme
 import com.capyreader.app.ui.theme.colorschemes.MonochromeColorScheme
 import com.capyreader.app.ui.theme.colorschemes.NewsprintColorScheme
-import com.capyreader.app.ui.theme.colorschemes.NordColorScheme
-import com.capyreader.app.ui.theme.colorschemes.StrawberryColorScheme
 import com.capyreader.app.ui.theme.colorschemes.SunsetColorScheme
 import com.capyreader.app.ui.theme.colorschemes.TachiyomiColorScheme
-import com.capyreader.app.ui.theme.colorschemes.TakoColorScheme
-import com.capyreader.app.ui.theme.colorschemes.TealTurqoiseColorScheme
-import com.capyreader.app.ui.theme.colorschemes.TidalWaveColorScheme
-import com.capyreader.app.ui.theme.colorschemes.YotsubaColorScheme
 import com.jocmp.capy.logging.CapyLog
 
 @Composable
@@ -92,17 +83,8 @@ private fun getThemeColorScheme(
 private val colorSchemes: Map<AppTheme, BaseColorScheme> = mapOf(
     AppTheme.DEFAULT to TachiyomiColorScheme,
     AppTheme.SUNSET to SunsetColorScheme,
-    AppTheme.GREEN_APPLE to GreenAppleColorScheme,
-    AppTheme.LAVENDER to LavenderColorScheme,
-    AppTheme.MIDNIGHT_DUSK to MidnightDuskColorScheme,
     AppTheme.MONOCHROME to MonochromeColorScheme,
-    AppTheme.NORD to NordColorScheme,
-    AppTheme.STRAWBERRY_DAIQUIRI to StrawberryColorScheme,
-    AppTheme.TAKO to TakoColorScheme,
-    AppTheme.TEAL_TURQUOISE to TealTurqoiseColorScheme,
-    AppTheme.TIDAL_WAVE to TidalWaveColorScheme,
     AppTheme.NEWSPRINT to NewsprintColorScheme,
-    AppTheme.YOTSUBA to YotsubaColorScheme,
 )
 
 @Composable
