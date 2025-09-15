@@ -6,16 +6,14 @@ import androidx.activity.result.contract.ActivityResultContracts.RequestPermissi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
-import com.capyreader.app.notifications.Notifications
 import com.capyreader.app.R
+import com.capyreader.app.notifications.Notifications
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.opml.ImportProgress
 
@@ -37,10 +35,6 @@ fun OPMLImportButton(
                 onClick()
             }
         },
-        colors = ButtonDefaults.buttonColors(
-            containerColor = colorScheme.secondary,
-            contentColor = colorScheme.onSecondary
-        ),
         modifier = Modifier.fillMaxWidth()
     ) {
         ButtonText(importProgress)
