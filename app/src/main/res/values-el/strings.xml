@@ -258,4 +258,27 @@
     <string name="mark_read_position_floating_action_button">Αιωρούμενο Κουμπί Ενέργειας</string>
     <string name="mark_all_read_button_position">Θέση Κουμπιού Επισήμανση Όλων ως Αναγνωσμένα</string>
     <string name="settings_display_miscellaneous_title">Διάφορα</string>
+    <string name="auth_fields_client_certificate">Πιστοποιητικό πελάτη (προαιρετικό)</string>
+    <string name="auth_fields_remove_client_cert">Αφαίρεση πιστοποιητικού πελάτη</string>
+    <string name="theme_mode_system">Σύστημα</string>
+    <string name="theme_mode_light">Φωτεινό</string>
+    <string name="theme_mode_dark">Σκοτεινό</string>
+    <string name="theme_default">Προεπιλογή</string>
+    <string name="theme_dynamic">Δυναμικό</string>
+    <string name="theme_green_apple">Πράσινο Μήλο</string>
+    <string name="theme_lavender">Λεβάντα</string>
+    <string name="theme_midnight_dusk">Μεσάνυχτα</string>
+    <string name="theme_nord">Nord</string>
+    <string name="theme_strawberry_daiquiri">Φράουλα Ντακίρι</string>
+    <string name="theme_tako">Τάκο</string>
+    <string name="theme_teal_turquoise">Teal &amp; Τιρκουάζ</string>
+    <string name="theme_tidal_wave">Παλίρροια</string>
+    <string name="theme_newsprint">Εφημερίδα</string>
+    <string name="theme_yotsuba">Yotsuba</string>
+    <string name="theme_monochrome">Μονοχρωμία</string>
+    <string name="theme_sunset">Ηλιοβασίλεμα</string>
+    <string name="settings_pure_black_dark_mode">Απόλυτα μαύρη σκοτεινή λειτουργία</string>
+    <string name="settings_full_content_parser">Πλήρης Αναλυτής Περιεχομένου (Πειραματικό)</string>
+    <string name="open_articles_in_browser">Άνοιγμα Άρθρων στον Περιηγητή</string>
+    <string name="selected">Επιλέχθηκε</string>
 </resources>
