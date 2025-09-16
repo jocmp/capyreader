@@ -16,7 +16,7 @@ internal object SunsetColorScheme : BaseColorScheme() {
         onPrimary = Color(0xFF31312C),
         primaryContainer = Color(0xFFE5E2DB),
         onPrimaryContainer = Color(0xFF65645F),
-        secondary = Color(0xFFC9C6C3),
+        secondary = Color(0xFF9FCCD1),
         onSecondary = Color(0xFF31302E),
         secondaryContainer = Color(0xFF484744),
         onSecondaryContainer = Color(0xFFB7B5B1),
@@ -50,11 +50,11 @@ internal object SunsetColorScheme : BaseColorScheme() {
     )
 
     override val lightScheme: ColorScheme = lightColorScheme(
-        primary = Color(0xFF5F5E59),
+        primary = Color(0xFF191818),
         onPrimary = Color(0xFFFFFFFF),
         primaryContainer = Color(0xFFF5F2EB),
         onPrimaryContainer = Color(0xFF6F6E69),
-        secondary = Color(0xFF5F5E5C),
+        secondary = Color(0xFF509EA5),
         onSecondary = Color(0xFFFFFFFF),
         secondaryContainer = Color(0xFF6e6d69), // -- theme-color-sunset-500
         onSecondaryContainer = Color(0xFFFFFFFF),

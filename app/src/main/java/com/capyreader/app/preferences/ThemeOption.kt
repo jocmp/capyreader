@@ -25,16 +25,7 @@ enum class AppTheme {
     DEFAULT,
     SUNSET,
     NEWSPRINT,
-    MONOCHROME,
-    GREEN_APPLE,
-    LAVENDER,
-    MIDNIGHT_DUSK,
-    NORD,
-    STRAWBERRY_DAIQUIRI,
-    TAKO,
-    TEAL_TURQUOISE,
-    TIDAL_WAVE,
-    YOTSUBA;
+    MONOCHROME;
 
     val translationKey: Int
         get() = when (this) {
@@ -43,15 +34,6 @@ enum class AppTheme {
             SUNSET -> R.string.theme_sunset
             NEWSPRINT -> R.string.theme_newsprint
             MONOCHROME -> R.string.theme_monochrome
-            GREEN_APPLE -> R.string.theme_green_apple
-            LAVENDER -> R.string.theme_lavender
-            MIDNIGHT_DUSK -> R.string.theme_midnight_dusk
-            NORD -> R.string.theme_nord
-            STRAWBERRY_DAIQUIRI -> R.string.theme_strawberry_daiquiri
-            TAKO -> R.string.theme_tako
-            TEAL_TURQUOISE -> R.string.theme_teal_turquoise
-            TIDAL_WAVE -> R.string.theme_tidal_wave
-            YOTSUBA -> R.string.theme_yotsuba
         }
 
     /** On the off chance someone has selected MONET on an older version, default them */

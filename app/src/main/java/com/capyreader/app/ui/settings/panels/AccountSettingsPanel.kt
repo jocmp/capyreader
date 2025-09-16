@@ -4,6 +4,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -13,10 +14,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,6 +34,7 @@ import com.capyreader.app.R
 import com.capyreader.app.common.GetOPMLContent
 import com.capyreader.app.common.RowItem
 import com.capyreader.app.common.titleKey
+import com.capyreader.app.preferences.AppTheme
 import com.capyreader.app.transfers.OPMLExporter
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.settings.AccountSettingsStrings
@@ -153,10 +157,10 @@ fun AccountSettingsPanelView(
         FormSection {
             RowItem {
                 HorizontalDivider(modifier = Modifier.padding(bottom = 8.dp))
-                Button(
+                RemoveAccountButton(
+                    source = accountSource,
+                    modifier = Modifier.fillMaxWidth(),
                     onClick = { setRemoveDialogOpen(true) },
-                    colors = removeAccountButtonColors(accountSource),
-                    modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(stringResource(strings.requestRemoveText))
                 }
@@ -185,19 +189,22 @@ fun AccountSettingsPanelView(
 }
 
 @Composable
-fun removeAccountButtonColors(source: Source) = when (source) {
-    Source.LOCAL -> ButtonDefaults.buttonColors(
-        containerColor = colorScheme.error,
-        contentColor = colorScheme.onError
-    )
-
-    Source.FEEDBIN,
-    Source.FRESHRSS,
-    Source.MINIFLUX,
-    Source.READER -> ButtonDefaults.buttonColors(
-        containerColor = colorScheme.secondary,
-        contentColor = colorScheme.onSecondary
-    )
+fun RemoveAccountButton(
+    source: Source,
+    onClick: () -> Unit,
+    modifier: Modifier,
+    content: @Composable RowScope.() -> Unit
+) {
+    if (source == Source.LOCAL) {
+        Button(
+            colors = ButtonDefaults.buttonColors(
+                containerColor = colorScheme.error,
+                contentColor = colorScheme.contentColorFor(colorScheme.error)
+            ), onClick = onClick, modifier = modifier, content = content
+        )
+    } else {
+        FilledTonalButton(onClick = onClick, modifier = modifier, content = content)
+    }
 }
 
 fun showAccountName(source: Source): Boolean {
@@ -211,7 +218,7 @@ fun showImportButton(source: Source): Boolean {
 @Preview
 @Composable
 private fun AccountSettingsPanelViewPreview() {
-    CapyTheme {
+    CapyTheme(appTheme = AppTheme.NEWSPRINT) {
         AccountSettingsPanelView(
             onRequestRemoveAccount = {},
             onRequestImport = {},
@@ -227,7 +234,7 @@ private fun AccountSettingsPanelViewPreview() {
 @Preview
 @Composable
 private fun AccountSettingsPanelViewLocalPreview() {
-    CapyTheme {
+    CapyTheme(appTheme = AppTheme.NEWSPRINT) {
         AccountSettingsPanelView(
             onRequestRemoveAccount = {},
             onRequestImport = {},

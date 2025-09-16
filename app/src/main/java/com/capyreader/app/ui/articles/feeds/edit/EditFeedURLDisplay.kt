@@ -9,7 +9,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
-import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -51,7 +50,6 @@ fun EditFeedURLDisplay(
             trailingContent = {
                 Icon(
                     imageVector = Icons.Filled.ContentCopy,
-                    tint = colorScheme.secondary,
                     contentDescription = stringResource(R.string.feed_form_copy_feed_url_to_clipboard),
                 )
             }

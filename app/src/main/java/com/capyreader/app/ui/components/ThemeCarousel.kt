@@ -43,12 +43,14 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.preferences.AppTheme
+import com.capyreader.app.preferences.ThemeMode
 import com.capyreader.app.ui.theme.CapyTheme
 
 @Composable
 fun ThemeCarousel(
     currentTheme: AppTheme,
     pureBlackDarkMode: Boolean,
+    themeMode: ThemeMode,
     onThemeSelected: (AppTheme) -> Unit,
 ) {
     val appThemes = remember {
@@ -71,6 +73,7 @@ fun ThemeCarousel(
                 CapyTheme(
                     appTheme = appTheme,
                     pureBlack = pureBlackDarkMode,
+                    themeMode = themeMode,
                     preview = true,
                 ) {
                     AppThemePreviewItem(
@@ -251,6 +254,7 @@ private fun ThemeCarouselPreview() {
         Surface {
             ThemeCarousel(
                 currentTheme = appTheme,
+                themeMode = ThemeMode.DARK,
                 pureBlackDarkMode = false,
                 onThemeSelected = { appTheme = it },
             )

@@ -136,6 +136,7 @@ fun DisplaySettingsPanelView(
                 ThemeCarousel(
                     currentTheme = appTheme,
                     pureBlackDarkMode = pureBlackDarkMode,
+                    themeMode = themeMode,
                     onThemeSelected = onUpdateAppTheme,
                 )
 
@@ -216,7 +217,7 @@ fun DisplaySettingsPanelView(
 @Preview
 @Composable
 private fun DisplaySettingsPanelViewPreview() {
-    CapyTheme(appTheme = AppTheme.TAKO, pureBlack = true) {
+    CapyTheme(appTheme = AppTheme.NEWSPRINT, pureBlack = true) {
         Surface {
             DisplaySettingsPanelView(
                 onUpdateThemeMode = {},

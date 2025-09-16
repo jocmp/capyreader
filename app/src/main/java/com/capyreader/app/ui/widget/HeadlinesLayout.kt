@@ -8,7 +8,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.Button
-import androidx.glance.ButtonDefaults
 import androidx.glance.ColorFilter
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
@@ -95,10 +94,6 @@ fun HeadlinesLayout(articles: List<Article>) {
                     Button(
                         context.getString(R.string.widget_headlines_see_more_button),
                         onClick = context.openUnread(),
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = GlanceTheme.colors.secondary,
-                            contentColor = GlanceTheme.colors.onSecondary
-                        )
                     )
                 }
             }
