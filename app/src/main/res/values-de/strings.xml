@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Capy Reader</string>
     <string name="add_feed_name_title">Name</string>
     <string name="add_feed_submit">Hinzufügen</string>
     <string name="add_feed_success">Feed hinzugefügt</string>

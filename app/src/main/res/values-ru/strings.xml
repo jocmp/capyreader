@@ -152,7 +152,6 @@
     <string name="auth_fields_show_password">Показать пароль</string>
     <string name="font_option_system_default">Системный по умолчанию</string>
     <string name="filter_starred">В избранное</string>
-    <string name="app_name">Capy Reader</string>
     <string name="settings_remove_account_button_service">Выход</string>
     <string name="settings_remove_account_title_service">Выход</string>
     <string name="settings_remove_account_message_service">Вы уверены, что хотите выйти?</string>

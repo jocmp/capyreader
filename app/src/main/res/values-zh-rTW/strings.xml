@@ -23,7 +23,6 @@
     <string name="add_feed_feed_not_error">無法找到訂閱源</string>
     <string name="add_feed_save_error">無法儲存訂閱源</string>
     <string name="add_feed_network_error">無法找到訂閱源，請檢查您的連線。</string>
-    <string name="app_name">Capy Reader</string>
     <string name="add_feed_url_title">訂閱源或網站 URL</string>
     <string name="add_feed_submit">新增</string>
     <string name="add_feed_name_title">名稱</string>

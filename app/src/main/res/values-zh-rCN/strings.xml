@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="article_actions_mark_after_as_read">将以上内容标记为已读</string>
-    <string name="app_name">Capy Reader</string>
     <string name="add_feed_name_title">名称</string>
     <string name="add_feed_new_folder_title">新标签</string>
     <string name="add_feed_submit">添加</string>
