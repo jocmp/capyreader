@@ -22,10 +22,10 @@ enum class ThemeMode {
 
 enum class AppTheme {
     MONET,
-    DEFAULT,
     SUNSET,
     NEWSPRINT,
-    MONOCHROME;
+    MONOCHROME,
+    DEFAULT;
 
     val translationKey: Int
         get() = when (this) {
