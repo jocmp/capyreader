@@ -49,7 +49,6 @@
     <string name="settings_option_auto_delete_articles_title">Makaleleri Otomatik Sil</string>
     <string name="refresh_every_day">Hergün</string>
     <string name="relative_time_hours">%1$dsaat</string>
-    <string name="app_name">Capy Reader</string>
     <string name="add_feed_name_title">Ad</string>
     <string name="feed_form_cancel">Vazgeç</string>
     <string name="relative_time_days">%1$dgün</string>

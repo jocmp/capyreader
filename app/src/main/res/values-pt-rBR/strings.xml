@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Capy Reader</string>
     <string name="add_feed_url_title">URL do Feed ou Site</string>
     <string name="add_feed_name_title">Nome</string>
     <string name="add_feed_new_folder_title">Nova Etiqueta</string>
