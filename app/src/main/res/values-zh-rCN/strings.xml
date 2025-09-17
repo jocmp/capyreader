@@ -281,4 +281,10 @@
     <string name="theme_yotsuba">四叶</string>
     <string name="theme_monochrome">单色</string>
     <string name="settings_pure_black_dark_mode">纯黑暗模式</string>
+    <string name="theme_mode_system">系统</string>
+    <string name="theme_mode_light">浅色</string>
+    <string name="theme_mode_dark">深色</string>
+    <string name="theme_default">默认</string>
+    <string name="selected">已选择</string>
+    <string name="theme_sunset">日落</string>
 </resources>

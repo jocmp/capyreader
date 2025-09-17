@@ -283,4 +283,10 @@
     <string name="settings_pure_black_dark_mode">الوضع المظلم الأسود النقي</string>
     <string name="auth_fields_client_certificate">شهادة العميل (اختياري)</string>
     <string name="auth_fields_remove_client_cert">أزِل شهادة العميل</string>
+    <string name="theme_mode_system">نظام</string>
+    <string name="theme_mode_light">فاتح</string>
+    <string name="theme_mode_dark">داكن</string>
+    <string name="theme_default">المبدئي</string>
+    <string name="selected">محدّدة</string>
+    <string name="theme_sunset">الغروب</string>
 </resources>
