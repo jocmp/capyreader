@@ -23,7 +23,6 @@ import com.capyreader.app.ui.theme.colorschemes.MonochromeColorScheme
 import com.capyreader.app.ui.theme.colorschemes.NewsprintColorScheme
 import com.capyreader.app.ui.theme.colorschemes.SunsetColorScheme
 import com.capyreader.app.ui.theme.colorschemes.TachiyomiColorScheme
-import com.jocmp.capy.logging.CapyLog
 
 @Composable
 fun CapyTheme(
@@ -110,13 +109,6 @@ fun StatusBarColorListener(colorScheme: ColorScheme, themeMode: ThemeMode, pureB
                         .toArgb()
             }
 
-            CapyLog.info(
-                "bars",
-                mapOf(
-                    "light" to isAppearanceLightStatusBars,
-                    "mode" to themeMode,
-                )
-            )
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
                 isAppearanceLightStatusBars
         }
