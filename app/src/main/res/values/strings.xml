@@ -293,7 +293,7 @@
     <string name="settings_display_miscellaneous_title">Miscellaneous</string>
     <string name="full_content_parser_defuddle" translatable="false">Defuddle</string>
     <string name="full_content_parser_mercury_parser" translatable="false">Mercury Parser</string>
-    <string name="settings_full_content_parser">Full Content Parser (Experimental)</string>
+    <string name="settings_full_content_parser">Full Content Parser</string>
     <string name="open_articles_in_browser">Open Articles In Browser</string>
     <string name="selected">Selected</string>
 </resources>

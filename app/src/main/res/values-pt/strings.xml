@@ -259,7 +259,7 @@
     <string name="mark_read_position_floating_action_button">Botão de ação flutuante</string>
     <string name="mark_all_read_button_position">Posição do botão \"Marcar todos como lido\"</string>
     <string name="settings_display_miscellaneous_title">Diversos</string>
-    <string name="settings_full_content_parser">Analisador de conteúdo completo (Experimental)</string>
+    <string name="settings_full_content_parser">Analisador de conteúdo completo</string>
     <string name="open_articles_in_browser">Abrir artigos no navegador</string>
     <string name="theme_dynamic">Dinâmico</string>
     <string name="theme_green_apple">Maçã verde</string>
