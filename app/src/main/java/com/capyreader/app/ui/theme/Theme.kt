@@ -10,6 +10,7 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
@@ -46,7 +47,7 @@ fun CapyTheme(
     val view = LocalView.current
 
     if (!(preview || view.isInEditMode)) {
-        StatusBarColorListener(themeMode)
+        StatusBarColorListener(colorScheme, themeMode, pureBlack)
     }
 
     MaterialTheme(
@@ -94,9 +95,8 @@ fun ThemeMode.showAppearanceLightStatusBars(): Boolean {
 }
 
 @Composable
-fun StatusBarColorListener(themeMode: ThemeMode) {
+fun StatusBarColorListener(colorScheme: ColorScheme, themeMode: ThemeMode, pureBlack: Boolean) {
     val view = LocalView.current
-    val colorScheme = MaterialTheme.colorScheme
 
     val isAppearanceLightStatusBars = themeMode.showAppearanceLightStatusBars()
 
@@ -105,12 +105,32 @@ fun StatusBarColorListener(themeMode: ThemeMode) {
             val window = (view.context as Activity).window
 
             if (!isEdgeToEdgeAvailable()) {
-                window.statusBarColor = colorScheme.surfaceContainer.toArgb()
+                window.statusBarColor =
+                    findStatusBarColor(colorScheme, pureBlack, isAppearanceLightStatusBars)
+                        .toArgb()
             }
 
-            CapyLog.info("bars", mapOf("light" to isAppearanceLightStatusBars, "mode" to themeMode))
+            CapyLog.info(
+                "bars",
+                mapOf(
+                    "light" to isAppearanceLightStatusBars,
+                    "mode" to themeMode,
+                )
+            )
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
                 isAppearanceLightStatusBars
         }
+    }
+}
+
+fun findStatusBarColor(
+    colorScheme: ColorScheme,
+    pureBlack: Boolean,
+    isLightStatusBar: Boolean
+): Color {
+    return if (isLightStatusBar || !pureBlack) {
+        colorScheme.surface
+    } else {
+        Color.Black
     }
 }
