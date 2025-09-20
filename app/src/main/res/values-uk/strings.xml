@@ -36,12 +36,12 @@
     <string name="refresh_manually_only">Лише вручну</string>
     <string name="refresh_minutes">Кожні %1$d хвилин</string>
     <plurals name="refresh_hours">
-        <item quantity="one">Кожну %d годину</item>
+        <item quantity="one">Кожну годину</item>
         <item quantity="few">Кожні %d години</item>
         <item quantity="many">Кожних %d годин</item>
         <item quantity="other">Кожних %d годин</item>
     </plurals>
-    <string name="refresh_feeds_menu_label">Оновити стрічки</string>
+    <string name="refresh_feeds_menu_label">Оновлювати стрічки</string>
     <string name="nav_headline_tags">Теги</string>
     <string name="nav_headline_saved_searches">Пошуки</string>
     <string name="nav_headline_feeds">Стрічки</string>
@@ -109,7 +109,7 @@
     <string name="opml_import_toast_complete">Імпорт завершено</string>
     <string name="opml_import_toast_failed">Не вдалось імпортувати</string>
     <string name="theme_menu_label">Тема</string>
-    <string name="theme_mode_system">Система</string>
+    <string name="theme_mode_system">Системна</string>
     <string name="theme_mode_light">Світла</string>
     <string name="theme_mode_dark">Темна</string>
     <string name="theme_default">Типова</string>
@@ -145,7 +145,7 @@
     <string name="refresh_on_start">При запуску</string>
     <string name="empty_onboarding_title">Стрічок ще нема</string>
     <string name="empty_onboarding_prompt">Щоб почати, додайте стрічку</string>
-    <string name="article_style_options">Варіанти шрифту</string>
+    <string name="article_style_options">Параметри шрифту</string>
     <string name="font_option_system_default">Типовий системний</string>
     <string name="article_font_menu_label">Шрифт</string>
     <string name="article_font_scale_label">Розмір шрифту</string>
@@ -181,7 +181,7 @@
     <string name="settings_article_list_title">Список статей</string>
     <string name="opml_exporter_success">Експорт завершено</string>
     <string name="opml_exporter_failure">Не вдалось експортувати</string>
-    <string name="settings_reader_title">Читач</string>
+    <string name="settings_reader_title">Читання</string>
     <string name="settings_options_reader_pin_top_toolbar">Закріпити верхню панель</string>
     <string name="settings_options_reader_show_bottom_toolbar">Показати дії на панелі внизу</string>
     <string name="article_bottom_bar_next_article">Наступна стаття</string>
@@ -259,7 +259,7 @@
     <string name="widget_headlines_title">Нові заголовки</string>
     <string name="widget_headlines_see_more_button">Більше статей</string>
     <string name="widget_headlines_account_error">Спершу додайте обліковий запис</string>
-    <string name="mark_read_position_toolbar">Панель</string>
+    <string name="mark_read_position_toolbar">На панелі</string>
     <string name="settings_display_miscellaneous_title">Різне</string>
     <string name="settings_full_content_parser">Розпізнавати повний текст (експериментально)</string>
     <string name="open_articles_in_browser">Відкривати статті в браузері</string>
