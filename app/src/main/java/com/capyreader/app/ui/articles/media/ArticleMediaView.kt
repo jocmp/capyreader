@@ -52,6 +52,7 @@ import com.capyreader.app.ui.components.rememberSwiperState
 import com.capyreader.app.ui.isCompact
 import com.capyreader.app.ui.settings.LocalSnackbarHost
 import com.capyreader.app.ui.theme.CapyTheme
+import com.capyreader.app.ui.theme.findStatusBarColor
 import com.capyreader.app.ui.theme.showAppearanceLightStatusBars
 import me.saket.telephoto.zoomable.ZoomSpec
 import me.saket.telephoto.zoomable.coil.ZoomableAsyncImage
@@ -114,7 +115,8 @@ fun ArticleMediaView(
 
     val colorScheme = MaterialTheme.colorScheme
     val themeMode by appPreferences.themeMode.collectChangesWithCurrent()
-    val showAppearanceLightStatusBars = themeMode.showAppearanceLightStatusBars()
+    val showLightStatusBar = themeMode.showAppearanceLightStatusBars()
+    val pureBlack by appPreferences.pureBlackDarkMode.collectChangesWithCurrent()
 
     DisposableEffect(url) {
         val window = (view.context as Activity).window
@@ -130,11 +132,15 @@ fun ArticleMediaView(
             window.navigationBarColor = previousNavigationBarColor
 
             if (!isEdgeToEdgeAvailable()) {
-                window.statusBarColor = colorScheme.surfaceContainer.toArgb()
+                window.statusBarColor = findStatusBarColor(
+                    colorScheme,
+                    pureBlack = pureBlack,
+                    isLightStatusBar = showLightStatusBar
+                ).toArgb()
             }
 
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
-                showAppearanceLightStatusBars
+                showLightStatusBar
         }
     }
 }
