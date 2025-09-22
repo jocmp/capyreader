@@ -1,0 +1,2 @@
+• Simplify FreshRSS/Google Reader sync to speed up refresh
+• Set "Defuddle" as the default full content parser
