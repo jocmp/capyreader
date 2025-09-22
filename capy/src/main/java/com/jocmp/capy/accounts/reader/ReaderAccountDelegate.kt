@@ -238,12 +238,9 @@ internal class ReaderAccountDelegate(
     }
 
     private suspend fun refreshTopLevelArticles() {
-        val since = articleRecords.maxArrivedAt().toEpochSecond()
-
         refreshFeeds()
         refreshAllSavedSearches()
         refreshArticleState()
-        fetchPaginatedArticles(since = since, stream = Stream.Read())
         fetchMissingArticles()
     }
 
@@ -294,15 +291,6 @@ internal class ReaderAccountDelegate(
 
                 savedSearchRecords.deleteOrphaned(excludedIDs = tags.map { it.id })
             }
-        }
-
-        coroutineScope {
-            savedSearchRecords.allIDs()
-                .forEach { savedSearchID ->
-                    launch {
-                        fetchPaginatedArticles(stream = Stream.UserLabel(savedSearchID))
-                    }
-                }
         }
     }
 
