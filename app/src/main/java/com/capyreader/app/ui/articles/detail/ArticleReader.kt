@@ -2,10 +2,8 @@ package com.capyreader.app.ui.articles.detail
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -20,7 +18,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.unit.dp
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.rememberTalkbackPreference
 import com.capyreader.app.preferences.AppPreferences
@@ -117,7 +114,6 @@ fun ScrollableWebView(webViewState: WebViewState) {
                         .wrapContentHeight(),
                     state = webViewState,
                 )
-                Spacer(modifier = Modifier.height(120.dp))
             }
         }
     }
