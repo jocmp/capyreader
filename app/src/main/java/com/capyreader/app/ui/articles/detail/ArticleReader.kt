@@ -12,7 +12,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -32,6 +31,7 @@ import com.capyreader.app.ui.components.rememberSaveableShareLink
 import com.capyreader.app.ui.components.rememberWebViewState
 import com.jocmp.capy.Article
 import org.koin.compose.koinInject
+import kotlin.math.roundToInt
 
 @Composable
 fun ArticleReader(
@@ -93,7 +93,7 @@ fun ScrollableWebView(webViewState: WebViewState) {
         ScrollState(initial = 0)
     }
 
-    var lastScrollY by rememberSaveable { mutableIntStateOf(0) }
+    var lastScrollYPercent by rememberSaveable { mutableFloatStateOf(0f) }
 
     CornerTapGestureScroll(
         maxArticleHeight = maxHeight,
@@ -118,14 +118,14 @@ fun ScrollableWebView(webViewState: WebViewState) {
         }
     }
 
-    LaunchedEffect(scrollState.value) {
-        if (scrollState.value > 0) {
-            lastScrollY = scrollState.value
+    LaunchedEffect(scrollState.value, maxHeight) {
+        if (scrollState.value > 0 && maxHeight > 0) {
+            lastScrollYPercent = scrollState.value / maxHeight
         }
     }
-    LaunchedEffect(scrollState.maxValue) {
-        if (scrollState.maxValue > 0) {
-            scrollState.scrollTo(lastScrollY)
+    LaunchedEffect(scrollState.maxValue, maxHeight) {
+        if (scrollState.maxValue > 0 && maxHeight > 0) {
+            scrollState.scrollTo((lastScrollYPercent * maxHeight).roundToInt())
         }
     }
 }
