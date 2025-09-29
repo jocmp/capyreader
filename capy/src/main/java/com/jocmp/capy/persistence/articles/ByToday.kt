@@ -6,7 +6,6 @@ import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.db.Database
-import com.jocmp.capy.persistence.forCounts
 import com.jocmp.capy.persistence.listMapper
 import com.jocmp.capy.persistence.toStatusPair
 import java.time.OffsetDateTime
@@ -18,7 +17,7 @@ class ByToday(private val database: Database) {
         limit: Long,
         offset: Long,
         unreadSort: UnreadSortOrder,
-        since: OffsetDateTime? = null
+        since: OffsetDateTime?,
     ): Query<Article> {
         val (read, starred) = status.toStatusPair
         val newestFirst = isNewestFirst(status, unreadSort)
@@ -60,7 +59,7 @@ class ByToday(private val database: Database) {
         query: String? = null,
         since: OffsetDateTime? = null
     ): Query<Long> {
-        val (read, starred) = status.forCounts
+        val (read, starred) = status.toStatusPair
 
         return database.articlesByStatusQueries.countAll(
             read = read,

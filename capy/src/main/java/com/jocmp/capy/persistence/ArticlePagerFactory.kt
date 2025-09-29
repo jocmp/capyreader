@@ -171,6 +171,7 @@ class ArticlePagerFactory(private val database: Database) {
                     limit = limit,
                     unreadSort = unreadSort,
                     offset = offset,
+                    since = since,
                 )
             }
         )
