@@ -6,11 +6,12 @@ import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.db.Database
+import com.jocmp.capy.persistence.forCounts
 import com.jocmp.capy.persistence.listMapper
 import com.jocmp.capy.persistence.toStatusPair
 import java.time.OffsetDateTime
 
-class ByArticleStatus(private val database: Database) {
+class ByToday(private val database: Database) {
     fun all(
         status: ArticleStatus,
         query: String? = null,
@@ -28,7 +29,7 @@ class ByArticleStatus(private val database: Database) {
             limit = limit,
             offset = offset,
             lastReadAt = mapLastRead(read, since),
-            publishedSince = null,
+            publishedSince = mapTodayStartDate(),
             query = query,
             newestFirst = newestFirst,
             mapper = ::listMapper
@@ -48,14 +49,10 @@ class ByArticleStatus(private val database: Database) {
             starred = starred,
             afterArticleID = afterArticleID,
             beforeArticleID = beforeArticleID,
-            publishedSince = null,
+            publishedSince = mapTodayStartDate(),
             newestFirst = isNewestFirst(status, unreadSort),
             query = query,
         )
-    }
-
-    fun maxArrivedAt(): Long? {
-        return database.articlesQueries.lastUpdatedAt().executeAsOne().MAX
     }
 
     fun count(
@@ -63,14 +60,19 @@ class ByArticleStatus(private val database: Database) {
         query: String? = null,
         since: OffsetDateTime? = null
     ): Query<Long> {
-        val (read, starred) = status.toStatusPair
+        val (read, starred) = status.forCounts
 
         return database.articlesByStatusQueries.countAll(
             read = read,
             starred = starred,
             query = query,
             lastReadAt = mapLastRead(read, since),
-            publishedSince = null
+            publishedSince = mapTodayStartDate()
         )
+    }
+
+    private fun mapTodayStartDate(): Long {
+        return OffsetDateTime.now().toLocalDate().atStartOfDay()
+            .atOffset(OffsetDateTime.now().offset).toEpochSecond()
     }
 }

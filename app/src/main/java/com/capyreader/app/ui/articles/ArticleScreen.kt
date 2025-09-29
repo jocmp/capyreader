@@ -102,6 +102,7 @@ fun ArticleScreen(
     val folders by viewModel.folders.collectAsStateWithLifecycle(initialValue = emptyList())
     val savedSearches by viewModel.savedSearches.collectAsStateWithLifecycle(initialValue = emptyList())
     val statusCount by viewModel.statusCount.collectAsStateWithLifecycle(initialValue = 0)
+    val todayCount by viewModel.todayCount.collectAsStateWithLifecycle(initialValue = 0)
     val filter by viewModel.filter.collectAsStateWithLifecycle(appPreferences.filter.get())
     val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle("")
     val searchState by viewModel.searchState.collectAsStateWithLifecycle(SearchState.INACTIVE)
@@ -415,6 +416,14 @@ fun ArticleScreen(
             }
         }
 
+        val selectToday = {
+            if (!filter.hasTodaySelected()) {
+                openNextList { viewModel.selectToday() }
+            } else {
+                closeDrawer()
+            }
+        }
+
         ArticleHandler(article) { articleID ->
             selectArticle(articleID)
         }
@@ -433,12 +442,14 @@ fun ArticleScreen(
                     onSelectSavedSearch = selectSavedSearch,
                     onNavigateToSettings = onNavigateToSettings,
                     onFilterSelect = selectFilter,
+                    onSelectToday = { selectToday() },
                     refreshState = refreshAllState,
                     onRefresh = {
                         refreshAll()
                     },
                     filter = filter,
                     statusCount = statusCount,
+                    todayCount = todayCount,
                     onSelectStatus = { selectStatus(it) }
                 )
             },

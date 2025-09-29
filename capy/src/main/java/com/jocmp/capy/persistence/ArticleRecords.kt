@@ -15,6 +15,7 @@ import com.jocmp.capy.db.Database
 import com.jocmp.capy.persistence.articles.ByArticleStatus
 import com.jocmp.capy.persistence.articles.ByFeed
 import com.jocmp.capy.persistence.articles.BySavedSearch
+import com.jocmp.capy.persistence.articles.ByToday
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
@@ -27,6 +28,7 @@ internal class ArticleRecords internal constructor(
     val byStatus = ByArticleStatus(database)
     val byFeed = ByFeed(database)
     val bySavedSearch = BySavedSearch(database)
+    val byToday = ByToday(database)
 
     fun find(articleID: String): Article? {
         return database.articlesQueries.findBy(
@@ -224,6 +226,14 @@ internal class ArticleRecords internal constructor(
             }
     }
 
+    fun countToday(status: ArticleStatus): Long {
+        return byToday.count(
+            status = status,
+            query = null,
+            since = null
+        ).executeAsOneOrNull() ?: 0L
+    }
+
     /** Date in UTC */
     fun maxArrivedAt(): ZonedDateTime {
         val max = byStatus.maxArrivedAt()
@@ -272,6 +282,13 @@ internal class ArticleRecords internal constructor(
             is ArticleFilter.SavedSearches -> bySavedSearch.unreadArticleIDs(
                 filter.status,
                 savedSearchID = filter.savedSearchID,
+                range = range,
+                unreadSort = unreadSort,
+                query = query,
+            )
+
+            is ArticleFilter.Today -> byToday.unreadArticleIDs(
+                filter.status,
                 range = range,
                 unreadSort = unreadSort,
                 query = query,

@@ -20,12 +20,17 @@ sealed class ArticleFilter(open val status: ArticleStatus) {
         return this is Articles
     }
 
+    fun hasTodaySelected(): Boolean {
+        return this is Today
+    }
+
     fun withStatus(status: ArticleStatus): ArticleFilter {
         return when (this) {
             is Articles -> copy(articleStatus = status)
             is Feeds -> copy(feedStatus = status)
             is Folders -> copy(folderStatus = status)
             is SavedSearches -> copy(savedSearchStatus = status)
+            is Today -> copy(todayStatus = status)
         }
     }
 
@@ -56,6 +61,12 @@ sealed class ArticleFilter(open val status: ArticleStatus) {
     ) : ArticleFilter(savedSearchStatus) {
         override val status: ArticleStatus
             get() = savedSearchStatus
+    }
+
+    @Serializable
+    data class Today(val todayStatus: ArticleStatus) : ArticleFilter(todayStatus) {
+        override val status: ArticleStatus
+            get() = todayStatus
     }
 
     companion object {
