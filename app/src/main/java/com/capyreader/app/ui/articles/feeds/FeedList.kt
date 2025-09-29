@@ -52,6 +52,7 @@ fun FeedList(
     filter: ArticleFilter,
     statusCount: Long,
     todayCount: Long,
+    showTodayFilter: Boolean = true,
     folders: List<Folder> = emptyList(),
     feeds: List<Feed> = emptyList(),
     savedSearches: List<SavedSearch> = emptyList(),
@@ -138,24 +139,26 @@ fun FeedList(
                 }
             )
 
-            NavigationDrawerItem(
-                icon = {
-                    Icon(
-                        Icons.Rounded.Today,
-                        contentDescription = null
-                    )
-                },
-                label = {
-                    ListTitle(
-                        stringResource(R.string.filter_today),
-                    )
-                },
-                badge = { CountBadge(count = todayCount) },
-                selected = filter.hasTodaySelected(),
-                onClick = {
-                    onSelectToday()
-                }
-            )
+            if (showTodayFilter) {
+                NavigationDrawerItem(
+                    icon = {
+                        Icon(
+                            Icons.Rounded.Today,
+                            contentDescription = null
+                        )
+                    },
+                    label = {
+                        ListTitle(
+                            stringResource(R.string.filter_today),
+                        )
+                    },
+                    badge = { CountBadge(count = todayCount) },
+                    selected = filter.hasTodaySelected(),
+                    onClick = {
+                        onSelectToday()
+                    }
+                )
+            }
 
             Spacer(Modifier.height(8.dp))
 
@@ -247,6 +250,7 @@ fun FeedListPreview() {
                 filter = ArticleFilter.default(),
                 statusCount = 10,
                 todayCount = 5,
+                showTodayFilter = true,
                 onFeedAdded = {},
                 onSelectStatus = {},
                 onSelectSavedSearch = {},

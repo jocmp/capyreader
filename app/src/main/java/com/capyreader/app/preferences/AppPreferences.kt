@@ -82,6 +82,9 @@ class AppPreferences(context: Context) {
     val fullContentParser: Preference<FullContentParserType>
         get() = preferenceStore.getEnum("full_content_parser_type", FullContentParserType.default)
 
+    val showTodayFilter: Preference<Boolean>
+        get() = preferenceStore.getBoolean("show_today_filter", true)
+
     fun clearAll() {
         preferenceStore.clearAll()
     }

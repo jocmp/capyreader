@@ -158,6 +158,7 @@ class ArticleScreenViewModel(
     }
 
     val todayCount: Flow<Long> = filter.map { account.countToday(it.status) }
+    val showTodayFilter: Flow<Boolean> = appPreferences.showTodayFilter.stateIn(viewModelScope)
 
     val showUnauthorizedMessage: Boolean
         get() = _showUnauthorizedMessage == UnauthorizedMessageState.SHOW

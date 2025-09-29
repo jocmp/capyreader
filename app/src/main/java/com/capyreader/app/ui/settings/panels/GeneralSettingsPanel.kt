@@ -102,6 +102,8 @@ fun GeneralSettingsPanel(
             enableStickyFullContent = viewModel.enableStickyFullContent,
             fullContentParser = fullContentParser,
             updateFullContentParser = viewModel::updateFullContentParser,
+            showTodayFilter = viewModel.showTodayFilter,
+            updateShowTodayFilter = viewModel::updateShowTodayFilter,
         )
     }
 }
@@ -129,6 +131,8 @@ fun GeneralSettingsPanelView(
     updateFullContentParser: (parser: FullContentParserType) -> Unit,
     confirmMarkAllRead: Boolean,
     markReadOnScroll: Boolean,
+    showTodayFilter: Boolean,
+    updateShowTodayFilter: (show: Boolean) -> Unit,
 ) {
     val (isClearArticlesDialogOpen, setClearArticlesDialogOpen) = remember { mutableStateOf(false) }
 
@@ -149,6 +153,16 @@ fun GeneralSettingsPanelView(
             unreadSort,
             updateUnreadSort
         )
+
+        FormSection(title = stringResource(R.string.settings_section_categories)) {
+            RowItem {
+                TextSwitch(
+                    checked = showTodayFilter,
+                    onCheckedChange = updateShowTodayFilter,
+                    title = stringResource(R.string.settings_option_show_today_filter)
+                )
+            }
+        }
 
         FormSection(title = stringResource(R.string.settings_section_refresh)) {
             Column {
@@ -375,7 +389,9 @@ private fun GeneralSettingsPanelPreview() {
                 afterReadAll = AfterReadAllBehavior.NOTHING,
                 updateAfterReadAll = {},
                 fullContentParser = FullContentParserType.DEFUDDLE,
-                updateFullContentParser = {}
+                updateFullContentParser = {},
+                showTodayFilter = true,
+                updateShowTodayFilter = {}
             )
         }
     }
