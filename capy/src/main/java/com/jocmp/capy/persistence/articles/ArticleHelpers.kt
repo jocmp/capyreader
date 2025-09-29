@@ -15,3 +15,4 @@ internal fun mapLastRead(read: Boolean?, value: OffsetDateTime?): Long? {
 
     return null
 }
+

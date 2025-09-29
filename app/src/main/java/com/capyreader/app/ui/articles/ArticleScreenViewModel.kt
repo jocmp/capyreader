@@ -32,6 +32,7 @@ import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
 import com.jocmp.capy.countAll
+import com.jocmp.capy.countToday
 import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
@@ -156,6 +157,9 @@ class ArticleScreenViewModel(
         it.values.sum()
     }
 
+    val todayCount: Flow<Long> = filter.map { account.countToday(it.status) }
+    val showTodayFilter: Flow<Boolean> = appPreferences.showTodayFilter.stateIn(viewModelScope)
+
     val showUnauthorizedMessage: Boolean
         get() = _showUnauthorizedMessage == UnauthorizedMessageState.SHOW
 
@@ -187,6 +191,12 @@ class ArticleScreenViewModel(
 
     fun selectStatus(status: ArticleStatus) {
         val filter = latestFilter.withStatus(status = status)
+
+        updateFilter(filter)
+    }
+
+    fun selectToday() {
+        val filter = ArticleFilter.Today(todayStatus = latestFilter.status)
 
         updateFilter(filter)
     }

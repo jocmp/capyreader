@@ -26,6 +26,8 @@ import com.jocmp.readerclient.GoogleReader.Companion.BAD_TOKEN_HEADER_KEY
 import com.jocmp.readerclient.Item
 import com.jocmp.readerclient.ItemRef
 import com.jocmp.readerclient.Stream
+import com.jocmp.readerclient.Stream.Read
+import com.jocmp.readerclient.Stream.UserLabel
 import com.jocmp.readerclient.Subscription
 import com.jocmp.readerclient.SubscriptionEditAction
 import com.jocmp.readerclient.SubscriptionQuickAddResult
@@ -556,10 +558,10 @@ private val SubscriptionQuickAddResult.toSubscription: Subscription?
 
 private fun ArticleFilter.toStream(source: Source): Stream {
     return when (this) {
-        is ArticleFilter.Articles -> Stream.Read()
+        is ArticleFilter.Articles, is ArticleFilter.Today -> Read()
         is ArticleFilter.Feeds -> Stream.Feed(feedID)
         is ArticleFilter.Folders -> folderStream(this, source)
-        is ArticleFilter.SavedSearches -> Stream.UserLabel(savedSearchID)
+        is ArticleFilter.SavedSearches -> UserLabel(savedSearchID)
     }
 }
 

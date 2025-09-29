@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import com.capyreader.app.R
 import com.capyreader.app.ui.navigationTitle
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
@@ -41,6 +42,8 @@ fun FilterAppBarTitle(
 
         is ArticleFilter.SavedSearches ->
             allSavedSearches.find { it.id == filter.savedSearchID }?.name
+
+        is ArticleFilter.Today -> stringResource(R.string.filter_today)
     }.orEmpty()
 
     Box(

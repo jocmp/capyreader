@@ -48,6 +48,9 @@ class GeneralSettingsViewModel(
     var enableStickyFullContent by mutableStateOf(appPreferences.enableStickyFullContent.get())
         private set
 
+    var showTodayFilter by mutableStateOf(appPreferences.showTodayFilter.get())
+        private set
+
     val keywordBlocklist = account
         .preferences
         .keywordBlocklist
@@ -127,5 +130,11 @@ class GeneralSettingsViewModel(
         account.preferences.keywordBlocklist.getAndSet { list ->
             list.toMutableSet().apply { remove(keyword) }
         }
+    }
+
+    fun updateShowTodayFilter(show: Boolean) {
+        appPreferences.showTodayFilter.set(show)
+
+        showTodayFilter = show
     }
 }

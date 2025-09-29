@@ -14,6 +14,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.Today
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -50,10 +51,13 @@ import com.jocmp.capy.SavedSearch
 fun FeedList(
     filter: ArticleFilter,
     statusCount: Long,
+    todayCount: Long,
+    showTodayFilter: Boolean = true,
     folders: List<Folder> = emptyList(),
     feeds: List<Feed> = emptyList(),
     savedSearches: List<SavedSearch> = emptyList(),
     onFilterSelect: () -> Unit,
+    onSelectToday: () -> Unit,
     onSelectSavedSearch: (search: SavedSearch) -> Unit,
     refreshState: AngleRefreshState,
     onRefresh: () -> Unit,
@@ -134,6 +138,27 @@ fun FeedList(
                     onFilterSelect()
                 }
             )
+
+            if (showTodayFilter) {
+                NavigationDrawerItem(
+                    icon = {
+                        Icon(
+                            Icons.Rounded.Today,
+                            contentDescription = null
+                        )
+                    },
+                    label = {
+                        ListTitle(
+                            stringResource(R.string.filter_today),
+                        )
+                    },
+                    badge = { CountBadge(count = todayCount) },
+                    selected = filter.hasTodaySelected(),
+                    onClick = {
+                        onSelectToday()
+                    }
+                )
+            }
 
             Spacer(Modifier.height(8.dp))
 
@@ -221,8 +246,11 @@ fun FeedListPreview() {
                 onNavigateToSettings = {},
                 onRefresh = {},
                 onFilterSelect = {},
+                onSelectToday = {},
                 filter = ArticleFilter.default(),
                 statusCount = 10,
+                todayCount = 5,
+                showTodayFilter = true,
                 onFeedAdded = {},
                 onSelectStatus = {},
                 onSelectSavedSearch = {},

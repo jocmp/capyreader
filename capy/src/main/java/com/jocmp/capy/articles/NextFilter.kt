@@ -118,6 +118,21 @@ sealed class NextFilter {
                 }
 
                 is ArticleFilter.Feeds -> findNextFeed(filter, folders, feeds)
+                is ArticleFilter.Today -> {
+                    val firstFeed = feeds.firstOrNull()
+                    val firstFolder = folders.firstOrNull()
+                    val firstSearch = searches.firstOrNull()
+
+                    if (firstSearch != null) {
+                        SearchFilter(firstSearch.id)
+                    } else if (firstFolder != null) {
+                        FolderFilter(firstFolder.title)
+                    } else if (firstFeed != null) {
+                        FeedFilter(feedID = firstFeed.id, folderTitle = null)
+                    } else {
+                        null
+                    }
+                }
             }
         }
 
