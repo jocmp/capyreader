@@ -32,6 +32,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import okhttp3.OkHttpClient
 import java.io.InputStream
@@ -214,6 +215,19 @@ data class Account(
 
         val enclosures = enclosureRecords.byArticle(articleID)
         return articleRecords.find(articleID = articleID)?.copy(enclosures = enclosures)
+    }
+
+    fun findArticleAsync(articleID: String): Flow<Article?> {
+        if (articleID.isBlank()) {
+            return flow { null }
+        }
+
+        return articleRecords.findAsync(articleID)
+            .map {
+                val enclosures = enclosureRecords.byArticle(articleID)
+
+                it?.copy(enclosures = enclosures)
+            }
     }
 
     suspend fun addStar(articleID: String): Result<Unit> {
