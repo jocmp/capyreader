@@ -1,0 +1,4 @@
+• Add "Today" category to show all articles from the current day
+  • This can be turned of in Settings > General > Categories
+• Tweak reader restore state to use percentage instead of absolute value
+• Fix missing highlight options in reader
