@@ -21,6 +21,8 @@ import com.jocmp.capy.Account
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
+import com.jocmp.capy.ArticleStatus.STARRED
+import com.jocmp.capy.ArticleStatus.UNREAD
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
@@ -158,7 +160,7 @@ class ArticleScreenViewModel(
     }
 
     val todayCount: Flow<Long> = _counts.combine(filter) { _, filter ->
-       account.countToday(filter.status)
+        account.countToday(if (filter.status == STARRED) STARRED else UNREAD)
     }
 
     val showTodayFilter: Flow<Boolean> = appPreferences.showTodayFilter.stateIn(viewModelScope)
@@ -645,7 +647,7 @@ class ArticleScreenViewModel(
         if (nextFilter != null) {
             selectNextFilter(nextFilter)
         } else {
-            if (latestFilter.status == ArticleStatus.UNREAD) {
+            if (latestFilter.status == UNREAD) {
                 selectArticleFilter()
             }
             onArticlesCleared()
