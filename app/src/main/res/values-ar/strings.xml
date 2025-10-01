@@ -265,7 +265,7 @@
     <string name="mark_read_position_floating_action_button">زر الإجراء العائم</string>
     <string name="mark_all_read_button_position">موضع زر وضع علامة \"قراءة الكل\"</string>
     <string name="settings_display_miscellaneous_title">متفرقات</string>
-    <string name="settings_full_content_parser">محلّل المحتوى الكامل (تجريبي)</string>
+    <string name="settings_full_content_parser">محلّل المحتوى الكامل</string>
     <string name="open_articles_in_browser">افتح المقالات في المتصفح</string>
     <string name="theme_dynamic">ديناميكي</string>
     <string name="theme_green_apple">تفاحة خضراء</string>
@@ -288,4 +288,7 @@
     <string name="theme_default">المبدئي</string>
     <string name="selected">محدّدة</string>
     <string name="theme_sunset">الغروب</string>
+    <string name="filter_today">اليوم</string>
+    <string name="settings_section_categories">الفئات</string>
+    <string name="settings_option_show_today_filter">اليوم</string>
 </resources>
