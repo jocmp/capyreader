@@ -265,7 +265,7 @@
     <string name="mark_read_position_floating_action_button">Pulsante azione fluttuante</string>
     <string name="mark_all_read_button_position">Imposta la posizione del pulsante per segnare tutte le voci come lette</string>
     <string name="settings_display_miscellaneous_title">Varie</string>
-    <string name="settings_full_content_parser">Analizzatore del contenuto completo (sperimentale)</string>
+    <string name="settings_full_content_parser">Analizzatore del contenuto completo</string>
     <string name="open_articles_in_browser">Apri gli articoli nel browser</string>
     <string name="theme_dynamic">Dinamico</string>
     <string name="theme_green_apple">Mela verde</string>
@@ -288,4 +288,7 @@
     <string name="theme_default">Predefinito</string>
     <string name="theme_sunset">Tramonto</string>
     <string name="selected">Selezionato</string>
+    <string name="filter_today">Oggi</string>
+    <string name="settings_section_categories">Categorie</string>
+    <string name="settings_option_show_today_filter">Oggi</string>
 </resources>
