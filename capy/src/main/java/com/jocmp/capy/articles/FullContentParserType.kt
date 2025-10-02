@@ -1,11 +1,11 @@
 package com.jocmp.capy.articles
 
 enum class FullContentParserType {
-    DEFUDDLE,
-    MERCURY_PARSER;
+    MERCURY_PARSER,
+    DEFUDDLE;
 
     companion object {
         val default
-            get() = DEFUDDLE
+            get() = MERCURY_PARSER
     }
 }
