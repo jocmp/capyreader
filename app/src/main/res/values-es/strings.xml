@@ -274,4 +274,18 @@
     <string name="mark_read_position_floating_action_button">Botón de Acción Flotante</string>
     <string name="mark_all_read_button_position">Posición del Botón Marcar Todo Leido</string>
     <string name="settings_display_miscellaneous_title">Misceláneo</string>
+    <string name="filter_today">Hoy</string>
+    <string name="auth_fields_client_certificate">Certificado del cliente (opcional)</string>
+    <string name="auth_fields_remove_client_cert">Eliminar certificado del cliente</string>
+    <string name="theme_mode_system">Sistema</string>
+    <string name="theme_mode_light">Claro</string>
+    <string name="theme_mode_dark">Oscuro</string>
+    <string name="theme_default">Por defecto</string>
+    <string name="theme_sunset">Atardecer</string>
+    <string name="settings_pure_black_dark_mode">Modo oscuro puro</string>
+    <string name="settings_section_categories">Categorías</string>
+    <string name="settings_option_show_today_filter">Hoy</string>
+    <string name="settings_full_content_parser">Analizador del contenido completo</string>
+    <string name="open_articles_in_browser">Abrir artículos en el navegador</string>
+    <string name="selected">Seleccionado</string>
 </resources>
