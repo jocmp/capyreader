@@ -282,4 +282,8 @@
     <string name="settings_display_miscellaneous_title">Verschiedenes</string>
     <string name="open_articles_in_browser">Artikel im Browser öffnen</string>
     <string name="selected">Ausgewählt</string>
+    <string name="filter_today">Heute</string>
+    <string name="theme_sunset">Sonnenuntergang</string>
+    <string name="settings_section_categories">Kategorien</string>
+    <string name="settings_option_show_today_filter">Heute</string>
 </resources>

@@ -278,7 +278,10 @@
     <string name="theme_monochrome">Μονοχρωμία</string>
     <string name="theme_sunset">Ηλιοβασίλεμα</string>
     <string name="settings_pure_black_dark_mode">Απόλυτα μαύρη σκοτεινή λειτουργία</string>
-    <string name="settings_full_content_parser">Πλήρης Αναλυτής Περιεχομένου (Πειραματικό)</string>
+    <string name="settings_full_content_parser">Πλήρης Αναλυτής Περιεχομένου</string>
     <string name="open_articles_in_browser">Άνοιγμα Άρθρων στον Περιηγητή</string>
     <string name="selected">Επιλέχθηκε</string>
+    <string name="filter_today">Σήμερα</string>
+    <string name="settings_section_categories">Κατηγορίες</string>
+    <string name="settings_option_show_today_filter">Σήμερα</string>
 </resources>

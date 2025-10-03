@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="nav_headline_tags">Категории</string>
+    <string name="nav_headline_tags">Етикети</string>
     <string name="app_name">Capy Reader</string>
     <string name="add_account_title">Добавяне на профил</string>
     <string name="transfers_export_subscriptions">Изнасяне на абонаменти</string>
@@ -8,7 +8,7 @@
     <string name="settings_import_progress">Внасяне на абонаменти %1$d от %2$d</string>
     <string name="account_source_feedbin">Feedbin</string>
     <string name="account_source_local">Локален</string>
-    <string name="edit_feed_tags">Категории</string>
+    <string name="edit_feed_tags">Етикети</string>
     <string name="unauthorized_dialog_description">Възникна проблем при свързването с вашия профил. Моля, влезте отново.</string>
     <string name="auth_fields_hide_password">Скрий паролата</string>
     <string name="settings_top_bar_title">Настройки</string>
@@ -175,7 +175,7 @@
     <string name="settings_notifications_select_none">Няма избрано</string>
     <string name="edit_feed_notifications_title">Активирай известията</string>
     <string name="notifications_permission_disabled_title">Разрешението за известие е деактивирано</string>
-    <string name="edit_feed_tags_section">Категории</string>
+    <string name="edit_feed_tags_section">Етикети</string>
     <string name="settings_panel_notifications_title">Известия</string>
     <string name="settings_enable_refresh_call_to_action">Първо трябва да се активира периодично обновяване</string>
     <string name="notifications_permissions_disabled_call_to_action">Настройки</string>
@@ -265,7 +265,7 @@
     <string name="mark_read_position_floating_action_button">Плаващ бутон за действие</string>
     <string name="mark_all_read_button_position">Позиция на бутона „Маркирай всички прочетени“</string>
     <string name="settings_display_miscellaneous_title">Разни</string>
-    <string name="settings_full_content_parser">Пълен анализатор на съдържание (Експериментално)</string>
+    <string name="settings_full_content_parser">Пълен анализатор на съдържание</string>
     <string name="open_articles_in_browser">Отваряне на статии в браузъра</string>
     <string name="auth_fields_client_certificate">Клиентски сертификат (по избор)</string>
     <string name="auth_fields_remove_client_cert">Премахване на клиентски сертификат</string>
@@ -288,4 +288,7 @@
     <string name="theme_tako">Тако</string>
     <string name="theme_newsprint">Вестникарска хартия</string>
     <string name="theme_sunset">Залез</string>
+    <string name="filter_today">Днес</string>
+    <string name="settings_section_categories">Категории</string>
+    <string name="settings_option_show_today_filter">Днес</string>
 </resources>

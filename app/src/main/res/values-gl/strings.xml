@@ -258,7 +258,7 @@
     <string name="mark_all_read_button_position">Posición do botón para marcar todo lido</string>
     <string name="settings_display_miscellaneous_title">Varios</string>
     <string name="settings_article_list_shorten_titles">Acurtar títulos</string>
-    <string name="settings_full_content_parser">Procesador do contido completo (experimental)</string>
+    <string name="settings_full_content_parser">Procesador do contido completo</string>
     <string name="open_articles_in_browser">Abrir artigos no navegador</string>
     <string name="auth_fields_client_certificate">Certificado cliente (optativo)</string>
     <string name="auth_fields_remove_client_cert">Retirar certificado cliente</string>
@@ -281,4 +281,7 @@
     <string name="theme_sunset">Solpor</string>
     <string name="settings_pure_black_dark_mode">Negro puro modo escuro</string>
     <string name="selected">Seleccionado</string>
+    <string name="filter_today">Hoxe</string>
+    <string name="settings_section_categories">Categorías</string>
+    <string name="settings_option_show_today_filter">Hoxe</string>
 </resources>
