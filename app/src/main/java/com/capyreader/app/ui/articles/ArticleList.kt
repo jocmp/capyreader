@@ -140,7 +140,20 @@ fun MarkReadOnScroll(
             .debounce(500)
             .collect { firstVisibleIndex ->
                 val offscreenIndex = firstVisibleIndex - 1
-                val markAsRead = offscreenIndex > 0 && articles.itemCount > 0
+
+                val markAsRead =
+                    (articles.itemCount == 1 && firstVisibleIndex > 0) ||
+                            (offscreenIndex > 0 && articles.itemCount > 0)
+
+                CapyLog.info(
+                    "collect",
+                    mapOf(
+                        "first" to firstVisibleIndex,
+                        "count" to articles.itemCount,
+                        "mark" to markAsRead,
+                        "offset" to offscreenIndex,
+                    )
+                )
 
                 if (!markAsRead) {
                     return@collect
