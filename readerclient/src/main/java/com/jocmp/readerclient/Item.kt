@@ -32,7 +32,7 @@ data class Item(
 
     @JsonClass(generateAdapter = true)
     data class Summary(
-        val content: String,
+        val content: String?,
     )
 
     @JsonClass(generateAdapter = true)

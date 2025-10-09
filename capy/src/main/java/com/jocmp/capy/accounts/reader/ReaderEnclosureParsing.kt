@@ -14,7 +14,7 @@ internal object ReaderEnclosureParsing {
             return imageHref.unescapingHTMLCharacters
         }
 
-        val content = item.summary.content
+        val content = item.summary.content.orEmpty()
 
         return Jsoup.parse(content).selectFirst("img")?.attr("src")
     }
