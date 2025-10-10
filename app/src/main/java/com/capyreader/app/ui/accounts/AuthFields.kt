@@ -109,7 +109,7 @@ fun AuthFields(
             value = password,
             onValueChange = onPasswordChange,
             label = {
-                Text(stringResource(R.string.auth_fields_password))
+                Text(stringResource(source.passwordKey))
             },
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Go,
@@ -199,7 +199,10 @@ fun CertificateField(
                 IconButton(
                     onClick = onClearClientCert
                 ) {
-                    Icon(imageVector = Icons.Filled.RemoveCircleOutline, stringResource(R.string.auth_fields_remove_client_cert))
+                    Icon(
+                        imageVector = Icons.Filled.RemoveCircleOutline,
+                        stringResource(R.string.auth_fields_remove_client_cert)
+                    )
                 }
             }
         },
@@ -236,10 +239,18 @@ private fun ErrorAlert(message: String) {
 }
 
 private val Source.usernameKey
-    get() = when(this) {
+    get() = when (this) {
         Source.FEEDBIN -> R.string.auth_fields_email
         else -> R.string.auth_fields_username
     }
+
+private val Source.passwordKey
+    get() = when (this) {
+        Source.FRESHRSS -> R.string.auth_fields_freshrss_api_password
+        else -> R.string.auth_fields_password
+    }
+
+
 
 @Preview
 @Composable
