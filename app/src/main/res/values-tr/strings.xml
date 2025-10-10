@@ -270,4 +270,21 @@
     <string name="theme_yotsuba">Yotsuba</string>
     <string name="theme_monochrome">Tek renkli</string>
     <string name="settings_pure_black_dark_mode">Saf siyah karanlık mod</string>
+    <string name="filter_today">Bugün</string>
+    <string name="auth_fields_client_certificate">İstemci sertifikası (isteğe bağlı)</string>
+    <string name="auth_fields_remove_client_cert">İstemci sertifikasını kaldır</string>
+    <string name="theme_mode_system">Sistem</string>
+    <string name="theme_mode_light">Açık</string>
+    <string name="theme_mode_dark">Koyu</string>
+    <string name="theme_default">Öntanımlı</string>
+    <string name="theme_sunset">Gün batımı</string>
+    <string name="settings_section_categories">Kategoriler</string>
+    <string name="settings_option_show_today_filter">Bugün</string>
+    <string name="mark_read_position_toolbar">Araç çubuğu</string>
+    <string name="mark_read_position_floating_action_button">Yüzen Eylem Düğmesi</string>
+    <string name="mark_all_read_button_position">Tümünü Okundu Olarak İşaretle Düğmesi Konumu</string>
+    <string name="settings_display_miscellaneous_title">Çeşitli</string>
+    <string name="settings_full_content_parser">Tam İçerik Ayrıştırıcı</string>
+    <string name="open_articles_in_browser">Makaleleri Tarayıcıda Aç</string>
+    <string name="selected">Seçilen</string>
 </resources>
