@@ -312,7 +312,7 @@ internal class ReaderAccountDelegate(
         withResult(
             googleReader.streamItemsIDs(
                 stream = Stream.ReadingList(),
-                excludedStream = Stream.Read()
+                excludedStream = Read()
             )
         ) { result ->
             articleRecords.markAllUnread(articleIDs = result.itemRefs.map { it.hexID })

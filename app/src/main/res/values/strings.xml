@@ -299,4 +299,5 @@
     <string name="settings_full_content_parser">Full Content Parser</string>
     <string name="open_articles_in_browser">Open Articles In Browser</string>
     <string name="selected">Selected</string>
+    <string name="auth_fields_freshrss_api_password">API Password</string>
 </resources>
