@@ -270,4 +270,18 @@
     <string name="theme_newsprint">Газетная бумага</string>
     <string name="theme_monochrome">Монохромная</string>
     <string name="settings_pure_black_dark_mode">Режим чистого чёрного</string>
+    <string name="filter_today">Сегодня</string>
+    <string name="auth_fields_client_certificate">Сертификат клиента (необязательно)</string>
+    <string name="auth_fields_remove_client_cert">Удалить сертификат клиента</string>
+    <string name="theme_mode_system">Как в системе</string>
+    <string name="theme_mode_light">Светлая</string>
+    <string name="theme_mode_dark">Тёмная</string>
+    <string name="theme_default">По умолчанию</string>
+    <string name="theme_sunset">Закат</string>
+    <string name="settings_section_categories">Категории</string>
+    <string name="settings_option_show_today_filter">Сегодня</string>
+    <string name="settings_full_content_parser">Разбор полного текста</string>
+    <string name="open_articles_in_browser">Открытые статьи в обозревателе</string>
+    <string name="selected">Выбранно</string>
+    <string name="auth_fields_freshrss_api_password">Пароль API</string>
 </resources>
