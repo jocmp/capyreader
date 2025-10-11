@@ -280,4 +280,5 @@
     <string name="filter_today">今天</string>
     <string name="settings_option_show_today_filter">今天</string>
     <string name="settings_section_categories">类别</string>
+    <string name="auth_fields_freshrss_api_password">API 密码</string>
 </resources>
