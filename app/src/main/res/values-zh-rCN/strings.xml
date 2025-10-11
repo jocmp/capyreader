@@ -268,16 +268,7 @@
     <string name="auth_fields_client_certificate">客户端证书（可选）</string>
     <string name="auth_fields_remove_client_cert">移除客户端证书</string>
     <string name="theme_dynamic">动态</string>
-    <string name="theme_green_apple">青苹果</string>
-    <string name="theme_lavender">薰衣草</string>
-    <string name="theme_midnight_dusk">午夜黄昏</string>
-    <string name="theme_nord">Nord</string>
-    <string name="theme_strawberry_daiquiri">草莓代基里</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_teal_turquoise">青绿 &amp; 绿松石</string>
-    <string name="theme_tidal_wave">潮汐波浪</string>
     <string name="theme_newsprint">新闻纸</string>
-    <string name="theme_yotsuba">四叶</string>
     <string name="theme_monochrome">单色</string>
     <string name="settings_pure_black_dark_mode">纯黑暗模式</string>
     <string name="theme_mode_system">系统</string>

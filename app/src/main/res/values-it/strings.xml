@@ -268,16 +268,7 @@
     <string name="settings_full_content_parser">Analizzatore del contenuto completo</string>
     <string name="open_articles_in_browser">Apri gli articoli nel browser</string>
     <string name="theme_dynamic">Dinamico</string>
-    <string name="theme_green_apple">Mela verde</string>
-    <string name="theme_lavender">Lavanda</string>
-    <string name="theme_midnight_dusk">Crepuscolo di mezzanotte</string>
-    <string name="theme_nord">Nord</string>
-    <string name="theme_strawberry_daiquiri">Daiquiri alla fragola</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_teal_turquoise">Verde acqua e turchese</string>
-    <string name="theme_tidal_wave">Onda di marea</string>
     <string name="theme_newsprint">Carta di giornale</string>
-    <string name="theme_yotsuba">Yotsuba</string>
     <string name="theme_monochrome">Monocromatico</string>
     <string name="settings_pure_black_dark_mode">Modalità scura nero puro</string>
     <string name="auth_fields_client_certificate">Certificato del client (opzionale)</string>

@@ -263,26 +263,17 @@
     <string name="theme_mode_light">Gaišs</string>
     <string name="theme_mode_dark">Tumšs</string>
     <string name="theme_dynamic">Dinamisks</string>
-    <string name="theme_green_apple">Ābolzaļš</string>
-    <string name="theme_lavender">Lavandas</string>
-    <string name="theme_midnight_dusk">Pusnakts krēsla</string>
     <string name="settings_section_categories">Kategorijas</string>
     <string name="theme_sunset">Saulriets</string>
     <string name="auth_fields_remove_client_cert">Noņemt klienta sertifikātu</string>
-    <string name="theme_nord">Arktisks, ziemeļu-zilgans</string>
-    <string name="theme_strawberry_daiquiri">Zemeņu daikiri</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_teal_turquoise">Zilganzaļs, tumšs ciāns un tirkīzs</string>
     <string name="filter_today">Šodienas</string>
     <string name="theme_newsprint">Laikraksts, avīze</string>
     <string name="settings_option_show_today_filter">Rādīt šodienas raksti atlases iespēju</string>
     <string name="settings_full_content_parser">Visu (pilnu) raksta saturu parsētājs</string>
     <string name="auth_fields_client_certificate">Klienta sertifikāts (neobligāti, pēc izvēles)</string>
     <string name="theme_default">Noklusētais</string>
-    <string name="theme_tidal_wave">Plūdmaiņas (paisuma vai bēguma) vilnis</string>
     <string name="theme_monochrome">Vienkrāsains</string>
     <string name="settings_pure_black_dark_mode">Pilnīgi melns tumšais motīvs</string>
     <string name="open_articles_in_browser">Atvērt rakstus pārlūkā</string>
-    <string name="theme_yotsuba">Yotsuba manga</string>
     <string name="selected">Atlasītie</string>
 </resources>

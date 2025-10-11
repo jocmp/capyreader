@@ -267,16 +267,7 @@
     <string name="mark_all_read_button_position">Положение кнопки «Отметить всё прочитанным»</string>
     <string name="settings_display_miscellaneous_title">Разное</string>
     <string name="theme_dynamic">Динамическая</string>
-    <string name="theme_green_apple">Зеленое яблоко</string>
-    <string name="theme_lavender">Лаванда</string>
-    <string name="theme_midnight_dusk">Полночные сумерки</string>
-    <string name="theme_nord">Nord</string>
-    <string name="theme_strawberry_daiquiri">Клубничный дайкири</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_teal_turquoise">Сине-зелёная &amp; бирюзовая</string>
-    <string name="theme_tidal_wave">Приливная волна</string>
     <string name="theme_newsprint">Газетная бумага</string>
-    <string name="theme_yotsuba">Yotsuba</string>
     <string name="theme_monochrome">Монохромная</string>
     <string name="settings_pure_black_dark_mode">Режим чистого чёрного</string>
 </resources>

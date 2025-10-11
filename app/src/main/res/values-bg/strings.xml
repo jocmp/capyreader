@@ -275,17 +275,8 @@
     <string name="theme_mode_dark">Тъмна</string>
     <string name="theme_default">По подразбиране</string>
     <string name="theme_dynamic">Динамична</string>
-    <string name="theme_green_apple">Зелена ябълка</string>
-    <string name="theme_lavender">Лавандула</string>
-    <string name="theme_midnight_dusk">Полунощен здрач</string>
-    <string name="theme_nord">Север</string>
-    <string name="theme_strawberry_daiquiri">Ягодово дайкири</string>
-    <string name="theme_teal_turquoise">Тийл и тюркоаз</string>
-    <string name="theme_tidal_wave">Приливна вълна</string>
-    <string name="theme_yotsuba">Йоцуба</string>
     <string name="theme_monochrome">Монохром</string>
     <string name="settings_pure_black_dark_mode">Чисто черен тъмен режим</string>
-    <string name="theme_tako">Тако</string>
     <string name="theme_newsprint">Вестникарска хартия</string>
     <string name="theme_sunset">Залез</string>
     <string name="filter_today">Днес</string>

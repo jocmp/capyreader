@@ -258,16 +258,7 @@
     <string name="add_account_miniflux_signup_prompt">Miniflux örneğiniz yok mu?</string>
     <string name="add_account_miniflux_signup_link_text">Daha fazlasını öğrenin.</string>
     <string name="theme_dynamic">Dinamik</string>
-    <string name="theme_green_apple">Yeşil elma</string>
-    <string name="theme_lavender">Lavanta</string>
-    <string name="theme_midnight_dusk">Gece yarısı alacakaranlığı</string>
-    <string name="theme_nord">Nord</string>
-    <string name="theme_strawberry_daiquiri">Çilekli daiquiri</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_teal_turquoise">Çamurcun &amp; turkuaz</string>
-    <string name="theme_tidal_wave">Gelgit dalgası</string>
     <string name="theme_newsprint">Gazete kağıdı</string>
-    <string name="theme_yotsuba">Yotsuba</string>
     <string name="theme_monochrome">Tek renkli</string>
     <string name="settings_pure_black_dark_mode">Saf siyah karanlık mod</string>
     <string name="filter_today">Bugün</string>

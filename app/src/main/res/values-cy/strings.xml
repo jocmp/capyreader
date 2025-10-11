@@ -268,16 +268,7 @@
     <string name="theme_mode_dark">Tywyll</string>
     <string name="theme_default">Rhagosodedig</string>
     <string name="theme_dynamic">Dynamig</string>
-    <string name="theme_green_apple">Afal gwyrdd</string>
-    <string name="theme_lavender">Lafant</string>
-    <string name="theme_midnight_dusk">Cyfnos</string>
-    <string name="theme_nord">Nord</string>
-    <string name="theme_strawberry_daiquiri">Mefusen</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_teal_turquoise">Gwyrddlas</string>
-    <string name="theme_tidal_wave">Ton llanw</string>
     <string name="theme_newsprint">Papur newydd</string>
-    <string name="theme_yotsuba">Yotsuba</string>
     <string name="theme_monochrome">Monocrom</string>
     <string name="theme_sunset">Machlud haul</string>
     <string name="settings_pure_black_dark_mode">Modd du pur</string>

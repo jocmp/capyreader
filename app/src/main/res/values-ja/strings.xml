@@ -109,13 +109,7 @@
     <string name="theme_mode_dark">ダーク</string>
     <string name="theme_default">デフォルト</string>
     <string name="theme_dynamic">ダイナミック</string>
-    <string name="theme_green_apple">青りんご</string>
-    <string name="theme_lavender">ラベンダー</string>
-    <string name="theme_nord">Nord</string>
-    <string name="theme_strawberry_daiquiri">ストロベリーダイキリ</string>
-    <string name="theme_tako">Tako</string>
     <string name="theme_newsprint">新聞紙</string>
-    <string name="theme_yotsuba">四つ葉</string>
     <string name="theme_monochrome">モノクロ</string>
     <string name="theme_sunset">夕焼け</string>
     <string name="settings_pure_black_dark_mode">ピュアブラックのダークモード</string>

@@ -273,16 +273,7 @@
     <string name="theme_mode_dark">Tume kujundus</string>
     <string name="theme_default">Vaikimisi kujundus</string>
     <string name="theme_dynamic">Dünaamiline kujundus</string>
-    <string name="theme_green_apple">Roheline õun</string>
-    <string name="theme_lavender">Lavendel</string>
-    <string name="theme_midnight_dusk">Kesköine hämarik</string>
-    <string name="theme_nord">Põhjala</string>
-    <string name="theme_strawberry_daiquiri">Maasika daiquiri</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_teal_turquoise">Sinakasroheline ja türkiissinine</string>
-    <string name="theme_tidal_wave">Tõusulaine</string>
     <string name="theme_newsprint">Ajalehepaber</string>
-    <string name="theme_yotsuba">Yotsuba</string>
     <string name="theme_monochrome">Mustvalge</string>
     <string name="theme_sunset">Päikeseloojang</string>
     <string name="settings_pure_black_dark_mode">Süsimust kujundus</string>

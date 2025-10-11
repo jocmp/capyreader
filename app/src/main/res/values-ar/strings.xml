@@ -268,16 +268,7 @@
     <string name="settings_full_content_parser">محلّل المحتوى الكامل</string>
     <string name="open_articles_in_browser">افتح المقالات في المتصفح</string>
     <string name="theme_dynamic">ديناميكي</string>
-    <string name="theme_green_apple">تفاحة خضراء</string>
-    <string name="theme_lavender">الخزامى</string>
-    <string name="theme_midnight_dusk">غسق منتصف الليل</string>
-    <string name="theme_nord">Nord</string>
-    <string name="theme_strawberry_daiquiri">دايكيري الفراولة</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_teal_turquoise">أزرق مخضر &amp; فيروزي</string>
-    <string name="theme_tidal_wave">موجة المد</string>
     <string name="theme_newsprint">ورق الجرائد</string>
-    <string name="theme_yotsuba">يوتسوبا</string>
     <string name="theme_monochrome">أحادي اللون</string>
     <string name="settings_pure_black_dark_mode">الوضع المظلم الأسود النقي</string>
     <string name="auth_fields_client_certificate">شهادة العميل (اختياري)</string>

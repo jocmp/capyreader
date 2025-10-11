@@ -32,16 +32,7 @@
     <string name="opml_export_button_text">Exporter en OPML</string>
     <string name="theme_menu_label">Thème</string>
     <string name="theme_dynamic">Dynamique</string>
-    <string name="theme_green_apple">Pomme verte</string>
-    <string name="theme_lavender">Lavande</string>
-    <string name="theme_midnight_dusk">Crépuscule de minuit</string>
-    <string name="theme_nord">Nord</string>
-    <string name="theme_strawberry_daiquiri">Daiquiri aux fraises</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_teal_turquoise">Bleu canard et turquoise</string>
-    <string name="theme_tidal_wave">Raz-de-marée</string>
     <string name="theme_newsprint">Papier journal</string>
-    <string name="theme_yotsuba">Yotsuba</string>
     <string name="theme_monochrome">Monochrome</string>
     <string name="empty_onboarding_prompt">Commencer en ajoutant un flux</string>
     <string name="opml_exporter_failure">Export échoué</string>
