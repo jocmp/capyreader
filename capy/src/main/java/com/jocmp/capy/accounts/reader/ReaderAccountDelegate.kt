@@ -263,7 +263,7 @@ internal class ReaderAccountDelegate(
             title = subscription.title,
             feed_url = subscription.url,
             site_url = subscription.htmlUrl,
-            favicon_url = subscription.iconUrl.ifBlank {
+            favicon_url = subscription.iconUrl?.ifBlank {
                 CapyLog.warn(tag("blank_icon"), mapOf("feed_url" to subscription.url))
                 null
             }
@@ -312,7 +312,7 @@ internal class ReaderAccountDelegate(
         withResult(
             googleReader.streamItemsIDs(
                 stream = Stream.ReadingList(),
-                excludedStream = Stream.Read()
+                excludedStream = Read()
             )
         ) { result ->
             articleRecords.markAllUnread(articleIDs = result.itemRefs.map { it.hexID })
@@ -435,7 +435,7 @@ internal class ReaderAccountDelegate(
                     author = item.author,
                     content_html = item.content?.content ?: item.summary.content,
                     extracted_content_url = null,
-                    summary = Jsoup.parse(item.summary.content).text(),
+                    summary = item.summary.content?.let { Jsoup.parse(it).text() },
                     url = item.canonical.firstOrNull()?.href,
                     image_url = ReaderEnclosureParsing.parsedImageURL(item),
                     published_at = item.published
