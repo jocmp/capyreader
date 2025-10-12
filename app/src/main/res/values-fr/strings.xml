@@ -279,4 +279,5 @@
     <string name="filter_today">Aujourd\'hui</string>
     <string name="settings_section_categories">Catégories</string>
     <string name="settings_option_show_today_filter">Aujourd\'hui</string>
+    <string name="auth_fields_freshrss_api_password">Mot de passe API</string>
 </resources>
