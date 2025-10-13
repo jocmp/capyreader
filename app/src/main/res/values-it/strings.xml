@@ -282,4 +282,5 @@
     <string name="filter_today">Oggi</string>
     <string name="settings_section_categories">Categorie</string>
     <string name="settings_option_show_today_filter">Oggi</string>
+    <string name="auth_fields_freshrss_api_password">Password API</string>
 </resources>
