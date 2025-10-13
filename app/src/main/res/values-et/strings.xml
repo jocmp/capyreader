@@ -281,4 +281,5 @@
     <string name="filter_today">Täna</string>
     <string name="settings_section_categories">Kategooriad</string>
     <string name="settings_option_show_today_filter">Täna</string>
+    <string name="auth_fields_freshrss_api_password">API salasõna</string>
 </resources>
