@@ -93,16 +93,7 @@
     <string name="theme_menu_option_dark">Oscuro</string>
     <string name="theme_menu_option_system_default">Predeterminado del sistema</string>
     <string name="theme_dynamic">Dinámico</string>
-    <string name="theme_green_apple">Manzana verde</string>
-    <string name="theme_lavender">Lavanda</string>
-    <string name="theme_midnight_dusk">Crepúsculo de medianoche</string>
-    <string name="theme_nord">Norteño</string>
-    <string name="theme_strawberry_daiquiri">Daiquiri de fresa</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_teal_turquoise">Azul marino y turquesa</string>
-    <string name="theme_tidal_wave">Marea</string>
     <string name="theme_newsprint">Papel prensa</string>
-    <string name="theme_yotsuba">Yotsuba</string>
     <string name="theme_monochrome">Monocromo</string>
     <string name="edit_feed_tags">Etiquetas</string>
     <string name="settings_option_in_app_browser">Utilizar el navegador de la aplicación</string>

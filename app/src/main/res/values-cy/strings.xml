@@ -117,7 +117,7 @@
     <string name="settings_section_advanced">Uwch</string>
     <string name="settings_clear_all_articles_confirm">Cadarnhau</string>
     <string name="settings_clear_all_articles_button">Clirio pob erthyglau</string>
-    <string name="settings_support_button">Cefnogi</string>
+    <string name="settings_support_button">Cymorth</string>
     <string name="settings_article_list_title">Rhestr y erthyglau</string>
     <string name="opml_exporter_success">Wedi cwblhau allforio</string>
     <string name="opml_exporter_failure">Wedi methu allforio</string>
@@ -200,7 +200,7 @@
     <string name="settings_notifications_select_all">Dewis y cwbl</string>
     <string name="settings_mark_read_on_scroll">Nodi fel ei ddarllen wrth sgrolio</string>
     <string name="settings_gestures_reader_tap_to_page_title">Sgrolio sgrin bapur electronig</string>
-    <string name="settings_gestures_reader_tap_to_page_subtitle">Tapio corneli\'rgwaelod i lywio cynnwys yr erthygl</string>
+    <string name="settings_gestures_reader_tap_to_page_subtitle">Tapio cornel i\'r gwaelod i lywio cynnwys yr erthygl</string>
     <string name="layout_preference_label">Llunwedd a ffafrir</string>
     <string name="add_account_feedbin_signup_link_text">Crëwch gyfrif yma.</string>
     <string name="add_account_freshrss_signup_prompt">Nid oes gennych weinydd FreshRSS?</string>
@@ -262,4 +262,21 @@
     <string name="settings_display_miscellaneous_title">Amrywiol</string>
     <string name="mark_all_read_button_position">Lleoliad y botwm i nodi\'r cwbl fel eu darllen</string>
     <string name="add_account_miniflux_signup_prompt">Nad oes gennych gweinydd Miniflux?</string>
+    <string name="filter_today">Heddiw</string>
+    <string name="theme_mode_system">System</string>
+    <string name="theme_mode_light">Golau</string>
+    <string name="theme_mode_dark">Tywyll</string>
+    <string name="theme_default">Rhagosodedig</string>
+    <string name="theme_dynamic">Dynamig</string>
+    <string name="theme_newsprint">Papur newydd</string>
+    <string name="theme_monochrome">Monocrom</string>
+    <string name="theme_sunset">Machlud haul</string>
+    <string name="settings_pure_black_dark_mode">Modd du pur</string>
+    <string name="settings_section_categories">Categorïau</string>
+    <string name="settings_option_show_today_filter">Heddiw</string>
+    <string name="settings_full_content_parser">Parswr y cynnwys llawn</string>
+    <string name="open_articles_in_browser">Agor erthyglau yn y porwr</string>
+    <string name="selected">Wedi\'i ddewis</string>
+    <string name="auth_fields_client_certificate">Tystysgrif y cleient (dewisol)</string>
+    <string name="auth_fields_remove_client_cert">Cael gwared ar dystysgrif y cleient</string>
 </resources>

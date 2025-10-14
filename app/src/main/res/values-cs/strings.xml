@@ -234,16 +234,7 @@
     <string name="feed_nav_drawer_refresh_all">Obnovit vše</string>
     <string name="notification_mark_as_read_action">Označit jako přečtené</string>
     <string name="theme_dynamic">Dynamický</string>
-    <string name="theme_green_apple">Zelené jablko</string>
-    <string name="theme_lavender">Levandule</string>
-    <string name="theme_midnight_dusk">Půlnoční soumrak</string>
-    <string name="theme_nord">Nord</string>
-    <string name="theme_strawberry_daiquiri">Jahodové daiquiri</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_teal_turquoise">Šedozelená &amp; tyrkysová</string>
-    <string name="theme_tidal_wave">Přílivová vlna</string>
     <string name="theme_newsprint">Novinový papír</string>
-    <string name="theme_yotsuba">Yotsuba</string>
     <string name="theme_monochrome">Monochromatický</string>
     <string name="settings_pure_black_dark_mode">Čistě černý tmavý režim</string>
     <string name="delete_tag_error">Štítek se nepodařilo odstranit</string>
