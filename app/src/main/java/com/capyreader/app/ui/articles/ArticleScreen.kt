@@ -83,6 +83,8 @@ import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
+import com.jocmp.capy.logging.CapyLog
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
@@ -198,6 +200,7 @@ fun ArticleScreen(
         }
 
         val listState = articles.rememberLazyListState()
+        var showList by remember { mutableStateOf(true) }
 
         fun scrollToArticle(index: Int) {
             coroutineScope.launch {
@@ -230,7 +233,30 @@ fun ArticleScreen(
                 .drop(if (enableMarkReadOnScroll) 0 else 1)
                 .distinctUntilChanged()
                 .collect {
-                    scrollToTop()
+                    CapyLog.info(
+                        "collect",
+                        mapOf(
+                            "filter" to filter,
+                            "count" to listState.layoutInfo.totalItemsCount,
+                            "idle" to articles.loadState.isIdle
+                        )
+                    )
+                    listState.scrollToItem(0)
+                    resetScrollBehaviorOffset()
+                }
+        }
+
+        LaunchedEffect(listState) {
+            snapshotFlow { articles.loadState.isIdle }
+                .distinctUntilChanged()
+                .collect {
+                    if (articles.loadState.isIdle) {
+                        showList = true
+                    } else {
+                        // Last ditch effort to show the list if it hasn't settled
+                        delay(500)
+                        showList = true
+                    }
                 }
         }
 
@@ -269,7 +295,6 @@ fun ArticleScreen(
             }
         }
 
-
         fun refreshAll() {
             if (enableMarkReadOnScroll) {
                 scrollToTop()
@@ -304,6 +329,8 @@ fun ArticleScreen(
         fun openNextList(action: suspend () -> Unit) {
             coroutineScope.launchUI {
                 drawerState.close()
+                showList = false
+                delay(300)
                 openNextStatus(action)
             }
         }
@@ -542,20 +569,25 @@ fun ArticleScreen(
                                     requestNextFeed()
                                 },
                             ) {
-                                key(filter, articles.itemCount) {
-                                    ArticleList(
-                                        articles = articles,
-                                        selectedArticleKey = article?.id,
-                                        listState = listState,
-                                        enableMarkReadOnScroll = enableMarkReadOnScroll,
-                                        refreshingAll = viewModel.refreshingAll,
-                                        onMarkAllRead = { range ->
-                                            onMarkAllRead(range)
-                                        },
-                                        onSelect = { articleID ->
-                                            selectArticle(articleID)
-                                        },
-                                    )
+                                AnimatedVisibility(
+                                    showList,
+                                    modifier = Modifier.fillMaxSize()
+                                ) {
+                                    key(filter, articles.itemCount) {
+                                        ArticleList(
+                                            articles = articles,
+                                            selectedArticleKey = article?.id,
+                                            listState = listState,
+                                            enableMarkReadOnScroll = enableMarkReadOnScroll,
+                                            refreshingAll = viewModel.refreshingAll,
+                                            onMarkAllRead = { range ->
+                                                onMarkAllRead(range)
+                                            },
+                                            onSelect = { articleID ->
+                                                selectArticle(articleID)
+                                            },
+                                        )
+                                    }
                                 }
                             }
                         }
