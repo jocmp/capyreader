@@ -8,5 +8,5 @@ data class ArticleSearch(
     val state: SearchState = SearchState.INACTIVE,
 ) {
     val isActive
-        get() =  state == SearchState.ACTIVE
+        get() = state == SearchState.ACTIVE
 }
