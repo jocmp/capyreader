@@ -282,4 +282,5 @@
     <string name="filter_today">Днес</string>
     <string name="settings_section_categories">Категории</string>
     <string name="settings_option_show_today_filter">Днес</string>
+    <string name="auth_fields_freshrss_api_password">Парола за API</string>
 </resources>
