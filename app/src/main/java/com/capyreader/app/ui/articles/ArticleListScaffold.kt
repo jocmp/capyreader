@@ -16,8 +16,8 @@ fun ArticleListScaffold(
 ) {
     Box(
         Modifier
-            .padding(padding)
             .fillMaxSize()
+            .padding(padding)
     ) {
         if (showOnboarding) {
             onboarding()

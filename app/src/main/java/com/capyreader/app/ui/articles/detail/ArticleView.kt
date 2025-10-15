@@ -23,7 +23,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
-import androidx.compose.material3.TopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
@@ -33,7 +32,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -119,7 +117,7 @@ fun ArticleView(
         }
     }
 
-    val topToolbarPreference = rememberTopToolbarPreference(articleID = article.id)
+    val topToolbarPreference = rememberTopToolbarPreference()
     val bottomScrollBehavior = exitAlwaysScrollBehavior()
     val enableBottomBar by rememberBottomBarPreference()
 
@@ -333,20 +331,15 @@ fun rememberBottomBarPreference(appPreferences: AppPreferences = koinInject()): 
 
 @Composable
 fun rememberTopToolbarPreference(
-    articleID: String,
     appPreferences: AppPreferences = koinInject(),
 ): ToolbarPreferences {
-    val topBarState = rememberSaveable(articleID, saver = TopAppBarState.Saver) {
-        TopAppBarState(0f, 0f, 0f)
-    }
-
     val pinTopToolbar by appPreferences.readerOptions.pinTopToolbar.stateIn(rememberCoroutineScope())
         .collectAsState()
 
     val scrollBehavior = if (pinTopToolbar) {
-        TopAppBarDefaults.pinnedScrollBehavior(state = topBarState)
+        TopAppBarDefaults.pinnedScrollBehavior()
     } else {
-        TopAppBarDefaults.enterAlwaysScrollBehavior(state = topBarState)
+        TopAppBarDefaults.enterAlwaysScrollBehavior()
     }
 
     val showToolbars = scrollBehavior.state.collapsedFraction == 0f
