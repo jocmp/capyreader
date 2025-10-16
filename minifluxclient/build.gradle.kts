@@ -1,13 +1,22 @@
 plugins {
     id("java-library")
     alias(libs.plugins.jetbrains.kotlin.jvm)
+    id("com.google.devtools.ksp") version libs.versions.ksp
 }
+
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
-kotlin {
-    compilerOptions {
-        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
-    }
+
+dependencies {
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.moshi)
+    implementation(libs.moshi.converter)
+    implementation(libs.retrofit2.retrofit)
+    ksp(libs.moshi.kotlin.codegen)
+    testImplementation(kotlin("test"))
+    testImplementation(libs.tests.junit)
+    testImplementation(libs.tests.kotlinx.coroutines)
+    testImplementation(libs.tests.mockk.mockk)
 }
