@@ -14,11 +14,11 @@
             <option value="$PROJECT_DIR$/capy" />
             <option value="$PROJECT_DIR$/feedbinclient" />
             <option value="$PROJECT_DIR$/feedfinder" />
+            <option value="$PROJECT_DIR$/minifluxclient" />
             <option value="$PROJECT_DIR$/readerclient" />
             <option value="$PROJECT_DIR$/rssparser" />
           </set>
         </option>
-        <option name="resolveExternalAnnotations" value="false" />
       </GradleProjectSettings>
     </option>
   </component>
