@@ -7,7 +7,7 @@ data class Entry(
     val id: Long,
     val user_id: Long,
     val feed_id: Long,
-    val status: String, // "read", "unread", "removed"
+    val status: EntryStatus,
     val hash: String,
     val title: String,
     val url: String,

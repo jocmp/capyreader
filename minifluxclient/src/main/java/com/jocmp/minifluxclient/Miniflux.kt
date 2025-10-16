@@ -15,7 +15,6 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface Miniflux {
-    // Feeds
     @GET("feeds")
     suspend fun feeds(): Response<List<Feed>>
 
@@ -35,7 +34,7 @@ interface Miniflux {
     suspend fun deleteFeed(@Path("feedID") feedID: Long): Response<Unit>
 
     @GET("feeds/{feedID}/icon")
-    suspend fun feedIcon(@Path("feedID") feedID: Long): Response<Icon>
+    suspend fun feedIcon(@Path("feedID") feedID: Long): Response<IconData>
 
     @PUT("feeds/{feedID}/refresh")
     suspend fun refreshFeed(@Path("feedID") feedID: Long): Response<Unit>
@@ -43,10 +42,9 @@ interface Miniflux {
     @PUT("feeds/{feedID}/mark-all-as-read")
     suspend fun markFeedAsRead(@Path("feedID") feedID: Long): Response<Unit>
 
-    // Entries
     @GET("entries")
     suspend fun entries(
-        @Query("status") status: String? = null,
+        @Query("status") status: EntryStatus? = null,
         @Query("offset") offset: Int? = null,
         @Query("limit") limit: Int? = null,
         @Query("order") order: String? = null,
@@ -63,7 +61,7 @@ interface Miniflux {
     @GET("feeds/{feedID}/entries")
     suspend fun feedEntries(
         @Path("feedID") feedID: Long,
-        @Query("status") status: String? = null,
+        @Query("status") status: EntryStatus? = null,
         @Query("offset") offset: Int? = null,
         @Query("limit") limit: Int? = null,
         @Query("order") order: String? = null,
@@ -83,7 +81,6 @@ interface Miniflux {
     @PUT("entries/{entryID}/bookmark")
     suspend fun toggleBookmark(@Path("entryID") entryID: Long): Response<Unit>
 
-    // Categories
     @GET("categories")
     suspend fun categories(@Query("counts") counts: Boolean? = null): Response<List<Category>>
 
@@ -108,7 +105,7 @@ interface Miniflux {
     @GET("categories/{categoryID}/entries")
     suspend fun categoryEntries(
         @Path("categoryID") categoryID: Long,
-        @Query("status") status: String? = null,
+        @Query("status") status: EntryStatus? = null,
         @Query("offset") offset: Int? = null,
         @Query("limit") limit: Int? = null,
         @Query("order") order: String? = null,
@@ -120,13 +117,13 @@ interface Miniflux {
     @PUT("categories/{categoryID}/mark-all-as-read")
     suspend fun markCategoryAsRead(@Path("categoryID") categoryID: Long): Response<Unit>
 
-    // Icons
     @GET("icons/{iconID}")
-    suspend fun icon(@Path("iconID") iconID: Long): Response<Icon>
+    suspend fun icon(@Path("iconID") iconID: Long): Response<IconData>
+
+    @GET("me")
+    suspend fun me(): Response<User>
 
     companion object {
-        const val MAX_ENTRY_LIMIT = 100
-
         fun create(client: OkHttpClient, baseURL: String): Miniflux {
             val moshi = Moshi.Builder().build()
 
@@ -156,9 +153,9 @@ interface Miniflux {
             val miniflux = create(client, baseURL)
 
             return try {
-                val response = miniflux.feeds()
+                val response = miniflux.me()
                 response.isSuccessful
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 false
             }
         }

@@ -7,7 +7,6 @@ import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.withErrorHandling
 import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.common.UnauthorizedError
-import com.jocmp.capy.common.host
 import com.jocmp.capy.common.toDateTime
 import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.common.withResult
@@ -15,10 +14,10 @@ import com.jocmp.capy.db.Database
 import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.capy.persistence.EnclosureRecords
 import com.jocmp.capy.persistence.FeedRecords
-import com.jocmp.minifluxclient.Category
 import com.jocmp.minifluxclient.CreateCategoryRequest
 import com.jocmp.minifluxclient.CreateFeedRequest
 import com.jocmp.minifluxclient.Entry
+import com.jocmp.minifluxclient.EntryStatus
 import com.jocmp.minifluxclient.Miniflux
 import com.jocmp.minifluxclient.UpdateCategoryRequest
 import com.jocmp.minifluxclient.UpdateEntriesRequest
@@ -40,7 +39,6 @@ internal class MinifluxAccountDelegate(
     override suspend fun refresh(filter: ArticleFilter, cutoffDate: ZonedDateTime?): Result<Unit> {
         return try {
             refreshFeeds()
-            refreshCategories()
             refreshArticles()
 
             Result.success(Unit)
@@ -55,7 +53,7 @@ internal class MinifluxAccountDelegate(
         val entryIDs = articleIDs.map { it.toLong() }
 
         return withErrorHandling {
-            miniflux.updateEntries(UpdateEntriesRequest(entry_ids = entryIDs, status = "read"))
+            miniflux.updateEntries(UpdateEntriesRequest(entry_ids = entryIDs, status = EntryStatus.READ))
             Unit
         }
     }
@@ -64,7 +62,7 @@ internal class MinifluxAccountDelegate(
         val entryIDs = articleIDs.map { it.toLong() }
 
         return withErrorHandling {
-            miniflux.updateEntries(UpdateEntriesRequest(entry_ids = entryIDs, status = "unread"))
+            miniflux.updateEntries(UpdateEntriesRequest(entry_ids = entryIDs, status = EntryStatus.UNREAD))
             Unit
         }
     }
@@ -114,7 +112,8 @@ internal class MinifluxAccountDelegate(
             val feed = feedResponse.body()
 
             return if (feed != null) {
-                upsertFeed(feed)
+                val icons = fetchIcons(listOf(feed))
+                upsertFeed(feed, icons)
 
                 val localFeed = feedRecords.find(feed.id.toString())
 
@@ -193,30 +192,23 @@ internal class MinifluxAccountDelegate(
     }
 
     private suspend fun refreshFeeds() {
-        withResult(miniflux.feeds()) { feeds ->
-            database.transactionWithErrorHandling {
-                feeds.forEach { feed ->
-                    upsertFeed(feed)
-                }
-            }
+        val feedsResponse = miniflux.feeds()
+        val feeds = feedsResponse.body()
 
-            val feedsToKeep = feeds.map { it.id.toString() }
-            database.feedsQueries.deleteAllExcept(feedsToKeep)
+        if (!feedsResponse.isSuccessful || feeds == null) {
+            return
         }
-    }
 
-    private suspend fun refreshCategories() {
-        withResult(miniflux.categories()) { categories ->
-            database.transactionWithErrorHandling {
-                categories.forEach { category ->
-                    database.taggingsQueries.upsert(
-                        id = category.id.toString(),
-                        feed_id = "", // Miniflux categories are not directly tied to a single feed
-                        name = category.title,
-                    )
-                }
+        val icons = fetchIcons(feeds)
+
+        database.transactionWithErrorHandling {
+            feeds.forEach { feed ->
+                upsertFeed(feed, icons)
             }
         }
+
+        val feedsToKeep = feeds.map { it.id.toString() }
+        database.feedsQueries.deleteAllExcept(feedsToKeep)
     }
 
     private suspend fun refreshArticles() {
@@ -233,7 +225,7 @@ internal class MinifluxAccountDelegate(
     }
 
     private suspend fun refreshUnreadEntries() {
-        withResult(miniflux.entries(status = "unread")) { result ->
+        withResult(miniflux.entries(status = EntryStatus.UNREAD)) { result ->
             val ids = result.entries.map { it.id.toString() }
             articleRecords.markAllUnread(articleIDs = ids)
         }
@@ -288,7 +280,7 @@ internal class MinifluxAccountDelegate(
                 articleRecords.createStatus(
                     articleID = articleID,
                     updatedAt = updated,
-                    read = entry.status == "read"
+                    read = entry.status == EntryStatus.READ
                 )
 
                 entry.enclosures?.forEach { enclosure ->
@@ -304,15 +296,27 @@ internal class MinifluxAccountDelegate(
         }
     }
 
-    private fun upsertFeed(feed: com.jocmp.minifluxclient.Feed) {
+    private fun upsertFeed(feed: com.jocmp.minifluxclient.Feed, icons: Map<Long, String>) {
+        val icon = feed.icon?.icon_id?.let { icons[it] }
+
         database.feedsQueries.upsert(
             id = feed.id.toString(),
             subscription_id = feed.id.toString(),
             title = feed.title,
             feed_url = feed.feed_url,
             site_url = feed.site_url,
-            favicon_url = feed.icon?.data
+            favicon_url = icon,
+            priority = null
         )
+
+        // Create tagging for the feed's category
+        feed.category?.let { category ->
+            database.taggingsQueries.upsert(
+                id = "${feed.id}-${category.id}",
+                feed_id = feed.id.toString(),
+                name = category.title
+            )
+        }
     }
 
     private suspend fun getOrCreateCategory(title: String): Long {
@@ -325,6 +329,27 @@ internal class MinifluxAccountDelegate(
             val response = miniflux.createCategory(CreateCategoryRequest(title = title))
             response.body()?.id ?: throw IOException("Failed to create category")
         }
+    }
+
+    private suspend fun fetchIcons(feeds: List<com.jocmp.minifluxclient.Feed>): Map<Long, String> {
+        val iconMap = mutableMapOf<Long, String>()
+
+        feeds.forEach { feed ->
+            feed.icon?.icon_id?.let { iconId ->
+                try {
+                    val response = miniflux.icon(iconId)
+                    val iconData = response.body()
+
+                    if (response.isSuccessful && iconData != null) {
+                        iconMap[iconId] = iconData.data
+                    }
+                } catch (_: Exception) {
+                    // Ignore icon fetch failures
+                }
+            }
+        }
+
+        return iconMap
     }
 
     companion object {

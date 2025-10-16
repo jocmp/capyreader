@@ -5,5 +5,5 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class UpdateEntriesRequest(
     val entry_ids: List<Long>,
-    val status: String // "read", "unread", "removed"
+    val status: EntryStatus
 )
