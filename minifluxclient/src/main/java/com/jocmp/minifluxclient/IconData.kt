@@ -3,7 +3,8 @@ package com.jocmp.minifluxclient
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class Icon(
-    val feed_id: Long,
-    val icon_id: Long
+data class IconData(
+    val id: Long,
+    val data: String,
+    val mime_type: String
 )
