@@ -291,4 +291,9 @@
     <string name="open_articles_in_browser">Open Articles In Browser</string>
     <string name="selected">Selected</string>
     <string name="auth_fields_freshrss_api_password">API Password</string>
+    <string name="freshrss_visibility">Visibility</string>
+    <string name="freshrss_visibility_option_main">Main Stream</string>
+    <string name="freshrss_visibility_option_important">Important</string>
+    <string name="freshrss_visibility_option_category">Category</string>
+    <string name="freshrss_visibility_option_feed">Feed</string>
 </resources>

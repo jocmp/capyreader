@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
+import com.jocmp.capy.FeedPriority
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.db.Database
 import kotlinx.coroutines.Dispatchers
@@ -58,7 +59,7 @@ class ArticlePagerFactory(private val database: Database) {
         filter: ArticleFilter.Feeds,
         query: String?,
         unreadSort: UnreadSortOrder,
-        since: OffsetDateTime
+        since: OffsetDateTime,
     ): PagingSource<Int, Article> {
         val feedIDs = listOf(filter.feedID)
 
@@ -68,6 +69,7 @@ class ArticlePagerFactory(private val database: Database) {
             query = query,
             unreadSort = unreadSort,
             since = since,
+            priority = FeedPriority.FEED,
         )
     }
 
@@ -88,6 +90,7 @@ class ArticlePagerFactory(private val database: Database) {
             query = query,
             unreadSort = unreadSort,
             since = since,
+            priority = FeedPriority.CATEGORY,
         )
     }
 
@@ -96,6 +99,7 @@ class ArticlePagerFactory(private val database: Database) {
         query: String?,
         filter: ArticleFilter,
         unreadSort: UnreadSortOrder,
+        priority: FeedPriority,
         since: OffsetDateTime
     ): PagingSource<Int, Article> {
         return QueryPagingSource(
@@ -103,7 +107,8 @@ class ArticlePagerFactory(private val database: Database) {
                 feedIDs = feedIDs,
                 status = filter.status,
                 query = query,
-                since = since
+                since = since,
+                priority = priority,
             ),
             transacter = database.articlesQueries,
             context = Dispatchers.IO,
@@ -116,6 +121,7 @@ class ArticlePagerFactory(private val database: Database) {
                     limit = limit,
                     unreadSort = unreadSort,
                     offset = offset,
+                    priority = priority,
                 )
             }
         )

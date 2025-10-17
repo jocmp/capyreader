@@ -1,6 +1,7 @@
 package com.jocmp.capy.persistence.articles
 
 import com.jocmp.capy.ArticleStatus
+import com.jocmp.capy.FeedPriority
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.db.Database
@@ -45,6 +46,7 @@ class ByFeedTest {
                 query = null,
                 limit = 1,
                 offset = 0,
+                priority = FeedPriority.FEED,
             ).executeAsList()
 
         assertEquals(expected = expectedSummary, actual = articles[0].summary)

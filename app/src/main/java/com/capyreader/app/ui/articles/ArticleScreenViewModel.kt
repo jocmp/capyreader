@@ -155,11 +155,11 @@ class ArticleScreenViewModel(
     private val _nextFilter = MutableStateFlow<NextFilter?>(null)
 
     val statusCount: Flow<Long> = filter.flatMapLatest { latestFilter ->
-        account.countAllByStatus(latestFilter.status)
+        account.countAllByStatus(countableStatus(latestFilter))
     }
 
     val todayCount: Flow<Long> = _counts.combine(filter) { _, filter ->
-        account.countToday(if (filter.status == STARRED) STARRED else UNREAD)
+        account.countToday(countableStatus(filter))
     }
 
     val showTodayFilter: Flow<Boolean> = appPreferences.showTodayFilter.stateIn(viewModelScope)
@@ -688,4 +688,12 @@ fun Context.showFullContentErrorToast(throwable: Throwable) {
     }
 
     toast(message)
+}
+
+fun countableStatus(filter: ArticleFilter): ArticleStatus {
+    return if (filter.status == STARRED) {
+        STARRED
+    } else {
+        UNREAD
+    }
 }

@@ -15,14 +15,17 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuAnchorType.Companion.PrimaryNotEditable
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.ExposedDropdownMenuAnchorType.Companion.PrimaryNotEditable
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -45,6 +48,7 @@ import com.capyreader.app.ui.fixtures.FeedSample
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.EditFeedFormEntry
 import com.jocmp.capy.Feed
+import com.jocmp.capy.FeedPriority
 import com.jocmp.capy.Folder
 
 @Composable
@@ -55,6 +59,8 @@ fun EditFeedView(
     onSubmit: (feed: EditFeedFormEntry) -> Unit,
     onCancel: () -> Unit
 ) {
+    val priority = feed.priority
+
     val feedFolderTitles = folders
         .filter { folder -> folder.feeds.any { it.id == feed.id } }
         .map { it.title }
@@ -106,7 +112,20 @@ fun EditFeedView(
                 modifier = Modifier
                     .padding(vertical = 16.dp)
             ) {
-                EditFeedURLDisplay(url = feed.feedURL)
+                Column {
+                    EditFeedURLDisplay(url = feed.feedURL)
+                    if (priority != null) {
+                        ListItem(
+                            colors = ListItemDefaults.colors(containerColor = CardDefaults.cardColors().containerColor),
+                            headlineContent = {
+                                Text(stringResource(R.string.freshrss_visibility))
+                            },
+                            supportingContent = {
+                                Text(stringResource(priority.translationKey))
+                            },
+                        )
+                    }
+                }
                 OutlinedTextField(
                     value = name,
                     onValueChange = setName,
@@ -334,7 +353,7 @@ fun EditFeedViewPreview() {
     CapyTheme {
         Card(Modifier.height(600.dp)) {
             EditFeedView(
-                feed = FeedSample().values.first(),
+                feed = FeedSample().values.first().copy(priority = FeedPriority.CATEGORY),
                 folders = folders,
                 showMultiselect = true,
                 onSubmit = {},
@@ -368,3 +387,11 @@ fun EditFeedViewPreview_SingleSelect() {
         }
     }
 }
+
+private val FeedPriority.translationKey: Int
+    get() = when (this) {
+        FeedPriority.MAIN_STREAM -> R.string.freshrss_visibility_option_main
+        FeedPriority.IMPORTANT -> R.string.freshrss_visibility_option_important
+        FeedPriority.CATEGORY -> R.string.freshrss_visibility_option_category
+        FeedPriority.FEED -> R.string.freshrss_visibility_option_feed
+    }

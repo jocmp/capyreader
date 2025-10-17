@@ -1,19 +1,10 @@
 all:
-SELECT id, subscription_id, title, feed_url, site_url, favicon_url, enable_sticky_full_content, enable_notifications, open_articles_in_browser, priority
+SELECT *
 FROM feeds;
 
 tagged:
 SELECT
-    feeds.id,
-    feeds.subscription_id,
-    feeds.title,
-    feeds.feed_url,
-    feeds.site_url,
-    feeds.favicon_url,
-    feeds.enable_sticky_full_content,
-    feeds.enable_notifications,
-    feeds.open_articles_in_browser,
-    feeds.priority,
+    feeds.*,
     taggings.name,
     folders.expanded
 FROM feeds

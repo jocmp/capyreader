@@ -6,6 +6,7 @@ import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleNotification
 import com.jocmp.capy.ArticleStatus
+import com.jocmp.capy.FeedPriority
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
@@ -267,6 +268,7 @@ internal class ArticleRecords internal constructor(
                 range = range,
                 unreadSort = unreadSort,
                 query = query,
+                priority = FeedPriority.FEED,
             )
 
             is ArticleFilter.Folders -> {
@@ -276,6 +278,7 @@ internal class ArticleRecords internal constructor(
                     range = range,
                     unreadSort = unreadSort,
                     query = query,
+                    priority = FeedPriority.CATEGORY,
                 )
             }
 
