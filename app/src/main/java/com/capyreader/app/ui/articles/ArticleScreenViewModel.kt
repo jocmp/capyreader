@@ -33,8 +33,6 @@ import com.jocmp.capy.buildArticlePager
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
-import com.jocmp.capy.findArticlePages
-import com.jocmp.capy.countAll
 import com.jocmp.capy.countToday
 import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.ExperimentalCoroutinesApi

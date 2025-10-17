@@ -3,6 +3,7 @@ package com.jocmp.capy.persistence
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.jocmp.capy.Feed
+import com.jocmp.capy.FeedPriority
 import com.jocmp.capy.Folder
 import com.jocmp.capy.db.Database
 import kotlinx.coroutines.Dispatchers
@@ -123,6 +124,7 @@ internal class FeedRecords(private val database: Database) {
         enableStickyFullContent: Boolean = false,
         enableNotifications: Boolean = false,
         openArticlesInBrowser: Boolean = false,
+        priority: String? = null,
         folderName: String? = "",
         expanded: Boolean? = false,
     ) = Feed(
@@ -137,6 +139,7 @@ internal class FeedRecords(private val database: Database) {
         enableStickyFullContent = enableStickyFullContent,
         enableNotifications = enableNotifications,
         openArticlesInBrowser = openArticlesInBrowser,
-        folderExpanded = expanded ?: false
+        folderExpanded = expanded ?: false,
+        priority = FeedPriority.parse(priority)
     )
 }

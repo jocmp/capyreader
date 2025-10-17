@@ -145,7 +145,7 @@ fun MarkReadOnScroll(
                     (articles.itemCount == 1 && firstVisibleIndex > 0) ||
                             (offscreenIndex > 0 && articles.itemCount > 0)
 
-                CapyLog.info(
+                CapyLog.debug(
                     "collect",
                     mapOf(
                         "first" to firstVisibleIndex,
