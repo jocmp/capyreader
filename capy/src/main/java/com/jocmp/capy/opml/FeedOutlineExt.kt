@@ -14,6 +14,6 @@ internal fun OPMLFeed.asFeed(feeds: Map<Long, DBFeed> = mapOf()): Feed? {
         id = feed.id,
         subscriptionID = feed.subscription_id,
         title = title ?: "",
-        feedURL = xmlUrl ?: ""
+        feedURL = xmlUrl ?: "",
     )
 }

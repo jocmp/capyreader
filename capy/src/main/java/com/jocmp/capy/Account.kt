@@ -1,5 +1,7 @@
 package com.jocmp.capy
 
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToOne
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.accounts.FaviconFetcher
@@ -28,6 +30,7 @@ import com.jocmp.capy.persistence.FolderRecords
 import com.jocmp.capy.persistence.SavedSearchRecords
 import com.jocmp.capy.persistence.TaggingRecords
 import com.jocmp.feedbinclient.Feedbin
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
@@ -293,6 +296,13 @@ data class Account(
 
     fun countActiveNotifications(): Long {
         return articleRecords.countActiveNotifications()
+    }
+
+    fun countAll(status: ArticleStatus) =
+        articleRecords.countAll(status)
+
+    fun countAllByStatus(status: ArticleStatus): Flow<Long> {
+        return articleRecords.byStatus.count(status).asFlow().mapToOne(Dispatchers.IO)
     }
 
     fun dismissNotifications(ids: List<String>) {

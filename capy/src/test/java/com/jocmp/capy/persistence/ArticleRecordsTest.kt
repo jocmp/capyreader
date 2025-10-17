@@ -2,6 +2,7 @@ package com.jocmp.capy.persistence
 
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleStatus
+import com.jocmp.capy.FeedPriority
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.RandomUUID
 import com.jocmp.capy.articles.UnreadSortOrder
@@ -272,6 +273,7 @@ class ArticleRecordsTest {
                 limit = 10,
                 offset = 0,
                 unreadSort = UnreadSortOrder.NEWEST_FIRST,
+                priority = FeedPriority.FEED,
             )
             .executeAsList()
 
@@ -282,6 +284,7 @@ class ArticleRecordsTest {
                 query = query,
                 feedIDs = listOf(vergeFeed.id),
                 since = since,
+                priority = FeedPriority.FEED,
             )
             .executeAsOne()
 

@@ -286,7 +286,8 @@ internal class LocalAccountDelegate(
             title = feedTitle,
             feed_url = feedURL,
             site_url = feed.siteURL?.toString(),
-            favicon_url = feed.faviconURL?.toString()
+            favicon_url = feed.faviconURL?.toString(),
+            priority = null
         )
     }
 

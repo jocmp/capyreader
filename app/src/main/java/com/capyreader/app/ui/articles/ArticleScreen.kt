@@ -84,6 +84,7 @@ import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
 import com.jocmp.capy.logging.CapyLog
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
@@ -234,14 +235,15 @@ fun ArticleScreen(
                 .collect {
                     listState.scrollToItem(0)
                     resetScrollBehaviorOffset()
+                    delay(500)
+                    hideList = false // Tie-breaker if totalItemsCount hasn't changed
                 }
         }
 
         LaunchedEffect(listState) {
             snapshotFlow { listState.layoutInfo.totalItemsCount }
-                .distinctUntilChanged()
                 .collect {
-                    CapyLog.info("collect", mapOf("count" to listState.layoutInfo.totalItemsCount))
+                    CapyLog.debug("collect", mapOf("count" to listState.layoutInfo.totalItemsCount))
                     hideList = false
                 }
         }
