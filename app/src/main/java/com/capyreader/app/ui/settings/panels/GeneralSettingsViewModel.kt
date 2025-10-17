@@ -11,6 +11,7 @@ import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.refresher.RefreshScheduler
 import com.jocmp.capy.Account
 import com.jocmp.capy.accounts.AutoDelete
+import com.jocmp.capy.articles.FullContentParserType
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.preferences.getAndSet
 import kotlinx.coroutines.Dispatchers
@@ -47,10 +48,15 @@ class GeneralSettingsViewModel(
     var enableStickyFullContent by mutableStateOf(appPreferences.enableStickyFullContent.get())
         private set
 
+    var showTodayFilter by mutableStateOf(appPreferences.showTodayFilter.get())
+        private set
+
     val keywordBlocklist = account
         .preferences
         .keywordBlocklist
         .stateIn(viewModelScope)
+
+    val fullContentParser = appPreferences.fullContentParser.stateIn(viewModelScope)
 
     fun updateRefreshInterval(interval: RefreshInterval) {
         refreshScheduler.update(interval)
@@ -100,6 +106,10 @@ class GeneralSettingsViewModel(
         }
     }
 
+    fun updateFullContentParser(type: FullContentParserType) {
+        appPreferences.fullContentParser.set(type)
+    }
+
     fun updateMarkReadOnScroll(enable: Boolean) {
         appPreferences.articleListOptions.markReadOnScroll.set(enable)
 
@@ -120,5 +130,11 @@ class GeneralSettingsViewModel(
         account.preferences.keywordBlocklist.getAndSet { list ->
             list.toMutableSet().apply { remove(keyword) }
         }
+    }
+
+    fun updateShowTodayFilter(show: Boolean) {
+        appPreferences.showTodayFilter.set(show)
+
+        showTodayFilter = show
     }
 }

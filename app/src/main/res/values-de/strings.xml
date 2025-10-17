@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Capy Reader</string>
     <string name="add_feed_name_title">Name</string>
     <string name="add_feed_submit">Hinzufügen</string>
     <string name="add_feed_success">Feed hinzugefügt</string>
@@ -17,11 +16,10 @@
     <string name="folder_action_delete_title">Titel löschen</string>
     <string name="folder_action_edit">Umbenennen</string>
     <string name="feed_action_unsubscribe_title">Abonnement beenden</string>
-    <string name="feed_action_edit_success">Feed aktualisieren</string>
     <string name="settings">Einstellungen öffnen</string>
-    <string name="settings_remove_account_button_service">Ausloggen</string>
-    <string name="settings_remove_account_title_service">Ausloggen</string>
-    <string name="settings_remove_account_confirm_service">Ausloggen</string>
+    <string name="settings_remove_account_button_service">Abmelden</string>
+    <string name="settings_remove_account_title_service">Abmelden</string>
+    <string name="settings_remove_account_confirm_service">Abmelden</string>
     <string name="settings_remove_account_button_local">Benutzerkonto löschen</string>
     <string name="settings_remove_account_title_local">Benutzerkonto löschen</string>
     <string name="settings_remove_account_confirm_local">Bestätigen</string>
@@ -36,8 +34,6 @@
     <string name="nav_add_feed">Feed hinzufügen</string>
     <string name="add_feed_feed_not_error">Feed konnte nicht gefunden werden</string>
     <string name="add_feed_save_error">Feed konnte nicht gespeichert werden</string>
-    <string name="edit_feed_error">Fehler beim Speichern des Feeds</string>
-    <string name="unsubscribe_error">Fehler beim Beenden des Abonnements</string>
     <string name="relative_time_just_now">Jetzt</string>
     <string name="relative_time_minutes">%1$dm</string>
     <string name="relative_time_hours">%1$dh</string>
@@ -58,7 +54,7 @@
     <string name="auth_fields_password">Passwort</string>
     <string name="auth_fields_hide_password">Passwort ausblenden</string>
     <string name="auth_fields_show_password">Passwort anzeigen</string>
-    <string name="auth_fields_log_in_button">Einloggen</string>
+    <string name="auth_fields_log_in_button">Anmelden</string>
     <string name="settings_top_bar_title">Einstellungen</string>
     <string name="update_auth_success_message">Sie wurden erfolgreich eingeloggt</string>
     <string name="crash_reporting_checkbox_title">Fehlerberichterstattung einschalten</string>
@@ -75,6 +71,9 @@
     <string name="theme_menu_option_light">Hell</string>
     <string name="theme_menu_option_dark">Dunkel</string>
     <string name="theme_menu_option_system_default">System default</string>
+    <string name="theme_dynamic">Dynamisch</string>
+    <string name="theme_newsprint">Zeitungspapier</string>
+    <string name="theme_monochrome">Monochrom</string>
     <string name="edit_feed_tags">Bezeichnungen</string>
     <string name="settings_option_in_app_browser">In-App-Browser benutzen</string>
     <string name="opml_import_notification_cancel">Stop</string>
@@ -85,6 +84,7 @@
     <string name="settings_article_list_feed_name">Feed Name</string>
     <string name="settings_article_list_feed_icons">Feed Icons</string>
     <string name="settings_article_list_summary">Zusammenfassung</string>
+    <string name="settings_article_list_shorten_titles">Titel kürzen</string>
     <string name="settings_section_version">Version</string>
     <string name="settings_option_copy_version">Version kopieren</string>
     <string name="settings_option_full_content_title">Permanent vollständigen Text zeigen</string>
@@ -109,7 +109,7 @@
     <string name="feed_action_edit">Feed bearbeiten</string>
     <string name="add_feed_url_title">Feed oder Website URL</string>
     <string name="filter_unread">Ungelesen</string>
-    <string name="settings_remove_account_message_service">Sind Sie sicher, dass Sie sich ausloggen möchten?</string>
+    <string name="settings_remove_account_message_service">Sind Sie sicher, dass Sie sich abmelden möchten?</string>
     <string name="settings_remove_account_message_local">Sind Sie sicher, dass Sie dieses Benutzerkonto löschen möchten? Dies kann nicht rückgängig gemacht werden.</string>
     <string name="opml_export_button_text">Als OPML exportieren</string>
     <string name="settings_section_privacy">Privatsphäre</string>
@@ -182,7 +182,7 @@
     <string name="crash_log_export_item_subtitle">Speichert Absturzberichte in Datei, um sie mit dem Entwickler zu teilen</string>
     <string name="edit_feed_tags_section">Schlagwörter</string>
     <string name="settings_notifications_select_none">Nichts ausgewählt</string>
-    <string name="settings_notifications_select_all">Alles ausgewählt</string>
+    <string name="settings_notifications_select_all">Alles auswählen</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">Navigationsübersicht öffnen</string>
     <string name="add_account_local_subtitle">Auf Ihrem Gerät</string>
     <string name="edit_feed_tag_section">Bezeichnung hinzufügen oder auswählen</string>
@@ -205,7 +205,7 @@
     <string name="settings_gestures_reader_tap_to_page_subtitle">Tippen auf die unteren Ecken, um innerhalb eines Artikels zu navigieren</string>
     <string name="settings_gestures_reader_tap_to_page_title">Tippen, um zu scrollen</string>
     <string name="settings_enable_high_contrast_dark_theme">Dunkles Theme mit hohem Kontrast aktivieren</string>
-    <string name="layout_preference_single">Eine Spalte</string>
+    <string name="layout_preference_single">Einzelne Spalte</string>
     <string name="layout_preference_responsive">Automatisch</string>
     <string name="layout_preference_label">Bevorzugte Ansicht</string>
     <string name="end_of_feed_text">Alles erledigt!</string>
@@ -255,7 +255,27 @@
     <string name="widget_headlines_title">Neueste Schlagzeilen</string>
     <string name="widget_receiver_headlines_title">Schlagzeilen</string>
     <string name="settings_gestures_improve_talkback_title">TalkBack verbessern</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Deaktiviert manche Einstellungen, um TalkBeck Text-zu-Sprache zu verbessern</string>
+    <string name="settings_gestures_improve_talkback_subtitle">Deaktiviert manche Einstellungen, um TalkBack Text-zu-Sprache zu verbessern</string>
     <string name="settings_options_reader_pin_top_toolbar">Obere Werkzeugleiste anpinnen</string>
     <string name="settings_options_reader_show_bottom_toolbar">Aktionen in unterer Werkzeugleiste anzeigen</string>
+    <string name="add_account_miniflux_signup_prompt">Sie haben keine Miniflux-Instanz?</string>
+    <string name="add_account_miniflux_signup_link_text">Mehr erfahren.</string>
+    <string name="auth_fields_client_certificate">Client-Zertifikat (optional)</string>
+    <string name="auth_fields_remove_client_cert">Client-Zertifikat entfernen</string>
+    <string name="theme_mode_system">System</string>
+    <string name="theme_mode_light">Hell</string>
+    <string name="theme_mode_dark">Dunkel</string>
+    <string name="theme_default">Standard</string>
+    <string name="settings_pure_black_dark_mode">Reiner schwarzer Dunkelmodus</string>
+    <string name="mark_read_position_toolbar">Werkzeugleiste</string>
+    <string name="mark_read_position_floating_action_button">Schwebender Aktionsknopf</string>
+    <string name="mark_all_read_button_position">Schaltfläche „Alle als gelesen markieren“ Position</string>
+    <string name="settings_display_miscellaneous_title">Verschiedenes</string>
+    <string name="open_articles_in_browser">Artikel im Browser öffnen</string>
+    <string name="selected">Ausgewählt</string>
+    <string name="filter_today">Heute</string>
+    <string name="theme_sunset">Sonnenuntergang</string>
+    <string name="settings_section_categories">Kategorien</string>
+    <string name="settings_option_show_today_filter">Heute</string>
+    <string name="auth_fields_freshrss_api_password">API-Passwort</string>
 </resources>

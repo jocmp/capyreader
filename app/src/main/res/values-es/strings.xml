@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Capy Reader</string>
     <string name="add_feed_url_title">URL del feed o de la página web</string>
     <string name="add_feed_name_title">Nombre</string>
     <string name="add_feed_new_folder_title">Nueva etiqueta</string>
@@ -20,7 +19,6 @@
     <string name="folder_action_delete_title">Eliminar etiqueta</string>
     <string name="folder_action_edit">Cambiar nombre</string>
     <string name="feed_action_unsubscribe_title">Cancelar suscripción</string>
-    <string name="feed_action_edit_success">Feed actualizado</string>
     <string name="settings">Abrir los ajustes</string>
     <string name="settings_remove_account_button_service">Cerrar sesión</string>
     <string name="settings_remove_account_title_service">Cerrar sesión</string>
@@ -47,8 +45,6 @@
     <string name="add_feed_feed_not_error">No se ha encontrado el feed</string>
     <string name="add_feed_save_error">No se pudo guardar el feed</string>
     <string name="add_feed_network_error">No se ha encontrado el feed. Comprueba tu conexión.</string>
-    <string name="edit_feed_error">Error al guardar el feed</string>
-    <string name="unsubscribe_error">Error al darse de baja del feed</string>
     <string name="relative_time_just_now">Ahora mismo</string>
     <string name="relative_time_minutes">%1$dmin</string>
     <string name="relative_time_hours">%1$dhrs.</string>
@@ -96,6 +92,9 @@
     <string name="theme_menu_option_light">Claro</string>
     <string name="theme_menu_option_dark">Oscuro</string>
     <string name="theme_menu_option_system_default">Predeterminado del sistema</string>
+    <string name="theme_dynamic">Dinámico</string>
+    <string name="theme_newsprint">Papel prensa</string>
+    <string name="theme_monochrome">Monocromo</string>
     <string name="edit_feed_tags">Etiquetas</string>
     <string name="settings_option_in_app_browser">Utilizar el navegador de la aplicación</string>
     <string name="opml_import_notification_cancel">Detener</string>
@@ -106,6 +105,7 @@
     <string name="settings_article_list_feed_name">Nombre del feed</string>
     <string name="settings_article_list_feed_icons">Iconos del feed</string>
     <string name="settings_article_list_summary">Resumen</string>
+    <string name="settings_article_list_shorten_titles">Acortar títulos</string>
     <string name="settings_section_version">Versión</string>
     <string name="settings_option_copy_version">Copiar versión</string>
     <string name="settings_option_full_content_title">Contenido completado fijado</string>
@@ -258,4 +258,25 @@
     <string name="settings_gestures_improve_talkback_subtitle">Desactiva algunas configuraciones para mejorar el texto a voz de TalkBack</string>
     <string name="settings_options_reader_pin_top_toolbar">Fijar la barra de herramientas superior</string>
     <string name="settings_options_reader_show_bottom_toolbar">Mostrar acciones en la barra de herramientas inferior</string>
+    <string name="settings_gestures_list_back_navigation_navigate_to_parent">Un nivel más alto</string>
+    <string name="add_account_miniflux_signup_link_text">Más información.</string>
+    <string name="add_account_miniflux_signup_prompt">¿No tienes una instancia de Miniflux?</string>
+    <string name="mark_read_position_toolbar">Barra de herramientas</string>
+    <string name="mark_read_position_floating_action_button">Botón de Acción Flotante</string>
+    <string name="mark_all_read_button_position">Posición del Botón Marcar Todo Leido</string>
+    <string name="settings_display_miscellaneous_title">Misceláneo</string>
+    <string name="filter_today">Hoy</string>
+    <string name="auth_fields_client_certificate">Certificado del cliente (opcional)</string>
+    <string name="auth_fields_remove_client_cert">Eliminar certificado del cliente</string>
+    <string name="theme_mode_system">Sistema</string>
+    <string name="theme_mode_light">Claro</string>
+    <string name="theme_mode_dark">Oscuro</string>
+    <string name="theme_default">Por defecto</string>
+    <string name="theme_sunset">Atardecer</string>
+    <string name="settings_pure_black_dark_mode">Modo oscuro puro</string>
+    <string name="settings_section_categories">Categorías</string>
+    <string name="settings_option_show_today_filter">Hoy</string>
+    <string name="settings_full_content_parser">Analizador del contenido completo</string>
+    <string name="open_articles_in_browser">Abrir artículos en el navegador</string>
+    <string name="selected">Seleccionado</string>
 </resources>

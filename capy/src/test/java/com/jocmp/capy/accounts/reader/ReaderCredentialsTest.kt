@@ -1,5 +1,6 @@
 package com.jocmp.capy.accounts.reader
 
+import com.jocmp.capy.FakeClientCertManager
 import com.jocmp.capy.accounts.Source
 import com.jocmp.readerclient.GoogleReader
 import io.mockk.coEvery
@@ -18,7 +19,15 @@ internal class ReaderCredentialsTest {
     private val username = "alice"
     private val password = "its-a-secret-to-everybody"
     private val url = "http://selfhosted.example.com/greader.php"
-    private val credentials = ReaderCredentials(username, password, url, Source.FRESHRSS)
+    private val clientCertAlias = "alice@homelab"
+    private val credentials = ReaderCredentials(
+        username = username,
+        secret = password,
+        url = url,
+        clientCertAlias = clientCertAlias,
+        source = Source.FRESHRSS,
+        clientCertManager = FakeClientCertManager,
+    )
     lateinit var googleReader: GoogleReader
     private val auth = "alice/8e6845e089457af25303abc6f53356eb60bdb5f8"
 

@@ -17,11 +17,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
-import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
@@ -34,33 +32,35 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.capyreader.app.BuildConfig
-import com.capyreader.app.notifications.Notifications
 import com.capyreader.app.R
-import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.common.RowItem
+import com.capyreader.app.notifications.Notifications
+import com.capyreader.app.preferences.AfterReadAllBehavior
+import com.capyreader.app.preferences.translationKey
 import com.capyreader.app.refresher.RefreshInterval
-import com.capyreader.app.setupCommonModules
 import com.capyreader.app.ui.CrashReporting
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.components.TextSwitch
+import com.capyreader.app.ui.fixtures.PreviewKoinApplication
 import com.capyreader.app.ui.settings.CrashReportingCheckbox
 import com.capyreader.app.ui.settings.LocalSnackbarHost
 import com.capyreader.app.ui.settings.PreferenceSelect
 import com.capyreader.app.ui.settings.keywordblocklist.BlockedKeywords
 import com.capyreader.app.ui.settings.keywordblocklist.KeywordBlocklistItem
 import com.capyreader.app.ui.settings.keywordblocklist.LocalBlockedKeywords
+import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.accounts.Source
+import com.jocmp.capy.articles.FullContentParserType
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.common.launchUI
-import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.compose.koinViewModel
-import org.koin.compose.KoinApplication
 import java.lang.String.CASE_INSENSITIVE_ORDER
 
 @Composable
@@ -69,6 +69,7 @@ fun GeneralSettingsPanel(
     onNavigateToNotifications: () -> Unit,
 ) {
     val keywords by viewModel.keywordBlocklist.collectAsStateWithLifecycle()
+    val fullContentParser by viewModel.fullContentParser.collectAsStateWithLifecycle()
 
     val blockedKeywords = BlockedKeywords(
         keywords = keywords.toList().sortedWith(compareBy(CASE_INSENSITIVE_ORDER) { it }),
@@ -99,6 +100,10 @@ fun GeneralSettingsPanel(
             updateAfterReadAll = viewModel::updateAfterReadAll,
             updateStickyFullContent = viewModel::updateStickyFullContent,
             enableStickyFullContent = viewModel.enableStickyFullContent,
+            fullContentParser = fullContentParser,
+            updateFullContentParser = viewModel::updateFullContentParser,
+            showTodayFilter = viewModel.showTodayFilter,
+            updateShowTodayFilter = viewModel::updateShowTodayFilter,
         )
     }
 }
@@ -122,8 +127,12 @@ fun GeneralSettingsPanelView(
     updateMarkReadOnScroll: (enable: Boolean) -> Unit,
     afterReadAll: AfterReadAllBehavior,
     updateAfterReadAll: (behavior: AfterReadAllBehavior) -> Unit,
+    fullContentParser: FullContentParserType,
+    updateFullContentParser: (parser: FullContentParserType) -> Unit,
     confirmMarkAllRead: Boolean,
     markReadOnScroll: Boolean,
+    showTodayFilter: Boolean,
+    updateShowTodayFilter: (show: Boolean) -> Unit,
 ) {
     val (isClearArticlesDialogOpen, setClearArticlesDialogOpen) = remember { mutableStateOf(false) }
 
@@ -144,6 +153,16 @@ fun GeneralSettingsPanelView(
             unreadSort,
             updateUnreadSort
         )
+
+        FormSection(title = stringResource(R.string.settings_section_categories)) {
+            RowItem {
+                TextSwitch(
+                    checked = showTodayFilter,
+                    onCheckedChange = updateShowTodayFilter,
+                    title = stringResource(R.string.settings_option_show_today_filter)
+                )
+            }
+        }
 
         FormSection(title = stringResource(R.string.settings_section_refresh)) {
             Column {
@@ -224,6 +243,16 @@ fun GeneralSettingsPanelView(
             Column {
                 CrashLogExportItem()
 
+                PreferenceSelect(
+                    selected = fullContentParser,
+                    update = updateFullContentParser,
+                    options = FullContentParserType.entries,
+                    label = R.string.settings_full_content_parser,
+                    optionText = {
+                        stringResource(id = it.translationKey)
+                    }
+                )
+
                 AutoDeleteMenu(
                     updateAutoDelete = updateAutoDelete,
                     autoDelete = autoDelete,
@@ -231,19 +260,15 @@ fun GeneralSettingsPanelView(
             }
 
             RowItem {
-                Button(
+                FilledTonalButton(
                     onClick = { setClearArticlesDialogOpen(true) },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = colorScheme.secondary,
-                        contentColor = colorScheme.onSecondary
-                    ),
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(stringResource(R.string.settings_clear_all_articles_button))
                 }
             }
 
-            if (BuildConfig.DEBUG) {
+            if (BuildConfig.DEBUG && !LocalView.current.isInEditMode) {
                 TestNotificationRow()
             }
         }
@@ -341,34 +366,33 @@ private fun Context.openAppSettings() {
 @Preview
 @Composable
 private fun GeneralSettingsPanelPreview() {
-    val context = LocalContext.current
-
-    KoinApplication(
-        application = {
-            androidContext(context)
-            setupCommonModules()
+    PreviewKoinApplication {
+        CapyTheme {
+            GeneralSettingsPanelView(
+                source = Source.LOCAL,
+                refreshInterval = RefreshInterval.EVERY_HOUR,
+                updateRefreshInterval = {},
+                canOpenLinksInternally = false,
+                onClearArticles = {},
+                updateOpenLinksInternally = {},
+                updateAutoDelete = {},
+                autoDelete = AutoDelete.WEEKLY,
+                unreadSort = UnreadSortOrder.NEWEST_FIRST,
+                updateUnreadSort = {},
+                onNavigateToNotifications = {},
+                markReadOnScroll = true,
+                updateConfirmMarkAllRead = {},
+                updateMarkReadOnScroll = {},
+                confirmMarkAllRead = true,
+                updateStickyFullContent = {},
+                enableStickyFullContent = true,
+                afterReadAll = AfterReadAllBehavior.NOTHING,
+                updateAfterReadAll = {},
+                fullContentParser = FullContentParserType.DEFUDDLE,
+                updateFullContentParser = {},
+                showTodayFilter = true,
+                updateShowTodayFilter = {}
+            )
         }
-    ) {
-        GeneralSettingsPanelView(
-            source = Source.LOCAL,
-            refreshInterval = RefreshInterval.EVERY_HOUR,
-            updateRefreshInterval = {},
-            canOpenLinksInternally = false,
-            onClearArticles = {},
-            updateOpenLinksInternally = {},
-            updateAutoDelete = {},
-            autoDelete = AutoDelete.WEEKLY,
-            unreadSort = UnreadSortOrder.NEWEST_FIRST,
-            updateUnreadSort = {},
-            onNavigateToNotifications = {},
-            markReadOnScroll = true,
-            updateConfirmMarkAllRead = {},
-            updateMarkReadOnScroll = {},
-            confirmMarkAllRead = true,
-            updateStickyFullContent = {},
-            enableStickyFullContent = true,
-            afterReadAll = AfterReadAllBehavior.NOTHING,
-            updateAfterReadAll = {}
-        )
     }
 }

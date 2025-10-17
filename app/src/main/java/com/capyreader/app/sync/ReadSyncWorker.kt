@@ -15,6 +15,10 @@ class ReadSyncWorker(
     private val account by inject<Account>()
 
     override suspend fun doWork(): Result {
+        if (SyncWorkers.isMaxAttemptMet(runAttemptCount)) {
+            return Result.failure()
+        }
+
         val articleIDs = inputData
             .getStringArray(ARTICLES_KEY)?.toList() ?: return Result.failure()
         val markRead = inputData.getBoolean(MARK_READ_KEY, false)

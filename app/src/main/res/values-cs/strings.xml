@@ -26,7 +26,6 @@
         <item quantity="other">Každých %d hodin</item>
     </plurals>
     <string name="nav_headline_tags">Štítky</string>
-    <string name="unsubscribe_error">Chyby při rušení odběru kanálu</string>
     <string name="relative_time_just_now">Právě teď</string>
     <string name="relative_time_minutes">%1$dmin</string>
     <string name="relative_time_hours">%1$dhod</string>
@@ -76,7 +75,6 @@
     <string name="settings_option_auto_delete_articles_subtitle">Mazat přečtené články bez hvězdičky starší než 3 měsíce</string>
     <string name="settings_option_auto_delete_articles_title">Automaticky mazat články</string>
     <string name="feed_form_feed_url_title">Odkaz kanálu</string>
-    <string name="app_name">Capy Reader</string>
     <string name="add_feed_submit">Přidat</string>
     <string name="add_feed_success">Kanál přidán</string>
     <string name="filter_unread">Nepřečtené</string>
@@ -89,7 +87,6 @@
     <string name="dialog_cancel">Zrušit</string>
     <string name="feed_action_unsubscribe_title">Zrušit odběr</string>
     <string name="settings">Otevřít nastavení</string>
-    <string name="feed_action_edit_success">Kanál aktualizován</string>
     <string name="settings_remove_account_title_local">Odstranit účet</string>
     <string name="refresh_feeds_menu_label">Aktualizovat kanály</string>
     <string name="nav_headline_feeds">Kanály</string>
@@ -97,7 +94,6 @@
     <string name="add_feed_feed_not_error">Nelze najít kanál</string>
     <string name="add_feed_save_error">Nelze uložit kanál</string>
     <string name="add_feed_network_error">Nelze najít kanál. Zkontrolujte své připojení.</string>
-    <string name="edit_feed_error">Chyba při ukládání kanálu</string>
     <string name="extract_full_content">Vypsat celý obsah</string>
     <string name="action_mark_all_read">Označit vše jako přečtené</string>
     <string name="mark_all_read_dialog_submit">Potvrdit</string>
@@ -118,6 +114,7 @@
     <string name="opml_import_toast_complete">Import dokončen</string>
     <string name="opml_import_notification_cancel">Stop</string>
     <string name="settings_article_list_summary">Souhrn</string>
+    <string name="settings_article_list_shorten_titles">Zkrátit názvy</string>
     <string name="article_style_options">Nastavení fontu</string>
     <string name="font_option_vollkorn">Vollkorn</string>
     <string name="font_option_atkinson_hyperlegible">Atkinson Hyperlegible</string>
@@ -186,7 +183,7 @@
     <string name="add_account_feedbin_signup_link_text">Vytvořte si ho zde.</string>
     <string name="add_account_freshrss_signup_prompt">Nemáte instanci FreshRSS?</string>
     <string name="add_account_freshrss_signup_link_text">Zjistit více.</string>
-    <string name="edit_feed_tag_section">Štítek</string>
+    <string name="edit_feed_tag_section">Vytvořit nebo vybrat štítek</string>
     <string name="settings_notifications_select_none">Nevybrat nic</string>
     <string name="settings_notifications_select_all">Vybrat vše</string>
     <string name="settings_confirm_mark_all_read">Potvrdit označení všeho jako přečtené</string>
@@ -236,4 +233,47 @@
     <string name="media_share">Sdílet</string>
     <string name="feed_nav_drawer_refresh_all">Obnovit vše</string>
     <string name="notification_mark_as_read_action">Označit jako přečtené</string>
+    <string name="theme_dynamic">Dynamický</string>
+    <string name="theme_newsprint">Novinový papír</string>
+    <string name="theme_monochrome">Monochromatický</string>
+    <string name="settings_pure_black_dark_mode">Čistě černý tmavý režim</string>
+    <string name="delete_tag_error">Štítek se nepodařilo odstranit</string>
+    <string name="auth_fields_client_certificate">Klientský certifikát (nepovinné)</string>
+    <string name="auth_fields_remove_client_cert">Odebrat klientský certifikát</string>
+    <string name="add_account_miniflux_signup_prompt">Nemáte nainstalovaný Miniflux?</string>
+    <string name="add_account_miniflux_signup_link_text">Zjistit více.</string>
+    <string name="theme_mode_system">Systém</string>
+    <string name="theme_mode_light">Světlé</string>
+    <string name="theme_mode_dark">Tmavé</string>
+    <string name="theme_default">Výchozí</string>
+    <string name="theme_sunset">Soumrak</string>
+    <string name="settings_options_reader_pin_top_toolbar">Připnout na panel</string>
+    <string name="settings_options_reader_show_bottom_toolbar">Zobrazit akce na spodním panelu</string>
+    <string name="settings_gestures_list_back_navigation_navigate_to_parent">Navigovat k nadřazenému</string>
+    <string name="blocked_keywords">Seznam blokovaných</string>
+    <string name="blocked_keywords_supporting_text">Mazat články podle klíčových slov v názvu nebo obsahu</string>
+    <string name="blocked_keywords_remove_keyword">Odebrat klíčové slovo</string>
+    <string name="blocked_keywords_add_keyword">Přidat klíčové slovo</string>
+    <string name="tag_action_delete_title">Smazat</string>
+    <string name="tag_action_delete_message">Opravdu si přejete smazat štítek \"%1$s\"?</string>
+    <string name="tag_action_delete_confirm">Smazat</string>
+    <string name="tag_name_title">Název</string>
+    <string name="tag_action_edit_success">Štítek aktualizován</string>
+    <string name="tag_action_edit_error">Chyba při aktualizaci štítku</string>
+    <string name="tag_action_edit">Upravit štítek</string>
+    <string name="actions_copy_link">Kopírovat odkaz</string>
+    <string name="actions_share_link">Sdílet odkaz</string>
+    <string name="widget_receiver_headlines_title">Titulky</string>
+    <string name="widget_headlines_title">Nejnovější titulky</string>
+    <string name="widget_headlines_see_more_button">Zobrazit více článků</string>
+    <string name="widget_headlines_account_error">Nejprve přidat účet</string>
+    <string name="settings_gestures_improve_talkback_title">Vylepšit TalkBack</string>
+    <string name="settings_gestures_improve_talkback_subtitle">Zakáže určitá nastavení pro vylepšení převodu textu na řeč TalkBack</string>
+    <string name="mark_read_position_toolbar">Panel</string>
+    <string name="mark_read_position_floating_action_button">Plovoucí akční tlačítko</string>
+    <string name="mark_all_read_button_position">Pozice tlačítka Označit vše jako přečtené</string>
+    <string name="settings_display_miscellaneous_title">Další</string>
+    <string name="settings_full_content_parser">Načítání plného obsahu (experimentální)</string>
+    <string name="open_articles_in_browser">Otevřít články v prohlížeči</string>
+    <string name="selected">Vybrané</string>
 </resources>

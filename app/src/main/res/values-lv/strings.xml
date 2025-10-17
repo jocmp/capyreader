@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="feed_action_edit_success">Ziņu plūsma veiksmīgi rediģēta</string>
     <string name="edit_feed_submit">Saglabāt</string>
     <string name="add_feed_name_title">Nosaukums</string>
     <string name="add_feed_submit">Pievienot</string>
@@ -56,7 +55,7 @@
     <string name="add_feed_new_folder_title">Jauna birka</string>
     <string name="article_actions_copy_link">Kopēt saiti</string>
     <string name="article_view_mark_as_read">Atzīmēt kā lasītu</string>
-    <string name="opml_import_button_text">Ievietot no faila</string>
+    <string name="opml_import_button_text">Ievietot no datnes</string>
     <string name="account_source_feedbin">Feedbin</string>
     <string name="theme_menu_option_light">Gaišs</string>
     <string name="settings_article_list_feed_name">Ziņu plūsmas nosaukums</string>
@@ -72,19 +71,18 @@
     <string name="add_feed_feed_not_error">Neizdevās atrast ziņu plūsmu</string>
     <string name="add_feed_save_error">Neizdevās saglabāt ziņu plūsmu</string>
     <string name="add_feed_network_error">Neizdevās atrast ziņu plūsmu. Lūdzu, pārbaudiet savienojumu.</string>
-    <string name="edit_feed_error">Kļūda, saglabājot ziņu plūsmu</string>
     <string name="relative_time_minutes">%1$dm</string>
     <string name="relative_time_hours">%1$ds</string>
     <string name="relative_time_days">%1$dd</string>
     <string name="article_share">Dalīties ar rakstu</string>
-    <string name="extract_full_content">Izvilkt pilnu saturu</string>
+    <string name="extract_full_content">Izvilkt visu (pilnu) saturu</string>
     <string name="action_mark_all_read">Atzīmēt visus kā lasītus</string>
     <string name="mark_all_read_dialog_description">Atzīmēt visus rakstus kā lasītus?</string>
     <string name="article_actions_open_menu">Atvērt rakstu darbības</string>
     <string name="crash_reporting_checkbox_title">Ieslēgt avārijas ziņošanu</string>
     <string name="account_source_local">Vietējais (lokālais)</string>
     <string name="add_account_local_subtitle">Jūsu ierīcē</string>
-    <string name="add_account_reader_subtitle">Google Reader API personīgā mitināšana</string>
+    <string name="add_account_reader_subtitle">Pašmitināts Google Reader API</string>
     <string name="add_account_feedbin_signup_prompt">Nav Feedbin konta?</string>
     <string name="add_account_feedbin_signup_link_text">Izveidojiet to šeit.</string>
     <string name="add_account_freshrss_signup_prompt">Nav FreshRSS kopija?</string>
@@ -92,7 +90,7 @@
     <string name="opml_import_notification_title">Ievieto abonementus…</string>
     <string name="notifications_channel_title_feed_update">Ziņu plūsmas atjauninājumi</string>
     <string name="notification_mark_as_read_action">Atzīmēt kā lasītu</string>
-    <string name="opml_export_button_text">Izgūt kā OPML failu</string>
+    <string name="opml_export_button_text">Izgūt kā OPML datni</string>
     <string name="opml_import_toast_complete">Ievietošana pabeigta</string>
     <string name="opml_import_toast_failed">Neizdevās ievietot</string>
     <string name="theme_menu_label">Motīvs</string>
@@ -108,7 +106,7 @@
     <string name="settings_article_list_summary">Kopsavilkums</string>
     <string name="settings_section_version">Versija</string>
     <string name="settings_option_copy_version">Kopēt versiju</string>
-    <string name="settings_option_full_content_title">Rādīt visu raksta saturu</string>
+    <string name="settings_option_full_content_title">Rādīt visu (pilnu) raksta saturu</string>
     <string name="refresh_on_start">Kad atver lietotni</string>
     <string name="empty_onboarding_title">Pagaidām nav nevienas ziņu plūsmas</string>
     <string name="article_style_options">Fonta stila opcijas</string>
@@ -154,7 +152,7 @@
     <string name="article_vertical_swipe_next_article">Ielādēt nākamo rakstu</string>
     <string name="article_vertical_swipe_previous_article">Ielādēt iepriekšējo rakstu</string>
     <string name="article_vertical_swipe_disabled">Atspējots</string>
-    <string name="article_vertical_swipe_full_content">Ielādēt visu raksta saturu</string>
+    <string name="article_vertical_swipe_full_content">Ielādēt visu (pilnu) raksta saturu</string>
     <string name="article_vertical_open_article_in_browser">Atvērt rakstu pārlūkā</string>
     <string name="article_list_row_swipe_disabled">Atspējots</string>
     <string name="article_list_row_swipe_toggle_starred">Pārslēgt rakstu kā atzīmētu vai neatzīmētu</string>
@@ -194,7 +192,6 @@
     <string name="settings_remove_account_title_service">Iziet</string>
     <string name="settings_remove_account_message_service">Vai tiešām vēlaties iziet?</string>
     <string name="settings_remove_account_confirm_service">Iziet</string>
-    <string name="unsubscribe_error">Kļūda, pārtraucot ziņu plūsmas abonēšanu</string>
     <string name="article_actions_mark_below_as_read">Atzīmēt visus apakšējos rakstus kā lasītus</string>
     <string name="unauthorized_dialog_confirm_text">Ieiet</string>
     <string name="auth_fields_log_in_button">Ieiet</string>
@@ -212,14 +209,14 @@
     <string name="feed_nav_drawer_refresh_all">Atsvaidzināt visu</string>
     <string name="blocked_keywords_add_keyword">Pievienot atslēgvārdu</string>
     <string name="unauthorized_dialog_description">Veidojot savienojumu ar jūsu kontu, radās problēma. Lūdzu, atkārtojiet autorizāciju.</string>
-    <string name="unauthorized_dialog_title">Jūs esat atslēdzies</string>
+    <string name="unauthorized_dialog_title">Jūs esiet atslēgušies</string>
     <string name="update_auth_success_message">Veiksmīgi autorizējušies</string>
     <string name="notifications_channel_title_opml_import">Ievietot abonementus</string>
     <string name="settings_import_progress">Ievietoti %1$d no %2$d abonementiem</string>
     <string name="opml_import_notification_cancel">Apturēt</string>
     <string name="image_preview_menu_option_none">Nerādīt</string>
     <string name="settings_gestures_list_back_navigation_system_back">Noklusējuma</string>
-    <string name="settings_gestures_reader_tap_to_page_title">Skārienritināšana (priekš E Ink)</string>
+    <string name="settings_gestures_reader_tap_to_page_title">Skārienritināšana (priekš e-grāmatas lasītājiem ar E-tinti)</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Velciet pa kreisi vai pa labi, lai pārvietotos pa rakstiem</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Pieskarieties apakšējiem stūriem, lai pārvietotos pa raksta saturu</string>
     <string name="settings_enable_high_contrast_dark_theme">Iespējot augsta kontrasta tumšo motīvu</string>
@@ -254,4 +251,29 @@
     <string name="widget_receiver_headlines_title">Rakstu virsraksti</string>
     <string name="widget_headlines_title">Svaigie rakstu virsraksti</string>
     <string name="settings_gestures_improve_talkback_subtitle">Atspējo dažus iestatījumus, lai uzlabotu ekrānā redzamo teksta elementu pārveidošanu runā (TalkBack)</string>
+    <string name="settings_article_list_shorten_titles">Saīsināt virsrakstus</string>
+    <string name="mark_all_read_button_position">Pogas \"Atzīmēt visus kā lasītus\" pozīcija</string>
+    <string name="mark_read_position_toolbar">Rīkjosla</string>
+    <string name="mark_read_position_floating_action_button">Peldoša darbības poga</string>
+    <string name="settings_display_miscellaneous_title">Dažādi</string>
+    <string name="add_account_miniflux_signup_prompt">Ja jums vēl nav Miniflux instances?</string>
+    <string name="add_account_miniflux_signup_link_text">Vairāk informācijas.</string>
+    <string name="settings_options_reader_pin_top_toolbar">Piespraust augšējo rīkjoslu</string>
+    <string name="theme_mode_system">Sistēmas</string>
+    <string name="theme_mode_light">Gaišs</string>
+    <string name="theme_mode_dark">Tumšs</string>
+    <string name="theme_dynamic">Dinamisks</string>
+    <string name="settings_section_categories">Kategorijas</string>
+    <string name="theme_sunset">Saulriets</string>
+    <string name="auth_fields_remove_client_cert">Noņemt klienta sertifikātu</string>
+    <string name="filter_today">Šodienas</string>
+    <string name="theme_newsprint">Laikraksts, avīze</string>
+    <string name="settings_option_show_today_filter">Rādīt šodienas raksti atlases iespēju</string>
+    <string name="settings_full_content_parser">Visu (pilnu) raksta saturu parsētājs</string>
+    <string name="auth_fields_client_certificate">Klienta sertifikāts (neobligāti, pēc izvēles)</string>
+    <string name="theme_default">Noklusētais</string>
+    <string name="theme_monochrome">Vienkrāsains</string>
+    <string name="settings_pure_black_dark_mode">Pilnīgi melns tumšais motīvs</string>
+    <string name="open_articles_in_browser">Atvērt rakstus pārlūkā</string>
+    <string name="selected">Atlasītie</string>
 </resources>

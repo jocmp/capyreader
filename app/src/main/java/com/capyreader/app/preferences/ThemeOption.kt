@@ -1,27 +1,61 @@
 package com.capyreader.app.preferences
 
+import android.os.Build
 import com.capyreader.app.R
 
-enum class ThemeOption {
+enum class ThemeMode {
+    SYSTEM,
     LIGHT,
-    DARK,
-    SYSTEM_DEFAULT;
+    DARK;
 
     val translationKey: Int
-        get() = when(this) {
-            LIGHT -> R.string.theme_menu_option_light
-            DARK -> R.string.theme_menu_option_dark
-            SYSTEM_DEFAULT -> R.string.theme_menu_option_system_default
+        get() = when (this) {
+            SYSTEM -> R.string.theme_mode_system
+            LIGHT -> R.string.theme_mode_light
+            DARK -> R.string.theme_mode_dark
         }
 
     companion object {
-        val default = SYSTEM_DEFAULT
+        val default = SYSTEM
+    }
+}
 
-        val sorted: List<ThemeOption>
-            get() = listOf(
-                SYSTEM_DEFAULT,
-                LIGHT,
-                DARK,
-            )
+enum class AppTheme {
+    MONET,
+    SUNSET,
+    NEWSPRINT,
+    MONOCHROME,
+    DEFAULT;
+
+    val translationKey: Int
+        get() = when (this) {
+            MONET -> R.string.theme_dynamic
+            DEFAULT -> R.string.theme_default
+            SUNSET -> R.string.theme_sunset
+            NEWSPRINT -> R.string.theme_newsprint
+            MONOCHROME -> R.string.theme_monochrome
+        }
+
+    /** On the off chance someone has selected MONET on an older version, default them */
+    fun normalized(): AppTheme {
+        return if (this === MONET && Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            DEFAULT
+        } else {
+            this
+        }
+    }
+
+    companion object {
+        val default = MONET.normalized()
+    }
+}
+
+data class ThemePreference(
+    val themeMode: ThemeMode = ThemeMode.default,
+    val appTheme: AppTheme = AppTheme.default,
+    val pureBlackDarkMode: Boolean = false
+) {
+    companion object {
+        val default = ThemePreference()
     }
 }

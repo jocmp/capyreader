@@ -1,0 +1,3 @@
+• Simplify FreshRSS/Google Reader sync to speed up refresh
+• Set "Defuddle" as the default full content parser
+• Update translations for Czech, Estonian, Polish, and Ukrainian thanks to volunteers!

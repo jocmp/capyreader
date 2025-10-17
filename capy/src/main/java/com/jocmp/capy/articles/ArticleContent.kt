@@ -1,5 +1,6 @@
 package com.jocmp.capy.articles
 
+import com.jocmp.capy.UserAgentInterceptor
 import com.jocmp.capy.common.await
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -8,8 +9,11 @@ import java.io.IOException
 import java.net.URL
 
 class ArticleContent(
-    private val httpClient: OkHttpClient
+    client: OkHttpClient
 ) {
+    private val httpClient =
+        client.newBuilder().addInterceptor(UserAgentInterceptor(USER_AGENT)).build()
+
     internal suspend fun fetch(url: URL?): Result<String> {
         url ?: return Result.failure(MissingURLError())
 
@@ -51,4 +55,9 @@ class ArticleContent(
     class MissingBodyError(override val message: String?) : Throwable(message = message)
 
     class MissingURLError : Throwable()
+
+    companion object {
+        const val USER_AGENT =
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+    }
 }

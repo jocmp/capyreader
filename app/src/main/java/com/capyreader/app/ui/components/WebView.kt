@@ -1,13 +1,12 @@
 package com.capyreader.app.ui.components
 
 import android.annotation.SuppressLint
-import android.graphics.Bitmap
+import android.net.Uri
 import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebView.HitTestResult.SRC_ANCHOR_TYPE
-import android.webkit.WebView.VisualStateCallback
 import android.webkit.WebViewClient
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -22,54 +21,36 @@ import androidx.webkit.WebViewAssetLoader.AssetsPathHandler
 import androidx.webkit.WebViewAssetLoader.ResourcesPathHandler
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.WebViewInterface
-import com.capyreader.app.common.openLink
 import com.capyreader.app.common.rememberTalkbackPreference
-import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
 import com.jocmp.capy.common.launchUI
-import com.jocmp.capy.common.windowOrigin
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import org.koin.compose.koinInject
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun WebView(
     modifier: Modifier,
     state: WebViewState,
-    onDispose: (WebView) -> Unit = {},
 ) {
     AndroidView(
         modifier = modifier,
         factory = { state.webView },
-        onRelease = {
-            onDispose(it)
-        }
     )
 }
 
 class AccompanistWebViewClient(
     private val assetLoader: WebViewAssetLoader,
+    private val onOpenLink: (url: Uri) -> Unit,
 ) : WebViewClient(),
     KoinComponent {
     lateinit var state: WebViewState
         internal set
-
-    private val appPreferences by inject<AppPreferences>()
-
-    override fun onPageStarted(view: WebView, url: String?, favicon: Bitmap?) {
-        super.onPageStarted(view, url, favicon)
-
-        view.postVisualStateCallback(0, object : VisualStateCallback() {
-            override fun onComplete(requestId: Long) {
-                view.visibility = View.VISIBLE
-            }
-        })
-    }
 
     override fun shouldInterceptRequest(
         view: WebView,
@@ -87,8 +68,8 @@ class AccompanistWebViewClient(
     override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
         val url = request?.url
 
-        if (view != null && url != null) {
-            view.context.openLink(url, appPreferences)
+        if (url != null) {
+            onOpenLink(url)
         }
 
         return true
@@ -128,12 +109,15 @@ class WebViewState(
             )
 
             webView.loadDataWithBaseURL(
-                windowOrigin(article.url),
+                null,
                 html,
                 null,
                 "UTF-8",
                 null,
             )
+
+            delay(50)
+            webView.visibility = View.VISIBLE
         }
     }
 
@@ -151,6 +135,7 @@ fun rememberWebViewState(
     renderer: ArticleRenderer = koinInject(),
     onNavigateToMedia: (media: Media) -> Unit,
     onRequestLinkDialog: (link: ShareLink) -> Unit,
+    onOpenLink: (url: Uri) -> Unit,
     key: String? = null,
 ): WebViewState {
     val enableNativeScroll by rememberTalkbackPreference()
@@ -170,6 +155,7 @@ fun rememberWebViewState(
                 .addPathHandler("/assets/", AssetsPathHandler(context))
                 .addPathHandler("/res/", ResourcesPathHandler(context))
                 .build(),
+            onOpenLink = onOpenLink,
         )
     }
 

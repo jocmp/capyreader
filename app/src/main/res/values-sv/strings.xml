@@ -21,7 +21,6 @@
     <string name="dialog_cancel">Avbryt</string>
     <string name="folder_action_edit">Byt namn</string>
     <string name="feed_action_unsubscribe_title">Avprenumerera</string>
-    <string name="feed_action_edit_success">Flöde uppdaterat</string>
     <string name="settings">Öppna inställningar</string>
     <string name="settings_remove_account_button_service">Logga ut</string>
     <string name="settings_remove_account_title_service">Logga ut</string>
@@ -43,7 +42,6 @@
     <string name="nav_add_feed">Lägg till flöde</string>
     <string name="add_feed_feed_not_error">Kunde inte hitta flöde</string>
     <string name="add_feed_save_error">Kunde inte spara flöde</string>
-    <string name="edit_feed_error">Fel vid sparande av flöde</string>
     <string name="relative_time_minutes">%1$dmin</string>
     <string name="article_share">Dela artikel</string>
     <string name="action_mark_all_read">Markera alla som lästa</string>
@@ -108,6 +106,7 @@
     <string name="image_preview_menu_option_none">Ingen</string>
     <string name="add_account_reader_subtitle">Självhanterad hosting av Google Reader API</string>
     <string name="settings_article_list_summary">Sammanfattning</string>
+    <string name="settings_article_list_shorten_titles">Förkorta titlar</string>
     <string name="settings_option_copy_version">Kopiera version</string>
     <string name="empty_onboarding_title">Inga flöden än</string>
     <string name="empty_onboarding_prompt">Kom igång genom att lägga till ett flöde</string>
@@ -192,7 +191,6 @@
     <string name="full_content_error_missing_response">Artikeluppladdning misslyckad</string>
     <string name="end_of_feed_text">Du har kommit ikapp!</string>
     <string name="settings_enable_high_contrast_dark_theme">Aktivera högkontrast vid mörkt tema</string>
-    <string name="unsubscribe_error">Fel vid avprenumeration av flöde</string>
     <string name="article_view_unstar">Ta bort sjärnmärkning</string>
     <string name="refresh_on_start">Vid start</string>
     <string name="add_account_local_subtitle">På din enhet</string>
@@ -218,4 +216,6 @@
     <string name="nav_headline_saved_searches">Sökningar</string>
     <string name="search_bar_placeholder">Sök</string>
     <string name="article_vertical_open_article_in_browser">Öppna artikel i webbläsare</string>
+    <string name="article_list_swipe_disabled">Inaktiverad</string>
+    <string name="notification_mark_as_read_action">Markera som läst</string>
 </resources>

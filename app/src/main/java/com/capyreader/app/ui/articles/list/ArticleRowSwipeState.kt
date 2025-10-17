@@ -1,6 +1,5 @@
 package com.capyreader.app.ui.articles.list
 
-import android.content.Context
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
@@ -8,15 +7,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import com.capyreader.app.R
 import com.capyreader.app.common.asState
-import com.capyreader.app.common.openLinkExternally
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.RowSwipeOption
+import com.capyreader.app.ui.LinkOpener
+import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.articles.ArticleActions
 import com.capyreader.app.ui.articles.LocalArticleActions
 import com.capyreader.app.ui.components.ArticleAction
@@ -57,11 +57,11 @@ private fun swipeActions(article: Article, option: RowSwipeOption): List<SwipeAc
     }
 
     val actions = LocalArticleActions.current
-    val context = LocalContext.current
+    val linkOpener = LocalLinkOpener.current
 
     val action = when (option) {
         RowSwipeOption.TOGGLE_STARRED -> starAction(article, actions)
-        RowSwipeOption.OPEN_EXTERNALLY -> context.openExternally(article, actions)
+        RowSwipeOption.OPEN_EXTERNALLY -> linkOpener.openLink(article, actions)
         else -> readAction(article, actions)
     }
 
@@ -81,8 +81,7 @@ private fun swipeActions(article: Article, option: RowSwipeOption): List<SwipeAc
     )
 }
 
-
-private fun Context.openExternally(article: Article, actions: ArticleActions) =
+private fun LinkOpener.openLink(article: Article, actions: ArticleActions) =
     ArticleAction(
         R.drawable.icon_open_in_new,
         R.string.article_view_open_externally,
@@ -91,5 +90,5 @@ private fun Context.openExternally(article: Article, actions: ArticleActions) =
 
         actions.markRead(article.id)
 
-        openLinkExternally(url)
+        open(url.toString().toUri())
     }

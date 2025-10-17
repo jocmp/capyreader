@@ -17,14 +17,14 @@ if (rootProject.file("secrets.properties").exists()) {
 
 android {
     namespace = "com.capyreader.app"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.capyreader.app"
         minSdk = 30
-        targetSdk = 35
-        versionCode = 1137
-        versionName = "2025.05.1137-dev"
+        targetSdk = 36
+        versionCode = 1173
+        versionName = "2025.10.1173"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -85,6 +85,12 @@ android {
         debug {
             applicationIdSuffix = ".debug"
         }
+        create("nightly") {
+            initWith(getByName("release"))
+            applicationIdSuffix = ".nightly"
+            // https://developer.android.com/build/build-variants#resolve_matching_errors
+            matchingFallbacks += "release"
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
@@ -100,6 +106,7 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "/META-INF/versions/9/OSGI-INF/MANIFEST.MF"
         }
     }
 }

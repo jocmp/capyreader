@@ -1,0 +1,16 @@
+Added
+
+• Add custom full content parser for techcrunch.com
+• Add more font sizes to article list and reader options
+
+Updated
+
+• Improve FreshRSS image previews
+• Improve FreshRSS refresh for old articles
+• Show absolute time and date in article feed
+• Automatically dismiss notifications when read
+• Updated translations thanks to volunteers.
+
+Fixed
+
+• Fix bug for accented characters for some feeds

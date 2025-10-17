@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Capy Reader</string>
     <string name="add_feed_url_title">Link Izvora ili Veb sajta</string>
     <string name="add_feed_name_title">Naziv</string>
     <string name="add_feed_new_folder_title">Novi Tag</string>
@@ -20,7 +19,6 @@
     <string name="folder_action_delete_title">Izbriši Tag</string>
     <string name="folder_action_edit">Preimenuj</string>
     <string name="feed_action_unsubscribe_title">Ukloni Izvor</string>
-    <string name="feed_action_edit_success">Izvor je ažuriran</string>
     <string name="settings">Otvori podešavanja</string>
     <string name="settings_remove_account_button_service">Odjavi se</string>
     <string name="settings_remove_account_title_service">Odjavi se</string>
@@ -47,8 +45,6 @@
     <string name="add_feed_feed_not_error">Nije moguće pronaći Izvor</string>
     <string name="add_feed_save_error">Nije moguće sačuvati izvor</string>
     <string name="add_feed_network_error">Nije moguće pronaći izvor. Proverite svoju vezu.</string>
-    <string name="edit_feed_error">Greška pri čuvanju Izvora</string>
-    <string name="unsubscribe_error">Greška pri opozivanju prijave Izvora</string>
     <string name="relative_time_just_now">Upravo sada</string>
     <string name="relative_time_minutes">%1$dm</string>
     <string name="relative_time_hours">%1$dh</string>
@@ -106,6 +102,7 @@
     <string name="settings_article_list_feed_name">Naziv Izvora</string>
     <string name="settings_article_list_feed_icons">Ikonice Izvora</string>
     <string name="settings_article_list_summary">Rezime</string>
+    <string name="settings_article_list_shorten_titles">Skrati naslove</string>
     <string name="settings_section_version">Verzija</string>
     <string name="settings_option_copy_version">Kopiraj verziju</string>
     <string name="settings_option_full_content_title">Lepljivi puni sadržaj</string>

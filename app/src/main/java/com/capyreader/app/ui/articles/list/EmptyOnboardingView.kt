@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,12 +32,10 @@ fun EmptyOnboardingView(
         ) {
             Text(
                 stringResource(R.string.empty_onboarding_title),
-                color = colorScheme.secondary,
                 textAlign = TextAlign.Center,
             )
             Text(
                 stringResource(R.string.empty_onboarding_prompt),
-                color = colorScheme.secondary,
                 textAlign = TextAlign.Center,
             )
             addFeed()

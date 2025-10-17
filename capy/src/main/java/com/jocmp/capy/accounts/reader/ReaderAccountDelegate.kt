@@ -26,6 +26,8 @@ import com.jocmp.readerclient.GoogleReader.Companion.BAD_TOKEN_HEADER_KEY
 import com.jocmp.readerclient.Item
 import com.jocmp.readerclient.ItemRef
 import com.jocmp.readerclient.Stream
+import com.jocmp.readerclient.Stream.Read
+import com.jocmp.readerclient.Stream.UserLabel
 import com.jocmp.readerclient.Subscription
 import com.jocmp.readerclient.SubscriptionEditAction
 import com.jocmp.readerclient.SubscriptionQuickAddResult
@@ -238,12 +240,9 @@ internal class ReaderAccountDelegate(
     }
 
     private suspend fun refreshTopLevelArticles() {
-        val since = articleRecords.maxArrivedAt().toEpochSecond()
-
         refreshFeeds()
         refreshAllSavedSearches()
         refreshArticleState()
-        fetchPaginatedArticles(since = since, stream = Stream.Read())
         fetchMissingArticles()
     }
 
@@ -264,7 +263,7 @@ internal class ReaderAccountDelegate(
             title = subscription.title,
             feed_url = subscription.url,
             site_url = subscription.htmlUrl,
-            favicon_url = subscription.iconUrl.ifBlank {
+            favicon_url = subscription.iconUrl?.ifBlank {
                 CapyLog.warn(tag("blank_icon"), mapOf("feed_url" to subscription.url))
                 null
             },
@@ -296,15 +295,6 @@ internal class ReaderAccountDelegate(
                 savedSearchRecords.deleteOrphaned(excludedIDs = tags.map { it.id })
             }
         }
-
-        coroutineScope {
-            savedSearchRecords.allIDs()
-                .forEach { savedSearchID ->
-                    launch {
-                        fetchPaginatedArticles(stream = Stream.UserLabel(savedSearchID))
-                    }
-                }
-        }
     }
 
     private fun upsertSavedSearch(tag: Tag) {
@@ -323,7 +313,7 @@ internal class ReaderAccountDelegate(
         withResult(
             googleReader.streamItemsIDs(
                 stream = Stream.ReadingList(),
-                excludedStream = Stream.Read()
+                excludedStream = Read()
             )
         ) { result ->
             articleRecords.markAllUnread(articleIDs = result.itemRefs.map { it.hexID })
@@ -446,7 +436,7 @@ internal class ReaderAccountDelegate(
                     author = item.author,
                     content_html = item.content?.content ?: item.summary.content,
                     extracted_content_url = null,
-                    summary = Jsoup.parse(item.summary.content).text(),
+                    summary = item.summary.content?.let { Jsoup.parse(it).text() },
                     url = item.canonical.firstOrNull()?.href,
                     image_url = ReaderEnclosureParsing.parsedImageURL(item),
                     published_at = item.published
@@ -466,6 +456,13 @@ internal class ReaderAccountDelegate(
                             savedSearchID = category,
                         )
                     }
+                }
+
+                item.categories?.let { categories ->
+                    savedSearchRecords.removeArticleBySavedSearchIDs(
+                        articleID = item.hexID,
+                        excludedIDs = categories
+                    )
                 }
 
                 ReaderEnclosureParsing.validEnclosures(item).forEach {
@@ -563,10 +560,10 @@ private val SubscriptionQuickAddResult.toSubscription: Subscription?
 
 private fun ArticleFilter.toStream(source: Source): Stream {
     return when (this) {
-        is ArticleFilter.Articles -> Stream.Read()
+        is ArticleFilter.Articles, is ArticleFilter.Today -> Read()
         is ArticleFilter.Feeds -> Stream.Feed(feedID)
         is ArticleFilter.Folders -> folderStream(this, source)
-        is ArticleFilter.SavedSearches -> Stream.UserLabel(savedSearchID)
+        is ArticleFilter.SavedSearches -> UserLabel(savedSearchID)
     }
 }
 

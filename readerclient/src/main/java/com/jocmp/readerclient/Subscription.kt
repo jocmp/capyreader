@@ -10,7 +10,7 @@ data class Subscription(
     val categories: List<Category>,
     val url: String,
     val htmlUrl: String,
-    val iconUrl: String,
+    val iconUrl: String?,
     @Json(name = "frss:priority")
-    val frssPriority: String?
+    val frssPriority: String?,
 )

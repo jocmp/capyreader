@@ -14,11 +14,17 @@ platform :android do
   desc "Deploy a new version to the Google Play"
   lane :production do
     build_release_bundle
-    upload_to_play_store
+    upload_to_play_store(
+      sync_image_upload: true
+    )
   end
 
   lane :github_release do
     build_apk_release
+  end
+
+  lane :free_nightly do
+    gradle(task: 'clean assembleFreeNightly')
   end
 end
 

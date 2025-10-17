@@ -1,22 +1,21 @@
-#!/usr/bin/env ruby
-require 'open3'
-require 'fileutils'
+#!/bin/bash
 
-def fetch_config
-  result, _, _ = Open3.capture3("bumpver show -n --environ")
+# Function to fetch config and extract BID
+fetch_bid() {
+    local result
+    result=$(bumpver show -n --environ)
 
-  result
-    .split(' ')
-    .map { |pair| pair.split('=', 2) }
-    .to_h
-end
+    echo "$result" | grep "^BID=" | cut -d'=' -f2
+}
 
-build = fetch_config["BID"].to_i
-next_build = build + 1
+build=$(fetch_bid)
+next_build=$((build + 1))
 
-path = "fastlane/metadata/android/en-US/changelogs/#{next_build}.txt"
-FileUtils.touch "./#{path}"
+path="fastlane/metadata/android/en-US/changelogs/${next_build}.txt"
 
-puts "Added changelog for next build (#{next_build})\n./#{path}"
+touch "./${path}"
 
-exec("code", path)
+echo "Added changelog for next build (${next_build})"
+echo "./${path}"
+
+exec code "$path"

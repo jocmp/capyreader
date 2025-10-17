@@ -1,0 +1,11 @@
+Added
+
+• Add initial support for FreshRSS and Google Reader API
+
+Updated
+
+• Updated translations for Arabic, Bulgarian, German, Estonian, French, Italian, Russian, and Chinese thanks to volunteers
+
+Fixed
+
+• Fixed missing images on some articles

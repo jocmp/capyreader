@@ -23,6 +23,7 @@ class ArticlePagerFactory(private val database: Database) {
             is ArticleFilter.Feeds -> feedSource(filter, query, unreadSort, since)
             is ArticleFilter.Folders -> folderSource(filter, query, unreadSort, since)
             is ArticleFilter.SavedSearches -> savedSearchSource(filter, query, unreadSort, since)
+            is ArticleFilter.Today -> todaySource(filter, query, unreadSort, since)
         }
     }
 
@@ -144,6 +145,33 @@ class ArticlePagerFactory(private val database: Database) {
                     limit = limit,
                     unreadSort = unreadSort,
                     offset = offset,
+                )
+            }
+        )
+    }
+
+    private fun todaySource(
+        filter: ArticleFilter.Today,
+        query: String?,
+        unreadSort: UnreadSortOrder,
+        since: OffsetDateTime
+    ): PagingSource<Int, Article> {
+        return QueryPagingSource(
+            countQuery = articles.byToday.count(
+                status = filter.status,
+                query = query,
+                since = since
+            ),
+            transacter = database.articlesQueries,
+            context = Dispatchers.IO,
+            queryProvider = { limit, offset ->
+                articles.byToday.all(
+                    status = filter.status,
+                    query = query,
+                    limit = limit,
+                    unreadSort = unreadSort,
+                    offset = offset,
+                    since = since,
                 )
             }
         )

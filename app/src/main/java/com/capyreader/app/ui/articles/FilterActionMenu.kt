@@ -14,8 +14,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.capyreader.app.R
+import com.capyreader.app.ui.LocalMarkAllReadButtonPosition
 import com.capyreader.app.ui.articles.list.FeedActionMenu
 import com.capyreader.app.ui.articles.list.FolderActionMenu
+import com.capyreader.app.ui.articles.list.MarkAllReadButton
 import com.capyreader.app.ui.fixtures.FeedSample
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
@@ -25,12 +27,12 @@ import com.jocmp.capy.Feed
 fun FilterActionMenu(
     filter: ArticleFilter,
     currentFeed: Feed?,
-//    onMarkAllRead: () -> Unit,
-    onRemoveFeed: (feedID: String, completion: (result: Result<Unit>) -> Unit) -> Unit,
+    onMarkAllRead: () -> Unit,
     onRemoveFolder: (folderTitle: String, completion: (result: Result<Unit>) -> Unit) -> Unit,
     onRequestSearch: () -> Unit,
     hideSearchIcon: Boolean,
 ) {
+    val markReadPosition = LocalMarkAllReadButtonPosition.current
     val (expanded, setMenuExpanded) = remember(filter) { mutableStateOf(false) }
 
     val closeMenu = {
@@ -48,6 +50,14 @@ fun FilterActionMenu(
                 }
             }
 
+            if (markReadPosition == MarkReadPosition.TOOLBAR) {
+                MarkAllReadButton(
+                    onMarkAllRead = {
+                        onMarkAllRead()
+                    },
+                )
+            }
+
             Box {
                 if (currentFeed != null || filter is ArticleFilter.Folders) {
                     IconButton(onClick = { setMenuExpanded(true) }) {
@@ -63,7 +73,6 @@ fun FilterActionMenu(
                         expanded = expanded,
                         feed = currentFeed,
                         onDismissMenuRequest = { closeMenu() },
-                        onRemoveRequest = onRemoveFeed,
                     )
                 }
 
@@ -84,9 +93,8 @@ fun FilterActionMenu(
 @Composable
 fun FeedActionsPreview(@PreviewParameter(FeedSample::class) feed: Feed) {
     FilterActionMenu(
-        onRemoveFeed = { _, _ -> },
         onRemoveFolder = { _, _ -> },
-//        onMarkAllRead = {},
+        onMarkAllRead = {},
         onRequestSearch = {},
         currentFeed = feed,
         filter = ArticleFilter.Feeds(

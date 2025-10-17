@@ -1,6 +1,5 @@
 package com.capyreader.app.ui.settings.panels
 
-import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,7 +18,6 @@ import androidx.compose.material.icons.rounded.VolunteerActivism
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -31,9 +29,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import com.capyreader.app.BuildConfig.VERSION_NAME
 import com.capyreader.app.R
-import com.capyreader.app.common.openLink
+import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.theme.CapyTheme
 
@@ -45,6 +44,8 @@ fun AboutSettingsPanel() {
         clipboardManager.setText(AnnotatedString("Capy Reader $VERSION_NAME"))
     }
 
+    val linkOpener = LocalLinkOpener.current
+
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = Modifier.verticalScroll(rememberScrollState()),
@@ -52,7 +53,7 @@ fun AboutSettingsPanel() {
         Column {
             Box(
                 modifier = Modifier.clickable {
-                    context.openLink(Uri.parse(Support.URL))
+                    linkOpener.open(Support.URL.toUri())
                 }
             ) {
                 ListItem(
@@ -62,7 +63,7 @@ fun AboutSettingsPanel() {
             }
             Box(
                 modifier = Modifier.clickable {
-                    context.openLink(Uri.parse(Support.DONATE_URL))
+                    linkOpener.open(Support.DONATE_URL.toUri())
                 }
             ) {
                 ListItem(
@@ -89,7 +90,6 @@ fun AboutSettingsPanel() {
                 )
                 Icon(
                     imageVector = Icons.Filled.ContentCopy,
-                    tint = colorScheme.secondary,
                     contentDescription = stringResource(
                         R.string.settings_option_copy_version
                     ),
@@ -101,7 +101,7 @@ fun AboutSettingsPanel() {
         HorizontalDivider()
         FormSection {
             Box(Modifier.padding(horizontal = 4.dp)) {
-                TextButton(onClick = { context.openLink(Uri.parse(Support.ABOUT_URL)) }) {
+                TextButton(onClick = { linkOpener.open(Support.ABOUT_URL.toUri()) }) {
                     Text("Made with ♥ in ✶✶✶✶")
                 }
             }

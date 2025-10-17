@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Capy Reader</string>
     <string name="add_feed_url_title">Uudistevoo või veebisaidi aadress</string>
     <string name="add_feed_name_title">Nimi</string>
     <string name="add_feed_new_folder_title">Uus silt</string>
@@ -16,7 +15,6 @@
     <string name="feed_action_unsubscribe_message">Kas sa oled kindel et soovid loobuda „%1$s“ tellimusest?</string>
     <string name="edit_feed_submit">Salvesta</string>
     <string name="feed_action_unsubscribe_title">Loobu tellimusest</string>
-    <string name="feed_action_edit_success">Uudisvoog on muudetud</string>
     <string name="settings">Ava seadistused</string>
     <string name="settings_remove_account_button_service">Logi välja</string>
     <string name="settings_remove_account_title_service">Logi välja</string>
@@ -30,14 +28,12 @@
     <string name="article_view_mark_as_read">Märgi loetuks</string>
     <string name="refresh_manually_only">Vaid käsitsi</string>
     <string name="refresh_minutes">Iga %1$d minuti järel</string>
-    <string name="refresh_feeds_menu_label">Uuenda uudisvood</string>
+    <string name="refresh_feeds_menu_label">Uuenda uudisvooge</string>
     <string name="nav_headline_tags">Sildid</string>
     <string name="nav_headline_feeds">Uudisvood</string>
     <string name="nav_add_feed">Lisa uudisvoog</string>
     <string name="add_feed_feed_not_error">Uudisvoogu ei õnnestunud leida</string>
     <string name="add_feed_network_error">Uudisvoogu ei õnnestunud leida. Kontrolli oma nutiseadme võrguühendust.</string>
-    <string name="edit_feed_error">Viga uudisvoo salvestamisel</string>
-    <string name="unsubscribe_error">Viga uudisvoo tellimusest loobumisel</string>
     <string name="relative_time_just_now">Just nüüd</string>
     <string name="relative_time_minutes">%1$d min</string>
     <string name="relative_time_hours">%1$d t</string>
@@ -192,7 +188,7 @@
     <string name="add_account_freshrss_subtitle">freshrss.org</string>
     <string name="add_account_feedbin_signup_link_text">Saad selle siin luua.</string>
     <string name="add_account_freshrss_signup_link_text">Lisateavet leiad siit.</string>
-    <string name="auth_fields_api_url_freshrss_placeholder">https://example.com/</string>
+    <string name="auth_fields_api_url_placeholder">https://example.com/</string>
     <string name="account_source_reader">Uudistelugeja</string>
     <string name="add_account_reader_subtitle">Oma serveris asuv Google Readeri API</string>
     <string name="edit_feed_tag_section">Lisa või vali silt</string>
@@ -261,4 +257,29 @@
     <string name="settings_gestures_improve_talkback_subtitle">Parandamaks TalkBacki kõnesünteesi toimimist, lülita välja mõned seadistused</string>
     <string name="settings_options_reader_pin_top_toolbar">Kinnita ülemisele tööriistaribale</string>
     <string name="settings_options_reader_show_bottom_toolbar">Näita alumisel tööriistaribal tegevusi</string>
+    <string name="add_account_miniflux_signup_prompt">Sul pole Minifluxi serverit?</string>
+    <string name="add_account_miniflux_signup_link_text">Lisateavet leiad siit.</string>
+    <string name="mark_read_position_toolbar">Tööriistariba</string>
+    <string name="mark_read_position_floating_action_button">Ujuv tegevuste nupp</string>
+    <string name="mark_all_read_button_position">Kõige loetuks märkimise nupu asukoht</string>
+    <string name="settings_display_miscellaneous_title">Varia</string>
+    <string name="settings_article_list_shorten_titles">Lühenda pealkirju</string>
+    <string name="open_articles_in_browser">Ava artiklid veebibrauseris</string>
+    <string name="settings_full_content_parser">Täismahuline sisemine brauser</string>
+    <string name="auth_fields_client_certificate">Kliendi sertifikaat (valikuline)</string>
+    <string name="auth_fields_remove_client_cert">Eemalda kliendi sertifikaat</string>
+    <string name="theme_mode_system">Süsteemi kujundus</string>
+    <string name="theme_mode_light">Hele kujundus</string>
+    <string name="theme_mode_dark">Tume kujundus</string>
+    <string name="theme_default">Vaikimisi kujundus</string>
+    <string name="theme_dynamic">Dünaamiline kujundus</string>
+    <string name="theme_newsprint">Ajalehepaber</string>
+    <string name="theme_monochrome">Mustvalge</string>
+    <string name="theme_sunset">Päikeseloojang</string>
+    <string name="settings_pure_black_dark_mode">Süsimust kujundus</string>
+    <string name="selected">Valitud</string>
+    <string name="filter_today">Täna</string>
+    <string name="settings_section_categories">Kategooriad</string>
+    <string name="settings_option_show_today_filter">Täna</string>
+    <string name="auth_fields_freshrss_api_password">API salasõna</string>
 </resources>

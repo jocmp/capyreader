@@ -1,14 +1,18 @@
 package com.capyreader.app
 
 import android.app.Application
+import android.os.Build
+import androidx.glance.appwidget.GlanceAppWidgetManager
 import coil.ImageLoader
 import coil.ImageLoaderFactory
 import coil.decode.ImageDecoderDecoder
 import coil.decode.SvgDecoder
 import com.capyreader.app.preferences.AppPreferences
+import com.capyreader.app.ui.widget.HeadlinesWidgetReceiver
 import com.google.android.material.color.DynamicColors
-import com.jocmp.capy.UserAgentInterceptor
-import okhttp3.OkHttpClient
+import com.jocmp.capy.accounts.baseHttpClient
+import com.jocmp.capy.common.launchUI
+import kotlinx.coroutines.MainScope
 import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.workmanager.koin.workManagerFactory
@@ -28,6 +32,8 @@ class MainApplication : Application(), ImageLoaderFactory {
         if (get<AppPreferences>().isLoggedIn) {
             loadAccountModules()
         }
+
+       loadWidgetPreview()
     }
 
     override fun newImageLoader(): ImageLoader {
@@ -37,10 +43,19 @@ class MainApplication : Application(), ImageLoaderFactory {
                 add(SvgDecoder.Factory())
             }
             .okHttpClient {
-                OkHttpClient.Builder()
-                    .addInterceptor(UserAgentInterceptor())
-                    .build()
+                baseHttpClient()
             }
             .build()
+    }
+
+    /**
+     * [Docs](https://developer.android.com/develop/ui/compose/glance/generated-previews)
+     */
+    private fun loadWidgetPreview() {
+        MainScope().launchUI {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+                GlanceAppWidgetManager(applicationContext).setWidgetPreviews(HeadlinesWidgetReceiver::class)
+            }
+        }
     }
 }

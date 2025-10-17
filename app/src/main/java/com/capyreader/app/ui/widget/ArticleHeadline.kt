@@ -11,6 +11,7 @@ import androidx.core.net.toUri
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.LocalContext
+import androidx.glance.action.Action
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.action.actionStartActivity
 import androidx.glance.appwidget.cornerRadius
@@ -27,6 +28,8 @@ import androidx.glance.preview.Preview
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import com.capyreader.app.MainActivity
+import com.capyreader.app.OpenArticleInBrowserActivity
+import com.capyreader.app.OpenArticleInBrowserActivity.Companion.ARTICLE_URL_KEY
 import com.capyreader.app.notifications.NotificationHelper.Companion.ARTICLE_ID_KEY
 import com.capyreader.app.notifications.NotificationHelper.Companion.FEED_ID_KEY
 import com.jocmp.capy.Article
@@ -83,14 +86,25 @@ fun ArticleHeadline(article: Article, currentTime: LocalDateTime) {
     }
 }
 
-private fun Context.openArticle(article: Article) =
-    actionStartActivity(
-        Intent(this, MainActivity::class.java).apply {
-            putExtra(ARTICLE_ID_KEY, article.id)
-            putExtra(FEED_ID_KEY, article.feedID)
-            data = uniqueUri(article)
-            setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        })
+private fun Context.openArticle(article: Article): Action {
+    return if (article.openInBrowser && article.url != null) {
+        return actionStartActivity(
+            Intent(this, OpenArticleInBrowserActivity::class.java).apply {
+                putExtra(ARTICLE_ID_KEY, article.id)
+                putExtra(ARTICLE_URL_KEY, article.url.toString())
+            }
+        )
+    } else {
+        actionStartActivity(
+            Intent(this, MainActivity::class.java).apply {
+                putExtra(ARTICLE_ID_KEY, article.id)
+                putExtra(FEED_ID_KEY, article.feedID)
+                data = uniqueUri(article)
+                setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            })
+    }
+}
+
 
 private fun uniqueUri(article: Article): Uri {
     val fallbackUri = "https://capyreader.com/${article.id}".toUri()
@@ -113,7 +127,6 @@ fun ArticleHeadlinePreview() {
         title = "How to use the Galaxy S24's AI photo editing tool",
         author = "Andrew Romero",
         contentHTML = "<div>Test</div>",
-        extractedContentURL = null,
         imageURL = "https://example.com",
         summary = "The Galaxy S24 series, while bringing little physical change, packs a lot of AI narrative. One of the biggest Galaxy S24 features is the AI Generative Edit",
         url = URL("https://9to5google.com/?p=605559"),
@@ -139,7 +152,6 @@ fun ArticleHeadlineDarkPreview() {
         title = "How to use the Galaxy S24's AI photo editing tool",
         author = "Andrew Romero",
         contentHTML = "<div>Test</div>",
-        extractedContentURL = null,
         imageURL = "https://example.com",
         summary = "The Galaxy S24 series, while bringing little physical change, packs a lot of AI narrative. One of the biggest Galaxy S24 features is the AI Generative Edit",
         url = URL("https://9to5google.com/?p=605559"),

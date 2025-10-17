@@ -49,6 +49,7 @@ data class Account(
     val preferences: AccountPreferences,
     val source: Source = Source.LOCAL,
     val faviconFetcher: FaviconFetcher,
+    private val clientCertManager: ClientCertManager,
     private val localHttpClient: OkHttpClient = LocalOkHttpClient.forAccount(path = cacheDirectory),
     val delegate: AccountDelegate = when (source) {
         Source.LOCAL -> LocalAccountDelegate(
@@ -66,11 +67,14 @@ data class Account(
             )
         )
 
-        Source.FRESHRSS, Source.READER -> buildReaderDelegate(
+        Source.FRESHRSS,
+        Source.MINIFLUX,
+        Source.READER -> buildReaderDelegate(
             source = source,
             database = database,
             path = cacheDirectory,
-            preferences = preferences
+            preferences = preferences,
+            clientCertManager = clientCertManager,
         )
     }
 ) {
@@ -81,7 +85,7 @@ data class Account(
     private val taggingRecords = TaggingRecords(database)
     private val savedSearchRecords = SavedSearchRecords(database)
 
-    private val articleContent = ArticleContent(httpClient = localHttpClient)
+    private val articleContent = ArticleContent(localHttpClient)
 
     val taggedFeeds = feedRecords.taggedFeeds().map {
         it.sortedByTitle()
@@ -330,6 +334,10 @@ data class Account(
 
     fun expandFolder(folderName: String, expanded: Boolean) {
         folderRecords.expand(folderName, expanded)
+    }
+
+    fun updateOpenInBrowser(feedID: String, enabled: Boolean) {
+        feedRecords.updateOpenInBrowser(feedID, enabled)
     }
 
     fun disableStickyContent(feedID: String) {

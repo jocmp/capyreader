@@ -16,8 +16,6 @@ fun EditFeedDialog(
     feed: Feed,
     isOpen: Boolean,
     form: EditFeedViewModel = koinViewModel(),
-    onSuccess: () -> Unit,
-    onFailure: () -> Unit,
     onDismiss: () -> Unit
 ) {
     val folders by form.folders.collectAsStateWithLifecycle(emptyList())
@@ -28,8 +26,6 @@ fun EditFeedDialog(
             onDismiss()
 
             form.submit(entry)
-                .onSuccess { onSuccess() }
-                .onFailure { onFailure() }
         }
     }
 

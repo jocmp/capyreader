@@ -1,0 +1,2 @@
+• Add star and read options to long-press list menu
+• Fix list swipe gesture detection

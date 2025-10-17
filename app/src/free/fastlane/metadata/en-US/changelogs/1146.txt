@@ -1,0 +1,6 @@
+• Restore default "Mark All Read" button in toolbar and make floating action button optional
+• Add option to show full titles
+• Fix image loading for some sites
+• Update custom full content extractors for notebookcheck.net, sg.news.yahoo.com, and futura-sciences.com
+• Update external dependencies
+• Update translations for Arabic, Bulgarian, Greek, Estonian, French, Galician, Portuguese (Brazil), Turkish, and Chinese (Simplified) thanks to volunteers!

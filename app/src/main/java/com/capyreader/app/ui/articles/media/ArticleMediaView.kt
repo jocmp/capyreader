@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
@@ -25,7 +26,6 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,22 +42,29 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import coil.request.ImageRequest
 import com.capyreader.app.common.Media
+import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferredMaxWidth
+import com.capyreader.app.ui.EdgeToEdgeHelper.isEdgeToEdgeAvailable
+import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.components.LoadingView
 import com.capyreader.app.ui.components.Swiper
 import com.capyreader.app.ui.components.rememberSwiperState
 import com.capyreader.app.ui.isCompact
 import com.capyreader.app.ui.settings.LocalSnackbarHost
 import com.capyreader.app.ui.theme.CapyTheme
+import com.capyreader.app.ui.theme.findStatusBarColor
+import com.capyreader.app.ui.theme.showAppearanceLightStatusBars
 import me.saket.telephoto.zoomable.ZoomSpec
 import me.saket.telephoto.zoomable.coil.ZoomableAsyncImage
 import me.saket.telephoto.zoomable.rememberZoomableImageState
 import me.saket.telephoto.zoomable.rememberZoomableState
+import org.koin.compose.koinInject
 
 @Composable
 fun ArticleMediaView(
     onDismissRequest: () -> Unit,
     media: Media?,
+    appPreferences: AppPreferences = koinInject()
 ) {
     val url = media?.url ?: return
     val view = LocalView.current
@@ -106,25 +113,34 @@ fun ArticleMediaView(
         }
     }
 
-
-    SideEffect {
-        val window = (view.context as Activity).window
-
-        window.navigationBarColor = Color.Black.toArgb()
-        WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = false
-    }
+    val colorScheme = MaterialTheme.colorScheme
+    val themeMode by appPreferences.themeMode.collectChangesWithCurrent()
+    val showLightStatusBar = themeMode.showAppearanceLightStatusBars()
+    val pureBlack by appPreferences.pureBlackDarkMode.collectChangesWithCurrent()
 
     DisposableEffect(url) {
         val window = (view.context as Activity).window
+        val previousNavigationBarColor = window.navigationBarColor
 
-        val previousColor = window.navigationBarColor
-        val previousAppearanceLightStatusBars =
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars
+        window.navigationBarColor = Color.Black.toArgb()
+        if (!isEdgeToEdgeAvailable()) {
+            window.statusBarColor = Color.Black.toArgb()
+        }
+        WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = false
 
         onDispose {
-            window.navigationBarColor = previousColor
+            window.navigationBarColor = previousNavigationBarColor
+
+            if (!isEdgeToEdgeAvailable()) {
+                window.statusBarColor = findStatusBarColor(
+                    colorScheme,
+                    pureBlack = pureBlack,
+                    isLightStatusBar = showLightStatusBar
+                ).toArgb()
+            }
+
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
-                previousAppearanceLightStatusBars
+                showLightStatusBar
         }
     }
 }

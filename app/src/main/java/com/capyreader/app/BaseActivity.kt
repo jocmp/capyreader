@@ -5,12 +5,16 @@ import android.os.StrictMode
 import android.os.StrictMode.setThreadPolicy
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
+import com.capyreader.app.ui.EdgeToEdgeHelper.isEdgeToEdgeAvailable
 
 abstract class BaseActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableStrictModeOnDebug()
-        enableEdgeToEdge()
+
+        if (isEdgeToEdgeAvailable()) {
+            enableEdgeToEdge()
+        }
     }
 }
 

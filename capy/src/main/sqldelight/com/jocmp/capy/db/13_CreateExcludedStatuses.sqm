@@ -1,0 +1,11 @@
+-- excluded statuses are a way of tracking state
+-- for statuses that have recently been updated, for
+-- which the inverse action should be taken for all other
+-- article_statuses. This ensures that article IDs are state
+-- in the database as opposed to parameter state which
+-- can only go up to 999 variables in SQLite
+CREATE TABLE excluded_statuses (
+    article_id TEXT NOT NULL,
+    type TEXT,
+    PRIMARY KEY (article_id, type)
+);

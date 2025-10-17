@@ -1,0 +1,6 @@
+• Add full-content parser for 9to5google.com
+• Update parsing for YouTube on local feeds
+• Update drawer refresh button animation
+• Update translations for Bulgarian, Czech, Spanish, Estonian, French, Galician, Italian, Polish, Russian and Chinese thanks to volunteers.
+• Improve notification cleanup on "Mark as read"
+• Fix letter casing bug when editing multiple tags with the same name

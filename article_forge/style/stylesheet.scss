@@ -56,7 +56,7 @@ $font-families: (
 }
 
 ::selection {
-  background-color: var(--color-primary-container);
+  background-color: rgb(from var(--color-secondary) r g b / 60%);
 }
 
 /* #region Base */
@@ -202,6 +202,12 @@ ul:has(img) {
     word-wrap: break-word;
   }
 
+  td:empty:not(:first-child) {
+    border: none;
+    padding: 0;
+    display: none;
+  }
+
   td:has(pre) {
     border: none;
     padding: 0;
@@ -236,7 +242,7 @@ ul:has(img) {
 
 #article-body-content {
   line-height: var(--article-line-height);
-  margin-bottom: 20vh;
+  padding-bottom: 6rem;
   max-width: 40rem;
 
   img {

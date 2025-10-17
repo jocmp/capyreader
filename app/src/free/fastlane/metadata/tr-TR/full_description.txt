@@ -1,0 +1,13 @@
+Tıpkı isminin ilham kaynağı gibi, Capy Reader yaklaşılabilirlik ve sadelik üzerine odaklanmış küçük bir RSS okuyucudur.
+
+Bazı özellikler:
+
+• Feedbin, FreshRSS veya doğrudan cihazınızla senkronizasyon
+• Okunan ve yıldızlanan makaleleri takip etme
+• Makale arama
+• Manşetler widget’ı
+• Bildirimler
+• Tam içerik modu
+• Karanlık mod
+• Büyük ekran desteği
+• Kaydedilmiş beslemelerinizi içe ve dışa aktarma

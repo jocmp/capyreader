@@ -2,11 +2,13 @@ package com.capyreader.app.ui.articles.list
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ContentCopy
+import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -14,6 +16,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
+import com.capyreader.app.common.shareLink
 import com.capyreader.app.ui.articles.LocalArticleActions
 import com.capyreader.app.ui.components.ArticleAction
 import com.capyreader.app.ui.components.buildCopyToClipboard
@@ -35,7 +38,7 @@ fun ArticleActionMenu(
     DropdownMenu(
         expanded = expanded,
         onDismissRequest = { onDismissRequest() },
-        offset = DpOffset(x = 4.dp, y = 0.dp)
+        offset = DpOffset(x = 16.dp, y = 0.dp)
     ) {
         ToggleStarMenuItem(onDismissRequest, article)
         ToggleReadMenuItem(onDismissRequest, article)
@@ -60,6 +63,7 @@ fun ArticleActionMenu(
             onClick = { onMarkAllRead(Before(article.id)) },
         )
         CopyLinkMenuItem(onDismissRequest, article)
+        ShareLinkMenuItem(onDismissRequest, article)
     }
 }
 
@@ -85,12 +89,36 @@ private fun CopyLinkMenuItem(onDismissRequest: () -> Unit, article: Article) {
 }
 
 @Composable
+private fun ShareLinkMenuItem(onDismissRequest: () -> Unit, article: Article) {
+    val url = article.url?.toString() ?: return
+
+    val context = LocalContext.current
+
+    val shareLink = {
+        context.shareLink(url = url, article.title)
+    }
+
+    DropdownMenuItem(
+        leadingIcon = {
+            Icon(
+                Icons.Rounded.Share,
+                contentDescription = null
+            )
+        },
+        text = { Text(stringResource(R.string.article_share)) },
+        onClick = {
+            shareLink()
+            onDismissRequest()
+        },
+    )
+}
+
+@Composable
 private fun ToggleReadMenuItem(onDismissRequest: () -> Unit, article: Article) {
     val action = readAction(article, LocalArticleActions.current)
 
     ToggleActionMenuItem(onDismissRequest, action)
 }
-
 
 @Composable
 private fun ToggleStarMenuItem(onDismissRequest: () -> Unit, article: Article) {
@@ -119,7 +147,7 @@ private fun ToggleActionMenuItem(
     )
 }
 
-@Preview
+@Preview(heightDp = 400, widthDp = 400)
 @Composable
 private fun ArticleActionMenuPreview(@PreviewParameter(ArticleSample::class) article: Article) {
     ArticleActionMenu(

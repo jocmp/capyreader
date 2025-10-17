@@ -5,6 +5,7 @@
     <locale android:name="cs" />
     <locale android:name="cy" />
     <locale android:name="de" />
+    <locale android:name="el" />
     <locale android:name="en" />
     <locale android:name="es" />
     <locale android:name="et" />
@@ -16,14 +17,17 @@
     <locale android:name="ml" />
     <locale android:name="nb" />
     <locale android:name="ne" />
+    <locale android:name="nl" />
     <locale android:name="pl" />
     <locale android:name="pt-BR" />
     <locale android:name="pt" />
+    <locale android:name="ro" />
     <locale android:name="ru" />
     <locale android:name="sr-Latn" />
     <locale android:name="sv" />
     <locale android:name="ta" />
     <locale android:name="tr" />
+    <locale android:name="uk" />
     <locale android:name="zh-CN" />
     <locale android:name="zh-TW" />
 </locale-config>

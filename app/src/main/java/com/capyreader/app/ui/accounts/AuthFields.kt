@@ -1,6 +1,8 @@
 package com.capyreader.app.ui.accounts
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,22 +13,27 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.RemoveCircleOutline
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.autofill.AutofillType.EmailAddress
 import androidx.compose.ui.autofill.AutofillType.Password
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -53,6 +60,9 @@ fun AuthFields(
     errorMessage: String? = null,
     prompt: (@Composable () -> Unit)? = null,
     source: Source,
+    onChooseClientCert: () -> Unit = {},
+    onClearClientCert: () -> Unit = {},
+    clientCertAlias: String,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -99,7 +109,7 @@ fun AuthFields(
             value = password,
             onValueChange = onPasswordChange,
             label = {
-                Text(stringResource(R.string.auth_fields_password))
+                Text(stringResource(source.passwordKey))
             },
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Go,
@@ -140,6 +150,13 @@ fun AuthFields(
                 }
             }
         )
+        if (source.hasCustomURL) {
+            CertificateField(
+                onChooseClientCert = onChooseClientCert,
+                onClearClientCert = onClearClientCert,
+                certAlias = clientCertAlias,
+            )
+        }
         errorMessage?.let { message ->
             ErrorAlert(message = message)
         }
@@ -157,6 +174,49 @@ fun AuthFields(
 
         prompt?.invoke()
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CertificateField(
+    onChooseClientCert: () -> Unit,
+    onClearClientCert: () -> Unit,
+    certAlias: String,
+) {
+    TextField(
+        value = certAlias,
+        onValueChange = {},
+        singleLine = true,
+        label = {
+            Text(stringResource(R.string.auth_fields_client_certificate))
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .focusProperties { canFocus = false },
+        readOnly = true,
+        trailingIcon = {
+            if (certAlias.isNotBlank()) {
+                IconButton(
+                    onClick = onClearClientCert
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.RemoveCircleOutline,
+                        stringResource(R.string.auth_fields_remove_client_cert)
+                    )
+                }
+            }
+        },
+        interactionSource = remember { MutableInteractionSource() }
+            .also { interactionSource ->
+                LaunchedEffect(interactionSource) {
+                    interactionSource.interactions.collect {
+                        if (it is PressInteraction.Release) {
+                            onChooseClientCert()
+                        }
+                    }
+                }
+            }
+    )
 }
 
 @Composable
@@ -179,23 +239,31 @@ private fun ErrorAlert(message: String) {
 }
 
 private val Source.usernameKey
-    get() = when(this) {
+    get() = when (this) {
         Source.FEEDBIN -> R.string.auth_fields_email
         else -> R.string.auth_fields_username
     }
+
+private val Source.passwordKey
+    get() = when (this) {
+        Source.FRESHRSS -> R.string.auth_fields_freshrss_api_password
+        else -> R.string.auth_fields_password
+    }
+
+
 
 @Preview
 @Composable
 private fun AuthFieldsPreview() {
     CapyTheme {
         AuthFields(
-            onUsernameChange = {},
             onPasswordChange = {},
             onSubmit = {},
             username = "test@example.com",
             password = "its a secret to everyone",
+            clientCertAlias = "test certificate",
             loading = true,
-            source = Source.FRESHRSS
+            source = Source.FRESHRSS,
         )
     }
 }

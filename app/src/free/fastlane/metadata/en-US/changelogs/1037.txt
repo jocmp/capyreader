@@ -1,0 +1,15 @@
+Added
+
+• Article search
+• Translations for Chinese thanks to volunteers
+
+Updated
+
+• Add support for RDF (RSS 1.0) feeds like Slashdot
+• Small UI tweaks in the settings screen and edit feed dialog
+• Improve article media loading speed and storage usage
+• Translations for Czech, German, Spanish, Italian, Portuguese and Turkish thanks to volunteers
+
+Fixed
+
+• Fix bug where Feedbin starred articles were always marked as read on first sync

@@ -9,7 +9,7 @@ fun Database.transactionWithErrorHandling(
 ) {
     try {
         transaction(noEnclosing = false, body)
-    } catch(e: Exception) {
+    } catch(e: Throwable) {
         CapyLog.error("db_error", e)
     }
 }

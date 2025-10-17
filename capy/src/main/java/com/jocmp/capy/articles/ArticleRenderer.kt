@@ -14,6 +14,7 @@ class ArticleRenderer(
     private val fontOption: Preference<FontOption>,
     private val hideTopMargin: Preference<Boolean>,
     private val enableHorizontalScroll: Preference<Boolean>,
+    private val parser: Preference<FullContentParserType>,
 ) {
     private val template by lazy {
         context.resources.openRawResource(CapyRes.raw.template)
@@ -59,16 +60,29 @@ class ArticleRenderer(
             substitutions = substitutions
         ).renderedText
 
-        val document = Jsoup.parse(html).apply {
-            article.siteURL?.let { setBaseUri(it) }
-        }
+        val document = Jsoup.parse(html)
 
         if (article.parseFullContent) {
             val contentHTML = Jsoup.parse(article.content)
 
+            val baseUri = contentHTML.baseUri()
+
+            if (baseUri.isNotBlank()) {
+                document.setBaseUri(baseUri)
+            } else {
+                article.siteURL?.let { document.setBaseUri(it) }
+            }
+
             HtmlPostProcessor.clean(contentHTML, hideImages = hideImages)
 
-            document.content?.append(parseHtml(article, contentHTML, hideImages = hideImages))
+            document.content?.append(
+                parseHtml(
+                    article,
+                    document = contentHTML,
+                    hideImages = hideImages,
+                    fullContentParser =parser.get(),
+                )
+            )
         } else {
             article.imageEnclosures()?.let {
                 document.content?.appendChild(it)

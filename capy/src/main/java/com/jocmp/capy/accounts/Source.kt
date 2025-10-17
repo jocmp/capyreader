@@ -7,8 +7,11 @@ enum class Source(val value: String) {
     LOCAL("local"),
     FEEDBIN("feedbin"),
     FRESHRSS("freshrss"),
+    MINIFLUX("miniflux"),
     READER("reader");
 
     val hasCustomURL
-        get() = this == FRESHRSS || this == READER
+        get() = this == FRESHRSS ||
+                this == MINIFLUX ||
+                this == READER
 }

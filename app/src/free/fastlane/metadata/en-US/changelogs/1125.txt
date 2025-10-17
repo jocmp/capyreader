@@ -1,0 +1,4 @@
+• Add latest headlines widget to display unread articles
+• Update translations for Bulgarian, German, Spanish, French, Galician, Italian, Polish, Turkish and Chinese thanks to volunteers
+• Fix crash when marking 1,000 or more articles as read
+• Fix missing styling on video embeds

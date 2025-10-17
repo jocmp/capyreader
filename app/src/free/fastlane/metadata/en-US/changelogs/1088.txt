@@ -1,0 +1,6 @@
+• Add better local discovery for known websites like YouTube and Reddit
+• Rework notifications to display in a single dropdown
+• Combine lists in single column reader mode
+• Update FreshRSS read status on fetch
+• Small behavior tweaks to the feed list
+• Fix Cyrillic charset bug for local feeds

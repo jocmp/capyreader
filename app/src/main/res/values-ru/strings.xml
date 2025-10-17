@@ -11,7 +11,6 @@
     <string name="add_feed_url_title">URL ленты/веб-сайта</string>
     <string name="folder_action_delete_title">Удалить тег</string>
     <string name="folder_action_edit">Переименовать</string>
-    <string name="feed_action_edit_success">Лента обновлена</string>
     <string name="settings_remove_account_button_local">Удалить аккаунт</string>
     <string name="settings_remove_account_message_local">Вы уверены, что хотите удалить свой аккаунт? Это действие нельзя отменить.</string>
     <string name="settings_remove_account_confirm_local">Подтвердить</string>
@@ -36,7 +35,7 @@
     <string name="article_view_mark_as_read">Отметить как прочитанное</string>
     <string name="refresh_minutes">Каждые %1$d минут</string>
     <plurals name="refresh_hours">
-        <item quantity="one">Каждый час</item>
+        <item quantity="one">Каждый %d час</item>
         <item quantity="few">Каждые %d часа</item>
         <item quantity="many">Каждые %d часов</item>
         <item quantity="other">Каждые %d часов</item>
@@ -69,9 +68,7 @@
     <string name="crash_log_export_item_title">Поделитесь отчетами о сбоях</string>
     <string name="crash_log_export_item_subtitle">Сохраняет отчеты о сбоях в файл для передачи разработчику</string>
     <string name="notifications_permission_disabled_title">Разрешение на уведомления отключено</string>
-    <string name="edit_feed_error">Ошибка при сохранении ленты</string>
     <string name="action_mark_all_read">Отметить всё как прочитанное</string>
-    <string name="unsubscribe_error">Ошибка при отписке от ленты</string>
     <string name="mark_all_read_dialog_submit">Подтвердить</string>
     <string name="article_actions_mark_after_as_read">Отметить выше как прочитанное</string>
     <string name="crash_reporting_checkbox_title">Включить отчеты о сбоях</string>
@@ -155,7 +152,6 @@
     <string name="auth_fields_show_password">Показать пароль</string>
     <string name="font_option_system_default">Системный по умолчанию</string>
     <string name="filter_starred">В избранное</string>
-    <string name="app_name">Capy Reader</string>
     <string name="settings_remove_account_button_service">Выход</string>
     <string name="settings_remove_account_title_service">Выход</string>
     <string name="settings_remove_account_message_service">Вы уверены, что хотите выйти?</string>
@@ -169,6 +165,7 @@
     <string name="notifications_channel_title_feed_update">Обновления ленты</string>
     <string name="theme_menu_option_system_default">Системная по умолчанию</string>
     <string name="settings_article_list_summary">Резюме</string>
+    <string name="settings_article_list_shorten_titles">Сокращать заголовки</string>
     <string name="settings_option_full_content_title">Закрепить полное содержание</string>
     <string name="font_option_atkinson_hyperlegible">Atkinson Hyperlegible</string>
     <string name="font_option_poppins">Poppins</string>
@@ -189,7 +186,7 @@
     <string name="settings_section_account_server">Сервер</string>
     <string name="auth_fields_api_url">Сервер</string>
     <string name="account_source_freshrss">FreshRSS</string>
-    <string name="auth_fields_api_url_freshrss_placeholder">https://example.com/</string>
+    <string name="auth_fields_api_url_placeholder">https://example.com/</string>
     <string name="account_source_reader">Читалка</string>
     <string name="add_account_feedbin_subtitle">feedbin.com</string>
     <string name="add_account_freshrss_subtitle">freshrss.org</string>
@@ -263,4 +260,28 @@
     <string name="settings_gestures_improve_talkback_subtitle">Отключает некоторые настройки для улучшения озвучки элементов на экране</string>
     <string name="settings_options_reader_pin_top_toolbar">Прикрепить на верхнюю панель инструментов</string>
     <string name="settings_options_reader_show_bottom_toolbar">Показывать действия на нижней панели инструментов</string>
+    <string name="add_account_miniflux_signup_prompt">У вас нет сервера Miniflux?</string>
+    <string name="add_account_miniflux_signup_link_text">Узнать больше.</string>
+    <string name="mark_read_position_toolbar">Панель инструментов</string>
+    <string name="mark_read_position_floating_action_button">Плавающая кнопка действия</string>
+    <string name="mark_all_read_button_position">Положение кнопки «Отметить всё прочитанным»</string>
+    <string name="settings_display_miscellaneous_title">Разное</string>
+    <string name="theme_dynamic">Динамическая</string>
+    <string name="theme_newsprint">Газетная бумага</string>
+    <string name="theme_monochrome">Монохромная</string>
+    <string name="settings_pure_black_dark_mode">Режим чистого чёрного</string>
+    <string name="filter_today">Сегодня</string>
+    <string name="auth_fields_client_certificate">Сертификат клиента (необязательно)</string>
+    <string name="auth_fields_remove_client_cert">Удалить сертификат клиента</string>
+    <string name="theme_mode_system">Как в системе</string>
+    <string name="theme_mode_light">Светлая</string>
+    <string name="theme_mode_dark">Тёмная</string>
+    <string name="theme_default">По умолчанию</string>
+    <string name="theme_sunset">Закат</string>
+    <string name="settings_section_categories">Категории</string>
+    <string name="settings_option_show_today_filter">Сегодня</string>
+    <string name="settings_full_content_parser">Разбор полного текста</string>
+    <string name="open_articles_in_browser">Открытые статьи в обозревателе</string>
+    <string name="selected">Выбранно</string>
+    <string name="auth_fields_freshrss_api_password">Пароль API</string>
 </resources>

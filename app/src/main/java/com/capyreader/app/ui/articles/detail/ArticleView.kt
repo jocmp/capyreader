@@ -2,7 +2,6 @@
 
 package com.capyreader.app.ui.articles.detail
 
-import android.net.Uri
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,7 +23,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
-import androidx.compose.material3.TopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
@@ -32,17 +30,18 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
-import com.capyreader.app.common.openLink
+import androidx.core.net.toUri
+import androidx.paging.compose.LazyPagingItems
+import com.capyreader.app.common.Media
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleVerticalSwipe
 import com.capyreader.app.preferences.ArticleVerticalSwipe.DISABLED
@@ -50,8 +49,9 @@ import com.capyreader.app.preferences.ArticleVerticalSwipe.LOAD_FULL_CONTENT
 import com.capyreader.app.preferences.ArticleVerticalSwipe.NEXT_ARTICLE
 import com.capyreader.app.preferences.ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWSER
 import com.capyreader.app.preferences.ArticleVerticalSwipe.PREVIOUS_ARTICLE
+import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.articles.LocalFullContent
-import com.capyreader.app.ui.components.WebViewState
+import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.jocmp.capy.Article
 import org.koin.compose.koinInject
@@ -60,14 +60,17 @@ import org.koin.compose.koinInject
 @Composable
 fun ArticleView(
     article: Article,
-    pagination: ArticlePagination,
+    articles: LazyPagingItems<Article>,
     onBackPressed: () -> Unit,
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
     enableBackHandler: Boolean = false,
     onScrollToArticle: (index: Int) -> Unit,
-    webViewState: WebViewState,
+    onSelectArticle: (id: String) -> Unit,
+    onSelectMedia: (media: Media) -> Unit,
+    appPreferences: AppPreferences = koinInject()
 ) {
+    val enableHorizontalPager by appPreferences.readerOptions.enableHorizontaPagination.collectChangesWithDefault()
     val fullContent = LocalFullContent.current
     val openLink = articleOpenLink(article)
 
@@ -79,17 +82,42 @@ fun ArticleView(
         }
     }
 
+    val index = remember(
+        article.id,
+        articles.itemCount,
+    ) {
+        articles.itemSnapshotList.indexOfFirst { it?.id == article.id }
+    }
+
+    val previousIndex = index - 1
+    val nextIndex = index + 1
+
+    val hasPrevious = previousIndex > -1 && articles[index - 1] != null
+    val hasNext = nextIndex < articles.itemCount && articles[index + 1] != null
+
+    fun selectPrevious() {
+        articles[previousIndex]?.let {
+            onSelectArticle(it.id)
+        }
+    }
+
+    fun selectNext() {
+        articles[nextIndex]?.let {
+            onSelectArticle(it.id)
+        }
+    }
+
     val onSwipe = { swipe: ArticleVerticalSwipe ->
         when (swipe) {
             LOAD_FULL_CONTENT -> onToggleFullContent()
             OPEN_ARTICLE_IN_BROWSER -> openLink()
-            PREVIOUS_ARTICLE -> pagination.selectPrevious()
-            NEXT_ARTICLE -> pagination.selectNext()
+            PREVIOUS_ARTICLE -> selectPrevious()
+            NEXT_ARTICLE -> selectNext()
             DISABLED -> {}
         }
     }
 
-    val topToolbarPreference = rememberTopToolbarPreference(articleID = article.id)
+    val topToolbarPreference = rememberTopToolbarPreference()
     val bottomScrollBehavior = exitAlwaysScrollBehavior()
     val enableBottomBar by rememberBottomBarPreference()
 
@@ -134,23 +162,24 @@ fun ArticleView(
             ArticlePullRefresh(
                 topToolbarPreference.show && !topToolbarPreference.pinned,
                 onSwipe = onSwipe,
-                hasPreviousArticle = pagination.hasPrevious,
-                hasNextArticle = pagination.hasNext
+                hasPreviousArticle = hasPrevious,
+                hasNextArticle = hasNext
             ) {
                 HorizontalReaderPager(
-                    enablePrevious = pagination.hasPrevious,
-                    enableNext = pagination.hasNext,
+                    enabled = enableHorizontalPager,
+                    enablePrevious = hasPrevious,
+                    enableNext = hasNext,
                     onSelectPrevious = {
-                        pagination.selectPrevious()
+                        selectPrevious()
                     },
                     onSelectNext = {
-                        pagination.selectNext()
+                        selectNext()
                     },
                 ) {
                     key(article.id) {
                         ArticleReader(
                             article = article,
-                            webViewState = webViewState,
+                            onSelectMedia = onSelectMedia,
                         )
                     }
                 }
@@ -158,9 +187,9 @@ fun ArticleView(
         },
     )
 
-    LaunchedEffect(pagination.index) {
-        if (pagination.index > -1) {
-            onScrollToArticle(pagination.index)
+    LaunchedEffect(index) {
+        if (index > -1) {
+            onScrollToArticle(index)
         }
     }
 
@@ -302,20 +331,15 @@ fun rememberBottomBarPreference(appPreferences: AppPreferences = koinInject()): 
 
 @Composable
 fun rememberTopToolbarPreference(
-    articleID: String,
     appPreferences: AppPreferences = koinInject(),
 ): ToolbarPreferences {
-    val topBarState = rememberSaveable(articleID, saver = TopAppBarState.Saver) {
-        TopAppBarState(0f, 0f, 0f)
-    }
-
     val pinTopToolbar by appPreferences.readerOptions.pinTopToolbar.stateIn(rememberCoroutineScope())
         .collectAsState()
 
     val scrollBehavior = if (pinTopToolbar) {
-        TopAppBarDefaults.pinnedScrollBehavior(state = topBarState)
+        TopAppBarDefaults.pinnedScrollBehavior()
     } else {
-        TopAppBarDefaults.enterAlwaysScrollBehavior(state = topBarState)
+        TopAppBarDefaults.enterAlwaysScrollBehavior()
     }
 
     val showToolbars = scrollBehavior.state.collapsedFraction == 0f
@@ -347,14 +371,13 @@ private fun rememberSwipePreferences(appPreferences: AppPreferences = koinInject
 @Composable
 fun articleOpenLink(
     article: Article,
-    appPreferences: AppPreferences = koinInject()
 ): () -> Unit {
-    val context = LocalContext.current
+    val linkOpener = LocalLinkOpener.current
 
     fun open() {
         val link = article.url?.toString() ?: return
 
-        context.openLink(Uri.parse(link), appPreferences)
+        linkOpener.open(link.toUri())
     }
 
     return ::open

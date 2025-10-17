@@ -6,15 +6,16 @@ import com.capyreader.app.common.FeedGroup
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.ArticleListFontScale
+import com.capyreader.app.ui.articles.MarkReadPosition
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.articles.FontOption
 import com.jocmp.capy.articles.FontSize
+import com.jocmp.capy.articles.FullContentParserType
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.preferences.AndroidPreferenceStore
 import com.jocmp.capy.preferences.Preference
 import com.jocmp.capy.preferences.PreferenceStore
 import com.jocmp.capy.preferences.getEnum
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 class AppPreferences(context: Context) {
@@ -55,8 +56,14 @@ class AppPreferences(context: Context) {
     val crashReporting: Preference<Boolean>
         get() = preferenceStore.getBoolean("enable_crash_reporting", false)
 
-    val theme: Preference<ThemeOption>
-        get() = preferenceStore.getEnum("theme", ThemeOption.default)
+    val themeMode: Preference<ThemeMode>
+        get() = preferenceStore.getEnum("theme_mode", ThemeMode.default)
+    
+    val appTheme: Preference<AppTheme>
+        get() = preferenceStore.getEnum("app_theme", AppTheme.default)
+    
+    val pureBlackDarkMode: Preference<Boolean>
+        get() = preferenceStore.getBoolean("pure_black_dark_mode", false)
 
     val openLinksInternally: Preference<Boolean>
         get() = preferenceStore.getBoolean("open_links_internally", true)
@@ -64,8 +71,6 @@ class AppPreferences(context: Context) {
     val enableStickyFullContent: Preference<Boolean>
         get() = preferenceStore.getBoolean("enable_sticky_full_content", false)
 
-    val enableHighContrastDarkTheme: Preference<Boolean>
-        get() = preferenceStore.getBoolean("enable_high_contrast_dark_theme", false)
 
     val layout: Preference<LayoutPreference>
         get() = preferenceStore.getEnum("layout_preference", LayoutPreference.RESPONSIVE)
@@ -73,6 +78,12 @@ class AppPreferences(context: Context) {
     fun pinFeedGroup(type: FeedGroup): Preference<Boolean> {
         return preferenceStore.getBoolean("feed_group_${type.toString().lowercase()}", true)
     }
+
+    val fullContentParser: Preference<FullContentParserType>
+        get() = preferenceStore.getEnum("full_content_parser_type", FullContentParserType.default)
+
+    val showTodayFilter: Preference<Boolean>
+        get() = preferenceStore.getBoolean("show_today_filter", true)
 
     fun clearAll() {
         preferenceStore.clearAll()
@@ -141,10 +152,19 @@ class AppPreferences(context: Context) {
         val imagePreview: Preference<ImagePreview>
             get() = preferenceStore.getEnum("article_display_image_preview", ImagePreview.default)
 
+        val shortenTitles: Preference<Boolean>
+            get() = preferenceStore.getBoolean("article_display_shorten_titles", true)
+
         val fontScale: Preference<ArticleListFontScale>
             get() = preferenceStore.getEnum(
                 "article_display_font_scale",
                 ArticleListFontScale.default
+            )
+
+        val markReadButtonPosition: Preference<MarkReadPosition>
+            get() = preferenceStore.getEnum(
+                "article_list_mark_read_position",
+                MarkReadPosition.default
             )
 
         val swipeStart: Preference<RowSwipeOption>
@@ -168,12 +188,7 @@ class AppPreferences(context: Context) {
         val afterReadAllBehavior: Preference<AfterReadAllBehavior>
             get() = preferenceStore.getEnum(
                 "after_read_all_behavior",
-                AfterReadAllBehavior.withPreviousPref(openNextFeedOnReadAll.get())
+                AfterReadAllBehavior.default
             )
-
-        /** @deprecated */
-        private val openNextFeedOnReadAll: Preference<Boolean>
-            get() = preferenceStore.getBoolean("open_next_feed_on_read_all", false)
-
     }
 }

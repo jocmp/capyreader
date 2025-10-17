@@ -27,10 +27,12 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.itemKey
 import com.capyreader.app.R
 import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.Article
 import com.jocmp.capy.MarkRead
+import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.debounce
@@ -44,12 +46,14 @@ fun ArticleList(
     selectedArticleKey: String?,
     listState: LazyListState,
     onMarkAllRead: (range: MarkRead) -> Unit = {},
+    refreshingAll: Boolean,
     enableMarkReadOnScroll: Boolean = false,
 ) {
     val articleOptions = rememberArticleOptions()
     val currentTime = rememberCurrentTime()
     val localDensity = LocalDensity.current
     var listHeight by remember { mutableStateOf(0.dp) }
+
 
     LazyScrollbar(state = listState) {
         LazyColumn(
@@ -60,7 +64,7 @@ fun ArticleList(
                     listHeight = with(localDensity) { coordinates.size.height.toDp() }
                 }
         ) {
-            items(count = articles.itemCount) { index ->
+            items(count = articles.itemCount, key = articles.itemKey { it.id }) { index ->
                 val item = articles[index]
 
                 Box {
@@ -94,7 +98,7 @@ fun ArticleList(
     }
 
     MarkReadOnScroll(
-        enabled = enableMarkReadOnScroll,
+        enabled = enableMarkReadOnScroll && !refreshingAll,
         articles = articles,
         listState
     ) { range ->
@@ -137,7 +141,21 @@ fun MarkReadOnScroll(
             .collect { firstVisibleIndex ->
                 val offscreenIndex = firstVisibleIndex - 1
 
-                if (offscreenIndex < 0 || articles.itemCount == 0) {
+                val markAsRead =
+                    (articles.itemCount == 1 && firstVisibleIndex > 0) ||
+                            (offscreenIndex > 0 && articles.itemCount > 0)
+
+                CapyLog.info(
+                    "collect",
+                    mapOf(
+                        "first" to firstVisibleIndex,
+                        "count" to articles.itemCount,
+                        "mark" to markAsRead,
+                        "offset" to offscreenIndex,
+                    )
+                )
+
+                if (!markAsRead) {
                     return@collect
                 }
 
@@ -171,6 +189,8 @@ fun rememberArticleOptions(appPreferences: AppPreferences = koinInject()): Artic
     val imagePreview by appPreferences.articleListOptions.imagePreview.stateIn(scope)
         .collectAsState()
     val fontScale by appPreferences.articleListOptions.fontScale.stateIn(scope).collectAsState()
+    val shortenTitles by appPreferences.articleListOptions.shortenTitles.stateIn(scope)
+        .collectAsState()
 
     return ArticleRowOptions(
         showSummary = showSummary,
@@ -178,6 +198,7 @@ fun rememberArticleOptions(appPreferences: AppPreferences = koinInject()): Artic
         showFeedName = showFeedName,
         imagePreview = imagePreview,
         fontScale = fontScale,
+        shortenTitles = shortenTitles,
     )
 }
 

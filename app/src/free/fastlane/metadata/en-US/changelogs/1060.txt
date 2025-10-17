@@ -1,0 +1,3 @@
+• Added feed notification support to track when new articles are published
+• Added Bulgarian as a language option with updates to existing language options thanks to volunteers.
+• Fixed a bug where the app would crash when returning to settings

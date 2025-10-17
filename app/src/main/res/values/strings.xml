@@ -10,6 +10,7 @@
     <string name="filter_starred">Starred</string>
     <string name="filter_unread">Unread</string>
     <string name="filter_all">All</string>
+    <string name="filter_today">Today</string>
     <string name="feed_action_unsubscribe">Unsubscribe</string>
     <string name="filter_action_menu_description">Edit</string>
     <string name="feed_action_edit">Edit Feed</string>
@@ -20,7 +21,6 @@
     <string name="folder_action_delete_title">Delete Tag</string>
     <string name="folder_action_edit">Rename</string>
     <string name="feed_action_unsubscribe_title">Unsubscribe</string>
-    <string name="feed_action_edit_success">Feed updated</string>
     <string name="settings">Open settings</string>
     <string name="settings_remove_account_button_service">Log Out</string>
     <string name="settings_remove_account_title_service">Log Out</string>
@@ -50,14 +50,12 @@
     <string name="add_feed_feed_not_error">Couldn\'t find feed</string>
     <string name="add_feed_save_error">Couldn\'t save feed</string>
     <string name="add_feed_network_error">Couldn\'t find feed. Check your connection.</string>
-    <string name="edit_feed_error">Error saving feed</string>
-    <string name="unsubscribe_error">Error unsubscribing from feed</string>
     <string name="delete_tag_error">Error deleting tag</string>
     <string name="relative_time_just_now">Just now</string>
     <string name="relative_time_minutes">%1$dm</string>
     <string name="relative_time_hours">%1$dh</string>
     <string name="relative_time_days">%1$dd</string>
-    <string name="article_share">Share Article</string>
+    <string name="article_share">Share article</string>
     <string name="extract_full_content">Extract Full Content</string>
     <string name="action_mark_all_read">Mark All as Read</string>
     <string name="mark_all_read_dialog_description">Mark all items as read?</string>
@@ -74,26 +72,32 @@
     <string name="auth_fields_email">Email</string>
     <string name="auth_fields_username">Username</string>
     <string name="auth_fields_api_url">Server</string>
-    <string name="auth_fields_api_url_freshrss_placeholder" translatable="false">https://example.com/</string>
+    <string name="auth_fields_api_url_placeholder" translatable="false">https://example.com/</string>
+    <string name="auth_fields_client_certificate">Client certificate (optional)</string>
     <string name="auth_fields_hide_password">Hide password</string>
     <string name="auth_fields_show_password">Show password</string>
     <string name="auth_fields_log_in_button">Log In</string>
+    <string name="auth_fields_remove_client_cert">Remove client certificate</string>
     <string name="settings_top_bar_title">Settings</string>
     <string name="update_auth_success_message">Successfully logged in</string>
     <string name="crash_reporting_checkbox_title">Enable crash reporting</string>
-    <string name="account_source_feedbin">Feedbin</string>
-    <string name="account_source_freshrss">FreshRSS</string>
+    <string name="account_source_feedbin" translatable="false">Feedbin</string>
+    <string name="account_source_freshrss" translatable="false">FreshRSS</string>
+    <string name="account_source_miniflux" translatable="false">Miniflux</string>
     <string name="account_source_reader">Reader</string>
     <string name="account_source_local">Local</string>
     <string name="add_account_title">Add Account</string>
     <string name="add_account_local_subtitle">On your device</string>
     <string name="add_account_feedbin_subtitle" translatable="false">feedbin.com</string>
     <string name="add_account_freshrss_subtitle" translatable="false">freshrss.org</string>
+    <string name="add_account_miniflux_subtitle" translatable="false">miniflux.app</string>
     <string name="add_account_reader_subtitle">Self-hosted Google Reader API</string>
     <string name="add_account_feedbin_signup_prompt">Don\'t have a Feedbin account?</string>
     <string name="add_account_feedbin_signup_link_text">Create one here.</string>
     <string name="add_account_freshrss_signup_prompt">Don\'t have a FreshRSS instance?</string>
     <string name="add_account_freshrss_signup_link_text">Find out more.</string>
+    <string name="add_account_miniflux_signup_prompt">Don\'t have a Miniflux instance?</string>
+    <string name="add_account_miniflux_signup_link_text">Find out more.</string>
     <string name="transfers_export_subscriptions">Export Subscriptions</string>
     <string name="settings_section_account">Account</string>
     <string name="settings_section_account_server">Server</string>
@@ -113,6 +117,15 @@
     <string name="opml_import_toast_complete">Import complete</string>
     <string name="opml_import_toast_failed">Import failed</string>
     <string name="theme_menu_label">Theme</string>
+    <string name="theme_mode_system">System</string>
+    <string name="theme_mode_light">Light</string>
+    <string name="theme_mode_dark">Dark</string>
+    <string name="theme_default">Default</string>
+    <string name="theme_dynamic">Dynamic</string>
+    <string name="theme_newsprint">Newsprint</string>
+    <string name="theme_monochrome">Monochrome</string>
+    <string name="theme_sunset">Sunset</string>
+    <string name="settings_pure_black_dark_mode">Pure black dark mode</string>
     <string name="theme_menu_option_light">Light</string>
     <string name="theme_menu_option_dark">Dark</string>
     <string name="theme_menu_option_system_default">System default</string>
@@ -127,6 +140,7 @@
     <string name="settings_article_list_feed_name">Feed Name</string>
     <string name="settings_article_list_feed_icons">Feed Icons</string>
     <string name="settings_article_list_summary">Summary</string>
+    <string name="settings_article_list_shorten_titles">Shorten titles</string>
     <string name="settings_section_version">Version</string>
     <string name="settings_option_copy_version">Copy version</string>
     <string name="settings_option_full_content_title">Sticky Full Content</string>
@@ -224,6 +238,8 @@
     <string name="settings_enable_high_contrast_dark_theme">Enable high contrast dark theme</string>
     <string name="settings_section_mark_all_as_read">Mark All As Read</string>
     <string name="settings_section_browser">Browser</string>
+    <string name="settings_section_categories">Categories</string>
+    <string name="settings_option_show_today_filter">Today</string>
     <string name="reader_image_visibility_show_on_wifi">Only show images on Wi-Fi</string>
     <string name="reader_image_visibility_always_hide">Block images</string>
     <string name="reader_image_visibility_always_show">Always show images</string>
@@ -265,4 +281,14 @@
     <string name="widget_headlines_account_error">Add an account first</string>
     <string name="settings_gestures_improve_talkback_title">Improve TalkBack</string>
     <string name="settings_gestures_improve_talkback_subtitle">Disables some settings to improve TalkBack text-to-speech</string>
+    <string name="mark_read_position_toolbar">Toolbar</string>
+    <string name="mark_read_position_floating_action_button">Floating Action Button</string>
+    <string name="mark_all_read_button_position">Mark All Read Button Position</string>
+    <string name="settings_display_miscellaneous_title">Miscellaneous</string>
+    <string name="full_content_parser_defuddle" translatable="false">Defuddle</string>
+    <string name="full_content_parser_mercury_parser" translatable="false">Mercury Parser</string>
+    <string name="settings_full_content_parser">Full Content Parser</string>
+    <string name="open_articles_in_browser">Open Articles In Browser</string>
+    <string name="selected">Selected</string>
+    <string name="auth_fields_freshrss_api_password">API Password</string>
 </resources>

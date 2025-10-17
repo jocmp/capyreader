@@ -31,6 +31,7 @@
     <string name="image_preview_menu_option_small">Küçük</string>
     <string name="settings_article_list_feed_icons">Yayın İkonu</string>
     <string name="settings_article_list_summary">Özet</string>
+    <string name="settings_article_list_shorten_titles">Başlıkları kısalt</string>
     <string name="settings_option_copy_version">Kopya sürümü</string>
     <string name="settings_option_full_content_title">Yapışkan Tam İçerik</string>
     <string name="settings_option_full_content_subtitle">Tam makale içeriğini yükleme seçeneğini hatırla</string>
@@ -48,7 +49,6 @@
     <string name="settings_option_auto_delete_articles_title">Makaleleri Otomatik Sil</string>
     <string name="refresh_every_day">Hergün</string>
     <string name="relative_time_hours">%1$dsaat</string>
-    <string name="app_name">Capy Reader</string>
     <string name="add_feed_name_title">Ad</string>
     <string name="feed_form_cancel">Vazgeç</string>
     <string name="relative_time_days">%1$dgün</string>
@@ -61,8 +61,6 @@
     <string name="feed_action_unsubscribe_message">\"%1$s\" aboneliğinizi iptal etmek istediğinizden emin misiniz?</string>
     <string name="folder_action_delete_title">Etiketi Sil</string>
     <string name="feed_action_unsubscribe_title">Abonelikten çık</string>
-    <string name="feed_action_edit_success">Yayın güncellendi</string>
-    <string name="unsubscribe_error">Yayın aboneliği iptal etme hatası</string>
     <string name="relative_time_just_now">Şimdi</string>
     <string name="settings_remove_account_button_service">Çıkış Yap</string>
     <string name="article_view_star">Yıldız</string>
@@ -73,7 +71,7 @@
     <string name="relative_time_minutes">%1$ddakika</string>
     <string name="extract_full_content">Tam İçeriği Çıkar</string>
     <string name="action_mark_all_read">Tümünü okundu olarak işaretle</string>
-    <string name="article_share">Makaleyi Paylaş</string>
+    <string name="article_share">Makaleyi paylaş</string>
     <string name="article_actions_mark_below_as_read">Aşağıyı okundu olarak işaretleyin</string>
     <string name="mark_all_read_dialog_submit">Onayla</string>
     <string name="article_actions_open_menu">Makale eylemlerini aç</string>
@@ -119,7 +117,6 @@
     <string name="notifications_channel_title_opml_import">Abonelik İçeri Aktarma</string>
     <string name="settings_section_privacy">Gizlilik</string>
     <string name="add_feed_success">Yayın eklendi</string>
-    <string name="edit_feed_error">Yayın kaydedilirken hata oluştu</string>
     <string name="dialog_cancel">Vazgeç</string>
     <string name="folder_action_edit">Yeniden Adlandır</string>
     <string name="settings_remove_account_message_local">Hesabınızı silmek istediğinizden emin misiniz? Bu geri alınamaz.</string>
@@ -258,4 +255,28 @@
     <string name="settings_gestures_improve_talkback_title">Talkback\'i iyileştir</string>
     <string name="settings_options_reader_pin_top_toolbar">Üst araç çubuğunu sabitle</string>
     <string name="settings_options_reader_show_bottom_toolbar">Eylemleri alt araç çubuğunda göster</string>
+    <string name="add_account_miniflux_signup_prompt">Miniflux örneğiniz yok mu?</string>
+    <string name="add_account_miniflux_signup_link_text">Daha fazlasını öğrenin.</string>
+    <string name="theme_dynamic">Dinamik</string>
+    <string name="theme_newsprint">Gazete kağıdı</string>
+    <string name="theme_monochrome">Tek renkli</string>
+    <string name="settings_pure_black_dark_mode">Saf siyah karanlık mod</string>
+    <string name="filter_today">Bugün</string>
+    <string name="auth_fields_client_certificate">İstemci sertifikası (isteğe bağlı)</string>
+    <string name="auth_fields_remove_client_cert">İstemci sertifikasını kaldır</string>
+    <string name="theme_mode_system">Sistem</string>
+    <string name="theme_mode_light">Açık</string>
+    <string name="theme_mode_dark">Koyu</string>
+    <string name="theme_default">Öntanımlı</string>
+    <string name="theme_sunset">Gün batımı</string>
+    <string name="settings_section_categories">Kategoriler</string>
+    <string name="settings_option_show_today_filter">Bugün</string>
+    <string name="mark_read_position_toolbar">Araç çubuğu</string>
+    <string name="mark_read_position_floating_action_button">Yüzen Eylem Düğmesi</string>
+    <string name="mark_all_read_button_position">Tümünü Okundu Olarak İşaretle Düğmesi Konumu</string>
+    <string name="settings_display_miscellaneous_title">Çeşitli</string>
+    <string name="settings_full_content_parser">Tam İçerik Ayrıştırıcı</string>
+    <string name="open_articles_in_browser">Makaleleri Tarayıcıda Aç</string>
+    <string name="selected">Seçilen</string>
+    <string name="auth_fields_freshrss_api_password">API Parolası</string>
 </resources>

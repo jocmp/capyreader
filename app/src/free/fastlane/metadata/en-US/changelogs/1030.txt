@@ -1,0 +1,3 @@
+• Adds settings toggle to disable article auto-delete
+• Adds Portuguese, Serbian and Spanish translations thanks to several volunteers
+• Fixes auto-delete bug for feeds with old articles

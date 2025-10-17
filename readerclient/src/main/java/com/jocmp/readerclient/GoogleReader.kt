@@ -87,10 +87,11 @@ interface GoogleReader {
         @Field("T") postToken: String?,
     ): Response<String>
 
+    @FormUrlEncoded
     @POST("accounts/ClientLogin")
     suspend fun clientLogin(
-        @Query("Email") email: String,
-        @Query("Passwd") password: String
+        @Field("Email") email: String,
+        @Field("Passwd") password: String
     ): Response<String>
 
     @GET("reader/api/0/token")
@@ -112,6 +113,7 @@ interface GoogleReader {
                 .baseUrl(baseURL)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
+
                 .build()
                 .create()
         }
@@ -120,8 +122,10 @@ interface GoogleReader {
             username: String,
             password: String,
             baseURL: String,
-            client: OkHttpClient = OkHttpClient(),
+            client: OkHttpClient,
         ): Response<String> {
+            client.newBuilder()
+
             val googleReader = create(client = client, baseURL = baseURL)
 
             return googleReader.clientLogin(email = username, password = password)

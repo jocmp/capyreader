@@ -8,7 +8,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.Button
-import androidx.glance.ButtonDefaults
 import androidx.glance.ColorFilter
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
@@ -17,6 +16,7 @@ import androidx.glance.ImageProvider
 import androidx.glance.LocalContext
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.action.actionStartActivity
+import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.lazy.items
 import androidx.glance.background
@@ -53,6 +53,7 @@ fun HeadlinesLayout(articles: List<Article>) {
         GlanceModifier
             .fillMaxSize()
             .background(GlanceTheme.colors.widgetBackground)
+            .cornerRadius(16.dp)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -93,10 +94,6 @@ fun HeadlinesLayout(articles: List<Article>) {
                     Button(
                         context.getString(R.string.widget_headlines_see_more_button),
                         onClick = context.openUnread(),
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = GlanceTheme.colors.secondary,
-                            contentColor = GlanceTheme.colors.onSecondary
-                        )
                     )
                 }
             }
@@ -121,7 +118,6 @@ fun HeadlinesLayoutPreview() {
         title = "How to use the Galaxy S24's AI photo editing tool",
         author = "Andrew Romero",
         contentHTML = "<div>Test</div>",
-        extractedContentURL = null,
         imageURL = "https://example.com",
         summary = "The Galaxy S24 series, while bringing little physical change, packs a lot of AI narrative. One of the biggest Galaxy S24 features is the AI Generative Edit",
         url = URL("https://9to5google.com/?p=605559"),
@@ -147,7 +143,6 @@ fun HeadlinesLayoutDarkPreview() {
         title = "How to use the Galaxy S24's AI photo editing tool",
         author = "Andrew Romero",
         contentHTML = "<div>Test</div>",
-        extractedContentURL = null,
         imageURL = "https://example.com",
         summary = "The Galaxy S24 series, while bringing little physical change, packs a lot of AI narrative. One of the biggest Galaxy S24 features is the AI Generative Edit",
         url = URL("https://9to5google.com/?p=605559"),

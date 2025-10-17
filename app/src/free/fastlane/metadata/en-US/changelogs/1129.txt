@@ -1,0 +1,5 @@
+• Add better support for date-only timestamps on local accounts
+• Add option to show article actions on a bottom bar for easier access
+• Add option to disable some gestures for better TalkBack support
+• Ensure notifications open to unread filter
+• Update translations for Arabic, Bulgarian, German, Estonian, Spanish, French, Galician, Italian, Latvian, Polish, Russian, Turkish, and Chinese thanks to volunteers

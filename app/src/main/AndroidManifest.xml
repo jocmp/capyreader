@@ -7,6 +7,14 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <category android:name="android.intent.category.BROWSABLE"/>
+            <data android:scheme="https"/>
+        </intent>
+    </queries>
+
     <application
         android:name=".MainApplication"
         android:allowBackup="false"
@@ -51,6 +59,12 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".OpenArticleInBrowserActivity"
+            android:exported="false"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.NoDisplay" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -86,8 +100,8 @@
 
         <receiver
             android:name=".ui.widget.HeadlinesWidgetReceiver"
-            android:label="@string/widget_receiver_headlines_title"
-            android:exported="true">
+            android:exported="true"
+            android:label="@string/widget_receiver_headlines_title">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

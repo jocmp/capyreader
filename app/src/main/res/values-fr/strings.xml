@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Capy Reader</string>
-    <string name="add_feed_url_title">URL du flux ou du site web</string>
+    <string name="add_feed_url_title">URL du flux ou du site Web</string>
     <string name="add_feed_name_title">Nom</string>
     <string name="add_feed_new_folder_title">Nouvelle étiquette</string>
     <string name="add_feed_submit">Ajouter</string>
@@ -12,7 +11,6 @@
     <string name="edit_feed_submit">Enregistrer</string>
     <string name="dialog_cancel">Annuler</string>
     <string name="folder_action_delete_title">Supprimer l’étiquette</string>
-    <string name="feed_action_edit_success">Flux mis à jour</string>
     <string name="settings_remove_account_button_service">Se déconnecter</string>
     <string name="settings_remove_account_title_service">Se déconnecter</string>
     <string name="settings_remove_account_message_service">Voulez-vous vraiment vous déconnecter ?</string>
@@ -23,7 +21,6 @@
     <string name="account_settings_save_name">Nom enregistré</string>
     <string name="nav_headline_tags">Étiquettes</string>
     <string name="add_feed_network_error">Impossible de trouver un flux. Vérifiez votre connexion.</string>
-    <string name="edit_feed_error">Erreur à l’enregistrement du flux</string>
     <string name="add_feed_feed_not_error">Impossible de trouver un flux</string>
     <string name="add_feed_save_error">Impossible d’enregistrer le flux</string>
     <string name="action_mark_all_read">Tout marquer comme lu</string>
@@ -34,6 +31,9 @@
     <string name="settings_section_privacy">Confidentialité</string>
     <string name="opml_export_button_text">Exporter en OPML</string>
     <string name="theme_menu_label">Thème</string>
+    <string name="theme_dynamic">Dynamique</string>
+    <string name="theme_newsprint">Papier journal</string>
+    <string name="theme_monochrome">Monochrome</string>
     <string name="empty_onboarding_prompt">Commencer en ajoutant un flux</string>
     <string name="opml_exporter_failure">Export échoué</string>
     <string name="settings_reader_title">Lecteur</string>
@@ -53,7 +53,6 @@
     <string name="refresh_feeds_menu_label">Rafraîchir les flux</string>
     <string name="nav_headline_feeds">Flux</string>
     <string name="nav_add_feed">Ajouter un flux</string>
-    <string name="unsubscribe_error">Erreur à la désinscription du flux</string>
     <string name="relative_time_just_now">À l’instant</string>
     <string name="relative_time_minutes">%1$dm</string>
     <string name="relative_time_hours">%1$dh</string>
@@ -90,6 +89,7 @@
     <string name="settings_article_list_feed_name">Nom du flux</string>
     <string name="settings_article_list_feed_icons">Icônes du flux</string>
     <string name="settings_article_list_summary">Résumé</string>
+    <string name="settings_article_list_shorten_titles">Raccourcir les titres</string>
     <string name="settings_option_copy_version">Copier la version</string>
     <string name="settings_option_full_content_title">Maintenir l\'affichage complet</string>
     <string name="refresh_on_start">Au démarrage</string>
@@ -153,7 +153,7 @@
     <string name="article_font_menu_label">Police</string>
     <string name="refresh_every_day">Chaque jour</string>
     <string name="article_byline">%1$s à %2$s de %3$s</string>
-    <string name="settings_option_auto_delete_articles_subtitle">Supprimer les articles lus, non favoris de plus de 3 mois</string>
+    <string name="settings_option_auto_delete_articles_subtitle">Supprimer les articles lus et non favoris de plus de 3 mois</string>
     <string name="feed_list_top_bar_close_search">Annuler la recherche</string>
     <string name="settings_auto_delete_option_keep_for_one_month">1 mois</string>
     <string name="settings_about_title">À propos</string>
@@ -188,7 +188,7 @@
     <string name="auth_fields_api_url">Serveur</string>
     <string name="account_source_freshrss">FreshRSS</string>
     <string name="settings_section_account_server">Serveur</string>
-    <string name="account_source_reader">Lecteur</string>
+    <string name="account_source_reader">Reader</string>
     <string name="add_account_local_subtitle">Sur votre appareil</string>
     <string name="add_account_reader_subtitle">API Google Reader auto-hébergée</string>
     <string name="add_account_feedbin_signup_link_text">Créez-en un ici.</string>
@@ -259,4 +259,25 @@
     <string name="settings_gestures_improve_talkback_title">Améliorer TalkBack</string>
     <string name="settings_options_reader_pin_top_toolbar">Épingler la barre d\'outils supérieure</string>
     <string name="settings_options_reader_show_bottom_toolbar">Afficher les actions dans la barre d\'outils inférieure</string>
+    <string name="add_account_miniflux_signup_link_text">En savoir plus.</string>
+    <string name="add_account_miniflux_signup_prompt">Vous n\'avez pas d\'instance Miniflux ?</string>
+    <string name="mark_read_position_toolbar">Barre d\'outils</string>
+    <string name="mark_read_position_floating_action_button">Bouton d\'action flottant</string>
+    <string name="mark_all_read_button_position">Position du bouton \"Tout marquer comme lu\"</string>
+    <string name="settings_display_miscellaneous_title">Divers</string>
+    <string name="settings_full_content_parser">Analyseur de contenu complet</string>
+    <string name="open_articles_in_browser">Ouvrir les articles dans le navigateur</string>
+    <string name="auth_fields_client_certificate">Certificat client (facultatif)</string>
+    <string name="auth_fields_remove_client_cert">Supprimer le certificat client</string>
+    <string name="theme_mode_system">Système</string>
+    <string name="theme_mode_light">Clair</string>
+    <string name="theme_mode_dark">Sombre</string>
+    <string name="theme_default">Par défaut</string>
+    <string name="settings_pure_black_dark_mode">Mode sombre noir pur</string>
+    <string name="selected">Sélectionné</string>
+    <string name="theme_sunset">Crépuscule</string>
+    <string name="filter_today">Aujourd\'hui</string>
+    <string name="settings_section_categories">Catégories</string>
+    <string name="settings_option_show_today_filter">Aujourd\'hui</string>
+    <string name="auth_fields_freshrss_api_password">Mot de passe API</string>
 </resources>

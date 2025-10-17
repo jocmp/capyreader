@@ -3,21 +3,29 @@ package com.jocmp.capy.logging
 import android.util.Log
 
 object CapyLog : Logging {
-    override fun info(tag: String, data: Map<String, String?>) {
-        Log.i(appTag(tag), serializeData(data))
+    override fun debug(event: String, data: Map<String, Any?>) {
+        Log.d(TAG, serializeData(event, data))
     }
 
-    override fun warn(tag: String, data: Map<String, String?>) {
-        Log.w(appTag(tag), serializeData(data))
+    override fun info(event: String, data: Map<String, Any?>) {
+        Log.i(TAG, serializeData(event, data))
     }
 
-    override fun error(tag: String, error: Throwable, data: Map<String, String?>) {
-        Log.e(appTag(tag), serializeData(data), error)
+    override fun warn(event: String, data: Map<String, String?>) {
+        Log.w(TAG, serializeData(event, data))
     }
 
-    private fun serializeData(data: Map<String, String?>): String {
-        return data.map { (key, value) -> "$key=$value" }.joinToString(" ")
+    override fun error(
+        event: String,
+        error: Throwable,
+        data: Map<String, Any?>
+    ) {
+        Log.e(TAG, serializeData(event, data), error)
     }
 
-    private fun appTag(path: String) = "cr.$path"
+    private fun serializeData(event: String, data: Map<String, Any?>): String {
+        return "event=${event.padEnd(15, ' ')}" + data.map { (key, value) -> "$key=$value" }.joinToString(" ")
+    }
+
+    private const val TAG = "capy"
 }

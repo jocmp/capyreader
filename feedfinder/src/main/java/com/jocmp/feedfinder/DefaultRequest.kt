@@ -5,6 +5,7 @@ import kotlinx.coroutines.CompletionHandler
 import kotlinx.coroutines.suspendCancellableCoroutine
 import okhttp3.Call
 import okhttp3.Callback
+import okhttp3.Credentials
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import java.io.IOException
@@ -14,18 +15,25 @@ import kotlin.coroutines.resumeWithException
 
 internal class DefaultRequest(private val client: OkHttpClient = OkHttpClient()) : Request {
     override suspend fun fetch(url: URL): Response {
-        val parsedURL = URL(url.protocol, url.host, url.port, url.file)
-
-        val request = okhttp3.Request.Builder()
-            .url(parsedURL)
+        val builder = okhttp3.Request.Builder()
+            .url(url)
             .get()
-            .build()
+
+        val userInfo = url.userInfo.orEmpty().split(":")
+
+        if (userInfo.size == 2) {
+            val (username, password) = userInfo
+
+            builder.header("Authorization", Credentials.basic(username, password))
+        }
+
+        val request = builder.build()
 
         val response = client.newCall(request).await()
-        val body = response.body?.string().orEmpty()
+        val body = response.body.string()
 
         return Response(
-            url = parsedURL,
+            url = url,
             body = body,
             charset = response.header("content-type")?.toMediaTypeOrNull()?.charset()
         )

@@ -41,7 +41,7 @@ class OPMLImporterTest {
         ),
         GenericFeed(name = "NetNewsWire", url = "https://netnewswire.blog/feed.xml"),
         GenericFeed(name = "Block Club Chicago", url = "https://blockclubchicago.org/feed/"),
-        GenericFeed(name = "Julia Evans", url = "https://jvns.ca/atom.xml")
+        GenericFeed(name = "Julia Evans", url = "https://jvns.ca/atom.xml"),
     ).associateBy { it.feedURL.toString() }
 
     private val finder = MockFeedFinder(sites)
@@ -100,5 +100,16 @@ class OPMLImporterTest {
             expected = setOf("BBC News - World", "NetNewsWire", "Block Club Chicago"),
             actual = newsFeeds
         )
+    }
+
+    @Test
+    fun `it handles invalid https URLs`() = runTest {
+        val inputStream = testFile("newsblur.xml").inputStream()
+
+        OPMLImporter(account).import(inputStream = inputStream)
+
+        val topLevelFeeds = account.feeds.first().map { it.title }.toSet()
+
+        assertEquals(expected = setOf("Daring Fireball"), actual = topLevelFeeds)
     }
 }
