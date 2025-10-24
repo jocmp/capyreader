@@ -283,4 +283,9 @@
     <string name="settings_section_categories">الفئات</string>
     <string name="settings_option_show_today_filter">اليوم</string>
     <string name="auth_fields_freshrss_api_password">كلمة مرور API</string>
+    <string name="freshrss_visibility">الرؤية</string>
+    <string name="freshrss_visibility_option_main">التيار الرئيسي</string>
+    <string name="freshrss_visibility_option_important">مهم</string>
+    <string name="freshrss_visibility_option_category">فئة</string>
+    <string name="freshrss_visibility_option_feed">موجز</string>
 </resources>
