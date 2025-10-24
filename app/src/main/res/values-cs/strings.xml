@@ -65,8 +65,8 @@
     <string name="settings_article_list_feed_icons">Ikona kanálu</string>
     <string name="settings_section_version">Verze</string>
     <string name="settings_option_copy_version">Kopírovat verzi</string>
-    <string name="settings_option_full_content_title">Pamatovat volbu načítání úplného obsahu</string>
-    <string name="settings_option_full_content_subtitle">Pamatovat volbu pro načítání celého článku</string>
+    <string name="settings_option_full_content_title">Načítat celý obsah</string>
+    <string name="settings_option_full_content_subtitle">Zapamatovat si volbu načítání celého obsahu</string>
     <string name="refresh_on_start">Po otevření</string>
     <string name="empty_onboarding_title">Žádné kanály</string>
     <string name="empty_onboarding_prompt">Začněte přidáním kanálu</string>
@@ -273,7 +273,10 @@
     <string name="mark_read_position_floating_action_button">Plovoucí akční tlačítko</string>
     <string name="mark_all_read_button_position">Pozice tlačítka Označit vše jako přečtené</string>
     <string name="settings_display_miscellaneous_title">Další</string>
-    <string name="settings_full_content_parser">Načítání plného obsahu (experimentální)</string>
+    <string name="settings_full_content_parser">Načítání celého obsahu</string>
     <string name="open_articles_in_browser">Otevřít články v prohlížeči</string>
     <string name="selected">Vybrané</string>
+    <string name="filter_today">Dnešní</string>
+    <string name="settings_section_categories">Kategorie</string>
+    <string name="settings_option_show_today_filter">Dnešní</string>
 </resources>

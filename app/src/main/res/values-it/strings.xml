@@ -283,4 +283,9 @@
     <string name="settings_section_categories">Categorie</string>
     <string name="settings_option_show_today_filter">Oggi</string>
     <string name="auth_fields_freshrss_api_password">Password API</string>
+    <string name="freshrss_visibility">Visibilità</string>
+    <string name="freshrss_visibility_option_main">Flusso principale</string>
+    <string name="freshrss_visibility_option_important">Importante</string>
+    <string name="freshrss_visibility_option_category">Categoria</string>
+    <string name="freshrss_visibility_option_feed">Feed</string>
 </resources>
