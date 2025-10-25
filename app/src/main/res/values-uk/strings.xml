@@ -276,4 +276,9 @@
     <string name="settings_section_categories">Категорії</string>
     <string name="settings_option_show_today_filter">Сьогодні</string>
     <string name="auth_fields_freshrss_api_password">Пароль API</string>
+    <string name="freshrss_visibility_option_main">Головний потік</string>
+    <string name="freshrss_visibility_option_category">Категорія</string>
+    <string name="freshrss_visibility_option_feed">Стрічка</string>
+    <string name="freshrss_visibility">Видимість</string>
+    <string name="freshrss_visibility_option_important">Важливе</string>
 </resources>
