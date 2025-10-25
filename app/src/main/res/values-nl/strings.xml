@@ -26,7 +26,7 @@
     <string name="settings_remove_account_confirm_service">Uitloggen</string>
     <string name="settings_remove_account_button_local">Account verwijderen</string>
     <string name="settings_remove_account_title_local">Account verwijderen</string>
-    <string name="settings_remove_account_message_local">Weet je zeker dat je je account wilt verwijderen? Dit kan niet ongedaan worden gemaakt.</string>
+    <string name="settings_remove_account_message_local">Weet je zeker dat je je account wilt verwijderen? Dit kan niet ongedaan gemaakt worden.</string>
     <string name="settings_remove_account_confirm_local">Bevestigen</string>
     <string name="account_settings_save_name">Naam opgeslagen</string>
     <string name="article_view_mark_as_read">Markeren als gelezen</string>
@@ -267,7 +267,16 @@
     <string name="mark_read_position_floating_action_button">Zwevende actieknop</string>
     <string name="mark_all_read_button_position">Alles gelezen markeren knop positie</string>
     <string name="settings_display_miscellaneous_title">Diversen</string>
-    <string name="settings_full_content_parser">Volledige inhoud parser (Experimenteel)</string>
+    <string name="settings_full_content_parser">Volledige Inhoud Parser</string>
     <string name="open_articles_in_browser">Artikelen openen in browser</string>
     <string name="selected">Geselecteerd</string>
+    <string name="filter_today">Vandaag</string>
+    <string name="settings_section_categories">Categoriën</string>
+    <string name="settings_option_show_today_filter">Vandaag</string>
+    <string name="auth_fields_freshrss_api_password">API Paswoord</string>
+    <string name="freshrss_visibility">Zichtbaarheid</string>
+    <string name="freshrss_visibility_option_main">Mainstream</string>
+    <string name="freshrss_visibility_option_important">Belangrijk</string>
+    <string name="freshrss_visibility_option_category">Categorie</string>
+    <string name="freshrss_visibility_option_feed">feed</string>
 </resources>
