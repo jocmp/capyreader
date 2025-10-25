@@ -281,4 +281,9 @@
     <string name="settings_option_show_today_filter">今天</string>
     <string name="settings_section_categories">类别</string>
     <string name="auth_fields_freshrss_api_password">API 密码</string>
+    <string name="freshrss_visibility">可见性</string>
+    <string name="freshrss_visibility_option_main">主信息流‌</string>
+    <string name="freshrss_visibility_option_important">重要</string>
+    <string name="freshrss_visibility_option_category">类别</string>
+    <string name="freshrss_visibility_option_feed">订阅源</string>
 </resources>
