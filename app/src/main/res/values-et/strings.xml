@@ -282,4 +282,9 @@
     <string name="settings_section_categories">Kategooriad</string>
     <string name="settings_option_show_today_filter">Täna</string>
     <string name="auth_fields_freshrss_api_password">API salasõna</string>
+    <string name="freshrss_visibility">Nähtavus</string>
+    <string name="freshrss_visibility_option_main">Põhiline uudisvoog</string>
+    <string name="freshrss_visibility_option_important">Oluline</string>
+    <string name="freshrss_visibility_option_category">Kategooria</string>
+    <string name="freshrss_visibility_option_feed">Uudisvoog</string>
 </resources>
