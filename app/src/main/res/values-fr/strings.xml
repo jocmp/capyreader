@@ -280,4 +280,9 @@
     <string name="settings_section_categories">Catégories</string>
     <string name="settings_option_show_today_filter">Aujourd\'hui</string>
     <string name="auth_fields_freshrss_api_password">Mot de passe API</string>
+    <string name="freshrss_visibility">Visibilité</string>
+    <string name="freshrss_visibility_option_main">Flux Principal</string>
+    <string name="freshrss_visibility_option_important">Important</string>
+    <string name="freshrss_visibility_option_category">Catégorie</string>
+    <string name="freshrss_visibility_option_feed">Flux</string>
 </resources>
