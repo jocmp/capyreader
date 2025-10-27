@@ -26,7 +26,7 @@
     <string name="settings_remove_account_confirm_service">Uitloggen</string>
     <string name="settings_remove_account_button_local">Account verwijderen</string>
     <string name="settings_remove_account_title_local">Account verwijderen</string>
-    <string name="settings_remove_account_message_local">Weet je zeker dat je je account wilt verwijderen? Dit kan niet ongedaan gemaakt worden.</string>
+    <string name="settings_remove_account_message_local">Weet je zeker dat je jouw account wilt verwijderen? Dit kan niet ongedaan gemaakt worden.</string>
     <string name="settings_remove_account_confirm_local">Bevestigen</string>
     <string name="account_settings_save_name">Naam opgeslagen</string>
     <string name="article_view_mark_as_read">Markeren als gelezen</string>
