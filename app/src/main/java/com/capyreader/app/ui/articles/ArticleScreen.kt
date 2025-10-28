@@ -81,7 +81,6 @@ import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
-import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.drop
@@ -225,19 +224,21 @@ fun ArticleScreen(
         }
 
         LaunchedEffect(listState) {
-            snapshotFlow { "$filter:${listState.layoutInfo.totalItemsCount}" }
+            snapshotFlow { listState.layoutInfo.totalItemsCount }
                 .drop(if (enableMarkReadOnScroll) 0 else 1)
                 .distinctUntilChanged()
                 .collect {
-                    CapyLog.info(
-                        "collect",
-                        mapOf(
-                            "filter" to filter,
-                            "count" to listState.layoutInfo.totalItemsCount,
-                            "idle" to articles.loadState.isIdle
-                        )
-                    )
-                    listState.animateScrollToItem(0)
+                    listState.scrollToItem(0)
+                    resetScrollBehaviorOffset()
+                }
+        }
+
+        LaunchedEffect(listState) {
+            snapshotFlow { filter }
+                .distinctUntilChanged()
+                .collect {
+                    delay(200)
+                    listState.scrollToItem(0)
                     resetScrollBehaviorOffset()
                 }
         }

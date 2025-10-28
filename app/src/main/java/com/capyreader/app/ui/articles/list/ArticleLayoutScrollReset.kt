@@ -28,6 +28,10 @@ fun resetScrollBehaviorListener(
         scrollBehavior.state.contentOffset = nextContentOffset
     }
 
+    val scrollToTop = {
+        val maxCardSize = listState.layoutInfo.visibleItemsInfo.maxOfOrNull { it.size } ?: 0
+    }
+
     LaunchedEffect(resetContentOffset) {
         if (resetContentOffset) {
             scrollBehavior.state.contentOffset = 0f

@@ -32,7 +32,6 @@ import com.capyreader.app.R
 import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.Article
 import com.jocmp.capy.MarkRead
-import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.debounce
@@ -144,16 +143,6 @@ fun MarkReadOnScroll(
                 val markAsRead =
                     (articles.itemCount == 1 && firstVisibleIndex > 0) ||
                             (offscreenIndex > 0 && articles.itemCount > 0)
-
-                CapyLog.debug(
-                    "collect",
-                    mapOf(
-                        "first" to firstVisibleIndex,
-                        "count" to articles.itemCount,
-                        "mark" to markAsRead,
-                        "offset" to offscreenIndex,
-                    )
-                )
 
                 if (!markAsRead) {
                     return@collect
