@@ -8,12 +8,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
@@ -83,7 +81,6 @@ import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
-import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.drop
@@ -200,7 +197,6 @@ fun ArticleScreen(
         }
 
         val listState = articles.rememberLazyListState()
-        var hideList by remember { mutableStateOf(false) }
 
         fun scrollToArticle(index: Int) {
             coroutineScope.launch {
@@ -220,7 +216,6 @@ fun ArticleScreen(
             scrollBehavior = scrollBehavior
         )
 
-
         val scrollToTop = {
             coroutineScope.launch {
                 listState.scrollToItem(0)
@@ -229,22 +224,22 @@ fun ArticleScreen(
         }
 
         LaunchedEffect(listState) {
-            snapshotFlow { "$filter:${listState.layoutInfo.totalItemsCount}" }
+            snapshotFlow { listState.layoutInfo.totalItemsCount }
                 .drop(if (enableMarkReadOnScroll) 0 else 1)
                 .distinctUntilChanged()
                 .collect {
                     listState.scrollToItem(0)
                     resetScrollBehaviorOffset()
-                    delay(500)
-                    hideList = false // Tie-breaker if totalItemsCount hasn't changed
                 }
         }
 
         LaunchedEffect(listState) {
-            snapshotFlow { listState.layoutInfo.totalItemsCount }
+            snapshotFlow { filter }
+                .distinctUntilChanged()
                 .collect {
-                    CapyLog.debug("collect", mapOf("count" to listState.layoutInfo.totalItemsCount))
-                    hideList = false
+                    delay(200)
+                    listState.scrollToItem(0)
+                    resetScrollBehaviorOffset()
                 }
         }
 
@@ -315,9 +310,9 @@ fun ArticleScreen(
         }
 
         fun openNextList(action: suspend () -> Unit) {
-            hideList = true
             coroutineScope.launchUI {
                 drawerState.close()
+                delay(300)
                 openNextStatus(action)
             }
         }
@@ -556,7 +551,6 @@ fun ArticleScreen(
                                     requestNextFeed()
                                 },
                             ) {
-
                                 key(filter, articles.itemCount) {
                                     ArticleList(
                                         articles = articles,
@@ -571,15 +565,6 @@ fun ArticleScreen(
                                             selectArticle(articleID)
                                         },
                                     )
-                                }
-                                AnimatedVisibility(
-                                    hideList,
-                                    modifier = Modifier.fillMaxSize()
-                                ) {
-                                    Surface(
-                                        color = MaterialTheme.colorScheme.background,
-                                        modifier = Modifier.fillMaxSize()
-                                    ) {}
                                 }
                             }
                         }
