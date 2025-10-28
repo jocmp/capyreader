@@ -72,16 +72,7 @@
     <string name="theme_menu_option_dark">Dunkel</string>
     <string name="theme_menu_option_system_default">System default</string>
     <string name="theme_dynamic">Dynamisch</string>
-    <string name="theme_green_apple">Grüner Apfel</string>
-    <string name="theme_lavender">Lavendel</string>
-    <string name="theme_midnight_dusk">Mitternachtsdämmerung</string>
-    <string name="theme_nord">Nord</string>
-    <string name="theme_strawberry_daiquiri">Erdbeer-Daiquiri</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_teal_turquoise">Blaugrün &amp; Türkis</string>
-    <string name="theme_tidal_wave">Flutwelle</string>
     <string name="theme_newsprint">Zeitungspapier</string>
-    <string name="theme_yotsuba">Yotsuba</string>
     <string name="theme_monochrome">Monochrom</string>
     <string name="edit_feed_tags">Bezeichnungen</string>
     <string name="settings_option_in_app_browser">In-App-Browser benutzen</string>
@@ -282,4 +273,9 @@
     <string name="settings_display_miscellaneous_title">Verschiedenes</string>
     <string name="open_articles_in_browser">Artikel im Browser öffnen</string>
     <string name="selected">Ausgewählt</string>
+    <string name="filter_today">Heute</string>
+    <string name="theme_sunset">Sonnenuntergang</string>
+    <string name="settings_section_categories">Kategorien</string>
+    <string name="settings_option_show_today_filter">Heute</string>
+    <string name="auth_fields_freshrss_api_password">API-Passwort</string>
 </resources>

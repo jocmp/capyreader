@@ -255,7 +255,8 @@ internal class FeedbinAccountDelegate(
             title = subscription.title,
             feed_url = subscription.feed_url,
             site_url = subscription.site_url,
-            favicon_url = icon?.url
+            favicon_url = icon?.url,
+            priority = null
         )
     }
 

@@ -122,16 +122,7 @@
     <string name="theme_mode_dark">Dark</string>
     <string name="theme_default">Default</string>
     <string name="theme_dynamic">Dynamic</string>
-    <string name="theme_green_apple">Green Apple</string>
-    <string name="theme_lavender">Lavender</string>
-    <string name="theme_midnight_dusk">Midnight Dusk</string>
-    <string name="theme_nord">Nord</string>
-    <string name="theme_strawberry_daiquiri">Strawberry Daiquiri</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_teal_turquoise">Teal &amp; Turquoise</string>
-    <string name="theme_tidal_wave">Tidal Wave</string>
     <string name="theme_newsprint">Newsprint</string>
-    <string name="theme_yotsuba">Yotsuba</string>
     <string name="theme_monochrome">Monochrome</string>
     <string name="theme_sunset">Sunset</string>
     <string name="settings_pure_black_dark_mode">Pure black dark mode</string>
@@ -299,4 +290,10 @@
     <string name="settings_full_content_parser">Full Content Parser</string>
     <string name="open_articles_in_browser">Open Articles In Browser</string>
     <string name="selected">Selected</string>
+    <string name="auth_fields_freshrss_api_password">API Password</string>
+    <string name="freshrss_visibility">Visibility</string>
+    <string name="freshrss_visibility_option_main">Main Stream</string>
+    <string name="freshrss_visibility_option_important">Important</string>
+    <string name="freshrss_visibility_option_category">Category</string>
+    <string name="freshrss_visibility_option_feed">Feed</string>
 </resources>

@@ -59,7 +59,7 @@
     <string name="unauthorized_dialog_confirm_text">تسجيل الدخول</string>
     <string name="auth_fields_password">كلمة المرور</string>
     <string name="auth_fields_email">البريد الإلكتروني</string>
-    <string name="auth_fields_hide_password">إخفاء كلمة المرور</string>
+    <string name="auth_fields_hide_password">أخفِ كلمة المرور</string>
     <string name="auth_fields_show_password">اعرض كلمة المرور</string>
     <string name="settings_top_bar_title">الإعدادات</string>
     <string name="crash_reporting_checkbox_title">تمكين الإبلاغ عن الأعطال</string>
@@ -200,7 +200,7 @@
     <string name="settings_section_mark_all_as_read">وضع علامة كمقروء على الكل</string>
     <string name="settings_section_browser">المتصفح</string>
     <string name="reader_image_visibility_show_on_wifi">اعرض الصور فقط عبر الـWi-Fi</string>
-    <string name="reader_image_visibility_always_hide">حظر الصور</string>
+    <string name="reader_image_visibility_always_hide">احظر الصور</string>
     <string name="reader_image_visibility_always_show">اعرض الصور دائمًا</string>
     <string name="reader_image_visibility_label">الصور</string>
     <string name="settings_gestures_reader_tap_to_page_title">النقر لتمرير</string>
@@ -265,19 +265,10 @@
     <string name="mark_read_position_floating_action_button">زر الإجراء العائم</string>
     <string name="mark_all_read_button_position">موضع زر وضع علامة \"قراءة الكل\"</string>
     <string name="settings_display_miscellaneous_title">متفرقات</string>
-    <string name="settings_full_content_parser">محلّل المحتوى الكامل (تجريبي)</string>
+    <string name="settings_full_content_parser">محلّل المحتوى الكامل</string>
     <string name="open_articles_in_browser">افتح المقالات في المتصفح</string>
     <string name="theme_dynamic">ديناميكي</string>
-    <string name="theme_green_apple">تفاحة خضراء</string>
-    <string name="theme_lavender">الخزامى</string>
-    <string name="theme_midnight_dusk">غسق منتصف الليل</string>
-    <string name="theme_nord">Nord</string>
-    <string name="theme_strawberry_daiquiri">دايكيري الفراولة</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_teal_turquoise">أزرق مخضر &amp; فيروزي</string>
-    <string name="theme_tidal_wave">موجة المد</string>
     <string name="theme_newsprint">ورق الجرائد</string>
-    <string name="theme_yotsuba">يوتسوبا</string>
     <string name="theme_monochrome">أحادي اللون</string>
     <string name="settings_pure_black_dark_mode">الوضع المظلم الأسود النقي</string>
     <string name="auth_fields_client_certificate">شهادة العميل (اختياري)</string>
@@ -288,4 +279,13 @@
     <string name="theme_default">المبدئي</string>
     <string name="selected">محدّدة</string>
     <string name="theme_sunset">الغروب</string>
+    <string name="filter_today">اليوم</string>
+    <string name="settings_section_categories">الفئات</string>
+    <string name="settings_option_show_today_filter">اليوم</string>
+    <string name="auth_fields_freshrss_api_password">كلمة مرور API</string>
+    <string name="freshrss_visibility">الرؤية</string>
+    <string name="freshrss_visibility_option_main">التيار الرئيسي</string>
+    <string name="freshrss_visibility_option_important">مهم</string>
+    <string name="freshrss_visibility_option_category">فئة</string>
+    <string name="freshrss_visibility_option_feed">موجز</string>
 </resources>

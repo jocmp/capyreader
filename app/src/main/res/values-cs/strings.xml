@@ -65,8 +65,8 @@
     <string name="settings_article_list_feed_icons">Ikona kanálu</string>
     <string name="settings_section_version">Verze</string>
     <string name="settings_option_copy_version">Kopírovat verzi</string>
-    <string name="settings_option_full_content_title">Pamatovat volbu načítání úplného obsahu</string>
-    <string name="settings_option_full_content_subtitle">Pamatovat volbu pro načítání celého článku</string>
+    <string name="settings_option_full_content_title">Načítat celý obsah</string>
+    <string name="settings_option_full_content_subtitle">Zapamatovat si volbu načítání celého obsahu</string>
     <string name="refresh_on_start">Po otevření</string>
     <string name="empty_onboarding_title">Žádné kanály</string>
     <string name="empty_onboarding_prompt">Začněte přidáním kanálu</string>
@@ -234,16 +234,7 @@
     <string name="feed_nav_drawer_refresh_all">Obnovit vše</string>
     <string name="notification_mark_as_read_action">Označit jako přečtené</string>
     <string name="theme_dynamic">Dynamický</string>
-    <string name="theme_green_apple">Zelené jablko</string>
-    <string name="theme_lavender">Levandule</string>
-    <string name="theme_midnight_dusk">Půlnoční soumrak</string>
-    <string name="theme_nord">Nord</string>
-    <string name="theme_strawberry_daiquiri">Jahodové daiquiri</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_teal_turquoise">Šedozelená &amp; tyrkysová</string>
-    <string name="theme_tidal_wave">Přílivová vlna</string>
     <string name="theme_newsprint">Novinový papír</string>
-    <string name="theme_yotsuba">Yotsuba</string>
     <string name="theme_monochrome">Monochromatický</string>
     <string name="settings_pure_black_dark_mode">Čistě černý tmavý režim</string>
     <string name="delete_tag_error">Štítek se nepodařilo odstranit</string>
@@ -282,7 +273,10 @@
     <string name="mark_read_position_floating_action_button">Plovoucí akční tlačítko</string>
     <string name="mark_all_read_button_position">Pozice tlačítka Označit vše jako přečtené</string>
     <string name="settings_display_miscellaneous_title">Další</string>
-    <string name="settings_full_content_parser">Načítání plného obsahu (experimentální)</string>
+    <string name="settings_full_content_parser">Načítání celého obsahu</string>
     <string name="open_articles_in_browser">Otevřít články v prohlížeči</string>
     <string name="selected">Vybrané</string>
+    <string name="filter_today">Dnešní</string>
+    <string name="settings_section_categories">Kategorie</string>
+    <string name="settings_option_show_today_filter">Dnešní</string>
 </resources>

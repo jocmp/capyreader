@@ -263,16 +263,7 @@
     <string name="mark_all_read_button_position">Posição do Botão \"Marcar Todos como Lidos\"</string>
     <string name="settings_display_miscellaneous_title">Diversos</string>
     <string name="theme_dynamic">Dinâmico</string>
-    <string name="theme_green_apple">Maçã verde</string>
-    <string name="theme_lavender">Lavanda</string>
-    <string name="theme_midnight_dusk">Entardecer da meia-noite</string>
-    <string name="theme_nord">Nord</string>
-    <string name="theme_strawberry_daiquiri">Daiquiri de morango</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_teal_turquoise">Verde-azulado &amp; turquesa</string>
-    <string name="theme_tidal_wave">Onda de maré</string>
     <string name="theme_newsprint">Papel jornal</string>
-    <string name="theme_yotsuba">Yotsuba</string>
     <string name="theme_monochrome">Monocromático</string>
     <string name="settings_pure_black_dark_mode">Modo escuro preto puro</string>
 </resources>

@@ -1,0 +1,7 @@
+• Add "Today" category to show all articles from the current day
+  • This can be turned of in Settings > General > Categories
+• Tweak reader restore state to use percentage instead of absolute value
+• Fix missing highlight options in reader
+• Change default content parser back to "Mercury Parser" thanks to user feedback
+• Add Japanese translations thanks to volunteers!
+• Update translations for Arabic, Spanish, Italian and Chinese, thanks to volunteers!

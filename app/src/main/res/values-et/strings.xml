@@ -265,7 +265,7 @@
     <string name="settings_display_miscellaneous_title">Varia</string>
     <string name="settings_article_list_shorten_titles">Lühenda pealkirju</string>
     <string name="open_articles_in_browser">Ava artiklid veebibrauseris</string>
-    <string name="settings_full_content_parser">Täismahuline sisemine brauser (katseline)</string>
+    <string name="settings_full_content_parser">Täismahuline sisemine brauser</string>
     <string name="auth_fields_client_certificate">Kliendi sertifikaat (valikuline)</string>
     <string name="auth_fields_remove_client_cert">Eemalda kliendi sertifikaat</string>
     <string name="theme_mode_system">Süsteemi kujundus</string>
@@ -273,18 +273,18 @@
     <string name="theme_mode_dark">Tume kujundus</string>
     <string name="theme_default">Vaikimisi kujundus</string>
     <string name="theme_dynamic">Dünaamiline kujundus</string>
-    <string name="theme_green_apple">Roheline õun</string>
-    <string name="theme_lavender">Lavendel</string>
-    <string name="theme_midnight_dusk">Kesköine hämarik</string>
-    <string name="theme_nord">Põhjala</string>
-    <string name="theme_strawberry_daiquiri">Maasika daiquiri</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_teal_turquoise">Sinakasroheline ja türkiissinine</string>
-    <string name="theme_tidal_wave">Tõusulaine</string>
     <string name="theme_newsprint">Ajalehepaber</string>
-    <string name="theme_yotsuba">Yotsuba</string>
     <string name="theme_monochrome">Mustvalge</string>
     <string name="theme_sunset">Päikeseloojang</string>
     <string name="settings_pure_black_dark_mode">Süsimust kujundus</string>
     <string name="selected">Valitud</string>
+    <string name="filter_today">Täna</string>
+    <string name="settings_section_categories">Kategooriad</string>
+    <string name="settings_option_show_today_filter">Täna</string>
+    <string name="auth_fields_freshrss_api_password">API salasõna</string>
+    <string name="freshrss_visibility">Nähtavus</string>
+    <string name="freshrss_visibility_option_main">Põhiline uudisvoog</string>
+    <string name="freshrss_visibility_option_important">Oluline</string>
+    <string name="freshrss_visibility_option_category">Kategooria</string>
+    <string name="freshrss_visibility_option_feed">Uudisvoog</string>
 </resources>

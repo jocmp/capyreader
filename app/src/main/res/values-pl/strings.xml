@@ -261,18 +261,9 @@
     <string name="mark_all_read_button_position">Pozycja przycisku \"oznacz wszystko jako przeczytane\"</string>
     <string name="settings_display_miscellaneous_title">Różne</string>
     <string name="open_articles_in_browser">Otwieraj artykuły w przeglądarce</string>
-    <string name="settings_full_content_parser">Parsowanie pełnej zawartości (eksperymentalne)</string>
+    <string name="settings_full_content_parser">Parsowanie pełnej zawartości</string>
     <string name="theme_dynamic">Dynamiczny</string>
-    <string name="theme_green_apple">Zielone jabłko</string>
-    <string name="theme_lavender">Lawenda</string>
-    <string name="theme_midnight_dusk">Zmierzch północy</string>
-    <string name="theme_nord">Nord</string>
-    <string name="theme_strawberry_daiquiri">Daiquiri truskawkowe</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_teal_turquoise">Cyjan i turkus</string>
-    <string name="theme_tidal_wave">Fala przypływu</string>
     <string name="theme_newsprint">Papier gazetowy</string>
-    <string name="theme_yotsuba">Yotsuba</string>
     <string name="theme_monochrome">Monochromatyczny</string>
     <string name="settings_pure_black_dark_mode">Tryb czarny</string>
     <string name="auth_fields_client_certificate">Certyfikat klienta (opcjonalnie)</string>
@@ -283,4 +274,7 @@
     <string name="theme_default">Domyślny</string>
     <string name="theme_sunset">Zachód słońca</string>
     <string name="selected">Wybrano</string>
+    <string name="settings_section_categories">Kategorie</string>
+    <string name="filter_today">Dzisiejsze</string>
+    <string name="settings_option_show_today_filter">Dzisiejsze</string>
 </resources>

@@ -263,21 +263,12 @@
     <string name="mark_read_position_floating_action_button">浮动操作按钮</string>
     <string name="mark_all_read_button_position">标记全部已读按钮位置</string>
     <string name="settings_display_miscellaneous_title">其他</string>
-    <string name="settings_full_content_parser">完整内容解析器（实验性）</string>
+    <string name="settings_full_content_parser">完整内容解析器</string>
     <string name="open_articles_in_browser">在浏览器中打开文章</string>
     <string name="auth_fields_client_certificate">客户端证书（可选）</string>
     <string name="auth_fields_remove_client_cert">移除客户端证书</string>
     <string name="theme_dynamic">动态</string>
-    <string name="theme_green_apple">青苹果</string>
-    <string name="theme_lavender">薰衣草</string>
-    <string name="theme_midnight_dusk">午夜黄昏</string>
-    <string name="theme_nord">Nord</string>
-    <string name="theme_strawberry_daiquiri">草莓代基里</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_teal_turquoise">青绿 &amp; 绿松石</string>
-    <string name="theme_tidal_wave">潮汐波浪</string>
     <string name="theme_newsprint">新闻纸</string>
-    <string name="theme_yotsuba">四叶</string>
     <string name="theme_monochrome">单色</string>
     <string name="settings_pure_black_dark_mode">纯黑暗模式</string>
     <string name="theme_mode_system">系统</string>
@@ -286,4 +277,13 @@
     <string name="theme_default">默认</string>
     <string name="selected">已选择</string>
     <string name="theme_sunset">日落</string>
+    <string name="filter_today">今天</string>
+    <string name="settings_option_show_today_filter">今天</string>
+    <string name="settings_section_categories">类别</string>
+    <string name="auth_fields_freshrss_api_password">API 密码</string>
+    <string name="freshrss_visibility">可见性</string>
+    <string name="freshrss_visibility_option_main">主信息流‌</string>
+    <string name="freshrss_visibility_option_important">重要</string>
+    <string name="freshrss_visibility_option_category">类别</string>
+    <string name="freshrss_visibility_option_feed">订阅源</string>
 </resources>

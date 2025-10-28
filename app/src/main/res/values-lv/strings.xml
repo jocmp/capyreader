@@ -75,7 +75,7 @@
     <string name="relative_time_hours">%1$ds</string>
     <string name="relative_time_days">%1$dd</string>
     <string name="article_share">Dalīties ar rakstu</string>
-    <string name="extract_full_content">Izvilkt pilnu saturu</string>
+    <string name="extract_full_content">Izvilkt visu (pilnu) saturu</string>
     <string name="action_mark_all_read">Atzīmēt visus kā lasītus</string>
     <string name="mark_all_read_dialog_description">Atzīmēt visus rakstus kā lasītus?</string>
     <string name="article_actions_open_menu">Atvērt rakstu darbības</string>
@@ -106,7 +106,7 @@
     <string name="settings_article_list_summary">Kopsavilkums</string>
     <string name="settings_section_version">Versija</string>
     <string name="settings_option_copy_version">Kopēt versiju</string>
-    <string name="settings_option_full_content_title">Rādīt visu raksta saturu</string>
+    <string name="settings_option_full_content_title">Rādīt visu (pilnu) raksta saturu</string>
     <string name="refresh_on_start">Kad atver lietotni</string>
     <string name="empty_onboarding_title">Pagaidām nav nevienas ziņu plūsmas</string>
     <string name="article_style_options">Fonta stila opcijas</string>
@@ -152,7 +152,7 @@
     <string name="article_vertical_swipe_next_article">Ielādēt nākamo rakstu</string>
     <string name="article_vertical_swipe_previous_article">Ielādēt iepriekšējo rakstu</string>
     <string name="article_vertical_swipe_disabled">Atspējots</string>
-    <string name="article_vertical_swipe_full_content">Ielādēt visu raksta saturu</string>
+    <string name="article_vertical_swipe_full_content">Ielādēt visu (pilnu) raksta saturu</string>
     <string name="article_vertical_open_article_in_browser">Atvērt rakstu pārlūkā</string>
     <string name="article_list_row_swipe_disabled">Atspējots</string>
     <string name="article_list_row_swipe_toggle_starred">Pārslēgt rakstu kā atzīmētu vai neatzīmētu</string>
@@ -259,4 +259,21 @@
     <string name="add_account_miniflux_signup_prompt">Ja jums vēl nav Miniflux instances?</string>
     <string name="add_account_miniflux_signup_link_text">Vairāk informācijas.</string>
     <string name="settings_options_reader_pin_top_toolbar">Piespraust augšējo rīkjoslu</string>
+    <string name="theme_mode_system">Sistēmas</string>
+    <string name="theme_mode_light">Gaišs</string>
+    <string name="theme_mode_dark">Tumšs</string>
+    <string name="theme_dynamic">Dinamisks</string>
+    <string name="settings_section_categories">Kategorijas</string>
+    <string name="theme_sunset">Saulriets</string>
+    <string name="auth_fields_remove_client_cert">Noņemt klienta sertifikātu</string>
+    <string name="filter_today">Šodienas</string>
+    <string name="theme_newsprint">Laikraksts, avīze</string>
+    <string name="settings_option_show_today_filter">Rādīt šodienas raksti atlases iespēju</string>
+    <string name="settings_full_content_parser">Visu (pilnu) raksta saturu parsētājs</string>
+    <string name="auth_fields_client_certificate">Klienta sertifikāts (neobligāti, pēc izvēles)</string>
+    <string name="theme_default">Noklusētais</string>
+    <string name="theme_monochrome">Vienkrāsains</string>
+    <string name="settings_pure_black_dark_mode">Pilnīgi melns tumšais motīvs</string>
+    <string name="open_articles_in_browser">Atvērt rakstus pārlūkā</string>
+    <string name="selected">Atlasītie</string>
 </resources>

@@ -114,12 +114,6 @@
     <string name="theme_mode_dark">Темна</string>
     <string name="theme_default">Типова</string>
     <string name="theme_dynamic">Динамічна</string>
-    <string name="theme_green_apple">Зелене яблуко</string>
-    <string name="theme_lavender">Лаванда</string>
-    <string name="theme_midnight_dusk">Сутінки</string>
-    <string name="theme_nord">Північ</string>
-    <string name="theme_strawberry_daiquiri">Полуничний дайкірі</string>
-    <string name="theme_tako">Тако</string>
     <string name="theme_monochrome">Монохромна</string>
     <string name="theme_sunset">Захід</string>
     <string name="settings_pure_black_dark_mode">Темний режим із чистим чорним</string>
@@ -261,7 +255,7 @@
     <string name="widget_headlines_account_error">Спершу додайте обліковий запис</string>
     <string name="mark_read_position_toolbar">На панелі</string>
     <string name="settings_display_miscellaneous_title">Різне</string>
-    <string name="settings_full_content_parser">Розпізнавати повний текст (експериментально)</string>
+    <string name="settings_full_content_parser">Розпізнавати повний текст</string>
     <string name="open_articles_in_browser">Відкривати статті в браузері</string>
     <string name="selected">Вибрано</string>
     <string name="mark_all_read_button_position">Кнопка позначення прочитаними</string>
@@ -278,7 +272,13 @@
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Перемикати статті гортанням ліворуч або праворуч</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Гортати текст статті дотиком до нижніх країв</string>
     <string name="theme_newsprint">Газета</string>
-    <string name="theme_tidal_wave">Приплив</string>
-    <string name="theme_teal_turquoise">Бірюза</string>
-    <string name="theme_yotsuba">Йоцуба</string>
+    <string name="filter_today">Сьогодні</string>
+    <string name="settings_section_categories">Категорії</string>
+    <string name="settings_option_show_today_filter">Сьогодні</string>
+    <string name="auth_fields_freshrss_api_password">Пароль API</string>
+    <string name="freshrss_visibility_option_main">Головний потік</string>
+    <string name="freshrss_visibility_option_category">Категорія</string>
+    <string name="freshrss_visibility_option_feed">Стрічка</string>
+    <string name="freshrss_visibility">Видимість</string>
+    <string name="freshrss_visibility_option_important">Важливе</string>
 </resources>

@@ -33,15 +33,17 @@ INSERT INTO feeds(
     title,
     feed_url,
     site_url,
-    favicon_url
+    favicon_url,
+    priority
 )
 VALUES (
   :id,
   :subscription_id,
-    :title,
+  :title,
   :feed_url,
   :site_url,
-  :favicon_url
+  :favicon_url,
+  :priority
 )
 ON CONFLICT(id) DO UPDATE
 SET id = id,
@@ -50,7 +52,8 @@ title = excluded.title,
 feed_url = excluded.feed_url,
 site_url = excluded.site_url,
 favicon_url = excluded.favicon_url,
-enable_sticky_full_content = enable_sticky_full_content;
+enable_sticky_full_content = enable_sticky_full_content,
+priority = excluded.priority;
 
 update:
 UPDATE feeds SET

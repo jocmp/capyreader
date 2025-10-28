@@ -1,5 +1,6 @@
 package com.jocmp.readerclient
 
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
@@ -9,5 +10,7 @@ data class Subscription(
     val categories: List<Category>,
     val url: String,
     val htmlUrl: String,
-    val iconUrl: String,
+    val iconUrl: String?,
+    @Json(name = "frss:priority")
+    val frssPriority: String?,
 )

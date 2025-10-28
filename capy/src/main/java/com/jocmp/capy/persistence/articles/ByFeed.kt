@@ -3,6 +3,7 @@ package com.jocmp.capy.persistence.articles
 import app.cash.sqldelight.Query
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleStatus
+import com.jocmp.capy.FeedPriority
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.articles.UnreadSortOrder
 import com.jocmp.capy.db.Database
@@ -19,6 +20,7 @@ class ByFeed(private val database: Database) {
         limit: Long,
         unreadSort: UnreadSortOrder,
         offset: Long,
+        priority: FeedPriority,
     ): Query<Article> {
         val (read, starred) = status.toStatusPair
 
@@ -32,6 +34,7 @@ class ByFeed(private val database: Database) {
             lastReadAt = mapLastRead(read, since),
             publishedSince = null,
             newestFirst = isDescendingOrder(status, unreadSort),
+            priorities = priority.inclusivePriorities,
             mapper = ::listMapper
         )
     }
@@ -41,6 +44,7 @@ class ByFeed(private val database: Database) {
         feedIDs: List<String>,
         range: MarkRead,
         unreadSort: UnreadSortOrder,
+        priority: FeedPriority,
         query: String?,
     ): Query<String> {
         val (_, starred) = status.toStatusPair
@@ -54,6 +58,7 @@ class ByFeed(private val database: Database) {
             publishedSince = null,
             newestFirst = isNewestFirst(status, unreadSort),
             query = query,
+            priorities = priority.inclusivePriorities,
         )
     }
 
@@ -61,7 +66,8 @@ class ByFeed(private val database: Database) {
         feedIDs: List<String>,
         status: ArticleStatus,
         query: String?,
-        since: OffsetDateTime
+        since: OffsetDateTime,
+        priority: FeedPriority,
     ): Query<Long> {
         val (read, starred) = status.toStatusPair
 
@@ -71,6 +77,7 @@ class ByFeed(private val database: Database) {
             read = read,
             starred = starred,
             lastReadAt = mapLastRead(read, since),
+            priorities = priority.inclusivePriorities,
             publishedSince = null
         )
     }

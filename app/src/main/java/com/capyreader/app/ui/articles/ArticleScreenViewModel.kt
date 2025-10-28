@@ -33,7 +33,6 @@ import com.jocmp.capy.buildArticlePager
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
-import com.jocmp.capy.countAll
 import com.jocmp.capy.countToday
 import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -155,12 +154,12 @@ class ArticleScreenViewModel(
 
     private val _nextFilter = MutableStateFlow<NextFilter?>(null)
 
-    val statusCount: Flow<Long> = _counts.map {
-        it.values.sum()
+    val statusCount: Flow<Long> = filter.flatMapLatest { latestFilter ->
+        account.countAllByStatus(countableStatus(latestFilter))
     }
 
     val todayCount: Flow<Long> = _counts.combine(filter) { _, filter ->
-        account.countToday(if (filter.status == STARRED) STARRED else UNREAD)
+        account.countToday(countableStatus(filter))
     }
 
     val showTodayFilter: Flow<Boolean> = appPreferences.showTodayFilter.stateIn(viewModelScope)
@@ -689,4 +688,12 @@ fun Context.showFullContentErrorToast(throwable: Throwable) {
     }
 
     toast(message)
+}
+
+fun countableStatus(filter: ArticleFilter): ArticleStatus {
+    return if (filter.status == STARRED) {
+        STARRED
+    } else {
+        UNREAD
+    }
 }
