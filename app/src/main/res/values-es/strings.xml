@@ -279,4 +279,8 @@
     <string name="settings_full_content_parser">Analizador del contenido completo</string>
     <string name="open_articles_in_browser">Abrir artículos en el navegador</string>
     <string name="selected">Seleccionado</string>
+    <string name="auth_fields_freshrss_api_password">Contraseña de API</string>
+    <string name="freshrss_visibility">Visibilidad</string>
+    <string name="freshrss_visibility_option_important">Importante</string>
+    <string name="freshrss_visibility_option_category">Categoría</string>
 </resources>
