@@ -22,7 +22,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
-import java.time.OffsetDateTime
 import java.time.ZonedDateTime
 
 internal class ArticleRecords internal constructor(
@@ -232,8 +231,9 @@ internal class ArticleRecords internal constructor(
     fun countUnread(
         filter: ArticleFilter,
         query: String?,
-        since: OffsetDateTime,
     ): Flow<Long> {
+        val since = null
+
         val count = when (filter) {
             is ArticleFilter.Articles -> byStatus.count(
                 status = filter.articleStatus,

@@ -2,6 +2,7 @@ package com.jocmp.capy
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
+import com.jocmp.capy.ArticleStatus.UNREAD
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.accounts.FaviconFetcher
@@ -39,7 +40,6 @@ import kotlinx.coroutines.flow.map
 import okhttp3.OkHttpClient
 import java.io.InputStream
 import java.net.URI
-import java.time.OffsetDateTime
 import java.time.ZonedDateTime
 
 data class Account(
@@ -249,12 +249,10 @@ data class Account(
     fun countUnread(
         filter: ArticleFilter,
         query: String?,
-        since: OffsetDateTime,
     ): Flow<Long> {
         return articleRecords.countUnread(
-            filter = filter,
+            filter = filter.withStatus(UNREAD),
             query = query,
-            since = since,
         )
     }
 

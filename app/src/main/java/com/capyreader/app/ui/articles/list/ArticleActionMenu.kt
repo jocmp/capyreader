@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.common.shareLink
+import com.capyreader.app.ui.LocalUnreadCount
 import com.capyreader.app.ui.articles.LocalArticleActions
 import com.capyreader.app.ui.components.ArticleAction
 import com.capyreader.app.ui.components.buildCopyToClipboard
@@ -35,6 +36,8 @@ fun ArticleActionMenu(
     onMarkAllRead: (range: MarkRead) -> Unit = {},
     onDismissRequest: () -> Unit = {},
 ) {
+    val unreadCount = LocalUnreadCount.current
+
     DropdownMenu(
         expanded = expanded,
         onDismissRequest = { onDismissRequest() },
@@ -42,26 +45,28 @@ fun ArticleActionMenu(
     ) {
         ToggleStarMenuItem(onDismissRequest, article)
         ToggleReadMenuItem(onDismissRequest, article)
-        DropdownMenuItem(
-            leadingIcon = {
-                Icon(
-                    painterResource(R.drawable.icon_rounded_arrow_upward),
-                    contentDescription = null
-                )
-            },
-            text = { Text(stringResource(R.string.article_actions_mark_after_as_read)) },
-            onClick = { onMarkAllRead(After(article.id)) },
-        )
-        DropdownMenuItem(
-            leadingIcon = {
-                Icon(
-                    painterResource(R.drawable.icon_rounded_arrow_downward),
-                    contentDescription = null
-                )
-            },
-            text = { Text(stringResource(R.string.article_actions_mark_below_as_read)) },
-            onClick = { onMarkAllRead(Before(article.id)) },
-        )
+        if (unreadCount > 0) {
+            DropdownMenuItem(
+                leadingIcon = {
+                    Icon(
+                        painterResource(R.drawable.icon_rounded_arrow_upward),
+                        contentDescription = null
+                    )
+                },
+                text = { Text(stringResource(R.string.article_actions_mark_after_as_read)) },
+                onClick = { onMarkAllRead(After(article.id)) },
+            )
+            DropdownMenuItem(
+                leadingIcon = {
+                    Icon(
+                        painterResource(R.drawable.icon_rounded_arrow_downward),
+                        contentDescription = null
+                    )
+                },
+                text = { Text(stringResource(R.string.article_actions_mark_below_as_read)) },
+                onClick = { onMarkAllRead(Before(article.id)) },
+            )
+        }
         CopyLinkMenuItem(onDismissRequest, article)
         ShareLinkMenuItem(onDismissRequest, article)
     }

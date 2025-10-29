@@ -165,10 +165,11 @@ class ArticleScreenViewModel(
     val unreadCount: Flow<Long> = combine(
         filter,
         _searchQuery,
-        articlesSince,
-    ) { filter, query, since ->
-        account.countUnread(filter = filter, query = query, since = since)
-    }.flatMapLatest { it }
+    ) { filter, query ->
+        account.countUnread(filter = filter, query = query)
+    }.flatMapLatest {
+        it
+    }
 
     val showTodayFilter: Flow<Boolean> = appPreferences.showTodayFilter.stateIn(viewModelScope)
 

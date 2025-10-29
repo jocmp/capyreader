@@ -503,12 +503,10 @@ class ArticleRecordsTest {
         }
 
         val filter = ArticleFilter.Articles(ArticleStatus.UNREAD)
-        val since = OffsetDateTime.now().minusDays(1)
 
         val count = articleRecords.countUnread(
             filter = filter,
-            query = null,
-            since = since
+            query = null
         ).firstOrNull()
 
         assertEquals(expected = 3, actual = count)
@@ -534,12 +532,10 @@ class ArticleRecordsTest {
             folderTitle = null,
             feedStatus = ArticleStatus.UNREAD
         )
-        val since = OffsetDateTime.now().minusDays(1)
 
         val count = articleRecords.countUnread(
             filter = filter,
-            query = null,
-            since = since
+            query = null
         ).firstOrNull()
 
         assertEquals(expected = 3, actual = count)
@@ -561,12 +557,10 @@ class ArticleRecordsTest {
         }
 
         val filter = ArticleFilter.Articles(ArticleStatus.UNREAD)
-        val since = OffsetDateTime.now().minusDays(1)
 
         val count = articleRecords.countUnread(
             filter = filter,
-            query = "feature",
-            since = since
+            query = "feature"
         ).firstOrNull()
 
         assertEquals(expected = 2, actual = count)
