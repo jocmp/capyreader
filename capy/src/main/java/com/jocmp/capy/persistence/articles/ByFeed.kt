@@ -66,7 +66,7 @@ class ByFeed(private val database: Database) {
         feedIDs: List<String>,
         status: ArticleStatus,
         query: String?,
-        since: OffsetDateTime,
+        since: OffsetDateTime?,
         priority: FeedPriority,
     ): Query<Long> {
         val (read, starred) = status.toStatusPair

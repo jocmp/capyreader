@@ -2,6 +2,7 @@ package com.jocmp.capy
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
+import com.jocmp.capy.ArticleStatus.UNREAD
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.accounts.FaviconFetcher
@@ -241,6 +242,16 @@ data class Account(
             filter = filter,
             range = range,
             unreadSort = unreadSort,
+            query = query,
+        )
+    }
+
+    fun countUnread(
+        filter: ArticleFilter,
+        query: String?,
+    ): Flow<Long> {
+        return articleRecords.countUnread(
+            filter = filter.withStatus(UNREAD),
             query = query,
         )
     }

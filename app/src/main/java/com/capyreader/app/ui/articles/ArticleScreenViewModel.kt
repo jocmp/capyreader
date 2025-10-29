@@ -162,6 +162,15 @@ class ArticleScreenViewModel(
         account.countToday(countableStatus(filter))
     }
 
+    val unreadCount: Flow<Long> = combine(
+        filter,
+        _searchQuery,
+    ) { filter, query ->
+        account.countUnread(filter = filter, query = query)
+    }.flatMapLatest {
+        it
+    }
+
     val showTodayFilter: Flow<Boolean> = appPreferences.showTodayFilter.stateIn(viewModelScope)
 
     val showUnauthorizedMessage: Boolean

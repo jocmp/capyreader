@@ -62,7 +62,7 @@ class BySavedSearch(private val database: Database) {
         savedSearchID: String,
         status: ArticleStatus,
         query: String?,
-        since: OffsetDateTime
+        since: OffsetDateTime?
     ): Query<Long> {
         val (read, starred) = status.toStatusPair
 
