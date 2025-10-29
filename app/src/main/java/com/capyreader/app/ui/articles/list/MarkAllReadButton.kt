@@ -1,5 +1,8 @@
 package com.capyreader.app.ui.articles.list
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
@@ -13,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import com.capyreader.app.R
+import com.capyreader.app.ui.LocalUnreadCount
 import com.capyreader.app.ui.articles.MarkReadPosition
 
 @Composable
@@ -20,6 +24,7 @@ fun MarkAllReadButton(
     onMarkAllRead: () -> Unit,
     position: MarkReadPosition = MarkReadPosition.TOOLBAR,
 ) {
+    val unreadCount = LocalUnreadCount.current
     val confirmationEnabled by rememberMarkAllReadState()
 
     val (isDialogOpen, setDialogOpen) = remember {
@@ -39,20 +44,27 @@ fun MarkAllReadButton(
     }
 
     if (position == MarkReadPosition.FLOATING_ACTION_BUTTON) {
-        FloatingActionButton(
-            containerColor = MaterialTheme.colorScheme.primary,
-            shape = CircleShape,
-            onClick = {
-                onClick()
-            }
+        AnimatedVisibility(
+            visible = unreadCount > 0,
+            enter = slideInVertically { it * 2 },
+            exit = slideOutVertically { it * 2 }
         ) {
-            Icon(
-                imageVector = Icons.Filled.CheckCircle,
-                contentDescription = stringResource(R.string.action_mark_all_read)
-            )
+            FloatingActionButton(
+                containerColor = MaterialTheme.colorScheme.primary,
+                shape = CircleShape,
+                onClick = {
+                    onClick()
+                }
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.CheckCircle,
+                    contentDescription = stringResource(R.string.action_mark_all_read)
+                )
+            }
         }
     } else {
         IconButton(
+            enabled = unreadCount > 0,
             onClick = {
                 onClick()
             }

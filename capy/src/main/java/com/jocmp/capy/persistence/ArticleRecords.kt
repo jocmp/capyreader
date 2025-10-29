@@ -2,6 +2,7 @@ package com.jocmp.capy.persistence
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
+import app.cash.sqldelight.coroutines.mapToOneOrDefault
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleNotification
@@ -225,6 +226,52 @@ internal class ArticleRecords internal constructor(
                     feedID to it.COUNT
                 }
             }
+    }
+
+    fun countUnread(
+        filter: ArticleFilter,
+        query: String?,
+    ): Flow<Long> {
+        val since = null
+
+        val count = when (filter) {
+            is ArticleFilter.Articles -> byStatus.count(
+                status = filter.articleStatus,
+                query = query,
+                since = null
+            )
+
+            is ArticleFilter.Feeds -> byFeed.count(
+                feedIDs = listOf(filter.feedID),
+                status = filter.feedStatus,
+                query = query,
+                since = since,
+                priority = FeedPriority.FEED,
+            )
+
+            is ArticleFilter.Folders -> byFeed.count(
+                feedIDs = folderFeedIDs(filter),
+                status = filter.status,
+                query = query,
+                since = since,
+                priority = FeedPriority.CATEGORY,
+            )
+
+            is ArticleFilter.SavedSearches -> bySavedSearch.count(
+                savedSearchID = filter.savedSearchID,
+                status = filter.status,
+                query = query,
+                since = since,
+            )
+
+            is ArticleFilter.Today -> byToday.count(
+                status = filter.status,
+                query = query,
+                since = null
+            )
+        }
+
+        return count.asFlow().mapToOneOrDefault(0L, Dispatchers.IO)
     }
 
     fun countToday(status: ArticleStatus): Long {

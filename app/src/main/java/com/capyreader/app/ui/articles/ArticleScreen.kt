@@ -51,6 +51,7 @@ import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.LocalMarkAllReadButtonPosition
+import com.capyreader.app.ui.LocalUnreadCount
 import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
 import com.capyreader.app.ui.articles.feeds.AngleRefreshState
@@ -81,6 +82,7 @@ import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
+import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.drop
@@ -102,6 +104,7 @@ fun ArticleScreen(
     val savedSearches by viewModel.savedSearches.collectAsStateWithLifecycle(initialValue = emptyList())
     val statusCount by viewModel.statusCount.collectAsStateWithLifecycle(initialValue = 0)
     val todayCount by viewModel.todayCount.collectAsStateWithLifecycle(initialValue = 0)
+    val unreadCount by viewModel.unreadCount.collectAsStateWithLifecycle(initialValue = 0L)
     val showTodayFilter by viewModel.showTodayFilter.collectAsStateWithLifecycle(initialValue = true)
     val filter by viewModel.filter.collectAsStateWithLifecycle(appPreferences.filter.get())
     val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle("")
@@ -154,6 +157,10 @@ fun ArticleScreen(
         state = searchState,
     )
 
+    LaunchedEffect(unreadCount) {
+        CapyLog.debug("count", mapOf("value" to unreadCount))
+    }
+
     CompositionLocalProvider(
         LocalFullContent provides fullContent,
         LocalArticleActions provides articleActions,
@@ -161,7 +168,8 @@ fun ArticleScreen(
         LocalFeedActions provides feedActions,
         LocalConnectivity provides connectivity,
         LocalLinkOpener provides provideLinkOpener(context),
-        LocalMarkAllReadButtonPosition provides markAllReadButtonPosition
+        LocalMarkAllReadButtonPosition provides markAllReadButtonPosition,
+        LocalUnreadCount provides unreadCount,
     ) {
         val openNextFeedOnReadAll = afterReadAll == AfterReadAllBehavior.OPEN_NEXT_FEED
 
