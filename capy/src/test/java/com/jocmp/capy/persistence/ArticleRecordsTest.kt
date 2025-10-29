@@ -1,6 +1,7 @@
 package com.jocmp.capy.persistence
 
 import com.jocmp.capy.Article
+import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.FeedPriority
 import com.jocmp.capy.InMemoryDatabaseProvider
@@ -12,6 +13,7 @@ import com.jocmp.capy.fixtures.ArticleFixture
 import com.jocmp.capy.fixtures.FeedFixture
 import com.jocmp.capy.reload
 import com.jocmp.capy.repeated
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -485,6 +487,89 @@ class ArticleRecordsTest {
 
         val updatedCount = articleRecords.countActiveNotifications()
         assertEquals(actual = updatedCount, expected = 0)
+    }
+
+    @Test
+    fun countUnread_byArticleStatus() = runTest {
+        val articles = 5.repeated { i ->
+            articleFixture.create(
+                publishedAt = nowUTC().minusDays(i.toLong()).toEpochSecond()
+            )
+        }
+
+        val unreadArticles = articles.take(3)
+        unreadArticles.forEach { article ->
+            articleRecords.markUnread(article.id)
+        }
+
+        val filter = ArticleFilter.Articles(ArticleStatus.UNREAD)
+        val since = OffsetDateTime.now().minusDays(1)
+
+        val count = articleRecords.countUnread(
+            filter = filter,
+            query = null,
+            since = since
+        ).firstOrNull()
+
+        assertEquals(expected = 3, actual = count)
+    }
+
+    @Test
+    fun countUnread_byFeed() = runTest {
+        val feed1 = FeedFixture(database).create()
+        val feed2 = FeedFixture(database).create()
+
+        2.repeated {
+            articleFixture.create(feed = feed1, read = true)
+        }
+        3.repeated { // Unread articles
+            articleFixture.create(feed = feed1, read = false)
+        }
+        2.repeated {
+            articleFixture.create(feed = feed2, read = false)
+        }
+
+        val filter = ArticleFilter.Feeds(
+            feedID = feed1.id,
+            folderTitle = null,
+            feedStatus = ArticleStatus.UNREAD
+        )
+        val since = OffsetDateTime.now().minusDays(1)
+
+        val count = articleRecords.countUnread(
+            filter = filter,
+            query = null,
+            since = since
+        ).firstOrNull()
+
+        assertEquals(expected = 3, actual = count)
+    }
+
+    @Test
+    fun countUnread_withQuery() = runTest {
+        3.repeated { i ->
+            articleFixture.create(
+                title = "Regular article $i",
+                read = false
+            )
+        }
+        2.repeated { i ->
+            articleFixture.create(
+                title = "Special feature article $i",
+                read = false
+            )
+        }
+
+        val filter = ArticleFilter.Articles(ArticleStatus.UNREAD)
+        val since = OffsetDateTime.now().minusDays(1)
+
+        val count = articleRecords.countUnread(
+            filter = filter,
+            query = "feature",
+            since = since
+        ).firstOrNull()
+
+        assertEquals(expected = 2, actual = count)
     }
 }
 

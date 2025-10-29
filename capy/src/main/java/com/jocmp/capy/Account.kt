@@ -39,6 +39,7 @@ import kotlinx.coroutines.flow.map
 import okhttp3.OkHttpClient
 import java.io.InputStream
 import java.net.URI
+import java.time.OffsetDateTime
 import java.time.ZonedDateTime
 
 data class Account(
@@ -242,6 +243,18 @@ data class Account(
             range = range,
             unreadSort = unreadSort,
             query = query,
+        )
+    }
+
+    fun countUnread(
+        filter: ArticleFilter,
+        query: String?,
+        since: OffsetDateTime,
+    ): Flow<Long> {
+        return articleRecords.countUnread(
+            filter = filter,
+            query = query,
+            since = since,
         )
     }
 
