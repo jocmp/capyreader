@@ -1,0 +1,6 @@
+• Follow feed visibility for FreshRSS accounts
+  - Requires future FreshRSS version, available in FreshRSS Edge now
+• Disable "Mark All Read" when all articles have been read for a feed
+• Improve visuals when switching between feeds
+• Improve background color for Sunset light theme
+• Updated translations for Arabic, Bulgarian, Czech, Spanish, Estonian, French, Galician, Italian, Dutch, Swedish, Ukrainian, Chinese (Simplified) thanks to volunteers!
