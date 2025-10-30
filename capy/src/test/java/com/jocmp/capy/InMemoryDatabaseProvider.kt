@@ -6,6 +6,10 @@ import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.capy.persistence.FeedRecords
 
 object InMemoryDatabaseProvider : DatabaseProvider {
+    fun build(): Database {
+        return build("777")
+    }
+
     override fun build(accountID: String): Database {
         val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
         Database.Schema.create(driver)
