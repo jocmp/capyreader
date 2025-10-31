@@ -242,12 +242,15 @@ ul:has(img) {
 
 #article-body-content {
   line-height: var(--article-line-height);
-  padding-bottom: 6rem;
   max-width: 40rem;
 
   img {
     background-color: var(--color-surface-container-highest);
   }
+}
+
+.article-footer {
+  height: 6rem;
 }
 
 @each $family, $value in $font-families {
