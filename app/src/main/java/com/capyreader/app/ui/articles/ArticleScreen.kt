@@ -15,6 +15,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
+import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -184,7 +185,7 @@ fun ArticleScreen(
             mutableStateOf(false)
         }
         val coroutineScope = rememberCoroutineScope()
-        val scaffoldNavigator = rememberArticleScaffoldNavigator()
+        val scaffoldNavigator = rememberListDetailPaneScaffoldNavigator()
         val showMultipleColumns = scaffoldNavigator.scaffoldDirective.maxHorizontalPartitions > 1
         var isPullToRefreshing by remember { mutableStateOf(false) }
 
@@ -671,10 +672,10 @@ fun ArticleScreen(
             }
         )
 
-        LayoutNavigationHandler(
-            enabled = article == null
-        ) {
-            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
+        LaunchedEffect(Unit) {
+            if (article == null && scaffoldNavigator.currentDestination?.pane != ListDetailPaneScaffoldRole.List) {
+                scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
+            }
         }
     }
 }

@@ -71,10 +71,6 @@ class AppPreferences(context: Context) {
     val enableStickyFullContent: Preference<Boolean>
         get() = preferenceStore.getBoolean("enable_sticky_full_content", false)
 
-
-    val layout: Preference<LayoutPreference>
-        get() = preferenceStore.getEnum("layout_preference", LayoutPreference.RESPONSIVE)
-
     fun pinFeedGroup(type: FeedGroup): Preference<Boolean> {
         return preferenceStore.getBoolean("feed_group_${type.toString().lowercase()}", true)
     }

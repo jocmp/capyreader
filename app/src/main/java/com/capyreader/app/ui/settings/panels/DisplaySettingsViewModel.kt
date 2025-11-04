@@ -6,10 +6,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.preferences.AppPreferences
-import com.capyreader.app.preferences.LayoutPreference
+import com.capyreader.app.preferences.AppTheme
 import com.capyreader.app.preferences.ReaderImageVisibility
 import com.capyreader.app.preferences.ThemeMode
-import com.capyreader.app.preferences.AppTheme
 import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.capyreader.app.ui.articles.MarkReadPosition
 import com.jocmp.capy.Account
@@ -63,9 +62,6 @@ class DisplaySettingsViewModel(
     var imageVisibility by mutableStateOf(appPreferences.readerOptions.imageVisibility.get())
         private set
 
-    var layout by mutableStateOf(appPreferences.layout.get())
-        private set
-
     val improveTalkback = appPreferences.readerOptions.improveTalkback
 
     val markReadButtonPosition = appPreferences.articleListOptions.markReadButtonPosition
@@ -115,12 +111,6 @@ class DisplaySettingsViewModel(
         appPreferences.readerOptions.imageVisibility.set(option)
 
         this.imageVisibility = option
-    }
-
-    fun updateLayoutPreference(layout: LayoutPreference) {
-        appPreferences.layout.set(layout)
-
-        this.layout = layout
     }
 
     fun updateMarkReadButtonPosition(position: MarkReadPosition) {

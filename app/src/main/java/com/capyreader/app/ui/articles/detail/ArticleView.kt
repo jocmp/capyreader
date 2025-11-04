@@ -6,7 +6,6 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,10 +15,11 @@ import androidx.compose.material.icons.automirrored.rounded.Article
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults.exitAlwaysScrollBehavior
 import androidx.compose.material3.BottomAppBarScrollBehavior
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.FlexibleBottomAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
@@ -38,7 +38,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.paging.compose.LazyPagingItems
 import com.capyreader.app.common.Media
@@ -56,7 +55,7 @@ import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.jocmp.capy.Article
 import org.koin.compose.koinInject
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ArticleView(
     article: Article,
@@ -142,7 +141,7 @@ fun ArticleView(
             )
         },
         bottomBar = {
-            BottomAppBar(
+            FlexibleBottomAppBar(
                 scrollBehavior = bottomScrollBehavior,
             ) {
                 Row(
@@ -160,7 +159,6 @@ fun ArticleView(
         },
         reader = {
             ArticlePullRefresh(
-                topToolbarPreference.show && !topToolbarPreference.pinned,
                 onSwipe = onSwipe,
                 hasPreviousArticle = hasPrevious,
                 hasNextArticle = hasNext
@@ -250,7 +248,6 @@ private fun ArticleViewScaffold(
 
 @Composable
 fun ArticlePullRefresh(
-    includePadding: Boolean,
     hasNextArticle: Boolean,
     hasPreviousArticle: Boolean,
     onSwipe: (swipe: ArticleVerticalSwipe) -> Unit,
@@ -276,13 +273,6 @@ fun ArticlePullRefresh(
             topSwipe,
             relatedArticleIcon = Icons.Rounded.KeyboardArrowUp
         ),
-        indicatorPadding = PaddingValues(
-            top = if (includePadding) {
-                TopBarOffset
-            } else {
-                0.dp
-            }
-        ),
         onTriggerThreshold = { triggerThreshold() }
     ) {
         SwipeRefresh(
@@ -293,13 +283,6 @@ fun ArticlePullRefresh(
                 relatedArticleIcon = Icons.Rounded.KeyboardArrowDown
             ),
             onTriggerThreshold = { triggerThreshold() },
-            indicatorPadding = PaddingValues(
-                bottom = if (includePadding) {
-                    BottomBarOffset
-                } else {
-                    0.dp
-                }
-            ),
             indicatorAlignment = Alignment.BottomCenter,
         ) {
             content()
@@ -317,10 +300,6 @@ fun swipeIcon(
         else -> relatedArticleIcon
     }
 }
-
-private val TopBarOffset = 56.dp
-
-private val BottomBarOffset = 44.dp
 
 @Composable
 fun rememberBottomBarPreference(appPreferences: AppPreferences = koinInject()): State<Boolean> {
