@@ -1,1 +1,2 @@
 • Update full content parsers for gonintendo.com and orf.at
+• Reduce padding on article action bottom bar
