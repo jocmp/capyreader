@@ -11,14 +11,11 @@ import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
 import androidx.compose.material3.TopAppBarScrollBehavior
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -31,12 +28,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
-import com.capyreader.app.preferences.LayoutPreference
 import com.capyreader.app.ui.articles.FilterActionMenu
 import com.capyreader.app.ui.articles.FilterAppBarTitle
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.SearchTextField
-import com.capyreader.app.ui.rememberLayoutPreference
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
@@ -58,7 +53,6 @@ fun ArticleListTopBar(
     folders: List<Folder>,
 ) {
     val enableSearch = search.isActive
-    val layout = rememberLayoutPreference()
 
     val closeSearch = {
         search.clear()
@@ -130,7 +124,7 @@ fun ArticleListTopBar(
                         contentDescription = stringResource(R.string.feed_list_top_bar_close_search)
                     )
                 }
-            } else if (layout != LayoutPreference.SINGLE) {
+            } else {
                 IconButton(
                     onClick = onNavigateToDrawer
                 ) {

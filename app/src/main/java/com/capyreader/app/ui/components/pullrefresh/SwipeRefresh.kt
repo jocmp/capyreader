@@ -247,7 +247,7 @@ fun SwipeRefresh(
             clockwise = (indicatorAlignment as BiasAlignment).verticalBias != 1f
         )
     },
-    clipIndicatorToPadding: Boolean = true,
+    clipIndicatorToPadding: Boolean = false,
     content: @Composable () -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
