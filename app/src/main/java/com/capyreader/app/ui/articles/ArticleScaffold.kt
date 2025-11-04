@@ -22,6 +22,7 @@ import androidx.compose.material3.adaptive.layout.AnimatedPaneScope
 import androidx.compose.material3.adaptive.layout.ExtendedPaneScaffoldPaneScope
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffold
 import androidx.compose.material3.adaptive.layout.PaneScaffoldDirective
+import androidx.compose.material3.adaptive.layout.PaneScaffoldRole
 import androidx.compose.material3.adaptive.layout.PaneScaffoldValue
 import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
 import androidx.compose.material3.adaptive.layout.calculatePaneScaffoldDirective
@@ -110,7 +111,9 @@ fun ArticleScaffold(
 
 @ExperimentalMaterial3AdaptiveApi
 @Composable
-private fun <S, T : PaneScaffoldValue<S>> ExtendedPaneScaffoldPaneScope<S, T>.ArticlePane(content: (@Composable AnimatedPaneScope.() -> Unit)) {
+private fun <
+        Role : PaneScaffoldRole, ScaffoldValue : PaneScaffoldValue<Role>,
+        > ExtendedPaneScaffoldPaneScope<Role, ScaffoldValue>.ArticlePane(content: (@Composable AnimatedPaneScope.() -> Unit)) {
     AnimatedPane(
         enterTransition = fadeIn(),
         exitTransition = fadeOut(),
