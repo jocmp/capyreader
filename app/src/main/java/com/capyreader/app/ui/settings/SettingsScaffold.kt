@@ -1,13 +1,11 @@
 package com.capyreader.app.ui.settings
 
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
-import androidx.compose.material3.adaptive.layout.AnimatedPane
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffold
 import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.capyreader.app.ui.components.CapyAnimatedPane
 import com.capyreader.app.ui.components.safeEdgePadding
 import com.capyreader.app.ui.settings.panels.SettingsPanel
 
@@ -23,18 +21,12 @@ fun SettingsScaffold(
         directive = scaffoldNavigator.scaffoldDirective,
         value = scaffoldNavigator.scaffoldValue,
         listPane = {
-            AnimatedPane(
-                enterTransition = fadeIn(),
-                exitTransition = fadeOut(),
-            ) {
+            CapyAnimatedPane {
                 listPane()
             }
         },
         detailPane = {
-            AnimatedPane(
-                enterTransition = fadeIn(),
-                exitTransition = fadeOut(),
-            ) {
+            CapyAnimatedPane {
                 detailPane()
             }
         }

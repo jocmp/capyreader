@@ -15,18 +15,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
-import androidx.compose.material3.adaptive.layout.AnimatedPane
-import androidx.compose.material3.adaptive.layout.AnimatedPaneScope
-import androidx.compose.material3.adaptive.layout.ExtendedPaneScaffoldPaneScope
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffold
-import androidx.compose.material3.adaptive.layout.PaneMotion
 import androidx.compose.material3.adaptive.layout.PaneScaffoldDirective
-import androidx.compose.material3.adaptive.layout.PaneScaffoldMotionDataProvider
-import androidx.compose.material3.adaptive.layout.PaneScaffoldRole
-import androidx.compose.material3.adaptive.layout.PaneScaffoldValue
 import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
-import androidx.compose.material3.adaptive.layout.calculateDefaultEnterTransition
-import androidx.compose.material3.adaptive.layout.calculateDefaultExitTransition
 import androidx.compose.material3.adaptive.layout.calculatePaneScaffoldDirective
 import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
@@ -37,10 +28,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.preferences.LayoutPreference
+import com.capyreader.app.ui.components.CapyAnimatedPane
 import com.capyreader.app.ui.isAtMostMedium
 import com.capyreader.app.ui.rememberLayoutPreference
-import com.capyreader.app.ui.shared.materialSharedAxisXIn
-import com.capyreader.app.ui.shared.materialSharedAxisXOut
 import com.capyreader.app.ui.theme.CapyTheme
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
@@ -62,7 +52,7 @@ fun ArticleScaffold(
             directive = scaffoldNavigator.scaffoldDirective,
             value = scaffoldNavigator.scaffoldValue,
             listPane = {
-                ArticlePane {
+                CapyAnimatedPane {
                     Row {
                         Column(
                             Modifier
@@ -80,7 +70,7 @@ fun ArticleScaffold(
                 }
             },
             detailPane = {
-                ArticlePane {
+                CapyAnimatedPane {
                     detailPane()
                 }
             }
@@ -99,12 +89,12 @@ fun ArticleScaffold(
                 directive = scaffoldNavigator.scaffoldDirective,
                 value = scaffoldNavigator.scaffoldValue,
                 listPane = {
-                    ArticlePane {
+                    CapyAnimatedPane {
                         listPane()
                     }
                 },
                 detailPane = {
-                    ArticlePane {
+                    CapyAnimatedPane {
                         detailPane()
                     }
                 }
@@ -112,49 +102,6 @@ fun ArticleScaffold(
         }
     }
 }
-
-@ExperimentalMaterial3AdaptiveApi
-@Composable
-private fun <
-        Role : PaneScaffoldRole, ScaffoldValue : PaneScaffoldValue<Role>,
-        > ExtendedPaneScaffoldPaneScope<Role, ScaffoldValue>.ArticlePane(content: (@Composable AnimatedPaneScope.() -> Unit)) {
-    AnimatedPane(
-        enterTransition = motionDataProvider.calculateEnterTransition(paneRole),
-        exitTransition = motionDataProvider.calculateExitTransition(paneRole),
-        content = content,
-    )
-}
-
-private const val INITIAL_OFFSET_FACTOR = 0.10f
-
-@ExperimentalMaterial3AdaptiveApi
-internal fun <Role : PaneScaffoldRole> PaneScaffoldMotionDataProvider<Role>.calculateEnterTransition(
-    role: Role
-) =
-    when (this[role].motion) {
-        PaneMotion.EnterFromRight ->
-            materialSharedAxisXIn(initialOffsetX = { (it * INITIAL_OFFSET_FACTOR).toInt() })
-
-        PaneMotion.EnterFromLeft ->
-            materialSharedAxisXIn(initialOffsetX = { -(it * INITIAL_OFFSET_FACTOR).toInt() })
-
-        else -> calculateDefaultEnterTransition(role)
-    }
-
-@ExperimentalMaterial3AdaptiveApi
-internal fun <Role : PaneScaffoldRole> PaneScaffoldMotionDataProvider<Role>.calculateExitTransition(
-    role: Role
-) =
-    when (this[role].motion) {
-        PaneMotion.ExitToLeft ->
-            materialSharedAxisXOut(targetOffsetX = { -(it * INITIAL_OFFSET_FACTOR).toInt() })
-
-        PaneMotion.ExitToRight ->
-            materialSharedAxisXOut(targetOffsetX = { (it * INITIAL_OFFSET_FACTOR).toInt() })
-
-        else -> calculateDefaultExitTransition(role)
-    }
-
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
