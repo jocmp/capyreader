@@ -107,49 +107,6 @@ fun DisplaySettingsPanelView(
         modifier = Modifier.verticalScroll(rememberScrollState())
     ) {
         FormSection(
-            title = stringResource(R.string.theme_menu_label)
-        ) {
-            Column {
-                val options = ThemeMode.entries
-                MultiChoiceSegmentedButtonRow(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp),
-                ) {
-                    options.onEachIndexed { index, mode ->
-                        SegmentedButton(
-                            checked = themeMode == mode,
-                            onCheckedChange = { onUpdateThemeMode(mode) },
-                            shape = SegmentedButtonDefaults.itemShape(
-                                index,
-                                options.size,
-                            ),
-                        ) {
-                            Text(stringResource(mode.translationKey))
-                        }
-                    }
-                }
-
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                ThemeCarousel(
-                    currentTheme = appTheme,
-                    pureBlackDarkMode = pureBlackDarkMode,
-                    themeMode = themeMode,
-                    onThemeSelected = onUpdateAppTheme,
-                )
-
-                RowItem {
-                    TextSwitch(
-                        onCheckedChange = updatePureBlackDarkMode,
-                        checked = pureBlackDarkMode,
-                        title = stringResource(R.string.settings_pure_black_dark_mode)
-                    )
-                }
-            }
-        }
-        FormSection(
             title = stringResource(R.string.settings_reader_title)
         ) {
             PreferenceSelect(
@@ -185,6 +142,47 @@ fun DisplaySettingsPanelView(
             ArticleListSettings(
                 options = articleListOptions
             )
+        }
+
+        FormSection(
+            title = stringResource(R.string.theme_menu_label)
+        ) {
+            Column {
+                val options = ThemeMode.entries
+                MultiChoiceSegmentedButtonRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                ) {
+                    options.onEachIndexed { index, mode ->
+                        SegmentedButton(
+                            checked = themeMode == mode,
+                            onCheckedChange = { onUpdateThemeMode(mode) },
+                            shape = SegmentedButtonDefaults.itemShape(
+                                index,
+                                options.size,
+                            ),
+                        ) {
+                            Text(stringResource(mode.translationKey))
+                        }
+                    }
+                }
+
+                ThemeCarousel(
+                    currentTheme = appTheme,
+                    pureBlackDarkMode = pureBlackDarkMode,
+                    themeMode = themeMode,
+                    onThemeSelected = onUpdateAppTheme,
+                )
+
+                RowItem {
+                    TextSwitch(
+                        onCheckedChange = updatePureBlackDarkMode,
+                        checked = pureBlackDarkMode,
+                        title = stringResource(R.string.settings_pure_black_dark_mode)
+                    )
+                }
+            }
         }
 
         FormSection(title = stringResource(R.string.settings_display_miscellaneous_title)) {
