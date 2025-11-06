@@ -107,9 +107,13 @@ class WebViewState(
                 byline = article.byline(context = webView.context),
                 colors = colors
             )
-
+            // Pass in the baseUrl so that images with relative paths can be displayed properly.
+            val baseUrl = article.url.toString()?.let { url ->
+                val index = url.lastIndexOf('/') + 1
+                url.substring(0, index)
+            } ?: article.siteURL
             webView.loadDataWithBaseURL(
-                null,
+                baseUrl,
                 html,
                 null,
                 "UTF-8",
