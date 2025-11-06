@@ -64,6 +64,7 @@
     <string name="article_actions_mark_below_as_read">Mark below as read</string>
     <string name="article_actions_mark_after_as_read">Mark above as read</string>
     <string name="article_actions_copy_link">Copy link</string>
+    <string name="article_actions_go_to_feed">Go to feed</string>
     <string name="unauthorized_dialog_title">You\'re logged out</string>
     <string name="unauthorized_dialog_description">There was an issue connecting to your account. Please log in again.</string>
     <string name="unauthorized_dialog_dismiss_text">Later</string>

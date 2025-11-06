@@ -66,6 +66,7 @@ fun ArticleView(
     onScrollToArticle: (index: Int) -> Unit,
     onSelectArticle: (id: String) -> Unit,
     onSelectMedia: (media: Media) -> Unit,
+    onNavigateToFeed: (() -> Unit)? = null,
     appPreferences: AppPreferences = koinInject()
 ) {
     val enableHorizontalPager by appPreferences.readerOptions.enableHorizontaPagination.collectChangesWithDefault()
@@ -134,6 +135,7 @@ fun ArticleView(
                             onToggleExtractContent = onToggleFullContent,
                             onToggleRead = onToggleRead,
                             onToggleStar = onToggleStar,
+                            onNavigateToFeed = onNavigateToFeed,
                         )
                     }
                 }
@@ -149,6 +151,7 @@ fun ArticleView(
                     onToggleExtractContent = onToggleFullContent,
                     onToggleRead = onToggleRead,
                     onToggleStar = onToggleStar,
+                    onNavigateToFeed = onNavigateToFeed,
                 )
             }
         },

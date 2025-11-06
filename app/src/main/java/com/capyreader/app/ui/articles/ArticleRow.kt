@@ -82,6 +82,7 @@ fun ArticleRow(
     onMarkAllRead: (range: MarkRead) -> Unit = {},
     currentTime: LocalDateTime,
     options: ArticleRowOptions = ArticleRowOptions(),
+    onNavigateToFeed: (() -> Unit)? = null,
 ) {
     val imageURL = article.imageURL
     val colors = listItemColors(
@@ -198,7 +199,8 @@ fun ArticleRow(
                 },
                 onDismissRequest = {
                     setArticleMenuOpen(false)
-                }
+                },
+                onNavigateToFeed = onNavigateToFeed
             )
         }
     }

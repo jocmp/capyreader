@@ -3,6 +3,7 @@ package com.capyreader.app.ui.articles.detail
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.List
 import androidx.compose.material.icons.outlined.Circle
 import androidx.compose.material.icons.outlined.FormatSize
 import androidx.compose.material.icons.rounded.Circle
@@ -36,6 +37,7 @@ fun ArticleActions(
     onToggleExtractContent: () -> Unit,
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
+    onNavigateToFeed: (() -> Unit)? = null,
 ) {
     val context = LocalContext.current
     val (isStyleSheetOpen, setStyleSheetOpen) = rememberSaveable { mutableStateOf(false) }
@@ -103,6 +105,20 @@ fun ArticleActions(
                 Icons.Rounded.Share,
                 contentDescription = stringResource(R.string.article_share)
             )
+        }
+    }
+    if (onNavigateToFeed != null) {
+        ToolbarTooltip(
+            message = stringResource(R.string.article_actions_go_to_feed)
+        ) {
+            IconButton(
+                onClick = { onNavigateToFeed() },
+            ) {
+                Icon(
+                    Icons.AutoMirrored.Rounded.List,
+                    contentDescription = stringResource(R.string.article_actions_go_to_feed)
+                )
+            }
         }
     }
 

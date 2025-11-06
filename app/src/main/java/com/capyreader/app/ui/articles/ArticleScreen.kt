@@ -442,6 +442,10 @@ fun ArticleScreen(
             }
         }
 
+        val navigateToFeed = { feedID: String ->
+            openNextList { viewModel.selectFeed(feedID) }
+        }
+
         ArticleHandler(article) { articleID ->
             selectArticle(articleID)
         }
@@ -572,6 +576,7 @@ fun ArticleScreen(
                                         onSelect = { articleID ->
                                             selectArticle(articleID)
                                         },
+                                        onNavigateToFeed = navigateToFeed,
                                     )
                                 }
                             }
@@ -604,6 +609,9 @@ fun ArticleScreen(
                         },
                         onScrollToArticle = { index ->
                             scrollToArticle(index)
+                        },
+                        onNavigateToFeed = {
+                            navigateToFeed(article.feedID)
                         }
                     )
                 }

@@ -47,6 +47,7 @@ fun ArticleList(
     onMarkAllRead: (range: MarkRead) -> Unit = {},
     refreshingAll: Boolean,
     enableMarkReadOnScroll: Boolean = false,
+    onNavigateToFeed: ((feedID: String) -> Unit)? = null,
 ) {
     val articleOptions = rememberArticleOptions()
     val currentTime = rememberCurrentTime()
@@ -78,7 +79,12 @@ fun ArticleList(
                             },
                             onMarkAllRead = onMarkAllRead,
                             currentTime = currentTime,
-                            options = articleOptions
+                            options = articleOptions,
+                            onNavigateToFeed = if (onNavigateToFeed != null) {
+                                { onNavigateToFeed(item.feedID) }
+                            } else {
+                                null
+                            }
                         )
                     }
                 }
