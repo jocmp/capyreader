@@ -1,7 +1,5 @@
 package com.capyreader.app.ui.articles
 
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,13 +15,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
-import androidx.compose.material3.adaptive.layout.AnimatedPane
-import androidx.compose.material3.adaptive.layout.AnimatedPaneScope
-import androidx.compose.material3.adaptive.layout.ExtendedPaneScaffoldPaneScope
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffold
 import androidx.compose.material3.adaptive.layout.PaneScaffoldDirective
-import androidx.compose.material3.adaptive.layout.PaneScaffoldRole
-import androidx.compose.material3.adaptive.layout.PaneScaffoldValue
 import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
 import androidx.compose.material3.adaptive.layout.calculatePaneScaffoldDirective
 import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
@@ -35,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.preferences.LayoutPreference
+import com.capyreader.app.ui.components.CapyAnimatedPane
 import com.capyreader.app.ui.isAtMostMedium
 import com.capyreader.app.ui.rememberLayoutPreference
 import com.capyreader.app.ui.theme.CapyTheme
@@ -58,7 +52,7 @@ fun ArticleScaffold(
             directive = scaffoldNavigator.scaffoldDirective,
             value = scaffoldNavigator.scaffoldValue,
             listPane = {
-                ArticlePane {
+                CapyAnimatedPane {
                     Row {
                         Column(
                             Modifier
@@ -76,7 +70,7 @@ fun ArticleScaffold(
                 }
             },
             detailPane = {
-                ArticlePane {
+                CapyAnimatedPane {
                     detailPane()
                 }
             }
@@ -95,30 +89,18 @@ fun ArticleScaffold(
                 directive = scaffoldNavigator.scaffoldDirective,
                 value = scaffoldNavigator.scaffoldValue,
                 listPane = {
-                    ArticlePane {
+                    CapyAnimatedPane {
                         listPane()
                     }
                 },
                 detailPane = {
-                    ArticlePane {
+                    CapyAnimatedPane {
                         detailPane()
                     }
                 }
             )
         }
     }
-}
-
-@ExperimentalMaterial3AdaptiveApi
-@Composable
-private fun <
-        Role : PaneScaffoldRole, ScaffoldValue : PaneScaffoldValue<Role>,
-        > ExtendedPaneScaffoldPaneScope<Role, ScaffoldValue>.ArticlePane(content: (@Composable AnimatedPaneScope.() -> Unit)) {
-    AnimatedPane(
-        enterTransition = fadeIn(),
-        exitTransition = fadeOut(),
-        content = content,
-    )
 }
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
