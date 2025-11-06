@@ -72,8 +72,8 @@ class ArticleRenderer(
             } else {
                 article.siteURL?.let { document.setBaseUri(it) }
             }
-
-            HtmlPostProcessor.clean(contentHTML, hideImages = hideImages)
+            //do not clean, when website use images of relative path, this code will clean wrongly
+            //HtmlPostProcessor.clean(contentHTML, hideImages = hideImages)
 
             document.content?.append(
                 parseHtml(
@@ -89,8 +89,8 @@ class ArticleRenderer(
             }
 
             document.content?.append(article.content)
-
-            HtmlPostProcessor.clean(document, hideImages = hideImages)
+            //do not clean, when website use images of relative path, this code will clean wrongly
+            //HtmlPostProcessor.clean(document, hideImages = hideImages)
         }
 
         return document.html()
