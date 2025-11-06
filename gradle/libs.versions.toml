@@ -6,10 +6,9 @@ glance-material3 = "1.2.0-beta01"
 kotlin = "2.2.21"
 ksp = "2.2.20-2.0.4"
 androidx-lifecycle-runtime = "2.9.4"
-androidx-adaptive = "1.2.0"
 mockk = "1.14.6"
 mockwebserver3 = "5.3.0"
-navigation-compose = "2.9.5"
+navigation-compose = "2.9.6"
 okhttp = "5.3.0"
 retrofit = "3.0.0"
 paging-compose = "3.3.6"
@@ -18,11 +17,11 @@ zoomable = "0.18.0"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version = "1.11.0" }
-androidx-adaptive = { module = "androidx.compose.material3.adaptive:adaptive", version.ref = "androidx-adaptive" }
-androidx-adaptive-layout = { module = "androidx.compose.material3.adaptive:adaptive-layout", version.ref = "androidx-adaptive" }
-androidx-adaptive-navigation = { module = "androidx.compose.material3.adaptive:adaptive-navigation", version.ref = "androidx-adaptive" }
+androidx-adaptive = { module = "androidx.compose.material3.adaptive:adaptive" }
+androidx-adaptive-layout = { module = "androidx.compose.material3.adaptive:adaptive-layout" }
+androidx-adaptive-navigation = { module = "androidx.compose.material3.adaptive:adaptive-navigation" }
 androidx-browser = { module = "androidx.browser:browser", version = "1.9.0" }
-androidx-compose-bom = { module = "androidx.compose:compose-bom", version = "2025.10.01" }
+androidx-compose-bom = { module = "androidx.compose:compose-bom", version = "2025.11.00" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version = "1.17.0" }
 androidx-glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = "glance-material3" }
 androidx-glance-appwidget-preview = { module = "androidx.glance:glance-appwidget-preview", version.ref = "glance-material3" }
@@ -32,7 +31,7 @@ androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-ru
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle-runtime" }
 androidx-material = { module = "com.google.android.material:material", version = "1.13.0" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
-androidx-material3 = { module = "androidx.compose.material3:material3", version = "1.5.0-alpha07" }
+androidx-material3 = { module = "androidx.compose.material3:material3", version = "1.5.0-alpha08" }
 androidx-material3-window-size = { module = "androidx.compose.material3:material3-window-size-class-android", version = "1.4.0" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "paging-compose" }
