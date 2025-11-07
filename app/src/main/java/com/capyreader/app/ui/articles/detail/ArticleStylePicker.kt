@@ -29,6 +29,7 @@ import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.components.LabelStyle
+import com.capyreader.app.ui.components.ThemeCarousel
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.articles.FontSize
 import org.koin.compose.koinInject
@@ -37,7 +38,6 @@ import kotlin.math.roundToInt
 @Composable
 fun ArticleStylePicker(
     appPreferences: AppPreferences = koinInject(),
-    onChange: () -> Unit = {}
 ) {
     val textSizes = FontSize.scale
 
@@ -52,11 +52,14 @@ fun ArticleStylePicker(
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
+        ThemeCarousel(
+            appPreferences = appPreferences,
+        )
+
         ArticleFontMenu(
             updateFontFamily = { font ->
                 fontFamily = font
                 appPreferences.readerOptions.fontFamily.set(font)
-                onChange()
             },
             fontOption = fontFamily
         )
@@ -80,7 +83,6 @@ fun ArticleStylePicker(
                             FontSize.scale.getOrNull(it.roundToInt())?.let { size ->
                                 appPreferences.readerOptions.fontSize.set(size)
                             }
-                            onChange()
                         }
                     )
                     Box(

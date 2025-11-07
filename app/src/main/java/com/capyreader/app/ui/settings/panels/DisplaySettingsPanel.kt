@@ -32,7 +32,6 @@ import com.capyreader.app.ui.articles.MarkReadPosition
 import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.components.TextSwitch
-import com.capyreader.app.ui.components.ThemeCarousel
 import com.capyreader.app.ui.settings.PreferenceSelect
 import com.capyreader.app.ui.theme.CapyTheme
 import org.koin.androidx.compose.koinViewModel
@@ -49,8 +48,6 @@ fun DisplaySettingsPanel(
     DisplaySettingsPanelView(
         onUpdateThemeMode = viewModel::updateThemeMode,
         themeMode = viewModel.themeMode,
-        onUpdateAppTheme = viewModel::updateAppTheme,
-        appTheme = viewModel.appTheme,
         pureBlackDarkMode = viewModel.pureBlackDarkMode,
         updatePureBlackDarkMode = viewModel::updatePureBlackDarkMode,
         updatePinArticleBars = viewModel::updatePinArticleBars,
@@ -85,8 +82,6 @@ fun DisplaySettingsPanel(
 fun DisplaySettingsPanelView(
     onUpdateThemeMode: (themeMode: ThemeMode) -> Unit,
     themeMode: ThemeMode,
-    onUpdateAppTheme: (appTheme: AppTheme) -> Unit,
-    appTheme: AppTheme,
     pureBlackDarkMode: Boolean,
     updatePureBlackDarkMode: (enabled: Boolean) -> Unit,
     updatePinArticleBars: (enable: Boolean) -> Unit,
@@ -106,6 +101,40 @@ fun DisplaySettingsPanelView(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier.verticalScroll(rememberScrollState())
     ) {
+        FormSection(
+            title = stringResource(R.string.theme_menu_label)
+        ) {
+            Column {
+                val options = ThemeMode.entries
+                MultiChoiceSegmentedButtonRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                ) {
+                    options.onEachIndexed { index, mode ->
+                        SegmentedButton(
+                            checked = themeMode == mode,
+                            onCheckedChange = { onUpdateThemeMode(mode) },
+                            shape = SegmentedButtonDefaults.itemShape(
+                                index,
+                                options.size,
+                            ),
+                        ) {
+                            Text(stringResource(mode.translationKey))
+                        }
+                    }
+                }
+
+                RowItem {
+                    TextSwitch(
+                        onCheckedChange = updatePureBlackDarkMode,
+                        checked = pureBlackDarkMode,
+                        title = stringResource(R.string.settings_pure_black_dark_mode)
+                    )
+                }
+            }
+        }
+
         FormSection(
             title = stringResource(R.string.settings_reader_title)
         ) {
@@ -144,46 +173,7 @@ fun DisplaySettingsPanelView(
             )
         }
 
-        FormSection(
-            title = stringResource(R.string.theme_menu_label)
-        ) {
-            Column {
-                val options = ThemeMode.entries
-                MultiChoiceSegmentedButtonRow(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp),
-                ) {
-                    options.onEachIndexed { index, mode ->
-                        SegmentedButton(
-                            checked = themeMode == mode,
-                            onCheckedChange = { onUpdateThemeMode(mode) },
-                            shape = SegmentedButtonDefaults.itemShape(
-                                index,
-                                options.size,
-                            ),
-                        ) {
-                            Text(stringResource(mode.translationKey))
-                        }
-                    }
-                }
 
-                ThemeCarousel(
-                    currentTheme = appTheme,
-                    pureBlackDarkMode = pureBlackDarkMode,
-                    themeMode = themeMode,
-                    onThemeSelected = onUpdateAppTheme,
-                )
-
-                RowItem {
-                    TextSwitch(
-                        onCheckedChange = updatePureBlackDarkMode,
-                        checked = pureBlackDarkMode,
-                        title = stringResource(R.string.settings_pure_black_dark_mode)
-                    )
-                }
-            }
-        }
 
         FormSection(title = stringResource(R.string.settings_display_miscellaneous_title)) {
             PreferenceSelect(
@@ -220,8 +210,6 @@ private fun DisplaySettingsPanelViewPreview() {
             DisplaySettingsPanelView(
                 onUpdateThemeMode = {},
                 themeMode = ThemeMode.SYSTEM,
-                onUpdateAppTheme = {},
-                appTheme = AppTheme.DEFAULT,
                 pureBlackDarkMode = false,
                 updatePureBlackDarkMode = {},
                 layout = LayoutPreference.RESPONSIVE,

@@ -30,9 +30,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -41,18 +39,23 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import androidx.glance.LocalContext
 import com.capyreader.app.R
+import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.AppTheme
-import com.capyreader.app.preferences.ThemeMode
+import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.theme.CapyTheme
+import org.koin.compose.koinInject
 
 @Composable
 fun ThemeCarousel(
-    currentTheme: AppTheme,
-    pureBlackDarkMode: Boolean,
-    themeMode: ThemeMode,
-    onThemeSelected: (AppTheme) -> Unit,
+    appPreferences: AppPreferences = koinInject(),
+    onChange: () -> Unit = {}
 ) {
+    val currentTheme by appPreferences.appTheme.collectChangesWithCurrent()
+    val pureBlackDarkMode by appPreferences.pureBlackDarkMode.collectChangesWithCurrent()
+    val themeMode by appPreferences.themeMode.collectChangesWithCurrent()
+
     val appThemes = remember {
         AppTheme.entries
             .filterNot { it == AppTheme.MONET && Build.VERSION.SDK_INT < Build.VERSION_CODES.S }
@@ -79,7 +82,8 @@ fun ThemeCarousel(
                     AppThemePreviewItem(
                         selected = currentTheme == appTheme,
                         onClick = {
-                            onThemeSelected(appTheme)
+                            appPreferences.appTheme.set(appTheme)
+                            onChange()
                         },
                     )
                 }
@@ -248,16 +252,12 @@ fun AppThemePreviewItem(
 @PreviewLightDark
 @Composable
 private fun ThemeCarouselPreview() {
-    var appTheme by remember { mutableStateOf(AppTheme.DEFAULT) }
+    val context = LocalContext.current
+    val preferences = AppPreferences(context)
 
-    CapyTheme(appTheme = appTheme) {
+    CapyTheme {
         Surface {
-            ThemeCarousel(
-                currentTheme = appTheme,
-                themeMode = ThemeMode.DARK,
-                pureBlackDarkMode = false,
-                onThemeSelected = { appTheme = it },
-            )
+            ThemeCarousel(appPreferences = preferences)
         }
     }
 }
