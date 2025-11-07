@@ -111,7 +111,7 @@ fun ArticleActions(
         ModalBottomSheet(onDismissRequest = { setStyleSheetOpen(false) }) {
             Box(
                 modifier = Modifier
-                    .padding(horizontal = 32.dp)
+                    .padding(horizontal = 16.dp)
                     .padding(bottom = 16.dp)
             ) {
                 ArticleStylePicker()
