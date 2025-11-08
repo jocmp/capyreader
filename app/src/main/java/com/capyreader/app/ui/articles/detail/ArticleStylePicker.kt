@@ -29,6 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
+import com.capyreader.app.common.RowItem
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ThemeMode
 import com.capyreader.app.ui.collectChangesWithCurrent
@@ -66,7 +67,7 @@ fun ArticleStylePicker(
         ) {
             Column(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 val options = ThemeMode.entries
                 MultiChoiceSegmentedButtonRow(
@@ -88,7 +89,9 @@ fun ArticleStylePicker(
                 }
 
                 ThemeCarousel(appPreferences = appPreferences)
+            }
 
+            RowItem {
                 TextSwitch(
                     onCheckedChange = { appPreferences.pureBlackDarkMode.set(it) },
                     checked = pureBlackDarkMode,
@@ -97,9 +100,7 @@ fun ArticleStylePicker(
             }
         }
 
-        Column(
-            modifier = Modifier.padding(horizontal = 16.dp),
-        ) {
+        RowItem {
             ArticleFontMenu(
                 updateFontFamily = { font ->
                     fontFamily = font

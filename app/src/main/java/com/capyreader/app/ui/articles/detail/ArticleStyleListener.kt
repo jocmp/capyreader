@@ -1,7 +1,6 @@
 package com.capyreader.app.ui.articles.detail
 
 import android.webkit.WebView
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -20,7 +19,7 @@ fun ArticleStyleListener(webView: WebView?, appPreferences: AppPreferences = koi
     val themeMode by appPreferences.themeMode.collectChangesWithDefault()
     val pureBlackDarkMode by appPreferences.pureBlackDarkMode.collectChangesWithDefault()
 
-    val colorScheme = MaterialTheme.colorScheme
+    val colors = articleTemplateColors()
 
     LaunchedEffect(fontFamily) {
         if (webView != null) {
@@ -36,7 +35,7 @@ fun ArticleStyleListener(webView: WebView?, appPreferences: AppPreferences = koi
 
     LaunchedEffect(appTheme, themeMode, pureBlackDarkMode) {
         if (webView != null) {
-            updateThemeColors(webView, colorScheme)
+            updateThemeColors(webView, colors)
         }
     }
 }
@@ -70,28 +69,15 @@ private fun updateFontFamily(webView: WebView, fontOption: FontOption) {
     }
 }
 
-private fun updateThemeColors(webView: WebView, colorScheme: androidx.compose.material3.ColorScheme) {
-    val colors = mapOf(
-        "color-on-primary-container" to colorScheme.onPrimaryContainer.toHTMLColor(),
-        "color-on-surface" to colorScheme.onSurface.toHTMLColor(),
-        "color-on-surface-variant" to colorScheme.onSurfaceVariant.toHTMLColor(),
-        "color-primary" to colorScheme.primary.toHTMLColor(),
-        "color-primary-container" to colorScheme.primaryContainer.toHTMLColor(),
-        "color-surface" to colorScheme.surface.toHTMLColor(),
-        "color-secondary" to colorScheme.secondary.toHTMLColor(),
-        "color-surface-container-highest" to colorScheme.surfaceContainerHighest.toHTMLColor(),
-        "color-surface-variant" to colorScheme.surfaceVariant.toHTMLColor(),
-        "color-surface-container" to colorScheme.surfaceContainer.toHTMLColor()
-    )
-
-    val jsColorUpdates = colors.map { (key, value) ->
-        "document.documentElement.style.setProperty('--$key', '$value');"
+private fun updateThemeColors(webView: WebView, colors: Map<String, String>) {
+    val updatedColors = colors.map { (key, value) ->
+        "document.documentElement.style.setProperty('--${key.replace('_', '-')}', '$value');"
     }.joinToString("\n")
 
     webView.evaluateJavascript(
         """
         (function() {
-          $jsColorUpdates
+          $updatedColors
         })();
         """.trimIndent()
     ) {
