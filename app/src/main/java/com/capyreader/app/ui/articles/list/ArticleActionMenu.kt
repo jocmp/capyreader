@@ -33,6 +33,7 @@ import com.jocmp.capy.MarkRead.Before
 fun ArticleActionMenu(
     expanded: Boolean,
     article: Article,
+    index: Int,
     onMarkAllRead: (range: MarkRead) -> Unit = {},
     onDismissRequest: () -> Unit = {},
 ) {
@@ -46,16 +47,18 @@ fun ArticleActionMenu(
         ToggleStarMenuItem(onDismissRequest, article)
         ToggleReadMenuItem(onDismissRequest, article)
         if (unreadCount > 0) {
-            DropdownMenuItem(
-                leadingIcon = {
-                    Icon(
-                        painterResource(R.drawable.icon_rounded_arrow_upward),
-                        contentDescription = null
-                    )
-                },
-                text = { Text(stringResource(R.string.article_actions_mark_after_as_read)) },
-                onClick = { onMarkAllRead(After(article.id)) },
-            )
+            if (index > 0) {
+                DropdownMenuItem(
+                    leadingIcon = {
+                        Icon(
+                            painterResource(R.drawable.icon_rounded_arrow_upward),
+                            contentDescription = null
+                        )
+                    },
+                    text = { Text(stringResource(R.string.article_actions_mark_after_as_read)) },
+                    onClick = { onMarkAllRead(After(article.id)) },
+                )
+            }
             DropdownMenuItem(
                 leadingIcon = {
                     Icon(
@@ -157,6 +160,7 @@ private fun ToggleActionMenuItem(
 private fun ArticleActionMenuPreview(@PreviewParameter(ArticleSample::class) article: Article) {
     ArticleActionMenu(
         expanded = true,
+        index = 0,
         article = article
     )
 }

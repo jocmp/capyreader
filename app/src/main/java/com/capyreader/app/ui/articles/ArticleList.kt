@@ -53,7 +53,6 @@ fun ArticleList(
     val localDensity = LocalDensity.current
     var listHeight by remember { mutableStateOf(0.dp) }
 
-
     LazyScrollbar(state = listState) {
         LazyColumn(
             state = listState,
@@ -72,6 +71,7 @@ fun ArticleList(
                     } else {
                         ArticleRow(
                             article = item,
+                            index = index,
                             selected = selectedArticleKey == item.id,
                             onSelect = {
                                 onSelect(it)
