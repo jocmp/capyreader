@@ -4,6 +4,8 @@ import android.webkit.WebView
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.jocmp.capy.articles.FontOption
@@ -13,6 +15,11 @@ import org.koin.compose.koinInject
 fun ArticleStyleListener(webView: WebView?, appPreferences: AppPreferences = koinInject()) {
     val textSize by appPreferences.readerOptions.fontSize.collectChangesWithDefault()
     val fontFamily by appPreferences.readerOptions.fontFamily.collectChangesWithDefault()
+    val appTheme by appPreferences.appTheme.collectChangesWithDefault()
+    val themeMode by appPreferences.themeMode.collectChangesWithDefault()
+    val pureBlackDarkMode by appPreferences.pureBlackDarkMode.collectChangesWithDefault()
+
+    val colors = articleTemplateColors()
 
     LaunchedEffect(fontFamily) {
         if (webView != null) {
@@ -23,6 +30,12 @@ fun ArticleStyleListener(webView: WebView?, appPreferences: AppPreferences = koi
     LaunchedEffect(textSize) {
         if (webView != null) {
             updateFontSize(webView, textSize)
+        }
+    }
+
+    LaunchedEffect(appTheme, themeMode, pureBlackDarkMode) {
+        if (webView != null) {
+            updateThemeColors(webView, colors)
         }
     }
 }
@@ -54,4 +67,24 @@ private fun updateFontFamily(webView: WebView, fontOption: FontOption) {
         """.trimIndent()
     ) {
     }
+}
+
+private fun updateThemeColors(webView: WebView, colors: Map<String, String>) {
+    val updatedColors = colors.map { (key, value) ->
+        "document.documentElement.style.setProperty('--${key.replace('_', '-')}', '$value');"
+    }.joinToString("\n")
+
+    webView.evaluateJavascript(
+        """
+        (function() {
+          $updatedColors
+        })();
+        """.trimIndent()
+    ) {
+    }
+}
+
+private fun Color.toHTMLColor(): String {
+    val hex = Integer.toHexString(toArgb()).takeLast(6)
+    return "#${hex.uppercase()}"
 }
