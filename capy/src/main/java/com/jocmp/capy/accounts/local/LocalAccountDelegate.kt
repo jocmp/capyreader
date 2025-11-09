@@ -233,7 +233,7 @@ internal class LocalAccountDelegate(
                         id = parsedItem.id,
                         feed_id = feed.id,
                         title = parsedItem.title,
-                        author = item.author,
+                        author = parsedItem.author,
                         content_html = parsedItem.contentHTML,
                         url = parsedItem.url,
                         summary = item.summary,
@@ -263,6 +263,7 @@ internal class LocalAccountDelegate(
     private fun containsBlockedText(parsedItem: ParsedItem, blocklist: Set<String>): Boolean {
         return blocklist.any { keyword ->
             parsedItem.title.contains(keyword, ignoreCase = true) ||
+                    parsedItem.author.contains(keyword, ignoreCase = true) ||
                     parsedItem.summary.orEmpty().contains(keyword, ignoreCase = true) ||
                     parsedItem.contentHTML.orEmpty().contains(keyword, ignoreCase = true)
         }

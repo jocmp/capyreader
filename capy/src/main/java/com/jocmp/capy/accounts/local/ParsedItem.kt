@@ -51,6 +51,13 @@ internal class ParsedItem(private val item: RssItem, private val siteURL: String
             return cleaner.clean(Jsoup.parse(item.title.orEmpty())).text()
         }
 
+    val author: String
+        get() {
+            val cleaner = Cleaner(Safelist.none())
+
+            return cleaner.clean(Jsoup.parse(item.author.orEmpty())).text()
+        }
+
     val imageURL: String?
         get() = item.media?.thumbnailUrl ?: cleanedURL(item.image)?.toString()
 

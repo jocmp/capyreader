@@ -231,7 +231,7 @@
     <string name="settings_enable_refresh_call_to_action">Najpierw włącz cykliczne odświeżanie</string>
     <string name="settings_gestures_reader_tap_to_page_title">Dotknij, aby przewinąć (wyświetlacz E Ink)</string>
     <string name="image_preview_menu_option_medium">Średni</string>
-    <string name="blocked_keywords_supporting_text">Usuń artykuły, których tytuł lub treść pasują do słów kluczowych</string>
+    <string name="blocked_keywords_supporting_text">Usuń artykuły, których tytuł, autor lub treść pasują do słów kluczowych</string>
     <string name="blocked_keywords">Lista zablokowanych</string>
     <string name="blocked_keywords_remove_keyword">Usuń słowo kluczowe</string>
     <string name="blocked_keywords_add_keyword">Dodaj słowo kluczowe</string>
