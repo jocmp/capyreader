@@ -267,4 +267,11 @@
     <string name="theme_newsprint">新聞紙</string>
     <string name="theme_monochrome">單色</string>
     <string name="settings_pure_black_dark_mode">純黑暗模式</string>
+    <string name="filter_today">今天</string>
+    <string name="theme_mode_system">系統</string>
+    <string name="theme_default">預設</string>
+    <string name="settings_option_show_today_filter">今天</string>
+    <string name="selected">已選擇</string>
+    <string name="auth_fields_freshrss_api_password">API 密碼</string>
+    <string name="freshrss_visibility_option_important">重要</string>
 </resources>
