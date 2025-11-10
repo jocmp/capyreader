@@ -43,19 +43,6 @@ async function displayFullContent(article) {
  * @param {string} article.parserType
  */
 async function parseWithParser(article) {
-  if (article.parserType === "DEFUDDLE") {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(article.html, 'text/html');
-
-    const defuddle = new Defuddle(doc, {
-      url: article.url,
-      debug: true,
-      markdown: false,
-    })
-
-    return defuddle.parse();
-  }
-
   const result = await Mercury.parse(article.url, { html: article.html });
 
   return {
