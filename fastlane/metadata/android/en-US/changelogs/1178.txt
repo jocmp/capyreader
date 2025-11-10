@@ -4,3 +4,4 @@
 • Move theme selector to article page theme picker
 • Update animation on article select
 • Update translations for Chinese (Traditional) thanks to a volunteer!
+• Fix broken YouTube embeds
