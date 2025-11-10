@@ -27,6 +27,7 @@ import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
 import com.jocmp.capy.common.launchUI
+import com.jocmp.capy.common.windowOrigin
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import org.koin.compose.koinInject
@@ -109,7 +110,7 @@ class WebViewState(
             )
 
             webView.loadDataWithBaseURL(
-                null,
+                windowOrigin(article.url),
                 html,
                 null,
                 "UTF-8",
@@ -164,6 +165,7 @@ fun rememberWebViewState(
             settings.apply {
                 javaScriptEnabled = true
                 mediaPlaybackRequiresUserGesture = false
+                domStorageEnabled = true
             }
             isVerticalScrollBarEnabled = false
             isHorizontalScrollBarEnabled = false
