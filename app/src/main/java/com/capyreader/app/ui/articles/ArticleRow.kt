@@ -77,6 +77,7 @@ data class ArticleRowOptions(
 @Composable
 fun ArticleRow(
     article: Article,
+    index: Int,
     selected: Boolean,
     onSelect: (articleID: String) -> Unit,
     onMarkAllRead: (range: MarkRead) -> Unit = {},
@@ -192,6 +193,7 @@ fun ArticleRow(
             ArticleActionMenu(
                 expanded = isArticleMenuOpen,
                 article = article,
+                index = index,
                 onMarkAllRead = {
                     setArticleMenuOpen(false)
                     onMarkAllRead(it)
@@ -358,12 +360,14 @@ fun ArticleRowPreview_Selected_DarkMode() {
             Column {
                 ArticleRow(
                     article = article,
+                    index = 0,
                     selected = true,
                     onSelect = {},
                     currentTime = LocalDateTime.now(),
                 )
                 ArticleRow(
                     article = article.copy(read = false),
+                    index = 0,
                     selected = false,
                     onSelect = {},
                     currentTime = LocalDateTime.now(),
@@ -380,6 +384,7 @@ fun ArticleRowPreview_Selected(@PreviewParameter(ArticleSample::class) article: 
         CapyTheme {
             ArticleRow(
                 article = article,
+                index = 0,
                 selected = true,
                 onSelect = {},
                 currentTime = LocalDateTime.now(),
@@ -395,6 +400,7 @@ fun ArticleRowPreview_Large(@PreviewParameter(ArticleSample::class) article: Art
         CapyTheme {
             ArticleRow(
                 article = article.copy(imageURL = "http://example.com"),
+                index = 0,
                 selected = true,
                 onSelect = {},
                 currentTime = LocalDateTime.now(),
@@ -414,6 +420,7 @@ fun ArticleRowPreview_Medium(@PreviewParameter(ArticleSample::class) article: Ar
         CapyTheme {
             ArticleRow(
                 article = article.copy(imageURL = "http://example.com"),
+                index = 0,
                 selected = true,
                 onSelect = {},
                 currentTime = LocalDateTime.now(),
@@ -432,6 +439,7 @@ fun ArticleRowPreview_LargeText(@PreviewParameter(ArticleSample::class) article:
         CapyTheme {
             ArticleRow(
                 article = article.copy(imageURL = "http://example.com"),
+                index = 0,
                 selected = true,
                 onSelect = {},
                 currentTime = LocalDateTime.now(),
@@ -466,18 +474,21 @@ fun ArticleRowPreview_Unread() {
     Column {
         ArticleRow(
             article = article,
+            index = 0,
             selected = false,
             onSelect = {},
             currentTime = LocalDateTime.now(),
         )
         ArticleRow(
             article = article.copy(imageURL = null),
+            index = 0,
             selected = false,
             onSelect = {},
             currentTime = LocalDateTime.now(),
         )
         ArticleRow(
             article = article,
+            index = 0,
             selected = false,
             onSelect = {},
             currentTime = LocalDateTime.now(),
@@ -485,6 +496,7 @@ fun ArticleRowPreview_Unread() {
         )
         ArticleRow(
             article = article,
+            index = 0,
             selected = false,
             onSelect = {},
             currentTime = LocalDateTime.now(),
@@ -492,6 +504,7 @@ fun ArticleRowPreview_Unread() {
         )
         ArticleRow(
             article = article,
+            index = 0,
             selected = false,
             onSelect = {},
             currentTime = LocalDateTime.now(),
@@ -529,6 +542,7 @@ fun ArticleRowPreview_Rtl() {
 
     ArticleRow(
         article = article,
+        index = 0,
         selected = false,
         onSelect = {},
         currentTime = LocalDateTime.now(),
