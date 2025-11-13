@@ -63,7 +63,7 @@
     <string name="settings_clear_all_articles_text">Вы уверены, что хотите удалить все прочитанные, не избранные статьи с вашего устройства? Это действие нельзя отменить.</string>
     <string name="settings_article_list_title">Список статей</string>
     <string name="opml_exporter_failure">Экспорт не удался</string>
-    <string name="article_list_unread_sort_title">Сортировка непрочитанных</string>
+    <string name="article_list_sort_title">Сортировка статей</string>
     <string name="settings_gestures_list_back_navigation_system_back">По умолчанию</string>
     <string name="crash_log_export_item_title">Поделитесь отчетами о сбоях</string>
     <string name="crash_log_export_item_subtitle">Сохраняет отчеты о сбоях в файл для передачи разработчику</string>
@@ -138,8 +138,8 @@
     <string name="article_vertical_swipe_disabled">Отключено</string>
     <string name="article_vertical_swipe_full_content">Загрузить полное содержимое</string>
     <string name="article_list_row_swipe_disabled">Отключено</string>
-    <string name="article_list_unread_sort_oldest_first">Сначала старые</string>
-    <string name="article_list_unread_sort_newest_first">Сначала новые</string>
+    <string name="article_list_sort_oldest_first">Сначала старые</string>
+    <string name="article_list_sort_newest_first">Сначала новые</string>
     <string name="action_share">Поделиться</string>
     <string name="edit_feed_tags_section">Теги</string>
     <string name="edit_feed_notifications_title">Включить уведомления</string>

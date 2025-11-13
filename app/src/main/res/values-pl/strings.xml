@@ -161,10 +161,10 @@
     <string name="article_bottom_bar_next_article">Przejdź do następnego artykułu</string>
     <string name="settings_gestures_list_row_swipe_start">Przesunięcie w prawo</string>
     <string name="settings_gestures_list_row_swipe_end">Przesunięcie w lewo</string>
-    <string name="article_list_unread_sort_title">Sortowanie nieprzeczytanych</string>
+    <string name="article_list_sort_title">Sortowanie artykułów</string>
     <string name="article_vertical_swipe_full_content">Wczytaj całą zawartość</string>
-    <string name="article_list_unread_sort_newest_first">Od najnowszego</string>
-    <string name="article_list_unread_sort_oldest_first">Od najstarszego</string>
+    <string name="article_list_sort_newest_first">Od najnowszego</string>
+    <string name="article_list_sort_oldest_first">Od najstarszego</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">Otwórz menu nawigacji</string>
     <string name="crash_log_export_item_title">Udostępnij dziennik awarii</string>
     <string name="edit_feed_notifications_title">Włącz powiadomienia</string>

@@ -141,7 +141,7 @@ private fun PreferenceSelectPreview() {
                 update = { selected = it },
                 options = options,
                 optionText = { it },
-                label = R.string.article_list_unread_sort_title
+                label = R.string.article_list_sort_title
             )
         }
     }

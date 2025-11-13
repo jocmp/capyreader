@@ -58,7 +58,7 @@ import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.articles.FullContentParserType
-import com.jocmp.capy.articles.UnreadSortOrder
+import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.common.launchUI
 import org.koin.androidx.compose.koinViewModel
 import java.lang.String.CASE_INSENSITIVE_ORDER
@@ -90,8 +90,8 @@ fun GeneralSettingsPanel(
             updateAutoDelete = viewModel::updateAutoDelete,
             autoDelete = viewModel.autoDelete,
             onClearArticles = viewModel::clearAllArticles,
-            updateUnreadSort = viewModel::updateUnreadSort,
-            unreadSort = viewModel.unreadSort,
+            updateSortOrder = viewModel::updateSortOrder,
+            sortOrder = viewModel.sortOrder,
             updateConfirmMarkAllRead = viewModel::updateConfirmMarkAllRead,
             updateMarkReadOnScroll = viewModel::updateMarkReadOnScroll,
             confirmMarkAllRead = viewModel.confirmMarkAllRead,
@@ -119,8 +119,8 @@ fun GeneralSettingsPanelView(
     updateOpenLinksInternally: (canOpenLinksInternally: Boolean) -> Unit,
     updateAutoDelete: (AutoDelete) -> Unit,
     autoDelete: AutoDelete,
-    updateUnreadSort: (UnreadSortOrder) -> Unit,
-    unreadSort: UnreadSortOrder,
+    updateSortOrder: (SortOrder) -> Unit,
+    sortOrder: SortOrder,
     updateStickyFullContent: (enable: Boolean) -> Unit,
     enableStickyFullContent: Boolean,
     updateConfirmMarkAllRead: (enable: Boolean) -> Unit,
@@ -149,9 +149,9 @@ fun GeneralSettingsPanelView(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier.verticalScroll(rememberScrollState())
     ) {
-        UnreadSortOrderSelect(
-            unreadSort,
-            updateUnreadSort
+        SortOrderSelect(
+            sortOrder,
+            updateSortOrder
         )
 
         FormSection(title = stringResource(R.string.settings_section_categories)) {
@@ -377,8 +377,8 @@ private fun GeneralSettingsPanelPreview() {
                 updateOpenLinksInternally = {},
                 updateAutoDelete = {},
                 autoDelete = AutoDelete.WEEKLY,
-                unreadSort = UnreadSortOrder.NEWEST_FIRST,
-                updateUnreadSort = {},
+                sortOrder = SortOrder.NEWEST_FIRST,
+                updateSortOrder = {},
                 onNavigateToNotifications = {},
                 markReadOnScroll = true,
                 updateConfirmMarkAllRead = {},

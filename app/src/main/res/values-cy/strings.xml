@@ -122,8 +122,8 @@
     <string name="opml_exporter_success">Wedi cwblhau allforio</string>
     <string name="opml_exporter_failure">Wedi methu allforio</string>
     <string name="settings_reader_title">Darllenydd</string>
-    <string name="article_list_unread_sort_newest_first">Diweddaraf yn gyntaf</string>
-    <string name="article_list_unread_sort_oldest_first">Hynaf yn gyntaf</string>
+    <string name="article_list_sort_newest_first">Diweddaraf yn gyntaf</string>
+    <string name="article_list_sort_oldest_first">Hynaf yn gyntaf</string>
     <string name="settings_gestures_list_back_navigation_system_back">Rhagosodiad</string>
     <string name="crash_log_export_item_title">Rhannu logiau\'r chwalu</string>
     <string name="edit_feed_tags_section">Tagiau</string>
@@ -190,7 +190,7 @@
     <string name="settings_gestures_reader_swipe_up">Llusgo i fyny</string>
     <string name="article_list_row_swipe_toggle_read">Toglo statws darllen</string>
     <string name="article_list_row_swipe_toggle_starred">Toglo\'r statws seren</string>
-    <string name="article_list_unread_sort_title">Trefnu\'r erthyglau heb eu darllen</string>
+    <string name="article_list_sort_title">Trefnu erthyglau</string>
     <string name="notifications_permission_disabled_title">Mae caniatâd hysbysu wedi\'i analluogi</string>
     <string name="settings_gestures_list_back_navigation_action">Gweithred llywio\'n ôl</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">Agor y drôr llywio</string>

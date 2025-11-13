@@ -152,13 +152,13 @@
     <string name="article_vertical_swipe_next_article">Nästa artikel</string>
     <string name="article_vertical_swipe_disabled">Avaktiverad</string>
     <string name="article_vertical_swipe_full_content">Läs in fullständigt innehåll</string>
-    <string name="article_list_unread_sort_newest_first">Nyast först</string>
-    <string name="article_list_unread_sort_oldest_first">Äldst först</string>
+    <string name="article_list_sort_newest_first">Nyast först</string>
+    <string name="article_list_sort_oldest_first">Äldst först</string>
     <string name="settings_reader_title">Läsare</string>
     <string name="article_list_row_swipe_disabled">Avaktiverat</string>
     <string name="settings_gestures_list_back_navigation_action">Åtgärd för tillbakanavigering</string>
     <string name="settings_gestures_list_back_navigation_system_back">Standard</string>
-    <string name="article_list_unread_sort_title">Oläst sortering</string>
+    <string name="article_list_sort_title">Artikelsortering</string>
     <string name="article_list_row_swipe_toggle_starred">Markera stjärnmärkt</string>
     <string name="edit_feed_notifications_title">Aktivera aviseringar</string>
     <string name="notifications_permissions_disabled_call_to_action">Inställningar</string>
