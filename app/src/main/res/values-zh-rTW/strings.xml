@@ -274,4 +274,8 @@
     <string name="selected">已選擇</string>
     <string name="auth_fields_freshrss_api_password">API 密碼</string>
     <string name="freshrss_visibility_option_important">重要</string>
+    <string name="theme_mode_light">淺色</string>
+    <string name="theme_mode_dark">深色</string>
+    <string name="auth_fields_client_certificate">用戶端憑證 (可選)</string>
+    <string name="auth_fields_remove_client_cert">移除用戶端憑證</string>
 </resources>
