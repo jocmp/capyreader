@@ -1,7 +1,7 @@
 package com.jocmp.capy
 
 import com.jocmp.capy.accounts.AutoDelete
-import com.jocmp.capy.articles.UnreadSortOrder
+import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.fixtures.AccountFixture
 import com.jocmp.capy.fixtures.ArticleFixture
@@ -80,7 +80,7 @@ class AccountTest {
         val ids = account.unreadArticleIDs(
             filter = ArticleFilter.Articles(ArticleStatus.ALL),
             range = MarkRead.All,
-            unreadSort = UnreadSortOrder.NEWEST_FIRST,
+            sortOrder = SortOrder.NEWEST_FIRST,
             query = null,
         )
 
@@ -111,7 +111,7 @@ class AccountTest {
         val ids = account.unreadArticleIDs(
             filter = ArticleFilter.Articles(ArticleStatus.UNREAD),
             range = MarkRead.Before(unreadArticleIDs[1]),
-            unreadSort = UnreadSortOrder.NEWEST_FIRST,
+            sortOrder = SortOrder.NEWEST_FIRST,
             query = null,
         )
 
@@ -144,7 +144,7 @@ class AccountTest {
         val ids = account.unreadArticleIDs(
             filter = ArticleFilter.Articles(ArticleStatus.UNREAD),
             range = MarkRead.After(unreadArticleIDs[1]),
-            unreadSort = UnreadSortOrder.NEWEST_FIRST,
+            sortOrder = SortOrder.NEWEST_FIRST,
             query = null,
         )
 
@@ -177,7 +177,7 @@ class AccountTest {
         val ids = account.unreadArticleIDs(
             filter = ArticleFilter.Articles(ArticleStatus.UNREAD),
             range = MarkRead.Before(unreadArticleIDs[1]),
-            unreadSort = UnreadSortOrder.OLDEST_FIRST,
+            sortOrder = SortOrder.OLDEST_FIRST,
             query = null,
         )
 

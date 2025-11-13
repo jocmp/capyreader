@@ -4,24 +4,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.capyreader.app.R
 import com.capyreader.app.ui.settings.PreferenceSelect
-import com.jocmp.capy.articles.UnreadSortOrder
+import com.jocmp.capy.articles.SortOrder
 
 @Composable
-fun UnreadSortOrderSelect(
-    selected: UnreadSortOrder,
-    update: (UnreadSortOrder) -> Unit = {},
+fun SortOrderSelect(
+    selected: SortOrder,
+    update: (SortOrder) -> Unit = {},
 ) {
     PreferenceSelect(
         selected = selected,
         update = update,
-        options = UnreadSortOrder.entries,
+        options = SortOrder.entries,
         optionText = { stringResource(translationKey(it)) },
-        label = R.string.article_list_unread_sort_title
+        label = R.string.article_list_sort_title
     )
 }
 
-private fun translationKey(sortOrder: UnreadSortOrder) =
+private fun translationKey(sortOrder: SortOrder) =
     when (sortOrder) {
-        UnreadSortOrder.NEWEST_FIRST -> R.string.article_list_unread_sort_newest_first
-        UnreadSortOrder.OLDEST_FIRST -> R.string.article_list_unread_sort_oldest_first
+        SortOrder.NEWEST_FIRST -> R.string.article_list_sort_newest_first
+        SortOrder.OLDEST_FIRST -> R.string.article_list_sort_oldest_first
     }

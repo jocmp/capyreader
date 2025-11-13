@@ -2,7 +2,7 @@ package com.jocmp.capy.persistence.articles
 
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.InMemoryDatabaseProvider
-import com.jocmp.capy.articles.UnreadSortOrder
+import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.ArticleFixture
 import com.jocmp.capy.fixtures.FeedFixture
@@ -39,7 +39,7 @@ class ByArticleStatusTest {
         val articles = ByArticleStatus(database)
             .all(
                 status = ArticleStatus.ALL,
-                unreadSort = UnreadSortOrder.NEWEST_FIRST,
+                sortOrder = SortOrder.NEWEST_FIRST,
                 since = OffsetDateTime.now().minusDays(7),
                 query = null,
                 limit = 1,

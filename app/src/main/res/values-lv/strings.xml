@@ -158,9 +158,9 @@
     <string name="article_list_row_swipe_toggle_starred">Pārslēgt rakstu kā atzīmētu vai neatzīmētu</string>
     <string name="article_list_row_swipe_toggle_read">Pārslēgt rakstu kā lasītu vai nelasītu</string>
     <string name="article_list_swipe_next_feed">Doties uz nākamo ziņu plūsmu</string>
-    <string name="article_list_unread_sort_title">Nelasīto rakstu kārtošanas secība</string>
-    <string name="article_list_unread_sort_newest_first">Jaunākos augšgalā</string>
-    <string name="article_list_unread_sort_oldest_first">Vecākos augšgalā</string>
+    <string name="article_list_sort_title">Rakstu kārtošanas secība</string>
+    <string name="article_list_sort_newest_first">Jaunākos augšgalā</string>
+    <string name="article_list_sort_oldest_first">Vecākos augšgalā</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">Atvērt navigācijas paneli</string>
     <string name="action_share">Dalīties</string>
     <string name="crash_log_export_item_title">Dalīties ar avārijas pierakstiem</string>

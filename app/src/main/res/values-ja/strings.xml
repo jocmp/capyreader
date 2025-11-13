@@ -181,8 +181,8 @@
     <string name="article_list_row_swipe_toggle_starred">スター状態を切り替え</string>
     <string name="article_list_swipe_next_feed">次のフィードに行く</string>
     <string name="article_list_swipe_disabled">無効</string>
-    <string name="article_list_unread_sort_newest_first">新しい順</string>
-    <string name="article_list_unread_sort_oldest_first">古い順</string>
+    <string name="article_list_sort_newest_first">新しい順</string>
+    <string name="article_list_sort_oldest_first">古い順</string>
     <string name="settings_gestures_list_back_navigation_action">戻るナビゲーション操作</string>
     <string name="settings_gestures_list_back_navigation_system_back">デフォルト</string>
     <string name="action_share">共有</string>

@@ -14,7 +14,7 @@ import com.jocmp.capy.accounts.feedbin.FeedbinOkHttpClient
 import com.jocmp.capy.accounts.local.LocalAccountDelegate
 import com.jocmp.capy.accounts.reader.buildReaderDelegate
 import com.jocmp.capy.articles.ArticleContent
-import com.jocmp.capy.articles.UnreadSortOrder
+import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.sortedByName
 import com.jocmp.capy.common.sortedByTitle
@@ -235,13 +235,13 @@ data class Account(
     fun unreadArticleIDs(
         filter: ArticleFilter,
         range: MarkRead,
-        unreadSort: UnreadSortOrder,
+        sortOrder: SortOrder,
         query: String?,
     ): List<String> {
         return articleRecords.unreadArticleIDs(
             filter = filter,
             range = range,
-            unreadSort = unreadSort,
+            sortOrder = sortOrder,
             query = query,
         )
     }

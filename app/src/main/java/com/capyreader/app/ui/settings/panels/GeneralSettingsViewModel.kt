@@ -12,7 +12,7 @@ import com.capyreader.app.refresher.RefreshScheduler
 import com.jocmp.capy.Account
 import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.articles.FullContentParserType
-import com.jocmp.capy.articles.UnreadSortOrder
+import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.preferences.getAndSet
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -33,7 +33,7 @@ class GeneralSettingsViewModel(
     var canOpenLinksInternally by mutableStateOf(appPreferences.openLinksInternally.get())
         private set
 
-    var unreadSort by mutableStateOf(appPreferences.articleListOptions.unreadSort.get())
+    var sortOrder by mutableStateOf(appPreferences.articleListOptions.sortOrder.get())
         private set
 
     var confirmMarkAllRead by mutableStateOf(appPreferences.articleListOptions.confirmMarkAllRead.get())
@@ -64,10 +64,10 @@ class GeneralSettingsViewModel(
         this.refreshInterval = interval
     }
 
-    fun updateUnreadSort(sort: UnreadSortOrder) {
-        appPreferences.articleListOptions.unreadSort.set(sort)
+    fun updateSortOrder(sort: SortOrder) {
+        appPreferences.articleListOptions.sortOrder.set(sort)
 
-        this.unreadSort = sort
+        this.sortOrder = sort
     }
 
     fun updateAutoDelete(autoDelete: AutoDelete) {

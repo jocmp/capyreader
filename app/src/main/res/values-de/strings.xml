@@ -166,9 +166,9 @@
     <string name="article_list_row_swipe_disabled">Deaktiviert</string>
     <string name="article_list_row_swipe_toggle_read">gelesen/ungelesen</string>
     <string name="article_list_row_swipe_toggle_starred">Favorit an/aus</string>
-    <string name="article_list_unread_sort_title">Sortierung</string>
-    <string name="article_list_unread_sort_newest_first">Neueste zuerst</string>
-    <string name="article_list_unread_sort_oldest_first">Älteste zuerst</string>
+    <string name="article_list_sort_title">Sortierung</string>
+    <string name="article_list_sort_newest_first">Neueste zuerst</string>
+    <string name="article_list_sort_oldest_first">Älteste zuerst</string>
     <string name="notifications_permissions_disabled_call_to_action">Einstellungen</string>
     <string name="crash_log_export_item_title">Absturzberichte teilen</string>
     <string name="edit_feed_notifications_title">Benachrichtigungen einschalten</string>

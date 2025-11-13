@@ -160,9 +160,9 @@
     <string name="settings_gestures_list_row_swipe_end">Sola Kaydır</string>
     <string name="article_list_row_swipe_disabled">Devre dışı</string>
     <string name="article_list_row_swipe_toggle_read">Okunduyu Değiştir</string>
-    <string name="article_list_unread_sort_title">Okunmayanları Sırala</string>
-    <string name="article_list_unread_sort_newest_first">Önce En Yeni</string>
-    <string name="article_list_unread_sort_oldest_first">Önce En Eski</string>
+    <string name="article_list_sort_title">Makale Sıralaması</string>
+    <string name="article_list_sort_newest_first">Önce En Yeni</string>
+    <string name="article_list_sort_oldest_first">Önce En Eski</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">Gezinme Çekmecesini Aç</string>
     <string name="settings_gestures_list_back_navigation_action">Geri Gezinme Eylemi</string>
     <string name="settings_gestures_list_back_navigation_system_back">Öntanımlı</string>

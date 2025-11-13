@@ -155,7 +155,7 @@
     <string name="settings_about_title">O</string>
     <string name="settings_list_top_bar_title">Podešavanja</string>
     <string name="article_view_open_externally">Otvori spolja(U pretrazivacu)</string>
-    <string name="article_list_unread_sort_oldest_first">Prvo Najstariji</string>
+    <string name="article_list_sort_oldest_first">Prvo Najstariji</string>
     <string name="settings_gestures_list_back_navigation_system_back">Podrazumevano</string>
     <string name="crash_log_export_item_title">Delite evidenciju o pada aplikacije</string>
     <string name="edit_feed_tags_section">Oznake</string>
@@ -170,8 +170,8 @@
     <string name="article_list_row_swipe_disabled">Onemogućeno</string>
     <string name="article_list_row_swipe_toggle_read">Uključi Pročitano</string>
     <string name="article_list_row_swipe_toggle_starred">Uključi Sačuvno</string>
-    <string name="article_list_unread_sort_newest_first">Najnovije Prvo</string>
-    <string name="article_list_unread_sort_title">Sortiraj Nepročitano</string>
+    <string name="article_list_sort_newest_first">Najnovije Prvo</string>
+    <string name="article_list_sort_title">Sortiraj Članke</string>
     <string name="settings_panel_notifications_title">Obaveštenja</string>
     <string name="crash_log_export_item_subtitle">Čuva evidenciju o padu u datoteku za deljenje sa programerom</string>
     <string name="notifications_permissions_disabled_call_to_action">Podešavanja</string>

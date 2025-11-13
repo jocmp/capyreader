@@ -182,9 +182,9 @@
     <string name="article_vertical_swipe_disabled">Desativado</string>
     <string name="article_vertical_swipe_full_content">Carregar conteúdo completo</string>
     <string name="article_list_row_swipe_toggle_starred">Marcar Favorito</string>
-    <string name="article_list_unread_sort_title">Ordernar Não Lidos</string>
-    <string name="article_list_unread_sort_newest_first">Novos Primeiro</string>
-    <string name="article_list_unread_sort_oldest_first">Antigos Primeiro</string>
+    <string name="article_list_sort_title">Ordenar Artigos</string>
+    <string name="article_list_sort_newest_first">Novos Primeiro</string>
+    <string name="article_list_sort_oldest_first">Antigos Primeiro</string>
     <string name="settings_gestures_list_back_navigation_action">Ação para Voltar Navegação</string>
     <string name="settings_gestures_list_back_navigation_system_back">Padrão</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">Abrir Painel de Navegação</string>
