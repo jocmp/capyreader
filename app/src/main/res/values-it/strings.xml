@@ -160,10 +160,10 @@
     <string name="article_list_row_swipe_disabled">Disabilitato</string>
     <string name="article_list_row_swipe_toggle_starred">Contrassegno o meno l\'articolo</string>
     <string name="article_list_row_swipe_toggle_read">Imposto o meno come letto</string>
-    <string name="article_list_unread_sort_oldest_first">Prima gli articoli più vecchi</string>
+    <string name="article_list_sort_oldest_first">Prima gli articoli più vecchi</string>
     <string name="article_view_mark_as_unread">Segna come non letto</string>
-    <string name="article_list_unread_sort_title">Ordina gli articoli non letti</string>
-    <string name="article_list_unread_sort_newest_first">Prima gli articoli più recenti</string>
+    <string name="article_list_sort_title">Ordina articoli</string>
+    <string name="article_list_sort_newest_first">Prima gli articoli più recenti</string>
     <string name="settings_gestures_list_back_navigation_system_back">Predefinito</string>
     <string name="action_share">Condividi</string>
     <string name="settings_gestures_list_back_navigation_action">Azione tasto indietro</string>

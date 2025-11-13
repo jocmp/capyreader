@@ -6,7 +6,7 @@ import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.FeedPriority
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.RandomUUID
-import com.jocmp.capy.articles.UnreadSortOrder
+import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.ArticleFixture
@@ -54,7 +54,7 @@ class ArticleRecordsTest {
                 ArticleStatus.ALL,
                 limit = 3,
                 offset = 0,
-                unreadSort = UnreadSortOrder.NEWEST_FIRST,
+                sortOrder = SortOrder.NEWEST_FIRST,
             )
             .executeAsList()
 
@@ -100,7 +100,7 @@ class ArticleRecordsTest {
                 ArticleStatus.UNREAD,
                 limit = 3,
                 offset = 0,
-                unreadSort = UnreadSortOrder.NEWEST_FIRST,
+                sortOrder = SortOrder.NEWEST_FIRST,
             )
             .executeAsList()
 
@@ -142,7 +142,7 @@ class ArticleRecordsTest {
                 ArticleStatus.UNREAD,
                 limit = 3,
                 offset = 0,
-                unreadSort = UnreadSortOrder.OLDEST_FIRST,
+                sortOrder = SortOrder.OLDEST_FIRST,
             )
             .executeAsList()
 
@@ -180,7 +180,7 @@ class ArticleRecordsTest {
                 query = query,
                 limit = 3,
                 offset = 0,
-                unreadSort = UnreadSortOrder.NEWEST_FIRST,
+                sortOrder = SortOrder.NEWEST_FIRST,
             )
             .executeAsList()
 
@@ -220,7 +220,7 @@ class ArticleRecordsTest {
                 query = query,
                 limit = 3,
                 offset = 0,
-                unreadSort = UnreadSortOrder.NEWEST_FIRST,
+                sortOrder = SortOrder.NEWEST_FIRST,
             )
             .executeAsList()
 
@@ -274,7 +274,7 @@ class ArticleRecordsTest {
                 since = since,
                 limit = 10,
                 offset = 0,
-                unreadSort = UnreadSortOrder.NEWEST_FIRST,
+                sortOrder = SortOrder.NEWEST_FIRST,
                 priority = FeedPriority.FEED,
             )
             .executeAsList()

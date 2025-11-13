@@ -146,8 +146,8 @@
     <string name="filter_action_menu_search_articles">लेखहरू खोज्नुहोस्</string>
     <string name="feed_list_top_bar_close_search">खोज खारेज गर्नुहोस्</string>
     <string name="settings_article_list_summary">संक्षेप</string>
-    <string name="article_list_unread_sort_newest_first">सबैभन्दा नयाँ पहिलो</string>
-    <string name="article_list_unread_sort_oldest_first">सबैभन्दा पुरानो पहिलो</string>
+    <string name="article_list_sort_newest_first">सबैभन्दा नयाँ पहिलो</string>
+    <string name="article_list_sort_oldest_first">सबैभन्दा पुरानो पहिलो</string>
     <string name="settings_gestures_list_back_navigation_system_back">पूर्वनिर्धारित</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">नेभिगेसन ड्रयर खोल्नुहोस्</string>
     <string name="crash_log_export_item_title">क्र्यास लगहरू साझा गर्नुहोस्</string>

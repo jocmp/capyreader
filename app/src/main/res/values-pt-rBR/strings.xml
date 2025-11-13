@@ -159,9 +159,9 @@
     <string name="auth_fields_api_url">Servidor</string>
     <string name="settings_section_account_server">Servidor</string>
     <string name="account_source_freshrss">FreshRSS</string>
-    <string name="article_list_unread_sort_title">Ordernar Não Lidos</string>
-    <string name="article_list_unread_sort_newest_first">Novos Primeiro</string>
-    <string name="article_list_unread_sort_oldest_first">Antigos Primeiro</string>
+    <string name="article_list_sort_title">Ordernar Não Lidos</string>
+    <string name="article_list_sort_newest_first">Novos Primeiro</string>
+    <string name="article_list_sort_oldest_first">Antigos Primeiro</string>
     <string name="end_of_feed_text">Tudo em dia!</string>
     <string name="opml_exporter_success">Exportação completa</string>
     <string name="opml_exporter_failure">Exportação falhou</string>

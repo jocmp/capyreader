@@ -1,9 +1,7 @@
 package com.jocmp.capy.persistence.articles
 
-import com.jocmp.capy.ArticleStatus
-import com.jocmp.capy.articles.UnreadSortOrder
+import com.jocmp.capy.articles.SortOrder
 
-fun isNewestFirst(status: ArticleStatus, unreadSort: UnreadSortOrder): Boolean {
-    return status != ArticleStatus.UNREAD ||
-            unreadSort == UnreadSortOrder.NEWEST_FIRST
+fun isNewestFirst(sortOrder: SortOrder): Boolean {
+    return sortOrder == SortOrder.NEWEST_FIRST
 }

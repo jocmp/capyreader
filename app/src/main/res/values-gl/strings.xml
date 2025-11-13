@@ -153,9 +153,9 @@
     <string name="article_list_row_swipe_disabled">Desactivado</string>
     <string name="article_list_row_swipe_toggle_read">Estado da lectura</string>
     <string name="article_list_row_swipe_toggle_starred">Marca con estrela</string>
-    <string name="article_list_unread_sort_title">Orde dos non lidos</string>
-    <string name="article_list_unread_sort_newest_first">Novidades primeiro</string>
-    <string name="article_list_unread_sort_oldest_first">Antigos primeiro</string>
+    <string name="article_list_sort_title">Orde dos artigos</string>
+    <string name="article_list_sort_newest_first">Novidades primeiro</string>
+    <string name="article_list_sort_oldest_first">Antigos primeiro</string>
     <string name="settings_gestures_list_back_navigation_action">Acción de navegación atrás</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">Abre a caixa de navegación</string>
     <string name="action_share">Compartir</string>

@@ -9,7 +9,7 @@ import com.jocmp.capy.ArticleNotification
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.FeedPriority
 import com.jocmp.capy.MarkRead
-import com.jocmp.capy.articles.UnreadSortOrder
+import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.toDateTimeFromSeconds
 import com.jocmp.capy.common.transactionWithErrorHandling
@@ -298,14 +298,14 @@ internal class ArticleRecords internal constructor(
     fun unreadArticleIDs(
         filter: ArticleFilter,
         range: MarkRead,
-        unreadSort: UnreadSortOrder,
+        sortOrder: SortOrder,
         query: String?,
     ): List<String> {
         val ids = when (filter) {
             is ArticleFilter.Articles -> byStatus.unreadArticleIDs(
                 filter.articleStatus,
                 range = range,
-                unreadSort = unreadSort,
+                sortOrder = sortOrder,
                 query = query,
             )
 
@@ -313,7 +313,7 @@ internal class ArticleRecords internal constructor(
                 filter.feedStatus,
                 feedIDs = listOf(filter.feedID),
                 range = range,
-                unreadSort = unreadSort,
+                sortOrder = sortOrder,
                 query = query,
                 priority = FeedPriority.FEED,
             )
@@ -323,7 +323,7 @@ internal class ArticleRecords internal constructor(
                     filter.status,
                     feedIDs = folderFeedIDs(filter),
                     range = range,
-                    unreadSort = unreadSort,
+                    sortOrder = sortOrder,
                     query = query,
                     priority = FeedPriority.CATEGORY,
                 )
@@ -333,14 +333,14 @@ internal class ArticleRecords internal constructor(
                 filter.status,
                 savedSearchID = filter.savedSearchID,
                 range = range,
-                unreadSort = unreadSort,
+                sortOrder = sortOrder,
                 query = query,
             )
 
             is ArticleFilter.Today -> byToday.unreadArticleIDs(
                 filter.status,
                 range = range,
-                unreadSort = unreadSort,
+                sortOrder = sortOrder,
                 query = query,
             )
         }

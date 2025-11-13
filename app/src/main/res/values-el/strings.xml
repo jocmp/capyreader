@@ -185,9 +185,9 @@
     <string name="article_list_row_swipe_toggle_starred">Εναλλαγή αγαπημένου</string>
     <string name="article_list_swipe_next_feed">Μετάβαση στην επόμενη ροή</string>
     <string name="article_list_swipe_disabled">Ανενεργό</string>
-    <string name="article_list_unread_sort_title">Ταξινόμηση μη αναγν</string>
-    <string name="article_list_unread_sort_newest_first">Νεότερα Πρώτα</string>
-    <string name="article_list_unread_sort_oldest_first">Παλαιότερα Πρώτα</string>
+    <string name="article_list_sort_title">Ταξινόμηση άρθρων</string>
+    <string name="article_list_sort_newest_first">Νεότερα Πρώτα</string>
+    <string name="article_list_sort_oldest_first">Παλαιότερα Πρώτα</string>
     <string name="settings_gestures_list_back_navigation_system_back">Προεπιλογή</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">Άνοιγμα Συρταριού Πλοήγησης</string>
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">Πλοήγηση στο Γονικό</string>

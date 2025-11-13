@@ -8,8 +8,8 @@
     <string name="opml_exporter_failure">കയറ്റുമതി പരാജയപ്പെട്ടു</string>
     <string name="settings_notifications_select_all">എല്ലാം തിരഞ്ഞെടുക്കുക</string>
     <string name="article_vertical_swipe_previous_article">മുൻ ലേഖനം</string>
-    <string name="article_list_unread_sort_title">വായിക്കാത്ത അടുക്കുക</string>
-    <string name="article_list_unread_sort_newest_first">ഏറ്റവും പുതിയത് ആദ്യം</string>
+    <string name="article_list_sort_title">ലേഖനം അടുക്കുക</string>
+    <string name="article_list_sort_newest_first">ഏറ്റവും പുതിയത് ആദ്യം</string>
     <string name="theme_menu_option_dark">ഇരുട്ട്</string>
     <string name="settings_gestures_list_back_navigation_system_back">സ്ഥിരസ്ഥിതി</string>
     <string name="article_view_open_externally">ബാഹ്യമായി തുറക്കുക</string>
@@ -77,7 +77,7 @@
     <string name="article_bottom_bar_next_article">അടുത്ത ലേഖനത്തിലേക്ക് പോകുക</string>
     <string name="article_vertical_swipe_next_article">അടുത്ത ലേഖനം</string>
     <string name="article_vertical_swipe_disabled">അപ്രാപ്തമാക്കി</string>
-    <string name="article_list_unread_sort_oldest_first">ഏറ്റവും പഴയത് ആദ്യം</string>
+    <string name="article_list_sort_oldest_first">ഏറ്റവും പഴയത് ആദ്യം</string>
     <string name="article_list_row_swipe_disabled">അപ്രാപ്തമാക്കി</string>
     <string name="feed_form_cancel">റദ്ദാക്കുക</string>
     <string name="image_preview_menu_option_large">വലിയ</string>

@@ -156,9 +156,9 @@
     <string name="article_list_row_swipe_disabled">முடக்கப்பட்டது</string>
     <string name="article_list_row_swipe_toggle_read">படிக்கவும்</string>
     <string name="article_list_row_swipe_toggle_starred">டோகல் நடித்தார்</string>
-    <string name="article_list_unread_sort_title">படிக்காத வரிசை</string>
-    <string name="article_list_unread_sort_newest_first">புதிய முதல்</string>
-    <string name="article_list_unread_sort_oldest_first">முதலில் பழமையானது</string>
+    <string name="article_list_sort_title">கட்டுரை வரிசை</string>
+    <string name="article_list_sort_newest_first">புதிய முதல்</string>
+    <string name="article_list_sort_oldest_first">முதலில் பழமையானது</string>
     <string name="settings_gestures_list_back_navigation_action">பின் வழிசெலுத்தல் நடவடிக்கை</string>
     <string name="settings_gestures_list_back_navigation_system_back">இயல்புநிலை</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">திறந்த வழிசெலுத்தல் அலமாரியை</string>

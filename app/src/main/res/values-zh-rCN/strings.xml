@@ -159,9 +159,9 @@
     <string name="settings_gestures_list_row_swipe_start">向右滑动</string>
     <string name="article_list_row_swipe_toggle_starred">切换星标状态</string>
     <string name="article_list_row_swipe_toggle_read">切换阅读状态</string>
-    <string name="article_list_unread_sort_title">未读排序</string>
-    <string name="article_list_unread_sort_newest_first">从新到旧</string>
-    <string name="article_list_unread_sort_oldest_first">从旧到新</string>
+    <string name="article_list_sort_title">文章排序</string>
+    <string name="article_list_sort_newest_first">从新到旧</string>
+    <string name="article_list_sort_oldest_first">从旧到新</string>
     <string name="settings_gestures_list_back_navigation_action">返回导航操作</string>
     <string name="action_share">分享</string>
     <string name="crash_log_export_item_title">分享崩溃日志</string>
