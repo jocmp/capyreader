@@ -2,6 +2,7 @@ package com.jocmp.capy.accounts
 
 import com.jocmp.capy.ClientCertManager
 import com.jocmp.capy.accounts.feedbin.FeedbinCredentials
+import com.jocmp.capy.accounts.miniflux.MinifluxCredentials
 import com.jocmp.capy.accounts.reader.ReaderCredentials
 import com.jocmp.capy.common.optionalURL
 
@@ -25,8 +26,12 @@ interface Credentials {
         ): Credentials {
             return when (source) {
                 Source.FEEDBIN -> FeedbinCredentials(username, password)
+                Source.MINIFLUX -> MinifluxCredentials(
+                    username = username,
+                    secret = password,
+                    url = normalizeURL(url)
+                )
                 Source.FRESHRSS,
-                Source.MINIFLUX,
                 Source.READER -> ReaderCredentials(
                     username,
                     password,
