@@ -10,9 +10,9 @@ import android.webkit.WebView.HitTestResult.SRC_ANCHOR_TYPE
 import android.webkit.WebViewClient
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
@@ -32,6 +32,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import org.koin.compose.koinInject
 import org.koin.core.component.KoinComponent
+
+val LocalWebViewState = compositionLocalOf<WebViewState?> { null }
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
@@ -93,15 +95,23 @@ class WebViewState(
 
     fun loadHtml(article: Article, showImages: Boolean) {
         val id = article.id
+        val swapArticle = htmlId != null && id != htmlId
+
+        if (swapArticle) {
+            webView.visibility = View.INVISIBLE
+        }
 
         if (htmlId == null || id != htmlId) {
-            webView.visibility = View.INVISIBLE
             webView.isVerticalScrollBarEnabled = enableNativeScroll
         }
 
         htmlId = id
 
         scope.launchUI {
+            if (swapArticle) {
+                delay(50)
+            }
+
             val html = renderer.render(
                 article,
                 hideImages = !showImages,
@@ -117,7 +127,6 @@ class WebViewState(
                 null,
             )
 
-            delay(50)
             webView.visibility = View.VISIBLE
         }
     }
@@ -137,11 +146,11 @@ fun rememberWebViewState(
     onNavigateToMedia: (media: Media) -> Unit,
     onRequestLinkDialog: (link: ShareLink) -> Unit,
     onOpenLink: (url: Uri) -> Unit,
+    scope: CoroutineScope,
     key: String? = null,
 ): WebViewState {
     val enableNativeScroll by rememberTalkbackPreference()
     val colors = articleTemplateColors()
-    val scope = rememberCoroutineScope()
     val context = LocalContext.current
 
     val reset = if (enableNativeScroll) {
@@ -186,7 +195,6 @@ fun rememberWebViewState(
 
             webViewClient = client
         }
-
         WebViewState(
             renderer,
             colors,

@@ -54,6 +54,7 @@ import com.capyreader.app.ui.LocalMarkAllReadButtonPosition
 import com.capyreader.app.ui.LocalUnreadCount
 import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
+import com.capyreader.app.ui.articles.detail.ShareLinkDialog
 import com.capyreader.app.ui.articles.feeds.AngleRefreshState
 import com.capyreader.app.ui.articles.feeds.FeedActions
 import com.capyreader.app.ui.articles.feeds.FeedList
@@ -69,7 +70,10 @@ import com.capyreader.app.ui.articles.media.ArticleMediaView
 import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.ArticleSearch
+import com.capyreader.app.ui.components.LocalWebViewState
 import com.capyreader.app.ui.components.SearchState
+import com.capyreader.app.ui.components.rememberSaveableShareLink
+import com.capyreader.app.ui.components.rememberWebViewState
 import com.capyreader.app.ui.provideLinkOpener
 import com.capyreader.app.ui.rememberLazyListState
 import com.capyreader.app.ui.rememberLocalConnectivity
@@ -148,6 +152,7 @@ fun ArticleScreen(
     }
 
     val article = viewModel.article
+    var media by rememberSaveable(saver = Media.Saver) { mutableStateOf(null) }
 
     val search = ArticleSearch(
         query = searchQuery,
@@ -171,6 +176,21 @@ fun ArticleScreen(
         LocalMarkAllReadButtonPosition provides markAllReadButtonPosition,
         LocalUnreadCount provides unreadCount,
     ) {
+        val (shareLink, setShareLink) = rememberSaveableShareLink()
+        val linkOpener = LocalLinkOpener.current
+        val coroutineScope = rememberCoroutineScope()
+
+        val webViewState = rememberWebViewState(
+            key = article?.id,
+            onNavigateToMedia = { media = it },
+            onRequestLinkDialog = { setShareLink(it) },
+            scope = coroutineScope,
+            onOpenLink = { linkOpener.open(it) }
+        )
+
+        CompositionLocalProvider(
+            LocalWebViewState provides webViewState,
+        ) {
         val openNextFeedOnReadAll = afterReadAll == AfterReadAllBehavior.OPEN_NEXT_FEED
 
         val skipInitialRefresh = refreshInterval != RefreshInterval.ON_START
@@ -183,7 +203,6 @@ fun ArticleScreen(
         val (isUpdatePasswordDialogOpen, setUpdatePasswordDialogOpen) = rememberSaveable {
             mutableStateOf(false)
         }
-        val coroutineScope = rememberCoroutineScope()
         val scaffoldNavigator = rememberArticleScaffoldNavigator()
         val showMultipleColumns = scaffoldNavigator.scaffoldDirective.maxHorizontalPartitions > 1
         var isPullToRefreshing by remember { mutableStateOf(false) }
@@ -192,7 +211,6 @@ fun ArticleScreen(
         val addFeedSuccessMessage = stringResource(R.string.add_feed_success)
         val currentFeed by viewModel.currentFeed.collectAsStateWithLifecycle(null)
         val scrollBehavior = pinnedScrollBehavior()
-        var media by rememberSaveable(saver = Media.Saver) { mutableStateOf(null) }
         val focusManager = LocalFocusManager.current
         val openUpdatePasswordDialog = {
             viewModel.dismissUnauthorizedMessage()
@@ -375,8 +393,6 @@ fun ArticleScreen(
         fun setArticle(articleID: String, onComplete: (article: Article) -> Unit = {}) {
             viewModel.selectArticle(articleID, onComplete)
         }
-
-        val linkOpener = LocalLinkOpener.current
 
         fun selectArticle(articleID: String) {
             setArticle(articleID) { nextArticle ->
@@ -675,6 +691,16 @@ fun ArticleScreen(
             enabled = article == null
         ) {
             scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
+        }
+
+        if (shareLink != null) {
+            ShareLinkDialog(
+                onClose = {
+                    setShareLink(null)
+                },
+                link = shareLink,
+            )
+        }
         }
     }
 }

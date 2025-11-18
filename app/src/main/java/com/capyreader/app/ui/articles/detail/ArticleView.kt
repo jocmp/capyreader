@@ -172,7 +172,6 @@ fun ArticleView(
                     key(article.id) {
                         ArticleReader(
                             article = article,
-                            onSelectMedia = onSelectMedia,
                         )
                     }
                 }
