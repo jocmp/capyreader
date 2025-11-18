@@ -14,6 +14,7 @@ fun Article.imageEnclosures(): Element? {
         enclosures.forEach { enclosure ->
             val image = Element("img").apply {
                 attr("src", enclosure.url.toString())
+                attr("loading", "lazy")
             }
 
             appendChild(image)

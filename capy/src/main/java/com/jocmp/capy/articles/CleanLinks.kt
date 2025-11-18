@@ -3,13 +3,8 @@ package com.jocmp.capy.articles
 import org.jsoup.nodes.Element
 
 internal fun cleanLinks(element: Element) {
-    element.getElementsByTag("img").forEachIndexed { index, child ->
-        if (index == 0) {
-            child.attr("fetchpriority", "high")
-        } else {
-            child.attr("loading", "lazy")
-        }
-
+    element.getElementsByTag("img").forEach { child ->
+        child.attr("loading", "lazy")
         child.attr("src", child.attr("abs:src"))
     }
 
