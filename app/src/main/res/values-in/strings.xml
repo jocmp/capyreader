@@ -182,9 +182,9 @@
     <string name="settings_clear_all_articles_confirm">Konfirmasi</string>
     <string name="settings_reader_title">Pustaka</string>
     <string name="article_list_row_swipe_toggle_read">Beralih Baca</string>
-    <string name="article_list_unread_sort_title">Urutkan yang Belum Dibaca</string>
-    <string name="article_list_unread_sort_newest_first">Terbaru dahulu</string>
-    <string name="article_list_unread_sort_oldest_first">Tertua dahulu</string>
+    <string name="article_list_sort_title">Urutkan Artikel</string>
+    <string name="article_list_sort_newest_first">Terbaru dahulu</string>
+    <string name="article_list_sort_oldest_first">Tertua dahulu</string>
     <string name="article_list_row_swipe_toggle_starred">Beralih Favorit</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Ketuk sudut bawah untuk menavigasi konten artikel</string>
     <string name="settings_gestures_reader_tap_to_page_title">E ink Ketuk untuk menggulir</string>

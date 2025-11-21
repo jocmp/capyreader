@@ -84,8 +84,8 @@
     <string name="settings_gestures_reader_swipe_up">Sveip opp</string>
     <string name="article_vertical_swipe_next_article">Neste artikkel</string>
     <string name="article_list_row_swipe_disabled">Deaktivert</string>
-    <string name="article_list_unread_sort_newest_first">Nyeste først</string>
-    <string name="article_list_unread_sort_oldest_first">Eldste først</string>
+    <string name="article_list_sort_newest_first">Nyeste først</string>
+    <string name="article_list_sort_oldest_first">Eldste først</string>
     <string name="notifications_permission_disabled_title">Varseltillatelse er deaktivert</string>
     <string name="settings_enable_refresh_call_to_action">Periodisk oppdatering må være aktivert først</string>
     <string name="settings_enable_high_contrast_dark_theme">Aktiver høykontrast mørkt tema</string>
@@ -175,7 +175,7 @@
     <string name="article_list_row_swipe_toggle_starred">Veksle stjernemerking</string>
     <string name="settings_mark_read_on_scroll">Merk som lest ved skrolling</string>
     <string name="settings_section_mark_all_as_read">Marker alle som lest</string>
-    <string name="article_list_unread_sort_title">Rekkefølge av artikler som skal leses</string>
+    <string name="article_list_sort_title">Artikkelrekkefølge</string>
     <string name="settings_section_browser">Nettleser</string>
     <string name="reader_image_visibility_show_on_wifi">Kun vis bilder på Wi-Fi</string>
     <string name="reader_image_visibility_always_hide">Blokker bilder</string>

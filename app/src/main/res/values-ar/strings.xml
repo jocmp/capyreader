@@ -147,7 +147,7 @@
     <string name="settings_support_button">الدعم</string>
     <string name="settings_article_list_title">قائمة المقالات</string>
     <string name="article_vertical_swipe_next_article">المقالة التالية</string>
-    <string name="article_list_unread_sort_oldest_first">الأقدم أولاً</string>
+    <string name="article_list_sort_oldest_first">الأقدم أولاً</string>
     <string name="article_view_mark_as_unread">وضع علامة كغير مقروءة</string>
     <string name="article_view_unstar">إزالة النجمة</string>
     <string name="settings_panel_gestures_title">الإيماءات</string>
@@ -162,8 +162,8 @@
     <string name="article_list_row_swipe_disabled">تعطيل</string>
     <string name="article_list_row_swipe_toggle_read">وضع علامة مقروء/غير مقروء</string>
     <string name="article_list_row_swipe_toggle_starred">وضع علامة مميز/غير مميز بنجمة</string>
-    <string name="article_list_unread_sort_title">فرز غير المقروء</string>
-    <string name="article_list_unread_sort_newest_first">الأحدث أولاً</string>
+    <string name="article_list_sort_title">فرز المقالات</string>
+    <string name="article_list_sort_newest_first">الأحدث أولاً</string>
     <string name="opml_exporter_success">إكتمل التصدير</string>
     <string name="settings_gestures_list_back_navigation_action">إجراء زر العودة للخلف</string>
     <string name="settings_gestures_list_back_navigation_system_back">الأفتراضي</string>

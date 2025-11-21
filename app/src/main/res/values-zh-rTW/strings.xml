@@ -64,9 +64,9 @@
     <string name="article_vertical_swipe_disabled">停用</string>
     <string name="article_vertical_swipe_full_content">加載全文</string>
     <string name="settings_reader_title">閲讀頁面</string>
-    <string name="article_list_unread_sort_title">未讀排序</string>
-    <string name="article_list_unread_sort_newest_first">最新優先</string>
-    <string name="article_list_unread_sort_oldest_first">最舊優先</string>
+    <string name="article_list_sort_title">文章排序</string>
+    <string name="article_list_sort_newest_first">最新優先</string>
+    <string name="article_list_sort_oldest_first">最舊優先</string>
     <string name="settings_gestures_list_back_navigation_system_back">預設</string>
     <string name="settings_notifications_select_all">全部選擇</string>
     <string name="settings_notifications_select_none">全部不選</string>

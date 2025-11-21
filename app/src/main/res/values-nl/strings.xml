@@ -193,9 +193,9 @@
     <string name="article_list_row_swipe_toggle_starred">Favoriet in-/uitschakelen</string>
     <string name="article_list_swipe_next_feed">Ga naar volgende feed</string>
     <string name="article_list_swipe_disabled">Uitgeschakeld</string>
-    <string name="article_list_unread_sort_title">Ongelezen sortering</string>
-    <string name="article_list_unread_sort_newest_first">Nieuwste eerst</string>
-    <string name="article_list_unread_sort_oldest_first">Oudste eerst</string>
+    <string name="article_list_sort_title">Artikel sortering</string>
+    <string name="article_list_sort_newest_first">Nieuwste eerst</string>
+    <string name="article_list_sort_oldest_first">Oudste eerst</string>
     <string name="settings_gestures_list_back_navigation_action">Terug navigatie actie</string>
     <string name="settings_gestures_list_back_navigation_system_back">Standaard</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">Navigatie drawer openen</string>

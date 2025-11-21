@@ -22,7 +22,7 @@
     <string name="settings_auto_delete_option_keep_for_three_month">3 месеца</string>
     <string name="article_vertical_swipe_previous_article">Предишна статия</string>
     <string name="settings_gestures_reader_swipe_up">Плъзнете нагоре</string>
-    <string name="article_list_unread_sort_newest_first">Първо най-новите</string>
+    <string name="article_list_sort_newest_first">Първо най-новите</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">Отвори чекмеджето за навигация</string>
     <string name="crash_log_export_item_subtitle">Запазва дневници за срив във файл, за споделяне с разработчика</string>
     <string name="settings_option_auto_delete_articles_title">Автоматично изтриване на статии</string>
@@ -163,8 +163,8 @@
     <string name="article_list_row_swipe_disabled">Забрани</string>
     <string name="article_list_row_swipe_toggle_read">Превключи към прочетени</string>
     <string name="article_list_row_swipe_toggle_starred">Превключи към със звезда</string>
-    <string name="article_list_unread_sort_title">Сортирай непрочетени</string>
-    <string name="article_list_unread_sort_oldest_first">Първо най-старите</string>
+    <string name="article_list_sort_title">Сортирай непрочетени</string>
+    <string name="article_list_sort_oldest_first">Първо най-старите</string>
     <string name="settings_gestures_list_back_navigation_action">Действие връщане назад</string>
     <string name="settings_gestures_list_back_navigation_system_back">По подразбиране</string>
     <string name="crash_log_export_item_title">Сподели дневници за срив</string>

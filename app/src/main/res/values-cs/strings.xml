@@ -150,8 +150,8 @@
     <string name="article_list_row_swipe_disabled">Vypnuto</string>
     <string name="article_list_row_swipe_toggle_read">Prohodit přečtení</string>
     <string name="article_list_row_swipe_toggle_starred">Prohodit ohvězdičkování</string>
-    <string name="article_list_unread_sort_title">Řazení nepřečtených</string>
-    <string name="article_list_unread_sort_oldest_first">Nejstarší nahoře</string>
+    <string name="article_list_sort_title">Řazení článků</string>
+    <string name="article_list_sort_oldest_first">Nejstarší nahoře</string>
     <string name="opml_exporter_success">Export dokončen</string>
     <string name="opml_exporter_failure">Export selhal</string>
     <string name="settings_gestures_list_back_navigation_system_back">Výchozí</string>
@@ -165,7 +165,7 @@
     <string name="settings_list_top_bar_title">Nastavení</string>
     <string name="settings_auto_delete_option_keep_for_one_week">1 týden</string>
     <string name="settings_gestures_list_row_swipe_end">Přejetím doleva</string>
-    <string name="article_list_unread_sort_newest_first">Nejnovější nahoře</string>
+    <string name="article_list_sort_newest_first">Nejnovější nahoře</string>
     <string name="settings_gestures_list_back_navigation_action">Navigovat zpátky</string>
     <string name="article_bottom_bar_next_article">Jít na další článek</string>
     <string name="settings_reader_title">Čtečka</string>

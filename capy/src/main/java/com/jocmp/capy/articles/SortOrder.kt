@@ -1,6 +1,6 @@
 package com.jocmp.capy.articles
 
-enum class UnreadSortOrder  {
+enum class SortOrder  {
     NEWEST_FIRST,
     OLDEST_FIRST;
 

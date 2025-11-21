@@ -164,9 +164,9 @@
     <string name="article_list_row_swipe_disabled">Desactivado</string>
     <string name="article_list_row_swipe_toggle_read">Activar o desactivar lectura</string>
     <string name="article_list_row_swipe_toggle_starred">Activar/desactivar destacados</string>
-    <string name="article_list_unread_sort_oldest_first">Los más antiguos primero</string>
-    <string name="article_list_unread_sort_newest_first">Los más nuevos primero</string>
-    <string name="article_list_unread_sort_title">Ordenar no leídos</string>
+    <string name="article_list_sort_oldest_first">Los más antiguos primero</string>
+    <string name="article_list_sort_newest_first">Los más nuevos primero</string>
+    <string name="article_list_sort_title">Ordenar no leídos</string>
     <string name="settings_gestures_list_back_navigation_system_back">Por defecto</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">Abrir cajón de navegación</string>
     <string name="settings_gestures_list_back_navigation_action">Volver hacia atrás</string>

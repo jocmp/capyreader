@@ -164,9 +164,9 @@
     <string name="article_vertical_swipe_disabled">Désactivé</string>
     <string name="article_list_row_swipe_disabled">Désactivé</string>
     <string name="article_list_row_swipe_toggle_starred">Ajouter/Retirer des favoris</string>
-    <string name="article_list_unread_sort_newest_first">Plus récents d’abord</string>
-    <string name="article_list_unread_sort_oldest_first">Plus anciens d’abord</string>
-    <string name="article_list_unread_sort_title">Trier par articles non lus</string>
+    <string name="article_list_sort_newest_first">Plus récents d’abord</string>
+    <string name="article_list_sort_oldest_first">Plus anciens d’abord</string>
+    <string name="article_list_sort_title">Trier par articles non lus</string>
     <string name="settings_gestures_list_back_navigation_system_back">Par défaut</string>
     <string name="action_share">Partager</string>
     <string name="crash_log_export_item_title">Partager les rapports de plantage</string>

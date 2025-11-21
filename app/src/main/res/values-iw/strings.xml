@@ -181,9 +181,9 @@
     <string name="article_list_row_swipe_toggle_starred">מתג כוכבית</string>
     <string name="article_list_swipe_next_feed">עבור לפיד הבא</string>
     <string name="article_list_swipe_disabled">מכובה</string>
-    <string name="article_list_unread_sort_title">מיין לא נקראו</string>
-    <string name="article_list_unread_sort_newest_first">חדשים יותר קודם</string>
-    <string name="article_list_unread_sort_oldest_first">ישנים יותר קודם</string>
+    <string name="article_list_sort_title">מיין מאמרים</string>
+    <string name="article_list_sort_newest_first">חדשים יותר קודם</string>
+    <string name="article_list_sort_oldest_first">ישנים יותר קודם</string>
     <string name="settings_gestures_list_back_navigation_action">חזור אחורה</string>
     <string name="settings_gestures_list_back_navigation_system_back">ברירת מחדל</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">פתח תפריט ניווט</string>

@@ -189,9 +189,9 @@
     <string name="article_list_row_swipe_toggle_starred">Перемкнути вподобання</string>
     <string name="article_list_swipe_next_feed">Наступна стрічка</string>
     <string name="article_list_swipe_disabled">Вимкнено</string>
-    <string name="article_list_unread_sort_title">Порядок непрочитаних</string>
-    <string name="article_list_unread_sort_newest_first">Спершу новіші</string>
-    <string name="article_list_unread_sort_oldest_first">Спершу старіші</string>
+    <string name="article_list_sort_title">Порядок статей</string>
+    <string name="article_list_sort_newest_first">Спершу новіші</string>
+    <string name="article_list_sort_oldest_first">Спершу старіші</string>
     <string name="settings_gestures_list_back_navigation_action">Дія при переході назад</string>
     <string name="settings_gestures_list_back_navigation_system_back">Типова</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">Відкрити меню</string>

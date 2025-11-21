@@ -74,7 +74,7 @@ class ArticleScreenViewModel(
 
     private var _showUnauthorizedMessage by mutableStateOf(UnauthorizedMessageState.HIDE)
 
-    val unreadSort = appPreferences.articleListOptions.unreadSort.stateIn(viewModelScope)
+    val sortOrder = appPreferences.articleListOptions.sortOrder.stateIn(viewModelScope)
 
     val afterReadAll =
         appPreferences.articleListOptions.afterReadAllBehavior.stateIn(viewModelScope)
@@ -88,12 +88,12 @@ class ArticleScreenViewModel(
             filter,
             _searchQuery,
             articlesSince,
-            unreadSort
+            sortOrder
         ) { filter, query, since, sort ->
             account.buildArticlePager(
                 filter = filter,
                 query = query,
-                unreadSort = sort,
+                sortOrder = sort,
                 since = since
             ).flow
         }.flatMapLatest { it }
@@ -263,7 +263,7 @@ class ArticleScreenViewModel(
             val articleIDs = account.unreadArticleIDs(
                 filter = latestFilter,
                 range = range,
-                unreadSort = unreadSort.value,
+                sortOrder = sortOrder.value,
                 query = _searchQuery.value,
             )
 

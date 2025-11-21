@@ -11,7 +11,7 @@ import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.articles.FontOption
 import com.jocmp.capy.articles.FontSize
 import com.jocmp.capy.articles.FullContentParserType
-import com.jocmp.capy.articles.UnreadSortOrder
+import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.preferences.AndroidPreferenceStore
 import com.jocmp.capy.preferences.Preference
 import com.jocmp.capy.preferences.PreferenceStore
@@ -134,10 +134,10 @@ class AppPreferences(context: Context) {
         val backAction: Preference<BackAction>
             get() = preferenceStore.getEnum("article_list_back_action", BackAction.default)
 
-        val unreadSort: Preference<UnreadSortOrder>
+        val sortOrder: Preference<SortOrder>
             get() = preferenceStore.getEnum(
-                "article_list_unread_sort_order",
-                UnreadSortOrder.default
+                "article_list_sort_order",
+                SortOrder.default
             )
 
         val showFeedName: Preference<Boolean>
