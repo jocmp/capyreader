@@ -21,7 +21,7 @@ class CleanLinksTest {
 
         HtmlHelpers.assertEquals(document) {
             """
-            <img src="https://example.com/1.png" fetchpriority="high">
+            <img src="https://example.com/1.png" loading="lazy">
             <img src="https://example.com/2.png" loading="lazy">
             <img src="https://example.com/3.png" loading="lazy">
             """.trimIndent().lines().joinToString(" ")
@@ -40,7 +40,7 @@ class CleanLinksTest {
 
         HtmlHelpers.assertEquals(document) {
             """
-            <img data-src="https://example.com/1.png" fetchpriority="high" src="https://example.com/1.png">
+            <img data-src="https://example.com/1.png" loading="lazy" src="https://example.com/1.png">
            """
         }
     }
@@ -60,7 +60,7 @@ class CleanLinksTest {
 
         HtmlHelpers.assertEquals(document) {
             """
-            <img src="https://example.com/1.png" fetchpriority="high">  <img src="https://example.com/nested.png" loading="lazy">
+            <img src="https://example.com/1.png" loading="lazy">  <img src="https://example.com/nested.png" loading="lazy">
             """.trimIndent()
         }
     }
