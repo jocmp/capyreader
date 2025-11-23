@@ -458,7 +458,13 @@ fun ArticleScreen(
                     onFeedAdded = { onFeedAdded(it) },
                     savedSearches = savedSearches,
                     onSelectSavedSearch = selectSavedSearch,
-                    onNavigateToSettings = onNavigateToSettings,
+                    onNavigateToSettings = {
+                        onNavigateToSettings()
+                        coroutineScope.launchUI {
+                            delay(100)
+                            drawerState.close()
+                        }
+                    },
                     onFilterSelect = selectFilter,
                     onSelectToday = { selectToday() },
                     refreshState = refreshAllState,
