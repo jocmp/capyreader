@@ -27,7 +27,6 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -49,7 +48,6 @@ import com.capyreader.app.preferences.ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWS
 import com.capyreader.app.preferences.ArticleVerticalSwipe.PREVIOUS_ARTICLE
 import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.articles.LocalFullContent
-import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.jocmp.capy.Article
 import org.koin.compose.koinInject
@@ -68,7 +66,6 @@ fun ArticleView(
     onSelectMedia: (media: Media) -> Unit,
     appPreferences: AppPreferences = koinInject()
 ) {
-    val enableHorizontalPager by appPreferences.readerOptions.enableHorizontaPagination.collectChangesWithDefault()
     val fullContent = LocalFullContent.current
     val openLink = articleOpenLink(article)
 
@@ -119,6 +116,14 @@ fun ArticleView(
     val bottomScrollBehavior = exitAlwaysScrollBehavior()
     val enableBottomBar by rememberBottomBarPreference()
 
+    val previousArticle = if (hasPrevious) articles[previousIndex] else null
+    val nextArticle = if (hasNext) articles[nextIndex] else null
+    val transitionState = ArticleTransitionState(
+        articleId = article.id,
+        previousArticleId = previousArticle?.id,
+        nextArticleId = nextArticle?.id,
+    )
+
     ArticleViewScaffold(
         bottomScrollBehavior = bottomScrollBehavior,
         enableBottomBar = enableBottomBar,
@@ -153,28 +158,37 @@ fun ArticleView(
             }
         },
         reader = {
-            ArticlePullRefresh(
-                onSwipe = onSwipe,
-                hasPreviousArticle = hasPrevious,
-                hasNextArticle = hasNext
-            ) {
-                HorizontalReaderPager(
-                    enabled = enableHorizontalPager,
-                    enablePrevious = hasPrevious,
-                    enableNext = hasNext,
-                    onSelectPrevious = {
-                        selectPrevious()
-                    },
-                    onSelectNext = {
-                        selectNext()
-                    },
+            ArticleTransition(
+                article = transitionState
+            ) { state ->
+                val pullToLoadState = rememberPullToLoadState(
+                    key = article.id,
+                    onLoadNext = if (hasNext) {
+                        { selectNext() }
+                    } else null,
+                    onLoadPrevious = if (hasPrevious) {
+                        { selectPrevious() }
+                    } else null,
+                )
+
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
                 ) {
-                    key(article.id) {
-                        ArticleReader(
-                            article = article,
-                            onSelectMedia = onSelectMedia,
-                        )
-                    }
+                    ArticleReader(
+                        modifier = Modifier.pullToLoad(
+                            state = pullToLoadState,
+                            enabled = true
+                        ),
+                        article = article,
+                        onSelectMedia = onSelectMedia,
+                    )
+
+                    PullToLoadIndicator(
+                        state = pullToLoadState,
+                        canLoadNext = hasNext,
+                        canLoadPrevious = hasPrevious,
+                    )
                 }
             }
         },

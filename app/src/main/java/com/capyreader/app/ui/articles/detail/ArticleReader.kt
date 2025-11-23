@@ -37,6 +37,7 @@ import kotlin.math.roundToInt
 fun ArticleReader(
     article: Article,
     onSelectMedia: (media: Media) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val (shareLink, setShareLink) = rememberSaveableShareLink()
     val linkOpener = LocalLinkOpener.current
@@ -53,7 +54,7 @@ fun ArticleReader(
 
     if (improveTalkback) {
         Column(
-            Modifier.fillMaxSize()
+            modifier = modifier.fillMaxSize()
         ) {
             WebView(
                 modifier = Modifier.fillMaxSize(),
@@ -61,7 +62,10 @@ fun ArticleReader(
             )
         }
     } else {
-        ScrollableWebView(webViewState)
+        ScrollableWebView(
+            webViewState = webViewState,
+            modifier = modifier
+        )
     }
 
     LaunchedEffect(article.id, article.content) {
@@ -87,7 +91,10 @@ fun ArticleReader(
 }
 
 @Composable
-fun ScrollableWebView(webViewState: WebViewState) {
+fun ScrollableWebView(
+    webViewState: WebViewState,
+    modifier: Modifier = Modifier,
+) {
     var maxHeight by remember { mutableFloatStateOf(0f) }
     val scrollState = rememberSaveable(saver = ScrollState.Saver) {
         ScrollState(initial = 0)
@@ -101,7 +108,7 @@ fun ScrollableWebView(webViewState: WebViewState) {
     ) {
         ColumnScrollbar(state = scrollState) {
             Column(
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxSize()
                     .verticalScroll(scrollState)
                     .onGloballyPositioned { coordinates ->

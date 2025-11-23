@@ -2,7 +2,6 @@ package com.capyreader.app.ui.components
 
 import android.annotation.SuppressLint
 import android.net.Uri
-import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
@@ -29,7 +28,6 @@ import com.jocmp.capy.articles.ArticleRenderer
 import com.jocmp.capy.common.launchUI
 import com.jocmp.capy.common.windowOrigin
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
 import org.koin.compose.koinInject
 import org.koin.core.component.KoinComponent
 
@@ -42,6 +40,11 @@ fun WebView(
     AndroidView(
         modifier = modifier,
         factory = { state.webView },
+        update = { webView ->
+            // Update block is intentionally minimal to avoid unnecessary reloads
+            // Content updates are handled explicitly via state.loadHtml()
+            state.applySettings(webView)
+        }
     )
 }
 
@@ -86,6 +89,8 @@ class WebViewState(
     internal val webView: WebView,
 ) {
     private var htmlId: String? = null
+    private var currentArticle: Article? = null
+    private var currentShowImages: Boolean = true
 
     init {
         loadEmpty()
@@ -95,11 +100,12 @@ class WebViewState(
         val id = article.id
 
         if (htmlId == null || id != htmlId) {
-            webView.visibility = View.INVISIBLE
             webView.isVerticalScrollBarEnabled = enableNativeScroll
         }
 
         htmlId = id
+        currentArticle = article
+        currentShowImages = showImages
 
         scope.launchUI {
             val html = renderer.render(
@@ -116,14 +122,37 @@ class WebViewState(
                 "UTF-8",
                 null,
             )
+        }
+    }
 
-            delay(50)
-            webView.visibility = View.VISIBLE
+    fun applySettings(webView: WebView) {
+        // Reactive updates for settings that should apply immediately
+        webView.isVerticalScrollBarEnabled = enableNativeScroll
+
+        // Reload content if colors changed (theme change)
+        currentArticle?.let { article ->
+            scope.launchUI {
+                val html = renderer.render(
+                    article,
+                    hideImages = !currentShowImages,
+                    byline = article.byline(context = webView.context),
+                    colors = colors
+                )
+
+                webView.loadDataWithBaseURL(
+                    windowOrigin(article.url),
+                    html,
+                    null,
+                    "UTF-8",
+                    null,
+                )
+            }
         }
     }
 
     fun reset() {
         htmlId = null
+        currentArticle = null
         loadEmpty()
     }
 
