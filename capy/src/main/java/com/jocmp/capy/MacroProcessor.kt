@@ -16,7 +16,7 @@ data class MacroProcessor(
 
 private fun MacroProcessor.process(): String {
     val queue = ArrayDeque<Char>()
-    var result = ""
+    val result = StringBuilder()
 
     template.forEach { token ->
         if (openTag.contains(token)) {
@@ -28,31 +28,31 @@ private fun MacroProcessor.process(): String {
         }
 
         if (queue.isEmpty()) {
-            result += token
+            result.append(token)
         } else if (hasEvenTags(queue)) {
-            var taggedKey = ""
-
-            while (queue.isNotEmpty()) {
-                taggedKey += queue.removeFirst()
+            val taggedKey = buildString(queue.size) {
+                while (queue.isNotEmpty()) {
+                    append(queue.removeFirst())
+                }
             }
 
             val key = extractKey(taggedKey)
 
-            result += substitutions.getOrDefault(key, taggedKey)
+            result.append(substitutions.getOrDefault(key, taggedKey))
         } else if (hasHangingOpenTag(queue, token)) {
             while (queue.isNotEmpty()) {
-                result += queue.removeFirst()
+                result.append(queue.removeFirst())
             }
 
-            result += token
+            result.append(token)
         } else if (startedNewOpenTag(queue, token)) {
             while (queue.size > 1) {
-                result += queue.removeFirst()
+                result.append(queue.removeFirst())
             }
         }
     }
 
-    return result
+    return result.toString()
 }
 
 private fun MacroProcessor.extractKey(taggedKey: String): String {
@@ -62,11 +62,14 @@ private fun MacroProcessor.extractKey(taggedKey: String): String {
 }
 
 private fun MacroProcessor.startsWithTag(queue: ArrayDeque<Char>): Boolean {
-    return queue.take(openTag.length).joinToString("") == openTag
+    if (queue.size < openTag.length) return false
+    return (0 until openTag.length).all { i -> queue[i] == openTag[i] }
 }
 
 private fun MacroProcessor.endsWithTag(queue: ArrayDeque<Char>): Boolean {
-    return queue.takeLast(closeTag.length).joinToString("") == closeTag
+    if (queue.size < closeTag.length) return false
+    val offset = queue.size - closeTag.length
+    return (0 until closeTag.length).all { i -> queue[offset + i] == closeTag[i] }
 }
 
 private fun MacroProcessor.hasEvenTags(queue: ArrayDeque<Char>): Boolean {
