@@ -265,7 +265,6 @@
     <string name="mark_read_position_floating_action_button">Pulsante azione fluttuante</string>
     <string name="mark_all_read_button_position">Imposta la posizione del pulsante per segnare tutte le voci come lette</string>
     <string name="settings_display_miscellaneous_title">Varie</string>
-    <string name="settings_full_content_parser">Analizzatore del contenuto completo</string>
     <string name="open_articles_in_browser">Apri gli articoli nel browser</string>
     <string name="theme_dynamic">Dinamico</string>
     <string name="theme_newsprint">Carta di giornale</string>

@@ -255,7 +255,6 @@
     <string name="widget_headlines_account_error">Спершу додайте обліковий запис</string>
     <string name="mark_read_position_toolbar">На панелі</string>
     <string name="settings_display_miscellaneous_title">Різне</string>
-    <string name="settings_full_content_parser">Розпізнавати повний текст</string>
     <string name="open_articles_in_browser">Відкривати статті в браузері</string>
     <string name="selected">Вибрано</string>
     <string name="mark_all_read_button_position">Кнопка позначення прочитаними</string>

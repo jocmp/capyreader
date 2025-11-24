@@ -20,7 +20,6 @@ internal val articlesModule = module {
             fontOption = get<AppPreferences>().readerOptions.fontFamily,
             hideTopMargin = get<AppPreferences>().readerOptions.pinTopToolbar,
             enableHorizontalScroll = get<AppPreferences>().readerOptions.enableHorizontaPagination,
-            parser = get<AppPreferences>().fullContentParser,
         )
     }
     viewModel {

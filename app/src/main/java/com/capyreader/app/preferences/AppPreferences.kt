@@ -10,7 +10,6 @@ import com.capyreader.app.ui.articles.MarkReadPosition
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.articles.FontOption
 import com.jocmp.capy.articles.FontSize
-import com.jocmp.capy.articles.FullContentParserType
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.preferences.AndroidPreferenceStore
 import com.jocmp.capy.preferences.Preference
@@ -78,9 +77,6 @@ class AppPreferences(context: Context) {
     fun pinFeedGroup(type: FeedGroup): Preference<Boolean> {
         return preferenceStore.getBoolean("feed_group_${type.toString().lowercase()}", true)
     }
-
-    val fullContentParser: Preference<FullContentParserType>
-        get() = preferenceStore.getEnum("full_content_parser_type", FullContentParserType.default)
 
     val showTodayFilter: Preference<Boolean>
         get() = preferenceStore.getBoolean("show_today_filter", true)

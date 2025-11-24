@@ -14,7 +14,6 @@ class ArticleRenderer(
     private val fontOption: Preference<FontOption>,
     private val hideTopMargin: Preference<Boolean>,
     private val enableHorizontalScroll: Preference<Boolean>,
-    private val parser: Preference<FullContentParserType>,
 ) {
     private val template by lazy {
         context.resources.openRawResource(CapyRes.raw.template)
@@ -80,7 +79,6 @@ class ArticleRenderer(
                     article,
                     document = contentHTML,
                     hideImages = hideImages,
-                    fullContentParser =parser.get(),
                 )
             )
         } else {
