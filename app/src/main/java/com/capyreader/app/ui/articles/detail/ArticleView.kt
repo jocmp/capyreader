@@ -3,11 +3,17 @@
 package com.capyreader.app.ui.articles.detail
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.BottomAppBarDefaults.exitAlwaysScrollBehavior
 import androidx.compose.material3.BottomAppBarScrollBehavior
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,14 +27,20 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.core.net.toUri
 import androidx.paging.compose.LazyPagingItems
 import com.capyreader.app.common.Media
@@ -37,7 +49,12 @@ import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.articles.LocalFullContent
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.jocmp.capy.Article
+import kotlin.math.abs
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
+
+// Shared animation spec for synchronized toolbar animations (matching ReadYou's implementation)
+private val toolbarAnimationSpec = spring<IntSize>(stiffness = 700f)
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -211,6 +228,8 @@ private fun ArticleViewScaffold(
     bottomScrollBehavior: BottomAppBarScrollBehavior,
     topToolbarPreference: ToolbarPreferences,
 ) {
+    val showToolbars = topToolbarPreference.show
+
     Scaffold(
         modifier = Modifier
             .nestedScroll(bottomScrollBehavior.nestedScrollConnection)
@@ -236,16 +255,48 @@ private fun ArticleViewScaffold(
             }
 
             if (!topToolbarPreference.pinned) {
-                topBar()
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .zIndex(1f),
+                    contentAlignment = Alignment.TopCenter
+                ) {
+                    AnimatedVisibility(
+                        visible = showToolbars,
+                        enter = expandVertically(
+                            expandFrom = Alignment.Bottom,
+                            animationSpec = toolbarAnimationSpec
+                        ),
+                        exit = shrinkVertically(
+                            shrinkTowards = Alignment.Bottom,
+                            animationSpec = toolbarAnimationSpec
+                        )
+                    ) {
+                        topBar()
+                    }
+                }
             }
 
             if (enableBottomBar) {
                 Box(
-                    Modifier
+                    modifier = Modifier
                         .align(Alignment.BottomStart)
                         .fillMaxWidth()
+                        .zIndex(1f)
                 ) {
-                    bottomBar()
+                    AnimatedVisibility(
+                        visible = showToolbars,
+                        enter = expandVertically(
+                            expandFrom = Alignment.Top,
+                            animationSpec = toolbarAnimationSpec
+                        ),
+                        exit = shrinkVertically(
+                            shrinkTowards = Alignment.Top,
+                            animationSpec = toolbarAnimationSpec
+                        )
+                    ) {
+                        bottomBar()
+                    }
                 }
             }
         }
