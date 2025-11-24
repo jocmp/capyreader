@@ -5,20 +5,17 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -91,50 +88,37 @@ fun BoxScope.PullToLoadIndicator(
     }
 
     if (visible && !state.isSettled) {
-        Surface(
+        Box(
             modifier = modifier
                 .align(alignment)
-                .padding(vertical = 40.dp)
+                .padding(vertical = 24.dp)
                 .offset {
                     IntOffset(
                         x = 0,
                         y = (fraction * PullToLoadDefaults.ContentOffsetMultiple * .5f).dp.roundToPx()
                     )
-                }
-                .width(36.dp),
-            color = MaterialTheme.colorScheme.surfaceContainerHighest,
-            shape = MaterialTheme.shapes.extraLarge
+                },
+            contentAlignment = Alignment.Center
         ) {
-            Column(
-                modifier = Modifier
-                    .align(Alignment.Center),
+            AnimatedContent(
+                targetState = imageVector,
+                transitionSpec = {
+                    (fadeIn(animationSpec = tween(220, delayMillis = 0)))
+                        .togetherWith(fadeOut(animationSpec = tween(90)))
+                },
+                label = "pull_indicator_icon",
+                contentAlignment = Alignment.Center
             ) {
-                AnimatedContent(
-                    targetState = imageVector, modifier = Modifier.align(
-                        Alignment.CenterHorizontally
-                    ), transitionSpec = {
-                        (fadeIn(animationSpec = tween(220, delayMillis = 0)))
-                            .togetherWith(fadeOut(animationSpec = tween(90)))
-                    }, label = "",
-                    contentAlignment = Alignment.Center
-                ) {
-                    if (it != null) {
-                        Icon(
-                            imageVector = it,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onSurface,
-                            modifier = Modifier
-                                .padding(horizontal = 4.dp)
-                                .padding(vertical = (2 * absFraction).dp)
-                                .size(32.dp)
-                        )
-                    } else {
-                        Spacer(
-                            modifier = Modifier
-                                .width(36.dp)
-                                .height((12 * absFraction).dp)
-                        )
-                    }
+                if (it != null) {
+                    Icon(
+                        imageVector = it,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                        modifier = Modifier.size(40.dp)
+                    )
+                } else {
+                    // Empty spacer while pulling before threshold
+                    Spacer(modifier = Modifier.size(40.dp))
                 }
             }
         }
