@@ -40,9 +40,6 @@ fun WebView(
     AndroidView(
         modifier = modifier,
         factory = { state.webView },
-        update = { webView ->
-            state.applyState(webView)
-        }
     )
 }
 
@@ -120,29 +117,6 @@ class WebViewState(
                 "UTF-8",
                 null,
             )
-        }
-    }
-
-    fun applyState(webView: WebView) {
-        webView.isVerticalScrollBarEnabled = enableNativeScroll
-
-        currentArticle?.let { article ->
-            scope.launchUI {
-                val html = renderer.render(
-                    article,
-                    hideImages = !currentShowImages,
-                    byline = article.byline(context = webView.context),
-                    colors = colors
-                )
-
-                webView.loadDataWithBaseURL(
-                    windowOrigin(article.url),
-                    html,
-                    null,
-                    "UTF-8",
-                    null,
-                )
-            }
         }
     }
 
