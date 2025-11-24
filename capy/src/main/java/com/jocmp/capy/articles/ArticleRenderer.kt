@@ -115,7 +115,7 @@ class ArticleRenderer(
             FontOption.SYSTEM_DEFAULT -> ""
             else -> """
                 <link rel="preload" href="https://appassets.androidplatform.net/res/font/${fontFamily.slug}.ttf" as="font" type="font/ttf" crossorigin>
-                """.trimIndent()
+                """
         }
     }
 }
