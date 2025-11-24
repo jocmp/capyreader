@@ -265,7 +265,6 @@
     <string name="mark_read_position_floating_action_button">Плаващ бутон за действие</string>
     <string name="mark_all_read_button_position">Позиция на бутона „Маркирай всички прочетени“</string>
     <string name="settings_display_miscellaneous_title">Разни</string>
-    <string name="settings_full_content_parser">Пълен анализатор на съдържание</string>
     <string name="open_articles_in_browser">Отваряне на статии в браузъра</string>
     <string name="auth_fields_client_certificate">Клиентски сертификат (по избор)</string>
     <string name="auth_fields_remove_client_cert">Премахване на клиентски сертификат</string>

@@ -5,17 +5,15 @@ TEMPLATE_OUT = ./dist/template.html
 TEMPLATE_RES ?= ../capy/src/main/res/raw/template.html
 MEDIA_LISTENERS_JS_SRC = ./public/assets/media.js
 FULL_CONTENT_JS_SRC = ./public/assets/full-content.js
-DEFUDDLE_JS_SRC ?= ../../../kepano/defuddle/dist/index.js
 MEDIA_LISTENERS_JS_RES := ../capy/src/main/assets/media.js
 MERCURY_JS_RES = ../capy/src/main/assets/mercury-parser.js
-DEFUDDLE_JS_RES = ../capy/src/main/assets/defuddle.js
 FULL_CONTENT_JS_RES = ../capy/src/main/assets/full-content.js
 
 SHELL:=/usr/bin/env bash
 
 .PHONY: forge clean
 
-build: $(TEMPLATE_RES) $(FULL_CONTENT_JS_RES) $(STYLE_RES) $(MERCURY_JS_RES) $(MEDIA_LISTENERS_JS_RES) $(DEFUDDLE_JS_RES)
+build: $(TEMPLATE_RES) $(FULL_CONTENT_JS_RES) $(STYLE_RES) $(MERCURY_JS_RES) $(MEDIA_LISTENERS_JS_RES)
 
 $(STYLE_OUT): style/stylesheet.scss
 	@echo "Style..."
@@ -43,12 +41,6 @@ $(FULL_CONTENT_JS_RES): $(FULL_CONTENT_JS_SRC)
 $(MERCURY_JS_RES):
 	@echo 'Mercury script...'
 	cp ../../mercury-parser/dist/mercury.web.js $(MERCURY_JS_RES)
-
-.PHONY: $(DEFUDDLE_JS_RES)
-$(DEFUDDLE_JS_RES):
-	@echo 'Defuddle...'
-	cp $(DEFUDDLE_JS_SRC) $(DEFUDDLE_JS_RES)
-
 
 .PHONY: build-mercury
 build-mercury:

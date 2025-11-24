@@ -7,8 +7,7 @@ import org.jsoup.nodes.Document
 fun parseHtml(
     article: Article,
     document: Document,
-    hideImages: Boolean,
-    fullContentParser: FullContentParserType
+    hideImages: Boolean
 ): String {
     val html = document.html()
 
@@ -21,7 +20,6 @@ fun parseHtml(
                 "url" to article.url?.toString(),
                 "html" to html,
                 "hideImages" to hideImages,
-                "parserType" to fullContentParser.toString(),
             )
         )
     };

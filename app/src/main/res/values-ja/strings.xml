@@ -242,7 +242,6 @@
     <string name="mark_read_position_floating_action_button">フローティングアクションボタン</string>
     <string name="mark_all_read_button_position">すべてを既読にするボタンの位置</string>
     <string name="settings_display_miscellaneous_title">その他</string>
-    <string name="settings_full_content_parser">すべての記事内容の解析ツール</string>
     <string name="open_articles_in_browser">ブラウザで記事を開く</string>
     <string name="settings_notifications_select_none">すべて選択解除</string>
     <string name="settings_confirm_mark_all_read">すべてを既読としてマークすることを確認</string>

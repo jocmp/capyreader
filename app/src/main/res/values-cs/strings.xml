@@ -273,7 +273,6 @@
     <string name="mark_read_position_floating_action_button">Plovoucí akční tlačítko</string>
     <string name="mark_all_read_button_position">Pozice tlačítka Označit vše jako přečtené</string>
     <string name="settings_display_miscellaneous_title">Další</string>
-    <string name="settings_full_content_parser">Načítání celého obsahu</string>
     <string name="open_articles_in_browser">Otevřít články v prohlížeči</string>
     <string name="selected">Vybrané</string>
     <string name="filter_today">Dnešní</string>

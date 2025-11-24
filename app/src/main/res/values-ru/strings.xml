@@ -280,7 +280,6 @@
     <string name="theme_sunset">Закат</string>
     <string name="settings_section_categories">Категории</string>
     <string name="settings_option_show_today_filter">Сегодня</string>
-    <string name="settings_full_content_parser">Разбор полного текста</string>
     <string name="open_articles_in_browser">Открытые статьи в обозревателе</string>
     <string name="selected">Выбранно</string>
     <string name="auth_fields_freshrss_api_password">Пароль API</string>

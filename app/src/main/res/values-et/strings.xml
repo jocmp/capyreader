@@ -265,7 +265,6 @@
     <string name="settings_display_miscellaneous_title">Varia</string>
     <string name="settings_article_list_shorten_titles">Lühenda pealkirju</string>
     <string name="open_articles_in_browser">Ava artiklid veebibrauseris</string>
-    <string name="settings_full_content_parser">Täismahuline sisemine brauser</string>
     <string name="auth_fields_client_certificate">Kliendi sertifikaat (valikuline)</string>
     <string name="auth_fields_remove_client_cert">Eemalda kliendi sertifikaat</string>
     <string name="theme_mode_system">Süsteemi kujundus</string>

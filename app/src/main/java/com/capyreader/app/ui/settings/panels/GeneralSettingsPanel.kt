@@ -42,7 +42,6 @@ import com.capyreader.app.R
 import com.capyreader.app.common.RowItem
 import com.capyreader.app.notifications.Notifications
 import com.capyreader.app.preferences.AfterReadAllBehavior
-import com.capyreader.app.preferences.translationKey
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.CrashReporting
 import com.capyreader.app.ui.components.FormSection
@@ -57,7 +56,6 @@ import com.capyreader.app.ui.settings.keywordblocklist.LocalBlockedKeywords
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.accounts.Source
-import com.jocmp.capy.articles.FullContentParserType
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.common.launchUI
 import org.koin.androidx.compose.koinViewModel
@@ -69,7 +67,6 @@ fun GeneralSettingsPanel(
     onNavigateToNotifications: () -> Unit,
 ) {
     val keywords by viewModel.keywordBlocklist.collectAsStateWithLifecycle()
-    val fullContentParser by viewModel.fullContentParser.collectAsStateWithLifecycle()
 
     val blockedKeywords = BlockedKeywords(
         keywords = keywords.toList().sortedWith(compareBy(CASE_INSENSITIVE_ORDER) { it }),
@@ -100,8 +97,6 @@ fun GeneralSettingsPanel(
             updateAfterReadAll = viewModel::updateAfterReadAll,
             updateStickyFullContent = viewModel::updateStickyFullContent,
             enableStickyFullContent = viewModel.enableStickyFullContent,
-            fullContentParser = fullContentParser,
-            updateFullContentParser = viewModel::updateFullContentParser,
             showTodayFilter = viewModel.showTodayFilter,
             updateShowTodayFilter = viewModel::updateShowTodayFilter,
         )
@@ -127,8 +122,6 @@ fun GeneralSettingsPanelView(
     updateMarkReadOnScroll: (enable: Boolean) -> Unit,
     afterReadAll: AfterReadAllBehavior,
     updateAfterReadAll: (behavior: AfterReadAllBehavior) -> Unit,
-    fullContentParser: FullContentParserType,
-    updateFullContentParser: (parser: FullContentParserType) -> Unit,
     confirmMarkAllRead: Boolean,
     markReadOnScroll: Boolean,
     showTodayFilter: Boolean,
@@ -242,16 +235,6 @@ fun GeneralSettingsPanelView(
         ) {
             Column {
                 CrashLogExportItem()
-
-                PreferenceSelect(
-                    selected = fullContentParser,
-                    update = updateFullContentParser,
-                    options = FullContentParserType.entries,
-                    label = R.string.settings_full_content_parser,
-                    optionText = {
-                        stringResource(id = it.translationKey)
-                    }
-                )
 
                 AutoDeleteMenu(
                     updateAutoDelete = updateAutoDelete,
@@ -388,8 +371,6 @@ private fun GeneralSettingsPanelPreview() {
                 enableStickyFullContent = true,
                 afterReadAll = AfterReadAllBehavior.NOTHING,
                 updateAfterReadAll = {},
-                fullContentParser = FullContentParserType.DEFUDDLE,
-                updateFullContentParser = {},
                 showTodayFilter = true,
                 updateShowTodayFilter = {}
             )

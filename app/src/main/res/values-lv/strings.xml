@@ -269,7 +269,6 @@
     <string name="filter_today">Šodienas</string>
     <string name="theme_newsprint">Laikraksts, avīze</string>
     <string name="settings_option_show_today_filter">Rādīt šodienas raksti atlases iespēju</string>
-    <string name="settings_full_content_parser">Visu (pilnu) raksta saturu parsētājs</string>
     <string name="auth_fields_client_certificate">Klienta sertifikāts (neobligāti, pēc izvēles)</string>
     <string name="theme_default">Noklusētais</string>
     <string name="theme_monochrome">Vienkrāsains</string>
