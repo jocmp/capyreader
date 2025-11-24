@@ -94,7 +94,7 @@ fun BoxScope.PullToLoadIndicator(
         Surface(
             modifier = modifier
                 .align(alignment)
-                .padding(vertical = 80.dp)
+                .padding(vertical = 40.dp)
                 .offset {
                     IntOffset(
                         x = 0,
