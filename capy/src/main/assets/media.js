@@ -165,10 +165,7 @@ function longPress(element, callback) {
 
 window.addEventListener("DOMContentLoaded", () => {
   cleanEmbeds();
-});
-
-window.onload = () => {
   addImageClickListeners();
   addEmbedListeners();
   configureVideoTags();
-};
+});
