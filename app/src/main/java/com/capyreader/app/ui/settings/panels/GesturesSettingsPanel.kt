@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.common.RowItem
 import com.capyreader.app.preferences.ArticleListVerticalSwipe
-import com.capyreader.app.preferences.ArticleVerticalSwipe
 import com.capyreader.app.preferences.BackAction
 import com.capyreader.app.preferences.RowSwipeOption
 import com.capyreader.app.ui.components.FormSection
@@ -30,20 +29,18 @@ fun GesturesSettingPanel(
     GesturesSettingsPanelView(
         updateBackAction = viewModel::updateBackAction,
         updatePagingTapGesture = viewModel::updatePagingTapGesture,
-        updateReaderBottomSwipe = viewModel::updateReaderBottomSwipe,
-        updateReaderTopSwipe = viewModel::updateReaderTopSwipe,
+        updateSwipeNavigation = viewModel::updateSwipeNavigation,
         updateRowSwipeStart = viewModel::updateRowSwipeStart,
         updateRowSwipeEnd = viewModel::updateRowSwipeEnd,
         updateListSwipeBottom = viewModel::updateListSwipeBottom,
         updateHorizontalPagination = viewModel::updateHorizontalPagination,
         enableHorizontalPagination = viewModel.enableHorizontalPagination,
         backAction = viewModel.backAction,
-        bottomSwipe = viewModel.readerBottomSwipe,
+        enableSwipeNavigation = viewModel.enableSwipeNavigation,
         enablePagingTapGesture = viewModel.enablePagingTapGesture,
         rowSwipeStart = viewModel.rowSwipeStart,
         rowSwipeEnd = viewModel.rowSwipeEnd,
         listSwipeBottom = viewModel.listSwipeBottom,
-        topSwipe = viewModel.readerTopSwipe,
         updateImproveTalkback = viewModel::updateImproveTalkback,
         improveTalkback = viewModel.improveTalkback,
     )
@@ -53,20 +50,18 @@ fun GesturesSettingPanel(
 private fun GesturesSettingsPanelView(
     updateBackAction: (BackAction) -> Unit,
     updatePagingTapGesture: (enabled: Boolean) -> Unit,
-    updateReaderBottomSwipe: (swipe: ArticleVerticalSwipe) -> Unit,
-    updateReaderTopSwipe: (swipe: ArticleVerticalSwipe) -> Unit,
+    updateSwipeNavigation: (enabled: Boolean) -> Unit,
     updateRowSwipeStart: (swipe: RowSwipeOption) -> Unit,
     updateRowSwipeEnd: (swipe: RowSwipeOption) -> Unit,
     updateListSwipeBottom: (swipe: ArticleListVerticalSwipe) -> Unit,
     updateHorizontalPagination: (enable: Boolean) -> Unit,
     enableHorizontalPagination: Boolean,
     backAction: BackAction,
-    bottomSwipe: ArticleVerticalSwipe,
+    enableSwipeNavigation: Boolean,
     enablePagingTapGesture: Boolean,
     rowSwipeStart: RowSwipeOption,
     rowSwipeEnd: RowSwipeOption,
     listSwipeBottom: ArticleListVerticalSwipe,
-    topSwipe: ArticleVerticalSwipe,
     updateImproveTalkback: (improve: Boolean) -> Unit,
     improveTalkback: Boolean
 ) {
@@ -76,27 +71,15 @@ private fun GesturesSettingsPanelView(
     ) {
         FormSection(title = stringResource(R.string.settings_reader_title)) {
             Column {
-                PreferenceSelect(
-                    selected = topSwipe,
-                    update = updateReaderTopSwipe,
-                    options = ArticleVerticalSwipe.topOptions,
-                    label = R.string.settings_gestures_reader_swipe_down,
-                    enabled = !improveTalkback,
-                    disabledOption = ArticleVerticalSwipe.DISABLED,
-                    optionText = {
-                        stringResource(it.translationKey)
-                    }
-                )
-
-                PreferenceSelect(
-                    selected = bottomSwipe,
-                    update = updateReaderBottomSwipe,
-                    options = ArticleVerticalSwipe.bottomOptions,
-                    label = R.string.settings_gestures_reader_swipe_up,
-                    enabled = !improveTalkback,
-                    disabledOption = ArticleVerticalSwipe.DISABLED,
-                    optionText = { stringResource(it.translationKey) }
-                )
+                RowItem {
+                    TextSwitch(
+                        onCheckedChange = updateSwipeNavigation,
+                        checked = enableSwipeNavigation,
+                        enabled = !improveTalkback,
+                        title = stringResource(R.string.settings_gestures_enable_swipe_navigation_title),
+                        subtitle = stringResource(R.string.settings_gestures_enable_swipe_navigation_subtitle)
+                    )
+                }
 
                 RowItem {
                     TextSwitch(
@@ -177,20 +160,18 @@ fun GesturesSettingsPanelPreview() {
             updateBackAction = {},
             updateRowSwipeStart = {},
             updateRowSwipeEnd = {},
-            updateReaderTopSwipe = {},
-            updateReaderBottomSwipe = {},
+            updateSwipeNavigation = {},
             updatePagingTapGesture = {},
             updateHorizontalPagination = {},
             updateListSwipeBottom = {},
             backAction = BackAction.OPEN_DRAWER,
-            topSwipe = ArticleVerticalSwipe.PREVIOUS_ARTICLE,
-            bottomSwipe = ArticleVerticalSwipe.NEXT_ARTICLE,
+            enableSwipeNavigation = true,
             rowSwipeStart = RowSwipeOption.TOGGLE_READ,
             rowSwipeEnd = RowSwipeOption.TOGGLE_STARRED,
             enablePagingTapGesture = true,
             enableHorizontalPagination = true,
             listSwipeBottom = ArticleListVerticalSwipe.NEXT_FEED,
-            improveTalkback = true,
+            improveTalkback = false,
             updateImproveTalkback = {}
         )
     }

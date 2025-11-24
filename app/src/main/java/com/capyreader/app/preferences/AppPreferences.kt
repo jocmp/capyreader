@@ -98,16 +98,10 @@ class AppPreferences(context: Context) {
         val fontFamily: Preference<FontOption>
             get() = preferenceStore.getEnum("article_font_family", FontOption.default)
 
-        val topSwipeGesture: Preference<ArticleVerticalSwipe>
-            get() = preferenceStore.getEnum(
-                "article_top_swipe_gesture",
-                ArticleVerticalSwipe.topSwipeDefault
-            )
-
-        val bottomSwipeGesture: Preference<ArticleVerticalSwipe>
-            get() = preferenceStore.getEnum(
-                "article_bottom_swipe_gesture",
-                ArticleVerticalSwipe.bottomSwipeDefault
+        val enableSwipeNavigation: Preference<Boolean>
+            get() = preferenceStore.getBoolean(
+                "enable_swipe_navigation",
+                true
             )
 
         val imageVisibility: Preference<ReaderImageVisibility>
@@ -120,7 +114,7 @@ class AppPreferences(context: Context) {
             get() = preferenceStore.getBoolean("article_enable_paging_tap_gesture", false)
 
         val enableHorizontaPagination: Preference<Boolean>
-            get() = preferenceStore.getBoolean("article_enable_horizontal_pagination", true)
+            get() = preferenceStore.getBoolean("article_enable_horizontal_pagination", false)
 
         val improveTalkback: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_improve_talkback", false)

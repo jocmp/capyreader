@@ -30,7 +30,6 @@ import com.capyreader.app.ui.articles.detail.PullToLoadState.Status.PulledDown
 import com.capyreader.app.ui.articles.detail.PullToLoadState.Status.PulledUp
 import com.capyreader.app.ui.articles.detail.PullToLoadState.Status.PullingDown
 import com.capyreader.app.ui.articles.detail.PullToLoadState.Status.PullingUp
-import kotlin.math.abs
 
 @Composable
 fun BoxScope.PullToLoadIndicator(
@@ -57,7 +56,6 @@ fun BoxScope.PullToLoadIndicator(
     }
 
     val fraction = state.offsetFraction
-    val absFraction = abs(fraction)
 
     val imageVector = when (status) {
         PulledDown -> Icons.Rounded.KeyboardArrowUp

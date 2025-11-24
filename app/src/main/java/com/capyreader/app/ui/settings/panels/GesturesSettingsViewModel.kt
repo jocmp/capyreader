@@ -6,7 +6,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleListVerticalSwipe
-import com.capyreader.app.preferences.ArticleVerticalSwipe
 import com.capyreader.app.preferences.BackAction
 import com.capyreader.app.preferences.RowSwipeOption
 
@@ -16,7 +15,7 @@ class GesturesSettingsViewModel(
     var backAction by mutableStateOf(listOptions.backAction.get())
         private set
 
-    var readerTopSwipe by mutableStateOf(readerOptions.topSwipeGesture.get())
+    var enableSwipeNavigation by mutableStateOf(readerOptions.enableSwipeNavigation.get())
         private set
 
     var rowSwipeStart by mutableStateOf(listOptions.swipeStart.get())
@@ -26,9 +25,6 @@ class GesturesSettingsViewModel(
         private set
 
     var listSwipeBottom by mutableStateOf(listOptions.swipeBottom.get())
-        private set
-
-    var readerBottomSwipe by mutableStateOf(readerOptions.bottomSwipeGesture.get())
         private set
 
     var enablePagingTapGesture by mutableStateOf(readerOptions.enablePagingTapGesture.get())
@@ -53,24 +49,16 @@ class GesturesSettingsViewModel(
 
         if (improve) {
             readerOptions.pinTopToolbar.set(true)
-            updateReaderTopSwipe(ArticleVerticalSwipe.DISABLED)
-            updateReaderBottomSwipe(ArticleVerticalSwipe.DISABLED)
+            updateSwipeNavigation(false)
         } else {
-            updateReaderTopSwipe(ArticleVerticalSwipe.topSwipeDefault)
-            updateReaderBottomSwipe(ArticleVerticalSwipe.bottomSwipeDefault)
+            updateSwipeNavigation(true)
         }
     }
 
-    fun updateReaderTopSwipe(swipe: ArticleVerticalSwipe) {
-        readerTopSwipe = swipe
+    fun updateSwipeNavigation(enabled: Boolean) {
+        enableSwipeNavigation = enabled
 
-        readerOptions.topSwipeGesture.set(swipe)
-    }
-
-    fun updateReaderBottomSwipe(swipe: ArticleVerticalSwipe) {
-        readerBottomSwipe = swipe
-
-        readerOptions.bottomSwipeGesture.set(swipe)
+        readerOptions.enableSwipeNavigation.set(enabled)
     }
 
     fun updateRowSwipeStart(swipe: RowSwipeOption) {

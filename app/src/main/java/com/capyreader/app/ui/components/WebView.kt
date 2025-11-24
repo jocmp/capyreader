@@ -41,9 +41,7 @@ fun WebView(
         modifier = modifier,
         factory = { state.webView },
         update = { webView ->
-            // Update block is intentionally minimal to avoid unnecessary reloads
-            // Content updates are handled explicitly via state.loadHtml()
-            state.applySettings(webView)
+            state.applyState(webView)
         }
     )
 }
@@ -125,11 +123,9 @@ class WebViewState(
         }
     }
 
-    fun applySettings(webView: WebView) {
-        // Reactive updates for settings that should apply immediately
+    fun applyState(webView: WebView) {
         webView.isVerticalScrollBarEnabled = enableNativeScroll
 
-        // Reload content if colors changed (theme change)
         currentArticle?.let { article ->
             scope.launchUI {
                 val html = renderer.render(
