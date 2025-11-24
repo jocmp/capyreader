@@ -27,6 +27,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -48,6 +49,7 @@ import com.capyreader.app.preferences.ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWS
 import com.capyreader.app.preferences.ArticleVerticalSwipe.PREVIOUS_ARTICLE
 import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.articles.LocalFullContent
+import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.jocmp.capy.Article
 import org.koin.compose.koinInject
@@ -112,8 +114,9 @@ fun ArticleView(
         }
     }
 
-    val topToolbarPreference = rememberTopToolbarPreference()
-    val bottomScrollBehavior = exitAlwaysScrollBehavior()
+    val enableHorizontalPager by appPreferences.readerOptions.enableHorizontaPagination.collectChangesWithDefault()
+    val topToolbarPreference = rememberTopToolbarPreference(key = article.id)
+    val bottomScrollBehavior = key(article.id) { exitAlwaysScrollBehavior() }
     val enableBottomBar by rememberBottomBarPreference()
 
     val previousArticle = if (hasPrevious) articles[previousIndex] else null
@@ -175,14 +178,28 @@ fun ArticleView(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
-                    ArticleReader(
-                        modifier = Modifier.pullToLoad(
-                            state = pullToLoadState,
-                            enabled = true
-                        ),
-                        article = article,
-                        onSelectMedia = onSelectMedia,
-                    )
+                    HorizontalReaderPager(
+                        enabled = enableHorizontalPager,
+                        enablePrevious = hasPrevious,
+                        enableNext = hasNext,
+                        onSelectPrevious = {
+                            selectPrevious()
+                        },
+                        onSelectNext = {
+                            selectNext()
+                        },
+                    ) {
+                        key(article.id) {
+                            ArticleReader(
+                                modifier = Modifier.pullToLoad(
+                                    state = pullToLoadState,
+                                    enabled = true
+                                ),
+                                article = article,
+                                onSelectMedia = onSelectMedia,
+                            )
+                        }
+                    }
 
                     PullToLoadIndicator(
                         state = pullToLoadState,
@@ -319,15 +336,18 @@ fun rememberBottomBarPreference(appPreferences: AppPreferences = koinInject()): 
 
 @Composable
 fun rememberTopToolbarPreference(
+    key: Any? = null,
     appPreferences: AppPreferences = koinInject(),
 ): ToolbarPreferences {
     val pinTopToolbar by appPreferences.readerOptions.pinTopToolbar.stateIn(rememberCoroutineScope())
         .collectAsState()
 
-    val scrollBehavior = if (pinTopToolbar) {
-        TopAppBarDefaults.pinnedScrollBehavior()
-    } else {
-        TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val scrollBehavior = key(key) {
+        if (pinTopToolbar) {
+            TopAppBarDefaults.pinnedScrollBehavior()
+        } else {
+            TopAppBarDefaults.enterAlwaysScrollBehavior()
+        }
     }
 
     val showToolbars = scrollBehavior.state.collapsedFraction == 0f
