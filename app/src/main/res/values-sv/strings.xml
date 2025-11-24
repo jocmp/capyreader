@@ -181,6 +181,9 @@
     <string name="after_read_all_behavior_default">Standard</string>
     <string name="settings_confirm_mark_all_read">Bekräfta markering av alla som läst</string>
     <string name="settings_mark_read_on_scroll">Markera som läst vid skrollning</string>
+    <string name="settings_gestures_enable_swipe_navigation_title">Aktivera vertikal rullning</string>
+    <string name="settings_gestures_enable_swipe_navigation_subtitle">Svep upp eller ner för att navigera mellan artiklar</string>
+
     <string name="settings_gestures_reader_tap_to_page_title">Tryckskrollning för e-ink</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Tryck nedre hörn för att navigera artikelinnehåll</string>
     <string name="reader_image_visibility_show_on_wifi">Visa bara bilder på wifi</string>

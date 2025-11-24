@@ -199,6 +199,9 @@
     <string name="settings_notifications_select_none">Șterge alegerea</string>
     <string name="settings_notifications_select_all">Alege tot</string>
     <string name="settings_confirm_mark_all_read">Marchează elementele alese ca citite</string>
+    <string name="settings_gestures_enable_swipe_navigation_title">Activați derularea verticală</string>
+    <string name="settings_gestures_enable_swipe_navigation_subtitle">Glisați în sus sau în jos pentru a naviga între articole</string>
+
     <string name="settings_gestures_reader_tap_to_page_title">Gest E-Ink de atingere pentru derulare</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">Activează derularea pe orizontală</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Glisează spre stânga sau dreapta pentru a naviga articolele</string>

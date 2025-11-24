@@ -231,8 +231,8 @@
     <string name="article_view_open_externally">Open externally</string>
     <string name="settings_confirm_mark_all_read">Confirm marking all as read</string>
     <string name="settings_mark_read_on_scroll">Mark as read on scroll</string>
-    <string name="settings_gestures_enable_swipe_navigation_title">Swipe to next/previous article</string>
-    <string name="settings_gestures_enable_swipe_navigation_subtitle">Swipe vertically to navigate between articles</string>
+    <string name="settings_gestures_enable_swipe_navigation_title">Enable vertical scroll</string>
+    <string name="settings_gestures_enable_swipe_navigation_subtitle">Swipe up or down to navigate between articles</string>
     <string name="settings_gestures_reader_tap_to_page_title">E Ink tap to scroll</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">Enable horizontal scroll</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Swipe left or right to navigate articles</string>

@@ -195,6 +195,9 @@
     <string name="add_account_freshrss_signup_link_text">了解更多。</string>
     <string name="edit_feed_tag_section">新增或選擇標籤</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">點擊底部角落上下翻頁</string>
+    <string name="settings_gestures_enable_swipe_navigation_title">啟用垂直捲動</string>
+    <string name="settings_gestures_enable_swipe_navigation_subtitle">向上或向下滑動以在文章之間導航</string>
+
     <string name="settings_gestures_reader_tap_to_page_title">電子墨水屏手勢</string>
     <string name="settings_enable_high_contrast_dark_theme">高對比度深色主題</string>
     <string name="settings_mark_read_on_scroll">滾動時標為已讀</string>

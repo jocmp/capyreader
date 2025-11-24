@@ -197,6 +197,9 @@
     <string name="add_account_feedbin_subtitle">feedbin.com</string>
     <string name="add_account_freshrss_signup_link_text">Per saperne di più.</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Tocca gli angoli inferiori per navigare nel contenuto dell\'articolo</string>
+    <string name="settings_gestures_enable_swipe_navigation_title">Abilita scorrimento verticale</string>
+    <string name="settings_gestures_enable_swipe_navigation_subtitle">Scorri verso l\'alto o il basso per navigare tra gli articoli</string>
+
     <string name="settings_gestures_reader_tap_to_page_title">Dispositivi E-Ink tocca per scorrere</string>
     <string name="settings_enable_high_contrast_dark_theme">Abilita il tema scuro ad alto contrasto</string>
     <string name="settings_mark_read_on_scroll">Scorrendo verso il basso</string>

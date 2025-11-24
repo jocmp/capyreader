@@ -181,6 +181,9 @@
     <string name="article_list_row_swipe_open_externally">Makaleyi tarayıcıda aç</string>
     <string name="article_view_open_externally">Harici olarak aç</string>
     <string name="feed_nav_drawer_title">Akışlar</string>
+    <string name="settings_gestures_enable_swipe_navigation_title">Dikey kaydırmayı etkinleştir</string>
+    <string name="settings_gestures_enable_swipe_navigation_subtitle">Makaleler arasında gezinmek için yukarı veya aşağı kaydırın</string>
+
     <string name="settings_gestures_reader_tap_to_page_title">E Mürekkep kaydırmak için dokun</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Makale içeriğinde gezinmek için dip köşelere dokunun</string>
     <string name="auth_fields_api_url">Sunucu</string>

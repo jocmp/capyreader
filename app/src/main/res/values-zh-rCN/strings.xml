@@ -194,6 +194,9 @@
     <string name="edit_feed_tag_section">添加或选择标签</string>
     <string name="add_account_freshrss_subtitle">freshrss.org</string>
     <string name="add_account_reader_subtitle">自托管的 Google Reader API</string>
+    <string name="settings_gestures_enable_swipe_navigation_title">启用垂直滚动</string>
+    <string name="settings_gestures_enable_swipe_navigation_subtitle">向上或向下滑动以在文章之间导航</string>
+
     <string name="settings_gestures_reader_tap_to_page_title">电子墨水屏设备轻按滚动</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">轻按底部角落上下滚动文章内容</string>
     <string name="settings_enable_high_contrast_dark_theme">启用高对比度深色主题</string>

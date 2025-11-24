@@ -187,6 +187,9 @@
     <string name="article_list_sort_oldest_first">Tertua dahulu</string>
     <string name="article_list_row_swipe_toggle_starred">Beralih Favorit</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Ketuk sudut bawah untuk menavigasi konten artikel</string>
+    <string name="settings_gestures_enable_swipe_navigation_title">Aktifkan gulir vertikal</string>
+    <string name="settings_gestures_enable_swipe_navigation_subtitle">Geser ke atas atau ke bawah untuk menavigasi antar artikel</string>
+
     <string name="settings_gestures_reader_tap_to_page_title">E ink Ketuk untuk menggulir</string>
     <string name="settings_clear_all_articles_button">Hapus semua bacaan</string>
     <string name="article_actions_copy_link">Salin link</string>

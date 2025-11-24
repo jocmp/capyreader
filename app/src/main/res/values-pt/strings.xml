@@ -202,6 +202,9 @@
     <string name="article_view_open_externally">Abrir externamente</string>
     <string name="settings_confirm_mark_all_read">Confirmar ao marcar todos como lido</string>
     <string name="settings_mark_read_on_scroll">Marcar como lido ao rolar</string>
+    <string name="settings_gestures_enable_swipe_navigation_title">Ativar rolagem vertical</string>
+    <string name="settings_gestures_enable_swipe_navigation_subtitle">Deslize para cima ou para baixo para navegar entre artigos</string>
+
     <string name="settings_gestures_reader_tap_to_page_title">Toque E-Ink para rolar</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">Ativar rolagem horizontal</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Tocar no canto inferior para navegar para o conteúdo do artigo</string>

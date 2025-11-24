@@ -192,6 +192,9 @@
     <string name="account_source_freshrss">FreshRSS</string>
     <string name="edit_feed_notifications_title">Zapnout upozornění</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Posouvat článek doteky ve spodních rozích</string>
+    <string name="settings_gestures_enable_swipe_navigation_title">Povolit vertikální posouvání</string>
+    <string name="settings_gestures_enable_swipe_navigation_subtitle">Přejeďte nahoru nebo dolů pro navigaci mezi články</string>
+
     <string name="settings_gestures_reader_tap_to_page_title">Skrolování dotykem</string>
     <string name="settings_enable_refresh_call_to_action">Nejdříve je nutno zapnout pravidelné aktualizace kanálů</string>
     <string name="article_list_row_swipe_open_externally">Otevřít článek v prohlížeči</string>

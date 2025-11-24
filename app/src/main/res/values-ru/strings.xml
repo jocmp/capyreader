@@ -197,6 +197,9 @@
     <string name="add_account_freshrss_signup_prompt">У вас нет экземпляра FreshRSS?</string>
     <string name="add_account_local_subtitle">На вашем устройстве</string>
     <string name="edit_feed_tag_section">Добавить или выбрать тег</string>
+    <string name="settings_gestures_enable_swipe_navigation_title">Включить вертикальную прокрутку</string>
+    <string name="settings_gestures_enable_swipe_navigation_subtitle">Листайте вверх или вниз для навигации между статьями</string>
+
     <string name="settings_gestures_reader_tap_to_page_title">Прокрутка касанием (для E-ink)</string>
     <string name="settings_enable_high_contrast_dark_theme">Включить высококонтрастную темную тему</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Коснитесь нижних углов, чтобы перемещаться по содержимому статьи</string>

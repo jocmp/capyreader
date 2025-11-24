@@ -204,6 +204,9 @@
     <string name="layout_preference_single">Jedna Kolona</string>
     <string name="layout_preference_label">Željeni raspored</string>
     <string name="settings_enable_high_contrast_dark_theme">Omogućite tamnu temu visokog kontrasta</string>
+    <string name="settings_gestures_enable_swipe_navigation_title">Omogući vertikalno pomeranje</string>
+    <string name="settings_gestures_enable_swipe_navigation_subtitle">Prevucite gore ili dole za navigaciju između članaka</string>
+
     <string name="settings_gestures_reader_tap_to_page_title">E Mastilo dodirnite za pomeranje</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Dodirnite donje uglove da biste se kretali po sadržaju članka</string>
     <string name="full_content_error_missing_response">Preuzimanje članka nije uspelo</string>

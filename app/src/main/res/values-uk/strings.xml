@@ -267,6 +267,9 @@
     <string name="settings_gestures_list_row_swipe_start">Гортання праворуч</string>
     <string name="settings_gestures_list_row_swipe_end">Гортання ліворуч</string>
     <string name="settings_gestures_list_swipe_up">Гортання вгору</string>
+    <string name="settings_gestures_enable_swipe_navigation_title">Увімкнути вертикальну прокрутку</string>
+    <string name="settings_gestures_enable_swipe_navigation_subtitle">Гортайте вгору або вниз для навігації між статтями</string>
+
     <string name="settings_gestures_reader_tap_to_page_title">Гортання дотиком</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Перемикати статті гортанням ліворуч або праворуч</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Гортати текст статті дотиком до нижніх країв</string>

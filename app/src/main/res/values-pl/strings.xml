@@ -229,6 +229,9 @@
     <string name="settings_gestures_list_back_navigation_action">Działanie przycisku wstecz</string>
     <string name="end_of_feed_text">Wszystko przeczytane!</string>
     <string name="settings_enable_refresh_call_to_action">Najpierw włącz cykliczne odświeżanie</string>
+    <string name="settings_gestures_enable_swipe_navigation_title">Włącz przewijanie pionowe</string>
+    <string name="settings_gestures_enable_swipe_navigation_subtitle">Przesuń w górę lub w dół, aby nawigować między artykułami</string>
+
     <string name="settings_gestures_reader_tap_to_page_title">Dotknij, aby przewinąć (wyświetlacz E Ink)</string>
     <string name="image_preview_menu_option_medium">Średni</string>
     <string name="blocked_keywords_supporting_text">Usuń artykuły, których tytuł lub treść pasują do słów kluczowych</string>

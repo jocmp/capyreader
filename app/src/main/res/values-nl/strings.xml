@@ -215,6 +215,9 @@
     <string name="article_view_open_externally">Extern openen</string>
     <string name="settings_confirm_mark_all_read">Bevestig alles markeren als gelezen</string>
     <string name="settings_mark_read_on_scroll">Markeren als gelezen bij scrollen</string>
+    <string name="settings_gestures_enable_swipe_navigation_title">Verticaal scrollen inschakelen</string>
+    <string name="settings_gestures_enable_swipe_navigation_subtitle">Veeg omhoog of omlaag om tussen artikelen te navigeren</string>
+
     <string name="settings_gestures_reader_tap_to_page_title">E Ink tik om te scrollen</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">Horizontaal scrollen inschakelen</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Veeg links of rechts om door artikelen te navigeren</string>

@@ -196,6 +196,9 @@
     <string name="add_account_feedbin_signup_link_text">Създайте такъв тук.</string>
     <string name="edit_feed_tag_section">Добавяне или избиране на етикет</string>
     <string name="add_account_freshrss_signup_prompt">Нямате FreshRSS инстанция?</string>
+    <string name="settings_gestures_enable_swipe_navigation_title">Активирайте вертикално превъртане</string>
+    <string name="settings_gestures_enable_swipe_navigation_subtitle">Плъзнете нагоре или надолу за навигация между статии</string>
+
     <string name="settings_gestures_reader_tap_to_page_title">Докосни за превъртане (за E-ink)</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Докоснете долните ъгли, за да преминете към съдържанието на статията</string>
     <string name="settings_enable_high_contrast_dark_theme">Активирай тъмна тема с висок контраст</string>

@@ -173,6 +173,9 @@
     <string name="action_share">Compartilhar</string>
     <string name="crash_log_export_item_title">Compartilhar logs de erro</string>
     <string name="crash_log_export_item_subtitle">Salva logs de erro em um arquivo para compartilhar com o desenvolvedor</string>
+    <string name="settings_gestures_enable_swipe_navigation_title">Ativar rolagem vertical</string>
+    <string name="settings_gestures_enable_swipe_navigation_subtitle">Deslize para cima ou para baixo para navegar entre artigos</string>
+
     <string name="settings_gestures_reader_tap_to_page_title">Toque E-Ink para rolar</string>
     <string name="settings_panel_notifications_title">Notificações</string>
     <string name="settings_auto_delete_option_keep_for_one_week">1 semana</string>

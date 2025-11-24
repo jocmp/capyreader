@@ -170,6 +170,9 @@
     <string name="article_list_row_swipe_open_externally">Abrir artigo no navegador</string>
     <string name="settings_confirm_mark_all_read">Confirmar marcar todo como lido</string>
     <string name="settings_mark_read_on_scroll">Marcar como lido ao desprazarte</string>
+    <string name="settings_gestures_enable_swipe_navigation_title">Activar desprazamento vertical</string>
+    <string name="settings_gestures_enable_swipe_navigation_subtitle">Deslice cara arriba ou abaixo para navegar entre artigos</string>
+
     <string name="settings_gestures_reader_tap_to_page_title">Toque eReader para desprazar</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Toca nos cantos inferiores para navegar no contido do artigo</string>
     <string name="settings_enable_high_contrast_dark_theme">Activar decorado escuro de alto contraste</string>

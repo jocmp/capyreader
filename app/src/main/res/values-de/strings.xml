@@ -203,6 +203,9 @@
     <string name="reader_image_visibility_always_show">Bilder immer anzeigen</string>
     <string name="reader_image_visibility_label">Bilder</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Tippen auf die unteren Ecken, um innerhalb eines Artikels zu navigieren</string>
+    <string name="settings_gestures_enable_swipe_navigation_title">Vertikales Scrollen aktivieren</string>
+    <string name="settings_gestures_enable_swipe_navigation_subtitle">Nach oben oder unten wischen, um zwischen Artikeln zu navigieren</string>
+
     <string name="settings_gestures_reader_tap_to_page_title">Tippen, um zu scrollen</string>
     <string name="settings_enable_high_contrast_dark_theme">Dunkles Theme mit hohem Kontrast aktivieren</string>
     <string name="layout_preference_single">Einzelne Spalte</string>

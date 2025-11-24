@@ -216,6 +216,9 @@
     <string name="opml_import_notification_cancel">Apturēt</string>
     <string name="image_preview_menu_option_none">Nerādīt</string>
     <string name="settings_gestures_list_back_navigation_system_back">Noklusējuma</string>
+    <string name="settings_gestures_enable_swipe_navigation_title">Iespējot vertikālo ritināšanu</string>
+    <string name="settings_gestures_enable_swipe_navigation_subtitle">Velciet uz augšu vai uz leju, lai pārvietotos starp rakstiem</string>
+
     <string name="settings_gestures_reader_tap_to_page_title">Skārienritināšana (priekš e-grāmatas lasītājiem ar E-tinti)</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Velciet pa kreisi vai pa labi, lai pārvietotos pa rakstiem</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Pieskarieties apakšējiem stūriem, lai pārvietotos pa raksta saturu</string>
