@@ -283,4 +283,9 @@
     <string name="open_articles_in_browser">Открытые статьи в обозревателе</string>
     <string name="selected">Выбранно</string>
     <string name="auth_fields_freshrss_api_password">Пароль API</string>
+    <string name="freshrss_visibility">Видимость</string>
+    <string name="freshrss_visibility_option_important">Важный</string>
+    <string name="freshrss_visibility_option_category">Категория</string>
+    <string name="freshrss_visibility_option_feed">Лента</string>
+    <string name="freshrss_visibility_option_main">Основной поток</string>
 </resources>

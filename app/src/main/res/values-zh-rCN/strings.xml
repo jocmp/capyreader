@@ -77,7 +77,7 @@
     <string name="article_byline_date_only">%1$s %2$s</string>
     <string name="settings_option_auto_delete_articles_subtitle">删除超过 3 个月的已读、未加星标的文章</string>
     <string name="settings_option_auto_delete_articles_title">自动删除文章</string>
-    <string name="settings_article_list_feed_name">订阅源名称‌</string>
+    <string name="settings_article_list_feed_name">订阅源名称</string>
     <string name="settings_article_list_feed_icons">订阅源图标</string>
     <string name="refresh_every_day">每天</string>
     <string name="feed_form_copy_feed_url_to_clipboard">将订阅源 URL 复制到剪贴板</string>
@@ -281,7 +281,7 @@
     <string name="settings_section_categories">类别</string>
     <string name="auth_fields_freshrss_api_password">API 密码</string>
     <string name="freshrss_visibility">可见性</string>
-    <string name="freshrss_visibility_option_main">主信息流‌</string>
+    <string name="freshrss_visibility_option_main">主信息流</string>
     <string name="freshrss_visibility_option_important">重要</string>
     <string name="freshrss_visibility_option_category">类别</string>
     <string name="freshrss_visibility_option_feed">订阅源</string>
