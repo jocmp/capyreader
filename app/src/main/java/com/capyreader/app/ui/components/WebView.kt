@@ -36,10 +36,17 @@ import org.koin.core.component.KoinComponent
 fun WebView(
     modifier: Modifier,
     state: WebViewState,
+    article: Article? = null,
+    showImages: Boolean = true,
 ) {
     AndroidView(
         modifier = modifier,
         factory = { state.webView },
+        update = {
+            article?.let {
+                state.loadHtml(article, showImages)
+            }
+        }
     )
 }
 
@@ -84,6 +91,7 @@ class WebViewState(
     internal val webView: WebView,
 ) {
     private var htmlId: String? = null
+    private var contentHash: Int = 0
 
     init {
         loadEmpty()
@@ -91,12 +99,15 @@ class WebViewState(
 
     fun loadHtml(article: Article, showImages: Boolean) {
         val id = article.id
+        val hash = article.content.hashCode()
 
-        if (htmlId == null || id != htmlId) {
-            webView.isVerticalScrollBarEnabled = enableNativeScroll
+        if (id == htmlId && hash == contentHash) {
+            return
         }
 
+        webView.isVerticalScrollBarEnabled = enableNativeScroll
         htmlId = id
+        contentHash = hash
 
         scope.launchUI {
             val html = renderer.render(

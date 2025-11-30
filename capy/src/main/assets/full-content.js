@@ -60,12 +60,10 @@ function postProcessContent(baseUrl, hideImages) {
   const content = document.getElementById("article-body-content");
   if (!content) return;
 
-  // Clean inline styles
   content.querySelectorAll("*").forEach((el) => {
     el.removeAttribute("style");
   });
 
-  // Remove or resolve images
   content.querySelectorAll("img").forEach((img) => {
     if (hideImages) {
       img.remove();
@@ -76,13 +74,14 @@ function postProcessContent(baseUrl, hideImages) {
         if (src && !src.startsWith("http") && !src.startsWith("data:")) {
           try {
             img.src = new URL(src, baseUrl).href;
-          } catch (e) {}
+          } catch (e) {
+            // continue
+          }
         }
       }
     }
   });
 
-  // Wrap tables
   content.querySelectorAll("table").forEach((table) => {
     if (table.parentElement?.classList.contains("table__wrapper")) return;
     const wrapper = document.createElement("div");

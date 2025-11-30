@@ -9,7 +9,7 @@ SHELL:=/usr/bin/env bash
 
 .PHONY: forge clean
 
-build: $(TEMPLATE_RES) $(STYLE_RES) $(MERCURY_JS_RES) )
+build: $(TEMPLATE_RES) $(STYLE_RES) $(MERCURY_JS_RES)
 
 $(STYLE_OUT): style/stylesheet.scss
 	@echo "Style..."

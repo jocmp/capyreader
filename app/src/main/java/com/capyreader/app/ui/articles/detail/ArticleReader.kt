@@ -58,14 +58,12 @@ fun ArticleReader(
             WebView(
                 modifier = Modifier.fillMaxSize(),
                 state = webViewState,
+                article = article,
+                showImages = showImages,
             )
         }
     } else {
-        ScrollableWebView(webViewState)
-    }
-
-    LaunchedEffect(article.id, article.content) {
-        webViewState.loadHtml(article, showImages = showImages)
+        ScrollableWebView(webViewState, article, showImages)
     }
 
     ArticleStyleListener(webView = webViewState.webView)
@@ -87,7 +85,7 @@ fun ArticleReader(
 }
 
 @Composable
-fun ScrollableWebView(webViewState: WebViewState) {
+fun ScrollableWebView(webViewState: WebViewState, article: Article, showImages: Boolean) {
     var maxHeight by remember { mutableFloatStateOf(0f) }
     val scrollState = rememberSaveable(saver = ScrollState.Saver) {
         ScrollState(initial = 0)
@@ -113,6 +111,8 @@ fun ScrollableWebView(webViewState: WebViewState) {
                         .fillMaxWidth()
                         .wrapContentHeight(),
                     state = webViewState,
+                    article = article,
+                    showImages = showImages,
                 )
             }
         }
