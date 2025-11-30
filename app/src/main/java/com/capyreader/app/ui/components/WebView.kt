@@ -2,6 +2,7 @@ package com.capyreader.app.ui.components
 
 import android.annotation.SuppressLint
 import android.net.Uri
+import android.util.Log
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
@@ -25,9 +26,8 @@ import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
-import com.jocmp.capy.common.launchIO
+import com.jocmp.capy.common.launchUI
 import com.jocmp.capy.common.windowOrigin
-import com.jocmp.capy.common.withUIContext
 import kotlinx.coroutines.CoroutineScope
 import org.koin.compose.koinInject
 import org.koin.core.component.KoinComponent
@@ -99,23 +99,24 @@ class WebViewState(
 
         htmlId = id
 
-        scope.launchIO {
+        scope.launchUI {
+            val startTime = System.currentTimeMillis()
             val html = renderer.render(
                 article,
                 hideImages = !showImages,
                 byline = article.byline(context = webView.context),
                 colors = colors
             )
+            val renderTime = System.currentTimeMillis() - startTime
+            Log.d("WebViewState", "render() took ${renderTime}ms, html size: ${html.length} chars")
 
-            withUIContext {
-                webView.loadDataWithBaseURL(
-                    windowOrigin(article.url),
-                    html,
-                    null,
-                    "UTF-8",
-                    null,
-                )
-            }
+            webView.loadDataWithBaseURL(
+                windowOrigin(article.url),
+                html,
+                null,
+                "UTF-8",
+                null,
+            )
         }
     }
 
