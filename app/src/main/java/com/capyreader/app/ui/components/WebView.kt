@@ -2,7 +2,6 @@ package com.capyreader.app.ui.components
 
 import android.annotation.SuppressLint
 import android.net.Uri
-import android.util.Log
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
@@ -100,15 +99,12 @@ class WebViewState(
         htmlId = id
 
         scope.launchUI {
-            val startTime = System.currentTimeMillis()
             val html = renderer.render(
                 article,
                 hideImages = !showImages,
                 byline = article.byline(context = webView.context),
                 colors = colors
             )
-            val renderTime = System.currentTimeMillis() - startTime
-            Log.d("WebViewState", "render() took ${renderTime}ms, html size: ${html.length} chars")
 
             webView.loadDataWithBaseURL(
                 windowOrigin(article.url),
