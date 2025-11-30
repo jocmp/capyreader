@@ -2,7 +2,6 @@ package com.capyreader.app.ui.components
 
 import android.annotation.SuppressLint
 import android.net.Uri
-import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
@@ -26,10 +25,10 @@ import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
-import com.jocmp.capy.common.launchUI
+import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.windowOrigin
+import com.jocmp.capy.common.withUIContext
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
 import org.koin.compose.koinInject
 import org.koin.core.component.KoinComponent
 
@@ -95,13 +94,12 @@ class WebViewState(
         val id = article.id
 
         if (htmlId == null || id != htmlId) {
-            webView.visibility = View.INVISIBLE
             webView.isVerticalScrollBarEnabled = enableNativeScroll
         }
 
         htmlId = id
 
-        scope.launchUI {
+        scope.launchIO {
             val html = renderer.render(
                 article,
                 hideImages = !showImages,
@@ -109,16 +107,15 @@ class WebViewState(
                 colors = colors
             )
 
-            webView.loadDataWithBaseURL(
-                windowOrigin(article.url),
-                html,
-                null,
-                "UTF-8",
-                null,
-            )
-
-            delay(50)
-            webView.visibility = View.VISIBLE
+            withUIContext {
+                webView.loadDataWithBaseURL(
+                    windowOrigin(article.url),
+                    html,
+                    null,
+                    "UTF-8",
+                    null,
+                )
+            }
         }
     }
 
