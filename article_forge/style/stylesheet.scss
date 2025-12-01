@@ -107,6 +107,15 @@ object {
   margin: 0 auto;
 }
 
+img {
+  opacity: 0;
+  transition: opacity 0.1s ease-in;
+
+  &.loaded {
+    opacity: 1;
+  }
+}
+
 figure {
   margin-bottom: 1em;
   line-height: 1.2em;

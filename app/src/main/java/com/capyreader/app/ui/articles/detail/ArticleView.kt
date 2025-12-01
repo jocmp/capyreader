@@ -27,7 +27,6 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -169,9 +168,9 @@ fun ArticleView(
                         selectNext()
                     },
                 ) {
-                    key(article.id) {
+                    ArticleTransition(article = article) { targetArticle ->
                         ArticleReader(
-                            article = article,
+                            article = targetArticle,
                             onSelectMedia = onSelectMedia,
                         )
                     }

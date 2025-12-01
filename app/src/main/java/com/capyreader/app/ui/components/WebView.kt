@@ -2,7 +2,6 @@ package com.capyreader.app.ui.components
 
 import android.annotation.SuppressLint
 import android.net.Uri
-import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
@@ -12,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
@@ -26,10 +24,6 @@ import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
-import com.jocmp.capy.common.launchUI
-import com.jocmp.capy.common.windowOrigin
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
 import org.koin.compose.koinInject
 import org.koin.core.component.KoinComponent
 
@@ -38,10 +32,17 @@ import org.koin.core.component.KoinComponent
 fun WebView(
     modifier: Modifier,
     state: WebViewState,
+    article: Article? = null,
+    showImages: Boolean = true,
 ) {
     AndroidView(
         modifier = modifier,
         factory = { state.webView },
+        update = {
+            article?.let {
+                state.loadHtml(article, showImages)
+            }
+        }
     )
 }
 
@@ -81,11 +82,11 @@ class AccompanistWebViewClient(
 class WebViewState(
     private val renderer: ArticleRenderer,
     private val colors: Map<String, String>,
-    private val scope: CoroutineScope,
     private val enableNativeScroll: Boolean,
     internal val webView: WebView,
 ) {
     private var htmlId: String? = null
+    private var contentHash: Int = 0
 
     init {
         loadEmpty()
@@ -93,33 +94,30 @@ class WebViewState(
 
     fun loadHtml(article: Article, showImages: Boolean) {
         val id = article.id
+        val hash = article.content.hashCode()
 
-        if (htmlId == null || id != htmlId) {
-            webView.visibility = View.INVISIBLE
-            webView.isVerticalScrollBarEnabled = enableNativeScroll
+        if (id == htmlId && hash == contentHash) {
+            return
         }
 
+        webView.isVerticalScrollBarEnabled = enableNativeScroll
         htmlId = id
+        contentHash = hash
 
-        scope.launchUI {
-            val html = renderer.render(
-                article,
-                hideImages = !showImages,
-                byline = article.byline(context = webView.context),
-                colors = colors
-            )
+        val html = renderer.render(
+            article,
+            hideImages = !showImages,
+            byline = article.byline(context = webView.context),
+            colors = colors
+        )
 
-            webView.loadDataWithBaseURL(
-                windowOrigin(article.url),
-                html,
-                null,
-                "UTF-8",
-                null,
-            )
-
-            delay(50)
-            webView.visibility = View.VISIBLE
-        }
+        webView.loadDataWithBaseURL(
+            null,
+            html,
+            null,
+            "UTF-8",
+            null,
+        )
     }
 
     fun reset() {
@@ -141,7 +139,6 @@ fun rememberWebViewState(
 ): WebViewState {
     val enableNativeScroll by rememberTalkbackPreference()
     val colors = articleTemplateColors()
-    val scope = rememberCoroutineScope()
     val context = LocalContext.current
 
     val reset = if (enableNativeScroll) {
@@ -160,7 +157,7 @@ fun rememberWebViewState(
         )
     }
 
-    return remember(reset, enableNativeScroll) {
+    return remember {
         val webView = WebView(context).apply {
             settings.apply {
                 javaScriptEnabled = true
@@ -190,7 +187,6 @@ fun rememberWebViewState(
         WebViewState(
             renderer,
             colors,
-            scope,
             enableNativeScroll = enableNativeScroll,
             webView,
         ).also {

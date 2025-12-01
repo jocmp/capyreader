@@ -1,23 +1,19 @@
 package com.jocmp.capy.articles
 
 import com.jocmp.capy.Article
-import org.jsoup.nodes.Element
 
-fun Article.imageEnclosures(): Element? {
+fun Article.imageEnclosuresHtml(): String {
     val images = enclosures.filter { it.type.startsWith("image/") }
 
     if (images.isEmpty()) {
-        return null
+        return ""
     }
 
-    return Element("div").apply {
-        enclosures.forEach { enclosure ->
-            val image = Element("img").apply {
-                attr("src", enclosure.url.toString())
-                attr("loading", "lazy")
-            }
-
-            appendChild(image)
+    return buildString {
+        append("<div>")
+        images.forEach { enclosure ->
+            append("""<img src="${enclosure.url}" loading="lazy">""")
         }
+        append("</div>")
     }
 }
