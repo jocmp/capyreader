@@ -261,7 +261,6 @@
     <string name="mark_read_position_floating_action_button">Lebegő műveleti gomb</string>
     <string name="mark_all_read_button_position">Összes Olvasottként Megjelölése gomb pozíciója</string>
     <string name="settings_display_miscellaneous_title">Egyéb</string>
-    <string name="settings_full_content_parser">Teljes tartalom elemző</string>
     <string name="open_articles_in_browser">Cikkek megnyitása böngészőben</string>
     <string name="selected">Kiválasztott</string>
     <string name="auth_fields_freshrss_api_password">API jelszó</string>
