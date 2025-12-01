@@ -30,6 +30,10 @@ fun ArticleTransition(
         label = "articleTransition"
     ) {
         setShownArticle(true)
-        content(it)
+
+        remember { it }
+            .run {
+                content(it)
+            }
     }
 }

@@ -170,7 +170,7 @@ fun ArticleView(
                 ) {
                     ArticleTransition(article = article) { targetArticle ->
                         ArticleReader(
-                            article = article,
+                            article = targetArticle,
                             onSelectMedia = onSelectMedia,
                         )
                     }

@@ -6,7 +6,6 @@ def main
   filename = "template"
 
   file_content = File.read("./views/#{filename}.liquid")
-  file_content = file_content.gsub("{{body}}", "")
   file_content = file_content.gsub("    {{debug_script}}\n", "")
   file_content = file_content.gsub('src="/', 'src="https://appassets.androidplatform.net/')
   file_content = file_content.gsub('href="/', 'href="https://appassets.androidplatform.net/')

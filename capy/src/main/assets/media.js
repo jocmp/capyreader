@@ -26,6 +26,43 @@ function addImageClickListeners() {
   });
 }
 
+function setupImageLoadHandler(img) {
+  if (img.classList.contains("loaded")) {
+    return;
+  }
+
+  img.onload = () => img.classList.add("loaded");
+  img.onerror = () => img.classList.add("loaded");
+
+  // Check after attaching - catches race condition
+  if (img.complete) {
+    img.classList.add("loaded");
+  }
+}
+
+function addImageLoadListeners() {
+  [...document.getElementsByTagName("img")].forEach(setupImageLoadHandler);
+}
+
+function observeImages() {
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      mutation.addedNodes.forEach((node) => {
+        if (node.nodeName === "IMG") {
+          setupImageLoadHandler(node);
+        } else if (node.querySelectorAll) {
+          node.querySelectorAll("img").forEach(setupImageLoadHandler);
+        }
+      });
+    });
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
+}
+
 function addEmbedListeners() {
   [...document.querySelectorAll("div.iframe-embed")].forEach((div) => {
     div.addEventListener("click", () => {
@@ -169,6 +206,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
 window.onload = () => {
   addImageClickListeners();
+  addImageLoadListeners();
+  observeImages();
   addEmbedListeners();
   configureVideoTags();
 };
