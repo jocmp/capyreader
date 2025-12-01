@@ -136,9 +136,9 @@ function swapPlaceholder(embed, src, youtubeID) {
   const playButton = document.createElement("div");
   playButton.classList.add("iframe-embed__play-button");
 
-  const placeholder = document.createElement("div");
+  const placeholder = document.createElement("a");
   placeholder.classList.add("iframe-embed");
-  placeholder.setAttribute("data-iframe-src", autoplaySrc(src));
+  placeholder.setAttribute("href", `https://www.youtube.com/watch?v=${youtubeID}`);
   placeholder.appendChild(placeholderImage);
   placeholder.appendChild(playButton);
 
