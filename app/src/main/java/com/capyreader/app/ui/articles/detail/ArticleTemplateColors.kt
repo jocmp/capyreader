@@ -9,17 +9,18 @@ import com.jocmp.capy.articles.TemplateColors
 @Composable
 fun articleTemplateColors() =
     TemplateColors(
-        onPrimaryContainer = colorScheme.onPrimaryContainer.toHTMLColor(),
-        onSurface = colorScheme.onSurface.toHTMLColor(),
-        onSurfaceVariant = colorScheme.onSurfaceVariant.toHTMLColor(),
         primary = colorScheme.primary.toHTMLColor(),
-        primaryContainer = colorScheme.primaryContainer.toHTMLColor(),
         surface = colorScheme.surface.toHTMLColor(),
         surfaceContainerHighest = colorScheme.surfaceContainerHighest.toHTMLColor(),
+        onSurface = colorScheme.onSurface.toHTMLColor(),
+        onSurfaceVariant = colorScheme.onSurfaceVariant.toHTMLColor(),
         surfaceVariant = colorScheme.surfaceVariant.toHTMLColor(),
+        primaryContainer = colorScheme.primaryContainer.toHTMLColor(),
+        onPrimaryContainer = colorScheme.onPrimaryContainer.toHTMLColor(),
         secondary = colorScheme.secondary.toHTMLColor(),
-        surfaceContainer = colorScheme.surfaceContainer.toHTMLColor()
-    ).asMap()
+        surfaceContainer = colorScheme.surfaceContainer.toHTMLColor(),
+        surfaceTint = colorScheme.surfaceTint.toHTMLColor(),
+    )
 
 
 private fun Color.toHTMLColor(): String {

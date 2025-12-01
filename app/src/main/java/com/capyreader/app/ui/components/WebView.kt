@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
@@ -25,9 +24,8 @@ import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
-import com.jocmp.capy.common.launchUI
+import com.jocmp.capy.articles.TemplateColors
 import com.jocmp.capy.common.windowOrigin
-import kotlinx.coroutines.CoroutineScope
 import org.koin.compose.koinInject
 import org.koin.core.component.KoinComponent
 
@@ -85,8 +83,7 @@ class AccompanistWebViewClient(
 @Stable
 class WebViewState(
     private val renderer: ArticleRenderer,
-    private val colors: Map<String, String>,
-    private val scope: CoroutineScope,
+    private val colors: TemplateColors,
     private val enableNativeScroll: Boolean,
     internal val webView: WebView,
 ) {
@@ -109,22 +106,20 @@ class WebViewState(
         htmlId = id
         contentHash = hash
 
-        scope.launchUI {
-            val html = renderer.render(
-                article,
-                hideImages = !showImages,
-                byline = article.byline(context = webView.context),
-                colors = colors
-            )
+        val html = renderer.render(
+            article,
+            hideImages = !showImages,
+            byline = article.byline(context = webView.context),
+            colors = colors
+        )
 
-            webView.loadDataWithBaseURL(
-                windowOrigin(article.url),
-                html,
-                null,
-                "UTF-8",
-                null,
-            )
-        }
+        webView.loadDataWithBaseURL(
+            windowOrigin(article.url),
+            html,
+            null,
+            "UTF-8",
+            null,
+        )
     }
 
     fun reset() {
@@ -146,7 +141,6 @@ fun rememberWebViewState(
 ): WebViewState {
     val enableNativeScroll by rememberTalkbackPreference()
     val colors = articleTemplateColors()
-    val scope = rememberCoroutineScope()
     val context = LocalContext.current
 
     val reset = if (enableNativeScroll) {
@@ -195,7 +189,6 @@ fun rememberWebViewState(
         WebViewState(
             renderer,
             colors,
-            scope,
             enableNativeScroll = enableNativeScroll,
             webView,
         ).also {
