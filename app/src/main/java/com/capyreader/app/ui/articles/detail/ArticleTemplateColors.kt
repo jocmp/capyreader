@@ -20,7 +20,7 @@ fun articleTemplateColors() =
         secondary = colorScheme.secondary.toHTMLColor(),
         surfaceContainer = colorScheme.surfaceContainer.toHTMLColor(),
         surfaceTint = colorScheme.surfaceTint.toHTMLColor(),
-    )
+    ).asMap()
 
 
 private fun Color.toHTMLColor(): String {

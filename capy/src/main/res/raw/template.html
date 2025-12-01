@@ -5,23 +5,23 @@
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
     <style>
       :root {
-        --color-primary: %s;
-        --color-surface: %s;
-        --color-surface-container-highest: %s;
-        --color-on-surface: %s;
-        --color-on-surface-variant: %s;
-        --color-surface-variant: %s;
-        --color-primary-container: %s;
-        --color-on-primary-container: %s;
-        --color-secondary: %s;
-        --color-surface-container: %s;
-        --color-surface-tint: %s;
-        --article-top-margin: %s;
-        --article-font-size: %s;
-        --pre-white-space: %s;
+        --color-primary: {{color_primary}};
+        --color-surface: {{color_surface}};
+        --color-surface-container-highest: {{color_surface_container_highest}};
+        --color-on-surface: {{color_on_surface}};
+        --color-on-surface-variant: {{color_on_surface_variant}};
+        --color-surface-variant: {{color_surface_variant}};
+        --color-primary-container: {{color_primary_container}};
+        --color-on-primary-container: {{color_on_primary_container}};
+        --color-secondary: {{color_secondary}};
+        --color-surface-container: {{color_surface_container}};
+        --color-surface-tint: {{color_surface_tint}};
+        --article-top-margin: {{top_margin}};
+        --article-font-size: {{font_size}};
+        --pre-white-space: {{pre_white_space}};
       }
     </style>
-    %s
+    {{font_preload}}
     <link rel="stylesheet" href="https://appassets.androidplatform.net/assets/stylesheet.css">
     <script type="text/javascript" src="https://appassets.androidplatform.net/assets/media.js"></script>
     <script type="text/javascript" src="https://appassets.androidplatform.net/assets/mercury-parser.js"></script>
@@ -30,14 +30,14 @@
   <body>
     <article role="main">
       <header>
-        <a class="article__header" href="%s">
-          <h1 class="article__title">%s</h1>
-          <div>%s</div>
-          <div>%s</div>
+        <a class="article__header" href="{{external_link}}">
+          <h1 class="article__title">{{title}}</h1>
+          <div>{{byline}}</div>
+          <div>{{feed_name}}</div>
         </a>
       </header>
-      <div class="article__body article__body--font-%s">
-        <div id="article-body-content">%s</div>
+      <div class="article__body article__body--font-{{font_family}}">
+        <div id="article-body-content">{{body}}</div>
       </div>
     </article>
   </body>

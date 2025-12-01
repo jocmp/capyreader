@@ -20,16 +20,16 @@ fun ArticleTransition(
     AnimatedContent(
         targetState = article,
         transitionSpec = {
-//            if (hasShownArticle) {
-//                fadeIn(tween()) togetherWith fadeOut(tween(100))
-//            } else {
+            if (hasShownArticle) {
+                fadeIn(tween(100)) togetherWith fadeOut(tween(200))
+            } else {
                 fadeIn(tween(0)) togetherWith fadeOut(tween(0))
-//            }
+            }
         },
         contentKey = { it.id },
         label = "articleTransition"
-    ) { targetArticle ->
+    ) {
         setShownArticle(true)
-        content(targetArticle)
+        content(it)
     }
 }

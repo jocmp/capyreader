@@ -2,6 +2,7 @@ package com.jocmp.capy.articles
 
 import android.content.Context
 import com.jocmp.capy.Article
+import com.jocmp.capy.MacroProcessor
 import com.jocmp.capy.preferences.Preference
 import com.jocmp.capy.R as CapyRes
 
@@ -21,7 +22,7 @@ class ArticleRenderer(
     fun render(
         article: Article,
         byline: String,
-        colors: TemplateColors,
+        colors: Map<String, String>,
         hideImages: Boolean,
     ): String {
         val fontFamily = fontOption.get()
@@ -41,30 +42,20 @@ class ArticleRenderer(
 
         val content = buildContent(article, hideImages)
 
-        return String.format(
-            template,
-            colors.primary,
-            colors.surface,
-            colors.surfaceContainerHighest,
-            colors.onSurface,
-            colors.onSurfaceVariant,
-            colors.surfaceVariant,
-            colors.primaryContainer,
-            colors.onPrimaryContainer,
-            colors.secondary,
-            colors.surfaceContainer,
-            colors.surfaceTint,
-            topMargin(),
-            "${textSize.get()}px",
-            preWhiteSpace(),
-            fontPreload(fontFamily),
-            article.externalLink(),
-            title,
-            byline,
-            feedName,
-            fontFamily.slug,
-            content,
+        val substitutions = colors + mapOf(
+            "external_link" to article.externalLink(),
+            "title" to title,
+            "byline" to byline,
+            "feed_name" to feedName,
+            "font_size" to "${textSize.get()}px",
+            "font_family" to fontFamily.slug,
+            "font_preload" to fontPreload(fontFamily),
+            "top_margin" to topMargin(),
+            "pre_white_space" to preWhiteSpace(),
+            "body" to content,
         )
+
+        return MacroProcessor(template, substitutions).renderedText
     }
 
     private fun buildContent(article: Article, hideImages: Boolean): String {

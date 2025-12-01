@@ -24,8 +24,6 @@ import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
-import com.jocmp.capy.articles.TemplateColors
-import com.jocmp.capy.common.windowOrigin
 import org.koin.compose.koinInject
 import org.koin.core.component.KoinComponent
 
@@ -83,7 +81,7 @@ class AccompanistWebViewClient(
 @Stable
 class WebViewState(
     private val renderer: ArticleRenderer,
-    private val colors: TemplateColors,
+    private val colors: Map<String, String>,
     private val enableNativeScroll: Boolean,
     internal val webView: WebView,
 ) {
@@ -114,7 +112,7 @@ class WebViewState(
         )
 
         webView.loadDataWithBaseURL(
-            windowOrigin(article.url),
+            null,
             html,
             null,
             "UTF-8",
@@ -159,7 +157,7 @@ fun rememberWebViewState(
         )
     }
 
-    return remember(reset, enableNativeScroll) {
+    return remember {
         val webView = WebView(context).apply {
             settings.apply {
                 javaScriptEnabled = true

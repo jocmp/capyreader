@@ -9,7 +9,6 @@ import androidx.compose.ui.graphics.toArgb
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.jocmp.capy.articles.FontOption
-import com.jocmp.capy.articles.TemplateColors
 import org.koin.compose.koinInject
 
 @Composable
@@ -70,21 +69,15 @@ private fun updateFontFamily(webView: WebView, fontOption: FontOption) {
     }
 }
 
-private fun updateThemeColors(webView: WebView, colors: TemplateColors) {
+private fun updateThemeColors(webView: WebView, colors: Map<String, String>) {
+    val updatedColors = colors.map { (key, value) ->
+        "document.documentElement.style.setProperty('--${key.replace('_', '-')}', '$value');"
+    }.joinToString("\n")
+
     webView.evaluateJavascript(
         """
         (function() {
-          document.documentElement.style.setProperty('--color-primary', '${colors.primary}');
-          document.documentElement.style.setProperty('--color-surface', '${colors.surface}');
-          document.documentElement.style.setProperty('--color-surface-container-highest', '${colors.surfaceContainerHighest}');
-          document.documentElement.style.setProperty('--color-on-surface', '${colors.onSurface}');
-          document.documentElement.style.setProperty('--color-on-surface-variant', '${colors.onSurfaceVariant}');
-          document.documentElement.style.setProperty('--color-surface-variant', '${colors.surfaceVariant}');
-          document.documentElement.style.setProperty('--color-primary-container', '${colors.primaryContainer}');
-          document.documentElement.style.setProperty('--color-on-primary-container', '${colors.onPrimaryContainer}');
-          document.documentElement.style.setProperty('--color-secondary', '${colors.secondary}');
-          document.documentElement.style.setProperty('--color-surface-container', '${colors.surfaceContainer}');
-          document.documentElement.style.setProperty('--color-surface-tint', '${colors.surfaceTint}');
+          $updatedColors
         })();
         """.trimIndent()
     ) {
