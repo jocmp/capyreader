@@ -14,7 +14,9 @@ import com.capyreader.app.ui.Route
 import com.jocmp.capy.AccountManager
 import com.jocmp.capy.ClientCertManager
 import com.jocmp.capy.accounts.Credentials
+import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.withFreshRSSPath
+import com.jocmp.capy.accounts.withMinifluxPath
 import com.jocmp.capy.common.Async
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.withTrailingSeparator
@@ -107,7 +109,12 @@ class LoginViewModel(
         _url = _url
             .withProtocol
             .withTrailingSeparator
-            .let { withFreshRSSPath(it, source) }
+            .let {
+                when (source) {
+                    Source.MINIFLUX -> withMinifluxPath(it)
+                    else -> withFreshRSSPath(it, source)
+                }
+            }
     }
 
     private val credentials: Credentials
