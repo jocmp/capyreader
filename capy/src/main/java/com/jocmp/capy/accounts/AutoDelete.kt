@@ -8,6 +8,6 @@ enum class AutoDelete {
     EVERY_THREE_MONTHS;
 
     companion object {
-        val default = EVERY_MONTH
+        val default = EVERY_THREE_MONTHS
     }
 }
