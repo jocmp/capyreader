@@ -1,0 +1,29 @@
+-- Index for filtering/joining articles by feed
+CREATE INDEX articles_feed_id_index ON articles(feed_id);
+
+-- Index for sorting/filtering articles by published date
+CREATE INDEX articles_published_at_index ON articles(published_at);
+
+-- Index for filtering by read status
+CREATE INDEX article_statuses_read_index ON article_statuses(read);
+
+-- Index for filtering by starred status
+CREATE INDEX article_statuses_starred_index ON article_statuses(starred);
+
+-- Index for notification query filtering by updated_at
+CREATE INDEX article_statuses_updated_at_index ON article_statuses(updated_at);
+
+-- Index for taggings lookups by feed
+CREATE INDEX taggings_feed_id_index ON taggings(feed_id);
+
+-- Index for taggings lookups by folder name
+CREATE INDEX taggings_name_index ON taggings(name);
+
+-- Index for enclosure lookups by article
+CREATE INDEX enclosures_article_id_index ON enclosures(article_id);
+
+-- Index for counting active notifications
+CREATE INDEX article_notifications_dismissed_at_index ON article_notifications(dismissed_at);
+
+-- Index for saved search article JOINs (composite PK only indexes saved_search_id first)
+CREATE INDEX saved_search_articles_article_id_index ON saved_search_articles(article_id);

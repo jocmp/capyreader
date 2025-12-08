@@ -3,6 +3,7 @@ package com.jocmp.capy.persistence
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.ArticleFixture
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -18,7 +19,7 @@ class EnclosureRecordsTest {
     }
 
     @Test
-    fun create() {
+    fun create() = runTest {
         val enclosures = EnclosureRecords(database)
         val article = articleFixture.create()
 

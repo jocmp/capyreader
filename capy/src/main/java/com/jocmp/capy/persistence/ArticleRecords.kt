@@ -13,6 +13,7 @@ import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.toDateTimeFromSeconds
 import com.jocmp.capy.common.transactionWithErrorHandling
+import com.jocmp.capy.common.withIOContext
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.persistence.articles.ByArticleStatus
 import com.jocmp.capy.persistence.articles.ByFeed
@@ -32,8 +33,8 @@ internal class ArticleRecords internal constructor(
     val bySavedSearch = BySavedSearch(database)
     val byToday = ByToday(database)
 
-    fun find(articleID: String): Article? {
-        return database.articlesQueries.findBy(
+    suspend fun find(articleID: String): Article? = withIOContext {
+        database.articlesQueries.findBy(
             articleID = articleID,
             mapper = ::articleMapper
         ).executeAsOneOrNull()
@@ -115,17 +116,17 @@ internal class ArticleRecords internal constructor(
             .orEmpty()
     }
 
-    internal fun countActiveNotifications(): Long {
-        return notificationQueries
+    internal suspend fun countActiveNotifications(): Long = withIOContext {
+        notificationQueries
             .countActive()
             .executeAsOneOrNull() ?: 0
     }
 
-    internal fun dismissStaleNotifications() {
+    internal suspend fun dismissStaleNotifications() = withIOContext {
         notificationQueries.dismissStaleNotifications(deleted_at = nowUTC().toEpochSecond())
     }
 
-    internal fun dismissNotifications(ids: List<String>) {
+    internal suspend fun dismissNotifications(ids: List<String>) = withIOContext {
         ids.chunked(500).forEach { batchIDs ->
             notificationQueries.dismissNotifications(
                 articleIDs = batchIDs,
@@ -134,7 +135,7 @@ internal class ArticleRecords internal constructor(
         }
     }
 
-    fun deleteAllArticles() {
+    suspend fun deleteAllArticles() = withIOContext {
         database.articlesQueries.deleteAllArticles()
     }
 
@@ -274,8 +275,8 @@ internal class ArticleRecords internal constructor(
         return count.asFlow().mapToOneOrDefault(0L, Dispatchers.IO)
     }
 
-    fun countToday(status: ArticleStatus): Long {
-        return byToday.count(
+    suspend fun countToday(status: ArticleStatus): Long = withIOContext {
+        byToday.count(
             status = status,
             query = null,
             since = null

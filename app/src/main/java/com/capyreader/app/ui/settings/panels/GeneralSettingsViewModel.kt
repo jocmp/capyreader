@@ -110,7 +110,9 @@ class GeneralSettingsViewModel(
     }
 
     fun clearAllArticles() {
-        account.clearAllArticles()
+        viewModelScope.launch {
+            account.clearAllArticles()
+        }
     }
 
     fun addBlockedKeyword(keyword: String) {
