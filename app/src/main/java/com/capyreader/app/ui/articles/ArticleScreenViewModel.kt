@@ -555,7 +555,7 @@ class ArticleScreenViewModel(
         return feed.copy(count = counts.getOrDefault(feed.id, 0))
     }
 
-    private fun buildArticle(articleID: String): Article? {
+    private suspend fun buildArticle(articleID: String): Article? {
         val article = account.findArticle(articleID = articleID) ?: return null
 
         val fullContent = if (enableStickyFullContent && article.enableStickyFullContent) {
@@ -600,7 +600,9 @@ class ArticleScreenViewModel(
         )
 
         if (enableStickyFullContent) {
-            account.disableStickyContent(article.feedID)
+            viewModelScope.launch {
+                account.disableStickyContent(article.feedID)
+            }
         }
     }
 

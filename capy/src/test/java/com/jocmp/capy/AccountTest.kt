@@ -217,7 +217,7 @@ class AccountTest {
     }
 
     @Test
-    fun `it enables full content mode`() {
+    fun `it enables full content mode`() = runTest {
         val feed = FeedFixture(account.database).create()
 
         assertFalse(account.isFullContentEnabled(feed.id))

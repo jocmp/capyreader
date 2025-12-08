@@ -45,7 +45,7 @@ class NotificationHelper(
         }
     }
 
-    fun dismissNotifications(ids: List<String>) {
+    suspend fun dismissNotifications(ids: List<String>) {
         account.dismissNotifications(ids)
 
         ids.forEach {
@@ -122,7 +122,7 @@ class NotificationHelper(
         notificationManager.createNotificationChannel(channel)
     }
 
-    private fun dismissStaleNotifications() {
+    private suspend fun dismissStaleNotifications() {
         if (activeNotifications.isEmpty()) {
             account.dismissStaleNotifications()
         }

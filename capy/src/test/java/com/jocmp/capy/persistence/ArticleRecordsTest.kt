@@ -297,7 +297,7 @@ class ArticleRecordsTest {
     }
 
     @Test
-    fun markUnread() {
+    fun markUnread() = runTest {
         val article = articleFixture.create()
         val articleRecords = ArticleRecords(database)
 
@@ -309,7 +309,7 @@ class ArticleRecordsTest {
     }
 
     @Test
-    fun addStar() {
+    fun addStar() = runTest {
         val article = articleFixture.create()
         val articleRecords = ArticleRecords(database)
 
@@ -321,7 +321,7 @@ class ArticleRecordsTest {
     }
 
     @Test
-    fun removeStar() {
+    fun removeStar() = runTest {
         val article = articleFixture.create()
         val articleRecords = ArticleRecords(database)
 
@@ -333,7 +333,7 @@ class ArticleRecordsTest {
     }
 
     @Test
-    fun markAllUnread() {
+    fun markAllUnread() = runTest {
         val articleIDs = 3.repeated { RandomUUID.generate() }
         val articleRecords = ArticleRecords(database)
         val readArticle = articleFixture.create(read = false)
@@ -351,7 +351,7 @@ class ArticleRecordsTest {
     }
 
     @Test
-    fun deleteOldArticles() {
+    fun deleteOldArticles() = runTest {
         val oldPublishedAt = nowUTC().minusMonths(4).toEpochSecond()
         val articleRecords = ArticleRecords(database)
 
@@ -377,7 +377,7 @@ class ArticleRecordsTest {
     }
 
     @Test
-    fun deleteAllArticles() {
+    fun deleteAllArticles() = runTest {
         val oldPublishedAt = nowUTC().minusMonths(4).toEpochSecond()
         val articleRecords = ArticleRecords(database)
 
@@ -403,7 +403,7 @@ class ArticleRecordsTest {
     }
 
     @Test
-    fun createStatus() {
+    fun createStatus() = runTest {
         val article = articleFixture.create(read = false)
 
         articleRecords.createStatus(
@@ -416,7 +416,7 @@ class ArticleRecordsTest {
     }
 
     @Test
-    fun updateStatus() {
+    fun updateStatus() = runTest {
         var article = articleFixture.create(read = false)
         val updated = nowUTC()
 

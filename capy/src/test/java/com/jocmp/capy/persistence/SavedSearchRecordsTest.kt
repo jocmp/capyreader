@@ -47,7 +47,7 @@ class SavedSearchRecordsTest {
     }
 
     @Test
-    fun find_withInvalidID() {
+    fun find_withInvalidID() = runTest {
         val result = savedSearchRecords.find(savedSearchID = "bogus")
 
         assertNull(result)
