@@ -87,9 +87,10 @@ fun ArticleRow(
     val imageURL = article.imageURL
     val colors = listItemColors(
         selected = selected,
-        read = article.read
+        read = article.read,
+        starred = article.starred,
     )
-    val feedNameColor = findFeedNameColor(read = article.read)
+    val feedNameColor = findFeedNameColor(read = article.read, starred = article.starred)
     val haptics = LocalHapticFeedback.current
     val (isArticleMenuOpen, setArticleMenuOpen) = remember { mutableStateOf(false) }
     val openArticleMenu = {
@@ -274,22 +275,24 @@ fun PlaceholderArticleRow(imagePreview: ImagePreview = ImagePreview.NONE) {
 private fun listItemColors(
     selected: Boolean,
     read: Boolean,
+    starred: Boolean,
 ): ListItemColors {
     val defaults = ListItemDefaults.colors()
     val colorScheme = MaterialTheme.colorScheme
+    val shouldDisable = read && !starred
 
     return ListItemDefaults.colors(
         containerColor = if (selected) colorScheme.surfaceVariant else defaults.containerColor,
-        headlineColor = if (read) defaults.disabledHeadlineColor else defaults.headlineColor,
-        supportingColor = if (read) defaults.disabledHeadlineColor else defaults.supportingTextColor
+        headlineColor = if (shouldDisable) defaults.disabledHeadlineColor else defaults.headlineColor,
+        supportingColor = if (shouldDisable) defaults.disabledHeadlineColor else defaults.supportingTextColor
     )
 }
 
 @Composable
-fun findFeedNameColor(read: Boolean): Color {
+fun findFeedNameColor(read: Boolean, starred: Boolean): Color {
     val defaults = ListItemDefaults.colors()
 
-    return if (read) {
+    return if (read && !starred) {
         defaults.disabledHeadlineColor
     } else {
         defaults.overlineColor
