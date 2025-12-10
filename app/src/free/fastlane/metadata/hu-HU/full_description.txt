@@ -1,0 +1,13 @@
+Ahogyan a névadója, a Capy Reader is egy kicsi RSS olvasó, amely a megközelíthetőségre és az egyszerűségre összpontosít.
+
+Néhány funkció:
+
+• Szinkronizálás Feedbin, FreshRSS segítségével, vagy közvetlenül az eszközre
+• Olvasott és csillaggal jelölt cikkek követése
+• Cikk keresés
+• Címlap widget
+• Értesítések
+• Teljes tartalom mód
+• Sötét mód
+• Nagy képernyős támogatás
+• Mentett hírfolyamok importálása és exportálása
