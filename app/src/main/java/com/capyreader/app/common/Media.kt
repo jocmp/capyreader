@@ -8,10 +8,21 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 @Serializable
-data class Media(
+data class MediaItem(
     val url: String,
     val altText: String?
 )
+
+@Serializable
+data class Media(
+    val images: List<MediaItem>,
+    val currentIndex: Int = 0
+) {
+    constructor(url: String, altText: String?) : this(
+        images = listOf(MediaItem(url, altText)),
+        currentIndex = 0
+    )
+}
 
 val Media.Companion.Saver
     get() = Saver<MutableState<Media?>, String>(

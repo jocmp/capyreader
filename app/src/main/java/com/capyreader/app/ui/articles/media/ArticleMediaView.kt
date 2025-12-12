@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
@@ -42,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import coil.request.ImageRequest
 import com.capyreader.app.common.Media
+import com.capyreader.app.common.MediaItem
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferredMaxWidth
 import com.capyreader.app.ui.EdgeToEdgeHelper.isEdgeToEdgeAvailable
@@ -66,50 +69,41 @@ fun ArticleMediaView(
     media: Media?,
     appPreferences: AppPreferences = koinInject()
 ) {
-    val url = media?.url ?: return
+    if (media == null || media.images.isEmpty()) return
+    
     val view = LocalView.current
-    val caption = media.altText?.ifBlank { null }
-
-    var showError by rememberSaveable { mutableStateOf(false) }
-
-    val imageState = rememberZoomableImageState(
-        rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f))
+    val images = media.images
+    val initialPage = media.currentIndex.coerceIn(0, images.size - 1)
+    
+    val pagerState = rememberPagerState(
+        initialPage = initialPage,
+        pageCount = { images.size }
     )
 
     var showOverlay by rememberSaveable { mutableStateOf(true) }
+    val currentImage = images.getOrNull(pagerState.currentPage)
 
     MediaScaffold(
         onDismissRequest = onDismissRequest,
         showOverlay = showOverlay,
         footer = {
             CaptionOverlay(
-                caption = caption,
-                imageUrl = url
+                caption = currentImage?.altText?.ifBlank { null },
+                imageUrl = currentImage?.url ?: "",
+                currentPage = pagerState.currentPage + 1,
+                totalPages = images.size
             )
         }
     ) {
-        ZoomableAsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(url)
-                .listener(
-                    onError = { _, _ ->
-                        showError = true
-                    },
-                )
-                .build(),
-            state = imageState,
-            contentDescription = null,
-            onClick = {
-                showOverlay = !showOverlay
-            },
-            modifier = Modifier.fillMaxSize(),
-            alignment = Alignment.Center,
-        )
-
-        if (!imageState.isImageDisplayed && !showError) {
-            LoadingView()
-        } else if (showError) {
-            ImageErrorView()
+        HorizontalPager(
+            state = pagerState,
+            modifier = Modifier.fillMaxSize()
+        ) { page ->
+            val imageItem = images.getOrNull(page) ?: return@HorizontalPager
+            ImagePage(
+                imageItem = imageItem,
+                onToggleOverlay = { showOverlay = !showOverlay }
+            )
         }
     }
 
@@ -118,7 +112,7 @@ fun ArticleMediaView(
     val showLightStatusBar = themeMode.showAppearanceLightStatusBars()
     val pureBlack by appPreferences.pureBlackDarkMode.collectChangesWithCurrent()
 
-    DisposableEffect(url) {
+    DisposableEffect(media) {
         val window = (view.context as Activity).window
         val previousNavigationBarColor = window.navigationBarColor
 
@@ -141,6 +135,42 @@ fun ArticleMediaView(
 
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
                 showLightStatusBar
+        }
+    }
+}
+
+@Composable
+private fun ImagePage(
+    imageItem: MediaItem,
+    onToggleOverlay: () -> Unit
+) {
+    var showError by rememberSaveable(imageItem.url) { mutableStateOf(false) }
+
+    val imageState = rememberZoomableImageState(
+        rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f))
+    )
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        ZoomableAsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(imageItem.url)
+                .listener(
+                    onError = { _, _ ->
+                        showError = true
+                    },
+                )
+                .build(),
+            state = imageState,
+            contentDescription = imageItem.altText,
+            onClick = { onToggleOverlay() },
+            modifier = Modifier.fillMaxSize(),
+            alignment = Alignment.Center,
+        )
+
+        if (!imageState.isImageDisplayed && !showError) {
+            LoadingView()
+        } else if (showError) {
+            ImageErrorView()
         }
     }
 }
@@ -216,7 +246,12 @@ fun MediaScaffold(
 }
 
 @Composable
-private fun CaptionOverlay(caption: String?, imageUrl: String) {
+private fun CaptionOverlay(
+    caption: String?, 
+    imageUrl: String,
+    currentPage: Int = 1,
+    totalPages: Int = 1
+) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalAlignment = if (isCompact()) {
@@ -229,6 +264,14 @@ private fun CaptionOverlay(caption: String?, imageUrl: String) {
             .background(Color.Black.copy(alpha = 0.8f))
             .padding(vertical = 8.dp, horizontal = 16.dp)
     ) {
+        if (totalPages > 1) {
+            Text(
+                "$currentPage / $totalPages",
+                color = MediaColors.textColor.copy(alpha = 0.7f),
+                style = MaterialTheme.typography.labelMedium,
+                modifier = Modifier.padding(top = 4.dp)
+            )
+        }
         if (!caption.isNullOrBlank()) {
             Box(
                 Modifier
@@ -276,8 +319,10 @@ private fun ArticleMediaViewPreview_Foldable() {
         ) {
             Box(Modifier.align(Alignment.BottomStart)) {
                 CaptionOverlay(
-                    "A description of the picture you're taking a look at",
-                    "http://example.com/test.jpg"
+                    caption = "A description of the picture you're taking a look at",
+                    imageUrl = "http://example.com/test.jpg",
+                    currentPage = 2,
+                    totalPages = 5
                 )
             }
         }
@@ -295,8 +340,10 @@ private fun ArticleMediaViewPreview_Phone() {
         ) {
             Box(Modifier.align(Alignment.BottomStart)) {
                 CaptionOverlay(
-                    "A description",
-                    "http://example.com/test.jpg"
+                    caption = "A description",
+                    imageUrl = "http://example.com/test.jpg",
+                    currentPage = 1,
+                    totalPages = 3
                 )
             }
         }
@@ -315,8 +362,10 @@ private fun ArticleMediaViewPreview_Tablet() {
         ) {
             Box(Modifier.align(Alignment.BottomStart)) {
                 CaptionOverlay(
-                    "A description of the picture you're taking a look at",
-                    "http://example.com/test.jpg"
+                    caption = "A description of the picture you're taking a look at",
+                    imageUrl = "http://example.com/test.jpg",
+                    currentPage = 1,
+                    totalPages = 1
                 )
             }
         }

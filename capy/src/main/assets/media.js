@@ -15,13 +15,23 @@ function configureVideoTags() {
 }
 
 function addImageClickListeners() {
-  [...document.getElementsByTagName("img")].forEach((img) => {
-    if (img.classList.contains("iframe-embed__image")) {
-      return;
-    }
+  const images = [...document.getElementsByTagName("img")].filter(
+    (img) => !img.classList.contains("iframe-embed__image")
+  );
 
+  images.forEach((img, index) => {
     img.addEventListener("click", () => {
-      Android.openImage(img.src, img.alt);
+      // Try to use the new gallery method if available
+      if (Android.openImageGallery) {
+        const imageData = images.map((i) => ({
+          src: i.src,
+          alt: i.alt || null,
+        }));
+        Android.openImageGallery(JSON.stringify(imageData), index);
+      } else {
+        // Fallback to old method
+        Android.openImage(img.src, img.alt);
+      }
     });
   });
 }
