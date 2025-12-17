@@ -1,5 +1,3 @@
-// @ts-check
-
 function configureVideoTags() {
   [...document.getElementsByTagName("video")].forEach((v) => {
     v.setAttribute("preload", "auto");
@@ -15,14 +13,61 @@ function configureVideoTags() {
 }
 
 function addImageClickListeners() {
-  [...document.getElementsByTagName("img")].forEach((img) => {
-    if (img.classList.contains("iframe-embed__image")) {
-      return;
-    }
+  const images = [...document.getElementsByTagName("img")].filter(
+    (img) => !img.classList.contains("iframe-embed__image")
+  );
 
+  /** @type {MediaItem[]} */
+  const galleryImages = images.map((i) => ({
+    url: i.src,
+    altText: i.alt || null,
+  }));
+
+  images.forEach((img, index) => {
     img.addEventListener("click", () => {
-      Android.openImage(img.src, img.alt);
+      Android.openImageGallery(JSON.stringify(galleryImages), index);
     });
+  });
+}
+
+/**
+ * @param {HTMLImageElement} img
+ */
+function setupImageLoadHandler(img) {
+  if (img.classList.contains("loaded")) {
+    return;
+  }
+
+  img.onload = () => img.classList.add("loaded");
+  img.onerror = () => img.classList.add("loaded");
+
+  // Check after attaching - catches race condition
+  if (img.complete) {
+    img.classList.add("loaded");
+  }
+}
+
+function addImageLoadListeners() {
+  [...document.getElementsByTagName("img")].forEach(setupImageLoadHandler);
+}
+
+function observeImages() {
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      mutation.addedNodes.forEach((node) => {
+        if (node.nodeName === "IMG") {
+          setupImageLoadHandler(/** @type {HTMLImageElement} */ (node));
+        } else if (/** @type {Element} */ (node).querySelectorAll) {
+          /** @type {Element} */
+          (node).querySelectorAll("img").forEach(setupImageLoadHandler);
+        }
+      });
+    });
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
   });
 }
 
@@ -99,15 +144,19 @@ function swapPlaceholder(embed, src, youtubeID) {
   const playButton = document.createElement("div");
   playButton.classList.add("iframe-embed__play-button");
 
-  const placeholder = document.createElement("div");
+  const placeholder = document.createElement("a");
   placeholder.classList.add("iframe-embed");
-  placeholder.setAttribute("data-iframe-src", autoplaySrc(src));
+  placeholder.setAttribute(
+    "href",
+    `https://www.youtube.com/watch?v=${youtubeID}`
+  );
   placeholder.appendChild(placeholderImage);
   placeholder.appendChild(playButton);
 
   embed.replaceWith(placeholder);
 }
 
+/** @param {string} id */
 function imageURL(id) {
   return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
 }
@@ -142,6 +191,7 @@ const YOUTUBE_DOMAINS = [
  * @param {(event: Event) => void} callback
  */
 function longPress(element, callback) {
+  /** @type {number | undefined} */
   let timer;
 
   const start = (/** @type {Event} */ event) => {
@@ -169,6 +219,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
 window.onload = () => {
   addImageClickListeners();
+  addImageLoadListeners();
+  observeImages();
   addEmbedListeners();
   configureVideoTags();
 };

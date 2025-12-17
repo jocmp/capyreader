@@ -2,31 +2,36 @@ package com.jocmp.capy.articles
 
 import com.jocmp.capy.Article
 import org.json.JSONObject
-import org.jsoup.nodes.Document
 
 fun parseHtml(
     article: Article,
-    document: Document,
-    hideImages: Boolean,
-    fullContentParser: FullContentParserType
+    hideImages: Boolean
 ): String {
-    val html = document.html()
+    val json = JSONObject(
+        mapOf(
+            "url" to article.url?.toString(),
+            "html" to article.content,
+            "hideImages" to hideImages,
+        )
+    )
 
     return """
       <script>
         (async () => {
-          const input = ${
-        JSONObject(
-            mapOf(
-                "url" to article.url?.toString(),
-                "html" to html,
-                "hideImages" to hideImages,
-                "parserType" to fullContentParser.toString(),
-            )
-        )
-    };
-
+          const input = $json;
           displayFullContent(input);
+        })();
+      </script>
+    """.trimIndent()
+}
+
+fun postProcessScript(article: Article, hideImages: Boolean): String {
+    val baseUrl = article.url?.toString() ?: article.siteURL ?: ""
+
+    return """
+      <script>
+        (function() {
+          postProcessContent("$baseUrl", $hideImages);
         })();
       </script>
     """.trimIndent()

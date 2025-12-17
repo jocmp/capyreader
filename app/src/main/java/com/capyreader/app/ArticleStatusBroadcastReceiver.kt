@@ -5,6 +5,9 @@ import android.content.Context
 import android.content.Intent
 import com.capyreader.app.notifications.NotificationHelper
 import com.capyreader.app.sync.Sync
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -13,14 +16,21 @@ class ArticleStatusBroadcastReceiver : BroadcastReceiver(), KoinComponent {
 
     override fun onReceive(context: Context, intent: Intent) {
         val articleID = intent.getStringExtra(ARTICLE_ID) ?: return
+        val pendingResult = goAsync()
 
-        when (intent.action) {
-            ACTION_DISMISS_NOTIFICATION ->
-                handler.dismissNotification(articleID)
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                when (intent.action) {
+                    ACTION_DISMISS_NOTIFICATION ->
+                        handler.dismissNotification(articleID)
 
-            ACTION_MARK_AS_READ -> {
-                handler.markAsRead(articleID, context = context)
-                handler.dismissNotification(articleID)
+                    ACTION_MARK_AS_READ -> {
+                        handler.markAsRead(articleID, context = context)
+                        handler.dismissNotification(articleID)
+                    }
+                }
+            } finally {
+                pendingResult.finish()
             }
         }
     }
@@ -28,7 +38,7 @@ class ArticleStatusBroadcastReceiver : BroadcastReceiver(), KoinComponent {
     class BroadcastHandler : KoinComponent {
         private val notificationHelper by inject<NotificationHelper>()
 
-        fun dismissNotification(articleID: String) {
+        suspend fun dismissNotification(articleID: String) {
             notificationHelper.dismissNotifications(listOf(articleID))
         }
 

@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -58,23 +57,15 @@ fun ArticleReader(
             WebView(
                 modifier = Modifier.fillMaxSize(),
                 state = webViewState,
+                article = article,
+                showImages = showImages,
             )
         }
     } else {
-        ScrollableWebView(webViewState)
-    }
-
-    LaunchedEffect(article.id, article.content) {
-        webViewState.loadHtml(article, showImages = showImages)
+        ScrollableWebView(webViewState, article, showImages)
     }
 
     ArticleStyleListener(webView = webViewState.webView)
-
-    DisposableEffect(article.id) {
-        onDispose {
-            webViewState.reset()
-        }
-    }
 
     if (shareLink != null) {
         ShareLinkDialog(
@@ -87,13 +78,13 @@ fun ArticleReader(
 }
 
 @Composable
-fun ScrollableWebView(webViewState: WebViewState) {
+fun ScrollableWebView(webViewState: WebViewState, article: Article, showImages: Boolean) {
     var maxHeight by remember { mutableFloatStateOf(0f) }
-    val scrollState = rememberSaveable(saver = ScrollState.Saver) {
+    val scrollState = rememberSaveable(article.id, saver = ScrollState.Saver) {
         ScrollState(initial = 0)
     }
 
-    var lastScrollYPercent by rememberSaveable { mutableFloatStateOf(0f) }
+    var lastScrollYPercent by rememberSaveable(article.id) { mutableFloatStateOf(0f) }
 
     CornerTapGestureScroll(
         maxArticleHeight = maxHeight,
@@ -113,6 +104,8 @@ fun ScrollableWebView(webViewState: WebViewState) {
                         .fillMaxWidth()
                         .wrapContentHeight(),
                     state = webViewState,
+                    article = article,
+                    showImages = showImages,
                 )
             }
         }

@@ -3,15 +3,26 @@ package com.capyreader.app.common
 import android.webkit.JavascriptInterface
 import com.capyreader.app.ui.components.ShareLink
 import com.jocmp.capy.common.optionalURL
+import com.jocmp.capy.logging.CapyLog
+import kotlinx.serialization.json.Json
 
 class WebViewInterface(
     private val navigateToMedia: (media: Media) -> Unit,
     private val onRequestLinkDialog: (link: ShareLink) -> Unit,
 ) {
     @JavascriptInterface
-    fun openImage(src: String, altText: String?) {
-        optionalURL(src)?.let {
-            navigateToMedia(Media(url = src, altText = altText))
+    fun openImageGallery(imagesJson: String, clickedIndex: Int) {
+        try {
+            val mediaItems = Json.decodeFromString<List<MediaItem>>(imagesJson)
+                .filter { optionalURL(it.url) != null }
+
+            if (mediaItems.isNotEmpty()) {
+                val index = clickedIndex.coerceIn(0, mediaItems.size - 1)
+
+                navigateToMedia(Media(images = mediaItems, startIndex = index))
+            }
+        } catch (e: Exception) {
+            CapyLog.error("open_image_gallery", e)
         }
     }
 

@@ -1,0 +1,7 @@
+• Apply sort order to all articles, not just unread
+• Auto-delete old articles every month by default
+• Close drawer when navigating to settings
+• Hide 'mark read above' option on first article
+• Remove Defuddle as a full content option
+• Improve loading speed when switching between articles
+• Update translations for Chinese, Hungarian and Russian thanks to volunteers!

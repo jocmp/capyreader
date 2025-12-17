@@ -1,7 +1,9 @@
 package com.capyreader.app.ui.settings.panels
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.jocmp.capy.Account
+import kotlinx.coroutines.launch
 
 class SettingsViewModel(
     private val account: Account,
@@ -9,14 +11,20 @@ class SettingsViewModel(
     val feeds = account.allFeeds
 
     fun toggleNotifications(feedID: String, enabled: Boolean) {
-        account.toggleNotifications(feedID = feedID, enabled = enabled)
+        viewModelScope.launch {
+            account.toggleNotifications(feedID = feedID, enabled = enabled)
+        }
     }
 
     fun selectAllFeedNotifications() {
-        account.toggleAllFeedNotifications(enabled = true)
+        viewModelScope.launch {
+            account.toggleAllFeedNotifications(enabled = true)
+        }
     }
 
     fun deselectAllFeedNotifications() {
-        account.toggleAllFeedNotifications(enabled = false)
+        viewModelScope.launch {
+            account.toggleAllFeedNotifications(enabled = false)
+        }
     }
 }

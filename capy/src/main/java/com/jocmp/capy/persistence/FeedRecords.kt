@@ -5,18 +5,18 @@ import app.cash.sqldelight.coroutines.mapToList
 import com.jocmp.capy.Feed
 import com.jocmp.capy.FeedPriority
 import com.jocmp.capy.Folder
+import com.jocmp.capy.common.withIOContext
 import com.jocmp.capy.db.Database
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
-import kotlin.coroutines.coroutineContext
 
 internal class FeedRecords(private val database: Database) {
-    fun find(id: String): Feed? {
-        return database.feedsQueries.find(id, mapper = ::feedMapper).executeAsOneOrNull()
+    suspend fun find(id: String): Feed? = withIOContext {
+        database.feedsQueries.find(id, mapper = ::feedMapper).executeAsOneOrNull()
     }
 
-    fun upsert(
+    suspend fun upsert(
         feedID: String,
         subscriptionID: String,
         title: String,
@@ -24,7 +24,7 @@ internal class FeedRecords(private val database: Database) {
         siteURL: String?,
         faviconURL: String?,
         priority: String? = null,
-    ): Feed? {
+    ): Feed? = withIOContext {
         database.feedsQueries.upsert(
             id = feedID,
             subscription_id = subscriptionID,
@@ -35,7 +35,7 @@ internal class FeedRecords(private val database: Database) {
             priority = priority,
         )
 
-        return find(feedID)
+        find(feedID)
     }
 
     fun update(feedID: String, title: String) {
@@ -49,43 +49,43 @@ internal class FeedRecords(private val database: Database) {
         database.feedsQueries.updateFavicon(faviconURL = null, feedID = feedID)
     }
 
-    fun isFullContentEnabled(feedID: String): Boolean {
-        return database.feedsQueries.isFullContentEnabled(feedID).executeAsOneOrNull() ?: false
+    suspend fun isFullContentEnabled(feedID: String): Boolean = withIOContext {
+        database.feedsQueries.isFullContentEnabled(feedID).executeAsOneOrNull() ?: false
     }
 
-    fun updateStickyFullContent(feedID: String, enabled: Boolean) {
+    suspend fun updateStickyFullContent(feedID: String, enabled: Boolean) = withIOContext {
         database.feedsQueries.updateStickyFullContent(
             enabled = enabled,
             feedID = feedID
         )
     }
 
-    fun updateOpenInBrowser(feedID: String, enabled: Boolean) {
+    suspend fun updateOpenInBrowser(feedID: String, enabled: Boolean) = withIOContext {
         database.feedsQueries.updateOpenInBrowser(
             enabled = enabled,
             feedID = feedID
         )
     }
 
-    fun enableNotifications(feedID: String, enabled: Boolean) {
+    suspend fun enableNotifications(feedID: String, enabled: Boolean) = withIOContext {
         database.feedsQueries.enableNotifications(
             enabled = enabled,
             feedID = feedID
         )
     }
 
-    fun toggleAllNotifications(enabled: Boolean) {
+    suspend fun toggleAllNotifications(enabled: Boolean) = withIOContext {
         database.feedsQueries.toggleAllNotifications(enabled = enabled)
     }
 
-    fun clearStickyFullContent() {
+    suspend fun clearStickyFullContent() = withIOContext {
         database.feedsQueries.clearStickyFullContent()
     }
 
     suspend fun findFolder(title: String): Folder? {
         val feeds = database.feedsQueries.findByFolder(title, mapper = ::feedMapper)
             .asFlow()
-            .mapToList(coroutineContext)
+            .mapToList(Dispatchers.IO)
             .firstOrNull()
             .orEmpty()
 

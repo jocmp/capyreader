@@ -199,11 +199,11 @@ data class Account(
         }
     }
 
-    fun findFeed(feedID: String): Feed? {
+    suspend fun findFeed(feedID: String): Feed? {
         return feedRecords.find(feedID)
     }
 
-    fun findSavedSearch(savedSearchID: String): SavedSearch? {
+    suspend fun findSavedSearch(savedSearchID: String): SavedSearch? {
         return savedSearchRecords.find(savedSearchID)
     }
 
@@ -211,7 +211,7 @@ data class Account(
         return feedRecords.findFolder(title = title)
     }
 
-    fun findArticle(articleID: String): Article? {
+    suspend fun findArticle(articleID: String): Article? {
         if (articleID.isBlank()) {
             return null
         }
@@ -301,11 +301,11 @@ data class Account(
         return articleRecords.createNotifications(since = since)
     }
 
-    fun dismissStaleNotifications() {
+    suspend fun dismissStaleNotifications() {
         articleRecords.dismissStaleNotifications()
     }
 
-    fun countActiveNotifications(): Long {
+    suspend fun countActiveNotifications(): Long {
         return articleRecords.countActiveNotifications()
     }
 
@@ -316,7 +316,7 @@ data class Account(
         return articleRecords.byStatus.count(status).asFlow().mapToOne(Dispatchers.IO)
     }
 
-    fun dismissNotifications(ids: List<String>) {
+    suspend fun dismissNotifications(ids: List<String>) {
         articleRecords.dismissNotifications(ids)
     }
 
@@ -327,39 +327,39 @@ data class Account(
         OPMLImporter(this).import(onProgress, inputStream)
     }
 
-    fun isFullContentEnabled(feedID: String): Boolean {
+    suspend fun isFullContentEnabled(feedID: String): Boolean {
         return feedRecords.isFullContentEnabled(feedID = feedID)
     }
 
-    fun enableStickyContent(feedID: String) {
+    suspend fun enableStickyContent(feedID: String) {
         feedRecords.updateStickyFullContent(enabled = true, feedID = feedID)
     }
 
-    fun toggleNotifications(feedID: String, enabled: Boolean) {
+    suspend fun toggleNotifications(feedID: String, enabled: Boolean) {
         feedRecords.enableNotifications(enabled = enabled, feedID = feedID)
     }
 
-    fun toggleAllFeedNotifications(enabled: Boolean) {
+    suspend fun toggleAllFeedNotifications(enabled: Boolean) {
         feedRecords.toggleAllNotifications(enabled)
     }
 
-    fun expandFolder(folderName: String, expanded: Boolean) {
+    suspend fun expandFolder(folderName: String, expanded: Boolean) {
         folderRecords.expand(folderName, expanded)
     }
 
-    fun updateOpenInBrowser(feedID: String, enabled: Boolean) {
+    suspend fun updateOpenInBrowser(feedID: String, enabled: Boolean) {
         feedRecords.updateOpenInBrowser(feedID, enabled)
     }
 
-    fun disableStickyContent(feedID: String) {
+    suspend fun disableStickyContent(feedID: String) {
         feedRecords.updateStickyFullContent(enabled = false, feedID = feedID)
     }
 
-    fun clearAllArticles() {
+    suspend fun clearAllArticles() {
         articleRecords.deleteAllArticles()
     }
 
-    fun clearStickyFullContent() {
+    suspend fun clearStickyFullContent() {
         feedRecords.clearStickyFullContent()
     }
 

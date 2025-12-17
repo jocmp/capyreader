@@ -3,6 +3,7 @@ package com.jocmp.capy.persistence
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.jocmp.capy.SavedSearch
+import com.jocmp.capy.common.withIOContext
 import com.jocmp.capy.db.Database
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -19,8 +20,8 @@ internal class SavedSearchRecords(private val database: Database) {
         return savedSearchQueries.allIDs().executeAsList()
     }
 
-    internal fun find(savedSearchID: String): SavedSearch? {
-        return savedSearchQueries.find(savedSearchID, mapper = ::mapper).executeAsOneOrNull()
+    internal suspend fun find(savedSearchID: String): SavedSearch? = withIOContext {
+        savedSearchQueries.find(savedSearchID, mapper = ::mapper).executeAsOneOrNull()
     }
 
     internal fun upsert(

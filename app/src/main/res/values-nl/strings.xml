@@ -267,7 +267,6 @@
     <string name="mark_read_position_floating_action_button">Zwevende actieknop</string>
     <string name="mark_all_read_button_position">Alles gelezen markeren knop positie</string>
     <string name="settings_display_miscellaneous_title">Diversen</string>
-    <string name="settings_full_content_parser">Volledige Inhoud Parser</string>
     <string name="open_articles_in_browser">Artikelen openen in browser</string>
     <string name="selected">Geselecteerd</string>
     <string name="filter_today">Vandaag</string>

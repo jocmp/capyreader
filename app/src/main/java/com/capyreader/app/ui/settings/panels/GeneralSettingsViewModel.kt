@@ -11,7 +11,6 @@ import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.refresher.RefreshScheduler
 import com.jocmp.capy.Account
 import com.jocmp.capy.accounts.AutoDelete
-import com.jocmp.capy.articles.FullContentParserType
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.preferences.getAndSet
 import kotlinx.coroutines.Dispatchers
@@ -55,8 +54,6 @@ class GeneralSettingsViewModel(
         .preferences
         .keywordBlocklist
         .stateIn(viewModelScope)
-
-    val fullContentParser = appPreferences.fullContentParser.stateIn(viewModelScope)
 
     fun updateRefreshInterval(interval: RefreshInterval) {
         refreshScheduler.update(interval)
@@ -106,10 +103,6 @@ class GeneralSettingsViewModel(
         }
     }
 
-    fun updateFullContentParser(type: FullContentParserType) {
-        appPreferences.fullContentParser.set(type)
-    }
-
     fun updateMarkReadOnScroll(enable: Boolean) {
         appPreferences.articleListOptions.markReadOnScroll.set(enable)
 
@@ -117,7 +110,9 @@ class GeneralSettingsViewModel(
     }
 
     fun clearAllArticles() {
-        account.clearAllArticles()
+        viewModelScope.launch {
+            account.clearAllArticles()
+        }
     }
 
     fun addBlockedKeyword(keyword: String) {

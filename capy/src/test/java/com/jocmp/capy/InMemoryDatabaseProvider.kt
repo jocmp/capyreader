@@ -16,10 +16,10 @@ object InMemoryDatabaseProvider : DatabaseProvider {
     }
 }
 
-internal fun Database.reload(article: Article) = ArticleRecords(this).reload(article)
+internal suspend fun Database.reload(article: Article) = ArticleRecords(this).reload(article)
 
-internal fun Database.reload(feed: Feed) = FeedRecords(this).reload(feed)
+internal suspend fun Database.reload(feed: Feed) = FeedRecords(this).reload(feed)
 
-internal fun FeedRecords.reload(feed: Feed) = find(feed.id)!!
+internal suspend fun FeedRecords.reload(feed: Feed) = find(feed.id)!!
 
-internal fun ArticleRecords.reload(article: Article) = find(article.id)
+internal suspend fun ArticleRecords.reload(article: Article) = find(article.id)

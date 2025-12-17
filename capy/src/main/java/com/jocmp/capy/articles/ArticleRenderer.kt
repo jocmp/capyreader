@@ -4,8 +4,6 @@ import android.content.Context
 import com.jocmp.capy.Article
 import com.jocmp.capy.MacroProcessor
 import com.jocmp.capy.preferences.Preference
-import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
 import com.jocmp.capy.R as CapyRes
 
 class ArticleRenderer(
@@ -14,7 +12,6 @@ class ArticleRenderer(
     private val fontOption: Preference<FontOption>,
     private val hideTopMargin: Preference<Boolean>,
     private val enableHorizontalScroll: Preference<Boolean>,
-    private val parser: Preference<FullContentParserType>,
 ) {
     private val template by lazy {
         context.resources.openRawResource(CapyRes.raw.template)
@@ -43,6 +40,8 @@ class ArticleRenderer(
             article.feedName
         }
 
+        val content = buildContent(article, hideImages)
+
         val substitutions = colors + mapOf(
             "external_link" to article.externalLink(),
             "title" to title,
@@ -53,47 +52,19 @@ class ArticleRenderer(
             "font_preload" to fontPreload(fontFamily),
             "top_margin" to topMargin(),
             "pre_white_space" to preWhiteSpace(),
+            "body" to content,
         )
 
-        val html = MacroProcessor(
-            template = template,
-            substitutions = substitutions
-        ).renderedText
+        return MacroProcessor(template, substitutions).renderedText
+    }
 
-        val document = Jsoup.parse(html)
-
-        if (article.parseFullContent) {
-            val contentHTML = Jsoup.parse(article.content)
-
-            val baseUri = contentHTML.baseUri()
-
-            if (baseUri.isNotBlank()) {
-                document.setBaseUri(baseUri)
-            } else {
-                article.siteURL?.let { document.setBaseUri(it) }
-            }
-
-            HtmlPostProcessor.clean(contentHTML, hideImages = hideImages)
-
-            document.content?.append(
-                parseHtml(
-                    article,
-                    document = contentHTML,
-                    hideImages = hideImages,
-                    fullContentParser =parser.get(),
-                )
-            )
+    private fun buildContent(article: Article, hideImages: Boolean): String {
+        return if (article.parseFullContent) {
+            parseHtml(article, hideImages)
         } else {
-            article.imageEnclosures()?.let {
-                document.content?.appendChild(it)
-            }
-
-            document.content?.append(article.content)
-
-            HtmlPostProcessor.clean(document, hideImages = hideImages)
+            val enclosures = article.imageEnclosuresHtml()
+            enclosures + article.content + postProcessScript(article, hideImages)
         }
-
-        return document.html()
     }
 
     private fun topMargin(): String {
@@ -117,13 +88,10 @@ class ArticleRenderer(
             FontOption.SYSTEM_DEFAULT -> ""
             else -> """
                 <link rel="preload" href="https://appassets.androidplatform.net/res/font/${fontFamily.slug}.ttf" as="font" type="font/ttf" crossorigin>
-                """.trimIndent()
+                """
         }
     }
 }
-
-private val Document.content
-    get() = getElementById("article-body-content")
 
 private fun Article.externalLink(): String {
     val potentialURL = url ?: siteURL

@@ -2,6 +2,7 @@ package com.jocmp.capy.persistence
 
 import com.jocmp.capy.Enclosure
 import com.jocmp.capy.common.optionalURL
+import com.jocmp.capy.common.withIOContext
 import com.jocmp.capy.db.Database
 import java.net.URL
 
@@ -26,8 +27,8 @@ internal class EnclosureRecords internal constructor(
         )
     }
 
-    fun byArticle(id: String): List<Enclosure> {
-        return database
+    suspend fun byArticle(id: String): List<Enclosure> = withIOContext {
+        database
             .enclosuresQueries
             .findByArticleID(id, ::mapper)
             .executeAsList()
