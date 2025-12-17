@@ -15,7 +15,7 @@ data class MediaItem(
 @Serializable
 data class Media(
     val images: List<MediaItem>,
-    val currentIndex: Int = 0
+    val startIndex: Int = 0
 )
 
 val Media.Companion.Saver

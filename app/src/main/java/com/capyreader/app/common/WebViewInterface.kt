@@ -15,8 +15,11 @@ class WebViewInterface(
         try {
             val mediaItems = Json.decodeFromString<List<MediaItem>>(imagesJson)
                 .filter { optionalURL(it.url) != null }
+
             if (mediaItems.isNotEmpty()) {
-                navigateToMedia(Media(images = mediaItems, currentIndex = clickedIndex.coerceIn(0, mediaItems.size - 1)))
+                val index = clickedIndex.coerceIn(0, mediaItems.size - 1)
+
+                navigateToMedia(Media(images = mediaItems, startIndex = index))
             }
         } catch (e: Exception) {
             CapyLog.error("open_image_gallery", e)

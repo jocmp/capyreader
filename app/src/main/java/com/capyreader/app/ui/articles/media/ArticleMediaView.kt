@@ -7,6 +7,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,9 +16,15 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
@@ -31,10 +38,12 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
@@ -57,6 +66,7 @@ import com.capyreader.app.ui.settings.LocalSnackbarHost
 import com.capyreader.app.ui.theme.CapyTheme
 import com.capyreader.app.ui.theme.findStatusBarColor
 import com.capyreader.app.ui.theme.showAppearanceLightStatusBars
+import kotlinx.coroutines.launch
 import me.saket.telephoto.zoomable.ZoomSpec
 import me.saket.telephoto.zoomable.coil.ZoomableAsyncImage
 import me.saket.telephoto.zoomable.rememberZoomableImageState
@@ -73,7 +83,7 @@ fun ArticleMediaView(
     
     val view = LocalView.current
     val images = media.images
-    val initialPage = media.currentIndex.coerceIn(0, images.size - 1)
+    val initialPage = media.startIndex.coerceIn(0, images.size - 1)
     
     val pagerState = rememberPagerState(
         initialPage = initialPage,
@@ -82,16 +92,30 @@ fun ArticleMediaView(
 
     var showOverlay by rememberSaveable { mutableStateOf(true) }
     val currentImage = images.getOrNull(pagerState.currentPage)
+    val scope = rememberCoroutineScope()
+
+    val canGoBack = pagerState.currentPage > 0
+    val canGoForward = pagerState.currentPage < images.size - 1
 
     MediaScaffold(
         onDismissRequest = onDismissRequest,
         showOverlay = showOverlay,
+        canGoBack = canGoBack,
+        canGoForward = canGoForward,
+        onGoBack = {
+            scope.launch {
+                pagerState.animateScrollToPage(pagerState.currentPage - 1)
+            }
+        },
+        onGoForward = {
+            scope.launch {
+                pagerState.animateScrollToPage(pagerState.currentPage + 1)
+            }
+        },
         footer = {
             CaptionOverlay(
                 caption = currentImage?.altText?.ifBlank { null },
                 imageUrl = currentImage?.url ?: "",
-                currentPage = pagerState.currentPage + 1,
-                totalPages = images.size
             )
         }
     ) {
@@ -179,6 +203,10 @@ private fun ImagePage(
 fun MediaScaffold(
     onDismissRequest: () -> Unit,
     showOverlay: Boolean,
+    canGoBack: Boolean = false,
+    canGoForward: Boolean = false,
+    onGoBack: () -> Unit = {},
+    onGoForward: () -> Unit = {},
     footer: @Composable () -> Unit,
     content: @Composable () -> Unit,
 ) {
@@ -236,6 +264,20 @@ fun MediaScaffold(
                     }
                 }
 
+                NavigationArrow(
+                    visible = isOverlayVisible && canGoBack,
+                    onClick = onGoBack,
+                    direction = ArrowDirection.Left,
+                    modifier = Modifier.align(Alignment.CenterStart)
+                )
+
+                NavigationArrow(
+                    visible = isOverlayVisible && canGoForward,
+                    onClick = onGoForward,
+                    direction = ArrowDirection.Right,
+                    modifier = Modifier.align(Alignment.CenterEnd)
+                )
+
                 CloseButton(
                     onClick = { onDismissRequest() },
                     visible = isOverlayVisible
@@ -249,8 +291,6 @@ fun MediaScaffold(
 private fun CaptionOverlay(
     caption: String?, 
     imageUrl: String,
-    currentPage: Int = 1,
-    totalPages: Int = 1
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -264,14 +304,6 @@ private fun CaptionOverlay(
             .background(Color.Black.copy(alpha = 0.8f))
             .padding(vertical = 8.dp, horizontal = 16.dp)
     ) {
-        if (totalPages > 1) {
-            Text(
-                "$currentPage / $totalPages",
-                color = MediaColors.textColor.copy(alpha = 0.7f),
-                style = MaterialTheme.typography.labelMedium,
-                modifier = Modifier.padding(top = 4.dp)
-            )
-        }
         if (!caption.isNullOrBlank()) {
             Box(
                 Modifier
@@ -308,6 +340,54 @@ private fun CloseButton(
     }
 }
 
+private enum class ArrowDirection {
+    Left, Right
+}
+
+@Composable
+private fun NavigationArrow(
+    visible: Boolean,
+    onClick: () -> Unit,
+    direction: ArrowDirection,
+    modifier: Modifier = Modifier
+) {
+    AnimatedVisibility(
+        visible = visible,
+        enter = fadeIn(),
+        exit = fadeOut(),
+        modifier = modifier
+    ) {
+        Box(
+            modifier = Modifier.padding(horizontal = 8.dp),
+        ) {
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .background(
+                        color = Color.Black.copy(alpha = 0.6f),
+                        shape = CircleShape
+                    )
+                    .clickable { onClick() }
+            ) {
+                Icon(
+                    imageVector = when (direction) {
+                        ArrowDirection.Left -> Icons.AutoMirrored.Rounded.KeyboardArrowLeft
+                        ArrowDirection.Right -> Icons.AutoMirrored.Rounded.KeyboardArrowRight
+                    },
+                    contentDescription = when (direction) {
+                        ArrowDirection.Left -> "Previous image"
+                        ArrowDirection.Right -> "Next image"
+                    },
+                    tint = Color.White,
+                    modifier = Modifier.size(32.dp)
+                )
+            }
+        }
+    }
+}
+
 @Preview(device = "spec:width=673dp,height=841dp")
 @Composable
 private fun ArticleMediaViewPreview_Foldable() {
@@ -321,8 +401,6 @@ private fun ArticleMediaViewPreview_Foldable() {
                 CaptionOverlay(
                     caption = "A description of the picture you're taking a look at",
                     imageUrl = "http://example.com/test.jpg",
-                    currentPage = 2,
-                    totalPages = 5
                 )
             }
         }
@@ -342,8 +420,6 @@ private fun ArticleMediaViewPreview_Phone() {
                 CaptionOverlay(
                     caption = "A description",
                     imageUrl = "http://example.com/test.jpg",
-                    currentPage = 1,
-                    totalPages = 3
                 )
             }
         }
@@ -364,8 +440,6 @@ private fun ArticleMediaViewPreview_Tablet() {
                 CaptionOverlay(
                     caption = "A description of the picture you're taking a look at",
                     imageUrl = "http://example.com/test.jpg",
-                    currentPage = 1,
-                    totalPages = 1
                 )
             }
         }
