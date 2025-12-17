@@ -118,6 +118,13 @@ fun ArticleView(
     val bottomScrollBehavior = exitAlwaysScrollBehavior()
     val enableBottomBar by rememberBottomBarPreference()
 
+    LaunchedEffect(article.id) {
+        topToolbarPreference.scrollBehavior.state.heightOffset = 0f
+        topToolbarPreference.scrollBehavior.state.contentOffset = 0f
+        bottomScrollBehavior.state.heightOffset = 0f
+        bottomScrollBehavior.state.contentOffset = 0f
+    }
+
     ArticleViewScaffold(
         bottomScrollBehavior = bottomScrollBehavior,
         enableBottomBar = enableBottomBar,
