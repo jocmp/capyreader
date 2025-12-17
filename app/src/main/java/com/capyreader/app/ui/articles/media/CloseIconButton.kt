@@ -24,7 +24,7 @@ fun CloseIconButton(
     onClick: () -> Unit = {}
 ) {
     Box(
-        modifier = Modifier.padding(horizontal = 4.dp, vertical = 8.dp),
+        modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),
     ) {
         Box(
             contentAlignment = Alignment.Center,

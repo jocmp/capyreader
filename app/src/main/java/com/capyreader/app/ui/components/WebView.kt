@@ -24,6 +24,9 @@ import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
+import com.jocmp.capy.logging.CapyLog
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import org.koin.compose.koinInject
 import org.koin.core.component.KoinComponent
 
@@ -49,6 +52,7 @@ fun WebView(
 class AccompanistWebViewClient(
     private val assetLoader: WebViewAssetLoader,
     private val onOpenLink: (url: Uri) -> Unit,
+    private val httpClient: OkHttpClient = OkHttpClient(),
 ) : WebViewClient(),
     KoinComponent {
     lateinit var state: WebViewState
@@ -58,13 +62,61 @@ class AccompanistWebViewClient(
         view: WebView,
         request: WebResourceRequest
     ): WebResourceResponse? {
-        val asset = assetLoader.shouldInterceptRequest(request.url) ?: return null
+        val asset = assetLoader.shouldInterceptRequest(request.url)
+        if (asset != null) {
+            val headers = asset.responseHeaders ?: mutableMapOf()
+            headers["Access-Control-Allow-Origin"] = "*"
+            asset.responseHeaders = headers
+            return asset
+        }
 
-        val headers = asset.responseHeaders ?: mutableMapOf()
-        headers["Access-Control-Allow-Origin"] = "*"
-        asset.responseHeaders = headers
+        val url = request.url.toString()
+        val origin = request.requestHeaders["Origin"]
+        val isCorsRequest = origin == "null" && url.startsWith("http")
 
-        return asset
+        if (!isCorsRequest) {
+            return null
+        }
+
+        return proxyCorsRequest(request)
+    }
+
+    /** Avoids CORS issues when loading additional pages from Mercury.js */
+    private fun proxyCorsRequest(request: WebResourceRequest): WebResourceResponse? {
+        return try {
+            val okRequest = Request.Builder()
+                .url(request.url.toString())
+                .apply {
+                    request.requestHeaders.forEach { (key, value) ->
+                        header(key, value)
+                    }
+                }
+                .build()
+
+            val response = httpClient.newCall(okRequest).execute()
+            val contentType = response.header("Content-Type") ?: "text/html"
+            val mimeType = contentType.substringBefore(";").trim()
+            val charset = contentType
+                .substringAfter("charset=", "UTF-8")
+                .substringBefore(";")
+                .trim()
+
+            WebResourceResponse(
+                mimeType,
+                charset,
+                response.code,
+                response.message.ifEmpty { "OK" },
+                mapOf(
+                    "Access-Control-Allow-Origin" to "*",
+                    "Access-Control-Allow-Methods" to "GET, POST, OPTIONS",
+                    "Access-Control-Allow-Headers" to "*"
+                ),
+                response.body.byteStream()
+            )
+        } catch (e: Exception) {
+            CapyLog.error("webview_intercept_request", e)
+            null
+        }
     }
 
     override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
