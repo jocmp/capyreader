@@ -8,6 +8,10 @@ FASTLANE ?= bundle exec fastlane
 assets:
 	$(MAKE) -C article_forge clean build
 
+.PHONY: tsc
+tsc: ## Type-check JavaScript files
+	npx -p typescript tsc
+
 .PHONY: deps
 deps: ## Install bumpver
 	pip install bumpver==2024.1130
