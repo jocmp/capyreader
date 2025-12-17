@@ -1,2 +1,3 @@
 • Add image carousel to article image gallery thanks to a volunteer!
+• Fix multi-page articles for full content on Phoronix
 • Update translations for Dutch, Hungarian, Russian, and Chinese thanks to volunteers!
