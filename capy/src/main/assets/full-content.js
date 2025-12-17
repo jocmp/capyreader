@@ -22,16 +22,18 @@ async function displayFullContent(article) {
       !extracted.querySelectorAll("img:not(iframe img):not(.iframe-embed img)")
         .length;
 
-    if (shouldAddImage) {
+    if (shouldAddImage && result.image) {
       const leadImage = document.createElement("img");
       leadImage.src = result.image;
       extracted.prepend(leadImage);
     }
 
     const content = document.getElementById("article-body-content");
-    content.replaceWith(extracted);
+    if (content) {
+      content.replaceWith(extracted);
+    }
 
-    postProcessContent(article.url, hideImages);
+    postProcessContent(article.url ?? "", hideImages);
   } catch (e) {
     console.error(e);
   }
@@ -86,7 +88,7 @@ function postProcessContent(baseUrl, hideImages) {
     if (table.parentElement?.classList.contains("table__wrapper")) return;
     const wrapper = document.createElement("div");
     wrapper.className = "table__wrapper";
-    table.parentNode.insertBefore(wrapper, table);
+    table.parentNode?.insertBefore(wrapper, table);
     wrapper.appendChild(table);
   });
 }

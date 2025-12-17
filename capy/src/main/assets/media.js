@@ -1,5 +1,3 @@
-// @ts-check
-
 function configureVideoTags() {
   [...document.getElementsByTagName("video")].forEach((v) => {
     v.setAttribute("preload", "auto");
@@ -15,17 +13,26 @@ function configureVideoTags() {
 }
 
 function addImageClickListeners() {
-  [...document.getElementsByTagName("img")].forEach((img) => {
-    if (img.classList.contains("iframe-embed__image")) {
-      return;
-    }
+  const images = [...document.getElementsByTagName("img")].filter(
+    (img) => !img.classList.contains("iframe-embed__image")
+  );
 
+  /** @type {MediaItem[]} */
+  const galleryImages = images.map((i) => ({
+    url: i.src,
+    altText: i.alt || null,
+  }));
+
+  images.forEach((img, index) => {
     img.addEventListener("click", () => {
-      Android.openImage(img.src, img.alt);
+      Android.openImageGallery(JSON.stringify(galleryImages), index);
     });
   });
 }
 
+/**
+ * @param {HTMLImageElement} img
+ */
 function setupImageLoadHandler(img) {
   if (img.classList.contains("loaded")) {
     return;
@@ -49,9 +56,10 @@ function observeImages() {
     mutations.forEach((mutation) => {
       mutation.addedNodes.forEach((node) => {
         if (node.nodeName === "IMG") {
-          setupImageLoadHandler(node);
-        } else if (node.querySelectorAll) {
-          node.querySelectorAll("img").forEach(setupImageLoadHandler);
+          setupImageLoadHandler(/** @type {HTMLImageElement} */ (node));
+        } else if (/** @type {Element} */ (node).querySelectorAll) {
+          /** @type {Element} */
+          (node).querySelectorAll("img").forEach(setupImageLoadHandler);
         }
       });
     });
@@ -138,13 +146,17 @@ function swapPlaceholder(embed, src, youtubeID) {
 
   const placeholder = document.createElement("a");
   placeholder.classList.add("iframe-embed");
-  placeholder.setAttribute("href", `https://www.youtube.com/watch?v=${youtubeID}`);
+  placeholder.setAttribute(
+    "href",
+    `https://www.youtube.com/watch?v=${youtubeID}`
+  );
   placeholder.appendChild(placeholderImage);
   placeholder.appendChild(playButton);
 
   embed.replaceWith(placeholder);
 }
 
+/** @param {string} id */
 function imageURL(id) {
   return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
 }
@@ -179,6 +191,7 @@ const YOUTUBE_DOMAINS = [
  * @param {(event: Event) => void} callback
  */
 function longPress(element, callback) {
+  /** @type {number | undefined} */
   let timer;
 
   const start = (/** @type {Event} */ event) => {

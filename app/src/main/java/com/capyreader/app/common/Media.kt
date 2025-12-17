@@ -4,13 +4,18 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 @Serializable
-data class Media(
+data class MediaItem(
     val url: String,
     val altText: String?
+)
+
+@Serializable
+data class Media(
+    val images: List<MediaItem>,
+    val startIndex: Int = 0
 )
 
 val Media.Companion.Saver
@@ -22,3 +27,4 @@ val Media.Companion.Saver
             mutableStateOf(Json.decodeFromString(jsonString))
         }
     )
+
