@@ -157,10 +157,6 @@ fun ArticleScreen(
         state = searchState,
     )
 
-    LaunchedEffect(unreadCount) {
-        CapyLog.debug("count", mapOf("value" to unreadCount))
-    }
-
     CompositionLocalProvider(
         LocalFullContent provides fullContent,
         LocalArticleActions provides articleActions,
