@@ -1,2 +1,3 @@
 • Add image carousel to article image gallery thanks to a volunteer!
+• Fix article toolbar color when switching between articles
 • Update translations for Dutch, Hungarian, Russian, and Chinese thanks to volunteers!
