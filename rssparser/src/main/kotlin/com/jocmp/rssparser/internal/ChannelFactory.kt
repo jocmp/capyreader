@@ -9,6 +9,7 @@ import com.jocmp.rssparser.model.RssImage
 import com.jocmp.rssparser.model.RssItem
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
+import java.net.URI
 
 
 internal class ChannelFactory {
@@ -25,7 +26,11 @@ internal class ChannelFactory {
     private var imageUrlFromContent: String? = null
 
     fun buildArticle() {
-        articleBuilder.image(imageUrlFromContent)
+        val resolvedImageUrl = resolveImageUrl(
+            imageUrl = imageUrlFromContent,
+            baseUrl = articleBuilder.currentLink()
+        )
+        articleBuilder.image(resolvedImageUrl)
         articleBuilder.itunesArticleData(itunesArticleBuilder.build())
         articleBuilder.media(articleMediaBuilder.build())
         channelBuilder.addItem(articleBuilder.build())
@@ -85,5 +90,22 @@ internal class ChannelFactory {
         }
         channelBuilder.itunesChannelData(itunesChannelBuilder.build())
         return channelBuilder.build()
+    }
+
+    companion object {
+        internal fun resolveImageUrl(imageUrl: String?, baseUrl: String?): String? {
+            if (imageUrl == null || baseUrl == null) return imageUrl
+
+            return try {
+                val imageUri = URI(imageUrl)
+                if (imageUri.isAbsolute) {
+                    imageUrl
+                } else {
+                    URI(baseUrl).resolve(imageUrl).toString()
+                }
+            } catch (e: Exception) {
+                imageUrl
+            }
+        }
     }
 }

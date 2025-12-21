@@ -63,6 +63,7 @@ data class RssItem(
         fun title(title: String?) = apply { this.title = title }
         fun author(author: String?) = apply { this.author = author }
         fun link(link: String?) = apply { this.link = link }
+        fun currentLink(): String? = link
         fun pubDate(pubDate: String?) = apply {
             this.pubDate = pubDate
         }
