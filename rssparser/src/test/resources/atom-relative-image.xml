@@ -1,0 +1,4485 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>Crystal's Wobsite: Articles</title>
+    <link href="https://crystalwobsite.gay/article_feed.atom" rel="self" />
+    <link href="https://crystalwobsite.gay" rel="alternate" type="text/html" />
+    <id>https://crystalwobsite.gay/article_feed.atom</id>
+    <author>
+        <name>Crystal</name>
+        
+        <email>crystal@crystalwobsite.gay</email>
+        
+    </author>
+    <updated>2025-10-03T00:00:00Z</updated>
+    <entry>
+    <title>Working on Fluentflame Reader</title>
+    <link href="https://crystalwobsite.gay/posts/2025-10-03-fluentflame" type="text/html" rel="alternate" />
+    <id>https://crystalwobsite.gay/posts/2025-10-03-fluentflame.html</id>
+    <published>2025-10-03T00:00:00+00:00</published>
+    <updated>2025-10-03T00:00:00+00:00</updated>
+    <summary type="html"><![CDATA[Small blogpost because I don’t feel like writing a long one, but I felt I
+should talk a little about what I’ve been working on in my free time.
+
+
+Fluentflame Reader!
+
+Wow! It’s an RSS
+reader.
+If you read my blogpost about RSS
+readers, you may recall there was a reader
+called Fluent Reader. Fluent Reader, to my knowledge, is abandoned. The last
+update was 8 months ago, and even some very very basic security updates have
+not been made in years.
+When I tried to send over
+patches, they were met
+with crickets.
+SO.
+I helped make a hardfork! Now we have Fluentflame Reader, the attempted
+successor to Fluent Reader. It has a number of bug fixes already, a few tiny
+features added, and some code rewrites. I intend to keep working on this until
+it becomes an RSS reader me and my friends actually want to use.
+❦
+
+  You can email me at “crystal (at) <this domain>” to respond! Or just say hi. That's cool too!]]></summary>
+    <content type="html"><![CDATA[<p>Small blogpost because I don’t feel like writing a long one, but I felt I
+should talk a little about what I’ve been working on in my free time.</p>
+<figure>
+<img src="../images/post_images/2025-10-03-fluentflame.svg" alt="Fluentflame Reader!" />
+<figcaption aria-hidden="true">Fluentflame Reader!</figcaption>
+</figure>
+<p><strong>Wow! <a href="https://github.com/FluentFlame/fluentflame-reader">It’s an RSS
+reader.</a></strong></p>
+<p>If you read my <a href="../posts/2024-09-12-rss_reviews">blogpost about RSS
+readers</a>, you may recall there was a reader
+called Fluent Reader. Fluent Reader, to my knowledge, is abandoned. The last
+update was 8 months ago, and even some very very basic security updates have
+not been made in years.</p>
+<p>When I tried to send over
+<a href="https://github.com/yang991178/fluent-reader/pull/733">patches</a>, they were met
+with crickets.</p>
+<p>SO.</p>
+<p>I helped make a hardfork! Now we have Fluentflame Reader, the attempted
+successor to Fluent Reader. It has a number of bug fixes already, a few tiny
+features added, and some code rewrites. I intend to keep working on this until
+it becomes an RSS reader me and my friends actually want to use.</p>
+<div class="post-contact-spacer">❦</div>
+<div class="post-contact">
+  You can email me at <email-wrapper>“crystal (at) &lt;this domain&gt;”</email-wrapper> to respond!<br /> Or just say hi. That's cool too!
+</div>
+]]></content>
+</entry>
+<entry>
+    <title>Double Catch: We made a game!</title>
+    <link href="https://crystalwobsite.gay/posts/2025-09-20-double_catch" type="text/html" rel="alternate" />
+    <id>https://crystalwobsite.gay/posts/2025-09-20-double_catch.html</id>
+    <published>2025-09-20T00:00:00+00:00</published>
+    <updated>2025-10-19T00:00:00+00:00</updated>
+    <summary type="html"><![CDATA[Double Catch! Play here!
+
+We made a game for the Mini Jam 193 in 3 Days,
+and we came third!!! You can play it now entirely in your browser.
+This project was started by my friend Over, who
+allowed me to join in on her regular game jams. It was many firsts for me. This
+was the first game I have ever published. It was the first thing I have ever
+made in Godot (I downloaded the engine just for
+this jam). It’s the first time I’ve used Aseprite.
+It’s the first time I’ve uploaded something to itch.io.
+I have so many emotions about this. Loved hanging out and doing something with
+my friend. Pride in what we made together. Anxiety about making it in time, not
+releasing a broken game. And so much learning on the fly. So so much learning.
+
+UPDATE: Over has a blog post about Double Catch too!
+
+Coming Up With An Idea
+The theme of the project was “Hunters”, and we must include
+the limitation “Double or Nothing” in the game. My original thought process
+for ideation was to come up with keywords associated with both the theme
+and the limitation, and then smash them together:
+
+
+THEME: Hunters
+
+Guns
+Deer
+Spears
+Traps
+Seeking
+Holes
+Bow
+Animals
+Chase
+hunter community?
+whalers
+hunter gatherers
+slice of life, life outside the hunt
+
+
+
+LIMITATION: Double or Nothing
+
+Dice
+Coins
+Casino chips
+Mirrors
+Clone
+Gambling
+Wrestling
+Quiz Shows
+Double Tap (double shots)
+Black and White
+Wheel
+
+
+
+So we get things like “Animals Mirrors” or “Deer Quiz Shows” and see
+if that brings up any ideas.
+Over furthered this a bit more by trying to take “tangents” from the theme
+and limitation. She is way better at this, so I let her mostly take the reigns
+on the game design. We originally came up with a game about a fishing village
+and an angler trying to hunt a whale. But Over (correctly) descoped the game.
+Instead, she came up with the idea of a fisher catching the same
+fish twice. So we built around that.
+Evolution of the Art
+I did all the art in the game, with some direction from Over. I’m very
+inexperienced with pixel art, so forgive me if my art process is wonky.
+I’m not an expert here!
+I started out by choosing a palette. This was the most important part of making
+the pixel art cohesive, and I wanted to get it right. I just thought of sunset
+colours, and tried to choose things in that space. Eventually I got:
+
+
+Colour palette used in Double Catch
+
+I didn’t start out with this palette, but it grew to it. With the palette, I just
+started making rough silhouettes of things. They didn’t need to be perfect, just
+recognisable as the object they were representing when you squint.
+
+
+A fisher silhouette
+
+
+
+A swordfish silhouette
+
+These aren’t the originals I made, I didn’t save those, but they are about
+the level of detail I had.
+Then I spent time fleshing out the internals from the silhouette. I kept
+switching between outline-no-outline style, and you see this a bit in
+the game.
+
+
+The fisher completed
+
+
+
+The boat
+
+Making it Move
+Aseprite makes this really easy. I just copy the original art for each
+frame, and do transformations. A lot of it was trying to find an animation
+“rhythm” that all the animations together worked with. Every frame, I tried
+to restrict myself with a few pixel diffs per frame.
+
+
+Crab animation spritesheet
+
+
+
+Crab animated
+
+I relied a lot on oscillations. Choose two elements, and move them together
+on different phases.
+
+
+Fisher animated
+
+Tilemaps
+This is not the first time I’ve made tilemaps, but in general I was
+looking to line up the tiles so that drawing the one below and to the right
+was easier. You can see the tile transitions in the water tilemaps,
+especially.
+
+
+Water tilemap
+
+Programming
+Over did most of the programming here, though I came and did the Fish AI
+as well as some animations done via scripting. I used a lot of sinusoidal functions
+for basically everything.
+One fun side effect of the 3 day time limit was I had to make some very very
+ugly hacks right before submitting. For example, those treasure chests at the
+bottom? They’re scripted the same as a tropical fish with zero sinusoidal
+amplitude. But at spawn, they are forced by the spawner to rest at the bottom
+of the sea, and stay there.
+Also the boots are load-bearing. Removing them will crash the game, because they are
+the only “fish” which can spawn at any layer.
+Music and SFX
+I did not get to see any of this. Over did all of it. She’s amazing. I have no
+idea how she did it, and I encourage her to talk about it sometime. :3
+Tooling
+Godot is kinda cool?
+
+
+Our root Godot scene
+
+I’ve done a little with Unreal Engine, and quite a bit with Unity (though
+nothing ever released) back when Unity 2 and Unity 3 were out. Godot is very
+different to both. The node paradigm is very hard to wrap my head around still.
+Specifically, I don’t understand how you attach multiple script behaviours to a
+single object still? Perhaps you attach a script to child nodes and they
+operate on the parent. Not sure. It’s weird to me.
+Scenes are cool. I really like the scene concept. Being able to focus on a
+single node hierarchy for editing is like a single view of a Unity prefab. It’s
+great.
+The editor is very buggy. Deleting a file causes Godot to reliably crash for
+me. I had to bisect my operating system to find a bug in how Godot crashed my
+entire computer because of a kernel AMD driver
+issue.
+It’s rough. It really needs more stability QA. Yes yes… this only manifests
+on Linux, but as more and more people leave Windows, this is something that
+the project must workaround.
+All that being said, I’d be down to work in Godot again in the future. Not
+like I’m going back to Unity or UE lol.
+Also GDScript Is Just Python Again
+While it’s true that GDScript is not Python based, it’s so similar to Python
+that the vast majority of code could be syntactically valid between the two.
+Over was not so fond of GDScript, but since I’ve written probably tens of
+thousands of lines of Python at this point in my career, it came second nature
+to me.
+It’s convenient that there’s a GDScript autoformatter (gdformat) and linter
+(gdlint)! Both available from the gdtoolkit pip
+package.
+I’d be interested in doing C# programming in Godot, but I’m not very familiar
+what the state of the C# toolchain is on Linux (especially NixOS).
+Also, did you know Unity used to have a Python-like programming language
+called Boo-Script?
+The GDScript mostly reminds me a lot of Boo script in the niche it has filled.
+I was sad that Boo script was removed from Unity, even if I didn’t use it
+myself during my testing.
+Aseprite Is Amazing
+
+
+The dock tilemap in Aseprite
+
+It really is as good as they say it is. Maybe even better. It’s perfect for
+pixel art. I also tried LibreSprite, just
+to check whether the FOSS version was as good, and… it’s not. It is
+comparable, but indeed, it’s not as good. Aseprite’s quality is indeed worth
+paying for.
+I use NixOS, so I can just compile it myself and not pay for the prebuilt
+binaries. But it’s still worth paying for, and I think it’s worth paying for
+support.
+Conclusion
+I had a lot of fun! Would do again. Hard to find time for this stuff, but I’m
+glad I did it. Also it’s really wonderful to work on a truly creative
+endeavour with an awesome friend. Over is super cool and you should follow her
+stuff.
+❦
+
+  You can email me at “crystal (at) <this domain>” to respond! Or just say hi. That's cool too!]]></summary>
+    <content type="html"><![CDATA[<figure>
+<img src="../images/post_images/double_catch/2025-09-20-double_catch_cover.png" alt="Double Catch! Play here!" />
+<figcaption aria-hidden="true">Double Catch! <a href="https://draoicat.itch.io/mini-jam-193">Play here!</a></figcaption>
+</figure>
+<p>We made a game for the <a href="https://itch.io/jam/mini-jam-193-hunters">Mini Jam 193</a> in <strong>3 Days</strong>,
+and we came third!!! <strong>You can play it now <a href="https://draoicat.itch.io/mini-jam-193">entirely in your browser</a>.</strong></p>
+<p>This project was started by my friend <a href="https://draoicat.com/">Over</a>, who
+allowed me to join in on her regular game jams. It was many firsts for me. This
+was the first game I have ever published. It was the first thing I have ever
+made in <a href="https://godotengine.org/">Godot</a> (I downloaded the engine just for
+this jam). It’s the first time I’ve used <a href="https://www.aseprite.org/">Aseprite</a>.
+It’s the first time I’ve uploaded something to <a href="https://itch.io">itch.io</a>.</p>
+<p>I have so many emotions about this. Loved hanging out and doing something with
+my friend. Pride in what we made together. Anxiety about making it in time, not
+releasing a broken game. And so much learning on the fly. So so much learning.</p>
+<hr />
+<p>UPDATE: Over has <a href="https://draoicat.com/blog/2025-10-19">a blog post about Double Catch</a> too!</p>
+<hr />
+<h2 id="coming-up-with-an-idea">Coming Up With An Idea</h2>
+<p>The theme of the project was “Hunters”, and we must include
+the limitation “Double or Nothing” in the game. My original thought process
+for ideation was to come up with keywords associated with both the theme
+and the limitation, and then smash them together:</p>
+<div style="display: flex; gap: 10px">
+<section id="theme-hunters" style="flex: 50%;">
+<h3>THEME: Hunters</h3>
+<ul>
+<li>Guns</li>
+<li>Deer</li>
+<li>Spears</li>
+<li>Traps</li>
+<li>Seeking</li>
+<li>Holes</li>
+<li>Bow</li>
+<li>Animals</li>
+<li>Chase</li>
+<li>hunter community?</li>
+<li>whalers</li>
+<li>hunter gatherers</li>
+<li>slice of life, life outside the hunt</li>
+</ul>
+</section>
+<section id="limitation-double-or-nothing" style="flex: 50%">
+<h3>LIMITATION: Double or Nothing</h3>
+<ul>
+<li>Dice</li>
+<li>Coins</li>
+<li>Casino chips</li>
+<li>Mirrors</li>
+<li>Clone</li>
+<li>Gambling</li>
+<li>Wrestling</li>
+<li>Quiz Shows</li>
+<li>Double Tap (double shots)</li>
+<li>Black and White</li>
+<li>Wheel</li>
+</ul>
+</section>
+</div>
+<p>So we get things like “Animals Mirrors” or “Deer Quiz Shows” and see
+if that brings up any ideas.</p>
+<p>Over furthered this a bit more by trying to take “tangents” from the theme
+and limitation. She is way better at this, so I let her mostly take the reigns
+on the game design. We originally came up with a game about a fishing village
+and an angler trying to hunt a whale. But Over (correctly) descoped the game.
+Instead, she came up with the idea of a fisher catching the same
+fish twice. So we built around that.</p>
+<h2 id="evolution-of-the-art">Evolution of the Art</h2>
+<p>I did all the art in the game, with some direction from Over. I’m very
+inexperienced with pixel art, so forgive me if my art process is wonky.
+I’m not an expert here!</p>
+<p>I started out by choosing a palette. This was the most important part of making
+the pixel art cohesive, and I wanted to get it right. I just thought of sunset
+colours, and tried to choose things in that space. Eventually I got:</p>
+<figure>
+<img src="../images/post_images/double_catch/2025-09-20-double_catch_palette.png" alt="Colour palette used in Double Catch" />
+<figcaption aria-hidden="true">Colour palette used in Double Catch</figcaption>
+</figure>
+<p>I didn’t start out with this palette, but it grew to it. With the palette, I just
+started making rough silhouettes of things. They didn’t need to be perfect, just
+recognisable as the object they were representing when you squint.</p>
+<figure>
+<img src="../images/post_images/double_catch/2025-09-20-double_catch_fisher_silhouette.png" alt="A fisher silhouette" />
+<figcaption aria-hidden="true">A fisher silhouette</figcaption>
+</figure>
+<figure>
+<img src="../images/post_images/double_catch/2025-09-20-double_catch_swordfish_silhouette.png" alt="A swordfish silhouette" />
+<figcaption aria-hidden="true">A swordfish silhouette</figcaption>
+</figure>
+<p>These aren’t the originals I made, I didn’t save those, but they are about
+the level of detail I had.</p>
+<p>Then I spent time fleshing out the internals from the silhouette. I kept
+switching between outline-no-outline style, and you see this a bit in
+the game.</p>
+<figure>
+<img src="../images/post_images/double_catch/2025-09-20-double_catch_fisher.png" alt="The fisher completed" />
+<figcaption aria-hidden="true">The fisher completed</figcaption>
+</figure>
+<figure>
+<img src="../images/post_images/double_catch/2025-09-20-double_catch_boat.png" alt="The boat" />
+<figcaption aria-hidden="true">The boat</figcaption>
+</figure>
+<h3 id="making-it-move">Making it Move</h3>
+<p>Aseprite makes this really easy. I just copy the original art for each
+frame, and do transformations. A lot of it was trying to find an animation
+“rhythm” that all the animations together worked with. Every frame, I tried
+to restrict myself with a few pixel diffs per frame.</p>
+<figure>
+<img src="../images/post_images/double_catch/2025-09-20-double_catch_crab_animated.png" alt="Crab animation spritesheet" />
+<figcaption aria-hidden="true">Crab animation spritesheet</figcaption>
+</figure>
+<figure>
+<img src="../images/post_images/double_catch/2025-09-20-double_catch_crab.gif" alt="Crab animated" />
+<figcaption aria-hidden="true">Crab animated</figcaption>
+</figure>
+<p>I relied a lot on oscillations. Choose two elements, and move them together
+on different phases.</p>
+<figure>
+<img src="../images/post_images/double_catch/2025-09-20-double_catch_fisher.gif" alt="Fisher animated" />
+<figcaption aria-hidden="true">Fisher animated</figcaption>
+</figure>
+<h3 id="tilemaps">Tilemaps</h3>
+<p>This is not the first time I’ve made tilemaps, but in general I was
+looking to line up the tiles so that drawing the one below and to the right
+was easier. You can see the tile transitions in the water tilemaps,
+especially.</p>
+<figure>
+<img src="../images/post_images/double_catch/2025-09-20-double_catch_water_tilemap.png" alt="Water tilemap" />
+<figcaption aria-hidden="true">Water tilemap</figcaption>
+</figure>
+<h2 id="programming">Programming</h2>
+<p>Over did most of the programming here, though I came and did the Fish AI
+as well as some animations done via scripting. I used a lot of sinusoidal functions
+for basically everything.</p>
+<p>One fun side effect of the 3 day time limit was I had to make some very very
+ugly hacks right before submitting. For example, those treasure chests at the
+bottom? They’re scripted the same as a tropical fish with zero sinusoidal
+amplitude. But at spawn, they are forced by the spawner to rest at the bottom
+of the sea, and stay there.</p>
+<p>Also the boots are load-bearing. Removing them will crash the game, because they are
+the only “fish” which can spawn at any layer.</p>
+<h2 id="music-and-sfx">Music and SFX</h2>
+<p>I did not get to see any of this. Over did all of it. She’s amazing. I have no
+idea how she did it, and I encourage her to talk about it sometime. :3</p>
+<h2 id="tooling">Tooling</h2>
+<h3 id="godot-is-kinda-cool">Godot is kinda cool?</h3>
+<figure>
+<img src="../images/post_images/double_catch/2025-09-20-double_catch_godot.png" alt="Our root Godot scene" />
+<figcaption aria-hidden="true">Our root Godot scene</figcaption>
+</figure>
+<p>I’ve done a little with Unreal Engine, and quite a bit with Unity (though
+nothing ever released) back when Unity 2 and Unity 3 were out. Godot is very
+different to both. The node paradigm is very hard to wrap my head around still.
+Specifically, I don’t understand how you attach multiple script behaviours to a
+single object still? Perhaps you attach a script to child nodes and they
+operate on the parent. Not sure. It’s weird to me.</p>
+<p>Scenes are cool. I really like the scene concept. Being able to focus on a
+single node hierarchy for editing is like a single view of a Unity prefab. It’s
+great.</p>
+<p>The editor is very buggy. Deleting a file causes Godot to reliably crash for
+me. I had to bisect my operating system to find a bug in how Godot crashed <em>my
+entire computer</em> because of a <a href="https://github.com/NixOS/nixpkgs/pull/437955#issuecomment-3263613682">kernel AMD driver
+issue</a>.
+It’s rough. It really needs more stability QA. Yes yes… this only manifests
+on Linux, but as more and more people leave Windows, this is something that
+the project must workaround.</p>
+<p>All that being said, I’d be down to work in Godot again in the future. Not
+like I’m going back to Unity or UE lol.</p>
+<h4 id="also-gdscript-is-just-python-again">Also GDScript Is Just Python Again</h4>
+<p>While it’s true that GDScript is not Python based, it’s <em>so</em> similar to Python
+that the vast majority of code could be syntactically valid between the two.</p>
+<p>Over was not so fond of GDScript, but since I’ve written probably tens of
+thousands of lines of Python at this point in my career, it came second nature
+to me.</p>
+<p>It’s convenient that there’s a GDScript autoformatter (<code>gdformat</code>) and linter
+(<code>gdlint</code>)! Both available from the <a href="https://pypi.org/project/gdtoolkit/">gdtoolkit pip
+package</a>.</p>
+<p>I’d be interested in doing C# programming in Godot, but I’m not very familiar
+what the state of the C# toolchain is on Linux (especially NixOS).</p>
+<p>Also, did you know Unity used to have a Python-like programming language
+called <a href="https://en.wikipedia.org/wiki/Boo_(programming_language)">Boo-Script</a>?
+The GDScript mostly reminds me a lot of Boo script in the niche it has filled.
+I was sad that Boo script was removed from Unity, even if I didn’t use it
+myself during my testing.</p>
+<h3 id="aseprite-is-amazing">Aseprite Is Amazing</h3>
+<figure>
+<img src="../images/post_images/double_catch/2025-09-20-double_catch_aseprite.png" alt="The dock tilemap in Aseprite" />
+<figcaption aria-hidden="true">The dock tilemap in Aseprite</figcaption>
+</figure>
+<p>It really is as good as they say it is. Maybe even better. It’s perfect for
+pixel art. I also tried <a href="https://libresprite.github.io/#!/">LibreSprite</a>, just
+to check whether the FOSS version was as good, and… it’s not. It is
+comparable, but indeed, it’s not as good. Aseprite’s quality is indeed worth
+paying for.</p>
+<p>I use NixOS, so I can just compile it myself and not pay for the prebuilt
+binaries. But it’s still worth paying for, and I think it’s worth paying for
+support.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>I had a lot of fun! Would do again. Hard to find time for this stuff, but I’m
+glad I did it. Also it’s really wonderful to work on a truly creative
+endeavour with an awesome friend. Over is super cool and you should follow her
+stuff.</p>
+<div class="post-contact-spacer">❦</div>
+<div class="post-contact">
+  You can email me at <email-wrapper>“crystal (at) &lt;this domain&gt;”</email-wrapper> to respond!<br /> Or just say hi. That's cool too!
+</div>
+]]></content>
+</entry>
+<entry>
+    <title>Krita, Nix, Development: Problems with Wrappers</title>
+    <link href="https://crystalwobsite.gay/posts/2025-06-08-hacking_on_krita" type="text/html" rel="alternate" />
+    <id>https://crystalwobsite.gay/posts/2025-06-08-hacking_on_krita.html</id>
+    <published>2025-06-08T00:00:00+00:00</published>
+    <updated>2025-06-08T00:00:00+00:00</updated>
+    <summary type="html"><![CDATA[Krita 5 Splash Art. Art by Tyson Tan
+
+I generally like hacking on little projects here and there. I have frequently
+found it interesting to go poke and fix bugs in OSS projects, because the
+thought of maintaining a real project for years unending scares me!
+So it’s much easier to see a bug in a program and think “hey, maybe I can fix
+that?”. Nix in theory makes this engineering cycle very easy to do. Just:
+$ nix develop nixpkgs#<your package here>
+[develop]
+$ genericBuild # Tada! A built package.
+Or even step by step:
+[develop]
+$ unpackPhase && configurePhase && buildPhase # etc...
+So simple! Except this doesn’t always work.
+
+
+If you’re curious, here’s my relevant nixpkgs lock to reproduce
+this
+
+    # ...
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1749086602,
+        "narHash": "sha256-DJcgJMekoxVesl9kKjfLPix2Nbr42i7cpEHJiTnBUwU=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "4792576cb003c994bd7cc1edada3129def20b27d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-25.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    # ...
+
+Hacking on Krita
+Okay, so I want to fix a bug in the plugin listings in Krita. Let’s go grab
+the sources from Nix’s cache, it’s probably roughly the same. We can adapt the
+patch later on.
+So let’s get a dev build working!
+$ nix develop nixpkgs#krita
+[develop]
+$ genericBuild
+Running phase: qtPreHook
+Running phase: unpackPhase
+variable $src or $srcs should point to the source
+exit
+What. So what’s happening here? We can check the definition of unpackPhase:
+[develop]
+$ typeset -f unpackPhase
+unpackPhase ()
+{
+    runHook preUnpack;
+    if [ -z "${srcs:-}" ]; then
+        if [ -z "${src:-}" ]; then
+            echo 'variable $src or $srcs should point to the source';
+            exit 1;
+        fi;
+        srcs="$src";
+    fi;
+    local -a srcsArray;
+    concatTo srcsArray srcs;
+    # ... more unrelated bits ...
+So it needs a $src or $srcs variable set before running. And indeed,
+neither is set:
+[develop]
+$ echo $src $srcs
+
+$
+But if we take
+a simpler package like hello:
+$ nix develop nixpkgs#hello
+[develop]
+$ echo $src $srcs
+/nix/store/pa10z4ngm0g83kx9mssrqzz30s84vq7k-hello-2.12.1.tar.gz
+So $src is set sometimes. Why is it not set with Krita?
+Wrappings and symlinkJoin
+To answer this, we have to look at how nixpkgs selects and defines the Krita
+package. The file tree
+looks like:
+krita
+├── default.nix
+├── generic.nix
+└── wrapper.nix
+…And the all-packages.nix file calls the wrapper.nix, not default.nix:
+$ pwd
+/tmp/nixpkgs
+$ rg -C5 'krita.*wrapper' pkgs/top-level/all-packages.nix
+13035-    callPackage ../applications/networking/instant-messengers/telegram/kotatogram-desktop
+13036-      { };
+13037-
+13038-  krane = callPackage ../applications/networking/cluster/krane { };
+13039-
+13040:  krita = callPackage ../applications/graphics/krita/wrapper.nix { };
+13041-
+13042-  ktimetracker = libsForQt5.callPackage ../applications/office/ktimetracker { };
+13043-
+13044-  kubeval = callPackage ../applications/networking/cluster/kubeval { };
+13045-
+So what’s happening in that wrapper?
+# pkgs/applications/graphics/krita/wrapper.nix
+{
+  lib,
+  libsForQt5,
+  symlinkJoin,
+  unwrapped ? libsForQt5.callPackage ./. { },
+  krita-plugin-gmic,
+  binaryPlugins ? [
+    # Default plugins provided by upstream appimage
+    krita-plugin-gmic
+  ],
+}:
+
+symlinkJoin {
+  name = lib.replaceStrings [ "-unwrapped" ] [ "" ] unwrapped.name;
+  inherit (unwrapped)
+    version
+    buildInputs
+    nativeBuildInputs
+    meta
+    ;
+
+  paths = [ unwrapped ] ++ binaryPlugins;
+
+  postBuild = ''
+    wrapQtApp "$out/bin/krita" \
+      --prefix PYTHONPATH : "$PYTHONPATH" \
+      --set KRITA_PLUGIN_PATH "$out/lib/kritaplugins"
+  '';
+
+  passthru = {
+    inherit unwrapped binaryPlugins;
+  };
+}
+Ahhh it’s a symlinkJoin. symlinkJoin is a trivial derivation, and while it
+includes the dependencies as specified on its paths, it doesn’t configure
+the environment for those packages. And how could it? Those packages could
+have different build environments from one another, and could be
+irreconcilable.
+How to Actually Develop Krita On Nix: Back to nix-shell
+So how do you actually get into the development shell when the package you want
+is wrapped? Some
+packages
+have a -unwrapped version which works, like neovim-unwrapped. But krita
+doesn’t. So instead we have to checkout nixpkgs locally, and use nix-shell
+directly:
+$ git clone --depth 5 git@github.com:NixOS/nixpkgs.git -b nixos-unstable && cd nixpkgs
+$ nix-shell -E 'with import <nixpkgs> { }; libsForQt5.callPackage ./pkgs/applications/graphics/krita/default.nix { }'
+[shell] $ echo $src
+/nix/store/8sig0wy68ig9khmw5pkkcrqyxfnvac30-krita-5.2.9.tar.gz
+Hell yeah.
+Now we actually can unpack it and configure it:
+[shell]
+$ mkdir /tmp/krita_build && pushd /tmp/krita_build && unpackPhase
+/tmp/krita_build /tmp/nixpkgs
+unpacking source archive /nix/store/8sig0wy68ig9khmw5pkkcrqyxfnvac30-krita-5.2.9.tar.gz
+source root is krita-5.2.9
+setting SOURCE_DATE_EPOCH to timestamp 1737450668 of file "krita-5.2.9/winquirks/unistd.h"
+
+$ ls
+krita-5.2.9
+Or even do the build in full:
+[shell]
+$ genericBuild
+$ # Building Krita now in the current dir ...
+This Isn’t Great
+Honestly I do not like the idea that nix develop sometimes works and
+sometimes doesn’t depending on whether or not a package is wrapped. That’s
+just not good. Additionally, the fact that nix develop can never work for
+some packages because they are wrapped and don’t have a public -unwrapped
+package is not good. So I think really there should be two things:
+1. nix develop should tell you that you’re develop-ing on a wrapper
+Not sure how easy this is to check inside develop itself, but you can check
+on the shell easily enough with echo $src $srcs or checking the compiler is
+set with echo $CC $CXX (if appropriate).
+2. nixpkgs should lint for packages that are wrapped without *-unwrapped
+You probably can’t get everything since static analysis is hard. But like,
+checking for a new wrapped.nix file, looking for things like symlinkJoin
+or other shell wrappers and noting that there’s no entry new entry in
+all-packages.nix that ends in -unwrapped will probably catch 90% of these
+cases. Likely there’s a smarter solution out there, but the point is that
+devs should be warned that they’re making it hard to do development on their
+packages.
+Krita isn’t the only package like this! I found this out because nixpkgs#mpv
+also has the same problem!
+I don’t know. Software can be better. It’s all a fucking mess. Believe in a
+better world. Hope that someone out there is helped by this!
+
+Shout out to the #discuss:lix.systems
+for your help! Particularly prince213 and K900.
+❦
+
+  You can email me at “crystal (at) <this domain>” to respond! Or just say hi. That's cool too!]]></summary>
+    <content type="html"><![CDATA[<figure>
+<img src="../images/post_images/2025-06-08-kiki_splash.jpg" alt="Krita 5 Splash Art. Art by Tyson Tan" />
+<figcaption aria-hidden="true">Krita 5 Splash Art. Art by <a href="https://tysontan.com/">Tyson Tan</a></figcaption>
+</figure>
+<p>I generally like hacking on little projects here and there. I have frequently
+found it interesting to go poke and fix bugs in OSS projects, because the
+thought of maintaining a real project for years unending scares me!</p>
+<p>So it’s much easier to see a bug in a program and think “hey, maybe I can fix
+that?”. Nix in theory makes this engineering cycle very easy to do. Just:</p>
+<pre class="shell"><code>$ nix develop nixpkgs#&lt;your package here&gt;
+[develop]
+$ genericBuild # Tada! A built package.</code></pre>
+<p>Or even step by step:</p>
+<pre class="shell"><code>[develop]
+$ unpackPhase &amp;&amp; configurePhase &amp;&amp; buildPhase # etc...</code></pre>
+<p>So simple! Except this doesn’t always work.</p>
+<details>
+<summary>
+If you’re curious, here’s my relevant nixpkgs lock to reproduce
+this
+</summary>
+<pre class="json"><code>    # ...
+    &quot;nixpkgs&quot;: {
+      &quot;locked&quot;: {
+        &quot;lastModified&quot;: 1749086602,
+        &quot;narHash&quot;: &quot;sha256-DJcgJMekoxVesl9kKjfLPix2Nbr42i7cpEHJiTnBUwU=&quot;,
+        &quot;owner&quot;: &quot;NixOS&quot;,
+        &quot;repo&quot;: &quot;nixpkgs&quot;,
+        &quot;rev&quot;: &quot;4792576cb003c994bd7cc1edada3129def20b27d&quot;,
+        &quot;type&quot;: &quot;github&quot;
+      },
+      &quot;original&quot;: {
+        &quot;owner&quot;: &quot;NixOS&quot;,
+        &quot;ref&quot;: &quot;nixos-25.05&quot;,
+        &quot;repo&quot;: &quot;nixpkgs&quot;,
+        &quot;type&quot;: &quot;github&quot;
+      }
+    },
+    # ...</code></pre>
+</details>
+<h2 id="hacking-on-krita">Hacking on Krita</h2>
+<p>Okay, so I want to fix a bug in the plugin listings in Krita. Let’s go grab
+the sources from Nix’s cache, it’s probably roughly the same. We can adapt the
+patch later on.</p>
+<p>So let’s get a dev build working!</p>
+<pre class="shell"><code>$ nix develop nixpkgs#krita
+[develop]
+$ genericBuild
+Running phase: qtPreHook
+Running phase: unpackPhase
+variable $src or $srcs should point to the source
+exit</code></pre>
+<p>What. So what’s happening here? We can check the definition of <code>unpackPhase</code>:</p>
+<pre class="bash"><code>[develop]
+$ typeset -f unpackPhase
+unpackPhase ()
+{
+    runHook preUnpack;
+    if [ -z &quot;${srcs:-}&quot; ]; then
+        if [ -z &quot;${src:-}&quot; ]; then
+            echo 'variable $src or $srcs should point to the source';
+            exit 1;
+        fi;
+        srcs=&quot;$src&quot;;
+    fi;
+    local -a srcsArray;
+    concatTo srcsArray srcs;
+    # ... more unrelated bits ...</code></pre>
+<p>So it needs a <code>$src</code> or <code>$srcs</code> variable set before running. And indeed,
+neither is set:</p>
+<pre class="shell"><code>[develop]
+$ echo $src $srcs
+
+$</code></pre>
+<p>But if we take
+a simpler package like <code>hello</code>:</p>
+<pre class="shell"><code>$ nix develop nixpkgs#hello
+[develop]
+$ echo $src $srcs
+/nix/store/pa10z4ngm0g83kx9mssrqzz30s84vq7k-hello-2.12.1.tar.gz</code></pre>
+<p>So <code>$src</code> is set <em>sometimes</em>. Why is it not set with Krita?</p>
+<h2 id="wrappings-and-symlinkjoin">Wrappings and symlinkJoin</h2>
+<p>To answer this, we have to look at how nixpkgs selects and defines the Krita
+package. The <a href="https://github.com/NixOS/nixpkgs/tree/2ddb856be5f6e35594f9c38e088e5ee559ca59d7/pkgs/applications/graphics/krita">file tree</a>
+looks like:</p>
+<pre class="plaintext"><code>krita
+├── default.nix
+├── generic.nix
+└── wrapper.nix</code></pre>
+<p>…And the <code>all-packages.nix</code> file calls the <code>wrapper.nix</code>, not <code>default.nix</code>:</p>
+<pre class="shell"><code>$ pwd
+/tmp/nixpkgs
+$ rg -C5 'krita.*wrapper' pkgs/top-level/all-packages.nix
+13035-    callPackage ../applications/networking/instant-messengers/telegram/kotatogram-desktop
+13036-      { };
+13037-
+13038-  krane = callPackage ../applications/networking/cluster/krane { };
+13039-
+13040:  krita = callPackage ../applications/graphics/krita/wrapper.nix { };
+13041-
+13042-  ktimetracker = libsForQt5.callPackage ../applications/office/ktimetracker { };
+13043-
+13044-  kubeval = callPackage ../applications/networking/cluster/kubeval { };
+13045-</code></pre>
+<p>So what’s happening in that wrapper?</p>
+<pre class="nix"><code># pkgs/applications/graphics/krita/wrapper.nix
+{
+  lib,
+  libsForQt5,
+  symlinkJoin,
+  unwrapped ? libsForQt5.callPackage ./. { },
+  krita-plugin-gmic,
+  binaryPlugins ? [
+    # Default plugins provided by upstream appimage
+    krita-plugin-gmic
+  ],
+}:
+
+symlinkJoin {
+  name = lib.replaceStrings [ &quot;-unwrapped&quot; ] [ &quot;&quot; ] unwrapped.name;
+  inherit (unwrapped)
+    version
+    buildInputs
+    nativeBuildInputs
+    meta
+    ;
+
+  paths = [ unwrapped ] ++ binaryPlugins;
+
+  postBuild = ''
+    wrapQtApp &quot;$out/bin/krita&quot; \
+      --prefix PYTHONPATH : &quot;$PYTHONPATH&quot; \
+      --set KRITA_PLUGIN_PATH &quot;$out/lib/kritaplugins&quot;
+  '';
+
+  passthru = {
+    inherit unwrapped binaryPlugins;
+  };
+}</code></pre>
+<p>Ahhh it’s a <code>symlinkJoin</code>. <code>symlinkJoin</code> is a trivial derivation, and while it
+includes the dependencies as specified on its <code>paths</code>, it doesn’t configure
+the environment for those packages. And how could it? Those packages could
+have different build environments from one another, and could be
+irreconcilable.</p>
+<h2 id="how-to-actually-develop-krita-on-nix-back-to-nix-shell">How to Actually Develop Krita On Nix: Back to nix-shell</h2>
+<p>So how do you actually get into the development shell when the package you want
+is wrapped? Some
+<a href="https://search.nixos.org/packages?channel=unstable&amp;from=0&amp;size=50&amp;sort=relevance&amp;type=packages&amp;query=-unwrapped">packages</a>
+have a <code>-unwrapped</code> version which works, like <code>neovim-unwrapped</code>. But krita
+doesn’t. So instead we have to checkout nixpkgs locally, and use <code>nix-shell</code>
+directly:</p>
+<pre class="shell"><code>$ git clone --depth 5 git@github.com:NixOS/nixpkgs.git -b nixos-unstable &amp;&amp; cd nixpkgs
+$ nix-shell -E 'with import &lt;nixpkgs&gt; { }; libsForQt5.callPackage ./pkgs/applications/graphics/krita/default.nix { }'
+[shell] $ echo $src
+/nix/store/8sig0wy68ig9khmw5pkkcrqyxfnvac30-krita-5.2.9.tar.gz</code></pre>
+<p>Hell yeah.</p>
+<p>Now we actually can unpack it and configure it:</p>
+<pre class="shell"><code>[shell]
+$ mkdir /tmp/krita_build &amp;&amp; pushd /tmp/krita_build &amp;&amp; unpackPhase
+/tmp/krita_build /tmp/nixpkgs
+unpacking source archive /nix/store/8sig0wy68ig9khmw5pkkcrqyxfnvac30-krita-5.2.9.tar.gz
+source root is krita-5.2.9
+setting SOURCE_DATE_EPOCH to timestamp 1737450668 of file &quot;krita-5.2.9/winquirks/unistd.h&quot;
+
+$ ls
+krita-5.2.9</code></pre>
+<p>Or even do the build in full:</p>
+<pre><code>[shell]
+$ genericBuild
+$ # Building Krita now in the current dir ...</code></pre>
+<h2 id="this-isnt-great">This Isn’t Great</h2>
+<p>Honestly I do not like the idea that <code>nix develop</code> sometimes works and
+sometimes doesn’t depending on whether or not a package is wrapped. That’s
+just not good. Additionally, the fact that <code>nix develop</code> can <em>never</em> work for
+some packages because they are wrapped and don’t have a public <code>-unwrapped</code>
+package is not good. So I think really there should be two things:</p>
+<h3 id="nix-develop-should-tell-you-that-youre-develop-ing-on-a-wrapper">1. nix develop should tell you that you’re develop-ing on a wrapper</h3>
+<p>Not sure how easy this is to check inside develop itself, but you can check
+on the shell easily enough with <code>echo $src $srcs</code> or checking the compiler is
+set with <code>echo $CC $CXX</code> (if appropriate).</p>
+<h3 id="nixpkgs-should-lint-for-packages-that-are-wrapped-without--unwrapped">2. nixpkgs should lint for packages that are wrapped without *-unwrapped</h3>
+<p>You probably can’t get everything since static analysis is hard. But like,
+checking for a new <code>wrapped.nix</code> file, looking for things like <code>symlinkJoin</code>
+or other shell wrappers and noting that there’s no entry new entry in
+<code>all-packages.nix</code> that ends in <code>-unwrapped</code> will probably catch 90% of these
+cases. Likely there’s a smarter solution out there, but the point is that
+devs should be warned that they’re making it hard to do development on their
+packages.</p>
+<p>Krita isn’t the only package like this! I found this out because <code>nixpkgs#mpv</code>
+also has the same problem!</p>
+<p>I don’t know. Software can be better. It’s all a fucking mess. Believe in a
+better world. Hope that someone out there is helped by this!</p>
+<hr />
+<p>Shout out to the <a href="https://matrix.to/#/#space:lix.systems">#discuss:lix.systems</a>
+for your help! Particularly prince213 and K900.</p>
+<div class="post-contact-spacer">❦</div>
+<div class="post-contact">
+  You can email me at <email-wrapper>“crystal (at) &lt;this domain&gt;”</email-wrapper> to respond!<br /> Or just say hi. That's cool too!
+</div>
+]]></content>
+</entry>
+<entry>
+    <title>Too Much Going On</title>
+    <link href="https://crystalwobsite.gay/posts/2025-05-04-too_much_going_on" type="text/html" rel="alternate" />
+    <id>https://crystalwobsite.gay/posts/2025-05-04-too_much_going_on.html</id>
+    <published>2025-05-04T00:00:00+00:00</published>
+    <updated>2025-05-11T00:00:00+00:00</updated>
+    <summary type="html"><![CDATA[Been a lot of things going on. Too much, really. Both for myself and the world,
+I think. I have so many things to talk about on this blog that I think could be
+interesting or cool to talk about, but much less energy to write them up. It
+doesn’t help many of the personal things are sad or depressing. I’d rather
+talk about Neighhem and hardware hackery, but it’s hard to align that with
+job worries and family mourning.
+It’s a shame that “things going on” is directly causal to both
+“many things to write about” and also “no energy to write about them”.
+That’s probably how it always is.
+I’ve decided to write just a personal post today.
+
+
+Desktop Screencap of Seafoam. Art by Huussii.
+
+I’ve been working on running a desktop NixOS experience. I really enjoy the
+declarative configuration style that it has going for it, because reinstalls
+are inevitable and a pain. And! It’s using Lix, so I got my LixOS install!
+All is well :3
+You can see my “LixOS” configuration
+here,
+licensed under AGPL-3.0, if you wish to take inspiration from it.
+I get to experiment with lots of cool software that I normally don’t on Debian:
+
+Wayland! I actually get to try Wayland for once!!!
+KDE Plasma 6
+Tiling WMs
+BTRFS and filesystem snapshoting
+OpenTabletDriver (which sadly didn’t work for my tablet)
+
+In many ways I do miss Debian though. Many simple things are harder in NixOS.
+Things don’t “just work” most of the time. It’s a lot of bug finding, a lot of
+patching. This would be fine for a developer project but it’s not a great
+experience as a regular user.
+For example, Discord’s Krisp module doesn’t work on NixOS.
+This is a known issue, and
+the only two solutions are:
+
+Patch the node’s ELF binary
+using a patcher to get around Discord code signing (this does work!).
+Use a third party discord wrapper like Vesktop/Webcord, both of which
+are themselves buggy in other ways.
+
+Both of these options are fucking awful in my opinion, even as someone
+with experience in this work!
+Maybe the solution to all this is to use Debian with
+Ansible
+or something. But then again, such a set up does not force the discipline
+that configuration.nix demands.
+Hey, if you’re a Linux user reading this, what OS have you used? Done any
+distro hopping?
+
+
+1 comment posted in reply to this article.
+
+
+Anne - 2025-05-11
+
+:3
+
+
+❦
+
+  You can email me at “crystal (at) <this domain>” to respond! Or just say hi. That's cool too!]]></summary>
+    <content type="html"><![CDATA[<p>Been a lot of things going on. Too much, really. Both for myself and the world,
+I think. I have so many things to talk about on this blog that I think could be
+interesting or cool to talk about, but much less energy to write them up. It
+doesn’t help many of the personal things are sad or depressing. I’d rather
+talk about Neighhem and hardware hackery, but it’s hard to align that with
+job worries and family mourning.</p>
+<p>It’s a shame that “things going on” is directly causal to both
+“many things to write about” and also “no energy to write about them”.
+That’s probably how it always is.</p>
+<p>I’ve decided to write just a personal post today.</p>
+<figure>
+<img src="../images/post_images/2025-05-04-seafoam.jpg" alt="Desktop Screencap of Seafoam. Art by Huussii." />
+<figcaption aria-hidden="true">Desktop Screencap of Seafoam. <a href="https://www.deviantart.com/huussii/art/Her-Radiance-Our-Sunlight-524495358">Art by Huussii.</a></figcaption>
+</figure>
+<p>I’ve been working on running a desktop NixOS experience. I really enjoy the
+declarative configuration style that it has going for it, because reinstalls
+are inevitable and a pain. And! It’s using <code>Lix</code>, so I got my LixOS install!
+All is well :3</p>
+<p>You can see my “LixOS” configuration
+<a href="https://github.com/CrystalSplitter/crystals-lixos-configuration">here</a>,
+licensed under <code>AGPL-3.0</code>, if you wish to take inspiration from it.</p>
+<p>I get to experiment with lots of cool software that I normally don’t on Debian:</p>
+<ul>
+<li>Wayland! I actually get to try Wayland for once!!!</li>
+<li>KDE Plasma 6</li>
+<li>Tiling WMs</li>
+<li>BTRFS and filesystem snapshoting</li>
+<li>OpenTabletDriver (which sadly didn’t work for my tablet)</li>
+</ul>
+<p>In many ways I do miss Debian though. Many simple things are harder in NixOS.
+Things don’t “just work” most of the time. It’s a lot of bug finding, a lot of
+patching. This would be fine for a developer project but it’s not a great
+experience as a regular user.</p>
+<p>For example, Discord’s Krisp module doesn’t work on NixOS.
+<a href="https://github.com/NixOS/nixpkgs/issues/195512">This is a known issue</a>, and
+the only two solutions are:</p>
+<ol type="1">
+<li><a href="https://github.com/NixOS/nixpkgs/issues/195512#issuecomment-1320781446">Patch the node’s ELF binary</a>
+using a patcher to get around Discord code signing (this does work!).</li>
+<li>Use a third party discord wrapper like Vesktop/Webcord, both of which
+are themselves buggy in other ways.</li>
+</ol>
+<p>Both of these options are fucking awful in my opinion, even as someone
+with experience in this work!</p>
+<p>Maybe the solution to all this is to use Debian with
+<a href="https://github.com/NixOS/nixpkgs/issues/195512#issuecomment-1320781446">Ansible</a>
+or something. But then again, such a set up does not force the discipline
+that <code>configuration.nix</code> demands.</p>
+<p>Hey, if you’re a Linux user reading this, what OS have you used? Done any
+distro hopping?</p>
+<details class="rounded box-shadow box-light-border">
+<summary>
+1 comment posted in reply to this article.
+</summary>
+<div class="rounded box-shadow box-light-border">
+<p><strong>Anne - 2025-05-11</strong>
+<br />
+:3</p>
+</div>
+</details>
+<div class="post-contact-spacer">❦</div>
+<div class="post-contact">
+  You can email me at <email-wrapper>“crystal (at) &lt;this domain&gt;”</email-wrapper> to respond!<br /> Or just say hi. That's cool too!
+</div>
+]]></content>
+</entry>
+<entry>
+    <title>I will be at BABSCon and Pinkaboo's Neighhem!</title>
+    <link href="https://crystalwobsite.gay/posts/2025-04-04-babscon" type="text/html" rel="alternate" />
+    <id>https://crystalwobsite.gay/posts/2025-04-04-babscon.html</id>
+    <published>2025-04-04T00:00:00+00:00</published>
+    <updated>2025-04-04T00:00:00+00:00</updated>
+    <summary type="html"><![CDATA[Pinkaboo’s Neighhem
+
+Despite the BABSCon concert drama, I will be attending the convention in San
+Francisco!
+And, because of the BABSCon drama, I will also be attending Pinkaboo’s
+Neighhem.
+From the context that I have (however limited), it seems this is entirely on
+the fault of the convention board. I’m glad the musicians could come together
+one more time to make it a reality for a final hurrah.
+Anyways, say hi! I may not be around in the mornings, but I’ll be around!
+❦
+
+  You can email me at “crystal (at) <this domain>” to respond! Or just say hi. That's cool too!]]></summary>
+    <content type="html"><![CDATA[<figure>
+<img src="../images/post_images/2025-04-04-neighhem.jpg" alt="Pinkaboo’s Neighhem" />
+<figcaption aria-hidden="true">Pinkaboo’s Neighhem</figcaption>
+</figure>
+<p>Despite the BABSCon concert drama, I will be attending the convention in San
+Francisco!</p>
+<p>And, because of the BABSCon drama, I will also be attending <a href="https://musicbrainz.org/event/9731bcc3-9177-4d3d-8386-2e84140f2269">Pinkaboo’s
+Neighhem</a>.
+From the context that I have (however limited), it seems this is entirely on
+the fault of the convention board. I’m glad the musicians could come together
+one more time to make it a reality for a final hurrah.</p>
+<p>Anyways, say hi! I may not be around in the mornings, but I’ll be around!</p>
+<div class="post-contact-spacer">❦</div>
+<div class="post-contact">
+  You can email me at <email-wrapper>“crystal (at) &lt;this domain&gt;”</email-wrapper> to respond!<br /> Or just say hi. That's cool too!
+</div>
+]]></content>
+</entry>
+<entry>
+    <title>Welcome to ponysay.crystalwobsite.gay</title>
+    <link href="https://crystalwobsite.gay/posts/2025-02-22-welcome_to_ponysay" type="text/html" rel="alternate" />
+    <id>https://crystalwobsite.gay/posts/2025-02-22-welcome_to_ponysay.html</id>
+    <published>2025-02-22T00:00:00+00:00</published>
+    <updated>2025-02-22T00:00:00+00:00</updated>
+    <summary type="html"><![CDATA[Ponysay Screenshot
+
+Check it out now! Note that it only works on Desktop.
+ponysay.crystalwobsite.gay
+This will eventually be added to my cool stuff page.
+So I’ve had this running for a bit, but I’ve omitted writing about it for a
+while because
+it’s been quite an adventure and I wanted to give the topic due justice.
+How? What?
+The pipeline is as follows:
+nginx reverse proxy
+  -> haskell warp http server
+    -> fortune
+    -> ponysay-modern
+    -> ansi2html/aha
+  <- response
+The magic is mostly in the internal components that the haskell webserver
+calls, so I’ll
+briefly talk about them.
+fortune
+Fortune. Unix people already
+know this one.
+Randomly selects a quote from a massive database. It’s got a lot of witty ones,
+and some… less witty. I’m using the mostly-default set. I will probably
+update it over time.
+ponysay-modern
+ponysay-modern is my
+personal, fixed, fork of erkin’s ponysay.
+This is used to generate terminal ponies which can take arbitrary text to
+quote. It even supports its built-in fortune-like interface, though I’m
+not using it.
+Ponysay, frankly is a nightmare codebase. It needs a full rewrite in practice.
+Nothing
+in it is good or holy. Celestia’s eyes have not touched this work, nor should
+they.
+I have fixed some notable bugs, but there is no way to patch everything.
+ansi2html
+Does what it says on the tin. ansi2html
+converts ANSI colour codes to HTML spans with associated CSS styling.
+Personally,
+I want to use aha more, as it’s both faster and has less dependencies, but
+it would require more effort on my part.
+The Server
+So the entire program is just one singular haskell file. The current version,
+at the time of this posting, is below.
+
+
+Main.hs
+
+{-# LANGUAGE ApplicativeDo #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE RecordWildCards #-}
+
+module Main where
+
+import Blaze.ByteString.Builder (copyByteString, fromByteString)
+import Control.Concurrent (
+    Chan,
+    MVar,
+    forkIO,
+    modifyMVar,
+    newChan,
+    newMVar,
+    readChan,
+    readMVar,
+    threadDelay,
+    writeChan,
+ )
+import Data.ByteString.UTF8 qualified as BU
+import Data.Time qualified as Time
+import Data.Time.Format.ISO8601 qualified as Time
+import Network.HTTP.Types (status200)
+import Network.Wai qualified as Wai
+import Network.Wai.Handler.Warp qualified as Warp
+import Options.Applicative qualified as Args
+import System.Exit (ExitCode (..))
+import System.IO qualified as IO
+import System.Process qualified as Proc
+
+-- ------------------------------------------------------------------------------------------------
+-- Types
+-- ------------------------------------------------------------------------------------------------
+
+data Arguments = Arguments
+    { argsPort :: Int
+    , quiet :: Bool
+    , argsBufferSize :: Int
+    }
+
+data PonyResult = PonyResult ExitCode BU.ByteString
+
+data CountedChannel a = CountedChannel
+    { ccAmount :: MVar Int
+    , chan :: Chan a
+    , ccMaxSize :: Int
+    }
+
+type Logger = (String -> IO ())
+
+-- ------------------------------------------------------------------------------------------------
+-- Functions
+-- ------------------------------------------------------------------------------------------------
+
+main :: IO ()
+main = do
+    args <- Args.execParser prgrmOpts
+    let logS = if quiet args then noLogs else stdoutLogs
+    logS ("Listening on port " <> show (argsPort args))
+    ponyBuffer <- do
+        amnt <- newMVar 0
+        myChan <- newChan
+        pure $ CountedChannel amnt myChan (argsBufferSize args)
+    _threadID <- forkIO (generatorThread logS ponyBuffer)
+    Warp.run (argsPort args) (app logS ponyBuffer)
+  where
+    prgrmOpts =
+        Args.info
+            (parseArgs Args.<**> Args.helper)
+            (Args.header "ponysay-fortune-webserver - HTTP server for random pony quoting.")
+
+parseArgs :: Args.Parser Arguments
+parseArgs = do
+    quiet <-
+        Args.switch
+            ( Args.long "quiet"
+                <> Args.short 'q'
+                <> Args.help "Don't produce any logging."
+            )
+    argsPort <-
+        Args.option
+            Args.auto
+            ( Args.long "port"
+                <> Args.help "Port to listen on."
+                <> Args.showDefault
+                <> Args.value defaultPort
+                <> Args.metavar "PORTNUM"
+            )
+    argsBufferSize <-
+        Args.option
+            Args.auto
+            ( Args.long "buffer-size"
+                <> Args.short 'b'
+                <> Args.help "Number of ponies to pre-buffer."
+                <> Args.value defaultPonyBufferSize
+                <> Args.metavar "NUM")
+    pure Arguments{..}
+
+-- Web server -------------------------------------------------------------------------------------
+
+app :: Logger -> CountedChannel PonyResult -> Wai.Request -> (Wai.Response -> IO a) -> IO a
+app logS ponyBuffer req respond = do
+    logS $ "Request From " <> (show . Wai.remoteHost $ req)
+    pollForMore logS ponyBuffer
+    ponyResult <- modifyMVar (ccAmount ponyBuffer) $ \a -> do
+        ponyResult <- readChan (chan ponyBuffer)
+        -- In theory, after the subtraction, a could be
+        -- negative. This is okay.
+        pure (a - 1, ponyResult)
+    case ponyResult of
+        PonyResult ExitSuccess ponyData -> do
+            respond $ successResponse ponyData
+        PonyResult failureExitCode _ -> do
+            respond $ errorResponse failureExitCode
+
+errorResponse :: ExitCode -> Wai.Response
+errorResponse exitCode =
+    Wai.responseBuilder status200 [("Content-Type", "text/plain")]
+        . mconcat
+        . map copyByteString
+        $ ["Error: " <> (BU.fromString (show exitCode))]
+
+successResponse :: BU.ByteString -> Wai.Response
+successResponse output =
+    Wai.responseBuilder status200 [("Content-Type", "text/html")] $ fromByteString output
+
+pollForMore :: Logger -> CountedChannel a -> IO ()
+pollForMore logS channel =
+    readMVar (ccAmount channel)
+        >>= \count ->
+            if count > 0
+                then pure ()
+                else do
+                    logS "Ran out of ponies... waiting"
+                    threadDelay 300_000
+                    pollForMore logS channel
+
+-- Generator --------------------------------------------------------------------------------------
+
+generatorThread :: Logger -> CountedChannel PonyResult -> IO ()
+generatorThread logS ponyBuffer = do
+    count <- readMVar (ccAmount ponyBuffer)
+    if count < ccMaxSize ponyBuffer
+        then do
+            logS "Generating pony..."
+            newPony <- generatePony
+            handleGenResult newPony
+        else do
+            threadDelay 1_000_000
+            generatorThread logS ponyBuffer
+  where
+    handleGenResult (Just newPony) = do
+        logS "Success."
+        -- We specifically don't lock the ccAmount along
+        -- with the channel to prevent deadlock.
+        writeChan (chan ponyBuffer) newPony
+        newPonyCount <- modifyMVar (ccAmount ponyBuffer) $ \a -> do
+            pure $ (a + 1, a + 1)
+        logS ("New pony added: now at " <> show newPonyCount)
+        generatorThread logS ponyBuffer
+    handleGenResult Nothing = do
+        logS "Timed out."
+        generatorThread logS ponyBuffer
+
+generatePony :: IO (Maybe PonyResult)
+generatePony = do
+    fortuneOutput <- Proc.readProcess "fortune" [] ""
+    ponysayOutput <- Proc.readProcess "ponysay" ["-X", "-W", "100"] fortuneOutput
+    htmlOutput <-
+        Proc.readProcess
+            "ansi2html"
+            ["-a"]
+            (ponysayOutput
+                <> "\n\n  refresh for a new pony fortune."
+                <> "\n  or you can go back to https://crystalwobsite.gay")
+    pure $ Just (PonyResult ExitSuccess (BU.fromString htmlOutput))
+
+-- Utils ------------------------------------------------------------------------------------------
+
+stdoutLogs :: String -> IO ()
+stdoutLogs s = do
+    currentTime <- Time.getCurrentTime
+    IO.hPutStrLn IO.stdout (Time.iso8601Show currentTime <> " -- " <> s)
+
+noLogs :: String -> IO ()
+noLogs _ = pure ()
+
+defaultPonyBufferSize :: Int
+defaultPonyBufferSize = 30
+
+defaultPort :: Int
+defaultPort = 3000
+
+I also have a github repo for it
+here.
+Okay but I can’t read this…
+It works relatively simply. There’s two threads.
+The Main Thread handles web requests. It looks at a shared buffer for
+generated pony responses, and serves one up if one exists. Otherwise it blocks,
+waiting on a new pony response to be generated.
+The Generator Thread creates new ponies. It pushes into the shared buffer,
+generating new fortunes, ponies, and web pages, and putting them into an
+atomic channel: CountedChannel PonyResult. The channel has a maximum size,
+and if nothing more can be added, the generator blocks as well.
+It’s also a Nix Flake!
+You can literally try it out with:
+$ nix shell github:CrystalSplitter/ponysay-fortune-server/main
+$ ponysay-fortune-server
+It just works! God I love how Nix shells work.
+Conclusion
+be gay. be gender freaks. fight fascism. enjoy colourful equines.
+❦
+
+  You can email me at “crystal (at) <this domain>” to respond! Or just say hi. That's cool too!]]></summary>
+    <content type="html"><![CDATA[<figure>
+<img src="../images/post_images/2025-02-22-ponysay.webp" alt="Ponysay Screenshot" />
+<figcaption aria-hidden="true">Ponysay Screenshot</figcaption>
+</figure>
+<p>Check it out now! <strong>Note that it only works on Desktop.</strong></p>
+<p><a href="https://ponysay.crystalwobsite.gay">ponysay.crystalwobsite.gay</a></p>
+<p>This will eventually be added to my <a href="../cool_stuff">cool stuff</a> page.</p>
+<p>So I’ve had this running for a bit, but I’ve omitted writing about it for a
+while because
+it’s been quite an adventure and I wanted to give the topic due justice.</p>
+<h2 id="how-what">How? What?</h2>
+<p>The pipeline is as follows:</p>
+<pre class="plaintext"><code>nginx reverse proxy
+  -&gt; haskell warp http server
+    -&gt; fortune
+    -&gt; ponysay-modern
+    -&gt; ansi2html/aha
+  &lt;- response</code></pre>
+<p>The magic is mostly in the internal components that the haskell webserver
+calls, so I’ll
+briefly talk about them.</p>
+<h3 id="fortune">fortune</h3>
+<p><a href="https://en.wikipedia.org/wiki/Fortune_(Unix)">Fortune</a>. Unix people already
+know this one.
+Randomly selects a quote from a massive database. It’s got a lot of witty ones,
+and some… less witty. I’m using the mostly-default set. I will probably
+update it over time.</p>
+<h3 id="ponysay-modern">ponysay-modern</h3>
+<p><a href="https://github.com/CrystalSplitter/ponysay-modern">ponysay-modern</a> is my
+personal, fixed, fork of <a href="https://github.com/erkin/ponysay">erkin’s ponysay</a>.</p>
+<p>This is used to generate terminal ponies which can take arbitrary text to
+quote. It even supports its built-in fortune-like interface, though I’m
+not using it.</p>
+<p>Ponysay, frankly is a nightmare codebase. It needs a full rewrite in practice.
+Nothing
+in it is good or holy. Celestia’s eyes have not touched this work, nor should
+they.</p>
+<p>I have fixed some notable bugs, but there is no way to patch everything.</p>
+<h3 id="ansi2html">ansi2html</h3>
+<p>Does what it says on the tin. <a href="https://pypi.org/project/ansi2html/">ansi2html</a>
+converts ANSI colour codes to HTML spans with associated CSS styling.
+Personally,
+I want to use <a href="https://github.com/theZiz/aha">aha</a> more, as it’s both faster and has less dependencies, but
+it would require more effort on my part.</p>
+<h2 id="the-server">The Server</h2>
+<p>So the entire program is just one singular haskell file. The current version,
+at the time of this posting, is below.</p>
+<details class="rounded box-shadow box-light-border">
+<summary>
+Main.hs
+</summary>
+<pre class="haskell"><code>{-# LANGUAGE ApplicativeDo #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE RecordWildCards #-}
+
+module Main where
+
+import Blaze.ByteString.Builder (copyByteString, fromByteString)
+import Control.Concurrent (
+    Chan,
+    MVar,
+    forkIO,
+    modifyMVar,
+    newChan,
+    newMVar,
+    readChan,
+    readMVar,
+    threadDelay,
+    writeChan,
+ )
+import Data.ByteString.UTF8 qualified as BU
+import Data.Time qualified as Time
+import Data.Time.Format.ISO8601 qualified as Time
+import Network.HTTP.Types (status200)
+import Network.Wai qualified as Wai
+import Network.Wai.Handler.Warp qualified as Warp
+import Options.Applicative qualified as Args
+import System.Exit (ExitCode (..))
+import System.IO qualified as IO
+import System.Process qualified as Proc
+
+-- ------------------------------------------------------------------------------------------------
+-- Types
+-- ------------------------------------------------------------------------------------------------
+
+data Arguments = Arguments
+    { argsPort :: Int
+    , quiet :: Bool
+    , argsBufferSize :: Int
+    }
+
+data PonyResult = PonyResult ExitCode BU.ByteString
+
+data CountedChannel a = CountedChannel
+    { ccAmount :: MVar Int
+    , chan :: Chan a
+    , ccMaxSize :: Int
+    }
+
+type Logger = (String -&gt; IO ())
+
+-- ------------------------------------------------------------------------------------------------
+-- Functions
+-- ------------------------------------------------------------------------------------------------
+
+main :: IO ()
+main = do
+    args &lt;- Args.execParser prgrmOpts
+    let logS = if quiet args then noLogs else stdoutLogs
+    logS (&quot;Listening on port &quot; &lt;&gt; show (argsPort args))
+    ponyBuffer &lt;- do
+        amnt &lt;- newMVar 0
+        myChan &lt;- newChan
+        pure $ CountedChannel amnt myChan (argsBufferSize args)
+    _threadID &lt;- forkIO (generatorThread logS ponyBuffer)
+    Warp.run (argsPort args) (app logS ponyBuffer)
+  where
+    prgrmOpts =
+        Args.info
+            (parseArgs Args.&lt;**&gt; Args.helper)
+            (Args.header &quot;ponysay-fortune-webserver - HTTP server for random pony quoting.&quot;)
+
+parseArgs :: Args.Parser Arguments
+parseArgs = do
+    quiet &lt;-
+        Args.switch
+            ( Args.long &quot;quiet&quot;
+                &lt;&gt; Args.short 'q'
+                &lt;&gt; Args.help &quot;Don't produce any logging.&quot;
+            )
+    argsPort &lt;-
+        Args.option
+            Args.auto
+            ( Args.long &quot;port&quot;
+                &lt;&gt; Args.help &quot;Port to listen on.&quot;
+                &lt;&gt; Args.showDefault
+                &lt;&gt; Args.value defaultPort
+                &lt;&gt; Args.metavar &quot;PORTNUM&quot;
+            )
+    argsBufferSize &lt;-
+        Args.option
+            Args.auto
+            ( Args.long &quot;buffer-size&quot;
+                &lt;&gt; Args.short 'b'
+                &lt;&gt; Args.help &quot;Number of ponies to pre-buffer.&quot;
+                &lt;&gt; Args.value defaultPonyBufferSize
+                &lt;&gt; Args.metavar &quot;NUM&quot;)
+    pure Arguments{..}
+
+-- Web server -------------------------------------------------------------------------------------
+
+app :: Logger -&gt; CountedChannel PonyResult -&gt; Wai.Request -&gt; (Wai.Response -&gt; IO a) -&gt; IO a
+app logS ponyBuffer req respond = do
+    logS $ &quot;Request From &quot; &lt;&gt; (show . Wai.remoteHost $ req)
+    pollForMore logS ponyBuffer
+    ponyResult &lt;- modifyMVar (ccAmount ponyBuffer) $ \a -&gt; do
+        ponyResult &lt;- readChan (chan ponyBuffer)
+        -- In theory, after the subtraction, a could be
+        -- negative. This is okay.
+        pure (a - 1, ponyResult)
+    case ponyResult of
+        PonyResult ExitSuccess ponyData -&gt; do
+            respond $ successResponse ponyData
+        PonyResult failureExitCode _ -&gt; do
+            respond $ errorResponse failureExitCode
+
+errorResponse :: ExitCode -&gt; Wai.Response
+errorResponse exitCode =
+    Wai.responseBuilder status200 [(&quot;Content-Type&quot;, &quot;text/plain&quot;)]
+        . mconcat
+        . map copyByteString
+        $ [&quot;Error: &quot; &lt;&gt; (BU.fromString (show exitCode))]
+
+successResponse :: BU.ByteString -&gt; Wai.Response
+successResponse output =
+    Wai.responseBuilder status200 [(&quot;Content-Type&quot;, &quot;text/html&quot;)] $ fromByteString output
+
+pollForMore :: Logger -&gt; CountedChannel a -&gt; IO ()
+pollForMore logS channel =
+    readMVar (ccAmount channel)
+        &gt;&gt;= \count -&gt;
+            if count &gt; 0
+                then pure ()
+                else do
+                    logS &quot;Ran out of ponies... waiting&quot;
+                    threadDelay 300_000
+                    pollForMore logS channel
+
+-- Generator --------------------------------------------------------------------------------------
+
+generatorThread :: Logger -&gt; CountedChannel PonyResult -&gt; IO ()
+generatorThread logS ponyBuffer = do
+    count &lt;- readMVar (ccAmount ponyBuffer)
+    if count &lt; ccMaxSize ponyBuffer
+        then do
+            logS &quot;Generating pony...&quot;
+            newPony &lt;- generatePony
+            handleGenResult newPony
+        else do
+            threadDelay 1_000_000
+            generatorThread logS ponyBuffer
+  where
+    handleGenResult (Just newPony) = do
+        logS &quot;Success.&quot;
+        -- We specifically don't lock the ccAmount along
+        -- with the channel to prevent deadlock.
+        writeChan (chan ponyBuffer) newPony
+        newPonyCount &lt;- modifyMVar (ccAmount ponyBuffer) $ \a -&gt; do
+            pure $ (a + 1, a + 1)
+        logS (&quot;New pony added: now at &quot; &lt;&gt; show newPonyCount)
+        generatorThread logS ponyBuffer
+    handleGenResult Nothing = do
+        logS &quot;Timed out.&quot;
+        generatorThread logS ponyBuffer
+
+generatePony :: IO (Maybe PonyResult)
+generatePony = do
+    fortuneOutput &lt;- Proc.readProcess &quot;fortune&quot; [] &quot;&quot;
+    ponysayOutput &lt;- Proc.readProcess &quot;ponysay&quot; [&quot;-X&quot;, &quot;-W&quot;, &quot;100&quot;] fortuneOutput
+    htmlOutput &lt;-
+        Proc.readProcess
+            &quot;ansi2html&quot;
+            [&quot;-a&quot;]
+            (ponysayOutput
+                &lt;&gt; &quot;\n\n  refresh for a new pony fortune.&quot;
+                &lt;&gt; &quot;\n  or you can go back to https://crystalwobsite.gay&quot;)
+    pure $ Just (PonyResult ExitSuccess (BU.fromString htmlOutput))
+
+-- Utils ------------------------------------------------------------------------------------------
+
+stdoutLogs :: String -&gt; IO ()
+stdoutLogs s = do
+    currentTime &lt;- Time.getCurrentTime
+    IO.hPutStrLn IO.stdout (Time.iso8601Show currentTime &lt;&gt; &quot; -- &quot; &lt;&gt; s)
+
+noLogs :: String -&gt; IO ()
+noLogs _ = pure ()
+
+defaultPonyBufferSize :: Int
+defaultPonyBufferSize = 30
+
+defaultPort :: Int
+defaultPort = 3000</code></pre>
+</details>
+<p>I also have a github repo for it
+<a href="https://github.com/CrystalSplitter/ponysay-fortune-server">here</a>.</p>
+<h3 id="okay-but-i-cant-read-this">Okay but I can’t read this…</h3>
+<p>It works relatively simply. There’s two threads.</p>
+<p>The Main Thread handles web requests. It looks at a shared buffer for
+generated pony responses, and serves one up if one exists. Otherwise it blocks,
+waiting on a new pony response to be generated.</p>
+<p>The Generator Thread creates new ponies. It pushes into the shared buffer,
+generating new fortunes, ponies, and web pages, and putting them into an
+atomic channel: <code>CountedChannel PonyResult</code>. The channel has a maximum size,
+and if nothing more can be added, the generator blocks as well.</p>
+<h2 id="its-also-a-nix-flake">It’s also a Nix Flake!</h2>
+<p>You can literally try it out with:</p>
+<pre class="shell"><code>$ nix shell github:CrystalSplitter/ponysay-fortune-server/main
+$ ponysay-fortune-server</code></pre>
+<p>It just works! God I love how Nix shells work.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>be gay. be gender freaks. fight fascism. enjoy colourful equines.</p>
+<div class="post-contact-spacer">❦</div>
+<div class="post-contact">
+  You can email me at <email-wrapper>“crystal (at) &lt;this domain&gt;”</email-wrapper> to respond!<br /> Or just say hi. That's cool too!
+</div>
+]]></content>
+</entry>
+<entry>
+    <title>New background who dis</title>
+    <link href="https://crystalwobsite.gay/posts/2025-02-11-new_background" type="text/html" rel="alternate" />
+    <id>https://crystalwobsite.gay/posts/2025-02-11-new_background.html</id>
+    <published>2025-02-11T00:00:00+00:00</published>
+    <updated>2025-02-11T00:00:00+00:00</updated>
+    <summary type="html"><![CDATA[New background who dis
+I wanted a tiling pixel art background. I like this one a bit, though I might change it up a bit.
+Let me know what you think! It should be pretty fast to load, worked hard to optimise the
+compression settings.
+❦
+
+  You can email me at “crystal (at) <this domain>” to respond! Or just say hi. That's cool too!]]></summary>
+    <content type="html"><![CDATA[<p>New background who dis</p>
+<p>I wanted a tiling pixel art background. I like this one a bit, though I might change it up a bit.
+Let me know what you think! It should be pretty fast to load, worked hard to optimise the
+compression settings.</p>
+<div class="post-contact-spacer">❦</div>
+<div class="post-contact">
+  You can email me at <email-wrapper>“crystal (at) &lt;this domain&gt;”</email-wrapper> to respond!<br /> Or just say hi. That's cool too!
+</div>
+]]></content>
+</entry>
+<entry>
+    <title>NixOS Series: Deploying NixOS Configurations with Flakes and deploy-rs</title>
+    <link href="https://crystalwobsite.gay/posts/2025-02-09-deploying_nixos" type="text/html" rel="alternate" />
+    <id>https://crystalwobsite.gay/posts/2025-02-09-deploying_nixos.html</id>
+    <published>2025-02-09T00:00:00+00:00</published>
+    <updated>2025-02-09T00:00:00+00:00</updated>
+    <summary type="html"><![CDATA[Lix!
+
+This is a continuation of my NixOS tutorial series. You can
+start at the beginning if you’d like!
+In this tutorial, I’ll cover how to use the deploy-rs project to deploy NixOS configurations to a
+remote system. Other deployment tools exist, but deploy-rs was perfect for my needs. Following on
+the heels of my last tutorial, we’ll be using an already set up DigitalOcean NixOS droplet as our
+target.
+This is a long step-by-step walkthrough, and I explain all the steps.
+If you DON’T want to walk through each step as we go, there’s the full code at the end of this
+blogpost, and also on my GitHub.
+Table of Contents
+
+Table Of Contents
+Prerequisites
+Setting Up configuration.nix for New DigitalOcean Deployments
+Deploying Via Flakes
+Writing Our First Deployment
+Checking We Can Deploy as Lixy
+Allowing Deployments
+
+Deploying as Root
+Deploying as a Sudoer
+Deploying with a Trusted Key
+
+Fixing Our DigitalOcean Custom Image
+Troubleshooting
+What’s Next?
+Full Nix Source Code
+
+Prerequisites
+While this tutorial can be informative as a reference, it makes some assumptions about your set up.
+You can meet all these assumptions by following the previous tutorial, but if you don’t want to do
+that, you’ll need:
+
+A deployment target machine (assumed to be a DigitalOcean droplet), which has a running, SSH-able,
+NixOS install.
+A local Nix install with Nix Command and Nix Flakes enabled.
+A directory with the final files present in the “NixOS Series: Making Custom VPS Images for the
+Cloud” tutorial. These files can be found directly
+here, if
+you don’t want to recreate them step-by-step yourself.
+
+With that out of the way, let’s get back into our nixos_vm directory!
+$ cd nixos_vm
+For the scope of this tutorial, we’ll set a global shell variable TARGET to our deploy target
+IP address or hostname:
+$ TARGET="YOUR VM IP ADDRESS HERE"  # for bash/zsh
+
+$ # or...
+
+$ set -g TARGET "YOUR VM IP ADDRESS HERE"  # for fish
+Setting Up configuration.nix for New DigitalOcean Deployments
+This section is specific to our previous DigitalOcean droplet set up, assuming you followed the
+last tutorial. It may still prove useful, but it may not map exactly.
+Before we do anything, we have to get the existing NixOS configuration from our virtual machine
+image. The easiest way is to just scp it off the droplet that we stood up. But if that’s not an
+option, you can check inside the local qcow image we created by running it instead inside qemu.
+To get it from the droplet:
+$ scp lixy@$TARGET:/etc/nixos/configuration.nix droplet_config.nix
+This then should look something like…
+# droplet_config.nix
+
+{ modulesPath, lib, ... }:
+{
+  imports = lib.optional (builtins.pathExists ./do-userdata.nix) ./do-userdata.nix ++ [
+    (modulesPath + "/virtualisation/digital-ocean-config.nix")
+  ];
+}
+This configuration is extremely simple, and does two things: if it exists, load DigitalOcean
+userdata; and enable the
+DigitalOcean virtual machine config module,
+which is really important!
+This virtual machine config is quite critical for future deployments, because it actually
+lets it boot up!
+We need to copy these imports and put them into our configuration.nix:
+--- a/configuration.nix
++++ b/configuration.nix
+@@ -1,10 +1,14 @@
+ # ./configuration.nix
+-{ pkgs, ... }:
++{ lib, modulesPath, pkgs, ... }:
+
+ {
+
+   imports = [
+     ./networking.nix
++  ]
++  # Required for Digital Ocean droplets.
++  ++ lib.optional (builtins.pathExists ./do-userdata.nix) ./do-userdata.nix ++ [
++    (modulesPath + "/virtualisation/digital-ocean-config.nix")
+   ];
+
+   # Enable flakes.
+Afterwards we can clean up our droplet_config.nix that we copied over.
+$ rm droplet_config.nix
+Deploying Via Flakes
+So we want to deploy in a reproducible, configurable, fully functional manner. What if we could
+deploy using Nix Flakes?
+deploy-rs is a deployment tool which:
+
+takes a NixOS system configuration,
+…builds the packages for it locally,
+…sends the updated packages to a remote NixOS system,
+…and does so all from a Nix Flake output!
+
+I’ve found deploy-rs easiest to work with as a temporary Nix shell package. We can install it
+really easily with nix shell:
+$ nix shell github:serokell/deploy-rs
+$ deploy --help
+deploy-rs 1.0
+Serokell <https://serokell.io/>
+Simple Rust rewrite of a simple Nix Flake deployment tool
+The deploy command takes in a Nix Flake argument. It will look at that flake’s
+(outputs inputs).deploy attr to determine how to conduct the deployment. This deploy
+is a set which looks something like:
+outputs = { self, deploy-rs, ... }: {
+
+  # ...
+
+  deploy = {
+    nodes = {
+      yourSystemNameHere = {
+        hostname = "DIGITAL_OCEAN_HOSTNAME_OR_IP";
+        sshUser = "UserToLoginAs";
+        profiles = {
+          system = {
+            user = "ASystemUser";
+            path =
+              deploy-rs.lib.${system}.activate.nixos (<some nixosSystem function application>);
+          };
+        };
+
+        anotherSystemHere = {
+          # Same stuff as above! ...
+        };
+      };
+    };
+  };
+};
+This follows a hierarchical pattern: deploy is composed of nodes, which themselves are composed
+of profiles. nodes represent computer systems which you can deploy to.
+profiles tell how configs should be deployed. deploy sets options for all of
+deploy-rs. You can see all the options in the deploy-rs README.
+The simplest case is having a single node with a single profile, which is precisely what we are
+going to set up!
+Writing Our First Deployment
+We want to deploy to a single remote VPS system (in this case, a DigitalOcean droplet). We’re going to
+reuse our existing flake.nix, but refactor it slightly to re-use our modules. Let’s factor out
+our modules into a modules variable:
+--- a/flake.nix
++++ b/flake.nix
+@@ -14,20 +14,21 @@
+     { self, nixpkgs, ... }@flakeInputs:
+     let
+       system = "x86_64-linux";
++      modules = [
++        {
++          # Pin nixpkgs to the flake input.
++          nix.registry.nixpkgs.flake = nixpkgs;
++          virtualisation.diskSize = 8 * 1024; # 8GiB
++        }
++        ./configuration.nix
++      ];
+     in
+     {
+       packages.${system} = {
+         digitalOceanVM = flakeInputs.nixos-generator.nixosGenerate {
+           inherit system;
++          inherit modules;
+           format = "do"; # DigitalOcean
+-          modules = [
+-            {
+-              # Pin nixpkgs to the flake input.
+-              nix.registry.nixpkgs.flake = nixpkgs;
+-              virtualisation.diskSize = 8 * 1024; # 8GiB
+-            }
+-            ./configuration.nix
+-          ];
+         };
+       };
+     };
+From this, we add our deploy-rs input and node:
+--- a/flake.nix
++++ b/flake.nix
+@@ -9,6 +9,7 @@
+       url = "github:nix-community/nixos-generators/d002ce9b6e7eb467cd1c6bb9aef9c35d191b5453";
+       inputs.nixpkgs.follows = "nixpkgs";
+     };
++    deploy-rs.url = "github:serokell/deploy-rs";
+   };
+   outputs =
+     { self, nixpkgs, ... }@flakeInputs:
+@@ -31,5 +32,28 @@
+           format = "do"; # DigitalOcean
+         };
+       };
++
++      nixosConfigurations.myDigitalOceanDroplet = nixpkgs.lib.nixosSystem {
++        inherit system;
++        inherit modules;
++      };
++
++      deploy.nodes = {
++        myDigitalOceanDroplet = {
++          # Don't forget to set your hostname appropriately!
++          hostname = "0.0.0.0";
++          sshUser = "lixy";
++          profiles.system = {
++            user = "root";
++            path =
++              flakeInputs.deploy-rs.lib.${system}.activate.nixos
++                self.nixosConfigurations.myDigitalOceanDroplet;
++          };
++        };
++      };
++
++      checks = builtins.mapAttrs (
++        system: deployLib: deployLib.deployChecks self.deploy
++      ) flakeInputs.deploy-rs.lib;
+     };
+ }
+Don’t forget you must replace the hostname with your target’s hostname or IP address!!!
+If you’re not using the username “lixy” for your runner account, then also change that to
+what was used
+in your previous configuration.nix. And then, we’re done!
+Note that the deploy output is a non-standard outputs attribute, so it will give a spurious
+warning. This is okay, don’t worry! It’s going to be around
+until this upstream issue is resolved.
+Checking We Can Deploy as Lixy
+Before we can deploy, we have to make sure our target can actually be deployed to.
+Let’s test the SSH connection quickly, to that it’s ready to receive a deployment.
+$ ssh lixy@$TARGET
+Last login: Fri Feb  7 07:59:57 2025 from 0.0.0.0
+
+[lixy@nixos:~]$ exit
+
+$
+Yay!
+So let’s try to deploy…
+$ tree
+.
+├── configuration.nix
+├── flake.lock
+├── flake.nix
+├── networking.nix
+├── README.md
+└── result -> /nix/store/x0i92xzzh5s2nafaf4qqm8kdz9q6sy4f-digital-ocean-image
+$ deploy .
+And it’ll look like it’s deploying… this will take some time…
+…and will suddenly fail near the end…
+-->8--
+error: cannot add path '/nix/store/1z2xbncxixkvqfk4wgsrfrpvpb16krld-hm_fontconfigconf.d52hmdefaultfonts.conf' because it lacks a signature by a trusted key
+error (ignored): error: unexpected end-of-file
+error: unexpected end-of-file
+🚀 ❌ [deploy] [ERROR] Failed to push profile to node myDigitalOceanDroplet: myDigitalOceanDroplet
+Well shit. So what went wrong?
+If you SSH back into the image, and check the nix.conf at /etc/nix/nix.conf, you’ll notice
+it’ll have a line in it…
+$ ssh lixy@$TARGET
+Last login: Fri Feb  7 07:59:57 2025 from 0.0.0.0
+
+[lixy@nixos:~]$ cat /etc/nix/nix.conf
+# WARNING: this file is generated from the nix.* options in
+# your NixOS configuration, typically
+# /etc/nixos/configuration.nix.  Do not edit it!
+allowed-users = *
+auto-optimise-store = false
+builders =
+cores = 0
+experimental-features = nix-command flakes
+max-jobs = auto
+require-sigs = true
+sandbox = true
+sandbox-fallback = false
+substituters = https://cache.nixos.org/
+system-features = nixos-test benchmark big-parallel kvm
+trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+trusted-substituters =
+trusted-users = root
+extra-sandbox-paths =
+And in this, we see the following lines:
+# /etc/nix/nix.conf
+# ... other confs
+trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+# ...
+trusted-users = root
+# ...
+So only the root user will be authorised to deploy, not lixy! Additionally,
+there’s only one trusted public key, and it’s not from the instance we are
+building packages on! This will never work without some changes.
+Allowing Deployments
+So there’s some good news and some bad news…
+Good news, this is very easy to fix on the current remote, and once fixed, it’s
+fixed permanently for that system!
+Bad news, if we want to have our base image allow lixy to deploy, we have to
+rebuild and reupload it to the DigitalOcean custom image list.
+There’s three ways to really fix this:
+
+SSH in as root directly for all deployments (we’ll have to do this once to fix
+our droplet).
+Add @wheel to trusted-users in our nix.conf for future deployments.
+Create a trusted private-public key pair, sign our store, and deploy with no
+trusted users.
+
+Deploying as Root
+So we can’t actually fix the nix.conf, as it’s on a read-only file system and its
+settings won’t reload anyways. So instead, we’ll let us login as root using our
+existing lixy ssh key:
+$ ssh lixy@$TARGET
+[lixy@nixos:~]$ sudo cp /etc/ssh/authorized_keys.d/{lixy,root}
+We can then logout and log back in as root to test!
+$ ssh root@$TARGET
+[root@nixos:~]#
+Then it’s a quick fix to the flake.nix: we change sshUser to root:
+diff --git a/flake.nix b/flake.nix
+index 5f4dac1..8cd96ea 100644
+--- a/flake.nix
++++ b/flake.nix
+@@ -42,7 +42,7 @@
+         myDigitalOceanDroplet = {
+           # Don't forget to set your hostname appropriately!
+           hostname = "dodroplet";
+-          sshUser = "lixy";
++          sshUser = "root";
+           profiles.system = {
+             user = "root";
+             path =
+And let’s give root an authorized key so we can still log in:
+--- a/configuration.nix
++++ b/configuration.nix
+@@ -37,6 +37,15 @@
+     };
+   };
+
++  users.users.root = {
++    openssh = {
++      # NOTE: Change this to whatever public key you use!
++      authorizedKeys.keys = [
++        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINmzFzWOf+ddSaL0haZVVUn5tKjE+XsMEDGn/J4Etkuj"
++      ];
++    };
++  };
++
+   # Passwordless sudo.
+   # WARNING!
+   # If you decide to change this, remember you NEED to set a password
+And we can now build and deploy!
+$ deploy .  # in nixos_vm
+And this should succeed! We have now deployed our configuration to the system!!
+Deploying as a Sudoer
+But what if we don’t want to log in as root?
+Well, we can make lixy a trusted user
+instead. This way we don’t have to login as root over SSH.
+A warning though! Making a user “trusted” in Nix is equivalent to giving them root
+permissions. In our case, this is fine since lixy has passwordless sudo access
+anyways.
+While we still have a login-able root account, let’s change our configuration.nix
+to make lixy a trusted user:
+--- a/configuration.nix
++++ b/configuration.nix
+@@ -11,11 +11,16 @@
+     (modulesPath + "/virtualisation/digital-ocean-config.nix")
+   ];
+
+-  # Enable flakes.
+-  nix.settings.experimental-features = [
+-    "nix-command"
+-    "flakes"
+-  ];
++  nix.settings = {
++    trusted-users = [
++      "@wheel" # Allow sudoers to push Nix closures.
++    ];
++    # Enable flakes.
++    experimental-features = [
++      "nix-command"
++      "flakes"
++    ];
++  };
+
+   # Set your default locale, as you wish.
+   i18n.defaultLocale = "C.UTF-8";
+Notice that we HAVEN’T gotten rid of our root ssh authorized key yet! We
+still need it to deploy.
+$ deploy .  # in nixos_vm
+This should work. With that, let’s try deploying again, but as lixy:
+--- a/flake.nix
++++ b/flake.nix
+@@ -42,7 +42,7 @@
+         myDigitalOceanDroplet = {
+           # Don't forget to set your hostname appropriately!
+           hostname = "dodroplet";
+-          sshUser = "root";
++          sshUser = "lixy";
+           profiles.system = {
+             user = "root";
+             path =
+And again, but now as lixy! I’m including the full logging to be extra clear what’s
+happening:
+$ deploy .
+🚀 ℹ️  [deploy] [INFO] Running checks for flake in .
+warning: Git tree '/home/crystal/tmp/nixos_vm' is dirty
+warning: unknown flake output 'deploy'
+warning: The check omitted these incompatible systems: aarch64-darwin, aarch64-linux, x86_64-darwin
+Use '--all-systems' to check all.
+🚀 ℹ️  [deploy] [INFO] Evaluating flake in .
+warning: Git tree '/home/crystal/tmp/nixos_vm' is dirty
+🚀 ℹ️  [deploy] [INFO] The following profiles are going to be deployed:
+[myDigitalOceanDroplet.system]
+user = "root"
+ssh_user = "lixy"
+path = "/nix/store/4bb259iy0axrkya22fphz47jm1gyky6l-activatable-nixos-system-nixos-25.05.20241204.6eac218"
+hostname = "0.0.0.0"
+ssh_opts = []
+
+🚀 ℹ️  [deploy] [INFO] Building profile `system` for node `myDigitalOceanDroplet`
+🚀 ℹ️  [deploy] [INFO] Copying profile `system` to node `myDigitalOceanDroplet`
+🚀 ℹ️  [deploy] [INFO] Activating profile `system` for node `myDigitalOceanDroplet`
+🚀 ℹ️  [deploy] [INFO] Creating activation waiter
+⭐ ℹ️  [activate] [INFO] Activating profile
+👀 ℹ️  [wait] [INFO] Waiting for confirmation event...
+updating GRUB 2 menu...
+activating the configuration...
+setting up /etc...
+reloading user units for lixy...
+reloading user units for root...
+restarting sysinit-reactivation.target
+⭐ ℹ️  [activate] [INFO] Activation succeeded!
+⭐ ℹ️  [activate] [INFO] Magic rollback is enabled, setting up confirmation hook...
+👀 ℹ️  [wait] [INFO] Found canary file, done waiting!
+👀 ℹ️  [wait] [INFO] Found canary file, done waiting!
+⭐ ℹ️  [activate] [INFO] Waiting for confirmation event...
+🚀 ℹ️  [deploy] [INFO] Success activating, attempting to confirm activation
+🚀 ℹ️  [deploy] [INFO] Deployment confirmed.
+Wow! It works!!! We can clean up our root login now:
+--- a/configuration.nix
++++ b/configuration.nix
+@@ -42,15 +42,6 @@
+     };
+   };
+
+-  users.users.root = {
+-    openssh = {
+-      # NOTE: Change this to whatever public key you use!
+-      authorizedKeys.keys = [
+-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINmzFzWOf+ddSaL0haZVVUn5tKjE+XsMEDGn/J4Etkuj"
+-      ];
+-    };
+-  };
+-
+   # Passwordless sudo.
+   # WARNING!
+   # If you decide to change this, remember you NEED to set a password
+Deploying with a Trusted Key
+But what if we really don’t want to do either of those?
+You may not want to give a non-root user the ability to deploy to the store,
+for fairly valid reasons! Deploying to the Nix store is root equivalent, after
+all. So an alternative setup is to have a public-private key pair, where we
+sign our packages built locally.
+NOTE: You’ll need to keep this private key safe, secure, and backed up. Without it, you won’t be
+able to deploy packages! At least, until you can SSH into root again.
+Let’s create our private key:
+$ bash -c 'umask 077; nix key generate-secret --key-name cache.crystalwobsite.gay-1 > my-nix-key'
+This is a bit of a mess of a line! The real magic is in nix key generate-secret.
+The umask boilerplate is there to ensure it’s readable only to us. The key name
+can be anything, but it’s standard practice for it to be cache.<domain>-N where
+N is an incremented number for each revoked key. You can read more from
+nix key generate-secret --help.
+Now we need to get the public key…
+$ nix key convert-secret-to-public < my-nix-key  # You'll get your own output here.
+cache.crystalwobsite.gay-1:tARhYz8y0cmy/r0kY99bJnpsTLfxg8pvnN93IjuSij4=
+…and add it to our configuration under nix.settings:
+--- a/configuration.nix
++++ b/configuration.nix
+@@ -20,6 +20,9 @@
+       "nix-command"
+       "flakes"
+     ];
++    trusted-public-keys = [
++      "cache.crystalwobsite.gay-1:tARhYz8y0cmy/r0kY99bJnpsTLfxg8pvnN93IjuSij4="
++    ];
+   };
+
+   # Set your default locale, as you wish.
+Assuming we can still deploy (either because we can ssh into root still, or we
+gave lixy permissions), let’s deploy that now.
+$ deploy .
+Let’s check it worked:
+ssh lixy@$TARGET -- cat /etc/nix/nix.conf
+# WARNING: this file is generated from the nix.* options in
+# your NixOS configuration, typically
+# /etc/nixos/configuration.nix.  Do not edit it!
+allowed-users = *
+auto-optimise-store = false
+builders =
+cores = 0
+experimental-features = nix-command flakes
+max-jobs = auto
+require-sigs = true
+sandbox = true
+sandbox-fallback = false
+substituters = https://cache.nixos.org/
+system-features = nixos-test benchmark big-parallel kvm
+trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= cache.crystalwobsite.gay-1:tARhYz8y0cmy/r0kY99bJnpsTLfxg8pvnN93IjuSij4=
+trusted-substituters =
+trusted-users = root @wheel
+extra-sandbox-paths =
+Fuck yeah, we got our trusted-public-keys set! Now we can remove @wheel from
+our trusted-users group!
+--- a/configuration.nix
++++ b/configuration.nix
+@@ -12,9 +12,12 @@
+   ];
+
+   nix.settings = {
+-    trusted-users = [
+-      "@wheel" # Allow sudoers to push Nix closures.
+-    ];
++    # NOTE: Enable this if you want to allow deploying
++    # via sudoers!
++    # trusted-users = [
++    #   "@wheel" # Allow sudoers to push Nix closures.
++    # ];
++
+     # Enable flakes.
+     experimental-features = [
+       "nix-command"
+and deploy…
+$ deploy .
+If we try to deploy again now, we’ll likely get our familiar error:
+error: cannot add path '<...>' because it lacks a signature by a trusted key
+This is expected if we try to deploy without signing!
+To fix that, we need to pass a special environment
+variable LOCAL_KEY which tells deploy-rs which private key to use for signing:
+$ LOCAL_KEY=my-nix-key deploy .
+🚀 ℹ️  [deploy] [INFO] Running checks for flake in .
+warning: Git tree '/home/crystal/tmp/nixos_vm' is dirty
+warning: unknown flake output 'deploy'
+warning: The check omitted these incompatible systems: aarch64-darwin, aarch64-linux, x86_64-darwin
+Use '--all-systems' to check all.
+🚀 ℹ️  [deploy] [INFO] Evaluating flake in .
+warning: Git tree '/home/crystal/tmp/nixos_vm' is dirty
+🚀 ℹ️  [deploy] [INFO] The following profiles are going to be deployed:
+[myDigitalOceanDroplet.system]
+user = "root"
+ssh_user = "lixy"
+path = "/nix/store/gcz466hf4jsyl0ndnm2xbh36x1wdxzbp-activatable-nixos-system-nixos-25.05.20241204.6eac218"
+hostname = "0.0.0.0"
+ssh_opts = []
+
+🚀 ℹ️  [deploy] [INFO] Building profile `system` for node `myDigitalOceanDroplet`
+🚀 ℹ️  [deploy] [INFO] Signing key present! Signing profile `system` for node `myDigitalOceanDroplet`
+warning: 'sign-paths' is a deprecated alias for 'store sign'
+🚀 ℹ️  [deploy] [INFO] Copying profile `system` to node `myDigitalOceanDroplet`
+🚀 ℹ️  [deploy] [INFO] Activating profile `system` for node `myDigitalOceanDroplet`
+🚀 ℹ️  [deploy] [INFO] Creating activation waiter
+⭐ ℹ️  [activate] [INFO] Activating profile
+👀 ℹ️  [wait] [INFO] Waiting for confirmation event...
+updating GRUB 2 menu...
+activating the configuration...
+setting up /etc...
+reloading user units for lixy...
+restarting sysinit-reactivation.target
+⭐ ℹ️  [activate] [INFO] Activation succeeded!
+⭐ ℹ️  [activate] [INFO] Magic rollback is enabled, setting up confirmation hook...
+👀 ℹ️  [wait] [INFO] Found canary file, done waiting!
+⭐ ℹ️  [activate] [INFO] Waiting for confirmation event...
+🚀 ℹ️  [deploy] [INFO] Success activating, attempting to confirm activation
+🚀 ℹ️  [deploy] [INFO] Deployment confirmed.
+And that’s it! That’s all the ways that I know how to deploy with deploy-rs currently. We
+have a working VM, with a public-private key signing pair, and a way to deploy things
+to it!
+Fixing Our DigitalOcean Custom Image
+Our old image is still broken. We need to rebuild with our final flake.nix and our
+fixed configuration.nix:
+$ nix build .#digitalOceanVM  # in nixos_vm
+And upload it to DigitalOcean’s
+custom image page. If you don’t remember how
+to do this, check the previous tutorial.
+Troubleshooting
+If you ever get stuck again on
+error: cannot add path '<...>' because it lacks a signature by a trusted key
+and can no longer deploy, remember you can always let yourself log back in as root
+from the lixy account, just like before! You can always fix this, even if it’s a bit
+cumbersome.
+$ ssh lixy@$TARGET -- sudo cp /etc/ssh/authorized_keys.d/lixy /etc/ssh/authorized_keys.d/root
+And then switch your deploy attribute to sshUser = "root"; again, just like before.
+What’s Next?
+I don’t currently have another tutorial up, but I eventually plan to make one about
+secret storing with agenix or derivatives.
+But that’s not out yet, so you must wait.
+Full Nix Source Code
+For your reference, I’ve included the completed Nix files below!
+I’ve reformatted them a little to be rfc-style compliant:
+
+
+configuration.nix
+
+# ./configuration.nix
+{
+  lib,
+  modulesPath,
+  pkgs,
+  ...
+}:
+
+{
+
+  imports =
+    [
+      ./networking.nix
+    ]
+    # Required for Digital Ocean droplets.
+    ++ lib.optional (builtins.pathExists ./do-userdata.nix) ./do-userdata.nix
+    ++ [
+      (modulesPath + "/virtualisation/digital-ocean-config.nix")
+    ];
+
+  nix.settings = {
+    # NOTE: Enable this if you want to allow deploying
+    # via sudoers!
+    trusted-users = [
+      "@wheel" # Allow sudoers to push Nix closures.
+    ];
+    # Enable flakes.
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    trusted-public-keys = [
+      "cache.crystalwobsite.gay-1:tARhYz8y0cmy/r0kY99bJnpsTLfxg8pvnN93IjuSij4="
+    ];
+  };
+
+  # Set your default locale, as you wish.
+  i18n.defaultLocale = "C.UTF-8";
+
+  # System-wide packages.
+  environment.systemPackages = with pkgs; [
+    hyfetch # Fetch to show our system is working.
+    neovim # Change to your favourite tiny text editor.
+  ];
+
+  users.users.lixy = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    openssh = {
+      # NOTE: Change this to whatever public key you use!
+      authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINmzFzWOf+ddSaL0haZVVUn5tKjE+XsMEDGn/J4Etkuj"
+      ];
+    };
+  };
+
+  # Passwordless sudo.
+  # WARNING!
+  # If you decide to change this, remember you NEED to set a password
+  # for the chosen user with an "authorizedKeys" setting. Passwords are
+  # public in the nix store, so know what you're doing!
+  security.sudo.wheelNeedsPassword = false;
+
+  # Set this to whichever system state version you're installing now.
+  # Afterwards, don't change this lightly. It doesn't need to change to
+  # upgrade.
+  system.stateVersion = "25.05";
+}
+
+
+
+networking.nix
+
+# ./networking.nix
+{ ... }:
+
+{
+  networking = {
+    hostName = "nixos"; # NOTE: Define your hostname.
+    networkmanager.enable = true; # Easiest to use and most distros use this by default.
+  };
+  time.timeZone = "UTC";
+
+  # Enable the OpenSSH daemon.
+  services.openssh = {
+    enable = true;
+    # For security reasons, always have PasswordAuthentication = false
+    # and instead use SSH keys.
+    settings.PasswordAuthentication = false;
+  };
+
+  # Open ports in the firewall.
+  networking.firewall.allowedTCPPorts = [
+    22 # SSH. Feel free to use a different port.
+  ];
+}
+
+
+
+flake.nix
+
+# ./flake.nix
+{
+  description = "Tutorial on making a 'NixOS' VPS image.";
+  inputs = {
+    # NOTE: Change the SHA to "nixos-unstable" for your version. I try to pin things
+    # to known working commits whenever possible.
+    nixpkgs.url = "github:NixOS/nixpkgs/6eac218f2d3dfe6c09aaf61a5bfa09d8aa396129";
+    nixos-generator = {
+      url = "github:nix-community/nixos-generators/d002ce9b6e7eb467cd1c6bb9aef9c35d191b5453";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    deploy-rs.url = "github:serokell/deploy-rs";
+  };
+  outputs =
+    { self, nixpkgs, ... }@flakeInputs:
+    let
+      system = "x86_64-linux";
+      modules = [
+        {
+          # Pin nixpkgs to the flake input.
+          nix.registry.nixpkgs.flake = nixpkgs;
+          virtualisation.diskSize = 8 * 1024; # 8GiB
+        }
+        ./configuration.nix
+      ];
+    in
+    {
+      packages.${system} = {
+        digitalOceanVM = flakeInputs.nixos-generator.nixosGenerate {
+          inherit system;
+          inherit modules;
+          format = "do"; # DigitalOcean
+        };
+      };
+
+      nixosConfigurations.myDigitalOceanDroplet = nixpkgs.lib.nixosSystem {
+        inherit system;
+        inherit modules;
+      };
+
+      deploy.nodes = {
+        myDigitalOceanDroplet = {
+          # Don't forget to set your hostname appropriately!
+          hostname = "dodroplet";
+          sshUser = "lixy";
+          profiles.system = {
+            user = "root";
+            path =
+              flakeInputs.deploy-rs.lib.${system}.activate.nixos
+                self.nixosConfigurations.myDigitalOceanDroplet;
+          };
+        };
+      };
+
+      checks = builtins.mapAttrs (
+        system: deployLib: deployLib.deployChecks self.deploy
+      ) flakeInputs.deploy-rs.lib;
+    };
+}
+
+You can also check out my
+git repository
+where I have built up this tutorial to see the final directory structure.
+❦
+
+  You can email me at “crystal (at) <this domain>” to respond! Or just say hi. That's cool too!]]></summary>
+    <content type="html"><![CDATA[<figure>
+<img src="../images/post_images/2025-01-13-lix_handrawn.webp" alt="Lix!" />
+<figcaption aria-hidden="true">Lix!</figcaption>
+</figure>
+<p><em>This is a continuation of my NixOS tutorial series. You can
+<a href="../posts/2025-01-26-nixos_vm_image">start at the beginning</a> if you’d like!</em></p>
+<p>In this tutorial, I’ll cover how to use the <code>deploy-rs</code> project to deploy NixOS configurations to a
+remote system. Other deployment tools exist, but <code>deploy-rs</code> was perfect for my needs. Following on
+the heels of my last tutorial, we’ll be using an already set up DigitalOcean NixOS droplet as our
+target.</p>
+<p>This is a long step-by-step walkthrough, and I explain all the steps.
+If you DON’T want to walk through each step as we go, there’s the full code at the end of this
+blogpost, and also on my <a href="https://github.com/CrystalSplitter/lixos-digitalocean-tutorial">GitHub</a>.</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#table-of-contents">Table Of Contents</a></li>
+<li><a href="#prerequisites">Prerequisites</a></li>
+<li><a href="#setting-up-configuration.nix-for-new-digitalocean-deployments">Setting Up configuration.nix for New DigitalOcean Deployments</a></li>
+<li><a href="#deploying-via-flakes">Deploying Via Flakes</a></li>
+<li><a href="#writing-our-first-deployment">Writing Our First Deployment</a></li>
+<li><a href="#checking-we-can-deploy-as-lixy">Checking We Can Deploy as Lixy</a></li>
+<li><a href="#allowing-deployments">Allowing Deployments</a>
+<ul>
+<li><a href="#deploying-as-root">Deploying as Root</a></li>
+<li><a href="#deploying-as-a-sudoer">Deploying as a Sudoer</a></li>
+<li><a href="#deploying-with-a-trusted-key">Deploying with a Trusted Key</a></li>
+</ul></li>
+<li><a href="#fixing-our-digitalocean-custom-image">Fixing Our DigitalOcean Custom Image</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#whats-next">What’s Next?</a></li>
+<li><a href="#full-nix-source-code">Full Nix Source Code</a></li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>While this tutorial can be informative as a reference, it makes some assumptions about your set up.
+You can meet all these assumptions by following the previous tutorial, but if you don’t want to do
+that, you’ll need:</p>
+<ul>
+<li>A deployment target machine (assumed to be a DigitalOcean droplet), which has a running, SSH-able,
+NixOS install.</li>
+<li>A local Nix install with Nix Command and Nix Flakes enabled.</li>
+<li>A directory with the final files present in the “NixOS Series: Making Custom VPS Images for the
+Cloud” tutorial. These files can be found directly
+<a href="https://github.com/CrystalSplitter/lixos-digitalocean-tutorial/tree/nixos-vm-image">here</a>, if
+you don’t want to recreate them step-by-step yourself.</li>
+</ul>
+<p>With that out of the way, let’s get back into our <code>nixos_vm</code> directory!</p>
+<pre class="shell"><code>$ cd nixos_vm</code></pre>
+<p>For the scope of this tutorial, we’ll set a global shell variable TARGET to our deploy target
+IP address or hostname:</p>
+<pre class="shell"><code>$ TARGET=&quot;YOUR VM IP ADDRESS HERE&quot;  # for bash/zsh
+
+$ # or...
+
+$ set -g TARGET &quot;YOUR VM IP ADDRESS HERE&quot;  # for fish</code></pre>
+<h2 id="setting-up-configuration.nix-for-new-digitalocean-deployments">Setting Up configuration.nix for New DigitalOcean Deployments</h2>
+<p><em>This section is specific to our previous DigitalOcean droplet set up, assuming you followed the
+last tutorial. It may still prove useful, but it may not map exactly.</em></p>
+<p>Before we do anything, we have to get the existing NixOS configuration from our virtual machine
+image. The easiest way is to just <code>scp</code> it off the droplet that we stood up. But if that’s not an
+option, you can check inside the local <code>qcow</code> image we created by running it instead inside qemu.</p>
+<p>To get it from the droplet:</p>
+<pre class="shell"><code>$ scp lixy@$TARGET:/etc/nixos/configuration.nix droplet_config.nix</code></pre>
+<p>This then should look something like…</p>
+<pre class="nix"><code># droplet_config.nix
+
+{ modulesPath, lib, ... }:
+{
+  imports = lib.optional (builtins.pathExists ./do-userdata.nix) ./do-userdata.nix ++ [
+    (modulesPath + &quot;/virtualisation/digital-ocean-config.nix&quot;)
+  ];
+}</code></pre>
+<p>This configuration is extremely simple, and does two things: if it exists, load DigitalOcean
+userdata; and enable the
+<a href="https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/virtualisation/digital-ocean-config.nix">DigitalOcean virtual machine config module</a>,
+which is really important!</p>
+<p>This virtual machine config is quite critical for future deployments, because it actually
+lets it boot up!</p>
+<p>We need to copy these imports and put them into our <code>configuration.nix</code>:</p>
+<pre class="diff"><code>--- a/configuration.nix
++++ b/configuration.nix
+@@ -1,10 +1,14 @@
+ # ./configuration.nix
+-{ pkgs, ... }:
++{ lib, modulesPath, pkgs, ... }:
+
+ {
+
+   imports = [
+     ./networking.nix
++  ]
++  # Required for Digital Ocean droplets.
++  ++ lib.optional (builtins.pathExists ./do-userdata.nix) ./do-userdata.nix ++ [
++    (modulesPath + &quot;/virtualisation/digital-ocean-config.nix&quot;)
+   ];
+
+   # Enable flakes.</code></pre>
+<p>Afterwards we can clean up our <code>droplet_config.nix</code> that we copied over.</p>
+<pre class="shell"><code>$ rm droplet_config.nix</code></pre>
+<h2 id="deploying-via-flakes">Deploying Via Flakes</h2>
+<p>So we want to deploy in a reproducible, configurable, fully functional manner. What if we could
+deploy using Nix Flakes?</p>
+<p><a href="https://github.com/serokell/deploy-rs">deploy-rs</a> is a deployment tool which:</p>
+<ol type="1">
+<li>takes a <a href="https://github.com/NixOS/nixpkgs/blob/a01189f647c3a6947d76c22e375420665dce1190/flake.nix#L36">NixOS system configuration</a>,</li>
+<li>…builds the packages for it locally,</li>
+<li>…sends the updated packages to a remote NixOS system,</li>
+<li>…and does so all from a Nix Flake output!</li>
+</ol>
+<p>I’ve found <code>deploy-rs</code> easiest to work with as a temporary Nix shell package. We can install it
+really easily with <code>nix shell</code>:</p>
+<pre class="shell"><code>$ nix shell github:serokell/deploy-rs
+$ deploy --help
+deploy-rs 1.0
+Serokell &lt;https://serokell.io/&gt;
+Simple Rust rewrite of a simple Nix Flake deployment tool</code></pre>
+<p>The <code>deploy</code> command takes in a Nix Flake argument. It will look at that flake’s
+<code>(outputs inputs).deploy</code> attr to determine <em>how</em> to conduct the deployment. This <code>deploy</code>
+is a set which looks something like:</p>
+<pre class="nix"><code>outputs = { self, deploy-rs, ... }: {
+
+  # ...
+
+  deploy = {
+    nodes = {
+      yourSystemNameHere = {
+        hostname = &quot;DIGITAL_OCEAN_HOSTNAME_OR_IP&quot;;
+        sshUser = &quot;UserToLoginAs&quot;;
+        profiles = {
+          system = {
+            user = &quot;ASystemUser&quot;;
+            path =
+              deploy-rs.lib.${system}.activate.nixos (&lt;some nixosSystem function application&gt;);
+          };
+        };
+
+        anotherSystemHere = {
+          # Same stuff as above! ...
+        };
+      };
+    };
+  };
+};</code></pre>
+<p>This follows a hierarchical pattern: <code>deploy</code> is composed of <code>nodes</code>, which themselves are composed
+of <code>profiles</code>. <code>nodes</code> represent computer systems which you can deploy to.
+<code>profiles</code> tell how configs should be deployed. <code>deploy</code> sets options for all of
+<code>deploy-rs</code>. You can see all the options in the <a href="https://github.com/serokell/deploy-rs?tab=readme-ov-file#api">deploy-rs README</a>.</p>
+<p>The simplest case is having a single node with a single profile, which is precisely what we are
+going to set up!</p>
+<h2 id="writing-our-first-deployment">Writing Our First Deployment</h2>
+<p>We want to deploy to a single remote VPS system (in this case, a DigitalOcean droplet). We’re going to
+reuse our existing <code>flake.nix</code>, but refactor it slightly to re-use our modules. Let’s factor out
+our modules into a <code>modules</code> variable:</p>
+<pre class="diff"><code>--- a/flake.nix
++++ b/flake.nix
+@@ -14,20 +14,21 @@
+     { self, nixpkgs, ... }@flakeInputs:
+     let
+       system = &quot;x86_64-linux&quot;;
++      modules = [
++        {
++          # Pin nixpkgs to the flake input.
++          nix.registry.nixpkgs.flake = nixpkgs;
++          virtualisation.diskSize = 8 * 1024; # 8GiB
++        }
++        ./configuration.nix
++      ];
+     in
+     {
+       packages.${system} = {
+         digitalOceanVM = flakeInputs.nixos-generator.nixosGenerate {
+           inherit system;
++          inherit modules;
+           format = &quot;do&quot;; # DigitalOcean
+-          modules = [
+-            {
+-              # Pin nixpkgs to the flake input.
+-              nix.registry.nixpkgs.flake = nixpkgs;
+-              virtualisation.diskSize = 8 * 1024; # 8GiB
+-            }
+-            ./configuration.nix
+-          ];
+         };
+       };
+     };</code></pre>
+<p>From this, we add our <code>deploy-rs</code> input and node:</p>
+<pre class="diff"><code>--- a/flake.nix
++++ b/flake.nix
+@@ -9,6 +9,7 @@
+       url = &quot;github:nix-community/nixos-generators/d002ce9b6e7eb467cd1c6bb9aef9c35d191b5453&quot;;
+       inputs.nixpkgs.follows = &quot;nixpkgs&quot;;
+     };
++    deploy-rs.url = &quot;github:serokell/deploy-rs&quot;;
+   };
+   outputs =
+     { self, nixpkgs, ... }@flakeInputs:
+@@ -31,5 +32,28 @@
+           format = &quot;do&quot;; # DigitalOcean
+         };
+       };
++
++      nixosConfigurations.myDigitalOceanDroplet = nixpkgs.lib.nixosSystem {
++        inherit system;
++        inherit modules;
++      };
++
++      deploy.nodes = {
++        myDigitalOceanDroplet = {
++          # Don't forget to set your hostname appropriately!
++          hostname = &quot;0.0.0.0&quot;;
++          sshUser = &quot;lixy&quot;;
++          profiles.system = {
++            user = &quot;root&quot;;
++            path =
++              flakeInputs.deploy-rs.lib.${system}.activate.nixos
++                self.nixosConfigurations.myDigitalOceanDroplet;
++          };
++        };
++      };
++
++      checks = builtins.mapAttrs (
++        system: deployLib: deployLib.deployChecks self.deploy
++      ) flakeInputs.deploy-rs.lib;
+     };
+ }</code></pre>
+<p>Don’t forget you must replace the hostname with your target’s hostname or IP address!!!
+If you’re not using the username “lixy” for your runner account, then also change that to
+what was used
+in your previous <code>configuration.nix</code>. And then, we’re done!</p>
+<p>Note that the <code>deploy</code> output is a non-standard <code>outputs</code> attribute, so it will give a spurious
+warning. This is okay, don’t worry! It’s going to be around
+<a href="https://github.com/NixOS/nix/issues/6381">until this upstream issue is resolved</a>.</p>
+<h2 id="checking-we-can-deploy-as-lixy">Checking We Can Deploy as Lixy</h2>
+<p>Before we can deploy, we have to make sure our target can actually be deployed to.</p>
+<p>Let’s test the SSH connection quickly, to that it’s ready to receive a deployment.</p>
+<pre class="shell"><code>$ ssh lixy@$TARGET
+Last login: Fri Feb  7 07:59:57 2025 from 0.0.0.0
+
+[lixy@nixos:~]$ exit
+
+$</code></pre>
+<p>Yay!</p>
+<p>So let’s try to deploy…</p>
+<pre class="shell"><code>$ tree
+.
+├── configuration.nix
+├── flake.lock
+├── flake.nix
+├── networking.nix
+├── README.md
+└── result -&gt; /nix/store/x0i92xzzh5s2nafaf4qqm8kdz9q6sy4f-digital-ocean-image
+$ deploy .</code></pre>
+<p>And it’ll look like it’s deploying… this will take some time…</p>
+<p>…and will suddenly fail near the end…</p>
+<pre class="plaintext"><code>--&gt;8--
+error: cannot add path '/nix/store/1z2xbncxixkvqfk4wgsrfrpvpb16krld-hm_fontconfigconf.d52hmdefaultfonts.conf' because it lacks a signature by a trusted key
+error (ignored): error: unexpected end-of-file
+error: unexpected end-of-file
+🚀 ❌ [deploy] [ERROR] Failed to push profile to node myDigitalOceanDroplet: myDigitalOceanDroplet</code></pre>
+<p>Well shit. So what went wrong?</p>
+<p>If you SSH back into the image, and check the <code>nix.conf</code> at <code>/etc/nix/nix.conf</code>, you’ll notice
+it’ll have a line in it…</p>
+<pre class="shell"><code>$ ssh lixy@$TARGET
+Last login: Fri Feb  7 07:59:57 2025 from 0.0.0.0
+
+[lixy@nixos:~]$ cat /etc/nix/nix.conf
+# WARNING: this file is generated from the nix.* options in
+# your NixOS configuration, typically
+# /etc/nixos/configuration.nix.  Do not edit it!
+allowed-users = *
+auto-optimise-store = false
+builders =
+cores = 0
+experimental-features = nix-command flakes
+max-jobs = auto
+require-sigs = true
+sandbox = true
+sandbox-fallback = false
+substituters = https://cache.nixos.org/
+system-features = nixos-test benchmark big-parallel kvm
+trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+trusted-substituters =
+trusted-users = root
+extra-sandbox-paths =</code></pre>
+<p>And in this, we see the following lines:</p>
+<pre class="yaml"><code># /etc/nix/nix.conf
+# ... other confs
+trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+# ...
+trusted-users = root
+# ...</code></pre>
+<p>So only the <code>root</code> user will be authorised to deploy, not <code>lixy</code>! Additionally,
+there’s only one trusted public key, and it’s not from the instance we are
+building packages on! This will never work without some changes.</p>
+<h2 id="allowing-deployments">Allowing Deployments</h2>
+<p>So there’s some good news and some bad news…</p>
+<p>Good news, this is very easy to fix on the current remote, and once fixed, it’s
+fixed permanently for that system!</p>
+<p>Bad news, if we want to have our <em>base</em> image allow <code>lixy</code> to deploy, we have to
+rebuild and reupload it to the DigitalOcean custom image list.</p>
+<p>There’s three ways to really fix this:</p>
+<ol type="1">
+<li>SSH in as <code>root</code> directly for all deployments (we’ll have to do this once to fix
+our droplet).</li>
+<li>Add <code>@wheel</code> to <code>trusted-users</code> in our <code>nix.conf</code> for future deployments.</li>
+<li>Create a trusted private-public key pair, sign our store, and deploy with no
+trusted users.</li>
+</ol>
+<h3 id="deploying-as-root">Deploying as Root</h3>
+<p>So we can’t actually fix the <code>nix.conf</code>, as it’s on a read-only file system and its
+settings won’t reload anyways. So instead, we’ll let us login as <code>root</code> using our
+existing <code>lixy</code> ssh key:</p>
+<pre class="shell"><code>$ ssh lixy@$TARGET
+[lixy@nixos:~]$ sudo cp /etc/ssh/authorized_keys.d/{lixy,root}</code></pre>
+<p>We can then logout and log back in as root to test!</p>
+<pre class="shell"><code>$ ssh root@$TARGET
+[root@nixos:~]#</code></pre>
+<p>Then it’s a quick fix to the <code>flake.nix</code>: we change <code>sshUser</code> to <code>root</code>:</p>
+<pre class="diff"><code>diff --git a/flake.nix b/flake.nix
+index 5f4dac1..8cd96ea 100644
+--- a/flake.nix
++++ b/flake.nix
+@@ -42,7 +42,7 @@
+         myDigitalOceanDroplet = {
+           # Don't forget to set your hostname appropriately!
+           hostname = &quot;dodroplet&quot;;
+-          sshUser = &quot;lixy&quot;;
++          sshUser = &quot;root&quot;;
+           profiles.system = {
+             user = &quot;root&quot;;
+             path =</code></pre>
+<p>And let’s give <code>root</code> an authorized key so we can still log in:</p>
+<pre class="diff"><code>--- a/configuration.nix
++++ b/configuration.nix
+@@ -37,6 +37,15 @@
+     };
+   };
+
++  users.users.root = {
++    openssh = {
++      # NOTE: Change this to whatever public key you use!
++      authorizedKeys.keys = [
++        &quot;ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINmzFzWOf+ddSaL0haZVVUn5tKjE+XsMEDGn/J4Etkuj&quot;
++      ];
++    };
++  };
++
+   # Passwordless sudo.
+   # WARNING!
+   # If you decide to change this, remember you NEED to set a password</code></pre>
+<p>And we can now build and deploy!</p>
+<pre class="shell"><code>$ deploy .  # in nixos_vm</code></pre>
+<p>And this should succeed! We have now deployed our configuration to the system!!</p>
+<h3 id="deploying-as-a-sudoer">Deploying as a Sudoer</h3>
+<p>But what if we don’t want to log in as <code>root</code>?</p>
+<p>Well, we can make <code>lixy</code> a trusted user
+instead. This way we don’t have to login as <code>root</code> over SSH.</p>
+<p><strong>A warning though! Making a user “trusted” in Nix is equivalent to giving them root
+permissions. In our case, this is fine since lixy has passwordless sudo access
+anyways.</strong></p>
+<p>While we still have a login-able <code>root</code> account, let’s change our <code>configuration.nix</code>
+to make <code>lixy</code> a trusted user:</p>
+<pre class="diff"><code>--- a/configuration.nix
++++ b/configuration.nix
+@@ -11,11 +11,16 @@
+     (modulesPath + &quot;/virtualisation/digital-ocean-config.nix&quot;)
+   ];
+
+-  # Enable flakes.
+-  nix.settings.experimental-features = [
+-    &quot;nix-command&quot;
+-    &quot;flakes&quot;
+-  ];
++  nix.settings = {
++    trusted-users = [
++      &quot;@wheel&quot; # Allow sudoers to push Nix closures.
++    ];
++    # Enable flakes.
++    experimental-features = [
++      &quot;nix-command&quot;
++      &quot;flakes&quot;
++    ];
++  };
+
+   # Set your default locale, as you wish.
+   i18n.defaultLocale = &quot;C.UTF-8&quot;;</code></pre>
+<p>Notice that we HAVEN’T gotten rid of our <code>root</code> ssh authorized key yet! We
+still need it to deploy.</p>
+<pre class="shell"><code>$ deploy .  # in nixos_vm</code></pre>
+<p>This should work. With that, let’s try deploying again, but as <code>lixy</code>:</p>
+<pre class="diff"><code>--- a/flake.nix
++++ b/flake.nix
+@@ -42,7 +42,7 @@
+         myDigitalOceanDroplet = {
+           # Don't forget to set your hostname appropriately!
+           hostname = &quot;dodroplet&quot;;
+-          sshUser = &quot;root&quot;;
++          sshUser = &quot;lixy&quot;;
+           profiles.system = {
+             user = &quot;root&quot;;
+             path =</code></pre>
+<p>And again, but now as <code>lixy</code>! I’m including the full logging to be extra clear what’s
+happening:</p>
+<pre class="shell"><code>$ deploy .
+🚀 ℹ️  [deploy] [INFO] Running checks for flake in .
+warning: Git tree '/home/crystal/tmp/nixos_vm' is dirty
+warning: unknown flake output 'deploy'
+warning: The check omitted these incompatible systems: aarch64-darwin, aarch64-linux, x86_64-darwin
+Use '--all-systems' to check all.
+🚀 ℹ️  [deploy] [INFO] Evaluating flake in .
+warning: Git tree '/home/crystal/tmp/nixos_vm' is dirty
+🚀 ℹ️  [deploy] [INFO] The following profiles are going to be deployed:
+[myDigitalOceanDroplet.system]
+user = &quot;root&quot;
+ssh_user = &quot;lixy&quot;
+path = &quot;/nix/store/4bb259iy0axrkya22fphz47jm1gyky6l-activatable-nixos-system-nixos-25.05.20241204.6eac218&quot;
+hostname = &quot;0.0.0.0&quot;
+ssh_opts = []
+
+🚀 ℹ️  [deploy] [INFO] Building profile `system` for node `myDigitalOceanDroplet`
+🚀 ℹ️  [deploy] [INFO] Copying profile `system` to node `myDigitalOceanDroplet`
+🚀 ℹ️  [deploy] [INFO] Activating profile `system` for node `myDigitalOceanDroplet`
+🚀 ℹ️  [deploy] [INFO] Creating activation waiter
+⭐ ℹ️  [activate] [INFO] Activating profile
+👀 ℹ️  [wait] [INFO] Waiting for confirmation event...
+updating GRUB 2 menu...
+activating the configuration...
+setting up /etc...
+reloading user units for lixy...
+reloading user units for root...
+restarting sysinit-reactivation.target
+⭐ ℹ️  [activate] [INFO] Activation succeeded!
+⭐ ℹ️  [activate] [INFO] Magic rollback is enabled, setting up confirmation hook...
+👀 ℹ️  [wait] [INFO] Found canary file, done waiting!
+👀 ℹ️  [wait] [INFO] Found canary file, done waiting!
+⭐ ℹ️  [activate] [INFO] Waiting for confirmation event...
+🚀 ℹ️  [deploy] [INFO] Success activating, attempting to confirm activation
+🚀 ℹ️  [deploy] [INFO] Deployment confirmed.</code></pre>
+<p>Wow! It works!!! We can clean up our <code>root</code> login now:</p>
+<pre class="diff"><code>--- a/configuration.nix
++++ b/configuration.nix
+@@ -42,15 +42,6 @@
+     };
+   };
+
+-  users.users.root = {
+-    openssh = {
+-      # NOTE: Change this to whatever public key you use!
+-      authorizedKeys.keys = [
+-        &quot;ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINmzFzWOf+ddSaL0haZVVUn5tKjE+XsMEDGn/J4Etkuj&quot;
+-      ];
+-    };
+-  };
+-
+   # Passwordless sudo.
+   # WARNING!
+   # If you decide to change this, remember you NEED to set a password</code></pre>
+<h3 id="deploying-with-a-trusted-key">Deploying with a Trusted Key</h3>
+<p>But what if we really don’t want to do either of those?</p>
+<p>You may not want to give a non-root user the ability to deploy to the store,
+for fairly valid reasons! Deploying to the Nix store is <strong>root equivalent</strong>, after
+all. So an alternative setup is to have a public-private key pair, where we
+sign our packages built locally.</p>
+<p><strong>NOTE: You’ll need to keep this private key safe, secure, and backed up. Without it, you won’t be
+able to deploy packages! At least, until you can SSH into <code>root</code> again.</strong></p>
+<p>Let’s create our private key:</p>
+<pre class="shell"><code>$ bash -c 'umask 077; nix key generate-secret --key-name cache.crystalwobsite.gay-1 &gt; my-nix-key'</code></pre>
+<p>This is a bit of a mess of a line! The real magic is in <code>nix key generate-secret</code>.
+The <code>umask</code> boilerplate is there to ensure it’s readable only to us. The key name
+can be anything, but it’s standard practice for it to be <code>cache.&lt;domain&gt;-N</code> where
+<code>N</code> is an incremented number for each revoked key. You can read more from
+<code>nix key generate-secret --help</code>.</p>
+<p>Now we need to get the public key…</p>
+<pre class="shell"><code>$ nix key convert-secret-to-public &lt; my-nix-key  # You'll get your own output here.
+cache.crystalwobsite.gay-1:tARhYz8y0cmy/r0kY99bJnpsTLfxg8pvnN93IjuSij4=</code></pre>
+<p>…and add it to our configuration under <code>nix.settings</code>:</p>
+<pre class="diff"><code>--- a/configuration.nix
++++ b/configuration.nix
+@@ -20,6 +20,9 @@
+       &quot;nix-command&quot;
+       &quot;flakes&quot;
+     ];
++    trusted-public-keys = [
++      &quot;cache.crystalwobsite.gay-1:tARhYz8y0cmy/r0kY99bJnpsTLfxg8pvnN93IjuSij4=&quot;
++    ];
+   };
+
+   # Set your default locale, as you wish.</code></pre>
+<p>Assuming we can still deploy (either because we can ssh into <code>root</code> still, or we
+gave <code>lixy</code> permissions), let’s deploy that now.</p>
+<pre class="shell"><code>$ deploy .</code></pre>
+<p>Let’s check it worked:</p>
+<pre class="shell"><code>ssh lixy@$TARGET -- cat /etc/nix/nix.conf
+# WARNING: this file is generated from the nix.* options in
+# your NixOS configuration, typically
+# /etc/nixos/configuration.nix.  Do not edit it!
+allowed-users = *
+auto-optimise-store = false
+builders =
+cores = 0
+experimental-features = nix-command flakes
+max-jobs = auto
+require-sigs = true
+sandbox = true
+sandbox-fallback = false
+substituters = https://cache.nixos.org/
+system-features = nixos-test benchmark big-parallel kvm
+trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= cache.crystalwobsite.gay-1:tARhYz8y0cmy/r0kY99bJnpsTLfxg8pvnN93IjuSij4=
+trusted-substituters =
+trusted-users = root @wheel
+extra-sandbox-paths =</code></pre>
+<p>Fuck yeah, we got our <code>trusted-public-keys</code> set! Now we can remove <code>@wheel</code> from
+our <code>trusted-users</code> group!</p>
+<pre class="diff"><code>--- a/configuration.nix
++++ b/configuration.nix
+@@ -12,9 +12,12 @@
+   ];
+
+   nix.settings = {
+-    trusted-users = [
+-      &quot;@wheel&quot; # Allow sudoers to push Nix closures.
+-    ];
++    # NOTE: Enable this if you want to allow deploying
++    # via sudoers!
++    # trusted-users = [
++    #   &quot;@wheel&quot; # Allow sudoers to push Nix closures.
++    # ];
++
+     # Enable flakes.
+     experimental-features = [
+       &quot;nix-command&quot;</code></pre>
+<p>and deploy…</p>
+<pre class="shell"><code>$ deploy .</code></pre>
+<p>If we try to deploy again now, we’ll <em>likely</em> get our familiar error:</p>
+<pre><code>error: cannot add path '&lt;...&gt;' because it lacks a signature by a trusted key</code></pre>
+<p>This is expected if we try to deploy without signing!</p>
+<p>To fix that, we need to pass a special environment
+variable <code>LOCAL_KEY</code> which tells <code>deploy-rs</code> which private key to use for signing:</p>
+<pre class="shell"><code>$ LOCAL_KEY=my-nix-key deploy .
+🚀 ℹ️  [deploy] [INFO] Running checks for flake in .
+warning: Git tree '/home/crystal/tmp/nixos_vm' is dirty
+warning: unknown flake output 'deploy'
+warning: The check omitted these incompatible systems: aarch64-darwin, aarch64-linux, x86_64-darwin
+Use '--all-systems' to check all.
+🚀 ℹ️  [deploy] [INFO] Evaluating flake in .
+warning: Git tree '/home/crystal/tmp/nixos_vm' is dirty
+🚀 ℹ️  [deploy] [INFO] The following profiles are going to be deployed:
+[myDigitalOceanDroplet.system]
+user = &quot;root&quot;
+ssh_user = &quot;lixy&quot;
+path = &quot;/nix/store/gcz466hf4jsyl0ndnm2xbh36x1wdxzbp-activatable-nixos-system-nixos-25.05.20241204.6eac218&quot;
+hostname = &quot;0.0.0.0&quot;
+ssh_opts = []
+
+🚀 ℹ️  [deploy] [INFO] Building profile `system` for node `myDigitalOceanDroplet`
+🚀 ℹ️  [deploy] [INFO] Signing key present! Signing profile `system` for node `myDigitalOceanDroplet`
+warning: 'sign-paths' is a deprecated alias for 'store sign'
+🚀 ℹ️  [deploy] [INFO] Copying profile `system` to node `myDigitalOceanDroplet`
+🚀 ℹ️  [deploy] [INFO] Activating profile `system` for node `myDigitalOceanDroplet`
+🚀 ℹ️  [deploy] [INFO] Creating activation waiter
+⭐ ℹ️  [activate] [INFO] Activating profile
+👀 ℹ️  [wait] [INFO] Waiting for confirmation event...
+updating GRUB 2 menu...
+activating the configuration...
+setting up /etc...
+reloading user units for lixy...
+restarting sysinit-reactivation.target
+⭐ ℹ️  [activate] [INFO] Activation succeeded!
+⭐ ℹ️  [activate] [INFO] Magic rollback is enabled, setting up confirmation hook...
+👀 ℹ️  [wait] [INFO] Found canary file, done waiting!
+⭐ ℹ️  [activate] [INFO] Waiting for confirmation event...
+🚀 ℹ️  [deploy] [INFO] Success activating, attempting to confirm activation
+🚀 ℹ️  [deploy] [INFO] Deployment confirmed.</code></pre>
+<p>And that’s it! That’s all the ways that I know how to deploy with <code>deploy-rs</code> currently. We
+have a working VM, with a public-private key signing pair, and a way to deploy things
+to it!</p>
+<h2 id="fixing-our-digitalocean-custom-image">Fixing Our DigitalOcean Custom Image</h2>
+<p>Our old image is still broken. We need to rebuild with our final <code>flake.nix</code> and our
+fixed <code>configuration.nix</code>:</p>
+<pre class="shell"><code>$ nix build .#digitalOceanVM  # in nixos_vm</code></pre>
+<p>And upload it to DigitalOcean’s
+<a href="https://cloud.digitalocean.com/images/custom_images">custom image page</a>. If you don’t remember how
+to do this, check the <a href="../posts/2025-01-26-nixos_vm_image">previous tutorial</a>.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>If you ever get stuck again on</p>
+<pre class="plaintext"><code>error: cannot add path '&lt;...&gt;' because it lacks a signature by a trusted key</code></pre>
+<p>and can no longer deploy, remember you can always let yourself log back in as root
+from the lixy account, just like before! You can always fix this, even if it’s a bit
+cumbersome.</p>
+<pre class="shell"><code>$ ssh lixy@$TARGET -- sudo cp /etc/ssh/authorized_keys.d/lixy /etc/ssh/authorized_keys.d/root</code></pre>
+<p>And then switch your deploy attribute to <code>sshUser = "root";</code> again, just like before.</p>
+<h2 id="whats-next">What’s Next?</h2>
+<p>I don’t currently have another tutorial up, but I eventually plan to make one about
+secret storing with <a href="https://github.com/ryantm/agenix">agenix</a> or derivatives.</p>
+<p>But that’s not out yet, so you must wait.</p>
+<h2 id="full-nix-source-code">Full Nix Source Code</h2>
+<p>For your reference, I’ve included the completed Nix files below!
+I’ve reformatted them a little to be rfc-style compliant:</p>
+<details class="rounded box-shadow box-light-border">
+<summary>
+configuration.nix
+</summary>
+<pre class="nix"><code># ./configuration.nix
+{
+  lib,
+  modulesPath,
+  pkgs,
+  ...
+}:
+
+{
+
+  imports =
+    [
+      ./networking.nix
+    ]
+    # Required for Digital Ocean droplets.
+    ++ lib.optional (builtins.pathExists ./do-userdata.nix) ./do-userdata.nix
+    ++ [
+      (modulesPath + &quot;/virtualisation/digital-ocean-config.nix&quot;)
+    ];
+
+  nix.settings = {
+    # NOTE: Enable this if you want to allow deploying
+    # via sudoers!
+    trusted-users = [
+      &quot;@wheel&quot; # Allow sudoers to push Nix closures.
+    ];
+    # Enable flakes.
+    experimental-features = [
+      &quot;nix-command&quot;
+      &quot;flakes&quot;
+    ];
+    trusted-public-keys = [
+      &quot;cache.crystalwobsite.gay-1:tARhYz8y0cmy/r0kY99bJnpsTLfxg8pvnN93IjuSij4=&quot;
+    ];
+  };
+
+  # Set your default locale, as you wish.
+  i18n.defaultLocale = &quot;C.UTF-8&quot;;
+
+  # System-wide packages.
+  environment.systemPackages = with pkgs; [
+    hyfetch # Fetch to show our system is working.
+    neovim # Change to your favourite tiny text editor.
+  ];
+
+  users.users.lixy = {
+    isNormalUser = true;
+    extraGroups = [ &quot;wheel&quot; ]; # Enable ‘sudo’ for the user.
+    openssh = {
+      # NOTE: Change this to whatever public key you use!
+      authorizedKeys.keys = [
+        &quot;ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINmzFzWOf+ddSaL0haZVVUn5tKjE+XsMEDGn/J4Etkuj&quot;
+      ];
+    };
+  };
+
+  # Passwordless sudo.
+  # WARNING!
+  # If you decide to change this, remember you NEED to set a password
+  # for the chosen user with an &quot;authorizedKeys&quot; setting. Passwords are
+  # public in the nix store, so know what you're doing!
+  security.sudo.wheelNeedsPassword = false;
+
+  # Set this to whichever system state version you're installing now.
+  # Afterwards, don't change this lightly. It doesn't need to change to
+  # upgrade.
+  system.stateVersion = &quot;25.05&quot;;
+}</code></pre>
+</details>
+<details class="rounded box-shadow box-light-border">
+<summary>
+networking.nix
+</summary>
+<pre class="nix"><code># ./networking.nix
+{ ... }:
+
+{
+  networking = {
+    hostName = &quot;nixos&quot;; # NOTE: Define your hostname.
+    networkmanager.enable = true; # Easiest to use and most distros use this by default.
+  };
+  time.timeZone = &quot;UTC&quot;;
+
+  # Enable the OpenSSH daemon.
+  services.openssh = {
+    enable = true;
+    # For security reasons, always have PasswordAuthentication = false
+    # and instead use SSH keys.
+    settings.PasswordAuthentication = false;
+  };
+
+  # Open ports in the firewall.
+  networking.firewall.allowedTCPPorts = [
+    22 # SSH. Feel free to use a different port.
+  ];
+}</code></pre>
+</details>
+<details class="rounded box-shadow box-light-border">
+<summary>
+flake.nix
+</summary>
+<pre class="nix"><code># ./flake.nix
+{
+  description = &quot;Tutorial on making a 'NixOS' VPS image.&quot;;
+  inputs = {
+    # NOTE: Change the SHA to &quot;nixos-unstable&quot; for your version. I try to pin things
+    # to known working commits whenever possible.
+    nixpkgs.url = &quot;github:NixOS/nixpkgs/6eac218f2d3dfe6c09aaf61a5bfa09d8aa396129&quot;;
+    nixos-generator = {
+      url = &quot;github:nix-community/nixos-generators/d002ce9b6e7eb467cd1c6bb9aef9c35d191b5453&quot;;
+      inputs.nixpkgs.follows = &quot;nixpkgs&quot;;
+    };
+    deploy-rs.url = &quot;github:serokell/deploy-rs&quot;;
+  };
+  outputs =
+    { self, nixpkgs, ... }@flakeInputs:
+    let
+      system = &quot;x86_64-linux&quot;;
+      modules = [
+        {
+          # Pin nixpkgs to the flake input.
+          nix.registry.nixpkgs.flake = nixpkgs;
+          virtualisation.diskSize = 8 * 1024; # 8GiB
+        }
+        ./configuration.nix
+      ];
+    in
+    {
+      packages.${system} = {
+        digitalOceanVM = flakeInputs.nixos-generator.nixosGenerate {
+          inherit system;
+          inherit modules;
+          format = &quot;do&quot;; # DigitalOcean
+        };
+      };
+
+      nixosConfigurations.myDigitalOceanDroplet = nixpkgs.lib.nixosSystem {
+        inherit system;
+        inherit modules;
+      };
+
+      deploy.nodes = {
+        myDigitalOceanDroplet = {
+          # Don't forget to set your hostname appropriately!
+          hostname = &quot;dodroplet&quot;;
+          sshUser = &quot;lixy&quot;;
+          profiles.system = {
+            user = &quot;root&quot;;
+            path =
+              flakeInputs.deploy-rs.lib.${system}.activate.nixos
+                self.nixosConfigurations.myDigitalOceanDroplet;
+          };
+        };
+      };
+
+      checks = builtins.mapAttrs (
+        system: deployLib: deployLib.deployChecks self.deploy
+      ) flakeInputs.deploy-rs.lib;
+    };
+}</code></pre>
+</details>
+<p>You can also check out my
+<a href="https://github.com/CrystalSplitter/lixos-digitalocean-tutorial/tree/deploying-tutorial">git repository</a>
+where I have built up this tutorial to see the final directory structure.</p>
+<div class="post-contact-spacer">❦</div>
+<div class="post-contact">
+  You can email me at <email-wrapper>“crystal (at) &lt;this domain&gt;”</email-wrapper> to respond!<br /> Or just say hi. That's cool too!
+</div>
+]]></content>
+</entry>
+<entry>
+    <title>NixOS Series: Making Custom VPS Images for the Cloud</title>
+    <link href="https://crystalwobsite.gay/posts/2025-01-26-nixos_vm_image" type="text/html" rel="alternate" />
+    <id>https://crystalwobsite.gay/posts/2025-01-26-nixos_vm_image.html</id>
+    <published>2025-01-26T00:00:00+00:00</published>
+    <updated>2025-02-09T00:00:00+00:00</updated>
+    <summary type="html"><![CDATA[Lix!
+
+This is part of a collection of tutorials on how to deploy NixOS with flakes on
+DigitalOcean droplets.
+I had some minor experience with NixOS prior to starting this adventure. I wanted to
+deploy a small “LixOS” webserver on the smallest DigitalOcean droplet, and I found this to be
+extremely poorly documented elsewhere, with no single cohesive place where I could find all the
+steps and how they worked together.
+Table of Contents
+
+Table Of Contents
+Why DigitalOcean? Can I Use Another Provider?
+Prerequisites
+Enabling Experimental Features for Flakes
+Writing a Basic configuration.nix for Our VM Image
+Introducing nixos-generators
+Using the “nixos-generate” CLI to Make an Image
+Using “nixos-generator” Inside a Flake
+
+Setting the Image Size In Our Flake
+Building the Image From Flake
+
+Creating the Droplet from the Image
+Connecting to the Droplet and Testing It!
+What Now?
+Full Nix Source Code
+
+Why DigitalOcean? Can I Use Another Provider?
+This tutorial walks through a DigitalOcean build because, as of 2025, it’s what I use to host
+this website: crystalwobsite.gay. But! Much of this tutorial will work with any Virtual
+Private Server (VPS) provider, like Vultr, Linode, Azure, GCE, AWS, etc. As long as they allow you to upload
+custom images. I’m not paid by DigitalOcean, and I probably will also migrate providers myself
+one day. I don’t know how well this works with on-prem VMs with say libvirt or Proxmox
+clusters, since I don’t use those, but I would expect they work fine as well.
+Prerequisites
+I’ve tried to make these steps as approachable as possible, but I can’t make it for every person
+reading this. Given that, here’s some recommended prerequisites to trying to follow this
+tutorial:
+
+You have a working Nix install already. You need Nix to make NixOS images easily.
+You want to deploy NixOS to some VPS provider like DigitalOcean or Linode.
+You have some understanding of the Nix language.
+You have a working SSH install.
+You’re okay with using Nix Flakes.
+
+You don’t have to follow all of these per se, but if any of these are not true, it may be
+worth following other more basic tutorials first, then coming back here.
+Enabling Experimental Features for Flakes
+If you haven’t already, make sure to enable the experimental features flakes and
+nix-command permanently:
+
+
+On NixOS
+
+# In your system config (e.g. "/etc/nixos/configuration.nix")
+nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+
+
+Other Linux, OS X, no home-manager
+
+# User config
+$ echo 'experimental-features = nix-command flakes' >> ~/.config/nix/nix.conf
+
+# OR...
+
+# System wide
+$ echo 'experimental-features = nix-command flakes' >> /etc/nix/nix.conf
+
+
+
+Other Linux, OS X, with home-manager
+
+nix = {
+  package = pkgs.nix;
+  settings.experimental-features = [ "nix-command" "flakes" ];
+};
+
+These instructions come from the nixos.wiki, which is worth
+reading if you haven’t done so already.
+Writing a Basic configuration.nix for Our VM Image
+You’re probably already familiar with the idea of NixOS system configurations, but if not,
+here’s a quick intro. System configuration files are Nix modules which set Nix options, detailing
+properties of NixOS in a declarative way. Let’s write one with some basic utilities. We can
+expand it later.
+First, let’s create our workspace:
+$ mkdir nixos_vm && cd nixos_vm
+$ touch configuration.nix
+And inside that configuration.nix file, we write with our favourite editor:
+# ./configuration.nix
+{ pkgs, ... }:
+
+{
+  # Enable flakes.
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+
+  # Set your default locale, as you wish.
+  i18n.defaultLocale = "C.UTF-8";
+
+  # System-wide packages.
+  environment.systemPackages = with pkgs; [
+    hyfetch # Fetch to show our system is working.
+    neovim # Change to your favourite tiny text editor.
+  ];
+
+  # Set this to whichever system state version you're installing now.
+  # Afterwards, don't change this lightly. It doesn't need to change to
+  # upgrade.
+  system.stateVersion = "25.05";
+}
+This is our configuration skeleton. It’s not enough however, as we also need
+to set up SSH and a user. For our SSH set up, let’s create a Nix Module
+called networking.ssh:
+# ./networking.nix
+{ ... }:
+
+{
+  networking = {
+    hostName = "nixos"; # NOTE: Define your hostname.
+    networkmanager.enable = true; # Easiest to use and most distros use this by default.
+  };
+  time.timeZone = "UTC";
+
+  # Enable the OpenSSH daemon.
+  services.openssh = {
+    enable = true;
+    # For security reasons, always have PasswordAuthentication = false
+    # and instead use SSH keys.
+    settings.PasswordAuthentication = false;
+  };
+
+  # Open ports in the firewall.
+  networking.firewall.allowedTCPPorts = [
+    22 # SSH. Feel free to use a different port.
+  ];
+}
+This is all we need to do for networking. You can optionally open ports 80 and 443,
+but we won’t need them open for this tutorial.
+Now let’s import this new networking.nix module in our configuration.nix:
+--- a/configuration.nix
++++ b/configuration.nix
+@@ -2,6 +2,11 @@
+ { pkgs, ... }:
+ 
+ {
++
++  imports = [
++    ./networking.nix
++  ];
++
+   # Enable flakes.
+   nix.settings.experimental-features = [
+     "nix-command"
+Finally, we also need a user to log in as. I strongy recommend using a public-private SSH key
+pair to login instead of a password. We’ll call this user “lixy” for the purposes of this
+tutorial:
+--- a/configuration.nix
++++ b/configuration.nix
+@@ -22,6 +22,24 @@
+     neovim # Change to your favourite tiny text editor.
+   ];
+ 
++  users.users.lixy = {
++    isNormalUser = true;
++    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
++    openssh = {
++      # NOTE: Change this to whatever public key you use!
++      authorizedKeys.keys = [
++        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINmzFzWOf+ddSaL0haZVVUn5tKjE+XsMEDGn/J4Etkuj"
++      ];
++    };
++  };
++
++  # Passwordless sudo.
++  # WARNING!
++  # If you decide to change this, remember you NEED to set a password
++  # for the chosen user with an "authorizedKeys" setting. Passwords are
++  # public in the nix store, so know what you're doing!
++  security.sudo.wheelNeedsPassword = false;
++
+   # Set this to whichever system state version you're installing now.
+   # Afterwards, don't change this lightly. It doesn't need to change to
+   # upgrade.
+Notice that since we haven’t set a password for lixy, we need to have passwordless
+sudo. Don’t get locked out of sudo access!
+And that’s it for now! We want this to be tiny, as this should be just enough to get us
+off the ground for a proper deployment. You can see the final configuration.nix and
+networking.nix at the bottom of the tutorial.
+Introducing nixos-generators
+nixos-generators is a community-maintained
+package which can generate various virtual machine images and installers for NixOS. This includes
+setting up a DigitalOcean image!
+nixos-generators has both a CLI and a Nix Module mode which can be used in a flake.
+We can install it into a temporary Nix shell with:
+$ nix shell nixpkgs#nixos-generators
+You can check the list of supported targets now with:
+$ nixos-generate --list
+For this tutorial, we’ll be using the target do, for DigitalOcean.
+Using the “nixos-generate” CLI to Make an Image
+As mentioned in the previous section, nixos-generators has a CLI tool called
+nixos-generate (note that it’s “generate” and not “generators” or “generator”).
+It’s the simplest way to make the image, but it’s also non-declarative.
+We can build our DigitalOcean NixOS qcow2 image with:
+$ nixos-generate --configuration ./configuration.nix --format do
+This will build and then print out the canonical path to the new image:
+setting up /etc...
+updating GRUB 2 menu...
+installing the GRUB 2 boot loader on /dev/vda...
+Installing for i386-pc platform.
+Installation finished. No error reported.
+tune2fs 1.47.1 (20-May-2024)
+Setting maximal mount count to -1
+Setting interval between checks to 0 seconds
+Setting time filesystem last checked to Mon Jan 27 02:36:01 2025
+
+tune2fs 1.47.1 (20-May-2024)
+Setting time filesystem last checked to Thu Jan  1 00:00:00 1970
+
+[    1.526888] reboot: Power down
+[2025-01-27T02:36:02Z INFO  virtiofsd] Client disconnected, shutting down
+[2025-01-27T02:36:02Z INFO  virtiofsd] Client disconnected, shutting down
+/nix/store/nbmaki3cmzxc223gr4pniv0s27j1f37y-digital-ocean-image/nixos-image-digital-ocean-25.05pre738273.0bd024d34eb0-x86_64-linux.qcow2.gz
+This /nix/store/*-digital-ocean-image/nixos-image-digital-ocean-*.qcow2.gz is our image.
+I would recommend copying that path to somewhere more convenient, like to your nixos_vm directory.
+This image is now ready for upload. However, this didn’t really let us configure much about
+the image itself. It’s easier to show how to set the virtualisation configurations via the
+nixos-generate Nix Module. So let’s look how to build the image as part
+of a flake output! This way we won’t even need to install nixos-generators
+as a shell package!
+Using “nixos-generator” Inside a Flake
+In practice, I ended up preferring having the VM building inside a flake file for
+reproducibility. So let’s make one!
+I always start with this template:
+# ./flake.nix
+{
+  description = "Tutorial on making a 'NixOS' VPS image.";
+  inputs = {
+    # NOTE: Change the SHA to "nixos-unstable" for your version. I try to pin things
+    # to known working commits whenever possible.
+    nixpkgs.url = "github:NixOS/nixpkgs/6eac218f2d3dfe6c09aaf61a5bfa09d8aa396129";
+  };
+  outputs =
+    { self, nixpkgs, ... }@flakeInputs:
+    let
+      system = "x86_64-linux";
+    in
+    { };
+}
+Remember, every flake must have an inputs attribute set detailing the flake repositories
+we’re pulling from, and an outputs function detailing what this flake can produce.
+I’ve also bound the target VM system to a variable for convenience.
+Now we add nixos-generator to our inputs. It’s important tell nixos-generator to
+follow our nixpkgs so that we install the right packages into the system image.
+--- a/flake.nix
++++ b/flake.nix
+@@ -5,6 +5,10 @@
+     # NOTE: Change the SHA to "nixos-unstable" for your version. I try to pin things
+     # to known working commits whenever possible.
+     nixpkgs.url = "github:NixOS/nixpkgs/6eac218f2d3dfe6c09aaf61a5bfa09d8aa396129";
++    nixos-generator = {
++      url = "github:nix-community/nixos-generators/d002ce9b6e7eb467cd1c6bb9aef9c35d191b5453";
++      inputs.nixpkgs.follows = "nixpkgs";
++    };
+   };
+   outputs =
+     { self, nixpkgs, ... }@flakeInputs:
+This SHA is one I’ve personally tested to work for this tutorial, but I encourage you to
+use a newer one or the latest if it works.
+We now move on to adding our flake package to generate a qcow2.gz image. Just like when
+using the CLI, we specify the format to be do, to indicate we’re building a DigitalOcean
+VM!
+--- a/flake.nix
++++ b/flake.nix
+@@ -15,5 +15,19 @@
+     let
+       system = "x86_64-linux";
+     in
+-    { };
++    {
++      packages.${system} = {
++        digitalOceanVM = flakeInputs.nixos-generator.nixosGenerate {
++          inherit system;
++          format = "do"; # DigitalOcean
++          modules = [
++            {
++              # Pin nixpkgs to the flake input.
++              nix.registry.nixpkgs.flake = nixpkgs;
++            }
++            ./configuration.nix
++          ];
++        };
++      };
++    };
+ }
+Note that we pin the VM’s Nix registry to our flake input’s nixpkgs.
+Setting the Image Size In Our Flake
+One advantage of the flake.nix is that we can very clearly set the VM disk size through
+virtualisation.diskSize. This is handy for running on smaller droplets, but entirely optional.
+--- a/flake.nix
++++ b/flake.nix
+@@ -24,6 +24,7 @@
+             {
+               # Pin nixpkgs to the flake input.
+               nix.registry.nixpkgs.flake = nixpkgs;
++              virtualisation.diskSize = 8 * 1024; # 8GiB
+             }
+             ./configuration.nix
+           ];
+And with that, our flake.nix is ready.
+Building the Image From Flake
+We can now build the image with our simple flake build!
+$ nix build .#digitalOceanVM
+It’s fully declarative and reproducible! I think that’s really cool.
+The output will be in a newly created symlink directory ./result/
+$ ls ./result/
+nixos-image-digital-ocean-25.05.20241204.6eac218-x86_64-linux.qcow2.gz  nix-support/
+And that’s it! We have our image!
+Uploading Our Image to DigitalOcean
+Now we’ll upload our newly created image to DigitalOcean. If you’re using a different VPS
+provider, this is where your path will diverge. As far as I know, DigitalOcean only provides a
+web UI to upload local images1.
+The most direct way is to go to
+https://cloud.digitalocean.com/images/custom_images,
+but I’ll also walk you through the process to find this page now. You can skip this by clicking the
+link below.
+Skip to uploading ->
+Finding the Custom Images Uploader
+First, go to your dashboard at https://cloud.digitalocean.com/.
+Under “Manage”, click “Backups and Snapshots”.
+
+
+DigitalOcean Sidebar
+
+This will bring you to the Snapshots window. You then want to go to the Custom Images tab.
+
+
+Custom Image Tab Location
+
+And there you go, you can upload from here.
+Uploading the Image
+Click “Upload Image”. Find the path to nixos_vm that you created at the start, and go to
+nixos_vm/result. There should be a nixos-image-digital-ocean-*.qcow2.gz there, if you followed
+the previous steps. Here are the settings you want to choose:
+
+Edit Image Name: Whatever you want to name your image. I’ve chosen nixos-vm.qcow2.gz.
+Distribution: Choose Unknown here.
+Datacenter Region: Choose which region you want to upload. Which region you choose does matter!
+You can only spin up droplets in the region that this image is located at. You can move it later,
+but this can take a while.
+Tags: Set the tags however you want. I usually add NixOS here.
+Notes: Crystal's NixOS Tutorial Image, to remind you where this image came from.
+
+Now we wait for the upload to complete, and for the image to become available. Keep in mind,
+image storage does cost money! You can delete the image right after you create your droplet,
+but don’t be blindsided by the added cost per minute.
+Creating the Droplet from the Image
+Once the image is available, we can create a droplet. From the Custom Image screen,
+click the dropdown “More” on the right, and click “Start a droplet”.
+From this point on, it’s not any different from starting up a droplet normally. Make sure
+you choose a region that matches your image datacenter region.
+Now we wait for the droplet to boot up…
+Connecting to the Droplet and Testing It!
+Once the droplet has started up, we now test that everything is working as expected.
+Connect to it over SSH via the public ipv4:
+$ ssh lixy@<YOUR DROPLET IP ADDRESS HERE>
+Last login: XXXX
+
+[lixy@nixos:~]$ hyfetch
+
+
+NixOS hyfetch Output
+
+And that’s it! We have a working NixOS install in a DigitalOcean droplet!
+What Now?
+While we’ve created a minimal custom image, it’s not enough to have a working VPS. For that,
+we need to use a deployment system to build and upload the packages we need to the droplet.
+And we can do that with Nix flakes too!
+However, that’s its own separate tutorial though. You can read about it here:
+Deploying NixOS Configurations with Flakes and deploy-rs
+Full Nix Source Code
+For your reference, I’ve included the completed Nix files below!
+
+
+configuration.nix
+
+# ./configuration.nix
+{ pkgs, ... }:
+
+{
+
+  imports = [
+    ./networking.nix
+  ];
+
+  # Enable flakes.
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+
+  # Set your default locale, as you wish.
+  i18n.defaultLocale = "C.UTF-8";
+
+  # System-wide packages.
+  environment.systemPackages = with pkgs; [
+    hyfetch # Fetch to show our system is working.
+    neovim # Change to your favourite tiny text editor.
+  ];
+
+  users.users.lixy = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    openssh = {
+      # NOTE: Change this to whatever public key you use!
+      authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINmzFzWOf+ddSaL0haZVVUn5tKjE+XsMEDGn/J4Etkuj"
+      ];
+    };
+  };
+
+  # Passwordless sudo.
+  # WARNING!
+  # If you decide to change this, remember you NEED to set a password
+  # for the chosen user with an "authorizedKeys" setting. Passwords are
+  # public in the nix store, so know what you're doing!
+  security.sudo.wheelNeedsPassword = false;
+
+  # Set this to whichever system state version you're installing now.
+  # Afterwards, don't change this lightly. It doesn't need to change to
+  # upgrade.
+  system.stateVersion = "25.05";
+}
+
+
+
+networking.nix
+
+# ./networking.nix
+{ ... }:
+
+{
+  networking = {
+    hostName = "nixos"; # NOTE: Define your hostname.
+    networkmanager.enable = true; # Easiest to use and most distros use this by default.
+  };
+  time.timeZone = "UTC";
+
+  # Enable the OpenSSH daemon.
+  services.openssh = {
+    enable = true;
+    # For security reasons, always have PasswordAuthentication = false
+    # and instead use SSH keys.
+    settings.PasswordAuthentication = false;
+  };
+
+  # Open ports in the firewall.
+  networking.firewall.allowedTCPPorts = [
+    22 # SSH. Feel free to use a different port.
+  ];
+}
+
+
+
+flake.nix
+
+# ./flake.nix
+{
+  description = "Tutorial on making a 'NixOS' VPS image.";
+  inputs = {
+    # NOTE: Change the SHA to "nixos-unstable" for your version. I try to pin things
+    # to known working commits whenever possible.
+    nixpkgs.url = "github:NixOS/nixpkgs/6eac218f2d3dfe6c09aaf61a5bfa09d8aa396129";
+    nixos-generator = {
+      url = "github:nix-community/nixos-generators/d002ce9b6e7eb467cd1c6bb9aef9c35d191b5453";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+  outputs =
+    { self, nixpkgs, ... }@flakeInputs:
+    let
+      system = "x86_64-linux";
+    in
+    {
+      packages.${system} = {
+        digitalOceanVM = flakeInputs.nixos-generator.nixosGenerate {
+          inherit system;
+          format = "do"; # DigitalOcean
+          modules = [
+            {
+              # Pin nixpkgs to the flake input.
+              nix.registry.nixpkgs.flake = nixpkgs;
+              virtualisation.diskSize = 8 * 1024; # 8GiB
+            }
+            ./configuration.nix
+          ];
+        };
+      };
+    };
+}
+
+You can also check out my
+git repository
+where I have built up this tutorial to see the final directory structure.
+
+
+
+If you have a way to upload the image to a webserver for HTTP downloading, you can use the
+doctl CLI instead.↩︎
+
+
+❦
+
+  You can email me at “crystal (at) <this domain>” to respond! Or just say hi. That's cool too!]]></summary>
+    <content type="html"><![CDATA[<figure>
+<img src="../images/post_images/2025-01-13-lix_handrawn.webp" alt="Lix!" />
+<figcaption aria-hidden="true">Lix!</figcaption>
+</figure>
+<p>This is part of a <a href="../tags/nix">collection of tutorials</a> on how to deploy NixOS with flakes on
+DigitalOcean droplets.</p>
+<p>I had some minor experience with NixOS prior to starting this adventure. I wanted to
+deploy a small “LixOS” webserver on the smallest DigitalOcean droplet, and I found this to be
+extremely poorly documented elsewhere, with no single cohesive place where I could find all the
+steps and how they worked together.</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#table-of-contents">Table Of Contents</a></li>
+<li><a href="#why-digitalocean-can-i-use-another-provider">Why DigitalOcean? Can I Use Another Provider?</a></li>
+<li><a href="#prerequisites">Prerequisites</a></li>
+<li><a href="#enabling-experimental-features-for-flakes">Enabling Experimental Features for Flakes</a></li>
+<li><a href="#writing-a-basic-configuration.nix-for-our-vm-image">Writing a Basic configuration.nix for Our VM Image</a></li>
+<li><a href="#introducing-nixos-generators">Introducing nixos-generators</a></li>
+<li><a href="#using-the-nixos-generate-cli-to-make-an-image">Using the “nixos-generate” CLI to Make an Image</a></li>
+<li><a href="#using-nixos-generator-inside-a-flake">Using “nixos-generator” Inside a Flake</a>
+<ul>
+<li><a href="#setting-the-image-size-in-our-flake">Setting the Image Size In Our Flake</a></li>
+<li><a href="#building-the-image-from-flake">Building the Image From Flake</a></li>
+</ul></li>
+<li><a href="#creating-the-droplet-from-the-image">Creating the Droplet from the Image</a></li>
+<li><a href="#connecting-to-the-droplet-and-testing-it">Connecting to the Droplet and Testing It!</a></li>
+<li><a href="#what-now">What Now?</a></li>
+<li><a href="#full-nix-source-code">Full Nix Source Code</a></li>
+</ul>
+<h2 id="why-digitalocean-can-i-use-another-provider">Why DigitalOcean? Can I Use Another Provider?</h2>
+<p>This tutorial walks through a DigitalOcean build because, as of 2025, it’s what I use to host
+this website: <a href="../">crystalwobsite.gay</a>. But! Much of this tutorial will work with any Virtual
+Private Server (VPS) provider, like Vultr, Linode, Azure, GCE, AWS, etc. As long as they allow you to upload
+custom images. I’m not paid by DigitalOcean, and I probably will also migrate providers myself
+one day. I don’t know how well this works with on-prem VMs with say libvirt or Proxmox
+clusters, since I don’t use those, but I would expect they work fine as well.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>I’ve tried to make these steps as approachable as possible, but I can’t make it for every person
+reading this. Given that, here’s some recommended prerequisites to trying to follow this
+tutorial:</p>
+<ol type="1">
+<li>You have a working Nix install already. You need Nix to make NixOS images easily.</li>
+<li>You want to deploy NixOS to some VPS provider like DigitalOcean or Linode.</li>
+<li>You have some understanding of the Nix language.</li>
+<li>You have a working SSH install.</li>
+<li>You’re okay with using Nix Flakes.</li>
+</ol>
+<p>You don’t have to follow all of these per se, but if any of these are not true, it may be
+worth following other more basic tutorials first, then coming back here.</p>
+<h2 id="enabling-experimental-features-for-flakes">Enabling Experimental Features for Flakes</h2>
+<p>If you haven’t already, make sure to enable the experimental features <code>flakes</code> and
+<code>nix-command</code> permanently:</p>
+<details class="rounded box-shadow box-light-border">
+<summary>
+On NixOS
+</summary>
+<pre class="nix"><code># In your system config (e.g. &quot;/etc/nixos/configuration.nix&quot;)
+nix.settings.experimental-features = [ &quot;nix-command&quot; &quot;flakes&quot; ];</code></pre>
+</details>
+<details class="rounded box-shadow box-light-border">
+<summary>
+Other Linux, OS X, no home-manager
+</summary>
+<pre class="bash"><code># User config
+$ echo 'experimental-features = nix-command flakes' &gt;&gt; ~/.config/nix/nix.conf
+
+# OR...
+
+# System wide
+$ echo 'experimental-features = nix-command flakes' &gt;&gt; /etc/nix/nix.conf</code></pre>
+</details>
+<details class="rounded box-shadow box-light-border">
+<summary>
+Other Linux, OS X, with home-manager
+</summary>
+<pre class="nix"><code>nix = {
+  package = pkgs.nix;
+  settings.experimental-features = [ &quot;nix-command&quot; &quot;flakes&quot; ];
+};</code></pre>
+</details>
+<p>These instructions come from the <a href="https://nixos.wiki/wiki/Flakes">nixos.wiki</a>, which is worth
+reading if you haven’t done so already.</p>
+<h2 id="writing-a-basic-configuration.nix-for-our-vm-image">Writing a Basic configuration.nix for Our VM Image</h2>
+<p>You’re probably already familiar with the idea of NixOS system configurations, but if not,
+here’s a quick intro. System configuration files are Nix modules which set Nix options, detailing
+properties of NixOS in a declarative way. Let’s write one with some basic utilities. We can
+expand it later.</p>
+<p>First, let’s create our workspace:</p>
+<pre class="shell"><code>$ mkdir nixos_vm &amp;&amp; cd nixos_vm
+$ touch configuration.nix</code></pre>
+<p>And inside that <code>configuration.nix</code> file, we write with our favourite editor:</p>
+<pre class="nix"><code># ./configuration.nix
+{ pkgs, ... }:
+
+{
+  # Enable flakes.
+  nix.settings.experimental-features = [
+    &quot;nix-command&quot;
+    &quot;flakes&quot;
+  ];
+
+  # Set your default locale, as you wish.
+  i18n.defaultLocale = &quot;C.UTF-8&quot;;
+
+  # System-wide packages.
+  environment.systemPackages = with pkgs; [
+    hyfetch # Fetch to show our system is working.
+    neovim # Change to your favourite tiny text editor.
+  ];
+
+  # Set this to whichever system state version you're installing now.
+  # Afterwards, don't change this lightly. It doesn't need to change to
+  # upgrade.
+  system.stateVersion = &quot;25.05&quot;;
+}</code></pre>
+<p>This is our configuration skeleton. It’s not enough however, as we also need
+to set up SSH and a user. For our SSH set up, let’s create a Nix Module
+called <code>networking.ssh</code>:</p>
+<pre class="nix"><code># ./networking.nix
+{ ... }:
+
+{
+  networking = {
+    hostName = &quot;nixos&quot;; # NOTE: Define your hostname.
+    networkmanager.enable = true; # Easiest to use and most distros use this by default.
+  };
+  time.timeZone = &quot;UTC&quot;;
+
+  # Enable the OpenSSH daemon.
+  services.openssh = {
+    enable = true;
+    # For security reasons, always have PasswordAuthentication = false
+    # and instead use SSH keys.
+    settings.PasswordAuthentication = false;
+  };
+
+  # Open ports in the firewall.
+  networking.firewall.allowedTCPPorts = [
+    22 # SSH. Feel free to use a different port.
+  ];
+}</code></pre>
+<p>This is all we need to do for networking. You can optionally open ports <code>80</code> and <code>443</code>,
+but we won’t need them open for this tutorial.</p>
+<p>Now let’s import this new <code>networking.nix</code> module in our <code>configuration.nix</code>:</p>
+<pre class="diff"><code>--- a/configuration.nix
++++ b/configuration.nix
+@@ -2,6 +2,11 @@
+ { pkgs, ... }:
+ 
+ {
++
++  imports = [
++    ./networking.nix
++  ];
++
+   # Enable flakes.
+   nix.settings.experimental-features = [
+     &quot;nix-command&quot;</code></pre>
+<p>Finally, we also need a user to log in as. I strongy recommend using a public-private SSH key
+pair to login instead of a password. We’ll call this user “lixy” for the purposes of this
+tutorial:</p>
+<pre class="diff"><code>--- a/configuration.nix
++++ b/configuration.nix
+@@ -22,6 +22,24 @@
+     neovim # Change to your favourite tiny text editor.
+   ];
+ 
++  users.users.lixy = {
++    isNormalUser = true;
++    extraGroups = [ &quot;wheel&quot; ]; # Enable ‘sudo’ for the user.
++    openssh = {
++      # NOTE: Change this to whatever public key you use!
++      authorizedKeys.keys = [
++        &quot;ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINmzFzWOf+ddSaL0haZVVUn5tKjE+XsMEDGn/J4Etkuj&quot;
++      ];
++    };
++  };
++
++  # Passwordless sudo.
++  # WARNING!
++  # If you decide to change this, remember you NEED to set a password
++  # for the chosen user with an &quot;authorizedKeys&quot; setting. Passwords are
++  # public in the nix store, so know what you're doing!
++  security.sudo.wheelNeedsPassword = false;
++
+   # Set this to whichever system state version you're installing now.
+   # Afterwards, don't change this lightly. It doesn't need to change to
+   # upgrade.</code></pre>
+<p>Notice that since we haven’t set a password for <code>lixy</code>, we need to have passwordless
+<code>sudo</code>. Don’t get locked out of <code>sudo</code> access!</p>
+<p>And that’s it for now! We want this to be tiny, as this should be just enough to get us
+off the ground for a proper deployment. You can see the final <code>configuration.nix</code> and
+<code>networking.nix</code> at the bottom of the tutorial.</p>
+<h2 id="introducing-nixos-generators">Introducing nixos-generators</h2>
+<p><a href="https://github.com/nix-community/nixos-generators">nixos-generators</a> is a community-maintained
+package which can generate various virtual machine images and installers for NixOS. This includes
+setting up a DigitalOcean image!</p>
+<p><code>nixos-generators</code> has both a CLI and a Nix Module mode which can be used in a flake.
+We can install it into a temporary Nix shell with:</p>
+<pre class="shell"><code>$ nix shell nixpkgs#nixos-generators</code></pre>
+<p>You can check the list of supported targets now with:</p>
+<pre class="shell"><code>$ nixos-generate --list</code></pre>
+<p>For this tutorial, we’ll be using the target <code>do</code>, for DigitalOcean.</p>
+<h2 id="using-the-nixos-generate-cli-to-make-an-image">Using the “nixos-generate” CLI to Make an Image</h2>
+<p>As mentioned in the previous section, <code>nixos-generators</code> has a CLI tool called
+<code>nixos-generate</code> (note that it’s “generate” and not “generators” or “generator”).
+It’s the simplest way to make the image, but it’s also non-declarative.</p>
+<p>We can build our DigitalOcean NixOS qcow2 image with:</p>
+<pre class="shell"><code>$ nixos-generate --configuration ./configuration.nix --format do</code></pre>
+<p>This will build and then print out the canonical path to the new image:</p>
+<pre class="plaintext"><code>setting up /etc...
+updating GRUB 2 menu...
+installing the GRUB 2 boot loader on /dev/vda...
+Installing for i386-pc platform.
+Installation finished. No error reported.
+tune2fs 1.47.1 (20-May-2024)
+Setting maximal mount count to -1
+Setting interval between checks to 0 seconds
+Setting time filesystem last checked to Mon Jan 27 02:36:01 2025
+
+tune2fs 1.47.1 (20-May-2024)
+Setting time filesystem last checked to Thu Jan  1 00:00:00 1970
+
+[    1.526888] reboot: Power down
+[2025-01-27T02:36:02Z INFO  virtiofsd] Client disconnected, shutting down
+[2025-01-27T02:36:02Z INFO  virtiofsd] Client disconnected, shutting down
+/nix/store/nbmaki3cmzxc223gr4pniv0s27j1f37y-digital-ocean-image/nixos-image-digital-ocean-25.05pre738273.0bd024d34eb0-x86_64-linux.qcow2.gz</code></pre>
+<p>This <code>/nix/store/*-digital-ocean-image/nixos-image-digital-ocean-*.qcow2.gz</code> is our image.
+I would recommend copying that path to somewhere more convenient, like to your <code>nixos_vm</code> directory.</p>
+<p>This image is now ready for upload. However, this didn’t really let us configure much about
+the image itself. It’s easier to show how to set the virtualisation configurations via the
+<code>nixos-generate</code> Nix Module. So let’s look how to build the image as part
+of a flake output! This way we won’t even need to install <code>nixos-generators</code>
+as a shell package!</p>
+<h2 id="using-nixos-generator-inside-a-flake">Using “nixos-generator” Inside a Flake</h2>
+<p>In practice, I ended up preferring having the VM building inside a flake file for
+reproducibility. So let’s make one!</p>
+<p>I always start with this template:</p>
+<pre class="nix"><code># ./flake.nix
+{
+  description = &quot;Tutorial on making a 'NixOS' VPS image.&quot;;
+  inputs = {
+    # NOTE: Change the SHA to &quot;nixos-unstable&quot; for your version. I try to pin things
+    # to known working commits whenever possible.
+    nixpkgs.url = &quot;github:NixOS/nixpkgs/6eac218f2d3dfe6c09aaf61a5bfa09d8aa396129&quot;;
+  };
+  outputs =
+    { self, nixpkgs, ... }@flakeInputs:
+    let
+      system = &quot;x86_64-linux&quot;;
+    in
+    { };
+}</code></pre>
+<p>Remember, every flake must have an <code>inputs</code> attribute set detailing the flake repositories
+we’re pulling from, and an <code>outputs</code> function detailing what this flake can produce.
+I’ve also bound the target VM <code>system</code> to a variable for convenience.</p>
+<p>Now we add <code>nixos-generator</code> to our <code>inputs</code>. It’s important tell <code>nixos-generator</code> to
+follow our <code>nixpkgs</code> so that we install the right packages into the system image.</p>
+<pre class="diff"><code>--- a/flake.nix
++++ b/flake.nix
+@@ -5,6 +5,10 @@
+     # NOTE: Change the SHA to &quot;nixos-unstable&quot; for your version. I try to pin things
+     # to known working commits whenever possible.
+     nixpkgs.url = &quot;github:NixOS/nixpkgs/6eac218f2d3dfe6c09aaf61a5bfa09d8aa396129&quot;;
++    nixos-generator = {
++      url = &quot;github:nix-community/nixos-generators/d002ce9b6e7eb467cd1c6bb9aef9c35d191b5453&quot;;
++      inputs.nixpkgs.follows = &quot;nixpkgs&quot;;
++    };
+   };
+   outputs =
+     { self, nixpkgs, ... }@flakeInputs:</code></pre>
+<p>This SHA is one I’ve personally tested to work for this tutorial, but I encourage you to
+use a newer one or the latest if it works.</p>
+<p>We now move on to adding our flake package to generate a <code>qcow2.gz</code> image. Just like when
+using the CLI, we specify the format to be <code>do</code>, to indicate we’re building a DigitalOcean
+VM!</p>
+<pre class="diff"><code>--- a/flake.nix
++++ b/flake.nix
+@@ -15,5 +15,19 @@
+     let
+       system = &quot;x86_64-linux&quot;;
+     in
+-    { };
++    {
++      packages.${system} = {
++        digitalOceanVM = flakeInputs.nixos-generator.nixosGenerate {
++          inherit system;
++          format = &quot;do&quot;; # DigitalOcean
++          modules = [
++            {
++              # Pin nixpkgs to the flake input.
++              nix.registry.nixpkgs.flake = nixpkgs;
++            }
++            ./configuration.nix
++          ];
++        };
++      };
++    };
+ }</code></pre>
+<p>Note that we pin the VM’s Nix registry to our flake input’s <code>nixpkgs</code>.</p>
+<h3 id="setting-the-image-size-in-our-flake">Setting the Image Size In Our Flake</h3>
+<p>One advantage of the <code>flake.nix</code> is that we can very clearly set the VM disk size through
+<code>virtualisation.diskSize</code>. This is handy for running on smaller droplets, but entirely optional.</p>
+<pre class="diff"><code>--- a/flake.nix
++++ b/flake.nix
+@@ -24,6 +24,7 @@
+             {
+               # Pin nixpkgs to the flake input.
+               nix.registry.nixpkgs.flake = nixpkgs;
++              virtualisation.diskSize = 8 * 1024; # 8GiB
+             }
+             ./configuration.nix
+           ];</code></pre>
+<p>And with that, our <code>flake.nix</code> is ready.</p>
+<h3 id="building-the-image-from-flake">Building the Image From Flake</h3>
+<p>We can now build the image with our simple flake build!</p>
+<pre class="shell"><code>$ nix build .#digitalOceanVM</code></pre>
+<p>It’s fully declarative and reproducible! I think that’s really cool.
+The output will be in a newly created symlink directory <code>./result/</code></p>
+<pre class="shell"><code>$ ls ./result/
+nixos-image-digital-ocean-25.05.20241204.6eac218-x86_64-linux.qcow2.gz  nix-support/</code></pre>
+<p>And that’s it! We have our image!</p>
+<h2 id="uploading-our-image-to-digitalocean">Uploading Our Image to DigitalOcean</h2>
+<p>Now we’ll upload our newly created image to DigitalOcean. If you’re using a different VPS
+provider, this is where your path will diverge. As far as I know, DigitalOcean only provides a
+web UI to upload local images<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>The most direct way is to go to
+<a href="https://cloud.digitalocean.com/images/custom_images">https://cloud.digitalocean.com/images/custom_images</a>,
+but I’ll also walk you through the process to find this page now. You can skip this by clicking the
+link below.</p>
+<p><em><a href="#uploading-the-image">Skip to uploading -&gt;</a></em></p>
+<h3 id="finding-the-custom-images-uploader">Finding the Custom Images Uploader</h3>
+<p>First, go to your dashboard at <a href="https://cloud.digitalocean.com/">https://cloud.digitalocean.com/</a>.
+Under “Manage”, click “Backups and Snapshots”.</p>
+<figure>
+<img src="../images/post_images/2025-01-26-digital_ocean_manage.webp" alt="DigitalOcean Sidebar" />
+<figcaption aria-hidden="true">DigitalOcean Sidebar</figcaption>
+</figure>
+<p>This will bring you to the Snapshots window. You then want to go to the Custom Images tab.</p>
+<figure>
+<img src="../images/post_images/2025-01-26-digital_ocean_custom_images.webp" alt="Custom Image Tab Location" />
+<figcaption aria-hidden="true">Custom Image Tab Location</figcaption>
+</figure>
+<p>And there you go, you can upload from here.</p>
+<h3 id="uploading-the-image">Uploading the Image</h3>
+<p>Click “Upload Image”. Find the path to <code>nixos_vm</code> that you created at the start, and go to
+<code>nixos_vm/result</code>. There should be a <code>nixos-image-digital-ocean-*.qcow2.gz</code> there, if you followed
+the previous steps. Here are the settings you want to choose:</p>
+<ul>
+<li>Edit Image Name: Whatever you want to name your image. I’ve chosen <code>nixos-vm.qcow2.gz</code>.</li>
+<li>Distribution: Choose <code>Unknown</code> here.</li>
+<li>Datacenter Region: Choose which region you want to upload. Which region you choose does matter!
+You can only spin up droplets in the region that this image is located at. You can move it later,
+but this can take a while.</li>
+<li>Tags: Set the tags however you want. I usually add <code>NixOS</code> here.</li>
+<li>Notes: <code>Crystal's NixOS Tutorial Image</code>, to remind you where this image came from.</li>
+</ul>
+<p>Now we wait for the upload to complete, and for the image to become available. Keep in mind,
+image storage does cost money! You can delete the image right after you create your droplet,
+but don’t be blindsided by the added cost per minute.</p>
+<h2 id="creating-the-droplet-from-the-image">Creating the Droplet from the Image</h2>
+<p>Once the image is available, we can create a droplet. From the Custom Image screen,
+click the dropdown “More” on the right, and click “Start a droplet”.</p>
+<p>From this point on, it’s not any different from starting up a droplet normally. Make sure
+you choose a region that matches your image datacenter region.</p>
+<p>Now we wait for the droplet to boot up…</p>
+<h2 id="connecting-to-the-droplet-and-testing-it">Connecting to the Droplet and Testing It!</h2>
+<p>Once the droplet has started up, we now test that everything is working as expected.
+Connect to it over SSH via the public ipv4:</p>
+<pre class="shell"><code>$ ssh lixy@&lt;YOUR DROPLET IP ADDRESS HERE&gt;
+Last login: XXXX
+
+[lixy@nixos:~]$ hyfetch</code></pre>
+<figure>
+<img src="../images/post_images/2025-01-26-digital_ocean_nixos.webp" alt="NixOS hyfetch Output" />
+<figcaption aria-hidden="true">NixOS hyfetch Output</figcaption>
+</figure>
+<p>And that’s it! We have a working NixOS install in a DigitalOcean droplet!</p>
+<h2 id="what-now">What Now?</h2>
+<p>While we’ve created a minimal custom image, it’s not enough to have a working VPS. For that,
+we need to use a deployment system to build and upload the packages we need to the droplet.
+And we can do that with Nix flakes too!</p>
+<p>However, that’s its own separate tutorial though. You can read about it here:</p>
+<p><a href="./2025-02-09-deploying_nixos">Deploying NixOS Configurations with Flakes and deploy-rs</a></p>
+<h2 id="full-nix-source-code">Full Nix Source Code</h2>
+<p>For your reference, I’ve included the completed Nix files below!</p>
+<details class="rounded box-shadow box-light-border">
+<summary>
+configuration.nix
+</summary>
+<pre class="nix"><code># ./configuration.nix
+{ pkgs, ... }:
+
+{
+
+  imports = [
+    ./networking.nix
+  ];
+
+  # Enable flakes.
+  nix.settings.experimental-features = [
+    &quot;nix-command&quot;
+    &quot;flakes&quot;
+  ];
+
+  # Set your default locale, as you wish.
+  i18n.defaultLocale = &quot;C.UTF-8&quot;;
+
+  # System-wide packages.
+  environment.systemPackages = with pkgs; [
+    hyfetch # Fetch to show our system is working.
+    neovim # Change to your favourite tiny text editor.
+  ];
+
+  users.users.lixy = {
+    isNormalUser = true;
+    extraGroups = [ &quot;wheel&quot; ]; # Enable ‘sudo’ for the user.
+    openssh = {
+      # NOTE: Change this to whatever public key you use!
+      authorizedKeys.keys = [
+        &quot;ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINmzFzWOf+ddSaL0haZVVUn5tKjE+XsMEDGn/J4Etkuj&quot;
+      ];
+    };
+  };
+
+  # Passwordless sudo.
+  # WARNING!
+  # If you decide to change this, remember you NEED to set a password
+  # for the chosen user with an &quot;authorizedKeys&quot; setting. Passwords are
+  # public in the nix store, so know what you're doing!
+  security.sudo.wheelNeedsPassword = false;
+
+  # Set this to whichever system state version you're installing now.
+  # Afterwards, don't change this lightly. It doesn't need to change to
+  # upgrade.
+  system.stateVersion = &quot;25.05&quot;;
+}</code></pre>
+</details>
+<details class="rounded box-shadow box-light-border">
+<summary>
+networking.nix
+</summary>
+<pre class="nix"><code># ./networking.nix
+{ ... }:
+
+{
+  networking = {
+    hostName = &quot;nixos&quot;; # NOTE: Define your hostname.
+    networkmanager.enable = true; # Easiest to use and most distros use this by default.
+  };
+  time.timeZone = &quot;UTC&quot;;
+
+  # Enable the OpenSSH daemon.
+  services.openssh = {
+    enable = true;
+    # For security reasons, always have PasswordAuthentication = false
+    # and instead use SSH keys.
+    settings.PasswordAuthentication = false;
+  };
+
+  # Open ports in the firewall.
+  networking.firewall.allowedTCPPorts = [
+    22 # SSH. Feel free to use a different port.
+  ];
+}</code></pre>
+</details>
+<details class="rounded box-shadow box-light-border">
+<summary>
+flake.nix
+</summary>
+<pre class="nix"><code># ./flake.nix
+{
+  description = &quot;Tutorial on making a 'NixOS' VPS image.&quot;;
+  inputs = {
+    # NOTE: Change the SHA to &quot;nixos-unstable&quot; for your version. I try to pin things
+    # to known working commits whenever possible.
+    nixpkgs.url = &quot;github:NixOS/nixpkgs/6eac218f2d3dfe6c09aaf61a5bfa09d8aa396129&quot;;
+    nixos-generator = {
+      url = &quot;github:nix-community/nixos-generators/d002ce9b6e7eb467cd1c6bb9aef9c35d191b5453&quot;;
+      inputs.nixpkgs.follows = &quot;nixpkgs&quot;;
+    };
+  };
+  outputs =
+    { self, nixpkgs, ... }@flakeInputs:
+    let
+      system = &quot;x86_64-linux&quot;;
+    in
+    {
+      packages.${system} = {
+        digitalOceanVM = flakeInputs.nixos-generator.nixosGenerate {
+          inherit system;
+          format = &quot;do&quot;; # DigitalOcean
+          modules = [
+            {
+              # Pin nixpkgs to the flake input.
+              nix.registry.nixpkgs.flake = nixpkgs;
+              virtualisation.diskSize = 8 * 1024; # 8GiB
+            }
+            ./configuration.nix
+          ];
+        };
+      };
+    };
+}</code></pre>
+</details>
+<p>You can also check out my
+<a href="https://github.com/CrystalSplitter/lixos-digitalocean-tutorial/tree/nixos-vm-image">git repository</a>
+where I have built up this tutorial to see the final directory structure.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>If you have a way to upload the image to a webserver for HTTP downloading, you can use the
+<a href="https://docs.digitalocean.com/reference/doctl/reference/compute/image/">doctl CLI</a> instead.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+<div class="post-contact-spacer">❦</div>
+<div class="post-contact">
+  You can email me at <email-wrapper>“crystal (at) &lt;this domain&gt;”</email-wrapper> to respond!<br /> Or just say hi. That's cool too!
+</div>
+]]></content>
+</entry>
+<entry>
+    <title>Nix &amp; Lix Resources</title>
+    <link href="https://crystalwobsite.gay/posts/2025-01-12-nix_links" type="text/html" rel="alternate" />
+    <id>https://crystalwobsite.gay/posts/2025-01-12-nix_links.html</id>
+    <published>2025-01-12T00:00:00+00:00</published>
+    <updated>2025-05-18T00:00:00+00:00</updated>
+    <summary type="html"><![CDATA[My sketchy Lix logo
+
+I’ve been wanting for a while to get into NixOS because
+it fits my needs quite well, actually. The idea of declarative package
+management and declarative user configurations sounds awesome to me. Plus
+Lix looks fun and I want to try it1!
+But I will say it’s been a huge struggle to learn because documentation seems
+to be a mix of:
+
+Good and up to date.
+Out of date and broken.
+Non-existant entirely.
+Present, but extremely sparse on any actual details.
+Works intermittently, but breaking on non-deterministic bugs like segfaults
+or hash mismatches.
+
+The Nix language itself didn’t seem that confusing (especially coming from
+Haskell), but the nixpkgs module library baffled me. Additionally, there
+doesn’t seem to be any cohesive “best practices” or conventions on how to do
+anything. Just like every other build system, I guess.
+I will probably write an article about setting up a “LixOS” image later, but
+for now, I want to just share resources that I found useful and why.
+Online Books
+
+nix.dev Tutorials
+
+Very good, I would recommend starting here. Notably, they also have a
+section on creating NixOS Virtual Machine images,
+which I found particularly useful.
+
+Nix Pills
+
+Mostly introductory Nix stuff, but explained some gaps in my knowledge.
+Builds things up from fundamentals, which is very useful.
+
+NixOS in Production
+
+Real world advice and best practices. Book isn’t finished, but it’s
+Pay-What-You-Want, and I think it’s good.
+
+NixOS and Flakes
+
+Free incomplete book on NixOS Flakes. Great book on how to use Nix Flakes
+along with NixOS! Not finished, but nothing seems to be.
+
+nix.dev Nix Reference Manual or lix.systems Lix Reference Manual
+
+The basics. Okay reference. It really feels like it’s missing a lot.
+Hard to recommend alone, but if you can’t find it, check here.
+
+NixOS Manual
+
+Honestly fairly detailed, but also not for beginners and in many cases felt
+incomprehensible. Check here if you’re looking for a NixOS option or
+details on how the configuration.nix works.
+
+nixpkgs Manual
+
+nixpkgs is my bane and I cannot stand how universal yet incomprehensible
+it is. The manual is not super helpful, but important to reference if you
+have want to do basically anything with it.
+
+
+Blogs/Personal Sites/Other
+
+Flakes From First Principles
+by Tony Finn
+
+Extremely good tutorial on Nix Flakes. Highly recommend to just go through
+all of them.
+
+Flakes aren’t real and cannot hurt you
+by Jade
+
+Long explanation of Nix Flakes, what they are good for and what they
+are bad for. I think it’s pretty critical of a read to prevent you from
+believing flakes are the only way to do things, instead of just as a
+top-level entrypoint.
+
+NixOS in the Cloud
+by Justinas Stankevičius.
+
+This probably would be an excellent tutorial if it actually worked out of
+the box. But it turns out this was quite painful for me in practice since
+it seems too out of date? Useful stuff here, but don’t expect it to work.
+
+nix-tutorials
+by Inria
+
+More a scientific computing approach to Nix, but I found bits of it useful
+regardless.
+
+Using Morph for Deploying to NixOS
+by Xe Iaso.
+
+Morph set up for NixOS deployment. I ultimately didn’t use Morph for my deployment, but
+it filled in some gaps and ultimately changed how I structured my Nix set up.
+
+
+Wiki Pages
+
+nixos.wiki.
+
+The Wiki!
+Particularly liked their Flakes page.
+
+NixOS Configuration Collection
+
+List of NixOS configs that people have made public. Good to see how flakes.nix
+can fit together, if you’re willing to read lots of examples. Probably not the
+place you want to start, but a good list nonetheless.
+
+
+Tools
+
+NixOS Search
+
+Search packages, options, etc. Critical for actual development.
+
+
+
+
+
+There’s some bad history with the old Nix foundation leadership, and Lix
+is a separate implementation that attempts to rectify some technical and
+social issues. I’m a big believer in standing by your virtues, and Lix does
+just that.↩︎
+
+
+❦
+
+  You can email me at “crystal (at) <this domain>” to respond! Or just say hi. That's cool too!]]></summary>
+    <content type="html"><![CDATA[<figure>
+<img src="../images/post_images/2025-01-13-lix_handrawn.webp" alt="My sketchy Lix logo" />
+<figcaption aria-hidden="true">My sketchy Lix logo</figcaption>
+</figure>
+<p>I’ve been wanting for a while to get into <a href="https://nixos.org/">NixOS</a> because
+it fits my needs quite well, actually. The idea of declarative package
+management and declarative user configurations sounds awesome to me. Plus
+<a href="https://lix.systems">Lix</a> looks fun and I want to try it<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>!</p>
+<p>But I will say it’s been a huge struggle to learn because documentation seems
+to be a mix of:</p>
+<ol type="1">
+<li>Good and up to date.</li>
+<li>Out of date and broken.</li>
+<li>Non-existant entirely.</li>
+<li>Present, but extremely sparse on any actual details.</li>
+<li>Works intermittently, but breaking on non-deterministic bugs like segfaults
+or hash mismatches.</li>
+</ol>
+<p>The Nix language itself didn’t seem that confusing (especially coming from
+Haskell), but the <code>nixpkgs</code> module library baffled me. Additionally, there
+doesn’t seem to be any cohesive “best practices” or conventions on how to do
+anything. Just like every other build system, I guess.</p>
+<p>I will probably write an article about setting up a “LixOS” image later, but
+for now, I want to just share resources that I found useful and why.</p>
+<h2 id="online-books">Online Books</h2>
+<ul>
+<li><a href="https://nix.dev/tutorials/">nix.dev Tutorials</a>
+<ul>
+<li>Very good, I would recommend starting here. Notably, they also have a
+section on creating <a href="https://nix.dev/tutorials/nixos/nixos-configuration-on-vm">NixOS Virtual Machine images</a>,
+which I found particularly useful.</li>
+</ul></li>
+<li><a href="https://nixos.org/guides/nix-pills/00-preface.html">Nix Pills</a>
+<ul>
+<li>Mostly introductory Nix stuff, but explained some gaps in my knowledge.
+Builds things up from fundamentals, which is very useful.</li>
+</ul></li>
+<li><a href="https://leanpub.com/nixos-in-production">NixOS in Production</a>
+<ul>
+<li>Real world advice and best practices. Book isn’t finished, but it’s
+Pay-What-You-Want, and I think it’s good.</li>
+</ul></li>
+<li><a href="https://nixos-and-flakes.thiscute.world/preface">NixOS and Flakes</a>
+<ul>
+<li>Free incomplete book on NixOS Flakes. Great book on how to use Nix Flakes
+along with NixOS! Not finished, but nothing seems to be.</li>
+</ul></li>
+<li><a href="https://nix.dev/manual/nix/latest/">nix.dev Nix Reference Manual</a> or <a href="https://docs.lix.systems/manual/lix/stable/">lix.systems Lix Reference Manual</a>
+<ul>
+<li>The basics. Okay reference. It really feels like it’s missing a lot.
+Hard to recommend alone, but if you can’t find it, check here.</li>
+</ul></li>
+<li><a href="https://nixos.org/manual/nixos/stable/">NixOS Manual</a>
+<ul>
+<li>Honestly fairly detailed, but also not for beginners and in many cases felt
+incomprehensible. Check here if you’re looking for a NixOS option or
+details on how the <code>configuration.nix</code> works.</li>
+</ul></li>
+<li><a href="https://nixos.org/manual/nixpkgs/stable/">nixpkgs Manual</a>
+<ul>
+<li><code>nixpkgs</code> is my bane and I cannot stand how universal yet incomprehensible
+it is. The manual is not super helpful, but important to reference if you
+have want to do basically anything with it.</li>
+</ul></li>
+</ul>
+<h2 id="blogspersonal-sitesother">Blogs/Personal Sites/Other</h2>
+<ul>
+<li><a href="https://tonyfinn.com/blog/nix-from-first-principles-flake-edition/">Flakes From First Principles</a>
+by Tony Finn
+<ul>
+<li>Extremely good tutorial on Nix Flakes. Highly recommend to just go through
+all of them.</li>
+</ul></li>
+<li><a href="https://jade.fyi/blog/flakes-arent-real/">Flakes aren’t real and cannot hurt you</a>
+by Jade
+<ul>
+<li>Long explanation of Nix Flakes, what they are good for and what they
+are bad for. I think it’s pretty critical of a read to prevent you from
+believing flakes are the <em>only</em> way to do things, instead of just as a
+top-level entrypoint.</li>
+</ul></li>
+<li><a href="https://justinas.org/nixos-in-the-cloud-step-by-step-part-1">NixOS in the Cloud</a>
+by Justinas Stankevičius.
+<ul>
+<li>This probably would be an excellent tutorial if it actually worked out of
+the box. But it turns out this was quite painful for me in practice since
+it seems too out of date? Useful stuff here, but don’t expect it to work.</li>
+</ul></li>
+<li><a href="https://nix-tutorial.gitlabpages.inria.fr/nix-tutorial/installation.html">nix-tutorials</a>
+by Inria
+<ul>
+<li>More a scientific computing approach to Nix, but I found bits of it useful
+regardless.</li>
+</ul></li>
+<li><a href="https://xeiaso.net/blog/morph-setup-2021-04-25/">Using Morph for Deploying to NixOS</a>
+by Xe Iaso.
+<ul>
+<li>Morph set up for NixOS deployment. I ultimately didn’t use Morph for my deployment, but
+it filled in some gaps and ultimately changed how I structured my Nix set up.</li>
+</ul></li>
+</ul>
+<h2 id="wiki-pages">Wiki Pages</h2>
+<ul>
+<li><a href="https://nixos.wiki">nixos.wiki</a>.
+<ul>
+<li>The Wiki!</li>
+<li>Particularly liked their <a href="https://nixos.wiki/wiki/Flakes">Flakes page</a>.</li>
+</ul></li>
+<li><a href="https://nixos.wiki/wiki/Configuration_Collection">NixOS Configuration Collection</a>
+<ul>
+<li>List of NixOS configs that people have made public. Good to see how flakes.nix
+can fit together, if you’re willing to read lots of examples. Probably not the
+place you want to start, but a good list nonetheless.</li>
+</ul></li>
+</ul>
+<h2 id="tools">Tools</h2>
+<ul>
+<li><a href="https://search.nixos.org/">NixOS Search</a>
+<ul>
+<li>Search packages, options, etc. Critical for actual development.</li>
+</ul></li>
+</ul>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>There’s some bad history with the old Nix foundation leadership, and Lix
+is a separate implementation that attempts to rectify some technical and
+social issues. I’m a big believer in standing by your virtues, and Lix does
+just that.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+<div class="post-contact-spacer">❦</div>
+<div class="post-contact">
+  You can email me at <email-wrapper>“crystal (at) &lt;this domain&gt;”</email-wrapper> to respond!<br /> Or just say hi. That's cool too!
+</div>
+]]></content>
+</entry>
+
+</feed>
