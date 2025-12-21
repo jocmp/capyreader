@@ -177,6 +177,7 @@ iframe {
 }
 
 video {
+  width: 100%;
   background-color: black;
 
   &::-webkit-media-controls-fullscreen-button {

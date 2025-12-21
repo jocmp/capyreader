@@ -62,8 +62,8 @@ class ArticleRenderer(
         return if (article.parseFullContent) {
             parseHtml(article, hideImages)
         } else {
-            val enclosures = article.imageEnclosuresHtml()
-            enclosures + article.content + postProcessScript(article, hideImages)
+            val enclosures = article.enclosureHTML()
+            article.content + enclosures + postProcessScript(article, hideImages)
         }
     }
 
