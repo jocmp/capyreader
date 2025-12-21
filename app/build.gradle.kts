@@ -137,6 +137,7 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.coil.gif)
     implementation(libs.coil.svg)
+    implementation(libs.coil.video)
     implementation(libs.lazycolumnscrollbar)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)

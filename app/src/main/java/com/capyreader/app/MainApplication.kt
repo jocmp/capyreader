@@ -7,6 +7,7 @@ import coil.ImageLoader
 import coil.ImageLoaderFactory
 import coil.decode.ImageDecoderDecoder
 import coil.decode.SvgDecoder
+import coil.decode.VideoFrameDecoder
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.widget.HeadlinesWidgetReceiver
 import com.google.android.material.color.DynamicColors
@@ -41,6 +42,7 @@ class MainApplication : Application(), ImageLoaderFactory {
             .components {
                 add(ImageDecoderDecoder.Factory())
                 add(SvgDecoder.Factory())
+                add(VideoFrameDecoder.Factory())
             }
             .okHttpClient {
                 baseHttpClient()
