@@ -1,1 +1,1 @@
-Een kleine RSS lezer
+Een kleine RSS-lezer
