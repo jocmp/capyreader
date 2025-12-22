@@ -214,29 +214,36 @@ deleteAllArticles {
 }
 
 deleteArticles {
-  DELETE FROM article_statuses WHERE starred = 0 AND read = 1 AND article_id IN (
-    SELECT id
-    FROM articles
-    WHERE published_at < :publishedBefore
-  );
-
   DELETE FROM articles
-  WHERE id NOT IN (
-    SELECT article_id FROM article_statuses
+  WHERE published_at < :publishedBefore
+  AND EXISTS (
+    SELECT 1 FROM article_statuses
+    WHERE article_statuses.article_id = articles.id
+    AND starred = 0 AND read = 1
   );
 
   DELETE FROM article_notifications
-  WHERE article_id NOT IN (
-   SELECT article_id FROM article_statuses
+  WHERE NOT EXISTS (
+    SELECT 1 FROM articles WHERE articles.id = article_notifications.article_id
   );
 
   DELETE FROM saved_search_articles
-  WHERE article_id NOT IN (
-    SELECT article_id FROM article_statuses
+  WHERE NOT EXISTS (
+    SELECT 1 FROM articles WHERE articles.id = saved_search_articles.article_id
   );
 
   DELETE FROM enclosures
-  WHERE article_id NOT IN (
-    SELECT article_id FROM article_statuses
+  WHERE NOT EXISTS (
+    SELECT 1 FROM articles WHERE articles.id = enclosures.article_id
   );
 }
+
+deleteOrphanedStatuses:
+DELETE FROM article_statuses
+WHERE starred = 0
+  AND read = 1
+  AND updated_at < :cutoffDate
+  AND NOT EXISTS (SELECT 1 FROM articles WHERE articles.id = article_statuses.article_id);
+
+deleteByID:
+DELETE FROM articles WHERE id = :articleID;

@@ -190,6 +190,8 @@ data class Account(
 
             if (cutoffDate != null) {
                 articleRecords.deleteOldArticles(before = cutoffDate)
+
+                articleRecords.deleteOrphanedStatuses()
             }
 
             result

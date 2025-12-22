@@ -18,6 +18,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import java.time.OffsetDateTime
+import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
@@ -374,6 +375,29 @@ class ArticleRecordsTest {
         assertNotNull(articleRecords.reload(oldUnreadArticle))
         assertNotNull(articleRecords.reload(oldStarredArticle))
         assertNull(articleRecords.reload(oldArticle))
+    }
+
+    @Test
+    fun deleteOrphanedStatuses() = runTest {
+        val articleRecords = ArticleRecords(database)
+        val oldPublishedAt = nowUTC().minusDays(200).toEpochSecond()
+        val recentPublishedAt = nowUTC().minusDays(30).toEpochSecond()
+
+        val oldOrphanedArticle = articleFixture.create(publishedAt = oldPublishedAt)
+        val recentOrphanedArticle = articleFixture.create(publishedAt = recentPublishedAt)
+        val freshArticle = articleFixture.create()
+
+        database.articlesQueries.deleteByID(oldOrphanedArticle.id)
+        database.articlesQueries.deleteByID(recentOrphanedArticle.id)
+
+        val missingBefore = articleRecords.findMissingArticles()
+        assertEquals(expected = 2, actual = missingBefore.size)
+
+        articleRecords.deleteOrphanedStatuses()
+
+        val missingAfter = articleRecords.findMissingArticles()
+        assertContentEquals(expected = missingAfter, listOf(recentOrphanedArticle.id))
+        assertNotNull(articleRecords.reload(freshArticle))
     }
 
     @Test

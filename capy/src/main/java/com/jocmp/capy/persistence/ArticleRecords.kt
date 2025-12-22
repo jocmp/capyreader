@@ -147,6 +147,14 @@ internal class ArticleRecords internal constructor(
         }
     }
 
+    fun deleteOrphanedStatuses(now: ZonedDateTime = nowUTC()) {
+        database.transactionWithErrorHandling {
+            val cutoffDate = now.minusDays(180).toEpochSecond()
+
+            database.articlesQueries.deleteOrphanedStatuses(cutoffDate = cutoffDate)
+        }
+    }
+
     fun markAllUnread(articleIDs: List<String>, updatedAt: ZonedDateTime = nowUTC()) {
         val updated = updatedAt.toEpochSecond()
 
