@@ -234,6 +234,22 @@ data class Account(
         return delegate.removeStar(listOf(articleID))
     }
 
+    suspend fun addSavedSearch(articleID: String, savedSearchID: String): Result<Unit> {
+        return delegate.addSavedSearch(articleID, savedSearchID)
+    }
+
+    suspend fun removeSavedSearch(articleID: String, savedSearchID: String): Result<Unit> {
+        return delegate.removeSavedSearch(articleID, savedSearchID)
+    }
+
+    suspend fun createSavedSearch(name: String): Result<String> {
+        return delegate.createSavedSearch(name)
+    }
+
+    fun getArticleSavedSearches(articleID: String): Flow<List<String>> {
+        return savedSearchRecords.savedSearchIDsByArticle(articleID)
+    }
+
     fun unreadArticleIDs(
         filter: ArticleFilter,
         range: MarkRead,

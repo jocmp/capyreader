@@ -220,6 +220,13 @@
     <string name="after_read_all_behavior_label">После прочтения всего</string>
     <string name="after_read_all_behavior_open_drawer">Открыть боковое меню</string>
     <string name="article_actions_copy_link">Копировать ссылку</string>
+    <string name="freshrss_article_actions_label">Метка</string>
+    <string name="freshrss_labels_sheet_title">Метки</string>
+    <string name="freshrss_labels_new_label">Новая метка</string>
+    <string name="freshrss_labels_create_dialog_title">Новая метка</string>
+    <string name="freshrss_labels_create_dialog_label_name">Название метки</string>
+    <string name="freshrss_labels_create_dialog_save">Сохранить</string>
+    <string name="freshrss_nav_headline_my_labels">Мои метки</string>
     <string name="feed_nav_drawer_title">Ленты</string>
     <string name="article_vertical_open_article_in_browser">Открыть статью в браузере</string>
     <string name="search_bar_placeholder">Поиск</string>

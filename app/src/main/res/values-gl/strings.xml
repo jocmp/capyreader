@@ -211,6 +211,13 @@
     <string name="settings_donate_button">Doar</string>
     <string name="after_read_all_behavior_default">Predeterminado</string>
     <string name="article_actions_copy_link">Copiar ligazón</string>
+    <string name="freshrss_article_actions_label">Etiqueta</string>
+    <string name="freshrss_labels_sheet_title">Etiquetas</string>
+    <string name="freshrss_labels_new_label">Nova etiqueta</string>
+    <string name="freshrss_labels_create_dialog_title">Nova etiqueta</string>
+    <string name="freshrss_labels_create_dialog_label_name">Nome da etiqueta</string>
+    <string name="freshrss_labels_create_dialog_save">Gardar</string>
+    <string name="freshrss_nav_headline_my_labels">As miñas etiquetas</string>
     <string name="feed_nav_drawer_title">Canles</string>
     <string name="article_vertical_open_article_in_browser">Abrir artigo no navegador</string>
     <string name="search_bar_placeholder">Buscar</string>

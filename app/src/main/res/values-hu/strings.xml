@@ -56,6 +56,13 @@
     <string name="article_actions_mark_below_as_read">Alatta lévők megjelölése olvasottként</string>
     <string name="article_actions_mark_after_as_read">Fölötte lévők megjelölése olvasottként</string>
     <string name="article_actions_copy_link">Link másolása</string>
+    <string name="freshrss_article_actions_label">Címke</string>
+    <string name="freshrss_labels_sheet_title">Címkék</string>
+    <string name="freshrss_labels_new_label">Új címke</string>
+    <string name="freshrss_labels_create_dialog_title">Új címke</string>
+    <string name="freshrss_labels_create_dialog_label_name">Címke neve</string>
+    <string name="freshrss_labels_create_dialog_save">Mentés</string>
+    <string name="freshrss_nav_headline_my_labels">Címkéim</string>
     <string name="unauthorized_dialog_title">Ki van jelentkezve</string>
     <string name="unauthorized_dialog_dismiss_text">Később</string>
     <string name="unauthorized_dialog_confirm_text">Bejelentkezés</string>

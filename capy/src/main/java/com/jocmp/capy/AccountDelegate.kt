@@ -14,6 +14,12 @@ interface AccountDelegate {
 
     suspend fun removeStar(articleIDs: List<String>): Result<Unit>
 
+    suspend fun addSavedSearch(articleID: String, savedSearchID: String): Result<Unit>
+
+    suspend fun removeSavedSearch(articleID: String, savedSearchID: String): Result<Unit>
+
+    suspend fun createSavedSearch(name: String): Result<String>
+
     suspend fun addFeed(
         url: String,
         title: String?,

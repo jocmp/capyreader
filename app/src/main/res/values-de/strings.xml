@@ -218,6 +218,13 @@
     <string name="full_content_error_generic">Artikel verarbeiten fehlgeschlagen</string>
     <string name="after_read_all_behavior_default">Standard</string>
     <string name="article_actions_copy_link">Link kopieren</string>
+    <string name="freshrss_article_actions_label">Beschriftung</string>
+    <string name="freshrss_labels_sheet_title">Beschriftungen</string>
+    <string name="freshrss_labels_new_label">Neue Beschriftung</string>
+    <string name="freshrss_labels_create_dialog_title">Neue Beschriftung</string>
+    <string name="freshrss_labels_create_dialog_label_name">Beschriftungsname</string>
+    <string name="freshrss_labels_create_dialog_save">Speichern</string>
+    <string name="freshrss_nav_headline_my_labels">Meine Labels</string>
     <string name="media_share">Teilen</string>
     <string name="nav_headline_saved_searches">Suchanfragen</string>
     <string name="article_vertical_open_article_in_browser">Artikel im Browser öffnen</string>

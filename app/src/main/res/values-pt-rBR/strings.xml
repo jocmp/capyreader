@@ -220,6 +220,13 @@
     <string name="search_bar_placeholder">Pesquisar</string>
     <string name="nav_headline_saved_searches">Pesquisas</string>
     <string name="article_actions_copy_link">Copiar link</string>
+    <string name="freshrss_article_actions_label">Rótulo</string>
+    <string name="freshrss_labels_sheet_title">Rótulos</string>
+    <string name="freshrss_labels_new_label">Novo rótulo</string>
+    <string name="freshrss_labels_create_dialog_title">Novo rótulo</string>
+    <string name="freshrss_labels_create_dialog_label_name">Nome do rótulo</string>
+    <string name="freshrss_labels_create_dialog_save">Salvar</string>
+    <string name="freshrss_nav_headline_my_labels">Meus rótulos</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">Ativar rolagem horizontal</string>
     <string name="image_preview_menu_option_medium">Médio</string>
     <string name="settings_gestures_list_swipe_up">Deslizar para Cima</string>

@@ -20,6 +20,13 @@ internal class SavedSearchRecords(private val database: Database) {
         return savedSearchQueries.allIDs().executeAsList()
     }
 
+    internal fun savedSearchIDsByArticle(articleID: String): Flow<List<String>> {
+        return savedSearchQueries
+            .savedSearchIDsByArticle(articleID)
+            .asFlow()
+            .mapToList(Dispatchers.IO)
+    }
+
     internal suspend fun find(savedSearchID: String): SavedSearch? = withIOContext {
         savedSearchQueries.find(savedSearchID, mapper = ::mapper).executeAsOneOrNull()
     }
@@ -36,6 +43,13 @@ internal class SavedSearchRecords(private val database: Database) {
         savedSearchQueries.upsertArticle(
             saved_search_id = savedSearchID,
             article_id = articleID
+        )
+    }
+
+    internal fun removeArticle(articleID: String, savedSearchID: String) {
+        savedSearchQueries.deleteArticle(
+            savedSearchID = savedSearchID,
+            articleID = articleID
         )
     }
 

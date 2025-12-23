@@ -40,6 +40,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -684,6 +685,38 @@ class ArticleScreenViewModel(
         get() = appPreferences.enableStickyFullContent.get()
     private val context: Context
         get() = application.applicationContext
+
+    val source = account.source
+
+    fun getArticleLabels(articleID: String?): Flow<List<String>> {
+        articleID ?: return emptyFlow()
+
+        return account.getArticleSavedSearches(articleID)
+    }
+
+    fun addLabelAsync(articleID: String, savedSearchID: String) {
+        viewModelScope.launchIO {
+            account.addSavedSearch(articleID, savedSearchID)
+        }
+    }
+
+    fun removeLabelAsync(articleID: String, savedSearchID: String) {
+        viewModelScope.launchIO {
+            account.removeSavedSearch(articleID, savedSearchID)
+        }
+    }
+
+    suspend fun createLabel(articleID: String, name: String): Result<String> {
+        return account.createSavedSearch(name).fold(
+            onSuccess = { labelID ->
+                account.addSavedSearch(articleID, labelID).fold(
+                    onSuccess = { Result.success(labelID) },
+                    onFailure = { Result.failure(it) }
+                )
+            },
+            onFailure = { Result.failure(it) }
+        )
+    }
 
     enum class UnauthorizedMessageState {
         HIDE,

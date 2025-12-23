@@ -211,6 +211,13 @@
     <string name="auth_fields_username">Korisničko ime</string>
     <string name="nav_headline_saved_searches">Pretrage</string>
     <string name="article_actions_copy_link">Kopiraj vezu</string>
+    <string name="freshrss_article_actions_label">Oznaka</string>
+    <string name="freshrss_labels_sheet_title">Oznake</string>
+    <string name="freshrss_labels_new_label">Nova oznaka</string>
+    <string name="freshrss_labels_create_dialog_title">Nova oznaka</string>
+    <string name="freshrss_labels_create_dialog_label_name">Naziv oznake</string>
+    <string name="freshrss_labels_create_dialog_save">Sačuvaj</string>
+    <string name="freshrss_nav_headline_my_labels">Moje oznake</string>
     <string name="settings_donate_button">Donirajte</string>
     <string name="article_vertical_open_article_in_browser">Otvorite članak u web pretraživaču</string>
     <string name="after_read_all_behavior_label">Nakon čitanja svih</string>

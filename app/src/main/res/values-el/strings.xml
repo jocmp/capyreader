@@ -81,6 +81,13 @@
     <string name="article_actions_mark_below_as_read">Ανάγνωση των παρακάτω</string>
     <string name="article_actions_mark_after_as_read">Ανάγνωση των παραπάνω</string>
     <string name="article_actions_copy_link">Αντιγραφή συνδέσμου</string>
+    <string name="freshrss_article_actions_label">Ετικέτα</string>
+    <string name="freshrss_labels_sheet_title">Ετικέτες</string>
+    <string name="freshrss_labels_new_label">Νέα ετικέτα</string>
+    <string name="freshrss_labels_create_dialog_title">Νέα ετικέτα</string>
+    <string name="freshrss_labels_create_dialog_label_name">Όνομα ετικέτας</string>
+    <string name="freshrss_labels_create_dialog_save">Αποθήκευση</string>
+    <string name="freshrss_nav_headline_my_labels">Οι ετικέτες μου</string>
     <string name="unauthorized_dialog_title">Έχεις αποσυνδεθεί</string>
     <string name="unauthorized_dialog_description">Υπήρξε ένα θέμα κατά τη σύνδεση με το λογαριασμό σου. Παρακαλούμε συνδέσου ξανά.</string>
     <string name="unauthorized_dialog_dismiss_text">Αργότερα</string>

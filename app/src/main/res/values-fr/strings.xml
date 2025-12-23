@@ -219,6 +219,13 @@
     <string name="full_content_error_missing_response">Impossible de récupérer l\'article</string>
     <string name="after_read_all_behavior_label">Après avoir tout lu</string>
     <string name="article_actions_copy_link">Copier le lien</string>
+    <string name="freshrss_article_actions_label">Étiquette</string>
+    <string name="freshrss_labels_sheet_title">Étiquettes</string>
+    <string name="freshrss_labels_new_label">Nouvelle étiquette</string>
+    <string name="freshrss_labels_create_dialog_title">Nouvelle étiquette</string>
+    <string name="freshrss_labels_create_dialog_label_name">Nom de l\'étiquette</string>
+    <string name="freshrss_labels_create_dialog_save">Enregistrer</string>
+    <string name="freshrss_nav_headline_my_labels">Mes étiquettes</string>
     <string name="feed_nav_drawer_title">Flux</string>
     <string name="article_vertical_open_article_in_browser">Ouvrir l\'article dans le navigateur</string>
     <string name="search_bar_placeholder">Rechercher</string>

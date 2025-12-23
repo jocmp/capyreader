@@ -63,6 +63,13 @@
     <string name="article_actions_mark_below_as_read">סמן מאמר תחתון כנקרא</string>
     <string name="article_actions_mark_after_as_read">סמן מאמר עליון כנקרא</string>
     <string name="article_actions_copy_link">העתק קישור</string>
+    <string name="freshrss_article_actions_label">תווית</string>
+    <string name="freshrss_labels_sheet_title">תוויות</string>
+    <string name="freshrss_labels_new_label">תווית חדשה</string>
+    <string name="freshrss_labels_create_dialog_title">תווית חדשה</string>
+    <string name="freshrss_labels_create_dialog_label_name">שם תווית</string>
+    <string name="freshrss_labels_create_dialog_save">שמור</string>
+    <string name="freshrss_nav_headline_my_labels">התוויות שלי</string>
     <string name="unauthorized_dialog_title">התנתקת</string>
     <string name="unauthorized_dialog_description">ישנה שגיאה בהתחברות למשתמש שלך. אנא נסה שנית מאוחר יותר.</string>
     <string name="unauthorized_dialog_dismiss_text">מאוחר יותר</string>

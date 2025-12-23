@@ -43,7 +43,7 @@ internal fun articleMapper(
         starred = starred,
         feedName = feedTitle ?: "",
         enableStickyFullContent = enableStickyContent,
-        openInBrowser = openInBrowser
+        openInBrowser = openInBrowser,
     )
 }
 

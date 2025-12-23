@@ -61,6 +61,13 @@
     <string name="article_actions_mark_below_as_read">Het onderstaande als gelezen mankeren</string>
     <string name="article_actions_mark_after_as_read">Het bovenstaande als gelezen mankeren</string>
     <string name="article_actions_copy_link">Link kopiëren</string>
+    <string name="freshrss_article_actions_label">Label</string>
+    <string name="freshrss_labels_sheet_title">Labels</string>
+    <string name="freshrss_labels_new_label">Nieuw label</string>
+    <string name="freshrss_labels_create_dialog_title">Nieuw label</string>
+    <string name="freshrss_labels_create_dialog_label_name">Labelnaam</string>
+    <string name="freshrss_labels_create_dialog_save">Opslaan</string>
+    <string name="freshrss_nav_headline_my_labels">Mijn labels</string>
     <string name="unauthorized_dialog_title">Je bent thans uitgelogd</string>
     <string name="unauthorized_dialog_description">Er is een probleem bij het verbinden met je account. Log opnieuw in, aub.</string>
     <string name="unauthorized_dialog_dismiss_text">Later</string>

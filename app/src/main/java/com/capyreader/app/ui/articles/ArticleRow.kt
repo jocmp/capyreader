@@ -92,6 +92,7 @@ fun ArticleRow(
     val feedNameColor = findFeedNameColor(read = article.read)
     val haptics = LocalHapticFeedback.current
     val (isArticleMenuOpen, setArticleMenuOpen) = remember { mutableStateOf(false) }
+    val labelsActions = LocalLabelsActions.current
     val openArticleMenu = {
         haptics.performHapticFeedback(HapticFeedbackType.LongPress)
         setArticleMenuOpen(true)
@@ -194,9 +195,14 @@ fun ArticleRow(
                 expanded = isArticleMenuOpen,
                 article = article,
                 index = index,
+                showLabels = labelsActions.showLabels,
                 onMarkAllRead = {
                     setArticleMenuOpen(false)
                     onMarkAllRead(it)
+                },
+                onOpenLabels = {
+                    setArticleMenuOpen(false)
+                    labelsActions.openSheet(article.id)
                 },
                 onDismissRequest = {
                     setArticleMenuOpen(false)

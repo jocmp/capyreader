@@ -16,6 +16,11 @@ SELECT article_id
 FROM saved_search_articles
 WHERE saved_search_id = :savedSearchID;
 
+savedSearchIDsByArticle:
+SELECT saved_search_id
+FROM saved_search_articles
+WHERE article_id = :articleID;
+
 find:
 SELECT
   id,
@@ -60,4 +65,9 @@ AND article_id NOT IN :excludedIDs;
 deleteEntryBySavedSearchIDs:
 DELETE FROM saved_search_articles
 WHERE saved_search_id NOT IN :excludedIDs
+AND article_id = :articleID;
+
+deleteArticle:
+DELETE FROM saved_search_articles
+WHERE saved_search_id = :savedSearchID
 AND article_id = :articleID;

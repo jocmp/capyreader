@@ -224,6 +224,13 @@
     <string name="widget_headlines_account_error">Yn gyntaf, ychwanegu cyfrif</string>
     <string name="settings_donate_button">Rhoi arian</string>
     <string name="article_actions_copy_link">Copïo\'r ddolen</string>
+    <string name="freshrss_article_actions_label">Label</string>
+    <string name="freshrss_labels_sheet_title">Labeli</string>
+    <string name="freshrss_labels_new_label">Label newydd</string>
+    <string name="freshrss_labels_create_dialog_title">Label newydd</string>
+    <string name="freshrss_labels_create_dialog_label_name">Enw label</string>
+    <string name="freshrss_labels_create_dialog_save">Cadw</string>
+    <string name="freshrss_nav_headline_my_labels">Fy Labeli</string>
     <string name="full_content_error_generic">Wedi methu dehongli erthygl</string>
     <string name="image_preview_menu_option_medium">Canolig</string>
     <string name="settings_gestures_list_swipe_up">Llusgo i fyny</string>

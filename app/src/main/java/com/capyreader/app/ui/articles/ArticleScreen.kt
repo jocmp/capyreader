@@ -62,6 +62,7 @@ import com.capyreader.app.ui.articles.feeds.LocalFeedActions
 import com.capyreader.app.ui.articles.feeds.LocalFolderActions
 import com.capyreader.app.ui.articles.list.ArticleListTopBar
 import com.capyreader.app.ui.articles.list.EmptyOnboardingView
+import com.capyreader.app.ui.articles.list.LabelBottomSheet
 import com.capyreader.app.ui.articles.list.MarkAllReadButton
 import com.capyreader.app.ui.articles.list.PullToNextFeedBox
 import com.capyreader.app.ui.articles.list.resetScrollBehaviorListener
@@ -82,7 +83,6 @@ import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
-import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.drop
@@ -123,6 +123,7 @@ fun ArticleScreen(
     val articleActions = rememberArticleActions(viewModel)
     val folderActions = rememberFolderActions(viewModel)
     val feedActions = rememberFeedActions(viewModel)
+    val labelsActions = rememberLabelsActions(viewModel, savedSearches)
     val connectivity = rememberLocalConnectivity()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val showOnboarding by viewModel.showOnboarding.collectAsState(false)
@@ -162,6 +163,7 @@ fun ArticleScreen(
         LocalArticleActions provides articleActions,
         LocalFolderActions provides folderActions,
         LocalFeedActions provides feedActions,
+        LocalLabelsActions provides labelsActions,
         LocalConnectivity provides connectivity,
         LocalLinkOpener provides provideLinkOpener(context),
         LocalMarkAllReadButtonPosition provides markAllReadButtonPosition,
@@ -447,6 +449,7 @@ fun ArticleScreen(
             scaffoldNavigator = scaffoldNavigator,
             drawerPane = {
                 FeedList(
+                    source = viewModel.source,
                     folders = folders,
                     feeds = feeds,
                     onSelectFolder = selectFolder,
@@ -644,6 +647,21 @@ fun ArticleScreen(
             )
         }
 
+        labelsActions.selectedArticleID?.let { articleID ->
+            LabelBottomSheet(
+                articleID = articleID,
+                savedSearches = labelsActions.savedSearches,
+                articleLabels = labelsActions.articleLabels,
+                onAddLabel = { savedSearchID ->
+                    labelsActions.addLabel(articleID, savedSearchID)
+                },
+                onRemoveLabel = { savedSearchID ->
+                    labelsActions.removeLabel(articleID, savedSearchID)
+                },
+                onCreateLabel = labelsActions.createLabel,
+                onDismissRequest = labelsActions.closeSheet
+            )
+        }
 
         LaunchedEffect(Unit) {
             if (!isRefreshInitialized) {
@@ -712,6 +730,32 @@ fun rememberFeedActions(viewModel: ArticleScreenViewModel): FeedActions {
             removeFeed = { feedID ->
                 viewModel.removeFeed(feedID)
             }
+        )
+    }
+}
+
+@Composable
+fun rememberLabelsActions(
+    viewModel: ArticleScreenViewModel,
+    savedSearches: List<SavedSearch>,
+): LabelsActions {
+    var selectedArticleID by remember { mutableStateOf<String?>(null) }
+
+    val articleLabels by viewModel.getArticleLabels(selectedArticleID)
+        .collectAsState(initial = emptyList())
+
+    return remember(savedSearches, selectedArticleID, articleLabels) {
+        LabelsActions(
+            source = viewModel.source,
+            showLabels = viewModel.source.supportsLabels,
+            savedSearches = savedSearches,
+            selectedArticleID = selectedArticleID,
+            articleLabels = articleLabels,
+            openSheet = { selectedArticleID = it },
+            closeSheet = { selectedArticleID = null },
+            addLabel = viewModel::addLabelAsync,
+            removeLabel = viewModel::removeLabelAsync,
+            createLabel = viewModel::createLabel,
         )
     }
 }

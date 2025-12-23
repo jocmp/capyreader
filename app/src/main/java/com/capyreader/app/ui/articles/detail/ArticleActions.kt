@@ -3,6 +3,7 @@ package com.capyreader.app.ui.articles.detail
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Label
 import androidx.compose.material.icons.outlined.Circle
 import androidx.compose.material.icons.outlined.FormatSize
 import androidx.compose.material.icons.rounded.Circle
@@ -24,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.common.shareArticle
 import com.capyreader.app.ui.articles.FullContentLoadingIcon
+import com.capyreader.app.ui.articles.LocalLabelsActions
 import com.capyreader.app.ui.components.ToolbarTooltip
 import com.jocmp.capy.Article
 import com.jocmp.capy.Article.FullContentState.LOADED
@@ -38,6 +40,7 @@ fun ArticleActions(
     onToggleStar: () -> Unit,
 ) {
     val context = LocalContext.current
+    val labelsActions = LocalLabelsActions.current
     val (isStyleSheetOpen, setStyleSheetOpen) = rememberSaveable { mutableStateOf(false) }
 
     ToolbarTooltip(
@@ -63,6 +66,20 @@ fun ArticleActions(
                 starredIcon(article),
                 contentDescription = stringResource(R.string.article_view_star)
             )
+        }
+    }
+    if (labelsActions.showLabels) {
+        ToolbarTooltip(
+            message = stringResource(R.string.freshrss_article_actions_label)
+        ) {
+            IconButton(
+                onClick = { labelsActions.openSheet(article.id) },
+            ) {
+                Icon(
+                    Icons.AutoMirrored.Outlined.Label,
+                    contentDescription = stringResource(R.string.freshrss_article_actions_label)
+                )
+            }
         }
     }
     ToolbarTooltip(

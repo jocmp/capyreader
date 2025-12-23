@@ -116,6 +116,13 @@
     <string name="opml_export_button_text">OPML मा निर्यात गर्नुहोस्</string>
     <string name="article_share">लेख साझेदारी गर्नुहोस्</string>
     <string name="article_actions_copy_link">लिङ्क प्रतिलिपि गर्नुहोस्</string>
+    <string name="freshrss_article_actions_label">लेबल</string>
+    <string name="freshrss_labels_sheet_title">लेबलहरू</string>
+    <string name="freshrss_labels_new_label">नयाँ लेबल</string>
+    <string name="freshrss_labels_create_dialog_title">नयाँ लेबल</string>
+    <string name="freshrss_labels_create_dialog_label_name">लेबल नाम</string>
+    <string name="freshrss_labels_create_dialog_save">सेभ गर्नुहोस्</string>
+    <string name="freshrss_nav_headline_my_labels">मेरा लेबलहरू</string>
     <string name="unauthorized_dialog_title">तपाईं लग आउट हुनुहुन्छ</string>
     <string name="account_source_local">स्थानिय</string>
     <string name="add_account_title">खाता थप्नुहोस्</string>
