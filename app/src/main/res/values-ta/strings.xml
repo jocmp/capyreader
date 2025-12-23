@@ -206,6 +206,13 @@
     <string name="end_of_feed_text">அனைவரும் பிடிபட்டார்கள்!</string>
     <string name="nav_headline_saved_searches">தேடல்கள்</string>
     <string name="article_actions_copy_link">இணைப்பை நகலெடுக்கவும்</string>
+    <string name="freshrss_article_actions_label">லேபிள்</string>
+    <string name="freshrss_labels_sheet_title">லேபிள்கள்</string>
+    <string name="freshrss_labels_new_label">புதிய லேபிள்</string>
+    <string name="freshrss_labels_create_dialog_title">புதிய லேபிள்</string>
+    <string name="freshrss_labels_create_dialog_label_name">லேபிள் பெயர்</string>
+    <string name="freshrss_labels_create_dialog_save">சேமி</string>
+    <string name="freshrss_nav_headline_my_labels">எனது லேபிள்கள்</string>
     <string name="image_preview_menu_option_medium">சராசரி</string>
     <string name="settings_donate_button">நன்கொடை</string>
     <string name="settings_gestures_list_swipe_up">ச்வைப் செய்யுங்கள்</string>

@@ -216,6 +216,13 @@
     <string name="full_content_error_generic">Chyba při zpracování článku</string>
     <string name="after_read_all_behavior_label">Po přečtení všeho</string>
     <string name="article_actions_copy_link">Kopírovat odkaz</string>
+    <string name="freshrss_article_actions_label">Štítek</string>
+    <string name="freshrss_labels_sheet_title">Štítky</string>
+    <string name="freshrss_labels_new_label">Nový štítek</string>
+    <string name="freshrss_labels_create_dialog_title">Nový štítek</string>
+    <string name="freshrss_labels_create_dialog_label_name">Název štítku</string>
+    <string name="freshrss_labels_create_dialog_save">Uložit</string>
+    <string name="freshrss_nav_headline_my_labels">Moje štítky</string>
     <string name="nav_headline_saved_searches">Vyhledávání</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">Horizontální skrolování</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Procházet články přetažením v levo či v pravo</string>

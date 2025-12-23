@@ -63,6 +63,13 @@
     <string name="article_actions_mark_below_as_read">Позначити нижчі прочитаними</string>
     <string name="article_actions_mark_after_as_read">Позначити вищі прочитаними</string>
     <string name="article_actions_copy_link">Копіювати посилання</string>
+    <string name="freshrss_article_actions_label">Мітка</string>
+    <string name="freshrss_labels_sheet_title">Мітки</string>
+    <string name="freshrss_labels_new_label">Нова мітка</string>
+    <string name="freshrss_labels_create_dialog_title">Нова мітка</string>
+    <string name="freshrss_labels_create_dialog_label_name">Назва мітки</string>
+    <string name="freshrss_labels_create_dialog_save">Зберегти</string>
+    <string name="freshrss_nav_headline_my_labels">Мої мітки</string>
     <string name="unauthorized_dialog_title">Ви не ввійшли</string>
     <string name="unauthorized_dialog_description">Виникла проблема при з\'єднанні з вашим обліковим записом. Повторіть спробу входу.</string>
     <string name="unauthorized_dialog_dismiss_text">Пізніше</string>

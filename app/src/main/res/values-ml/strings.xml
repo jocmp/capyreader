@@ -38,6 +38,13 @@
     <string name="mark_all_read_dialog_submit">സ്ഥിരീകരിക്കുക</string>
     <string name="article_actions_open_menu">ലേഖന പ്രവർത്തനങ്ങൾ തുറക്കുക</string>
     <string name="article_actions_mark_after_as_read">മുകളിൽ വായിച്ചതായി അടയാളപ്പെടുത്തുക</string>
+    <string name="freshrss_article_actions_label">ലേബൽ</string>
+    <string name="freshrss_labels_sheet_title">ലേബലുകൾ</string>
+    <string name="freshrss_labels_new_label">പുതിയ ലേബൽ</string>
+    <string name="freshrss_labels_create_dialog_title">പുതിയ ലേബൽ</string>
+    <string name="freshrss_labels_create_dialog_label_name">ലേബൽ പേര്</string>
+    <string name="freshrss_labels_create_dialog_save">സംരക്ഷിക്കുക</string>
+    <string name="freshrss_nav_headline_my_labels">എന്റെ ലേബലുകൾ</string>
     <string name="unauthorized_dialog_dismiss_text">പിന്നീട്</string>
     <string name="account_source_reader">വായനക്കാരൻ</string>
     <string name="account_source_local">പ്രാദേശിക</string>

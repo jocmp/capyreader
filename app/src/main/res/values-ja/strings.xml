@@ -58,6 +58,13 @@
     <string name="mark_all_read_dialog_description">すべてを既読としてマークしますか？</string>
     <string name="article_actions_open_menu">記事の操作メニューを開く</string>
     <string name="article_actions_copy_link">リンクをコピー</string>
+    <string name="freshrss_article_actions_label">ラベル</string>
+    <string name="freshrss_labels_sheet_title">ラベル</string>
+    <string name="freshrss_labels_new_label">新規ラベル</string>
+    <string name="freshrss_labels_create_dialog_title">新規ラベル</string>
+    <string name="freshrss_labels_create_dialog_label_name">ラベル名</string>
+    <string name="freshrss_labels_create_dialog_save">保存</string>
+    <string name="freshrss_nav_headline_my_labels">マイラベル</string>
     <string name="unauthorized_dialog_title">ログアウト状態です</string>
     <string name="unauthorized_dialog_description">アカウントとの接続に問題があります。再度ログインしてください。</string>
     <string name="unauthorized_dialog_dismiss_text">また後で</string>

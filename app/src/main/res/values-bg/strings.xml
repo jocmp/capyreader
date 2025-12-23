@@ -219,6 +219,13 @@
     <string name="settings_donate_button">Дарение</string>
     <string name="after_read_all_behavior_default">По подразбиране</string>
     <string name="article_actions_copy_link">Копирай връзката</string>
+    <string name="freshrss_article_actions_label">Етикет</string>
+    <string name="freshrss_labels_sheet_title">Етикети</string>
+    <string name="freshrss_labels_new_label">Нов етикет</string>
+    <string name="freshrss_labels_create_dialog_title">Нов етикет</string>
+    <string name="freshrss_labels_create_dialog_label_name">Име на етикет</string>
+    <string name="freshrss_labels_create_dialog_save">Запиши</string>
+    <string name="freshrss_nav_headline_my_labels">Моите етикети</string>
     <string name="feed_nav_drawer_title">Емисии</string>
     <string name="nav_headline_saved_searches">Търсения</string>
     <string name="article_vertical_open_article_in_browser">Отвори статия в браузъра</string>

@@ -145,6 +145,18 @@ internal class LocalAccountDelegate(
         return Result.success(Unit)
     }
 
+    override suspend fun addSavedSearch(articleID: String, savedSearchID: String): Result<Unit> {
+        return Result.failure(UnsupportedOperationException("Labels not supported"))
+    }
+
+    override suspend fun removeSavedSearch(articleID: String, savedSearchID: String): Result<Unit> {
+        return Result.failure(UnsupportedOperationException("Labels not supported"))
+    }
+
+    override suspend fun createSavedSearch(name: String): Result<String> {
+        return Result.failure(UnsupportedOperationException("Labels not supported"))
+    }
+
     override suspend fun markRead(articleIDs: List<String>): Result<Unit> {
         return Result.success(Unit)
     }

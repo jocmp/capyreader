@@ -61,6 +61,13 @@
     <string name="article_actions_mark_below_as_read">Marchează ce e mai jos ca citit</string>
     <string name="article_actions_mark_after_as_read">Marchează ce este mai sus ca citit</string>
     <string name="article_actions_copy_link">Copiază linkul</string>
+    <string name="freshrss_article_actions_label">Etichetă</string>
+    <string name="freshrss_labels_sheet_title">Etichete</string>
+    <string name="freshrss_labels_new_label">Etichetă nouă</string>
+    <string name="freshrss_labels_create_dialog_title">Etichetă nouă</string>
+    <string name="freshrss_labels_create_dialog_label_name">Nume etichetă</string>
+    <string name="freshrss_labels_create_dialog_save">Salvează</string>
+    <string name="freshrss_nav_headline_my_labels">Etichetele mele</string>
     <string name="unauthorized_dialog_title">Te-ai deconectat</string>
     <string name="unauthorized_dialog_description">A apărut o problemă la conectare. Te rog să te reconectezi.</string>
     <string name="unauthorized_dialog_dismiss_text">Mai târziu</string>

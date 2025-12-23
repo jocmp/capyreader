@@ -84,6 +84,28 @@ internal class ReaderAccountDelegate(
         return editTag(ids = articleIDs, removeTag = Stream.Starred())
     }
 
+    override suspend fun addSavedSearch(articleID: String, savedSearchID: String): Result<Unit> {
+        savedSearchRecords.upsertArticle(articleID = articleID, savedSearchID = savedSearchID)
+
+        return editTag(ids = listOf(articleID), addTag = Stream.UserLabel(savedSearchID)).onFailure {
+            savedSearchRecords.removeArticle(articleID = articleID, savedSearchID = savedSearchID)
+        }
+    }
+
+    override suspend fun removeSavedSearch(articleID: String, savedSearchID: String): Result<Unit> {
+        savedSearchRecords.removeArticle(articleID = articleID, savedSearchID = savedSearchID)
+
+        return editTag(ids = listOf(articleID), removeTag = Stream.UserLabel(savedSearchID)).onFailure {
+            savedSearchRecords.upsertArticle(articleID = articleID, savedSearchID = savedSearchID)
+        }
+    }
+
+    override suspend fun createSavedSearch(name: String): Result<String> {
+        val labelID = userLabel(name)
+        savedSearchRecords.upsert(id = labelID, name = name)
+        return Result.success(labelID)
+    }
+
     override suspend fun addFeed(
         url: String,
         title: String?,
@@ -482,7 +504,7 @@ internal class ReaderAccountDelegate(
         removeTag: Stream? = null,
     ): Result<Unit> {
         return withErrorHandling {
-            withPostToken {
+            val response = withPostToken {
                 googleReader.editTag(
                     ids,
                     postToken = postToken.get(),
@@ -491,7 +513,9 @@ internal class ReaderAccountDelegate(
                 )
             }
 
-            Unit
+            if (!response.isSuccessful) {
+                throw ValidationError(response.message())
+            }
         }
     }
 

@@ -49,6 +49,13 @@
     <string name="mark_all_read_dialog_submit">Bekräfta</string>
     <string name="article_actions_mark_below_as_read">Markera allting nedan som läst</string>
     <string name="article_actions_copy_link">Kopiera länk</string>
+    <string name="freshrss_article_actions_label">Etikett</string>
+    <string name="freshrss_labels_sheet_title">Etiketter</string>
+    <string name="freshrss_labels_new_label">Ny etikett</string>
+    <string name="freshrss_labels_create_dialog_title">Ny etikett</string>
+    <string name="freshrss_labels_create_dialog_label_name">Etikettnamn</string>
+    <string name="freshrss_labels_create_dialog_save">Spara</string>
+    <string name="freshrss_nav_headline_my_labels">Mina etiketter</string>
     <string name="unauthorized_dialog_title">Du är utloggad</string>
     <string name="unauthorized_dialog_description">Ett fel uppstod vid anslutning till ditt konto. Vänligen logga in igen.</string>
     <string name="auth_fields_password">Lösenord</string>

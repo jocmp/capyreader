@@ -14,4 +14,7 @@ enum class Source(val value: String) {
         get() = this == FRESHRSS ||
                 this == MINIFLUX ||
                 this == READER
+
+    val supportsLabels
+        get() = this == FRESHRSS
 }

@@ -458,6 +458,150 @@ class ReaderAccountDelegateTest {
     }
 
     @Test
+    fun addSavedSearch() = runTest {
+        val articleID = "0006265cd4de43c6"
+        val savedSearchID = "user/-/label/Chicago"
+
+        coEvery {
+            googleReader.editTag(
+                ids = listOf(articleID),
+                postToken = postToken,
+                addTag = savedSearchID,
+            )
+        } returns Response.success("OK")
+
+        stubPostToken()
+
+        delegate.addSavedSearch(articleID, savedSearchID)
+
+        coVerify {
+            googleReader.editTag(
+                ids = listOf(articleID),
+                postToken = postToken,
+                addTag = savedSearchID,
+            )
+        }
+
+        val savedSearchIDs = database.saved_searchesQueries
+            .savedSearchIDsByArticle(articleID)
+            .executeAsList()
+
+        assertEquals(expected = listOf(savedSearchID), actual = savedSearchIDs)
+    }
+
+    @Test
+    fun removeSavedSearch() = runTest {
+        val articleID = "0006265cd4de43c6"
+        val savedSearchID = "user/-/label/Chicago"
+
+        database.saved_searchesQueries.upsertArticle(
+            saved_search_id = savedSearchID,
+            article_id = articleID
+        )
+
+        coEvery {
+            googleReader.editTag(
+                ids = listOf(articleID),
+                postToken = postToken,
+                removeTag = savedSearchID,
+            )
+        } returns Response.success("OK")
+
+        stubPostToken()
+
+        delegate.removeSavedSearch(articleID, savedSearchID)
+
+        coVerify {
+            googleReader.editTag(
+                ids = listOf(articleID),
+                postToken = postToken,
+                removeTag = savedSearchID,
+            )
+        }
+
+        val savedSearchIDs = database.saved_searchesQueries
+            .savedSearchIDsByArticle(articleID)
+            .executeAsList()
+
+        assertEquals(expected = emptyList(), actual = savedSearchIDs)
+    }
+
+    @Test
+    fun createSavedSearch() = runTest {
+        val labelName = "Important"
+        val expectedID = "user/-/label/Important"
+
+        val result = delegate.createSavedSearch(labelName)
+
+        assertTrue(result.isSuccess)
+        assertEquals(expected = expectedID, actual = result.getOrNull())
+
+        val savedSearch = database.saved_searchesQueries
+            .find(expectedID)
+            .executeAsOneOrNull()
+
+        assertTrue(savedSearch != null)
+        assertEquals(expected = labelName, actual = savedSearch?.name)
+    }
+
+    @Test
+    fun addSavedSearch_rollbackOnFailure() = runTest {
+        val articleID = "0006265cd4de43c6"
+        val savedSearchID = "user/-/label/Chicago"
+
+        coEvery {
+            googleReader.editTag(
+                ids = listOf(articleID),
+                postToken = postToken,
+                addTag = savedSearchID,
+            )
+        } returns Response.error(500, "Server Error".toResponseBody())
+
+        stubPostToken()
+
+        val result = delegate.addSavedSearch(articleID, savedSearchID)
+
+        assertTrue(result.isFailure)
+
+        val savedSearchIDs = database.saved_searchesQueries
+            .savedSearchIDsByArticle(articleID)
+            .executeAsList()
+
+        assertEquals(expected = emptyList(), actual = savedSearchIDs)
+    }
+
+    @Test
+    fun removeSavedSearch_rollbackOnFailure() = runTest {
+        val articleID = "0006265cd4de43c6"
+        val savedSearchID = "user/-/label/Chicago"
+
+        database.saved_searchesQueries.upsertArticle(
+            saved_search_id = savedSearchID,
+            article_id = articleID
+        )
+
+        coEvery {
+            googleReader.editTag(
+                ids = listOf(articleID),
+                postToken = postToken,
+                removeTag = savedSearchID,
+            )
+        } returns Response.error(500, "Server Error".toResponseBody())
+
+        stubPostToken()
+
+        val result = delegate.removeSavedSearch(articleID, savedSearchID)
+
+        assertTrue(result.isFailure)
+
+        val savedSearchIDs = database.saved_searchesQueries
+            .savedSearchIDsByArticle(articleID)
+            .executeAsList()
+
+        assertEquals(expected = listOf(savedSearchID), actual = savedSearchIDs)
+    }
+
+    @Test
     fun addFeed() = runTest {
         stubPostToken()
         stubUnread()

@@ -102,6 +102,18 @@ internal class FeedbinAccountDelegate(
         }
     }
 
+    override suspend fun addSavedSearch(articleID: String, savedSearchID: String): Result<Unit> {
+        return Result.failure(UnsupportedOperationException("Labels not supported"))
+    }
+
+    override suspend fun removeSavedSearch(articleID: String, savedSearchID: String): Result<Unit> {
+        return Result.failure(UnsupportedOperationException("Labels not supported"))
+    }
+
+    override suspend fun createSavedSearch(name: String): Result<String> {
+        return Result.failure(UnsupportedOperationException("Labels not supported"))
+    }
+
     override suspend fun addFeed(
         url: String,
         title: String?,

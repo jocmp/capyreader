@@ -219,6 +219,13 @@
     <string name="full_content_error_missing_response">Impossibile recuperare l\'articolo</string>
     <string name="after_read_all_behavior_open_next_feed">Apri il prossimo feed</string>
     <string name="article_actions_copy_link">Copia il link</string>
+    <string name="freshrss_article_actions_label">Etichetta</string>
+    <string name="freshrss_labels_sheet_title">Etichette</string>
+    <string name="freshrss_labels_new_label">Nuova etichetta</string>
+    <string name="freshrss_labels_create_dialog_title">Nuova etichetta</string>
+    <string name="freshrss_labels_create_dialog_label_name">Nome etichetta</string>
+    <string name="freshrss_labels_create_dialog_save">Salva</string>
+    <string name="freshrss_nav_headline_my_labels">Le mie etichette</string>
     <string name="feed_nav_drawer_title">Feed</string>
     <string name="article_vertical_open_article_in_browser">Apri l\'articolo nel browser</string>
     <string name="search_bar_placeholder">Cerca</string>

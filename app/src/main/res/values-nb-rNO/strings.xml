@@ -187,6 +187,13 @@
     <string name="article_actions_open_menu">Åpne artikkelhandlinger</string>
     <string name="article_actions_mark_below_as_read">Merk alle under som lest</string>
     <string name="article_actions_mark_after_as_read">Merk alle over som lest</string>
+    <string name="freshrss_article_actions_label">Etikett</string>
+    <string name="freshrss_labels_sheet_title">Etiketter</string>
+    <string name="freshrss_labels_new_label">Ny etikett</string>
+    <string name="freshrss_labels_create_dialog_title">Ny etikett</string>
+    <string name="freshrss_labels_create_dialog_label_name">Etikettnavn</string>
+    <string name="freshrss_labels_create_dialog_save">Lagre</string>
+    <string name="freshrss_nav_headline_my_labels">Mine etiketter</string>
     <string name="settings_option_full_content_subtitle">Husk valg for å laste hele artikkelens innhold</string>
     <string name="settings_option_auto_delete_articles_subtitle">Slett leste artikler uten stjernemerke som er eldre enn tre måneder</string>
     <string name="settings_option_full_content_title">Husk full visning av innholdet</string>

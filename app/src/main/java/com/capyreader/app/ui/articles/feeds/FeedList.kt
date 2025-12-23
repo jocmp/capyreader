@@ -46,9 +46,11 @@ import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.SavedSearch
+import com.jocmp.capy.accounts.Source
 
 @Composable
 fun FeedList(
+    source: Source,
     filter: ArticleFilter,
     statusCount: Long,
     todayCount: Long,
@@ -163,8 +165,17 @@ fun FeedList(
             Spacer(Modifier.height(8.dp))
 
             if (savedSearches.isNotEmpty()) {
+                val savedSearchesTitle = if (source == Source.FRESHRSS) {
+                    stringResource(R.string.freshrss_nav_headline_my_labels)
+                } else {
+                    stringResource(R.string.nav_headline_saved_searches)
+                }
+
                 FeedListDivider()
-                FeedGroupList(FeedGroup.SAVED_SEARCHES) {
+                FeedGroupList(
+                    type = FeedGroup.SAVED_SEARCHES,
+                    title = savedSearchesTitle,
+                ) {
                     savedSearches.forEach {
                         SavedSearchRow(
                             onSelect = onSelectSavedSearch,
@@ -177,7 +188,10 @@ fun FeedList(
 
             if (folders.isNotEmpty()) {
                 FeedListDivider()
-                FeedGroupList(FeedGroup.FOLDERS) {
+                FeedGroupList(
+                    type = FeedGroup.FOLDERS,
+                    title = stringResource(R.string.nav_headline_tags),
+                ) {
                     folders.forEach { folder ->
                         FolderRow(
                             folder = folder,
@@ -193,7 +207,10 @@ fun FeedList(
 
             if (feeds.isNotEmpty()) {
                 FeedListDivider()
-                FeedGroupList(FeedGroup.FEEDS) {
+                FeedGroupList(
+                    type = FeedGroup.FEEDS,
+                    title = stringResource(R.string.nav_headline_feeds),
+                ) {
                     feeds.forEach { feed ->
                         FeedRow(
                             feed = feed,
@@ -239,6 +256,7 @@ fun FeedListPreview() {
     PreviewKoinApplication {
         CapyTheme {
             FeedList(
+                source = Source.LOCAL,
                 folders = folders,
                 feeds = feeds,
                 onSelectFolder = {},

@@ -1,6 +1,7 @@
 package com.capyreader.app.ui.articles.list
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Label
 import androidx.compose.material.icons.rounded.ContentCopy
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.DropdownMenu
@@ -34,7 +35,9 @@ fun ArticleActionMenu(
     expanded: Boolean,
     article: Article,
     index: Int,
+    showLabels: Boolean = false,
     onMarkAllRead: (range: MarkRead) -> Unit = {},
+    onOpenLabels: () -> Unit = {},
     onDismissRequest: () -> Unit = {},
 ) {
     val unreadCount = LocalUnreadCount.current
@@ -46,6 +49,9 @@ fun ArticleActionMenu(
     ) {
         ToggleStarMenuItem(onDismissRequest, article)
         ToggleReadMenuItem(onDismissRequest, article)
+        if (showLabels) {
+            LabelMenuItem(onDismissRequest, onOpenLabels)
+        }
         if (unreadCount > 0) {
             if (index > 0) {
                 DropdownMenuItem(
@@ -73,6 +79,26 @@ fun ArticleActionMenu(
         CopyLinkMenuItem(onDismissRequest, article)
         ShareLinkMenuItem(onDismissRequest, article)
     }
+}
+
+@Composable
+private fun LabelMenuItem(
+    onDismissRequest: () -> Unit,
+    onOpenLabels: () -> Unit,
+) {
+    DropdownMenuItem(
+        leadingIcon = {
+            Icon(
+                Icons.AutoMirrored.Outlined.Label,
+                contentDescription = null
+            )
+        },
+        text = { Text(stringResource(R.string.freshrss_article_actions_label)) },
+        onClick = {
+            onDismissRequest()
+            onOpenLabels()
+        },
+    )
 }
 
 @Composable

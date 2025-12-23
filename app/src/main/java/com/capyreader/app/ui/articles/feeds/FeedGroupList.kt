@@ -19,11 +19,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.capyreader.app.R
 import com.capyreader.app.common.FeedGroup
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.articles.ListHeadline
@@ -35,6 +33,7 @@ import org.koin.compose.koinInject
 @Composable
 fun FeedGroupList(
     type: FeedGroup,
+    title: String,
     appPreferences: AppPreferences = koinInject(),
     content: @Composable () -> Unit,
 ) {
@@ -63,7 +62,7 @@ fun FeedGroupList(
                         indication = null
                     )
             ) {
-                ListHeadline(text = stringResource(type.translationKey))
+                ListHeadline(text = title)
             }
             IconDropdown(expanded, onClick = toggle)
             Spacer(Modifier.width(16.dp))
@@ -81,13 +80,6 @@ fun FeedGroupList(
     }
 }
 
-private val FeedGroup.translationKey: Int
-    get() = when (this) {
-        FeedGroup.FEEDS -> R.string.nav_headline_feeds
-        FeedGroup.FOLDERS -> R.string.nav_headline_tags
-        FeedGroup.SAVED_SEARCHES -> R.string.nav_headline_saved_searches
-    }
-
 @Preview
 @Composable
 fun FeedGroupPreview() {
@@ -96,6 +88,7 @@ fun FeedGroupPreview() {
             Box(Modifier.width(300.dp)) {
                 FeedGroupList(
                     type = FeedGroup.FEEDS,
+                    title = "Feeds",
                 ) {
                     Text("One")
                     Text("Two")

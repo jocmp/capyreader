@@ -22,3 +22,8 @@ Capy Reader is an RSS reader for Android split into several gradle modules
 - **Account System**: Pluggable account delegates for different sync services
 - **Feed Management**: Hierarchical folder/feed organization with OPML import/export using SQLite
 - **Article Rendering**: Template-based HTML rendering
+
+## Code Style
+
+- When naming accessors, prefer "savedSearches" over `getSavedSearches` unless there's a parameter, in which case use "get"
+- Prefer explicit named parameters when passing arguments to Jetpack Compose functions over positional arguments.

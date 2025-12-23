@@ -45,6 +45,7 @@
     <string name="refresh_feeds_menu_label">Refresh Feeds</string>
     <string name="nav_headline_tags">Tags</string>
     <string name="nav_headline_saved_searches">Searches</string>
+    <string name="freshrss_nav_headline_my_labels">My Labels</string>
     <string name="nav_headline_feeds">Feeds</string>
     <string name="nav_add_feed">Add Feed</string>
     <string name="add_feed_feed_not_error">Couldn\'t find feed</string>
@@ -64,6 +65,12 @@
     <string name="article_actions_mark_below_as_read">Mark below as read</string>
     <string name="article_actions_mark_after_as_read">Mark above as read</string>
     <string name="article_actions_copy_link">Copy link</string>
+    <string name="freshrss_article_actions_label">Label</string>
+    <string name="freshrss_labels_sheet_title">Labels</string>
+    <string name="freshrss_labels_new_label">New Label</string>
+    <string name="freshrss_labels_create_dialog_title">New Label</string>
+    <string name="freshrss_labels_create_dialog_label_name">Label name</string>
+    <string name="freshrss_labels_create_dialog_save">Save</string>
     <string name="unauthorized_dialog_title">You\'re logged out</string>
     <string name="unauthorized_dialog_description">There was an issue connecting to your account. Please log in again.</string>
     <string name="unauthorized_dialog_dismiss_text">Later</string>
