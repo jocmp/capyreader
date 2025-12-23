@@ -24,7 +24,8 @@ function addImageClickListeners() {
   }));
 
   images.forEach((img, index) => {
-    img.addEventListener("click", () => {
+    img.addEventListener("click", (e) => {
+      e.preventDefault();
       Android.openImageGallery(JSON.stringify(galleryImages), index);
     });
   });
