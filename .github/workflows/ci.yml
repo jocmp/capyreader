@@ -1,8 +1,10 @@
 name: CI
 
 on:
-  - push
-  - pull_request
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
   typecheck:
@@ -25,6 +27,7 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: "21"
+          cache: 'gradle'
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
