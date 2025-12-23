@@ -23,9 +23,7 @@ private fun enableStrictModeOnDebug() {
         setThreadPolicy(
             StrictMode.ThreadPolicy.Builder()
                 .detectNetwork()
-                .detectDiskReads()
-                .detectDiskWrites()
-                .penaltyLog()
+                .penaltyDeath()
                 .build()
         )
     }

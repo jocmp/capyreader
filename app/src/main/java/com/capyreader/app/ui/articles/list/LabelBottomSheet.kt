@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -37,11 +38,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.jocmp.capy.SavedSearch
-import kotlinx.coroutines.launch
+import com.jocmp.capy.common.launchIO
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -143,12 +145,31 @@ private fun CreateLabelDialog(
     onLabelApplied: (savedSearchID: String) -> Unit,
 ) {
     var labelName by remember { mutableStateOf("") }
-    var errorMessage by remember { mutableStateOf<String?>(null) }
-    var isLoading by remember { mutableStateOf(false) }
+    val (errorMessage, setErrorMessage) = remember { mutableStateOf<String?>(null) }
     val scope = rememberCoroutineScope()
 
+    fun save() {
+        val name = labelName.trim()
+
+        if (name.isBlank()) {
+            return
+        }
+
+        scope.launchIO {
+            onCreateLabel(name).fold(
+                onSuccess = { labelID ->
+                    onLabelApplied(labelID)
+                    onDismiss()
+                },
+                onFailure = { error ->
+                    setErrorMessage(error.message ?: "Failed to create label")
+                }
+            )
+        }
+    }
+
     AlertDialog(
-        onDismissRequest = { if (!isLoading) onDismiss() },
+        onDismissRequest = { onDismiss() },
         title = { Text(stringResource(R.string.freshrss_labels_create_dialog_title)) },
         text = {
             Column {
@@ -156,20 +177,23 @@ private fun CreateLabelDialog(
                     value = labelName,
                     onValueChange = {
                         labelName = it
-                        errorMessage = null
+                        setErrorMessage(null)
                     },
                     keyboardOptions = KeyboardOptions(
                         capitalization = KeyboardCapitalization.Words,
+                        imeAction = ImeAction.Done
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onDone = { save() }
                     ),
                     label = { Text(stringResource(R.string.freshrss_labels_create_dialog_label_name)) },
                     singleLine = true,
                     isError = errorMessage != null,
-                    enabled = !isLoading,
                     modifier = Modifier.fillMaxWidth()
                 )
                 if (errorMessage != null) {
                     Text(
-                        text = errorMessage!!,
+                        text = errorMessage,
                         color = MaterialTheme.colorScheme.error,
                         style = MaterialTheme.typography.bodySmall,
                         modifier = Modifier.padding(top = 4.dp)
@@ -180,25 +204,9 @@ private fun CreateLabelDialog(
         confirmButton = {
             TextButton(
                 onClick = {
-                    if (labelName.isBlank()) {
-                        return@TextButton
-                    }
-                    isLoading = true
-                    scope.launch {
-                        onCreateLabel(labelName.trim()).fold(
-                            onSuccess = { labelID ->
-                                onLabelApplied(labelID)
-                                onDismiss()
-                            },
-                            onFailure = { error ->
-                                isLoading = false
-                                errorMessage = error.message
-                                    ?: "Failed to create label"
-                            }
-                        )
-                    }
+                    save()
                 },
-                enabled = labelName.isNotBlank() && !isLoading
+                enabled = labelName.isNotBlank()
             ) {
                 Text(stringResource(R.string.freshrss_labels_create_dialog_save))
             }
@@ -206,7 +214,6 @@ private fun CreateLabelDialog(
         dismissButton = {
             TextButton(
                 onClick = onDismiss,
-                enabled = !isLoading
             ) {
                 Text(stringResource(android.R.string.cancel))
             }
