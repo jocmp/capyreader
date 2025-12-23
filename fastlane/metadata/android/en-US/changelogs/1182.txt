@@ -1,5 +1,7 @@
 • Add image carousel to article image gallery thanks to a volunteer!
+• Add FreshRSS labels for articles
 • Fix multi-page articles for full content on Phoronix
 • Fix thumbnails for some local feeds
+• Fix issue where gallery would sometimes open the containing image's link
 • Display video enclosures when available
 • Update translations for Dutch, Hungarian, Russian, and Chinese thanks to volunteers!
