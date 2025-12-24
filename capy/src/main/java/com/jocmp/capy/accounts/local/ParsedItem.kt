@@ -6,6 +6,7 @@ import com.jocmp.capy.common.unescapingHTMLCharacters
 import com.jocmp.rssparser.model.RssItem
 import com.jocmp.rssparser.model.RssItemEnclosure
 import org.jsoup.Jsoup
+import org.jsoup.parser.Parser
 import org.jsoup.safety.Cleaner
 import org.jsoup.safety.Safelist
 import java.net.URI
@@ -47,8 +48,16 @@ internal class ParsedItem(private val item: RssItem, private val siteURL: String
     val title: String
         get() {
             val cleaner = Cleaner(Safelist.none())
+            val itemTitle = item.title.orEmpty()
 
-            return cleaner.clean(Jsoup.parse(item.title.orEmpty())).text()
+            val parsedTitle = if (itemTitle.contains("<![CDATA[")) {
+                val xmlDoc = Jsoup.parse("<root>$itemTitle</root>", "", Parser.xmlParser())
+                xmlDoc.text()
+            } else {
+                itemTitle
+            }
+
+            return cleaner.clean(Jsoup.parse(parsedTitle)).text()
         }
 
     val imageURL: String?
