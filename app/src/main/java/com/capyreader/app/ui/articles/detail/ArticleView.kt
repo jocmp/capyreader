@@ -319,7 +319,7 @@ fun rememberTopToolbarPreference(
     val scrollBehavior = if (pinTopToolbar) {
         TopAppBarDefaults.pinnedScrollBehavior()
     } else {
-        TopAppBarDefaults.enterAlwaysScrollBehavior()
+        TopAppBarDefaults.enterAlwaysScrollBehavior(reverseLayout = true)
     }
 
     val showToolbars = scrollBehavior.state.collapsedFraction == 0f
