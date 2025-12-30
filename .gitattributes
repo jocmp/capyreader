@@ -1,7 +1,6 @@
 article_forge/articles/fixtures/**/* linguist-generated=true
 article_forge/public/**/* linguist-generated=true
 capy/src/main/assets/*.css linguist-generated=true
-capy/src/main/assets/*.js linguist-generated=true
 capy/src/main/res/raw/*.html linguist-generated=true
 capy/src/test/resources/*.html linguist-generated=true
 feedfinder/src/test/resources/*.html linguist-generated=true
