@@ -9,6 +9,12 @@ plugins {
     alias(libs.plugins.compose.compiler)
 }
 
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
+    }
+}
+
 val secrets = Properties()
 
 if (rootProject.file("secrets.properties").exists()) {
@@ -95,9 +101,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
-    }
-    kotlinOptions {
-        jvmTarget = "21"
     }
     buildFeatures {
         compose = true

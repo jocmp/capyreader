@@ -87,26 +87,24 @@ fun SettingsView(
                             navigateBack()
                         },
                     ) {
-                        Box(contentAlignment = Alignment.Center) {
-                            when (currentPanel) {
-                                SettingsPanel.General -> GeneralSettingsPanel(
-                                    onNavigateToNotifications = {
-                                        navigateToPanel(SettingsPanel.Notifications)
-                                    }
-                                )
+                        when (currentPanel) {
+                            SettingsPanel.General -> GeneralSettingsPanel(
+                                onNavigateToNotifications = {
+                                    navigateToPanel(SettingsPanel.Notifications)
+                                }
+                            )
 
-                                SettingsPanel.Notifications -> NotificationsSettingsPanel(
-                                    onSelectNone = viewModel::deselectAllFeedNotifications,
-                                    onSelectAll = viewModel::selectAllFeedNotifications,
-                                    onToggleNotifications = viewModel::toggleNotifications,
-                                    feeds = feeds,
-                                )
+                            SettingsPanel.Notifications -> NotificationsSettingsPanel(
+                                onSelectNone = viewModel::deselectAllFeedNotifications,
+                                onSelectAll = viewModel::selectAllFeedNotifications,
+                                onToggleNotifications = viewModel::toggleNotifications,
+                                feeds = feeds,
+                            )
 
-                                SettingsPanel.Display -> DisplaySettingsPanel()
-                                SettingsPanel.Gestures -> GesturesSettingPanel()
-                                SettingsPanel.Account -> AccountSettingsPanel(onRemoveAccount = onRemoveAccount)
-                                SettingsPanel.About -> AboutSettingsPanel()
-                            }
+                            SettingsPanel.Display -> DisplaySettingsPanel()
+                            SettingsPanel.Gestures -> GesturesSettingPanel()
+                            SettingsPanel.Account -> AccountSettingsPanel(onRemoveAccount = onRemoveAccount)
+                            SettingsPanel.About -> AboutSettingsPanel()
                         }
                     }
                 }
