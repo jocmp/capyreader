@@ -14,6 +14,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults.exitUntilCollapsedScrollBehavior
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
@@ -31,7 +32,7 @@ fun SettingsPanelScaffold(
     onBack: () -> Unit,
     content: @Composable () -> Unit,
 ) {
-    val scrollBehavior = exitUntilCollapsedScrollBehavior()
+    val scrollBehavior = exitUntilCollapsedScrollBehavior(state = rememberTopAppBarState())
     val snackbarHost = remember { SnackbarHostState() }
 
     CompositionLocalProvider(
@@ -68,8 +69,7 @@ fun SettingsPanelScaffold(
             }
         ) { padding ->
             Column(
-                modifier = Modifier
-                    .padding(padding)
+                modifier = Modifier.padding(padding)
             ) {
                 content()
             }

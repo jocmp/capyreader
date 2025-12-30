@@ -3,10 +3,15 @@ package com.capyreader.app.ui.settings.panels
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -17,13 +22,16 @@ import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.common.RowItem
+import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.LayoutPreference
 import com.capyreader.app.preferences.ReaderImageVisibility
+import com.capyreader.app.preferences.ThemeMode
 import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.capyreader.app.ui.articles.MarkReadPosition
 import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.components.TextSwitch
+import com.capyreader.app.ui.components.ThemePicker
 import com.capyreader.app.ui.settings.PreferenceSelect
 import com.capyreader.app.ui.theme.CapyTheme
 import org.koin.androidx.compose.koinViewModel
@@ -38,6 +46,11 @@ fun DisplaySettingsPanel(
     val markReadButtonPosition by viewModel.markReadButtonPosition.collectChangesWithCurrent()
 
     DisplaySettingsPanelView(
+        themeMode = viewModel.themeMode,
+        updateThemeMode = viewModel::updateThemeMode,
+        pureBlackDarkMode = viewModel.pureBlackDarkMode,
+        updatePureBlackDarkMode = viewModel::updatePureBlackDarkMode,
+        appPreferences = viewModel.appPreferences,
         updatePinArticleBars = viewModel::updatePinArticleBars,
         updateBottomBarActions = viewModel::updateBottomBarActions,
         enableBottomBarActions = enableBottomBarActions,
@@ -68,6 +81,11 @@ fun DisplaySettingsPanel(
 
 @Composable
 fun DisplaySettingsPanelView(
+    themeMode: ThemeMode,
+    updateThemeMode: (ThemeMode) -> Unit,
+    pureBlackDarkMode: Boolean,
+    updatePureBlackDarkMode: (Boolean) -> Unit,
+    appPreferences: AppPreferences?,
     updatePinArticleBars: (enable: Boolean) -> Unit,
     updateBottomBarActions: (enable: Boolean) -> Unit,
     pinArticleBars: Boolean,
@@ -85,6 +103,29 @@ fun DisplaySettingsPanelView(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier.verticalScroll(rememberScrollState())
     ) {
+        FormSection(
+            title = stringResource(R.string.theme_menu_label)
+        ) {
+            RowItem {
+                ThemeModeButtons(
+                    themeMode = themeMode,
+                    updateThemeMode = updateThemeMode
+                )
+            }
+
+            if (appPreferences != null) {
+                ThemePicker(appPreferences = appPreferences)
+            }
+
+            RowItem {
+                TextSwitch(
+                    onCheckedChange = updatePureBlackDarkMode,
+                    checked = pureBlackDarkMode,
+                    title = stringResource(R.string.settings_pure_black_dark_mode)
+                )
+            }
+        }
+
         FormSection(
             title = stringResource(R.string.settings_reader_title)
         ) {
@@ -117,13 +158,10 @@ fun DisplaySettingsPanelView(
         FormSection(
             title = stringResource(R.string.settings_article_list_title)
         ) {
-
             ArticleListSettings(
                 options = articleListOptions
             )
         }
-
-
 
         FormSection(title = stringResource(R.string.settings_display_miscellaneous_title)) {
             PreferenceSelect(
@@ -150,6 +188,29 @@ fun DisplaySettingsPanelView(
     }
 }
 
+@Composable
+private fun ThemeModeButtons(
+    themeMode: ThemeMode,
+    updateThemeMode: (ThemeMode) -> Unit
+) {
+    SingleChoiceSegmentedButtonRow(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        ThemeMode.entries.forEachIndexed { index, mode ->
+            SegmentedButton(
+                shape = SegmentedButtonDefaults.itemShape(
+                    index = index,
+                    count = ThemeMode.entries.size
+                ),
+                onClick = { updateThemeMode(mode) },
+                selected = themeMode == mode,
+                icon = {}
+            ) {
+                Text(stringResource(mode.translationKey))
+            }
+        }
+    }
+}
 
 @PreviewLightDark
 @Preview
@@ -158,6 +219,11 @@ private fun DisplaySettingsPanelViewPreview() {
     CapyTheme {
         Surface {
             DisplaySettingsPanelView(
+                themeMode = ThemeMode.SYSTEM,
+                updateThemeMode = {},
+                pureBlackDarkMode = false,
+                updatePureBlackDarkMode = {},
+                appPreferences = null,
                 layout = LayoutPreference.RESPONSIVE,
                 updateLayoutPreference = {},
                 articleListOptions = ArticleListOptions(
