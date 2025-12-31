@@ -281,4 +281,10 @@
     <string name="filter_today">Σήμερα</string>
     <string name="settings_section_categories">Κατηγορίες</string>
     <string name="settings_option_show_today_filter">Σήμερα</string>
+    <string name="auth_fields_freshrss_api_password">Κωδικός API</string>
+    <string name="freshrss_visibility">Ορατότητα</string>
+    <string name="freshrss_visibility_option_main">Κύρια Ροή</string>
+    <string name="freshrss_visibility_option_important">Σημαντικό</string>
+    <string name="freshrss_visibility_option_category">Κατηγορία</string>
+    <string name="freshrss_visibility_option_feed">Ροή</string>
 </resources>
