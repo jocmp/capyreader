@@ -128,6 +128,12 @@
     <string name="font_option_vollkorn">Vollkorn</string>
     <string name="article_font_menu_label">Шрифт</string>
     <string name="article_font_scale_label">Размер на шрифта</string>
+    <string name="article_style_title_section">Заглавие</string>
+    <string name="article_style_text_section">Текст</string>
+    <string name="article_style_title_follow_body_font">Използвай шрифта на текста за заглавие</string>
+    <string name="title_alignment_left">Подравни вляво</string>
+    <string name="title_alignment_center">Центрирай</string>
+    <string name="article_title_font_scale_label">Размер на шрифта</string>
     <string name="image_error_text">Грешка при зареждане на изображение</string>
     <string name="article_byline">%1$s при %2$s от %3$s</string>
     <string name="article_byline_date_only">%1$s при %2$s</string>

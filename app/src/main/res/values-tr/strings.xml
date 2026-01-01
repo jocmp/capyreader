@@ -21,6 +21,12 @@
     <string name="settings_option_in_app_browser">Uygulama içi tarayıcıyı kullan</string>
     <string name="opml_import_notification_cancel">Durdur</string>
     <string name="article_font_scale_label">Metin boyutu</string>
+    <string name="article_style_title_section">Başlık</string>
+    <string name="article_style_text_section">Metin</string>
+    <string name="article_style_title_follow_body_font">Başlık için metin yazı tipini kullan</string>
+    <string name="title_alignment_left">Sola hizala</string>
+    <string name="title_alignment_center">Ortala</string>
+    <string name="article_title_font_scale_label">Yazı tipi boyutu</string>
     <string name="image_error_text">Görüntü yükleme hatası</string>
     <string name="settings_import_progress_placeholder">Abonelikler içe aktarılıyor…</string>
     <string name="opml_import_toast_complete">İçe aktarım tamamlandı</string>

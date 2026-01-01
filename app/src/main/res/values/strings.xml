@@ -165,7 +165,13 @@
     <string name="font_option_jost" translatable="false">Jost</string>
     <string name="font_option_literata" translatable="false">Literata</string>
     <string name="article_font_menu_label">Font</string>
-    <string name="article_font_scale_label">Font scale</string>
+    <string name="article_font_scale_label">Font size</string>
+    <string name="article_style_title_section">Title</string>
+    <string name="article_style_text_section">Text</string>
+    <string name="article_style_title_follow_body_font">Use body font for title</string>
+    <string name="title_alignment_left">Align left</string>
+    <string name="title_alignment_center">Align center</string>
+    <string name="article_title_font_scale_label">Font size</string>
     <string name="image_error_text">Error loading image</string>
     <string name="article_byline">%1$s at %2$s by %3$s</string>
     <string name="article_byline_date_only">%1$s at %2$s</string>

@@ -148,7 +148,13 @@
     <string name="article_style_options">Lettertype stijl opties</string>
     <string name="font_option_system_default">Systeem standaard</string>
     <string name="article_font_menu_label">Lettertype</string>
-    <string name="article_font_scale_label">Lettertype schaal</string>
+    <string name="article_font_scale_label">Lettergrootte</string>
+    <string name="article_style_title_section">Titel</string>
+    <string name="article_style_text_section">Tekst</string>
+    <string name="article_style_title_follow_body_font">Gebruik tekstlettertype voor titel</string>
+    <string name="title_alignment_left">Links uitlijnen</string>
+    <string name="title_alignment_center">Centreren</string>
+    <string name="article_title_font_scale_label">Lettergrootte</string>
     <string name="image_error_text">Fout bij laden afbeelding</string>
     <string name="article_byline">%1$s om %2$s door %3$s</string>
     <string name="article_byline_date_only">%1$s om %2$s</string>

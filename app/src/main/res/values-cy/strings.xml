@@ -153,6 +153,12 @@
     <string name="article_style_options">Opsiynau arddull y ffont</string>
     <string name="article_font_menu_label">Ffont</string>
     <string name="article_font_scale_label">Maint y ffont</string>
+    <string name="article_style_title_section">Teitl</string>
+    <string name="article_style_text_section">Testun</string>
+    <string name="article_style_title_follow_body_font">Defnyddio ffont y corff ar gyfer y teitl</string>
+    <string name="title_alignment_left">Alinio i\'r chwith</string>
+    <string name="title_alignment_center">Canoli</string>
+    <string name="article_title_font_scale_label">Maint y ffont</string>
     <string name="article_byline_date_only">%1$s am %2$s</string>
     <string name="settings_option_auto_delete_articles_title">Dileu erthyglau\'n awtomatig</string>
     <string name="refresh_every_day">Bob dydd</string>

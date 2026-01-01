@@ -18,6 +18,9 @@ internal val articlesModule = module {
             context = get(),
             textSize = get<AppPreferences>().readerOptions.fontSize,
             fontOption = get<AppPreferences>().readerOptions.fontFamily,
+            titleFontSize = get<AppPreferences>().readerOptions.titleFontSize,
+            textAlignment = get<AppPreferences>().readerOptions.titleTextAlignment,
+            titleFollowsBodyFont = get<AppPreferences>().readerOptions.titleFollowsBodyFont,
             hideTopMargin = get<AppPreferences>().readerOptions.pinTopToolbar,
             enableHorizontalScroll = get<AppPreferences>().readerOptions.enableHorizontaPagination,
         )

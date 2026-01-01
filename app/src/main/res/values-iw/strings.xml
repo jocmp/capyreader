@@ -139,6 +139,12 @@
     <string name="font_option_system_default">ברירת מחדל מערכת</string>
     <string name="article_font_menu_label">גופן</string>
     <string name="article_font_scale_label">גודל גופן</string>
+    <string name="article_style_title_section">כותרת</string>
+    <string name="article_style_text_section">טקסט</string>
+    <string name="article_style_title_follow_body_font">השתמש בגופן הגוף לכותרת</string>
+    <string name="title_alignment_left">יישור לשמאל</string>
+    <string name="title_alignment_center">מרכז</string>
+    <string name="article_title_font_scale_label">גודל גופן</string>
     <string name="image_error_text">שגיאה בטעינת תמונה</string>
     <string name="settings_option_auto_delete_articles_subtitle">מחק קריאה, הורד ממועדפים מאמרים הישנים מ3 חודשים</string>
     <string name="settings_option_auto_delete_articles_title">מחיקה אוטומטית של מאמרים</string>

@@ -145,6 +145,12 @@
     <string name="font_option_system_default">システムのデフォルト</string>
     <string name="article_font_menu_label">フォント</string>
     <string name="article_font_scale_label">フォントの大きさ</string>
+    <string name="article_style_title_section">タイトル</string>
+    <string name="article_style_text_section">本文</string>
+    <string name="article_style_title_follow_body_font">タイトルに本文のフォントを使用</string>
+    <string name="title_alignment_left">左揃え</string>
+    <string name="title_alignment_center">中央揃え</string>
+    <string name="article_title_font_scale_label">フォントの大きさ</string>
     <string name="image_error_text">画像の読み込みでエラーが発生しました</string>
     <string name="settings_option_auto_delete_articles_subtitle">3ヶ月以上前の既読かつスターなしの記事を削除</string>
     <string name="settings_option_auto_delete_articles_title">記事の自動削除</string>

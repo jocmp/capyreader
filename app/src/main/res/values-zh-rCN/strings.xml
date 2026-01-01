@@ -71,7 +71,13 @@
     <string name="font_option_poppins">Poppins</string>
     <string name="font_option_system_default">系统默认</string>
     <string name="article_font_menu_label">字体</string>
-    <string name="article_font_scale_label">字体比例</string>
+    <string name="article_font_scale_label">字体大小</string>
+    <string name="article_style_title_section">标题</string>
+    <string name="article_style_text_section">正文</string>
+    <string name="article_style_title_follow_body_font">标题使用正文字体</string>
+    <string name="title_alignment_left">左对齐</string>
+    <string name="title_alignment_center">居中</string>
+    <string name="article_title_font_scale_label">字体大小</string>
     <string name="image_error_text">加载图片错误</string>
     <string name="article_byline">%1$s %2$s %3$s</string>
     <string name="article_byline_date_only">%1$s %2$s</string>

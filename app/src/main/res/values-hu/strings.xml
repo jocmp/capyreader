@@ -143,6 +143,12 @@
     <string name="font_option_system_default">Rendszer alapértelmezett</string>
     <string name="article_font_menu_label">Betűtípus</string>
     <string name="article_font_scale_label">Betűméret</string>
+    <string name="article_style_title_section">Cím</string>
+    <string name="article_style_text_section">Szöveg</string>
+    <string name="article_style_title_follow_body_font">Szövegtípus használata a címhez</string>
+    <string name="title_alignment_left">Balra igazítás</string>
+    <string name="title_alignment_center">Középre igazítás</string>
+    <string name="article_title_font_scale_label">Betűméret</string>
     <string name="image_error_text">Hiba a kép betöltésekor</string>
     <string name="article_byline">%1$s, %2$s, szerző: %3$s</string>
     <string name="article_byline_date_only">%1$s, %2$s</string>

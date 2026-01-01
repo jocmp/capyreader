@@ -8,4 +8,5 @@ object FontSize {
         get() = (MIN..MAX step 2).toList()
 
     const val DEFAULT = 16
+    const val TITLE_DEFAULT = 24
 }

@@ -8,9 +8,9 @@ FASTLANE ?= bundle exec fastlane
 assets:
 	$(MAKE) -C article_forge clean build
 
-.PHONY: tsc
-tsc: ## Type-check JavaScript files
-	npx -p typescript tsc
+.PHONY: check
+check: ## Type-check JavaScript files
+	npx -p typescript tsc --noEmit
 
 .PHONY: deps
 deps: ## Install bumpver

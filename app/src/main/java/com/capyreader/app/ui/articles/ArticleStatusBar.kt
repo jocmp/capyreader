@@ -1,28 +1,38 @@
 package com.capyreader.app.ui.articles
 
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.ButtonGroupDefaults
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.ToggleButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.jocmp.capy.ArticleStatus
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ArticleStatusBar(
     onSelectStatus: (status: ArticleStatus) -> Unit,
     status: ArticleStatus,
 ) {
-    SingleChoiceSegmentedButtonRow {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween),
+    ) {
         options.forEachIndexed { index, buttonStatus ->
-            SegmentedButton(
-                shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
-                onClick = {
+            ToggleButton(
+                checked = buttonStatus == status,
+                onCheckedChange = {
                     if (buttonStatus != status) {
                         onSelectStatus(buttonStatus)
                     }
                 },
-                icon = {},
-                selected = buttonStatus == status
+                modifier = Modifier.weight(1f),
+                shapes = when (index) {
+                    0 -> ButtonGroupDefaults.connectedLeadingButtonShapes()
+                    options.lastIndex -> ButtonGroupDefaults.connectedTrailingButtonShapes()
+                    else -> ButtonGroupDefaults.connectedMiddleButtonShapes()
+                }
             ) {
                 ArticleStatusIcon(status = buttonStatus)
             }

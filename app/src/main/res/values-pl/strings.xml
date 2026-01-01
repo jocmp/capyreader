@@ -114,7 +114,13 @@
     <string name="settings_option_copy_version">Kopiuj wersję</string>
     <string name="refresh_on_start">Przy uruchamianiu</string>
     <string name="font_option_system_default">Domyślne ustawienia systemu</string>
-    <string name="article_font_scale_label">Skala czcionki</string>
+    <string name="article_font_scale_label">Rozmiar czcionki</string>
+    <string name="article_style_title_section">Tytuł</string>
+    <string name="article_style_text_section">Tekst</string>
+    <string name="article_style_title_follow_body_font">Użyj czcionki tekstu dla tytułu</string>
+    <string name="title_alignment_left">Wyrównaj do lewej</string>
+    <string name="title_alignment_center">Wyśrodkuj</string>
+    <string name="article_title_font_scale_label">Rozmiar czcionki</string>
     <string name="refresh_every_day">Codziennie</string>
     <string name="feed_form_feed_url_title">Adres URL kanału</string>
     <string name="settings_auto_delete_option_keep_forever">Na zawsze</string>

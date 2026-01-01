@@ -110,6 +110,12 @@
     <string name="empty_onboarding_prompt">ஊட்டத்தைச் சேர்ப்பதன் மூலம் தொடங்கவும்</string>
     <string name="article_style_options">எழுத்துரு நடை விருப்பங்கள்</string>
     <string name="article_font_scale_label">எழுத்துரு அளவு</string>
+    <string name="article_style_title_section">தலைப்பு</string>
+    <string name="article_style_text_section">உரை</string>
+    <string name="article_style_title_follow_body_font">தலைப்புக்கு உரை எழுத்துருவைப் பயன்படுத்து</string>
+    <string name="title_alignment_left">இடது சீரமை</string>
+    <string name="title_alignment_center">நடுவில்</string>
+    <string name="article_title_font_scale_label">எழுத்துரு அளவு</string>
     <string name="font_option_system_default">கணினி இயல்புநிலை</string>
     <string name="article_font_menu_label">எழுத்துரு</string>
     <string name="image_error_text">படத்தை ஏற்றுவதில் பிழை</string>

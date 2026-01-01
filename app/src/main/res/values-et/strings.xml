@@ -141,7 +141,13 @@
     <string name="empty_onboarding_prompt">Alustuseks lisa mõni uudisvoog</string>
     <string name="font_option_vollkorn">Vollkorn</string>
     <string name="article_font_menu_label">Kirjatüüp</string>
-    <string name="article_font_scale_label">Kirjatüübi mõõtkava</string>
+    <string name="article_font_scale_label">Fondi suurus</string>
+    <string name="article_style_title_section">Pealkiri</string>
+    <string name="article_style_text_section">Tekst</string>
+    <string name="article_style_title_follow_body_font">Kasuta põhiteksti fonti pealkirja jaoks</string>
+    <string name="title_alignment_left">Joonda vasakule</string>
+    <string name="title_alignment_center">Keskelda</string>
+    <string name="article_title_font_scale_label">Fondi suurus</string>
     <string name="settings_panel_gestures_title">Viiped</string>
     <string name="settings_list_top_bar_title">Seadistused</string>
     <string name="settings_auto_delete_option_keep_for_one_month">1 kuu</string>
