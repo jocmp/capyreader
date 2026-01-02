@@ -609,8 +609,17 @@ fun ArticleScreen(
                         },
                         onScrollToArticle = { index ->
                             scrollToArticle(index)
-                        }
+                        },
+                        translationState = viewModel.translationState,
+                        sourceLanguageDisplayName = viewModel.detectedLanguage.displayName,
+                        onTranslate = viewModel::translateArticle,
+                        onShowOriginal = viewModel::showOriginalArticle,
+                        onDismissTranslation = viewModel::dismissTranslation,
                     )
+
+                    LaunchedEffect(article.id) {
+                        viewModel.detectArticleLanguage()
+                    }
                 }
             }
         )

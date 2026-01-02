@@ -307,4 +307,14 @@
     <string name="freshrss_visibility_option_important">Important</string>
     <string name="freshrss_visibility_option_category">Category</string>
     <string name="freshrss_visibility_option_feed">Feed</string>
+
+    <string name="translation_offer">Translate from %1$s?</string>
+    <string name="translation_translate">Translate</string>
+    <string name="translation_dismiss">Dismiss</string>
+    <string name="translation_downloading">Downloading language model…</string>
+    <string name="translation_in_progress">Translating…</string>
+    <string name="translation_viewing_translated">Viewing translation</string>
+    <string name="translation_show_original">Show original</string>
+    <string name="translation_error">Translation failed</string>
+    <string name="translation_retry">Retry</string>
 </resources>

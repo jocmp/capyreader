@@ -15,6 +15,10 @@ import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleListVerticalSwipe
 import com.capyreader.app.sync.Sync
+import com.capyreader.app.translation.ArticleTranslator
+import com.capyreader.app.translation.DetectedLanguage
+import com.capyreader.app.translation.TranslatedArticle
+import com.capyreader.app.translation.TranslationState
 import com.capyreader.app.ui.components.SearchState
 import com.capyreader.app.ui.widget.WidgetUpdater
 import com.jocmp.capy.Account
@@ -45,6 +49,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.time.OffsetDateTime
+import java.util.Locale
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ArticleScreenViewModel(
@@ -52,10 +57,23 @@ class ArticleScreenViewModel(
     private val appPreferences: AppPreferences,
     private val application: Application,
     private val notificationHelper: NotificationHelper,
+    private val articleTranslator: ArticleTranslator,
 ) : AndroidViewModel(application) {
     private var refreshJob: Job? = null
 
     private var fullContentJob: Job? = null
+
+    private var translationJob: Job? = null
+
+    var translationState by mutableStateOf(TranslationState.NONE)
+        private set
+
+    var detectedLanguage by mutableStateOf(DetectedLanguage.UNDETERMINED)
+        private set
+
+    private var translatedArticle: TranslatedArticle? = null
+    private var originalTitle: String? = null
+    private var originalContent: String? = null
 
     val filter = appPreferences.filter.stateIn(viewModelScope)
 
@@ -420,6 +438,7 @@ class ArticleScreenViewModel(
     fun clearArticle() {
         _article = null
         appPreferences.articleID.delete()
+        resetTranslationState()
     }
 
     fun startSearch() {
@@ -605,6 +624,114 @@ class ArticleScreenViewModel(
                 account.disableStickyContent(article.feedID)
             }
         }
+    }
+
+    fun detectArticleLanguage() {
+        val article = _article ?: return
+
+        if (!articleTranslator.isAvailable) {
+            translationState = TranslationState.NONE
+            return
+        }
+
+        translationJob?.cancel()
+        translationState = TranslationState.DETECTING
+
+        translationJob = viewModelScope.launchIO {
+            val textToDetect = article.title + " " + article.content
+            val detected = articleTranslator.detectLanguage(textToDetect)
+            detectedLanguage = detected
+
+            val deviceLanguage = Locale.getDefault().language
+
+            if (detected.languageCode != "und" && detected.languageCode != deviceLanguage) {
+                translationState = TranslationState.AVAILABLE
+            } else {
+                translationState = TranslationState.NONE
+            }
+        }
+    }
+
+    fun translateArticle() {
+        val article = _article ?: return
+
+        translationJob?.cancel()
+
+        originalTitle = article.title
+        originalContent = article.content
+
+        translationJob = viewModelScope.launchIO {
+            val modelDownloaded = articleTranslator.isModelDownloaded(
+                sourceLanguage = detectedLanguage.languageCode
+            )
+
+            if (!modelDownloaded) {
+                translationState = TranslationState.DOWNLOADING
+                val downloadResult = articleTranslator.downloadModel(
+                    sourceLanguage = detectedLanguage.languageCode,
+                    requireWifi = false
+                )
+                if (downloadResult.isFailure) {
+                    translationState = TranslationState.ERROR
+                    return@launchIO
+                }
+            }
+
+            translationState = TranslationState.TRANSLATING
+
+            articleTranslator.translate(
+                title = article.title,
+                content = article.content,
+                sourceLanguage = detectedLanguage.languageCode
+            ).fold(
+                onSuccess = { translated ->
+                    translatedArticle = translated
+                    _article = article.copy(
+                        title = translated.title,
+                        content = translated.content
+                    )
+                    translationState = TranslationState.TRANSLATED
+                },
+                onFailure = {
+                    translationState = TranslationState.ERROR
+                    CapyLog.warn(
+                        "translation",
+                        mapOf(
+                            "error_type" to it::class.simpleName,
+                            "error_message" to it.message
+                        )
+                    )
+                }
+            )
+        }
+    }
+
+    fun showOriginalArticle() {
+        val article = _article ?: return
+        val origTitle = originalTitle ?: return
+        val origContent = originalContent ?: return
+
+        _article = article.copy(
+            title = origTitle,
+            content = origContent
+        )
+        translationState = TranslationState.AVAILABLE
+    }
+
+    fun dismissTranslation() {
+        translationState = TranslationState.NONE
+        translatedArticle = null
+        originalTitle = null
+        originalContent = null
+    }
+
+    private fun resetTranslationState() {
+        translationJob?.cancel()
+        translationState = TranslationState.NONE
+        detectedLanguage = DetectedLanguage.UNDETERMINED
+        translatedArticle = null
+        originalTitle = null
+        originalContent = null
     }
 
     private suspend fun fetchFullContent(article: Article) {

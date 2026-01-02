@@ -33,6 +33,7 @@ internal val articlesModule = module {
             appPreferences = appPreferences,
             notificationHelper = get(),
             application = get(),
+            articleTranslator = get(),
         )
     }
     viewModel {
