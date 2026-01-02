@@ -1,4 +1,0 @@
-• Add full-content parser for 9to5google.com
-• Improve parsing for YouTube on locale feeds
-• Improve notification cleanup on "Mark as read"
-• Update translations for Polish and Russian thanks to volunteers

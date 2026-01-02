@@ -1,7 +1,0 @@
-Bug fixes aplenty!
-
-• Add custom article parsers for flatpanelshd.com and insideEVs.com
-• Update Greek and Portuguese translations thanks to volunteers!
-• Fix Feedbin bug when syncing more than 1,000 unread articles
-• Fix for updating stale articles in FreshRSS labels
-• Fix missing scrollbar when switching between feeds

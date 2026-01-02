@@ -1,4 +1,0 @@
-• Add custom article parsers for flatpanelshd.com and insideEVs.com
-• Fix Feedbin bug when syncing more than 1,000 unread articles
-• Add initial fix for updating stale articles in FreshRSS labels
-• Update Greek translations thanks to a volunteer!

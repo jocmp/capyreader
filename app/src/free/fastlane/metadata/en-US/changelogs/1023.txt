@@ -1,2 +1,0 @@
-• Updates highlight and scrollbar colors on the article page
-• Fixes scrolling issue when adding a feed from a long list of feed choices

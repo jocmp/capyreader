@@ -1,5 +1,9 @@
 default_platform(:android)
 
+GOOGLE_PLAY_LOCALES = YAML.load_file("google_play_locales.yml").freeze
+
+GPLAY_METADATA_OUT = './.gplay_metadata/android'
+
 platform :android do
   desc 'Validate Play Store key'
   lane :validate_key do
@@ -13,10 +17,45 @@ platform :android do
 
   desc "Deploy a new version to the Google Play"
   lane :production do
+    prepare_gplay_metadata
     build_release_bundle
     upload_to_play_store(
+      metadata_path:GPLAY_METADATA_OUT,
       sync_image_upload: true
     )
+    cleanup_gplay_metadata
+  end
+
+  private_lane :prepare_gplay_metadata do
+    source = "./metadata/android"
+    dest = GPLAY_METADATA_OUT
+
+    FileUtils.rm_rf(GPLAY_METADATA_OUT)
+    FileUtils.mkdir_p(dest)
+
+    Dir.glob("#{source}/*").select { |f| File.directory?(f) }.each do |path|
+      locale = File.basename(path)
+      target_locale = gplay_locale(locale)
+
+      if target_locale
+        FileUtils.cp_r(path, "#{dest}/#{target_locale}")
+      else
+        UI.message("Skipping unsupported locale: #{locale}")
+      end
+    end
+  end
+
+  def gplay_locale(locale)
+    return locale if GOOGLE_PLAY_LOCALES.include?(locale)
+
+    base_locale = locale.split("-").first
+    return base_locale if GOOGLE_PLAY_LOCALES.include?(base_locale)
+
+    nil
+  end
+
+  private_lane :cleanup_gplay_metadata do
+    FileUtils.rm_rf("fastlane/.gplay_metadata")
   end
 
   lane :github_release do

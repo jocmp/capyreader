@@ -1,2 +1,0 @@
-- Adds swipe navigation to open feed list drawer
-- Behind-the-scenes speedup for the article page

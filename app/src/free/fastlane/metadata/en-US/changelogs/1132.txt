@@ -1,6 +1,0 @@
-• Add support for FreshRSS image enclosures
-• Mark articles as on swipe-to-open from list
-• Update custom parsers for polygon.com and theverge.com
-• Fix feed selection when app is refreshing
-• Prevent "mark all read" from marking entire list as read on search filter
-• Update translations for Bulgarian, German, Spanish, Estonian, French, Galician, Italian, Indonesian, Latvian, Polish, Tamil, Turkish, and Chinese thanks to volunteers

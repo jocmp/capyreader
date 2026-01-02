@@ -1,1 +1,0 @@
-Add options to the article page to change font family and text size.

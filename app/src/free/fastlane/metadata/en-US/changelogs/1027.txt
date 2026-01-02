@@ -1,4 +1,0 @@
-• Add support to play embedded videos
-• Add fullscreen image viewer for articles
-• Other small UI tweaks to improve colors and controls
-

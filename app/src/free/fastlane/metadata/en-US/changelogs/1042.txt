@@ -1,3 +1,0 @@
-• Add RTL (Right-to-Left) support for the reader page and article list
-• Update timestamp UI in article list
-• Update Arabic translations thanks to volunteers

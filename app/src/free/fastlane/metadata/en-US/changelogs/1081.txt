@@ -1,4 +1,0 @@
-• Added option for single-column layouts on big screens
-• Fixed bug where sticky content preference didn't reset after toggle
-• Use device-local article parser for Feedbin
-• Updated translations for Bulgarian, Norwegian, and Italian thanks to volunteers

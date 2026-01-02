@@ -1,7 +1,0 @@
-• Add menu options to rename or delete tags
-• Add long press options when selecting article links
-• Add "Navigate to Parent" back nav option
-• Update translations for Bulgarian, German, Estonian, French, Galician, Italian, and Latvian, Polish, Russian and Chinese thanks to volunteers
-• Reword "Add or Select Tag" field when editing a FreshRSS feed
-• Ensure animated GIFs are shown in reader
-• Fix "author" tag parsing for local RSS feeds

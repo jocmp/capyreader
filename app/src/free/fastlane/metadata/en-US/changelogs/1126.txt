@@ -1,5 +1,0 @@
-• Add option to disable some gestures for better TalkBack support
-• Show feed title if article title is missing in reader
-• [Local] Add better support for date-only timestamps
-• Update translations for Estonian, Latvian, Russian and Turkish thanks to volunteers
-• Ensure notifications open to unread filter

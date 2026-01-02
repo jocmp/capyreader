@@ -1,1 +1,0 @@
-• Improve reader loading speed

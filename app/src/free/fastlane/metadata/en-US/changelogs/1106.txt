@@ -1,6 +1,0 @@
-• Add button to navigation drawer to refresh all feeds
-• Add save and share buttons to the article media viewer
-• Add "Mark as read" button to article notifications
-• Add option to disable bottom swipe between feeds
-• Persist folder dropdown expanded state
-• Fix local feed articles that use blank GUIDs

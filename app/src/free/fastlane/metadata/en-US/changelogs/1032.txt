@@ -1,3 +1,0 @@
-• Updates RSS parser to better support non-English characters
-• Updates translations, now including Chinese (Simplified)
-• Minor UI tweaks to improve padding in settings and the feed edit page

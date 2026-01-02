@@ -1,4 +1,0 @@
-• Fix mark read on scroll bug when refreshing all
-• Increase widget articles from 10 to 30
-• Hide empty table cell rows for better formatting
-• Update translations for Arabic, Bulgarian, German, Greek, Spanish, Estonian, French, Galician, Italian, Polish, Portuguese (Brazil), Portuguese, Romanian, Swedish, Chinese (Simplified), and Chinese (Traditional) thanks to volunteers!

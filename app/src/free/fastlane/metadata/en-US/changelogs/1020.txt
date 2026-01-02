@@ -1,1 +1,0 @@
-Fix issue where sticky full content was not saved after refreshing a feed.

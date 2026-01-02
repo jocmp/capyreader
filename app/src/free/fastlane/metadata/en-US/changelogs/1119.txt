@@ -1,3 +1,0 @@
-• Add menu options to rename or delete tags
-• [FreshRSS] Reword "Add or Select Tag" field when editing a feed
-• Update translations for French and Latvian thanks to volunteers

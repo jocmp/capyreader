@@ -1,3 +1,0 @@
-• Rework Full Content parser to respect autoplay on factorio.com's blog
-• Always show video controls when available
-

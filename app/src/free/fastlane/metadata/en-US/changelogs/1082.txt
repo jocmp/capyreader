@@ -1,4 +1,0 @@
-• Add end-of-feed swipe gesture to move to the next feed
-• Add transition to move next feed when marking all as read
-• Improve FreshRSS login wording
-• Update translations for Spanish, Chinese, Italian, Estonian, Bulgarian, German, and Serbian thanks to volunteers

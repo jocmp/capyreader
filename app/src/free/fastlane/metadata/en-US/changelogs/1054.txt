@@ -1,2 +1,0 @@
-• Adds back navigation option to open the drawer
-• Adds translations for French and Estonian thanks to volunteers

@@ -1,2 +1,0 @@
-- Fix crash for feeds that use incomplete links
-- Adds a button to add feeds when starting a new account

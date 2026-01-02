@@ -1,1 +1,0 @@
-Fixes a blank page bug with articles that were missing outline content

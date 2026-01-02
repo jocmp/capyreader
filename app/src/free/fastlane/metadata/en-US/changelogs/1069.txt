@@ -1,2 +1,0 @@
-• Fix handling for feeds that are missing article URL
-• Fix swipe gesture padding when toolbars are pinned

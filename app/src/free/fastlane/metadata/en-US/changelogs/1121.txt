@@ -1,4 +1,0 @@
-Small bugfix release!
-
-• Fix bug where article text couldn't be highlighted on long press
-• Update translations for Bulgarian, Galician, Italian, and Chinese thanks to volunteers.

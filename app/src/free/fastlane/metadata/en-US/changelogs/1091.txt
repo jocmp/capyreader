@@ -1,3 +1,0 @@
-• Add more font sizes to article list and reader options
-• Updated translations for Bulgarian, Chinese, Estonian, French, Galician, German, Italian, Portuguese and Russian thanks to volunteers.
-• Ensure parser handles accented characters for some feed encodings

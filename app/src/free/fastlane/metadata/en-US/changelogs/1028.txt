@@ -1,2 +1,0 @@
-• Adds settings toggle to disable article auto-delete
-• Adds Serbian translations (thank you Whiteowle!)
