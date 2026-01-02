@@ -99,7 +99,13 @@
     <string name="font_option_poppins">Poppins</string>
     <string name="font_option_system_default">Valeur du système</string>
     <string name="article_font_scale_label">Taille de la police</string>
-    <string name="image_error_text">Erreur au chargement de l’image</string>
+    <string name="article_style_title_section">Titre</string>
+    <string name="article_style_text_section">Texte</string>
+    <string name="article_style_title_follow_body_font">Utiliser la police du corps pour le titre</string>
+    <string name="title_alignment_left">Aligner à gauche</string>
+    <string name="title_alignment_center">Centrer</string>
+    <string name="article_title_font_scale_label">Taille de la police</string>
+    <string name="image_error_text">Erreur au chargement de l\'image</string>
     <string name="article_byline_date_only">%1$s à %2$s</string>
     <string name="settings_option_auto_delete_articles_title">Suppression automatique des articles</string>
     <string name="feed_form_copy_feed_url_to_clipboard">Copier l’URL du flux dans le presse-papier</string>

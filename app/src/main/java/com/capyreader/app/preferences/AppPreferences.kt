@@ -11,6 +11,7 @@ import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.articles.FontOption
 import com.jocmp.capy.articles.FontSize
 import com.jocmp.capy.articles.SortOrder
+import com.jocmp.capy.articles.TextAlignment
 import com.jocmp.capy.preferences.AndroidPreferenceStore
 import com.jocmp.capy.preferences.Preference
 import com.jocmp.capy.preferences.PreferenceStore
@@ -124,6 +125,15 @@ class AppPreferences(context: Context) {
 
         val improveTalkback: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_improve_talkback", false)
+
+        val titleTextAlignment: Preference<TextAlignment>
+            get() = preferenceStore.getEnum("article_title_text_alignment", TextAlignment.default)
+
+        val titleFontSize: Preference<Int>
+            get() = preferenceStore.getInt("article_title_font_size", FontSize.TITLE_DEFAULT)
+
+        val titleFollowsBodyFont: Preference<Boolean>
+            get() = preferenceStore.getBoolean("article_title_follows_body_font", false)
     }
 
     class ArticleListOptions(private val preferenceStore: PreferenceStore) {

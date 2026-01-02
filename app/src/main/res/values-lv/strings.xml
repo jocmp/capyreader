@@ -120,6 +120,12 @@
     <string name="font_option_system_default">Izmantot sistēmas noklusējuma iestatījumus</string>
     <string name="article_font_menu_label">Fonts</string>
     <string name="article_font_scale_label">Fonta lielums</string>
+    <string name="article_style_title_section">Virsraksts</string>
+    <string name="article_style_text_section">Teksts</string>
+    <string name="article_style_title_follow_body_font">Izmantot pamatteksta fontu virsrakstam</string>
+    <string name="title_alignment_left">Līdzināt pa kreisi</string>
+    <string name="title_alignment_center">Centrēt</string>
+    <string name="article_title_font_scale_label">Fonta lielums</string>
     <string name="filter_action_menu_search_articles">Meklēt rakstus</string>
     <string name="image_error_text">Attēla ielādes kļūda</string>
     <string name="article_byline_date_only">%1$s publicēts %2$s</string>

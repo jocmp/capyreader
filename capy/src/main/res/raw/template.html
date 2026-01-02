@@ -18,6 +18,8 @@
         --color-surface-tint: {{color_surface_tint}};
         --article-top-margin: {{top_margin}};
         --article-font-size: {{font_size}};
+        --article-title-font-size: {{title_font_size}};
+        --article-title-text-align: {{title_text_align}};
         --pre-white-space: {{pre_white_space}};
       }
     </style>
@@ -31,7 +33,7 @@
     <article role="main">
       <header>
         <a class="article__header" href="{{external_link}}">
-          <h1 class="article__title">{{title}}</h1>
+          <h1 class="article__title article__title--font-{{title_font_family}}">{{title}}</h1>
           <div>{{byline}}</div>
           <div>{{feed_name}}</div>
         </a>

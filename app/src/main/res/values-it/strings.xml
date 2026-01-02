@@ -81,6 +81,12 @@
     <string name="font_option_system_default">Impostazioni predefinite</string>
     <string name="article_font_menu_label">Font</string>
     <string name="article_font_scale_label">Dimensione del testo</string>
+    <string name="article_style_title_section">Titolo</string>
+    <string name="article_style_text_section">Testo</string>
+    <string name="article_style_title_follow_body_font">Usa il font del corpo per il titolo</string>
+    <string name="title_alignment_left">Allinea a sinistra</string>
+    <string name="title_alignment_center">Centra</string>
+    <string name="article_title_font_scale_label">Dimensione del testo</string>
     <string name="image_error_text">Errore nel caricamento dell\'immagine</string>
     <string name="article_byline">%1$s a %2$s da %3$s</string>
     <string name="article_byline_date_only">%1$s a %2$s</string>

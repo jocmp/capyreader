@@ -110,7 +110,13 @@
     <string name="edit_feed_notifications_title">Slå på varsler</string>
     <string name="notifications_permissions_disabled_call_to_action">Innstillinger</string>
     <string name="filter_action_menu_search_articles">Søk i artikler</string>
-    <string name="article_font_scale_label">Skriftskalering</string>
+    <string name="article_font_scale_label">Skriftstørrelse</string>
+    <string name="article_style_title_section">Tittel</string>
+    <string name="article_style_text_section">Tekst</string>
+    <string name="article_style_title_follow_body_font">Bruk brødtekstens skrifttype for tittel</string>
+    <string name="title_alignment_left">Venstrejuster</string>
+    <string name="title_alignment_center">Midtstill</string>
+    <string name="article_title_font_scale_label">Skriftstørrelse</string>
     <string name="settings_clear_all_articles_confirm">Bekreft</string>
     <string name="settings_auto_delete_option_keep_for_two_week">2 uker</string>
     <string name="settings_auto_delete_option_keep_for_three_month">3 måneder</string>

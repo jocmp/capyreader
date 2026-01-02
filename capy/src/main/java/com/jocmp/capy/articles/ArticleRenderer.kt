@@ -10,6 +10,9 @@ class ArticleRenderer(
     private val context: Context,
     private val textSize: Preference<Int>,
     private val fontOption: Preference<FontOption>,
+    private val titleFontSize: Preference<Int>,
+    private val textAlignment: Preference<TextAlignment>,
+    private val titleFollowsBodyFont: Preference<Boolean>,
     private val hideTopMargin: Preference<Boolean>,
     private val enableHorizontalScroll: Preference<Boolean>,
 ) {
@@ -42,6 +45,12 @@ class ArticleRenderer(
 
         val content = buildContent(article, hideImages)
 
+        val titleFontFamily = if (titleFollowsBodyFont.get()) {
+            fontFamily
+        } else {
+            FontOption.SYSTEM_DEFAULT
+        }
+
         val substitutions = colors + mapOf(
             "external_link" to article.externalLink(),
             "title" to title,
@@ -52,6 +61,9 @@ class ArticleRenderer(
             "font_preload" to fontPreload(fontFamily),
             "top_margin" to topMargin(),
             "pre_white_space" to preWhiteSpace(),
+            "title_font_size" to "${titleFontSize.get()}px",
+            "title_text_align" to textAlignment.get().toCSS,
+            "title_font_family" to titleFontFamily.slug,
             "body" to content,
         )
 

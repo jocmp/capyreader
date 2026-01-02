@@ -142,7 +142,13 @@
     <string name="empty_onboarding_title">Καμία ροή ακόμα</string>
     <string name="empty_onboarding_prompt">Ξεκίνα προσθέτοντας μια ροή</string>
     <string name="article_style_options">Επιλογές στυλ γραμματοσειράς</string>
-    <string name="article_font_scale_label">Κλίμακα γραμματοσειράς</string>
+    <string name="article_font_scale_label">Μέγεθος γραμματοσειράς</string>
+    <string name="article_style_title_section">Τίτλος</string>
+    <string name="article_style_text_section">Κείμενο</string>
+    <string name="article_style_title_follow_body_font">Χρήση γραμματοσειράς κειμένου για τίτλο</string>
+    <string name="title_alignment_left">Στοίχιση αριστερά</string>
+    <string name="title_alignment_center">Κεντράρισμα</string>
+    <string name="article_title_font_scale_label">Μέγεθος γραμματοσειράς</string>
     <string name="image_error_text">Σφάλμα φόρτωσης εικόνας</string>
     <string name="article_byline">%1$s στις %2$s από %3$s</string>
     <string name="article_byline_date_only">%1$s στις %2$s</string>

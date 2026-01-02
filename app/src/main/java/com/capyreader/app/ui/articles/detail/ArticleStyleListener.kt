@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.toArgb
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.jocmp.capy.articles.FontOption
+import com.jocmp.capy.articles.TextAlignment
 import org.koin.compose.koinInject
 
 @Composable
@@ -18,6 +19,9 @@ fun ArticleStyleListener(webView: WebView?, appPreferences: AppPreferences = koi
     val appTheme by appPreferences.appTheme.collectChangesWithDefault()
     val themeMode by appPreferences.themeMode.collectChangesWithDefault()
     val pureBlackDarkMode by appPreferences.pureBlackDarkMode.collectChangesWithDefault()
+    val titleFontSize by appPreferences.readerOptions.titleFontSize.collectChangesWithDefault()
+    val titleTextAlignment by appPreferences.readerOptions.titleTextAlignment.collectChangesWithDefault()
+    val titleFollowsBodyFont by appPreferences.readerOptions.titleFollowsBodyFont.collectChangesWithDefault()
 
     val colors = articleTemplateColors()
 
@@ -36,6 +40,25 @@ fun ArticleStyleListener(webView: WebView?, appPreferences: AppPreferences = koi
     LaunchedEffect(appTheme, themeMode, pureBlackDarkMode) {
         if (webView != null) {
             updateThemeColors(webView, colors)
+        }
+    }
+
+    LaunchedEffect(titleFontSize) {
+        if (webView != null) {
+            updateTitleFontSize(webView, titleFontSize)
+        }
+    }
+
+    LaunchedEffect(titleTextAlignment) {
+        if (webView != null) {
+            updateTitleAlignment(webView, titleTextAlignment)
+        }
+    }
+
+    LaunchedEffect(titleFollowsBodyFont, fontFamily) {
+        if (webView != null) {
+            val titleFont = if (titleFollowsBodyFont) fontFamily else FontOption.SYSTEM_DEFAULT
+            updateTitleFontFamily(webView, titleFont)
         }
     }
 }
@@ -87,4 +110,40 @@ private fun updateThemeColors(webView: WebView, colors: Map<String, String>) {
 private fun Color.toHTMLColor(): String {
     val hex = Integer.toHexString(toArgb()).takeLast(6)
     return "#${hex.uppercase()}"
+}
+
+private fun updateTitleFontSize(webView: WebView, fontSize: Int) {
+    webView.evaluateJavascript(
+        """
+        (function() {
+          document.documentElement.style.setProperty("--article-title-font-size", "${fontSize}px");
+        })();
+        """.trimIndent()
+    ) {}
+}
+
+private fun updateTitleAlignment(webView: WebView, alignment: TextAlignment) {
+    webView.evaluateJavascript(
+        """
+        (function() {
+          document.documentElement.style.setProperty("--article-title-text-align", "${alignment.toCSS}");
+        })();
+        """.trimIndent()
+    ) {}
+}
+
+private fun updateTitleFontFamily(webView: WebView, fontOption: FontOption) {
+    webView.evaluateJavascript(
+        """
+        (function() {
+          let slug = "${fontOption.slug}";
+          let articleTitle = document.getElementsByClassName("article__title")[0];
+
+          if (articleTitle) {
+            const classes = articleTitle.className.split(" ").filter(c => !c.startsWith("article__title--font"));
+            articleTitle.className = classes.join(" ").trim() + " article__title--font-" + slug;
+          }
+        })();
+        """.trimIndent()
+    ) {}
 }

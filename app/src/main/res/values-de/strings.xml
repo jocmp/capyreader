@@ -99,6 +99,12 @@
     <string name="article_font_menu_label">Schriftart</string>
     <string name="font_option_poppins">Poppins</string>
     <string name="article_font_scale_label">Schriftgröße</string>
+    <string name="article_style_title_section">Titel</string>
+    <string name="article_style_text_section">Text</string>
+    <string name="article_style_title_follow_body_font">Textschriftart für Titel verwenden</string>
+    <string name="title_alignment_left">Linksbündig</string>
+    <string name="title_alignment_center">Zentriert</string>
+    <string name="article_title_font_scale_label">Schriftgröße</string>
     <string name="image_error_text">Fehler beim Laden des Bildes</string>
     <string name="article_byline">%1$s um %2$s von %3$s</string>
     <string name="article_byline_date_only">%1$s um %2$s</string>

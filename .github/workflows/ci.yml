@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: "20"
       - name: Type-check JavaScript
-        run: make tsc
+        run: make check
 
   test:
     runs-on: ubuntu-latest

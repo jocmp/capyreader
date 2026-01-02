@@ -53,6 +53,8 @@ $font-families: (
 :root {
   --corner-radius: 0.1875rem;
   --article-line-height: 1.6em;
+  --article-title-font-size: 1.5em;
+  --article-title-text-align: left;
 }
 
 ::selection {
@@ -229,6 +231,7 @@ ul:has(img) {
   margin-bottom: 1.5rem;
   max-width: 40rem;
   margin: 0 auto 1rem;
+  text-align: var(--article-title-text-align);
 
   &:link,
   &:visited {
@@ -239,6 +242,7 @@ ul:has(img) {
 .article__title {
   margin: 0;
   padding-bottom: 0.5rem;
+  font-size: var(--article-title-font-size);
 
   &:empty {
     padding: 0;
@@ -262,6 +266,12 @@ ul:has(img) {
 
 @each $family, $value in $font-families {
   .article__body--font-#{$family} {
+    font-family: $value;
+  }
+}
+
+@each $family, $value in $font-families {
+  .article__title--font-#{$family} {
     font-family: $value;
   }
 }

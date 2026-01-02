@@ -111,6 +111,12 @@
     <string name="font_option_system_default">الخط الإفتراضي للنظام</string>
     <string name="article_font_menu_label">الخط</string>
     <string name="article_font_scale_label">حجم النص</string>
+    <string name="article_style_title_section">العنوان</string>
+    <string name="article_style_text_section">النص</string>
+    <string name="article_style_title_follow_body_font">استخدام خط النص للعنوان</string>
+    <string name="title_alignment_left">محاذاة لليسار</string>
+    <string name="title_alignment_center">توسيط</string>
+    <string name="article_title_font_scale_label">حجم الخط</string>
     <string name="image_error_text">خطأ في تحميل الصورة</string>
     <string name="article_byline">%1$s في %2$s بواسطة %3$s</string>
     <string name="article_byline_date_only">%1$s في %2$s</string>

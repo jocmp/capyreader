@@ -51,7 +51,13 @@
     <string name="settings_option_full_content_subtitle">Запомнить выбор для загрузки полного содержания статьи</string>
     <string name="empty_onboarding_prompt">Начните с добавления ленты</string>
     <string name="article_font_menu_label">Шрифт</string>
-    <string name="article_font_scale_label">Масштаб шрифта</string>
+    <string name="article_font_scale_label">Размер шрифта</string>
+    <string name="article_style_title_section">Заголовок</string>
+    <string name="article_style_text_section">Текст</string>
+    <string name="article_style_title_follow_body_font">Использовать шрифт текста для заголовка</string>
+    <string name="title_alignment_left">По левому краю</string>
+    <string name="title_alignment_center">По центру</string>
+    <string name="article_title_font_scale_label">Размер шрифта</string>
     <string name="article_byline">%1$s в %2$s от %3$s</string>
     <string name="settings_option_auto_delete_articles_title">Автоудаление статей</string>
     <string name="feed_form_feed_url_title">URL-ленты</string>
