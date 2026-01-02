@@ -1,3 +1,0 @@
-• Add support for image enclosures on local accounts
-• Add custom parser for techpowerup.com
-• Ensure tags are alphabetically ordered in the edit feed dialog

@@ -1,7 +1,0 @@
-• Adds end-of-list behavior when marking items as read on scroll
-• Allow adding empty local feeds like Google Alerts
-• Adds Galician, Polish and Malayalam translations to the app to volunteers
-• Updated custom parser for some sites
-• Updated styling for YouTube thumbnails
-• Updated translations for Bulgarian, Spanish, Estonian, French, Italian, Russian and Chinese thanks to volunteers
-• Fixed timestamps for local feeds for some locales

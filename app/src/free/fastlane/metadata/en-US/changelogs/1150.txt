@@ -1,3 +1,0 @@
-• Ensure widget corners are rounded on Android 12 thanks to a volunteer!
-• Add 'Open in browser' option per feed
-• Update translations for Latvian and Spanish thanks to volunteers

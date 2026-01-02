@@ -1,2 +1,0 @@
-• Open article notifications to article on the "Unread" filter instead of the "All" filter.
-• Fix scrollbar padding in reader

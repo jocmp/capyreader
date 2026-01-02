@@ -1,3 +1,0 @@
-• Add per-app language option for system settings
-• Fix missing locales for Spanish, Serbian, Portuguese
-

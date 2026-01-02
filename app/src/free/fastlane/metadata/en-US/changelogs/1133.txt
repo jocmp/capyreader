@@ -1,2 +1,0 @@
-• Fix Feedbin refresh bug caused by parsing issues
-• Update translations for Russian and Latvian thanks to volunteers

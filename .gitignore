@@ -21,6 +21,7 @@
 .cxx
 local.properties
 fastlane/report.xml
+fastlane/.gplay_metadata/
 app/release/
 app/google-services.json
 

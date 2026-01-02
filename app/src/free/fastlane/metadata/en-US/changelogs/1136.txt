@@ -1,3 +1,0 @@
-• Move "Mark all as read" to a floating action button
-• Open notifications to the last filter used instead of "Unread"
-• Update translations thanks to volunteers

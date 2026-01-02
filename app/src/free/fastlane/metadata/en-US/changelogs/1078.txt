@@ -1,3 +1,0 @@
-• Added option to mark read on scroll
-• Added option to hide images in articles
-• Updated translations for Spanish, Bulgarian, Norwegian, Italian, Chinese, German and Estonian thanks to volunteers

@@ -1,5 +1,0 @@
-• Tweak wait time when marking read as scroll
-• Display saved search collections for Feedbin
-• Update Mercury Parser for some feeds
-• Update error message for adding a feed when offline
-• Update translations for Arabic, Bulgarian, Estonian, French, Galician, Italian and Chinese thanks to volunteers.

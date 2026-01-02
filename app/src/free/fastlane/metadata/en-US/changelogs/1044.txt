@@ -1,3 +1,0 @@
-• Improve spacing in article list row UI
-• Export OPML to file instead of share sheet
-• Update Chinese (Traditional) translations thanks to volunteers

@@ -1,8 +1,0 @@
-Added
-
-• Add option to hide article top bar on scroll for fullscreen reading
-
-Fixed
-
-• Add support for Brotli encoding to avoid garbled text
-• Fix published dates for some feeds

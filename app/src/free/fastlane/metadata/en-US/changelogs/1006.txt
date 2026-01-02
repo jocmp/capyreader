@@ -1,2 +1,0 @@
-- Add full content support for local feeds
-- Add OPML support for imports, not just XML

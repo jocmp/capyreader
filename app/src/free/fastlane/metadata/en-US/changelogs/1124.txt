@@ -1,2 +1,0 @@
-• Add latest headlines widget to display unread articles
-• Fix crash when marking 1,000 or more articles as read

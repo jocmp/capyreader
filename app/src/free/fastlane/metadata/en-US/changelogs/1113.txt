@@ -1,3 +1,0 @@
-• Improve drawer refresh button animation
-• Fix letter casing bug when editing multiple tags with the same name
-• Update translations for Bulgarian, Spanish, Estonian, French, Galician, Italian, Polish and Chinese thanks to volunteers.

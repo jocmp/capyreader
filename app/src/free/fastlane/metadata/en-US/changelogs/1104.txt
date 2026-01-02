@@ -1,5 +1,0 @@
-• Fix horizontal scrolling jank and speed up opening reader view
-• Ensure articles are not closed when unstarred
-• Update custom parsers for arstechnica.com and se.pl
-• Ensure all feeds are refreshed on start
-• Update translations for Bulgarian, Czech, Estonian, French, Galician, Italian, Portuguese, and Chinese thanks to volunteers!

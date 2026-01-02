@@ -1,3 +1,0 @@
-• Fix feed name ordering for titles with accented characters
-• Ensure Feedbin saved searches articles are always refreshed
-• Update translations for Arabic, Bulgarian, German, Greek, Estonian, French, Galician, Italian, Malayalam, Polish, and Chinese thanks to volunteers.

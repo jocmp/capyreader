@@ -1,2 +1,0 @@
-- Fixes import issue for certain RSS feeds
-- Adds current version code to the settings menu

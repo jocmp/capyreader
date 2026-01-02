@@ -1,7 +1,0 @@
-• Add "Load full content" as a swipe up option in the reader
-• Add medium image option for article list
-• Undo timing change for "Mark as read on scroll"
-• Update article parser for several sites
-• Fix handling for dates in some feeds
-• Fix image cleaner for non-standard attributes
-• Fix database compatibility bug on Android 13 and below

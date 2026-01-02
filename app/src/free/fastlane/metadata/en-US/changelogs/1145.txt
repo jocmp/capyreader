@@ -1,4 +1,0 @@
-• Add "Share Article" to article list dropdown
-• Bump HTTP timeout from 10 seconds to 30 seconds
-• Set max retry attempts for background sync workers
-• Update translations for Arabic, Bulgarian, German, and Turkish thanks to volunteers!

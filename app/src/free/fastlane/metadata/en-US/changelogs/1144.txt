@@ -1,1 +1,0 @@
-• Fix crashes when extracting full content

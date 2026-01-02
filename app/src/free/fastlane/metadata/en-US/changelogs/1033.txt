@@ -1,2 +1,0 @@
-• Improve caching for full-screen media
-• Fix full content articles for some feeds

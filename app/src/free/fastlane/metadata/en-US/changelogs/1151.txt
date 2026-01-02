@@ -1,3 +1,0 @@
-• Add an "Open in browser" option per feed
-• Ensure widget corners are rounded on Android 12 thanks to a volunteer!
-• Update translations for Bulgarian, Galician, Italian, Latvian, Polish, Portuguese, Spanish, Welsh, and Chinese (Traditional) thanks to volunteers

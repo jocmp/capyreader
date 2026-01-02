@@ -1,5 +1,0 @@
-• Add custom parser for vortez.net
-• Set max lines to 3 for article list titles
-• Add font size options in reader view
-• Update translations for Bulgarian and German thanks to volunteers
-• Fix Miniflux crash when adding a new feed
