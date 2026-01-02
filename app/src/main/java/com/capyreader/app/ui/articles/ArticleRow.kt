@@ -22,7 +22,6 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemColors
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -51,12 +50,14 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.capyreader.app.R
 import com.capyreader.app.common.ImagePreview
+import com.capyreader.app.preferences.AppTheme
 import com.capyreader.app.ui.articles.list.ArticleActionMenu
 import com.capyreader.app.ui.articles.list.ArticleListItem
 import com.capyreader.app.ui.articles.list.ArticleRowSwipeBox
 import com.capyreader.app.ui.fixtures.ArticleSample
 import com.capyreader.app.ui.fixtures.PreviewKoinApplication
 import com.capyreader.app.ui.theme.CapyTheme
+import com.capyreader.app.ui.theme.LocalAppTheme
 import com.jocmp.capy.Article
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.articles.relativeTime
@@ -85,6 +86,8 @@ fun ArticleRow(
     options: ArticleRowOptions = ArticleRowOptions(),
 ) {
     val imageURL = article.imageURL
+    val isMonochrome = LocalAppTheme.current == AppTheme.MONOCHROME
+    val deEmphasizeFontWeight = article.read && isMonochrome
     val colors = listItemColors(
         selected = selected,
         read = article.read
@@ -111,7 +114,7 @@ fun ArticleRow(
                             article.title,
                             maxLines = if (options.shortenTitles) 3 else Int.MAX_VALUE,
                             overflow = TextOverflow.Ellipsis,
-                            fontWeight = FontWeight.Bold,
+                            fontWeight = if (deEmphasizeFontWeight) FontWeight.Light else FontWeight.Bold,
                         )
                     }
                 },
@@ -129,7 +132,8 @@ fun ArticleRow(
                                 color = feedNameColor,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
-                                modifier = Modifier.weight(1f)
+                                modifier = Modifier.weight(1f),
+                                fontWeight = if (deEmphasizeFontWeight) FontWeight.Light else null,
                             )
                             Spacer(Modifier.width(16.dp))
                         }
@@ -163,7 +167,8 @@ fun ArticleRow(
                                 text = article.summary,
                                 maxLines = 2,
                                 overflow = TextOverflow.Ellipsis,
-                            )
+                                fontWeight = if (deEmphasizeFontWeight) FontWeight.Light else null,
+                                )
                         }
                         if (imageURL != null && options.imagePreview == ImagePreview.LARGE) {
                             ArticleImage(imageURL = imageURL, imagePreview = options.imagePreview)
@@ -282,20 +287,22 @@ private fun listItemColors(
     read: Boolean,
 ): ListItemColors {
     val defaults = ListItemDefaults.colors()
-    val colorScheme = MaterialTheme.colorScheme
+    val isMonochrome = LocalAppTheme.current == AppTheme.MONOCHROME
+    val dimColors = read && !isMonochrome
 
     return ListItemDefaults.colors(
         containerColor = if (selected) colorScheme.surfaceVariant else defaults.containerColor,
-        headlineColor = if (read) defaults.disabledHeadlineColor else defaults.headlineColor,
-        supportingColor = if (read) defaults.disabledHeadlineColor else defaults.supportingTextColor
+        headlineColor = if (dimColors) defaults.disabledContentColor else defaults.headlineColor,
+        supportingColor = if (dimColors) defaults.disabledContentColor else defaults.supportingTextColor
     )
 }
 
 @Composable
 fun findFeedNameColor(read: Boolean): Color {
     val defaults = ListItemDefaults.colors()
+    val isMonochrome = LocalAppTheme.current == AppTheme.MONOCHROME
 
-    return if (read) {
+    return if (read && !isMonochrome) {
         defaults.disabledHeadlineColor
     } else {
         defaults.overlineColor
