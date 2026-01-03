@@ -46,6 +46,7 @@ import com.capyreader.app.preferences.ArticleVerticalSwipe.LOAD_FULL_CONTENT
 import com.capyreader.app.preferences.ArticleVerticalSwipe.NEXT_ARTICLE
 import com.capyreader.app.preferences.ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWSER
 import com.capyreader.app.preferences.ArticleVerticalSwipe.PREVIOUS_ARTICLE
+import com.capyreader.app.translation.TranslationState
 import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.articles.LocalFullContent
 import com.capyreader.app.ui.collectChangesWithDefault
@@ -65,6 +66,11 @@ fun ArticleView(
     onScrollToArticle: (index: Int) -> Unit,
     onSelectArticle: (id: String) -> Unit,
     onSelectMedia: (media: Media) -> Unit,
+    translationState: TranslationState = TranslationState.NONE,
+    sourceLanguageDisplayName: String = "",
+    onTranslate: () -> Unit = {},
+    onShowOriginal: () -> Unit = {},
+    onDismissTranslation: () -> Unit = {},
     appPreferences: AppPreferences = koinInject()
 ) {
     val enableHorizontalPager by appPreferences.readerOptions.enableHorizontaPagination.collectChangesWithDefault()
@@ -159,27 +165,36 @@ fun ArticleView(
             }
         },
         reader = {
-            ArticlePullRefresh(
-                onSwipe = onSwipe,
-                hasPreviousArticle = hasPrevious,
-                hasNextArticle = hasNext
-            ) {
-                HorizontalReaderPager(
-                    enabled = enableHorizontalPager,
-                    enablePrevious = hasPrevious,
-                    enableNext = hasNext,
-                    onSelectPrevious = {
-                        selectPrevious()
-                    },
-                    onSelectNext = {
-                        selectNext()
-                    },
+            Column {
+                TranslationBanner(
+                    state = translationState,
+                    sourceLanguage = sourceLanguageDisplayName,
+                    onTranslate = onTranslate,
+                    onShowOriginal = onShowOriginal,
+                    onDismiss = onDismissTranslation,
+                )
+                ArticlePullRefresh(
+                    onSwipe = onSwipe,
+                    hasPreviousArticle = hasPrevious,
+                    hasNextArticle = hasNext
                 ) {
-                    ArticleTransition(article = article) { targetArticle ->
-                        ArticleReader(
-                            article = targetArticle,
-                            onSelectMedia = onSelectMedia,
-                        )
+                    HorizontalReaderPager(
+                        enabled = enableHorizontalPager,
+                        enablePrevious = hasPrevious,
+                        enableNext = hasNext,
+                        onSelectPrevious = {
+                            selectPrevious()
+                        },
+                        onSelectNext = {
+                            selectNext()
+                        },
+                    ) {
+                        ArticleTransition(article = article) { targetArticle ->
+                            ArticleReader(
+                                article = targetArticle,
+                                onSelectMedia = onSelectMedia,
+                            )
+                        }
                     }
                 }
             }
