@@ -19,7 +19,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -127,7 +126,7 @@ fun FeedList(
                     )
                 }
             }
-            NavigationDrawerItem(
+            DrawerItem(
                 icon = { ArticleStatusIcon(status = articleStatus) },
                 label = {
                     ListTitle(
@@ -142,7 +141,7 @@ fun FeedList(
             )
 
             if (showTodayFilter) {
-                NavigationDrawerItem(
+                DrawerItem(
                     icon = {
                         Icon(
                             Icons.Rounded.Today,
