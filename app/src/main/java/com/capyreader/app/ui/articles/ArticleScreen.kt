@@ -29,8 +29,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.foundation.focusable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
@@ -38,6 +41,8 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import com.capyreader.app.ui.articles.detail.ArticleShortcut
+import com.capyreader.app.ui.articles.detail.articleKeyboardHandler
 import androidx.compose.ui.res.stringResource
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -192,6 +197,8 @@ fun ArticleScreen(
         val scrollBehavior = pinnedScrollBehavior()
         var media by rememberSaveable(saver = Media.Saver) { mutableStateOf(null) }
         val focusManager = LocalFocusManager.current
+        val listFocusRequester = remember { FocusRequester() }
+        val detailFocusRequester = remember { FocusRequester() }
         val openUpdatePasswordDialog = {
             viewModel.dismissUnauthorizedMessage()
             setUpdatePasswordDialogOpen(true)
@@ -480,9 +487,68 @@ fun ArticleScreen(
             listPane = {
                 val keyboardManager = LocalSoftwareKeyboardController.current
                 val markReadPosition = LocalMarkAllReadButtonPosition.current
+                val isListFocused =
+                    scaffoldNavigator.currentDestination?.pane == ListDetailPaneScaffoldRole.List
+
+                val currentArticleIndex = remember(article?.id, articles.itemCount) {
+                    if (article == null) -1
+                    else articles.itemSnapshotList.indexOfFirst { it?.id == article.id }
+                }
+
+                val onListShortcut = { shortcut: ArticleShortcut ->
+                    when (shortcut) {
+                        ArticleShortcut.NextArticle -> {
+                            val nextIndex = if (currentArticleIndex < 0) 0 else currentArticleIndex + 1
+                            if (nextIndex < articles.itemCount) {
+                                articles[nextIndex]?.let { setArticle(it.id) }
+                            }
+                        }
+                        ArticleShortcut.PreviousArticle -> {
+                            val prevIndex = currentArticleIndex - 1
+                            if (prevIndex >= 0) {
+                                articles[prevIndex]?.let { setArticle(it.id) }
+                            }
+                        }
+                        ArticleShortcut.OpenInBrowser -> {
+                            article?.url?.let { url ->
+                                linkOpener.open(url.toString().toUri())
+                            }
+                        }
+                        ArticleShortcut.ToggleStar -> {
+                            if (article != null) {
+                                viewModel.toggleArticleStar()
+                            }
+                        }
+                        ArticleShortcut.ToggleRead -> {
+                            if (article != null) {
+                                viewModel.toggleArticleRead()
+                            }
+                        }
+                        ArticleShortcut.ToggleFullContent -> {
+                            if (article != null) {
+                                fullContent.fetch()
+                            }
+                        }
+                        ArticleShortcut.FocusDetail -> {
+                            coroutineScope.launch {
+                                scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
+                                detailFocusRequester.requestFocus()
+                            }
+                        }
+                        ArticleShortcut.FocusList -> {}
+                        else -> {}
+                    }
+                    Unit
+                }
 
                 Scaffold(
                     modifier = Modifier
+                        .focusRequester(listFocusRequester)
+                        .focusable()
+                        .articleKeyboardHandler(
+                            isDetailPaneFocused = false,
+                            onShortcut = onListShortcut,
+                        )
                         .nestedScroll(scrollBehavior.nestedScrollConnection)
                         .nestedScroll(object : NestedScrollConnection {
                             override fun onPostScroll(
@@ -565,19 +631,23 @@ fun ArticleScreen(
                                 },
                             ) {
                                 key(filter, articles.itemCount) {
-                                    ArticleList(
-                                        articles = articles,
-                                        selectedArticleKey = article?.id,
-                                        listState = listState,
-                                        enableMarkReadOnScroll = enableMarkReadOnScroll,
-                                        refreshingAll = viewModel.refreshingAll,
-                                        onMarkAllRead = { range ->
-                                            onMarkAllRead(range)
-                                        },
-                                        onSelect = { articleID ->
-                                            selectArticle(articleID)
-                                        },
-                                    )
+                                    CompositionLocalProvider(
+                                        LocalListFocused provides isListFocused
+                                    ) {
+                                        ArticleList(
+                                            articles = articles,
+                                            selectedArticleKey = article?.id,
+                                            listState = listState,
+                                            enableMarkReadOnScroll = enableMarkReadOnScroll,
+                                            refreshingAll = viewModel.refreshingAll,
+                                            onMarkAllRead = { range ->
+                                                onMarkAllRead(range)
+                                            },
+                                            onSelect = { articleID ->
+                                                selectArticle(articleID)
+                                            },
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -594,6 +664,9 @@ fun ArticleScreen(
                         CapyPlaceholder()
                     }
                 } else if (article != null) {
+                    val isDetailPaneFocused =
+                        scaffoldNavigator.currentDestination?.pane == ListDetailPaneScaffoldRole.Detail
+
                     ArticleView(
                         article = article,
                         articles = articles,
@@ -603,6 +676,20 @@ fun ArticleScreen(
                         onToggleRead = viewModel::toggleArticleRead,
                         onToggleStar = viewModel::toggleArticleStar,
                         enableBackHandler = media == null,
+                        isDetailPaneFocused = isDetailPaneFocused,
+                        onFocusList = {
+                            coroutineScope.launch {
+                                scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
+                                listFocusRequester.requestFocus()
+                            }
+                        },
+                        focusRequester = detailFocusRequester,
+                        onFocusDetail = {
+                            coroutineScope.launch {
+                                scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
+                                detailFocusRequester.requestFocus()
+                            }
+                        },
                         onSelectMedia = { media = it },
                         onSelectArticle = { articleID ->
                             setArticle(articleID)
