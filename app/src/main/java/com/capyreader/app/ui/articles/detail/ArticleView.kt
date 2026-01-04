@@ -38,6 +38,7 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.paging.compose.LazyPagingItems
+import com.capyreader.app.common.AudioEnclosure
 import com.capyreader.app.common.Media
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleVerticalSwipe
@@ -65,6 +66,10 @@ fun ArticleView(
     onScrollToArticle: (index: Int) -> Unit,
     onSelectArticle: (id: String) -> Unit,
     onSelectMedia: (media: Media) -> Unit,
+    onSelectAudio: (audio: AudioEnclosure) -> Unit = {},
+    onPauseAudio: () -> Unit = {},
+    currentAudioUrl: String? = null,
+    isAudioPlaying: Boolean = false,
     appPreferences: AppPreferences = koinInject()
 ) {
     val enableHorizontalPager by appPreferences.readerOptions.enableHorizontaPagination.collectChangesWithDefault()
@@ -179,6 +184,10 @@ fun ArticleView(
                         ArticleReader(
                             article = targetArticle,
                             onSelectMedia = onSelectMedia,
+                            onSelectAudio = onSelectAudio,
+                            onPauseAudio = onPauseAudio,
+                            currentAudioUrl = currentAudioUrl,
+                            isAudioPlaying = isAudioPlaying,
                         )
                     }
                 }

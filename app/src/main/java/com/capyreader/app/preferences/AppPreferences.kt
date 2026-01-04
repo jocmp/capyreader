@@ -82,6 +82,9 @@ class AppPreferences(context: Context) {
     val showTodayFilter: Preference<Boolean>
         get() = preferenceStore.getBoolean("show_today_filter", true)
 
+    val enableAudioPlayer: Preference<Boolean>
+        get() = preferenceStore.getBoolean("enable_audio_player", false)
+
     fun clearAll() {
         preferenceStore.clearAll()
     }

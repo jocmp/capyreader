@@ -262,6 +262,70 @@ window.addEventListener("DOMContentLoaded", () => {
   cleanEmbeds();
 });
 
+/** @type {string | null} */
+let currentPlayingUrl = null;
+
+/** @type {boolean} */
+let isCurrentlyPlaying = false;
+
+/**
+ * Toggle audio playback - play if stopped, pause if playing
+ * @param {string} url
+ * @param {string} title
+ * @param {string} feedName
+ * @param {number | null} durationSeconds
+ * @param {string} artworkUrl
+ */
+function playAudio(url, title, feedName, durationSeconds, artworkUrl) {
+  if (currentPlayingUrl === url && isCurrentlyPlaying) {
+    Android.pauseAudio();
+  } else {
+    const audioData = JSON.stringify({
+      url: url,
+      title: title,
+      feedName: feedName,
+      durationSeconds: durationSeconds,
+      artworkUrl: artworkUrl || null
+    });
+    Android.openAudioPlayer(audioData);
+  }
+}
+
+/**
+ * Update the play/pause state for an audio enclosure
+ * Called from Android when play state changes
+ * @param {string} url
+ * @param {boolean} isPlaying
+ */
+function updateAudioPlayState(url, isPlaying) {
+  currentPlayingUrl = url;
+  isCurrentlyPlaying = isPlaying;
+
+  const enclosures = document.querySelectorAll('.audio-enclosure');
+  enclosures.forEach((enclosure) => {
+    const enclosureUrl = enclosure.getAttribute('data-url');
+    const playButton = enclosure.querySelector('.audio-enclosure__play-button');
+    if (!playButton) return;
+
+    if (enclosureUrl === url) {
+      playButton.classList.toggle('playing', isPlaying);
+    } else {
+      playButton.classList.remove('playing');
+    }
+  });
+}
+
+/**
+ * Reset all audio enclosures to not playing state
+ * Called from Android when audio is dismissed
+ */
+function resetAudioPlayState() {
+  currentPlayingUrl = null;
+  isCurrentlyPlaying = false;
+  const playButtons = document.querySelectorAll('.audio-enclosure__play-button');
+  playButtons.forEach((btn) => btn.classList.remove('playing'));
+}
+
 window.onload = () => {
   addImageClickListeners();
   addImageLoadListeners();

@@ -58,6 +58,8 @@
     <string name="opml_import_notification_cancel">Zatrzymaj</string>
     <string name="article_font_menu_label">Czcionka</string>
     <string name="settings_section_advanced">Zaawansowane</string>
+    <string name="settings_section_experimental">Eksperymentalne</string>
+    <string name="settings_option_enable_audio_player">Odtwarzacz audio</string>
     <string name="dialog_cancel">Anuluj</string>
     <string name="add_feed_submit">Dodaj</string>
     <string name="add_feed_success">Dodano kanał</string>

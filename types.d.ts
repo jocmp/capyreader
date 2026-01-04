@@ -6,6 +6,8 @@ interface MediaItem {
 declare const Android: {
   openImageGallery(imagesJson: string, clickedIndex: number): void;
   showLinkDialog(href: string, text: string): void;
+  openAudioPlayer(audioJson: string): void;
+  pauseAudio(): void;
 };
 
 declare const Mercury: {

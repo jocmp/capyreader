@@ -59,6 +59,8 @@
     <string name="settings_auto_delete_option_keep_for_three_month">3 個月</string>
     <string name="settings_auto_delete_option_keep_for_two_week">2 週</string>
     <string name="settings_section_advanced">進階</string>
+    <string name="settings_section_experimental">實驗性</string>
+    <string name="settings_option_enable_audio_player">音訊播放器</string>
     <string name="settings_clear_all_articles_confirm">確認</string>
     <string name="settings_clear_all_articles_text">確認要從裝置中刪除全部已讀且未加星標的文章嗎？此操作不可撤銷。</string>
     <string name="settings_gestures_reader_swipe_down">向下滑動</string>

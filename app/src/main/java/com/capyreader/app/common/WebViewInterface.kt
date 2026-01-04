@@ -9,6 +9,8 @@ import kotlinx.serialization.json.Json
 class WebViewInterface(
     private val navigateToMedia: (media: Media) -> Unit,
     private val onRequestLinkDialog: (link: ShareLink) -> Unit,
+    private val onOpenAudioPlayer: (audio: AudioEnclosure) -> Unit = {},
+    private val onPauseAudio: () -> Unit = {},
 ) {
     @JavascriptInterface
     fun openImageGallery(imagesJson: String, clickedIndex: Int) {
@@ -31,6 +33,21 @@ class WebViewInterface(
         optionalURL(href)?.let {
             onRequestLinkDialog(ShareLink(url = it.toString(), text = text.trimIndent()))
         }
+    }
+
+    @JavascriptInterface
+    fun openAudioPlayer(audioJson: String) {
+        try {
+            val audio = Json.decodeFromString<AudioEnclosure>(audioJson)
+            onOpenAudioPlayer(audio)
+        } catch (e: Exception) {
+            CapyLog.error("open_audio_player", e)
+        }
+    }
+
+    @JavascriptInterface
+    fun pauseAudio() {
+        onPauseAudio()
     }
 
     companion object {

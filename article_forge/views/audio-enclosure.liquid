@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html dir="auto">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      :root {
+        --color-primary: {{color_primary}};
+        --color-surface: {{color_surface}};
+        --color-surface-container-highest: {{color_surface_container_highest}};
+        --color-on-surface: {{color_on_surface}};
+        --color-on-surface-variant: {{color_on_surface_variant}};
+        --color-surface-variant: {{color_surface_variant}};
+        --color-primary-container: {{color_primary_container}};
+        --color-on-primary-container: {{color_on_primary_container}};
+        --color-secondary: {{color_secondary}};
+        --color-surface-container: {{color_surface_container}};
+        --color-surface-tint: {{color_surface_tint}};
+        --article-top-margin: 0;
+        --article-font-size: {{font_size}};
+        --article-title-font-size: {{title_font_size}};
+        --article-title-text-align: left;
+        --pre-white-space: pre-wrap;
+      }
+    </style>
+    <link rel="stylesheet" href="/assets/stylesheet.css">
+    <script type="text/javascript" src="/assets/media.js"></script>
+  </head>
+  <body>
+    <article role="main">
+      <header>
+        <a class="article__header" href="#">
+          <h1 class="article__title">Audio Enclosure Tests</h1>
+        </a>
+      </header>
+      <div class="article__body">
+        <div id="article-body-content">
+          {% for example in examples %}
+          <h3>{{ example.label }}</h3>
+          <div class="audio-enclosure">
+            <div class="audio-enclosure__artwork">
+              {% if example.artwork %}
+              <img src="{{ example.artwork }}" loading="lazy">
+              {% else %}
+              <div class="audio-enclosure__artwork-placeholder"></div>
+              {% endif %}
+            </div>
+            <div class="audio-enclosure__content">
+              <div class="audio-enclosure__title">{{ example.title }}</div>
+              <div class="audio-enclosure__feed">{{ example.feed }}</div>
+              {% if example.duration %}
+              <div class="audio-enclosure__duration">{{ example.duration }}</div>
+              {% endif %}
+            </div>
+            <div class="audio-enclosure__play-button{% if example.playing %} playing{% endif %}" onclick="playAudio('{{ example.title }}')">
+              <div class="audio-enclosure__play-icon"></div>
+            </div>
+          </div>
+          {% endfor %}
+
+          <script>
+            function playAudio(title) {
+              console.log('Play audio:', title);
+            }
+          </script>
+        </div>
+      </div>
+    </article>
+  </body>
+</html>

@@ -17,6 +17,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewAssetLoader.AssetsPathHandler
 import androidx.webkit.WebViewAssetLoader.ResourcesPathHandler
+import com.capyreader.app.common.AudioEnclosure
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.WebViewInterface
 import com.capyreader.app.common.rememberTalkbackPreference
@@ -177,6 +178,15 @@ class WebViewState(
         loadEmpty()
     }
 
+    fun updateAudioPlayState(url: String, isPlaying: Boolean) {
+        val escapedUrl = url.replace("'", "\\'")
+        webView.evaluateJavascript("updateAudioPlayState('$escapedUrl', $isPlaying)", null)
+    }
+
+    fun resetAudioPlayState() {
+        webView.evaluateJavascript("resetAudioPlayState()", null)
+    }
+
     private fun loadEmpty() = webView.loadUrl("about:blank")
 }
 
@@ -187,6 +197,8 @@ fun rememberWebViewState(
     onNavigateToMedia: (media: Media) -> Unit,
     onRequestLinkDialog: (link: ShareLink) -> Unit,
     onOpenLink: (url: Uri) -> Unit,
+    onOpenAudioPlayer: (audio: AudioEnclosure) -> Unit = {},
+    onPauseAudio: () -> Unit = {},
     key: String? = null,
 ): WebViewState {
     val enableNativeScroll by rememberTalkbackPreference()
@@ -227,6 +239,8 @@ fun rememberWebViewState(
                 WebViewInterface(
                     navigateToMedia = { onNavigateToMedia(it) },
                     onRequestLinkDialog = onRequestLinkDialog,
+                    onOpenAudioPlayer = onOpenAudioPlayer,
+                    onPauseAudio = onPauseAudio,
                 ),
                 WebViewInterface.INTERFACE_NAME
             )

@@ -147,6 +147,8 @@
     <string name="settings_auto_delete_option_keep_for_one_month">1 mes</string>
     <string name="settings_auto_delete_option_keep_for_three_month">3 meses</string>
     <string name="settings_section_advanced">Avanzado</string>
+    <string name="settings_section_experimental">Experimental</string>
+    <string name="settings_option_enable_audio_player">Reproductor de audio</string>
     <string name="settings_clear_all_articles_confirm">Confirmar</string>
     <string name="settings_clear_all_articles_text">¿Estás seguro de que deseas eliminar todos los artículos leídos, no destacados desde tu dispositivo? Esta acción no se puede deshacer.</string>
     <string name="settings_clear_all_articles_button">Borrar todos los artículos</string>

@@ -196,6 +196,8 @@
     <string name="settings_auto_delete_option_keep_for_one_month">1 month</string>
     <string name="settings_auto_delete_option_keep_for_three_month">3 months</string>
     <string name="settings_section_advanced">Advanced</string>
+    <string name="settings_section_experimental">Experimental</string>
+    <string name="settings_option_enable_audio_player">Audio player</string>
     <string name="settings_clear_all_articles_confirm">Confirm</string>
     <string name="settings_clear_all_articles_text">Are you sure you want to delete all read, unstarred articles from your device? This action cannot be undone.</string>
     <string name="settings_clear_all_articles_button">Clear all articles</string>
@@ -307,4 +309,7 @@
     <string name="freshrss_visibility_option_important">Important</string>
     <string name="freshrss_visibility_option_category">Category</string>
     <string name="freshrss_visibility_option_feed">Feed</string>
+    <string name="audio_player_play">Play</string>
+    <string name="audio_player_pause">Pause</string>
+    <string name="audio_player_close">Close player</string>
 </resources>

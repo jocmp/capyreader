@@ -172,6 +172,8 @@
     <string name="opml_exporter_success">Exportação completa</string>
     <string name="opml_exporter_failure">Exportação falhou</string>
     <string name="settings_section_advanced">Avançado</string>
+    <string name="settings_section_experimental">Experimental</string>
+    <string name="settings_option_enable_audio_player">Reprodutor de áudio</string>
     <string name="edit_feed_tag_section">Adicionar ou Selecionar Etiqueta</string>
     <string name="settings_confirm_mark_all_read">Confirmar marcar todos como lidos</string>
     <string name="article_bottom_bar_next_article">Ir para próximo artigo</string>

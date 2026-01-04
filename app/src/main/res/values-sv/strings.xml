@@ -150,6 +150,8 @@
     <string name="settings_auto_delete_option_keep_for_one_month">1 månad</string>
     <string name="settings_auto_delete_option_keep_for_three_month">3 månader</string>
     <string name="settings_section_advanced">Avancerat</string>
+    <string name="settings_section_experimental">Experimentellt</string>
+    <string name="settings_option_enable_audio_player">Ljudspelare</string>
     <string name="settings_clear_all_articles_confirm">Bekräfta</string>
     <string name="settings_clear_all_articles_button">Rensa alla artiklar</string>
     <string name="settings_support_button">Support</string>
