@@ -36,6 +36,7 @@ import kotlin.math.roundToInt
 fun ArticleReader(
     article: Article,
     onSelectMedia: (media: Media) -> Unit,
+    onScrollStateReady: (ScrollState, maxHeight: Float) -> Unit = { _, _ -> },
 ) {
     val (shareLink, setShareLink) = rememberSaveableShareLink()
     val linkOpener = LocalLinkOpener.current
@@ -62,7 +63,12 @@ fun ArticleReader(
             )
         }
     } else {
-        ScrollableWebView(webViewState, article, showImages)
+        ScrollableWebView(
+            webViewState = webViewState,
+            article = article,
+            showImages = showImages,
+            onScrollStateReady = onScrollStateReady,
+        )
     }
 
     ArticleStyleListener(webView = webViewState.webView)
@@ -78,13 +84,22 @@ fun ArticleReader(
 }
 
 @Composable
-fun ScrollableWebView(webViewState: WebViewState, article: Article, showImages: Boolean) {
+fun ScrollableWebView(
+    webViewState: WebViewState,
+    article: Article,
+    showImages: Boolean,
+    onScrollStateReady: (ScrollState, maxHeight: Float) -> Unit = { _, _ -> },
+) {
     var maxHeight by remember { mutableFloatStateOf(0f) }
     val scrollState = rememberSaveable(article.id, saver = ScrollState.Saver) {
         ScrollState(initial = 0)
     }
 
     var lastScrollYPercent by rememberSaveable(article.id) { mutableFloatStateOf(0f) }
+
+    LaunchedEffect(scrollState, maxHeight) {
+        onScrollStateReady(scrollState, maxHeight)
+    }
 
     CornerTapGestureScroll(
         maxArticleHeight = maxHeight,

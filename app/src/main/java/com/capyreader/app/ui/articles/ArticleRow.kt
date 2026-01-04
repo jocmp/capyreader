@@ -289,9 +289,16 @@ private fun listItemColors(
     val defaults = ListItemDefaults.colors()
     val isMonochrome = LocalAppTheme.current == AppTheme.MONOCHROME
     val dimColors = read && !isMonochrome
+    val isListFocused = LocalListFocused.current
+
+    val containerColor = when {
+        selected && isListFocused -> colorScheme.primaryContainer
+        selected -> colorScheme.surfaceVariant
+        else -> defaults.containerColor
+    }
 
     return ListItemDefaults.colors(
-        containerColor = if (selected) colorScheme.surfaceVariant else defaults.containerColor,
+        containerColor = containerColor,
         headlineColor = if (dimColors) defaults.disabledContentColor else defaults.headlineColor,
         supportingColor = if (dimColors) defaults.disabledContentColor else defaults.supportingTextColor
     )

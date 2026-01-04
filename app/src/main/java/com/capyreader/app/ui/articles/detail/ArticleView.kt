@@ -21,18 +21,27 @@ import androidx.compose.material3.FlexibleBottomAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import com.jocmp.capy.common.launchUI
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.foundation.focusable
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
@@ -62,6 +71,10 @@ fun ArticleView(
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
     enableBackHandler: Boolean = false,
+    isDetailPaneFocused: Boolean = true,
+    focusRequester: FocusRequester = remember { FocusRequester() },
+    onFocusList: () -> Unit = {},
+    onFocusDetail: () -> Unit = {},
     onScrollToArticle: (index: Int) -> Unit,
     onSelectArticle: (id: String) -> Unit,
     onSelectMedia: (media: Media) -> Unit,
@@ -114,6 +127,41 @@ fun ArticleView(
         }
     }
 
+    var readerScrollState by remember { mutableStateOf<ScrollState?>(null) }
+    var readerMaxHeight by remember { mutableFloatStateOf(0f) }
+    val coroutineScope = rememberCoroutineScope()
+
+    val onScrollStateReady = { scrollState: ScrollState, maxHeight: Float ->
+        readerScrollState = scrollState
+        readerMaxHeight = maxHeight
+    }
+
+    val scrollReader = { direction: Int ->
+        readerScrollState?.let { scrollState ->
+            val scrollAmount = readerMaxHeight * SCROLL_PROPORTION * direction
+            coroutineScope.launchUI {
+                scrollState.scrollBy(scrollAmount)
+            }
+        }
+        Unit
+    }
+
+    val onShortcut = { shortcut: ArticleShortcut ->
+        when (shortcut) {
+            ArticleShortcut.NextArticle -> selectNext()
+            ArticleShortcut.PreviousArticle -> selectPrevious()
+            ArticleShortcut.OpenInBrowser -> openLink()
+            ArticleShortcut.ToggleStar -> onToggleStar()
+            ArticleShortcut.ToggleRead -> onToggleRead()
+            ArticleShortcut.ToggleFullContent -> onToggleFullContent()
+            ArticleShortcut.GoBack -> onBackPressed()
+            ArticleShortcut.ScrollDown -> scrollReader(1)
+            ArticleShortcut.ScrollUp -> scrollReader(-1)
+            ArticleShortcut.FocusList -> onFocusList()
+            ArticleShortcut.FocusDetail -> onFocusDetail()
+        }
+    }
+
     val topToolbarPreference = rememberTopToolbarPreference()
     val bottomScrollBehavior = exitAlwaysScrollBehavior()
     val enableBottomBar by rememberBottomBarPreference()
@@ -129,6 +177,9 @@ fun ArticleView(
         bottomScrollBehavior = bottomScrollBehavior,
         enableBottomBar = enableBottomBar,
         topToolbarPreference = topToolbarPreference,
+        focusRequester = focusRequester,
+        isDetailPaneFocused = isDetailPaneFocused,
+        onShortcut = onShortcut,
         topBar = {
             ArticleTopBar(
                 scrollBehavior = topToolbarPreference.scrollBehavior,
@@ -179,6 +230,7 @@ fun ArticleView(
                         ArticleReader(
                             article = targetArticle,
                             onSelectMedia = onSelectMedia,
+                            onScrollStateReady = onScrollStateReady,
                         )
                     }
                 }
@@ -205,9 +257,18 @@ private fun ArticleViewScaffold(
     reader: @Composable () -> Unit,
     bottomScrollBehavior: BottomAppBarScrollBehavior,
     topToolbarPreference: ToolbarPreferences,
+    focusRequester: FocusRequester,
+    isDetailPaneFocused: Boolean,
+    onShortcut: (ArticleShortcut) -> Unit,
 ) {
     Scaffold(
         modifier = Modifier
+            .focusRequester(focusRequester)
+            .focusable()
+            .articleKeyboardHandler(
+                isDetailPaneFocused = isDetailPaneFocused,
+                onShortcut = onShortcut,
+            )
             .nestedScroll(bottomScrollBehavior.nestedScrollConnection)
             .nestedScroll(topToolbarPreference.scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -368,3 +429,5 @@ private data class SwipePreferences(
     val topSwipe: ArticleVerticalSwipe,
     val bottomSwipe: ArticleVerticalSwipe,
 )
+
+private const val SCROLL_PROPORTION = 0.05f
