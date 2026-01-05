@@ -19,34 +19,29 @@ internal class ParsedItem(private val item: RssItem, private val siteURL: String
 
     private fun buildEnclosures(): List<Enclosure> {
         val enclosures = item.enclosures.mapNotNull { enclosure ->
-            val parsedUrl = optionalURL(enclosure.url.unescapingHTMLCharacters) ?: return@mapNotNull null
-            val isAudio = enclosure.type.startsWith("audio/")
+            val parsedUrl =
+                optionalURL(enclosure.url.unescapingHTMLCharacters) ?: return@mapNotNull null
 
             Enclosure(
                 url = parsedUrl,
                 type = enclosure.type,
-                itunesDurationSeconds = if (isAudio) item.itunesItemData?.duration?.parseDuration() else null,
-                itunesImage = if (isAudio) item.itunesItemData?.image else null
+                itunesDurationSeconds = item.itunesItemData?.duration?.parseDuration(),
+                itunesImage = item.itunesItemData?.image
             )
-        }.toMutableList()
-
-        // Add audio enclosure from item.audio if not already present
-        item.audio?.let { audioUrl ->
-            val parsedUrl = optionalURL(audioUrl.unescapingHTMLCharacters) ?: return@let
-            val alreadyExists = enclosures.any { it.url == parsedUrl }
-            if (!alreadyExists) {
-                enclosures.add(
-                    Enclosure(
-                        url = parsedUrl,
-                        type = "audio/mpeg",
-                        itunesDurationSeconds = item.itunesItemData?.duration?.parseDuration(),
-                        itunesImage = item.itunesItemData?.image
-                    )
-                )
-            }
         }
 
-        return enclosures
+        val audioEnclosures = item.audio?.let { audioUrl ->
+            val parsedUrl = optionalURL(audioUrl.unescapingHTMLCharacters) ?: return@let null
+
+            Enclosure(
+                url = parsedUrl,
+                type = "audio/mpeg",
+                itunesDurationSeconds = item.itunesItemData?.duration?.parseDuration(),
+                itunesImage = item.itunesItemData?.image
+            )
+        }
+
+        return (enclosures + listOfNotNull(audioEnclosures)).distinctBy { it.url.toString() }
     }
 
     val contentHTML: String?
