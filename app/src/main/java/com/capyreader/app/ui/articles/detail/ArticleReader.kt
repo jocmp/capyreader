@@ -52,14 +52,12 @@ fun ArticleReader(
         onOpenLink = { linkOpener.open(it) },
         onOpenAudioPlayer = onSelectAudio,
         onPauseAudio = onPauseAudio,
+        currentAudioUrl = currentAudioUrl,
+        isAudioPlaying = isAudioPlaying,
     )
 
     LaunchedEffect(currentAudioUrl, isAudioPlaying) {
-        if (currentAudioUrl != null) {
-            webViewState.updateAudioPlayState(currentAudioUrl, isAudioPlaying)
-        } else {
-            webViewState.resetAudioPlayState()
-        }
+        webViewState.updateAudioPlayState(currentAudioUrl, isAudioPlaying)
     }
 
     val showImages = rememberImageVisibility()

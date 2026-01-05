@@ -8,6 +8,7 @@ declare const Android: {
   showLinkDialog(href: string, text: string): void;
   openAudioPlayer(audioJson: string): void;
   pauseAudio(): void;
+  requestAudioState(): void;
 };
 
 declare const Mercury: {

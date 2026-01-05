@@ -332,4 +332,5 @@ window.onload = () => {
   observeImages();
   addEmbedListeners();
   configureVideoTags();
+  Android.requestAudioState();
 };

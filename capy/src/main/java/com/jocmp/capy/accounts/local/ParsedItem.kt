@@ -21,12 +21,13 @@ internal class ParsedItem(private val item: RssItem, private val siteURL: String
         val enclosures = item.enclosures.mapNotNull { enclosure ->
             val parsedUrl =
                 optionalURL(enclosure.url.unescapingHTMLCharacters) ?: return@mapNotNull null
+            val isAudio = enclosure.type.startsWith("audio/")
 
             Enclosure(
                 url = parsedUrl,
                 type = enclosure.type,
-                itunesDurationSeconds = item.itunesItemData?.duration?.parseDuration(),
-                itunesImage = item.itunesItemData?.image
+                itunesDurationSeconds = if (isAudio) item.itunesItemData?.duration?.parseDuration() else null,
+                itunesImage = if (isAudio) item.itunesItemData?.image else null
             )
         }
 

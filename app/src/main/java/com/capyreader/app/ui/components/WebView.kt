@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
@@ -140,6 +141,8 @@ class WebViewState(
 ) {
     private var htmlId: String? = null
     private var contentHash: Int = 0
+    private var currentAudioUrl: String? = null
+    private var isAudioPlaying: Boolean = false
 
     init {
         loadEmpty()
@@ -178,13 +181,21 @@ class WebViewState(
         loadEmpty()
     }
 
-    fun updateAudioPlayState(url: String, isPlaying: Boolean) {
-        val escapedUrl = url.replace("'", "\\'")
-        webView.evaluateJavascript("updateAudioPlayState('$escapedUrl', $isPlaying)", null)
+    fun updateAudioPlayState(url: String?, isPlaying: Boolean) {
+        currentAudioUrl = url
+        isAudioPlaying = isPlaying
+        webView.post {
+            if (url != null) {
+                val escapedUrl = url.replace("'", "\\'")
+                webView.evaluateJavascript("updateAudioPlayState('$escapedUrl', $isPlaying)", null)
+            } else {
+                webView.evaluateJavascript("resetAudioPlayState()", null)
+            }
+        }
     }
 
     fun resetAudioPlayState() {
-        webView.evaluateJavascript("resetAudioPlayState()", null)
+        updateAudioPlayState(null, false)
     }
 
     private fun loadEmpty() = webView.loadUrl("about:blank")
@@ -199,11 +210,15 @@ fun rememberWebViewState(
     onOpenLink: (url: Uri) -> Unit,
     onOpenAudioPlayer: (audio: AudioEnclosure) -> Unit = {},
     onPauseAudio: () -> Unit = {},
+    currentAudioUrl: String? = null,
+    isAudioPlaying: Boolean = false,
     key: String? = null,
 ): WebViewState {
     val enableNativeScroll by rememberTalkbackPreference()
     val colors = articleTemplateColors()
     val context = LocalContext.current
+    val currentAudioUrlState by rememberUpdatedState(currentAudioUrl)
+    val isAudioPlayingState by rememberUpdatedState(isAudioPlaying)
 
     val reset = if (enableNativeScroll) {
         key
@@ -222,6 +237,13 @@ fun rememberWebViewState(
     }
 
     return remember {
+        val webViewInterface = WebViewInterface(
+            navigateToMedia = { onNavigateToMedia(it) },
+            onRequestLinkDialog = onRequestLinkDialog,
+            onOpenAudioPlayer = onOpenAudioPlayer,
+            onPauseAudio = onPauseAudio,
+        )
+
         val webView = WebView(context).apply {
             settings.apply {
                 javaScriptEnabled = true
@@ -235,15 +257,7 @@ fun rememberWebViewState(
                 hitTestResult.type == SRC_ANCHOR_TYPE
             }
 
-            addJavascriptInterface(
-                WebViewInterface(
-                    navigateToMedia = { onNavigateToMedia(it) },
-                    onRequestLinkDialog = onRequestLinkDialog,
-                    onOpenAudioPlayer = onOpenAudioPlayer,
-                    onPauseAudio = onPauseAudio,
-                ),
-                WebViewInterface.INTERFACE_NAME
-            )
+            addJavascriptInterface(webViewInterface, WebViewInterface.INTERFACE_NAME)
 
             setBackgroundColor(context.getColor(android.R.color.transparent))
 
@@ -257,6 +271,9 @@ fun rememberWebViewState(
             webView,
         ).also {
             client.state = it
+            webViewInterface.onRequestAudioState = {
+                it.updateAudioPlayState(currentAudioUrlState, isAudioPlayingState)
+            }
         }
     }
 }

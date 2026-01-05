@@ -12,6 +12,7 @@ class WebViewInterface(
     private val onOpenAudioPlayer: (audio: AudioEnclosure) -> Unit = {},
     private val onPauseAudio: () -> Unit = {},
 ) {
+    var onRequestAudioState: () -> Unit = {}
     @JavascriptInterface
     fun openImageGallery(imagesJson: String, clickedIndex: Int) {
         try {
@@ -48,6 +49,11 @@ class WebViewInterface(
     @JavascriptInterface
     fun pauseAudio() {
         onPauseAudio()
+    }
+
+    @JavascriptInterface
+    fun requestAudioState() {
+        onRequestAudioState()
     }
 
     companion object {
