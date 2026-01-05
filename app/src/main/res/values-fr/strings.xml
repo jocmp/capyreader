@@ -299,4 +299,5 @@
     <string name="freshrss_visibility_option_important">Important</string>
     <string name="freshrss_visibility_option_category">Catégorie</string>
     <string name="freshrss_visibility_option_feed">Flux</string>
+    <string name="theme_mode_label">Mode</string>
 </resources>

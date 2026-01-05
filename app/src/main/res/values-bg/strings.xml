@@ -300,4 +300,5 @@
     <string name="freshrss_visibility_option_important">Важно</string>
     <string name="freshrss_visibility_option_category">Категория</string>
     <string name="freshrss_visibility_option_feed">Емисия</string>
+    <string name="theme_mode_label">Режим</string>
 </resources>

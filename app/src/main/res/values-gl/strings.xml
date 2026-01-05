@@ -293,4 +293,5 @@
     <string name="freshrss_visibility_option_important">Importante</string>
     <string name="freshrss_visibility_option_category">Categoría</string>
     <string name="freshrss_visibility_option_feed">Cronoloxía</string>
+    <string name="theme_mode_label">Modo</string>
 </resources>
