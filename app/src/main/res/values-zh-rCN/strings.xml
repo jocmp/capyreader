@@ -301,4 +301,7 @@
     <string name="freshrss_visibility_option_category">类别</string>
     <string name="freshrss_visibility_option_feed">订阅源</string>
     <string name="theme_mode_label">模式</string>
+    <string name="audio_player_play">播放</string>
+    <string name="audio_player_pause">暂停</string>
+    <string name="audio_player_close">关闭播放器</string>
 </resources>
