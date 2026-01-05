@@ -176,6 +176,8 @@
     <string name="settings_auto_delete_option_keep_for_one_month">1 mês</string>
     <string name="settings_auto_delete_option_keep_for_three_month">3 meses</string>
     <string name="settings_section_advanced">Avançado</string>
+    <string name="settings_section_experimental">Experimental</string>
+    <string name="settings_option_enable_audio_player">Leitor de áudio</string>
     <string name="settings_clear_all_articles_confirm">Confirmar</string>
     <string name="settings_clear_all_articles_text">Tem certeza de que deseja apagar todos os artigos lidos e desfavoritados do seu dispositivo? Esta ação não pode ser desfeita.</string>
     <string name="settings_clear_all_articles_button">Limpar todos os artigos</string>

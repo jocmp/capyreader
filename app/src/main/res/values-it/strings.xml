@@ -137,6 +137,8 @@
     <string name="settings_support_button">Supporto</string>
     <string name="settings_clear_all_articles_confirm">Conferma</string>
     <string name="settings_section_advanced">Avanzate</string>
+    <string name="settings_section_experimental">Sperimentale</string>
+    <string name="settings_option_enable_audio_player">Lettore audio</string>
     <string name="settings_clear_all_articles_text">Sei sicuro di voler eliminare tutti gli articoli letti e non contrassegnati? Non è possibile annullare l\'operazione.</string>
     <string name="settings_article_list_title">Elenco articoli</string>
     <string name="settings_panel_general_title">Generale</string>

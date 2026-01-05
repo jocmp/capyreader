@@ -66,6 +66,8 @@
     <string name="settings_auto_delete_option_keep_forever">Всегда</string>
     <string name="settings_auto_delete_option_keep_for_one_month">1 месяц</string>
     <string name="settings_section_advanced">Расширенные</string>
+    <string name="settings_section_experimental">Экспериментальное</string>
+    <string name="settings_option_enable_audio_player">Аудиоплеер</string>
     <string name="settings_clear_all_articles_text">Вы уверены, что хотите удалить все прочитанные, не избранные статьи с вашего устройства? Это действие нельзя отменить.</string>
     <string name="settings_article_list_title">Список статей</string>
     <string name="opml_exporter_failure">Экспорт не удался</string>

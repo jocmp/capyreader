@@ -179,6 +179,8 @@
     <string name="settings_auto_delete_option_keep_for_one_month">1 maand</string>
     <string name="settings_auto_delete_option_keep_for_three_month">3 maanden</string>
     <string name="settings_section_advanced">Geavanceerd</string>
+    <string name="settings_section_experimental">Experimenteel</string>
+    <string name="settings_option_enable_audio_player">Audiospeler</string>
     <string name="settings_clear_all_articles_confirm">Bevestigen</string>
     <string name="settings_clear_all_articles_text">Weet je zeker dat je alle gelezen, niet-gefavoriseerde artikelen van je apparaat wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.</string>
     <string name="settings_clear_all_articles_button">Alle artikelen wissen</string>

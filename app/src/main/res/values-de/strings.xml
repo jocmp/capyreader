@@ -157,6 +157,8 @@
     <string name="opml_exporter_success">Export vollständig</string>
     <string name="settings_panel_general_title">Allgemein</string>
     <string name="settings_section_advanced">Fortgeschritten</string>
+    <string name="settings_section_experimental">Experimentell</string>
+    <string name="settings_option_enable_audio_player">Audio-Player</string>
     <string name="settings_clear_all_articles_confirm">Bestätigen</string>
     <string name="settings_clear_all_articles_text">Bist Du sicher, dass Du alle gelesenen nicht favorisierten Artikel löschen möchtest? Dies kann nicht rückgängig gemacht werden.</string>
     <string name="settings_clear_all_articles_button">Alle Artikel löschen</string>

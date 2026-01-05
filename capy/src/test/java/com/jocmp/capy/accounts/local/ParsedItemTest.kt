@@ -1,6 +1,8 @@
 package com.jocmp.capy.accounts.local
 
+import com.jocmp.rssparser.model.ItunesItemData
 import com.jocmp.rssparser.model.RssItem
+import java.net.URL
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
@@ -213,5 +215,203 @@ class ParsedItemTest {
         val parsedItem = ParsedItem(item, siteURL = "https://example.com")
 
         assertEquals(expected = summary, actual = parsedItem.contentHTML)
+    }
+
+    @Test
+    fun enclosures_audioWithItunesData_secondsFormat() {
+        val enclosureUrl = "https://example.com/episode.mp3"
+        val imageUrl = "http://example.com/artwork.png"
+        val itunesData = ItunesItemData(
+            author = "Test Author",
+            duration = "3122",
+            episode = null,
+            episodeType = "full",
+            explicit = "no",
+            image = imageUrl,
+            keywords = emptyList(),
+            subtitle = null,
+            summary = null,
+            season = null,
+        )
+        val item = RssItem.Builder()
+            .addEnclosure(url = enclosureUrl, type = "audio/mpeg")
+            .itunesArticleData(itunesData)
+            .build()
+        val parsedItem = ParsedItem(item, siteURL = "https://example.com")
+
+        assertEquals(expected = 1, actual = parsedItem.enclosures.size)
+
+        val enclosure = parsedItem.enclosures.first()
+        assertEquals(expected = URL(enclosureUrl), actual = enclosure.url)
+        assertEquals(expected = "audio/mpeg", actual = enclosure.type)
+        assertEquals(expected = 3122L, actual = enclosure.itunesDurationSeconds)
+        assertEquals(expected = imageUrl, actual = enclosure.itunesImage)
+    }
+
+    @Test
+    fun enclosures_audioWithItunesData_hhmmssFormat() {
+        val enclosureUrl = "https://example.com/episode.mp3"
+        val itunesData = ItunesItemData(
+            author = null,
+            duration = "02:02:35",
+            episode = null,
+            episodeType = null,
+            explicit = null,
+            image = null,
+            keywords = emptyList(),
+            subtitle = null,
+            summary = null,
+            season = null,
+        )
+        val item = RssItem.Builder()
+            .addEnclosure(url = enclosureUrl, type = "audio/mpeg")
+            .itunesArticleData(itunesData)
+            .build()
+        val parsedItem = ParsedItem(item, siteURL = "https://example.com")
+
+        val enclosure = parsedItem.enclosures.first()
+        assertEquals(expected = 7355L, actual = enclosure.itunesDurationSeconds)
+    }
+
+    @Test
+    fun enclosures_audioWithItunesData_mmssFormat() {
+        val enclosureUrl = "https://example.com/episode.mp3"
+        val itunesData = ItunesItemData(
+            author = null,
+            duration = "52:02",
+            episode = null,
+            episodeType = null,
+            explicit = null,
+            image = null,
+            keywords = emptyList(),
+            subtitle = null,
+            summary = null,
+            season = null,
+        )
+        val item = RssItem.Builder()
+            .addEnclosure(url = enclosureUrl, type = "audio/mpeg")
+            .itunesArticleData(itunesData)
+            .build()
+        val parsedItem = ParsedItem(item, siteURL = "https://example.com")
+
+        val enclosure = parsedItem.enclosures.first()
+        assertEquals(expected = 3122L, actual = enclosure.itunesDurationSeconds)
+    }
+
+    @Test
+    fun enclosures_audioWithoutItunesData() {
+        val enclosureUrl = "https://example.com/episode.mp3"
+        val item = RssItem.Builder()
+            .addEnclosure(url = enclosureUrl, type = "audio/mpeg")
+            .build()
+        val parsedItem = ParsedItem(item, siteURL = "https://example.com")
+
+        val enclosure = parsedItem.enclosures.first()
+        assertEquals(expected = URL(enclosureUrl), actual = enclosure.url)
+        assertEquals(expected = "audio/mpeg", actual = enclosure.type)
+        assertNull(enclosure.itunesDurationSeconds)
+        assertNull(enclosure.itunesImage)
+    }
+
+    @Test
+    fun enclosures_nonAudioIgnoresItunesData() {
+        val enclosureUrl = "https://example.com/image.jpg"
+        val imageUrl = "http://example.com/artwork.png"
+        val itunesData = ItunesItemData(
+            author = null,
+            duration = "3122",
+            episode = null,
+            episodeType = null,
+            explicit = null,
+            image = imageUrl,
+            keywords = emptyList(),
+            subtitle = null,
+            summary = null,
+            season = null,
+        )
+        val item = RssItem.Builder()
+            .addEnclosure(url = enclosureUrl, type = "image/jpeg")
+            .itunesArticleData(itunesData)
+            .build()
+        val parsedItem = ParsedItem(item, siteURL = "https://example.com")
+
+        val enclosure = parsedItem.enclosures.first()
+        assertEquals(expected = URL(enclosureUrl), actual = enclosure.url)
+        assertEquals(expected = "image/jpeg", actual = enclosure.type)
+        assertNull(enclosure.itunesDurationSeconds)
+        assertNull(enclosure.itunesImage)
+    }
+
+    @Test
+    fun enclosures_derivedFromItemAudio() {
+        val audioUrl = "https://example.com/podcast/episode.mp3"
+        val imageUrl = "http://example.com/artwork.png"
+        val itunesData = ItunesItemData(
+            author = "Test Author",
+            duration = "3122",
+            episode = "42",
+            episodeType = "full",
+            explicit = "no",
+            image = imageUrl,
+            keywords = emptyList(),
+            subtitle = null,
+            summary = null,
+            season = "2",
+        )
+        val item = RssItem.Builder()
+            .audio(audioUrl)
+            .itunesArticleData(itunesData)
+            .build()
+        val parsedItem = ParsedItem(item, siteURL = "https://example.com")
+
+        assertEquals(expected = 1, actual = parsedItem.enclosures.size)
+
+        val enclosure = parsedItem.enclosures.first()
+        assertEquals(expected = URL(audioUrl), actual = enclosure.url)
+        assertEquals(expected = "audio/mpeg", actual = enclosure.type)
+        assertEquals(expected = 3122L, actual = enclosure.itunesDurationSeconds)
+        assertEquals(expected = imageUrl, actual = enclosure.itunesImage)
+    }
+
+    @Test
+    fun enclosures_derivedFromItemAudioWithoutItunesData() {
+        val audioUrl = "https://example.com/podcast/episode.mp3"
+        val item = RssItem.Builder()
+            .audio(audioUrl)
+            .build()
+        val parsedItem = ParsedItem(item, siteURL = "https://example.com")
+
+        assertEquals(expected = 1, actual = parsedItem.enclosures.size)
+
+        val enclosure = parsedItem.enclosures.first()
+        assertEquals(expected = URL(audioUrl), actual = enclosure.url)
+        assertEquals(expected = "audio/mpeg", actual = enclosure.type)
+        assertNull(enclosure.itunesDurationSeconds)
+        assertNull(enclosure.itunesImage)
+    }
+
+    @Test
+    fun enclosures_noDuplicatesWhenAudioMatchesEnclosure() {
+        val audioUrl = "https://example.com/podcast/episode.mp3"
+        val itunesData = ItunesItemData(
+            author = null,
+            duration = "3122",
+            episode = null,
+            episodeType = null,
+            explicit = null,
+            image = null,
+            keywords = emptyList(),
+            subtitle = null,
+            summary = null,
+            season = null,
+        )
+        val item = RssItem.Builder()
+            .audio(audioUrl)
+            .addEnclosure(url = audioUrl, type = "audio/mpeg")
+            .itunesArticleData(itunesData)
+            .build()
+        val parsedItem = ParsedItem(item, siteURL = "https://example.com")
+
+        assertEquals(expected = 1, actual = parsedItem.enclosures.size)
     }
 }

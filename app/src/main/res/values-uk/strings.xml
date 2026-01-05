@@ -180,6 +180,8 @@
     <string name="settings_auto_delete_option_keep_for_one_month">Місяць</string>
     <string name="settings_auto_delete_option_keep_for_three_month">Три місяці</string>
     <string name="settings_section_advanced">Додаткове</string>
+    <string name="settings_section_experimental">Експериментальне</string>
+    <string name="settings_option_enable_audio_player">Аудіоплеєр</string>
     <string name="settings_clear_all_articles_confirm">Підтвердити</string>
     <string name="settings_clear_all_articles_text">Точно видалити всі прочитані невподобані статті з пристрою? Це незворотна дія.</string>
     <string name="settings_clear_all_articles_button">Видалити всі статті</string>

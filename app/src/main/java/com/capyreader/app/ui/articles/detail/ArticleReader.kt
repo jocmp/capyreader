@@ -16,6 +16,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
+import com.capyreader.app.common.AudioEnclosure
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.rememberTalkbackPreference
 import com.capyreader.app.preferences.AppPreferences
@@ -36,6 +37,10 @@ import kotlin.math.roundToInt
 fun ArticleReader(
     article: Article,
     onSelectMedia: (media: Media) -> Unit,
+    onSelectAudio: (audio: AudioEnclosure) -> Unit = {},
+    onPauseAudio: () -> Unit = {},
+    currentAudioUrl: String? = null,
+    isAudioPlaying: Boolean = false,
 ) {
     val (shareLink, setShareLink) = rememberSaveableShareLink()
     val linkOpener = LocalLinkOpener.current
@@ -44,8 +49,16 @@ fun ArticleReader(
         key = article.id,
         onNavigateToMedia = onSelectMedia,
         onRequestLinkDialog = { setShareLink(it) },
-        onOpenLink = { linkOpener.open(it) }
+        onOpenLink = { linkOpener.open(it) },
+        onOpenAudioPlayer = onSelectAudio,
+        onPauseAudio = onPauseAudio,
+        currentAudioUrl = currentAudioUrl,
+        isAudioPlaying = isAudioPlaying,
     )
+
+    LaunchedEffect(currentAudioUrl, isAudioPlaying) {
+        webViewState.updateAudioPlayState(currentAudioUrl, isAudioPlaying)
+    }
 
     val showImages = rememberImageVisibility()
     val improveTalkback by rememberTalkbackPreference()

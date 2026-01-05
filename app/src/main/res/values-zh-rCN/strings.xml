@@ -146,6 +146,8 @@
     <string name="settings_auto_delete_option_keep_for_one_month">1 个月</string>
     <string name="settings_auto_delete_option_keep_for_three_month">3 个月</string>
     <string name="settings_section_advanced">高级</string>
+    <string name="settings_section_experimental">实验性</string>
+    <string name="settings_option_enable_audio_player">音频播放器</string>
     <string name="settings_clear_all_articles_confirm">确认</string>
     <string name="settings_clear_all_articles_button">清除所有文章</string>
     <string name="settings_support_button">支持</string>

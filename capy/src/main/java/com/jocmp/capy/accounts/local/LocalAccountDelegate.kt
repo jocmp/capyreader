@@ -265,6 +265,8 @@ internal class LocalAccountDelegate(
                             url = it.url.toString(),
                             type = it.type,
                             articleID = parsedItem.id,
+                            itunesDurationSeconds = it.itunesDurationSeconds?.toString(),
+                            itunesImage = it.itunesImage,
                         )
                     }
                 }

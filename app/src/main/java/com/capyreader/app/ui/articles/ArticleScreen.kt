@@ -4,6 +4,8 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.DrawerValue
@@ -43,8 +45,11 @@ import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.R
+import com.capyreader.app.common.AudioEnclosure
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.Saver
+import com.capyreader.app.ui.articles.audio.AudioPlayerController
+import com.capyreader.app.ui.articles.audio.FloatingAudioPlayer
 import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.refresher.RefreshInterval
@@ -191,6 +196,8 @@ fun ArticleScreen(
         val currentFeed by viewModel.currentFeed.collectAsStateWithLifecycle(null)
         val scrollBehavior = pinnedScrollBehavior()
         var media by rememberSaveable(saver = Media.Saver) { mutableStateOf(null) }
+        val audioController: AudioPlayerController = koinInject()
+        val audioEnclosure by audioController.currentAudio.collectAsState()
         val focusManager = LocalFocusManager.current
         val openUpdatePasswordDialog = {
             viewModel.dismissUnauthorizedMessage()
@@ -535,6 +542,23 @@ fun ArticleScreen(
                                 position = MarkReadPosition.FLOATING_ACTION_BUTTON,
                             )
                         }
+                    },
+                    bottomBar = {
+                        AnimatedVisibility(
+                            enter = slideInVertically(initialOffsetY = { it }) + fadeIn(),
+                            exit = slideOutVertically(targetOffsetY = { it }) + fadeOut(),
+                            visible = audioEnclosure != null,
+                        ) {
+                            audioEnclosure?.let { audio ->
+                                FloatingAudioPlayer(
+                                    audio = audio,
+                                    controller = audioController,
+                                    onDismiss = {
+                                        audioController.dismiss()
+                                    },
+                                )
+                            }
+                        }
                     }
                 ) { innerPadding ->
                     ArticleListScaffold(
@@ -594,6 +618,9 @@ fun ArticleScreen(
                         CapyPlaceholder()
                     }
                 } else if (article != null) {
+                    val isAudioPlaying by audioController.isPlaying.collectAsState()
+                    val currentAudio by audioController.currentAudio.collectAsState()
+
                     ArticleView(
                         article = article,
                         articles = articles,
@@ -604,12 +631,20 @@ fun ArticleScreen(
                         onToggleStar = viewModel::toggleArticleStar,
                         enableBackHandler = media == null,
                         onSelectMedia = { media = it },
+                        onSelectAudio = { audio ->
+                            audioController.play(audio)
+                        },
+                        onPauseAudio = {
+                            audioController.pause()
+                        },
                         onSelectArticle = { articleID ->
                             setArticle(articleID)
                         },
                         onScrollToArticle = { index ->
                             scrollToArticle(index)
-                        }
+                        },
+                        currentAudioUrl = currentAudio?.url,
+                        isAudioPlaying = isAudioPlaying,
                     )
                 }
             }
@@ -627,6 +662,7 @@ fun ArticleScreen(
                 media = media
             )
         }
+
 
         if (viewModel.showUnauthorizedMessage) {
             UnauthorizedAlertDialog(
@@ -673,7 +709,11 @@ fun ArticleScreen(
             media = null
         }
 
-        BackHandler(media == null && search.isActive && article == null) {
+        BackHandler(audioEnclosure != null && media == null) {
+            audioController.dismiss()
+        }
+
+        BackHandler(media == null && audioEnclosure == null && search.isActive && article == null) {
             search.clear()
         }
 

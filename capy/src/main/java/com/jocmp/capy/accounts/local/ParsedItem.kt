@@ -4,7 +4,6 @@ import com.jocmp.capy.Enclosure
 import com.jocmp.capy.common.optionalURL
 import com.jocmp.capy.common.unescapingHTMLCharacters
 import com.jocmp.rssparser.model.RssItem
-import com.jocmp.rssparser.model.RssItemEnclosure
 import org.jsoup.Jsoup
 import org.jsoup.safety.Cleaner
 import org.jsoup.safety.Safelist
@@ -16,7 +15,35 @@ internal class ParsedItem(private val item: RssItem, private val siteURL: String
 
     val id: String? = item.guid.orEmpty().ifBlank { url?.ifBlank { null } }
 
-    val enclosures = item.enclosures.mapNotNull { it.toEnclosure() }
+    val enclosures: List<Enclosure> = buildEnclosures()
+
+    private fun buildEnclosures(): List<Enclosure> {
+        val enclosures = item.enclosures.mapNotNull { enclosure ->
+            val parsedUrl =
+                optionalURL(enclosure.url.unescapingHTMLCharacters) ?: return@mapNotNull null
+            val isAudio = enclosure.type.startsWith("audio/")
+
+            Enclosure(
+                url = parsedUrl,
+                type = enclosure.type,
+                itunesDurationSeconds = if (isAudio) item.itunesItemData?.duration?.parseDuration() else null,
+                itunesImage = if (isAudio) item.itunesItemData?.image else null
+            )
+        }
+
+        val audioEnclosures = item.audio?.let { audioUrl ->
+            val parsedUrl = optionalURL(audioUrl.unescapingHTMLCharacters) ?: return@let null
+
+            Enclosure(
+                url = parsedUrl,
+                type = "audio/mpeg",
+                itunesDurationSeconds = item.itunesItemData?.duration?.parseDuration(),
+                itunesImage = item.itunesItemData?.image
+            )
+        }
+
+        return (enclosures + listOfNotNull(audioEnclosures)).distinctBy { it.url.toString() }
+    }
 
     val contentHTML: String?
         get() {
@@ -81,8 +108,19 @@ internal class ParsedItem(private val item: RssItem, private val siteURL: String
     }
 }
 
-private fun RssItemEnclosure.toEnclosure(): Enclosure? {
-    val url = optionalURL(url.unescapingHTMLCharacters) ?: return null
+/**
+ * Parses iTunes duration which can be:
+ * - Seconds only: "3122"
+ * - MM:SS format: "52:02"
+ * - HH:MM:SS format: "02:02:35"
+ */
+private fun String.parseDuration(): Long? {
+    val parts = split(":").mapNotNull { it.toLongOrNull() }
 
-    return Enclosure(url = url, type = type, itunesDurationSeconds = null, itunesImage = null)
+    return when (parts.size) {
+        1 -> parts[0]
+        2 -> parts[0] * 60 + parts[1]
+        3 -> parts[0] * 3600 + parts[1] * 60 + parts[2]
+        else -> null
+    }
 }
