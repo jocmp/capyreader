@@ -164,7 +164,7 @@
     <string name="theme_menu_option_light">Hele kujundus</string>
     <string name="theme_menu_option_dark">Tume kujundus</string>
     <string name="theme_menu_option_system_default">Süsteemi välimus</string>
-    <string name="opml_import_notification_cancel">Peata</string>
+    <string name="opml_import_notification_cancel">Lõpeta</string>
     <string name="article_list_sort_title">Artiklite järjestus</string>
     <string name="article_list_sort_oldest_first">Esmalt vanemad</string>
     <string name="article_list_sort_newest_first">Esmalt uuemad</string>
@@ -300,4 +300,9 @@
     <string name="freshrss_visibility_option_category">Kategooria</string>
     <string name="freshrss_visibility_option_feed">Uudisvoog</string>
     <string name="theme_mode_label">Režiim</string>
+    <string name="settings_section_experimental">Katseline</string>
+    <string name="settings_option_enable_audio_player">Meediamängija</string>
+    <string name="audio_player_play">Esita</string>
+    <string name="audio_player_pause">Peata</string>
+    <string name="audio_player_close">Sulge meediamängija</string>
 </resources>
