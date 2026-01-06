@@ -302,4 +302,8 @@
     <string name="freshrss_visibility_option_important">مهم</string>
     <string name="freshrss_visibility_option_category">فئة</string>
     <string name="freshrss_visibility_option_feed">موجز</string>
+    <string name="theme_mode_label">الوضع</string>
+    <string name="audio_player_play">شغِّل</string>
+    <string name="audio_player_pause">ألبث</string>
+    <string name="audio_player_close">أغلق المشغِّل</string>
 </resources>
