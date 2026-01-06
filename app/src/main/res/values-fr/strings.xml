@@ -300,4 +300,7 @@
     <string name="freshrss_visibility_option_category">Catégorie</string>
     <string name="freshrss_visibility_option_feed">Flux</string>
     <string name="theme_mode_label">Mode</string>
+    <string name="audio_player_play">Lecture</string>
+    <string name="audio_player_pause">Pause</string>
+    <string name="audio_player_close">Fermer le lecteur</string>
 </resources>
