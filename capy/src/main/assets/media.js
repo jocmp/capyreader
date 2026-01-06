@@ -28,6 +28,11 @@ function addImageClickListeners() {
       e.preventDefault();
       Android.openImageGallery(JSON.stringify(galleryImages), index);
     });
+
+    longPress(img, (e) => {
+      e.preventDefault();
+      Android.showImageDialog(img.src);
+    });
   });
 }
 

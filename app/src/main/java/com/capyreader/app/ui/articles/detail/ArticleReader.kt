@@ -11,25 +11,36 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import com.capyreader.app.R
 import com.capyreader.app.common.AudioEnclosure
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.rememberTalkbackPreference
+import com.capyreader.app.common.shareImage
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ReaderImageVisibility
 import com.capyreader.app.ui.ConnectivityType
 import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.articles.ColumnScrollbar
+import com.capyreader.app.ui.articles.media.ImageSaver
 import com.capyreader.app.ui.components.WebView
 import com.capyreader.app.ui.components.WebViewState
 import com.capyreader.app.ui.components.rememberSaveableShareLink
 import com.capyreader.app.ui.components.rememberWebViewState
+import com.capyreader.app.ui.settings.LocalSnackbarHost
 import com.jocmp.capy.Article
+import com.jocmp.capy.common.launchIO
+import com.jocmp.capy.common.launchUI
+import com.jocmp.capy.common.withUIContext
 import org.koin.compose.koinInject
 import kotlin.math.roundToInt
 
@@ -43,12 +54,62 @@ fun ArticleReader(
     isAudioPlaying: Boolean = false,
 ) {
     val (shareLink, setShareLink) = rememberSaveableShareLink()
+    val (shareImageUrl, setImageUrl) = rememberSaveable { mutableStateOf<String?>(null) }
     val linkOpener = LocalLinkOpener.current
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val snackbar = LocalSnackbarHost.current
+    val successMessage = stringResource(R.string.media_save_success)
+    val failureMessage = stringResource(R.string.media_save_failure)
+    val shareFailureMessage = stringResource(R.string.media_share_failure)
+
+    fun showSnackbar(message: String) {
+        scope.launchUI {
+            snackbar.showSnackbar(message)
+        }
+    }
+
+    fun saveImage(imageUrl: String) {
+        scope.launchIO {
+            val result = ImageSaver.saveImage(imageUrl, context = context)
+
+            withUIContext {
+                result.fold(
+                    onSuccess = {
+                        showSnackbar(successMessage)
+                    },
+                    onFailure = {
+                        showSnackbar(failureMessage)
+                    }
+                )
+
+            }
+        }
+
+        setImageUrl(null)
+    }
+
+    fun shareImage(imageUrl: String) {
+        scope.launchIO {
+            ImageSaver.shareImage(imageUrl, context = context)
+                .fold(
+                    onSuccess = { uri ->
+                        context.shareImage(uri)
+                    },
+                    onFailure = {
+                        showSnackbar(shareFailureMessage)
+                    }
+                )
+        }
+
+        setImageUrl(null)
+    }
 
     val webViewState = rememberWebViewState(
         key = article.id,
         onNavigateToMedia = onSelectMedia,
         onRequestLinkDialog = { setShareLink(it) },
+        onRequestImageDialog = { setImageUrl(it) },
         onOpenLink = { linkOpener.open(it) },
         onOpenAudioPlayer = onSelectAudio,
         onPauseAudio = onPauseAudio,
@@ -86,6 +147,17 @@ fun ArticleReader(
                 setShareLink(null)
             },
             link = shareLink,
+        )
+    }
+
+    if (shareImageUrl != null) {
+        ShareImageDialog(
+            onClose = {
+                setImageUrl(null)
+            },
+            imageUrl = shareImageUrl,
+            onSave = { saveImage(shareImageUrl) },
+            onShare = { shareImage(shareImageUrl) },
         )
     }
 }
