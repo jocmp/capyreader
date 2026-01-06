@@ -1,58 +1,37 @@
 package com.capyreader.app.ui.articles.audio
 
+import android.content.ComponentName
 import android.content.Context
-import android.os.Handler
+import android.net.Uri
 import android.os.Looper
 import androidx.annotation.OptIn
+import androidx.core.content.ContextCompat
 import androidx.media3.common.MediaItem
+import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
-import androidx.media3.database.StandaloneDatabaseProvider
-import androidx.media3.datasource.cache.CacheDataSource
-import androidx.media3.datasource.cache.LeastRecentlyUsedCacheEvictor
-import androidx.media3.datasource.cache.SimpleCache
-import androidx.media3.datasource.okhttp.OkHttpDataSource
-import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
+import androidx.media3.session.MediaController
+import androidx.media3.session.SessionToken
 import com.capyreader.app.common.AudioEnclosure
+import com.google.common.util.concurrent.ListenableFuture
+import com.jocmp.capy.logging.CapyLog
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import okhttp3.OkHttpClient
-import java.io.File
-
-private const val CACHE_SIZE_BYTES = 100L * 1024L * 1024L // 100 MB
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 
 class AudioPlayerController(
     private val context: Context,
-    okHttpClient: OkHttpClient,
 ) {
-    private val cache: SimpleCache
-    private val cacheDataSourceFactory: CacheDataSource.Factory
-
-    init {
-        val cacheDir = File(context.cacheDir, "audio_cache")
-        val databaseProvider = StandaloneDatabaseProvider(context)
-        cache = SimpleCache(cacheDir, LeastRecentlyUsedCacheEvictor(CACHE_SIZE_BYTES), databaseProvider)
-
-        val okHttpDataSourceFactory = OkHttpDataSource.Factory(okHttpClient)
-        cacheDataSourceFactory = CacheDataSource.Factory()
-            .setCache(cache)
-            .setUpstreamDataSourceFactory(okHttpDataSourceFactory)
-    }
-    private var player: ExoPlayer? = null
-    private val mainHandler = Handler(Looper.getMainLooper())
-    private val positionUpdateRunnable = object : Runnable {
-        override fun run() {
-            player?.let {
-                _currentPosition.value = it.currentPosition
-                if (_duration.value == 0L && it.duration > 0) {
-                    _duration.value = it.duration
-                }
-            }
-            mainHandler.postDelayed(this, 500)
-        }
-    }
+    private var controllerFuture: ListenableFuture<MediaController>? = null
+    private var mediaController: MediaController? = null
+    private var positionUpdateJob: Job? = null
+    private val mainScope = CoroutineScope(Dispatchers.Main)
 
     private val _isPlaying = MutableStateFlow(false)
     val isPlaying: StateFlow<Boolean> = _isPlaying.asStateFlow()
@@ -66,88 +45,139 @@ class AudioPlayerController(
     private val _currentAudio = MutableStateFlow<AudioEnclosure?>(null)
     val currentAudio: StateFlow<AudioEnclosure?> = _currentAudio.asStateFlow()
 
-    @OptIn(UnstableApi::class)
-    fun play(audio: AudioEnclosure) {
-        mainHandler.post {
-            playOnMainThread(audio)
+    private fun ensureController(onReady: (MediaController) -> Unit) {
+        mediaController?.let {
+            if (it.isConnected) {
+                onReady(it)
+                return
+            }
         }
+
+        val sessionToken = SessionToken(
+            context,
+            ComponentName(context, MediaPlaybackService::class.java)
+        )
+
+        controllerFuture = MediaController.Builder(context, sessionToken)
+            .setApplicationLooper(Looper.getMainLooper())
+            .buildAsync()
+        controllerFuture?.addListener({
+            try {
+                val controller = controllerFuture?.get()
+                mediaController = controller
+                controller?.let {
+                    setupPlayerListener(it)
+                    onReady(it)
+                }
+            } catch (e: Exception) {
+                CapyLog.error("audio_player", e)
+            }
+        }, ContextCompat.getMainExecutor(context))
+    }
+
+    private fun setupPlayerListener(controller: MediaController) {
+        controller.addListener(object : Player.Listener {
+            override fun onIsPlayingChanged(isPlaying: Boolean) {
+                _isPlaying.value = isPlaying
+                if (isPlaying) {
+                    startPositionUpdates()
+                } else {
+                    stopPositionUpdates()
+                }
+            }
+
+            override fun onPlaybackStateChanged(playbackState: Int) {
+                if (playbackState == Player.STATE_READY) {
+                    _duration.value = controller.duration
+                }
+                if (playbackState == Player.STATE_ENDED) {
+                    _isPlaying.value = false
+                    _currentPosition.value = 0L
+                    controller.seekTo(0)
+                }
+            }
+        })
     }
 
     @OptIn(UnstableApi::class)
-    private fun playOnMainThread(audio: AudioEnclosure) {
-        val currentUrl = _currentAudio.value?.url
+    fun play(audio: AudioEnclosure) {
+        mainScope.launch {
+            val currentUrl = _currentAudio.value?.url
 
-        if (currentUrl == audio.url && player != null) {
-            player?.play()
-            return
-        }
+            if (currentUrl == audio.url && mediaController?.isConnected == true) {
+                mediaController?.play()
+                return@launch
+            }
 
-        releaseInternal()
+            ensureController { controller ->
+                val mediaItem = MediaItem.Builder()
+                    .setUri(audio.url)
+                    .setMediaMetadata(
+                        MediaMetadata.Builder()
+                            .setTitle(audio.title)
+                            .setArtist(audio.feedName)
+                            .setArtworkUri(audio.artworkUrl?.let { Uri.parse(it) })
+                            .build()
+                    )
+                    .build()
 
-        val mediaSourceFactory = DefaultMediaSourceFactory(context)
-            .setDataSourceFactory(cacheDataSourceFactory)
+                controller.setMediaItem(mediaItem)
+                controller.prepare()
+                controller.playWhenReady = true
 
-        player = ExoPlayer.Builder(context)
-            .setMediaSourceFactory(mediaSourceFactory)
-            .build()
-            .apply {
-            val mediaItem = MediaItem.fromUri(audio.url)
-            setMediaItem(mediaItem)
-            prepare()
-            playWhenReady = true
-
-            addListener(object : Player.Listener {
-                override fun onIsPlayingChanged(isPlaying: Boolean) {
-                    _isPlaying.value = isPlaying
-                    if (isPlaying) {
-                        startPositionUpdates()
-                    } else {
-                        stopPositionUpdates()
-                    }
+                _currentAudio.value = audio
+                audio.durationSeconds?.let {
+                    _duration.value = it * 1000
                 }
-
-                override fun onPlaybackStateChanged(playbackState: Int) {
-                    if (playbackState == Player.STATE_READY) {
-                        _duration.value = duration
-                    }
-                    if (playbackState == Player.STATE_ENDED) {
-                        _isPlaying.value = false
-                        _currentPosition.value = 0L
-                        seekTo(0)
-                    }
-                }
-            })
-        }
-
-        _currentAudio.value = audio
-
-        audio.durationSeconds?.let {
-            _duration.value = it * 1000
+            }
         }
     }
 
     fun pause() {
-        mainHandler.post {
-            player?.pause()
+        mainScope.launch {
+            mediaController?.pause()
         }
     }
 
     fun resume() {
-        mainHandler.post {
-            player?.play()
+        mainScope.launch {
+            mediaController?.play()
         }
     }
 
     fun seekTo(positionMs: Long) {
-        mainHandler.post {
-            player?.seekTo(positionMs)
+        mainScope.launch {
+            mediaController?.seekTo(positionMs)
             _currentPosition.value = positionMs
         }
     }
 
+    fun skipBack() {
+        mainScope.launch {
+            mediaController?.let { controller ->
+                val newPosition = SkipCalculator.skipBack(controller.currentPosition)
+                controller.seekTo(newPosition)
+                _currentPosition.value = newPosition
+            }
+        }
+    }
+
+    fun skipForward() {
+        mainScope.launch {
+            mediaController?.let { controller ->
+                val newPosition = SkipCalculator.skipForward(controller.currentPosition, controller.duration)
+                controller.seekTo(newPosition)
+                _currentPosition.value = newPosition
+            }
+        }
+    }
+
     fun dismiss() {
-        mainHandler.post {
-            releaseInternal()
+        mainScope.launch {
+            mediaController?.let { controller ->
+                controller.stop()
+                controller.clearMediaItems()
+            }
             _currentAudio.value = null
             _isPlaying.value = false
             _currentPosition.value = 0L
@@ -155,18 +185,32 @@ class AudioPlayerController(
         }
     }
 
-    private fun releaseInternal() {
+    fun release() {
         stopPositionUpdates()
-        player?.release()
-        player = null
+        controllerFuture?.let {
+            MediaController.releaseFuture(it)
+        }
+        mediaController = null
+        controllerFuture = null
     }
 
     private fun startPositionUpdates() {
         stopPositionUpdates()
-        mainHandler.post(positionUpdateRunnable)
+        positionUpdateJob = mainScope.launch {
+            while (isActive) {
+                mediaController?.let {
+                    _currentPosition.value = it.currentPosition
+                    if (_duration.value == 0L && it.duration > 0) {
+                        _duration.value = it.duration
+                    }
+                }
+                delay(500)
+            }
+        }
     }
 
     private fun stopPositionUpdates() {
-        mainHandler.removeCallbacks(positionUpdateRunnable)
+        positionUpdateJob?.cancel()
+        positionUpdateJob = null
     }
 }

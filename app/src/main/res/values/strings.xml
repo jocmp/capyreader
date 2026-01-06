@@ -312,4 +312,6 @@
     <string name="audio_player_play">Play</string>
     <string name="audio_player_pause">Pause</string>
     <string name="audio_player_close">Close player</string>
+    <string name="audio_player_skip_back">Skip back 30 seconds</string>
+    <string name="audio_player_skip_forward">Skip forward 30 seconds</string>
 </resources>
