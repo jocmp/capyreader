@@ -3,9 +3,11 @@ package com.capyreader.app.ui.articles.audio
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.capyreader.app.common.AudioEnclosure
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -30,13 +32,17 @@ class AudioPlayerControllerTest {
     @Before
     fun setup() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
-        controller = AudioPlayerController(context)
+        InstrumentationRegistry.getInstrumentation().runOnMainSync {
+            controller = AudioPlayerController(context)
+        }
     }
 
     @After
     fun teardown() {
-        controller.dismiss()
-        controller.release()
+        InstrumentationRegistry.getInstrumentation().runOnMainSync {
+            controller.dismiss()
+            controller.release()
+        }
     }
 
     @Test
@@ -59,7 +65,9 @@ class AudioPlayerControllerTest {
 
     @Test
     fun play_setsCurrentAudio() = runBlocking {
-        controller.play(testAudio)
+        withContext(Dispatchers.Main) {
+            controller.play(testAudio)
+        }
 
         withTimeout(5000) {
             while (controller.currentAudio.value == null) {
@@ -75,7 +83,9 @@ class AudioPlayerControllerTest {
 
     @Test
     fun dismiss_clearsCurrentAudio() = runBlocking {
-        controller.play(testAudio)
+        withContext(Dispatchers.Main) {
+            controller.play(testAudio)
+        }
 
         withTimeout(5000) {
             while (controller.currentAudio.value == null) {
@@ -83,7 +93,9 @@ class AudioPlayerControllerTest {
             }
         }
 
-        controller.dismiss()
+        withContext(Dispatchers.Main) {
+            controller.dismiss()
+        }
 
         withTimeout(2000) {
             while (controller.currentAudio.value != null) {
@@ -97,7 +109,9 @@ class AudioPlayerControllerTest {
 
     @Test
     fun seekTo_updatesPosition() = runBlocking {
-        controller.play(testAudio)
+        withContext(Dispatchers.Main) {
+            controller.play(testAudio)
+        }
 
         withTimeout(5000) {
             while (controller.currentAudio.value == null) {
@@ -106,7 +120,9 @@ class AudioPlayerControllerTest {
         }
 
         val seekPosition = 30_000L
-        controller.seekTo(seekPosition)
+        withContext(Dispatchers.Main) {
+            controller.seekTo(seekPosition)
+        }
 
         withTimeout(2000) {
             while (controller.currentPosition.value != seekPosition) {
