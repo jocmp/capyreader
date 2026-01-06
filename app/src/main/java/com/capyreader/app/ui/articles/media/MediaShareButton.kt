@@ -1,8 +1,5 @@
 package com.capyreader.app.ui.articles.media
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.runtime.Composable
@@ -10,6 +7,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.capyreader.app.R
+import com.capyreader.app.common.shareImage
 import com.capyreader.app.ui.settings.LocalSnackbarHost
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
@@ -35,7 +33,7 @@ fun MediaShareButton(imageUrl: String) {
             withUIContext {
                 result.fold(
                     onSuccess = { uri ->
-                        openShareSheet(uri, context = context)
+                        context.shareImage(uri)
                     },
                     onFailure = {
                         showFailureMessage()
@@ -52,14 +50,4 @@ fun MediaShareButton(imageUrl: String) {
         text = R.string.media_share,
         icon = Icons.Rounded.Share,
     )
-}
-
-private fun openShareSheet(uri: Uri, context: Context) {
-    val shareIntent = Intent(Intent.ACTION_SEND).apply {
-        putExtra(Intent.EXTRA_STREAM, uri)
-        setDataAndType(uri, "image/jpeg")
-        flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-    }
-
-    context.startActivity(Intent.createChooser(shareIntent, null))
 }

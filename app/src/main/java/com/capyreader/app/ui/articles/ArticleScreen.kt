@@ -76,6 +76,7 @@ import com.capyreader.app.ui.components.SearchState
 import com.capyreader.app.ui.provideLinkOpener
 import com.capyreader.app.ui.rememberLazyListState
 import com.capyreader.app.ui.rememberLocalConnectivity
+import com.capyreader.app.ui.settings.LocalSnackbarHost
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
@@ -160,6 +161,8 @@ fun ArticleScreen(
         state = searchState,
     )
 
+    val snackbarHostState = remember { SnackbarHostState() }
+
     CompositionLocalProvider(
         LocalFullContent provides fullContent,
         LocalArticleActions provides articleActions,
@@ -170,6 +173,7 @@ fun ArticleScreen(
         LocalLinkOpener provides provideLinkOpener(context),
         LocalMarkAllReadButtonPosition provides markAllReadButtonPosition,
         LocalUnreadCount provides unreadCount,
+        LocalSnackbarHost provides snackbarHostState,
     ) {
         val openNextFeedOnReadAll = afterReadAll == AfterReadAllBehavior.OPEN_NEXT_FEED
 
@@ -187,8 +191,6 @@ fun ArticleScreen(
         val scaffoldNavigator = rememberArticleScaffoldNavigator()
         val showMultipleColumns = scaffoldNavigator.scaffoldDirective.maxHorizontalPartitions > 1
         var isPullToRefreshing by remember { mutableStateOf(false) }
-
-        val snackbarHostState = remember { SnackbarHostState() }
         val addFeedSuccessMessage = stringResource(R.string.add_feed_success)
         val currentFeed by viewModel.currentFeed.collectAsStateWithLifecycle(null)
         val scrollBehavior = pinnedScrollBehavior()

@@ -207,6 +207,7 @@ fun rememberWebViewState(
     renderer: ArticleRenderer = koinInject(),
     onNavigateToMedia: (media: Media) -> Unit,
     onRequestLinkDialog: (link: ShareLink) -> Unit,
+    onRequestImageDialog: (imageUrl: String) -> Unit = {},
     onOpenLink: (url: Uri) -> Unit,
     onOpenAudioPlayer: (audio: AudioEnclosure) -> Unit = {},
     onPauseAudio: () -> Unit = {},
@@ -240,6 +241,7 @@ fun rememberWebViewState(
         val webViewInterface = WebViewInterface(
             navigateToMedia = { onNavigateToMedia(it) },
             onRequestLinkDialog = onRequestLinkDialog,
+            onRequestImageDialog = onRequestImageDialog,
             onOpenAudioPlayer = onOpenAudioPlayer,
             onPauseAudio = onPauseAudio,
         )
