@@ -4,8 +4,6 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.DrawerValue
@@ -45,11 +43,8 @@ import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.R
-import com.capyreader.app.common.AudioEnclosure
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.Saver
-import com.capyreader.app.ui.articles.audio.AudioPlayerController
-import com.capyreader.app.ui.articles.audio.FloatingAudioPlayer
 import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.refresher.RefreshInterval
@@ -57,6 +52,8 @@ import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.LocalMarkAllReadButtonPosition
 import com.capyreader.app.ui.LocalUnreadCount
+import com.capyreader.app.ui.articles.audio.AudioPlayerController
+import com.capyreader.app.ui.articles.audio.FloatingAudioPlayer
 import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
 import com.capyreader.app.ui.articles.feeds.AngleRefreshState
@@ -79,6 +76,7 @@ import com.capyreader.app.ui.components.SearchState
 import com.capyreader.app.ui.provideLinkOpener
 import com.capyreader.app.ui.rememberLazyListState
 import com.capyreader.app.ui.rememberLocalConnectivity
+import com.capyreader.app.ui.settings.LocalSnackbarHost
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
@@ -163,6 +161,8 @@ fun ArticleScreen(
         state = searchState,
     )
 
+    val snackbarHostState = remember { SnackbarHostState() }
+
     CompositionLocalProvider(
         LocalFullContent provides fullContent,
         LocalArticleActions provides articleActions,
@@ -173,6 +173,7 @@ fun ArticleScreen(
         LocalLinkOpener provides provideLinkOpener(context),
         LocalMarkAllReadButtonPosition provides markAllReadButtonPosition,
         LocalUnreadCount provides unreadCount,
+        LocalSnackbarHost provides snackbarHostState,
     ) {
         val openNextFeedOnReadAll = afterReadAll == AfterReadAllBehavior.OPEN_NEXT_FEED
 
@@ -190,8 +191,6 @@ fun ArticleScreen(
         val scaffoldNavigator = rememberArticleScaffoldNavigator()
         val showMultipleColumns = scaffoldNavigator.scaffoldDirective.maxHorizontalPartitions > 1
         var isPullToRefreshing by remember { mutableStateOf(false) }
-
-        val snackbarHostState = remember { SnackbarHostState() }
         val addFeedSuccessMessage = stringResource(R.string.add_feed_success)
         val currentFeed by viewModel.currentFeed.collectAsStateWithLifecycle(null)
         val scrollBehavior = pinnedScrollBehavior()
@@ -544,20 +543,14 @@ fun ArticleScreen(
                         }
                     },
                     bottomBar = {
-                        AnimatedVisibility(
-                            enter = slideInVertically(initialOffsetY = { it }) + fadeIn(),
-                            exit = slideOutVertically(targetOffsetY = { it }) + fadeOut(),
-                            visible = audioEnclosure != null,
-                        ) {
-                            audioEnclosure?.let { audio ->
-                                FloatingAudioPlayer(
-                                    audio = audio,
-                                    controller = audioController,
-                                    onDismiss = {
-                                        audioController.dismiss()
-                                    },
-                                )
-                            }
+                        audioEnclosure?.let { audio ->
+                            FloatingAudioPlayer(
+                                audio = audio,
+                                controller = audioController,
+                                onDismiss = {
+                                    audioController.dismiss()
+                                },
+                            )
                         }
                     }
                 ) { innerPadding ->
@@ -709,11 +702,7 @@ fun ArticleScreen(
             media = null
         }
 
-        BackHandler(audioEnclosure != null && media == null) {
-            audioController.dismiss()
-        }
-
-        BackHandler(media == null && audioEnclosure == null && search.isActive && article == null) {
+        BackHandler(media == null && search.isActive && article == null) {
             search.clear()
         }
 
