@@ -18,7 +18,7 @@ FROM articles
 JOIN feeds ON articles.feed_id = feeds.id
 JOIN article_statuses ON articles.id = article_statuses.article_id
 WHERE ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
-AND (feeds.priority IS NULL OR feeds.priority IN ("main", "important"))
+AND (feeds.priority IS NULL OR feeds.priority IN ('main', 'important'))
 AND (article_statuses.starred = :starred OR :starred IS NULL)
 AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
 AND (articles.title LIKE '%' || :query || '%' OR articles.summary  LIKE '%' || :query || '%' OR :query IS NULL)
@@ -32,7 +32,7 @@ FROM articles
 JOIN feeds ON articles.feed_id = feeds.id
 JOIN article_statuses ON articles.id = article_statuses.article_id
 WHERE ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
-AND (feeds.priority IS NULL OR feeds.priority IN ("main", "important"))
+AND (feeds.priority IS NULL OR feeds.priority IN ('main', 'important'))
 AND (article_statuses.starred = :starred OR :starred IS NULL)
 AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
 AND (articles.title LIKE '%' || :query || '%' OR articles.summary  LIKE '%' || :query || '%' OR :query IS NULL);
@@ -44,7 +44,7 @@ JOIN feeds ON articles.feed_id = feeds.id
 JOIN article_statuses ON articles.id = article_statuses.article_id
 WHERE article_statuses.read = 0
 AND (article_statuses.starred = :starred OR :starred IS NULL)
-AND (feeds.priority IS NULL OR feeds.priority IN ("main", "important"))
+AND (feeds.priority IS NULL OR feeds.priority IN ('main', 'important'))
 AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
 AND (articles.title LIKE '%' || :query || '%' OR articles.summary  LIKE '%' || :query || '%' OR :query IS NULL)
 AND (
