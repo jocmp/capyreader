@@ -1,1 +1,2 @@
 • Add audio player to notification drawer
+• Update translations for Arabic, Estonian, French, Ukrainian, and Chinese thanks to volunteers!
