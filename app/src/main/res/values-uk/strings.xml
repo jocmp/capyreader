@@ -298,5 +298,5 @@
     <string name="audio_player_play">Відтворити</string>
     <string name="audio_player_pause">Призупинити</string>
     <string name="audio_player_close">Закрити програвач</string>
-    <string name="theme_mode_label">Видозміна</string>
+    <string name="theme_mode_label">Режим</string>
 </resources>
