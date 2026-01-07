@@ -302,4 +302,8 @@
     <string name="freshrss_visibility_option_important">Importante</string>
     <string name="freshrss_visibility_option_category">Categoria</string>
     <string name="freshrss_visibility_option_feed">Feed</string>
+    <string name="theme_mode_label">Modalità</string>
+    <string name="audio_player_play">Riproduci</string>
+    <string name="audio_player_pause">Pausa</string>
+    <string name="audio_player_close">Chiudi lettore</string>
 </resources>
