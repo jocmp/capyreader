@@ -5,7 +5,6 @@ import com.capyreader.app.R
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.articles.audio.AudioPlayerController
 import com.capyreader.app.ui.articles.feeds.edit.EditFeedViewModel
-import com.jocmp.capy.accounts.baseHttpClient
 import com.jocmp.capy.articles.ArticleRenderer
 import com.jocmp.capy.articles.AudioPlayerLabels
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -20,8 +19,7 @@ internal val articlesModule = module {
     }
     single {
         AudioPlayerController(
-            context = get(),
-            okHttpClient = baseHttpClient()
+            context = get()
         )
     }
     single {
