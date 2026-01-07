@@ -295,4 +295,8 @@
     <string name="freshrss_visibility_option_feed">Стрічка</string>
     <string name="freshrss_visibility">Видимість</string>
     <string name="freshrss_visibility_option_important">Важливе</string>
+    <string name="audio_player_play">Відтворити</string>
+    <string name="audio_player_pause">Призупинити</string>
+    <string name="audio_player_close">Закрити програвач</string>
+    <string name="theme_mode_label">Режим</string>
 </resources>
