@@ -25,19 +25,19 @@ Capy Reader is free across all sources. It is available for devices running Andr
 
 ## Reporting a bug
 
-Bug reports are always welcome and are my top priority.
+Bug reports are always welcome and are my top priority. Please search discussions and issues to make sure the bug is new and hasn't been reported yet.
 
-If you run into an issue, let me know by submitting a [bug report](https://github.com/jocmp/capyreader/issues/new?labels=bug&template=1-bug-report.yml).
+If you're in doubt or run into an unreported issue, let me know by submitting a [bug report](https://github.com/jocmp/capyreader/discussions/new?category=bugs).
 
 ## Feature Requests
 
-If you have questions or a general feature request, please post them to [Discussions](https://github.com/jocmp/capyreader/discussions).
+If you have questions or a general feature request, please post them to discussions as a [feature request](https://github.com/jocmp/capyreader/discussions/new?category=feature-requests).
 
 ### Full Content Support
 
 Sometimes Capy's full content mode doesn't work as expected on a site due to the chaos of the web.
 
-When this happens, please submit a separate feature request to support full content for that site: [Full Content Request form](https://github.com/jocmp/capyreader/issues/new?labels=full%20content%20request&template=2-full-content-request.yml)
+When this happens, please submit a separate feature request to support full content for that site: [Full Content Request form](https://github.com/jocmp/capyreader/discussions/new?category=full-content-request)
 
 Writing and verifying full content parsers can be time consuming. If you find this useful, [consider donating](https://ko-fi.com/capyreader) to show your support.
 
