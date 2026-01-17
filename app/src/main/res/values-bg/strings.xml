@@ -301,4 +301,9 @@
     <string name="freshrss_visibility_option_category">Категория</string>
     <string name="freshrss_visibility_option_feed">Емисия</string>
     <string name="theme_mode_label">Режим</string>
+    <string name="settings_section_experimental">Експериментално</string>
+    <string name="settings_option_enable_audio_player">Аудио плейър</string>
+    <string name="audio_player_play">Възпроизвеждане</string>
+    <string name="audio_player_pause">Пауза</string>
+    <string name="audio_player_close">Затвори плейъра</string>
 </resources>

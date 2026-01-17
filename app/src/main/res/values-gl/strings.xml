@@ -294,4 +294,9 @@
     <string name="freshrss_visibility_option_category">Categoría</string>
     <string name="freshrss_visibility_option_feed">Cronoloxía</string>
     <string name="theme_mode_label">Modo</string>
+    <string name="settings_section_experimental">Experimental</string>
+    <string name="settings_option_enable_audio_player">Reprodutor de audio</string>
+    <string name="audio_player_play">Reproducir</string>
+    <string name="audio_player_pause">Pausa</string>
+    <string name="audio_player_close">Fechar reprodutor</string>
 </resources>
