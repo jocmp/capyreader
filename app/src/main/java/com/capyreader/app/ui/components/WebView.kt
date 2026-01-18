@@ -202,6 +202,9 @@ class WebViewState(
     fun updateAudioPlayState(url: String?, isPlaying: Boolean) {
         currentAudioUrl = url
         isAudioPlaying = isPlaying
+        if (htmlId == null) {
+            return
+        }
         webView.post {
             if (url != null) {
                 val escapedUrl = url.replace("'", "\\'")
