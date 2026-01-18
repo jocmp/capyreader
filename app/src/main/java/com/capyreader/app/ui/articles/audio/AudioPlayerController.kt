@@ -92,8 +92,7 @@ class AudioPlayerController(
                 }
                 if (playbackState == Player.STATE_ENDED) {
                     _isPlaying.value = false
-                    _currentPosition.value = 0L
-                    controller.seekTo(0)
+                    controller.pause()
                 }
             }
         })
