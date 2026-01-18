@@ -306,4 +306,6 @@
     <string name="audio_player_play">شغِّل</string>
     <string name="audio_player_pause">ألبث</string>
     <string name="audio_player_close">أغلق المشغِّل</string>
+    <string name="audio_player_skip_back">ارجع للخلف 30 ثانية</string>
+    <string name="audio_player_skip_forward">تخطي للأمام 30 ثانية</string>
 </resources>

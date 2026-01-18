@@ -304,4 +304,6 @@
     <string name="audio_player_play">播放</string>
     <string name="audio_player_pause">暂停</string>
     <string name="audio_player_close">关闭播放器</string>
+    <string name="audio_player_skip_back">快退 30 秒</string>
+    <string name="audio_player_skip_forward">快进 30 秒</string>
 </resources>
