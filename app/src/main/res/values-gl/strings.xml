@@ -123,8 +123,8 @@
     <string name="title_alignment_left">Aliñar á esquerda</string>
     <string name="title_alignment_center">Centrar</string>
     <string name="article_title_font_scale_label">Tamaño da letra</string>
-    <string name="article_byline">%1$s desde %2$s por %3$s</string>
-    <string name="article_byline_date_only">%1$s desde %2$s</string>
+    <string name="article_byline">%1$s ás %2$s por %3$s</string>
+    <string name="article_byline_date_only">%1$s ás %2$s</string>
     <string name="settings_option_auto_delete_articles_subtitle">Eliminar os artigos lidos e sen estrela anteriores a 3 meses</string>
     <string name="settings_option_auto_delete_articles_title">Eliminación automática de artigos</string>
     <string name="feed_form_feed_url_title">URL da canle</string>
@@ -181,7 +181,7 @@
     <string name="settings_enable_high_contrast_dark_theme">Activar decorado escuro de alto contraste</string>
     <string name="settings_section_mark_all_as_read">Marcar todo como lido</string>
     <string name="settings_section_browser">Navegador</string>
-    <string name="reader_image_visibility_show_on_wifi">Mostrar imaxes só cando Wi-Fi</string>
+    <string name="reader_image_visibility_show_on_wifi">Só con Wi-Fi</string>
     <string name="reader_image_visibility_always_hide">Bloquear imaxes</string>
     <string name="reader_image_visibility_always_show">Mostrar imaxes sempre</string>
     <string name="reader_image_visibility_label">Imaxes</string>
@@ -262,7 +262,7 @@
     <string name="widget_headlines_see_more_button">Ver máis artigos</string>
     <string name="settings_gestures_improve_talkback_title">Mellorar TalkBack</string>
     <string name="settings_gestures_improve_talkback_subtitle">Desactiva algúns axustes para mellorar o texto-a-palabra de TalkBack</string>
-    <string name="settings_options_reader_pin_top_toolbar">Fixar na barra superior</string>
+    <string name="settings_options_reader_pin_top_toolbar">Fixar a Barra superior</string>
     <string name="settings_options_reader_show_bottom_toolbar">Mostrar accións na barra inferior</string>
     <string name="add_account_miniflux_signup_prompt">Non tes unha instancia Miniflux?</string>
     <string name="add_account_miniflux_signup_link_text">Coñece máis.</string>
@@ -299,4 +299,6 @@
     <string name="audio_player_play">Reproducir</string>
     <string name="audio_player_pause">Pausa</string>
     <string name="audio_player_close">Fechar reprodutor</string>
+    <string name="audio_player_skip_back">Recuar 30 segundos</string>
+    <string name="audio_player_skip_forward">Avanzar 30 segundos</string>
 </resources>
