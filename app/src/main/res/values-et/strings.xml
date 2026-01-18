@@ -305,4 +305,6 @@
     <string name="audio_player_play">Esita</string>
     <string name="audio_player_pause">Peata</string>
     <string name="audio_player_close">Sulge meediamängija</string>
+    <string name="audio_player_skip_back">Keri 30 sekundit tagasi</string>
+    <string name="audio_player_skip_forward">Keri 30 sekundit edasi</string>
 </resources>
