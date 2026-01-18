@@ -241,6 +241,8 @@ internal class LocalAccountDelegate(
                 val blocked = containsBlockedText(parsedItem, blocklist)
 
                 if (parsedItem.id != null && withinCutoff && !blocked) {
+                    val enclosureType = parsedItem.enclosures.firstOrNull()?.type
+
                     database.articlesQueries.create(
                         id = parsedItem.id,
                         feed_id = feed.id,
@@ -252,6 +254,7 @@ internal class LocalAccountDelegate(
                         extracted_content_url = null,
                         image_url = parsedItem.imageURL,
                         published_at = publishedAt,
+                        enclosure_type = enclosureType,
                     )
 
                     articleRecords.createStatus(

@@ -450,6 +450,8 @@ internal class ReaderAccountDelegate(
 
             items.forEach { item ->
                 val updated = TimeHelpers.nowUTC()
+                val enclosures = ReaderEnclosureParsing.validEnclosures(item)
+                val enclosureType = enclosures.firstOrNull()?.type
 
                 database.articlesQueries.create(
                     id = item.hexID,
@@ -461,7 +463,8 @@ internal class ReaderAccountDelegate(
                     summary = item.summary.content?.let { Jsoup.parse(it).text() },
                     url = item.canonical.firstOrNull()?.href,
                     image_url = ReaderEnclosureParsing.parsedImageURL(item),
-                    published_at = item.published
+                    published_at = item.published,
+                    enclosure_type = enclosureType,
                 )
 
                 articleRecords.updateStatus(
@@ -487,7 +490,7 @@ internal class ReaderAccountDelegate(
                     )
                 }
 
-                ReaderEnclosureParsing.validEnclosures(item).forEach {
+                enclosures.forEach {
                     enclosureRecords.create(
                         url = it.url.toString(),
                         type = it.type,

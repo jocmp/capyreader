@@ -1,0 +1,1 @@
+ALTER TABLE articles ADD COLUMN enclosure_type TEXT;
