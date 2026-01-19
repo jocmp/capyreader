@@ -1,3 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="add_feed_url_title">Feed eller webadresse</string>
+    <string name="add_feed_name_title">Navn</string>
+    <string name="add_feed_new_folder_title">Ny etikette</string>
+    <string name="add_feed_submit">Tilføj</string>
+    <string name="add_feed_success">Feed tilføjet</string>
+    <string name="feed_form_cancel">Annuller</string>
+    <string name="filter_starred">Favoritter</string>
+    <string name="filter_unread">Ulæste</string>
+    <string name="filter_all">Alle</string>
+    <string name="filter_today">I dag</string>
+    <string name="feed_action_unsubscribe">Afmeld</string>
+    <string name="filter_action_menu_description">Rediger</string>
+    <string name="feed_action_edit">Rediger feed</string>
+    <string name="feed_action_unsubscribe_message">Er du sikker på at du vil afmelde \"%1$s\"?</string>
+    <string name="feed_action_unsubscribe_confirm">Afmeld</string>
+    <string name="edit_feed_submit">Gem</string>
+    <string name="dialog_cancel">Annuller</string>
+    <string name="folder_action_delete_title">Slet etikette</string>
+    <string name="folder_action_edit">Omdøb</string>
+    <string name="feed_action_unsubscribe_title">Afmeld</string>
+    <string name="settings">Åbn indstillinger</string>
+    <string name="nav_add_feed">Tilføj feed</string>
 </resources>
