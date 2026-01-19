@@ -303,4 +303,6 @@
     <string name="audio_player_play">Lecture</string>
     <string name="audio_player_pause">Pause</string>
     <string name="audio_player_close">Fermer le lecteur</string>
+    <string name="audio_player_skip_back">Retour arrière de 30 sec</string>
+    <string name="audio_player_skip_forward">Avancer de 30 sec</string>
 </resources>
