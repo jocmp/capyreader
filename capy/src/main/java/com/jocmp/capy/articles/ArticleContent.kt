@@ -24,6 +24,11 @@ class ArticleContent(
 
         return try {
             val response = httpClient.newCall(request).await()
+
+            if (!response.isSuccessful) {
+                return Result.failure(HttpError(code = response.code))
+            }
+
             val body = getBodyOrNull(response)
 
             if (body == null) {
@@ -38,11 +43,9 @@ class ArticleContent(
 
     private fun getBodyOrNull(response: Response): String? {
         val body = response.body
-        val bodyValue = body?.string().orEmpty()
+        val bodyValue = body.string()
 
         return if (
-            response.isSuccessful &&
-            body != null &&
             bodyValue.isNotBlank() &&
             body.contentType()?.subtype == "html"
         ) {
@@ -55,6 +58,8 @@ class ArticleContent(
     class MissingBodyError(override val message: String?) : Throwable(message = message)
 
     class MissingURLError : Throwable()
+
+    class HttpError(val code: Int) : Throwable()
 
     companion object {
         const val USER_AGENT =

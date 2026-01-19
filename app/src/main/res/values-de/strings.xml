@@ -224,6 +224,7 @@
     <string name="after_read_all_behavior_open_drawer">Navigationsleiste anzeigen</string>
     <string name="after_read_all_behavior_label">Wenn Alles Gelesen</string>
     <string name="full_content_error_generic">Artikel verarbeiten fehlgeschlagen</string>
+    <string name="full_content_error_forbidden">Abruf von Website blockiert</string>
     <string name="after_read_all_behavior_default">Standard</string>
     <string name="article_actions_copy_link">Link kopieren</string>
     <string name="freshrss_article_actions_label">Beschriftung</string>

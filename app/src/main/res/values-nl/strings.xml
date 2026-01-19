@@ -251,6 +251,7 @@
     <string name="after_read_all_behavior_open_next_feed">Volgende feed openen</string>
     <string name="full_content_error_missing_response">Ophalen artikel mislukt</string>
     <string name="full_content_error_generic">Ontleden artikel mislukt</string>
+    <string name="full_content_error_forbidden">Ophalen geblokkeerd door site</string>
     <string name="feed_nav_drawer_title">Feeds</string>
     <string name="search_bar_placeholder">Zoeken</string>
     <string name="media_save">Opslaan</string>

@@ -726,8 +726,11 @@ class ArticleScreenViewModel(
 }
 
 fun Context.showFullContentErrorToast(throwable: Throwable) {
-    val message = when (throwable) {
-        is ArticleContent.MissingBodyError -> R.string.full_content_error_missing_response
+    val message = when {
+        throwable is ArticleContent.HttpError && throwable.code == 403 ->
+            R.string.full_content_error_forbidden
+        throwable is ArticleContent.MissingBodyError ->
+            R.string.full_content_error_missing_response
         else -> R.string.full_content_error_generic
     }
 

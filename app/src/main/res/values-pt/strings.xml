@@ -48,6 +48,7 @@
     <string name="article_list_swipe_disabled">Desativado</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Deslizar para a esquerda ou para a direita para navegar entre artigos</string>
     <string name="full_content_error_generic">Falha ao analisar artigo</string>
+    <string name="full_content_error_forbidden">Obtenção bloqueada pelo site</string>
     <string name="media_save">Gravar</string>
     <string name="media_save_success">Imagem gravada</string>
     <string name="media_save_failure">Falha ao gravar imagem</string>

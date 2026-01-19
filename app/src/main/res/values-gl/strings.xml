@@ -214,6 +214,7 @@
     <string name="after_read_all_behavior_open_next_feed">Abrir a seguinte canle</string>
     <string name="full_content_error_missing_response">Non se puido obter o artigo</string>
     <string name="full_content_error_generic">Non se puido procesar o artigo</string>
+    <string name="full_content_error_forbidden">Obtención bloqueada polo sitio</string>
     <string name="settings_donate_button">Doar</string>
     <string name="after_read_all_behavior_default">Predeterminado</string>
     <string name="article_actions_copy_link">Copiar ligazón</string>

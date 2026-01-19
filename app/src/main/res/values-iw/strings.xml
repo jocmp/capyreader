@@ -236,6 +236,7 @@
     <string name="after_read_all_behavior_open_next_feed">פתח פיד הבא</string>
     <string name="full_content_error_missing_response">שגיאה בטעינת מאמר</string>
     <string name="full_content_error_generic">שגיאה בהצגת מאמר</string>
+    <string name="full_content_error_forbidden">האתר חסם את הבקשה</string>
     <string name="feed_nav_drawer_title">פידים</string>
     <string name="search_bar_placeholder">חיפוש</string>
     <string name="media_save">שמירה</string>

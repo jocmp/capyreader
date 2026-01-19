@@ -237,6 +237,7 @@
     <string name="after_read_all_behavior_default">Noklusējuma</string>
     <string name="full_content_error_missing_response">Neizdevās ielādēt rakstu</string>
     <string name="full_content_error_generic">Neizdevās parsēt rakstu</string>
+    <string name="full_content_error_forbidden">Vietne bloķēja ielādi</string>
     <string name="media_save">Saglabāt</string>
     <string name="media_save_success">Attēls saglabāts</string>
     <string name="media_save_failure">Neizdevās saglabāt attēlu</string>

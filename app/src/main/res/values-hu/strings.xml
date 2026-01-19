@@ -243,6 +243,7 @@
     <string name="after_read_all_behavior_open_next_feed">Következő hírfolyam megnyitása</string>
     <string name="full_content_error_missing_response">Nem sikerült lekérni a cikket</string>
     <string name="full_content_error_generic">Nem sikerült elemezni a cikket</string>
+    <string name="full_content_error_forbidden">A letöltést a webhely blokkolta</string>
     <string name="feed_nav_drawer_title">Hírfolyamok</string>
     <string name="search_bar_placeholder">Keresés</string>
     <string name="media_save">Mentés</string>
