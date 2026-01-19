@@ -299,4 +299,6 @@
     <string name="audio_player_pause">Призупинити</string>
     <string name="audio_player_close">Закрити програвач</string>
     <string name="theme_mode_label">Режим</string>
+    <string name="audio_player_skip_back">Назад на 30 секунд</string>
+    <string name="audio_player_skip_forward">Уперед на 30 секунд</string>
 </resources>
