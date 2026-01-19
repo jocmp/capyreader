@@ -54,7 +54,6 @@ import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.preferences.AppTheme
 import com.capyreader.app.ui.articles.list.ArticleActionMenu
 import com.capyreader.app.ui.articles.list.ArticleListItem
-import com.capyreader.app.ui.articles.list.ArticleRowSwipeBox
 import com.capyreader.app.ui.fixtures.ArticleSample
 import com.capyreader.app.ui.fixtures.PreviewKoinApplication
 import com.capyreader.app.ui.theme.CapyTheme
@@ -108,7 +107,6 @@ fun ArticleRow(
         ArticleBox(
             onClick = { onSelect(article.id) },
             onLongClick = openArticleMenu,
-            article = article,
         ) {
             ArticleListItem(
                 headlineContent = {
@@ -345,20 +343,17 @@ fun StyleProviders(options: ArticleRowOptions, content: @Composable () -> Unit) 
 private fun ArticleBox(
     onClick: () -> Unit,
     onLongClick: () -> Unit,
-    article: Article,
     content: @Composable () -> Unit
 ) {
-    ArticleRowSwipeBox(article) {
-        Box(
-            Modifier
-                .combinedClickable(
-                    onClick = onClick,
-                    onLongClick = onLongClick,
-                    onLongClickLabel = stringResource(R.string.article_actions_open_menu)
-                ),
-        ) {
-            content()
-        }
+    Box(
+        Modifier
+            .combinedClickable(
+                onClick = onClick,
+                onLongClick = onLongClick,
+                onLongClickLabel = stringResource(R.string.article_actions_open_menu)
+            ),
+    ) {
+        content()
     }
 }
 

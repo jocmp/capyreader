@@ -62,11 +62,13 @@ import com.capyreader.app.ui.articles.feeds.FeedList
 import com.capyreader.app.ui.articles.feeds.FolderActions
 import com.capyreader.app.ui.articles.feeds.LocalFeedActions
 import com.capyreader.app.ui.articles.feeds.LocalFolderActions
+import com.capyreader.app.ui.articles.list.ArticleListScrollState
 import com.capyreader.app.ui.articles.list.ArticleListTopBar
 import com.capyreader.app.ui.articles.list.EmptyOnboardingView
 import com.capyreader.app.ui.articles.list.LabelBottomSheet
 import com.capyreader.app.ui.articles.list.MarkAllReadButton
 import com.capyreader.app.ui.articles.list.PullToNextFeedBox
+import com.capyreader.app.ui.articles.list.rememberArticleListScrollState
 import com.capyreader.app.ui.articles.list.resetScrollBehaviorListener
 import com.capyreader.app.ui.articles.media.ArticleMediaView
 import com.capyreader.app.ui.collectChangesWithCurrent
@@ -74,7 +76,6 @@ import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.SearchState
 import com.capyreader.app.ui.provideLinkOpener
-import com.capyreader.app.ui.rememberLazyListState
 import com.capyreader.app.ui.rememberLocalConnectivity
 import com.capyreader.app.ui.settings.LocalSnackbarHost
 import com.jocmp.capy.Article
@@ -208,49 +209,49 @@ fun ArticleScreen(
             scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
         }
 
-        val listState = articles.rememberLazyListState()
+        val scrollState = rememberArticleListScrollState()
 
         fun scrollToArticle(index: Int) {
             coroutineScope.launch {
                 if (index > -1) {
-                    val visibleItemsInfo = listState.layoutInfo.visibleItemsInfo
+                    val visibleItemsInfo = scrollState.layoutInfo.visibleItemsInfo
                     val isItemVisible = visibleItemsInfo.any { it.index == index }
 
                     if (!isItemVisible) {
-                        listState.animateScrollToItem(index)
+                        scrollState.animateScrollToItem(index)
                     }
                 }
             }
         }
 
         val resetScrollBehaviorOffset = resetScrollBehaviorListener(
-            listState = listState,
+            scrollState = scrollState,
             scrollBehavior = scrollBehavior
         )
 
         val scrollToTop = {
             coroutineScope.launch {
-                listState.scrollToItem(0)
+                scrollState.scrollToItem(0)
                 resetScrollBehaviorOffset()
             }
         }
 
-        LaunchedEffect(listState) {
-            snapshotFlow { listState.layoutInfo.totalItemsCount }
+        LaunchedEffect(scrollState) {
+            snapshotFlow { scrollState.layoutInfo.totalItemsCount }
                 .drop(if (enableMarkReadOnScroll) 0 else 1)
                 .distinctUntilChanged()
                 .collect {
-                    listState.scrollToItem(0)
+                    scrollState.scrollToItem(0)
                     resetScrollBehaviorOffset()
                 }
         }
 
-        LaunchedEffect(listState) {
+        LaunchedEffect(scrollState) {
             snapshotFlow { filter }
                 .distinctUntilChanged()
                 .collect {
                     delay(200)
-                    listState.scrollToItem(0)
+                    scrollState.scrollToItem(0)
                     resetScrollBehaviorOffset()
                 }
         }
@@ -585,7 +586,7 @@ fun ArticleScreen(
                                     ArticleList(
                                         articles = articles,
                                         selectedArticleKey = article?.id,
-                                        listState = listState,
+                                        scrollState = scrollState,
                                         enableMarkReadOnScroll = enableMarkReadOnScroll,
                                         refreshingAll = viewModel.refreshingAll,
                                         onMarkAllRead = { range ->

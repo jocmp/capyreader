@@ -1,0 +1,232 @@
+package com.capyreader.app.ui.articles.list
+
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.paging.compose.LazyPagingItems
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.capyreader.app.common.asState
+import com.capyreader.app.preferences.AppPreferences
+import com.capyreader.app.preferences.RowSwipeOption
+import com.capyreader.app.ui.LocalLinkOpener
+import com.capyreader.app.ui.articles.ArticleRowOptions
+import com.capyreader.app.ui.articles.LocalArticleActions
+import com.capyreader.app.ui.articles.LocalLabelsActions
+import com.capyreader.app.ui.articles.rememberArticleOptions
+import com.capyreader.app.ui.articles.rememberCurrentTime
+import com.capyreader.app.ui.theme.LocalAppTheme
+import com.jocmp.capy.Article
+import com.jocmp.capy.MarkRead
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
+
+@OptIn(FlowPreview::class)
+@Composable
+fun ArticleRecyclerView(
+    articles: LazyPagingItems<Article>,
+    selectedArticleKey: String?,
+    onSelect: (articleID: String) -> Unit,
+    onMarkAllRead: (range: MarkRead) -> Unit,
+    enableMarkReadOnScroll: Boolean,
+    refreshingAll: Boolean,
+    scrollState: ArticleListScrollState,
+    modifier: Modifier = Modifier,
+    appPreferences: AppPreferences = koinInject(),
+) {
+    val articleActions = LocalArticleActions.current
+    val labelsActions = LocalLabelsActions.current
+    val linkOpener = LocalLinkOpener.current
+    val appTheme = LocalAppTheme.current
+    val options = rememberArticleOptions()
+    val currentTime = rememberCurrentTime()
+    val scope = rememberCoroutineScope()
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    val swipeStart by appPreferences.articleListOptions.swipeStart.asState()
+    val swipeEnd by appPreferences.articleListOptions.swipeEnd.asState()
+
+    val compositionContext = remember(
+        articleActions,
+        labelsActions,
+        linkOpener,
+        appTheme,
+        options,
+        currentTime,
+        swipeStart,
+        swipeEnd,
+        selectedArticleKey
+    ) {
+        ArticleCompositionContext(
+            articleActions = articleActions,
+            labelsActions = labelsActions,
+            linkOpener = linkOpener,
+            appTheme = appTheme,
+            options = options,
+            currentTime = currentTime,
+            swipeStart = swipeStart,
+            swipeEnd = swipeEnd,
+            selectedArticleKey = selectedArticleKey
+        )
+    }
+
+    val adapter = remember {
+        ArticlePagingAdapter(
+            onSelect = onSelect,
+            onMarkAllRead = onMarkAllRead,
+        )
+    }
+
+    LaunchedEffect(compositionContext) {
+        adapter.compositionContext = compositionContext
+    }
+
+    LaunchedEffect(articles) {
+        snapshotFlow { articles.itemSnapshotList }
+            .collect {
+                adapter.submitData(articles.itemSnapshotList.items.let { items ->
+                    androidx.paging.PagingData.from(items)
+                })
+            }
+    }
+
+    val itemTouchHelper = remember(adapter) {
+        ItemTouchHelper(
+            ArticleItemTouchHelper(
+                adapter = adapter,
+                getSwipeStart = { swipeStart },
+                getSwipeEnd = { swipeEnd },
+                articleActions = { articleActions },
+                openLink = { uri -> linkOpener.open(uri) }
+            )
+        )
+    }
+
+    AndroidView(
+        modifier = modifier,
+        factory = { context ->
+            RecyclerView(context).apply {
+                layoutManager = LinearLayoutManager(context)
+                this.adapter = adapter
+                itemTouchHelper.attachToRecyclerView(this)
+
+                addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        val layoutManager = recyclerView.layoutManager as? LinearLayoutManager ?: return
+                        scrollState.updateFromLayoutManager(layoutManager)
+                    }
+                })
+            }
+        },
+        update = { recyclerView ->
+            scrollState.recyclerView = recyclerView
+        }
+    )
+
+    if (enableMarkReadOnScroll && !refreshingAll) {
+        LaunchedEffect(scrollState) {
+            snapshotFlow { scrollState.firstVisibleItemIndex }
+                .debounce(500)
+                .distinctUntilChanged()
+                .collect { firstVisibleIndex ->
+                    val offscreenIndex = firstVisibleIndex - 1
+
+                    val markAsRead =
+                        (articles.itemCount == 1 && firstVisibleIndex > 0) ||
+                                (offscreenIndex > 0 && articles.itemCount > 0)
+
+                    if (!markAsRead) {
+                        return@collect
+                    }
+
+                    val item = if (offscreenIndex in 0 until articles.itemCount) {
+                        articles[offscreenIndex]
+                    } else null
+
+                    item?.let { onMarkAllRead(MarkRead.After(it.id)) }
+                }
+        }
+    }
+
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_DESTROY) {
+                scrollState.recyclerView = null
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
+}
+
+class ArticleListScrollState {
+    var recyclerView: RecyclerView? = null
+    var firstVisibleItemIndex: Int = 0
+        private set
+    var firstVisibleItemScrollOffset: Int = 0
+        private set
+
+    fun updateFromLayoutManager(layoutManager: LinearLayoutManager) {
+        firstVisibleItemIndex = layoutManager.findFirstVisibleItemPosition()
+        val firstVisibleView = layoutManager.findViewByPosition(firstVisibleItemIndex)
+        firstVisibleItemScrollOffset = firstVisibleView?.top ?: 0
+    }
+
+    suspend fun scrollToItem(index: Int) {
+        recyclerView?.scrollToPosition(index)
+    }
+
+    suspend fun animateScrollToItem(index: Int) {
+        recyclerView?.smoothScrollToPosition(index)
+    }
+
+    val layoutInfo: ArticleListLayoutInfo
+        get() {
+            val rv = recyclerView
+            val lm = rv?.layoutManager as? LinearLayoutManager
+            return if (rv != null && lm != null) {
+                val visibleItemsInfo = (lm.findFirstVisibleItemPosition()..lm.findLastVisibleItemPosition())
+                    .mapNotNull { pos ->
+                        lm.findViewByPosition(pos)?.let { view ->
+                            ArticleVisibleItemInfo(index = pos, size = view.height)
+                        }
+                    }
+                ArticleListLayoutInfo(
+                    totalItemsCount = rv.adapter?.itemCount ?: 0,
+                    visibleItemsInfo = visibleItemsInfo
+                )
+            } else {
+                ArticleListLayoutInfo(totalItemsCount = 0, visibleItemsInfo = emptyList())
+            }
+        }
+}
+
+data class ArticleListLayoutInfo(
+    val totalItemsCount: Int,
+    val visibleItemsInfo: List<ArticleVisibleItemInfo>
+)
+
+data class ArticleVisibleItemInfo(
+    val index: Int,
+    val size: Int
+)
+
+@Composable
+fun rememberArticleListScrollState(): ArticleListScrollState {
+    return remember { ArticleListScrollState() }
+}

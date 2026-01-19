@@ -40,3 +40,31 @@ fun resetScrollBehaviorListener(
 
     return resetScrollBehaviorOffset
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun resetScrollBehaviorListener(
+    scrollState: ArticleListScrollState,
+    scrollBehavior: TopAppBarScrollBehavior
+): () -> Unit {
+    val resetContentOffset by remember {
+        derivedStateOf {
+            scrollState.firstVisibleItemScrollOffset == 0 &&
+                    scrollState.firstVisibleItemIndex == 0
+        }
+    }
+
+    val resetScrollBehaviorOffset = {
+        val maxCardSize = scrollState.layoutInfo.visibleItemsInfo.maxOfOrNull { it.size } ?: 0
+        val nextContentOffset = -(maxCardSize * scrollState.firstVisibleItemIndex).toFloat()
+        scrollBehavior.state.contentOffset = nextContentOffset
+    }
+
+    LaunchedEffect(resetContentOffset) {
+        if (resetContentOffset) {
+            scrollBehavior.state.contentOffset = 0f
+        }
+    }
+
+    return resetScrollBehaviorOffset
+}
