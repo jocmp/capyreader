@@ -75,6 +75,7 @@ data class ArticleRowOptions(
     val imagePreview: ImagePreview = ImagePreview.default,
     val fontScale: ArticleListFontScale = ArticleListFontScale.MEDIUM,
     val shortenTitles: Boolean = true,
+    val showAudioIcon: Boolean = false,
 )
 
 @Composable
@@ -153,7 +154,7 @@ fun ArticleRow(
                                         .width(12.dp.relative(options.fontScale))
                                 )
                             }
-                            if (article.enclosureType == EnclosureType.AUDIO) {
+                            if (options.showAudioIcon && article.enclosureType == EnclosureType.AUDIO) {
                                 Icon(
                                     Icons.Rounded.PlayArrow,
                                     contentDescription = null,
@@ -395,6 +396,7 @@ fun ArticleRowPreview_Selected_DarkMode() {
                     selected = true,
                     onSelect = {},
                     currentTime = LocalDateTime.now(),
+                    options = ArticleRowOptions(showAudioIcon = true),
                 )
                 ArticleRow(
                     article = article.copy(read = false),
@@ -402,6 +404,7 @@ fun ArticleRowPreview_Selected_DarkMode() {
                     selected = false,
                     onSelect = {},
                     currentTime = LocalDateTime.now(),
+                    options = ArticleRowOptions(showAudioIcon = true),
                 )
             }
         }
@@ -460,7 +463,8 @@ fun ArticleRowPreview_Medium(@PreviewParameter(ArticleSample::class) article: Ar
                 onSelect = {},
                 currentTime = LocalDateTime.now(),
                 options = ArticleRowOptions(
-                    imagePreview = ImagePreview.MEDIUM
+                    imagePreview = ImagePreview.MEDIUM,
+                    showAudioIcon = true,
                 )
             )
         }
