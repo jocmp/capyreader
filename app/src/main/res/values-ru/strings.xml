@@ -224,6 +224,7 @@
     <string name="settings_donate_button">Пожертвовать</string>
     <string name="after_read_all_behavior_open_next_feed">Открыть следующую ленту</string>
     <string name="full_content_error_generic">Не удалось разобрать статью</string>
+    <string name="full_content_error_forbidden">Получение заблокировано сайтом</string>
     <string name="end_of_feed_text">Все статьи прочитаны!</string>
     <string name="after_read_all_behavior_label">После прочтения всего</string>
     <string name="after_read_all_behavior_open_drawer">Открыть боковое меню</string>

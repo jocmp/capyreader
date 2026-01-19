@@ -252,6 +252,7 @@
     <string name="article_list_swipe_disabled">முடக்கப்பட்டது</string>
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">பெற்றோருக்கு செல்லவும்</string>
     <string name="full_content_error_generic">கட்டுரையை அலசத் தவறிவிட்டது</string>
+    <string name="full_content_error_forbidden">தளத்தால் பெறுதல் தடுக்கப்பட்டது</string>
     <string name="media_share_failure">படத்தைப் பகிரத் தவறிவிட்டது</string>
     <string name="feed_nav_drawer_refresh_all">அனைத்தையும் புதுப்பிக்கவும்</string>
     <string name="blocked_keywords_add_keyword">முக்கிய சொல்லைச் சேர்க்கவும்</string>

@@ -220,6 +220,7 @@
     <string name="after_read_all_behavior_open_next_feed">Otevřít další kanál</string>
     <string name="full_content_error_missing_response">Chyba při načítání článku</string>
     <string name="full_content_error_generic">Chyba při zpracování článku</string>
+    <string name="full_content_error_forbidden">Načítání zablokováno webem</string>
     <string name="after_read_all_behavior_label">Po přečtení všeho</string>
     <string name="article_actions_copy_link">Kopírovat odkaz</string>
     <string name="freshrss_article_actions_label">Štítek</string>

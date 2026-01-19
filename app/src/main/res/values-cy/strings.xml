@@ -238,6 +238,7 @@
     <string name="freshrss_labels_create_dialog_save">Cadw</string>
     <string name="freshrss_nav_headline_my_labels">Fy Labeli</string>
     <string name="full_content_error_generic">Wedi methu dehongli erthygl</string>
+    <string name="full_content_error_forbidden">Nôl wedi\'i rwystro gan y wefan</string>
     <string name="image_preview_menu_option_medium">Canolig</string>
     <string name="settings_gestures_list_swipe_up">Llusgo i fyny</string>
     <string name="article_vertical_open_article_in_browser">Agor yr erthygl mewn porwr</string>

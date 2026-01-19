@@ -251,6 +251,7 @@
     <string name="full_content_error_missing_response">Falló al obtener el artículo</string>
     <string name="after_read_all_behavior_open_drawer">Abrir el cajón de navegación</string>
     <string name="full_content_error_generic">Falló al analizar el artículo</string>
+    <string name="full_content_error_forbidden">Obtención bloqueada por el sitio</string>
     <string name="blocked_keywords_supporting_text">Eliminar artículos con coincidencias de palabras clave en el título o el contenido</string>
     <string name="blocked_keywords">Palabras Clave Bloqueadas</string>
     <string name="blocked_keywords_remove_keyword">Eliminar palabra clave</string>

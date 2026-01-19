@@ -221,6 +221,7 @@
     <string name="after_read_all_behavior_default">Bawaan</string>
     <string name="full_content_error_missing_response">Gagal mengambil artikel</string>
     <string name="full_content_error_generic">Gagal menguraikan artikel</string>
+    <string name="full_content_error_forbidden">Pengambilan diblokir oleh situs</string>
     <string name="settings_notifications_select_none">Tidak ada pilihan</string>
     <string name="article_list_row_swipe_open_externally">Buka artikel di browser</string>
     <string name="settings_section_browser">Peramban</string>

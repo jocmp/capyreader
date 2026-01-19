@@ -223,6 +223,7 @@
     <string name="after_read_all_behavior_open_drawer">Ouvrir le menu de navigation</string>
     <string name="after_read_all_behavior_open_next_feed">Ouvrir le flux suivant</string>
     <string name="full_content_error_generic">Impossible d\'analyser l\'article</string>
+    <string name="full_content_error_forbidden">Récupération bloquée par le site</string>
     <string name="settings_donate_button">Faire un don</string>
     <string name="full_content_error_missing_response">Impossible de récupérer l\'article</string>
     <string name="after_read_all_behavior_label">Après avoir tout lu</string>

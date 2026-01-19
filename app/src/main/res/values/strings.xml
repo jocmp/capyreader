@@ -270,6 +270,7 @@
     <string name="after_read_all_behavior_open_next_feed">Open Next Feed</string>
     <string name="full_content_error_missing_response">Failed to fetch article</string>
     <string name="full_content_error_generic">Failed to parse article</string>
+    <string name="full_content_error_forbidden">Fetch blocked by site</string>
     <string name="feed_nav_drawer_title">Feeds</string>
     <string name="search_bar_placeholder">Search</string>
     <string name="media_save">Save</string>

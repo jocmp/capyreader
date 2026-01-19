@@ -59,4 +59,7 @@
     <string name="action_mark_all_read">Marker alle som læst</string>
     <string name="mark_all_read_dialog_description">Marker alle elementer som læst?</string>
     <string name="mark_all_read_dialog_submit">Bekræft</string>
+    <string name="full_content_error_missing_response">Kunne ikke hente artikel</string>
+    <string name="full_content_error_generic">Kunne ikke behandle artikel</string>
+    <string name="full_content_error_forbidden">Hentning blokeret af websted</string>
 </resources>

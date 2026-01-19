@@ -224,6 +224,7 @@
     <string name="after_read_all_behavior_open_next_feed">次のフィードを開く</string>
     <string name="full_content_error_missing_response">記事の取得に失敗しました</string>
     <string name="full_content_error_generic">記事の解析に失敗しました</string>
+    <string name="full_content_error_forbidden">サイトによりブロックされました</string>
     <string name="feed_nav_drawer_title">フィード</string>
     <string name="search_bar_placeholder">検索</string>
     <string name="media_save">保存</string>

@@ -212,4 +212,7 @@
         <item quantity="one">Hver time</item>
         <item quantity="other">Hver %d. time</item>
     </plurals>
+    <string name="full_content_error_missing_response">Kunne ikke hente artikkel</string>
+    <string name="full_content_error_generic">Kunne ikke behandle artikkel</string>
+    <string name="full_content_error_forbidden">Henting blokkert av nettstedet</string>
 </resources>
