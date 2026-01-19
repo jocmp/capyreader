@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
@@ -59,6 +60,7 @@ import com.capyreader.app.ui.fixtures.PreviewKoinApplication
 import com.capyreader.app.ui.theme.CapyTheme
 import com.capyreader.app.ui.theme.LocalAppTheme
 import com.jocmp.capy.Article
+import com.jocmp.capy.EnclosureType
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.articles.relativeTime
 import java.net.URL
@@ -126,35 +128,50 @@ fun ArticleRow(
                             .fillMaxWidth()
                             .padding(bottom = 2.dp)
                     ) {
+
                         if (options.showFeedName) {
                             Text(
                                 text = article.feedName,
                                 color = feedNameColor,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
-                                modifier = Modifier.weight(1f),
                                 fontWeight = if (deEmphasizeFontWeight) FontWeight.Light else null,
+                                modifier = Modifier.weight(1f)
                             )
                             Spacer(Modifier.width(16.dp))
                         }
-                        if (article.starred) {
-                            Icon(
-                                Icons.Rounded.Star,
-                                contentDescription = null,
-                                tint = feedNameColor,
-                                modifier = Modifier
-                                    .width(12.dp.relative(options.fontScale))
-                                    .padding(end = 2.dp)
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(2.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            if (article.starred) {
+                                Icon(
+                                    Icons.Rounded.Star,
+                                    contentDescription = null,
+                                    tint = feedNameColor,
+                                    modifier = Modifier
+                                        .width(12.dp.relative(options.fontScale))
+                                )
+                            }
+                            if (article.enclosureType == EnclosureType.AUDIO) {
+                                Icon(
+                                    Icons.Rounded.PlayArrow,
+                                    contentDescription = null,
+                                    tint = feedNameColor,
+                                    modifier = Modifier
+                                        .width(16.dp.relative(options.fontScale))
+                                        .padding(end = 2.dp)
+                                )
+                            }
+                            Text(
+                                text = relativeTime(
+                                    time = article.publishedAt,
+                                    currentTime = currentTime,
+                                ),
+                                color = feedNameColor,
+                                maxLines = 1,
                             )
                         }
-                        Text(
-                            text = relativeTime(
-                                time = article.publishedAt,
-                                currentTime = currentTime,
-                            ),
-                            color = feedNameColor,
-                            maxLines = 1,
-                        )
                     }
                 },
                 supportingContent = {
@@ -168,7 +185,7 @@ fun ArticleRow(
                                 maxLines = 2,
                                 overflow = TextOverflow.Ellipsis,
                                 fontWeight = if (deEmphasizeFontWeight) FontWeight.Light else null,
-                                )
+                            )
                         }
                         if (imageURL != null && options.imagePreview == ImagePreview.LARGE) {
                             ArticleImage(imageURL = imageURL, imagePreview = options.imagePreview)
@@ -365,6 +382,7 @@ fun ArticleRowPreview_Selected_DarkMode() {
         publishedAt = ZonedDateTime.of(2024, 2, 11, 8, 33, 0, 0, ZoneOffset.UTC),
         read = true,
         starred = false,
+        enclosureType = EnclosureType.AUDIO,
         feedName = "9to5Google - Google news, Pixel, Android, Home, Chrome OS, more"
     )
 
@@ -432,7 +450,11 @@ fun ArticleRowPreview_Medium(@PreviewParameter(ArticleSample::class) article: Ar
     PreviewKoinApplication {
         CapyTheme {
             ArticleRow(
-                article = article.copy(imageURL = "http://example.com"),
+                article = article.copy(
+                    imageURL = "http://example.com",
+                    starred = true,
+                    enclosureType = EnclosureType.AUDIO
+                ),
                 index = 0,
                 selected = true,
                 onSelect = {},

@@ -53,7 +53,8 @@ INSERT INTO articles(
     url,
     summary,
     image_url,
-    published_at
+    published_at,
+    enclosure_type
 )
 VALUES (
 :id,
@@ -65,7 +66,8 @@ VALUES (
 :url,
 :summary,
 :image_url,
-:published_at
+:published_at,
+:enclosure_type
 )
 ON CONFLICT(id) DO UPDATE
 SET
@@ -78,7 +80,8 @@ extracted_content_url = excluded.extracted_content_url,
 url = excluded.url,
 summary = excluded.summary,
 image_url = excluded.image_url,
-published_at = published_at;
+published_at = published_at,
+enclosure_type = excluded.enclosure_type;
 
 createStatus:
 INSERT INTO article_statuses(

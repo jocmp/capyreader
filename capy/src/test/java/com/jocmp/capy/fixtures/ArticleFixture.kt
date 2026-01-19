@@ -29,7 +29,8 @@ class ArticleFixture(private val database: Database) {
                 image_url = null,
                 published_at = publishedAt,
                 summary = summary,
-                url = "https://example.com/test-article"
+                url = "https://example.com/test-article",
+                enclosure_type = null
             )
             database.articlesQueries.createStatus(
                 article_id = id,

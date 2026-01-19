@@ -72,18 +72,36 @@ class AccompanistWebViewClient(
             return asset
         }
 
-        val url = request.url.toString()
-        val origin = request.requestHeaders["Origin"]
-        val isCorsRequest = origin == "null" && url.startsWith("http")
-
-        if (!isCorsRequest) {
+        if (!shouldProxyRequest(request)) {
             return null
         }
 
         return proxyCorsRequest(request)
     }
 
-    /** Avoids CORS issues when loading additional pages from Mercury.js */
+    private fun shouldProxyRequest(request: WebResourceRequest): Boolean {
+        val url = request.url.toString()
+        val origin = request.requestHeaders["Origin"]
+        val accept = request.requestHeaders["Accept"]
+
+        // XHR/fetch from null origin (loadDataWithBaseURL)
+        // Issue #1616
+        val isCorsRequest = origin == "null" && url.startsWith("http")
+
+        // iframe document load
+        // Strips X-Frame-Options to allow embeds like Slashdot
+        // Issue #1605
+        val isIframeNavigation = !request.isForMainFrame &&
+            accept?.startsWith("text/html") == true &&
+            url.startsWith("http")
+
+        return isCorsRequest || isIframeNavigation
+    }
+
+    /**
+     * Avoids CORS issues when loading additional pages from Mercury.js
+     * Issue #1616
+     */
     private fun proxyCorsRequest(request: WebResourceRequest): WebResourceResponse? {
         return try {
             val okRequest = Request.Builder()
@@ -184,6 +202,9 @@ class WebViewState(
     fun updateAudioPlayState(url: String?, isPlaying: Boolean) {
         currentAudioUrl = url
         isAudioPlaying = isPlaying
+        if (htmlId == null) {
+            return
+        }
         webView.post {
             if (url != null) {
                 val escapedUrl = url.replace("'", "\\'")

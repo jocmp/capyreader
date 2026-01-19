@@ -379,6 +379,8 @@ internal class FeedbinAccountDelegate(
             entries.forEach { entry ->
                 val updated = TimeHelpers.nowUTC()
                 val articleID = entry.id.toString()
+                val enclosure = entry.enclosure
+                val enclosureType = enclosure?.enclosure_type
 
                 database.articlesQueries.create(
                     id = articleID,
@@ -391,6 +393,7 @@ internal class FeedbinAccountDelegate(
                     summary = entry.summary,
                     image_url = entry.images?.size_1?.cdn_url,
                     published_at = entry.published.toDateTime?.toEpochSecond(),
+                    enclosure_type = enclosureType,
                 )
 
                 articleRecords.createStatus(
@@ -398,9 +401,6 @@ internal class FeedbinAccountDelegate(
                     updatedAt = updated,
                     read = true
                 )
-
-                val enclosure = entry.enclosure
-                val enclosureType = enclosure?.enclosure_type
 
                 if (enclosure != null && enclosureType != null) {
                     enclosureRecords.create(

@@ -8,6 +8,7 @@ SELECT
   SUBSTR(articles.summary, 1, 250),
   articles.image_url,
   articles.published_at,
+  articles.enclosure_type,
   feeds.title AS feed_title,
   feeds.favicon_url,
   feeds.open_articles_in_browser,
