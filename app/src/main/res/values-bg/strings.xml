@@ -306,4 +306,6 @@
     <string name="audio_player_play">Възпроизвеждане</string>
     <string name="audio_player_pause">Пауза</string>
     <string name="audio_player_close">Затвори плейъра</string>
+    <string name="audio_player_skip_back">Прескочи 30 секунди назад</string>
+    <string name="audio_player_skip_forward">Прескочи 30 секунди напред</string>
 </resources>
