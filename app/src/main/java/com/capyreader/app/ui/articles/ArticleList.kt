@@ -65,7 +65,7 @@ fun ArticleList(
             items(count = articles.itemCount, key = articles.itemKey { it.id }) { index ->
                 val item = articles[index]
 
-                Box {
+                Box(Modifier.animateItem()) {
                     if (item == null) {
                         PlaceholderArticleRow(articleOptions.imagePreview)
                     } else {
