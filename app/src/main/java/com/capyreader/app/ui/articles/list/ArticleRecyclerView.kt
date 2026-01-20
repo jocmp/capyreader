@@ -2,7 +2,6 @@ package com.capyreader.app.ui.articles.list
 
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.InsetDrawable
-import android.os.Parcelable
 import android.view.LayoutInflater
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -115,7 +114,8 @@ fun ArticleRecyclerView(
 //        }
     }
 
-    var layoutManagerState by rememberSaveable { mutableStateOf<Parcelable?>(null) }
+    var savedScrollPosition by rememberSaveable { mutableIntStateOf(-1) }
+    var savedScrollOffset by rememberSaveable { mutableIntStateOf(0) }
     var shouldRestoreScroll by remember { mutableStateOf(true) }
 
     SideEffect {
@@ -126,11 +126,15 @@ fun ArticleRecyclerView(
         snapshotFlow { articles.itemSnapshotList.items }
             .collect { items ->
                 if (items.isNotEmpty()) {
+                    val pendingPosition = if (shouldRestoreScroll && savedScrollPosition >= 0) savedScrollPosition else -1
+                    val pendingOffset = savedScrollOffset
                     adapter.submitList(items.toList()) {
-                        if (shouldRestoreScroll && layoutManagerState != null) {
-                            val lm = scrollState.recyclerView?.layoutManager as? LinearLayoutManager
-                            lm?.onRestoreInstanceState(layoutManagerState)
-                            layoutManagerState = null
+                        if (pendingPosition >= 0) {
+                            scrollState.recyclerView?.post {
+                                val lm = scrollState.recyclerView?.layoutManager as? LinearLayoutManager
+                                lm?.scrollToPositionWithOffset(pendingPosition, pendingOffset)
+                            }
+                            savedScrollPosition = -1
                         }
                         shouldRestoreScroll = false
                     }
@@ -176,7 +180,11 @@ fun ArticleRecyclerView(
             scrollState.recyclerView = recyclerView
         },
         onRelease = { recyclerView ->
-            layoutManagerState = recyclerView.layoutManager?.onSaveInstanceState()
+            val lm = recyclerView.layoutManager as? LinearLayoutManager
+            val pos = lm?.findFirstVisibleItemPosition() ?: -1
+            val offset = if (pos >= 0) lm?.findViewByPosition(pos)?.top ?: 0 else 0
+            savedScrollPosition = pos
+            savedScrollOffset = offset
             shouldRestoreScroll = true
         }
     )
