@@ -54,13 +54,13 @@ import org.koin.compose.koinInject
 @Composable
 fun ArticleRecyclerView(
     articles: Flow<PagingData<Article>>,
-    listKey: String,
     selectedArticleKey: String?,
     onSelect: (articleID: String) -> Unit,
     onMarkAllRead: (range: MarkRead) -> Unit,
     enableMarkReadOnScroll: Boolean,
     refreshingAll: Boolean,
     scrollState: ArticleListScrollState,
+    onAdapterReady: (ArticlePagingAdapter) -> Unit,
     appPreferences: AppPreferences = koinInject(),
 ) {
     val articleActions = LocalArticleActions.current
@@ -119,6 +119,7 @@ fun ArticleRecyclerView(
 
     SideEffect {
         adapter.compositionContext = compositionContext
+        onAdapterReady(adapter)
     }
 
     LaunchedEffect(Unit) {

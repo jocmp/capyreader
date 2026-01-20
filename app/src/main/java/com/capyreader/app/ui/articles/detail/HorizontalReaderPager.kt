@@ -1,73 +1,58 @@
 package com.capyreader.app.ui.articles.detail
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowLeft
-import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.unit.dp
-import me.saket.swipe.SwipeAction
-import me.saket.swipe.SwipeableActionsBox
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.snapshotFlow
+import com.capyreader.app.ui.articles.LocalArticleNavigator
+import com.jocmp.capy.Article
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.filter
 
 @Composable
 fun HorizontalReaderPager(
+    article: Article,
     enabled: Boolean,
-    enablePrevious: Boolean,
-    enableNext: Boolean,
-    onSelectPrevious: () -> Unit,
-    onSelectNext: () -> Unit,
-    content: @Composable () -> Unit,
+    content: @Composable (Article) -> Unit,
 ) {
-    if (!enabled) {
-        return content()
+    val navigator = LocalArticleNavigator.current
+
+    if (!enabled || navigator == null) {
+        return content(article)
     }
 
-    SwipeableActionsBox(
-        disableRipple = true,
-        swipeThreshold = 24.dp,
-        backgroundUntilSwipeThreshold = colorScheme.surface,
-        startActions = action(
-            enabled = enablePrevious,
-            icon = Icons.AutoMirrored.Rounded.KeyboardArrowLeft,
-            onSwipe = onSelectPrevious,
-        ),
-        endActions = action(
-            enabled = enableNext,
-            icon = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
-            onSwipe = onSelectNext
-        )
-    ) {
-        content()
-    }
-}
-
-@Composable
-fun action(
-    enabled: Boolean,
-    icon: ImageVector,
-    onSwipe: () -> Unit
-): List<SwipeAction> {
-    if (!enabled) {
-        return emptyList()
-    }
-
-    return listOf(
-        SwipeAction(
-            onSwipe = onSwipe,
-            background = colorScheme.surfaceContainerHighest,
-            icon = {
-               Box(Modifier.padding(16.dp)) {
-                   Icon(
-                       icon,
-                       contentDescription = null,
-                   )
-               }
-            }
-        )
+    val pages = listOfNotNull(
+        navigator.previousArticle(),
+        article,
+        navigator.nextArticle()
     )
+
+    val currentIndex = pages.indexOfFirst { it.id == article.id }.coerceAtLeast(0)
+
+    val pagerState = rememberPagerState(
+        initialPage = currentIndex,
+        pageCount = { pages.size }
+    )
+
+    // Handle page changes - only when user has stopped scrolling
+    LaunchedEffect(pagerState) {
+        snapshotFlow { pagerState.settledPage to pagerState.isScrollInProgress }
+            .filter { (_, isScrolling) -> !isScrolling }
+            .collectLatest { (settledPage, _) ->
+                val targetArticle = pages.getOrNull(settledPage)
+                if (targetArticle != null && targetArticle.id != article.id) {
+                    navigator.selectArticle(targetArticle)
+                }
+            }
+    }
+
+    HorizontalPager(
+        state = pagerState,
+        key = { page -> pages.getOrNull(page)?.id ?: "empty-$page" }
+    ) { page ->
+        pages.getOrNull(page)?.let { pageArticle ->
+            content(pageArticle)
+        }
+    }
 }

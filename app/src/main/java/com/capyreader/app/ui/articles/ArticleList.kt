@@ -11,6 +11,7 @@ import androidx.compose.runtime.setValue
 import androidx.paging.PagingData
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.articles.list.ArticleListScrollState
+import com.capyreader.app.ui.articles.list.ArticlePagingAdapter
 import com.capyreader.app.ui.articles.list.ArticleRecyclerView
 import com.jocmp.capy.Article
 import com.jocmp.capy.MarkRead
@@ -22,23 +23,23 @@ import java.time.LocalDateTime
 @Composable
 fun ArticleList(
     articles: Flow<PagingData<Article>>,
-    listKey: String,
     onSelect: (articleID: String) -> Unit,
     selectedArticleKey: String?,
     scrollState: ArticleListScrollState,
     onMarkAllRead: (range: MarkRead) -> Unit = {},
     refreshingAll: Boolean,
     enableMarkReadOnScroll: Boolean = false,
+    onAdapterReady: (ArticlePagingAdapter) -> Unit,
 ) {
     ArticleRecyclerView(
         articles = articles,
-        listKey = listKey,
         selectedArticleKey = selectedArticleKey,
         onSelect = onSelect,
         onMarkAllRead = onMarkAllRead,
         enableMarkReadOnScroll = enableMarkReadOnScroll,
         refreshingAll = refreshingAll,
         scrollState = scrollState,
+        onAdapterReady = onAdapterReady,
     )
 }
 

@@ -62,6 +62,15 @@ class ArticlePagingAdapter(
         return if (position in 0 until itemCount) getItem(position) else null
     }
 
+    fun findPositionForArticle(articleId: String): Int {
+        for (i in 0 until itemCount) {
+            if (getItem(i)?.id == articleId) {
+                return i
+            }
+        }
+        return -1
+    }
+
     companion object {
         private const val CONTEXT_PAYLOAD = "context_update"
     }

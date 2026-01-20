@@ -61,6 +61,7 @@ import com.capyreader.app.ui.articles.feeds.FolderActions
 import com.capyreader.app.ui.articles.feeds.LocalFeedActions
 import com.capyreader.app.ui.articles.feeds.LocalFolderActions
 import com.capyreader.app.ui.articles.list.ArticleListTopBar
+import com.capyreader.app.ui.articles.list.ArticlePagingAdapter
 import com.capyreader.app.ui.articles.list.EmptyOnboardingView
 import com.capyreader.app.ui.articles.list.LabelBottomSheet
 import com.capyreader.app.ui.articles.list.MarkAllReadButton
@@ -159,6 +160,15 @@ fun ArticleScreen(
 
     val snackbarHostState = remember { SnackbarHostState() }
 
+    var articleAdapter by remember { mutableStateOf<ArticlePagingAdapter?>(null) }
+    val articleNavigator = remember(article) {
+        ArticleNavigator(
+            getAdapter = { articleAdapter },
+            getSelectedArticleId = { article?.id },
+            onSelectArticle = { articleID -> viewModel.selectArticle(articleID) {} }
+        )
+    }
+
     CompositionLocalProvider(
         LocalFullContent provides fullContent,
         LocalArticleActions provides articleActions,
@@ -170,6 +180,7 @@ fun ArticleScreen(
         LocalMarkAllReadButtonPosition provides markAllReadButtonPosition,
         LocalUnreadCount provides unreadCount,
         LocalSnackbarHost provides snackbarHostState,
+        LocalArticleNavigator provides articleNavigator,
     ) {
         val openNextFeedOnReadAll = afterReadAll == AfterReadAllBehavior.OPEN_NEXT_FEED
 
@@ -206,6 +217,18 @@ fun ArticleScreen(
 
         val scrollState = rememberArticleListScrollState()
 
+        val resetScrollBehaviorOffset = resetScrollBehaviorListener(
+            scrollState = scrollState,
+            scrollBehavior = scrollBehavior
+        )
+
+        val scrollToTop = {
+            coroutineScope.launch {
+                scrollState.scrollToItem(0)
+                resetScrollBehaviorOffset()
+            }
+        }
+
         fun scrollToArticle(index: Int) {
             coroutineScope.launch {
                 if (index > -1) {
@@ -219,16 +242,12 @@ fun ArticleScreen(
             }
         }
 
-        val resetScrollBehaviorOffset = resetScrollBehaviorListener(
-            scrollState = scrollState,
-            scrollBehavior = scrollBehavior
-        )
-
-        val scrollToTop = {
-            coroutineScope.launch {
-                scrollState.scrollToItem(0)
-                resetScrollBehaviorOffset()
-            }
+        // Scroll list to selected article when it changes (e.g., from horizontal pager)
+        LaunchedEffect(article?.id, articleAdapter) {
+            val adapter = articleAdapter ?: return@LaunchedEffect
+            val articleId = article?.id ?: return@LaunchedEffect
+            val position = adapter.findPositionForArticle(articleId)
+            scrollToArticle(position)
         }
 
         LaunchedEffect(scrollState) {
@@ -310,7 +329,6 @@ fun ArticleScreen(
         fun openNextList(action: suspend () -> Unit) {
             coroutineScope.launchUI {
                 drawerState.close()
-                delay(300)
                 openNextStatus(action)
             }
         }
@@ -569,7 +587,6 @@ fun ArticleScreen(
                             ) {
                                 ArticleList(
                                     articles = viewModel.articles,
-                                    listKey = filter.toString(),
                                     selectedArticleKey = article?.id,
                                     scrollState = scrollState,
                                     enableMarkReadOnScroll = enableMarkReadOnScroll,
@@ -579,6 +596,9 @@ fun ArticleScreen(
                                     },
                                     onSelect = { articleID ->
                                         selectArticle(articleID)
+                                    },
+                                    onAdapterReady = { adapter ->
+                                        articleAdapter = adapter
                                     },
                                 )
                             }
@@ -613,12 +633,6 @@ fun ArticleScreen(
                         },
                         onPauseAudio = {
                             audioController.pause()
-                        },
-                        onSelectArticle = { articleID ->
-                            setArticle(articleID)
-                        },
-                        onScrollToArticle = { index ->
-                            scrollToArticle(index)
                         },
                         currentAudioUrl = currentAudio?.url,
                         isAudioPlaying = isAudioPlaying,

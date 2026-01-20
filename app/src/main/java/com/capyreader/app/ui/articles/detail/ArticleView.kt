@@ -50,6 +50,7 @@ import com.capyreader.app.preferences.ArticleVerticalSwipe.NEXT_ARTICLE
 import com.capyreader.app.preferences.ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWSER
 import com.capyreader.app.preferences.ArticleVerticalSwipe.PREVIOUS_ARTICLE
 import com.capyreader.app.ui.LocalLinkOpener
+import com.capyreader.app.ui.articles.LocalArticleNavigator
 import com.capyreader.app.ui.articles.LocalFullContent
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
@@ -65,8 +66,6 @@ fun ArticleView(
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
     enableBackHandler: Boolean = false,
-    onScrollToArticle: (index: Int) -> Unit,
-    onSelectArticle: (id: String) -> Unit,
     onSelectMedia: (media: Media) -> Unit,
     onSelectAudio: (audio: AudioEnclosure) -> Unit = {},
     onPauseAudio: () -> Unit = {},
@@ -86,38 +85,17 @@ fun ArticleView(
         }
     }
 
-    // TODO: Restore article navigation once RecyclerView refactor is complete
-//    val index = remember(
-//        article.id,
-//        articles.itemCount,
-//    ) {
-//        articles.itemSnapshotList.indexOfFirst { it?.id == article.id }
-//    }
-//
-//    val previousIndex = index - 1
-//    val nextIndex = index + 1
-//
-//    val hasPrevious = previousIndex > -1 && articles[index - 1] != null
-//    val hasNext = nextIndex < articles.itemCount && articles[index + 1] != null
-//
-//    fun selectPrevious() {
-//        articles[previousIndex]?.let {
-//            onSelectArticle(it.id)
-//        }
-//    }
-//
-//    fun selectNext() {
-//        articles[nextIndex]?.let {
-//            onSelectArticle(it.id)
-//        }
-//    }
+    val navigator = LocalArticleNavigator.current
+    val hasPrevious = navigator?.hasPrevious() ?: false
+    val hasNext = navigator?.hasNext() ?: false
 
-    val index = -1
-    val hasPrevious = false
-    val hasNext = false
+    fun selectPrevious() {
+        navigator?.selectPrevious()
+    }
 
-    fun selectPrevious() {}
-    fun selectNext() {}
+    fun selectNext() {
+        navigator?.selectNext()
+    }
 
     val onSwipe = { swipe: ArticleVerticalSwipe ->
         when (swipe) {
@@ -179,20 +157,18 @@ fun ArticleView(
                 hasPreviousArticle = hasPrevious,
                 hasNextArticle = hasNext
             ) {
-                HorizontalReaderPager(
-                    enabled = enableHorizontalPager,
-                    enablePrevious = hasPrevious,
-                    enableNext = hasNext,
-                    onSelectPrevious = {
-                        selectPrevious()
-                    },
-                    onSelectNext = {
-                        selectNext()
-                    },
-                ) {
-                    ArticleTransition(article = article) { targetArticle ->
+                val adapter = navigator?.adapter
+                if (enableHorizontalPager && adapter != null) {
+                    ArticleViewPager(
+                        article = article,
+                        articleAdapter = adapter,
+                        onArticleChange = { newArticle ->
+                            navigator.selectArticle(newArticle)
+                        },
+                        modifier = Modifier.fillMaxSize(),
+                    ) { pageArticle ->
                         ArticleReader(
-                            article = targetArticle,
+                            article = pageArticle,
                             onSelectMedia = onSelectMedia,
                             onSelectAudio = onSelectAudio,
                             onPauseAudio = onPauseAudio,
@@ -200,16 +176,19 @@ fun ArticleView(
                             isAudioPlaying = isAudioPlaying,
                         )
                     }
+                } else {
+                    ArticleReader(
+                        article = article,
+                        onSelectMedia = onSelectMedia,
+                        onSelectAudio = onSelectAudio,
+                        onPauseAudio = onPauseAudio,
+                        currentAudioUrl = currentAudioUrl,
+                        isAudioPlaying = isAudioPlaying,
+                    )
                 }
             }
         },
     )
-
-    LaunchedEffect(index) {
-        if (index > -1) {
-            onScrollToArticle(index)
-        }
-    }
 
     BackHandler(enableBackHandler) {
         onBackPressed()
