@@ -230,6 +230,7 @@
     <string name="media_save">Αποθήκευση</string>
     <string name="after_read_all_behavior_open_drawer">Άνοιγμα Συρταριού Πλοήγησης</string>
     <string name="full_content_error_generic">Αποτυχία ανάλυσης άρθρου</string>
+    <string name="full_content_error_forbidden">Η ανάκτηση αποκλείστηκε από τον ιστότοπο</string>
     <string name="add_account_miniflux_signup_prompt">Δεν έχετε οντότητα Miniflux;</string>
     <string name="add_account_miniflux_signup_link_text">Μάθε περισσότερα.</string>
     <string name="end_of_feed_text">Τα \'δες όλα!</string>

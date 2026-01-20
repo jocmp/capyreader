@@ -1,6 +1,6 @@
 [versions]
 androidx-paging = "3.3.6"
-media3 = "1.5.1"
+media3 = "1.9.0"
 coil = "2.7.0"
 coroutines = "1.10.2"
 glance-material3 = "1.2.0-rc01"
@@ -22,7 +22,7 @@ androidx-adaptive = { module = "androidx.compose.material3.adaptive:adaptive" }
 androidx-adaptive-layout = { module = "androidx.compose.material3.adaptive:adaptive-layout" }
 androidx-adaptive-navigation = { module = "androidx.compose.material3.adaptive:adaptive-navigation" }
 androidx-browser = { module = "androidx.browser:browser", version = "1.9.0" }
-androidx-compose-bom = { module = "androidx.compose:compose-bom", version = "2025.12.01" }
+androidx-compose-bom = { module = "androidx.compose:compose-bom", version = "2026.01.00" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version = "1.17.0" }
 androidx-glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = "glance-material3" }
 androidx-glance-appwidget-preview = { module = "androidx.glance:glance-appwidget-preview", version.ref = "glance-material3" }
@@ -32,7 +32,7 @@ androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-ru
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle-runtime" }
 androidx-material = { module = "com.google.android.material:material", version = "1.13.0" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
-androidx-material3 = { module = "androidx.compose.material3:material3", version = "1.5.0-alpha11" }
+androidx-material3 = { module = "androidx.compose.material3:material3", version = "1.5.0-alpha12" }
 androidx-material3-window-size = { module = "androidx.compose.material3:material3-window-size-class-android", version = "1.4.0" }
 androidx-media3-datasource-okhttp = { module = "androidx.media3:media3-datasource-okhttp", version.ref = "media3" }
 androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "media3" }
@@ -52,8 +52,8 @@ coil-gif = { module = "io.coil-kt:coil-gif", version.ref = "coil" }
 coil-svg = { module = "io.coil-kt:coil-svg", version.ref = "coil" }
 coil-video = { module = "io.coil-kt:coil-video", version.ref = "coil" }
 converter-scalars = { module = "com.squareup.retrofit2:converter-scalars", version.ref = "retrofit" }
-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics", version = "20.0.3" }
-jsoup = { module = "org.jsoup:jsoup", version = "1.21.2" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics", version = "20.0.4" }
+jsoup = { module = "org.jsoup:jsoup", version = "1.22.1" }
 koin-android = { module = "io.insert-koin:koin-android" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose" }
 koin-androidx-workmanager = { module = "io.insert-koin:koin-androidx-workmanager" }

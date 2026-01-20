@@ -230,6 +230,7 @@
     <string name="settings_gestures_reader_tap_to_page_subtitle">Dotknij dolnych rogów, aby poruszać się po treści artykułu</string>
     <string name="reader_image_visibility_show_on_wifi">Wyświetlaj obrazy tylko przez Wi-Fi</string>
     <string name="full_content_error_generic">Nie udało się przetworzyć artykułu</string>
+    <string name="full_content_error_forbidden">Pobieranie zablokowane przez stronę</string>
     <string name="settings_option_full_content_title">Pełna zawartość</string>
     <string name="settings_option_full_content_subtitle">Wczytaj całą treść artykułu</string>
     <string name="full_content_error_missing_response">Nie udało się pobrać artykułu</string>

@@ -232,5 +232,6 @@
     <string name="search_bar_placeholder">Pretraga</string>
     <string name="end_of_feed_text">Sve pregledano!</string>
     <string name="full_content_error_generic">Raščlanjivanje članka nije uspelo</string>
+    <string name="full_content_error_forbidden">Preuzimanje blokirano od strane sajta</string>
     <string name="after_read_all_behavior_open_drawer">Otvorite fioku za navigaciju</string>
 </resources>

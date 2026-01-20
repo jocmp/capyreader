@@ -233,4 +233,7 @@
     <string name="settings_section_mark_all_as_read">Marchează tot ca citit</string>
     <string name="reader_image_visibility_always_show">Arată mereu imagini</string>
     <string name="auth_fields_freshrss_api_password">Parolă API</string>
+    <string name="full_content_error_missing_response">Nu s-a putut prelua articolul</string>
+    <string name="full_content_error_generic">Nu s-a putut analiza articolul</string>
+    <string name="full_content_error_forbidden">Preluarea blocată de site</string>
 </resources>

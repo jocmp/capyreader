@@ -225,6 +225,7 @@
     <string name="after_read_all_behavior_open_next_feed">إفتح المقالة التالية</string>
     <string name="full_content_error_missing_response">فشل في جلب المقالة</string>
     <string name="full_content_error_generic">فشل تحليل المقالة</string>
+    <string name="full_content_error_forbidden">تم حظر الجلب بواسطة الموقع</string>
     <string name="nav_headline_saved_searches">عمليات البحث</string>
     <string name="article_actions_copy_link">نسخ الرابط</string>
     <string name="freshrss_article_actions_label">تصنيف</string>

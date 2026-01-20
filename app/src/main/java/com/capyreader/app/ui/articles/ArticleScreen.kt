@@ -22,7 +22,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -41,6 +40,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.R
 import com.capyreader.app.common.Media
@@ -245,14 +245,15 @@ fun ArticleScreen(
                 }
         }
 
-        LaunchedEffect(listState) {
-            snapshotFlow { filter }
-                .distinctUntilChanged()
-                .collect {
-                    delay(200)
-                    listState.scrollToItem(0)
-                    resetScrollBehaviorOffset()
-                }
+        var scrolledForFilter by remember { mutableStateOf<ArticleFilter?>(null) }
+
+        LaunchedEffect(filter, articles.loadState.refresh) {
+            val refreshComplete = articles.loadState.refresh is LoadState.NotLoading
+            if (refreshComplete && filter != scrolledForFilter) {
+                listState.scrollToItem(0)
+                resetScrollBehaviorOffset()
+                scrolledForFilter = filter
+            }
         }
 
         suspend fun openNextStatus(action: suspend () -> Unit) {
@@ -581,21 +582,19 @@ fun ArticleScreen(
                                     requestNextFeed()
                                 },
                             ) {
-                                key(filter, articles.itemCount) {
-                                    ArticleList(
-                                        articles = articles,
-                                        selectedArticleKey = article?.id,
-                                        listState = listState,
-                                        enableMarkReadOnScroll = enableMarkReadOnScroll,
-                                        refreshingAll = viewModel.refreshingAll,
-                                        onMarkAllRead = { range ->
-                                            onMarkAllRead(range)
-                                        },
-                                        onSelect = { articleID ->
-                                            selectArticle(articleID)
-                                        },
-                                    )
-                                }
+                                ArticleList(
+                                    articles = articles,
+                                    selectedArticleKey = article?.id,
+                                    listState = listState,
+                                    enableMarkReadOnScroll = enableMarkReadOnScroll,
+                                    refreshingAll = viewModel.refreshingAll,
+                                    onMarkAllRead = { range ->
+                                        onMarkAllRead(range)
+                                    },
+                                    onSelect = { articleID ->
+                                        selectArticle(articleID)
+                                    },
+                                )
                             }
                         }
                     }

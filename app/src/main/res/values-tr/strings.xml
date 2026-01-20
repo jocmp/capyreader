@@ -229,6 +229,7 @@
     <string name="after_read_all_behavior_default">Varsayılan</string>
     <string name="full_content_error_missing_response">Makaleyi getirmek başarısız oldu</string>
     <string name="full_content_error_generic">Makaleyi ayrıştırmak başarısız oldu</string>
+    <string name="full_content_error_forbidden">Site tarafından getirme engellendi</string>
     <string name="search_bar_placeholder">Ara</string>
     <string name="media_save">Kaydet</string>
     <string name="media_share">Paylaş</string>

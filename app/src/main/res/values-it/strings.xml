@@ -221,6 +221,7 @@
     <string name="end_of_feed_text">Letti tutti!</string>
     <string name="settings_donate_button">Donare</string>
     <string name="full_content_error_generic">Impossibile analizzare l\'articolo</string>
+    <string name="full_content_error_forbidden">Recupero bloccato dal sito</string>
     <string name="after_read_all_behavior_open_drawer">Apri menù a scomparsa</string>
     <string name="after_read_all_behavior_default">Predefinito</string>
     <string name="after_read_all_behavior_label">Dopo aver letto tutto</string>
@@ -306,4 +307,6 @@
     <string name="audio_player_play">Riproduci</string>
     <string name="audio_player_pause">Pausa</string>
     <string name="audio_player_close">Chiudi lettore</string>
+    <string name="audio_player_skip_back">Torna indietro di 30 secondi</string>
+    <string name="audio_player_skip_forward">Avanti veloce di 30 secondi</string>
 </resources>

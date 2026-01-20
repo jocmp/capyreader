@@ -221,6 +221,7 @@
     <string name="after_read_all_behavior_open_next_feed">Abrir Próximo Feed</string>
     <string name="full_content_error_missing_response">Falha ao buscar artigo</string>
     <string name="full_content_error_generic">Falha ao processar artigo</string>
+    <string name="full_content_error_forbidden">Busca bloqueada pelo site</string>
     <string name="settings_donate_button">Doar</string>
     <string name="after_read_all_behavior_default">Padrão</string>
     <string name="feed_nav_drawer_title">Feeds</string>
