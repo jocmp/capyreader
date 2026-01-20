@@ -23,8 +23,8 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.State
@@ -40,7 +40,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
-import androidx.paging.compose.LazyPagingItems
 import com.capyreader.app.common.AudioEnclosure
 import com.capyreader.app.common.Media
 import com.capyreader.app.preferences.AppPreferences
@@ -62,7 +61,6 @@ import org.koin.compose.koinInject
 @Composable
 fun ArticleView(
     article: Article,
-    articles: LazyPagingItems<Article>,
     onBackPressed: () -> Unit,
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
@@ -88,30 +86,38 @@ fun ArticleView(
         }
     }
 
-    val index = remember(
-        article.id,
-        articles.itemCount,
-    ) {
-        articles.itemSnapshotList.indexOfFirst { it?.id == article.id }
-    }
+    // TODO: Restore article navigation once RecyclerView refactor is complete
+//    val index = remember(
+//        article.id,
+//        articles.itemCount,
+//    ) {
+//        articles.itemSnapshotList.indexOfFirst { it?.id == article.id }
+//    }
+//
+//    val previousIndex = index - 1
+//    val nextIndex = index + 1
+//
+//    val hasPrevious = previousIndex > -1 && articles[index - 1] != null
+//    val hasNext = nextIndex < articles.itemCount && articles[index + 1] != null
+//
+//    fun selectPrevious() {
+//        articles[previousIndex]?.let {
+//            onSelectArticle(it.id)
+//        }
+//    }
+//
+//    fun selectNext() {
+//        articles[nextIndex]?.let {
+//            onSelectArticle(it.id)
+//        }
+//    }
 
-    val previousIndex = index - 1
-    val nextIndex = index + 1
+    val index = -1
+    val hasPrevious = false
+    val hasNext = false
 
-    val hasPrevious = previousIndex > -1 && articles[index - 1] != null
-    val hasNext = nextIndex < articles.itemCount && articles[index + 1] != null
-
-    fun selectPrevious() {
-        articles[previousIndex]?.let {
-            onSelectArticle(it.id)
-        }
-    }
-
-    fun selectNext() {
-        articles[nextIndex]?.let {
-            onSelectArticle(it.id)
-        }
-    }
+    fun selectPrevious() {}
+    fun selectNext() {}
 
     val onSwipe = { swipe: ArticleVerticalSwipe ->
         when (swipe) {

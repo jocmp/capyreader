@@ -6,7 +6,7 @@ import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import androidx.lifecycle.setViewTreeLifecycleOwner
 import androidx.lifecycle.setViewTreeViewModelStoreOwner
-import androidx.recyclerview.widget.ListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.savedstate.findViewTreeSavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import com.capyreader.app.ui.articles.ArticleMenuState
@@ -15,15 +15,7 @@ import com.jocmp.capy.Article
 class ArticlePagingAdapter(
     private val onSelect: (articleID: String) -> Unit,
     private val onOpenMenu: (ArticleMenuState) -> Unit,
-) : ListAdapter<Article, ArticleViewHolder>(ArticleDiffCallback) {
-
-    init {
-        setHasStableIds(true)
-    }
-
-    override fun getItemId(position: Int): Long {
-        return getItem(position).id.hashCode().toLong()
-    }
+) : PagingDataAdapter<Article, ArticleViewHolder>(ArticleDiffCallback) {
 
     var compositionContext: ArticleCompositionContext? = null
         set(value) {
@@ -48,7 +40,8 @@ class ArticlePagingAdapter(
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val context = compositionContext ?: return
-        holder.bind(getItem(position), position, context)
+        val article = getItem(position) ?: return
+        holder.bind(article, position, context)
     }
 
     override fun onBindViewHolder(
@@ -60,7 +53,8 @@ class ArticlePagingAdapter(
             onBindViewHolder(holder, position)
         } else {
             val context = compositionContext ?: return
-            holder.bind(getItem(position), position, context)
+            val article = getItem(position) ?: return
+            holder.bind(article, position, context)
         }
     }
 

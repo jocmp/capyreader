@@ -8,19 +8,21 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.paging.compose.LazyPagingItems
+import androidx.paging.PagingData
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.articles.list.ArticleListScrollState
 import com.capyreader.app.ui.articles.list.ArticleRecyclerView
 import com.jocmp.capy.Article
 import com.jocmp.capy.MarkRead
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import org.koin.compose.koinInject
 import java.time.LocalDateTime
 
 @Composable
 fun ArticleList(
-    articles: LazyPagingItems<Article>,
+    articles: Flow<PagingData<Article>>,
+    listKey: String,
     onSelect: (articleID: String) -> Unit,
     selectedArticleKey: String?,
     scrollState: ArticleListScrollState,
@@ -30,6 +32,7 @@ fun ArticleList(
 ) {
     ArticleRecyclerView(
         articles = articles,
+        listKey = listKey,
         selectedArticleKey = selectedArticleKey,
         onSelect = onSelect,
         onMarkAllRead = onMarkAllRead,

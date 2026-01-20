@@ -40,7 +40,6 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.R
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.Saver
@@ -133,8 +132,6 @@ fun ArticleScreen(
         .articleListOptions
         .markReadButtonPosition
         .collectChangesWithCurrent()
-
-    val articles = viewModel.articles.collectAsLazyPagingItems()
 
     val onMarkAllRead = { range: MarkRead ->
         viewModel.markAllRead(
@@ -239,16 +236,6 @@ fun ArticleScreen(
                 .drop(if (enableMarkReadOnScroll) 0 else 1)
                 .distinctUntilChanged()
                 .collect {
-                    scrollState.scrollToItem(0)
-                    resetScrollBehaviorOffset()
-                }
-        }
-
-        LaunchedEffect(scrollState) {
-            snapshotFlow { filter }
-                .distinctUntilChanged()
-                .collect {
-                    delay(200)
                     scrollState.scrollToItem(0)
                     resetScrollBehaviorOffset()
                 }
@@ -581,7 +568,8 @@ fun ArticleScreen(
                                 },
                             ) {
                                 ArticleList(
-                                    articles = articles,
+                                    articles = viewModel.articles,
+                                    listKey = filter.toString(),
                                     selectedArticleKey = article?.id,
                                     scrollState = scrollState,
                                     enableMarkReadOnScroll = enableMarkReadOnScroll,
@@ -613,7 +601,6 @@ fun ArticleScreen(
 
                     ArticleView(
                         article = article,
-                        articles = articles,
                         onBackPressed = {
                             clearArticle()
                         },

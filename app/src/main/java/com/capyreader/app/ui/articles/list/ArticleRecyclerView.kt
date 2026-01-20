@@ -15,7 +15,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
@@ -25,7 +24,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import androidx.paging.compose.LazyPagingItems
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -43,6 +42,8 @@ import com.capyreader.app.ui.theme.LocalAppTheme
 import com.jocmp.capy.Article
 import com.jocmp.capy.MarkRead
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import org.koin.compose.koinInject
@@ -50,7 +51,8 @@ import org.koin.compose.koinInject
 @OptIn(FlowPreview::class)
 @Composable
 fun ArticleRecyclerView(
-    articles: LazyPagingItems<Article>,
+    articles: Flow<PagingData<Article>>,
+    listKey: String,
     selectedArticleKey: String?,
     onSelect: (articleID: String) -> Unit,
     onMarkAllRead: (range: MarkRead) -> Unit,
@@ -109,37 +111,16 @@ fun ArticleRecyclerView(
             onSelect = onSelect,
             onOpenMenu = { state -> setMenuState(state) },
         )
-//            .apply {
-//            stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-//        }
     }
-
-    var savedScrollPosition by rememberSaveable { mutableIntStateOf(-1) }
-    var savedScrollOffset by rememberSaveable { mutableIntStateOf(0) }
-    var shouldRestoreScroll by remember { mutableStateOf(true) }
 
     SideEffect {
         adapter.compositionContext = compositionContext
     }
 
-    LaunchedEffect(articles) {
-        snapshotFlow { articles.itemSnapshotList.items }
-            .collect { items ->
-                if (items.isNotEmpty()) {
-                    val pendingPosition = if (shouldRestoreScroll && savedScrollPosition >= 0) savedScrollPosition else -1
-                    val pendingOffset = savedScrollOffset
-                    adapter.submitList(items.toList()) {
-                        if (pendingPosition >= 0) {
-                            scrollState.recyclerView?.post {
-                                val lm = scrollState.recyclerView?.layoutManager as? LinearLayoutManager
-                                lm?.scrollToPositionWithOffset(pendingPosition, pendingOffset)
-                            }
-                            savedScrollPosition = -1
-                        }
-                        shouldRestoreScroll = false
-                    }
-                }
-            }
+    LaunchedEffect(Unit) {
+        articles.collectLatest { pagingData ->
+            adapter.submitData(pagingData)
+        }
     }
 
     val itemTouchHelper = remember(adapter) {
@@ -179,14 +160,6 @@ fun ArticleRecyclerView(
         update = { recyclerView ->
             scrollState.recyclerView = recyclerView
         },
-        onRelease = { recyclerView ->
-            val lm = recyclerView.layoutManager as? LinearLayoutManager
-            val pos = lm?.findFirstVisibleItemPosition() ?: -1
-            val offset = if (pos >= 0) lm?.findViewByPosition(pos)?.top ?: 0 else 0
-            savedScrollPosition = pos
-            savedScrollOffset = offset
-            shouldRestoreScroll = true
-        }
     )
 
     menuState?.let { state ->
@@ -218,7 +191,7 @@ fun ArticleRecyclerView(
     }
 
     if (enableMarkReadOnScroll && !refreshingAll) {
-        LaunchedEffect(scrollState) {
+        LaunchedEffect(scrollState, adapter) {
             snapshotFlow { scrollState.firstVisibleItemIndex }
                 .debounce(500)
                 .distinctUntilChanged()
@@ -226,16 +199,14 @@ fun ArticleRecyclerView(
                     val offscreenIndex = firstVisibleIndex - 1
 
                     val markAsRead =
-                        (articles.itemCount == 1 && firstVisibleIndex > 0) ||
-                                (offscreenIndex > 0 && articles.itemCount > 0)
+                        (adapter.itemCount == 1 && firstVisibleIndex > 0) ||
+                                (offscreenIndex > 0 && adapter.itemCount > 0)
 
                     if (!markAsRead) {
                         return@collect
                     }
 
-                    val item = if (offscreenIndex in 0 until articles.itemCount) {
-                        articles[offscreenIndex]
-                    } else null
+                    val item = adapter.getArticle(offscreenIndex)
 
                     item?.let { onMarkAllRead(MarkRead.After(it.id)) }
                 }
