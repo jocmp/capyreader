@@ -4,6 +4,7 @@ SELECT
   articles.feed_id,
   articles.title,
   articles.author,
+  articles.content_html,
   articles.url,
   SUBSTR(articles.summary, 1, 250),
   articles.image_url,

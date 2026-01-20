@@ -55,6 +55,7 @@ internal fun listMapper(
     feedID: String?,
     title: String?,
     author: String?,
+    contentHtml: String?,
     url: String?,
     summary: String?,
     imageURL: String?,
@@ -72,7 +73,7 @@ internal fun listMapper(
         feedID = feedID.toString(),
         title = title ?: "",
         author = author,
-        contentHtml = "",
+        contentHtml = contentHtml,
         extractedContentURL = null,
         url = url,
         summary = if (!summary.isNullOrBlank()) {

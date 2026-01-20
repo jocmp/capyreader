@@ -175,26 +175,16 @@ fun ArticleView(
             ) {
                 HorizontalReaderPager(
                     enabled = enableHorizontalPager,
-                    enablePrevious = hasPrevious,
-                    enableNext = hasNext,
-                    onSelectPrevious = {
-                        selectPrevious()
-                    },
-                    onSelectNext = {
-                        selectNext()
-                    },
-                ) {
-                    ArticleTransition(article = article) { targetArticle ->
-                        ArticleReader(
-                            article = targetArticle,
-                            onSelectMedia = onSelectMedia,
-                            onSelectAudio = onSelectAudio,
-                            onPauseAudio = onPauseAudio,
-                            currentAudioUrl = currentAudioUrl,
-                            isAudioPlaying = isAudioPlaying,
-                        )
-                    }
-                }
+                    articles = articles,
+                    currentArticle = article,
+                    currentIndex = index,
+                    onSelectArticle = onSelectArticle,
+                    onSelectMedia = onSelectMedia,
+                    onSelectAudio = onSelectAudio,
+                    onPauseAudio = onPauseAudio,
+                    currentAudioUrl = currentAudioUrl,
+                    isAudioPlaying = isAudioPlaying,
+                )
             }
         },
     )

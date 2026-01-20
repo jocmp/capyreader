@@ -3,6 +3,9 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+    {{debug_script}}
+    {{font_preload}}
+    <link rel="stylesheet" href="/assets/stylesheet.css">
     <style>
       :root {
         --color-primary: {{color_primary}};
@@ -23,9 +26,6 @@
         --pre-white-space: {{pre_white_space}};
       }
     </style>
-    {{debug_script}}
-    {{font_preload}}
-    <link rel="stylesheet" href="/assets/stylesheet.css">
     <script type="text/javascript" src="/assets/media.js"></script>
     <script type="text/javascript" src="/assets/mercury-parser.js"></script>
     <script type="text/javascript" src="/assets/full-content.js"></script>

@@ -165,11 +165,16 @@ fun ArticleReader(
 @Composable
 fun ScrollableWebView(webViewState: WebViewState, article: Article, showImages: Boolean) {
     var maxHeight by remember { mutableFloatStateOf(0f) }
-    val scrollState = rememberSaveable(article.id, saver = ScrollState.Saver) {
+    val scrollState = rememberSaveable(saver = ScrollState.Saver) {
         ScrollState(initial = 0)
     }
 
-    var lastScrollYPercent by rememberSaveable(article.id) { mutableFloatStateOf(0f) }
+    var lastScrollYPercent by rememberSaveable { mutableFloatStateOf(0f) }
+
+    LaunchedEffect(article.id) {
+        scrollState.scrollTo(0)
+        lastScrollYPercent = 0f
+    }
 
     CornerTapGestureScroll(
         maxArticleHeight = maxHeight,
