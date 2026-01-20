@@ -29,14 +29,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
@@ -52,7 +56,6 @@ import coil.compose.AsyncImage
 import com.capyreader.app.R
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.preferences.AppTheme
-import com.capyreader.app.ui.articles.list.ArticleActionMenu
 import com.capyreader.app.ui.articles.list.ArticleListItem
 import com.capyreader.app.ui.fixtures.ArticleSample
 import com.capyreader.app.ui.fixtures.PreviewKoinApplication
@@ -77,13 +80,19 @@ data class ArticleRowOptions(
     val showAudioIcon: Boolean = false,
 )
 
+data class ArticleMenuState(
+    val article: Article,
+    val index: Int,
+    val yPosition: Int,
+)
+
 @Composable
 fun ArticleRow(
     article: Article,
     index: Int,
     selected: Boolean,
     onSelect: (articleID: String) -> Unit,
-    onMarkAllRead: (range: MarkRead) -> Unit = {},
+    onOpenMenu: (ArticleMenuState) -> Unit = {},
     currentTime: LocalDateTime,
     options: ArticleRowOptions = ArticleRowOptions(),
 ) {
@@ -96,17 +105,19 @@ fun ArticleRow(
     )
     val feedNameColor = findFeedNameColor(read = article.read)
     val haptics = LocalHapticFeedback.current
-    val (isArticleMenuOpen, setArticleMenuOpen) = remember { mutableStateOf(false) }
-    val labelsActions = LocalLabelsActions.current
+    var yPosition by remember { mutableIntStateOf(0) }
     val openArticleMenu = {
         haptics.performHapticFeedback(HapticFeedbackType.LongPress)
-        setArticleMenuOpen(true)
+        onOpenMenu(ArticleMenuState(article, index, yPosition))
     }
 
     StyleProviders(options) {
         ArticleBox(
             onClick = { onSelect(article.id) },
             onLongClick = openArticleMenu,
+            modifier = Modifier.onGloballyPositioned { coordinates ->
+                yPosition = coordinates.positionInWindow().y.toInt()
+            }
         ) {
             ArticleListItem(
                 headlineContent = {
@@ -210,24 +221,6 @@ fun ArticleRow(
                     null
                 },
                 colors = colors
-            )
-
-            ArticleActionMenu(
-                expanded = isArticleMenuOpen,
-                article = article,
-                index = index,
-                showLabels = labelsActions.showLabels,
-                onMarkAllRead = {
-                    setArticleMenuOpen(false)
-                    onMarkAllRead(it)
-                },
-                onOpenLabels = {
-                    setArticleMenuOpen(false)
-                    labelsActions.openSheet(article.id)
-                },
-                onDismissRequest = {
-                    setArticleMenuOpen(false)
-                }
             )
         }
     }
@@ -343,10 +336,11 @@ fun StyleProviders(options: ArticleRowOptions, content: @Composable () -> Unit) 
 private fun ArticleBox(
     onClick: () -> Unit,
     onLongClick: () -> Unit,
+    modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
     Box(
-        Modifier
+        modifier
             .combinedClickable(
                 onClick = onClick,
                 onLongClick = onLongClick,

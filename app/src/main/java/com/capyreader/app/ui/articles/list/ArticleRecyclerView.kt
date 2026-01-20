@@ -1,13 +1,19 @@
 package com.capyreader.app.ui.articles.list
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -18,9 +24,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.capyreader.app.common.asState
 import com.capyreader.app.preferences.AppPreferences
-import com.capyreader.app.preferences.RowSwipeOption
 import com.capyreader.app.ui.LocalLinkOpener
-import com.capyreader.app.ui.articles.ArticleRowOptions
+import com.capyreader.app.ui.LocalUnreadCount
+import com.capyreader.app.ui.articles.ArticleMenuState
 import com.capyreader.app.ui.articles.LocalArticleActions
 import com.capyreader.app.ui.articles.LocalLabelsActions
 import com.capyreader.app.ui.articles.rememberArticleOptions
@@ -31,7 +37,6 @@ import com.jocmp.capy.MarkRead
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 @OptIn(FlowPreview::class)
@@ -53,11 +58,14 @@ fun ArticleRecyclerView(
     val appTheme = LocalAppTheme.current
     val options = rememberArticleOptions()
     val currentTime = rememberCurrentTime()
-    val scope = rememberCoroutineScope()
     val lifecycleOwner = LocalLifecycleOwner.current
+    val unreadCount = LocalUnreadCount.current
+    val density = LocalDensity.current
 
     val swipeStart by appPreferences.articleListOptions.swipeStart.asState()
     val swipeEnd by appPreferences.articleListOptions.swipeEnd.asState()
+
+    var menuState by remember { mutableStateOf<ArticleMenuState?>(null) }
 
     val compositionContext = remember(
         articleActions,
@@ -86,7 +94,7 @@ fun ArticleRecyclerView(
     val adapter = remember {
         ArticlePagingAdapter(
             onSelect = onSelect,
-            onMarkAllRead = onMarkAllRead,
+            onOpenMenu = { state -> menuState = state },
         )
     }
 
@@ -115,26 +123,57 @@ fun ArticleRecyclerView(
         )
     }
 
-    AndroidView(
-        modifier = modifier,
-        factory = { context ->
-            RecyclerView(context).apply {
-                layoutManager = LinearLayoutManager(context)
-                this.adapter = adapter
-                itemTouchHelper.attachToRecyclerView(this)
+    Box(modifier = modifier.fillMaxSize()) {
+        AndroidView(
+            modifier = Modifier.fillMaxSize(),
+            factory = { context ->
+                RecyclerView(context).apply {
+                    layoutManager = LinearLayoutManager(context)
+                    this.adapter = adapter
+                    itemTouchHelper.attachToRecyclerView(this)
 
-                addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                        val layoutManager = recyclerView.layoutManager as? LinearLayoutManager ?: return
-                        scrollState.updateFromLayoutManager(layoutManager)
-                    }
-                })
+                    addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                            val layoutManager =
+                                recyclerView.layoutManager as? LinearLayoutManager ?: return
+                            scrollState.updateFromLayoutManager(layoutManager)
+                        }
+                    })
+                }
+            },
+            update = { recyclerView ->
+                scrollState.recyclerView = recyclerView
             }
-        },
-        update = { recyclerView ->
-            scrollState.recyclerView = recyclerView
+        )
+
+        menuState?.let { state ->
+            Box(
+                modifier = Modifier.offset {
+                    IntOffset(0, state.yPosition)
+                }
+            ) {
+                ArticleActionMenu(
+                    expanded = true,
+                    article = state.article,
+                    index = state.index,
+                    unreadCount = unreadCount,
+                    articleActions = articleActions,
+                    showLabels = labelsActions.showLabels,
+                    onMarkAllRead = {
+                        menuState = null
+                        onMarkAllRead(it)
+                    },
+                    onOpenLabels = {
+                        menuState = null
+                        labelsActions.openSheet(state.article.id)
+                    },
+                    onDismissRequest = {
+                        menuState = null
+                    }
+                )
+            }
         }
-    )
+    }
 
     if (enableMarkReadOnScroll && !refreshingAll) {
         LaunchedEffect(scrollState) {
@@ -200,12 +239,13 @@ class ArticleListScrollState {
             val rv = recyclerView
             val lm = rv?.layoutManager as? LinearLayoutManager
             return if (rv != null && lm != null) {
-                val visibleItemsInfo = (lm.findFirstVisibleItemPosition()..lm.findLastVisibleItemPosition())
-                    .mapNotNull { pos ->
-                        lm.findViewByPosition(pos)?.let { view ->
-                            ArticleVisibleItemInfo(index = pos, size = view.height)
+                val visibleItemsInfo =
+                    (lm.findFirstVisibleItemPosition()..lm.findLastVisibleItemPosition())
+                        .mapNotNull { pos ->
+                            lm.findViewByPosition(pos)?.let { view ->
+                                ArticleVisibleItemInfo(index = pos, size = view.height)
+                            }
                         }
-                    }
                 ArticleListLayoutInfo(
                     totalItemsCount = rv.adapter?.itemCount ?: 0,
                     visibleItemsInfo = visibleItemsInfo

@@ -12,19 +12,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.common.shareLink
-import com.capyreader.app.ui.LocalUnreadCount
-import com.capyreader.app.ui.articles.LocalArticleActions
+import com.capyreader.app.ui.articles.ArticleActions
 import com.capyreader.app.ui.components.ArticleAction
 import com.capyreader.app.ui.components.buildCopyToClipboard
 import com.capyreader.app.ui.components.readAction
 import com.capyreader.app.ui.components.starAction
-import com.capyreader.app.ui.fixtures.ArticleSample
 import com.jocmp.capy.Article
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.MarkRead.After
@@ -35,20 +31,20 @@ fun ArticleActionMenu(
     expanded: Boolean,
     article: Article,
     index: Int,
+    unreadCount: Long,
+    articleActions: ArticleActions,
     showLabels: Boolean = false,
     onMarkAllRead: (range: MarkRead) -> Unit = {},
     onOpenLabels: () -> Unit = {},
     onDismissRequest: () -> Unit = {},
 ) {
-    val unreadCount = LocalUnreadCount.current
-
     DropdownMenu(
         expanded = expanded,
         onDismissRequest = { onDismissRequest() },
         offset = DpOffset(x = 16.dp, y = 0.dp)
     ) {
-        ToggleStarMenuItem(onDismissRequest, article)
-        ToggleReadMenuItem(onDismissRequest, article)
+        ToggleStarMenuItem(onDismissRequest, article, articleActions)
+        ToggleReadMenuItem(onDismissRequest, article, articleActions)
         if (showLabels) {
             LabelMenuItem(onDismissRequest, onOpenLabels)
         }
@@ -128,10 +124,6 @@ private fun ShareLinkMenuItem(onDismissRequest: () -> Unit, article: Article) {
 
     val context = LocalContext.current
 
-    val shareLink = {
-        context.shareLink(url = url, article.title)
-    }
-
     DropdownMenuItem(
         leadingIcon = {
             Icon(
@@ -141,23 +133,29 @@ private fun ShareLinkMenuItem(onDismissRequest: () -> Unit, article: Article) {
         },
         text = { Text(stringResource(R.string.article_share)) },
         onClick = {
-            shareLink()
+            context.shareLink(url = url, article.title)
             onDismissRequest()
         },
     )
 }
 
 @Composable
-private fun ToggleReadMenuItem(onDismissRequest: () -> Unit, article: Article) {
-    val action = readAction(article, LocalArticleActions.current)
-
+private fun ToggleReadMenuItem(
+    onDismissRequest: () -> Unit,
+    article: Article,
+    articleActions: ArticleActions
+) {
+    val action = readAction(article, articleActions)
     ToggleActionMenuItem(onDismissRequest, action)
 }
 
 @Composable
-private fun ToggleStarMenuItem(onDismissRequest: () -> Unit, article: Article) {
-    val action = starAction(article, LocalArticleActions.current)
-
+private fun ToggleStarMenuItem(
+    onDismissRequest: () -> Unit,
+    article: Article,
+    articleActions: ArticleActions
+) {
+    val action = starAction(article, articleActions)
     ToggleActionMenuItem(onDismissRequest, action)
 }
 
@@ -178,15 +176,5 @@ private fun ToggleActionMenuItem(
             onDismissRequest()
             action.commit()
         },
-    )
-}
-
-@Preview(heightDp = 400, widthDp = 400)
-@Composable
-private fun ArticleActionMenuPreview(@PreviewParameter(ArticleSample::class) article: Article) {
-    ArticleActionMenu(
-        expanded = true,
-        index = 0,
-        article = article
     )
 }

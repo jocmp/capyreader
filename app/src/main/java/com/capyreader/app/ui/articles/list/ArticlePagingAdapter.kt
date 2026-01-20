@@ -2,13 +2,19 @@ package com.capyreader.app.ui.articles.list
 
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
+import androidx.lifecycle.findViewTreeLifecycleOwner
+import androidx.lifecycle.findViewTreeViewModelStoreOwner
+import androidx.lifecycle.setViewTreeLifecycleOwner
+import androidx.lifecycle.setViewTreeViewModelStoreOwner
 import androidx.paging.PagingDataAdapter
+import androidx.savedstate.findViewTreeSavedStateRegistryOwner
+import androidx.savedstate.setViewTreeSavedStateRegistryOwner
+import com.capyreader.app.ui.articles.ArticleMenuState
 import com.jocmp.capy.Article
-import com.jocmp.capy.MarkRead
 
 class ArticlePagingAdapter(
     private val onSelect: (articleID: String) -> Unit,
-    private val onMarkAllRead: (range: MarkRead) -> Unit,
+    private val onOpenMenu: (ArticleMenuState) -> Unit,
 ) : PagingDataAdapter<Article, ArticleViewHolder>(ArticleDiffCallback) {
 
     var compositionContext: ArticleCompositionContext? = null
@@ -25,8 +31,11 @@ class ArticlePagingAdapter(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
+            setViewTreeLifecycleOwner(parent.findViewTreeLifecycleOwner())
+            setViewTreeViewModelStoreOwner(parent.findViewTreeViewModelStoreOwner())
+            setViewTreeSavedStateRegistryOwner(parent.findViewTreeSavedStateRegistryOwner())
         }
-        return ArticleViewHolder(composeView, onSelect, onMarkAllRead)
+        return ArticleViewHolder(composeView, onSelect, onOpenMenu)
     }
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
