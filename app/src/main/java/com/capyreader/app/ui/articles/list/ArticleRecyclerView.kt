@@ -13,7 +13,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
@@ -62,12 +61,11 @@ fun ArticleRecyclerView(
     val currentTime = rememberCurrentTime()
     val lifecycleOwner = LocalLifecycleOwner.current
     val unreadCount = LocalUnreadCount.current
-    val density = LocalDensity.current
 
     val swipeStart by appPreferences.articleListOptions.swipeStart.asState()
     val swipeEnd by appPreferences.articleListOptions.swipeEnd.asState()
 
-    var menuState by remember { mutableStateOf<ArticleMenuState?>(null) }
+    val (menuState, setMenuState) = remember { mutableStateOf<ArticleMenuState?>(null) }
 
     val compositionContext = remember(
         articleActions,
@@ -96,7 +94,7 @@ fun ArticleRecyclerView(
     val adapter = remember {
         ArticlePagingAdapter(
             onSelect = onSelect,
-            onOpenMenu = { state -> menuState = state },
+            onOpenMenu = { state -> setMenuState(state) },
         )
     }
 
@@ -105,11 +103,11 @@ fun ArticleRecyclerView(
     }
 
     LaunchedEffect(articles) {
-        snapshotFlow { articles.itemSnapshotList }
-            .collect {
-                adapter.submitData(articles.itemSnapshotList.items.let { items ->
-                    androidx.paging.PagingData.from(items)
-                })
+        snapshotFlow { articles.itemSnapshotList.items }
+            .collect { items ->
+                if (items.isNotEmpty()) {
+                    adapter.submitList(items.toList())
+                }
             }
     }
 
@@ -125,57 +123,55 @@ fun ArticleRecyclerView(
         )
     }
 
-    Box(modifier = modifier.fillMaxSize()) {
-        AndroidView(
-            modifier = Modifier.fillMaxSize(),
-            factory = { context ->
-                val recyclerView = LayoutInflater.from(context)
-                    .inflate(R.layout.article_recycler_view, null) as RecyclerView
-                recyclerView.apply {
-                    layoutManager = LinearLayoutManager(context)
-                    this.adapter = adapter
-                    itemTouchHelper.attachToRecyclerView(this)
+    AndroidView(
+        modifier = Modifier.fillMaxSize(),
+        factory = { context ->
+            val recyclerView = LayoutInflater.from(context)
+                .inflate(R.layout.article_recycler_view, null) as RecyclerView
+            recyclerView.apply {
+                layoutManager = LinearLayoutManager(context)
+                this.adapter = adapter
+                itemTouchHelper.attachToRecyclerView(this)
 
-                    addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                            val layoutManager =
-                                recyclerView.layoutManager as? LinearLayoutManager ?: return
-                            scrollState.updateFromLayoutManager(layoutManager)
-                        }
-                    })
-                }
-            },
-            update = { recyclerView ->
-                scrollState.recyclerView = recyclerView
-            }
-        )
-
-        menuState?.let { state ->
-            Box(
-                modifier = Modifier.offset {
-                    IntOffset(0, state.yPosition)
-                }
-            ) {
-                ArticleActionMenu(
-                    expanded = true,
-                    article = state.article,
-                    index = state.index,
-                    unreadCount = unreadCount,
-                    articleActions = articleActions,
-                    showLabels = labelsActions.showLabels,
-                    onMarkAllRead = {
-                        menuState = null
-                        onMarkAllRead(it)
-                    },
-                    onOpenLabels = {
-                        menuState = null
-                        labelsActions.openSheet(state.article.id)
-                    },
-                    onDismissRequest = {
-                        menuState = null
+                addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        val layoutManager =
+                            recyclerView.layoutManager as? LinearLayoutManager ?: return
+                        scrollState.updateFromLayoutManager(layoutManager)
                     }
-                )
+                })
             }
+        },
+        update = { recyclerView ->
+            scrollState.recyclerView = recyclerView
+        }
+    )
+
+    menuState?.let { state ->
+        Box(
+            modifier = Modifier.offset {
+                IntOffset(0, state.yPosition)
+            }
+        ) {
+            ArticleActionMenu(
+                expanded = true,
+                article = state.article,
+                index = state.index,
+                unreadCount = unreadCount,
+                articleActions = articleActions,
+                showLabels = labelsActions.showLabels,
+                onMarkAllRead = {
+                    setMenuState(null)
+                    onMarkAllRead(it)
+                },
+                onOpenLabels = {
+                    setMenuState(null)
+                    labelsActions.openSheet(state.article.id)
+                },
+                onDismissRequest = {
+                    setMenuState(null)
+                }
+            )
         }
     }
 

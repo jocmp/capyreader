@@ -582,7 +582,7 @@ fun ArticleScreen(
                                     requestNextFeed()
                                 },
                             ) {
-                                key(filter, articles.itemCount) {
+                                key(filter) {
                                     ArticleList(
                                         articles = articles,
                                         selectedArticleKey = article?.id,
