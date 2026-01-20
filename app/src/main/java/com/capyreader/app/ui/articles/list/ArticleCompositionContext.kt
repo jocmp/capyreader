@@ -15,6 +15,7 @@ data class ArticleCompositionContext(
     val linkOpener: LinkOpener,
     val appTheme: AppTheme,
     val themeMode: ThemeMode,
+    val pureBlackDarkMode: Boolean,
     val options: ArticleRowOptions,
     val currentTime: LocalDateTime,
     val swipeStart: RowSwipeOption,

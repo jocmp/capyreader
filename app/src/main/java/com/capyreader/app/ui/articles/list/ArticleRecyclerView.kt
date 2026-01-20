@@ -66,6 +66,7 @@ fun ArticleRecyclerView(
     val swipeStart by appPreferences.articleListOptions.swipeStart.asState()
     val swipeEnd by appPreferences.articleListOptions.swipeEnd.asState()
     val themeMode by appPreferences.themeMode.asState()
+    val pureBlackDarkMode by appPreferences.pureBlackDarkMode.asState()
 
     val (menuState, setMenuState) = remember { mutableStateOf<ArticleMenuState?>(null) }
 
@@ -75,6 +76,7 @@ fun ArticleRecyclerView(
         linkOpener,
         appTheme,
         themeMode,
+        pureBlackDarkMode,
         options,
         currentTime,
         swipeStart,
@@ -87,6 +89,7 @@ fun ArticleRecyclerView(
             linkOpener = linkOpener,
             appTheme = appTheme,
             themeMode = themeMode,
+            pureBlackDarkMode = pureBlackDarkMode,
             options = options,
             currentTime = currentTime,
             swipeStart = swipeStart,
