@@ -34,6 +34,8 @@ class ArticleItemTouchHelper(
         target: RecyclerView.ViewHolder
     ): Boolean = false
 
+    override fun getSwipeThreshold(viewHolder: RecyclerView.ViewHolder): Float = 0.25f
+
     override fun getSwipeDirs(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder
@@ -134,7 +136,7 @@ class ArticleItemTouchHelper(
                     val iconColor = getThemeColor(context, MaterialR.attr.colorOnSurfaceVariant)
                     DrawableCompat.setTint(wrappedDrawable, iconColor)
 
-                    val iconSize = (itemView.height * 0.3f).toInt()
+                    val iconSize = (24 * context.resources.displayMetrics.density).toInt()
                     val iconMargin = iconPadding.toInt()
                     val iconTop = itemView.top + (itemView.height - iconSize) / 2
                     val iconLeft = itemView.left + iconMargin
@@ -166,7 +168,7 @@ class ArticleItemTouchHelper(
                     val iconColor = getThemeColor(context, MaterialR.attr.colorOnSurfaceVariant)
                     DrawableCompat.setTint(wrappedDrawable, iconColor)
 
-                    val iconSize = (itemView.height * 0.3f).toInt()
+                    val iconSize = (24 * context.resources.displayMetrics.density).toInt()
                     val iconMargin = iconPadding.toInt()
                     val iconTop = itemView.top + (itemView.height - iconSize) / 2
                     val iconRight = itemView.right - iconMargin
