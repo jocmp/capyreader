@@ -582,21 +582,19 @@ fun ArticleScreen(
                                     requestNextFeed()
                                 },
                             ) {
-                                key(filter) {
-                                    ArticleList(
-                                        articles = articles,
-                                        selectedArticleKey = article?.id,
-                                        scrollState = scrollState,
-                                        enableMarkReadOnScroll = enableMarkReadOnScroll,
-                                        refreshingAll = viewModel.refreshingAll,
-                                        onMarkAllRead = { range ->
-                                            onMarkAllRead(range)
-                                        },
-                                        onSelect = { articleID ->
-                                            selectArticle(articleID)
-                                        },
-                                    )
-                                }
+                                ArticleList(
+                                    articles = articles,
+                                    selectedArticleKey = article?.id,
+                                    scrollState = scrollState,
+                                    enableMarkReadOnScroll = enableMarkReadOnScroll,
+                                    refreshingAll = viewModel.refreshingAll,
+                                    onMarkAllRead = { range ->
+                                        onMarkAllRead(range)
+                                    },
+                                    onSelect = { articleID ->
+                                        selectArticle(articleID)
+                                    },
+                                )
                             }
                         }
                     }
