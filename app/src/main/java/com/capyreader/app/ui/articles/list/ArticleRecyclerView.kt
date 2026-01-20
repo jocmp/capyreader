@@ -58,7 +58,6 @@ fun ArticleRecyclerView(
     enableMarkReadOnScroll: Boolean,
     refreshingAll: Boolean,
     scrollState: ArticleListScrollState,
-    onScrollToTop: () -> Unit = {},
     appPreferences: AppPreferences = koinInject(),
 ) {
     val articleActions = LocalArticleActions.current
@@ -117,7 +116,6 @@ fun ArticleRecyclerView(
     }
 
     var layoutManagerState by rememberSaveable { mutableStateOf<Parcelable?>(null) }
-    var previousFirstItemId by remember { mutableStateOf<String?>(null) }
     var shouldRestoreScroll by remember { mutableStateOf(true) }
 
     SideEffect {
@@ -128,23 +126,14 @@ fun ArticleRecyclerView(
         snapshotFlow { articles.itemSnapshotList.items }
             .collect { items ->
                 if (items.isNotEmpty()) {
-                    val firstItemId = items.first().id
-                    val listChanged = previousFirstItemId != null && previousFirstItemId != firstItemId
-
                     adapter.submitList(items.toList()) {
-                        if (listChanged) {
-                            layoutManagerState = null
-                            scrollState.recyclerView?.scrollToPosition(0)
-                            onScrollToTop()
-                        } else if (shouldRestoreScroll && layoutManagerState != null) {
+                        if (shouldRestoreScroll && layoutManagerState != null) {
                             val lm = scrollState.recyclerView?.layoutManager as? LinearLayoutManager
                             lm?.onRestoreInstanceState(layoutManagerState)
                             layoutManagerState = null
                         }
                         shouldRestoreScroll = false
                     }
-
-                    previousFirstItemId = firstItemId
                 }
             }
     }

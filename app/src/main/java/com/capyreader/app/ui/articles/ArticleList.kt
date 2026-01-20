@@ -27,7 +27,6 @@ fun ArticleList(
     onMarkAllRead: (range: MarkRead) -> Unit = {},
     refreshingAll: Boolean,
     enableMarkReadOnScroll: Boolean = false,
-    onScrollToTop: () -> Unit = {},
 ) {
     ArticleRecyclerView(
         articles = articles,
@@ -37,7 +36,6 @@ fun ArticleList(
         enableMarkReadOnScroll = enableMarkReadOnScroll,
         refreshingAll = refreshingAll,
         scrollState = scrollState,
-        onScrollToTop = onScrollToTop
     )
 }
 

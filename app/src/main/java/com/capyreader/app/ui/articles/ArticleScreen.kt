@@ -592,9 +592,6 @@ fun ArticleScreen(
                                     onSelect = { articleID ->
                                         selectArticle(articleID)
                                     },
-                                    onScrollToTop = {
-                                        resetScrollBehaviorOffset()
-                                    },
                                 )
                             }
                         }
