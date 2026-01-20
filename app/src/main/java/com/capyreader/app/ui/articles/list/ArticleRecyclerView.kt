@@ -2,6 +2,7 @@ package com.capyreader.app.ui.articles.list
 
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.InsetDrawable
+import android.os.Parcelable
 import android.view.LayoutInflater
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
@@ -113,6 +115,8 @@ fun ArticleRecyclerView(
         )
     }
 
+    var layoutManagerState by rememberSaveable { mutableStateOf<Parcelable?>(null) }
+
     SideEffect {
         adapter.compositionContext = compositionContext
     }
@@ -146,6 +150,11 @@ fun ArticleRecyclerView(
                 this.adapter = adapter
                 itemTouchHelper.attachToRecyclerView(this)
 
+                layoutManagerState?.let { state ->
+                    linearLayoutManager.onRestoreInstanceState(state)
+                    layoutManagerState = null
+                }
+
                 setScrollbarThumbColor(scrollbarColor)
 
                 addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -159,6 +168,10 @@ fun ArticleRecyclerView(
         },
         update = { recyclerView ->
             scrollState.recyclerView = recyclerView
+        },
+        onRelease = { recyclerView ->
+            val lm = recyclerView.layoutManager as? LinearLayoutManager
+            layoutManagerState = lm?.onSaveInstanceState()
         },
     )
 
