@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -64,6 +65,7 @@ fun ArticleRecyclerView(
 
     val swipeStart by appPreferences.articleListOptions.swipeStart.asState()
     val swipeEnd by appPreferences.articleListOptions.swipeEnd.asState()
+    val themeMode by appPreferences.themeMode.asState()
 
     val (menuState, setMenuState) = remember { mutableStateOf<ArticleMenuState?>(null) }
 
@@ -72,6 +74,7 @@ fun ArticleRecyclerView(
         labelsActions,
         linkOpener,
         appTheme,
+        themeMode,
         options,
         currentTime,
         swipeStart,
@@ -83,6 +86,7 @@ fun ArticleRecyclerView(
             labelsActions = labelsActions,
             linkOpener = linkOpener,
             appTheme = appTheme,
+            themeMode = themeMode,
             options = options,
             currentTime = currentTime,
             swipeStart = swipeStart,
@@ -98,7 +102,7 @@ fun ArticleRecyclerView(
         )
     }
 
-    LaunchedEffect(compositionContext) {
+    SideEffect {
         adapter.compositionContext = compositionContext
     }
 

@@ -36,7 +36,7 @@ class ArticleViewHolder(
             val currentContext = context ?: return@setContent
             val currentArticle = article
 
-            CapyTheme(appTheme = currentContext.appTheme) {
+            CapyTheme(appTheme = currentContext.appTheme, themeMode = currentContext.themeMode) {
                 CompositionLocalProvider(
                     LocalArticleActions provides currentContext.articleActions,
                     LocalLabelsActions provides currentContext.labelsActions,
