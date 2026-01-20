@@ -13,6 +13,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -117,7 +118,7 @@ fun ArticleRecyclerView(
 
     var layoutManagerState by rememberSaveable { mutableStateOf<Parcelable?>(null) }
     var previousFirstItemId by remember { mutableStateOf<String?>(null) }
-    var pendingStateRestore by remember { mutableStateOf(true) }
+    var shouldRestoreScroll by remember { mutableStateOf(true) }
 
     SideEffect {
         adapter.compositionContext = compositionContext
@@ -135,12 +136,12 @@ fun ArticleRecyclerView(
                             layoutManagerState = null
                             scrollState.recyclerView?.scrollToPosition(0)
                             onScrollToTop()
-                        } else if (pendingStateRestore && layoutManagerState != null) {
+                        } else if (shouldRestoreScroll && layoutManagerState != null) {
                             val lm = scrollState.recyclerView?.layoutManager as? LinearLayoutManager
                             lm?.onRestoreInstanceState(layoutManagerState)
                             layoutManagerState = null
                         }
-                        pendingStateRestore = false
+                        shouldRestoreScroll = false
                     }
 
                     previousFirstItemId = firstItemId
@@ -187,7 +188,7 @@ fun ArticleRecyclerView(
         },
         onRelease = { recyclerView ->
             layoutManagerState = recyclerView.layoutManager?.onSaveInstanceState()
-            pendingStateRestore = true
+            shouldRestoreScroll = true
         }
     )
 
@@ -259,9 +260,9 @@ fun ArticleRecyclerView(
 
 class ArticleListScrollState {
     var recyclerView: RecyclerView? = null
-    var firstVisibleItemIndex: Int by mutableStateOf(0)
+    var firstVisibleItemIndex: Int by mutableIntStateOf(0)
         private set
-    var firstVisibleItemScrollOffset: Int by mutableStateOf(0)
+    var firstVisibleItemScrollOffset: Int by mutableIntStateOf(0)
         private set
 
     fun updateFromLayoutManager(layoutManager: LinearLayoutManager) {
