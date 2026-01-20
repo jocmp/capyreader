@@ -219,9 +219,9 @@ fun ArticleRecyclerView(
 
 class ArticleListScrollState {
     var recyclerView: RecyclerView? = null
-    var firstVisibleItemIndex: Int = 0
+    var firstVisibleItemIndex: Int by mutableStateOf(0)
         private set
-    var firstVisibleItemScrollOffset: Int = 0
+    var firstVisibleItemScrollOffset: Int by mutableStateOf(0)
         private set
 
     fun updateFromLayoutManager(layoutManager: LinearLayoutManager) {
