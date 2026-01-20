@@ -1,6 +1,5 @@
 package com.capyreader.app.ui.articles
 
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -9,7 +8,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.articles.list.ArticleListScrollState
@@ -29,6 +27,7 @@ fun ArticleList(
     onMarkAllRead: (range: MarkRead) -> Unit = {},
     refreshingAll: Boolean,
     enableMarkReadOnScroll: Boolean = false,
+    onScrollToTop: () -> Unit = {},
 ) {
     ArticleRecyclerView(
         articles = articles,
@@ -38,7 +37,7 @@ fun ArticleList(
         enableMarkReadOnScroll = enableMarkReadOnScroll,
         refreshingAll = refreshingAll,
         scrollState = scrollState,
-        modifier = Modifier.fillMaxSize()
+        onScrollToTop = onScrollToTop
     )
 }
 

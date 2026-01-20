@@ -1,9 +1,13 @@
 package com.capyreader.app.ui.articles.list
 
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.InsetDrawable
+import android.os.Parcelable
 import android.view.LayoutInflater
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -11,9 +15,11 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
@@ -51,7 +57,7 @@ fun ArticleRecyclerView(
     enableMarkReadOnScroll: Boolean,
     refreshingAll: Boolean,
     scrollState: ArticleListScrollState,
-    modifier: Modifier = Modifier,
+    onScrollToTop: () -> Unit = {},
     appPreferences: AppPreferences = koinInject(),
 ) {
     val articleActions = LocalArticleActions.current
@@ -69,6 +75,7 @@ fun ArticleRecyclerView(
     val pureBlackDarkMode by appPreferences.pureBlackDarkMode.asState()
 
     val (menuState, setMenuState) = remember { mutableStateOf<ArticleMenuState?>(null) }
+    val scrollbarColor = MaterialTheme.colorScheme.onSurfaceVariant.toArgb()
 
     val compositionContext = remember(
         articleActions,
@@ -103,7 +110,14 @@ fun ArticleRecyclerView(
             onSelect = onSelect,
             onOpenMenu = { state -> setMenuState(state) },
         )
+//            .apply {
+//            stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+//        }
     }
+
+    var layoutManagerState by rememberSaveable { mutableStateOf<Parcelable?>(null) }
+    var previousFirstItemId by remember { mutableStateOf<String?>(null) }
+    var pendingStateRestore by remember { mutableStateOf(true) }
 
     SideEffect {
         adapter.compositionContext = compositionContext
@@ -113,7 +127,23 @@ fun ArticleRecyclerView(
         snapshotFlow { articles.itemSnapshotList.items }
             .collect { items ->
                 if (items.isNotEmpty()) {
-                    adapter.submitList(items.toList())
+                    val firstItemId = items.first().id
+                    val listChanged = previousFirstItemId != null && previousFirstItemId != firstItemId
+
+                    adapter.submitList(items.toList()) {
+                        if (listChanged) {
+                            layoutManagerState = null
+                            scrollState.recyclerView?.scrollToPosition(0)
+                            onScrollToTop()
+                        } else if (pendingStateRestore && layoutManagerState != null) {
+                            val lm = scrollState.recyclerView?.layoutManager as? LinearLayoutManager
+                            lm?.onRestoreInstanceState(layoutManagerState)
+                            layoutManagerState = null
+                        }
+                        pendingStateRestore = false
+                    }
+
+                    previousFirstItemId = firstItemId
                 }
             }
     }
@@ -136,9 +166,12 @@ fun ArticleRecyclerView(
             val recyclerView = LayoutInflater.from(context)
                 .inflate(R.layout.article_recycler_view, null) as RecyclerView
             recyclerView.apply {
-                layoutManager = LinearLayoutManager(context)
+                val linearLayoutManager = LinearLayoutManager(context)
+                layoutManager = linearLayoutManager
                 this.adapter = adapter
                 itemTouchHelper.attachToRecyclerView(this)
+
+                setScrollbarThumbColor(scrollbarColor)
 
                 addOnScrollListener(object : RecyclerView.OnScrollListener() {
                     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -151,6 +184,10 @@ fun ArticleRecyclerView(
         },
         update = { recyclerView ->
             scrollState.recyclerView = recyclerView
+        },
+        onRelease = { recyclerView ->
+            layoutManagerState = recyclerView.layoutManager?.onSaveInstanceState()
+            pendingStateRestore = true
         }
     )
 
@@ -233,11 +270,11 @@ class ArticleListScrollState {
         firstVisibleItemScrollOffset = firstVisibleView?.top ?: 0
     }
 
-    suspend fun scrollToItem(index: Int) {
+    fun scrollToItem(index: Int) {
         recyclerView?.scrollToPosition(index)
     }
 
-    suspend fun animateScrollToItem(index: Int) {
+    fun animateScrollToItem(index: Int) {
         recyclerView?.smoothScrollToPosition(index)
     }
 
@@ -276,4 +313,19 @@ data class ArticleVisibleItemInfo(
 @Composable
 fun rememberArticleListScrollState(): ArticleListScrollState {
     return remember { ArticleListScrollState() }
+}
+
+private fun RecyclerView.setScrollbarThumbColor(color: Int) {
+    val density = context.resources.displayMetrics.density
+    val thumbWidthPx = (4 * density).toInt()
+    val cornerRadiusPx = 100 * density
+    val insetRightPx = (2 * density).toInt()
+
+    val thumbShape = GradientDrawable().apply {
+        shape = GradientDrawable.RECTANGLE
+        setColor(color)
+        cornerRadius = cornerRadiusPx
+        setSize(thumbWidthPx, 0)
+    }
+    verticalScrollbarThumbDrawable = InsetDrawable(thumbShape, 0, 0, insetRightPx, 0)
 }
