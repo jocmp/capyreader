@@ -1,5 +1,6 @@
 package com.capyreader.app.ui.articles.list
 
+import android.view.LayoutInflater
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
@@ -22,6 +23,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.capyreader.app.R
 import com.capyreader.app.common.asState
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.LocalLinkOpener
@@ -127,7 +129,9 @@ fun ArticleRecyclerView(
         AndroidView(
             modifier = Modifier.fillMaxSize(),
             factory = { context ->
-                RecyclerView(context).apply {
+                val recyclerView = LayoutInflater.from(context)
+                    .inflate(R.layout.article_recycler_view, null) as RecyclerView
+                recyclerView.apply {
                     layoutManager = LinearLayoutManager(context)
                     this.adapter = adapter
                     itemTouchHelper.attachToRecyclerView(this)
