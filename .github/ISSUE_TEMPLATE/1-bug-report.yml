@@ -1,4 +1,4 @@
-name: Do not open issues, go to discussions please!
+name: Do not open issues for bugs or feature requests, go to discussions please!
 description: Do not open an issue
 body:
   - type: checkboxes
