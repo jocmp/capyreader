@@ -24,7 +24,7 @@ class XmlParserCommentsTest : BaseParserTest(
     channelTitle = "Hacker News",
     channelLink = "https://news.ycombinator.com/",
     channelDescription = "Links for the intellectually curious, ranked by readers.",
-    articleTitle = "GPTZero case study discovers it&#x27;s only accurate on less than 50% of text",
+    articleTitle = "GPTZero case study discovers it's only accurate on less than 50% of text",
     articleLink = "https://gonzoknows.com/posts/GPTZero-Case-Study/",
     articlePubDate = "Sun, 19 Feb 2023 15:22:39 +0000",
     articleDescription = "<a href=\"https://news.ycombinator.com/item?id=34858307\">Comments</a>",
