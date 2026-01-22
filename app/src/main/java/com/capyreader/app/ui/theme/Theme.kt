@@ -25,6 +25,7 @@ import com.capyreader.app.ui.theme.colorschemes.MonochromeColorScheme
 import com.capyreader.app.ui.theme.colorschemes.NewsprintColorScheme
 import com.capyreader.app.ui.theme.colorschemes.SunsetColorScheme
 import com.capyreader.app.ui.theme.colorschemes.TachiyomiColorScheme
+import com.capyreader.app.ui.theme.colorschemes.applyPureBlack
 
 val LocalAppTheme = staticCompositionLocalOf { AppTheme.DEFAULT }
 
@@ -73,6 +74,7 @@ private fun getThemeColorScheme(
     return if (theme == AppTheme.MONET && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
         if (isDark) {
             dynamicDarkColorScheme(LocalContext.current)
+                .applyPureBlack(pureBlack)
         } else {
             dynamicLightColorScheme(LocalContext.current)
         }

@@ -298,4 +298,10 @@
     <string name="freshrss_visibility">Visibilidad</string>
     <string name="freshrss_visibility_option_important">Importante</string>
     <string name="freshrss_visibility_option_category">Categoría</string>
+    <string name="theme_mode_label">Modo</string>
+    <string name="audio_player_play">Reproducir</string>
+    <string name="audio_player_pause">Pausar</string>
+    <string name="audio_player_close">Cerrar reproductor</string>
+    <string name="audio_player_skip_back">Retroceder 30 segundos</string>
+    <string name="audio_player_skip_forward">Adelantar 30 segundos</string>
 </resources>
