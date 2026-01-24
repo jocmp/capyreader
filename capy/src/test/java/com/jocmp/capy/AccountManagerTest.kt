@@ -23,6 +23,8 @@ class AccountManagerTest {
             databaseProvider = InMemoryDatabaseProvider,
             faviconFetcher = FakeFaviconFetcher,
             clientCertManager = FakeClientCertManager,
+            userAgent = "TestUserAgent",
+            acceptLanguage = "en-US",
         )
     }
 

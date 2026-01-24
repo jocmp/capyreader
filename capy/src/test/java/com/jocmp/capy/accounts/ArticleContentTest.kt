@@ -38,7 +38,11 @@ class ArticleContentTest {
 
     @Before
     fun setup() {
-        extractor = ArticleContent(client)
+        extractor = ArticleContent(
+            client = client,
+            userAgent = "TestUserAgent",
+            acceptLanguage = "en-US",
+        )
     }
 
     @Test
