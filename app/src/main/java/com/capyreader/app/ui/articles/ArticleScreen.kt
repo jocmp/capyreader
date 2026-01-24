@@ -245,14 +245,14 @@ fun ArticleScreen(
                 }
         }
 
-        var scrolledForFilter by remember { mutableStateOf<ArticleFilter?>(null) }
+        val (scrolledFilter, setScrolledFilter) = remember { mutableStateOf<ArticleFilter?>(null) }
 
         LaunchedEffect(filter, articles.loadState.refresh) {
             val refreshComplete = articles.loadState.refresh is LoadState.NotLoading
-            if (refreshComplete && filter != scrolledForFilter) {
+            if (refreshComplete && filter != scrolledFilter) {
                 listState.scrollToItem(0)
                 resetScrollBehaviorOffset()
-                scrolledForFilter = filter
+                setScrolledFilter(filter)
             }
         }
 
