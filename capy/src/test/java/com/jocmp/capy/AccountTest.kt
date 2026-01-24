@@ -186,6 +186,75 @@ class AccountTest {
         assertEquals(result, ids)
     }
 
+    /**
+     * When multiple articles share the same published_at timestamp,
+     * mark-as-read should work per-article, not per-timestamp.
+     *
+     * [c, b, a] - all with same timestamp, sorted by ID descending
+     * Request articles after "b"
+     * [c, b]
+     */
+    @Test
+    fun unreadArticleIDs_sameTimestamp_newestFirst() = runTest {
+        val articleFixture = ArticleFixture(account.database)
+        val sharedTimestamp = nowUTC().minusDays(1).toEpochSecond()
+
+        val unreadArticleIDs = listOf("c", "b", "a")
+            .map { id ->
+                articleFixture.create(
+                    id = id,
+                    read = false,
+                    publishedAt = sharedTimestamp
+                )
+            }
+            .map { it.id }
+
+        val ids = account.unreadArticleIDs(
+            filter = ArticleFilter.Articles(ArticleStatus.UNREAD),
+            range = MarkRead.After(unreadArticleIDs[1]), // "b"
+            sortOrder = SortOrder.NEWEST_FIRST,
+            query = null,
+        )
+
+        val result = unreadArticleIDs.take(2) // ["c", "b"]
+
+        assertEquals(expected = result.sorted(), actual = ids.sorted())
+    }
+
+    /**
+     * Same timestamp test with oldest-first sorting.
+     *
+     * [a, b, c] - all with same timestamp, sorted by ID ascending
+     * Request articles before "b" (which means from b onwards in oldest-first)
+     * [b, c]
+     */
+    @Test
+    fun unreadArticleIDs_sameTimestamp_oldestFirst() = runTest {
+        val articleFixture = ArticleFixture(account.database)
+        val sharedTimestamp = nowUTC().minusDays(1).toEpochSecond()
+
+        val unreadArticleIDs = listOf("a", "b", "c")
+            .map { id ->
+                articleFixture.create(
+                    id = id,
+                    read = false,
+                    publishedAt = sharedTimestamp
+                )
+            }
+            .map { it.id }
+
+        val ids = account.unreadArticleIDs(
+            filter = ArticleFilter.Articles(ArticleStatus.UNREAD),
+            range = MarkRead.Before(unreadArticleIDs[1]), // "b"
+            sortOrder = SortOrder.OLDEST_FIRST,
+            query = null,
+        )
+
+        val result = unreadArticleIDs.takeLast(2) // ["b", "c"]
+
+        assertEquals(expected = result.sorted(), actual = ids.sorted())
+    }
+
     @Test
     fun markAllRead() = runTest {
         coEvery { account.delegate.markRead(any()) }.returns(Result.success(Unit))
