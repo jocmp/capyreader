@@ -1,5 +1,7 @@
 package com.jocmp.rssparser.model
 
+import com.jocmp.rssparser.internal.decodeNumericEntities
+
 data class RssChannel(
     val title: String?,
     val link: String?,
@@ -20,7 +22,9 @@ data class RssChannel(
         private val items: MutableList<RssItem> = mutableListOf(),
         private var itunesChannelData: ItunesChannelData? = null
     ) {
-        fun title(title: String?) = apply { this.title = title }
+        fun title(title: String?) = apply {
+            this.title = title?.let { decodeNumericEntities(it) }
+        }
         fun link(link: String?) = apply { this.link = link }
         fun description(description: String?) = apply { this.description = description }
         fun image(image: RssImage) = apply { this.image = image }

@@ -18,6 +18,7 @@
 package com.jocmp.rssparser.model
 
 import com.jocmp.rssparser.internal.ImagePolicy
+import com.jocmp.rssparser.internal.decodeNumericEntities
 
 data class RssItem(
     val guid: String?,
@@ -60,7 +61,9 @@ data class RssItem(
         private var commentUrl: String? = null,
     ) {
         fun guid(guid: String?) = apply { this.guid = guid }
-        fun title(title: String?) = apply { this.title = title }
+        fun title(title: String?) = apply {
+            this.title = title?.let { decodeNumericEntities(it) }
+        }
         fun author(author: String?) = apply { this.author = author }
         fun link(link: String?) = apply { this.link = link }
         fun currentLink(): String? = link
