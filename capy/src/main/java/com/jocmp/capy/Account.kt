@@ -11,7 +11,9 @@ import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.asOPML
 import com.jocmp.capy.accounts.feedbin.FeedbinAccountDelegate
 import com.jocmp.capy.accounts.feedbin.FeedbinOkHttpClient
+import com.jocmp.capy.accounts.forAccount
 import com.jocmp.capy.accounts.local.LocalAccountDelegate
+import com.jocmp.capy.accounts.miniflux.MinifluxAccountDelegate
 import com.jocmp.capy.accounts.reader.buildReaderDelegate
 import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.articles.SortOrder
@@ -32,6 +34,7 @@ import com.jocmp.capy.persistence.SavedSearchRecords
 import com.jocmp.capy.persistence.TaggingRecords
 import com.jocmp.feedbinclient.Feedbin
 import kotlinx.coroutines.Dispatchers
+import com.jocmp.minifluxclient.Miniflux
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
@@ -68,8 +71,15 @@ data class Account(
             )
         )
 
+        Source.MINIFLUX -> MinifluxAccountDelegate(
+            database = database,
+            miniflux = Miniflux.forAccount(
+                path = cacheDirectory,
+                preferences = preferences
+            )
+        )
+
         Source.FRESHRSS,
-        Source.MINIFLUX,
         Source.READER -> buildReaderDelegate(
             source = source,
             database = database,

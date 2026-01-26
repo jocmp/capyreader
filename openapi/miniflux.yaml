@@ -1,0 +1,1361 @@
+openapi: 3.0.3
+info:
+  title: Miniflux API
+  description: API specification for Miniflux RSS reader
+  version: 2.0.0
+  contact:
+    url: https://miniflux.app
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+
+servers:
+  - url: https://miniflux.app/v1
+    description: Miniflux API v1
+
+security:
+  - BasicAuth: []
+  - ApiKeyAuth: []
+
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Authentication with username and password
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Auth-Token
+      description: API token authentication (preferred method since v2.0.21)
+
+  schemas:
+    Feed:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        user_id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        site_url:
+          type: string
+          format: uri
+        feed_url:
+          type: string
+          format: uri
+        checked_at:
+          type: string
+          format: date-time
+        etag_header:
+          type: string
+        last_modified_header:
+          type: string
+        parsing_error_message:
+          type: string
+        parsing_error_count:
+          type: integer
+        scraper_rules:
+          type: string
+        rewrite_rules:
+          type: string
+        crawler:
+          type: boolean
+        blocklist_rules:
+          type: string
+        keeplist_rules:
+          type: string
+        user_agent:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        disabled:
+          type: boolean
+        ignore_http_cache:
+          type: boolean
+        fetch_via_proxy:
+          type: boolean
+        category:
+          $ref: '#/components/schemas/Category'
+        icon:
+          $ref: '#/components/schemas/Icon'
+
+    FeedCreateRequest:
+      type: object
+      required:
+        - feed_url
+      properties:
+        feed_url:
+          type: string
+          format: uri
+        category_id:
+          type: integer
+          format: int64
+          description: Optional since v2.0.49
+        username:
+          type: string
+        password:
+          type: string
+        crawler:
+          type: boolean
+        user_agent:
+          type: string
+        scraper_rules:
+          type: string
+        rewrite_rules:
+          type: string
+        blocklist_rules:
+          type: string
+        keeplist_rules:
+          type: string
+        disabled:
+          type: boolean
+        ignore_http_cache:
+          type: boolean
+        fetch_via_proxy:
+          type: boolean
+
+    FeedCreateResponse:
+      type: object
+      properties:
+        feed_id:
+          type: integer
+          format: int64
+
+    FeedUpdateRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        site_url:
+          type: string
+          format: uri
+        feed_url:
+          type: string
+          format: uri
+        scraper_rules:
+          type: string
+        rewrite_rules:
+          type: string
+        blocklist_rules:
+          type: string
+        keeplist_rules:
+          type: string
+        crawler:
+          type: boolean
+        user_agent:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        category_id:
+          type: integer
+          format: int64
+        disabled:
+          type: boolean
+        ignore_http_cache:
+          type: boolean
+        fetch_via_proxy:
+          type: boolean
+
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        user_id:
+          type: integer
+          format: int64
+        feed_count:
+          type: integer
+          description: Only included when ?counts=true query parameter is used
+
+    CategoryCreateRequest:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+
+    CategoryUpdateRequest:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+
+    Entry:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        user_id:
+          type: integer
+          format: int64
+        feed_id:
+          type: integer
+          format: int64
+        status:
+          type: string
+          enum: [read, unread, removed]
+        hash:
+          type: string
+        title:
+          type: string
+        url:
+          type: string
+          format: uri
+        comments_url:
+          type: string
+          format: uri
+        published_at:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        changed_at:
+          type: string
+          format: date-time
+        content:
+          type: string
+          description: HTML content
+        author:
+          type: string
+        share_code:
+          type: string
+        starred:
+          type: boolean
+        reading_time:
+          type: integer
+          description: Estimated reading time in minutes
+        enclosures:
+          type: array
+          items:
+            $ref: '#/components/schemas/Enclosure'
+        feed:
+          $ref: '#/components/schemas/Feed'
+
+    EntryUpdateRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        content:
+          type: string
+
+    EntriesUpdateRequest:
+      type: object
+      required:
+        - entry_ids
+        - status
+      properties:
+        entry_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+        status:
+          type: string
+          enum: [read, unread, removed]
+
+    EntryResultSet:
+      type: object
+      properties:
+        total:
+          type: integer
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/Entry'
+
+    FetchContentResponse:
+      type: object
+      properties:
+        content:
+          type: string
+          description: HTML content
+
+    Enclosure:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        user_id:
+          type: integer
+          format: int64
+        entry_id:
+          type: integer
+          format: int64
+        url:
+          type: string
+          format: uri
+        mime_type:
+          type: string
+        size:
+          type: integer
+          format: int64
+
+    Icon:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        data:
+          type: string
+          description: Base64 encoded icon data
+        mime_type:
+          type: string
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        username:
+          type: string
+        password:
+          type: string
+          writeOnly: true
+        is_admin:
+          type: boolean
+        theme:
+          type: string
+        language:
+          type: string
+        timezone:
+          type: string
+        entry_sorting_direction:
+          type: string
+          enum: [asc, desc]
+        stylesheet:
+          type: string
+        google_id:
+          type: string
+        openid_connect_id:
+          type: string
+        entries_per_page:
+          type: integer
+        keyboard_shortcuts:
+          type: boolean
+        show_reading_time:
+          type: boolean
+        entry_swipe:
+          type: boolean
+        last_login_at:
+          type: string
+          format: date-time
+
+    UserCreateRequest:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        google_id:
+          type: string
+        openid_connect_id:
+          type: string
+        is_admin:
+          type: boolean
+
+    UserUpdateRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        theme:
+          type: string
+        language:
+          type: string
+        timezone:
+          type: string
+        entry_sorting_direction:
+          type: string
+          enum: [asc, desc]
+        stylesheet:
+          type: string
+        google_id:
+          type: string
+        openid_connect_id:
+          type: string
+        entries_per_page:
+          type: integer
+        is_admin:
+          type: boolean
+        keyboard_shortcuts:
+          type: boolean
+        show_reading_time:
+          type: boolean
+        entry_swipe:
+          type: boolean
+
+    DiscoverRequest:
+      type: object
+      required:
+        - url
+      properties:
+        url:
+          type: string
+          format: uri
+
+    Subscription:
+      type: object
+      properties:
+        title:
+          type: string
+        url:
+          type: string
+          format: uri
+        type:
+          type: string
+
+    VersionResponse:
+      type: object
+      properties:
+        version:
+          type: string
+        commit:
+          type: string
+        build_date:
+          type: string
+
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+
+    Error:
+      type: object
+      properties:
+        error_message:
+          type: string
+
+  parameters:
+    feedID:
+      name: feedID
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+      description: Feed ID
+
+    categoryID:
+      name: categoryID
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+      description: Category ID
+
+    entryID:
+      name: entryID
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+      description: Entry ID
+
+    iconID:
+      name: iconID
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+      description: Icon ID
+
+    userID:
+      name: userID
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+      description: User ID
+
+    status:
+      name: status
+      in: query
+      schema:
+        type: string
+        enum: [read, unread, removed]
+      description: Filter entries by status
+
+    offset:
+      name: offset
+      in: query
+      schema:
+        type: integer
+        minimum: 0
+      description: Pagination offset
+
+    limit:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+      description: Number of items to return
+
+    order:
+      name: order
+      in: query
+      schema:
+        type: string
+        enum: [id, status, published_at, category_title, category_id]
+        default: id
+      description: Sort field
+
+    direction:
+      name: direction
+      in: query
+      schema:
+        type: string
+        enum: [asc, desc]
+        default: asc
+      description: Sort direction
+
+    before:
+      name: before
+      in: query
+      schema:
+        type: integer
+        format: int64
+      description: Unix timestamp to filter entries before this date
+
+    after:
+      name: after
+      in: query
+      schema:
+        type: integer
+        format: int64
+      description: Unix timestamp to filter entries after this date
+
+    before_entry_id:
+      name: before_entry_id
+      in: query
+      schema:
+        type: integer
+        format: int64
+      description: Filter entries before this entry ID
+
+    after_entry_id:
+      name: after_entry_id
+      in: query
+      schema:
+        type: integer
+        format: int64
+      description: Filter entries after this entry ID
+
+    starred:
+      name: starred
+      in: query
+      schema:
+        type: boolean
+      description: Filter starred entries
+
+    search:
+      name: search
+      in: query
+      schema:
+        type: string
+      description: Full-text search query
+
+    categoryIDQuery:
+      name: category_id
+      in: query
+      schema:
+        type: integer
+        format: int64
+      description: Filter entries by category ID
+
+    counts:
+      name: counts
+      in: query
+      schema:
+        type: boolean
+      description: Include feed counts in category response
+
+    update_content:
+      name: update_content
+      in: query
+      schema:
+        type: boolean
+        default: false
+      description: Update entry content in database
+
+paths:
+  # Health Check
+  /healthcheck:
+    get:
+      summary: Health check endpoint
+      tags:
+        - System
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: OK
+
+  # Version
+  /version:
+    get:
+      summary: Get version information
+      tags:
+        - System
+      responses:
+        '200':
+          description: Version information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionResponse'
+
+  # Current User
+  /me:
+    get:
+      summary: Get current authenticated user
+      tags:
+        - Users
+      responses:
+        '200':
+          description: Current user information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  # Users
+  /users:
+    get:
+      summary: Get all users
+      description: Admin only
+      tags:
+        - Users
+      responses:
+        '200':
+          description: List of all users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '403':
+          description: Forbidden - Admin access required
+
+    post:
+      summary: Create a new user
+      description: Admin only
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreateRequest'
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - Admin access required
+
+  /users/{userID}:
+    parameters:
+      - $ref: '#/components/parameters/userID'
+
+    get:
+      summary: Get user by ID
+      description: Admin only
+      tags:
+        - Users
+      responses:
+        '200':
+          description: User information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '403':
+          description: Forbidden - Admin access required
+        '404':
+          description: User not found
+
+    put:
+      summary: Update user
+      description: Admin only
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdateRequest'
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - Admin access required
+        '404':
+          description: User not found
+
+    delete:
+      summary: Delete user
+      description: Admin only
+      tags:
+        - Users
+      responses:
+        '204':
+          description: User deleted successfully
+        '403':
+          description: Forbidden - Admin access required
+        '404':
+          description: User not found
+
+  # Categories
+  /categories:
+    get:
+      summary: Get all categories
+      tags:
+        - Categories
+      parameters:
+        - $ref: '#/components/parameters/counts'
+      responses:
+        '200':
+          description: List of categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+
+    post:
+      summary: Create a new category
+      tags:
+        - Categories
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryCreateRequest'
+      responses:
+        '201':
+          description: Category created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /categories/{categoryID}:
+    parameters:
+      - $ref: '#/components/parameters/categoryID'
+
+    get:
+      summary: Get category by ID
+      tags:
+        - Categories
+      responses:
+        '200':
+          description: Category information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        '404':
+          description: Category not found
+
+    put:
+      summary: Update category
+      tags:
+        - Categories
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryUpdateRequest'
+      responses:
+        '200':
+          description: Category updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Category not found
+
+    delete:
+      summary: Delete category
+      tags:
+        - Categories
+      responses:
+        '204':
+          description: Category deleted successfully
+        '404':
+          description: Category not found
+
+  /categories/{categoryID}/feeds:
+    parameters:
+      - $ref: '#/components/parameters/categoryID'
+
+    get:
+      summary: Get all feeds in a category
+      tags:
+        - Categories
+        - Feeds
+      responses:
+        '200':
+          description: List of feeds in category
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Feed'
+        '404':
+          description: Category not found
+
+  /categories/{categoryID}/entries:
+    parameters:
+      - $ref: '#/components/parameters/categoryID'
+
+    get:
+      summary: Get entries for a category
+      tags:
+        - Categories
+        - Entries
+      parameters:
+        - $ref: '#/components/parameters/status'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/order'
+        - $ref: '#/components/parameters/direction'
+        - $ref: '#/components/parameters/before'
+        - $ref: '#/components/parameters/after'
+        - $ref: '#/components/parameters/before_entry_id'
+        - $ref: '#/components/parameters/after_entry_id'
+        - $ref: '#/components/parameters/starred'
+        - $ref: '#/components/parameters/search'
+      responses:
+        '200':
+          description: Paginated list of entries
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntryResultSet'
+        '404':
+          description: Category not found
+
+  /categories/{categoryID}/mark-all-as-read:
+    parameters:
+      - $ref: '#/components/parameters/categoryID'
+
+    put:
+      summary: Mark all entries in category as read
+      tags:
+        - Categories
+      responses:
+        '204':
+          description: Entries marked as read successfully
+        '404':
+          description: Category not found
+
+  # Feeds
+  /feeds:
+    get:
+      summary: Get all feeds
+      tags:
+        - Feeds
+      responses:
+        '200':
+          description: List of feeds
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Feed'
+
+    post:
+      summary: Create a new feed
+      tags:
+        - Feeds
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FeedCreateRequest'
+      responses:
+        '201':
+          description: Feed created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeedCreateResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /feeds/{feedID}:
+    parameters:
+      - $ref: '#/components/parameters/feedID'
+
+    get:
+      summary: Get feed by ID
+      tags:
+        - Feeds
+      responses:
+        '200':
+          description: Feed information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feed'
+        '404':
+          description: Feed not found
+
+    put:
+      summary: Update feed
+      tags:
+        - Feeds
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FeedUpdateRequest'
+      responses:
+        '200':
+          description: Feed updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feed'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Feed not found
+
+    delete:
+      summary: Delete feed
+      tags:
+        - Feeds
+      responses:
+        '204':
+          description: Feed deleted successfully
+        '404':
+          description: Feed not found
+
+  /feeds/{feedID}/icon:
+    parameters:
+      - $ref: '#/components/parameters/feedID'
+
+    get:
+      summary: Get feed icon by feed ID
+      tags:
+        - Feeds
+        - Icons
+      responses:
+        '200':
+          description: Feed icon
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Icon'
+        '404':
+          description: Icon not found
+
+  /feeds/{feedID}/refresh:
+    parameters:
+      - $ref: '#/components/parameters/feedID'
+
+    put:
+      summary: Refresh a feed
+      tags:
+        - Feeds
+      responses:
+        '204':
+          description: Feed refresh triggered successfully
+        '404':
+          description: Feed not found
+
+  /feeds/{feedID}/mark-all-as-read:
+    parameters:
+      - $ref: '#/components/parameters/feedID'
+
+    put:
+      summary: Mark all entries in feed as read
+      tags:
+        - Feeds
+      responses:
+        '204':
+          description: Entries marked as read successfully
+        '404':
+          description: Feed not found
+
+  /feeds/{feedID}/entries:
+    parameters:
+      - $ref: '#/components/parameters/feedID'
+
+    get:
+      summary: Get entries for a feed
+      tags:
+        - Feeds
+        - Entries
+      parameters:
+        - $ref: '#/components/parameters/status'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/order'
+        - $ref: '#/components/parameters/direction'
+        - $ref: '#/components/parameters/before'
+        - $ref: '#/components/parameters/after'
+        - $ref: '#/components/parameters/before_entry_id'
+        - $ref: '#/components/parameters/after_entry_id'
+        - $ref: '#/components/parameters/starred'
+        - $ref: '#/components/parameters/search'
+      responses:
+        '200':
+          description: Paginated list of entries
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntryResultSet'
+        '404':
+          description: Feed not found
+
+  /feeds/{feedID}/entries/{entryID}:
+    parameters:
+      - $ref: '#/components/parameters/feedID'
+      - $ref: '#/components/parameters/entryID'
+
+    get:
+      summary: Get a specific entry from a feed
+      tags:
+        - Feeds
+        - Entries
+      responses:
+        '200':
+          description: Entry information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entry'
+        '404':
+          description: Entry not found
+
+  # Entries
+  /entries:
+    get:
+      summary: Get all entries
+      tags:
+        - Entries
+      parameters:
+        - $ref: '#/components/parameters/status'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/order'
+        - $ref: '#/components/parameters/direction'
+        - $ref: '#/components/parameters/before'
+        - $ref: '#/components/parameters/after'
+        - $ref: '#/components/parameters/before_entry_id'
+        - $ref: '#/components/parameters/after_entry_id'
+        - $ref: '#/components/parameters/starred'
+        - $ref: '#/components/parameters/search'
+        - $ref: '#/components/parameters/categoryIDQuery'
+      responses:
+        '200':
+          description: Paginated list of entries
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntryResultSet'
+
+    put:
+      summary: Update multiple entries
+      tags:
+        - Entries
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EntriesUpdateRequest'
+      responses:
+        '204':
+          description: Entries updated successfully
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /entries/{entryID}:
+    parameters:
+      - $ref: '#/components/parameters/entryID'
+
+    get:
+      summary: Get entry by ID
+      tags:
+        - Entries
+      responses:
+        '200':
+          description: Entry information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entry'
+        '404':
+          description: Entry not found
+
+    put:
+      summary: Update entry
+      tags:
+        - Entries
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EntryUpdateRequest'
+      responses:
+        '201':
+          description: Entry updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entry'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Entry not found
+
+  /entries/{entryID}/bookmark:
+    parameters:
+      - $ref: '#/components/parameters/entryID'
+
+    put:
+      summary: Toggle bookmark status
+      tags:
+        - Entries
+      responses:
+        '204':
+          description: Bookmark toggled successfully
+        '404':
+          description: Entry not found
+
+  /entries/{entryID}/save:
+    parameters:
+      - $ref: '#/components/parameters/entryID'
+
+    post:
+      summary: Save entry to third-party service
+      tags:
+        - Entries
+      responses:
+        '202':
+          description: Save request accepted
+        '404':
+          description: Entry not found
+
+  /entries/{entryID}/fetch-content:
+    parameters:
+      - $ref: '#/components/parameters/entryID'
+
+    get:
+      summary: Fetch original article content
+      tags:
+        - Entries
+      parameters:
+        - $ref: '#/components/parameters/update_content'
+      responses:
+        '200':
+          description: Fetched content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FetchContentResponse'
+        '404':
+          description: Entry not found
+
+  # Icons
+  /icons/{iconID}:
+    parameters:
+      - $ref: '#/components/parameters/iconID'
+
+    get:
+      summary: Get icon by ID
+      tags:
+        - Icons
+      responses:
+        '200':
+          description: Icon data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Icon'
+        '404':
+          description: Icon not found
+
+  # OPML
+  /export:
+    get:
+      summary: Export feeds as OPML
+      tags:
+        - OPML
+      responses:
+        '200':
+          description: OPML export
+          content:
+            application/xml:
+              schema:
+                type: string
+
+  /import:
+    post:
+      summary: Import feeds from OPML
+      tags:
+        - OPML
+      requestBody:
+        required: true
+        content:
+          application/xml:
+            schema:
+              type: string
+      responses:
+        '201':
+          description: Feeds imported successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  # Discovery
+  /discover:
+    post:
+      summary: Discover feeds at a URL
+      tags:
+        - Discovery
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DiscoverRequest'
+      responses:
+        '200':
+          description: List of discovered subscriptions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subscription'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+tags:
+  - name: System
+    description: System information and health checks
+  - name: Users
+    description: User management operations
+  - name: Categories
+    description: Category/folder management
+  - name: Feeds
+    description: Feed/subscription management
+  - name: Entries
+    description: Article/entry operations
+  - name: Icons
+    description: Feed icon operations
+  - name: OPML
+    description: OPML import and export
+  - name: Discovery
+    description: Feed discovery

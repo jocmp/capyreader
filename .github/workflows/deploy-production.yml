@@ -21,6 +21,8 @@ jobs:
         with:
           distribution: "zulu"
           java-version: "21"
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
       - name: Setup build dependencies
         run: make deps
       - name: Configure Git user
