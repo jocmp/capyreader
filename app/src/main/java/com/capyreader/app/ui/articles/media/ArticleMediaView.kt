@@ -51,7 +51,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
-import coil.request.ImageRequest
+import coil3.request.ImageRequest
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.MediaItem
 import com.capyreader.app.preferences.AppPreferences
@@ -68,7 +68,7 @@ import com.capyreader.app.ui.theme.findStatusBarColor
 import com.capyreader.app.ui.theme.showAppearanceLightStatusBars
 import kotlinx.coroutines.launch
 import me.saket.telephoto.zoomable.ZoomSpec
-import me.saket.telephoto.zoomable.coil.ZoomableAsyncImage
+import me.saket.telephoto.zoomable.coil3.ZoomableAsyncImage
 import me.saket.telephoto.zoomable.rememberZoomableImageState
 import me.saket.telephoto.zoomable.rememberZoomableState
 import org.koin.compose.koinInject

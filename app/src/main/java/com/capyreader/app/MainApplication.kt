@@ -3,11 +3,13 @@ package com.capyreader.app
 import android.app.Application
 import android.os.Build
 import androidx.glance.appwidget.GlanceAppWidgetManager
-import coil.ImageLoader
-import coil.ImageLoaderFactory
-import coil.decode.ImageDecoderDecoder
-import coil.decode.SvgDecoder
-import coil.decode.VideoFrameDecoder
+import coil3.ImageLoader
+import coil3.PlatformContext
+import coil3.SingletonImageLoader
+import coil3.gif.AnimatedImageDecoder
+import coil3.network.okhttp.OkHttpNetworkFetcherFactory
+import coil3.svg.SvgDecoder
+import coil3.video.VideoFrameDecoder
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.widget.HeadlinesWidgetReceiver
 import com.google.android.material.color.DynamicColors
@@ -19,7 +21,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.workmanager.koin.workManagerFactory
 import org.koin.core.context.startKoin
 
-class MainApplication : Application(), ImageLoaderFactory {
+class MainApplication : Application(), SingletonImageLoader.Factory {
     override fun onCreate() {
         super.onCreate()
         DynamicColors.applyToActivitiesIfAvailable(this)
@@ -37,15 +39,13 @@ class MainApplication : Application(), ImageLoaderFactory {
        loadWidgetPreview()
     }
 
-    override fun newImageLoader(): ImageLoader {
-        return ImageLoader.Builder(this)
+    override fun newImageLoader(context: PlatformContext): ImageLoader {
+        return ImageLoader.Builder(context)
             .components {
-                add(ImageDecoderDecoder.Factory())
+                add(OkHttpNetworkFetcherFactory(callFactory = { baseHttpClient() }))
+                add(AnimatedImageDecoder.Factory())
                 add(SvgDecoder.Factory())
                 add(VideoFrameDecoder.Factory())
-            }
-            .okHttpClient {
-                baseHttpClient()
             }
             .build()
     }
