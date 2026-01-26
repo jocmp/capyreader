@@ -189,7 +189,7 @@ fun FeedList(
                 FeedListDivider()
                 FeedGroupList(
                     type = FeedGroup.FOLDERS,
-                    title = stringResource(R.string.nav_headline_tags),
+                    title = stringResource(source.folderNavTitle)
                 ) {
                     folders.forEach { folder ->
                         FolderRow(
@@ -276,3 +276,10 @@ fun FeedListPreview() {
         }
     }
 }
+
+private val Source.folderNavTitle: Int
+    get() = if (this === Source.FRESHRSS) {
+        R.string.freshrss_nav_headline_categories
+    } else {
+        R.string.nav_headline_tags
+    }
