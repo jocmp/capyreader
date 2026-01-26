@@ -15,6 +15,8 @@ class AccountManager(
     private val preferenceStoreProvider: PreferenceStoreProvider,
     private val faviconFetcher: FaviconFetcher,
     private val clientCertManager: ClientCertManager,
+    private val userAgent: String,
+    private val acceptLanguage: String,
 ) {
     fun findByID(
         id: String,
@@ -92,6 +94,8 @@ class AccountManager(
             preferences = preferences,
             faviconFetcher = faviconFetcher,
             clientCertManager = clientCertManager,
+            userAgent = userAgent,
+            acceptLanguage = acceptLanguage,
         )
     }
 
