@@ -306,4 +306,5 @@
     <string name="audio_player_close">Fermer le lecteur</string>
     <string name="audio_player_skip_back">Retour arrière de 30 sec</string>
     <string name="audio_player_skip_forward">Avancer de 30 sec</string>
+    <string name="freshrss_nav_headline_categories">Catégories</string>
 </resources>

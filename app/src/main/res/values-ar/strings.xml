@@ -27,7 +27,7 @@
     <string name="article_view_mark_as_read">وضع علامة كمقروءة</string>
     <string name="refresh_manually_only">يدوياً</string>
     <string name="refresh_minutes">كل %1$d دقيقة</string>
-    <string name="refresh_feeds_menu_label">تحديث الموجز</string>
+    <string name="refresh_feeds_menu_label">حدِّث الموجز</string>
     <string name="nav_headline_tags">المجلدات</string>
     <string name="nav_headline_feeds">الموجز</string>
     <string name="nav_add_feed">أضف موجز</string>
@@ -228,12 +228,12 @@
     <string name="full_content_error_forbidden">تم حظر الجلب بواسطة الموقع</string>
     <string name="nav_headline_saved_searches">عمليات البحث</string>
     <string name="article_actions_copy_link">نسخ الرابط</string>
-    <string name="freshrss_article_actions_label">تصنيف</string>
-    <string name="freshrss_labels_sheet_title">التصنيفات</string>
-    <string name="freshrss_labels_new_label">تصنيف جديد</string>
-    <string name="freshrss_labels_create_dialog_title">تصنيف جديد</string>
-    <string name="freshrss_labels_create_dialog_label_name">اسم التصنيف</string>
-    <string name="freshrss_labels_create_dialog_save">حفظ</string>
+    <string name="freshrss_article_actions_label">تسمية</string>
+    <string name="freshrss_labels_sheet_title">التسميات</string>
+    <string name="freshrss_labels_new_label">تسمية جديدة</string>
+    <string name="freshrss_labels_create_dialog_title">تسمية جديدة</string>
+    <string name="freshrss_labels_create_dialog_label_name">اسم التسمية</string>
+    <string name="freshrss_labels_create_dialog_save">احفظ</string>
     <string name="freshrss_nav_headline_my_labels">تسمياتي</string>
     <string name="article_vertical_open_article_in_browser">افتح المقالة في المتصفح</string>
     <string name="feed_nav_drawer_title">الموجز</string>
@@ -309,4 +309,5 @@
     <string name="audio_player_close">أغلق المشغِّل</string>
     <string name="audio_player_skip_back">ارجع للخلف 30 ثانية</string>
     <string name="audio_player_skip_forward">تخطي للأمام 30 ثانية</string>
+    <string name="freshrss_nav_headline_categories">التصنيفات</string>
 </resources>
