@@ -17,6 +17,15 @@ internal fun decodeNumericEntities(text: String): String {
         } else {
             code.toIntOrNull()
         }
-        codePoint?.let { String(Character.toChars(it)) } ?: matchResult.value
+
+        if (codePoint != null && Character.isValidCodePoint(codePoint)) {
+            try {
+                String(Character.toChars(codePoint))
+            } catch (e: IllegalArgumentException) {
+                matchResult.value
+            }
+        } else {
+            matchResult.value
+        }
     }
 }
