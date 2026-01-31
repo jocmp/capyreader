@@ -20,6 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.capyreader.app.BuildConfig
 import com.capyreader.app.R
 import com.capyreader.app.setupCommonModules
 import com.capyreader.app.ui.CrashReporting
@@ -69,6 +70,12 @@ fun AddAccountView(
                     onSelectService,
                     source = Source.FRESHRSS
                 )
+                if (BuildConfig.BUILD_TYPE == "debug" || BuildConfig.BUILD_TYPE == "nightly") {
+                    SyncServiceRow(
+                        onSelectService,
+                        source = Source.MINIFLUX
+                    )
+                }
                 SyncServiceRow(
                     onSelectService,
                     source = Source.READER

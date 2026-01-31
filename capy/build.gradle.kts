@@ -66,6 +66,7 @@ dependencies {
     implementation(libs.okhttp.brotli)
     implementation(project(":feedbinclient"))
     implementation(project(":feedfinder"))
+    implementation(project(":minifluxclient"))
     implementation(project(":rssparser"))
     implementation(project(":readerclient"))
     testImplementation(kotlin("test"))
