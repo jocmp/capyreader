@@ -1,7 +1,7 @@
 [versions]
 androidx-paging = "3.3.6"
 media3 = "1.9.0"
-coil = "2.7.0"
+coil = "3.3.0"
 coroutines = "1.10.2"
 glance-material3 = "1.2.0-rc01"
 kotlin = "2.3.0"
@@ -47,10 +47,11 @@ androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 androidx-webkit = { module = "androidx.webkit:webkit", version = "1.15.0" }
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version = "2.11.0" }
-coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
-coil-gif = { module = "io.coil-kt:coil-gif", version.ref = "coil" }
-coil-svg = { module = "io.coil-kt:coil-svg", version.ref = "coil" }
-coil-video = { module = "io.coil-kt:coil-video", version.ref = "coil" }
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
+coil-gif = { module = "io.coil-kt.coil3:coil-gif", version.ref = "coil" }
+coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
+coil-svg = { module = "io.coil-kt.coil3:coil-svg", version.ref = "coil" }
+coil-video = { module = "io.coil-kt.coil3:coil-video", version.ref = "coil" }
 converter-scalars = { module = "com.squareup.retrofit2:converter-scalars", version.ref = "retrofit" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics", version = "20.0.4" }
 jsoup = { module = "org.jsoup:jsoup", version = "1.22.1" }
@@ -85,7 +86,7 @@ tests-mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk"
 tests-mockk-mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 tests-okhttp-mock = { module = "com.github.gmazzo.okhttp.mock:mock-client", version = "2.1.0" }
 zoomable = { module = "me.saket.telephoto:zoomable", version.ref = "zoomable" }
-zoomable-image-coil = { module = "me.saket.telephoto:zoomable-image-coil", version.ref = "zoomable" }
+zoomable-image-coil = { module = "me.saket.telephoto:zoomable-image-coil3", version.ref = "zoomable" }
 
 [plugins]
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

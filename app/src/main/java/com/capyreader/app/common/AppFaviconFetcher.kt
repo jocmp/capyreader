@@ -1,8 +1,8 @@
 package com.capyreader.app.common
 
 import android.content.Context
-import coil.imageLoader
-import coil.request.ImageRequest
+import coil3.imageLoader
+import coil3.request.ImageRequest
 import com.jocmp.capy.accounts.FaviconFetcher
 
 class AppFaviconFetcher(private val context: Context) : FaviconFetcher {
@@ -16,6 +16,6 @@ class AppFaviconFetcher(private val context: Context) : FaviconFetcher {
                     .build()
             )
 
-        return result.drawable != null
+        return result.image != null
     }
 }

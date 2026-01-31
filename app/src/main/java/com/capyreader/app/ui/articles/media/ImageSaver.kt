@@ -6,11 +6,10 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
-import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
-import coil.executeBlocking
-import coil.imageLoader
-import coil.request.ImageRequest
+import coil3.imageLoader
+import coil3.request.ImageRequest
+import coil3.toBitmap
 import com.capyreader.app.common.MD5
 import com.capyreader.app.common.externalImageCacheFile
 import com.capyreader.app.common.fileURI
@@ -86,11 +85,11 @@ object ImageSaver {
         return "${MD5.from(imageUrl)}.jpg"
     }
 
-    private fun createBitmap(imageUrl: String, context: Context): Bitmap? {
+    private suspend fun createBitmap(imageUrl: String, context: Context): Bitmap? {
         val imageRequest = ImageRequest.Builder(context)
             .data(imageUrl)
             .build()
 
-        return context.imageLoader.executeBlocking(imageRequest).drawable?.toBitmap()
+        return context.imageLoader.execute(imageRequest).image?.toBitmap()
     }
 }
