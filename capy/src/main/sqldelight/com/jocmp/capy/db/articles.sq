@@ -26,6 +26,17 @@ WHERE (article_statuses.read = :read OR :read IS NULL)
 AND (article_statuses.starred = :starred OR :starred IS NULL)
 GROUP BY articles.feed_id;
 
+countAllBySavedSearch:
+SELECT
+ saved_search_articles.saved_search_id,
+ COUNT(DISTINCT articles.id)
+FROM articles
+JOIN article_statuses ON articles.id = article_statuses.article_id
+JOIN saved_search_articles ON articles.id = saved_search_articles.article_id
+WHERE (article_statuses.read = :read OR :read IS NULL)
+AND (article_statuses.starred = :starred OR :starred IS NULL)
+GROUP BY saved_search_articles.saved_search_id;
+
 lastUpdatedAt:
 SELECT MAX(article_statuses.updated_at)
 FROM article_statuses;

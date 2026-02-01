@@ -340,6 +340,9 @@ data class Account(
     fun countAll(status: ArticleStatus) =
         articleRecords.countAll(status)
 
+    fun countAllBySavedSearch(status: ArticleStatus) =
+        articleRecords.countAllBySavedSearch(status)
+
     fun countAllByStatus(status: ArticleStatus): Flow<Long> {
         return articleRecords.byStatus.count(status).asFlow().mapToOne(Dispatchers.IO)
     }
