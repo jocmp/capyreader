@@ -157,6 +157,7 @@
     <string name="refresh_on_start">On start</string>
     <string name="empty_onboarding_title">No feeds yet</string>
     <string name="empty_onboarding_prompt">Start by adding a feed</string>
+    <string name="article_list_empty">Nothing here</string>
     <string name="article_style_options">Font style options</string>
     <string name="font_option_vollkorn" translatable="false">Vollkorn</string>
     <string name="font_option_atkinson_hyperlegible" translatable="false">Atkinson Hyperlegible</string>
