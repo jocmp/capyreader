@@ -1,6 +1,7 @@
 package com.jocmp.capy.articles
 
 import com.jocmp.capy.Article
+import com.jocmp.capy.common.escapingSpecialHTMLCharacters
 
 fun Article.enclosureHTML(): String {
     val images = imageEnclosureHTML()
@@ -22,8 +23,8 @@ fun Article.audioEnclosureHTML(
     return buildString {
         audioItems.forEach { enclosure ->
             val durationFormatted =
-                enclosure.itunesDurationSeconds?.let { formatDuration(it) } ?: ""
-            val artworkUrl = enclosure.itunesImage ?: ""
+                enclosure.itunesDurationSeconds?.let { formatDuration(it) }.orEmpty()
+            val artworkUrl = enclosure.itunesImage.orEmpty()
             val rawUrl = enclosure.url.toString()
             val escapedTitle = title.escapeForJs()
             val escapedFeedName = feedName.escapeForJs()
@@ -52,7 +53,14 @@ fun Article.audioEnclosureHTML(
 }
 
 private fun Article.imageEnclosureHTML(): String {
-    val images = enclosures.filter { it.type.startsWith("image/") }
+    val images = enclosures
+        .filter { it.type.startsWith("image/") }
+        .filterNot { enclosure ->
+            val url = enclosure.url.toString()
+
+            content.contains(url) ||
+                    content.contains(url.escapingSpecialHTMLCharacters)
+        }
 
     if (images.isEmpty()) {
         return ""

@@ -88,9 +88,67 @@ class ArticleEnclosuresExtTest {
         assertContains(html, "&quot;Episode&quot;")
     }
 
+    @Test
+    fun `enclosureHTML excludes image enclosures already present in content`() {
+        val imageEnclosure = Enclosure(
+            url = URL("https://example.com/image.jpg"),
+            type = "image/jpeg",
+            itunesDurationSeconds = null,
+            itunesImage = null
+        )
+
+        val article = createArticle(
+            contentHTML = """<p>Text</p><img src="https://example.com/image.jpg">""",
+            enclosures = listOf(imageEnclosure)
+        )
+
+        val html = article.enclosureHTML()
+
+        assertEquals("", html)
+    }
+
+    @Test
+    fun `enclosureHTML excludes image enclosures with HTML-encoded URLs in content`() {
+        val imageEnclosure = Enclosure(
+            url = URL("https://example.com/image.jpg?io=1&width=1000"),
+            type = "image/jpeg",
+            itunesDurationSeconds = null,
+            itunesImage = null
+        )
+
+        val article = createArticle(
+            contentHTML = """<img src="https://example.com/image.jpg?io=1&amp;width=1000">""",
+            enclosures = listOf(imageEnclosure)
+        )
+
+        val html = article.enclosureHTML()
+
+        assertEquals("", html)
+    }
+
+    @Test
+    fun `enclosureHTML includes image enclosures not present in content`() {
+        val imageEnclosure = Enclosure(
+            url = URL("https://example.com/other.jpg"),
+            type = "image/jpeg",
+            itunesDurationSeconds = null,
+            itunesImage = null
+        )
+
+        val article = createArticle(
+            contentHTML = """<p>Text</p><img src="https://example.com/image.jpg">""",
+            enclosures = listOf(imageEnclosure)
+        )
+
+        val html = article.enclosureHTML()
+
+        assertContains(html, "https://example.com/other.jpg")
+    }
+
     private fun createArticle(
         title: String = "Test Article",
         feedName: String = "Test Feed",
+        contentHTML: String = "<p>Content</p>",
         enclosures: List<Enclosure> = emptyList(),
     ): Article {
         return Article(
@@ -98,7 +156,7 @@ class ArticleEnclosuresExtTest {
             feedID = "feed-1",
             title = title,
             author = null,
-            contentHTML = "<p>Content</p>",
+            contentHTML = contentHTML,
             url = URL("https://example.com/article"),
             summary = "Summary",
             imageURL = null,
