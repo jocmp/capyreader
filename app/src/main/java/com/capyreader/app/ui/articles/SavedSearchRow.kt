@@ -14,6 +14,7 @@ fun SavedSearchRow(
 ) {
     DrawerItem(
         label = { ListTitle(savedSearch.name) },
+        badge = { CountBadge(count = savedSearch.count) },
         selected = selected,
         onClick = {
             onSelect(savedSearch)

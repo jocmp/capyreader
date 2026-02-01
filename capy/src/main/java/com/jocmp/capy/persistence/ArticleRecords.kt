@@ -237,6 +237,20 @@ internal class ArticleRecords internal constructor(
             }
     }
 
+    fun countAllBySavedSearch(status: ArticleStatus): Flow<Map<String, Long>> {
+        val (read, starred) = status.forCounts
+
+        return database.articlesQueries.countAllBySavedSearch(
+            read = read,
+            starred = starred,
+        )
+            .asFlow()
+            .mapToList(Dispatchers.IO)
+            .map { list ->
+                list.associate { it.saved_search_id to it.COUNT }
+            }
+    }
+
     fun countUnread(
         filter: ArticleFilter,
         query: String?,
