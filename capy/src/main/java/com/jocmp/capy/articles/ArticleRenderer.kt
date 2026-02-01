@@ -15,7 +15,6 @@ class ArticleRenderer(
     private val titleFollowsBodyFont: Preference<Boolean>,
     private val hideTopMargin: Preference<Boolean>,
     private val enableHorizontalScroll: Preference<Boolean>,
-    private val enableAudioPlayer: Preference<Boolean>,
     private val audioPlayerLabels: AudioPlayerLabels = AudioPlayerLabels(),
 ) {
     private val template by lazy {
@@ -76,14 +75,10 @@ class ArticleRenderer(
         return if (article.parseFullContent) {
             parseHtml(article, hideImages)
         } else {
-            val audioEnclosures = if (enableAudioPlayer.get()) {
-                article.audioEnclosureHTML(
-                    playLabel = audioPlayerLabels.play,
-                    pauseLabel = audioPlayerLabels.pause,
-                )
-            } else {
-                ""
-            }
+            val audioEnclosures = article.audioEnclosureHTML(
+                playLabel = audioPlayerLabels.play,
+                pauseLabel = audioPlayerLabels.pause,
+            )
             val otherEnclosures = article.enclosureHTML()
             audioEnclosures + article.content + otherEnclosures + postProcessScript(article, hideImages)
         }
