@@ -309,4 +309,5 @@
     <string name="audio_player_close">Chiudi lettore</string>
     <string name="audio_player_skip_back">Torna indietro di 30 secondi</string>
     <string name="audio_player_skip_forward">Avanti veloce di 30 secondi</string>
+    <string name="freshrss_nav_headline_categories">Categorie</string>
 </resources>
