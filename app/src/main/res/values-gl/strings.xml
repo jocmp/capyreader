@@ -109,8 +109,8 @@
     <string name="image_preview_label">Vista previa de imaxes</string>
     <string name="settings_article_list_feed_icons">Iconas das canles</string>
     <string name="settings_article_list_summary">Resumo</string>
-    <string name="settings_option_full_content_title">Fixar opción contido completo</string>
-    <string name="settings_option_full_content_subtitle">Lembrar a opción de cargar o contido completo do artigo</string>
+    <string name="settings_option_full_content_title">Lembrar opción Contido completo</string>
+    <string name="settings_option_full_content_subtitle">Para a canle, lembrar que queres o artigo completo</string>
     <string name="refresh_on_start">Ao inicio</string>
     <string name="empty_onboarding_title">Aínda non hai canles</string>
     <string name="empty_onboarding_prompt">Engade unha canle para comezar</string>
@@ -302,4 +302,6 @@
     <string name="audio_player_close">Fechar reprodutor</string>
     <string name="audio_player_skip_back">Recuar 30 segundos</string>
     <string name="audio_player_skip_forward">Avanzar 30 segundos</string>
+    <string name="freshrss_nav_headline_categories">Categorías</string>
+    <string name="article_list_empty">Nada por aquí</string>
 </resources>
