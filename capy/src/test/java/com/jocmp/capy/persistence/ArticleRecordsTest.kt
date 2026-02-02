@@ -11,8 +11,10 @@ import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.ArticleFixture
 import com.jocmp.capy.fixtures.FeedFixture
+import com.jocmp.capy.fixtures.SavedSearchFixture
 import com.jocmp.capy.reload
 import com.jocmp.capy.repeated
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -588,6 +590,33 @@ class ArticleRecordsTest {
         ).firstOrNull()
 
         assertEquals(expected = 2, actual = count)
+    }
+
+    @Test
+    fun countAllBySavedSearch() = runTest {
+        val savedSearchFixture = SavedSearchFixture(database)
+        val savedSearchRecords = SavedSearchRecords(database)
+
+        val firstSearch = savedSearchFixture.create()
+        val secondSearch = savedSearchFixture.create()
+
+        val firstSearchArticles = 3.repeated { articleFixture.create(read = false) }
+        val secondSearchArticles = 2.repeated { articleFixture.create(read = false) }
+
+        firstSearchArticles.forEach { article ->
+            savedSearchRecords.upsertArticle(articleID = article.id, savedSearchID = firstSearch.id)
+        }
+        secondSearchArticles.forEach { article ->
+            savedSearchRecords.upsertArticle(
+                articleID = article.id,
+                savedSearchID = secondSearch.id
+            )
+        }
+
+        val counts = articleRecords.countAllBySavedSearch(ArticleStatus.UNREAD).first()
+
+        assertEquals(expected = 3, actual = counts[firstSearch.id])
+        assertEquals(expected = 2, actual = counts[secondSearch.id])
     }
 }
 

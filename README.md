@@ -25,9 +25,11 @@ Capy Reader is free across all sources. It is available for devices running Andr
 
 ## Reporting a bug
 
-Bug reports are always welcome and are my top priority. Please search discussions and issues to make sure the bug is new and hasn't been reported yet.
+Bug reports are always welcome and are a top priority. Please search the [discussions](https://github.com/jocmp/capyreader/discussions) first and issues to make sure the bug is new and hasn't been reported yet.
 
-If you're in doubt or run into an unreported issue, let me know by submitting a [bug report](https://github.com/jocmp/capyreader/discussions/new?category=bugs).
+If you're in doubt or run into an unreported issue, go ahead and submit a bug report. Please include details like app version, OS version, and steps to reproduce the bug. Screenshots are also useful!
+
+[Report a bug](https://github.com/jocmp/capyreader/discussions/new?category=bugs)
 
 ## Feature Requests
 
