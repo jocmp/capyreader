@@ -267,6 +267,22 @@ window.addEventListener("DOMContentLoaded", () => {
   cleanEmbeds();
 });
 
+/**
+ * @param {MessageEvent} event
+ */
+function handleBlueskyEmbedResize(event) {
+  if (event.origin !== "https://embed.bsky.app") return;
+  if (!event.data || typeof event.data.height !== "number") return;
+
+  document.querySelectorAll("iframe").forEach((iframe) => {
+    if (iframe.contentWindow === event.source) {
+      iframe.style.height = event.data.height + "px";
+    }
+  });
+}
+
+window.addEventListener("message", handleBlueskyEmbedResize);
+
 /** @type {string | null} */
 let currentPlayingUrl = null;
 
