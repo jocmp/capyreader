@@ -81,6 +81,12 @@ a {
   }
 }
 
+blockquote {
+  margin: 1em 0;
+  padding: 0.25em 0 0.25em 1em;
+  border-left: 2px solid var(--color-on-surface-variant);
+}
+
 code,
 pre {
   background: var(--color-surface-container);
@@ -164,6 +170,7 @@ figure {
 iframe {
   max-width: 100%;
   margin: 0 auto;
+  border: 0;
 
   &[src*="youtube-nocookie.com"],
   &[src*="youtube.com"],
@@ -171,7 +178,6 @@ iframe {
     background-color: #000000;
     width: 100%;
     aspect-ratio: 16 / 9;
-    border: 0;
     border-radius: var(--corner-radius);
   }
 }
