@@ -308,4 +308,6 @@
     <string name="audio_player_close">Sulge meediamängija</string>
     <string name="audio_player_skip_back">Keri 30 sekundit tagasi</string>
     <string name="audio_player_skip_forward">Keri 30 sekundit edasi</string>
+    <string name="freshrss_nav_headline_categories">Kategooriad</string>
+    <string name="article_list_empty">Siin pole mitte midagi</string>
 </resources>
