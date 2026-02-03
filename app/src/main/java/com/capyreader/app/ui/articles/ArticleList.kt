@@ -53,7 +53,7 @@ fun ArticleList(
     val localDensity = LocalDensity.current
     var listHeight by remember { mutableStateOf(0.dp) }
 
-    if (articles.itemCount == 0) {
+    if (articles.loadState.isIdle && articles.itemCount == 0) {
         ArticleListEmptyView()
         return
     }
