@@ -49,7 +49,7 @@ private fun buildPrompt(source: Source): SignupPrompt? {
             link = "https://freshrss.org/"
         )
 
-        Source.MINIFLUX -> SignupPrompt(
+        Source.MINIFLUX, Source.MINIFLUX_TOKEN -> SignupPrompt(
             text = stringResource(R.string.add_account_miniflux_signup_prompt),
             linkText = stringResource(R.string.add_account_miniflux_signup_link_text),
             link = "https://miniflux.app/"

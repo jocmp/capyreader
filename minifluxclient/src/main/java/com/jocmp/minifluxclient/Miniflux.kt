@@ -159,5 +159,28 @@ interface Miniflux {
                 false
             }
         }
+
+        suspend fun verifyToken(
+            token: String,
+            baseURL: String
+        ): Boolean {
+            val client = OkHttpClient.Builder()
+                .addInterceptor { chain ->
+                    val request = chain.request().newBuilder()
+                        .header("X-Auth-Token", token)
+                        .build()
+                    chain.proceed(request)
+                }
+                .build()
+
+            val miniflux = create(client, baseURL)
+
+            return try {
+                val response = miniflux.me()
+                response.isSuccessful
+            } catch (_: Exception) {
+                false
+            }
+        }
     }
 }

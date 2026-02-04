@@ -8,6 +8,6 @@ val Source.titleKey: Int
         Source.FEEDBIN -> R.string.account_source_feedbin
         Source.FRESHRSS -> R.string.account_source_freshrss
         Source.LOCAL -> R.string.account_source_local
-        Source.MINIFLUX -> R.string.account_source_miniflux
+        Source.MINIFLUX, Source.MINIFLUX_TOKEN -> R.string.account_source_miniflux
         Source.READER -> R.string.account_source_reader
     }

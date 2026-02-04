@@ -69,7 +69,7 @@ private fun buildItem(source: Source): SourceModel {
                 subtitle = stringResource(R.string.add_account_freshrss_subtitle),
             )
 
-        Source.MINIFLUX ->
+        Source.MINIFLUX, Source.MINIFLUX_TOKEN ->
             SourceModel(
                 title = stringResource(source.titleKey),
                 iconID = R.drawable.miniflux_logo,

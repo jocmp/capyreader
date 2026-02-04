@@ -26,10 +26,11 @@ interface Credentials {
         ): Credentials {
             return when (source) {
                 Source.FEEDBIN -> FeedbinCredentials(username, password)
-                Source.MINIFLUX -> MinifluxCredentials(
+                Source.MINIFLUX, Source.MINIFLUX_TOKEN -> MinifluxCredentials(
                     username = username,
                     secret = password,
-                    url = normalizeURL(url)
+                    url = normalizeURL(url),
+                    source = source
                 )
                 Source.FRESHRSS,
                 Source.READER -> ReaderCredentials(

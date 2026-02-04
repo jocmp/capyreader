@@ -26,6 +26,7 @@ fun IconDropdown(
     expanded: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     colors: IconButtonColors = IconButtonDefaults.iconButtonColors(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
@@ -38,14 +39,20 @@ fun IconDropdown(
     Box(
         modifier = modifier
             .background(color = colors.containerColor)
-            .clickable(
-                onClick = onClick,
-                role = Role.Button,
-                interactionSource = interactionSource,
-                indication = ripple(
-                    bounded = false,
-                    radius = size / 2
-                )
+            .then(
+                if (enabled) {
+                    Modifier.clickable(
+                        onClick = onClick,
+                        role = Role.Button,
+                        interactionSource = interactionSource,
+                        indication = ripple(
+                            bounded = false,
+                            radius = size / 2
+                        )
+                    )
+                } else {
+                    Modifier
+                }
             ),
         contentAlignment = Alignment.Center
     ) {
