@@ -196,7 +196,7 @@
     <string name="settings_confirm_mark_all_read">Potvrdit označení všeho jako přečtené</string>
     <string name="auth_fields_api_url">Server</string>
     <string name="settings_section_account_server">Server</string>
-    <string name="account_source_freshrss">FreshRSS</string>
+    <string name="account_source_freshrss" translatable="false">FreshRSS</string>
     <string name="edit_feed_notifications_title">Zapnout upozornění</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Posouvat článek doteky ve spodních rozích</string>
     <string name="settings_gestures_reader_tap_to_page_title">Skrolování dotykem</string>
@@ -317,4 +317,5 @@
     <string name="audio_player_skip_back"></string>
     <string name="add_account_miniflux_subtitle" translatable="false"></string>
     <string name="font_option_jost" translatable="false"></string>
+    <string name="app_name" translatable="false"></string>
 </resources>
