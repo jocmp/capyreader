@@ -47,7 +47,7 @@
     <string name="refresh_feeds_menu_label">Aggiorna i feed</string>
     <string name="nav_add_feed">Aggiungi un feed</string>
     <string name="update_auth_success_message">Accesso riuscito</string>
-    <string name="account_source_feedbin">Feedbin</string>
+    <string name="account_source_feedbin" translatable="false">Feedbin</string>
     <string name="opml_export_button_text">Esporta in OPML</string>
     <string name="opml_import_progress_content_text_start">Iniziare l\'importazione</string>
     <string name="settings_import_progress_placeholder">Importazione delle sottoscrizioni…</string>
@@ -76,8 +76,8 @@
     <string name="settings_option_full_content_subtitle">Ricorda la scelta di caricare il contenuto completo dell\'articolo</string>
     <string name="empty_onboarding_prompt">Inizia con l\'aggiunta di un feed</string>
     <string name="article_style_options">Opzioni di stile dei caratteri</string>
-    <string name="font_option_vollkorn">Vollkorn</string>
-    <string name="font_option_poppins">Poppins</string>
+    <string name="font_option_vollkorn" translatable="false">Vollkorn</string>
+    <string name="font_option_poppins" translatable="false">Poppins</string>
     <string name="font_option_system_default">Impostazioni predefinite</string>
     <string name="article_font_menu_label">Font</string>
     <string name="article_font_scale_label">Dimensione del testo</string>
@@ -127,7 +127,7 @@
     <string name="settings_section_privacy">Privacy</string>
     <string name="settings_section_refresh">Aggiornare</string>
     <string name="empty_onboarding_title">Nessun feed ancora</string>
-    <string name="font_option_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="font_option_atkinson_hyperlegible" translatable="false">Atkinson Hyperlegible</string>
     <string name="settings_option_auto_delete_articles_title">Eliminazione automatica degli articoli</string>
     <string name="feed_form_copy_feed_url_to_clipboard">Copia l\'URL del feed negli appunti</string>
     <string name="feed_form_feed_url_title">URL del feed</string>
@@ -190,19 +190,19 @@
     <string name="article_list_row_swipe_open_externally">Apri l\'articolo nel browser</string>
     <string name="article_view_open_externally">Apri esternamente</string>
     <string name="settings_confirm_mark_all_read">Chiedi conferma</string>
-    <string name="account_source_freshrss">FreshRSS</string>
+    <string name="account_source_freshrss" translatable="false">FreshRSS</string>
     <string name="settings_section_account_server">Server</string>
     <string name="auth_fields_api_url">Server</string>
     <string name="auth_fields_api_url_placeholder">https://example.com/</string>
     <string name="account_source_reader">Reader</string>
     <string name="add_account_local_subtitle">Sul tuo dispositivo</string>
-    <string name="add_account_freshrss_subtitle">freshrss.org</string>
+    <string name="add_account_freshrss_subtitle" translatable="false">freshrss.org</string>
     <string name="add_account_reader_subtitle">API di Google Reader in self-hosting</string>
     <string name="add_account_feedbin_signup_prompt">Non hai un account Feedbin?</string>
     <string name="add_account_feedbin_signup_link_text">Creane uno qui.</string>
     <string name="add_account_freshrss_signup_prompt">Non hai un\'istanza FreshRSS?</string>
     <string name="edit_feed_tag_section">Aggiungi o Seleziona Tag</string>
-    <string name="add_account_feedbin_subtitle">feedbin.com</string>
+    <string name="add_account_feedbin_subtitle" translatable="false">feedbin.com</string>
     <string name="add_account_freshrss_signup_link_text">Per saperne di più.</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Tocca gli angoli inferiori per navigare nel contenuto dell\'articolo</string>
     <string name="settings_gestures_reader_tap_to_page_title">Dispositivi E-Ink tocca per scorrere</string>
@@ -311,4 +311,5 @@
     <string name="audio_player_skip_forward">Avanti veloce di 30 secondi</string>
     <string name="freshrss_nav_headline_categories">Categorie</string>
     <string name="article_list_empty">Niente qui</string>
+    <string name="app_name" translatable="false"></string>
 </resources>
