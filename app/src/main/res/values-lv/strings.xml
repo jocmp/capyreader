@@ -50,7 +50,7 @@
         <item quantity="other">Ik pēc %d stundām</item>
     </plurals>
     <string name="filter_starred">Atzīmētie</string>
-    <string name="account_source_freshrss">FreshRSS</string>
+    <string name="account_source_freshrss" translatable="false">FreshRSS</string>
     <string name="add_feed_url_title">Ziņu plūsma vai vietnes URL</string>
     <string name="add_feed_new_folder_title">Jauna birka</string>
     <string name="article_actions_copy_link">Kopēt saiti</string>
@@ -63,7 +63,7 @@
     <string name="freshrss_nav_headline_my_labels">Manas etiķetes</string>
     <string name="article_view_mark_as_read">Atzīmēt kā lasītu</string>
     <string name="opml_import_button_text">Ievietot no datnes</string>
-    <string name="account_source_feedbin">Feedbin</string>
+    <string name="account_source_feedbin" translatable="false">Feedbin</string>
     <string name="theme_menu_option_light">Gaišs</string>
     <string name="settings_article_list_feed_name">Ziņu plūsmas nosaukums</string>
     <string name="settings_option_full_content_subtitle">Atcerēties ielādēt visu (pilnu) raksta saturu</string>
