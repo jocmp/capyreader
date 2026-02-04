@@ -33,10 +33,10 @@
         <item quantity="one">Cada hora</item>
         <item quantity="other">Cada %d horas</item>
     </plurals>
-    <string name="account_source_feedbin">Feedbin</string>
+    <string name="account_source_feedbin" translatable="false">Feedbin</string>
     <string name="unauthorized_dialog_dismiss_text">Máis tarde</string>
     <string name="add_account_reader_subtitle">API Google Reader auto-hospedada</string>
-    <string name="account_source_freshrss">FreshRSS</string>
+    <string name="account_source_freshrss" translatable="false">FreshRSS</string>
     <string name="settings_section_account">Conta</string>
     <string name="settings_section_export">Exportar</string>
     <string name="theme_menu_option_dark">Escuro</string>
