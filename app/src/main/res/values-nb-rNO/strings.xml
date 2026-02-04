@@ -34,8 +34,8 @@
     <string name="auth_fields_show_password">Vis passord</string>
     <string name="settings_top_bar_title">Innstillinger</string>
     <string name="crash_reporting_checkbox_title">Slå på kræsjrapportering</string>
-    <string name="account_source_feedbin">Feedbin</string>
-    <string name="account_source_freshrss">FreshRSS</string>
+    <string name="account_source_feedbin" translatable="false">Feedbin</string>
+    <string name="account_source_freshrss" translatable="false">FreshRSS</string>
     <string name="account_source_local">Lokal</string>
     <string name="add_account_title">Legg til konto</string>
     <string name="add_account_local_subtitle">På din enhet</string>
@@ -303,4 +303,6 @@
     <string name="freshrss_visibility_option_important"></string>
     <string name="auth_fields_remove_client_cert"></string>
     <string name="font_option_jost" translatable="false"></string>
+    <string name="app_name" translatable="false"></string>
+    <string name="auth_fields_username"></string>
 </resources>
