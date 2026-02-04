@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Surface
@@ -26,7 +28,7 @@ fun ArticleListEmptyView() {
     val tint = colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
 
     Box(
-        modifier = Modifier.fillMaxSize(),
+        Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -47,6 +49,12 @@ fun ArticleListEmptyView() {
             )
         }
     }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
+    )
 }
 
 @Preview
