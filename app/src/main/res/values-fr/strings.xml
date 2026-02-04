@@ -16,7 +16,7 @@
     <string name="settings_remove_account_message_service">Voulez-vous vraiment vous déconnecter ?</string>
     <string name="settings_remove_account_confirm_service">Se déconnecter</string>
     <string name="settings_remove_account_title_local">Supprimer le compte</string>
-    <string name="settings_remove_account_message_local">Voulez-vous vraiment supprimer votre compte ? Cela ne peut être annulé.</string>
+    <string name="settings_remove_account_message_local">Voulez-vous vraiment supprimer votre compte ? Cela ne peut être annulé.</string>
     <string name="settings_remove_account_confirm_local">Confirmer</string>
     <string name="account_settings_save_name">Nom enregistré</string>
     <string name="nav_headline_tags">Étiquettes</string>
@@ -24,7 +24,7 @@
     <string name="add_feed_feed_not_error">Impossible de trouver un flux</string>
     <string name="add_feed_save_error">Impossible d’enregistrer le flux</string>
     <string name="action_mark_all_read">Tout marquer comme lu</string>
-    <string name="mark_all_read_dialog_description">Marquer tous les articles comme lus ?</string>
+    <string name="mark_all_read_dialog_description">Marquer tous les articles comme lus ?</string>
     <string name="mark_all_read_dialog_submit">Confirmer</string>
     <string name="auth_fields_log_in_button">Se connecter</string>
     <string name="settings_section_account">Compte</string>
@@ -68,7 +68,7 @@
     <string name="settings_top_bar_title">Paramètres</string>
     <string name="update_auth_success_message">Connexion réussie</string>
     <string name="crash_reporting_checkbox_title">Activer les rapports d’anomalie</string>
-    <string name="account_source_feedbin">Feedbin</string>
+    <string name="account_source_feedbin" translatable="false">Feedbin</string>
     <string name="account_source_local">Local</string>
     <string name="settings_section_import">Importer</string>
     <string name="settings_section_export">Exporter</string>
@@ -94,9 +94,9 @@
     <string name="settings_option_full_content_title">Maintenir l\'affichage complet</string>
     <string name="refresh_on_start">Au démarrage</string>
     <string name="article_style_options">Option de style de police</string>
-    <string name="font_option_vollkorn">Vollkorn</string>
-    <string name="font_option_atkinson_hyperlegible">Atkinson Hyperlegible</string>
-    <string name="font_option_poppins">Poppins</string>
+    <string name="font_option_vollkorn" translatable="false">Vollkorn</string>
+    <string name="font_option_atkinson_hyperlegible" translatable="false">Atkinson Hyperlegible</string>
+    <string name="font_option_poppins" translatable="false">Poppins</string>
     <string name="font_option_system_default">Valeur du système</string>
     <string name="article_font_scale_label">Taille de la police</string>
     <string name="article_style_title_section">Titre</string>
@@ -139,7 +139,7 @@
     <string name="feed_action_unsubscribe_title">Se désinscrire</string>
     <string name="settings">Ouvrir les paramètres</string>
     <string name="article_view_mark_as_read">Marquer comme lu</string>
-    <string name="feed_action_unsubscribe_message">Voulez-vous vraiment vous désinscrire de \"%1$s\" ?</string>
+    <string name="feed_action_unsubscribe_message">Voulez-vous vraiment vous désinscrire de \"%1$s\" ?</string>
     <string name="folder_action_edit">Renommer</string>
     <string name="settings_remove_account_button_local">Supprimer le compte</string>
     <string name="article_actions_mark_below_as_read">Marquer ci-dessous comme lus</string>
