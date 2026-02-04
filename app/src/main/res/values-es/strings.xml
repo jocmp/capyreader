@@ -69,7 +69,7 @@
     <string name="settings_top_bar_title">Ajustes</string>
     <string name="update_auth_success_message">Te has conectado correctamente</string>
     <string name="crash_reporting_checkbox_title">Habilitar informes de fallos</string>
-    <string name="account_source_feedbin">Feedbin</string>
+    <string name="account_source_feedbin" translatable="false">Feedbin</string>
     <string name="account_source_local">Local</string>
     <string name="add_account_title">Añadir una cuenta</string>
     <string name="transfers_export_subscriptions">Exportar suscripciones</string>
@@ -114,9 +114,9 @@
     <string name="empty_onboarding_title">No hay feeds todavía</string>
     <string name="empty_onboarding_prompt">Comienza agregando un feed</string>
     <string name="article_style_options">Opciones de la fuente</string>
-    <string name="font_option_vollkorn">Vollkorn</string>
-    <string name="font_option_atkinson_hyperlegible">Atkinson Hyperlegible</string>
-    <string name="font_option_poppins">Poppins</string>
+    <string name="font_option_vollkorn" translatable="false">Vollkorn</string>
+    <string name="font_option_atkinson_hyperlegible" translatable="false">Atkinson Hyperlegible</string>
+    <string name="font_option_poppins" translatable="false">Poppins</string>
     <string name="font_option_system_default">Predeterminado del sistema</string>
     <string name="article_font_menu_label">Fuente</string>
     <string name="article_font_scale_label">Tamaño del texto</string>
@@ -195,7 +195,7 @@
     <string name="settings_confirm_mark_all_read">Confirmar que se ha leído todo</string>
     <string name="settings_section_account_server">Servidor</string>
     <string name="auth_fields_api_url">Servidor</string>
-    <string name="account_source_freshrss">FreshRSS</string>
+    <string name="account_source_freshrss" translatable="false">FreshRSS</string>
     <string name="add_account_local_subtitle">En tu dispositivo</string>
     <string name="add_account_reader_subtitle">API de Google Reader autohospedada</string>
     <string name="add_account_feedbin_signup_prompt">¿No tienes una cuenta Feedbin?</string>
@@ -316,4 +316,5 @@
     <string name="font_option_literata" translatable="false"></string>
     <string name="add_account_miniflux_subtitle" translatable="false"></string>
     <string name="font_option_jost" translatable="false"></string>
+    <string name="app_name" translatable="false"></string>
 </resources>
