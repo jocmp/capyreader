@@ -57,7 +57,7 @@
     <string name="filter_all">Όλα</string>
     <string name="relative_time_minutes">%1$dλ</string>
     <string name="delete_tag_error">Σφάλμα διαγραφής ετικέτας</string>
-    <string name="account_source_feedbin">Feedbin</string>
+    <string name="account_source_feedbin" translatable="false">Feedbin</string>
     <string name="auth_fields_hide_password">Απόκρυψη κωδικού</string>
     <string name="auth_fields_log_in_button">Σύνδεση</string>
     <string name="theme_menu_label">Θέμα</string>
@@ -99,7 +99,7 @@
     <string name="auth_fields_show_password">Εμφάνιση κωδικού</string>
     <string name="settings_top_bar_title">Ρυθμίσεις</string>
     <string name="crash_reporting_checkbox_title">Ενεργοποίηση αναφορών σφάλματος</string>
-    <string name="account_source_freshrss">FreshRSS</string>
+    <string name="account_source_freshrss" translatable="false">FreshRSS</string>
     <string name="account_source_reader">Reader</string>
     <string name="account_source_local">Τοπικό</string>
     <string name="add_account_title">Προσθήκη Λογαριασμού</string>
