@@ -314,4 +314,5 @@
     <string name="audio_player_skip_back"></string>
     <string name="add_account_miniflux_subtitle" translatable="false"></string>
     <string name="font_option_jost" translatable="false"></string>
+    <string name="app_name" translatable="false"></string>
 </resources>
