@@ -189,18 +189,18 @@
     <string name="article_view_open_externally">外部打开</string>
     <string name="settings_confirm_mark_all_read">需要确认才能标记全部为已读</string>
     <string name="auth_fields_api_url">服务器</string>
-    <string name="account_source_freshrss">FreshRSS</string>
+    <string name="account_source_freshrss" translatable="false">FreshRSS</string>
     <string name="settings_section_account_server">服务器</string>
     <string name="auth_fields_api_url_placeholder">https://example.com/</string>
     <string name="account_source_reader">Reader</string>
     <string name="add_account_local_subtitle">在设备上</string>
-    <string name="add_account_feedbin_subtitle">feedbin.com</string>
+    <string name="add_account_feedbin_subtitle" translatable="false">feedbin.com</string>
     <string name="add_account_feedbin_signup_prompt">没有 Feedbin 账号？</string>
     <string name="add_account_feedbin_signup_link_text">在这里创建一个。</string>
     <string name="add_account_freshrss_signup_prompt">没有 FreshRSS 实例？</string>
     <string name="add_account_freshrss_signup_link_text">了解更多。</string>
     <string name="edit_feed_tag_section">添加或选择标签</string>
-    <string name="add_account_freshrss_subtitle">freshrss.org</string>
+    <string name="add_account_freshrss_subtitle" translatable="false">freshrss.org</string>
     <string name="add_account_reader_subtitle">自托管的 Google Reader API</string>
     <string name="settings_gestures_reader_tap_to_page_title">电子墨水屏设备轻按滚动</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">轻按底部角落上下滚动文章内容</string>
