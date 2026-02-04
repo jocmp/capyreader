@@ -60,7 +60,7 @@
     <string name="auth_fields_api_url">Gweinydd</string>
     <string name="auth_fields_hide_password">Cuddio\'r cyfrinair</string>
     <string name="auth_fields_show_password">Dangos y cyfrinair</string>
-    <string name="account_source_freshrss">FreshRSS</string>
+    <string name="account_source_freshrss" translatable="false">FreshRSS</string>
     <string name="account_source_reader">Reader</string>
     <string name="account_source_local">Lleol</string>
     <string name="add_account_title">Ychwanegu cyfrif</string>
@@ -147,7 +147,7 @@
     <string name="settings_top_bar_title">Gosodiadau</string>
     <string name="update_auth_success_message">Wedi mewngofnodi\'n llwyddiannus</string>
     <string name="crash_reporting_checkbox_title">Galluogi adroddiadau ar chwalu</string>
-    <string name="account_source_feedbin">Feedbin</string>
+    <string name="account_source_feedbin" translatable="false">Feedbin</string>
     <string name="settings_section_account_server">Gweinydd</string>
     <string name="theme_menu_option_dark">Tywyll</string>
     <string name="article_style_options">Opsiynau arddull y ffont</string>
