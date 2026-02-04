@@ -305,4 +305,15 @@
     <string name="font_option_jost" translatable="false"></string>
     <string name="app_name" translatable="false"></string>
     <string name="auth_fields_username"></string>
+    <string name="layout_preference_label"></string>
+    <string name="settings_options_reader_pin_top_toolbar"></string>
+    <string name="layout_preference_single"></string>
+    <string name="settings_options_reader_show_bottom_toolbar"></string>
+    <string name="after_read_all_behavior_open_next_feed"></string>
+    <string name="settings_gestures_list_swipe_up"></string>
+    <string name="settings_gestures_list_back_navigation_navigate_to_parent"></string>
+    <string name="after_read_all_behavior_label"></string>
+    <string name="after_read_all_behavior_open_drawer"></string>
+    <string name="tag_action_edit"></string>
+    <string name="widget_headlines_title"></string>
 </resources>
