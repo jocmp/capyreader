@@ -311,4 +311,9 @@
     <string name="font_option_atkinson_hyperlegible" translatable="false"></string>
     <string name="auth_fields_remove_client_cert"></string>
     <string name="font_option_jost" translatable="false"></string>
+    <string name="settings_options_reader_pin_top_toolbar"></string>
+    <string name="settings_options_reader_show_bottom_toolbar"></string>
+    <string name="settings_gestures_list_swipe_up"></string>
+    <string name="settings_gestures_list_back_navigation_navigate_to_parent"></string>
+    <string name="tag_action_edit"></string>
 </resources>

@@ -310,4 +310,11 @@
     <string name="freshrss_visibility_option_important"></string>
     <string name="auth_fields_remove_client_cert"></string>
     <string name="font_option_jost" translatable="false"></string>
+    <string name="layout_preference_label"></string>
+    <string name="after_read_all_behavior_open_next_feed"></string>
+    <string name="after_read_all_behavior_label"></string>
+    <string name="settings_option_full_content_title"></string>
+    <string name="after_read_all_behavior_open_drawer"></string>
+    <string name="tag_action_edit"></string>
+    <string name="widget_headlines_title"></string>
 </resources>
