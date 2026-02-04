@@ -173,4 +173,19 @@
     <string name="settings_section_mark_all_as_read">सबैलाई पढिएको चिन्ह लगाउनुहोस्</string>
     <string name="opml_import_button_text">फाइलबाट आयात गर्नुहोस्</string>
     <string name="action_mark_all_read">सबैलाई पढिएको चिन्ह लगाउनुहोस्</string>
+    <string name="image_preview_label"></string>
+    <string name="settings_article_list_feed_name"></string>
+    <string name="settings_options_reader_pin_top_toolbar"></string>
+    <string name="settings_gestures_list_back_navigation_action"></string>
+    <string name="layout_preference_single"></string>
+    <string name="settings_options_reader_show_bottom_toolbar"></string>
+    <string name="article_list_row_swipe_toggle_starred"></string>
+    <string name="article_list_row_swipe_toggle_read"></string>
+    <string name="settings_article_list_feed_icons"></string>
+    <string name="settings_gestures_list_swipe_up"></string>
+    <string name="settings_gestures_list_back_navigation_navigate_to_parent"></string>
+    <string name="settings_clear_all_articles_text"></string>
+    <string name="settings_option_full_content_title"></string>
+    <string name="tag_action_edit"></string>
+    <string name="widget_headlines_title"></string>
 </resources>
