@@ -294,4 +294,12 @@
     <string name="theme_mode_dark">深色</string>
     <string name="auth_fields_client_certificate">用戶端憑證 (可選)</string>
     <string name="auth_fields_remove_client_cert">移除用戶端憑證</string>
+    <string name="theme_mode_label">模式</string>
+    <string name="article_list_empty">這裡什麼都沒有</string>
+    <string name="audio_player_play">播放</string>
+    <string name="audio_player_pause">暫停</string>
+    <string name="freshrss_nav_headline_categories">類別</string>
+    <string name="theme_sunset">日落</string>
+    <string name="settings_section_categories">類別</string>
+    <string name="freshrss_visibility_option_category">類別</string>
 </resources>

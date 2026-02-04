@@ -310,4 +310,5 @@
     <string name="audio_player_skip_back">Прескочи 30 секунди назад</string>
     <string name="audio_player_skip_forward">Прескочи 30 секунди напред</string>
     <string name="freshrss_nav_headline_categories">Категории</string>
+    <string name="article_list_empty">Няма нищо тук</string>
 </resources>
