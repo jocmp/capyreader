@@ -44,7 +44,7 @@
     <string name="auth_fields_hide_password">隐藏密码</string>
     <string name="update_auth_success_message">登录成功</string>
     <string name="crash_reporting_checkbox_title">启用崩溃报告</string>
-    <string name="account_source_feedbin">Feedbin</string>
+    <string name="account_source_feedbin" translatable="false">Feedbin</string>
     <string name="account_source_local">本地</string>
     <string name="add_account_title">添加账号</string>
     <string name="transfers_export_subscriptions">导出订阅</string>
@@ -68,7 +68,7 @@
     <string name="settings_section_version">版本</string>
     <string name="settings_option_copy_version">复制版本</string>
     <string name="settings_option_full_content_title">固定显示完整内容</string>
-    <string name="font_option_poppins">Poppins</string>
+    <string name="font_option_poppins" translatable="false">Poppins</string>
     <string name="font_option_system_default">系统默认</string>
     <string name="article_font_menu_label">字体</string>
     <string name="article_font_scale_label">字体大小</string>
@@ -124,8 +124,8 @@
     <string name="theme_menu_option_system_default">系统默认</string>
     <string name="image_preview_menu_option_large">大</string>
     <string name="image_preview_label">图片预览</string>
-    <string name="font_option_vollkorn">Vollkorn</string>
-    <string name="font_option_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="font_option_vollkorn" translatable="false">Vollkorn</string>
+    <string name="font_option_atkinson_hyperlegible" translatable="false">Atkinson Hyperlegible</string>
     <string name="settings_option_full_content_subtitle">记住选择以加载完整文章内容</string>
     <string name="refresh_on_start">启动时</string>
     <string name="article_style_options">字体样式选项</string>
@@ -309,4 +309,5 @@
     <string name="audio_player_skip_forward">快进 30 秒</string>
     <string name="freshrss_nav_headline_categories">类别</string>
     <string name="article_list_empty">这里没东西</string>
+    <string name="app_name" translatable="false"></string>
 </resources>
