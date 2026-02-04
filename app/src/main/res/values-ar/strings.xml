@@ -63,7 +63,7 @@
     <string name="auth_fields_show_password">اعرض كلمة المرور</string>
     <string name="settings_top_bar_title">الإعدادات</string>
     <string name="crash_reporting_checkbox_title">تمكين الإبلاغ عن الأعطال</string>
-    <string name="account_source_feedbin">Feedbin</string>
+    <string name="account_source_feedbin" translatable="false">Feedbin</string>
     <string name="account_source_local">محلي</string>
     <string name="add_account_title">إضافة حساب</string>
     <string name="transfers_export_subscriptions">تصدير الإشتراكات</string>
@@ -105,9 +105,9 @@
     <string name="empty_onboarding_title">لا يوجد موجز حتى الآن</string>
     <string name="empty_onboarding_prompt">ابدأ بإضافة موجز</string>
     <string name="article_style_options">خيارات نمط الخط</string>
-    <string name="font_option_vollkorn">Vollkorn</string>
-    <string name="font_option_atkinson_hyperlegible">Atkinson Hyperlegible</string>
-    <string name="font_option_poppins">Poppins</string>
+    <string name="font_option_vollkorn" translatable="false">Vollkorn</string>
+    <string name="font_option_atkinson_hyperlegible" translatable="false">Atkinson Hyperlegible</string>
+    <string name="font_option_poppins" translatable="false">Poppins</string>
     <string name="font_option_system_default">الخط الإفتراضي للنظام</string>
     <string name="article_font_menu_label">الخط</string>
     <string name="article_font_scale_label">حجم النص</string>
@@ -191,7 +191,7 @@
     <string name="notifications_permission_disabled_title">تم تعطيل إذن الإشعارات</string>
     <string name="settings_confirm_mark_all_read">تأكيد وضع علامة كمقروءة على الكل</string>
     <string name="auth_fields_api_url">الخادم</string>
-    <string name="account_source_freshrss">FreshRSS</string>
+    <string name="account_source_freshrss" translatable="false">FreshRSS</string>
     <string name="settings_section_account_server">الخادم</string>
     <string name="notifications_channel_title_feed_update">تحديثات الموجز</string>
     <string name="settings_panel_notifications_title">الإشعارات</string>
@@ -319,4 +319,5 @@
     <string name="font_option_literata" translatable="false"></string>
     <string name="add_account_miniflux_subtitle" translatable="false"></string>
     <string name="font_option_jost" translatable="false"></string>
+    <string name="app_name" translatable="false"></string>
 </resources>
