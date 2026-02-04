@@ -31,8 +31,8 @@
     <string name="settings_remove_account_confirm_local">Potwierdź</string>
     <string name="nav_headline_tags">Kategorie</string>
     <string name="relative_time_days">%1$dd</string>
-    <string name="account_source_feedbin">Feedbin</string>
-    <string name="account_source_freshrss">FreshRSS</string>
+    <string name="account_source_feedbin" translatable="false">Feedbin</string>
+    <string name="account_source_freshrss" translatable="false">FreshRSS</string>
     <string name="article_list_row_swipe_disabled">Wyłączono</string>
     <string name="action_share">Udostępnij</string>
     <string name="edit_feed_tag_section">Dodaj lub wybierz kategorię</string>
