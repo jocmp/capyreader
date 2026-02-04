@@ -260,4 +260,59 @@
     <string name="settings_notifications_select_none">すべて選択解除</string>
     <string name="settings_confirm_mark_all_read">すべてを既読としてマークすることを確認</string>
     <string name="settings_mark_read_on_scroll">スクロール時に既読としてマーク</string>
+    <string name="audio_player_close"></string>
+    <string name="layout_preference_label"></string>
+    <string name="settings_options_reader_pin_top_toolbar"></string>
+    <string name="article_byline_date_only"></string>
+    <string name="settings_gestures_list_back_navigation_open_drawer"></string>
+    <string name="settings_section_advanced"></string>
+    <string name="freshrss_visibility_option_category"></string>
+    <string name="account_source_miniflux" translatable="false"></string>
+    <string name="font_option_vollkorn" translatable="false"></string>
+    <string name="freshrss_visibility_option_main"></string>
+    <string name="layout_preference_single"></string>
+    <string name="article_list_sort_title"></string>
+    <string name="settings_option_enable_audio_player"></string>
+    <string name="settings_gestures_reader_tap_to_page_title"></string>
+    <string name="add_account_feedbin_subtitle" translatable="false"></string>
+    <string name="account_source_feedbin" translatable="false"></string>
+    <string name="settings_options_reader_show_bottom_toolbar"></string>
+    <string name="audio_player_play"></string>
+    <string name="font_option_poppins" translatable="false"></string>
+    <string name="after_read_all_behavior_default"></string>
+    <string name="theme_mode_label"></string>
+    <string name="settings_section_experimental"></string>
+    <string name="audio_player_skip_forward"></string>
+    <string name="settings_clear_all_articles_confirm"></string>
+    <string name="selected"></string>
+    <string name="settings_gestures_reader_tap_to_page_subtitle"></string>
+    <string name="article_list_empty"></string>
+    <string name="layout_preference_responsive"></string>
+    <string name="add_account_freshrss_subtitle" translatable="false"></string>
+    <string name="freshrss_visibility"></string>
+    <string name="article_byline"></string>
+    <string name="auth_fields_api_url_placeholder" translatable="false"></string>
+    <string name="font_option_inter" translatable="false"></string>
+    <string name="audio_player_pause"></string>
+    <string name="article_actions_mark_below_as_read"></string>
+    <string name="settings_gestures_list_back_navigation_navigate_to_parent"></string>
+    <string name="settings_about_title"></string>
+    <string name="article_view_open_externally"></string>
+    <string name="freshrss_nav_headline_categories"></string>
+    <string name="font_option_literata" translatable="false"></string>
+    <string name="after_read_all_behavior_label"></string>
+    <string name="mark_all_read_dialog_submit"></string>
+    <string name="auth_fields_freshrss_api_password"></string>
+    <string name="freshrss_visibility_option_feed"></string>
+    <string name="audio_player_skip_back"></string>
+    <string name="article_actions_mark_after_as_read"></string>
+    <string name="settings_clear_all_articles_button"></string>
+    <string name="settings_option_full_content_title"></string>
+    <string name="after_read_all_behavior_open_drawer"></string>
+    <string name="app_name" translatable="false"></string>
+    <string name="account_source_freshrss" translatable="false"></string>
+    <string name="add_account_miniflux_subtitle" translatable="false"></string>
+    <string name="font_option_atkinson_hyperlegible" translatable="false"></string>
+    <string name="freshrss_visibility_option_important"></string>
+    <string name="font_option_jost" translatable="false"></string>
 </resources>
