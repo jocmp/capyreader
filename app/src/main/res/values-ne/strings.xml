@@ -133,8 +133,8 @@
     <string name="transfers_export_subscriptions">सदस्यताहरू निर्यात गर्नुहोस्</string>
     <string name="mark_all_read_dialog_description">सबै वस्तुहरूलाई पढिएको भनी चिन्ह लगाउने हो?</string>
     <string name="article_actions_open_menu">लेख कार्यहरू खोल्नुहोस्</string>
-    <string name="account_source_feedbin">Feedbin</string>
-    <string name="account_source_freshrss">FreshRSS</string>
+    <string name="account_source_feedbin" translatable="false">Feedbin</string>
+    <string name="account_source_freshrss" translatable="false">FreshRSS</string>
     <string name="add_account_reader_subtitle">स्व-होस्ट गरिएको Google Reader API</string>
     <string name="add_account_feedbin_signup_prompt">Feedbin खाता छैन?</string>
     <string name="add_account_freshrss_signup_prompt">FreshRSS instance छैन?</string>
