@@ -173,8 +173,8 @@
     <string name="add_account_feedbin_signup_link_text">Buat satu disini.</string>
     <string name="settings_section_account_server">Klient</string>
     <string name="settings_confirm_mark_all_read">Konfirmasi penanda semua sebagai sudah dibaca</string>
-    <string name="account_source_feedbin">FeedBin</string>
-    <string name="account_source_freshrss">FressRss</string>
+    <string name="account_source_feedbin" translatable="false">FeedBin</string>
+    <string name="account_source_freshrss" translatable="false">FressRss</string>
     <string name="end_of_feed_text">Semua tertangkap!</string>
     <string name="settings_article_list_title">Daftar Artikel</string>
     <string name="settings_gestures_list_back_navigation_action">Tindakan Navigasi Kembali</string>
