@@ -88,7 +88,7 @@
     <string name="unauthorized_dialog_confirm_text">Giriş Yap</string>
     <string name="auth_fields_hide_password">Parolayı gizle</string>
     <string name="settings_top_bar_title">Ayarlar</string>
-    <string name="account_source_feedbin">Feedbin</string>
+    <string name="account_source_feedbin" translatable="false">Feedbin</string>
     <string name="account_source_local">Yerel</string>
     <string name="font_option_system_default">Sistem varsayılanı</string>
     <string name="refresh_on_start">Başlangıçta</string>
