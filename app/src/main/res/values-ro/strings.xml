@@ -77,7 +77,7 @@
     <string name="auth_fields_api_url">Server</string>
     <string name="auth_fields_show_password">Arată parola</string>
     <string name="crash_reporting_checkbox_title">Activează raportarea problemelor</string>
-    <string name="account_source_feedbin">Feedbin</string>
+    <string name="account_source_feedbin" translatable="false">Feedbin</string>
     <string name="account_source_reader">Cititor</string>
     <string name="account_source_local">Local</string>
     <string name="add_account_title">Adaugă cont</string>
@@ -99,7 +99,7 @@
     <string name="filter_action_menu_description">Modifică</string>
     <string name="feed_action_edit">Modifică flux</string>
     <string name="update_auth_success_message">Conectare cu succes</string>
-    <string name="account_source_freshrss">FreshRSS</string>
+    <string name="account_source_freshrss" translatable="false">FreshRSS</string>
     <string name="settings_section_privacy">Confidențialitate</string>
     <string name="opml_import_button_text">Importă din fișier</string>
     <string name="feed_action_unsubscribe_title">Dezabonează-te</string>
