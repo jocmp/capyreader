@@ -194,7 +194,7 @@
     <string name="settings_confirm_mark_all_read">Demander confirmation avant de tout marquer comme lu</string>
     <string name="notifications_permission_disabled_title">L’autorisation de notification est désactivée</string>
     <string name="auth_fields_api_url">Serveur</string>
-    <string name="account_source_freshrss">FreshRSS</string>
+    <string name="account_source_freshrss" translatable="false">FreshRSS</string>
     <string name="settings_section_account_server">Serveur</string>
     <string name="account_source_reader">Reader</string>
     <string name="add_account_local_subtitle">Sur votre appareil</string>
@@ -203,8 +203,8 @@
     <string name="add_account_freshrss_signup_link_text">En savoir plus.</string>
     <string name="edit_feed_tag_section">Ajouter ou sélectionner une étiquette</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Appuyez sur les coins inférieurs pour parcourir le contenu de l\'article</string>
-    <string name="add_account_feedbin_signup_prompt">Vous n’avez pas de compte Feedbin ?</string>
-    <string name="add_account_freshrss_signup_prompt">Vous n’avez pas d’instance FreshRSS ?</string>
+    <string name="add_account_feedbin_signup_prompt">Vous n’avez pas de compte Feedbin ?</string>
+    <string name="add_account_freshrss_signup_prompt">Vous n’avez pas d’instance FreshRSS ?</string>
     <string name="settings_gestures_reader_tap_to_page_title">Appuyer pour faire défiler (mode E Ink)</string>
     <string name="settings_enable_high_contrast_dark_theme">Activer le thème sombre à contraste élevé</string>
     <string name="reader_image_visibility_show_on_wifi">Afficher uniquement sur Wi-Fi</string>
