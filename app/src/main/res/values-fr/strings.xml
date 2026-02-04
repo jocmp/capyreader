@@ -122,7 +122,7 @@
     <string name="settings_section_experimental">Expérimental</string>
     <string name="settings_option_enable_audio_player">Lecteur audio</string>
     <string name="settings_clear_all_articles_confirm">Confirmer</string>
-    <string name="settings_clear_all_articles_text">Voulez-vous vraiment supprimer tous les articles lus et non favoris de votre appareil ? Cette action est irréversible.</string>
+    <string name="settings_clear_all_articles_text">Voulez-vous vraiment supprimer tous les articles lus et non favoris de votre appareil ? Cette action est irréversible.</string>
     <string name="settings_clear_all_articles_button">Supprimer tous les articles</string>
     <string name="settings_support_button">Assistance</string>
     <string name="settings_article_list_title">Liste d’articles</string>
@@ -217,7 +217,7 @@
     <string name="settings_mark_read_on_scroll">Marquer comme lu lors du défilement</string>
     <string name="settings_section_mark_all_as_read">Tout marquer comme lu</string>
     <string name="settings_section_browser">Navigateur</string>
-    <string name="end_of_feed_text">Tous les articles sont lus !</string>
+    <string name="end_of_feed_text">Tous les articles sont lus !</string>
     <string name="reader_image_visibility_label">Images</string>
     <string name="after_read_all_behavior_default">Par défaut</string>
     <string name="after_read_all_behavior_open_drawer">Ouvrir le menu de navigation</string>
@@ -258,7 +258,7 @@
     <string name="blocked_keywords_remove_keyword">Supprimer le mot-clé</string>
     <string name="delete_tag_error">Erreur de suppression de l\'étiquette</string>
     <string name="tag_action_delete_title">Supprimer</string>
-    <string name="tag_action_delete_message">Êtes-vous sûr de vouloir supprimer l\'étiquette « %1$s » ?</string>
+    <string name="tag_action_delete_message">Êtes-vous sûr de vouloir supprimer l\'étiquette « %1$s » ?</string>
     <string name="tag_action_delete_confirm">Supprimer</string>
     <string name="tag_name_title">Nom</string>
     <string name="tag_action_edit_success">Étiquette mise à jour</string>
@@ -276,7 +276,7 @@
     <string name="settings_options_reader_pin_top_toolbar">Épingler la barre d\'outils supérieure</string>
     <string name="settings_options_reader_show_bottom_toolbar">Afficher les actions dans la barre d\'outils inférieure</string>
     <string name="add_account_miniflux_signup_link_text">En savoir plus.</string>
-    <string name="add_account_miniflux_signup_prompt">Vous n\'avez pas d\'instance Miniflux ?</string>
+    <string name="add_account_miniflux_signup_prompt">Vous n\'avez pas d\'instance Miniflux ?</string>
     <string name="mark_read_position_toolbar">Barre d\'outils</string>
     <string name="mark_read_position_floating_action_button">Bouton d\'action flottant</string>
     <string name="mark_all_read_button_position">Position du bouton \"Tout marquer comme lu\"</string>
