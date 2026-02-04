@@ -70,8 +70,8 @@
     <string name="account_source_local">Lokalt</string>
     <string name="add_account_title">Lägg till konto</string>
     <string name="extract_full_content">Läs in fullständigt innehåll</string>
-    <string name="account_source_feedbin">Feedbin</string>
-    <string name="account_source_freshrss">FreshRSS</string>
+    <string name="account_source_feedbin" translatable="false">Feedbin</string>
+    <string name="account_source_freshrss" translatable="false">FreshRSS</string>
     <string name="account_source_reader">Läsare</string>
     <string name="relative_time_hours">%1$dh</string>
     <string name="relative_time_days">%1$dd</string>
