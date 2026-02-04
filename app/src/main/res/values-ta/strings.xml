@@ -59,8 +59,8 @@
     <string name="settings_top_bar_title">அமைப்புகள்</string>
     <string name="update_auth_success_message">வெற்றிகரமாக உள்நுழைந்தது</string>
     <string name="crash_reporting_checkbox_title">செயலிழப்பு அறிக்கையை இயக்கவும்</string>
-    <string name="account_source_feedbin">ஃபீட்பின்</string>
-    <string name="account_source_freshrss">ஃப்ரெச்ச்</string>
+    <string name="account_source_feedbin" translatable="false">ஃபீட்பின்</string>
+    <string name="account_source_freshrss" translatable="false">ஃப்ரெச்ச்</string>
     <string name="account_source_reader">வாசகர்</string>
     <string name="account_source_local">உள்ளக</string>
     <string name="add_account_title">கணக்கைச் சேர்க்கவும்</string>
