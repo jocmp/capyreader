@@ -44,11 +44,11 @@
     <string name="article_style_options">Yazı tipi stili seçenekleri</string>
     <string name="empty_onboarding_title">Henüz yayın yok</string>
     <string name="empty_onboarding_prompt">Bir yayın ekleyerek başlayın</string>
-    <string name="font_option_vollkorn">Vollkorn</string>
+    <string name="font_option_vollkorn" translatable="false">Vollkorn</string>
     <string name="article_byline">%1$s %2$s\'de %3$s tarafından</string>
-    <string name="font_option_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="font_option_atkinson_hyperlegible" translatable="false">Atkinson Hyperlegible</string>
     <string name="article_font_menu_label">Yazı tipi</string>
-    <string name="font_option_poppins">Poppins</string>
+    <string name="font_option_poppins" translatable="false">Poppins</string>
     <string name="article_byline_date_only">%1$s %2$s\'de</string>
     <string name="feed_form_feed_url_title">Yayın URL</string>
     <string name="settings_option_auto_delete_articles_subtitle">3 aydan eski okunmuş, yıldızsız makaleleri sil</string>
@@ -315,4 +315,5 @@
     <string name="add_account_miniflux_subtitle" translatable="false"></string>
     <string name="freshrss_visibility_option_important"></string>
     <string name="font_option_jost" translatable="false"></string>
+    <string name="app_name" translatable="false"></string>
 </resources>

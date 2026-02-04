@@ -314,4 +314,5 @@
     <string name="freshrss_visibility_option_important"></string>
     <string name="auth_fields_remove_client_cert"></string>
     <string name="font_option_jost" translatable="false"></string>
+    <string name="app_name" translatable="false"></string>
 </resources>
