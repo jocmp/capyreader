@@ -164,7 +164,7 @@
     <string name="article_list_row_swipe_toggle_starred">Marcar Favorito</string>
     <string name="auth_fields_api_url">Servidor</string>
     <string name="settings_section_account_server">Servidor</string>
-    <string name="account_source_freshrss">FreshRSS</string>
+    <string name="account_source_freshrss" translatable="false">FreshRSS</string>
     <string name="article_list_sort_title">Ordernar Não Lidos</string>
     <string name="article_list_sort_newest_first">Novos Primeiro</string>
     <string name="article_list_sort_oldest_first">Antigos Primeiro</string>
