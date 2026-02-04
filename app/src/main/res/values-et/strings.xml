@@ -310,10 +310,4 @@
     <string name="audio_player_skip_forward">Keri 30 sekundit edasi</string>
     <string name="freshrss_nav_headline_categories">Kategooriad</string>
     <string name="article_list_empty">Siin pole mitte midagi</string>
-    <string name="app_name" translatable="false"></string>
-    <string name="account_source_miniflux" translatable="false"></string>
-    <string name="font_option_inter" translatable="false"></string>
-    <string name="font_option_literata" translatable="false"></string>
-    <string name="add_account_miniflux_subtitle" translatable="false"></string>
-    <string name="font_option_jost" translatable="false"></string>
 </resources>

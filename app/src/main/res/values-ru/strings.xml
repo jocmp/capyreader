@@ -311,11 +311,4 @@
     <string name="audio_player_close">Закрыть</string>
     <string name="audio_player_skip_back">Назад 30 сек</string>
     <string name="audio_player_skip_forward">Вперед 30 сек</string>
-    <string name="account_source_miniflux" translatable="false"></string>
-    <string name="article_list_empty"></string>
-    <string name="font_option_inter" translatable="false"></string>
-    <string name="font_option_literata" translatable="false"></string>
-    <string name="add_account_miniflux_subtitle" translatable="false"></string>
-    <string name="font_option_jost" translatable="false"></string>
-    <string name="app_name" translatable="false"></string>
 </resources>

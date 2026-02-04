@@ -302,17 +302,4 @@
     <string name="theme_sunset">日落</string>
     <string name="settings_section_categories">類別</string>
     <string name="freshrss_visibility_option_category">類別</string>
-    <string name="audio_player_close"></string>
-    <string name="open_articles_in_browser"></string>
-    <string name="account_source_miniflux" translatable="false"></string>
-    <string name="freshrss_visibility_option_main"></string>
-    <string name="audio_player_skip_forward"></string>
-    <string name="freshrss_visibility"></string>
-    <string name="font_option_inter" translatable="false"></string>
-    <string name="font_option_literata" translatable="false"></string>
-    <string name="freshrss_visibility_option_feed"></string>
-    <string name="audio_player_skip_back"></string>
-    <string name="add_account_miniflux_subtitle" translatable="false"></string>
-    <string name="font_option_jost" translatable="false"></string>
-    <string name="app_name" translatable="false"></string>
 </resources>

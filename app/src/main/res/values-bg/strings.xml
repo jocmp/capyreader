@@ -311,9 +311,4 @@
     <string name="audio_player_skip_forward">Прескочи 30 секунди напред</string>
     <string name="freshrss_nav_headline_categories">Категории</string>
     <string name="article_list_empty">Няма нищо тук</string>
-    <string name="account_source_miniflux" translatable="false"></string>
-    <string name="font_option_inter" translatable="false"></string>
-    <string name="font_option_literata" translatable="false"></string>
-    <string name="add_account_miniflux_subtitle" translatable="false"></string>
-    <string name="font_option_jost" translatable="false"></string>
 </resources>
