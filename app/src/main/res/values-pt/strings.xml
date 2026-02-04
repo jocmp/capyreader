@@ -100,12 +100,12 @@
     <string name="auth_fields_api_url">Servidor</string>
     <string name="auth_fields_hide_password">Ocultar palavra-passe</string>
     <string name="auth_fields_show_password">Mostrar palavra-passe</string>
-    <string name="account_source_freshrss">FreshRSS</string>
+    <string name="account_source_freshrss" translatable="false">FreshRSS</string>
     <string name="auth_fields_log_in_button">Log In</string>
     <string name="settings_top_bar_title">Configurações</string>
     <string name="update_auth_success_message">Logado com sucesso</string>
     <string name="crash_reporting_checkbox_title">Ligar relatório de erros</string>
-    <string name="account_source_feedbin">Feedbin</string>
+    <string name="account_source_feedbin" translatable="false">Feedbin</string>
     <string name="account_source_reader">Leitor</string>
     <string name="account_source_local">Local</string>
     <string name="add_account_title">Adicionar Conta</string>
