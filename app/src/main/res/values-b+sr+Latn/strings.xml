@@ -188,7 +188,7 @@
     <string name="settings_gestures_list_back_navigation_open_drawer">Otvorite Fioku Za Navigaciju</string>
     <string name="notifications_permission_disabled_title">Dozvola za obaveštenja je onemogućena</string>
     <string name="settings_confirm_mark_all_read">Potvrdite označavanje svega kao pročitano</string>
-    <string name="account_source_freshrss">FreshRSS</string>
+    <string name="account_source_freshrss" translatable="false">FreshRSS</string>
     <string name="account_source_reader">Čitač</string>
     <string name="add_account_local_subtitle">Na vašem uređaju</string>
     <string name="add_account_reader_subtitle">API za Google Reader koji se samostalno hostuje</string>
