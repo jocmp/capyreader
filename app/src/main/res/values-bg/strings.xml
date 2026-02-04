@@ -197,7 +197,7 @@
     <string name="add_account_feedbin_signup_prompt">Нямате Feedbin профил?</string>
     <string name="add_account_freshrss_signup_link_text">Научете повече.</string>
     <string name="account_source_reader">Четец</string>
-    <string name="auth_fields_api_url_placeholder">https://example.com/</string>
+    <string name="auth_fields_api_url_placeholder" translatable="false">https://example.com/</string>
     <string name="add_account_reader_subtitle">Самостоятелно хостван Google Reader API</string>
     <string name="add_account_feedbin_signup_link_text">Създайте такъв тук.</string>
     <string name="edit_feed_tag_section">Добавяне или избиране на етикет</string>
@@ -311,4 +311,9 @@
     <string name="audio_player_skip_forward">Прескочи 30 секунди напред</string>
     <string name="freshrss_nav_headline_categories">Категории</string>
     <string name="article_list_empty">Няма нищо тук</string>
+    <string name="account_source_miniflux" translatable="false"></string>
+    <string name="font_option_inter" translatable="false"></string>
+    <string name="font_option_literata" translatable="false"></string>
+    <string name="add_account_miniflux_subtitle" translatable="false"></string>
+    <string name="font_option_jost" translatable="false"></string>
 </resources>

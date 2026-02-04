@@ -300,4 +300,20 @@
     <string name="audio_player_close">Luk lydafspiller</string>
     <string name="audio_player_skip_back">Gå 30 sekunder tilbage</string>
     <string name="audio_player_skip_forward">Gå 30 sekunder frem</string>
+    <string name="account_source_miniflux" translatable="false"></string>
+    <string name="font_option_vollkorn" translatable="false"></string>
+    <string name="add_account_feedbin_subtitle" translatable="false"></string>
+    <string name="account_source_feedbin" translatable="false"></string>
+    <string name="font_option_poppins" translatable="false"></string>
+    <string name="article_list_empty"></string>
+    <string name="add_account_freshrss_subtitle" translatable="false"></string>
+    <string name="auth_fields_api_url_placeholder" translatable="false"></string>
+    <string name="font_option_inter" translatable="false"></string>
+    <string name="freshrss_nav_headline_categories"></string>
+    <string name="font_option_literata" translatable="false"></string>
+    <string name="app_name" translatable="false"></string>
+    <string name="account_source_freshrss" translatable="false"></string>
+    <string name="add_account_miniflux_subtitle" translatable="false"></string>
+    <string name="font_option_atkinson_hyperlegible" translatable="false"></string>
+    <string name="font_option_jost" translatable="false"></string>
 </resources>

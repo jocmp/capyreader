@@ -69,7 +69,7 @@
     <string name="settings_top_bar_title">Podešavanja</string>
     <string name="update_auth_success_message">Uspešno ste prijavljeni</string>
     <string name="crash_reporting_checkbox_title">Omogućite slanje izveštaja o padu aplikacije</string>
-    <string name="account_source_feedbin">Feedbin</string>
+    <string name="account_source_feedbin" translatable="false">Feedbin</string>
     <string name="account_source_local">Lokalni</string>
     <string name="add_account_title">Dodaj Nalog</string>
     <string name="transfers_export_subscriptions">Izvezite Izvore</string>
@@ -111,9 +111,9 @@
     <string name="empty_onboarding_title">Još nema Izvora</string>
     <string name="empty_onboarding_prompt">Započni sa dodavanjem Izvora</string>
     <string name="article_style_options">Font Opcije</string>
-    <string name="font_option_vollkorn">Vollkorn</string>
-    <string name="font_option_atkinson_hyperlegible">Atkinson Hyperlegible</string>
-    <string name="font_option_poppins">Poppins</string>
+    <string name="font_option_vollkorn" translatable="false">Vollkorn</string>
+    <string name="font_option_atkinson_hyperlegible" translatable="false">Atkinson Hyperlegible</string>
+    <string name="font_option_poppins" translatable="false">Poppins</string>
     <string name="font_option_system_default">Sistemski podrazumevano</string>
     <string name="article_font_menu_label">Font</string>
     <string name="article_font_scale_label">Veličina Teksta</string>
@@ -234,4 +234,81 @@
     <string name="full_content_error_generic">Raščlanjivanje članka nije uspelo</string>
     <string name="full_content_error_forbidden">Preuzimanje blokirano od strane sajta</string>
     <string name="after_read_all_behavior_open_drawer">Otvorite fioku za navigaciju</string>
+    <string name="audio_player_close"></string>
+    <string name="media_save_success"></string>
+    <string name="tag_name_title"></string>
+    <string name="media_save_failure"></string>
+    <string name="mark_read_position_floating_action_button"></string>
+    <string name="settings_section_categories"></string>
+    <string name="actions_share_link"></string>
+    <string name="notification_mark_as_read_action"></string>
+    <string name="feed_nav_drawer_refresh_all"></string>
+    <string name="open_articles_in_browser"></string>
+    <string name="freshrss_visibility_option_category"></string>
+    <string name="account_source_miniflux" translatable="false"></string>
+    <string name="settings_option_show_today_filter"></string>
+    <string name="theme_mode_system"></string>
+    <string name="tag_action_delete_confirm"></string>
+    <string name="freshrss_visibility_option_main"></string>
+    <string name="media_share_failure"></string>
+    <string name="theme_monochrome"></string>
+    <string name="settings_option_enable_audio_player"></string>
+    <string name="add_account_miniflux_signup_prompt"></string>
+    <string name="mark_all_read_button_position"></string>
+    <string name="add_account_feedbin_subtitle" translatable="false"></string>
+    <string name="settings_gestures_improve_talkback_subtitle"></string>
+    <string name="auth_fields_client_certificate"></string>
+    <string name="audio_player_play"></string>
+    <string name="theme_mode_label"></string>
+    <string name="theme_mode_dark"></string>
+    <string name="settings_gestures_enable_horizontal_pagination_title"></string>
+    <string name="image_preview_menu_option_medium"></string>
+    <string name="actions_copy_link"></string>
+    <string name="delete_tag_error"></string>
+    <string name="theme_default"></string>
+    <string name="filter_today"></string>
+    <string name="settings_display_miscellaneous_title"></string>
+    <string name="settings_section_experimental"></string>
+    <string name="widget_receiver_headlines_title"></string>
+    <string name="media_save"></string>
+    <string name="audio_player_skip_forward"></string>
+    <string name="settings_gestures_improve_talkback_title"></string>
+    <string name="widget_headlines_account_error"></string>
+    <string name="tag_action_edit_success"></string>
+    <string name="selected"></string>
+    <string name="add_account_miniflux_signup_link_text"></string>
+    <string name="theme_dynamic"></string>
+    <string name="blocked_keywords_add_keyword"></string>
+    <string name="article_list_empty"></string>
+    <string name="article_list_swipe_disabled"></string>
+    <string name="settings_gestures_enable_horizontal_pagination_subtitle"></string>
+    <string name="add_account_freshrss_subtitle" translatable="false"></string>
+    <string name="freshrss_visibility"></string>
+    <string name="tag_action_delete_message"></string>
+    <string name="auth_fields_api_url_placeholder" translatable="false"></string>
+    <string name="theme_newsprint"></string>
+    <string name="blocked_keywords_remove_keyword"></string>
+    <string name="font_option_inter" translatable="false"></string>
+    <string name="audio_player_pause"></string>
+    <string name="freshrss_nav_headline_categories"></string>
+    <string name="font_option_literata" translatable="false"></string>
+    <string name="media_share"></string>
+    <string name="auth_fields_freshrss_api_password"></string>
+    <string name="freshrss_visibility_option_feed"></string>
+    <string name="audio_player_skip_back"></string>
+    <string name="mark_read_position_toolbar"></string>
+    <string name="widget_headlines_see_more_button"></string>
+    <string name="tag_action_edit_error"></string>
+    <string name="theme_sunset"></string>
+    <string name="article_list_swipe_next_feed"></string>
+    <string name="blocked_keywords_supporting_text"></string>
+    <string name="theme_mode_light"></string>
+    <string name="settings_pure_black_dark_mode"></string>
+    <string name="app_name" translatable="false"></string>
+    <string name="blocked_keywords"></string>
+    <string name="tag_action_delete_title"></string>
+    <string name="add_account_miniflux_subtitle" translatable="false"></string>
+    <string name="freshrss_visibility_option_important"></string>
+    <string name="auth_fields_remove_client_cert"></string>
+    <string name="font_option_jost" translatable="false"></string>
 </resources>

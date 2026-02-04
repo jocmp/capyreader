@@ -308,4 +308,12 @@
     <string name="article_list_empty">Nada por aquí</string>
     <string name="freshrss_visibility_option_feed">Contenido</string>
     <string name="freshrss_visibility_option_main">Corriente principal</string>
+    <string name="account_source_miniflux" translatable="false"></string>
+    <string name="add_account_feedbin_subtitle" translatable="false"></string>
+    <string name="add_account_freshrss_subtitle" translatable="false"></string>
+    <string name="auth_fields_api_url_placeholder" translatable="false"></string>
+    <string name="font_option_inter" translatable="false"></string>
+    <string name="font_option_literata" translatable="false"></string>
+    <string name="add_account_miniflux_subtitle" translatable="false"></string>
+    <string name="font_option_jost" translatable="false"></string>
 </resources>

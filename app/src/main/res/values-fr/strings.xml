@@ -13,7 +13,7 @@
     <string name="folder_action_delete_title">Supprimer l’étiquette</string>
     <string name="settings_remove_account_button_service">Se déconnecter</string>
     <string name="settings_remove_account_title_service">Se déconnecter</string>
-    <string name="settings_remove_account_message_service">Voulez-vous vraiment vous déconnecter ?</string>
+    <string name="settings_remove_account_message_service">Voulez-vous vraiment vous déconnecter ?</string>
     <string name="settings_remove_account_confirm_service">Se déconnecter</string>
     <string name="settings_remove_account_title_local">Supprimer le compte</string>
     <string name="settings_remove_account_message_local">Voulez-vous vraiment supprimer votre compte ? Cela ne peut être annulé.</string>
@@ -308,4 +308,12 @@
     <string name="audio_player_skip_forward">Avancer de 30 sec</string>
     <string name="freshrss_nav_headline_categories">Catégories</string>
     <string name="article_list_empty">Rien ici</string>
+    <string name="account_source_miniflux" translatable="false"></string>
+    <string name="add_account_feedbin_subtitle" translatable="false"></string>
+    <string name="add_account_freshrss_subtitle" translatable="false"></string>
+    <string name="auth_fields_api_url_placeholder" translatable="false"></string>
+    <string name="font_option_inter" translatable="false"></string>
+    <string name="font_option_literata" translatable="false"></string>
+    <string name="add_account_miniflux_subtitle" translatable="false"></string>
+    <string name="font_option_jost" translatable="false"></string>
 </resources>

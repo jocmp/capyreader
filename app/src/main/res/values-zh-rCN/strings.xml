@@ -191,7 +191,7 @@
     <string name="auth_fields_api_url">服务器</string>
     <string name="account_source_freshrss" translatable="false">FreshRSS</string>
     <string name="settings_section_account_server">服务器</string>
-    <string name="auth_fields_api_url_placeholder">https://example.com/</string>
+    <string name="auth_fields_api_url_placeholder" translatable="false">https://example.com/</string>
     <string name="account_source_reader">Reader</string>
     <string name="add_account_local_subtitle">在设备上</string>
     <string name="add_account_feedbin_subtitle" translatable="false">feedbin.com</string>
@@ -310,4 +310,9 @@
     <string name="freshrss_nav_headline_categories">类别</string>
     <string name="article_list_empty">这里没东西</string>
     <string name="app_name" translatable="false"></string>
+    <string name="account_source_miniflux" translatable="false"></string>
+    <string name="font_option_inter" translatable="false"></string>
+    <string name="font_option_literata" translatable="false"></string>
+    <string name="add_account_miniflux_subtitle" translatable="false"></string>
+    <string name="font_option_jost" translatable="false"></string>
 </resources>

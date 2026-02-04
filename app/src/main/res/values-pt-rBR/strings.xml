@@ -69,7 +69,7 @@
     <string name="settings_top_bar_title">Configurações</string>
     <string name="update_auth_success_message">Logado com sucesso</string>
     <string name="crash_reporting_checkbox_title">Ligar relatório de erros</string>
-    <string name="account_source_feedbin">Feedbin</string>
+    <string name="account_source_feedbin" translatable="false">Feedbin</string>
     <string name="account_source_local">Local</string>
     <string name="add_account_title">Adicionar Conta</string>
     <string name="transfers_export_subscriptions">Exportar Inscrições</string>
@@ -111,9 +111,9 @@
     <string name="empty_onboarding_title">Sem artigos ainda</string>
     <string name="empty_onboarding_prompt">Comece adicionando um feed</string>
     <string name="article_style_options">Opções de estilo de fonte</string>
-    <string name="font_option_vollkorn">Vollkorn</string>
-    <string name="font_option_atkinson_hyperlegible">Atkinson Hyperlegible</string>
-    <string name="font_option_poppins">Poppins</string>
+    <string name="font_option_vollkorn" translatable="false">Vollkorn</string>
+    <string name="font_option_atkinson_hyperlegible" translatable="false">Atkinson Hyperlegible</string>
+    <string name="font_option_poppins" translatable="false">Poppins</string>
     <string name="font_option_system_default">Padrão do sistema</string>
     <string name="article_font_menu_label">Fonte</string>
     <string name="article_font_scale_label">Tamanho da fonte</string>
@@ -282,4 +282,39 @@
     <string name="theme_newsprint">Papel jornal</string>
     <string name="theme_monochrome">Monocromático</string>
     <string name="settings_pure_black_dark_mode">Modo escuro preto puro</string>
+    <string name="audio_player_close"></string>
+    <string name="settings_section_categories"></string>
+    <string name="open_articles_in_browser"></string>
+    <string name="freshrss_visibility_option_category"></string>
+    <string name="account_source_miniflux" translatable="false"></string>
+    <string name="settings_option_show_today_filter"></string>
+    <string name="theme_mode_system"></string>
+    <string name="freshrss_visibility_option_main"></string>
+    <string name="add_account_feedbin_subtitle" translatable="false"></string>
+    <string name="auth_fields_client_certificate"></string>
+    <string name="audio_player_play"></string>
+    <string name="theme_mode_label"></string>
+    <string name="theme_mode_dark"></string>
+    <string name="theme_default"></string>
+    <string name="filter_today"></string>
+    <string name="audio_player_skip_forward"></string>
+    <string name="selected"></string>
+    <string name="article_list_empty"></string>
+    <string name="add_account_freshrss_subtitle" translatable="false"></string>
+    <string name="freshrss_visibility"></string>
+    <string name="auth_fields_api_url_placeholder" translatable="false"></string>
+    <string name="font_option_inter" translatable="false"></string>
+    <string name="audio_player_pause"></string>
+    <string name="freshrss_nav_headline_categories"></string>
+    <string name="font_option_literata" translatable="false"></string>
+    <string name="auth_fields_freshrss_api_password"></string>
+    <string name="freshrss_visibility_option_feed"></string>
+    <string name="audio_player_skip_back"></string>
+    <string name="theme_sunset"></string>
+    <string name="theme_mode_light"></string>
+    <string name="app_name" translatable="false"></string>
+    <string name="add_account_miniflux_subtitle" translatable="false"></string>
+    <string name="freshrss_visibility_option_important"></string>
+    <string name="auth_fields_remove_client_cert"></string>
+    <string name="font_option_jost" translatable="false"></string>
 </resources>
