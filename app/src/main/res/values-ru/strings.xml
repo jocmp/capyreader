@@ -121,7 +121,7 @@
     <string name="refresh_on_start">При запуске</string>
     <string name="empty_onboarding_title">Пока нет лент</string>
     <string name="article_style_options">Варианты стиля шрифта</string>
-    <string name="font_option_vollkorn">Vollkorn</string>
+    <string name="font_option_vollkorn" translatable="false">Vollkorn</string>
     <string name="image_error_text">Ошибка загрузки изображения</string>
     <string name="article_byline_date_only">%1$s в %2$s</string>
     <string name="refresh_every_day">Каждый день</string>
@@ -168,15 +168,15 @@
     <string name="unauthorized_dialog_confirm_text">Войти</string>
     <string name="auth_fields_log_in_button">Войти</string>
     <string name="update_auth_success_message">Успешно вошли в систему</string>
-    <string name="account_source_feedbin">Feedbin</string>
+    <string name="account_source_feedbin" translatable="false">Feedbin</string>
     <string name="notifications_channel_title_opml_import">Импорт подписок</string>
     <string name="notifications_channel_title_feed_update">Обновления ленты</string>
     <string name="theme_menu_option_system_default">Системная по умолчанию</string>
     <string name="settings_article_list_summary">Аннотация</string>
     <string name="settings_article_list_shorten_titles">Сокращать заголовки</string>
     <string name="settings_option_full_content_title">Закрепить полное содержание</string>
-    <string name="font_option_atkinson_hyperlegible">Atkinson Hyperlegible</string>
-    <string name="font_option_poppins">Poppins</string>
+    <string name="font_option_atkinson_hyperlegible" translatable="false">Atkinson Hyperlegible</string>
+    <string name="font_option_poppins" translatable="false">Poppins</string>
     <string name="settings_option_auto_delete_articles_subtitle">Удалить прочитанные, не избранные, статьи старше 3 месяцев</string>
     <string name="settings_panel_general_title">Общие</string>
     <string name="article_bottom_bar_next_article">Перейти к следующей статье</string>
@@ -193,11 +193,11 @@
     <string name="settings_confirm_mark_all_read">Запрашивать подтверждение</string>
     <string name="settings_section_account_server">Сервер</string>
     <string name="auth_fields_api_url">Сервер</string>
-    <string name="account_source_freshrss">FreshRSS</string>
+    <string name="account_source_freshrss" translatable="false">FreshRSS</string>
     <string name="auth_fields_api_url_placeholder" translatable="false">https://example.com/</string>
     <string name="account_source_reader">Читалка</string>
-    <string name="add_account_feedbin_subtitle">feedbin.com</string>
-    <string name="add_account_freshrss_subtitle">freshrss.org</string>
+    <string name="add_account_feedbin_subtitle" translatable="false">feedbin.com</string>
+    <string name="add_account_freshrss_subtitle" translatable="false">freshrss.org</string>
     <string name="add_account_reader_subtitle">Личный хостинг Google Reader API</string>
     <string name="add_account_feedbin_signup_prompt">Нет аккаунта Feedbin?</string>
     <string name="add_account_freshrss_signup_link_text">Узнать больше.</string>
@@ -317,4 +317,5 @@
     <string name="font_option_literata" translatable="false"></string>
     <string name="add_account_miniflux_subtitle" translatable="false"></string>
     <string name="font_option_jost" translatable="false"></string>
+    <string name="app_name" translatable="false"></string>
 </resources>
