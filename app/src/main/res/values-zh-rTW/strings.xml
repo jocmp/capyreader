@@ -97,7 +97,7 @@
     <string name="settings_top_bar_title">設定</string>
     <string name="auth_fields_email">電子郵件</string>
     <string name="update_auth_success_message">登入成功</string>
-    <string name="account_source_feedbin">Feedbin</string>
+    <string name="account_source_feedbin" translatable="false">Feedbin</string>
     <string name="crash_reporting_checkbox_title">啟用崩潰報告</string>
     <string name="settings_account_title">帳戶</string>
     <string name="account_source_local">本地</string>
@@ -158,7 +158,7 @@
     <string name="settings_option_full_content_title">保持全文加載</string>
     <string name="refresh_on_start">啟動時</string>
     <string name="article_style_options">字體樣式選項</string>
-    <string name="font_option_vollkorn">Vollkorn</string>
+    <string name="font_option_vollkorn" translatable="false">Vollkorn</string>
     <string name="settings_article_list_feed_name">訂閱源名稱</string>
     <string name="settings_article_list_feed_icons">訂閱源圖標</string>
     <string name="settings_option_full_content_subtitle">記住選擇以加載全文</string>
@@ -174,8 +174,8 @@
     <string name="image_preview_menu_option_large">大</string>
     <string name="image_preview_label">圖片預覽</string>
     <string name="image_error_text">加載圖片時發生錯誤</string>
-    <string name="font_option_atkinson_hyperlegible">Atkinson Hyperlegible</string>
-    <string name="font_option_poppins">Poppins</string>
+    <string name="font_option_atkinson_hyperlegible" translatable="false">Atkinson Hyperlegible</string>
+    <string name="font_option_poppins" translatable="false">Poppins</string>
     <string name="font_option_system_default">系統預設</string>
     <string name="article_font_menu_label">字體</string>
     <string name="settings_option_auto_delete_articles_title">自動刪除文章</string>
@@ -188,13 +188,13 @@
     <string name="filter_action_menu_search_articles">搜尋文章</string>
     <string name="feed_list_top_bar_close_search">取消搜尋</string>
     <string name="article_bottom_bar_next_article">下一篇文章</string>
-    <string name="account_source_freshrss">FreshRSS</string>
+    <string name="account_source_freshrss" translatable="false">FreshRSS</string>
     <string name="settings_section_account_server">伺服器</string>
     <string name="auth_fields_api_url">伺服器</string>
     <string name="auth_fields_api_url_placeholder" translatable="false">https://example.com/</string>
     <string name="account_source_reader">Reader</string>
-    <string name="add_account_feedbin_subtitle">feedbin.com</string>
-    <string name="add_account_freshrss_subtitle">freshrss.org</string>
+    <string name="add_account_feedbin_subtitle" translatable="false">feedbin.com</string>
+    <string name="add_account_freshrss_subtitle" translatable="false">freshrss.org</string>
     <string name="add_account_reader_subtitle">自託管的 Google Reader API</string>
     <string name="add_account_local_subtitle">在您的裝置上</string>
     <string name="add_account_feedbin_signup_prompt">沒有 Feedbin 帳戶？</string>
