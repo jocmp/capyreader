@@ -192,7 +192,7 @@
     <string name="settings_gestures_reader_tap_to_page_title">E Mürekkep kaydırmak için dokun</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Makale içeriğinde gezinmek için dip köşelere dokunun</string>
     <string name="auth_fields_api_url">Sunucu</string>
-    <string name="account_source_freshrss">FreshRSS</string>
+    <string name="account_source_freshrss" translatable="false">FreshRSS</string>
     <string name="article_vertical_open_article_in_browser">Makaleyi tarayıcıda aç</string>
     <string name="edit_feed_tag_section">Etiket Ekle ya da Seç</string>
     <string name="settings_mark_read_on_scroll">Kaydırınca okundu olarak işaretle</string>
