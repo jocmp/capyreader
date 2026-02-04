@@ -307,6 +307,11 @@
     <string name="open_articles_in_browser">Open Articles In Browser</string>
     <string name="selected">Selected</string>
     <string name="auth_fields_freshrss_api_password">API Password</string>
+    <string name="auth_fields_miniflux_api_token">API Token</string>
+    <string name="auth_fields_miniflux_use_api_token">Use API Token instead</string>
+    <string name="auth_fields_miniflux_use_password">Use Password instead</string>
+    <string name="auth_fields_show_advanced">Advanced options</string>
+    <string name="auth_fields_hide_advanced">Hide advanced options</string>
     <string name="freshrss_visibility">Visibility</string>
     <string name="freshrss_visibility_option_main">Main Stream</string>
     <string name="freshrss_visibility_option_important">Important</string>

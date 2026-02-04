@@ -23,6 +23,7 @@ data class AccountSettingsStrings(
                 Source.FEEDBIN,
                 Source.FRESHRSS,
                 Source.MINIFLUX,
+                Source.MINIFLUX_TOKEN,
                 Source.READER -> AccountSettingsStrings(
                     dialogTitle = R.string.settings_remove_account_title_service,
                     dialogMessage = R.string.settings_remove_account_message_service,
