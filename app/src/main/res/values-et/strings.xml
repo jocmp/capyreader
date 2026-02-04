@@ -51,7 +51,7 @@
     <string name="settings_top_bar_title">Seadistused</string>
     <string name="update_auth_success_message">Sisselogimine õnnestus</string>
     <string name="crash_reporting_checkbox_title">Võta kasutusele rakenduse kokkujooksmistest teatamine</string>
-    <string name="account_source_feedbin">Feedbin</string>
+    <string name="account_source_feedbin" translatable="false">Feedbin</string>
     <string name="account_source_local">Kohalik andmekogu</string>
     <string name="add_account_title">Lisa kasutajakonto</string>
     <string name="transfers_export_subscriptions">Ekspordi tellimused</string>
@@ -80,8 +80,8 @@
     <string name="refresh_on_start">Rakenduse käivitamisel</string>
     <string name="empty_onboarding_title">Uudisvoogusid veel pole</string>
     <string name="article_style_options">Kirjatüübi välimuse eelistused</string>
-    <string name="font_option_atkinson_hyperlegible">Atkinson Hyperlegible</string>
-    <string name="font_option_poppins">Poppins</string>
+    <string name="font_option_atkinson_hyperlegible" translatable="false">Atkinson Hyperlegible</string>
+    <string name="font_option_poppins" translatable="false">Poppins</string>
     <string name="font_option_system_default">Süsteemi vaikimisi kirjatüüp</string>
     <string name="image_error_text">Viga pildi laadimisel</string>
     <string name="article_byline">%1$s %2$s, autoriks %3$s</string>
@@ -139,7 +139,7 @@
     <string name="settings_article_list_feed_icons">Uudisvoo ikoonid</string>
     <string name="settings_article_list_summary">Kokkuvõte</string>
     <string name="empty_onboarding_prompt">Alustuseks lisa mõni uudisvoog</string>
-    <string name="font_option_vollkorn">Vollkorn</string>
+    <string name="font_option_vollkorn" translatable="false">Vollkorn</string>
     <string name="article_font_menu_label">Kirjatüüp</string>
     <string name="article_font_scale_label">Fondi suurus</string>
     <string name="article_style_title_section">Pealkiri</string>
@@ -188,10 +188,10 @@
     <string name="settings_confirm_mark_all_read">Kinnita, et soovid kõik märkida loetuks</string>
     <string name="auth_fields_api_url">Server</string>
     <string name="settings_section_account_server">Server</string>
-    <string name="account_source_freshrss">FreshRSS</string>
+    <string name="account_source_freshrss" translatable="false">FreshRSS</string>
     <string name="add_account_local_subtitle">Sinu seadmes</string>
-    <string name="add_account_feedbin_subtitle">feedbin.com</string>
-    <string name="add_account_freshrss_subtitle">freshrss.org</string>
+    <string name="add_account_feedbin_subtitle" translatable="false">feedbin.com</string>
+    <string name="add_account_freshrss_subtitle" translatable="false">freshrss.org</string>
     <string name="add_account_feedbin_signup_link_text">Saad selle siin luua.</string>
     <string name="add_account_freshrss_signup_link_text">Lisateavet leiad siit.</string>
     <string name="auth_fields_api_url_placeholder">https://example.com/</string>
@@ -310,4 +310,5 @@
     <string name="audio_player_skip_forward">Keri 30 sekundit edasi</string>
     <string name="freshrss_nav_headline_categories">Kategooriad</string>
     <string name="article_list_empty">Siin pole mitte midagi</string>
+    <string name="app_name" translatable="false"></string>
 </resources>
