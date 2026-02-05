@@ -163,7 +163,7 @@ interface Miniflux {
         suspend fun verifyToken(
             token: String,
             baseURL: String
-        ): Boolean {
+        ): Response<User>? {
             val client = OkHttpClient.Builder()
                 .addInterceptor { chain ->
                     val request = chain.request().newBuilder()
@@ -176,10 +176,9 @@ interface Miniflux {
             val miniflux = create(client, baseURL)
 
             return try {
-                val response = miniflux.me()
-                response.isSuccessful
+                return miniflux.me()
             } catch (_: Exception) {
-                false
+                null
             }
         }
     }

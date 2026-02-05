@@ -13,23 +13,29 @@ internal data class MinifluxCredentials(
     override val clientCertAlias: String = ""
 
     override suspend fun verify(): Result<Credentials> {
-        val verified = if (source == Source.MINIFLUX_TOKEN) {
-            Miniflux.verifyToken(
+        if (source == Source.MINIFLUX_TOKEN) {
+            val response = Miniflux.verifyToken(
                 token = secret,
                 baseURL = url
             )
+
+            val username = response?.body()?.username
+
+            if (response?.isSuccessful == true && username != null) {
+                return Result.success(this.copy(username = username))
+            }
         } else {
-            Miniflux.verifyCredentials(
+            val verified = Miniflux.verifyCredentials(
                 username = username,
                 password = secret,
                 baseURL = url
             )
+
+            if (verified) {
+                return Result.success(this)
+            }
         }
 
-        return if (verified) {
-            Result.success(this)
-        } else {
-            Result.failure(Throwable("Failed to verify Miniflux credentials"))
-        }
+        return Result.failure(Throwable("Failed to verify Miniflux credentials"))
     }
 }
