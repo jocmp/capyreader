@@ -1,0 +1,3 @@
+• Add Miniflux API token authentication
+• Fix pull-to-refresh on empty article pages
+• Update translations for Bulgarian, Chinese, French, and Italian thanks to volunteers!

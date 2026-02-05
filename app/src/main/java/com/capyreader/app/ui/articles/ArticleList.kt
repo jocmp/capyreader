@@ -53,11 +53,6 @@ fun ArticleList(
     val localDensity = LocalDensity.current
     var listHeight by remember { mutableStateOf(0.dp) }
 
-    if (articles.loadState.isIdle && articles.itemCount == 0) {
-        ArticleListEmptyView()
-        return
-    }
-
     LazyScrollbar(state = listState) {
         LazyColumn(
             state = listState,

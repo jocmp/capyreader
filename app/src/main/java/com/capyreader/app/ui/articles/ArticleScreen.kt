@@ -582,19 +582,23 @@ fun ArticleScreen(
                                     requestNextFeed()
                                 },
                             ) {
-                                ArticleList(
-                                    articles = articles,
-                                    selectedArticleKey = article?.id,
-                                    listState = listState,
-                                    enableMarkReadOnScroll = enableMarkReadOnScroll,
-                                    refreshingAll = viewModel.refreshingAll,
-                                    onMarkAllRead = { range ->
-                                        onMarkAllRead(range)
-                                    },
-                                    onSelect = { articleID ->
-                                        selectArticle(articleID)
-                                    },
-                                )
+                                if (isRefreshInitialized && articles.itemCount == 0) {
+                                    ArticleListEmptyView()
+                                } else {
+                                    ArticleList(
+                                        articles = articles,
+                                        selectedArticleKey = article?.id,
+                                        listState = listState,
+                                        enableMarkReadOnScroll = enableMarkReadOnScroll,
+                                        refreshingAll = viewModel.refreshingAll,
+                                        onMarkAllRead = { range ->
+                                            onMarkAllRead(range)
+                                        },
+                                        onSelect = { articleID ->
+                                            selectArticle(articleID)
+                                        },
+                                    )
+                                }
                             }
                         }
                     }
