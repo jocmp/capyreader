@@ -41,9 +41,8 @@ import org.koin.androidx.compose.koinViewModel
 fun DisplaySettingsPanel(
     viewModel: DisplaySettingsViewModel = koinViewModel(),
 ) {
-    val pinArticleBars by viewModel.pinArticleBars.collectChangesWithCurrent()
+    val autoHideToolbar by viewModel.autoHideToolbar.collectChangesWithCurrent()
     val improveTalkback by viewModel.improveTalkback.collectChangesWithCurrent()
-    val enableBottomBarActions by viewModel.enableBottomBarActions.collectChangesWithCurrent()
     val markReadButtonPosition by viewModel.markReadButtonPosition.collectChangesWithCurrent()
 
     DisplaySettingsPanelView(
@@ -52,11 +51,9 @@ fun DisplaySettingsPanel(
         pureBlackDarkMode = viewModel.pureBlackDarkMode,
         updatePureBlackDarkMode = viewModel::updatePureBlackDarkMode,
         appPreferences = viewModel.appPreferences,
-        updatePinArticleBars = viewModel::updatePinArticleBars,
-        updateBottomBarActions = viewModel::updateBottomBarActions,
-        enableBottomBarActions = enableBottomBarActions,
-        pinArticleBars = pinArticleBars,
-        enablePinArticleBars = !improveTalkback,
+        autoHideToolbar = autoHideToolbar,
+        updateAutoHideToolbar = viewModel::updateAutoHideToolbar,
+        enableAutoHideToolbar = !improveTalkback,
         updateImageVisibility = viewModel::updateImageVisibility,
         imageVisibility = viewModel.imageVisibility,
         layout = viewModel.layout,
@@ -87,11 +84,9 @@ fun DisplaySettingsPanelView(
     pureBlackDarkMode: Boolean,
     updatePureBlackDarkMode: (Boolean) -> Unit,
     appPreferences: AppPreferences?,
-    updatePinArticleBars: (enable: Boolean) -> Unit,
-    updateBottomBarActions: (enable: Boolean) -> Unit,
-    pinArticleBars: Boolean,
-    enableBottomBarActions: Boolean,
-    enablePinArticleBars: Boolean,
+    autoHideToolbar: Boolean,
+    updateAutoHideToolbar: (enable: Boolean) -> Unit,
+    enableAutoHideToolbar: Boolean,
     imageVisibility: ReaderImageVisibility,
     layout: LayoutPreference,
     markReadButtonPosition: MarkReadPosition,
@@ -141,17 +136,10 @@ fun DisplaySettingsPanelView(
             )
             RowItem {
                 TextSwitch(
-                    enabled = enablePinArticleBars,
-                    checked = pinArticleBars,
-                    onCheckedChange = updatePinArticleBars,
-                    title = stringResource(R.string.settings_options_reader_pin_top_toolbar),
-                )
-            }
-            RowItem {
-                TextSwitch(
-                    checked = enableBottomBarActions,
-                    onCheckedChange = updateBottomBarActions,
-                    title = stringResource(R.string.settings_options_reader_show_bottom_toolbar),
+                    enabled = enableAutoHideToolbar,
+                    checked = autoHideToolbar,
+                    onCheckedChange = updateAutoHideToolbar,
+                    title = stringResource(R.string.settings_options_reader_auto_hide_toolbars),
                 )
             }
         }
@@ -245,13 +233,11 @@ private fun DisplaySettingsPanelViewPreview() {
                     updateFontScale = {},
                     updateShortenTitles = {},
                 ),
-                updatePinArticleBars = {},
-                pinArticleBars = false,
+                autoHideToolbar = true,
+                updateAutoHideToolbar = {},
                 updateImageVisibility = {},
-                updateBottomBarActions = {},
                 imageVisibility = ReaderImageVisibility.ALWAYS_SHOW,
-                enablePinArticleBars = false,
-                enableBottomBarActions = false,
+                enableAutoHideToolbar = true,
                 markReadButtonPosition = MarkReadPosition.TOOLBAR,
                 updateMarkReadButtonPosition = {}
             )

@@ -211,6 +211,8 @@
     <string name="settings_reader_title">Reader</string>
     <string name="settings_options_reader_pin_top_toolbar">Pin Top Toolbar</string>
     <string name="settings_options_reader_show_bottom_toolbar">Show Actions on Bottom Toolbar</string>
+    <string name="settings_options_reader_auto_hide_toolbars">Auto Hide Toolbars</string>
+    <string name="settings_gestures_pull_to_switch_article">Pull to switch article</string>
     <string name="article_bottom_bar_next_article">Go to next article</string>
     <string name="settings_gestures_reader_swipe_down">Swipe Down</string>
     <string name="settings_gestures_reader_swipe_up">Swipe Up</string>

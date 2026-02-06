@@ -46,6 +46,8 @@ fun GesturesSettingPanel(
         topSwipe = viewModel.readerTopSwipe,
         updateImproveTalkback = viewModel::updateImproveTalkback,
         improveTalkback = viewModel.improveTalkback,
+        pullToSwitchArticle = viewModel.pullToSwitchArticle,
+        updatePullToSwitchArticle = viewModel::updatePullToSwitchArticle,
     )
 }
 
@@ -68,7 +70,9 @@ private fun GesturesSettingsPanelView(
     listSwipeBottom: ArticleListVerticalSwipe,
     topSwipe: ArticleVerticalSwipe,
     updateImproveTalkback: (improve: Boolean) -> Unit,
-    improveTalkback: Boolean
+    improveTalkback: Boolean,
+    pullToSwitchArticle: Boolean,
+    updatePullToSwitchArticle: (enabled: Boolean) -> Unit,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -97,6 +101,15 @@ private fun GesturesSettingsPanelView(
                     disabledOption = ArticleVerticalSwipe.DISABLED,
                     optionText = { stringResource(it.translationKey) }
                 )
+
+                RowItem {
+                    TextSwitch(
+                        onCheckedChange = updatePullToSwitchArticle,
+                        checked = pullToSwitchArticle,
+                        enabled = !improveTalkback,
+                        title = stringResource(R.string.settings_gestures_pull_to_switch_article),
+                    )
+                }
 
                 RowItem {
                     TextSwitch(
@@ -191,7 +204,9 @@ fun GesturesSettingsPanelPreview() {
             enableHorizontalPagination = true,
             listSwipeBottom = ArticleListVerticalSwipe.NEXT_FEED,
             improveTalkback = true,
-            updateImproveTalkback = {}
+            updateImproveTalkback = {},
+            pullToSwitchArticle = true,
+            updatePullToSwitchArticle = {},
         )
     }
 }

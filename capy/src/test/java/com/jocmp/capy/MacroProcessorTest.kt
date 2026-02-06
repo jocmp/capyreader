@@ -116,7 +116,7 @@ class MacroProcessorTest {
             "#625B71",       // color_secondary
             "#F3EDF7",       // color_surface_container
             "#6750A4",       // color_surface_tint
-            "64px",          // top_margin
+            "100px",         // top_margin
             "16px",          // font_size
             "pre-wrap",      // pre_white_space
             """<link rel="preload" href="https://appassets.androidplatform.net/res/font/system.ttf" as="font" type="font/ttf" crossorigin>""", // font_preload
@@ -140,7 +140,7 @@ class MacroProcessorTest {
             "color_secondary" to "#625B71",
             "color_surface_container" to "#F3EDF7",
             "color_surface_tint" to "#6750A4",
-            "top_margin" to "64px",
+            "top_margin" to "100px",
             "font_size" to "16px",
             "pre_white_space" to "pre-wrap",
             "font_preload" to """<link rel="preload" href="https://appassets.androidplatform.net/res/font/system.ttf" as="font" type="font/ttf" crossorigin>""",

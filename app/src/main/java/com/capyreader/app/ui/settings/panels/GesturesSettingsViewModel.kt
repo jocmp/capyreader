@@ -40,6 +40,9 @@ class GesturesSettingsViewModel(
     var improveTalkback by mutableStateOf(readerOptions.improveTalkback.get())
         private set
 
+    var pullToSwitchArticle by mutableStateOf(readerOptions.pullToSwitchArticle.get())
+        private set
+
     fun updateBackAction(action: BackAction) {
         backAction = action
 
@@ -52,13 +55,20 @@ class GesturesSettingsViewModel(
         readerOptions.improveTalkback.set(improve)
 
         if (improve) {
-            readerOptions.pinTopToolbar.set(true)
+            readerOptions.autoHideToolbar.set(false)
+            updatePullToSwitchArticle(false)
             updateReaderTopSwipe(ArticleVerticalSwipe.DISABLED)
             updateReaderBottomSwipe(ArticleVerticalSwipe.DISABLED)
         } else {
             updateReaderTopSwipe(ArticleVerticalSwipe.topSwipeDefault)
             updateReaderBottomSwipe(ArticleVerticalSwipe.bottomSwipeDefault)
         }
+    }
+
+    fun updatePullToSwitchArticle(enabled: Boolean) {
+        pullToSwitchArticle = enabled
+
+        readerOptions.pullToSwitchArticle.set(enabled)
     }
 
     fun updateReaderTopSwipe(swipe: ArticleVerticalSwipe) {

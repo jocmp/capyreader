@@ -63,7 +63,7 @@ class MacroProcessorBenchmark {
         "color_secondary" to "#FF625B71",
         "color_surface_container" to "#FFF3EDF7",
         "color_surface_tint" to "#FF6200EE",
-        "top_margin" to "64px",
+        "top_margin" to "100px",
         "font_size" to "16px",
         "pre_white_space" to "pre-wrap",
         "font_preload" to "",

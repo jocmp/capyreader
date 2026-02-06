@@ -1,13 +1,11 @@
 package com.capyreader.app.ui.articles.list
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.KeyboardArrowDown
+import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalHapticFeedback
-import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
+import com.capyreader.app.ui.components.pulltoload.PullToLoadIndicator
+import com.capyreader.app.ui.components.pulltoload.pullToLoad
+import com.capyreader.app.ui.components.pulltoload.rememberPullToLoadState
 
 @Composable
 fun PullToNextFeedBox(
@@ -16,20 +14,20 @@ fun PullToNextFeedBox(
     onRequestNext: () -> Unit,
     content: @Composable () -> Unit,
 ) {
-    val haptics = LocalHapticFeedback.current
+    val state = rememberPullToLoadState(
+        key = "feed_list",
+        onLoadPrevious = null,
+        onLoadNext = if (enabled) {
+            { onRequestNext() }
+        } else null,
+    )
 
-    val triggerThreshold = {
-        haptics.performHapticFeedback(HapticFeedbackType.LongPress)
-    }
-
-    SwipeRefresh(
-        onRefresh = { onRequestNext() },
-        swipeEnabled = enabled,
-        onTriggerThreshold = { triggerThreshold() },
-        indicatorAlignment = Alignment.BottomCenter,
-        icon = Icons.Rounded.KeyboardArrowDown,
-        modifier = modifier,
-    ) {
+    Box(modifier.pullToLoad(state = state, enabled = enabled)) {
         content()
+        PullToLoadIndicator(
+            state = state,
+            canLoadPrevious = false,
+            canLoadNext = enabled,
+        )
     }
 }

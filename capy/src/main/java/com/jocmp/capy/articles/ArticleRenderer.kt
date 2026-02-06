@@ -13,7 +13,6 @@ class ArticleRenderer(
     private val titleFontSize: Preference<Int>,
     private val textAlignment: Preference<TextAlignment>,
     private val titleFollowsBodyFont: Preference<Boolean>,
-    private val hideTopMargin: Preference<Boolean>,
     private val enableHorizontalScroll: Preference<Boolean>,
     private val audioPlayerLabels: AudioPlayerLabels = AudioPlayerLabels(),
 ) {
@@ -85,11 +84,7 @@ class ArticleRenderer(
     }
 
     private fun topMargin(): String {
-        return if (hideTopMargin.get()) {
-            "0px"
-        } else {
-            "64px"
-        }
+        return "100px"
     }
 
     private fun preWhiteSpace(): String {
