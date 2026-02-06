@@ -138,7 +138,6 @@ fun ArticleView(
                     previousArticleId = previousArticleId,
                     nextArticleId = nextArticleId,
                 ) { targetArticle ->
-                    // resets to zero offset when the article changes.
                     val pullToLoadState = rememberPullToLoadState(
                         key = targetArticle.id,
                         onLoadPrevious = if (enableTopSwipe) {

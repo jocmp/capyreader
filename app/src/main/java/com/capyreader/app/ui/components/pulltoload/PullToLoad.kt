@@ -214,18 +214,11 @@ class PullToLoadState internal constructor(
 
     internal fun onRelease(): Float {
         when (status) {
-            Status.PulledDown -> {
-                onLoadPrevious.value?.let { it() } ?: animateDistanceTo(0f)
-            }
-
-            Status.PulledUp -> {
-                onLoadNext.value?.let { it() } ?: animateDistanceTo(0f)
-            }
-
-            else -> {
-                animateDistanceTo(0f)
-            }
+            Status.PulledDown -> onLoadPrevious.value?.invoke()
+            Status.PulledUp -> onLoadNext.value?.invoke()
+            else -> {}
         }
+        animateDistanceTo(0f)
         return 0f
     }
 
