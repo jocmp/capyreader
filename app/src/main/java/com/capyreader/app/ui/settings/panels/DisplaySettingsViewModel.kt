@@ -13,6 +13,7 @@ import com.capyreader.app.preferences.AppTheme
 import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.capyreader.app.ui.articles.MarkReadPosition
 import com.jocmp.capy.Account
+import com.jocmp.capy.accounts.Source
 
 class DisplaySettingsViewModel(
     val account: Account,
@@ -36,6 +37,9 @@ class DisplaySettingsViewModel(
     private val _showFeedIcons =
         mutableStateOf(appPreferences.articleListOptions.showFeedIcons.get())
 
+    private val _showReadingTime =
+        mutableStateOf(appPreferences.articleListOptions.showReadingTime.get())
+
     private val _shortenTitles = mutableStateOf(appPreferences.articleListOptions.shortenTitles.get())
 
     var fontScale by mutableStateOf(appPreferences.articleListOptions.fontScale.get())
@@ -55,8 +59,14 @@ class DisplaySettingsViewModel(
     val showFeedIcons: Boolean
         get() = _showFeedIcons.value
 
+    val showReadingTime: Boolean
+        get() = _showReadingTime.value
+
     val shortenTitles: Boolean
         get() = _shortenTitles.value
+
+    val source: Source
+        get() = account.source
 
     val pinArticleBars = appPreferences.readerOptions.pinTopToolbar
 
@@ -137,6 +147,12 @@ class DisplaySettingsViewModel(
         appPreferences.articleListOptions.showFeedName.set(show)
 
         _showFeedName.value = show
+    }
+
+    fun updateShowReadingTime(show: Boolean) {
+        appPreferences.articleListOptions.showReadingTime.set(show)
+
+        _showReadingTime.value = show
     }
 
     fun updateShortenTitles(shortenTitles: Boolean) {

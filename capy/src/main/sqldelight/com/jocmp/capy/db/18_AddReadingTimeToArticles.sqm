@@ -1,0 +1,1 @@
+ALTER TABLE articles ADD COLUMN reading_time_minutes INTEGER;

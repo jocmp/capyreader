@@ -70,12 +70,15 @@ fun DisplaySettingsPanel(
             showFeedIcons = viewModel.showFeedIcons,
             showFeedName = viewModel.showFeedName,
             shortenTitles = viewModel.shortenTitles,
+            showReadingTime = viewModel.showReadingTime,
+            showReadingTimeToggle = viewModel.source.isMiniflux,
             updateImagePreview = viewModel::updateImagePreview,
             updateSummary = viewModel::updateSummary,
             updateFeedName = viewModel::updateFeedName,
             updateFeedIcons = viewModel::updateFeedIcons,
             updateFontScale = viewModel::updateFontScale,
             updateShortenTitles = viewModel::updateShortenTitles,
+            updateShowReadingTime = viewModel::updateShowReadingTime,
         )
     )
 }

@@ -26,6 +26,8 @@ data class ArticleListOptions(
     val showFeedName: Boolean,
     val showSummary: Boolean,
     val shortenTitles: Boolean,
+    val showReadingTime: Boolean = false,
+    val showReadingTimeToggle: Boolean = false,
     val fontScale: ArticleListFontScale,
     val updateFeedIcons: (show: Boolean) -> Unit,
     val updateFeedName: (show: Boolean) -> Unit,
@@ -33,6 +35,7 @@ data class ArticleListOptions(
     val updateSummary: (show: Boolean) -> Unit,
     val updateFontScale: (scale: ArticleListFontScale) -> Unit,
     val updateShortenTitles: (show: Boolean) -> Unit,
+    val updateShowReadingTime: (show: Boolean) -> Unit = {},
 )
 
 @Composable
@@ -63,6 +66,13 @@ fun ArticleListSettings(
                 checked = options.shortenTitles,
                 title = stringResource(R.string.settings_article_list_shorten_titles)
             )
+            if (options.showReadingTimeToggle) {
+                TextSwitch(
+                    onCheckedChange = options.updateShowReadingTime,
+                    checked = options.showReadingTime,
+                    title = stringResource(R.string.settings_article_list_show_reading_time)
+                )
+            }
         }
 
         PreferenceSelect(

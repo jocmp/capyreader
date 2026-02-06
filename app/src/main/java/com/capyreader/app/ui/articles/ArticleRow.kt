@@ -39,6 +39,7 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDirection
@@ -72,6 +73,7 @@ data class ArticleRowOptions(
     val showIcon: Boolean = true,
     val showSummary: Boolean = true,
     val showFeedName: Boolean = true,
+    val showReadingTime: Boolean = false,
     val imagePreview: ImagePreview = ImagePreview.default,
     val fontScale: ArticleListFontScale = ArticleListFontScale.MEDIUM,
     val shortenTitles: Boolean = true,
@@ -161,6 +163,22 @@ fun ArticleRow(
                                     modifier = Modifier
                                         .width(16.dp.relative(options.fontScale))
                                         .padding(end = 2.dp)
+                                )
+                            }
+                            val readingTime = article.readingTimeMinutes
+                            if (options.showReadingTime && readingTime != null) {
+                                Text(
+                                    text = pluralStringResource(
+                                        R.plurals.reading_time_minutes,
+                                        readingTime.toInt(),
+                                        readingTime.toInt(),
+                                    ),
+                                    color = feedNameColor,
+                                    maxLines = 1,
+                                )
+                                Text(
+                                    text = " · ",
+                                    color = feedNameColor,
                                 )
                             }
                             Text(

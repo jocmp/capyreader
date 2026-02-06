@@ -12,6 +12,7 @@ interface Credentials {
     val url: String
     val clientCertAlias: String
     val source: Source
+    val showReadingTime: Boolean get() = false
 
     suspend fun verify(): Result<Credentials>
 
