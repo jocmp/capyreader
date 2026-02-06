@@ -93,7 +93,9 @@ class LoginViewModel(
     }
 
     fun submit(onSuccess: () -> Unit) {
-        if (username.isBlank() || password.isBlank()) {
+        val missingUsername = source.requiresUsername && username.isBlank()
+
+        if (missingUsername || password.isBlank()) {
             _result = Async.Failure(loginError())
         }
 

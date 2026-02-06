@@ -101,26 +101,28 @@ fun AuthFields(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = Modifier.imePadding()
     ) {
-        TextField(
-            value = username,
-            onValueChange = onUsernameChange,
-            singleLine = true,
-            enabled = !readOnlyUsername,
-            readOnly = readOnlyUsername,
-            label = {
-                Text(stringResource(source.usernameKey))
-            },
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Next,
-                keyboardType = KeyboardType.Email
-            ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .autofill(
-                    listOf(EmailAddress),
-                    onFill = onUsernameChange
-                )
-        )
+        if (source.requiresUsername) {
+            TextField(
+                value = username,
+                onValueChange = onUsernameChange,
+                singleLine = true,
+                enabled = !readOnlyUsername,
+                readOnly = readOnlyUsername,
+                label = {
+                    Text(stringResource(source.usernameKey))
+                },
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Next,
+                    keyboardType = KeyboardType.Email
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .autofill(
+                        listOf(EmailAddress),
+                        onFill = onUsernameChange
+                    )
+            )
+        }
         Column {
             if (hasApiToken) {
                 TextField(
