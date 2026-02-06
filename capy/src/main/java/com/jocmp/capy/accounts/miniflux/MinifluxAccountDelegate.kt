@@ -319,8 +319,8 @@ internal class MinifluxAccountDelegate(
             entries.forEach { entry ->
                 val updated = TimeHelpers.nowUTC()
                 val articleID = entry.id.toString()
-                val enclosure = entry.enclosures?.firstOrNull()
-                val enclosureType = enclosure?.mime_type
+                val imageURL = MinifluxEnclosureParsing.parsedImageURL(entry)
+                val enclosures = entry.enclosures.orEmpty()
 
                 database.articlesQueries.create(
                     id = articleID,
@@ -331,9 +331,9 @@ internal class MinifluxAccountDelegate(
                     extracted_content_url = null,
                     url = entry.url,
                     summary = null,
-                    image_url = null,
+                    image_url = imageURL,
                     published_at = entry.published_at.toDateTime?.toEpochSecond(),
-                    enclosure_type = enclosureType,
+                    enclosure_type = enclosures.firstOrNull()?.mime_type,
                 )
 
                 articleRecords.createStatus(
@@ -342,10 +342,10 @@ internal class MinifluxAccountDelegate(
                     read = entry.status == EntryStatus.READ
                 )
 
-                if (enclosure != null && enclosureType != null) {
+                enclosures.forEach { enclosure ->
                     enclosureRecords.create(
                         url = enclosure.url,
-                        type = enclosureType,
+                        type = enclosure.mime_type,
                         articleID = articleID,
                         itunesDurationSeconds = null,
                         itunesImage = null,
