@@ -87,7 +87,7 @@ class AppPreferences(context: Context) {
     }
 
     class ReaderOptions(private val preferenceStore: PreferenceStore) {
-        val pinTopToolbar: Preference<Boolean>
+        val pinToolbars: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_pin_top_bar", false)
 
         val fontSize: Preference<Int>

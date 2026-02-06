@@ -7,6 +7,7 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,6 +22,7 @@ import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarOutline
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -72,14 +74,19 @@ fun ArticleBottomBar(
         ) {
             val view = LocalView.current
 
-            Surface(
-                color = MaterialTheme.colorScheme.surfaceContainer
-            ) {
-                Row(
+            Column {
+                HorizontalDivider(
+                    color = MaterialTheme.colorScheme.surfaceContainerHighest,
+                    thickness = 0.5f.dp,
+                )
+                Surface(
+                    color = MaterialTheme.colorScheme.surface
+                ) {
+                    Row(
                     modifier = Modifier
                         .navigationBarsPadding()
                         .fillMaxWidth()
-                        .height(60.dp),
+                        .height(ArticleBarDefaults.BottomBarHeight),
                     horizontalArrangement = Arrangement.SpaceAround,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
@@ -162,6 +169,7 @@ fun ArticleBottomBar(
                         }
                     }
                 }
+            }
             }
         }
     }

@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material.icons.Icons
@@ -48,6 +49,7 @@ private val sizeSpec = spring<IntSize>(stiffness = 700f)
 @Composable
 fun ArticleTopBar(
     show: Boolean,
+    isScrolled: Boolean,
     articleId: String,
     onClose: () -> Unit,
 ) {
@@ -121,6 +123,12 @@ fun ArticleTopBar(
                     ),
                 )
             }
+            if (isScrolled) {
+                HorizontalDivider(
+                    color = MaterialTheme.colorScheme.surfaceContainerHighest,
+                    thickness = 0.5f.dp,
+                )
+            }
         }
     }
 
@@ -144,6 +152,7 @@ private fun ArticleTopBarPreview() {
     PreviewKoinApplication {
         ArticleTopBar(
             show = true,
+            isScrolled = false,
             articleId = "",
             onClose = {}
         )

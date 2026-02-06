@@ -3,8 +3,12 @@ package com.capyreader.app.ui.articles.detail
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Article
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
@@ -17,16 +21,11 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
-import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
@@ -120,63 +119,64 @@ fun ArticleView(
         }
     }
 
-    val pinToolbar by appPreferences.readerOptions.pinTopToolbar.collectChangesWithDefault()
-    var isReaderScrollingDown by remember { mutableStateOf(false) }
-    val showToolBar = pinToolbar || !isReaderScrollingDown
-
-    val scrollConnection = remember {
-        object : NestedScrollConnection {
-            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-                if (kotlin.math.abs(available.y) > 2f) {
-                    isReaderScrollingDown = available.y < 0f
-                }
-                return Offset.Zero
-            }
-        }
-    }
+    val pinToolbars by appPreferences.readerOptions.pinToolbars.collectChangesWithDefault()
+    val scrollState = rememberArticleScrollState()
+    val showToolBar = pinToolbars || !scrollState.isScrollingDown
 
     LaunchedEffect(article.id) {
-        isReaderScrollingDown = false
+        scrollState.reset()
     }
 
     val snackbarHostState = remember { SnackbarHostState() }
 
+    val contentPadding = rememberContentPadding(pinToolbars)
+
     CompositionLocalProvider(
         LocalSnackbarHost provides snackbarHostState,
     ) {
-        Box(Modifier.fillMaxSize().nestedScroll(scrollConnection)) {
-            ArticlePullRefresh(
-                onSwipe = onSwipe,
-                hasPreviousArticle = hasPrevious,
-                hasNextArticle = hasNext,
+        Box(Modifier
+            .fillMaxSize()
+            .nestedScroll(scrollState.connection)) {
+            Box(
+                modifier = Modifier
+                    .padding(contentPadding)
+                    .fillMaxSize()
             ) {
-                HorizontalReaderPager(
-                    enabled = enableHorizontalPager,
-                    enablePrevious = hasPrevious,
-                    enableNext = hasNext,
-                    onSelectPrevious = { selectPrevious() },
-                    onSelectNext = { selectNext() },
+                ArticlePullRefresh(
+                    onSwipe = onSwipe,
+                    hasPreviousArticle = hasPrevious,
+                    pinToolbars = pinToolbars,
+                    hasNextArticle = hasNext,
                 ) {
-                    ArticleTransition(
-                        article = article,
-                        enableHorizontalPager = enableHorizontalPager,
-                        previousArticleId = previousArticleId,
-                        nextArticleId = nextArticleId,
-                    ) { targetArticle ->
-                        ArticleReader(
-                            article = targetArticle,
-                            onSelectMedia = onSelectMedia,
-                            onSelectAudio = onSelectAudio,
-                            onPauseAudio = onPauseAudio,
-                            currentAudioUrl = currentAudioUrl,
-                            isAudioPlaying = isAudioPlaying,
-                        )
+                    HorizontalReaderPager(
+                        enabled = enableHorizontalPager,
+                        enablePrevious = hasPrevious,
+                        enableNext = hasNext,
+                        onSelectPrevious = { selectPrevious() },
+                        onSelectNext = { selectNext() },
+                    ) {
+                        ArticleTransition(
+                            article = article,
+                            enableHorizontalPager = enableHorizontalPager,
+                            previousArticleId = previousArticleId,
+                            nextArticleId = nextArticleId,
+                        ) { targetArticle ->
+                            ArticleReader(
+                                article = targetArticle,
+                                onSelectMedia = onSelectMedia,
+                                onSelectAudio = onSelectAudio,
+                                onPauseAudio = onPauseAudio,
+                                currentAudioUrl = currentAudioUrl,
+                                isAudioPlaying = isAudioPlaying,
+                            )
+                        }
                     }
                 }
             }
 
             ArticleTopBar(
                 show = showToolBar,
+                isScrolled = scrollState.showTopDivider,
                 articleId = article.id,
                 onClose = onBackPressed,
             )
@@ -215,6 +215,7 @@ fun ArticleView(
 fun ArticlePullRefresh(
     hasNextArticle: Boolean,
     hasPreviousArticle: Boolean,
+    pinToolbars: Boolean,
     onSwipe: (swipe: ArticleVerticalSwipe) -> Unit,
     content: @Composable () -> Unit,
 ) {
@@ -234,7 +235,7 @@ fun ArticlePullRefresh(
     SwipeRefresh(
         onRefresh = { onSwipe(topSwipe) },
         swipeEnabled = enableTopSwipe,
-        indicatorPadding = PaddingValues(top = 100.dp),
+        indicatorPadding = if (!pinToolbars) PaddingValues(top = 100.dp) else PaddingValues(),
         icon = swipeIcon(
             topSwipe,
             relatedArticleIcon = Icons.Rounded.KeyboardArrowUp
@@ -295,3 +296,16 @@ private data class SwipePreferences(
     val topSwipe: ArticleVerticalSwipe,
     val bottomSwipe: ArticleVerticalSwipe,
 )
+
+@Composable
+private fun rememberContentPadding(pinToolbars: Boolean): PaddingValues {
+    return if (pinToolbars) {
+        PaddingValues(
+            top = WindowInsets.statusBars.asPaddingValues().calculateTopPadding() + ArticleBarDefaults.TopBarHeight,
+            bottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding() + ArticleBarDefaults.BottomBarHeight,
+        )
+    } else {
+        PaddingValues()
+    }
+}
+
