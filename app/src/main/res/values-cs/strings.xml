@@ -262,7 +262,6 @@
     <string name="theme_default">Výchozí</string>
     <string name="theme_sunset">Soumrak</string>
     <string name="settings_options_reader_pin_top_toolbar">Připnout na panel</string>
-    <string name="settings_options_reader_show_bottom_toolbar">Zobrazit akce na spodním panelu</string>
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">Navigovat k nadřazenému</string>
     <string name="blocked_keywords">Seznam blokovaných</string>
     <string name="blocked_keywords_supporting_text">Mazat články podle klíčových slov v názvu nebo obsahu</string>

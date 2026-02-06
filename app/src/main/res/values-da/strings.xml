@@ -196,7 +196,6 @@
     <string name="opml_exporter_success">Eksport succesfuld</string>
     <string name="opml_exporter_failure">Eksport mislykkedes</string>
     <string name="settings_options_reader_pin_top_toolbar">Fastgør øverste værktøjslinje</string>
-    <string name="settings_options_reader_show_bottom_toolbar">Vis handlinger på nederste værktøjslinje</string>
     <string name="article_bottom_bar_next_article">Gå til næste artikel</string>
     <string name="settings_gestures_reader_swipe_down">Swipe ned</string>
     <string name="settings_gestures_reader_swipe_up">Swipe op</string>

@@ -41,8 +41,6 @@ class DisplaySettingsViewModel(
     var fontScale by mutableStateOf(appPreferences.articleListOptions.fontScale.get())
         private set
 
-    var enableBottomBarActions = appPreferences.readerOptions.bottomBarActions
-
     val imagePreview: ImagePreview
         get() = _imagePreview.value
 
@@ -87,10 +85,6 @@ class DisplaySettingsViewModel(
 
     fun updatePinArticleBars(pinBars: Boolean) {
         appPreferences.readerOptions.pinTopToolbar.set(pinBars)
-    }
-
-    fun updateBottomBarActions(enable: Boolean) {
-        appPreferences.readerOptions.bottomBarActions.set(enable)
     }
 
     fun updateFontScale(fontScale: ArticleListFontScale) {

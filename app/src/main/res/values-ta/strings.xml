@@ -237,7 +237,6 @@
     <string name="tag_action_edit_error">குறிச்சொல்லைப் புதுப்பிப்பதில் பிழை</string>
     <string name="delete_tag_error">குறிச்சொல்லை நீக்குவதில் பிழை</string>
     <string name="tag_action_delete_title">நீக்கு</string>
-    <string name="settings_options_reader_show_bottom_toolbar">கீழ் கருவிப்பட்டியில் செயல்களைக் காட்டு</string>
     <string name="article_vertical_open_article_in_browser">உலாவியில் திறந்த கட்டுரை</string>
     <string name="after_read_all_behavior_label">அனைத்தையும் படித்த பிறகு</string>
     <string name="tag_action_delete_confirm">நீக்கு</string>

@@ -255,7 +255,6 @@
     <string name="nav_headline_saved_searches">Chwiliadau</string>
     <string name="delete_tag_error">Bu gwall wrth ddileu tag</string>
     <string name="tag_name_title">Enw</string>
-    <string name="settings_options_reader_show_bottom_toolbar">Dangos gweithredoedd ar y bar offer gwaelod</string>
     <string name="article_list_swipe_disabled">Wedi\'i analluogi</string>
     <string name="article_list_swipe_next_feed">Mynd i\'r ffrwd nesaf</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Llusgo i\'r chwith neu\'r dde i lywio erthyglau</string>

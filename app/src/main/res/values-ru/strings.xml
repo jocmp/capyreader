@@ -275,7 +275,6 @@
     <string name="settings_gestures_improve_talkback_title">Улучшить озвучку элементов на экране</string>
     <string name="settings_gestures_improve_talkback_subtitle">Отключает некоторые настройки для улучшения озвучки элементов на экране</string>
     <string name="settings_options_reader_pin_top_toolbar">Прикрепить на верхнюю панель инструментов</string>
-    <string name="settings_options_reader_show_bottom_toolbar">Показывать действия на нижней панели инструментов</string>
     <string name="add_account_miniflux_signup_prompt">У вас нет сервера Miniflux?</string>
     <string name="add_account_miniflux_signup_link_text">Узнать больше.</string>
     <string name="mark_read_position_toolbar">Панель инструментов</string>

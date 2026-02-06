@@ -274,7 +274,6 @@
     <string name="blocked_keywords_supporting_text">إزالة المقالات التي تحتوي على عنوان أو محتوى تطابق الكلمات المفتاحية</string>
     <string name="settings_gestures_improve_talkback_title">تحسين TalkBack</string>
     <string name="settings_gestures_improve_talkback_subtitle">يعطل بعض الإعدادات لتحسين تحويل النص إلى كلام من TalkBack</string>
-    <string name="settings_options_reader_show_bottom_toolbar">اعرض الإجراءات على شريط الأدوات السفلي</string>
     <string name="add_account_miniflux_signup_link_text">اكتشف المزيد.</string>
     <string name="add_account_miniflux_signup_prompt">أليس لديك نسخة Miniflux؟</string>
     <string name="mark_read_position_toolbar">شريط اﻷدوات</string>

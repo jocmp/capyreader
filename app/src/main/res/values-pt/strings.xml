@@ -247,7 +247,6 @@
         <item quantity="many">A cada %d horas</item>
         <item quantity="other">A cada %d horas</item>
     </plurals>
-    <string name="settings_options_reader_show_bottom_toolbar">Mostrar ações na barra de ferramentas inferior</string>
     <string name="blocked_keywords">Lista de bloqueio</string>
     <string name="blocked_keywords_supporting_text">Remover artigos em que o título ou conteúdo batem com palavras-chave</string>
     <string name="blocked_keywords_remove_keyword">Remover palavras-chave</string>

@@ -180,7 +180,6 @@
     <string name="opml_exporter_failure">Η εξαγωγή απέτυχε</string>
     <string name="settings_reader_title">Αναγνώστης</string>
     <string name="settings_options_reader_pin_top_toolbar">Καρφίτσωμα Πάνω Γραμμής Εργαλειών</string>
-    <string name="settings_options_reader_show_bottom_toolbar">Εμφάνιση Ενεργειών στη Κάτω Γραμμή Εργαλειών</string>
     <string name="article_bottom_bar_next_article">Μετάβαση στο επόμενο άρθρο</string>
     <string name="settings_gestures_reader_swipe_down">Κύλιση Κάτω</string>
     <string name="settings_gestures_reader_swipe_up">Κύλιση Πάνω</string>

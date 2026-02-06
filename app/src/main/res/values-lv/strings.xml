@@ -256,7 +256,6 @@
     <string name="tag_action_edit_error">Birkas atjaunināšanas kļūda</string>
     <string name="tag_action_edit">Rediģēt birku</string>
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">Doties augšup par vienu līmeni</string>
-    <string name="settings_options_reader_show_bottom_toolbar">Rādīt darbības apakšējā rīkjoslā</string>
     <string name="actions_copy_link">Kopēt saiti</string>
     <string name="widget_headlines_see_more_button">Skatīt vairāk rakstus</string>
     <string name="widget_headlines_account_error">Vispirms pievienojiet kontu</string>
