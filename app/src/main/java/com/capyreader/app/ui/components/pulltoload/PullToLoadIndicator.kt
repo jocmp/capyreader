@@ -93,7 +93,7 @@ fun BoxScope.PullToLoadIndicator(
                 .offset {
                     IntOffset(
                         x = 0,
-                        y = (fraction * PullToLoadDefaults.ContentOffsetMultiple * .5f).dp.roundToPx()
+                        y = (fraction * PullToLoadDefaults.CONTENT_OFFSET_MULTIPLE * .5f).dp.roundToPx()
                     )
                 }
                 .width(36.dp),

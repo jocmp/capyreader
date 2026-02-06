@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
-import com.capyreader.app.ui.components.pulltoload.PullToLoadDefaults.ContentOffsetMultiple
+import com.capyreader.app.ui.components.pulltoload.PullToLoadDefaults.CONTENT_OFFSET_MULTIPLE
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
@@ -288,12 +288,12 @@ private fun Float.signOpposites(f: Float): Boolean = this.sign * f.sign < 0f
  * Default parameter values for [rememberPullToLoadState].
  */
 object PullToLoadDefaults {
-    const val ContentOffsetMultiple = 60
+    const val CONTENT_OFFSET_MULTIPLE = 40
 
-    const val LoadThresholdFraction = .05f
+    const val LOAD_THRESHOLD_FRACTION = 0.05f
 
     @Composable
-    fun loadThreshold(fraction: Float = LoadThresholdFraction): Dp {
+    fun loadThreshold(fraction: Float = LOAD_THRESHOLD_FRACTION): Dp {
         val windowHeight = LocalWindowInfo.current.containerSize.height
         return with(LocalDensity.current) {
             (windowHeight * fraction).toDp()
@@ -304,7 +304,7 @@ object PullToLoadDefaults {
 fun Modifier.pullToLoad(
     state: PullToLoadState,
     contentOffsetY: Density.(Float) -> Int = { fraction ->
-        (ContentOffsetMultiple.dp * fraction).roundToPx()
+        (CONTENT_OFFSET_MULTIPLE.dp * fraction).roundToPx()
     },
     onScroll: ((Float) -> Unit)? = null,
     enabled: Boolean = true,

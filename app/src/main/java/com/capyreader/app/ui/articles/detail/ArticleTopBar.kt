@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.capyreader.app.R
 import com.capyreader.app.ui.articles.LocalLabelsActions
+import com.capyreader.app.ui.components.ToolbarTooltip
 import com.capyreader.app.ui.fixtures.PreviewKoinApplication
 
 private val sizeSpec = spring<IntSize>(stiffness = 700f)
@@ -86,24 +87,32 @@ fun ArticleTopBar(
                     title = {},
                     actions = {
                         if (labelsActions.showLabels) {
+                            ToolbarTooltip(
+                                message = stringResource(R.string.freshrss_article_actions_label)
+                            ) {
+                                IconButton(
+                                    onClick = { labelsActions.openSheet(articleId) },
+                                ) {
+                                    Icon(
+                                        Icons.AutoMirrored.Outlined.Label,
+                                        contentDescription = stringResource(R.string.freshrss_article_actions_label),
+                                        modifier = Modifier.size(24.dp)
+                                    )
+                                }
+                            }
+                        }
+                        ToolbarTooltip(
+                            message = stringResource(R.string.article_style_options)
+                        ) {
                             IconButton(
-                                onClick = { labelsActions.openSheet(articleId) },
+                                onClick = { setStyleSheetOpen(true) },
                             ) {
                                 Icon(
-                                    Icons.AutoMirrored.Outlined.Label,
-                                    contentDescription = stringResource(R.string.freshrss_article_actions_label),
+                                    Icons.Outlined.FormatSize,
+                                    contentDescription = stringResource(R.string.article_style_options),
                                     modifier = Modifier.size(24.dp)
                                 )
                             }
-                        }
-                        IconButton(
-                            onClick = { setStyleSheetOpen(true) },
-                        ) {
-                            Icon(
-                                Icons.Outlined.FormatSize,
-                                contentDescription = stringResource(R.string.article_style_options),
-                                modifier = Modifier.size(24.dp)
-                            )
                         }
                     },
                     windowInsets = WindowInsets(0.dp),

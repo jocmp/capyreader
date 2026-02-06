@@ -20,10 +20,12 @@ import androidx.compose.material.icons.rounded.ExpandMore
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarOutline
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.TooltipAnchorPosition
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,6 +46,7 @@ import com.jocmp.capy.Article.FullContentState.LOADING
 
 private val sizeSpec = spring<IntSize>(stiffness = 700f)
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArticleBottomBar(
     show: Boolean,
@@ -81,6 +84,7 @@ fun ArticleBottomBar(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     ToolbarTooltip(
+                        positioning = TooltipAnchorPosition.Above,
                         message = stringResource(R.string.article_view_mark_as_read)
                     ) {
                         IconButton(
@@ -97,6 +101,7 @@ fun ArticleBottomBar(
                         }
                     }
                     ToolbarTooltip(
+                        positioning = TooltipAnchorPosition.Above,
                         message = stringResource(R.string.article_view_star)
                     ) {
                         IconButton(
@@ -113,6 +118,7 @@ fun ArticleBottomBar(
                         }
                     }
                     ToolbarTooltip(
+                        positioning = TooltipAnchorPosition.Above,
                         message = stringResource(R.string.article_bottom_bar_next_article)
                     ) {
                         IconButton(
@@ -130,6 +136,7 @@ fun ArticleBottomBar(
                         }
                     }
                     ToolbarTooltip(
+                        positioning = TooltipAnchorPosition.Above,
                         message = stringResource(R.string.extract_full_content)
                     ) {
                         IconButton(
@@ -150,6 +157,7 @@ fun ArticleBottomBar(
                         }
                     }
                     ToolbarTooltip(
+                        positioning = TooltipAnchorPosition.Above,
                         message = stringResource(R.string.article_share)
                     ) {
                         IconButton(
