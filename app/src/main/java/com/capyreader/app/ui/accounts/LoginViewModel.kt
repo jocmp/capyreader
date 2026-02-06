@@ -108,6 +108,11 @@ class LoginViewModel(
                 .onSuccess { result ->
                     createAccount(result)
 
+                    if (source.isMiniflux) {
+                        appPreferences.articleListOptions.showReadingTime
+                            .set(result.showReadingTime)
+                    }
+
                     withContext(Dispatchers.Main) {
                         onSuccess()
                     }

@@ -26,6 +26,7 @@ data class Article(
     val content: String = contentHTML.ifBlank { summary },
     val enclosures: List<Enclosure> = emptyList(),
     val enclosureType: EnclosureType? = null,
+    val readingTimeMinutes: Long? = null,
 ) {
     val defaultContent = contentHTML.ifBlank { summary }
 

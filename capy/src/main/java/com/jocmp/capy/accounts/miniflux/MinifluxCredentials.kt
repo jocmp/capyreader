@@ -9,6 +9,7 @@ internal data class MinifluxCredentials(
     override val secret: String,
     override val url: String,
     override val source: Source,
+    override val showReadingTime: Boolean = false,
 ) : Credentials {
     override val clientCertAlias: String = ""
 
@@ -19,20 +20,29 @@ internal data class MinifluxCredentials(
                 baseURL = url
             )
 
-            val username = response?.body()?.username
+            val user = response?.body()
 
-            if (response?.isSuccessful == true && username != null) {
-                return Result.success(this.copy(username = username))
+            if (response?.isSuccessful == true && user != null) {
+                return Result.success(
+                    this.copy(
+                        username = user.username,
+                        showReadingTime = user.showReadingTime,
+                    )
+                )
             }
         } else {
-            val verified = Miniflux.verifyCredentials(
+            val response = Miniflux.verifyCredentials(
                 username = username,
                 password = secret,
                 baseURL = url
             )
 
-            if (verified) {
-                return Result.success(this)
+            val user = response?.body()
+
+            if (response?.isSuccessful == true && user != null) {
+                return Result.success(
+                    this.copy(showReadingTime = user.showReadingTime)
+                )
             }
         }
 

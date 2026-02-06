@@ -255,6 +255,7 @@ internal class LocalAccountDelegate(
                         image_url = parsedItem.imageURL,
                         published_at = publishedAt,
                         enclosure_type = enclosureType,
+                        reading_time_minutes = null,
                     )
 
                     articleRecords.createStatus(

@@ -22,6 +22,9 @@ enum class Source(val value: String) {
     val requiresUsername
         get() = this != MINIFLUX_TOKEN
 
+    val isMiniflux
+        get() = this == MINIFLUX || this == MINIFLUX_TOKEN
+
     val supportsLabels
         get() = this == FRESHRSS
 }
