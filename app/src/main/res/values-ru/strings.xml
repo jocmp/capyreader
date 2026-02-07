@@ -297,7 +297,7 @@
     <string name="settings_option_show_today_filter">Сегодня</string>
     <string name="open_articles_in_browser">Открытые статьи в обозревателе</string>
     <string name="selected">Выбранно</string>
-    <string name="auth_fields_freshrss_api_password">Пароль API</string>
+    <string name="auth_fields_freshrss_api_password">API-пароль</string>
     <string name="freshrss_visibility">Видимость</string>
     <string name="freshrss_visibility_option_important">Важный</string>
     <string name="freshrss_visibility_option_category">Категория</string>
@@ -310,4 +310,10 @@
     <string name="audio_player_close">Закрыть</string>
     <string name="audio_player_skip_back">Назад 30 сек</string>
     <string name="audio_player_skip_forward">Вперед 30 сек</string>
+    <string name="article_list_empty">Здесь пусто</string>
+    <string name="auth_fields_hide_advanced">Скрыть расширенные опции</string>
+    <string name="auth_fields_show_advanced">Расширенные опции</string>
+    <string name="auth_fields_miniflux_use_password">Использовать пароль вместо этого</string>
+    <string name="auth_fields_miniflux_use_api_token">Использовать API-токен вместо этого</string>
+    <string name="auth_fields_miniflux_api_token">API-токен</string>
 </resources>
