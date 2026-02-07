@@ -302,7 +302,6 @@
     <string name="auth_fields_miniflux_use_password">Nutze Passwort</string>
     <string name="auth_fields_show_advanced">Erweiterte Optionen</string>
     <string name="auth_fields_hide_advanced">Erweiterte Optionen verbergen</string>
-    <string name="freshrss_visibility_option_main"></string>
     <string name="freshrss_visibility_option_category">Kategorie</string>
     <string name="audio_player_play">Abspielen</string>
     <string name="audio_player_pause">Pause</string>
