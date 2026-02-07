@@ -104,7 +104,7 @@
     <string name="refresh_on_start">På oppstart</string>
     <string name="settings_remove_account_message_service">Er du sikker på at du vil logge ut?</string>
     <string name="settings_remove_account_confirm_service">Logg ut</string>
-    <string name="settings_notifications_select_all">Velg alle</string>
+    <string name="settings_select_all">Velg alle</string>
     <string name="article_list_row_swipe_open_externally">Åpne artikkel i nettleser</string>
     <string name="article_view_open_externally">Åpne eksternt</string>
     <string name="edit_feed_notifications_title">Slå på varsler</string>
@@ -205,7 +205,7 @@
     <string name="settings_option_full_content_title">Husk full visning av innholdet</string>
     <string name="settings_clear_all_articles_text">Er du sikker på at du vil slette alle leste artikler uten stjernemerke fra enheten din? Denne handlingen kan ikke angres.</string>
     <string name="settings_gestures_list_back_navigation_action">Handling for tilbakenavigering</string>
-    <string name="settings_notifications_select_none">Velg ingen</string>
+    <string name="settings_select_none">Velg ingen</string>
     <string name="settings_gestures_reader_tap_to_page_title">Trykkskrolling for e-ink</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Trykk nedre hjørner for å navigere i artikkelinnhold</string>
     <plurals name="refresh_hours">

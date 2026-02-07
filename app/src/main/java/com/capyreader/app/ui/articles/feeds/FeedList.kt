@@ -45,6 +45,8 @@ import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.SavedSearch
+import com.capyreader.app.ui.folderNavTitle
+import com.capyreader.app.ui.savedSearchNavTitle
 import com.jocmp.capy.accounts.Source
 
 @Composable
@@ -133,7 +135,7 @@ fun FeedList(
                         stringResource(articleStatus.navigationTitle),
                     )
                 },
-                badge = { CountBadge(count = statusCount) },
+                badge = { CountBadge(count = statusCount, status = articleStatus) },
                 selected = filter.hasArticlesSelected(),
                 onClick = {
                     onFilterSelect()
@@ -153,7 +155,7 @@ fun FeedList(
                             stringResource(R.string.filter_today),
                         )
                     },
-                    badge = { CountBadge(count = todayCount) },
+                    badge = { CountBadge(count = todayCount, status = articleStatus) },
                     selected = filter.hasTodaySelected(),
                     onClick = {
                         onSelectToday()
@@ -164,22 +166,17 @@ fun FeedList(
             Spacer(Modifier.height(8.dp))
 
             if (savedSearches.isNotEmpty()) {
-                val savedSearchesTitle = if (source == Source.FRESHRSS) {
-                    stringResource(R.string.freshrss_nav_headline_my_labels)
-                } else {
-                    stringResource(R.string.nav_headline_saved_searches)
-                }
-
                 FeedListDivider()
                 FeedGroupList(
                     type = FeedGroup.SAVED_SEARCHES,
-                    title = savedSearchesTitle,
+                    title = stringResource(source.savedSearchNavTitle),
                 ) {
                     savedSearches.forEach {
                         SavedSearchRow(
                             onSelect = onSelectSavedSearch,
                             selected = filter.isSavedSearchSelected(it),
                             savedSearch = it,
+                            status = articleStatus,
                         )
                     }
                 }
@@ -198,7 +195,8 @@ fun FeedList(
                             onFeedSelect = { feed ->
                                 onSelectFeed(feed, folder.title)
                             },
-                            filter = filter
+                            filter = filter,
+                            source = source,
                         )
                     }
                 }
@@ -217,6 +215,7 @@ fun FeedList(
                                 onSelectFeed(it, null)
                             },
                             selected = filter.isFeedSelected(feed),
+                            status = articleStatus,
                         )
                     }
                 }
@@ -277,9 +276,3 @@ fun FeedListPreview() {
     }
 }
 
-private val Source.folderNavTitle: Int
-    get() = if (this === Source.FRESHRSS) {
-        R.string.freshrss_nav_headline_categories
-    } else {
-        R.string.nav_headline_tags
-    }

@@ -167,8 +167,8 @@
     <string name="crash_log_export_item_title">क्र्यास लगहरू साझा गर्नुहोस्</string>
     <string name="notifications_permission_disabled_title">सूचना अनुमति असक्षम गरिएको छ</string>
     <string name="settings_enable_refresh_call_to_action">आवधिक रिफ्रेस पहिले सक्षम हुनुपर्छ</string>
-    <string name="settings_notifications_select_none">कुनै पनि चयन नगर्नुहोस्</string>
-    <string name="settings_notifications_select_all">सबै चयन गर्नुहोस्</string>
+    <string name="settings_select_none">कुनै पनि चयन नगर्नुहोस्</string>
+    <string name="settings_select_all">सबै चयन गर्नुहोस्</string>
     <string name="settings_section_browser">ब्राउजर</string>
     <string name="settings_section_mark_all_as_read">सबैलाई पढिएको चिन्ह लगाउनुहोस्</string>
     <string name="opml_import_button_text">फाइलबाट आयात गर्नुहोस्</string>

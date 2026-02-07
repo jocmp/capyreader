@@ -41,6 +41,7 @@ import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.SavedSearch
+import com.jocmp.capy.accounts.Source
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -56,6 +57,7 @@ fun ArticleListTopBar(
     feeds: List<Feed>,
     savedSearches: List<SavedSearch>,
     folders: List<Folder>,
+    source: Source = Source.LOCAL,
 ) {
     val enableSearch = search.isActive
     val layout = rememberLayoutPreference()
@@ -149,6 +151,7 @@ fun ArticleListTopBar(
                 onRequestSearch = { search.start() },
                 onMarkAllRead = { onMarkAllRead() },
                 hideSearchIcon = enableSearch,
+                source = source,
             )
         }
     )

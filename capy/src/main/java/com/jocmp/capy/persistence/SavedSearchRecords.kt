@@ -68,15 +68,28 @@ internal class SavedSearchRecords(private val database: Database) {
         savedSearchQueries.deleteOrphanedEntries(savedSearchID, excludedIDs = excludedIDs)
     }
 
+    internal suspend fun updateShowUnreadCounts(id: String, enabled: Boolean) = withIOContext {
+        savedSearchQueries.updateShowUnreadCounts(
+            enabled = enabled,
+            id = id
+        )
+    }
+
+    internal suspend fun toggleAllShowUnreadCounts(enabled: Boolean) = withIOContext {
+        savedSearchQueries.toggleAllShowUnreadCounts(enabled = enabled)
+    }
+
     private fun mapper(
         id: String,
         name: String,
         query: String?,
+        showUnreadCounts: Boolean = true,
     ) =
         SavedSearch(
             id = id,
             name = name,
             query = query,
+            showUnreadCounts = showUnreadCounts,
         )
 
     private val savedSearchQueries

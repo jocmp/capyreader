@@ -695,6 +695,18 @@ class ArticleScreenViewModel(
         }
     }
 
+    fun updateFeedShowUnreadCounts(feedID: String, enabled: Boolean) {
+        viewModelScope.launchIO {
+            account.toggleFeedShowUnreadCounts(feedID, enabled)
+        }
+    }
+
+    fun updateSavedSearchShowUnreadCounts(id: String, enabled: Boolean) {
+        viewModelScope.launchIO {
+            account.toggleSavedSearchShowUnreadCounts(id, enabled)
+        }
+    }
+
     private val latestFilter: ArticleFilter
         get() = filter.value
 

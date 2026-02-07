@@ -121,7 +121,7 @@ data class Account(
             Folder(
                 title = it.key,
                 feeds = it.value.sortedByTitle(),
-                expanded = it.value.firstOrNull()?.folderExpanded ?: false
+                expanded = it.value.firstOrNull()?.folderExpanded ?: false,
             )
         }.sortedByTitle()
     }
@@ -382,6 +382,27 @@ data class Account(
 
     suspend fun updateOpenInBrowser(feedID: String, enabled: Boolean) {
         feedRecords.updateOpenInBrowser(feedID, enabled)
+    }
+
+    suspend fun toggleFeedShowUnreadCounts(feedID: String, enabled: Boolean) {
+        feedRecords.updateShowUnreadCounts(feedID, enabled)
+    }
+
+    suspend fun toggleAllFeedShowUnreadCounts(enabled: Boolean) {
+        feedRecords.toggleAllShowUnreadCounts(enabled)
+    }
+
+    suspend fun toggleSavedSearchShowUnreadCounts(id: String, enabled: Boolean) {
+        savedSearchRecords.updateShowUnreadCounts(id, enabled)
+    }
+
+    suspend fun toggleAllSavedSearchShowUnreadCounts(enabled: Boolean) {
+        savedSearchRecords.toggleAllShowUnreadCounts(enabled)
+    }
+
+    suspend fun toggleAllShowUnreadCounts(enabled: Boolean) {
+        toggleAllFeedShowUnreadCounts(enabled)
+        toggleAllSavedSearchShowUnreadCounts(enabled)
     }
 
     suspend fun disableStickyContent(feedID: String) {

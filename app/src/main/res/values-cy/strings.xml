@@ -202,8 +202,8 @@
     <string name="settings_gestures_list_back_navigation_open_drawer">Agor y drôr llywio</string>
     <string name="crash_log_export_item_subtitle">Mae logiau chwalu yn cael eu cadw mewn ffeil i\'w rhannu gyda\'r datblygwr</string>
     <string name="settings_enable_refresh_call_to_action">Yn gyntaf, galluogwch adnewyddu\'n gyfnodol</string>
-    <string name="settings_notifications_select_none">Dewis dim</string>
-    <string name="settings_notifications_select_all">Dewis y cwbl</string>
+    <string name="settings_select_none">Dewis dim</string>
+    <string name="settings_select_all">Dewis y cwbl</string>
     <string name="settings_mark_read_on_scroll">Nodi fel ei ddarllen wrth sgrolio</string>
     <string name="settings_gestures_reader_tap_to_page_title">Sgrolio sgrin bapur electronig</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Tapio cornel i\'r gwaelod i lywio cynnwys yr erthygl</string>

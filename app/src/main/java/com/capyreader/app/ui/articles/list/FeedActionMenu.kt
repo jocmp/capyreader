@@ -32,6 +32,13 @@ fun FeedActionMenu(
         }
     }
 
+    fun onToggleShowUnreadCounts() {
+        onDismissMenuRequest()
+        scope.launchUI {
+            actions.updateShowUnreadCounts(feed.id, !feed.showUnreadCounts)
+        }
+    }
+
     DropdownMenu(
         expanded = expanded,
         onDismissRequest = onDismissMenuRequest,
@@ -43,6 +50,9 @@ fun FeedActionMenu(
             onMenuClose = onDismissMenuRequest,
             onToggleOpenInBrowser = {
                 onToggleOpenInBrowser()
+            },
+            onToggleShowUnreadCounts = {
+                onToggleShowUnreadCounts()
             },
         )
     }

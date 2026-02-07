@@ -179,10 +179,10 @@
     <string name="edit_feed_notifications_title">Võta teavitused kasutusele</string>
     <string name="notifications_permission_disabled_title">Puuduvad õigused teavituse saatmiseks</string>
     <string name="settings_enable_refresh_call_to_action">Esmalt võta kasutusele korraline andmete uuendus</string>
-    <string name="settings_notifications_select_none">Vali mitte midagi</string>
+    <string name="settings_select_none">Vali mitte midagi</string>
     <string name="settings_panel_notifications_title">Teavitused</string>
     <string name="notifications_permissions_disabled_call_to_action">Seadistused</string>
-    <string name="settings_notifications_select_all">Vali kõik</string>
+    <string name="settings_select_all">Vali kõik</string>
     <string name="article_list_row_swipe_open_externally">Ava artikkel veebibrauseris</string>
     <string name="article_view_open_externally">Ava väliselt</string>
     <string name="settings_confirm_mark_all_read">Kinnita, et soovid kõik märkida loetuks</string>

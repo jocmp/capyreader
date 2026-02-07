@@ -152,7 +152,7 @@
     <string name="edit_feed_tags_section">Теги</string>
     <string name="edit_feed_notifications_title">Включить уведомления</string>
     <string name="notifications_permissions_disabled_call_to_action">Настройки</string>
-    <string name="settings_notifications_select_all">Выбрать все</string>
+    <string name="settings_select_all">Выбрать все</string>
     <string name="article_list_row_swipe_open_externally">Открыть статью в браузере</string>
     <string name="article_view_open_externally">Открыть внешне</string>
     <string name="unauthorized_dialog_description">Возникла проблема с подключением к вашему аккаунту. Пожалуйста, войдите снова.</string>
@@ -189,7 +189,7 @@
     <string name="settings_gestures_list_back_navigation_action">Действие возврата назад</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">Открыть навигационную панель</string>
     <string name="settings_enable_refresh_call_to_action">Сначала включите периодическое обновление</string>
-    <string name="settings_notifications_select_none">Не выбрано</string>
+    <string name="settings_select_none">Не выбрано</string>
     <string name="settings_confirm_mark_all_read">Запрашивать подтверждение</string>
     <string name="settings_section_account_server">Сервер</string>
     <string name="auth_fields_api_url">Сервер</string>

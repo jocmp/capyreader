@@ -13,6 +13,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.capyreader.app.R
+import com.capyreader.app.preferences.CountStyle
+import com.capyreader.app.ui.LocalCountStyle
 import com.capyreader.app.ui.fixtures.FeedSample
 import com.jocmp.capy.Feed
 
@@ -23,6 +25,7 @@ fun FeedActionMenuItems(
     onRemoveRequest: () -> Unit,
     onEdit: () -> Unit,
     onToggleOpenInBrowser: () -> Unit,
+    onToggleShowUnreadCounts: () -> Unit,
 ) {
     DropdownMenuItem(
         text = {
@@ -57,6 +60,22 @@ fun FeedActionMenuItems(
         },
         onClick = onToggleOpenInBrowser
     )
+    if (LocalCountStyle.current == CountStyle.SIMPLE) {
+        val showUnreadCountsIcon = @Composable {
+            if (feed.showUnreadCounts) {
+                Icon(Icons.Rounded.CheckBox, contentDescription = null)
+            } else {
+                Icon(Icons.Rounded.CheckBoxOutlineBlank, contentDescription = null)
+            }
+        }
+        DropdownMenuItem(
+            trailingIcon = showUnreadCountsIcon,
+            text = {
+                Text(stringResource(R.string.show_unread_badge))
+            },
+            onClick = onToggleShowUnreadCounts
+        )
+    }
 }
 
 @Preview
@@ -68,7 +87,8 @@ fun FeedActionMenuPreview(@PreviewParameter(FeedSample::class) feed: Feed) {
             onMenuClose = {},
             onEdit = {},
             onRemoveRequest = {},
-            onToggleOpenInBrowser = {}
+            onToggleOpenInBrowser = {},
+            onToggleShowUnreadCounts = {},
         )
     }
 }

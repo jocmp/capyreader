@@ -178,13 +178,13 @@
     <string name="settings_gestures_list_back_navigation_open_drawer">打开导航抽屉</string>
     <string name="notifications_channel_title_feed_update">订阅源更新</string>
     <string name="settings_enable_refresh_call_to_action">必须先启用定期刷新</string>
-    <string name="settings_notifications_select_none">全不选</string>
+    <string name="settings_select_none">全不选</string>
     <string name="settings_panel_notifications_title">通知</string>
     <string name="edit_feed_tags_section">标签</string>
     <string name="edit_feed_notifications_title">启用通知</string>
     <string name="notifications_permissions_disabled_call_to_action">设置</string>
     <string name="notifications_permission_disabled_title">通知权限已禁用</string>
-    <string name="settings_notifications_select_all">全选</string>
+    <string name="settings_select_all">全选</string>
     <string name="article_list_row_swipe_open_externally">在浏览器中打开文章</string>
     <string name="article_view_open_externally">外部打开</string>
     <string name="settings_confirm_mark_all_read">需要确认才能标记全部为已读</string>

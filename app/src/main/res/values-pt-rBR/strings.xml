@@ -141,10 +141,10 @@
     <string name="article_vertical_swipe_next_article">Próximo artigo</string>
     <string name="settings_gestures_list_back_navigation_system_back">Padrão</string>
     <string name="edit_feed_tags_section">Etiquetas</string>
-    <string name="settings_notifications_select_none">Desmarcar Todas</string>
+    <string name="settings_select_none">Desmarcar Todas</string>
     <string name="article_list_row_swipe_open_externally">Abrir artigo no navegador</string>
     <string name="settings_enable_refresh_call_to_action">Atualização periódica deve ser habilitada primeiro</string>
-    <string name="settings_notifications_select_all">Marcar Todas</string>
+    <string name="settings_select_all">Marcar Todas</string>
     <string name="account_source_reader">Leitor</string>
     <string name="add_account_local_subtitle">No dispositivo</string>
     <string name="add_account_feedbin_signup_link_text">Crie uma aqui.</string>

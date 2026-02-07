@@ -82,6 +82,9 @@ class AppPreferences(context: Context) {
     val showTodayFilter: Preference<Boolean>
         get() = preferenceStore.getBoolean("show_today_filter", true)
 
+    val countStyle: Preference<CountStyle>
+        get() = preferenceStore.getEnum("count_style", CountStyle.default)
+
     fun clearAll() {
         preferenceStore.clearAll()
     }

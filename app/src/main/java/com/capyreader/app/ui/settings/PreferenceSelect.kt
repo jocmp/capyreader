@@ -45,6 +45,7 @@ fun <T> PreferenceSelect(
     options: List<T>,
     disabledOption: T? = null,
     optionText: @Composable (T) -> String,
+    trailingContent: (@Composable () -> Unit)? = null,
     enabled: Boolean = true,
     @StringRes label: Int,
 ) {
@@ -69,7 +70,8 @@ fun <T> PreferenceSelect(
             headlineContent = { Text(stringResource(label)) },
             supportingContent = {
                 Text(optionText(selected))
-            }
+            },
+            trailingContent = trailingContent
         )
     }
 

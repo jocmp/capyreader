@@ -6,10 +6,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonGroupDefaults
+import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.ToggleButton
@@ -40,6 +43,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun DisplaySettingsPanel(
     viewModel: DisplaySettingsViewModel = koinViewModel(),
+    onNavigateToUnreadBadges: () -> Unit = {},
 ) {
     val pinArticleBars by viewModel.pinArticleBars.collectChangesWithCurrent()
     val improveTalkback by viewModel.improveTalkback.collectChangesWithCurrent()
@@ -60,6 +64,7 @@ fun DisplaySettingsPanel(
         updateLayoutPreference = viewModel::updateLayoutPreference,
         markReadButtonPosition = markReadButtonPosition,
         updateMarkReadButtonPosition = viewModel::updateMarkReadButtonPosition,
+        onNavigateToUnreadBadges = onNavigateToUnreadBadges,
         articleListOptions = ArticleListOptions(
             imagePreview = viewModel.imagePreview,
             showSummary = viewModel.showSummary,
@@ -93,6 +98,7 @@ fun DisplaySettingsPanelView(
     updateLayoutPreference: (layout: LayoutPreference) -> Unit,
     updateImageVisibility: (option: ReaderImageVisibility) -> Unit,
     updateMarkReadButtonPosition: (position: MarkReadPosition) -> Unit,
+    onNavigateToUnreadBadges: () -> Unit = {},
     articleListOptions: ArticleListOptions,
 ) {
     Column(
@@ -118,6 +124,13 @@ fun DisplaySettingsPanelView(
                     onCheckedChange = updatePureBlackDarkMode,
                     checked = pureBlackDarkMode,
                     title = stringResource(R.string.settings_pure_black_dark_mode)
+                )
+            }
+            Box(Modifier.clickable { onNavigateToUnreadBadges() }) {
+                ListItem(
+                    headlineContent = {
+                        Text(stringResource(R.string.settings_panel_unread_counts_title))
+                    }
                 )
             }
         }

@@ -6,7 +6,7 @@
     <string name="settings_article_list_title">ലേഖന പട്ടിക</string>
     <string name="opml_exporter_success">കയറ്റുമതി പൂർത്തിയായി</string>
     <string name="opml_exporter_failure">കയറ്റുമതി പരാജയപ്പെട്ടു</string>
-    <string name="settings_notifications_select_all">എല്ലാം തിരഞ്ഞെടുക്കുക</string>
+    <string name="settings_select_all">എല്ലാം തിരഞ്ഞെടുക്കുക</string>
     <string name="article_vertical_swipe_previous_article">മുൻ ലേഖനം</string>
     <string name="article_list_sort_title">ലേഖനം അടുക്കുക</string>
     <string name="article_list_sort_newest_first">ഏറ്റവും പുതിയത് ആദ്യം</string>
@@ -88,7 +88,7 @@
     <string name="article_list_row_swipe_disabled">അപ്രാപ്തമാക്കി</string>
     <string name="feed_form_cancel">റദ്ദാക്കുക</string>
     <string name="image_preview_menu_option_large">വലിയ</string>
-    <string name="settings_notifications_select_none">ഒന്നുമില്ല തിരഞ്ഞെടുക്കുക</string>
+    <string name="settings_select_none">ഒന്നുമില്ല തിരഞ്ഞെടുക്കുക</string>
     <string name="layout_preference_responsive">പ്രതികരണശേഷിയുള്ള</string>
     <string name="end_of_feed_text">എല്ലാം പിടികിട്ടി!</string>
     <string name="settings_confirm_mark_all_read">എല്ലാം വായിച്ചതായി അടയാളപ്പെടുത്തുന്നത് സ്ഥിരീകരിക്കുക</string>

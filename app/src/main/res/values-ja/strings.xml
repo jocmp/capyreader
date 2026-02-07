@@ -207,7 +207,7 @@
     <string name="notifications_permissions_disabled_call_to_action">設定</string>
     <string name="notifications_permission_disabled_title">通知の権限が無効になっています</string>
     <string name="settings_enable_refresh_call_to_action">まず定期的な更新を有効化する必要があります</string>
-    <string name="settings_notifications_select_all">すべて選択</string>
+    <string name="settings_select_all">すべて選択</string>
     <string name="article_list_row_swipe_open_externally">ブラウザで記事を開く</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">水平方向のスクロールを有効化</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">左右にスワイプして記事を移動</string>
@@ -257,7 +257,7 @@
     <string name="mark_all_read_button_position">すべてを既読にするボタンの位置</string>
     <string name="settings_display_miscellaneous_title">その他</string>
     <string name="open_articles_in_browser">ブラウザで記事を開く</string>
-    <string name="settings_notifications_select_none">すべて選択解除</string>
+    <string name="settings_select_none">すべて選択解除</string>
     <string name="settings_confirm_mark_all_read">すべてを既読としてマークすることを確認</string>
     <string name="settings_mark_read_on_scroll">スクロール時に既読としてマーク</string>
 </resources>
