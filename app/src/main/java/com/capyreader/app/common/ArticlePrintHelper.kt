@@ -93,11 +93,8 @@ class ArticlePrintHelper(
         // Create a print job with the name and adapter
         val jobName = "${context.packageName} - ${article.title}"
 
-        val printAttributes = PrintAttributes.Builder()
-            .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
-            .build()
-
-        printManager.print(jobName, printAdapter, printAttributes)
+        // Pass null to use system defaults and let the user choose in the print dialog
+        printManager.print(jobName, printAdapter, null)
     }
 
     companion object {
