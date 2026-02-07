@@ -594,6 +594,7 @@ fun ArticleScreen(
                                         listState = listState,
                                         enableMarkReadOnScroll = enableMarkReadOnScroll,
                                         refreshingAll = viewModel.refreshingAll,
+                                        filterStatus = filter.status,
                                         onMarkAllRead = { range ->
                                             onMarkAllRead(range)
                                         },
