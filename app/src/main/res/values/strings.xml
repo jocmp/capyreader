@@ -57,6 +57,7 @@
     <string name="relative_time_hours">%1$dh</string>
     <string name="relative_time_days">%1$dd</string>
     <string name="article_share">Share article</string>
+    <string name="article_print">Print article</string>
     <string name="extract_full_content">Extract Full Content</string>
     <string name="action_mark_all_read">Mark All as Read</string>
     <string name="mark_all_read_dialog_description">Mark all items as read?</string>

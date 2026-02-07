@@ -50,6 +50,7 @@
     <string name="relative_time_hours">%1$dhrs.</string>
     <string name="relative_time_days">%1$dd</string>
     <string name="article_share">Compartir el artículo</string>
+    <string name="article_print">Imprimir artículo</string>
     <string name="extract_full_content">Extraer todo el contenido</string>
     <string name="action_mark_all_read">Marcar todo como leído</string>
     <string name="mark_all_read_dialog_description">¿Marcar todos los elementos como leídos?</string>
