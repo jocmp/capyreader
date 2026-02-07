@@ -3,6 +3,7 @@ package com.capyreader.app.ui.articles
 import android.content.Context
 import com.capyreader.app.R
 import com.capyreader.app.preferences.AppPreferences
+import com.capyreader.app.ui.addintent.SavePageViewModel
 import com.capyreader.app.ui.articles.audio.AudioPlayerController
 import com.capyreader.app.ui.articles.feeds.edit.EditFeedViewModel
 import com.jocmp.capy.articles.ArticleRenderer
@@ -15,6 +16,11 @@ internal val articlesModule = module {
         AddFeedViewModel(
             account = get(),
             appPreferences = get()
+        )
+    }
+    factory {
+        SavePageViewModel(
+            account = get()
         )
     }
     single {

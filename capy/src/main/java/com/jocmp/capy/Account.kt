@@ -128,6 +128,8 @@ data class Account(
         }.sortedByTitle()
     }
 
+    suspend fun createPage(url: String) = delegate.createPage(url)
+
     suspend fun addFeed(
         url: String,
         title: String? = null,

@@ -6,13 +6,15 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.getValue
 import com.capyreader.app.common.toast
 import com.capyreader.app.preferences.AppPreferences
-import com.capyreader.app.ui.addintent.AddFeedScreen
+import com.capyreader.app.ui.addintent.AddLinkScreen
 import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.theme.CapyTheme
+import com.jocmp.capy.Account
 import org.koin.android.ext.android.inject
 
-class AddFeedActivity : BaseActivity() {
+class AddLinkActivity : BaseActivity() {
     val appPreferences by inject<AppPreferences>()
+    val account by inject<Account>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,10 +32,15 @@ class AddFeedActivity : BaseActivity() {
             val pureBlackDarkMode by appPreferences.pureBlackDarkMode.collectChangesWithCurrent()
 
             CapyTheme(themeMode = themeMode, appTheme = appTheme, pureBlack = pureBlackDarkMode) {
-                AddFeedScreen(
+                AddLinkScreen(
                     defaultQueryURL = defaultQueryURL,
-                    onComplete = {
+                    supportsPages = account.source.supportsPages,
+                    onAddFeedComplete = {
                         toast(R.string.add_feed_success)
+                        popUpToMainActivity()
+                    },
+                    onSavePageComplete = {
+                        toast(R.string.save_page_success)
                         popUpToMainActivity()
                     },
                     onBack = {

@@ -20,6 +20,8 @@ interface AccountDelegate {
 
     suspend fun createSavedSearch(name: String): Result<String>
 
+    suspend fun createPage(url: String): Result<Unit>
+
     suspend fun addFeed(
         url: String,
         title: String?,

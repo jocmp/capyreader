@@ -106,6 +106,9 @@ internal class ReaderAccountDelegate(
         return Result.success(labelID)
     }
 
+    override suspend fun createPage(url: String) =
+        Result.failure<Unit>(UnsupportedOperationException("Pages not supported"))
+
     override suspend fun addFeed(
         url: String,
         title: String?,

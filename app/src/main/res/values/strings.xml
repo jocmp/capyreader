@@ -51,6 +51,13 @@
     <string name="add_feed_feed_not_error">Couldn\'t find feed</string>
     <string name="add_feed_save_error">Couldn\'t save feed</string>
     <string name="add_feed_network_error">Couldn\'t find feed. Check your connection.</string>
+    <string name="add_link_title">Add Link</string>
+    <string name="tab_add_feed">Add Feed</string>
+    <string name="tab_save_page">Save Page</string>
+    <string name="save_page_success">Page saved</string>
+    <string name="save_page_error">Couldn\'t save page</string>
+    <string name="save_page_network_error">Couldn\'t save page. Check your connection.</string>
+    <string name="save_page_submit">Save</string>
     <string name="delete_tag_error">Error deleting tag</string>
     <string name="relative_time_just_now">Just now</string>
     <string name="relative_time_minutes">%1$dm</string>
