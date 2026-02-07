@@ -308,4 +308,9 @@
     <string name="audio_player_skip_forward">快进 30 秒</string>
     <string name="freshrss_nav_headline_categories">类别</string>
     <string name="article_list_empty">这里没东西</string>
+    <string name="auth_fields_miniflux_api_token">API 令牌</string>
+    <string name="auth_fields_miniflux_use_api_token">改为使用 API 令牌</string>
+    <string name="auth_fields_miniflux_use_password">改为使用密码</string>
+    <string name="auth_fields_show_advanced">高级选项</string>
+    <string name="auth_fields_hide_advanced">隐藏高级选项</string>
 </resources>
