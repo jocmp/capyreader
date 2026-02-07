@@ -303,4 +303,9 @@
     <string name="audio_player_skip_forward">Avanzar 30 segundos</string>
     <string name="freshrss_nav_headline_categories">Categorías</string>
     <string name="article_list_empty">Nada por aquí</string>
+    <string name="auth_fields_miniflux_api_token">Token da API</string>
+    <string name="auth_fields_miniflux_use_api_token">Alternativa, usar Token da API</string>
+    <string name="auth_fields_miniflux_use_password">Alternativa, usar contrasinal</string>
+    <string name="auth_fields_show_advanced">Opcións avanzadas</string>
+    <string name="auth_fields_hide_advanced">Ocultar opcións avanzadas</string>
 </resources>
