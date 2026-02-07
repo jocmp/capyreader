@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -53,44 +54,46 @@ fun ArticleList(
     val localDensity = LocalDensity.current
     var listHeight by remember { mutableStateOf(0.dp) }
 
-    LazyScrollbar(state = listState) {
-        LazyColumn(
-            state = listState,
-            modifier = Modifier
-                .fillMaxSize()
-                .onGloballyPositioned { coordinates ->
-                    listHeight = with(localDensity) { coordinates.size.height.toDp() }
-                }
-        ) {
-            items(count = articles.itemCount, key = articles.itemKey { it.id }) { index ->
-                val item = articles[index]
+    key(listState) {
+        LazyScrollbar(state = listState) {
+            LazyColumn(
+                state = listState,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .onGloballyPositioned { coordinates ->
+                        listHeight = with(localDensity) { coordinates.size.height.toDp() }
+                    }
+            ) {
+                items(count = articles.itemCount, key = articles.itemKey { it.id }) { index ->
+                    val item = articles[index]
 
-                Box(Modifier.animateItem()) {
-                    if (item == null) {
-                        PlaceholderArticleRow(articleOptions.imagePreview)
-                    } else {
-                        ArticleRow(
-                            article = item,
-                            index = index,
-                            selected = selectedArticleKey == item.id,
-                            onSelect = {
-                                onSelect(it)
-                            },
-                            onMarkAllRead = onMarkAllRead,
-                            currentTime = currentTime,
-                            options = articleOptions
-                        )
+                    Box(Modifier.animateItem()) {
+                        if (item == null) {
+                            PlaceholderArticleRow(articleOptions.imagePreview)
+                        } else {
+                            ArticleRow(
+                                article = item,
+                                index = index,
+                                selected = selectedArticleKey == item.id,
+                                onSelect = {
+                                    onSelect(it)
+                                },
+                                onMarkAllRead = onMarkAllRead,
+                                currentTime = currentTime,
+                                options = articleOptions
+                            )
+                        }
                     }
                 }
-            }
 
-            if (enableMarkReadOnScroll && articles.itemCount > 0) {
-                item {
-                    FeedOverScrollBox(height = listHeight)
-                }
-            } else {
-                item {
-                    Spacer(Modifier.height(120.dp))
+                if (enableMarkReadOnScroll && articles.itemCount > 0) {
+                    item {
+                        FeedOverScrollBox(height = listHeight)
+                    }
+                } else {
+                    item {
+                        Spacer(Modifier.height(120.dp))
+                    }
                 }
             }
         }

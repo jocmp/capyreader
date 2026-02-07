@@ -246,7 +246,9 @@ fun ArticleScreen(
                 }
         }
 
-        val (scrolledFilter, setScrolledFilter) = remember { mutableStateOf<ArticleFilter?>(null) }
+        val (scrolledFilter, setScrolledFilter) = rememberSaveable(
+            saver = ArticleFilter.Saver
+        ) { mutableStateOf(null) }
 
         LaunchedEffect(filter, articles.loadState.refresh) {
             val refreshComplete = articles.loadState.refresh is LoadState.NotLoading
