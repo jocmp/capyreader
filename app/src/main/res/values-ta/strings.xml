@@ -176,8 +176,8 @@
     <string name="notifications_permissions_disabled_call_to_action">அமைப்புகள்</string>
     <string name="notifications_permission_disabled_title">அறிவிப்பு இசைவு முடக்கப்பட்டுள்ளது</string>
     <string name="settings_enable_refresh_call_to_action">அவ்வப்போது புதுப்பிப்பு முதலில் இயக்கப்பட வேண்டும்</string>
-    <string name="settings_notifications_select_none">எதுவுமில்லை என்பதைத் தேர்ந்தெடுக்கவும்</string>
-    <string name="settings_notifications_select_all">அனைத்தையும் தெரிவுசெய்</string>
+    <string name="settings_select_none">எதுவுமில்லை என்பதைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="settings_select_all">அனைத்தையும் தெரிவுசெய்</string>
     <string name="article_list_row_swipe_open_externally">உலாவியில் திறந்த கட்டுரை</string>
     <string name="settings_gestures_reader_tap_to_page_title">உருட்ட மின் தட்டு</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">கட்டுரை உள்ளடக்கத்திற்கு செல்ல கீழே மூலைகளைத் தட்டவும்</string>

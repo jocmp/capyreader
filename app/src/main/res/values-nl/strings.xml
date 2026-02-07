@@ -223,8 +223,8 @@
     <string name="notifications_permissions_disabled_call_to_action">Instellingen</string>
     <string name="notifications_permission_disabled_title">Notificatie toestemming is uitgeschakeld</string>
     <string name="settings_enable_refresh_call_to_action">Periodiek vernieuwen moet eerst ingeschakeld worden</string>
-    <string name="settings_notifications_select_none">Geen selecteren</string>
-    <string name="settings_notifications_select_all">Alle selecteren</string>
+    <string name="settings_select_none">Geen selecteren</string>
+    <string name="settings_select_all">Alle selecteren</string>
     <string name="article_list_row_swipe_open_externally">Artikel openen in browser</string>
     <string name="article_view_open_externally">Extern openen</string>
     <string name="settings_confirm_mark_all_read">Bevestig alles markeren als gelezen</string>

@@ -11,6 +11,7 @@ import com.capyreader.app.ui.articles.FaviconBadge
 import com.capyreader.app.ui.articles.ListTitle
 import com.capyreader.app.ui.articles.list.FeedActionMenu
 import com.capyreader.app.ui.fixtures.FeedSample
+import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 
 @Composable
@@ -18,6 +19,7 @@ fun FeedRow(
     selected: Boolean,
     feed: Feed,
     onSelect: (feed: Feed) -> Unit,
+    status: ArticleStatus = ArticleStatus.ALL,
 ) {
     val (showMenu, setShowMenu) = remember { mutableStateOf(false) }
 
@@ -27,7 +29,9 @@ fun FeedRow(
                FaviconBadge(url = feed.faviconURL)
            },
            label = { ListTitle(feed.title) },
-           badge = { CountBadge(count = feed.count) },
+           badge = {
+               CountBadge(count = feed.count, showBadge = feed.showUnreadBadge, status = status)
+           },
            selected = selected,
            onClick = {
                onSelect(feed)

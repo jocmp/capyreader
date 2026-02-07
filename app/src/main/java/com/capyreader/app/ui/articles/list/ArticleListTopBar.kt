@@ -11,14 +11,11 @@ import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
 import androidx.compose.material3.TopAppBarScrollBehavior
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -41,6 +38,7 @@ import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.SavedSearch
+import com.jocmp.capy.accounts.Source
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -56,6 +54,7 @@ fun ArticleListTopBar(
     feeds: List<Feed>,
     savedSearches: List<SavedSearch>,
     folders: List<Folder>,
+    source: Source,
 ) {
     val enableSearch = search.isActive
     val layout = rememberLayoutPreference()
@@ -149,6 +148,7 @@ fun ArticleListTopBar(
                 onRequestSearch = { search.start() },
                 onMarkAllRead = { onMarkAllRead() },
                 hideSearchIcon = enableSearch,
+                source = source,
             )
         }
     )
@@ -170,6 +170,7 @@ private fun FeedListTopBarPreview() {
         currentFeed = null,
         feeds = listOf(),
         savedSearches = emptyList(),
-        folders = emptyList()
+        folders = emptyList(),
+        source = Source.LOCAL
     )
 }

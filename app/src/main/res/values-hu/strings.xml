@@ -213,8 +213,8 @@
     <string name="notifications_permissions_disabled_call_to_action">Beállítások</string>
     <string name="notifications_permission_disabled_title">Értesítési engedély le van tiltva</string>
     <string name="settings_enable_refresh_call_to_action">Először az időszakos frissítést kell engedélyezni</string>
-    <string name="settings_notifications_select_none">Egyik sem</string>
-    <string name="settings_notifications_select_all">Összes kijelölése</string>
+    <string name="settings_select_none">Egyik sem</string>
+    <string name="settings_select_all">Összes kijelölése</string>
     <string name="article_list_row_swipe_open_externally">Cikk megnyitása böngészőben</string>
     <string name="article_view_open_externally">Megnyitás külsőleg</string>
     <string name="settings_confirm_mark_all_read">Összes olvasottként való megjelölés megerősítése</string>

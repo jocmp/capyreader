@@ -177,8 +177,8 @@
     <string name="action_share">Сподели</string>
     <string name="refresh_feeds_menu_label">Обновяване на емисии</string>
     <string name="notifications_channel_title_feed_update">Актуализации на емисия</string>
-    <string name="settings_notifications_select_all">Избери всичко</string>
-    <string name="settings_notifications_select_none">Няма избрано</string>
+    <string name="settings_select_all">Избери всичко</string>
+    <string name="settings_select_none">Няма избрано</string>
     <string name="edit_feed_notifications_title">Активирай известията</string>
     <string name="notifications_permission_disabled_title">Разрешението за известие е деактивирано</string>
     <string name="edit_feed_tags_section">Етикети</string>

@@ -193,7 +193,7 @@
     <string name="article_list_row_swipe_toggle_read">Εναλλαγή Αναγνωσμένου</string>
     <string name="settings_gestures_list_back_navigation_action">Ενέργεια Πλοήγησης Πίσω</string>
     <string name="settings_enable_refresh_call_to_action">Η περιοδική ανανέωση πρέπει να ενεργοποιηθεί πρώτα</string>
-    <string name="settings_notifications_select_all">Επιλογή Όλων</string>
+    <string name="settings_select_all">Επιλογή Όλων</string>
     <string name="article_list_row_swipe_toggle_starred">Εναλλαγή αγαπημένου</string>
     <string name="article_list_swipe_next_feed">Μετάβαση στην επόμενη ροή</string>
     <string name="article_list_swipe_disabled">Ανενεργό</string>
@@ -211,7 +211,7 @@
     <string name="edit_feed_notifications_title">Ενεργοποίηση ειδοποιήσεων</string>
     <string name="notifications_permissions_disabled_call_to_action">Ρυθμίσεις</string>
     <string name="notifications_permission_disabled_title">Η άδεια ειδοποιήσεων είναι ανενεργή</string>
-    <string name="settings_notifications_select_none">Επιλογή Κανενός</string>
+    <string name="settings_select_none">Επιλογή Κανενός</string>
     <string name="article_list_row_swipe_open_externally">Άνοιγμα άρθρου στον περιηγητή</string>
     <string name="article_view_open_externally">Άνοιγμα εξωτερικά</string>
     <string name="settings_confirm_mark_all_read">Επιβεβαίωση ανάγνωσης όλων</string>

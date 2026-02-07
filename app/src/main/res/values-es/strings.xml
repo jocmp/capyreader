@@ -188,8 +188,8 @@
     <string name="settings_panel_notifications_title">Notificaciones</string>
     <string name="notifications_permissions_disabled_call_to_action">Ajustes</string>
     <string name="settings_enable_refresh_call_to_action">Primero debe activarse la actualización periódica</string>
-    <string name="settings_notifications_select_all">Seleccionar todo</string>
-    <string name="settings_notifications_select_none">Sin seleccionar</string>
+    <string name="settings_select_all">Seleccionar todo</string>
+    <string name="settings_select_none">Sin seleccionar</string>
     <string name="article_list_row_swipe_open_externally">Abrir el artículo en el navegador</string>
     <string name="article_view_open_externally">Abrir externamente</string>
     <string name="settings_confirm_mark_all_read">Confirmar que se ha leído todo</string>

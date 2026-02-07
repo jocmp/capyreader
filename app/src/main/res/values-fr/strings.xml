@@ -188,8 +188,8 @@
     <string name="edit_feed_notifications_title">Activer les notifications</string>
     <string name="notifications_channel_title_feed_update">Mises à jour des flux</string>
     <string name="edit_feed_tags_section">Étiquettes</string>
-    <string name="settings_notifications_select_all">Tout sélectionner</string>
-    <string name="settings_notifications_select_none">Ne rien sélectionner</string>
+    <string name="settings_select_all">Tout sélectionner</string>
+    <string name="settings_select_none">Ne rien sélectionner</string>
     <string name="settings_gestures_list_back_navigation_action">Action de navigation retour</string>
     <string name="settings_confirm_mark_all_read">Demander confirmation avant de tout marquer comme lu</string>
     <string name="notifications_permission_disabled_title">L’autorisation de notification est désactivée</string>

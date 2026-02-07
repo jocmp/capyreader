@@ -171,8 +171,8 @@
     <string name="edit_feed_tag_section">Engadir ou seleccionar etiqueta</string>
     <string name="edit_feed_notifications_title">Activar notificacións</string>
     <string name="settings_enable_refresh_call_to_action">Primeiro debes activar a actualización periódica</string>
-    <string name="settings_notifications_select_none">Sen selección</string>
-    <string name="settings_notifications_select_all">Seleccionar todo</string>
+    <string name="settings_select_none">Sen selección</string>
+    <string name="settings_select_all">Seleccionar todo</string>
     <string name="article_list_row_swipe_open_externally">Abrir artigo no navegador</string>
     <string name="settings_confirm_mark_all_read">Confirmar marcar todo como lido</string>
     <string name="settings_mark_read_on_scroll">Marcar como lido ao desprazarte</string>

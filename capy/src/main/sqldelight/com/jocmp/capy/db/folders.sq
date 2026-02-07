@@ -3,14 +3,15 @@ SELECT *
 FROM folders;
 
 upsert:
-INSERT OR REPLACE INTO folders(
+INSERT INTO folders(
     name,
     expanded
 )
 VALUES (
     :name,
     :expanded
-);
+)
+ON CONFLICT(name) DO UPDATE SET expanded = excluded.expanded;
 
 find:
 SELECT expanded

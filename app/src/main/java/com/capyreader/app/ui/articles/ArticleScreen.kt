@@ -49,6 +49,7 @@ import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.LocalConnectivity
+import com.capyreader.app.ui.LocalBadgeStyle
 import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.LocalMarkAllReadButtonPosition
 import com.capyreader.app.ui.LocalUnreadCount
@@ -62,6 +63,8 @@ import com.capyreader.app.ui.articles.feeds.FeedList
 import com.capyreader.app.ui.articles.feeds.FolderActions
 import com.capyreader.app.ui.articles.feeds.LocalFeedActions
 import com.capyreader.app.ui.articles.feeds.LocalFolderActions
+import com.capyreader.app.ui.articles.feeds.LocalSavedSearchActions
+import com.capyreader.app.ui.articles.feeds.SavedSearchActions
 import com.capyreader.app.ui.articles.list.ArticleListTopBar
 import com.capyreader.app.ui.articles.list.EmptyOnboardingView
 import com.capyreader.app.ui.articles.list.LabelBottomSheet
@@ -127,6 +130,7 @@ fun ArticleScreen(
     val articleActions = rememberArticleActions(viewModel)
     val folderActions = rememberFolderActions(viewModel)
     val feedActions = rememberFeedActions(viewModel)
+    val savedSearchActions = rememberSavedSearchActions(viewModel)
     val labelsActions = rememberLabelsActions(viewModel, allSavedSearches)
     val connectivity = rememberLocalConnectivity()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
@@ -135,6 +139,7 @@ fun ArticleScreen(
         .articleListOptions
         .markReadButtonPosition
         .collectChangesWithCurrent()
+    val badgeStyle by appPreferences.badgeStyle.collectChangesWithDefault()
 
     val articles = viewModel.articles.collectAsLazyPagingItems()
 
@@ -169,10 +174,12 @@ fun ArticleScreen(
         LocalArticleActions provides articleActions,
         LocalFolderActions provides folderActions,
         LocalFeedActions provides feedActions,
+        LocalSavedSearchActions provides savedSearchActions,
         LocalLabelsActions provides labelsActions,
         LocalConnectivity provides connectivity,
         LocalLinkOpener provides provideLinkOpener(context),
         LocalMarkAllReadButtonPosition provides markAllReadButtonPosition,
+        LocalBadgeStyle provides badgeStyle,
         LocalUnreadCount provides unreadCount,
         LocalSnackbarHost provides snackbarHostState,
     ) {
@@ -530,7 +537,8 @@ fun ArticleScreen(
                             currentFeed = currentFeed,
                             feeds = allFeeds,
                             savedSearches = savedSearches,
-                            folders = allFolders
+                            folders = allFolders,
+                            source = viewModel.source,
                         )
                     },
                     snackbarHost = {
@@ -752,6 +760,9 @@ fun rememberFolderActions(viewModel: ArticleScreenViewModel): FolderActions {
     return remember {
         FolderActions(
             updateExpanded = viewModel::expandFolder,
+            removeFolder = { folderTitle, completion ->
+                viewModel.removeFolder(folderTitle, completion)
+            },
         )
     }
 }
@@ -765,7 +776,10 @@ fun rememberFeedActions(viewModel: ArticleScreenViewModel): FeedActions {
             },
             removeFeed = { feedID ->
                 viewModel.removeFeed(feedID)
-            }
+            },
+            toggleUnreadBadge = { feedID, show ->
+                viewModel.toggleFeedUnreadBadge(feedID, show)
+            },
         )
     }
 }
@@ -792,6 +806,17 @@ fun rememberLabelsActions(
             addLabel = viewModel::addLabelAsync,
             removeLabel = viewModel::removeLabelAsync,
             createLabel = viewModel::createLabel,
+        )
+    }
+}
+
+@Composable
+fun rememberSavedSearchActions(viewModel: ArticleScreenViewModel): SavedSearchActions {
+    return remember {
+        SavedSearchActions(
+            toggleUnreadBadge = { id, show ->
+                viewModel.toggleSavedSearchUnreadBadge(id, show)
+            },
         )
     }
 }

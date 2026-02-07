@@ -243,8 +243,8 @@
     <string name="notifications_permissions_disabled_call_to_action">Settings</string>
     <string name="notifications_permission_disabled_title">Notification permission is disabled</string>
     <string name="settings_enable_refresh_call_to_action">Periodic refresh must be enabled first</string>
-    <string name="settings_notifications_select_none">Select None</string>
-    <string name="settings_notifications_select_all">Select All</string>
+    <string name="settings_select_none">Select None</string>
+    <string name="settings_select_all">Select All</string>
     <string name="article_list_row_swipe_open_externally">Open article in browser</string>
     <string name="article_view_open_externally">Open externally</string>
     <string name="settings_confirm_mark_all_read">Confirm marking all as read</string>
@@ -317,9 +317,15 @@
     <string name="freshrss_visibility_option_important">Important</string>
     <string name="freshrss_visibility_option_category">Category</string>
     <string name="freshrss_visibility_option_feed">Feed</string>
+    <string name="freshrss_tag_action_edit">Edit Category</string>
     <string name="audio_player_play">Play</string>
     <string name="audio_player_pause">Pause</string>
     <string name="audio_player_close">Close player</string>
     <string name="audio_player_skip_back">Skip back 30 seconds</string>
     <string name="audio_player_skip_forward">Skip forward 30 seconds</string>
+    <string name="settings_panel_unread_counts_title">Unread Badges</string>
+    <string name="settings_option_badge_style">Badge style</string>
+    <string name="badge_style_simple">Simple</string>
+    <string name="badge_style_exact">Exact</string>
+    <string name="show_unread_badge">Show Unread Badge</string>
 </resources>

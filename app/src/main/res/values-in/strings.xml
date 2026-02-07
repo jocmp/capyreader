@@ -212,7 +212,7 @@
     <string name="edit_feed_tag_section">Tambah atau Pilih Label</string>
     <string name="edit_feed_notifications_title">Hidupkan notifikasi</string>
     <string name="settings_enable_refresh_call_to_action">Penyegaran berkala harus diaktifkan terlebih dahulu</string>
-    <string name="settings_notifications_select_all">Pilih Semuanya</string>
+    <string name="settings_select_all">Pilih Semuanya</string>
     <string name="crash_log_export_item_title">Bagikan catatan kerusakan</string>
     <string name="article_view_open_externally">Buka secara eksternal</string>
     <string name="settings_mark_read_on_scroll">Tandai sebagai sudah dibaca saat digulir</string>
@@ -222,7 +222,7 @@
     <string name="full_content_error_missing_response">Gagal mengambil artikel</string>
     <string name="full_content_error_generic">Gagal menguraikan artikel</string>
     <string name="full_content_error_forbidden">Pengambilan diblokir oleh situs</string>
-    <string name="settings_notifications_select_none">Tidak ada pilihan</string>
+    <string name="settings_select_none">Tidak ada pilihan</string>
     <string name="article_list_row_swipe_open_externally">Buka artikel di browser</string>
     <string name="settings_section_browser">Peramban</string>
     <string name="feed_nav_drawer_title">Umpan</string>

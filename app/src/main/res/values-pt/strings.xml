@@ -210,8 +210,8 @@
     <string name="edit_feed_tags_section">Etiquetas</string>
     <string name="edit_feed_notifications_title">Ativar notificações</string>
     <string name="notifications_permissions_disabled_call_to_action">Configurações</string>
-    <string name="settings_notifications_select_none">Desmarcar Todas</string>
-    <string name="settings_notifications_select_all">Marcar Todas</string>
+    <string name="settings_select_none">Desmarcar Todas</string>
+    <string name="settings_select_all">Marcar Todas</string>
     <string name="article_list_row_swipe_open_externally">Abrir artigo no navegador</string>
     <string name="notifications_permission_disabled_title">Permissão de notificação está desativada</string>
     <string name="settings_enable_refresh_call_to_action">Atualização periódica deve ser ativada primeiro</string>

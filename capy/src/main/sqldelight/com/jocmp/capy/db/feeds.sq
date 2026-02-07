@@ -80,6 +80,12 @@ UPDATE feeds SET enable_notifications = :enabled WHERE feeds.id = :feedID;
 toggleAllNotifications:
 UPDATE feeds SET enable_notifications = :enabled;
 
+updateShowUnreadBadge:
+UPDATE feeds SET show_unread_badge = :enabled WHERE id = :feedID;
+
+toggleAllShowUnreadBadge:
+UPDATE feeds SET show_unread_badge = :enabled;
+
 delete {
   DELETE FROM article_statuses WHERE article_statuses.article_id IN (
       SELECT id

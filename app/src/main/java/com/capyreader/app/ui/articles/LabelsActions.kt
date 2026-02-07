@@ -5,11 +5,11 @@ import androidx.compose.runtime.compositionLocalOf
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.accounts.Source
 
-val LocalLabelsActions = compositionLocalOf { LabelsActions() }
+val LocalLabelsActions = compositionLocalOf { LabelsActions(source = Source.LOCAL) }
 
 @Stable
 data class LabelsActions(
-    val source: Source = Source.LOCAL,
+    val source: Source,
     val showLabels: Boolean = false,
     val savedSearches: List<SavedSearch> = emptyList(),
     val selectedArticleID: String? = null,

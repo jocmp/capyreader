@@ -167,7 +167,7 @@
     <string name="edit_feed_tags_section">Oznake</string>
     <string name="edit_feed_notifications_title">Omogući obaveštenja</string>
     <string name="settings_enable_refresh_call_to_action">Prvo mora biti omogućeno periodično osvežavanje</string>
-    <string name="settings_notifications_select_none">Izaberite Ništa</string>
+    <string name="settings_select_none">Izaberite Ništa</string>
     <string name="article_list_row_swipe_open_externally">Otvorite članak u pretraživaču</string>
     <string name="article_view_mark_as_unread">Označi kao nepročitano</string>
     <string name="article_view_unstar">Ukloni iz sačuvnog</string>
@@ -181,7 +181,7 @@
     <string name="settings_panel_notifications_title">Obaveštenja</string>
     <string name="crash_log_export_item_subtitle">Čuva evidenciju o padu u datoteku za deljenje sa programerom</string>
     <string name="notifications_permissions_disabled_call_to_action">Podešavanja</string>
-    <string name="settings_notifications_select_all">Izaberite Sve</string>
+    <string name="settings_select_all">Izaberite Sve</string>
     <string name="settings_gestures_list_back_navigation_action">Akcija Navigacije Nazad</string>
     <string name="action_share">Podeli</string>
     <string name="notifications_channel_title_feed_update">Ažuriranja Izvora</string>
