@@ -181,7 +181,6 @@
     <string name="opml_exporter_failure">Exportálás sikertelen</string>
     <string name="settings_reader_title">Olvasó</string>
     <string name="settings_options_reader_pin_top_toolbar">Felső eszköztár rögzítése</string>
-    <string name="settings_options_reader_show_bottom_toolbar">Műveletek megjelenítése az alsó eszköztáron</string>
     <string name="article_bottom_bar_next_article">Ugrás a következő cikkre</string>
     <string name="settings_gestures_reader_swipe_down">Lehúzás</string>
     <string name="settings_gestures_reader_swipe_up">Felhúzás</string>

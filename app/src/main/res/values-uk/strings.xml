@@ -192,7 +192,6 @@
     <string name="opml_exporter_failure">Не вдалось експортувати</string>
     <string name="settings_reader_title">Читання</string>
     <string name="settings_options_reader_pin_top_toolbar">Закріпити верхню панель</string>
-    <string name="settings_options_reader_show_bottom_toolbar">Показати дії на панелі внизу</string>
     <string name="article_bottom_bar_next_article">Наступна стаття</string>
     <string name="article_vertical_swipe_previous_article">Попередня стаття</string>
     <string name="article_vertical_swipe_next_article">Наступна стаття</string>

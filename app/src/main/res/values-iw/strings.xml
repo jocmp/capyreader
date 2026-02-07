@@ -177,7 +177,6 @@
     <string name="opml_exporter_failure">יצוא נכשל</string>
     <string name="settings_reader_title">קורא</string>
     <string name="settings_options_reader_pin_top_toolbar">הצמד תפריט עליון</string>
-    <string name="settings_options_reader_show_bottom_toolbar">הצג פעולות בתפריט התחתון</string>
     <string name="article_bottom_bar_next_article">עבור למאמר הבא</string>
     <string name="settings_gestures_reader_swipe_down">גלוש למטה</string>
     <string name="settings_gestures_reader_swipe_up">גלוש למעלה</string>

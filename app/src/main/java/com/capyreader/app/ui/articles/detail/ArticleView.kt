@@ -1,37 +1,27 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package com.capyreader.app.ui.articles.detail
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Article
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
-import androidx.compose.material3.BottomAppBarDefaults.exitAlwaysScrollBehavior
-import androidx.compose.material3.BottomAppBarScrollBehavior
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.FlexibleBottomAppBar
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollBehavior
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -58,7 +48,6 @@ import com.capyreader.app.ui.settings.LocalSnackbarHost
 import com.jocmp.capy.Article
 import org.koin.compose.koinInject
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ArticleView(
     article: Article,
@@ -101,13 +90,20 @@ fun ArticleView(
     val hasPrevious = previousIndex > -1 && articles[index - 1] != null
     val hasNext = nextIndex < articles.itemCount && articles[index + 1] != null
 
+    val previousArticleId = if (hasPrevious) articles[previousIndex]?.id else null
+    val nextArticleId = if (hasNext) articles[nextIndex]?.id else null
+
     fun selectPrevious() {
+        if (previousIndex < 0) return
+
         articles[previousIndex]?.let {
             onSelectArticle(it.id)
         }
     }
 
     fun selectNext() {
+        if (nextIndex >= articles.itemCount) return
+
         articles[nextIndex]?.let {
             onSelectArticle(it.id)
         }
@@ -123,81 +119,86 @@ fun ArticleView(
         }
     }
 
-    val topToolbarPreference = rememberTopToolbarPreference()
-    val bottomScrollBehavior = exitAlwaysScrollBehavior()
-    val enableBottomBar by rememberBottomBarPreference()
+    val pinToolbars by appPreferences.readerOptions.pinToolbars.collectChangesWithDefault()
+    val scrollState = rememberArticleScrollState()
+    val showToolBar = pinToolbars || !scrollState.isScrollingDown
 
     LaunchedEffect(article.id) {
-        topToolbarPreference.scrollBehavior.state.heightOffset = 0f
-        topToolbarPreference.scrollBehavior.state.contentOffset = 0f
-        bottomScrollBehavior.state.heightOffset = 0f
-        bottomScrollBehavior.state.contentOffset = 0f
+        scrollState.reset()
     }
 
-    ArticleViewScaffold(
-        bottomScrollBehavior = bottomScrollBehavior,
-        enableBottomBar = enableBottomBar,
-        topToolbarPreference = topToolbarPreference,
-        topBar = {
-            ArticleTopBar(
-                scrollBehavior = topToolbarPreference.scrollBehavior,
-                onClose = onBackPressed,
-                actions = {
-                    if (!enableBottomBar) {
-                        ArticleActions(
-                            article = article,
-                            onToggleExtractContent = onToggleFullContent,
-                            onToggleRead = onToggleRead,
-                            onToggleStar = onToggleStar,
-                        )
-                    }
-                }
-            )
-        },
-        bottomBar = {
-            FlexibleBottomAppBar(
-                expandedHeight = 56.dp,
-                scrollBehavior = bottomScrollBehavior,
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    val contentPadding = rememberContentPadding(pinToolbars)
+
+    CompositionLocalProvider(
+        LocalSnackbarHost provides snackbarHostState,
+    ) {
+        Box(Modifier
+            .fillMaxSize()
+            .nestedScroll(scrollState.connection)) {
+            Box(
+                modifier = Modifier
+                    .padding(contentPadding)
+                    .fillMaxSize()
             ) {
-                ArticleActions(
-                    article = article,
-                    onToggleExtractContent = onToggleFullContent,
-                    onToggleRead = onToggleRead,
-                    onToggleStar = onToggleStar,
-                )
-            }
-        },
-        reader = {
-            ArticlePullRefresh(
-                onSwipe = onSwipe,
-                hasPreviousArticle = hasPrevious,
-                hasNextArticle = hasNext
-            ) {
-                HorizontalReaderPager(
-                    enabled = enableHorizontalPager,
-                    enablePrevious = hasPrevious,
-                    enableNext = hasNext,
-                    onSelectPrevious = {
-                        selectPrevious()
-                    },
-                    onSelectNext = {
-                        selectNext()
-                    },
+                ArticlePullRefresh(
+                    onSwipe = onSwipe,
+                    hasPreviousArticle = hasPrevious,
+                    pinToolbars = pinToolbars,
+                    hasNextArticle = hasNext,
                 ) {
-                    ArticleTransition(article = article) { targetArticle ->
-                        ArticleReader(
-                            article = targetArticle,
-                            onSelectMedia = onSelectMedia,
-                            onSelectAudio = onSelectAudio,
-                            onPauseAudio = onPauseAudio,
-                            currentAudioUrl = currentAudioUrl,
-                            isAudioPlaying = isAudioPlaying,
-                        )
+                    HorizontalReaderPager(
+                        enabled = enableHorizontalPager,
+                        enablePrevious = hasPrevious,
+                        enableNext = hasNext,
+                        onSelectPrevious = { selectPrevious() },
+                        onSelectNext = { selectNext() },
+                    ) {
+                        ArticleTransition(
+                            article = article,
+                            enableHorizontalPager = enableHorizontalPager,
+                            previousArticleId = previousArticleId,
+                            nextArticleId = nextArticleId,
+                        ) { targetArticle ->
+                            ArticleReader(
+                                article = targetArticle,
+                                onSelectMedia = onSelectMedia,
+                                onSelectAudio = onSelectAudio,
+                                onPauseAudio = onPauseAudio,
+                                currentAudioUrl = currentAudioUrl,
+                                isAudioPlaying = isAudioPlaying,
+                            )
+                        }
                     }
                 }
             }
-        },
-    )
+
+            ArticleTopBar(
+                show = showToolBar,
+                isScrolled = scrollState.showTopDivider,
+                articleId = article.id,
+                onClose = onBackPressed,
+            )
+
+            ArticleBottomBar(
+                show = showToolBar,
+                article = article,
+                hasNextArticle = hasNext,
+                onToggleExtractContent = onToggleFullContent,
+                onToggleRead = onToggleRead,
+                onToggleStar = onToggleStar,
+                onSelectNext = { selectNext() },
+            )
+
+            SnackbarHost(
+                hostState = snackbarHostState,
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 68.dp)
+            )
+        }
+    }
 
     LaunchedEffect(index) {
         if (index > -1) {
@@ -211,68 +212,10 @@ fun ArticleView(
 }
 
 @Composable
-private fun ArticleViewScaffold(
-    topBar: @Composable () -> Unit,
-    enableBottomBar: Boolean,
-    bottomBar: @Composable () -> Unit,
-    reader: @Composable () -> Unit,
-    bottomScrollBehavior: BottomAppBarScrollBehavior,
-    topToolbarPreference: ToolbarPreferences,
-) {
-    val snackbarHostState = remember { SnackbarHostState() }
-
-    Scaffold(
-        modifier = Modifier
-            .nestedScroll(bottomScrollBehavior.nestedScrollConnection)
-            .nestedScroll(topToolbarPreference.scrollBehavior.nestedScrollConnection),
-        topBar = {
-            if (topToolbarPreference.pinned) {
-                topBar()
-            }
-        },
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
-        }
-    ) { innerPadding ->
-        CompositionLocalProvider(
-            LocalSnackbarHost provides snackbarHostState,
-        ) {
-            Box(
-                Modifier
-                    .fillMaxSize()
-            ) {
-                Box(
-                    modifier = Modifier
-                        .padding(innerPadding)
-                        .fillMaxSize()
-                ) {
-                    Column {
-                        reader()
-                    }
-                }
-
-                if (!topToolbarPreference.pinned) {
-                    topBar()
-                }
-
-                if (enableBottomBar) {
-                    Box(
-                        Modifier
-                            .align(Alignment.BottomStart)
-                            .fillMaxWidth()
-                    ) {
-                        bottomBar()
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
 fun ArticlePullRefresh(
     hasNextArticle: Boolean,
     hasPreviousArticle: Boolean,
+    pinToolbars: Boolean,
     onSwipe: (swipe: ArticleVerticalSwipe) -> Unit,
     content: @Composable () -> Unit,
 ) {
@@ -292,6 +235,7 @@ fun ArticlePullRefresh(
     SwipeRefresh(
         onRefresh = { onSwipe(topSwipe) },
         swipeEnabled = enableTopSwipe,
+        indicatorPadding = if (!pinToolbars) PaddingValues(top = 100.dp) else PaddingValues(),
         icon = swipeIcon(
             topSwipe,
             relatedArticleIcon = Icons.Rounded.KeyboardArrowUp
@@ -325,52 +269,6 @@ fun swipeIcon(
 }
 
 @Composable
-fun rememberBottomBarPreference(appPreferences: AppPreferences = koinInject()): State<Boolean> {
-    return appPreferences.readerOptions.bottomBarActions
-        .stateIn(rememberCoroutineScope())
-        .collectAsState()
-}
-
-@Composable
-fun rememberTopToolbarPreference(
-    appPreferences: AppPreferences = koinInject(),
-): ToolbarPreferences {
-    val pinTopToolbar by appPreferences.readerOptions.pinTopToolbar.stateIn(rememberCoroutineScope())
-        .collectAsState()
-
-    val scrollBehavior = if (pinTopToolbar) {
-        TopAppBarDefaults.pinnedScrollBehavior()
-    } else {
-        TopAppBarDefaults.enterAlwaysScrollBehavior(reverseLayout = true)
-    }
-
-    val showToolbars = scrollBehavior.state.collapsedFraction == 0f
-
-    return ToolbarPreferences(scrollBehavior, showToolbars, pinTopToolbar)
-}
-
-@Stable
-data class ToolbarPreferences(
-    val scrollBehavior: TopAppBarScrollBehavior,
-    val show: Boolean,
-    val pinned: Boolean,
-)
-
-@Composable
-private fun rememberSwipePreferences(appPreferences: AppPreferences = koinInject()): SwipePreferences {
-    val coroutineScope = rememberCoroutineScope()
-    val topSwipe by appPreferences.readerOptions.topSwipeGesture
-        .stateIn(coroutineScope)
-        .collectAsState()
-
-    val bottomSwipe by appPreferences.readerOptions.bottomSwipeGesture
-        .stateIn(coroutineScope)
-        .collectAsState()
-
-    return SwipePreferences(topSwipe, bottomSwipe)
-}
-
-@Composable
 fun articleOpenLink(
     article: Article,
 ): () -> Unit {
@@ -385,8 +283,29 @@ fun articleOpenLink(
     return ::open
 }
 
+@Composable
+private fun rememberSwipePreferences(appPreferences: AppPreferences = koinInject()): SwipePreferences {
+    val topSwipe by appPreferences.readerOptions.topSwipeGesture.collectChangesWithDefault()
+    val bottomSwipe by appPreferences.readerOptions.bottomSwipeGesture.collectChangesWithDefault()
+
+    return SwipePreferences(topSwipe, bottomSwipe)
+}
+
 @Stable
 private data class SwipePreferences(
     val topSwipe: ArticleVerticalSwipe,
     val bottomSwipe: ArticleVerticalSwipe,
 )
+
+@Composable
+private fun rememberContentPadding(pinToolbars: Boolean): PaddingValues {
+    return if (pinToolbars) {
+        PaddingValues(
+            top = WindowInsets.statusBars.asPaddingValues().calculateTopPadding() + ArticleBarDefaults.TopBarHeight,
+            bottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding() + ArticleBarDefaults.BottomBarHeight,
+        )
+    } else {
+        PaddingValues()
+    }
+}
+

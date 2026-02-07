@@ -274,7 +274,6 @@
     <string name="settings_gestures_improve_talkback_title">Migliora il talkback</string>
     <string name="settings_gestures_improve_talkback_subtitle">Disattiva alcune impostazioni per migliorare la sintesi vocale di TalkBack</string>
     <string name="settings_options_reader_pin_top_toolbar">Fissa la barra degli strumenti in alto</string>
-    <string name="settings_options_reader_show_bottom_toolbar">Mostra le azioni nella barra degli strumenti in basso</string>
     <string name="add_account_miniflux_signup_link_text">Per saperne di più.</string>
     <string name="add_account_miniflux_signup_prompt">Hai un\'istanza Miniflux?</string>
     <string name="mark_read_position_toolbar">Barra degli strumenti</string>

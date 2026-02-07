@@ -246,7 +246,6 @@
     <string name="tag_name_title">Nama</string>
     <string name="actions_share_link">Bagikan tautan</string>
     <string name="delete_tag_error">Kesalahan saat menghapus label</string>
-    <string name="settings_options_reader_show_bottom_toolbar">Tampilkan Tindakan di Bilah Alat Bawah</string>
     <string name="settings_gestures_list_swipe_up">Usap ke Atas</string>
     <string name="article_list_swipe_next_feed">Ke umpan selanjutnya</string>
     <string name="media_save">Simpan</string>

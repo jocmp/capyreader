@@ -273,7 +273,6 @@
     <string name="settings_gestures_improve_talkback_title">TalkBack verbessern</string>
     <string name="settings_gestures_improve_talkback_subtitle">Deaktiviert manche Einstellungen, um TalkBack Text-zu-Sprache zu verbessern</string>
     <string name="settings_options_reader_pin_top_toolbar">Obere Werkzeugleiste anpinnen</string>
-    <string name="settings_options_reader_show_bottom_toolbar">Aktionen in unterer Werkzeugleiste anzeigen</string>
     <string name="add_account_miniflux_signup_prompt">Sie haben keine Miniflux-Instanz?</string>
     <string name="add_account_miniflux_signup_link_text">Mehr erfahren.</string>
     <string name="auth_fields_client_certificate">Client-Zertifikat (optional)</string>

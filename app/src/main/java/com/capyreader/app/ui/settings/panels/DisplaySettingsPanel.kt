@@ -43,7 +43,6 @@ fun DisplaySettingsPanel(
 ) {
     val pinArticleBars by viewModel.pinArticleBars.collectChangesWithCurrent()
     val improveTalkback by viewModel.improveTalkback.collectChangesWithCurrent()
-    val enableBottomBarActions by viewModel.enableBottomBarActions.collectChangesWithCurrent()
     val markReadButtonPosition by viewModel.markReadButtonPosition.collectChangesWithCurrent()
 
     DisplaySettingsPanelView(
@@ -53,8 +52,6 @@ fun DisplaySettingsPanel(
         updatePureBlackDarkMode = viewModel::updatePureBlackDarkMode,
         appPreferences = viewModel.appPreferences,
         updatePinArticleBars = viewModel::updatePinArticleBars,
-        updateBottomBarActions = viewModel::updateBottomBarActions,
-        enableBottomBarActions = enableBottomBarActions,
         pinArticleBars = pinArticleBars,
         enablePinArticleBars = !improveTalkback,
         updateImageVisibility = viewModel::updateImageVisibility,
@@ -88,9 +85,7 @@ fun DisplaySettingsPanelView(
     updatePureBlackDarkMode: (Boolean) -> Unit,
     appPreferences: AppPreferences?,
     updatePinArticleBars: (enable: Boolean) -> Unit,
-    updateBottomBarActions: (enable: Boolean) -> Unit,
     pinArticleBars: Boolean,
-    enableBottomBarActions: Boolean,
     enablePinArticleBars: Boolean,
     imageVisibility: ReaderImageVisibility,
     layout: LayoutPreference,
@@ -145,13 +140,6 @@ fun DisplaySettingsPanelView(
                     checked = pinArticleBars,
                     onCheckedChange = updatePinArticleBars,
                     title = stringResource(R.string.settings_options_reader_pin_top_toolbar),
-                )
-            }
-            RowItem {
-                TextSwitch(
-                    checked = enableBottomBarActions,
-                    onCheckedChange = updateBottomBarActions,
-                    title = stringResource(R.string.settings_options_reader_show_bottom_toolbar),
                 )
             }
         }
@@ -248,10 +236,8 @@ private fun DisplaySettingsPanelViewPreview() {
                 updatePinArticleBars = {},
                 pinArticleBars = false,
                 updateImageVisibility = {},
-                updateBottomBarActions = {},
                 imageVisibility = ReaderImageVisibility.ALWAYS_SHOW,
                 enablePinArticleBars = false,
-                enableBottomBarActions = false,
                 markReadButtonPosition = MarkReadPosition.TOOLBAR,
                 updateMarkReadButtonPosition = {}
             )

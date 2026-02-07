@@ -272,7 +272,6 @@
     <string name="settings_gestures_improve_talkback_title">Подобряване на TalkBack</string>
     <string name="settings_gestures_improve_talkback_subtitle">Деактивира някои настройки за подобряване на преобразуването на текст в реч на TalkBack</string>
     <string name="settings_options_reader_pin_top_toolbar">Фиксирана горна лента с инструменти</string>
-    <string name="settings_options_reader_show_bottom_toolbar">Покажи действия в долната лента с инструменти</string>
     <string name="add_account_miniflux_signup_prompt">Не разполагате с инстанция на Miniflux?</string>
     <string name="add_account_miniflux_signup_link_text">Научете повече.</string>
     <string name="mark_read_position_toolbar">Лента с инструменти</string>
