@@ -75,6 +75,7 @@ data class ArticleRowOptions(
     val imagePreview: ImagePreview = ImagePreview.default,
     val fontScale: ArticleListFontScale = ArticleListFontScale.MEDIUM,
     val shortenTitles: Boolean = true,
+    val dim: Boolean = true,
 )
 
 @Composable
@@ -89,12 +90,13 @@ fun ArticleRow(
 ) {
     val imageURL = article.imageURL
     val isMonochrome = LocalAppTheme.current == AppTheme.MONOCHROME
-    val deEmphasizeFontWeight = article.read && isMonochrome
+    val dim = article.read && options.dim
+    val deEmphasizeFontWeight = dim && isMonochrome
     val colors = listItemColors(
         selected = selected,
-        read = article.read
+        read = dim
     )
-    val feedNameColor = findFeedNameColor(read = article.read)
+    val feedNameColor = findFeedNameColor(read = dim)
     val haptics = LocalHapticFeedback.current
     val (isArticleMenuOpen, setArticleMenuOpen) = remember { mutableStateOf(false) }
     val labelsActions = LocalLabelsActions.current

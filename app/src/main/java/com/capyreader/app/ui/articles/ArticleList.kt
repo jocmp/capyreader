@@ -32,6 +32,7 @@ import androidx.paging.compose.itemKey
 import com.capyreader.app.R
 import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.Article
+import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.MarkRead
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
@@ -48,8 +49,11 @@ fun ArticleList(
     onMarkAllRead: (range: MarkRead) -> Unit = {},
     refreshingAll: Boolean,
     enableMarkReadOnScroll: Boolean = false,
+    filterStatus: ArticleStatus = ArticleStatus.ALL,
 ) {
-    val articleOptions = rememberArticleOptions()
+    val articleOptions = rememberArticleOptions().copy(
+        dim = filterStatus != ArticleStatus.STARRED,
+    )
     val currentTime = rememberCurrentTime()
     val localDensity = LocalDensity.current
     var listHeight by remember { mutableStateOf(0.dp) }
