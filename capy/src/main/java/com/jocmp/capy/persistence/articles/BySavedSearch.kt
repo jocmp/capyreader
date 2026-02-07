@@ -30,6 +30,7 @@ class BySavedSearch(private val database: Database) {
             limit = limit,
             offset = offset,
             lastReadAt = mapLastRead(read, since),
+            lastStarredAt = mapLastStarred(starred, since),
             publishedSince = null,
             newestFirst = isDescendingOrder(sortOrder),
             mapper = ::listMapper
@@ -72,6 +73,7 @@ class BySavedSearch(private val database: Database) {
             read = read,
             starred = starred,
             lastReadAt = mapLastRead(read, since),
+            lastStarredAt = mapLastStarred(starred, since),
             publishedSince = null
         )
     }

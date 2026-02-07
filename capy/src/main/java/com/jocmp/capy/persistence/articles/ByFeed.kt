@@ -32,6 +32,7 @@ class ByFeed(private val database: Database) {
             limit = limit,
             offset = offset,
             lastReadAt = mapLastRead(read, since),
+            lastStarredAt = mapLastStarred(starred, since),
             publishedSince = null,
             newestFirst = isDescendingOrder(sortOrder),
             priorities = priority.inclusivePriorities,
@@ -77,6 +78,7 @@ class ByFeed(private val database: Database) {
             read = read,
             starred = starred,
             lastReadAt = mapLastRead(read, since),
+            lastStarredAt = mapLastStarred(starred, since),
             priorities = priority.inclusivePriorities,
             publishedSince = null
         )

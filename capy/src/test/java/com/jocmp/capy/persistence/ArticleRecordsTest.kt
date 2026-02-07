@@ -336,6 +336,61 @@ class ArticleRecordsTest {
     }
 
     @Test
+    fun allByStatus_starredIncludesRecentlyUnstarred() {
+        val articles = 3.repeated { articleFixture.create() }
+
+        articles.forEach { articleRecords.addStar(it.id) }
+        articleRecords.removeStar(articles.last().id)
+
+        val since = OffsetDateTime.now().minusDays(1)
+
+        val results = articleRecords
+            .byStatus
+            .all(
+                status = ArticleStatus.STARRED,
+                limit = 10,
+                offset = 0,
+                sortOrder = SortOrder.NEWEST_FIRST,
+                since = since,
+            )
+            .executeAsList()
+
+        val count = articleRecords
+            .byStatus
+            .count(
+                status = ArticleStatus.STARRED,
+                since = since,
+            )
+            .executeAsOne()
+
+        assertEquals(expected = 3, actual = results.size)
+        assertEquals(expected = 3, actual = count)
+    }
+
+    @Test
+    fun allByStatus_starredExcludesOldUnstarred() {
+        val articles = 3.repeated { articleFixture.create() }
+
+        articles.forEach { articleRecords.addStar(it.id) }
+        articleRecords.removeStar(articles.last().id)
+
+        val since = OffsetDateTime.now().plusDays(1)
+
+        val results = articleRecords
+            .byStatus
+            .all(
+                status = ArticleStatus.STARRED,
+                limit = 10,
+                offset = 0,
+                sortOrder = SortOrder.NEWEST_FIRST,
+                since = since,
+            )
+            .executeAsList()
+
+        assertEquals(expected = 2, actual = results.size)
+    }
+
+    @Test
     fun markAllUnread() = runTest {
         val articleIDs = 3.repeated { RandomUUID.generate() }
         val articleRecords = ArticleRecords(database)

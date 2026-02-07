@@ -201,7 +201,7 @@ UPDATE article_statuses SET read = :read, last_read_at = :lastReadAt
 WHERE article_statuses.article_id IN :articleIDs;
 
 markStarred:
-UPDATE article_statuses SET starred = :starred
+UPDATE article_statuses SET starred = :starred, last_starred_at = :lastStarredAt
 WHERE article_statuses.article_id = :articleID;
 
 deleteAllArticles {
