@@ -6,7 +6,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Label
 import androidx.compose.material.icons.outlined.Circle
 import androidx.compose.material.icons.outlined.FormatSize
-import androidx.compose.material.icons.outlined.Print
 import androidx.compose.material.icons.rounded.Circle
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material.icons.rounded.Star
@@ -24,7 +23,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
-import com.capyreader.app.common.printArticle
 import com.capyreader.app.common.shareArticle
 import com.capyreader.app.ui.articles.FullContentLoadingIcon
 import com.capyreader.app.ui.articles.LocalLabelsActions
@@ -109,18 +107,6 @@ fun ArticleActions(
             Icon(
                 Icons.Outlined.FormatSize,
                 stringResource(R.string.article_style_options)
-            )
-        }
-    }
-    ToolbarTooltip(
-        message = stringResource(R.string.article_print)
-    ) {
-        IconButton(
-            onClick = { context.printArticle(article = article) },
-        ) {
-            Icon(
-                Icons.Outlined.Print,
-                contentDescription = stringResource(R.string.article_print)
             )
         }
     }
