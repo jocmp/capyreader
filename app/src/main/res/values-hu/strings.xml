@@ -291,4 +291,14 @@
     <string name="unauthorized_dialog_description">Hiba történt a fiókodhoz való csatlakozáskor. Kérjük, jelentkezz be újra.</string>
     <string name="settings_panel_display_title">Kijelző és megjelenés</string>
     <string name="settings_clear_all_articles_text">Biztosan törölni szeretné az összes olvasott, csillaggal nem jelölt cikket az eszközéről? Ez a művelet nem vonható vissza.</string>
+    <string name="freshrss_nav_headline_categories">Kategóriák</string>
+    <string name="theme_mode_label">Mód</string>
+    <string name="article_list_empty">Nincs semmi</string>
+    <string name="settings_section_experimental">Kísérleti</string>
+    <string name="settings_option_enable_audio_player">Hanglejátszó</string>
+    <string name="audio_player_play">Lejátsz</string>
+    <string name="audio_player_pause">Szünet</string>
+    <string name="audio_player_close">Lejátszó bezárása</string>
+    <string name="audio_player_skip_back">Ugrás vissza 30 másodperccel</string>
+    <string name="audio_player_skip_forward">Ugrás előre 30 másodperccel</string>
 </resources>

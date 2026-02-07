@@ -294,4 +294,19 @@
     <string name="settings_option_show_today_filter">Heute</string>
     <string name="auth_fields_freshrss_api_password">API-Passwort</string>
     <string name="freshrss_visibility">Sichtbarkeit</string>
+    <string name="freshrss_nav_headline_categories">Kategorien</string>
+    <string name="theme_mode_label">Modus</string>
+    <string name="article_list_empty">Leer hier</string>
+    <string name="auth_fields_miniflux_api_token">API Token</string>
+    <string name="auth_fields_miniflux_use_api_token">Nutze API Token</string>
+    <string name="auth_fields_miniflux_use_password">Nutze Passwort</string>
+    <string name="auth_fields_show_advanced">Erweiterte Optionen</string>
+    <string name="auth_fields_hide_advanced">Erweiterte Optionen verbergen</string>
+    <string name="freshrss_visibility_option_category">Kategorie</string>
+    <string name="audio_player_play">Abspielen</string>
+    <string name="audio_player_pause">Pause</string>
+    <string name="audio_player_close">Player schließen</string>
+    <string name="audio_player_skip_back">30 Sekunden zurückspulen</string>
+    <string name="audio_player_skip_forward">30 Sekunden vorspulen</string>
+    <string name="freshrss_visibility_option_feed">Feed</string>
 </resources>
