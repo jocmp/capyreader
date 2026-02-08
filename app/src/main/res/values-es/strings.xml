@@ -272,7 +272,7 @@
     <string name="widget_headlines_account_error">Añade una cuenta primero</string>
     <string name="settings_gestures_improve_talkback_title">Mejorar TalkBack</string>
     <string name="settings_gestures_improve_talkback_subtitle">Desactiva algunas configuraciones para mejorar el texto a voz de TalkBack</string>
-    <string name="settings_options_reader_pin_top_toolbar">Fijar la barra de herramientas superior</string>
+    <string name="settings_options_reader_pin_top_toolbar">Fijar la barra de herramientas</string>
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">Un nivel más alto</string>
     <string name="add_account_miniflux_signup_link_text">Más información.</string>
     <string name="add_account_miniflux_signup_prompt">¿No tienes una instancia de Miniflux?</string>
@@ -307,4 +307,9 @@
     <string name="article_list_empty">Nada por aquí</string>
     <string name="freshrss_visibility_option_feed">Contenido</string>
     <string name="freshrss_visibility_option_main">Corriente principal</string>
+    <string name="auth_fields_miniflux_api_token">Fijar barras de herramientas</string>
+    <string name="auth_fields_miniflux_use_password">Usar Contraseña en su lugar</string>
+    <string name="auth_fields_show_advanced">Opciones avanzadas</string>
+    <string name="auth_fields_hide_advanced">Ocultar opciones avanzadas</string>
+    <string name="auth_fields_miniflux_use_api_token">Utilizar token API en su lugar</string>
 </resources>
