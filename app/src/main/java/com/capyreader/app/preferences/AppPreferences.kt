@@ -87,11 +87,8 @@ class AppPreferences(context: Context) {
     }
 
     class ReaderOptions(private val preferenceStore: PreferenceStore) {
-        val pinTopToolbar: Preference<Boolean>
-            get() = preferenceStore.getBoolean("article_pin_top_bar", true)
-
-        val bottomBarActions: Preference<Boolean>
-            get() = preferenceStore.getBoolean("article_bottom_bar_actions", false)
+        val pinToolbars: Preference<Boolean>
+            get() = preferenceStore.getBoolean("article_pin_top_bar", false)
 
         val fontSize: Preference<Int>
             get() = preferenceStore.getInt("article_font_size", FontSize.DEFAULT)
@@ -121,7 +118,7 @@ class AppPreferences(context: Context) {
             get() = preferenceStore.getBoolean("article_enable_paging_tap_gesture", false)
 
         val enableHorizontaPagination: Preference<Boolean>
-            get() = preferenceStore.getBoolean("article_enable_horizontal_pagination", true)
+            get() = preferenceStore.getBoolean("article_enable_horizontal_pagination", false)
 
         val improveTalkback: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_improve_talkback", false)

@@ -5,6 +5,7 @@ import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.withErrorHandling
+import com.jocmp.capy.common.ContentFormatter
 import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.toDateTime
@@ -330,7 +331,7 @@ internal class MinifluxAccountDelegate(
                     content_html = entry.content,
                     extracted_content_url = null,
                     url = entry.url,
-                    summary = null,
+                    summary = ContentFormatter.summary(entry.content),
                     image_url = imageURL,
                     published_at = entry.published_at.toDateTime?.toEpochSecond(),
                     enclosure_type = enclosures.firstOrNull()?.mime_type,

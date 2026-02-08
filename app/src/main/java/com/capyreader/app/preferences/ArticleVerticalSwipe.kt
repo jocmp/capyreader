@@ -38,8 +38,8 @@ enum class ArticleVerticalSwipe {
             LOAD_FULL_CONTENT,
         )
 
-        val topSwipeDefault = LOAD_FULL_CONTENT
+        val topSwipeDefault = PREVIOUS_ARTICLE
 
-        val bottomSwipeDefault = OPEN_ARTICLE_IN_BROWSER
+        val bottomSwipeDefault = NEXT_ARTICLE
     }
 }

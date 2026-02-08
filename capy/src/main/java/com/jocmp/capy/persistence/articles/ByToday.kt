@@ -28,6 +28,7 @@ class ByToday(private val database: Database) {
             limit = limit,
             offset = offset,
             lastReadAt = mapLastRead(read, since),
+            lastStarredAt = mapLastStarred(starred, since),
             publishedSince = mapTodayStartDate(),
             query = query,
             newestFirst = newestFirst,
@@ -66,6 +67,7 @@ class ByToday(private val database: Database) {
             starred = starred,
             query = query,
             lastReadAt = mapLastRead(read, since),
+            lastStarredAt = mapLastStarred(starred, since),
             publishedSince = mapTodayStartDate()
         )
     }

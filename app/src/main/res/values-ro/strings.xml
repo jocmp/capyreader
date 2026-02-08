@@ -152,7 +152,6 @@
     <string name="reader_image_visibility_label">Imagini</string>
     <string name="layout_preference_responsive">Răspuns</string>
     <string name="settings_gestures_list_row_swipe_end">Glisează spre stânga</string>
-    <string name="settings_options_reader_show_bottom_toolbar">Arată acțiuni în bara inferioară</string>
     <string name="article_list_sort_oldest_first">După cel mai vechi</string>
     <string name="settings_article_list_title">Listă articole</string>
     <string name="settings_clear_all_articles_text">Ești sigur că vrei să ștergi toate articolele citite și nesalvate de pe dispozitiv? Această acțiune nu poate fi anulată.</string>

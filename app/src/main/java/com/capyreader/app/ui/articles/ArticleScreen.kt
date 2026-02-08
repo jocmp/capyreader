@@ -105,6 +105,7 @@ fun ArticleScreen(
     val allFolders by viewModel.allFolders.collectAsStateWithLifecycle(initialValue = emptyList())
     val folders by viewModel.folders.collectAsStateWithLifecycle(initialValue = emptyList())
     val savedSearches by viewModel.savedSearches.collectAsStateWithLifecycle(initialValue = emptyList())
+    val allSavedSearches by viewModel.allSavedSearches.collectAsStateWithLifecycle(initialValue = emptyList())
     val statusCount by viewModel.statusCount.collectAsStateWithLifecycle(initialValue = 0)
     val todayCount by viewModel.todayCount.collectAsStateWithLifecycle(initialValue = 0)
     val unreadCount by viewModel.unreadCount.collectAsStateWithLifecycle(initialValue = 0L)
@@ -126,7 +127,7 @@ fun ArticleScreen(
     val articleActions = rememberArticleActions(viewModel)
     val folderActions = rememberFolderActions(viewModel)
     val feedActions = rememberFeedActions(viewModel)
-    val labelsActions = rememberLabelsActions(viewModel, savedSearches)
+    val labelsActions = rememberLabelsActions(viewModel, allSavedSearches)
     val connectivity = rememberLocalConnectivity()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val showOnboarding by viewModel.showOnboarding.collectAsState(false)
@@ -245,7 +246,9 @@ fun ArticleScreen(
                 }
         }
 
-        val (scrolledFilter, setScrolledFilter) = remember { mutableStateOf<ArticleFilter?>(null) }
+        val (scrolledFilter, setScrolledFilter) = rememberSaveable(
+            saver = ArticleFilter.Saver
+        ) { mutableStateOf(null) }
 
         LaunchedEffect(filter, articles.loadState.refresh) {
             val refreshComplete = articles.loadState.refresh is LoadState.NotLoading
@@ -591,6 +594,7 @@ fun ArticleScreen(
                                         listState = listState,
                                         enableMarkReadOnScroll = enableMarkReadOnScroll,
                                         refreshingAll = viewModel.refreshingAll,
+                                        filterStatus = filter.status,
                                         onMarkAllRead = { range ->
                                             onMarkAllRead(range)
                                         },

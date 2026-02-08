@@ -41,8 +41,6 @@ class DisplaySettingsViewModel(
     var fontScale by mutableStateOf(appPreferences.articleListOptions.fontScale.get())
         private set
 
-    var enableBottomBarActions = appPreferences.readerOptions.bottomBarActions
-
     val imagePreview: ImagePreview
         get() = _imagePreview.value
 
@@ -58,7 +56,7 @@ class DisplaySettingsViewModel(
     val shortenTitles: Boolean
         get() = _shortenTitles.value
 
-    val pinArticleBars = appPreferences.readerOptions.pinTopToolbar
+    val pinArticleBars = appPreferences.readerOptions.pinToolbars
 
     var imageVisibility by mutableStateOf(appPreferences.readerOptions.imageVisibility.get())
         private set
@@ -86,11 +84,7 @@ class DisplaySettingsViewModel(
     }
 
     fun updatePinArticleBars(pinBars: Boolean) {
-        appPreferences.readerOptions.pinTopToolbar.set(pinBars)
-    }
-
-    fun updateBottomBarActions(enable: Boolean) {
-        appPreferences.readerOptions.bottomBarActions.set(enable)
+        appPreferences.readerOptions.pinToolbars.set(pinBars)
     }
 
     fun updateFontScale(fontScale: ArticleListFontScale) {

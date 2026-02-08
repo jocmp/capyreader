@@ -7,6 +7,7 @@ import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.FaviconFetcher
 import com.jocmp.capy.accounts.FeedOption
+import com.jocmp.capy.common.ContentFormatter
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.TimeHelpers.published
 import com.jocmp.capy.common.transactionWithErrorHandling
@@ -23,7 +24,6 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
-import org.jsoup.Jsoup
 import java.net.UnknownHostException
 import java.time.ZonedDateTime
 import com.jocmp.feedfinder.parser.Feed as ParserFeed
@@ -363,5 +363,5 @@ internal val RssItem.summary: String?
             return null
         }
 
-        return Jsoup.parse(it).text()
+        return ContentFormatter.summary(it)
     }

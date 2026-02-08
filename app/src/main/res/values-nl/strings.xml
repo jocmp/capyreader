@@ -191,7 +191,6 @@
     <string name="opml_exporter_failure">Export mislukt</string>
     <string name="settings_reader_title">Lezer</string>
     <string name="settings_options_reader_pin_top_toolbar">Bovenste werkbalk vastpinnen</string>
-    <string name="settings_options_reader_show_bottom_toolbar">Acties op onderste werkbalk tonen</string>
     <string name="article_bottom_bar_next_article">Ga naar volgend artikel</string>
     <string name="settings_gestures_reader_swipe_down">Veeg omlaag</string>
     <string name="settings_gestures_reader_swipe_up">Veeg omhoog</string>
