@@ -18,6 +18,8 @@ import com.jocmp.capy.persistence.EnclosureRecords
 import com.jocmp.capy.persistence.FeedRecords
 import com.jocmp.capy.persistence.TaggingRecords
 import com.jocmp.feedfinder.DefaultFeedFinder
+import com.jocmp.feedfinder.FeedException
+import com.jocmp.feedfinder.FeedError
 import com.jocmp.feedfinder.FeedFinder
 import com.jocmp.rssparser.model.RssItem
 import kotlinx.coroutines.coroutineScope
@@ -71,8 +73,12 @@ internal class LocalAccountDelegate(
                     )
                 )
 
-                if (exception != null && exception is UnknownHostException) {
+                if (exception is UnknownHostException) {
                     return AddFeedResult.connectionError()
+                }
+
+                if (exception is FeedException && exception.feedError == FeedError.BLOCKED_BY_SITE) {
+                    return AddFeedResult.blockedBySite()
                 }
 
                 return AddFeedResult.feedNotFound()

@@ -49,6 +49,7 @@
     <string name="nav_headline_feeds">Feeds</string>
     <string name="nav_add_feed">Add Feed</string>
     <string name="add_feed_feed_not_error">Couldn\'t find feed</string>
+    <string name="add_feed_blocked_by_site_error">Blocked by site</string>
     <string name="add_feed_save_error">Couldn\'t save feed</string>
     <string name="add_feed_network_error">Couldn\'t find feed. Check your connection.</string>
     <string name="delete_tag_error">Error deleting tag</string>

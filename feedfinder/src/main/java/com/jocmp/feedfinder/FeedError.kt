@@ -4,6 +4,7 @@ enum class FeedError {
     IO_FAILURE,
     INVALID_URL,
     NO_FEEDS_FOUND,
+    BLOCKED_BY_SITE,
 }
 
 val FeedError.asException: FeedException

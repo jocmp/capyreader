@@ -89,6 +89,7 @@ fun AddFeedView(
             supportingText = {
                 error?.let {
                     val resource = when (it) {
+                        is AddFeedResult.Error.BlockedBySite -> R.string.add_feed_blocked_by_site_error
                         is AddFeedResult.Error.FeedNotFound -> R.string.add_feed_feed_not_error
                         is AddFeedResult.Error.ConnectionError -> R.string.add_feed_network_error
                         is AddFeedResult.Error.NetworkError -> R.string.add_feed_network_error
