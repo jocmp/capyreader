@@ -11,6 +11,7 @@ import com.capyreader.app.ui.articles.RemoveFeedDialog
 import com.capyreader.app.ui.articles.feeds.LocalFeedActions
 import com.capyreader.app.ui.articles.feeds.edit.EditFeedDialog
 import com.jocmp.capy.Feed
+import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.common.launchUI
 
 @Composable
@@ -18,6 +19,7 @@ fun FeedActionMenu(
     onDismissMenuRequest: () -> Unit,
     feed: Feed,
     expanded: Boolean,
+    source: Source = Source.LOCAL,
 ) {
     val actions = LocalFeedActions.current
     val scope = rememberCoroutineScope()
@@ -62,6 +64,7 @@ fun FeedActionMenu(
             onToggleUnreadBadge = {
                 onToggleUnreadBadge()
             },
+            showReloadIcon = source == Source.LOCAL,
         )
     }
 

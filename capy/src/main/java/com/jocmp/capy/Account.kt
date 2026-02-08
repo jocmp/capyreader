@@ -7,8 +7,8 @@ import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.feedfinder.DefaultFeedFinder
 import com.jocmp.feedfinder.FeedFinder
 import com.jocmp.capy.accounts.AutoDelete
-import com.jocmp.capy.accounts.FaviconFetcher
 import com.jocmp.capy.accounts.FaviconFinder
+import com.jocmp.capy.accounts.FaviconPolicy
 import com.jocmp.capy.accounts.LocalOkHttpClient
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.asOPML
@@ -21,7 +21,6 @@ import com.jocmp.capy.accounts.reader.buildReaderDelegate
 import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
-import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.sortedByName
 import com.jocmp.capy.common.sortedByTitle
 import com.jocmp.capy.common.transactionWithErrorHandling
@@ -41,7 +40,6 @@ import kotlinx.coroutines.Dispatchers
 import com.jocmp.minifluxclient.Miniflux
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -57,7 +55,7 @@ data class Account(
     val database: Database,
     val preferences: AccountPreferences,
     val source: Source = Source.LOCAL,
-    val faviconFetcher: FaviconFetcher,
+    val faviconPolicy: FaviconPolicy,
     private val clientCertManager: ClientCertManager,
     private val userAgent: String,
     private val acceptLanguage: String,
@@ -66,7 +64,6 @@ data class Account(
         Source.LOCAL -> LocalAccountDelegate(
             database = database,
             httpClient = localHttpClient,
-            faviconFetcher = faviconFetcher,
             preferences = preferences,
         )
 
@@ -148,11 +145,7 @@ data class Account(
             url = url,
             title = title,
             folderTitles = folderTitles
-        ).also {
-            if (it is AddFeedResult.Success) {
-                findFavicon(it.feed)
-            }
-        }
+        )
     }
 
     suspend fun editFeed(form: EditFeedFormEntry): Result<Feed> {
@@ -439,11 +432,10 @@ data class Account(
     }
 
     private suspend fun findFavicon(feed: Feed) {
-        coroutineScope {
-            launchIO {
-                FaviconFinder(localHttpClient, faviconFetcher).find(feed)?.let {
-                    feedRecords.updateFavicon(feed.id, it)
-                }
+        withIOContext {
+            val siteURL = FaviconFinder.siteURL(feed) ?: return@withIOContext
+            FaviconFinder(localHttpClient, faviconPolicy, userAgent, acceptLanguage).find(siteURL.toString())?.let {
+                feedRecords.updateFavicon(feed.id, it)
             }
         }
     }

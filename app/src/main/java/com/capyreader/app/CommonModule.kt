@@ -3,7 +3,7 @@ package com.capyreader.app
 import android.webkit.WebSettings
 import com.capyreader.app.common.AndroidClientCertManager
 import com.capyreader.app.common.AndroidDatabaseProvider
-import com.capyreader.app.common.AppFaviconFetcher
+import com.capyreader.app.common.AppFaviconPolicy
 import com.capyreader.app.common.SharedPreferenceStoreProvider
 import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.AccountManager
@@ -24,7 +24,7 @@ internal val common = module {
             databaseProvider = get(),
             cacheDirectory = androidContext().cacheDir.toURI(),
             preferenceStoreProvider = get(),
-            faviconFetcher = AppFaviconFetcher(get()),
+            faviconPolicy = AppFaviconPolicy(get()),
             clientCertManager = get(),
             userAgent = WebSettings.getDefaultUserAgent(androidContext()),
             acceptLanguage = Locale.getDefault().toAcceptLanguageTag(),

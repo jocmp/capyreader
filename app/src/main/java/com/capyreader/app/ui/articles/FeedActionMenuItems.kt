@@ -27,6 +27,7 @@ fun FeedActionMenuItems(
     onReloadIcon: () -> Unit,
     onToggleOpenInBrowser: () -> Unit,
     onToggleUnreadBadge: () -> Unit,
+    showReloadIcon: Boolean = false,
 ) {
     DropdownMenuItem(
         text = {
@@ -37,15 +38,17 @@ fun FeedActionMenuItems(
             onEdit()
         }
     )
-    DropdownMenuItem(
-        text = {
-            Text(stringResource(R.string.feed_action_reload_icon))
-        },
-        onClick = {
-            onMenuClose()
-            onReloadIcon()
-        }
-    )
+    if (showReloadIcon) {
+        DropdownMenuItem(
+            text = {
+                Text(stringResource(R.string.feed_action_reload_icon))
+            },
+            onClick = {
+                onMenuClose()
+                onReloadIcon()
+            }
+        )
+    }
     DropdownMenuItem(
         text = {
             Text(stringResource(R.string.feed_action_unsubscribe))

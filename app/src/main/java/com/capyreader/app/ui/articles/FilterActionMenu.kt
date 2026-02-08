@@ -75,6 +75,7 @@ fun FilterActionMenu(
                         expanded = expanded,
                         feed = currentFeed,
                         onDismissMenuRequest = { closeMenu() },
+                        source = source,
                     )
                 }
 

@@ -227,6 +227,7 @@ fun FeedList(
                             },
                             selected = filter.isFeedSelected(feed),
                             status = articleStatus,
+                            source = source,
                         )
                     }
                 }

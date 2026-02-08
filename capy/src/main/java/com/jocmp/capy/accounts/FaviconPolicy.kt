@@ -1,5 +1,5 @@
 package com.jocmp.capy.accounts
 
-interface FaviconFetcher {
+fun interface FaviconPolicy {
     suspend fun isValid(url: String?): Boolean
 }

@@ -5,7 +5,6 @@ import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.accounts.AddFeedResult
-import com.jocmp.capy.accounts.FakeFaviconFetcher
 import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.FeedFixture
@@ -103,7 +102,6 @@ class LocalAccountDelegateTest {
             database,
             httpClient,
             feedFinder = feedFinder,
-            faviconFetcher = FakeFaviconFetcher,
             preferences = accountPreferences
         )
     }

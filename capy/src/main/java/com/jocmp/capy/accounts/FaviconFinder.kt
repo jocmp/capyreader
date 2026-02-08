@@ -9,14 +9,14 @@ import java.net.URL
 
 class FaviconFinder(
     private val httpClient: OkHttpClient,
-    private val faviconPolicy: FaviconFetcher
+    private val faviconPolicy: FaviconPolicy,
+    private val userAgent: String = "",
+    private val acceptLanguage: String = "",
 ) {
-    suspend fun find(feed: Feed): String? {
-        val siteURL = siteURL(feed) ?: return null
+    suspend fun find(url: String): String? {
+        val html = ArticleContent(httpClient, userAgent, acceptLanguage).fetch(URL(url)).getOrNull() ?: return null
 
-        val html = ArticleContent(httpClient).fetch(siteURL).getOrNull() ?: return null
-
-        return parse(html, baseURL = siteURL.toString())
+        return parse(html, baseURL = url)
     }
 
     internal suspend fun parse(html: String, baseURL: String): String? {

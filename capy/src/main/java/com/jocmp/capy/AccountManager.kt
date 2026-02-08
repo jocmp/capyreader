@@ -1,6 +1,6 @@
 package com.jocmp.capy
 
-import com.jocmp.capy.accounts.FaviconFetcher
+import com.jocmp.capy.accounts.FaviconPolicy
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.db.Database
 import java.io.File
@@ -13,7 +13,7 @@ class AccountManager(
     private val cacheDirectory: URI,
     private val databaseProvider: DatabaseProvider,
     private val preferenceStoreProvider: PreferenceStoreProvider,
-    private val faviconFetcher: FaviconFetcher,
+    private val faviconPolicy: FaviconPolicy,
     private val clientCertManager: ClientCertManager,
     private val userAgent: String,
     private val acceptLanguage: String,
@@ -92,7 +92,7 @@ class AccountManager(
             database = database,
             source = preferences.source.get(),
             preferences = preferences,
-            faviconFetcher = faviconFetcher,
+            faviconPolicy = faviconPolicy,
             clientCertManager = clientCertManager,
             userAgent = userAgent,
             acceptLanguage = acceptLanguage,

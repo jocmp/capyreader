@@ -11,11 +11,12 @@ import kotlin.test.assertNull
 
 class FaviconFinderTest {
     private val baseURL = "https://example.com"
+    private val acceptAll = FaviconPolicy { true }
     private lateinit var faviconFinder: FaviconFinder
 
     @Before
     fun setup() {
-        faviconFinder = FaviconFinder(OkHttpClient(), AcceptAllFavicons())
+        faviconFinder = FaviconFinder(OkHttpClient(), acceptAll)
     }
 
     @Test
@@ -48,14 +49,12 @@ class FaviconFinderTest {
     @Test
     fun parse_skipsInvalidURLs() = runTest {
         val html = readResource("favicon_apple_touch_icon.html")
-        val rejectFirstFavicon = object : FaviconFetcher {
-            private var callCount = 0
-            override suspend fun isValid(url: String?): Boolean {
-                callCount++
-                return callCount > 1
-            }
+        var callCount = 0
+        val rejectFirst = FaviconPolicy {
+            callCount++
+            callCount > 1
         }
-        val finder = FaviconFinder(OkHttpClient(), rejectFirstFavicon)
+        val finder = FaviconFinder(OkHttpClient(), rejectFirst)
 
         val result = finder.parse(html, baseURL)
 
@@ -109,9 +108,5 @@ class FaviconFinderTest {
 
     private fun readResource(name: String): String {
         return ClasspathResources.resource(name).bufferedReader().readText()
-    }
-
-    private class AcceptAllFavicons : FaviconFetcher {
-        override suspend fun isValid(url: String?) = true
     }
 }

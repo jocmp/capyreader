@@ -1,5 +1,5 @@
 package com.jocmp.capy.accounts
 
-object FakeFaviconFetcher : FaviconFetcher {
+object FakeFaviconPolicy : FaviconPolicy {
     override suspend fun isValid(url: String?) = true
 }
