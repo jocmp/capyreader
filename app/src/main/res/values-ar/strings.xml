@@ -252,7 +252,7 @@
     <string name="article_list_swipe_next_feed">إنتقل إلى الموجز التالي</string>
     <string name="article_list_swipe_disabled">تعطيل</string>
     <string name="notification_mark_as_read_action">وضع علامة كمقروءة</string>
-    <string name="settings_options_reader_pin_top_toolbar">تثبيت الشريط العلوي</string>
+    <string name="settings_options_reader_pin_top_toolbar">ثبّت أشرطة الأدوات</string>
     <string name="widget_headlines_account_error">أضف حسابًا أولاً</string>
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">إنتقل إلى قائمة الكل</string>
     <string name="blocked_keywords_remove_keyword">إزالة الكلمة المفتاحية</string>
@@ -310,4 +310,9 @@
     <string name="audio_player_skip_forward">تخطي للأمام 30 ثانية</string>
     <string name="freshrss_nav_headline_categories">التصنيفات</string>
     <string name="article_list_empty">لا شيء هنا</string>
+    <string name="auth_fields_miniflux_api_token">رمز API</string>
+    <string name="auth_fields_miniflux_use_api_token">استخدم رمز API بدلاً من ذلك</string>
+    <string name="auth_fields_miniflux_use_password">استخدم كلمة المرور بدلاً من ذلك</string>
+    <string name="auth_fields_show_advanced">خيارات متقدمة</string>
+    <string name="auth_fields_hide_advanced">أخفِ الإعدادات المتقدمة</string>
 </resources>
