@@ -307,7 +307,7 @@
     <string name="article_list_empty">Nada por aquí</string>
     <string name="freshrss_visibility_option_feed">Contenido</string>
     <string name="freshrss_visibility_option_main">Corriente principal</string>
-    <string name="auth_fields_miniflux_api_token">Fijar barras de herramientas</string>
+    <string name="auth_fields_miniflux_api_token">Token de API</string>
     <string name="auth_fields_miniflux_use_password">Usar Contraseña en su lugar</string>
     <string name="auth_fields_show_advanced">Opciones avanzadas</string>
     <string name="auth_fields_hide_advanced">Ocultar opciones avanzadas</string>
