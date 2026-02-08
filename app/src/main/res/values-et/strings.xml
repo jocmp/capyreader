@@ -269,7 +269,7 @@
     <string name="widget_headlines_account_error">Esmalt palun lisa kasutajakonto</string>
     <string name="settings_gestures_improve_talkback_title">Paranda TalkBacki toimimist</string>
     <string name="settings_gestures_improve_talkback_subtitle">Parandamaks TalkBacki kõnesünteesi toimimist, lülita välja mõned seadistused</string>
-    <string name="settings_options_reader_pin_top_toolbar">Kinnita ülemisele tööriistaribale</string>
+    <string name="settings_options_reader_pin_top_toolbar">Kinnita tööriistaribad</string>
     <string name="add_account_miniflux_signup_prompt">Sul pole Minifluxi serverit?</string>
     <string name="add_account_miniflux_signup_link_text">Lisateavet leiad siit.</string>
     <string name="mark_read_position_toolbar">Tööriistariba</string>
@@ -309,4 +309,9 @@
     <string name="audio_player_skip_forward">Keri 30 sekundit edasi</string>
     <string name="freshrss_nav_headline_categories">Kategooriad</string>
     <string name="article_list_empty">Siin pole mitte midagi</string>
+    <string name="auth_fields_miniflux_api_token">API tunnusluba</string>
+    <string name="auth_fields_miniflux_use_api_token">Selle asemel kasuta API tunnusluba</string>
+    <string name="auth_fields_miniflux_use_password">Selle asemel kasuta salasõna</string>
+    <string name="auth_fields_show_advanced">Lisaseadistused</string>
+    <string name="auth_fields_hide_advanced">Peida lisaseadistused</string>
 </resources>
