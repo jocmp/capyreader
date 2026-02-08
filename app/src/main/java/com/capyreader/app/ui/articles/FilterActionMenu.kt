@@ -22,6 +22,7 @@ import com.capyreader.app.ui.fixtures.FeedSample
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
+import com.jocmp.capy.accounts.Source
 
 @Composable
 fun FilterActionMenu(
@@ -31,6 +32,7 @@ fun FilterActionMenu(
     onRemoveFolder: (folderTitle: String, completion: (result: Result<Unit>) -> Unit) -> Unit,
     onRequestSearch: () -> Unit,
     hideSearchIcon: Boolean,
+    source: Source,
 ) {
     val markReadPosition = LocalMarkAllReadButtonPosition.current
     val (expanded, setMenuExpanded) = remember(filter) { mutableStateOf(false) }
@@ -82,6 +84,7 @@ fun FilterActionMenu(
                         folderTitle = filter.folderTitle,
                         onDismissMenuRequest = { closeMenu() },
                         onRemoveRequest = onRemoveFolder,
+                        source = source,
                     )
                 }
             }
@@ -103,5 +106,6 @@ fun FeedActionsPreview(@PreviewParameter(FeedSample::class) feed: Feed) {
             feedStatus = ArticleStatus.ALL
         ),
         hideSearchIcon = false,
+        source = Source.LOCAL,
     )
 }

@@ -219,8 +219,8 @@
     <string name="notifications_permissions_disabled_call_to_action">Параметри</string>
     <string name="notifications_permission_disabled_title">Сповіщення заборонено</string>
     <string name="settings_enable_refresh_call_to_action">Спершу ввімкніть періодичне оновлення</string>
-    <string name="settings_notifications_select_none">Зняти вибір</string>
-    <string name="settings_notifications_select_all">Вибрати все</string>
+    <string name="settings_select_none">Зняти вибір</string>
+    <string name="settings_select_all">Вибрати все</string>
     <string name="article_list_row_swipe_open_externally">Відкрити в браузері</string>
     <string name="article_view_open_externally">Відкрити в програмі</string>
     <string name="settings_confirm_mark_all_read">Перепитувати, чи позначати всі прочитаними</string>

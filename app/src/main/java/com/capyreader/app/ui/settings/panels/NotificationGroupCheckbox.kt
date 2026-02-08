@@ -39,8 +39,8 @@ fun NotificationGroupCheckbox(
         ListItem(
             headlineContent = {
                 val text = when (groupSelection) {
-                    ToggleableState.On -> stringResource(R.string.settings_notifications_select_none)
-                    else -> stringResource(R.string.settings_notifications_select_all)
+                    ToggleableState.On -> stringResource(R.string.settings_select_none)
+                    else -> stringResource(R.string.settings_select_all)
                 }
 
                 Text(text, fontWeight = FontWeight.Medium)

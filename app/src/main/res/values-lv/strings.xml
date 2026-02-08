@@ -181,7 +181,7 @@
     <string name="edit_feed_tags_section">Birkas</string>
     <string name="edit_feed_tag_section">Pievienot vai atlasīt birku</string>
     <string name="edit_feed_notifications_title">Iespējot paziņojumus</string>
-    <string name="settings_notifications_select_all">Atlasīt visu</string>
+    <string name="settings_select_all">Atlasīt visu</string>
     <string name="notifications_permissions_disabled_call_to_action">Iestatījumi</string>
     <string name="notifications_permission_disabled_title">Paziņojuma atļauja ir atspējota</string>
     <string name="article_list_row_swipe_open_externally">Atvērt rakstu pārlūkā</string>
@@ -216,7 +216,7 @@
     <string name="feed_list_top_bar_close_search">Pārtraukt meklēšanu</string>
     <string name="settings_gestures_list_back_navigation_action">Atpakaļ navigācijas darbība</string>
     <string name="settings_enable_refresh_call_to_action">Vispirms jaiespējo regulārā atsvaidzināšana</string>
-    <string name="settings_notifications_select_none">Atlasīt nevienu</string>
+    <string name="settings_select_none">Atlasīt nevienu</string>
     <string name="after_read_all_behavior_open_next_feed">Atvērt nākamo ziņu plūsmu</string>
     <string name="feed_nav_drawer_title">Ziņu plūsmas</string>
     <string name="feed_nav_drawer_refresh_all">Atsvaidzināt visu</string>

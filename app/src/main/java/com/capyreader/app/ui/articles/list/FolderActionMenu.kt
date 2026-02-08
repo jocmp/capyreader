@@ -11,6 +11,7 @@ import com.capyreader.app.R
 import com.capyreader.app.ui.articles.EditFolderDialog
 import com.capyreader.app.ui.articles.RemoveFolderDialog
 import com.capyreader.app.ui.settings.localSnackbarDisplay
+import com.jocmp.capy.accounts.Source
 
 @Composable
 fun FolderActionMenu(
@@ -18,6 +19,7 @@ fun FolderActionMenu(
     folderTitle: String,
     onRemoveRequest: (folderTitle: String, completion: (result: Result<Unit>) -> Unit) -> Unit,
     expanded: Boolean,
+    source: Source,
 ) {
     val editSuccessMessage = stringResource(R.string.tag_action_edit_success)
     val editErrorMessage = stringResource(R.string.tag_action_edit_error)
@@ -37,9 +39,14 @@ fun FolderActionMenu(
         expanded = expanded,
         onDismissRequest = onDismissMenuRequest,
     ) {
+        val editTitle = if (source == Source.FRESHRSS) {
+            R.string.freshrss_tag_action_edit
+        } else {
+            R.string.tag_action_edit
+        }
         DropdownMenuItem(
             text = {
-                Text(stringResource(R.string.tag_action_edit))
+                Text(stringResource(editTitle))
             },
             onClick = {
                 onDismissMenuRequest()

@@ -176,9 +176,9 @@
     <string name="settings_gestures_list_back_navigation_open_drawer">Otwórz menu nawigacji</string>
     <string name="crash_log_export_item_title">Udostępnij dziennik awarii</string>
     <string name="edit_feed_notifications_title">Włącz powiadomienia</string>
-    <string name="settings_notifications_select_none">Odznacz wszystkie</string>
+    <string name="settings_select_none">Odznacz wszystkie</string>
     <string name="notifications_permission_disabled_title">Nie udzielono zgody na powiadomienia</string>
-    <string name="settings_notifications_select_all">Zaznacz wszystkie</string>
+    <string name="settings_select_all">Zaznacz wszystkie</string>
     <string name="article_view_open_externally">Otwórz za pomocą innej aplikacji</string>
     <string name="reader_image_visibility_always_hide">Nie wyświetlaj obrazów</string>
     <string name="layout_preference_responsive">Dostosowany</string>

@@ -209,8 +209,8 @@
     <string name="notifications_permissions_disabled_call_to_action">אפשרויות</string>
     <string name="notifications_permission_disabled_title">הרשאת התראות מכובה</string>
     <string name="settings_enable_refresh_call_to_action">רענון מתוזמן חייב להיות פעיל</string>
-    <string name="settings_notifications_select_none">בחר בכלום</string>
-    <string name="settings_notifications_select_all">בחר בהכל</string>
+    <string name="settings_select_none">בחר בכלום</string>
+    <string name="settings_select_all">בחר בהכל</string>
     <string name="article_list_row_swipe_open_externally">פתח מאמר בדפדפן</string>
     <string name="article_view_open_externally">פתח חיצונית</string>
     <string name="settings_confirm_mark_all_read">אשר סימון כולם כנקרא</string>

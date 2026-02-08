@@ -32,6 +32,13 @@ fun FeedActionMenu(
         }
     }
 
+    fun onToggleUnreadBadge() {
+        onDismissMenuRequest()
+        scope.launchUI {
+            actions.toggleUnreadBadge(feed.id, !feed.showUnreadBadge)
+        }
+    }
+
     DropdownMenu(
         expanded = expanded,
         onDismissRequest = onDismissMenuRequest,
@@ -43,6 +50,9 @@ fun FeedActionMenu(
             onMenuClose = onDismissMenuRequest,
             onToggleOpenInBrowser = {
                 onToggleOpenInBrowser()
+            },
+            onToggleUnreadBadge = {
+                onToggleUnreadBadge()
             },
         )
     }

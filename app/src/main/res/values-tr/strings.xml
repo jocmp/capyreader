@@ -178,14 +178,14 @@
     <string name="crash_log_export_item_subtitle">Geliştirici ile paylaşmak için çökme günlüklerini bir dosyaya kaydeder</string>
     <string name="crash_log_export_item_title">Çökme günlüklerini paylaş</string>
     <string name="settings_panel_notifications_title">Bildirimler</string>
-    <string name="settings_notifications_select_all">Tümünü Seç</string>
+    <string name="settings_select_all">Tümünü Seç</string>
     <string name="notifications_permission_disabled_title">Bildirim izni reddedildi</string>
     <string name="notifications_channel_title_feed_update">Yayın Güncellemeleri</string>
     <string name="edit_feed_tags_section">Etiketler</string>
     <string name="edit_feed_notifications_title">Bildirimleri etkinleştir</string>
     <string name="notifications_permissions_disabled_call_to_action">Ayarlar</string>
     <string name="settings_enable_refresh_call_to_action">Önce düzenli yenileme etkinleştirilmelidir</string>
-    <string name="settings_notifications_select_none">Hiçbirini Seçme</string>
+    <string name="settings_select_none">Hiçbirini Seçme</string>
     <string name="article_list_row_swipe_open_externally">Makaleyi tarayıcıda aç</string>
     <string name="article_view_open_externally">Harici olarak aç</string>
     <string name="feed_nav_drawer_title">Akışlar</string>

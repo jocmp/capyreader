@@ -82,6 +82,9 @@ class AppPreferences(context: Context) {
     val showTodayFilter: Preference<Boolean>
         get() = preferenceStore.getBoolean("show_today_filter", true)
 
+    val badgeStyle: Preference<BadgeStyle>
+        get() = preferenceStore.getEnum("badge_style", BadgeStyle.default)
+
     fun clearAll() {
         preferenceStore.clearAll()
     }

@@ -76,8 +76,8 @@
     <string name="article_list_sort_newest_first">最新優先</string>
     <string name="article_list_sort_oldest_first">最舊優先</string>
     <string name="settings_gestures_list_back_navigation_system_back">預設</string>
-    <string name="settings_notifications_select_all">全部選擇</string>
-    <string name="settings_notifications_select_none">全部不選</string>
+    <string name="settings_select_all">全部選擇</string>
+    <string name="settings_select_none">全部不選</string>
     <string name="notifications_permission_disabled_title">通知權限被封鎖</string>
     <string name="settings_confirm_mark_all_read">全部標爲已讀時需確認</string>
     <string name="article_view_mark_as_unread">標為未讀</string>

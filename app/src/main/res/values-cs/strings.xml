@@ -190,8 +190,8 @@
     <string name="add_account_freshrss_signup_prompt">Nemáte instanci FreshRSS?</string>
     <string name="add_account_freshrss_signup_link_text">Zjistit více.</string>
     <string name="edit_feed_tag_section">Vytvořit nebo vybrat štítek</string>
-    <string name="settings_notifications_select_none">Nevybrat nic</string>
-    <string name="settings_notifications_select_all">Vybrat vše</string>
+    <string name="settings_select_none">Nevybrat nic</string>
+    <string name="settings_select_all">Vybrat vše</string>
     <string name="settings_confirm_mark_all_read">Potvrdit označení všeho jako přečtené</string>
     <string name="auth_fields_api_url">Server</string>
     <string name="settings_section_account_server">Server</string>

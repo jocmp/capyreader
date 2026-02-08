@@ -228,8 +228,8 @@
     <string name="notifications_permissions_disabled_call_to_action">Indstillinger</string>
     <string name="notifications_permission_disabled_title">Notifikationstilladelse ej givet</string>
     <string name="settings_enable_refresh_call_to_action">Periodisk opdatering skal først slåes til</string>
-    <string name="settings_notifications_select_none">Vælg ingen</string>
-    <string name="settings_notifications_select_all">Vælg alle</string>
+    <string name="settings_select_none">Vælg ingen</string>
+    <string name="settings_select_all">Vælg alle</string>
     <string name="article_list_row_swipe_open_externally">Åbn artikel i browser</string>
     <string name="article_view_open_externally">Åbn eksternt</string>
     <string name="settings_confirm_mark_all_read">Bekræft markering af alle artikler som læst</string>

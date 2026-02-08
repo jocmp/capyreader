@@ -208,8 +208,8 @@
     <string name="crash_log_export_item_title">Distribuie log-urile de eroare</string>
     <string name="edit_feed_tag_section">Adaugă sau alege etichete</string>
     <string name="edit_feed_notifications_title">Activează notificări</string>
-    <string name="settings_notifications_select_none">Șterge alegerea</string>
-    <string name="settings_notifications_select_all">Alege tot</string>
+    <string name="settings_select_none">Șterge alegerea</string>
+    <string name="settings_select_all">Alege tot</string>
     <string name="settings_confirm_mark_all_read">Marchează elementele alese ca citite</string>
     <string name="settings_gestures_reader_tap_to_page_title">Gest E-Ink de atingere pentru derulare</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">Activează derularea pe orizontală</string>
