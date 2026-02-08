@@ -26,6 +26,11 @@ class DefaultFeedFinder internal constructor(
         try {
             val parsedURL = URI(url.withProtocol).toURL()
             val response = request.fetch(url = parsedURL)
+
+            if (response.statusCode == 403) {
+                return@withContext Result.failure(FeedError.BLOCKED_BY_SITE.asException)
+            }
+
             val feeds = mutableListOf<Feed>()
 
             sources(response).forEach { source ->
