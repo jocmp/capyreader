@@ -191,7 +191,7 @@
     <string name="opml_exporter_success">Експорт завершено</string>
     <string name="opml_exporter_failure">Не вдалось експортувати</string>
     <string name="settings_reader_title">Читання</string>
-    <string name="settings_options_reader_pin_top_toolbar">Закріпити верхню панель</string>
+    <string name="settings_options_reader_pin_top_toolbar">Закріпити панелі</string>
     <string name="article_bottom_bar_next_article">Наступна стаття</string>
     <string name="article_vertical_swipe_previous_article">Попередня стаття</string>
     <string name="article_vertical_swipe_next_article">Наступна стаття</string>
@@ -301,4 +301,11 @@
     <string name="theme_mode_label">Режим</string>
     <string name="audio_player_skip_back">Назад на 30 секунд</string>
     <string name="audio_player_skip_forward">Уперед на 30 секунд</string>
+    <string name="freshrss_nav_headline_categories">Категорії</string>
+    <string name="article_list_empty">Тут порожньо</string>
+    <string name="auth_fields_miniflux_api_token">Ключ API</string>
+    <string name="auth_fields_miniflux_use_api_token">Використати ключ API</string>
+    <string name="auth_fields_miniflux_use_password">Використати пароль</string>
+    <string name="auth_fields_show_advanced">Додаткові опції</string>
+    <string name="auth_fields_hide_advanced">Сховати додаткові опції</string>
 </resources>
