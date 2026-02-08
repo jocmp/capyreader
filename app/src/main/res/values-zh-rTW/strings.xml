@@ -301,4 +301,16 @@
     <string name="theme_sunset">日落</string>
     <string name="settings_section_categories">類別</string>
     <string name="freshrss_visibility_option_category">類別</string>
+    <string name="auth_fields_miniflux_api_token">API 權杖</string>
+    <string name="auth_fields_miniflux_use_password">改為使用密碼</string>
+    <string name="auth_fields_miniflux_use_api_token">改為使用 API 權杖</string>
+    <string name="auth_fields_show_advanced">進階選項</string>
+    <string name="auth_fields_hide_advanced">隱藏進階選項</string>
+    <string name="freshrss_visibility">能見度</string>
+    <string name="freshrss_visibility_option_feed">訂閱源</string>
+    <string name="audio_player_close">關閉播放器</string>
+    <string name="audio_player_skip_back">倒轉 30 秒</string>
+    <string name="audio_player_skip_forward">快轉 30 秒</string>
+    <string name="freshrss_visibility_option_main">主資訊流</string>
+    <string name="open_articles_in_browser">在瀏覽器中開啟文章</string>
 </resources>
