@@ -1,0 +1,7 @@
+• Add simple unread badges option
+ • Enable this under "Display & Appearance"
+• Add Miniflux preview image and summary support
+• Rework article actions in reader
+• Improve vertical swipe animation and make vertical swiping the default
+• Fix jank when unstarring an article in the Starred list
+• Do not dim Starred articles in the starred list

@@ -38,6 +38,7 @@ app/gplay/release/
 # Cruft
 technotes/.obsidian/
 .idea/runConfigurations.xml
+.idea/markdown.xml
 .kotlin/sessions/
 
 TODO.md
