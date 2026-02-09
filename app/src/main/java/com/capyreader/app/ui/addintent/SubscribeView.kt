@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -49,7 +48,11 @@ fun SubscribeView(
         else -> userSelection
     }
 
-    Column(Modifier.padding(top = 16.dp)) {
+    Column(
+        Modifier
+            .verticalScroll(rememberScrollState())
+            .padding(top = 16.dp)
+    ) {
         error?.let {
             Text(
                 text = stringResource(it.translationKey),
@@ -64,15 +67,11 @@ fun SubscribeView(
             enter = fadeIn() + expandVertically(),
             exit = fadeOut() + shrinkVertically(tween()),
         ) {
-            Row(
-                Modifier.heightIn(max = 300.dp)
-            ) {
-                FeedChoices(
-                    options = feedChoices,
-                    selectedOption = selectedOption,
-                    onOptionSelect = selectOption,
-                )
-            }
+            FeedChoices(
+                options = feedChoices,
+                selectedOption = selectedOption,
+                onOptionSelect = selectOption,
+            )
         }
 
         Button(
@@ -113,7 +112,6 @@ private fun FeedChoices(
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = Modifier
-            .verticalScroll(rememberScrollState())
             .then(if (singleOption) Modifier else Modifier.selectableGroup())
     ) {
         options.forEach { option ->
@@ -121,7 +119,6 @@ private fun FeedChoices(
             Row(
                 Modifier
                     .fillMaxWidth()
-                    .heightIn(max = 56.dp)
                     .then(
                         if (singleOption) {
                             Modifier

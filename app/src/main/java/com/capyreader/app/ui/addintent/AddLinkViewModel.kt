@@ -19,7 +19,6 @@ class AddLinkViewModel(
     private val account: Account,
     private val appPreferences: AppPreferences,
 ) : ViewModel() {
-    // --- Add Feed state ---
     private val _feedResult = mutableStateOf<AddFeedResult?>(null)
     private val _feedLoading = mutableStateOf(false)
 
@@ -92,7 +91,6 @@ class AddLinkViewModel(
         }
     }
 
-    // --- Save Page state ---
     private val _pageLoading = mutableStateOf(false)
     private val _pageError = mutableStateOf<String?>(null)
 

@@ -13,9 +13,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.outlined.AddBox
@@ -171,7 +169,6 @@ fun AddLinkView(
                     modifier = Modifier
                         .fillMaxWidth()
                         .heightIn(min = 120.dp)
-                        .verticalScroll(rememberScrollState())
                 ) {
                     if (successMessage != null) {
                         SuccessView(message = successMessage)
@@ -261,7 +258,7 @@ private enum class AddLinkTab(val title: Int, val icon: ImageVector) {
 @Composable
 private fun AddLinkViewPreview() {
     AddLinkView(
-        defaultQueryURL = "https://example.com",
+        defaultQueryURL = "",
         supportsPages = true,
         onBack = {},
     )

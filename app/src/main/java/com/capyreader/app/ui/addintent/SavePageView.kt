@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
@@ -29,13 +28,8 @@ fun SavePageView(
     loading: Boolean,
     error: String?,
 ) {
-    Column(
-        Modifier
-            .padding(start = 16.dp, end = 16.dp, top = 16.dp)
-    ) {
-        Column(
-            Modifier.heightIn(max = 56.dp)
-        ) {
+    Column(Modifier.padding(top = 16.dp)) {
+        Column(Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
             if (pageTitle.isNotBlank()) {
                 Text(
                     text = pageTitle,
@@ -50,7 +44,6 @@ fun SavePageView(
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 1,
-
                     overflow = TextOverflow.Ellipsis,
                 )
             }
@@ -64,7 +57,7 @@ fun SavePageView(
                 text = stringResource(resource),
                 color = MaterialTheme.colorScheme.error,
                 style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.padding(top = 8.dp)
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
             )
         }
         Button(
@@ -72,7 +65,7 @@ fun SavePageView(
             enabled = !loading,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp),
+                .padding(16.dp),
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,

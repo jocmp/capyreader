@@ -5,12 +5,11 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.capyreader.app.common.toast
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.addintent.AddLinkScreen
-import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.Account
 import org.koin.android.ext.android.inject
@@ -23,7 +22,8 @@ class AddLinkActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         if (appPreferences.accountID.get().isBlank()) {
-            startMainActivity()
+            toast(R.string.widget_headlines_account_error)
+            finish()
             return
         }
 
@@ -31,11 +31,7 @@ class AddLinkActivity : BaseActivity() {
         val pageTitle = intent.getStringExtra(Intent.EXTRA_SUBJECT).orEmpty()
 
         setContent {
-            val themeMode by appPreferences.themeMode.collectChangesWithCurrent()
-            val appTheme by appPreferences.appTheme.collectChangesWithCurrent()
-            val pureBlackDarkMode by appPreferences.pureBlackDarkMode.collectChangesWithCurrent()
-
-            CapyTheme(themeMode = themeMode, appTheme = appTheme, pureBlack = pureBlackDarkMode) {
+            CapyTheme(appPreferences) {
                 Box(
                     modifier = Modifier.fillMaxWidth(),
                     contentAlignment = Alignment.Center,
@@ -59,13 +55,6 @@ class AddLinkActivity : BaseActivity() {
 
     override fun onStop() {
         super.onStop()
-        finish()
-    }
-
-    private fun startMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-        startActivity(intent)
         finish()
     }
 }
