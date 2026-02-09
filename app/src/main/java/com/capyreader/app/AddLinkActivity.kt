@@ -20,7 +20,7 @@ class AddLinkActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         if (appPreferences.accountID.get().isBlank()) {
-            popUpToMainActivity()
+            startMainActivity()
             return
         }
 
@@ -37,14 +37,14 @@ class AddLinkActivity : BaseActivity() {
                     supportsPages = account.source.supportsPages,
                     onAddFeedComplete = {
                         toast(R.string.add_feed_success)
-                        popUpToMainActivity()
+                        finish()
                     },
                     onSavePageComplete = {
                         toast(R.string.save_page_success)
-                        popUpToMainActivity()
+                        finish()
                     },
                     onBack = {
-                        popUpToMainActivity()
+                        finish()
                     }
                 )
             }
@@ -56,9 +56,9 @@ class AddLinkActivity : BaseActivity() {
         finish()
     }
 
-    private fun popUpToMainActivity() {
+    private fun startMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
         finish()
     }

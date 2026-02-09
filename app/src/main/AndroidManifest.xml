@@ -47,11 +47,10 @@
 
         <activity
             android:name=".AddLinkActivity"
+            android:excludeFromRecents="true"
             android:exported="true"
             android:finishOnTaskLaunch="true"
-            android:launchMode="singleTask"
             android:noHistory="true"
-            android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.CapyReader.Translucent">
             <intent-filter android:label="@string/add_link_title">
                 <action android:name="android.intent.action.SEND" />
