@@ -170,7 +170,7 @@ fun AddLinkView(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .heightIn(min = 140.dp)
+                        .heightIn(min = 120.dp)
                         .verticalScroll(rememberScrollState())
                 ) {
                     if (successMessage != null) {

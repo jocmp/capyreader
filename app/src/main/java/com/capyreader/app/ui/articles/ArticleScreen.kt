@@ -104,6 +104,7 @@ fun ArticleScreen(
     onNavigateToSettings: () -> Unit,
 ) {
     val feeds by viewModel.topLevelFeeds.collectAsStateWithLifecycle(initialValue = emptyList())
+    val pagesFeed by viewModel.pagesFeed.collectAsStateWithLifecycle(initialValue = null)
     val allFeeds by viewModel.allFeeds.collectAsStateWithLifecycle(initialValue = emptyList())
     val allFolders by viewModel.allFolders.collectAsStateWithLifecycle(initialValue = emptyList())
     val folders by viewModel.folders.collectAsStateWithLifecycle(initialValue = emptyList())
@@ -469,6 +470,7 @@ fun ArticleScreen(
                     source = viewModel.source,
                     folders = folders,
                     feeds = feeds,
+                    pagesFeed = pagesFeed,
                     onSelectFolder = selectFolder,
                     onSelectFeed = selectFeed,
                     onFeedAdded = { onFeedAdded(it) },

@@ -61,7 +61,7 @@ fun FilterActionMenu(
             }
 
             Box {
-                if (currentFeed != null || filter is ArticleFilter.Folders) {
+                if ((currentFeed != null && !currentFeed.isPages) || filter is ArticleFilter.Folders) {
                     IconButton(onClick = { setMenuExpanded(true) }) {
                         Icon(
                             imageVector = Icons.Filled.MoreVert,
@@ -70,7 +70,7 @@ fun FilterActionMenu(
                     }
                 }
 
-                if (currentFeed != null) {
+                if (currentFeed != null && !currentFeed.isPages) {
                     FeedActionMenu(
                         expanded = expanded,
                         feed = currentFeed,

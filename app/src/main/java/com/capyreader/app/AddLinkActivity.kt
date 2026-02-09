@@ -3,7 +3,11 @@ package com.capyreader.app
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.addintent.AddLinkScreen
 import com.capyreader.app.ui.collectChangesWithCurrent
@@ -32,14 +36,23 @@ class AddLinkActivity : BaseActivity() {
             val pureBlackDarkMode by appPreferences.pureBlackDarkMode.collectChangesWithCurrent()
 
             CapyTheme(themeMode = themeMode, appTheme = appTheme, pureBlack = pureBlackDarkMode) {
-                AddLinkScreen(
-                    defaultQueryURL = defaultQueryURL,
-                    pageTitle = pageTitle,
-                    supportsPages = account.source.supportsPages,
-                    onBack = {
-                        finish()
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Box(
+                        modifier = Modifier.preferredMaxWidth(),
+                    ) {
+                        AddLinkScreen(
+                            defaultQueryURL = defaultQueryURL,
+                            pageTitle = pageTitle,
+                            supportsPages = account.source.supportsPages,
+                            onBack = {
+                                finish()
+                            }
+                        )
                     }
-                )
+                }
             }
         }
     }

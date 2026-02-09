@@ -134,8 +134,19 @@ class ArticleScreenViewModel(
         _counts,
         filter,
     ) { feeds, latestCounts, filter ->
-        feeds.map { copyFeedCounts(it, latestCounts) }
+        feeds.filter { !it.isPages }
+            .map { copyFeedCounts(it, latestCounts) }
             .withPositiveCount(filter.status)
+    }
+
+    val pagesFeed: Flow<Feed?> = combine(
+        account.feeds,
+        _counts,
+        filter,
+    ) { feeds, latestCounts, filter ->
+        feeds.find { it.isPages }
+            ?.let { copyFeedCounts(it, latestCounts) }
+            ?.takeIf { it.count > 0 || filter.status != ArticleStatus.UNREAD }
     }
 
     val currentFeed: Flow<Feed?> = combine(allFeeds, filter) { feeds, filter ->
