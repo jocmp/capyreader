@@ -120,7 +120,19 @@ internal class ReaderAccountDelegate(
                     .quickAddSubscription(url = url.withProtocol, postToken = postToken.get())
             }.body()
 
-            val subscription = result?.toSubscription ?: return AddFeedResult.feedNotFound()
+            val subscription = result?.toSubscription
+
+            if (subscription == null) {
+                val alreadySubscribedURL = result?.alreadySubscribedURL
+                    ?: return AddFeedResult.feedNotFound()
+
+                refreshFeeds()
+
+                val feed = feedRecords.findByFeedURL(alreadySubscribedURL)
+                    ?: return AddFeedResult.feedNotFound()
+
+                return AddFeedResult.Success(feed)
+            }
 
             try {
                 refreshFeeds()
@@ -571,6 +583,16 @@ internal class ReaderAccountDelegate(
         private fun tag(path: String) = "$TAG.$path"
     }
 }
+
+private val ALREADY_SUBSCRIBED_PREFIX = "Already subscribed!"
+
+private val SubscriptionQuickAddResult.alreadySubscribedURL: String?
+    get() {
+        val message = error ?: return null
+        if (!message.startsWith(ALREADY_SUBSCRIBED_PREFIX)) return null
+
+        return message.removePrefix(ALREADY_SUBSCRIBED_PREFIX).trim().ifBlank { null }
+    }
 
 private val SubscriptionQuickAddResult.toSubscription: Subscription?
     get() {

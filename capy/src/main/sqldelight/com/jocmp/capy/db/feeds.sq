@@ -19,6 +19,12 @@ FROM feeds
 WHERE id = :id
 LIMIT 1;
 
+findByFeedURL:
+SELECT *
+FROM feeds
+WHERE feed_url = :feedURL
+LIMIT 1;
+
 findByFolder:
 SELECT feeds.*
 FROM feeds

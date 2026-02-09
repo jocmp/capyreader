@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.getValue
-import com.capyreader.app.common.toast
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.addintent.AddLinkScreen
 import com.capyreader.app.ui.collectChangesWithCurrent
@@ -24,7 +23,8 @@ class AddLinkActivity : BaseActivity() {
             return
         }
 
-        val defaultQueryURL = intent.getStringExtra(Intent.EXTRA_TEXT) ?: ""
+        val defaultQueryURL = intent.getStringExtra(Intent.EXTRA_TEXT).orEmpty()
+        val pageTitle = intent.getStringExtra(Intent.EXTRA_SUBJECT).orEmpty()
 
         setContent {
             val themeMode by appPreferences.themeMode.collectChangesWithCurrent()
@@ -34,15 +34,8 @@ class AddLinkActivity : BaseActivity() {
             CapyTheme(themeMode = themeMode, appTheme = appTheme, pureBlack = pureBlackDarkMode) {
                 AddLinkScreen(
                     defaultQueryURL = defaultQueryURL,
+                    pageTitle = pageTitle,
                     supportsPages = account.source.supportsPages,
-                    onAddFeedComplete = {
-                        toast(R.string.add_feed_success)
-                        finish()
-                    },
-                    onSavePageComplete = {
-                        toast(R.string.save_page_success)
-                        finish()
-                    },
                     onBack = {
                         finish()
                     }

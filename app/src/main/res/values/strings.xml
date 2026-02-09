@@ -58,6 +58,10 @@
     <string name="save_page_error">Couldn\'t save page</string>
     <string name="save_page_network_error">Couldn\'t save page. Check your connection.</string>
     <string name="save_page_submit">Save</string>
+    <string name="add_link_searching">Searching for feeds…</string>
+    <string name="add_link_subscribe">Subscribe</string>
+    <string name="add_link_feed_added">Feed added</string>
+    <string name="add_link_page_saved">Page saved</string>
     <string name="delete_tag_error">Error deleting tag</string>
     <string name="relative_time_just_now">Just now</string>
     <string name="relative_time_minutes">%1$dm</string>
