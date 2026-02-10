@@ -312,4 +312,10 @@
     <string name="auth_fields_miniflux_use_password">Utiliser plutôt un mot de passe</string>
     <string name="auth_fields_show_advanced">Options avancées</string>
     <string name="auth_fields_hide_advanced">Masquer les options avancées</string>
+    <string name="freshrss_tag_action_edit">Modifier la catégorie</string>
+    <string name="settings_panel_unread_counts_title">Badges non lus</string>
+    <string name="settings_option_badge_style">Style de badge</string>
+    <string name="badge_style_simple">Simple</string>
+    <string name="badge_style_exact">Exact</string>
+    <string name="show_unread_badge">Afficher le badge des non-lus</string>
 </resources>
