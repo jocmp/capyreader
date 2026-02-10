@@ -313,4 +313,10 @@
     <string name="audio_player_skip_forward">快轉 30 秒</string>
     <string name="freshrss_visibility_option_main">主資訊流</string>
     <string name="open_articles_in_browser">在瀏覽器中開啟文章</string>
+    <string name="freshrss_tag_action_edit">編輯類別</string>
+    <string name="settings_panel_unread_counts_title">未讀徽章</string>
+    <string name="settings_option_badge_style">徽章風格</string>
+    <string name="badge_style_simple">簡單</string>
+    <string name="badge_style_exact">精確</string>
+    <string name="show_unread_badge">顯示未讀徽章</string>
 </resources>
