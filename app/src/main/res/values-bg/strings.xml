@@ -271,7 +271,7 @@
     <string name="widget_receiver_headlines_title">Заглавия</string>
     <string name="settings_gestures_improve_talkback_title">Подобряване на TalkBack</string>
     <string name="settings_gestures_improve_talkback_subtitle">Деактивира някои настройки за подобряване на преобразуването на текст в реч на TalkBack</string>
-    <string name="settings_options_reader_pin_top_toolbar">Фиксирана горна лента с инструменти</string>
+    <string name="settings_options_reader_pin_top_toolbar">Фиксирана лента с инструменти</string>
     <string name="add_account_miniflux_signup_prompt">Не разполагате с инстанция на Miniflux?</string>
     <string name="add_account_miniflux_signup_link_text">Научете повече.</string>
     <string name="mark_read_position_toolbar">Лента с инструменти</string>
@@ -310,4 +310,15 @@
     <string name="audio_player_skip_forward">Прескочи 30 секунди напред</string>
     <string name="freshrss_nav_headline_categories">Категории</string>
     <string name="article_list_empty">Няма нищо тук</string>
+    <string name="auth_fields_miniflux_api_token">API токен</string>
+    <string name="auth_fields_miniflux_use_api_token">Използвайте API токен вместо това</string>
+    <string name="auth_fields_miniflux_use_password">Използвайте парола вместо това</string>
+    <string name="auth_fields_show_advanced">Разширени опции</string>
+    <string name="auth_fields_hide_advanced">Скриване на разширени опции</string>
+    <string name="freshrss_tag_action_edit">Редактиране на категория</string>
+    <string name="settings_panel_unread_counts_title">Непрочетени значки</string>
+    <string name="settings_option_badge_style">Стил на значката</string>
+    <string name="badge_style_simple">Просто</string>
+    <string name="badge_style_exact">Точно</string>
+    <string name="show_unread_badge">Покажи значка за непрочетени</string>
 </resources>
