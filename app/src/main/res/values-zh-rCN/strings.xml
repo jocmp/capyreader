@@ -112,7 +112,7 @@
     <string name="article_actions_open_menu">打开文章操作</string>
     <string name="settings_top_bar_title">设置</string>
     <string name="auth_fields_show_password">显示密码</string>
-    <string name="empty_onboarding_title">还没有订阅源</string>
+    <string name="empty_onboarding_title">尚无订阅源</string>
     <string name="auth_fields_log_in_button">登录</string>
     <string name="settings_section_export">导出</string>
     <string name="image_preview_menu_option_none">无</string>
@@ -175,10 +175,10 @@
     <string name="crash_log_export_item_title">分享崩溃日志</string>
     <string name="crash_log_export_item_subtitle">将崩溃日志保存到文件以便分享给开发者</string>
     <string name="settings_gestures_list_back_navigation_system_back">默认</string>
-    <string name="settings_gestures_list_back_navigation_open_drawer">打开导航抽屉</string>
+    <string name="settings_gestures_list_back_navigation_open_drawer">打开抽屉式导航栏</string>
     <string name="notifications_channel_title_feed_update">订阅源更新</string>
     <string name="settings_enable_refresh_call_to_action">必须先启用定期刷新</string>
-    <string name="settings_select_none">全不选</string>
+    <string name="settings_select_none">取消全选</string>
     <string name="settings_panel_notifications_title">通知</string>
     <string name="edit_feed_tags_section">标签</string>
     <string name="edit_feed_notifications_title">启用通知</string>
@@ -222,7 +222,7 @@
     <string name="full_content_error_generic">解析文章失败</string>
     <string name="full_content_error_forbidden">获取被网站阻止</string>
     <string name="after_read_all_behavior_label">全部阅读后</string>
-    <string name="after_read_all_behavior_open_drawer">打开导航抽屉</string>
+    <string name="after_read_all_behavior_open_drawer">打开抽屉式导航栏</string>
     <string name="settings_donate_button">捐赠</string>
     <string name="after_read_all_behavior_default">默认</string>
     <string name="article_actions_copy_link">复制链接</string>
@@ -307,10 +307,16 @@
     <string name="audio_player_skip_back">快退 30 秒</string>
     <string name="audio_player_skip_forward">快进 30 秒</string>
     <string name="freshrss_nav_headline_categories">类别</string>
-    <string name="article_list_empty">这里没东西</string>
+    <string name="article_list_empty">暂无内容</string>
     <string name="auth_fields_miniflux_api_token">API 令牌</string>
     <string name="auth_fields_miniflux_use_api_token">改为使用 API 令牌</string>
     <string name="auth_fields_miniflux_use_password">改为使用密码</string>
     <string name="auth_fields_show_advanced">高级选项</string>
     <string name="auth_fields_hide_advanced">隐藏高级选项</string>
+    <string name="freshrss_tag_action_edit">编辑类别</string>
+    <string name="settings_panel_unread_counts_title">未读徽章</string>
+    <string name="settings_option_badge_style">徽章样式</string>
+    <string name="badge_style_simple">简约</string>
+    <string name="badge_style_exact">精确</string>
+    <string name="show_unread_badge">显示未读徽章</string>
 </resources>

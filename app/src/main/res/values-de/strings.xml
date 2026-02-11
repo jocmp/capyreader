@@ -272,7 +272,7 @@
     <string name="widget_receiver_headlines_title">Schlagzeilen</string>
     <string name="settings_gestures_improve_talkback_title">TalkBack verbessern</string>
     <string name="settings_gestures_improve_talkback_subtitle">Deaktiviert manche Einstellungen, um TalkBack Text-zu-Sprache zu verbessern</string>
-    <string name="settings_options_reader_pin_top_toolbar">Obere Werkzeugleiste anpinnen</string>
+    <string name="settings_options_reader_pin_top_toolbar">Werkzeugleisten anheften</string>
     <string name="add_account_miniflux_signup_prompt">Sie haben keine Miniflux-Instanz?</string>
     <string name="add_account_miniflux_signup_link_text">Mehr erfahren.</string>
     <string name="auth_fields_client_certificate">Client-Zertifikat (optional)</string>
@@ -298,10 +298,10 @@
     <string name="theme_mode_label">Modus</string>
     <string name="article_list_empty">Leer hier</string>
     <string name="auth_fields_miniflux_api_token">API Token</string>
-    <string name="auth_fields_miniflux_use_api_token">Nutze API Token</string>
-    <string name="auth_fields_miniflux_use_password">Nutze Passwort</string>
+    <string name="auth_fields_miniflux_use_api_token">API-Token stattdessen verwenden</string>
+    <string name="auth_fields_miniflux_use_password">Passwort stattdessen verwenden</string>
     <string name="auth_fields_show_advanced">Erweiterte Optionen</string>
-    <string name="auth_fields_hide_advanced">Erweiterte Optionen verbergen</string>
+    <string name="auth_fields_hide_advanced">Erweiterte Optionen ausblenden</string>
     <string name="freshrss_visibility_option_category">Kategorie</string>
     <string name="audio_player_play">Abspielen</string>
     <string name="audio_player_pause">Pause</string>
@@ -309,4 +309,8 @@
     <string name="audio_player_skip_back">30 Sekunden zurückspulen</string>
     <string name="audio_player_skip_forward">30 Sekunden vorspulen</string>
     <string name="freshrss_visibility_option_feed">Feed</string>
+    <string name="badge_style_exact">Exakt</string>
+    <string name="freshrss_visibility_option_important">Wichtig</string>
+    <string name="freshrss_tag_action_edit">Kategorie bearbeiten</string>
+    <string name="badge_style_simple">Einfach</string>
 </resources>

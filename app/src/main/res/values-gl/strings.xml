@@ -308,4 +308,10 @@
     <string name="auth_fields_miniflux_use_password">Alternativa, usar contrasinal</string>
     <string name="auth_fields_show_advanced">Opcións avanzadas</string>
     <string name="auth_fields_hide_advanced">Ocultar opcións avanzadas</string>
+    <string name="freshrss_tag_action_edit">Editar categoría</string>
+    <string name="settings_panel_unread_counts_title">Marcas de non lidos</string>
+    <string name="settings_option_badge_style">Estilo da marca</string>
+    <string name="badge_style_simple">Simple</string>
+    <string name="badge_style_exact">Exacto</string>
+    <string name="show_unread_badge">Mostrar marca de non lidos</string>
 </resources>
