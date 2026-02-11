@@ -28,6 +28,8 @@ object AccountFixture {
             delegate = accountDelegate,
             faviconFetcher = FakeFaviconFetcher,
             clientCertManager = FakeClientCertManager,
+            userAgent = "TestUserAgent",
+            acceptLanguage = "en-US",
         )
     }
 }
