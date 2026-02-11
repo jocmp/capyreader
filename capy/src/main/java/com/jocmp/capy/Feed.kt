@@ -19,4 +19,8 @@ data class Feed(
     val folderExpanded: Boolean = false,
     val priority: FeedPriority? = null,
     val showUnreadBadge: Boolean = true,
-): Countable
+): Countable {
+    val isPages: Boolean
+        get() = title == "Pages" &&
+                feedURL.startsWith("http://pages.feedbinusercontent.com/")
+}

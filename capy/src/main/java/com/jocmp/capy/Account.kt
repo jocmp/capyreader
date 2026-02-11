@@ -4,6 +4,8 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
 import com.jocmp.capy.ArticleStatus.UNREAD
 import com.jocmp.capy.accounts.AddFeedResult
+import com.jocmp.feedfinder.DefaultFeedFinder
+import com.jocmp.feedfinder.FeedFinder
 import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.accounts.FaviconFetcher
 import com.jocmp.capy.accounts.LocalOkHttpClient
@@ -100,6 +102,8 @@ data class Account(
     private val taggingRecords = TaggingRecords(database)
     private val savedSearchRecords = SavedSearchRecords(database)
 
+    private val feedFinder: FeedFinder by lazy { DefaultFeedFinder(localHttpClient) }
+
     private val articleContent = ArticleContent(localHttpClient, userAgent, acceptLanguage)
 
     val taggedFeeds = feedRecords.taggedFeeds().map {
@@ -127,6 +131,10 @@ data class Account(
             )
         }.sortedByTitle()
     }
+
+    suspend fun createPage(url: String) = delegate.createPage(url)
+
+    suspend fun searchFeed(url: String) = feedFinder.find(url)
 
     suspend fun addFeed(
         url: String,

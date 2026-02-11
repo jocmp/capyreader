@@ -50,6 +50,9 @@ internal class LocalAccountDelegate(
         return Result.success(Unit)
     }
 
+    override suspend fun createPage(url: String) =
+        Result.failure<Unit>(UnsupportedOperationException("Pages not supported"))
+
     override suspend fun addFeed(
         url: String,
         title: String?,

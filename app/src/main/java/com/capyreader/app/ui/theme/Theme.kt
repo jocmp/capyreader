@@ -11,15 +11,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.AppTheme
 import com.capyreader.app.preferences.ThemeMode
 import com.capyreader.app.ui.EdgeToEdgeHelper.isEdgeToEdgeAvailable
+import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.theme.colorschemes.BaseColorScheme
 import com.capyreader.app.ui.theme.colorschemes.MonochromeColorScheme
 import com.capyreader.app.ui.theme.colorschemes.NewsprintColorScheme
@@ -60,6 +63,23 @@ fun CapyTheme(
             content = content,
         )
     }
+}
+
+@Composable
+fun CapyTheme(
+    appPreferences: AppPreferences,
+    content: @Composable () -> Unit,
+) {
+    val themeMode by appPreferences.themeMode.collectChangesWithCurrent()
+    val appTheme by appPreferences.appTheme.collectChangesWithCurrent()
+    val pureBlack by appPreferences.pureBlackDarkMode.collectChangesWithCurrent()
+
+    CapyTheme(
+        appTheme = appTheme,
+        themeMode = themeMode,
+        pureBlack = pureBlack,
+        content = content,
+    )
 }
 
 @Composable

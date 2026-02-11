@@ -38,15 +38,15 @@ import com.capyreader.app.ui.articles.SavedSearchRow
 import com.capyreader.app.ui.fixtures.FeedSample
 import com.capyreader.app.ui.fixtures.FolderPreviewFixture
 import com.capyreader.app.ui.fixtures.PreviewKoinApplication
+import com.capyreader.app.ui.folderNavTitle
 import com.capyreader.app.ui.navigationTitle
+import com.capyreader.app.ui.savedSearchNavTitle
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.SavedSearch
-import com.capyreader.app.ui.folderNavTitle
-import com.capyreader.app.ui.savedSearchNavTitle
 import com.jocmp.capy.accounts.Source
 
 @Composable
@@ -58,6 +58,7 @@ fun FeedList(
     showTodayFilter: Boolean = true,
     folders: List<Folder> = emptyList(),
     feeds: List<Feed> = emptyList(),
+    pagesFeed: Feed? = null,
     savedSearches: List<SavedSearch> = emptyList(),
     onFilterSelect: () -> Unit,
     onSelectToday: () -> Unit,
@@ -160,6 +161,16 @@ fun FeedList(
                     onClick = {
                         onSelectToday()
                     }
+                )
+            }
+
+            if (pagesFeed != null) {
+                FeedRow(
+                    feed = pagesFeed,
+                    onSelect = { onSelectFeed(it, null) },
+                    selected = filter.isFeedSelected(pagesFeed),
+                    status = articleStatus,
+                    showContextMenu = false,
                 )
             }
 

@@ -92,6 +92,9 @@ interface Feedbin {
     @HTTP(method = "DELETE", path = "v2/unread_entries.json", hasBody = true)
     suspend fun deleteUnreadEntries(@Body body: UnreadEntriesRequest): Response<List<Long>>
 
+    @POST("v2/pages.json")
+    suspend fun createPage(@Body body: CreatePageRequest): Response<Entry>
+
     @GET
     suspend fun fetchExtractedContent(@Url url: String): Response<ExtractedContent>
 

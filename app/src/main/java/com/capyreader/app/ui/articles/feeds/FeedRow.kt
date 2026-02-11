@@ -20,6 +20,7 @@ fun FeedRow(
     feed: Feed,
     onSelect: (feed: Feed) -> Unit,
     status: ArticleStatus = ArticleStatus.ALL,
+    showContextMenu: Boolean = true,
 ) {
     val (showMenu, setShowMenu) = remember { mutableStateOf(false) }
 
@@ -37,17 +38,21 @@ fun FeedRow(
                onSelect(feed)
            },
            onLongClick = {
-               setShowMenu(true)
+               if (showContextMenu) {
+                   setShowMenu(true)
+               }
            }
        )
 
-       FeedActionMenu(
-           expanded = showMenu,
-           feed = feed,
-           onDismissMenuRequest = {
-               setShowMenu(false)
-           }
-       )
+       if (showContextMenu) {
+           FeedActionMenu(
+               expanded = showMenu,
+               feed = feed,
+               onDismissMenuRequest = {
+                   setShowMenu(false)
+               }
+           )
+       }
    }
 }
 

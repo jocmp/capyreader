@@ -24,4 +24,7 @@ enum class Source(val value: String) {
 
     val supportsLabels
         get() = this == FRESHRSS
+
+    val supportsPages
+        get() = this == FEEDBIN
 }

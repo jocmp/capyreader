@@ -16,6 +16,10 @@ internal class FeedRecords(private val database: Database) {
         database.feedsQueries.find(id, mapper = ::feedMapper).executeAsOneOrNull()
     }
 
+    suspend fun findByFeedURL(feedURL: String): Feed? = withIOContext {
+        database.feedsQueries.findByFeedURL(feedURL, mapper = ::feedMapper).executeAsOneOrNull()
+    }
+
     suspend fun upsert(
         feedID: String,
         subscriptionID: String,

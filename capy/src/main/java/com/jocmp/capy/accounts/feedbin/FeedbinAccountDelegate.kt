@@ -19,6 +19,7 @@ import com.jocmp.capy.persistence.EnclosureRecords
 import com.jocmp.capy.persistence.FeedRecords
 import com.jocmp.capy.persistence.SavedSearchRecords
 import com.jocmp.capy.persistence.TaggingRecords
+import com.jocmp.feedbinclient.CreatePageRequest
 import com.jocmp.feedbinclient.CreateSubscriptionRequest
 import com.jocmp.feedbinclient.CreateTaggingRequest
 import com.jocmp.feedbinclient.DeleteTagRequest
@@ -112,6 +113,21 @@ internal class FeedbinAccountDelegate(
 
     override suspend fun createSavedSearch(name: String): Result<String> {
         return Result.failure(UnsupportedOperationException("Labels not supported"))
+    }
+
+    override suspend fun createPage(url: String): Result<Unit> {
+        return withErrorHandling {
+            val response = feedbin.createPage(CreatePageRequest(url = url))
+            val entry = response.body()
+
+            if (!response.isSuccessful || entry == null) {
+                throw IOException("Failed to save page")
+            }
+
+            saveEntries(listOf(entry), read = false)
+
+            Unit
+        }
     }
 
     override suspend fun addFeed(
@@ -374,6 +390,7 @@ internal class FeedbinAccountDelegate(
     private fun saveEntries(
         entries: List<Entry>,
         savedSearchID: String? = null,
+        read: Boolean = true,
     ) {
         database.transactionWithErrorHandling {
             entries.forEach { entry ->
@@ -399,7 +416,7 @@ internal class FeedbinAccountDelegate(
                 articleRecords.createStatus(
                     articleID = articleID,
                     updatedAt = updated,
-                    read = true
+                    read = read
                 )
 
                 if (enclosure != null && enclosureType != null) {
