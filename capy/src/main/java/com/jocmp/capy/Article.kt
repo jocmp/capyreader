@@ -31,6 +31,10 @@ data class Article(
 
     val parseFullContent = fullContent == FullContentState.LOADED
 
+    val isPages: Boolean
+        get() = feedName == "Pages" &&
+                feedURL?.startsWith("http://pages.feedbinusercontent.com/") == true
+
     enum class FullContentState {
         NONE,
         LOADING,

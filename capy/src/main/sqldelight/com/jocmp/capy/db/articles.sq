@@ -261,3 +261,11 @@ WHERE starred = 0
 
 deleteByID:
 DELETE FROM articles WHERE id = :articleID;
+
+deletePageByID {
+  DELETE FROM article_statuses WHERE article_id = :articleID;
+  DELETE FROM saved_search_articles WHERE article_id = :articleID;
+  DELETE FROM article_notifications WHERE article_id = :articleID;
+  DELETE FROM enclosures WHERE article_id = :articleID;
+  DELETE FROM articles WHERE id = :articleID;
+}

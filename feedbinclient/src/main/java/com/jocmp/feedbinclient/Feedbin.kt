@@ -95,6 +95,9 @@ interface Feedbin {
     @POST("v2/pages.json")
     suspend fun createPage(@Body body: CreatePageRequest): Response<Entry>
 
+    @DELETE("v2/pages/{entryID}.json")
+    suspend fun deletePage(@Path("entryID") entryID: String): Response<Void>
+
     @GET
     suspend fun fetchExtractedContent(@Url url: String): Response<ExtractedContent>
 

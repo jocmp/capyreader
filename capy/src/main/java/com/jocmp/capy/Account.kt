@@ -134,6 +134,8 @@ data class Account(
 
     suspend fun createPage(url: String) = delegate.createPage(url)
 
+    suspend fun deletePage(articleID: String) = delegate.deletePage(articleID)
+
     suspend fun searchFeed(url: String) = feedFinder.find(url)
 
     suspend fun addFeed(

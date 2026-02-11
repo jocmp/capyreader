@@ -56,6 +56,7 @@ fun ArticleView(
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
     enableBackHandler: Boolean = false,
+    onDeletePage: () -> Unit = {},
     onScrollToArticle: (index: Int) -> Unit,
     onSelectArticle: (id: String) -> Unit,
     onSelectMedia: (media: Media) -> Unit,
@@ -178,6 +179,8 @@ fun ArticleView(
                 show = showToolBar,
                 isScrolled = scrollState.showTopDivider,
                 articleId = article.id,
+                canDeletePage = article.isPages,
+                onDeletePage = onDeletePage,
                 onClose = onBackPressed,
             )
 

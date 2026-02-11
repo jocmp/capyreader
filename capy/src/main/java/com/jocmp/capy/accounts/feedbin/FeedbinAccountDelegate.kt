@@ -239,6 +239,17 @@ internal class FeedbinAccountDelegate(
         Unit
     }
 
+    override suspend fun deletePage(articleID: String): Result<Unit> {
+        val response = feedbin.deletePage(articleID)
+
+        return if (response.isSuccessful) {
+            database.articlesQueries.deletePageByID(articleID)
+            Result.success(Unit)
+        } else {
+            Result.failure(Throwable("Failed to delete page"))
+        }
+    }
+
     private suspend fun refreshArticles(since: String = maxArrivedAt()) {
         refreshStarredEntries()
         refreshUnreadEntries()

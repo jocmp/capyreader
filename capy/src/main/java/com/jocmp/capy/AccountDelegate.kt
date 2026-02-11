@@ -42,4 +42,7 @@ interface AccountDelegate {
     suspend fun removeFeed(feed: Feed): Result<Unit>
 
     suspend fun removeFolder(folderTitle: String): Result<Unit>
+
+    suspend fun deletePage(articleID: String): Result<Unit> =
+        Result.failure(UnsupportedOperationException())
 }
