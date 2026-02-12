@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="add_feed_new_folder_title">مجلد جديد</string>
-    <string name="add_feed_submit">إضافة</string>
-    <string name="feed_form_cancel">إلغاء</string>
+    <string name="add_feed_submit">أضف</string>
+    <string name="feed_form_cancel">ألغِ</string>
     <string name="filter_starred">المميزة بنجمة</string>
     <string name="filter_unread">غير مقروءة</string>
     <string name="filter_all">الكل</string>
-    <string name="feed_action_unsubscribe">إلغاء الإشتراك</string>
-    <string name="feed_action_edit">تعديل الموجز</string>
+    <string name="feed_action_unsubscribe">ألغِ الإشتراك</string>
+    <string name="feed_action_edit">عدِّل الموجز</string>
     <string name="add_feed_success">تمت إضافة الموجز بنجاح</string>
-    <string name="feed_action_unsubscribe_message">هل أنت متأكد أنك تريد إلغاء الإشتراك في \"%1$s\" ؟</string>
-    <string name="feed_action_unsubscribe_confirm">إلغاء الإشتراك</string>
-    <string name="edit_feed_submit">حفظ</string>
+    <string name="feed_action_unsubscribe_message">أمتأكد أنك تريد إلغاء الإشتراك في \"%1$s\" ؟</string>
+    <string name="feed_action_unsubscribe_confirm">ألغِ الإشتراك</string>
+    <string name="edit_feed_submit">احفظ</string>
     <string name="dialog_cancel">إلغاء</string>
     <string name="folder_action_delete_title">حذف المجلد</string>
     <string name="folder_action_edit">إعادة تسمية</string>
@@ -132,7 +132,7 @@
     <string name="filter_action_menu_description">تعديل</string>
     <string name="settings_remove_account_message_service">هل أنت متأكد أنك تريد تسجيل الخروج؟</string>
     <string name="article_view_star">نجمة</string>
-    <string name="feed_action_unsubscribe_title">إلغاء الإشتراك</string>
+    <string name="feed_action_unsubscribe_title">ألغِ الإشتراك</string>
     <string name="add_feed_network_error">تعذر العثور على الموجز. تحقق من اتصالك.</string>
     <string name="auth_fields_log_in_button">تسجيل الدخول</string>
     <string name="update_auth_success_message">تم تسجيل الدخول بنجاح</string>
@@ -321,4 +321,15 @@
     <string name="badge_style_simple">بسيط</string>
     <string name="badge_style_exact">بالضبط</string>
     <string name="show_unread_badge">أظهر شارة غير المقروءة</string>
+    <string name="add_link_title">أضف رابط</string>
+    <string name="tab_add_feed">أضف موجز</string>
+    <string name="tab_save_page">احفظ الصفحة</string>
+    <string name="save_page_success">حُفظت الصفحة</string>
+    <string name="save_page_error">تعذر حفظ الصفحة</string>
+    <string name="save_page_network_error">تعذر حفظ الصفحة. تحقق من اتصالك.</string>
+    <string name="save_page_submit">احفظ</string>
+    <string name="add_link_searching">يبحث عن مواجز…</string>
+    <string name="add_link_subscribe">اشترك</string>
+    <string name="add_link_feed_added">أُضيف موجز</string>
+    <string name="add_link_page_saved">حُفظت الصفحة</string>
 </resources>
