@@ -13,7 +13,6 @@ class ArticleRenderer(
     private val titleFontSize: Preference<Int>,
     private val textAlignment: Preference<TextAlignment>,
     private val titleFollowsBodyFont: Preference<Boolean>,
-    private val hideTopMargin: Preference<Boolean>,
     private val enableHorizontalScroll: Preference<Boolean>,
     private val audioPlayerLabels: AudioPlayerLabels = AudioPlayerLabels(),
 ) {
@@ -60,7 +59,6 @@ class ArticleRenderer(
             "font_size" to "${textSize.get()}px",
             "font_family" to fontFamily.slug,
             "font_preload" to fontPreload(fontFamily),
-            "top_margin" to topMargin(),
             "pre_white_space" to preWhiteSpace(),
             "title_font_size" to "${titleFontSize.get()}px",
             "title_text_align" to textAlignment.get().toCSS,
@@ -81,14 +79,6 @@ class ArticleRenderer(
             )
             val otherEnclosures = article.enclosureHTML()
             audioEnclosures + article.content + otherEnclosures + postProcessScript(article, hideImages)
-        }
-    }
-
-    private fun topMargin(): String {
-        return if (hideTopMargin.get()) {
-            "0px"
-        } else {
-            "100px"
         }
     }
 

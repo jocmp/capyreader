@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Article
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
@@ -163,6 +162,7 @@ fun ArticleView(
                         ) { targetArticle ->
                             ArticleReader(
                                 article = targetArticle,
+                                pinToolbars = pinToolbars,
                                 onSelectMedia = onSelectMedia,
                                 onSelectAudio = onSelectAudio,
                                 onPauseAudio = onPauseAudio,
@@ -301,7 +301,7 @@ private data class SwipePreferences(
 private fun rememberContentPadding(pinToolbars: Boolean): PaddingValues {
     return if (pinToolbars) {
         PaddingValues(
-            top = WindowInsets.statusBars.asPaddingValues().calculateTopPadding() + ArticleBarDefaults.TopBarHeight,
+            top = ArticleBarDefaults.topBarOffset,
             bottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding() + ArticleBarDefaults.BottomBarHeight,
         )
     } else {
