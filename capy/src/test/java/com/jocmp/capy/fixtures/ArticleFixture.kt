@@ -30,7 +30,8 @@ class ArticleFixture(private val database: Database) {
                 published_at = publishedAt,
                 summary = summary,
                 url = "https://example.com/test-article",
-                enclosure_type = null
+                enclosure_type = null,
+                reading_time_minutes = null
             )
             database.articlesQueries.createStatus(
                 article_id = id,

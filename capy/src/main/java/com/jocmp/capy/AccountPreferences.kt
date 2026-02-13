@@ -29,4 +29,7 @@ class AccountPreferences(
 
     val keywordBlocklist: Preference<Set<String>>
         get() = store.getStringSet("keyword_blocklist")
+
+    val showReadingTime: Preference<Boolean>
+        get() = store.getBoolean("show_reading_time", false)
 }

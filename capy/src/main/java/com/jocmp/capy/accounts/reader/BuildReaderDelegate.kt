@@ -23,6 +23,7 @@ internal fun buildReaderDelegate(
         googleReader = GoogleReader.create(
             client = httpClient,
             baseURL = preferences.url.get()
-        )
+        ),
+        preferences = preferences,
     )
 }

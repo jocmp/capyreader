@@ -1,12 +1,14 @@
 package com.jocmp.capy.accounts.feedbin
 
 import com.jocmp.capy.AccountDelegate
+import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.FeedOption
 import com.jocmp.capy.accounts.SubscriptionChoice
 import com.jocmp.capy.accounts.withErrorHandling
+import com.jocmp.capy.articles.ReadingTime
 import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.host
@@ -42,7 +44,8 @@ import java.time.ZonedDateTime
 
 internal class FeedbinAccountDelegate(
     private val database: Database,
-    private val feedbin: Feedbin
+    private val feedbin: Feedbin,
+    private val preferences: AccountPreferences,
 ) : AccountDelegate {
     private val articleRecords = ArticleRecords(database)
     private val enclosureRecords = EnclosureRecords(database)
@@ -411,6 +414,7 @@ internal class FeedbinAccountDelegate(
                     image_url = entry.images?.size_1?.cdn_url,
                     published_at = entry.published.toDateTime?.toEpochSecond(),
                     enclosure_type = enclosureType,
+                    reading_time_minutes = readingTime(entry.content),
                 )
 
                 articleRecords.createStatus(
@@ -445,6 +449,12 @@ internal class FeedbinAccountDelegate(
             name = savedSearch.name,
             query = savedSearch.query
         )
+    }
+
+    private fun readingTime(content: String?): Long? {
+        if (!preferences.showReadingTime.get()) return null
+
+        return ReadingTime.calculate(content)
     }
 
     private fun maxArrivedAt() = articleRecords.maxArrivedAt().toString()

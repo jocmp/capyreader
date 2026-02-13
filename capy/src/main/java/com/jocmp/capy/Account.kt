@@ -72,7 +72,8 @@ data class Account(
             feedbin = Feedbin.forAccount(
                 path = cacheDirectory,
                 preferences = preferences
-            )
+            ),
+            preferences = preferences,
         )
 
         Source.MINIFLUX,
@@ -82,7 +83,8 @@ data class Account(
                 path = cacheDirectory,
                 preferences = preferences,
                 source = source
-            )
+            ),
+            preferences = preferences,
         )
 
         Source.FRESHRSS,

@@ -20,6 +20,7 @@ class ArticleMapperTest {
             imageURL = "https://cdn.vox-cdn.com/thumbor/r-eWiuX74LfGvTxwenExmwmkPlk=/0x0:1800x1200/1310x873/cdn.vox-cdn.com/uploads/chorus_image/image/73010063/Vizio_TV_D_Series_Lifestyle.0.jpg",
             publishedAt = 1703960809,
             enclosureType = null,
+            readingTimeMinutes = null,
             feedTitle = "",
             faviconURL = null,
             enableStickyContent = false,

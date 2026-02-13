@@ -25,12 +25,14 @@ data class ArticleListOptions(
     val showFeedIcons: Boolean,
     val showFeedName: Boolean,
     val showSummary: Boolean,
+    val showReadingTime: Boolean,
     val shortenTitles: Boolean,
     val fontScale: ArticleListFontScale,
     val updateFeedIcons: (show: Boolean) -> Unit,
     val updateFeedName: (show: Boolean) -> Unit,
     val updateImagePreview: (preview: ImagePreview) -> Unit,
     val updateSummary: (show: Boolean) -> Unit,
+    val updateShowReadingTime: (show: Boolean) -> Unit,
     val updateFontScale: (scale: ArticleListFontScale) -> Unit,
     val updateShortenTitles: (show: Boolean) -> Unit,
 )
@@ -62,6 +64,11 @@ fun ArticleListSettings(
                 onCheckedChange = options.updateShortenTitles,
                 checked = options.shortenTitles,
                 title = stringResource(R.string.settings_article_list_shorten_titles)
+            )
+            TextSwitch(
+                onCheckedChange = options.updateShowReadingTime,
+                checked = options.showReadingTime,
+                title = stringResource(R.string.settings_article_list_show_reading_time)
             )
         }
 
@@ -103,11 +110,13 @@ private fun ArticleListSettingsPreview() {
             imagePreview = ImagePreview.default,
             showSummary = true,
             showFeedIcons = true,
+            showReadingTime = false,
             fontScale = ArticleListFontScale.LARGE,
             showFeedName = false,
             shortenTitles = true,
             updateImagePreview = {},
             updateSummary = {},
+            updateShowReadingTime = {},
             updateFeedName = {},
             updateFeedIcons = {},
             updateFontScale = {},

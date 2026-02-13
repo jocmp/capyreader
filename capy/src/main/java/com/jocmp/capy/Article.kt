@@ -24,6 +24,7 @@ data class Article(
     val openInBrowser: Boolean = false,
     val fullContent: FullContentState = FullContentState.NONE,
     val content: String = contentHTML.ifBlank { summary },
+    val readingTimeMinutes: Long? = null,
     val enclosures: List<Enclosure> = emptyList(),
     val enclosureType: EnclosureType? = null,
 ) {

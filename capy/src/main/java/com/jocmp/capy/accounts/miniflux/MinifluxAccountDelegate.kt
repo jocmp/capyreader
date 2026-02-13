@@ -1,6 +1,7 @@
 package com.jocmp.capy.accounts.miniflux
 
 import com.jocmp.capy.AccountDelegate
+import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
@@ -37,7 +38,8 @@ import com.jocmp.minifluxclient.Feed as MinifluxFeed
 
 internal class MinifluxAccountDelegate(
     private val database: Database,
-    private val miniflux: Miniflux
+    private val miniflux: Miniflux,
+    private val preferences: AccountPreferences,
 ) : AccountDelegate {
     private val articleRecords = ArticleRecords(database)
     private val enclosureRecords = EnclosureRecords(database)
@@ -338,6 +340,7 @@ internal class MinifluxAccountDelegate(
                     image_url = imageURL,
                     published_at = entry.published_at.toDateTime?.toEpochSecond(),
                     enclosure_type = enclosures.firstOrNull()?.mime_type,
+                    reading_time_minutes = readingTime(entry),
                 )
 
                 articleRecords.createStatus(
@@ -357,6 +360,12 @@ internal class MinifluxAccountDelegate(
                 }
             }
         }
+    }
+
+    private fun readingTime(entry: Entry): Long? {
+        if (!preferences.showReadingTime.get()) return null
+
+        return entry.reading_time.toLong()
     }
 
     private fun upsertFeed(feed: MinifluxFeed, icons: Map<Long, String>) {
