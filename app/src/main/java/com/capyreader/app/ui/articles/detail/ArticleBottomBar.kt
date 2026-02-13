@@ -19,6 +19,7 @@ import androidx.compose.material.icons.outlined.Circle
 import androidx.compose.material.icons.rounded.Circle
 import androidx.compose.material.icons.rounded.ExpandMore
 import androidx.compose.material.icons.rounded.Share
+//import androidx.compose.material.icons.rounded.Print
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarOutline
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -39,6 +40,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.capyreader.app.R
+//import com.capyreader.app.common.printArticle
 import com.capyreader.app.common.shareArticle
 import com.capyreader.app.ui.articles.FullContentLoadingIcon
 import com.capyreader.app.ui.components.ToolbarTooltip
@@ -168,6 +170,20 @@ fun ArticleBottomBar(
                             )
                         }
                     }
+//                    ToolbarTooltip(
+//                        positioning = TooltipAnchorPosition.Above,
+//                        message = stringResource(R.string.article_print)
+//                    ) {
+//                        IconButton(
+//                            onClick = { context.printArticle(article = article) },
+//                        ) {
+//                            Icon(
+//                                Icons.Rounded.Print,
+//                                contentDescription = stringResource(R.string.article_print),
+//                                modifier = Modifier.size(24.dp)
+//                            )
+//                        }
+//                    }
                 }
             }
             }
