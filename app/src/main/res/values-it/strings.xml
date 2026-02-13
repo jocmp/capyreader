@@ -273,7 +273,7 @@
     <string name="widget_receiver_headlines_title">Titoli</string>
     <string name="settings_gestures_improve_talkback_title">Migliora il talkback</string>
     <string name="settings_gestures_improve_talkback_subtitle">Disattiva alcune impostazioni per migliorare la sintesi vocale di TalkBack</string>
-    <string name="settings_options_reader_pin_top_toolbar">Fissa la barra degli strumenti in alto</string>
+    <string name="settings_options_reader_pin_top_toolbar">Fissa la barra degli strumenti</string>
     <string name="add_account_miniflux_signup_link_text">Per saperne di più.</string>
     <string name="add_account_miniflux_signup_prompt">Hai un\'istanza Miniflux?</string>
     <string name="mark_read_position_toolbar">Barra degli strumenti</string>
@@ -310,4 +310,26 @@
     <string name="audio_player_skip_forward">Avanti veloce di 30 secondi</string>
     <string name="freshrss_nav_headline_categories">Categorie</string>
     <string name="article_list_empty">Niente qui</string>
+    <string name="add_link_title">Aggiungi link</string>
+    <string name="tab_add_feed">Aggiungi feed</string>
+    <string name="tab_save_page">Salva pagina</string>
+    <string name="save_page_success">Pagina salvata</string>
+    <string name="save_page_error">Impossibile salvare la pagina</string>
+    <string name="save_page_network_error">Impossibile salvare la pagina. Controlla la tua connessione.</string>
+    <string name="save_page_submit">Salva</string>
+    <string name="add_link_searching">Ricerca dei feed…</string>
+    <string name="add_link_subscribe">Iscriviti</string>
+    <string name="add_link_feed_added">Feed aggiunto</string>
+    <string name="add_link_page_saved">Pagina salvata</string>
+    <string name="auth_fields_miniflux_api_token">Token API</string>
+    <string name="auth_fields_miniflux_use_api_token">Utilizza invece il token API</string>
+    <string name="auth_fields_miniflux_use_password">Utilizza la password</string>
+    <string name="auth_fields_show_advanced">Opzioni avanzate</string>
+    <string name="auth_fields_hide_advanced">Nascondi opzioni avanzate</string>
+    <string name="freshrss_tag_action_edit">Modifica categoria</string>
+    <string name="settings_panel_unread_counts_title">Badge non letti</string>
+    <string name="settings_option_badge_style">Stile Badge</string>
+    <string name="badge_style_simple">Semplice</string>
+    <string name="badge_style_exact">Esatto</string>
+    <string name="show_unread_badge">Mostra badge non letti</string>
 </resources>
