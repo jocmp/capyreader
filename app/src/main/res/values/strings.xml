@@ -14,6 +14,7 @@
     <string name="feed_action_unsubscribe">Unsubscribe</string>
     <string name="filter_action_menu_description">Edit</string>
     <string name="feed_action_edit">Edit Feed</string>
+    <string name="feed_action_reload_icon">Reload Icon</string>
     <string name="feed_action_unsubscribe_message">Are you sure you want to unsubscribe from \"%1$s\"?</string>
     <string name="feed_action_unsubscribe_confirm">Unsubscribe</string>
     <string name="edit_feed_submit">Save</string>

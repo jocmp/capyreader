@@ -90,6 +90,7 @@ fun FolderRow(
                             onSelect = { onFeedSelect(feed) },
                             selected = filter.isFeedSelected(feed),
                             status = filter.status,
+                            source = source,
                         )
                     }
                 }

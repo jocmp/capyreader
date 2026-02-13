@@ -32,6 +32,7 @@
     <string name="filter_starred">星標</string>
     <string name="filter_unread">未讀</string>
     <string name="feed_action_edit">編輯訂閱源</string>
+    <string name="feed_action_reload_icon">重新載入圖示</string>
     <string name="feed_action_unsubscribe_message">您確定要取消訂閱 \"%1$s\" 嗎？</string>
     <string name="folder_action_edit">重命名</string>
     <string name="edit_feed_submit">儲存</string>

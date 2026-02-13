@@ -7,7 +7,8 @@ import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.feedfinder.DefaultFeedFinder
 import com.jocmp.feedfinder.FeedFinder
 import com.jocmp.capy.accounts.AutoDelete
-import com.jocmp.capy.accounts.FaviconFetcher
+import com.jocmp.capy.accounts.FaviconFinder
+import com.jocmp.capy.accounts.FaviconPolicy
 import com.jocmp.capy.accounts.LocalOkHttpClient
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.asOPML
@@ -54,7 +55,7 @@ data class Account(
     val database: Database,
     val preferences: AccountPreferences,
     val source: Source = Source.LOCAL,
-    val faviconFetcher: FaviconFetcher,
+    val faviconPolicy: FaviconPolicy,
     private val clientCertManager: ClientCertManager,
     private val userAgent: String,
     private val acceptLanguage: String,
@@ -63,7 +64,6 @@ data class Account(
         Source.LOCAL -> LocalAccountDelegate(
             database = database,
             httpClient = localHttpClient,
-            faviconFetcher = faviconFetcher,
             preferences = preferences,
         )
 
@@ -425,6 +425,19 @@ data class Account(
 
     suspend fun clearStickyFullContent() {
         feedRecords.clearStickyFullContent()
+    }
+
+    suspend fun reloadFavicon(feedID: String) {
+        findFeed(feedID)?.let { findFavicon(it) }
+    }
+
+    private suspend fun findFavicon(feed: Feed) {
+        withIOContext {
+            val siteURL = FaviconFinder.siteURL(feed) ?: return@withIOContext
+            FaviconFinder(localHttpClient, faviconPolicy, userAgent, acceptLanguage).find(siteURL.toString())?.let {
+                feedRecords.updateFavicon(feed.id, it)
+            }
+        }
     }
 
     val supportsMultiFolderFeeds: Boolean

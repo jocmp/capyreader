@@ -5,6 +5,7 @@
     <string name="add_feed_name_title">Název</string>
     <string name="add_feed_new_folder_title">Nový štítek</string>
     <string name="feed_action_edit">Upravit kanál</string>
+    <string name="feed_action_reload_icon">Znovu načíst ikonu</string>
     <string name="feed_action_unsubscribe_message">Opravdu chcete zrušit odběr „%1$s“?</string>
     <string name="folder_action_delete_title">Smazat štítek</string>
     <string name="folder_action_edit">Přejmenovat</string>

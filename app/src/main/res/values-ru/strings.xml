@@ -7,6 +7,7 @@
     <string name="feed_action_unsubscribe">Отписаться</string>
     <string name="filter_action_menu_description">Изменить</string>
     <string name="feed_action_edit">Изменить ленту</string>
+    <string name="feed_action_reload_icon">Перезагрузить значок</string>
     <string name="add_feed_new_folder_title">Новый тег</string>
     <string name="add_feed_url_title">Ссылка ленты/сайта</string>
     <string name="folder_action_delete_title">Удалить тег</string>

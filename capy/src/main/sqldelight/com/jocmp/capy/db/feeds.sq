@@ -56,7 +56,7 @@ subscription_id = excluded.subscription_id,
 title = excluded.title,
 feed_url = excluded.feed_url,
 site_url = excluded.site_url,
-favicon_url = excluded.favicon_url,
+favicon_url = COALESCE(excluded.favicon_url, favicon_url),
 enable_sticky_full_content = enable_sticky_full_content,
 priority = excluded.priority;
 

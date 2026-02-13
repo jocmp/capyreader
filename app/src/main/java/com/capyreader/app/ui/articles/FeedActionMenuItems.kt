@@ -24,8 +24,10 @@ fun FeedActionMenuItems(
     onMenuClose: () -> Unit,
     onRemoveRequest: () -> Unit,
     onEdit: () -> Unit,
+    onReloadIcon: () -> Unit,
     onToggleOpenInBrowser: () -> Unit,
     onToggleUnreadBadge: () -> Unit,
+    showReloadIcon: Boolean = false,
 ) {
     DropdownMenuItem(
         text = {
@@ -36,6 +38,17 @@ fun FeedActionMenuItems(
             onEdit()
         }
     )
+    if (showReloadIcon) {
+        DropdownMenuItem(
+            text = {
+                Text(stringResource(R.string.feed_action_reload_icon))
+            },
+            onClick = {
+                onMenuClose()
+                onReloadIcon()
+            }
+        )
+    }
     DropdownMenuItem(
         text = {
             Text(stringResource(R.string.feed_action_unsubscribe))
@@ -86,6 +99,7 @@ fun FeedActionMenuPreview(@PreviewParameter(FeedSample::class) feed: Feed) {
             feed = feed,
             onMenuClose = {},
             onEdit = {},
+            onReloadIcon = {},
             onRemoveRequest = {},
             onToggleOpenInBrowser = {},
             onToggleUnreadBadge = {},

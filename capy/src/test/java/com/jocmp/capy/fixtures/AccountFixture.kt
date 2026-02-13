@@ -7,7 +7,7 @@ import com.jocmp.capy.FakeClientCertManager
 import com.jocmp.capy.InMemoryDataStore
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.RandomUUID
-import com.jocmp.capy.accounts.FakeFaviconFetcher
+import com.jocmp.capy.accounts.FakeFaviconPolicy
 import com.jocmp.capy.db.Database
 import io.mockk.mockk
 import org.junit.rules.TemporaryFolder
@@ -26,7 +26,7 @@ object AccountFixture {
             cacheDirectory = parentFolder.newFile().toURI(),
             preferences = AccountPreferences(InMemoryDataStore()),
             delegate = accountDelegate,
-            faviconFetcher = FakeFaviconFetcher,
+            faviconPolicy = FakeFaviconPolicy,
             clientCertManager = FakeClientCertManager,
             userAgent = "TestUserAgent",
             acceptLanguage = "en-US",

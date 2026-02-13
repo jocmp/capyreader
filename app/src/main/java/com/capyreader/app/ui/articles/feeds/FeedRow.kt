@@ -13,6 +13,7 @@ import com.capyreader.app.ui.articles.list.FeedActionMenu
 import com.capyreader.app.ui.fixtures.FeedSample
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
+import com.jocmp.capy.accounts.Source
 
 @Composable
 fun FeedRow(
@@ -21,6 +22,7 @@ fun FeedRow(
     onSelect: (feed: Feed) -> Unit,
     status: ArticleStatus = ArticleStatus.ALL,
     showContextMenu: Boolean = true,
+    source: Source = Source.LOCAL,
 ) {
     val (showMenu, setShowMenu) = remember { mutableStateOf(false) }
 
@@ -50,7 +52,8 @@ fun FeedRow(
                feed = feed,
                onDismissMenuRequest = {
                    setShowMenu(false)
-               }
+               },
+               source = source,
            )
        }
    }
