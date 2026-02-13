@@ -239,11 +239,23 @@ internal class FeedbinAccountDelegate(
         Unit
     }
 
+    override suspend fun deletePage(articleID: String): Result<Unit> {
+        val response = feedbin.deletePage(articleID)
+
+        return if (response.isSuccessful) {
+            database.articlesQueries.deletePageByID(articleID)
+            Result.success(Unit)
+        } else {
+            Result.failure(Throwable("Failed to delete page"))
+        }
+    }
+
     private suspend fun refreshArticles(since: String = maxArrivedAt()) {
         refreshStarredEntries()
         refreshUnreadEntries()
         refreshAllArticles(since = since)
         fetchMissingArticles()
+        refreshPages()
     }
 
     private suspend fun refreshFeeds() {
@@ -359,6 +371,45 @@ internal class FeedbinAccountDelegate(
                 }
             }
         }
+    }
+
+    private suspend fun refreshPages() {
+        val feedID = database.feedsQueries
+            .findPagesFeedID()
+            .executeAsOneOrNull() ?: return
+
+        val remoteIDs = fetchAllFeedEntryIDs(feedID)
+
+        val localIDs = database.articlesQueries
+            .findIDsByFeed(feedID)
+            .executeAsList()
+            .toSet()
+
+        val orphanedIDs = localIDs - remoteIDs
+
+        if (orphanedIDs.isNotEmpty()) {
+            database.articlesQueries.deleteArticlesByID(orphanedIDs)
+        }
+    }
+
+    private suspend fun fetchAllFeedEntryIDs(feedID: String): Set<String> {
+        val remoteIDs = mutableSetOf<String>()
+        var nextPage: Int? = 1
+
+        while (nextPage != null) {
+            val response = feedbin.feedEntries(
+                feedID = feedID,
+                page = nextPage.toString()
+            )
+            val entries = response.body().orEmpty()
+
+            saveEntries(entries)
+            entries.forEach { remoteIDs.add(it.id.toString()) }
+
+            nextPage = response.pagingInfo?.nextPage
+        }
+
+        return remoteIDs
     }
 
     private suspend fun fetchPaginatedEntries(

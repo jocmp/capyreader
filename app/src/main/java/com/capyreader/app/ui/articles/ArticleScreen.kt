@@ -640,6 +640,10 @@ fun ArticleScreen(
                         onToggleRead = viewModel::toggleArticleRead,
                         onToggleStar = viewModel::toggleArticleStar,
                         enableBackHandler = media == null,
+                        onDeletePage = {
+                            clearArticle()
+                            viewModel.deletePage(article.id)
+                        },
                         onSelectMedia = { media = it },
                         onSelectAudio = { audio ->
                             audioController.play(audio)

@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Label
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.FormatSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -39,6 +40,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.capyreader.app.R
+import com.capyreader.app.ui.articles.DeletePageDialog
 import com.capyreader.app.ui.articles.LocalLabelsActions
 import com.capyreader.app.ui.components.ToolbarTooltip
 import com.capyreader.app.ui.fixtures.PreviewKoinApplication
@@ -51,11 +53,14 @@ fun ArticleTopBar(
     show: Boolean,
     isScrolled: Boolean,
     articleId: String,
+    canDeletePage: Boolean = false,
+    onDeletePage: () -> Unit = {},
     onClose: () -> Unit,
 ) {
     val containerColor = MaterialTheme.colorScheme.surface
     val labelsActions = LocalLabelsActions.current
     val (isStyleSheetOpen, setStyleSheetOpen) = rememberSaveable { mutableStateOf(false) }
+    val (isDeletePageDialogOpen, setDeletePageDialogOpen) = rememberSaveable { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -88,6 +93,21 @@ fun ArticleTopBar(
                     },
                     title = {},
                     actions = {
+                        if (canDeletePage) {
+                            ToolbarTooltip(
+                                message = stringResource(R.string.article_actions_delete_page)
+                            ) {
+                                IconButton(
+                                    onClick = { setDeletePageDialogOpen(true) },
+                                ) {
+                                    Icon(
+                                        Icons.Outlined.Delete,
+                                        contentDescription = stringResource(R.string.article_actions_delete_page),
+                                        modifier = Modifier.size(24.dp)
+                                    )
+                                }
+                            }
+                        }
                         if (labelsActions.showLabels) {
                             ToolbarTooltip(
                                 message = stringResource(R.string.freshrss_article_actions_label)
@@ -142,6 +162,16 @@ fun ArticleTopBar(
                 ArticleStylePicker()
             }
         }
+    }
+
+    if (isDeletePageDialogOpen) {
+        DeletePageDialog(
+            onConfirm = {
+                setDeletePageDialogOpen(false)
+                onDeletePage()
+            },
+            onDismissRequest = { setDeletePageDialogOpen(false) }
+        )
     }
 }
 

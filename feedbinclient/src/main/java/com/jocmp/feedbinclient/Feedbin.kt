@@ -95,6 +95,17 @@ interface Feedbin {
     @POST("v2/pages.json")
     suspend fun createPage(@Body body: CreatePageRequest): Response<Entry>
 
+    @DELETE("v2/pages/{entryID}.json")
+    suspend fun deletePage(@Path("entryID") entryID: String): Response<Void>
+
+    @GET("v2/feeds/{feedID}/entries.json")
+    suspend fun feedEntries(
+        @Path("feedID") feedID: String,
+        @Query("page") page: String? = null,
+        @Query("mode") mode: String? = "extended",
+        @Query("per_page") perPage: Int? = 100,
+    ): Response<List<Entry>>
+
     @GET
     suspend fun fetchExtractedContent(@Url url: String): Response<ExtractedContent>
 

@@ -21,6 +21,5 @@ data class Feed(
     val showUnreadBadge: Boolean = true,
 ): Countable {
     val isPages: Boolean
-        get() = title == "Pages" &&
-                feedURL.startsWith("http://pages.feedbinusercontent.com/")
+        get() = feedURL.startsWith("http://pages.feedbinusercontent.com/")
 }

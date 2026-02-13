@@ -234,6 +234,11 @@ deleteArticles {
     SELECT 1 FROM article_statuses
     WHERE article_statuses.article_id = articles.id
     AND starred = 0 AND read = 1
+  )
+  AND NOT EXISTS (
+    SELECT 1 FROM feeds
+    WHERE feeds.id = articles.feed_id
+    AND feeds.feed_url LIKE 'http://pages.feedbinusercontent.com/%'
   );
 
   DELETE FROM article_notifications
@@ -261,3 +266,22 @@ WHERE starred = 0
 
 deleteByID:
 DELETE FROM articles WHERE id = :articleID;
+
+deletePageByID {
+  DELETE FROM article_statuses WHERE article_id = :articleID;
+  DELETE FROM saved_search_articles WHERE article_id = :articleID;
+  DELETE FROM article_notifications WHERE article_id = :articleID;
+  DELETE FROM enclosures WHERE article_id = :articleID;
+  DELETE FROM articles WHERE id = :articleID;
+}
+
+findIDsByFeed:
+SELECT id FROM articles WHERE feed_id = :feedID;
+
+deleteArticlesByID {
+  DELETE FROM article_statuses WHERE article_id IN :articleIDs;
+  DELETE FROM saved_search_articles WHERE article_id IN :articleIDs;
+  DELETE FROM article_notifications WHERE article_id IN :articleIDs;
+  DELETE FROM enclosures WHERE article_id IN :articleIDs;
+  DELETE FROM articles WHERE id IN :articleIDs;
+}

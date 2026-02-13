@@ -25,6 +25,12 @@ FROM feeds
 WHERE feed_url = :feedURL
 LIMIT 1;
 
+findPagesFeedID:
+SELECT id
+FROM feeds
+WHERE feed_url LIKE 'http://pages.feedbinusercontent.com/%'
+LIMIT 1;
+
 findByFolder:
 SELECT feeds.*
 FROM feeds

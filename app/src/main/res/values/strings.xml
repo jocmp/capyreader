@@ -340,4 +340,8 @@
     <string name="badge_style_simple">Simple</string>
     <string name="badge_style_exact">Exact</string>
     <string name="show_unread_badge">Show Unread Badge</string>
+    <string name="article_actions_delete_page">Delete page</string>
+    <string name="article_actions_delete_page_title">Delete</string>
+    <string name="article_actions_delete_page_message">Are you sure you want to delete this page?</string>
+    <string name="article_actions_delete_page_confirm">Delete</string>
 </resources>

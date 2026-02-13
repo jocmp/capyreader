@@ -312,6 +312,12 @@ class ArticleScreenViewModel(
         }
     }
 
+    fun deletePage(articleID: String) {
+        viewModelScope.launchIO {
+            account.deletePage(articleID)
+        }
+    }
+
     fun removeFeed(
         feedID: String,
     ) {
