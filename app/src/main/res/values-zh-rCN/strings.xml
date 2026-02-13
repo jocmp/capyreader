@@ -319,4 +319,15 @@
     <string name="badge_style_simple">简约</string>
     <string name="badge_style_exact">精确</string>
     <string name="show_unread_badge">显示未读徽章</string>
+    <string name="add_link_title">添加链接</string>
+    <string name="tab_add_feed">添加订阅源</string>
+    <string name="tab_save_page">保存页面</string>
+    <string name="save_page_success">页面已保存</string>
+    <string name="save_page_error">无法保存页面</string>
+    <string name="save_page_network_error">无法保存页面，请检查您的连接。</string>
+    <string name="save_page_submit">保存</string>
+    <string name="add_link_searching">正在搜索订阅源…</string>
+    <string name="add_link_subscribe">订阅</string>
+    <string name="add_link_feed_added">订阅源已添加</string>
+    <string name="add_link_page_saved">页面已保存</string>
 </resources>
