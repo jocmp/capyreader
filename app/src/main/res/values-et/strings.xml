@@ -314,4 +314,21 @@
     <string name="auth_fields_miniflux_use_password">Selle asemel kasuta salasõna</string>
     <string name="auth_fields_show_advanced">Lisaseadistused</string>
     <string name="auth_fields_hide_advanced">Peida lisaseadistused</string>
+    <string name="add_link_title">Lisa link</string>
+    <string name="tab_add_feed">Lisa uudisvoog</string>
+    <string name="tab_save_page">Salvesta leht</string>
+    <string name="save_page_success">Leht on salvestatud</string>
+    <string name="save_page_error">Lehe salvestamine ei õnnestunud</string>
+    <string name="save_page_network_error">Lehe salvestamine ei õnnestunud. Palun kontrolli, kas nutiseadme internetiühendus toimib.</string>
+    <string name="save_page_submit">Salvesta</string>
+    <string name="add_link_searching">Otsin uudisvooge…</string>
+    <string name="add_link_subscribe">Telli</string>
+    <string name="add_link_feed_added">Uudisvoog on lisatud</string>
+    <string name="add_link_page_saved">Leht on salvestatud</string>
+    <string name="freshrss_tag_action_edit">Muuda kategooriat</string>
+    <string name="settings_panel_unread_counts_title">Lugemata tunnused</string>
+    <string name="settings_option_badge_style">Tunnuse stiil</string>
+    <string name="badge_style_simple">Lihtne</string>
+    <string name="badge_style_exact">Täpne</string>
+    <string name="show_unread_badge">Näita lugemata tunnuseid</string>
 </resources>
