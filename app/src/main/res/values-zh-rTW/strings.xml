@@ -320,4 +320,15 @@
     <string name="badge_style_simple">簡單</string>
     <string name="badge_style_exact">精確</string>
     <string name="show_unread_badge">顯示未讀徽章</string>
+    <string name="tab_save_page">儲存頁面</string>
+    <string name="save_page_success">頁面已儲存</string>
+    <string name="save_page_error">無法儲存頁面</string>
+    <string name="save_page_network_error">無法儲存頁面。請檢查您的連線。</string>
+    <string name="save_page_submit">儲存</string>
+    <string name="add_link_subscribe">訂閱</string>
+    <string name="add_link_page_saved">頁面已儲存</string>
+    <string name="add_link_title">新增連結</string>
+    <string name="tab_add_feed">新增訂閱源</string>
+    <string name="add_link_searching">尋找訂閱源…</string>
+    <string name="add_link_feed_added">訂閱源已新增</string>
 </resources>

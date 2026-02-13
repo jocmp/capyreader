@@ -309,4 +309,21 @@
     <string name="auth_fields_miniflux_use_password">Використати пароль</string>
     <string name="auth_fields_show_advanced">Додаткові опції</string>
     <string name="auth_fields_hide_advanced">Сховати додаткові опції</string>
+    <string name="add_link_title">Додати посилання</string>
+    <string name="tab_add_feed">Додати стрічку</string>
+    <string name="tab_save_page">Зберегти сторінку</string>
+    <string name="save_page_success">Сторінку збережено</string>
+    <string name="save_page_error">Помилка збереження сторінки</string>
+    <string name="save_page_network_error">Помилка збереження сторінки. Перевірте з\'єднання.</string>
+    <string name="save_page_submit">Зберегти</string>
+    <string name="add_link_searching">Пошук стрічок…</string>
+    <string name="add_link_subscribe">Підписатись</string>
+    <string name="add_link_feed_added">Стрічку додано</string>
+    <string name="add_link_page_saved">Сторінку збережено</string>
+    <string name="freshrss_tag_action_edit">Редагувати категорію</string>
+    <string name="settings_panel_unread_counts_title">Підписи непрочитаних</string>
+    <string name="settings_option_badge_style">Стиль підпису</string>
+    <string name="badge_style_simple">Простий</string>
+    <string name="badge_style_exact">Точний</string>
+    <string name="show_unread_badge">Підписи непрочитаних</string>
 </resources>
