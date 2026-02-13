@@ -6,4 +6,5 @@ import org.koin.dsl.module
 val syncModule = module {
     worker { ReadSyncWorker(get(), get()) }
     worker { StarSyncWorker(get(), get()) }
+    worker { ReadingTimeWorker(get(), get()) }
 }

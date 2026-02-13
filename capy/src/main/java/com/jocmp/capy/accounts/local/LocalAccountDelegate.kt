@@ -6,6 +6,7 @@ import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.FeedOption
+import com.jocmp.capy.articles.ReadingTime
 import com.jocmp.capy.common.ContentFormatter
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.TimeHelpers.published
@@ -255,6 +256,7 @@ internal class LocalAccountDelegate(
                         image_url = parsedItem.imageURL,
                         published_at = publishedAt,
                         enclosure_type = enclosureType,
+                        reading_time_minutes = readingTime(parsedItem.contentHTML),
                     )
 
                     articleRecords.createStatus(
@@ -320,6 +322,12 @@ internal class LocalAccountDelegate(
                 )
             }
         }
+    }
+
+    private fun readingTime(content: String?): Long? {
+        if (!preferences.showReadingTime.get()) return null
+
+        return ReadingTime.calculate(content)
     }
 
     companion object {

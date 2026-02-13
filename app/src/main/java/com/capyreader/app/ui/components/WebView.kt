@@ -23,6 +23,7 @@ import com.capyreader.app.common.AudioEnclosure
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.WebViewInterface
 import com.capyreader.app.common.rememberTalkbackPreference
+import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
@@ -158,6 +159,7 @@ class WebViewState(
     private val renderer: ArticleRenderer,
     private val colors: Map<String, String>,
     private val enableNativeScroll: Boolean,
+    private val showReadingTime: Boolean,
     internal val webView: WebView,
 ) {
     private var htmlId: String? = null
@@ -184,7 +186,10 @@ class WebViewState(
         val html = renderer.render(
             article,
             hideImages = !showImages,
-            byline = article.byline(context = webView.context),
+            byline = article.byline(
+                context = webView.context,
+                showReadingTime = showReadingTime
+            ),
             colors = colors
         )
 
@@ -239,7 +244,9 @@ fun rememberWebViewState(
     isAudioPlaying: Boolean = false,
     key: String? = null,
 ): WebViewState {
+    val appPreferences: AppPreferences = koinInject()
     val enableNativeScroll by rememberTalkbackPreference()
+    val showReadingTime = appPreferences.articleListOptions.showReadingTime.get()
     val colors = articleTemplateColors()
     val context = LocalContext.current
     val currentAudioUrlState by rememberUpdatedState(currentAudioUrl)
@@ -301,6 +308,7 @@ fun rememberWebViewState(
             renderer,
             colors,
             enableNativeScroll = enableNativeScroll,
+            showReadingTime = showReadingTime,
             webView,
         ).also {
             client.state = it

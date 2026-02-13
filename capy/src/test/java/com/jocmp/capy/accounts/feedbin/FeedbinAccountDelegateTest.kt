@@ -1,8 +1,10 @@
 package com.jocmp.capy.accounts.feedbin
 
 import com.jocmp.capy.AccountDelegate
+import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
+import com.jocmp.capy.InMemoryDataStore
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.SubscriptionChoice
@@ -127,7 +129,7 @@ class FeedbinAccountDelegateTest {
         database = InMemoryDatabaseProvider.build(accountID)
         feedFixture = FeedFixture(database)
         feedbin = mockk()
-        delegate = FeedbinAccountDelegate(database, feedbin)
+        delegate = FeedbinAccountDelegate(database, feedbin, AccountPreferences(InMemoryDataStore()))
 
         coEvery { feedbin.icons() }.returns(Response.success(listOf()))
     }
@@ -448,7 +450,7 @@ class FeedbinAccountDelegateTest {
 
     @Test
     fun updateFeed_modifyTitle() = runTest {
-        val delegate = FeedbinAccountDelegate(database, feedbin)
+        val delegate = FeedbinAccountDelegate(database, feedbin, AccountPreferences(InMemoryDataStore()))
         val feed = feedFixture.create()
 
         val subscription = Subscription(

@@ -28,6 +28,7 @@ val settingsModule = module {
     }
     viewModel {
         DisplaySettingsViewModel(
+            context = get(),
             account = get(),
             appPreferences = get(),
         )

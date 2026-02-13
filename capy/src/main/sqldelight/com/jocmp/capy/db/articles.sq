@@ -65,7 +65,8 @@ INSERT INTO articles(
     summary,
     image_url,
     published_at,
-    enclosure_type
+    enclosure_type,
+    reading_time_minutes
 )
 VALUES (
 :id,
@@ -78,7 +79,8 @@ VALUES (
 :summary,
 :image_url,
 :published_at,
-:enclosure_type
+:enclosure_type,
+:reading_time_minutes
 )
 ON CONFLICT(id) DO UPDATE
 SET
@@ -92,7 +94,8 @@ url = excluded.url,
 summary = excluded.summary,
 image_url = excluded.image_url,
 published_at = published_at,
-enclosure_type = excluded.enclosure_type;
+enclosure_type = excluded.enclosure_type,
+reading_time_minutes = excluded.reading_time_minutes;
 
 createStatus:
 INSERT INTO article_statuses(
@@ -261,3 +264,9 @@ WHERE starred = 0
 
 deleteByID:
 DELETE FROM articles WHERE id = :articleID;
+
+updateReadingTime:
+UPDATE articles SET reading_time_minutes = :readingTimeMinutes WHERE id = :articleID;
+
+articlesWithMissingReadingTime:
+SELECT id, content_html FROM articles WHERE reading_time_minutes IS NULL LIMIT :limit;

@@ -1,20 +1,26 @@
 package com.capyreader.app.ui.settings.panels
 
+import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.LayoutPreference
 import com.capyreader.app.preferences.ReaderImageVisibility
 import com.capyreader.app.preferences.ThemeMode
 import com.capyreader.app.preferences.AppTheme
+import com.capyreader.app.sync.ReadingTimeWorker
 import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.capyreader.app.ui.articles.MarkReadPosition
 import com.jocmp.capy.Account
 
 class DisplaySettingsViewModel(
+    private val context: Context,
     val account: Account,
     val appPreferences: AppPreferences,
 ) : ViewModel() {
@@ -37,6 +43,12 @@ class DisplaySettingsViewModel(
         mutableStateOf(appPreferences.articleListOptions.showFeedIcons.get())
 
     private val _shortenTitles = mutableStateOf(appPreferences.articleListOptions.shortenTitles.get())
+
+    private val _showReadingTime =
+        mutableStateOf(appPreferences.articleListOptions.showReadingTime.get())
+
+    val showReadingTime: Boolean
+        get() = _showReadingTime.value
 
     var fontScale by mutableStateOf(appPreferences.articleListOptions.fontScale.get())
         private set
@@ -137,5 +149,26 @@ class DisplaySettingsViewModel(
         appPreferences.articleListOptions.shortenTitles.set(shortenTitles)
 
         _shortenTitles.value = shortenTitles
+    }
+
+    fun updateShowReadingTime(show: Boolean) {
+        appPreferences.articleListOptions.showReadingTime.set(show)
+        account.preferences.showReadingTime.set(show)
+
+        _showReadingTime.value = show
+
+        if (show) {
+            backfillReadingTime()
+        }
+    }
+
+    private fun backfillReadingTime() {
+        val request = OneTimeWorkRequestBuilder<ReadingTimeWorker>().build()
+        WorkManager.getInstance(context)
+            .enqueueUniqueWork(READING_TIME_WORK, ExistingWorkPolicy.REPLACE, request)
+    }
+
+    companion object {
+        private const val READING_TIME_WORK = "reading_time_backfill"
     }
 }

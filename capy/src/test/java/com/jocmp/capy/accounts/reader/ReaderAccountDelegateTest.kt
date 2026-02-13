@@ -1,8 +1,10 @@
 package com.jocmp.capy.accounts.reader
 
 import com.jocmp.capy.AccountDelegate
+import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
+import com.jocmp.capy.InMemoryDataStore
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.Source
@@ -175,7 +177,7 @@ class ReaderAccountDelegateTest {
         folderFixture = FolderFixture(database)
         googleReader = mockk()
 
-        delegate = ReaderAccountDelegate(source = Source.FRESHRSS, database, googleReader)
+        delegate = ReaderAccountDelegate(source = Source.FRESHRSS, database, googleReader, AccountPreferences(InMemoryDataStore()))
     }
 
     @Test
@@ -273,7 +275,7 @@ class ReaderAccountDelegateTest {
 
     @Test
     fun `refresh Miniflux folder`() = runTest {
-        delegate = ReaderAccountDelegate(source = Source.READER, database, googleReader)
+        delegate = ReaderAccountDelegate(source = Source.READER, database, googleReader, AccountPreferences(InMemoryDataStore()))
 
         val folderTitle = "Tech"
         val feed = feedFixture.create(feedID = "feed/2")

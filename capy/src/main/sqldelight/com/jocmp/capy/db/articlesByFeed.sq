@@ -9,6 +9,7 @@ SELECT
   articles.image_url,
   articles.published_at,
   articles.enclosure_type,
+  articles.reading_time_minutes,
   feeds.title AS feed_title,
   feeds.favicon_url,
   feeds.open_articles_in_browser,

@@ -1,6 +1,7 @@
 package com.jocmp.capy.accounts.reader
 
 import com.jocmp.capy.AccountDelegate
+import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
@@ -8,6 +9,7 @@ import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.ValidationError
 import com.jocmp.capy.accounts.feedbin.FeedbinAccountDelegate.Companion.MAX_CREATE_UNREAD_LIMIT
 import com.jocmp.capy.accounts.withErrorHandling
+import com.jocmp.capy.articles.ReadingTime
 import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.transactionWithErrorHandling
@@ -46,6 +48,7 @@ internal class ReaderAccountDelegate(
     private val source: Source,
     private val database: Database,
     private val googleReader: GoogleReader,
+    private val preferences: AccountPreferences,
 ) : AccountDelegate {
     private var postToken = AtomicReference<String?>(null)
     private val articleRecords = ArticleRecords(database)
@@ -468,18 +471,21 @@ internal class ReaderAccountDelegate(
                 val enclosures = ReaderEnclosureParsing.validEnclosures(item)
                 val enclosureType = enclosures.firstOrNull()?.type
 
+                val contentHtml = item.content?.content ?: item.summary.content
+
                 database.articlesQueries.create(
                     id = item.hexID,
                     feed_id = item.origin.streamId,
                     title = item.title,
                     author = item.author,
-                    content_html = item.content?.content ?: item.summary.content,
+                    content_html = contentHtml,
                     extracted_content_url = null,
                     summary = item.summary.content?.let { Jsoup.parse(it).text() },
                     url = item.canonical.firstOrNull()?.href,
                     image_url = ReaderEnclosureParsing.parsedImageURL(item),
                     published_at = item.published,
                     enclosure_type = enclosureType,
+                    reading_time_minutes = readingTime(contentHtml),
                 )
 
                 articleRecords.updateStatus(
@@ -573,6 +579,12 @@ internal class ReaderAccountDelegate(
 
     private fun taggingID(subscription: Subscription, category: Category): String {
         return "${subscription.id}:${category.id}"
+    }
+
+    private fun readingTime(contentHtml: String?): Long? {
+        if (!preferences.showReadingTime.get()) return null
+
+        return ReadingTime.calculate(contentHtml)
     }
 
     companion object {
