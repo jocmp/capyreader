@@ -7,8 +7,8 @@ import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.FeedFixture
 import com.jocmp.capy.persistence.EnclosureRecords
-import com.jocmp.capy.randomID
 import com.jocmp.minifluxclient.Category
+import com.jocmp.minifluxclient.CreateCategoryRequest
 import com.jocmp.minifluxclient.CreateFeedRequest
 import com.jocmp.minifluxclient.CreateFeedResponse
 import com.jocmp.minifluxclient.Enclosure
@@ -372,5 +372,77 @@ class MinifluxAccountDelegateTest {
         ).getOrThrow()
 
         assertEquals(expected = feedTitle, actual = updated.title)
+    }
+
+    @Test
+    fun updateFeed_modifyCategoryToExisting() = runTest {
+        val feed = feedFixture.create(folderNames = listOf("Tech"))
+        val newCategory = Category(id = 2, title = "News", user_id = 100)
+
+        coEvery {
+            miniflux.categories()
+        }.returns(Response.success(listOf(category, newCategory)))
+
+        coEvery {
+            miniflux.updateFeed(
+                feedID = feed.id.toLong(),
+                request = UpdateFeedRequest(title = feed.title, category_id = newCategory.id)
+            )
+        }.returns(Response.success(vergeFeed))
+
+        delegate.updateFeed(
+            feed = feed,
+            title = feed.title,
+            folderTitles = listOf("News"),
+        ).getOrThrow()
+
+        val allTaggings = database.taggingsQueries
+            .findFeedTaggingsToDelete(feedID = feed.id, excludedNames = emptyList())
+            .executeAsList()
+
+        val nonNewsTaggings = database.taggingsQueries
+            .findFeedTaggingsToDelete(feedID = feed.id, excludedNames = listOf("News"))
+            .executeAsList()
+
+        assertEquals(expected = 1, actual = allTaggings.size)
+        assertEquals(expected = 0, actual = nonNewsTaggings.size)
+    }
+
+    @Test
+    fun updateFeed_newCategory() = runTest {
+        val feed = feedFixture.create(folderNames = listOf("Tech"))
+        val createdCategory = Category(id = 3, title = "Science", user_id = 100)
+
+        coEvery {
+            miniflux.categories()
+        }.returns(Response.success(listOf(category)))
+
+        coEvery {
+            miniflux.createCategory(CreateCategoryRequest(title = "Science"))
+        }.returns(Response.success(createdCategory))
+
+        coEvery {
+            miniflux.updateFeed(
+                feedID = feed.id.toLong(),
+                request = UpdateFeedRequest(title = feed.title, category_id = createdCategory.id)
+            )
+        }.returns(Response.success(vergeFeed))
+
+        delegate.updateFeed(
+            feed = feed,
+            title = feed.title,
+            folderTitles = listOf("Science"),
+        ).getOrThrow()
+
+        val allTaggings = database.taggingsQueries
+            .findFeedTaggingsToDelete(feedID = feed.id, excludedNames = emptyList())
+            .executeAsList()
+
+        val nonScienceTaggings = database.taggingsQueries
+            .findFeedTaggingsToDelete(feedID = feed.id, excludedNames = listOf("Science"))
+            .executeAsList()
+
+        assertEquals(expected = 1, actual = allTaggings.size)
+        assertEquals(expected = 0, actual = nonScienceTaggings.size)
     }
 }
