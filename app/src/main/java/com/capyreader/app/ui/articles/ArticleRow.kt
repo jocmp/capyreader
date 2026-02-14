@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Star
@@ -254,7 +254,6 @@ private fun ArticleImage(
             Modifier
                 .fillMaxWidth()
                 .aspectRatio(3 / 2f)
-                .clip(RoundedCornerShape(8.dp))
         }
     }
 
@@ -263,6 +262,7 @@ private fun ArticleImage(
         contentDescription = null,
         contentScale = ContentScale.Crop,
         modifier = sizeModifier
+            .clip(MaterialTheme.shapes.small)
             .background(colorScheme.surfaceContainer)
     )
 }
@@ -276,8 +276,8 @@ fun PlaceholderArticleRow(imagePreview: ImagePreview = ImagePreview.NONE) {
                     Modifier
                         .fillMaxWidth()
                         .aspectRatio(3 / 2f)
+                        .clip(MaterialTheme.shapes.small)
                         .background(colorScheme.surfaceContainer)
-                        .clip(RoundedCornerShape(8.dp))
                 ) {}
             }
         },
