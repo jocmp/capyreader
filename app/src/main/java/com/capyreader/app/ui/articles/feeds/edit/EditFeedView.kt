@@ -1,5 +1,6 @@
 package com.capyreader.app.ui.articles.feeds.edit
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,16 +18,12 @@ import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuAnchorType.Companion.PrimaryNotEditable
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -67,7 +64,7 @@ fun EditFeedView(
 
     fun defaultFolder(): String {
         return if (showMultiselect) {
-            return ""
+            ""
         } else {
             feed.folderName
         }
@@ -161,15 +158,24 @@ fun EditFeedView(
                     )
                 }
             } else {
-                Column(
-                    Modifier
-                        .padding(horizontal = 16.dp)
-                        .padding(bottom = 16.dp)
+                val (newFolder, setNewFolder) = remember { mutableStateOf("") }
+
+                FormSection(
+                    modifier = Modifier.padding(bottom = 16.dp),
+                    title = stringResource(R.string.edit_feed_category_section)
                 ) {
-                    FolderSelect(
-                        onChange = setSelectedFolder,
-                        value = selectedFolder,
-                        options = folders.map { it.title }
+                    FolderRadioSelect(
+                        folders = folders,
+                        selectedFolder = selectedFolder,
+                        onSelectFolder = setSelectedFolder,
+                        newFolder = newFolder,
+                        onUpdateNewFolder = setNewFolder,
+                        onAddFolder = {
+                            if (newFolder.isNotBlank()) {
+                                setSelectedFolder(newFolder)
+                                setNewFolder("")
+                            }
+                        }
                     )
                 }
             }
@@ -192,45 +198,89 @@ fun EditFeedView(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun FolderSelect(
-    options: List<String>,
-    onChange: (value: String) -> Unit,
-    value: String,
+private fun FolderRadioSelect(
+    folders: List<Folder>,
+    selectedFolder: String,
+    onSelectFolder: (String) -> Unit,
+    newFolder: String,
+    onUpdateNewFolder: (String) -> Unit,
+    onAddFolder: () -> Unit,
 ) {
-    val (expanded, setExpanded) = remember { mutableStateOf(false) }
+    val folderTitles = folders.map { it.title }
+    val stagedFolder = selectedFolder.takeIf { it.isNotBlank() && it !in folderTitles }
 
-    ExposedDropdownMenuBox(
-        expanded = expanded,
-        onExpandedChange = { setExpanded(it) },
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         OutlinedTextField(
+            value = newFolder,
+            onValueChange = onUpdateNewFolder,
+            label = { Text(stringResource(id = R.string.add_feed_new_folder_title)) },
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(
+                capitalization = KeyboardCapitalization.Words,
+                autoCorrectEnabled = false,
+                imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = { onAddFolder() }
+            ),
             modifier = Modifier
-                .menuAnchor(PrimaryNotEditable)
-                .fillMaxWidth(),
-            value = value,
-            onValueChange = onChange,
-            label = { Text(stringResource(R.string.edit_feed_tag_section)) },
-            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-            colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(),
+                .weight(1f)
+                .padding(start = 16.dp)
+                .fillMaxWidth()
         )
-        ExposedDropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { setExpanded(false) }
+        IconButton(
+            modifier = Modifier.padding(top = 8.dp, end = 8.dp),
+            onClick = onAddFolder,
         ) {
-            options.forEach { option ->
-                DropdownMenuItem(
-                    text = {
-                        Text(text = option)
-                    },
-                    onClick = {
-                        onChange(option)
-                        setExpanded(false)
-                    }
-                )
-            }
+            Icon(
+                imageVector = Icons.Rounded.Add,
+                contentDescription = stringResource(R.string.blocked_keywords_add_keyword)
+            )
         }
+    }
+    Column {
+        AnimatedVisibility(visible = stagedFolder != null) {
+            RadioRow(
+                title = stagedFolder.orEmpty(),
+                selected = true,
+                onSelect = {},
+            )
+        }
+
+        folders.forEach { folder ->
+            RadioRow(
+                title = folder.title,
+                selected = folder.title == selectedFolder,
+                onSelect = { onSelectFolder(folder.title) },
+            )
+        }
+    }
+}
+
+@Composable
+private fun RadioRow(title: String, selected: Boolean, onSelect: () -> Unit) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onSelect() }
+    ) {
+        RadioButton(
+            selected = selected,
+            onClick = onSelect,
+            modifier = Modifier.padding(start = 8.dp)
+        )
+        Text(
+            text = title,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.padding(end = 16.dp)
+        )
     }
 }
 
