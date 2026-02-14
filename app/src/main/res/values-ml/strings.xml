@@ -89,7 +89,6 @@
     <string name="feed_form_cancel">റദ്ദാക്കുക</string>
     <string name="image_preview_menu_option_large">വലിയ</string>
     <string name="settings_select_none">ഒന്നുമില്ല തിരഞ്ഞെടുക്കുക</string>
-    <string name="layout_preference_responsive">പ്രതികരണശേഷിയുള്ള</string>
     <string name="end_of_feed_text">എല്ലാം പിടികിട്ടി!</string>
     <string name="settings_confirm_mark_all_read">എല്ലാം വായിച്ചതായി അടയാളപ്പെടുത്തുന്നത് സ്ഥിരീകരിക്കുക</string>
     <string name="settings_enable_refresh_call_to_action">ആനുകാലിക പുതുക്കൽ ആദ്യം പ്രവർത്തനക്ഷമമാക്കണം</string>

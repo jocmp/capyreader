@@ -247,9 +247,6 @@
     <string name="reader_image_visibility_always_hide">Bloker billeder</string>
     <string name="reader_image_visibility_always_show">Vis altid billeder</string>
     <string name="reader_image_visibility_label">Billeder</string>
-    <string name="layout_preference_responsive">Responsiv</string>
-    <string name="layout_preference_single">Enkelt kolonne</string>
-    <string name="layout_preference_label">Foretrukne layout</string>
     <string name="end_of_feed_text">Du er ajour!</string>
     <string name="after_read_all_behavior_label">Efter alle læst</string>
     <string name="after_read_all_behavior_default">Standard</string>

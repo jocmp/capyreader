@@ -207,9 +207,6 @@
     <string name="reader_image_visibility_always_hide">Blokirajte slike</string>
     <string name="reader_image_visibility_always_show">Uvek prikaži slike</string>
     <string name="reader_image_visibility_label">Slike</string>
-    <string name="layout_preference_responsive">Responzivan</string>
-    <string name="layout_preference_single">Jedna Kolona</string>
-    <string name="layout_preference_label">Željeni raspored</string>
     <string name="settings_enable_high_contrast_dark_theme">Omogućite tamnu temu visokog kontrasta</string>
     <string name="settings_gestures_reader_tap_to_page_title">E Mastilo dodirnite za pomeranje</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Dodirnite donje uglove da biste se kretali po sadržaju članka</string>

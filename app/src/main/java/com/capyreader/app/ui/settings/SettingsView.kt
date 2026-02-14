@@ -1,6 +1,5 @@
 package com.capyreader.app.ui.settings
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
@@ -129,9 +128,6 @@ fun SettingsView(
         )
     }
 
-    BackHandler(navigator.canNavigateBack(BackNavigationBehavior.PopLatest)) {
-        navigateBack()
-    }
 }
 
 @Preview

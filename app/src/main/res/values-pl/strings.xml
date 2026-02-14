@@ -182,9 +182,6 @@
     <string name="settings_select_all">Zaznacz wszystkie</string>
     <string name="article_view_open_externally">Otwórz za pomocą innej aplikacji</string>
     <string name="reader_image_visibility_always_hide">Nie wyświetlaj obrazów</string>
-    <string name="layout_preference_responsive">Dostosowany</string>
-    <string name="layout_preference_single">Jedna kolumna</string>
-    <string name="layout_preference_label">Preferowany układ</string>
     <string name="reader_image_visibility_always_show">Zawsze wyświetlaj obrazy</string>
     <string name="settings_donate_button">Wspomóż finansowo</string>
     <string name="after_read_all_behavior_default">Domyślne</string>

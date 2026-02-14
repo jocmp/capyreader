@@ -216,9 +216,6 @@
     <string name="reader_image_visibility_always_hide">Блокировать изображения</string>
     <string name="reader_image_visibility_always_show">Всегда выводите картинки</string>
     <string name="reader_image_visibility_label">Картинки</string>
-    <string name="layout_preference_single">Один столбец</string>
-    <string name="layout_preference_label">Предпочтительный макет</string>
-    <string name="layout_preference_responsive">Отзывчивый</string>
     <string name="auth_fields_username">Имя пользователя</string>
     <string name="full_content_error_missing_response">Не удалось получить статью</string>
     <string name="after_read_all_behavior_default">По умолчанию</string>

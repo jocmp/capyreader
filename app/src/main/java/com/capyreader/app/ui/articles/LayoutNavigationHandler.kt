@@ -2,16 +2,16 @@ package com.capyreader.app.ui.articles
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import com.capyreader.app.ui.rememberLayoutPreference
+import com.capyreader.app.ui.isExpanded
 
 @Composable
 fun LayoutNavigationHandler(
     enabled: Boolean,
     onChange: suspend () -> Unit,
 ) {
-    val layout = rememberLayoutPreference()
+    val expanded = isExpanded()
 
-    LaunchedEffect(layout) {
+    LaunchedEffect(expanded) {
         if (enabled) {
             onChange()
         }
