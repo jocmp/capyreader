@@ -53,15 +53,17 @@ fun FolderActionMenu(
                 setEditDialogOpen(true)
             }
         )
-        DropdownMenuItem(
-            text = {
-                Text(stringResource(R.string.tag_action_delete_title))
-            },
-            onClick = {
-                onDismissMenuRequest()
-                setRemoveDialogOpen(true)
-            }
-        )
+        if (source.supportsTagDeletion) {
+            DropdownMenuItem(
+                text = {
+                    Text(stringResource(R.string.tag_action_delete_title))
+                },
+                onClick = {
+                    onDismissMenuRequest()
+                    setRemoveDialogOpen(true)
+                }
+            )
+        }
     }
 
     if (isRemoveDialogOpen) {

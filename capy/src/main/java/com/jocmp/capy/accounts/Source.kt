@@ -25,6 +25,14 @@ enum class Source(val value: String) {
     val supportsLabels
         get() = this == FRESHRSS
 
+    /**
+     * Miniflux's API with delete all feeds within a category
+     * instead of reassigning them. This is surprising and
+     * destructive behavior so it's unsupported within the app.
+     */
+    val supportsTagDeletion
+        get() = this != MINIFLUX && this != MINIFLUX_TOKEN
+
     val supportsPages
         get() = this == FEEDBIN
 }
