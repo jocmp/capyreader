@@ -315,4 +315,15 @@
     <string name="badge_style_simple">Simple</string>
     <string name="badge_style_exact">Exacto</string>
     <string name="show_unread_badge">Mostrar marca de non lidos</string>
+    <string name="add_link_title">Engadir Ligazón</string>
+    <string name="tab_add_feed">Engadir Canle</string>
+    <string name="tab_save_page">Gardar Páxina</string>
+    <string name="save_page_success">Gardouse a páxina</string>
+    <string name="save_page_error">Non se puido gardar a páxina</string>
+    <string name="save_page_network_error">Non se puido gardar a páxina, comproba a conexión.</string>
+    <string name="save_page_submit">Gardar</string>
+    <string name="add_link_searching">Buscando canles…</string>
+    <string name="add_link_subscribe">Subscribir</string>
+    <string name="add_link_feed_added">Engadiuse a canle</string>
+    <string name="add_link_page_saved">Gardouse a páxina</string>
 </resources>

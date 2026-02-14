@@ -319,4 +319,15 @@
     <string name="badge_style_simple">Simple</string>
     <string name="badge_style_exact">Exact</string>
     <string name="show_unread_badge">Afficher le badge des non-lus</string>
+    <string name="add_link_title">Ajouter un lien</string>
+    <string name="tab_add_feed">Ajouter un flux</string>
+    <string name="tab_save_page">Enregistrer la page</string>
+    <string name="save_page_success">Page enregistrée</string>
+    <string name="save_page_error">Impossible d\'enregistrer la page</string>
+    <string name="save_page_network_error">Impossible d\'enregistrer la page. Vérifiez votre connexion.</string>
+    <string name="save_page_submit">Enregistrer</string>
+    <string name="add_link_searching">Recherche de flux…</string>
+    <string name="add_link_subscribe">S\'abonner</string>
+    <string name="add_link_feed_added">Flux ajouté</string>
+    <string name="add_link_page_saved">Page enregistrée</string>
 </resources>

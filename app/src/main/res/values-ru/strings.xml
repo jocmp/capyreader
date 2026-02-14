@@ -275,7 +275,7 @@
     <string name="widget_headlines_account_error">Сперва добавьте аккаунт</string>
     <string name="settings_gestures_improve_talkback_title">Улучшить озвучку элементов на экране</string>
     <string name="settings_gestures_improve_talkback_subtitle">Отключает некоторые настройки для улучшения озвучки элементов на экране</string>
-    <string name="settings_options_reader_pin_top_toolbar">Прикрепить на верхнюю панель инструментов</string>
+    <string name="settings_options_reader_pin_top_toolbar">Закрепить панели инструментов</string>
     <string name="add_account_miniflux_signup_prompt">У вас нет сервера Miniflux?</string>
     <string name="add_account_miniflux_signup_link_text">Узнать больше.</string>
     <string name="mark_read_position_toolbar">Панель инструментов</string>
@@ -317,4 +317,21 @@
     <string name="auth_fields_miniflux_use_password">Использовать пароль вместо этого</string>
     <string name="auth_fields_miniflux_use_api_token">Использовать API-токен вместо этого</string>
     <string name="auth_fields_miniflux_api_token">API-токен</string>
+    <string name="add_link_title">Добавить ссылку</string>
+    <string name="tab_add_feed">Добавить ленту</string>
+    <string name="tab_save_page">Сохранить страниц</string>
+    <string name="save_page_success">Страница сохранена</string>
+    <string name="save_page_error">Не удалось сохранить страницу</string>
+    <string name="save_page_network_error">Не удалось сохранить страницу. Проверьте подключение.</string>
+    <string name="save_page_submit">Сохранить</string>
+    <string name="add_link_searching">Ищем ленты…</string>
+    <string name="add_link_subscribe">Подписаться</string>
+    <string name="add_link_feed_added">Лента добавлена</string>
+    <string name="add_link_page_saved">Страница сохранена</string>
+    <string name="settings_option_badge_style">Стиль счётчиков</string>
+    <string name="freshrss_tag_action_edit">Изменить категорию</string>
+    <string name="settings_panel_unread_counts_title">Счётчики непрочитанных</string>
+    <string name="badge_style_simple">Простой</string>
+    <string name="badge_style_exact">Точный</string>
+    <string name="show_unread_badge">Показывать счетчик непрочитанных</string>
 </resources>
