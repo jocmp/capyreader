@@ -55,6 +55,8 @@ fun ArticleTopBar(
     articleId: String,
     canDeletePage: Boolean = false,
     onDeletePage: () -> Unit = {},
+    isFullscreen: Boolean = false,
+    onExitFullscreen: () -> Unit = {},
     onClose: () -> Unit,
 ) {
     val containerColor = MaterialTheme.colorScheme.surface
@@ -88,7 +90,9 @@ fun ArticleTopBar(
                 TopAppBar(
                     navigationIcon = {
                         ArticleNavigationIcon(
-                            onClick = onClose
+                            isFullscreen = isFullscreen,
+                            onExitFullscreen = onExitFullscreen,
+                            onClick = onClose,
                         )
                     },
                     title = {},

@@ -199,6 +199,7 @@ fun ArticleScreen(
         val coroutineScope = rememberCoroutineScope()
         val scaffoldNavigator = rememberArticleScaffoldNavigator()
         val showMultipleColumns = scaffoldNavigator.scaffoldDirective.maxHorizontalPartitions > 1
+        val paneExpansion = rememberArticlePaneExpansion()
         var isPullToRefreshing by remember { mutableStateOf(false) }
         val addFeedSuccessMessage = stringResource(R.string.add_feed_success)
         val currentFeed by viewModel.currentFeed.collectAsStateWithLifecycle(null)
@@ -215,6 +216,9 @@ fun ArticleScreen(
 
         suspend fun navigateToDetail() {
             scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
+            if (showMultipleColumns) {
+                paneExpansion.restoreAnchor()
+            }
         }
 
         val listState = articles.rememberLazyListState()
@@ -465,6 +469,7 @@ fun ArticleScreen(
         ArticleScaffold(
             drawerState = drawerState,
             scaffoldNavigator = scaffoldNavigator,
+            paneExpansion = paneExpansion,
             drawerPane = {
                 FeedList(
                     source = viewModel.source,
@@ -659,10 +664,19 @@ fun ArticleScreen(
                         },
                         currentAudioUrl = currentAudio?.url,
                         isAudioPlaying = isAudioPlaying,
+                        isFullscreen = paneExpansion.isFullscreen,
+                        onExitFullscreen = { paneExpansion.exitFullscreen() },
                     )
                 }
             }
         )
+
+        LaunchedEffect(scaffoldNavigator.currentDestination) {
+            val isOnList = scaffoldNavigator.currentDestination?.pane != ListDetailPaneScaffoldRole.Detail
+            if (isOnList && article != null) {
+                viewModel.clearArticle()
+            }
+        }
 
         AnimatedVisibility(
             enter = fadeIn(),
@@ -721,6 +735,10 @@ fun ArticleScreen(
 
         BackHandler(media != null) {
             media = null
+        }
+
+        BackHandler(media == null && article != null) {
+            clearArticle()
         }
 
         BackHandler(media == null && search.isActive && article == null) {

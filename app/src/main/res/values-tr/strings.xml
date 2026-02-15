@@ -199,7 +199,6 @@
     <string name="settings_mark_read_on_scroll">Kaydırınca okundu olarak işaretle</string>
     <string name="settings_enable_high_contrast_dark_theme">Yüksek karşıtlıklı karanlık temayı etkinleştir</string>
     <string name="settings_section_mark_all_as_read">Tümünü Okundu Olarak İşaretle</string>
-    <string name="layout_preference_responsive">Duyarlı</string>
     <string name="article_actions_copy_link">Bağlantıyı kopyala</string>
     <string name="freshrss_article_actions_label">Etiket</string>
     <string name="freshrss_labels_sheet_title">Etiketler</string>
@@ -211,7 +210,6 @@
     <string name="add_account_local_subtitle">Cihazınızda</string>
     <string name="add_account_feedbin_signup_link_text">Buradan oluşturun.</string>
     <string name="add_account_freshrss_signup_link_text">Daha fazlasını öğrenin.</string>
-    <string name="layout_preference_single">Tek Sütun</string>
     <string name="image_preview_menu_option_medium">Orta</string>
     <string name="settings_donate_button">Bağış Yap</string>
     <string name="settings_gestures_list_swipe_up">Yukarı Kaydır</string>
@@ -225,7 +223,6 @@
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">Üste Git</string>
     <string name="settings_confirm_mark_all_read">Hepsini okundu olarak işaretlemeyi doğrula</string>
     <string name="reader_image_visibility_always_hide">Görselleri engelle</string>
-    <string name="layout_preference_label">Tercih Edilen Düzen</string>
     <string name="after_read_all_behavior_label">Hepsi Okunduktan Sonra</string>
     <string name="after_read_all_behavior_default">Varsayılan</string>
     <string name="full_content_error_missing_response">Makaleyi getirmek başarısız oldu</string>

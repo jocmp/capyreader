@@ -205,15 +205,12 @@
     <string name="settings_enable_high_contrast_dark_theme">Zobrazení s vysokým kontrastem</string>
     <string name="settings_section_mark_all_as_read">Označit vše jako přečtené</string>
     <string name="settings_section_browser">Prohlížeč</string>
-    <string name="layout_preference_single">Jeden sloupec</string>
     <string name="auth_fields_username">Uživatelské jméno</string>
     <string name="end_of_feed_text">Vše dohnáno!</string>
     <string name="reader_image_visibility_show_on_wifi">Načítat obrázky pouze přes Wi-Fi</string>
     <string name="reader_image_visibility_always_hide">Blokovat obrázky</string>
     <string name="reader_image_visibility_always_show">Vždy načítat obrázky</string>
     <string name="reader_image_visibility_label">Obrázky</string>
-    <string name="layout_preference_responsive">Adaptivní</string>
-    <string name="layout_preference_label">Preferované rozvržení</string>
     <string name="settings_mark_read_on_scroll">Označit jako přečtené při posunutí</string>
     <string name="settings_donate_button">Přispět</string>
     <string name="after_read_all_behavior_default">Výchozí</string>

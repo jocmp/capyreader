@@ -28,12 +28,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
-import com.capyreader.app.preferences.LayoutPreference
 import com.capyreader.app.ui.articles.FilterActionMenu
 import com.capyreader.app.ui.articles.FilterAppBarTitle
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.SearchTextField
-import com.capyreader.app.ui.rememberLayoutPreference
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
@@ -57,7 +55,6 @@ fun ArticleListTopBar(
     source: Source,
 ) {
     val enableSearch = search.isActive
-    val layout = rememberLayoutPreference()
 
     val closeSearch = {
         search.clear()
@@ -129,7 +126,7 @@ fun ArticleListTopBar(
                         contentDescription = stringResource(R.string.feed_list_top_bar_close_search)
                     )
                 }
-            } else if (layout != LayoutPreference.SINGLE) {
+            } else {
                 IconButton(
                     onClick = onNavigateToDrawer
                 ) {

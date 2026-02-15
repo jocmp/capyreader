@@ -196,9 +196,6 @@
     <string name="reader_image_visibility_always_hide">Nerādīt attēlus</string>
     <string name="reader_image_visibility_always_show">Rādīt attēlus</string>
     <string name="reader_image_visibility_label">Attēli</string>
-    <string name="layout_preference_responsive">Atsaucīgs</string>
-    <string name="layout_preference_single">Viena kolonna</string>
-    <string name="layout_preference_label">Vēlamais izkārtojums</string>
     <string name="after_read_all_behavior_label">Kad viss izlasīts</string>
     <string name="after_read_all_behavior_open_drawer">Atvērt sānu izvēlni</string>
     <string name="article_actions_mark_after_as_read">Atzīmēt visus augšējos rakstus kā lasītus</string>

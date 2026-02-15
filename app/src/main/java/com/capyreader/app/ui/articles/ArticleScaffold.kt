@@ -1,72 +1,151 @@
 package com.capyreader.app.ui.articles
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.sizeIn
-import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.material3.DrawerDefaults
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDragHandle
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
-import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffold
-import androidx.compose.material3.adaptive.layout.PaneScaffoldDirective
+import androidx.compose.material3.adaptive.layout.PaneExpansionAnchor
+import androidx.compose.material3.adaptive.layout.PaneExpansionState
 import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
-import androidx.compose.material3.adaptive.layout.calculatePaneScaffoldDirective
+import androidx.compose.material3.adaptive.layout.rememberPaneExpansionState
 import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.capyreader.app.preferences.LayoutPreference
 import com.capyreader.app.ui.components.CapyAnimatedPane
+import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.isAtMostMedium
-import com.capyreader.app.ui.rememberLayoutPreference
+import com.capyreader.app.ui.isCompact
+import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
 import com.capyreader.app.ui.theme.CapyTheme
+
+private val ArticlePaneAnchors = buildList {
+    add(PaneExpansionAnchor.Proportion(0f))
+    (40..75 step 5).forEach { add(PaneExpansionAnchor.Proportion(it / 100f)) }
+    add(PaneExpansionAnchor.Proportion(1f))
+}
+
+private val DetailFullscreenAnchor = PaneExpansionAnchor.Proportion(0f)
+
+private const val DefaultAnchorIndex = 1
+
+@Stable
+class ArticlePaneExpansion(
+    val state: PaneExpansionState,
+    val isFullscreen: Boolean,
+    private val lastAnchorIndex: Int,
+    private val scope: kotlinx.coroutines.CoroutineScope,
+) {
+    fun exitFullscreen() {
+        scope.launch {
+            state.animateTo(ArticlePaneAnchors[DefaultAnchorIndex])
+        }
+    }
+
+    suspend fun restoreAnchor() {
+        state.animateTo(ArticlePaneAnchors[lastAnchorIndex])
+    }
+}
+
+@OptIn(ExperimentalMaterial3AdaptiveApi::class)
+@Composable
+fun rememberArticlePaneExpansion(
+    appPreferences: AppPreferences = koinInject(),
+): ArticlePaneExpansion {
+    val savedIndex = appPreferences.paneExpansionIndex.get()
+        .coerceIn(0, ArticlePaneAnchors.lastIndex - 1)
+    val paneExpansionState = rememberPaneExpansionState(
+        anchors = ArticlePaneAnchors,
+        initialAnchoredIndex = savedIndex,
+    )
+    val compact = isCompact()
+    val scope = rememberCoroutineScope()
+    var lastAnchorIndex by rememberSaveable { mutableIntStateOf(savedIndex) }
+    val listFullscreenIndex = ArticlePaneAnchors.lastIndex
+
+    LaunchedEffect(paneExpansionState.currentAnchor) {
+        val anchor = paneExpansionState.currentAnchor ?: return@LaunchedEffect
+        val index = ArticlePaneAnchors.indexOf(anchor)
+        if (index in 0 until listFullscreenIndex) {
+            lastAnchorIndex = index
+            appPreferences.paneExpansionIndex.set(index)
+        }
+    }
+
+    val isFullscreen = !compact &&
+            paneExpansionState.currentAnchor == DetailFullscreenAnchor
+
+    return remember(paneExpansionState, isFullscreen, lastAnchorIndex, scope) {
+        ArticlePaneExpansion(
+            state = paneExpansionState,
+            isFullscreen = isFullscreen,
+            lastAnchorIndex = lastAnchorIndex,
+            scope = scope,
+        )
+    }
+}
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun ArticleScaffold(
     drawerState: DrawerState = rememberDrawerState(DrawerValue.Closed),
     scaffoldNavigator: ThreePaneScaffoldNavigator<Any> = rememberArticleScaffoldNavigator(),
+    paneExpansion: ArticlePaneExpansion = rememberArticlePaneExpansion(),
     drawerPane: @Composable () -> Unit,
     listPane: @Composable () -> Unit,
     detailPane: @Composable () -> Unit,
 ) {
-    val layout = rememberLayoutPreference()
-
     val enableGesture = drawerState.isOpen ||
             isAtMostMedium() && scaffoldNavigator.currentDestination?.pane != ThreePaneScaffoldRole.Primary
 
-    if (layout == LayoutPreference.SINGLE) {
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        gesturesEnabled = enableGesture,
+        drawerContent = {
+            ModalDrawerSheet {
+                drawerPane()
+            }
+        },
+    ) {
         ListDetailPaneScaffold(
             directive = scaffoldNavigator.scaffoldDirective,
-            value = scaffoldNavigator.scaffoldValue,
+            scaffoldState = scaffoldNavigator.scaffoldState,
+            paneExpansionDragHandle = { state ->
+                val interactionSource = remember { MutableInteractionSource() }
+                VerticalDragHandle(
+                    modifier = Modifier.paneExpansionDraggable(
+                        state,
+                        LocalMinimumInteractiveComponentSize.current,
+                        interactionSource,
+                    ),
+                    interactionSource = interactionSource,
+                )
+            },
+            paneExpansionState = paneExpansion.state,
             listPane = {
                 CapyAnimatedPane {
-                    Row {
-                        Column(
-                            Modifier
-                                .sizeIn(
-                                    minWidth = 240.dp,
-                                    maxWidth = 300.dp
-                                )
-                                .windowInsetsPadding(DrawerDefaults.windowInsets)
-                        ) {
-                            drawerPane()
-                        }
-
-                        listPane()
-                    }
+                    listPane()
                 }
             },
             detailPane = {
@@ -75,56 +154,13 @@ fun ArticleScaffold(
                 }
             }
         )
-    } else {
-        ModalNavigationDrawer(
-            drawerState = drawerState,
-            gesturesEnabled = enableGesture,
-            drawerContent = {
-                ModalDrawerSheet {
-                    drawerPane()
-                }
-            },
-        ) {
-            ListDetailPaneScaffold(
-                directive = scaffoldNavigator.scaffoldDirective,
-                value = scaffoldNavigator.scaffoldValue,
-                listPane = {
-                    CapyAnimatedPane {
-                        listPane()
-                    }
-                },
-                detailPane = {
-                    CapyAnimatedPane {
-                        detailPane()
-                    }
-                }
-            )
-        }
     }
 }
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun rememberArticleScaffoldNavigator(): ThreePaneScaffoldNavigator<Any> {
-    val layout = rememberLayoutPreference()
-
-    if (layout == LayoutPreference.SINGLE) {
-        return rememberListDetailPaneScaffoldNavigator(
-            scaffoldDirective = PaneScaffoldDirective(
-                maxHorizontalPartitions = 1,
-                horizontalPartitionSpacerSize = 0.dp,
-                maxVerticalPartitions = 1,
-                verticalPartitionSpacerSize = 0.dp,
-                defaultPanePreferredWidth = 360.dp,
-                emptyList(),
-            )
-        )
-    }
-    val directive = calculatePaneScaffoldDirective(currentWindowAdaptiveInfo())
-
-    return rememberListDetailPaneScaffoldNavigator(
-        scaffoldDirective = directive.copy(horizontalPartitionSpacerSize = 0.dp)
-    )
+    return rememberListDetailPaneScaffoldNavigator()
 }
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)

@@ -216,9 +216,6 @@
     <string name="settings_gestures_reader_tap_to_page_subtitle">إضغط على الزوايا السفلية للتمرير محتوى المقالة</string>
     <string name="settings_enable_high_contrast_dark_theme">تمكين المظهر الداكن عالي التباين</string>
     <string name="auth_fields_username">إسم المستخدم</string>
-    <string name="layout_preference_label">التخطيط المفضل</string>
-    <string name="layout_preference_responsive">مستجيب</string>
-    <string name="layout_preference_single">قائمة عمودية</string>
     <string name="settings_donate_button">تبرع</string>
     <string name="after_read_all_behavior_label">بعد قراءة الكل</string>
     <string name="after_read_all_behavior_default">إفتراضي</string>

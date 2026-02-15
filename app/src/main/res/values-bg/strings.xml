@@ -213,9 +213,6 @@
     <string name="reader_image_visibility_show_on_wifi">Показвай изображения само при Wi-Fi</string>
     <string name="reader_image_visibility_label">Изображения</string>
     <string name="reader_image_visibility_always_show">Винаги показвай изображения</string>
-    <string name="layout_preference_single">Единична колона</string>
-    <string name="layout_preference_responsive">Отзивчив</string>
-    <string name="layout_preference_label">Предпочитано оформление</string>
     <string name="auth_fields_username">Потребителско име</string>
     <string name="end_of_feed_text">Всички статии са прочетени!</string>
     <string name="after_read_all_behavior_label">След прочитане на всички</string>
