@@ -2,6 +2,7 @@ package com.jocmp.capy.accounts
 
 import com.jocmp.capy.Feed
 import com.jocmp.capy.articles.ArticleContent
+import com.jocmp.capy.common.baseURL
 import com.jocmp.capy.common.optionalURL
 import okhttp3.OkHttpClient
 import org.jsoup.Jsoup
@@ -13,10 +14,11 @@ class FaviconFinder(
     private val userAgent: String = "",
     private val acceptLanguage: String = "",
 ) {
-    suspend fun find(url: String): String? {
-        val html = ArticleContent(httpClient, userAgent, acceptLanguage).fetch(URL(url)).getOrNull() ?: return null
+    suspend fun find(url: URL): String? {
+        val html = ArticleContent(httpClient, userAgent, acceptLanguage).fetch(url).getOrNull()
+            ?: return null
 
-        return parse(html, baseURL = url)
+        return parse(html, baseURL = url.toString())
     }
 
     internal suspend fun parse(html: String, baseURL: String): String? {
@@ -35,9 +37,7 @@ class FaviconFinder(
 
     companion object {
         fun siteURL(feed: Feed): URL? {
-            return optionalURL(feed.siteURL) ?: optionalURL(feed.feedURL)?.let { url ->
-                optionalURL("${url.protocol}://${url.host}")
-            }
+            return optionalURL(feed.siteURL)?.baseURL() ?: optionalURL(feed.feedURL)?.baseURL()
         }
     }
 }

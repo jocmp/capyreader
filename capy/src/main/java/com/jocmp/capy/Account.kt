@@ -4,8 +4,6 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
 import com.jocmp.capy.ArticleStatus.UNREAD
 import com.jocmp.capy.accounts.AddFeedResult
-import com.jocmp.feedfinder.DefaultFeedFinder
-import com.jocmp.feedfinder.FeedFinder
 import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.accounts.FaviconFinder
 import com.jocmp.capy.accounts.FaviconPolicy
@@ -36,8 +34,10 @@ import com.jocmp.capy.persistence.FolderRecords
 import com.jocmp.capy.persistence.SavedSearchRecords
 import com.jocmp.capy.persistence.TaggingRecords
 import com.jocmp.feedbinclient.Feedbin
-import kotlinx.coroutines.Dispatchers
+import com.jocmp.feedfinder.DefaultFeedFinder
+import com.jocmp.feedfinder.FeedFinder
 import com.jocmp.minifluxclient.Miniflux
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
@@ -436,7 +436,8 @@ data class Account(
     private suspend fun findFavicon(feed: Feed) {
         withIOContext {
             val siteURL = FaviconFinder.siteURL(feed) ?: return@withIOContext
-            FaviconFinder(localHttpClient, faviconPolicy, userAgent, acceptLanguage).find(siteURL.toString())?.let {
+            
+            faviconFinder.find(siteURL)?.let {
                 feedRecords.updateFavicon(feed.id, it)
             }
         }
@@ -444,6 +445,9 @@ data class Account(
 
     val supportsMultiFolderFeeds: Boolean
         get() = source == Source.FEEDBIN || source == Source.LOCAL
+
+    val faviconFinder
+        get() = FaviconFinder(localHttpClient, faviconPolicy, userAgent, acceptLanguage)
 
     internal suspend fun asOPML(): String {
         var opml = ""
