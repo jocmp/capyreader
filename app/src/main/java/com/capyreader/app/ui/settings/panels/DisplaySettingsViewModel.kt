@@ -8,7 +8,6 @@ import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ReaderImageVisibility
 import com.capyreader.app.preferences.ThemeMode
-import com.capyreader.app.preferences.AppTheme
 import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.capyreader.app.ui.articles.MarkReadPosition
 import com.jocmp.capy.Account
@@ -24,6 +23,9 @@ class DisplaySettingsViewModel(
         private set
     
     var pureBlackDarkMode by mutableStateOf(appPreferences.pureBlackDarkMode.get())
+        private set
+
+    var accentColors by mutableStateOf(appPreferences.accentColors.get())
         private set
 
     private val _imagePreview = mutableStateOf(appPreferences.articleListOptions.imagePreview.get())
@@ -69,14 +71,14 @@ class DisplaySettingsViewModel(
         this.themeMode = themeMode
     }
 
-    fun updateAppTheme(appTheme: AppTheme) {
-        appPreferences.appTheme.set(appTheme)
-        this.appTheme = appTheme
-    }
-
     fun updatePureBlackDarkMode(enable: Boolean) {
         appPreferences.pureBlackDarkMode.set(enable)
         this.pureBlackDarkMode = enable
+    }
+
+    fun updateAccentColors(enable: Boolean) {
+        appPreferences.accentColors.set(enable)
+        this.accentColors = enable
     }
 
     fun updatePinArticleBars(pinBars: Boolean) {

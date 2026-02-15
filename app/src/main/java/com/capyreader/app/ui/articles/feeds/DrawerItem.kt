@@ -95,7 +95,7 @@ private data class DrawerColors(
 private fun NavigationDrawerItemColors.mapToTheme(
     selected: Boolean,
 ): DrawerColors {
-    val isMonochrome = LocalAppTheme.current == AppTheme.MONOCHROME
+    val isMonochrome = LocalAppTheme.current.value == AppTheme.MONOCHROME
     val useMonochromeSelected = selected && isMonochrome
     val unselectedTextColor = textColor(false).value
     val surfaceColor = MaterialTheme.colorScheme.surface
