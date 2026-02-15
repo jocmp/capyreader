@@ -48,6 +48,15 @@ internal class KnownPatterns(
                 }
             }
 
+            if (isMastodonServer) {
+                val feedURL = "${response.url}.rss"
+                val feed = createFromURL(feedURL, fetcher = request)
+
+                if (feed != null) {
+                    return listOf(feed)
+                }
+            }
+
             return emptyList()
         } catch (e: Parser.NotFeedError) {
             return emptyList()
@@ -60,6 +69,11 @@ internal class KnownPatterns(
 
     private val isYouTubeDomain: Boolean
         get() = response.url.toString().startsWith("https://www.youtube.com")
+
+    private val isMastodonServer: Boolean
+        get() = response.headers.any { (_, values) ->
+            values.any { it.contains("mastodon", ignoreCase = true) }
+        }
 
     private data class URLTemplate(val template: String, val regex: Regex)
 
@@ -84,6 +98,14 @@ internal class KnownPatterns(
             URLTemplate(
                 template = "https://vimeo.com/%s/videos/rss",
                 regex = Regex("https://vimeo\\.com/([^/#?]*)")
+            ),
+            URLTemplate(
+                template = "https://github.com/%s.atom",
+                regex = Regex("https://github\\.com/(orgs/[^/#?]+/discussions)")
+            ),
+            URLTemplate(
+                template = "https://github.com/%s.atom",
+                regex = Regex("https://github\\.com/([^/#?]+/[^/#?]+/discussions)")
             )
         )
     }
