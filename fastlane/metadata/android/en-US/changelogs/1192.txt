@@ -1,0 +1,5 @@
+• Add Feedbin Pages support via share sheet
+• Add "Reload Icon" action for local feeds
+• Fix full content support for techpowerup.com and bristolpost.co
+• Fix missing categories when adding them in Miniflux
+• Updated translations thanks to volunteers!
