@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem 'fastlane', "~> 2.231.0"
+gem 'fastlane', "~> 2.232.1"
 gem "rexml", "~> 3.4.4"
 
 
