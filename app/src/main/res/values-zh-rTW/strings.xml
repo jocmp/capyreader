@@ -328,4 +328,8 @@
     <string name="tab_add_feed">新增訂閱源</string>
     <string name="add_link_searching">尋找訂閱源…</string>
     <string name="add_link_feed_added">訂閱源已新增</string>
+    <string name="article_actions_delete_page">刪除頁面</string>
+    <string name="article_actions_delete_page_title">刪除</string>
+    <string name="article_actions_delete_page_confirm">刪除</string>
+    <string name="article_actions_delete_page_message">您確定要刪除此頁面嗎？</string>
 </resources>
