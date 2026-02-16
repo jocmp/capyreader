@@ -330,4 +330,7 @@
     <string name="article_actions_delete_page_message">Bist du sicher, dass du diese Seite löschen willst?</string>
     <string name="article_actions_delete_page_confirm">Löschen</string>
     <string name="freshrss_visibility_option_main">Main Stream</string>
+    <string name="article_actions_save_externally">Speichern</string>
+    <string name="article_actions_save_externally_success">Gespeichert</string>
+    <string name="article_actions_save_externally_failure">Speichern fehlgeschlagen</string>
 </resources>
