@@ -33,6 +33,7 @@ import com.jocmp.capy.buildArticlePager
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
+import com.jocmp.capy.common.withUIContext
 import com.jocmp.capy.countToday
 import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -312,6 +313,15 @@ class ArticleScreenViewModel(
         }
     }
 
+    val canSaveArticleExternally = account.canSaveArticleExternally.stateIn(viewModelScope)
+
+    fun saveArticleExternallyAsync(articleID: String, onComplete: (Result<Unit>) -> Unit) {
+        viewModelScope.launchIO {
+            val result = account.saveArticleExternally(articleID)
+            withUIContext { onComplete(result) }
+        }
+    }
+
     fun deletePage(articleID: String) {
         viewModelScope.launchIO {
             account.deletePage(articleID)
@@ -586,7 +596,10 @@ class ArticleScreenViewModel(
         return feed.copy(count = counts.getOrDefault(feed.id, 0))
     }
 
-    private fun copySavedSearchCounts(savedSearch: SavedSearch, counts: Map<String, Long>): SavedSearch {
+    private fun copySavedSearchCounts(
+        savedSearch: SavedSearch,
+        counts: Map<String, Long>
+    ): SavedSearch {
         return savedSearch.copy(count = counts.getOrDefault(savedSearch.id, 0))
     }
 
@@ -781,8 +794,10 @@ fun Context.showFullContentErrorToast(throwable: Throwable) {
     val message = when {
         throwable is ArticleContent.HttpError && throwable.code == 403 ->
             R.string.full_content_error_forbidden
+
         throwable is ArticleContent.MissingBodyError ->
             R.string.full_content_error_missing_response
+
         else -> R.string.full_content_error_generic
     }
 

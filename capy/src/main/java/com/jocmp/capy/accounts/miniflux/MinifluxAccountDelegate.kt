@@ -1,6 +1,7 @@
 package com.jocmp.capy.accounts.miniflux
 
 import com.jocmp.capy.AccountDelegate
+import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
@@ -37,7 +38,8 @@ import com.jocmp.minifluxclient.Feed as MinifluxFeed
 
 internal class MinifluxAccountDelegate(
     private val database: Database,
-    private val miniflux: Miniflux
+    private val miniflux: Miniflux,
+    private val preferences: AccountPreferences,
 ) : AccountDelegate {
     private val articleRecords = ArticleRecords(database)
     private val enclosureRecords = EnclosureRecords(database)
@@ -46,6 +48,7 @@ internal class MinifluxAccountDelegate(
 
     override suspend fun refresh(filter: ArticleFilter, cutoffDate: ZonedDateTime?): Result<Unit> {
         return try {
+            refreshIntegrationStatus()
             refreshFeeds()
             refreshArticles()
 
@@ -121,6 +124,19 @@ internal class MinifluxAccountDelegate(
 
     override suspend fun createPage(url: String) =
         Result.failure<Unit>(UnsupportedOperationException("Pages not supported"))
+
+    override suspend fun saveArticleExternally(articleID: String): Result<Unit> {
+        return try {
+            val response = miniflux.saveEntry(articleID.toLong())
+            if (response.isSuccessful) {
+                Result.success(Unit)
+            } else {
+                Result.failure(IOException("Save failed"))
+            }
+        } catch (e: IOException) {
+            Result.failure(e)
+        }
+    }
 
     override suspend fun addFeed(
         url: String,
@@ -245,6 +261,18 @@ internal class MinifluxAccountDelegate(
         }
 
         Unit
+    }
+
+    private suspend fun refreshIntegrationStatus() {
+        try {
+            val response = miniflux.integrationStatus()
+            val status = response.body()
+            if (response.isSuccessful && status != null) {
+                preferences.canSaveArticleExternally.set(status.has_integrations)
+            }
+        } catch (e: Exception) {
+            CapyLog.warn("refresh_integration_status", mapOf("error" to e.message))
+        }
     }
 
     private suspend fun refreshFeeds() {

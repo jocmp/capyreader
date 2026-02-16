@@ -33,6 +33,7 @@ import com.jocmp.capy.persistence.FeedRecords
 import com.jocmp.capy.persistence.FolderRecords
 import com.jocmp.capy.persistence.SavedSearchRecords
 import com.jocmp.capy.persistence.TaggingRecords
+import com.jocmp.capy.preferences.Preference
 import com.jocmp.feedbinclient.Feedbin
 import com.jocmp.feedfinder.DefaultFeedFinder
 import com.jocmp.feedfinder.FeedFinder
@@ -82,7 +83,8 @@ data class Account(
                 path = cacheDirectory,
                 preferences = preferences,
                 source = source
-            )
+            ),
+            preferences = preferences,
         )
 
         Source.FRESHRSS,
@@ -132,9 +134,14 @@ data class Account(
         }.sortedByTitle()
     }
 
+    val canSaveArticleExternally: Preference<Boolean>
+        get() = preferences.canSaveArticleExternally
+
     suspend fun createPage(url: String) = delegate.createPage(url)
 
     suspend fun deletePage(articleID: String) = delegate.deletePage(articleID)
+
+    suspend fun saveArticleExternally(articleID: String) = delegate.saveArticleExternally(articleID)
 
     suspend fun searchFeed(url: String) = feedFinder.find(url)
 
