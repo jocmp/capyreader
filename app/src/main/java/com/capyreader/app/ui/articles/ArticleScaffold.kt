@@ -32,17 +32,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.capyreader.app.ui.components.CapyAnimatedPane
 import com.capyreader.app.preferences.AppPreferences
+import com.capyreader.app.ui.components.CapyAnimatedPane
 import com.capyreader.app.ui.isAtMostMedium
 import com.capyreader.app.ui.isCompact
+import com.capyreader.app.ui.theme.CapyTheme
+import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
-import com.capyreader.app.ui.theme.CapyTheme
 
 private val ArticlePaneAnchors = buildList {
     add(PaneExpansionAnchor.Proportion(0f))
-    (40..75 step 5).forEach { add(PaneExpansionAnchor.Proportion(it / 100f)) }
+    (45..70 step 5).forEach { add(PaneExpansionAnchor.Proportion(it / 100f)) }
     add(PaneExpansionAnchor.Proportion(1f))
 }
 
@@ -57,14 +58,24 @@ class ArticlePaneExpansion(
     private val lastAnchorIndex: Int,
     private val scope: kotlinx.coroutines.CoroutineScope,
 ) {
-    fun exitFullscreen() {
+    fun toggleFullscreen() {
         scope.launch {
-            state.animateTo(ArticlePaneAnchors[DefaultAnchorIndex])
+            if (isFullscreen) {
+                state.animateTo(ArticlePaneAnchors[DefaultAnchorIndex])
+            } else {
+                state.animateTo(DetailFullscreenAnchor)
+            }
         }
     }
 
     suspend fun restoreAnchor() {
         state.animateTo(ArticlePaneAnchors[lastAnchorIndex])
+    }
+
+    fun resetAnchor() {
+        scope.launch {
+            state.animateTo(ArticlePaneAnchors[DefaultAnchorIndex])
+        }
     }
 }
 
@@ -75,6 +86,7 @@ fun rememberArticlePaneExpansion(
 ): ArticlePaneExpansion {
     val savedIndex = appPreferences.paneExpansionIndex.get()
         .coerceIn(0, ArticlePaneAnchors.lastIndex - 1)
+
     val paneExpansionState = rememberPaneExpansionState(
         anchors = ArticlePaneAnchors,
         initialAnchoredIndex = savedIndex,
@@ -85,8 +97,10 @@ fun rememberArticlePaneExpansion(
     val listFullscreenIndex = ArticlePaneAnchors.lastIndex
 
     LaunchedEffect(paneExpansionState.currentAnchor) {
+        CapyLog.debug("current_anchor", mapOf("value" to paneExpansionState.currentAnchor))
         val anchor = paneExpansionState.currentAnchor ?: return@LaunchedEffect
         val index = ArticlePaneAnchors.indexOf(anchor)
+
         if (index in 0 until listFullscreenIndex) {
             lastAnchorIndex = index
             appPreferences.paneExpansionIndex.set(index)
@@ -110,7 +124,7 @@ fun rememberArticlePaneExpansion(
 @Composable
 fun ArticleScaffold(
     drawerState: DrawerState = rememberDrawerState(DrawerValue.Closed),
-    scaffoldNavigator: ThreePaneScaffoldNavigator<Any> = rememberArticleScaffoldNavigator(),
+    scaffoldNavigator: ThreePaneScaffoldNavigator<Any> = rememberListDetailPaneScaffoldNavigator(),
     paneExpansion: ArticlePaneExpansion = rememberArticlePaneExpansion(),
     drawerPane: @Composable () -> Unit,
     listPane: @Composable () -> Unit,
@@ -155,12 +169,6 @@ fun ArticleScaffold(
             }
         )
     }
-}
-
-@OptIn(ExperimentalMaterial3AdaptiveApi::class)
-@Composable
-fun rememberArticleScaffoldNavigator(): ThreePaneScaffoldNavigator<Any> {
-    return rememberListDetailPaneScaffoldNavigator()
 }
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)

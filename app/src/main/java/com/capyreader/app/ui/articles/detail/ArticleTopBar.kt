@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material.icons.Icons
@@ -22,6 +21,7 @@ import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.FormatSize
 import androidx.compose.material.icons.outlined.Save
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -45,10 +45,10 @@ import com.capyreader.app.R
 import com.capyreader.app.ui.articles.DeletePageDialog
 import com.capyreader.app.ui.articles.LocalArticleActions
 import com.capyreader.app.ui.articles.LocalLabelsActions
-import com.capyreader.app.ui.settings.LocalSnackbarHost
-import kotlinx.coroutines.launch
 import com.capyreader.app.ui.components.ToolbarTooltip
 import com.capyreader.app.ui.fixtures.PreviewKoinApplication
+import com.capyreader.app.ui.settings.LocalSnackbarHost
+import kotlinx.coroutines.launch
 
 private val sizeSpec = spring<IntSize>(stiffness = 700f)
 
@@ -62,7 +62,7 @@ fun ArticleTopBar(
     canSaveExternally: Boolean = false,
     onDeletePage: () -> Unit = {},
     isFullscreen: Boolean = false,
-    onExitFullscreen: () -> Unit = {},
+    onToggleFullscreen: () -> Unit = {},
     onClose: () -> Unit,
 ) {
     val containerColor = MaterialTheme.colorScheme.surface
@@ -97,8 +97,8 @@ fun ArticleTopBar(
                     navigationIcon = {
                         ArticleNavigationIcon(
                             isFullscreen = isFullscreen,
-                            onExitFullscreen = onExitFullscreen,
-                            onClick = onClose,
+                            onToggleFullscreen = onToggleFullscreen,
+                            onClose = onClose,
                         )
                     },
                     title = {},
