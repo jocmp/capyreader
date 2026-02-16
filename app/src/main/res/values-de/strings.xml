@@ -48,7 +48,7 @@
     <string name="article_actions_open_menu">Artikeloptionen öffnen</string>
     <string name="article_actions_mark_below_as_read">Alles unterhalb als gelesen markieren</string>
     <string name="article_actions_mark_after_as_read">Alles oberhalb als gelesen markieren</string>
-    <string name="unauthorized_dialog_title">Sie sind ausgeloggt</string>
+    <string name="unauthorized_dialog_title">Du bist ausgeloggt</string>
     <string name="unauthorized_dialog_dismiss_text">Später</string>
     <string name="unauthorized_dialog_confirm_text">Einloggen</string>
     <string name="auth_fields_password">Passwort</string>
@@ -56,7 +56,7 @@
     <string name="auth_fields_show_password">Passwort anzeigen</string>
     <string name="auth_fields_log_in_button">Anmelden</string>
     <string name="settings_top_bar_title">Einstellungen</string>
-    <string name="update_auth_success_message">Sie wurden erfolgreich eingeloggt</string>
+    <string name="update_auth_success_message">Du wurdest erfolgreich eingeloggt</string>
     <string name="crash_reporting_checkbox_title">Fehlerberichterstattung einschalten</string>
     <string name="account_source_local">Lokal</string>
     <string name="add_account_title">Konto hinzufügen</string>
@@ -193,7 +193,7 @@
     <string name="settings_select_none">Nichts ausgewählt</string>
     <string name="settings_select_all">Alles auswählen</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">Navigationsübersicht öffnen</string>
-    <string name="add_account_local_subtitle">Auf Ihrem Gerät</string>
+    <string name="add_account_local_subtitle">Auf Deinem Gerät</string>
     <string name="edit_feed_tag_section">Bezeichnung hinzufügen oder auswählen</string>
     <string name="auth_fields_api_url">Server</string>
     <string name="settings_section_account_server">Server</string>
