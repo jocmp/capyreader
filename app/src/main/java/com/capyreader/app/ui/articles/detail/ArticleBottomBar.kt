@@ -7,7 +7,6 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -83,100 +82,94 @@ fun ArticleBottomBar(
                 Surface(
                     color = MaterialTheme.colorScheme.surface
                 ) {
-                    BoxWithConstraints {
-                        val showNextArticle = maxWidth >= 210.dp
-
-                        Row(
-                            modifier = Modifier
-                                .navigationBarsPadding()
-                                .fillMaxWidth()
-                                .height(ArticleBarDefaults.BottomBarHeight),
-                            horizontalArrangement = Arrangement.SpaceAround,
-                            verticalAlignment = Alignment.CenterVertically,
+                    Row(
+                    modifier = Modifier
+                        .navigationBarsPadding()
+                        .fillMaxWidth()
+                        .height(ArticleBarDefaults.BottomBarHeight),
+                    horizontalArrangement = Arrangement.SpaceAround,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    ToolbarTooltip(
+                        positioning = TooltipAnchorPosition.Above,
+                        message = stringResource(R.string.article_view_mark_as_read)
+                    ) {
+                        IconButton(
+                            onClick = { onToggleRead() },
                         ) {
-                            ToolbarTooltip(
-                                positioning = TooltipAnchorPosition.Above,
-                                message = stringResource(R.string.article_view_mark_as_read)
-                            ) {
-                                IconButton(
-                                    onClick = { onToggleRead() },
-                                ) {
-                                    Icon(
-                                        if (article.read) Icons.Outlined.Circle else Icons.Rounded.Circle,
-                                        contentDescription = stringResource(R.string.article_view_mark_as_read),
-                                        modifier = Modifier.size(24.dp)
-                                    )
-                                }
-                            }
-                            ToolbarTooltip(
-                                positioning = TooltipAnchorPosition.Above,
-                                message = stringResource(R.string.article_view_star)
-                            ) {
-                                IconButton(
-                                    onClick = { onToggleStar() },
-                                ) {
-                                    Icon(
-                                        if (article.starred) Icons.Rounded.Star else Icons.Rounded.StarOutline,
-                                        contentDescription = stringResource(R.string.article_view_star),
-                                        modifier = Modifier.size(24.dp)
-                                    )
-                                }
-                            }
-                            if (showNextArticle) {
-                                ToolbarTooltip(
-                                    positioning = TooltipAnchorPosition.Above,
-                                    message = stringResource(R.string.article_bottom_bar_next_article)
-                                ) {
-                                    IconButton(
-                                        enabled = hasNextArticle,
-                                        onClick = {
-                                            view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
-                                            onSelectNext()
-                                        },
-                                    ) {
-                                        Icon(
-                                            Icons.Rounded.ExpandMore,
-                                            contentDescription = stringResource(R.string.article_bottom_bar_next_article),
-                                            modifier = Modifier.size(24.dp)
-                                        )
-                                    }
-                                }
-                            }
-                            ToolbarTooltip(
-                                positioning = TooltipAnchorPosition.Above,
-                                message = stringResource(R.string.extract_full_content)
-                            ) {
-                                IconButton(
-                                    onClick = { onToggleExtractContent() },
-                                ) {
-                                    if (article.fullContent == LOADING) {
-                                        FullContentLoadingIcon()
-                                    } else {
-                                        Icon(
-                                            painterResource(id = extractIcon(article.fullContent)),
-                                            contentDescription = stringResource(R.string.extract_full_content),
-                                            modifier = Modifier.size(24.dp)
-                                        )
-                                    }
-                                }
-                            }
-                            ToolbarTooltip(
-                                positioning = TooltipAnchorPosition.Above,
-                                message = stringResource(R.string.article_share)
-                            ) {
-                                IconButton(
-                                    onClick = { context.shareArticle(article = article) },
-                                ) {
-                                    Icon(
-                                        Icons.Rounded.Share,
-                                        contentDescription = stringResource(R.string.article_share),
-                                        modifier = Modifier.size(24.dp)
-                                    )
-                                }
+                            Icon(
+                                if (article.read) Icons.Outlined.Circle else Icons.Rounded.Circle,
+                                contentDescription = stringResource(R.string.article_view_mark_as_read),
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
+                    }
+                    ToolbarTooltip(
+                        positioning = TooltipAnchorPosition.Above,
+                        message = stringResource(R.string.article_view_star)
+                    ) {
+                        IconButton(
+                            onClick = { onToggleStar() },
+                        ) {
+                            Icon(
+                                if (article.starred) Icons.Rounded.Star else Icons.Rounded.StarOutline,
+                                contentDescription = stringResource(R.string.article_view_star),
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
+                    }
+                    ToolbarTooltip(
+                        positioning = TooltipAnchorPosition.Above,
+                        message = stringResource(R.string.article_bottom_bar_next_article)
+                    ) {
+                        IconButton(
+                            enabled = hasNextArticle,
+                            onClick = {
+                                view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
+                                onSelectNext()
+                            },
+                        ) {
+                            Icon(
+                                Icons.Rounded.ExpandMore,
+                                contentDescription = stringResource(R.string.article_bottom_bar_next_article),
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
+                    }
+                    ToolbarTooltip(
+                        positioning = TooltipAnchorPosition.Above,
+                        message = stringResource(R.string.extract_full_content)
+                    ) {
+                        IconButton(
+                            onClick = { onToggleExtractContent() },
+                        ) {
+                            if (article.fullContent == LOADING) {
+                                FullContentLoadingIcon()
+                            } else {
+                                Icon(
+                                    painterResource(id = extractIcon(article.fullContent)),
+                                    contentDescription = stringResource(R.string.extract_full_content),
+                                    modifier = Modifier.size(24.dp)
+                                )
                             }
                         }
                     }
+                    ToolbarTooltip(
+                        positioning = TooltipAnchorPosition.Above,
+                        message = stringResource(R.string.article_share)
+                    ) {
+                        IconButton(
+                            onClick = { context.shareArticle(article = article) },
+                        ) {
+                            Icon(
+                                Icons.Rounded.Share,
+                                contentDescription = stringResource(R.string.article_share),
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
+                    }
                 }
+            }
             }
         }
     }

@@ -220,7 +220,7 @@ fun ArticleScreen(
         suspend fun navigateToDetail() {
             scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
             if (showMultipleColumns) {
-                paneExpansion.restoreAnchor()
+                paneExpansion.restore()
             }
         }
 
@@ -741,7 +741,7 @@ fun ArticleScreen(
         }
 
         BackHandler(media == null && article != null) {
-            paneExpansion.resetAnchor()
+            paneExpansion.reset()
             clearArticle()
         }
 

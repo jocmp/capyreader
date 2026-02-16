@@ -28,7 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
-import com.capyreader.app.ui.isAtMostMedium
+import com.capyreader.app.ui.isCompact
 import com.capyreader.app.ui.settings.panels.SettingsPanel
 import com.capyreader.app.ui.theme.CapyTheme
 
@@ -86,7 +86,7 @@ fun SettingsList(
                                 Icon(panel.icon(), contentDescription = null)
                             },
                             colors = ListItemDefaults.colors(
-                                containerColor = if (!isAtMostMedium() && panel == selected) {
+                                containerColor = if (!isCompact() && panel == selected) {
                                     MaterialTheme.colorScheme.surfaceContainerHigh
                                 } else {
                                     MaterialTheme.colorScheme.surface

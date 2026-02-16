@@ -2,22 +2,23 @@ package com.capyreader.app.ui
 
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
-import androidx.window.core.layout.WindowWidthSizeClass.Companion.EXPANDED
+import androidx.window.core.layout.WindowSizeClass.Companion.WIDTH_DP_EXPANDED_LOWER_BOUND
+import androidx.window.core.layout.WindowSizeClass.Companion.WIDTH_DP_LARGE_LOWER_BOUND
 
 @Composable
 fun currentWindowSizeClass() = currentWindowAdaptiveInfo().windowSizeClass
 
 @Composable
-fun isAtMostMedium(): Boolean {
-    return currentWindowSizeClass().windowWidthSizeClass != EXPANDED
+fun isExpanded(): Boolean {
+    return currentWindowSizeClass().isWidthAtLeastBreakpoint(WIDTH_DP_EXPANDED_LOWER_BOUND)
 }
 
 @Composable
-fun isExpanded(): Boolean {
-    return currentWindowSizeClass().windowWidthSizeClass == EXPANDED
+fun isLarge(): Boolean {
+    return currentWindowSizeClass().isWidthAtLeastBreakpoint(WIDTH_DP_LARGE_LOWER_BOUND)
 }
 
 @Composable
 fun isCompact(): Boolean {
-    return currentWindowSizeClass().windowWidthSizeClass != EXPANDED
+    return currentWindowSizeClass().minWidthDp < WIDTH_DP_EXPANDED_LOWER_BOUND
 }
