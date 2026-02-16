@@ -327,4 +327,8 @@
     <string name="add_link_subscribe">S\'abonner</string>
     <string name="add_link_feed_added">Flux ajouté</string>
     <string name="add_link_page_saved">Page enregistrée</string>
+    <string name="article_actions_delete_page">Supprimer la page</string>
+    <string name="article_actions_delete_page_title">Supprimer</string>
+    <string name="article_actions_delete_page_message">Êtes-vous sûr de vouloir supprimer cette page ?</string>
+    <string name="article_actions_delete_page_confirm">Supprimer</string>
 </resources>
