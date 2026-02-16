@@ -323,4 +323,11 @@
     <string name="badge_style_simple">Простий</string>
     <string name="badge_style_exact">Точний</string>
     <string name="show_unread_badge">Підписи непрочитаних</string>
+    <string name="article_actions_save_externally">Зберегти</string>
+    <string name="article_actions_save_externally_success">Збережено</string>
+    <string name="article_actions_save_externally_failure">Помилка збереження</string>
+    <string name="article_actions_delete_page">Видалити сторінку</string>
+    <string name="article_actions_delete_page_title">Видалити</string>
+    <string name="article_actions_delete_page_message">Точно видалити сторінку?</string>
+    <string name="article_actions_delete_page_confirm">Видалити</string>
 </resources>
