@@ -15,7 +15,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.isCompact
-import com.capyreader.app.ui.isLarge
 import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -23,12 +22,11 @@ import org.koin.compose.koinInject
 
 private val DetailFullscreenAnchor = PaneExpansionAnchor.Proportion(0f)
 
-const val DefaultPaneExpansionIndex = 3
+const val DefaultPaneExpansionIndex = 4
 
-private fun articlePaneAnchors(isLarge: Boolean): List<PaneExpansionAnchor> = buildList {
+private val ArticlePaneAnchors: List<PaneExpansionAnchor> = buildList {
     add(PaneExpansionAnchor.Proportion(0f))
-    val minProportion = if (isLarge) 25 else 35
-    (minProportion..70 step 5).forEach { add(PaneExpansionAnchor.Proportion(it / 100f)) }
+    (30..70 step 5).forEach { add(PaneExpansionAnchor.Proportion(it / 100f)) }
     add(PaneExpansionAnchor.Proportion(1f))
 }
 
@@ -74,7 +72,7 @@ class ArticlePaneExpansion(
 fun rememberArticlePaneExpansion(
     appPreferences: AppPreferences = koinInject(),
 ): ArticlePaneExpansion {
-    val anchors = articlePaneAnchors(isLarge = isLarge())
+    val anchors = ArticlePaneAnchors
 
     val savedIndex = appPreferences.paneExpansionIndex.get()
         .coerceIn(0, anchors.lastIndex)
