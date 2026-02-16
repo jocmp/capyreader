@@ -305,6 +305,7 @@ internal class MinifluxAccountDelegate(
         var offset = MAX_ENTRY_LIMIT
         while (ids.size < firstPage.total) {
             val page = fetch(offset).body() ?: break
+            if (page.entries.isEmpty()) break
             ids.addAll(page.entries.map { it.id.toString() })
             offset += MAX_ENTRY_LIMIT
         }
@@ -315,28 +316,20 @@ internal class MinifluxAccountDelegate(
     private suspend fun fetchAllEntries() {
         var offset = 0
         val limit = MAX_ENTRY_LIMIT
+        var hasMore = true
 
-        do {
-            val response = miniflux.entries(
+        while (hasMore) {
+            val result = miniflux.entries(
                 limit = limit,
                 offset = offset,
                 order = "published_at",
                 direction = "desc"
-            )
-            val result = response.body()
+            ).body() ?: return
 
-            if (result != null) {
-                saveEntries(result.entries)
-                offset += limit
-
-                // Continue if we got a full page
-                if (result.entries.size < limit) {
-                    break
-                }
-            } else {
-                break
-            }
-        } while (true)
+            saveEntries(result.entries)
+            offset += limit
+            hasMore = result.entries.size >= limit
+        }
     }
 
     private fun saveEntries(entries: List<Entry>) {
