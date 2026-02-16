@@ -328,4 +328,7 @@
     <string name="add_link_subscribe">订阅</string>
     <string name="add_link_feed_added">订阅源已添加</string>
     <string name="add_link_page_saved">页面已保存</string>
+    <string name="article_actions_delete_page">删除页面</string>
+    <string name="article_actions_delete_page_title">删除</string>
+    <string name="article_actions_delete_page_confirm">删除</string>
 </resources>
