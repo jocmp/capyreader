@@ -64,7 +64,7 @@ fun ArticleView(
     currentAudioUrl: String? = null,
     isAudioPlaying: Boolean = false,
     isFullscreen: Boolean = false,
-    onExitFullscreen: () -> Unit = {},
+    onToggleFullscreen: () -> Unit = {},
     appPreferences: AppPreferences = koinInject()
 ) {
     val enableHorizontalPager by appPreferences.readerOptions.enableHorizontaPagination.collectChangesWithDefault()
@@ -184,7 +184,7 @@ fun ArticleView(
                 canSaveExternally = canSaveExternally,
                 onDeletePage = onDeletePage,
                 isFullscreen = isFullscreen,
-                onExitFullscreen = onExitFullscreen,
+                onToggleFullscreen = onToggleFullscreen,
                 onClose = onBackPressed,
             )
 

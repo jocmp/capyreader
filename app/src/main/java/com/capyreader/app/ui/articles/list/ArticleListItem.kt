@@ -47,7 +47,7 @@ fun ArticleListItem(
                 .padding(
                     top = TopPadding,
                     start = VerticalPadding,
-                    end = VerticalSpacing,
+                    end = VerticalSpacing + 4.dp,
                     bottom = BottomPadding,
                 )
         ) {

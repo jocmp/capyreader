@@ -3,32 +3,38 @@ package com.capyreader.app.ui.articles.detail
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.CloseFullscreen
+import androidx.compose.material.icons.rounded.OpenInFull
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.tooling.preview.Preview
+import com.capyreader.app.ui.isCompact
 import com.capyreader.app.ui.theme.CapyTheme
 
 @Composable
 fun ArticleNavigationIcon(
     isFullscreen: Boolean = false,
-    onExitFullscreen: () -> Unit = {},
-    onClick: () -> Unit,
+    onToggleFullscreen: () -> Unit = {},
+    onClose: () -> Unit,
 ) {
-    if (isFullscreen) {
-        IconButton(onClick = onExitFullscreen) {
+    if (isCompact()) {
+        IconButton(onClick = onClose) {
+            Icon(
+                imageVector = Icons.Rounded.Close,
+                contentDescription = null
+            )
+        }
+    } else if (isFullscreen) {
+        IconButton(onClick = onToggleFullscreen) {
             Icon(
                 imageVector = Icons.Rounded.CloseFullscreen,
-                modifier = Modifier.rotate(90f),
                 contentDescription = null
             )
         }
     } else {
-        IconButton(onClick = onClick) {
+        IconButton(onClick = onToggleFullscreen) {
             Icon(
-                imageVector = Icons.Rounded.Close,
+                imageVector = Icons.Rounded.OpenInFull,
                 contentDescription = null
             )
         }

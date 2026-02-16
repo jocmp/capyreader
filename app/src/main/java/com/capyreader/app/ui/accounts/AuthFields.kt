@@ -285,7 +285,9 @@ private fun AdvancedOptions(
     onToggle: () -> Unit,
     content: @Composable () -> Unit,
 ) {
-    Column {
+    Column(
+        Modifier.padding(top = 8.dp)
+    ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
@@ -379,6 +381,22 @@ private fun MinifluxAuthFieldsPreview() {
             loading = true,
             source = Source.MINIFLUX,
             errorMessage = "Oh drats",
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun FreshRSSAuthFieldsPreview() {
+    CapyTheme {
+        AuthFields(
+            onPasswordChange = {},
+            onSubmit = {},
+            username = "test@example.com",
+            password = "its a secret to everyone",
+            clientCertAlias = "test certificate",
+            loading = true,
+            source = Source.FRESHRSS,
         )
     }
 }

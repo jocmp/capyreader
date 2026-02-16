@@ -196,3 +196,23 @@ private fun MinifluxLoginViewPreview() {
     }
 }
 
+@Preview
+@Composable
+private fun FreshRSSLoginViewPreview() {
+    val context = LocalContext.current
+
+    KoinApplication(
+        application = {
+            androidContext(context)
+            setupCommonModules()
+        }
+    ) {
+        LoginView(
+            source = Source.FRESHRSS,
+            url = "",
+            clientCertAlias = "",
+            username = "test@example.com",
+            password = "",
+        )
+    }
+}
