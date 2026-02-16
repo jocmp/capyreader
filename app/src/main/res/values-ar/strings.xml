@@ -334,4 +334,7 @@
     <string name="article_actions_delete_page_title">احذف</string>
     <string name="article_actions_delete_page_message">أمتأكد إنك تريد حذف هذه الصفحة؟</string>
     <string name="article_actions_delete_page_confirm">احذف</string>
+    <string name="article_actions_save_externally">احفظ</string>
+    <string name="article_actions_save_externally_success">حُفظ</string>
+    <string name="article_actions_save_externally_failure">فشل الحفظ</string>
 </resources>
