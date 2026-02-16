@@ -54,7 +54,7 @@ fun ArticleView(
     onBackPressed: () -> Unit,
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
-    enableBackHandler: Boolean = false,
+    canSaveExternally: Boolean = false,
     onDeletePage: () -> Unit = {},
     onScrollToArticle: (index: Int) -> Unit,
     onSelectArticle: (id: String) -> Unit,
@@ -181,6 +181,7 @@ fun ArticleView(
                 isScrolled = scrollState.showTopDivider,
                 articleId = article.id,
                 canDeletePage = article.isPages,
+                canSaveExternally = canSaveExternally,
                 onDeletePage = onDeletePage,
                 isFullscreen = isFullscreen,
                 onExitFullscreen = onExitFullscreen,
@@ -201,7 +202,7 @@ fun ArticleView(
                 hostState = snackbarHostState,
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = 68.dp)
+                    .padding(bottom = 80.dp)
             )
         }
     }

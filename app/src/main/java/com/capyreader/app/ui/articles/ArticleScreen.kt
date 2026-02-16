@@ -127,6 +127,8 @@ fun ArticleScreen(
     val canSwipeToNextFeed = nextFilter != null
     val context = LocalContext.current
 
+    val canSaveExternally by viewModel.canSaveArticleExternally.collectAsStateWithLifecycle()
+
     val fullContent = rememberFullContent(viewModel)
     val articleActions = rememberArticleActions(viewModel)
     val folderActions = rememberFolderActions(viewModel)
@@ -644,7 +646,7 @@ fun ArticleScreen(
                         },
                         onToggleRead = viewModel::toggleArticleRead,
                         onToggleStar = viewModel::toggleArticleStar,
-                        enableBackHandler = media == null,
+                        canSaveExternally = canSaveExternally,
                         onDeletePage = {
                             clearArticle()
                             viewModel.deletePage(article.id)
@@ -775,6 +777,7 @@ fun rememberArticleActions(viewModel: ArticleScreenViewModel): ArticleActions {
             markUnread = viewModel::markUnreadAsync,
             star = viewModel::addStarAsync,
             unstar = viewModel::removeStarAsync,
+            saveExternally = viewModel::saveArticleExternallyAsync,
         )
     }
 }

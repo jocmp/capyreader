@@ -11,4 +11,5 @@ data class ArticleActions(
     val star: (articleID: String) -> Unit = {},
     val markUnread: (articleID: String) -> Unit = {},
     val unstar: (articleID: String) -> Unit = {},
+    val saveExternally: (articleID: String, onComplete: (Result<Unit>) -> Unit) -> Unit = { _, _ -> },
 )

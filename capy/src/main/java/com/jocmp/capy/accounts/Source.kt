@@ -7,8 +7,10 @@ enum class Source(val value: String) {
     LOCAL("local"),
     FEEDBIN("feedbin"),
     FRESHRSS("freshrss"),
+
     /** Miniflux with username/password combination */
     MINIFLUX("miniflux"),
+
     /** Miniflux with API Token */
     MINIFLUX_TOKEN("miniflux_token"),
     READER("reader");
@@ -31,8 +33,12 @@ enum class Source(val value: String) {
      * destructive behavior so it's unsupported within the app.
      */
     val supportsTagDeletion
-        get() = this != MINIFLUX && this != MINIFLUX_TOKEN
+        get() = !isMiniflux
 
     val supportsPages
         get() = this == FEEDBIN
+
+    private val isMiniflux
+        get() = this == MINIFLUX || this == MINIFLUX_TOKEN
+
 }
