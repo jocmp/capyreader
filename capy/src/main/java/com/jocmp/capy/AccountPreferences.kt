@@ -29,4 +29,7 @@ class AccountPreferences(
 
     val keywordBlocklist: Preference<Set<String>>
         get() = store.getStringSet("keyword_blocklist")
+
+    val canSaveArticleExternally: Preference<Boolean>
+        get() = store.getBoolean("can_save_article_externally", false)
 }

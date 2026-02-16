@@ -45,4 +45,7 @@ interface AccountDelegate {
 
     suspend fun deletePage(articleID: String): Result<Unit> =
         Result.failure(UnsupportedOperationException())
+
+    suspend fun saveArticleExternally(articleID: String): Result<Unit> =
+        Result.failure(UnsupportedOperationException())
 }
