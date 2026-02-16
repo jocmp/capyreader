@@ -212,6 +212,9 @@
     <string name="reader_image_visibility_label">Pildid</string>
     <string name="reader_image_visibility_always_show">Näita alati pilte</string>
     <string name="auth_fields_username">Kasutajanimi</string>
+    <string name="layout_preference_single">Üheveeruline liides</string>
+    <string name="layout_preference_responsive">Reageeriv kasutajaliides</string>
+    <string name="layout_preference_label">Eelistatud paigutus</string>
     <string name="end_of_feed_text">Eks kõik olegi nüüd loetud!</string>
     <string name="full_content_error_missing_response">Artikli laadimine ei õnnestunud</string>
     <string name="after_read_all_behavior_label">Peale kõikide lugemist</string>

@@ -1,5 +1,6 @@
 package com.capyreader.app.ui.articles.detail
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
@@ -63,8 +64,6 @@ fun ArticleView(
     onPauseAudio: () -> Unit = {},
     currentAudioUrl: String? = null,
     isAudioPlaying: Boolean = false,
-    isFullscreen: Boolean = false,
-    onExitFullscreen: () -> Unit = {},
     appPreferences: AppPreferences = koinInject()
 ) {
     val enableHorizontalPager by appPreferences.readerOptions.enableHorizontaPagination.collectChangesWithDefault()
@@ -182,8 +181,6 @@ fun ArticleView(
                 articleId = article.id,
                 canDeletePage = article.isPages,
                 onDeletePage = onDeletePage,
-                isFullscreen = isFullscreen,
-                onExitFullscreen = onExitFullscreen,
                 onClose = onBackPressed,
             )
 
@@ -212,6 +209,9 @@ fun ArticleView(
         }
     }
 
+    BackHandler(enableBackHandler) {
+        onBackPressed()
+    }
 }
 
 @Composable

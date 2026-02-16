@@ -200,6 +200,8 @@
     <string name="settings_gestures_reader_tap_to_page_title">Tryckskrollning för e-ink</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Tryck nedre hörn för att navigera artikelinnehåll</string>
     <string name="reader_image_visibility_show_on_wifi">Visa bara bilder på wifi</string>
+    <string name="layout_preference_responsive">Responsiv</string>
+    <string name="layout_preference_label">Föredragen layout</string>
     <string name="after_read_all_behavior_open_drawer">Öppna navigationsfält</string>
     <string name="after_read_all_behavior_label">Efter att markerat allt som läst</string>
     <string name="full_content_error_missing_response">Artikeluppladdning misslyckad</string>
@@ -218,6 +220,7 @@
     <string name="settings_auto_delete_option_keep_for_one_week">1 vecka</string>
     <string name="notifications_channel_title_opml_import">Prenumerationsimporter</string>
     <string name="settings_panel_notifications_title">Aviseringar</string>
+    <string name="layout_preference_single">Singel kolumn</string>
     <string name="settings_list_top_bar_title">Inställningar</string>
     <string name="opml_exporter_success">Export klar</string>
     <string name="settings_option_auto_delete_articles_subtitle">Ta bort lästa, ostjärnmärkta artiklar äldre än 3 månader</string>

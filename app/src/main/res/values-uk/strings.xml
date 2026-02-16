@@ -233,6 +233,9 @@
     <string name="reader_image_visibility_always_hide">Блокувати зображення</string>
     <string name="reader_image_visibility_always_show">Завжди показувати зображення</string>
     <string name="reader_image_visibility_label">Зображення</string>
+    <string name="layout_preference_responsive">Адаптивний</string>
+    <string name="layout_preference_single">Одна колонка</string>
+    <string name="layout_preference_label">Бажаний макет</string>
     <string name="end_of_feed_text">На цьому все!</string>
     <string name="after_read_all_behavior_label">Після прочитання всіх</string>
     <string name="after_read_all_behavior_default">Типово</string>

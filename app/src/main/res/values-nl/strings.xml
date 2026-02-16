@@ -241,6 +241,9 @@
     <string name="reader_image_visibility_always_hide">Afbeeldingen blokkeren</string>
     <string name="reader_image_visibility_always_show">Altijd afbeeldingen tonen</string>
     <string name="reader_image_visibility_label">Afbeeldingen</string>
+    <string name="layout_preference_responsive">Responsief</string>
+    <string name="layout_preference_single">Enkele kolom</string>
+    <string name="layout_preference_label">Voorkeurs layout</string>
     <string name="end_of_feed_text">Alles bijgewerkt!</string>
     <string name="after_read_all_behavior_label">Na alles gelezen</string>
     <string name="after_read_all_behavior_default">Standaard</string>

@@ -1,7 +1,7 @@
 package com.capyreader.app.ui.settings
 
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
-import androidx.compose.material3.adaptive.navigation.NavigableListDetailPaneScaffold
+import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffold
 import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,9 +16,10 @@ fun SettingsScaffold(
     listPane: @Composable () -> Unit,
     detailPane: @Composable () -> Unit,
 ) {
-    NavigableListDetailPaneScaffold(
+    ListDetailPaneScaffold(
         modifier = Modifier.safeEdgePadding(),
-        navigator = scaffoldNavigator,
+        directive = scaffoldNavigator.scaffoldDirective,
+        value = scaffoldNavigator.scaffoldValue,
         listPane = {
             CapyAnimatedPane {
                 listPane()

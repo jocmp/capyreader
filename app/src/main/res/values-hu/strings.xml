@@ -233,6 +233,9 @@
     <string name="reader_image_visibility_always_hide">Képek blokkolása</string>
     <string name="reader_image_visibility_always_show">Mindig mutassa a képeket</string>
     <string name="reader_image_visibility_label">Képek</string>
+    <string name="layout_preference_responsive">Reszponzív</string>
+    <string name="layout_preference_single">Egy oszlopos</string>
+    <string name="layout_preference_label">Előnyben részesített elrendezés</string>
     <string name="end_of_feed_text">Nincs több olvasatlan cikk!</string>
     <string name="after_read_all_behavior_label">Az Összes Elolvasása után</string>
     <string name="after_read_all_behavior_default">Alapértelmezett</string>

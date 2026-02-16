@@ -220,7 +220,10 @@
     <string name="settings_gestures_reader_tap_to_page_title">E Ink πάτημα για κύλιση</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">Ενεργοποίηση οριζόντιας κύλισης</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Κύλιση αριστερά ή δεξιά για πλοήγηση σε άρθρα</string>
+    <string name="layout_preference_label">Προτιμώμενη Διάταξη</string>
     <string name="after_read_all_behavior_label">Μετά την Ανάγνωση Όλων</string>
+    <string name="layout_preference_single">Μονή Στήλη</string>
+    <string name="layout_preference_responsive">Αποκρίσιμο</string>
     <string name="after_read_all_behavior_default">Προεπιλογή</string>
     <string name="after_read_all_behavior_open_next_feed">Άνοιγμα Επόμενης Ροής</string>
     <string name="full_content_error_missing_response">Αποτυχία ανάκτησης άρθρου</string>

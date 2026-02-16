@@ -211,6 +211,9 @@
     <string name="reader_image_visibility_show_on_wifi">Afficher uniquement sur Wi-Fi</string>
     <string name="reader_image_visibility_always_hide">Bloquer les images</string>
     <string name="reader_image_visibility_always_show">Toujours afficher les images</string>
+    <string name="layout_preference_responsive">Adaptatif</string>
+    <string name="layout_preference_single">Colonne unique</string>
+    <string name="layout_preference_label">Mise en page préférée</string>
     <string name="auth_fields_username">Nom d\'utilisateur</string>
     <string name="settings_mark_read_on_scroll">Marquer comme lu lors du défilement</string>
     <string name="settings_section_mark_all_as_read">Tout marquer comme lu</string>

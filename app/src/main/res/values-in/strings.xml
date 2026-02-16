@@ -160,7 +160,10 @@
     <string name="reader_image_visibility_show_on_wifi">Hanya tampilkan gambar saat menggunakan WiFi</string>
     <string name="reader_image_visibility_always_hide">Blokir gambar</string>
     <string name="reader_image_visibility_always_show">Selalu tampilkan gambar</string>
+    <string name="layout_preference_single">Kolom Tunggal</string>
     <string name="after_read_all_behavior_label">Setelah Baca Semua</string>
+    <string name="layout_preference_responsive">Responsif</string>
+    <string name="layout_preference_label">Pilihan Tata Letak</string>
     <string name="after_read_all_behavior_open_next_feed">Buka Umpan Berikutnya</string>
     <string name="after_read_all_behavior_open_drawer">Buka Laci Navigasi</string>
     <string name="account_source_reader">Pustaka</string>

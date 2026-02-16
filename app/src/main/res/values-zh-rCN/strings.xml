@@ -213,6 +213,9 @@
     <string name="reader_image_visibility_always_hide">屏蔽图片</string>
     <string name="reader_image_visibility_always_show">始终显示图片</string>
     <string name="reader_image_visibility_label">图片</string>
+    <string name="layout_preference_responsive">响应式布局</string>
+    <string name="layout_preference_single">单栏布局</string>
+    <string name="layout_preference_label">首选布局</string>
     <string name="auth_fields_username">用户名</string>
     <string name="end_of_feed_text">都读完了！</string>
     <string name="after_read_all_behavior_open_next_feed">打开下一订阅源</string>

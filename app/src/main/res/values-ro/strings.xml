@@ -149,7 +149,9 @@
     <string name="settings_mark_read_on_scroll">Marchează ca citit la derulare</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Atinge colțurile de jos pentru a naviga prin conținutul articolului</string>
     <string name="reader_image_visibility_show_on_wifi">Arată imagini doar prin Wi-Fi</string>
+    <string name="layout_preference_single">O coloană</string>
     <string name="reader_image_visibility_label">Imagini</string>
+    <string name="layout_preference_responsive">Răspuns</string>
     <string name="settings_gestures_list_row_swipe_end">Glisează spre stânga</string>
     <string name="article_list_sort_oldest_first">După cel mai vechi</string>
     <string name="settings_article_list_title">Listă articole</string>

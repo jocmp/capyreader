@@ -229,6 +229,9 @@
     <string name="reader_image_visibility_always_hide">Bloquear imagens</string>
     <string name="reader_image_visibility_always_show">Sempre mostrar imagens</string>
     <string name="reader_image_visibility_label">Imagens</string>
+    <string name="layout_preference_responsive">Responsivo</string>
+    <string name="layout_preference_single">Uma Coluna</string>
+    <string name="layout_preference_label">Layout Preferido</string>
     <string name="end_of_feed_text">Tudo em dia!</string>
     <string name="full_content_error_missing_response">Falha ao buscar artigo</string>
     <string name="after_read_all_behavior_label">Depois de Ler Tudo</string>

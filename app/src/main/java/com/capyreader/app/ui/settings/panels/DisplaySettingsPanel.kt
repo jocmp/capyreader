@@ -27,6 +27,7 @@ import com.capyreader.app.R
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.common.RowItem
 import com.capyreader.app.preferences.AppPreferences
+import com.capyreader.app.preferences.LayoutPreference
 import com.capyreader.app.preferences.ReaderImageVisibility
 import com.capyreader.app.preferences.ThemeMode
 import com.capyreader.app.ui.articles.ArticleListFontScale
@@ -59,6 +60,8 @@ fun DisplaySettingsPanel(
         enablePinArticleBars = !improveTalkback,
         updateImageVisibility = viewModel::updateImageVisibility,
         imageVisibility = viewModel.imageVisibility,
+        layout = viewModel.layout,
+        updateLayoutPreference = viewModel::updateLayoutPreference,
         markReadButtonPosition = markReadButtonPosition,
         updateMarkReadButtonPosition = viewModel::updateMarkReadButtonPosition,
         onNavigateToUnreadBadges = onNavigateToUnreadBadges,
@@ -90,7 +93,9 @@ fun DisplaySettingsPanelView(
     pinArticleBars: Boolean,
     enablePinArticleBars: Boolean,
     imageVisibility: ReaderImageVisibility,
+    layout: LayoutPreference,
     markReadButtonPosition: MarkReadPosition,
+    updateLayoutPreference: (layout: LayoutPreference) -> Unit,
     updateImageVisibility: (option: ReaderImageVisibility) -> Unit,
     updateMarkReadButtonPosition: (position: MarkReadPosition) -> Unit,
     onNavigateToUnreadBadges: () -> Unit = {},
@@ -162,6 +167,15 @@ fun DisplaySettingsPanelView(
 
         FormSection(title = stringResource(R.string.settings_display_miscellaneous_title)) {
             PreferenceSelect(
+                selected = layout,
+                update = updateLayoutPreference,
+                options = LayoutPreference.entries,
+                label = R.string.layout_preference_label,
+                optionText = {
+                    stringResource(it.translationKey)
+                }
+            )
+            PreferenceSelect(
                 selected = markReadButtonPosition,
                 update = updateMarkReadButtonPosition,
                 options = MarkReadPosition.entries,
@@ -216,6 +230,8 @@ private fun DisplaySettingsPanelViewPreview() {
                 pureBlackDarkMode = false,
                 updatePureBlackDarkMode = {},
                 appPreferences = null,
+                layout = LayoutPreference.RESPONSIVE,
+                updateLayoutPreference = {},
                 articleListOptions = ArticleListOptions(
                     imagePreview = ImagePreview.default,
                     showSummary = true,

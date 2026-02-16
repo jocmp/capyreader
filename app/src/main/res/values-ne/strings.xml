@@ -28,6 +28,7 @@
     <string name="full_content_error_generic">लेख पार्स गर्न असफल भयो</string>
     <string name="full_content_error_forbidden">साइटद्वारा फेच ब्लक गरियो</string>
     <string name="reader_image_visibility_label">तस्बिरहरू</string>
+    <string name="layout_preference_label">रुचाइएको लेआउट</string>
     <string name="after_read_all_behavior_label">सबै पढेपछि</string>
     <string name="after_read_all_behavior_default">पूर्वनिर्धारित</string>
     <string name="settings_remove_account_button_service">बाहिर निस्कनुहोस्</string>

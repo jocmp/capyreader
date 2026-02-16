@@ -131,6 +131,7 @@
     <string name="edit_feed_notifications_title">Galluogi hysbysiadau</string>
     <string name="notifications_permissions_disabled_call_to_action">Gosodiadau</string>
     <string name="article_list_row_swipe_open_externally">Agor yr erthygl mewn porwr</string>
+    <string name="layout_preference_single">Un colofn</string>
     <string name="filter_all">Popeth</string>
     <string name="feed_action_unsubscribe">Dad-danysgrifio</string>
     <string name="filter_action_menu_description">Golygu</string>
@@ -179,6 +180,7 @@
     <string name="reader_image_visibility_always_hide">Rhwystro delweddau</string>
     <string name="reader_image_visibility_always_show">Dangos delweddau bob amser</string>
     <string name="reader_image_visibility_label">Delweddau</string>
+    <string name="layout_preference_responsive">Ymatebol</string>
     <string name="end_of_feed_text">Wedi darllen popeth!</string>
     <string name="unauthorized_dialog_description">Roedd broblem wrth gysylltu â\'ch cyfrif. Mewngofnodwch eto.</string>
     <string name="add_account_reader_subtitle">API Google Reader hunan-gynnal</string>
@@ -206,6 +208,7 @@
     <string name="settings_mark_read_on_scroll">Nodi fel ei ddarllen wrth sgrolio</string>
     <string name="settings_gestures_reader_tap_to_page_title">Sgrolio sgrin bapur electronig</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Tapio cornel i\'r gwaelod i lywio cynnwys yr erthygl</string>
+    <string name="layout_preference_label">Llunwedd a ffafrir</string>
     <string name="add_account_feedbin_signup_link_text">Crëwch gyfrif yma.</string>
     <string name="add_account_freshrss_signup_prompt">Nid oes gennych weinydd FreshRSS?</string>
     <string name="add_account_freshrss_signup_link_text">Dysgu mwy.</string>

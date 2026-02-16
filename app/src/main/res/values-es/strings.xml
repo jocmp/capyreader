@@ -216,6 +216,9 @@
     <string name="reader_image_visibility_always_show">Mostrar siempre las imágenes</string>
     <string name="reader_image_visibility_label">Imágenes</string>
     <string name="auth_fields_username">Nombre de usuario</string>
+    <string name="layout_preference_responsive">Adaptable (Responsive)</string>
+    <string name="layout_preference_label">Disposición preferida</string>
+    <string name="layout_preference_single">Columna única</string>
     <string name="end_of_feed_text">¡Estás al día!</string>
     <string name="settings_donate_button">Donar</string>
     <string name="after_read_all_behavior_default">Por defecto</string>

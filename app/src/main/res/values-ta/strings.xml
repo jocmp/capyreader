@@ -188,6 +188,9 @@
     <string name="reader_image_visibility_always_hide">படங்களை தொகுத்து</string>
     <string name="reader_image_visibility_always_show">எப்போதும் படங்களைக் காட்டுங்கள்</string>
     <string name="reader_image_visibility_label">படங்கள்</string>
+    <string name="layout_preference_responsive">பதிலளிக்கக்கூடிய</string>
+    <string name="layout_preference_single">ஒற்றை நெடுவரிசை</string>
+    <string name="layout_preference_label">விருப்பமான தளவமைப்பு</string>
     <string name="add_feed_name_title">பெயர்</string>
     <string name="add_feed_submit">கூட்டு</string>
     <string name="action_mark_all_read">அனைத்தையும் படித்தபடி குறிக்கவும்</string>

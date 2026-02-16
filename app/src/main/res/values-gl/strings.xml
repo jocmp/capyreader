@@ -186,6 +186,9 @@
     <string name="reader_image_visibility_always_hide">Bloquear imaxes</string>
     <string name="reader_image_visibility_always_show">Mostrar imaxes sempre</string>
     <string name="reader_image_visibility_label">Imaxes</string>
+    <string name="layout_preference_single">Columna única</string>
+    <string name="layout_preference_label">Disposición preferida</string>
+    <string name="layout_preference_responsive">Adaptativo</string>
     <string name="add_feed_success">Engadiuse a canle</string>
     <string name="filter_unread">Sen ler</string>
     <string name="auth_fields_password">Contrasinal</string>
