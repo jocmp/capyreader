@@ -13,7 +13,7 @@
     <string name="filter_action_menu_description">Editar</string>
     <string name="feed_action_edit">Editar Feed</string>
     <string name="feed_action_reload_icon">Recarregar ícone</string>
-    <string name="feed_action_unsubscribe_message">Você tem certeza de que quer cancelar a inscrição de \"%1$s\"?</string>
+    <string name="feed_action_unsubscribe_message">Você tem certeza de que quer cancelar sua inscrição em \"%1$s\"?</string>
     <string name="feed_action_unsubscribe_confirm">Cancelar inscrição</string>
     <string name="edit_feed_submit">Salvar</string>
     <string name="dialog_cancel">Cancelar</string>
@@ -239,7 +239,7 @@
     <string name="settings_gestures_list_swipe_up">Deslizar para Cima</string>
     <string name="article_list_swipe_disabled">Desabilitado</string>
     <string name="delete_tag_error">Erro ao excluir etiqueta</string>
-    <string name="settings_options_reader_pin_top_toolbar">Fixar na barra superior</string>
+    <string name="settings_options_reader_pin_top_toolbar">Fixar Barras de Ferramentas</string>
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">Voltar um Nível</string>
     <string name="article_list_swipe_next_feed">Ir para o próximo feed</string>
     <string name="notification_mark_as_read_action">Marcar como lido</string>
@@ -305,4 +305,26 @@
     <string name="audio_player_close">Fechar tocador</string>
     <string name="audio_player_skip_back">Retroceder 30 segundos</string>
     <string name="audio_player_skip_forward">Avançar 30 segundos</string>
+    <string name="add_link_title">Adicionar Link</string>
+    <string name="tab_add_feed">Adicionar Feed</string>
+    <string name="tab_save_page">Salvar Página</string>
+    <string name="save_page_success">Página salva</string>
+    <string name="save_page_error">Não foi possível salvar página</string>
+    <string name="save_page_network_error">Não foi possível salvar a página. Verifique sua conexão.</string>
+    <string name="save_page_submit">Salvar</string>
+    <string name="add_link_searching">Buscando por feeds…</string>
+    <string name="add_link_subscribe">Inscrever-se</string>
+    <string name="add_link_feed_added">Feed adicionado</string>
+    <string name="add_link_page_saved">Página salva</string>
+    <string name="auth_fields_miniflux_api_token">Token de API</string>
+    <string name="auth_fields_miniflux_use_api_token">Usar Token de API</string>
+    <string name="auth_fields_miniflux_use_password">Usar Senha</string>
+    <string name="auth_fields_show_advanced">Opções avançadas</string>
+    <string name="auth_fields_hide_advanced">Ocultar opções avançadas</string>
+    <string name="freshrss_tag_action_edit">Editar Categoria</string>
+    <string name="badge_style_simple">Simples</string>
+    <string name="badge_style_exact">Exato</string>
+    <string name="show_unread_badge">Mostrar Selo Não-lido</string>
+    <string name="settings_panel_unread_counts_title">Selos Não-lidos</string>
+    <string name="settings_option_badge_style">Estilo de selo</string>
 </resources>
