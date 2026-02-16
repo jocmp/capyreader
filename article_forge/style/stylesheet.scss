@@ -326,8 +326,15 @@ ul:has(img) {
   }
 
   table table {
+    table-layout: auto;
     margin-bottom: 0;
     border: none;
+
+    td,
+    th {
+      border: none;
+      padding: 0;
+    }
   }
 
   td,

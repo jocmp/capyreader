@@ -201,6 +201,8 @@ function postProcessContent(baseUrl, hideImages) {
   const content = document.getElementById("article-body-content");
   if (!content) return;
 
+  content.querySelectorAll("style").forEach((el) => el.remove());
+
   content.querySelectorAll("*").forEach((el) => {
     el.removeAttribute("style");
   });
