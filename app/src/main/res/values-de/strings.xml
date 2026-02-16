@@ -8,7 +8,7 @@
     <string name="filter_all">Alle</string>
     <string name="feed_action_unsubscribe">Abonnement beenden</string>
     <string name="filter_action_menu_description">Bearbeiten</string>
-    <string name="feed_action_unsubscribe_message">Bist du sicher, dass du das Abonnement von “%1$s” beenden möchtest?</string>
+    <string name="feed_action_unsubscribe_message">Bist Du sicher, dass Du das Abonnement von “%1$s” beenden möchtest?</string>
     <string name="feed_action_unsubscribe_confirm">Abonnement beenden</string>
     <string name="edit_feed_submit">Speichern</string>
     <string name="dialog_cancel">Abbrechen</string>
@@ -90,7 +90,7 @@
     <string name="settings_option_full_content_title">Permanent vollständigen Text zeigen</string>
     <string name="settings_option_full_content_subtitle">Auswahl, den vollständigen Text zu laden, merken</string>
     <string name="refresh_on_start">Beim Start</string>
-    <string name="empty_onboarding_prompt">Beginnen Sie mit dem Hinzufügen eines Feeds</string>
+    <string name="empty_onboarding_prompt">Beginne mit dem Hinzufügen eines Feeds</string>
     <string name="empty_onboarding_title">Keine Feeds vorhanden</string>
     <string name="article_style_options">Schriftart</string>
     <string name="font_option_vollkorn">Vollkorn</string>
@@ -116,7 +116,7 @@
     <string name="feed_action_reload_icon">Symbol neu laden</string>
     <string name="add_feed_url_title">Feed oder Website URL</string>
     <string name="filter_unread">Ungelesen</string>
-    <string name="settings_remove_account_message_service">Bist du sicher, dass du dich abmelden möchtest?</string>
+    <string name="settings_remove_account_message_service">Bist Du sicher, dass Du Dich ausloggen möchtest?</string>
     <string name="settings_remove_account_message_local">Bist du sicher, dass du dieses Benutzerkonto löschen möchtest? Dies kann nicht rückgängig gemacht werden.</string>
     <string name="opml_export_button_text">Als OPML exportieren</string>
     <string name="settings_section_privacy">Privatsphäre</string>
