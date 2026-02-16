@@ -319,4 +319,19 @@
     <string name="badge_style_simple">Просто</string>
     <string name="badge_style_exact">Точно</string>
     <string name="show_unread_badge">Покажи значка за непрочетени</string>
+    <string name="add_link_title">Добавяне на връзка</string>
+    <string name="tab_add_feed">Добавяне на емисия</string>
+    <string name="tab_save_page">Запазване на страница</string>
+    <string name="save_page_success">Страницата е запазена</string>
+    <string name="save_page_error">Страницата не можа да бъде запазена</string>
+    <string name="save_page_network_error">Страницата не можа да се запази. Проверете връзката си.</string>
+    <string name="save_page_submit">Запазване</string>
+    <string name="add_link_searching">Търсене на емисии…</string>
+    <string name="add_link_subscribe">Абониране</string>
+    <string name="add_link_feed_added">Емисията е добавена</string>
+    <string name="add_link_page_saved">Страницата е запазена</string>
+    <string name="article_actions_delete_page">Изтриване на страница</string>
+    <string name="article_actions_delete_page_title">Изтриване</string>
+    <string name="article_actions_delete_page_message">Сигурни ли сте, че искате да изтриете тази страница?</string>
+    <string name="article_actions_delete_page_confirm">Изтриване</string>
 </resources>
