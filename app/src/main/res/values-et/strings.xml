@@ -333,4 +333,7 @@
     <string name="article_actions_delete_page_title">Kustuta</string>
     <string name="article_actions_delete_page_message">Kas oled kindel, et soovid selle lehe kustutada?</string>
     <string name="article_actions_delete_page_confirm">Kustuta</string>
+    <string name="article_actions_save_externally">Salvesta</string>
+    <string name="article_actions_save_externally_success">Salvestatud</string>
+    <string name="article_actions_save_externally_failure">Salvestamine ei õnnestunud</string>
 </resources>
