@@ -82,7 +82,7 @@
     <string name="image_preview_menu_option_large">Groß</string>
     <string name="image_preview_label">Bildervorschau</string>
     <string name="settings_article_list_feed_name">Feed-Name</string>
-    <string name="settings_article_list_feed_icons">Feed Symbol</string>
+    <string name="settings_article_list_feed_icons">Feed-Symbole</string>
     <string name="settings_article_list_summary">Zusammenfassung</string>
     <string name="settings_article_list_shorten_titles">Titel kürzen</string>
     <string name="settings_section_version">Version</string>
@@ -116,7 +116,7 @@
     <string name="feed_action_reload_icon">Symbol neu laden</string>
     <string name="add_feed_url_title">Feed oder Website URL</string>
     <string name="filter_unread">Ungelesen</string>
-    <string name="settings_remove_account_message_service">Bist Du sicher, dass Du Dich ausloggen möchtest?</string>
+    <string name="settings_remove_account_message_service">Bist du sicher, dass du dich ausloggen möchtest?</string>
     <string name="settings_remove_account_message_local">Bist du sicher, dass du dieses Benutzerkonto löschen möchtest? Dies kann nicht rückgängig gemacht werden.</string>
     <string name="opml_export_button_text">Als OPML exportieren</string>
     <string name="settings_section_privacy">Privatsphäre</string>

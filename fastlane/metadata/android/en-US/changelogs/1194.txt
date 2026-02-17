@@ -2,3 +2,4 @@
 • Add discovery for Mastodon and GitHub Discussions feeds in local accounts
 • Make list draggable for large screens
 • Fix styling bug for some newsletter feeds 
+• Update translations for Arabic, Bulgarian, German, Spanish, Estonian, French, Galician, Italian, Portuguese (Brazil) and Chinese thanks to volunteers!

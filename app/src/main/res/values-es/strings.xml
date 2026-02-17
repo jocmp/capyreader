@@ -311,7 +311,7 @@
     <string name="auth_fields_hide_advanced">Ocultar opciones avanzadas</string>
     <string name="auth_fields_miniflux_use_api_token">Utilizar token API en su lugar</string>
     <string name="add_link_title">Agregar enlace</string>
-    <string name="tab_add_feed">Añadir un feed</string>
+    <string name="tab_add_feed">Agregar feed</string>
     <string name="tab_save_page">Guardar Página</string>
     <string name="save_page_success">Página guardada</string>
     <string name="save_page_error">No se pudo guardar la página</string>
