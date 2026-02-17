@@ -329,4 +329,8 @@
     <string name="badge_style_simple">Lihtne</string>
     <string name="badge_style_exact">Täpne</string>
     <string name="show_unread_badge">Näita lugemata tunnuseid</string>
+    <string name="article_actions_delete_page">Kustuta leht</string>
+    <string name="article_actions_delete_page_title">Kustuta</string>
+    <string name="article_actions_delete_page_message">Kas oled kindel, et soovid selle lehe kustutada?</string>
+    <string name="article_actions_delete_page_confirm">Kustuta</string>
 </resources>

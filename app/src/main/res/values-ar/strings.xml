@@ -330,4 +330,8 @@
     <string name="add_link_subscribe">اشترك</string>
     <string name="add_link_feed_added">أُضيف موجز</string>
     <string name="add_link_page_saved">حُفظت الصفحة</string>
+    <string name="article_actions_delete_page">احذف الصفحة</string>
+    <string name="article_actions_delete_page_title">احذف</string>
+    <string name="article_actions_delete_page_message">أمتأكد إنك تريد حذف هذه الصفحة؟</string>
+    <string name="article_actions_delete_page_confirm">احذف</string>
 </resources>

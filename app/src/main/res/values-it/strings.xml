@@ -330,4 +330,8 @@
     <string name="badge_style_simple">Semplice</string>
     <string name="badge_style_exact">Esatto</string>
     <string name="show_unread_badge">Mostra badge non letti</string>
+    <string name="article_actions_delete_page">Elimina pagina</string>
+    <string name="article_actions_delete_page_title">Elimina</string>
+    <string name="article_actions_delete_page_message">Sei sicuro di voler eliminare questa pagina?</string>
+    <string name="article_actions_delete_page_confirm">Elimina</string>
 </resources>
