@@ -1,0 +1,4 @@
+• Show rounded images in reader
+• Add discovery for Mastodon and GitHub Discussions feeds in local accounts
+• Make list draggable for large screens
+• Fix styling bug for some newsletter feeds 
