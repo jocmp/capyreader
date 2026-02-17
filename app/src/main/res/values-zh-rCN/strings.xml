@@ -77,7 +77,7 @@
     <string name="article_style_text_section">正文</string>
     <string name="article_style_title_follow_body_font">标题使用正文字体</string>
     <string name="title_alignment_left">左对齐</string>
-    <string name="title_alignment_center">居中</string>
+    <string name="title_alignment_center">居中对齐</string>
     <string name="article_title_font_scale_label">字体大小</string>
     <string name="image_error_text">加载图片错误</string>
     <string name="article_byline">%1$s %2$s %3$s</string>
@@ -216,8 +216,8 @@
     <string name="auth_fields_username">用户名</string>
     <string name="end_of_feed_text">都读完了！</string>
     <string name="after_read_all_behavior_open_next_feed">打开下一订阅源</string>
-    <string name="full_content_error_missing_response">获取文章失败</string>
-    <string name="full_content_error_generic">解析文章失败</string>
+    <string name="full_content_error_missing_response">无法获取文章</string>
+    <string name="full_content_error_generic">无法解析文章</string>
     <string name="full_content_error_forbidden">获取被网站阻止</string>
     <string name="after_read_all_behavior_label">全部阅读后</string>
     <string name="after_read_all_behavior_open_drawer">打开抽屉式导航栏</string>
@@ -244,8 +244,8 @@
     <string name="settings_gestures_list_swipe_up">向上滑动</string>
     <string name="article_list_swipe_disabled">已禁用</string>
     <string name="media_save">保存</string>
-    <string name="media_save_failure">保存图片失败</string>
-    <string name="media_share_failure">分享图片失败</string>
+    <string name="media_save_failure">无法保存图片</string>
+    <string name="media_share_failure">无法分享图片</string>
     <string name="feed_nav_drawer_refresh_all">刷新全部</string>
     <string name="image_preview_menu_option_medium">中</string>
     <string name="blocked_keywords_supporting_text">移除标题或内容中与关键词匹配的文章</string>
@@ -331,5 +331,8 @@
     <string name="article_actions_delete_page">删除页面</string>
     <string name="article_actions_delete_page_title">删除</string>
     <string name="article_actions_delete_page_confirm">删除</string>
-    <string name="article_actions_delete_page_message">确定要删除此页吗？</string>
+    <string name="article_actions_delete_page_message">是否确定要删除此页面？</string>
+    <string name="article_actions_save_externally">保存</string>
+    <string name="article_actions_save_externally_success">已保存</string>
+    <string name="article_actions_save_externally_failure">无法保存</string>
 </resources>
