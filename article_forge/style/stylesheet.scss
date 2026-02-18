@@ -318,6 +318,7 @@ ul:has(img) {
 
 .table__wrapper {
   width: 100%;
+  overflow-x: var(--table-overflow-x, visible);
 
   table {
     table-layout: fixed;
