@@ -1,6 +1,7 @@
 package com.jocmp.capy
 
 import com.jocmp.capy.accounts.local.LocalAccountDelegate
+import com.jocmp.capy.preferences.InMemoryPreferenceStore
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.AccountFixture
 import com.jocmp.capy.fixtures.FeedFixture
@@ -36,7 +37,7 @@ class OPMLFileTest {
             database = database,
             httpClient = httpClient,
             feedFinder = MockFeedFinder(),
-            preferences = AccountPreferences(InMemoryDataStore()),
+            preferences = AccountPreferences(InMemoryPreferenceStore()),
         )
 
         account = AccountFixture.create(

@@ -25,7 +25,7 @@ fun MarkAllReadButton(
     position: MarkReadPosition = MarkReadPosition.TOOLBAR,
 ) {
     val unreadCount = LocalUnreadCount.current
-    val confirmationEnabled by rememberMarkAllReadState()
+    val confirmationEnabled = rememberMarkAllReadState().value ?: true
 
     val (isDialogOpen, setDialogOpen) = remember {
         mutableStateOf(false)

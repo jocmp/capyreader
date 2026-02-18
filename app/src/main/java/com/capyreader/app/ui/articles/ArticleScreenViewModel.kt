@@ -40,10 +40,13 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.OffsetDateTime
 
@@ -58,10 +61,12 @@ class ArticleScreenViewModel(
 
     private var fullContentJob: Job? = null
 
-    val filter = appPreferences.filter.stateIn(viewModelScope)
+    val filter = appPreferences.filter.changes()
+        .stateIn(viewModelScope, SharingStarted.Eagerly, appPreferences.filter.defaultValue())
 
     private val listSwipeBottom =
-        appPreferences.articleListOptions.swipeBottom.stateIn(viewModelScope)
+        appPreferences.articleListOptions.swipeBottom.changes()
+            .stateIn(viewModelScope, SharingStarted.Eagerly, appPreferences.articleListOptions.swipeBottom.defaultValue())
 
     private val _searchQuery = MutableStateFlow("")
 
@@ -76,10 +81,12 @@ class ArticleScreenViewModel(
 
     private var _showUnauthorizedMessage by mutableStateOf(UnauthorizedMessageState.HIDE)
 
-    val sortOrder = appPreferences.articleListOptions.sortOrder.stateIn(viewModelScope)
+    val sortOrder = appPreferences.articleListOptions.sortOrder.changes()
+        .stateIn(viewModelScope, SharingStarted.Eagerly, appPreferences.articleListOptions.sortOrder.defaultValue())
 
     val afterReadAll =
-        appPreferences.articleListOptions.afterReadAllBehavior.stateIn(viewModelScope)
+        appPreferences.articleListOptions.afterReadAllBehavior.changes()
+            .stateIn(viewModelScope, SharingStarted.Eagerly, appPreferences.articleListOptions.afterReadAllBehavior.defaultValue())
 
     private val _counts = filter.flatMapLatest { latestFilter ->
         account.countAll(latestFilter.status)
@@ -197,7 +204,8 @@ class ArticleScreenViewModel(
         it
     }
 
-    val showTodayFilter: Flow<Boolean> = appPreferences.showTodayFilter.stateIn(viewModelScope)
+    val showTodayFilter: Flow<Boolean> = appPreferences.showTodayFilter.changes()
+        .stateIn(viewModelScope, SharingStarted.Eagerly, appPreferences.showTodayFilter.defaultValue())
 
     val showUnauthorizedMessage: Boolean
         get() = _showUnauthorizedMessage == UnauthorizedMessageState.SHOW
@@ -313,7 +321,8 @@ class ArticleScreenViewModel(
         }
     }
 
-    val canSaveArticleExternally = account.canSaveArticleExternally.stateIn(viewModelScope)
+    val canSaveArticleExternally = account.canSaveArticleExternally.changes()
+        .stateIn(viewModelScope, SharingStarted.Eagerly, account.canSaveArticleExternally.defaultValue())
 
     fun saveArticleExternallyAsync(articleID: String, onComplete: (Result<Unit>) -> Unit) {
         viewModelScope.launchIO {
@@ -459,7 +468,7 @@ class ArticleScreenViewModel(
 
     fun clearArticle() {
         _article = null
-        appPreferences.articleID.delete()
+        viewModelScope.launch { appPreferences.articleID.delete() }
     }
 
     fun startSearch() {
@@ -568,7 +577,7 @@ class ArticleScreenViewModel(
     }
 
     private fun updateFilter(filter: ArticleFilter) {
-        appPreferences.filter.set(filter)
+        viewModelScope.launch { appPreferences.filter.set(filter) }
 
         clearArticle()
 
@@ -746,8 +755,12 @@ class ArticleScreenViewModel(
     private val latestFilter: ArticleFilter
         get() = filter.value
 
+    private val _enableStickyFullContent: StateFlow<Boolean> =
+        appPreferences.enableStickyFullContent.changes()
+            .stateIn(viewModelScope, SharingStarted.Eagerly, appPreferences.enableStickyFullContent.defaultValue())
+
     private val enableStickyFullContent: Boolean
-        get() = appPreferences.enableStickyFullContent.get()
+        get() = _enableStickyFullContent.value
     private val context: Context
         get() = application.applicationContext
 

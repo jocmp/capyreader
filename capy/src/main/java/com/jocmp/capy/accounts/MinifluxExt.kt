@@ -1,15 +1,14 @@
 package com.jocmp.capy.accounts
 
-import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.accounts.miniflux.MinifluxOkHttpClient
 import com.jocmp.minifluxclient.Miniflux
 import java.net.URI
 
 
-fun Miniflux.Companion.forAccount(path: URI, preferences: AccountPreferences, source: Source) =
+fun Miniflux.Companion.forAccount(path: URI, baseURL: String, username: String, password: String, source: Source) =
     create(
-        client = MinifluxOkHttpClient.forAccount(path, preferences, source),
-        baseURL = preferences.url.get()
+        client = MinifluxOkHttpClient.forAccount(path, username, password, source),
+        baseURL = baseURL
     )
 
 fun withMinifluxPath(url: String): String {

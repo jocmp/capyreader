@@ -31,9 +31,11 @@ class HeadlinesWidget : GlanceAppWidget() {
     private val viewModel by lazy { HeadlinesViewModel() }
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
+        val loggedIn = viewModel.isLoggedIn()
+
         provideContent {
             GlanceTheme {
-                Content()
+                Content(loggedIn)
             }
         }
     }
@@ -45,8 +47,8 @@ class HeadlinesWidget : GlanceAppWidget() {
     }
 
     @Composable
-    private fun Content() {
-        if (viewModel.isLoggedIn) {
+    private fun Content(isLoggedIn: Boolean) {
+        if (isLoggedIn) {
             val articles by viewModel.articles.collectAsState(emptyList())
 
             HeadlinesLayout(articles)
@@ -72,8 +74,7 @@ class HeadlinesViewModel : KoinComponent {
     private val appPreferences by inject<AppPreferences>()
     private val repository by lazy { ArticlesRepository() }
 
-    val isLoggedIn
-        get() = appPreferences.isLoggedIn
+    suspend fun isLoggedIn() = appPreferences.isLoggedIn()
 
     val articles
         get() = repository.articles

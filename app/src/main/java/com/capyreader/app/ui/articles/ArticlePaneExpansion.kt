@@ -74,16 +74,24 @@ fun rememberArticlePaneExpansion(
 ): ArticlePaneExpansion {
     val anchors = ArticlePaneAnchors
 
-    val savedIndex = appPreferences.paneExpansionIndex.get()
+    val defaultIndex = appPreferences.paneExpansionIndex.defaultValue()
         .coerceIn(0, anchors.lastIndex)
 
     val paneExpansionState = rememberPaneExpansionState(
         anchors = anchors,
-        initialAnchoredIndex = savedIndex,
+        initialAnchoredIndex = defaultIndex,
     )
     val compact = isCompact()
     val scope = rememberCoroutineScope()
-    var lastAnchorIndex by rememberSaveable { mutableIntStateOf(savedIndex) }
+    var lastAnchorIndex by rememberSaveable { mutableIntStateOf(defaultIndex) }
+
+    LaunchedEffect(Unit) {
+        val saved = appPreferences.paneExpansionIndex.get()
+            .coerceIn(0, anchors.lastIndex)
+        if (saved != defaultIndex) {
+            lastAnchorIndex = saved
+        }
+    }
     val listFullscreenIndex = anchors.lastIndex
 
     LaunchedEffect(paneExpansionState.currentAnchor) {

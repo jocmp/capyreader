@@ -89,7 +89,7 @@ class LocalAccountDelegateTest {
 
         accountPreferences = mockk()
         val blocklist = mockk<Preference<Set<String>>>()
-        every { blocklist.get() }.returns(emptySet())
+        coEvery { blocklist.get() }.returns(emptySet())
         every { accountPreferences.keywordBlocklist }.returns(blocklist)
         every { CapyLog.warn(any(), any()) }.returns(Unit)
         every { CapyLog.error(any(), any()) }.returns(Unit)
@@ -132,7 +132,7 @@ class LocalAccountDelegateTest {
     @Test
     fun refreshAll_updatesEntries_filteredByBlocklist() = runTest {
         val blocklist = mockk<Preference<Set<String>>>()
-        every { blocklist.get() }.returns(setOf("Apple Intelligence"))
+        coEvery { blocklist.get() }.returns(setOf("Apple Intelligence"))
         every { accountPreferences.keywordBlocklist }.returns(blocklist)
         coEvery { feedFinder.fetch(url = any()) }.returns(Result.success(channel))
 

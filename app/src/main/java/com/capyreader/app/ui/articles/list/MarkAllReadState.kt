@@ -9,6 +9,6 @@ import org.koin.compose.koinInject
 @Composable
 internal fun rememberMarkAllReadState(
     appPreferences: AppPreferences = koinInject(),
-): State<Boolean> {
+): State<Boolean?> {
     return appPreferences.articleListOptions.confirmMarkAllRead.asState()
 }

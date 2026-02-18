@@ -57,7 +57,7 @@ import com.capyreader.app.common.MediaItem
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferredMaxWidth
 import com.capyreader.app.ui.EdgeToEdgeHelper.isEdgeToEdgeAvailable
-import com.capyreader.app.ui.collectChangesWithCurrent
+import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.LoadingView
 import com.capyreader.app.ui.components.Swiper
 import com.capyreader.app.ui.components.rememberSwiperState
@@ -132,9 +132,9 @@ fun ArticleMediaView(
     }
 
     val colorScheme = MaterialTheme.colorScheme
-    val themeMode by appPreferences.themeMode.collectChangesWithCurrent()
+    val themeMode by appPreferences.themeMode.collectChangesWithDefault()
     val showLightStatusBar = themeMode.showAppearanceLightStatusBars()
-    val pureBlack by appPreferences.pureBlackDarkMode.collectChangesWithCurrent()
+    val pureBlack by appPreferences.pureBlackDarkMode.collectChangesWithDefault()
 
     DisposableEffect(media) {
         val window = (view.context as Activity).window

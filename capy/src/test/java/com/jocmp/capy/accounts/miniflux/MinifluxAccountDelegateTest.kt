@@ -3,7 +3,7 @@ package com.jocmp.capy.accounts.miniflux
 import com.jocmp.capy.AccountDelegate
 import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.ArticleFilter
-import com.jocmp.capy.InMemoryDataStore
+import com.jocmp.capy.preferences.InMemoryPreferenceStore
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.db.Database
@@ -165,7 +165,7 @@ class MinifluxAccountDelegateTest {
         database = InMemoryDatabaseProvider.build(accountID)
         feedFixture = FeedFixture(database)
         miniflux = mockk()
-        delegate = MinifluxAccountDelegate(database, miniflux, AccountPreferences(InMemoryDataStore()))
+        delegate = MinifluxAccountDelegate(database, miniflux, AccountPreferences(InMemoryPreferenceStore()))
     }
 
     @Test

@@ -1,6 +1,5 @@
 package com.jocmp.capy.accounts.reader
 
-import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.ClientCertManager
 import com.jocmp.capy.accounts.BasicAuthInterceptor
 import com.jocmp.capy.accounts.httpClientBuilder
@@ -8,16 +7,14 @@ import okhttp3.OkHttpClient
 import java.net.URI
 
 internal object ReaderOkHttpClient {
-    fun forAccount(path: URI, preferences: AccountPreferences, clientCertManager: ClientCertManager): OkHttpClient {
+    fun forAccount(path: URI, password: String, clientCertAlias: String, clientCertManager: ClientCertManager): OkHttpClient {
         return httpClientBuilder(cachePath = path)
             .addInterceptor(
                 BasicAuthInterceptor {
-                    val secret = preferences.password.get()
-
-                    "GoogleLogin auth=${secret}"
+                    "GoogleLogin auth=${password}"
                 }
             )
-            .clientCertAlias(clientCertManager, preferences.clientCertAlias.get())
+            .clientCertAlias(clientCertManager, clientCertAlias)
             .build()
     }
 

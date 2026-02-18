@@ -23,14 +23,17 @@ import com.capyreader.app.ui.provideLinkOpener
 import com.capyreader.app.ui.settings.panels.AboutSettingsPanel
 import com.capyreader.app.ui.settings.panels.AccountSettingsPanel
 import com.capyreader.app.ui.settings.panels.DisplaySettingsPanel
+import com.capyreader.app.ui.settings.panels.DisplaySettingsViewModel
 import com.capyreader.app.ui.settings.panels.GeneralSettingsPanel
 import com.capyreader.app.ui.settings.panels.GesturesSettingPanel
+import com.capyreader.app.ui.settings.panels.GesturesSettingsViewModel
 import com.capyreader.app.ui.settings.panels.NotificationsSettingsPanel
 import com.capyreader.app.ui.settings.panels.SettingsPanel
-import com.capyreader.app.ui.settings.panels.UnreadBadgesSettingsPanel
 import com.capyreader.app.ui.settings.panels.SettingsViewModel
+import com.capyreader.app.ui.settings.panels.UnreadBadgesSettingsPanel
 import com.jocmp.capy.common.launchUI
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.KoinApplication
 import org.koin.compose.koinInject
 
@@ -38,6 +41,8 @@ import org.koin.compose.koinInject
 @Composable
 fun SettingsView(
     viewModel: SettingsViewModel = koinInject(),
+    gesturesViewModel: GesturesSettingsViewModel = koinViewModel(),
+    displayViewModel: DisplaySettingsViewModel = koinViewModel(),
     onNavigateBack: () -> Unit,
     onRemoveAccount: () -> Unit,
 ) {
@@ -103,11 +108,12 @@ fun SettingsView(
                             )
 
                             SettingsPanel.Display -> DisplaySettingsPanel(
+                                displayViewModel,
                                 onNavigateToUnreadBadges = {
                                     navigateToPanel(SettingsPanel.UnreadBadges)
                                 }
                             )
-                            SettingsPanel.Gestures -> GesturesSettingPanel()
+                            SettingsPanel.Gestures -> GesturesSettingPanel(gesturesViewModel)
                             SettingsPanel.Account -> AccountSettingsPanel(onRemoveAccount = onRemoveAccount)
                             SettingsPanel.About -> AboutSettingsPanel()
                             SettingsPanel.UnreadBadges -> UnreadBadgesSettingsPanel(

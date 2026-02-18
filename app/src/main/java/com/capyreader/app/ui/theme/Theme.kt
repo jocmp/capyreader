@@ -21,8 +21,9 @@ import androidx.core.view.WindowCompat
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.AppTheme
 import com.capyreader.app.preferences.ThemeMode
+import com.capyreader.app.preferences.ThemePreference
 import com.capyreader.app.ui.EdgeToEdgeHelper.isEdgeToEdgeAvailable
-import com.capyreader.app.ui.collectChangesWithCurrent
+import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.theme.colorschemes.BaseColorScheme
 import com.capyreader.app.ui.theme.colorschemes.MonochromeColorScheme
 import com.capyreader.app.ui.theme.colorschemes.NewsprintColorScheme
@@ -68,11 +69,12 @@ fun CapyTheme(
 @Composable
 fun CapyTheme(
     appPreferences: AppPreferences,
+    initialTheme: ThemePreference = ThemePreference.default,
     content: @Composable () -> Unit,
 ) {
-    val themeMode by appPreferences.themeMode.collectChangesWithCurrent()
-    val appTheme by appPreferences.appTheme.collectChangesWithCurrent()
-    val pureBlack by appPreferences.pureBlackDarkMode.collectChangesWithCurrent()
+    val themeMode by appPreferences.themeMode.collectChangesWithDefault(initial = initialTheme.themeMode)
+    val appTheme by appPreferences.appTheme.collectChangesWithDefault(initial = initialTheme.appTheme)
+    val pureBlack by appPreferences.pureBlackDarkMode.collectChangesWithDefault(initial = initialTheme.pureBlackDarkMode)
 
     CapyTheme(
         appTheme = appTheme,

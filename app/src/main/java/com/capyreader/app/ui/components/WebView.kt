@@ -28,6 +28,7 @@ import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
 import com.jocmp.capy.BrowserHeadersInterceptor
 import com.jocmp.capy.articles.ArticleRenderer
+import com.jocmp.capy.articles.RendererPreferences
 import com.jocmp.capy.logging.CapyLog
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -42,15 +43,14 @@ fun WebView(
     state: WebViewState,
     article: Article? = null,
     showImages: Boolean = true,
+    preferences: RendererPreferences = RendererPreferences(),
 ) {
     AndroidView(
         modifier = modifier,
         factory = { state.webView },
         update = {
-            article?.let {
-                state.loadHtml(article, showImages)
-            }
-        }
+            article?.let { state.loadHtml(it, showImages, preferences) }
+        },
     )
 }
 
@@ -169,9 +169,9 @@ class WebViewState(
         loadEmpty()
     }
 
-    fun loadHtml(article: Article, showImages: Boolean) {
+    fun loadHtml(article: Article, showImages: Boolean, preferences: RendererPreferences) {
         val id = article.id
-        val hash = article.content.hashCode()
+        val hash = article.content.hashCode() + preferences.hashCode()
 
         if (id == htmlId && hash == contentHash) {
             return
@@ -185,7 +185,8 @@ class WebViewState(
             article,
             hideImages = !showImages,
             byline = article.byline(context = webView.context),
-            colors = colors
+            colors = colors,
+            preferences = preferences,
         )
 
         webView.loadDataWithBaseURL(

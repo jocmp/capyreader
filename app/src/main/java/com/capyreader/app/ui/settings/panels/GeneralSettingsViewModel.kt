@@ -14,6 +14,8 @@ import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.preferences.getAndSet
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class GeneralSettingsViewModel(
@@ -26,34 +28,48 @@ class GeneralSettingsViewModel(
     var refreshInterval by mutableStateOf(refreshScheduler.refreshInterval)
         private set
 
-    var autoDelete by mutableStateOf(account.preferences.autoDelete.get())
+    var autoDelete by mutableStateOf(account.preferences.autoDelete.defaultValue())
         private set
 
-    var canOpenLinksInternally by mutableStateOf(appPreferences.openLinksInternally.get())
+    var canOpenLinksInternally by mutableStateOf(appPreferences.openLinksInternally.defaultValue())
         private set
 
-    var sortOrder by mutableStateOf(appPreferences.articleListOptions.sortOrder.get())
+    var sortOrder by mutableStateOf(appPreferences.articleListOptions.sortOrder.defaultValue())
         private set
 
-    var confirmMarkAllRead by mutableStateOf(appPreferences.articleListOptions.confirmMarkAllRead.get())
+    var confirmMarkAllRead by mutableStateOf(appPreferences.articleListOptions.confirmMarkAllRead.defaultValue())
         private set
 
-    var markReadOnScroll by mutableStateOf(appPreferences.articleListOptions.markReadOnScroll.get())
+    var markReadOnScroll by mutableStateOf(appPreferences.articleListOptions.markReadOnScroll.defaultValue())
         private set
 
-    var afterReadAll by mutableStateOf(appPreferences.articleListOptions.afterReadAllBehavior.get())
+    var afterReadAll by mutableStateOf(appPreferences.articleListOptions.afterReadAllBehavior.defaultValue())
         private set
 
-    var enableStickyFullContent by mutableStateOf(appPreferences.enableStickyFullContent.get())
+    var enableStickyFullContent by mutableStateOf(appPreferences.enableStickyFullContent.defaultValue())
         private set
 
-    var showTodayFilter by mutableStateOf(appPreferences.showTodayFilter.get())
+    var showTodayFilter by mutableStateOf(appPreferences.showTodayFilter.defaultValue())
         private set
 
     val keywordBlocklist = account
         .preferences
         .keywordBlocklist
-        .stateIn(viewModelScope)
+        .changes()
+        .stateIn(viewModelScope, SharingStarted.Eagerly, account.preferences.keywordBlocklist.defaultValue())
+
+    init {
+        viewModelScope.launch {
+            autoDelete = account.preferences.autoDelete.get()
+            canOpenLinksInternally = appPreferences.openLinksInternally.get()
+            sortOrder = appPreferences.articleListOptions.sortOrder.get()
+            confirmMarkAllRead = appPreferences.articleListOptions.confirmMarkAllRead.get()
+            markReadOnScroll = appPreferences.articleListOptions.markReadOnScroll.get()
+            afterReadAll = appPreferences.articleListOptions.afterReadAllBehavior.get()
+            enableStickyFullContent = appPreferences.enableStickyFullContent.get()
+            showTodayFilter = appPreferences.showTodayFilter.get()
+        }
+    }
 
     fun updateRefreshInterval(interval: RefreshInterval) {
         refreshScheduler.update(interval)
@@ -62,37 +78,37 @@ class GeneralSettingsViewModel(
     }
 
     fun updateSortOrder(sort: SortOrder) {
-        appPreferences.articleListOptions.sortOrder.set(sort)
+        viewModelScope.launch { appPreferences.articleListOptions.sortOrder.set(sort) }
 
         this.sortOrder = sort
     }
 
     fun updateAutoDelete(autoDelete: AutoDelete) {
-        account.preferences.autoDelete.set(autoDelete)
+        viewModelScope.launch { account.preferences.autoDelete.set(autoDelete) }
 
         this.autoDelete = autoDelete
     }
 
     fun updateOpenLinksInternally(openLinksInternally: Boolean) {
-        appPreferences.openLinksInternally.set(openLinksInternally)
+        viewModelScope.launch { appPreferences.openLinksInternally.set(openLinksInternally) }
 
         this.canOpenLinksInternally = openLinksInternally
     }
 
     fun updateConfirmMarkAllRead(confirm: Boolean) {
-        appPreferences.articleListOptions.confirmMarkAllRead.set(confirm)
+        viewModelScope.launch { appPreferences.articleListOptions.confirmMarkAllRead.set(confirm) }
 
         confirmMarkAllRead = confirm
     }
 
     fun updateAfterReadAll(behavior: AfterReadAllBehavior) {
-        appPreferences.articleListOptions.afterReadAllBehavior.set(behavior)
+        viewModelScope.launch { appPreferences.articleListOptions.afterReadAllBehavior.set(behavior) }
 
         afterReadAll = behavior
     }
 
     fun updateStickyFullContent(enable: Boolean) {
-        appPreferences.enableStickyFullContent.set(enable)
+        viewModelScope.launch { appPreferences.enableStickyFullContent.set(enable) }
 
         enableStickyFullContent = enable
 
@@ -104,7 +120,7 @@ class GeneralSettingsViewModel(
     }
 
     fun updateMarkReadOnScroll(enable: Boolean) {
-        appPreferences.articleListOptions.markReadOnScroll.set(enable)
+        viewModelScope.launch { appPreferences.articleListOptions.markReadOnScroll.set(enable) }
 
         markReadOnScroll = enable
     }
@@ -116,19 +132,23 @@ class GeneralSettingsViewModel(
     }
 
     fun addBlockedKeyword(keyword: String) {
-        account.preferences.keywordBlocklist.getAndSet { list ->
-            list.toMutableSet().apply { add(keyword) }
+        viewModelScope.launch {
+            account.preferences.keywordBlocklist.getAndSet { list ->
+                list.toMutableSet().apply { add(keyword) }
+            }
         }
     }
 
     fun removeBlockedKeyword(keyword: String) {
-        account.preferences.keywordBlocklist.getAndSet { list ->
-            list.toMutableSet().apply { remove(keyword) }
+        viewModelScope.launch {
+            account.preferences.keywordBlocklist.getAndSet { list ->
+                list.toMutableSet().apply { remove(keyword) }
+            }
         }
     }
 
     fun updateShowTodayFilter(show: Boolean) {
-        appPreferences.showTodayFilter.set(show)
+        viewModelScope.launch { appPreferences.showTodayFilter.set(show) }
 
         showTodayFilter = show
     }

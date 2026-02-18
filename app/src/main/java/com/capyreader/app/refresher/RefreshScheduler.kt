@@ -8,20 +8,36 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.logging.CapyLog
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
 class RefreshScheduler(
     private val context: Context,
     private val appPreferences: AppPreferences,
 ) {
-    val refreshInterval
-        get() = appPreferences.refreshInterval.get()
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+
+    var refreshInterval: RefreshInterval = appPreferences.refreshInterval.defaultValue()
+        private set
+
+    init {
+        scope.launch {
+            refreshInterval = appPreferences.refreshInterval.get()
+        }
+    }
 
     fun update(interval: RefreshInterval) {
         if (interval == refreshInterval) {
             return
         }
 
-        appPreferences.refreshInterval.set(interval)
+        refreshInterval = interval
+
+        scope.launch {
+            appPreferences.refreshInterval.set(interval)
+        }
 
         val workManager = WorkManager.getInstance(context)
 

@@ -4,7 +4,7 @@ import com.jocmp.capy.Account
 import com.jocmp.capy.AccountDelegate
 import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.FakeClientCertManager
-import com.jocmp.capy.InMemoryDataStore
+import com.jocmp.capy.preferences.InMemoryPreferenceStore
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.RandomUUID
 import com.jocmp.capy.accounts.FakeFaviconPolicy
@@ -24,7 +24,7 @@ object AccountFixture {
             path = parentFolder.newFile().toURI(),
             database = database,
             cacheDirectory = parentFolder.newFile().toURI(),
-            preferences = AccountPreferences(InMemoryDataStore()),
+            preferences = AccountPreferences(InMemoryPreferenceStore()),
             delegate = accountDelegate,
             faviconPolicy = FakeFaviconPolicy,
             clientCertManager = FakeClientCertManager,

@@ -13,16 +13,21 @@ fun KoinApplication.setupCommonModules() {
     modules(common, loginModule)
 }
 
-fun loadAccountModules() {
-    loadKoinModules(accountModules)
+private var currentAccountModules: List<org.koin.core.module.Module>? = null
+
+fun loadAccountModules(accountID: String) {
+    val modules = accountModules(accountID)
+    currentAccountModules = modules
+    loadKoinModules(modules)
 }
 
 fun unloadAccountModules() {
-    unloadKoinModules(accountModules)
+    currentAccountModules?.let { unloadKoinModules(it) }
+    currentAccountModules = null
 }
 
-private val accountModules = listOf(
-    accountModule,
+private fun accountModules(accountID: String) = listOf(
+    accountModule(accountID),
     settingsModule,
     articlesModule,
     refresherModule,

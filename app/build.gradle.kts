@@ -134,7 +134,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.paging.compose)
     implementation(libs.androidx.paging.runtime.ktx)
-    implementation(libs.androidx.preferences)
+    implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)

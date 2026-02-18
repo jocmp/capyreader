@@ -2,7 +2,7 @@ package com.jocmp.capy.opml
 
 import com.jocmp.capy.Account
 import com.jocmp.capy.AccountPreferences
-import com.jocmp.capy.InMemoryDataStore
+import com.jocmp.capy.preferences.InMemoryPreferenceStore
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.MockFeedFinder
 import com.jocmp.capy.accounts.local.LocalAccountDelegate
@@ -52,7 +52,7 @@ class OPMLImporterTest {
             database = database,
             httpClient = httpClient,
             feedFinder = finder,
-            preferences = AccountPreferences(InMemoryDataStore()),
+            preferences = AccountPreferences(InMemoryPreferenceStore()),
         )
 
         account = AccountFixture.create(

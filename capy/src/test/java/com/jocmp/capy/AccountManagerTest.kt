@@ -29,7 +29,7 @@ class AccountManagerTest {
     }
 
     @Test
-    fun addAccount() {
+    fun addAccount(): Unit = runBlocking {
         val manager = buildManager()
 
         assertNotNull(manager.createAccount("foo", "bar", "", "", Source.LOCAL))

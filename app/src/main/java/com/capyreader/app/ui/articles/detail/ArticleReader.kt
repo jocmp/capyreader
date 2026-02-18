@@ -32,12 +32,14 @@ import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.articles.ColumnScrollbar
 import com.capyreader.app.ui.articles.media.ImageSaver
+import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.WebView
 import com.capyreader.app.ui.components.WebViewState
 import com.capyreader.app.ui.components.rememberSaveableShareLink
 import com.capyreader.app.ui.components.rememberWebViewState
 import com.capyreader.app.ui.settings.LocalSnackbarHost
 import com.jocmp.capy.Article
+import com.jocmp.capy.articles.RendererPreferences
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
 import com.jocmp.capy.common.withUIContext
@@ -123,6 +125,7 @@ fun ArticleReader(
 
     val showImages = rememberImageVisibility()
     val improveTalkback by rememberTalkbackPreference()
+    val rendererPreferences = rememberRendererPreferences()
 
     if (improveTalkback) {
         Column(
@@ -133,10 +136,11 @@ fun ArticleReader(
                 state = webViewState,
                 article = article,
                 showImages = showImages,
+                preferences = rendererPreferences,
             )
         }
     } else {
-        ScrollableWebView(webViewState, article, showImages)
+        ScrollableWebView(webViewState, article, showImages, rendererPreferences)
     }
 
     ArticleStyleListener(webView = webViewState.webView)
@@ -163,7 +167,12 @@ fun ArticleReader(
 }
 
 @Composable
-fun ScrollableWebView(webViewState: WebViewState, article: Article, showImages: Boolean) {
+fun ScrollableWebView(
+    webViewState: WebViewState,
+    article: Article,
+    showImages: Boolean,
+    preferences: RendererPreferences,
+) {
     var maxHeight by remember { mutableFloatStateOf(0f) }
     val scrollState = rememberSaveable(article.id, saver = ScrollState.Saver) {
         ScrollState(initial = 0)
@@ -191,6 +200,7 @@ fun ScrollableWebView(webViewState: WebViewState, article: Article, showImages: 
                     state = webViewState,
                     article = article,
                     showImages = showImages,
+                    preferences = preferences,
                 )
             }
         }
@@ -213,12 +223,33 @@ fun rememberImageVisibility(appPreferences: AppPreferences = koinInject()): Bool
     val imagePreference by appPreferences.readerOptions
         .imageVisibility
         .changes()
-        .collectAsState(appPreferences.readerOptions.imageVisibility.get())
+        .collectAsState(appPreferences.readerOptions.imageVisibility.defaultValue())
 
     val connectivity = LocalConnectivity.current
 
     return imagePreference == ReaderImageVisibility.ALWAYS_SHOW ||
             (imagePreference == ReaderImageVisibility.SHOW_ON_WIFI && connectivity.isOnWifi)
+}
+
+@Composable
+fun rememberRendererPreferences(appPreferences: AppPreferences = koinInject()): RendererPreferences {
+    val textSize by appPreferences.readerOptions.fontSize.collectChangesWithDefault()
+    val fontOption by appPreferences.readerOptions.fontFamily.collectChangesWithDefault()
+    val titleFontSize by appPreferences.readerOptions.titleFontSize.collectChangesWithDefault()
+    val textAlignment by appPreferences.readerOptions.titleTextAlignment.collectChangesWithDefault()
+    val titleFollowsBodyFont by appPreferences.readerOptions.titleFollowsBodyFont.collectChangesWithDefault()
+    val hideTopMargin by appPreferences.readerOptions.pinToolbars.collectChangesWithDefault()
+    val enableHorizontalScroll by appPreferences.readerOptions.enableHorizontaPagination.collectChangesWithDefault()
+
+    return RendererPreferences(
+        textSize = textSize,
+        fontOption = fontOption,
+        titleFontSize = titleFontSize,
+        textAlignment = textAlignment,
+        titleFollowsBodyFont = titleFollowsBodyFont,
+        hideTopMargin = hideTopMargin,
+        enableHorizontalScroll = enableHorizontalScroll,
+    )
 }
 
 private val ConnectivityType.isOnWifi

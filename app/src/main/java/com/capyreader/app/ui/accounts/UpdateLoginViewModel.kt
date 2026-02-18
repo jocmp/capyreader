@@ -12,15 +12,24 @@ import com.jocmp.capy.accounts.Credentials
 import com.jocmp.capy.common.Async
 import com.jocmp.capy.common.launchIO
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class UpdateLoginViewModel(
     private val account: Account,
     private val clientCertManager: ClientCertManager,
 ) : ViewModel() {
-    val username = account.preferences.username.get()
+    var username by mutableStateOf("")
+        private set
     val source = account.source
-    private val url = account.preferences.url.get()
+    private var url by mutableStateOf("")
+
+    init {
+        viewModelScope.launch {
+            username = account.preferences.username.get()
+            url = account.preferences.url.get()
+        }
+    }
 
     private var _password by mutableStateOf("")
     private var _clientCertAlias by mutableStateOf("")
@@ -84,7 +93,7 @@ class UpdateLoginViewModel(
             clientCertManager = clientCertManager,
         )
 
-    private fun updateAccount(result: Credentials) {
+    private suspend fun updateAccount(result: Credentials) {
         account.preferences.password.set(result.secret)
     }
 

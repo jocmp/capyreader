@@ -18,12 +18,18 @@ class SettingsViewModel(
     val feeds = account.allFeeds
     val savedSearches = account.savedSearches
 
-    var badgeStyle by mutableStateOf(appPreferences.badgeStyle.get())
+    var badgeStyle by mutableStateOf(appPreferences.badgeStyle.defaultValue())
         private set
+
+    init {
+        viewModelScope.launch {
+            badgeStyle = appPreferences.badgeStyle.get()
+        }
+    }
 
     fun updateBadgeStyle(style: BadgeStyle) {
         badgeStyle = style
-        appPreferences.badgeStyle.set(style)
+        viewModelScope.launch { appPreferences.badgeStyle.set(style) }
 
         if (style == BadgeStyle.EXACT) {
             viewModelScope.launch {

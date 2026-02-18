@@ -40,7 +40,8 @@ androidx-media3-session = { module = "androidx.media3:media3-session", version.r
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "paging-compose" }
 androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "androidx-paging" }
-androidx-preferences = { module = "androidx.preference:preference-ktx", version = "1.2.1" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version = "1.2.0" }
+androidx-datastore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version = "1.2.0" }
 androidx-ui = { module = "androidx.compose.ui:ui" }
 androidx-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
 androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }

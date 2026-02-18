@@ -31,13 +31,24 @@ class AccountSettingsViewModel(
     var importProgress by mutableStateOf<ImportProgress?>(null)
         private set
 
-    val accountURL = account.preferences.url.get()
+    var accountURL by mutableStateOf("")
+        private set
 
-    val accountName = account.preferences.username.get()
+    var accountName by mutableStateOf("")
+        private set
+
+    init {
+        viewModelScope.launch {
+            accountURL = account.preferences.url.get()
+            accountName = account.preferences.username.get()
+        }
+    }
 
     fun removeAccount() {
-        appPreferences.clearAll()
-        accountManager.removeAccount(accountID = account.id)
+        viewModelScope.launch {
+            appPreferences.clearAll()
+            accountManager.removeAccount(accountID = account.id)
+        }
     }
 
     fun startOPMLImport(uri: Uri?) {

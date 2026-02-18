@@ -73,7 +73,7 @@ import com.capyreader.app.ui.articles.list.MarkAllReadButton
 import com.capyreader.app.ui.articles.list.PullToNextFeedBox
 import com.capyreader.app.ui.articles.list.resetScrollBehaviorListener
 import com.capyreader.app.ui.articles.media.ArticleMediaView
-import com.capyreader.app.ui.collectChangesWithCurrent
+import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.SearchState
@@ -115,7 +115,7 @@ fun ArticleScreen(
     val todayCount by viewModel.todayCount.collectAsStateWithLifecycle(initialValue = 0)
     val unreadCount by viewModel.unreadCount.collectAsStateWithLifecycle(initialValue = 0L)
     val showTodayFilter by viewModel.showTodayFilter.collectAsStateWithLifecycle(initialValue = true)
-    val filter by viewModel.filter.collectAsStateWithLifecycle(appPreferences.filter.get())
+    val filter by viewModel.filter.collectAsStateWithLifecycle(appPreferences.filter.defaultValue())
     val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle("")
     val searchState by viewModel.searchState.collectAsStateWithLifecycle(SearchState.INACTIVE)
     val nextFilter by viewModel.nextFilter.collectAsStateWithLifecycle(initialValue = null)
@@ -123,7 +123,7 @@ fun ArticleScreen(
     val scope = rememberCoroutineScope()
     val refreshInterval by appPreferences
         .refreshInterval
-        .collectChangesWithDefault(appPreferences.refreshInterval.get())
+        .collectChangesWithDefault()
 
     val canSwipeToNextFeed = nextFilter != null
     val context = LocalContext.current
@@ -142,7 +142,7 @@ fun ArticleScreen(
     val markAllReadButtonPosition by appPreferences
         .articleListOptions
         .markReadButtonPosition
-        .collectChangesWithCurrent()
+        .collectChangesWithDefault()
     val badgeStyle by appPreferences.badgeStyle.collectChangesWithDefault()
 
     val articles = viewModel.articles.collectAsLazyPagingItems()

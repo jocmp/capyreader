@@ -1,23 +1,22 @@
 package com.capyreader.app.ui.settings.panels
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonGroupDefaults
-import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.ToggleButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,40 +25,35 @@ import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.common.RowItem
-import com.capyreader.app.preferences.AppPreferences
+import com.capyreader.app.preferences.AppTheme
 import com.capyreader.app.preferences.ReaderImageVisibility
 import com.capyreader.app.preferences.ThemeMode
 import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.capyreader.app.ui.articles.MarkReadPosition
-import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.components.TextSwitch
 import com.capyreader.app.ui.components.ThemePicker
 import com.capyreader.app.ui.settings.PreferenceSelect
 import com.capyreader.app.ui.theme.CapyTheme
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun DisplaySettingsPanel(
-    viewModel: DisplaySettingsViewModel = koinViewModel(),
+    viewModel: DisplaySettingsViewModel,
     onNavigateToUnreadBadges: () -> Unit = {},
 ) {
-    val pinArticleBars by viewModel.pinArticleBars.collectChangesWithCurrent()
-    val improveTalkback by viewModel.improveTalkback.collectChangesWithCurrent()
-    val markReadButtonPosition by viewModel.markReadButtonPosition.collectChangesWithCurrent()
-
     DisplaySettingsPanelView(
         themeMode = viewModel.themeMode,
         updateThemeMode = viewModel::updateThemeMode,
+        appTheme = viewModel.appTheme,
+        updateAppTheme = viewModel::updateAppTheme,
         pureBlackDarkMode = viewModel.pureBlackDarkMode,
         updatePureBlackDarkMode = viewModel::updatePureBlackDarkMode,
-        appPreferences = viewModel.appPreferences,
         updatePinArticleBars = viewModel::updatePinArticleBars,
-        pinArticleBars = pinArticleBars,
-        enablePinArticleBars = !improveTalkback,
+        pinArticleBars = viewModel.pinArticleBars,
+        enablePinArticleBars = !viewModel.improveTalkback,
         updateImageVisibility = viewModel::updateImageVisibility,
         imageVisibility = viewModel.imageVisibility,
-        markReadButtonPosition = markReadButtonPosition,
+        markReadButtonPosition = viewModel.markReadButtonPosition,
         updateMarkReadButtonPosition = viewModel::updateMarkReadButtonPosition,
         onNavigateToUnreadBadges = onNavigateToUnreadBadges,
         articleListOptions = ArticleListOptions(
@@ -83,9 +77,10 @@ fun DisplaySettingsPanel(
 fun DisplaySettingsPanelView(
     themeMode: ThemeMode,
     updateThemeMode: (ThemeMode) -> Unit,
+    appTheme: AppTheme,
+    updateAppTheme: (AppTheme) -> Unit,
     pureBlackDarkMode: Boolean,
     updatePureBlackDarkMode: (Boolean) -> Unit,
-    appPreferences: AppPreferences?,
     updatePinArticleBars: (enable: Boolean) -> Unit,
     pinArticleBars: Boolean,
     enablePinArticleBars: Boolean,
@@ -110,9 +105,12 @@ fun DisplaySettingsPanelView(
                 )
             }
 
-            if (appPreferences != null) {
-                ThemePicker(appPreferences = appPreferences)
-            }
+            ThemePicker(
+                currentTheme = appTheme,
+                pureBlackDarkMode = pureBlackDarkMode,
+                themeMode = themeMode,
+                onSelectTheme = updateAppTheme,
+            )
 
             RowItem {
                 TextSwitch(
@@ -213,9 +211,10 @@ private fun DisplaySettingsPanelViewPreview() {
             DisplaySettingsPanelView(
                 themeMode = ThemeMode.SYSTEM,
                 updateThemeMode = {},
+                appTheme = AppTheme.DEFAULT,
+                updateAppTheme = {},
                 pureBlackDarkMode = false,
                 updatePureBlackDarkMode = {},
-                appPreferences = null,
                 articleListOptions = ArticleListOptions(
                     imagePreview = ImagePreview.default,
                     showSummary = true,

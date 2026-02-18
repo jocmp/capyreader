@@ -29,26 +29,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.AppTheme
-import com.capyreader.app.ui.collectChangesWithCurrent
+import com.capyreader.app.preferences.ThemeMode
 import com.capyreader.app.ui.theme.CapyTheme
-import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ThemePicker(
-    appPreferences: AppPreferences = koinInject(),
-    onChange: () -> Unit = {}
+    currentTheme: AppTheme,
+    pureBlackDarkMode: Boolean,
+    themeMode: ThemeMode,
+    onSelectTheme: (AppTheme) -> Unit,
 ) {
-    val currentTheme by appPreferences.appTheme.collectChangesWithCurrent()
-    val pureBlackDarkMode by appPreferences.pureBlackDarkMode.collectChangesWithCurrent()
-    val themeMode by appPreferences.themeMode.collectChangesWithCurrent()
-
     val appThemes = remember {
         AppTheme.entries
             .filterNot { it == AppTheme.MONET && Build.VERSION.SDK_INT < Build.VERSION_CODES.S }
@@ -112,8 +107,7 @@ fun ThemePicker(
                         }
                     },
                     onClick = {
-                        appPreferences.appTheme.set(appTheme)
-                        onChange()
+                        onSelectTheme(appTheme)
                         expanded = false
                     }
                 )
@@ -152,12 +146,14 @@ private fun ThemePreviewSquare() {
 @PreviewLightDark
 @Composable
 private fun ThemePickerPreview() {
-    val context = LocalContext.current
-    val preferences = AppPreferences(context)
-
     CapyTheme {
         Surface {
-            ThemePicker(appPreferences = preferences)
+            ThemePicker(
+                currentTheme = AppTheme.DEFAULT,
+                pureBlackDarkMode = false,
+                themeMode = ThemeMode.SYSTEM,
+                onSelectTheme = {},
+            )
         }
     }
 }

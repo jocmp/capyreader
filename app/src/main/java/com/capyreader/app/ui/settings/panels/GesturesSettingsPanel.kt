@@ -21,11 +21,10 @@ import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.components.TextSwitch
 import com.capyreader.app.ui.settings.PreferenceSelect
 import com.capyreader.app.ui.theme.CapyTheme
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun GesturesSettingPanel(
-    viewModel: GesturesSettingsViewModel = koinViewModel(),
+    viewModel: GesturesSettingsViewModel,
 ) {
     GesturesSettingsPanelView(
         updateBackAction = viewModel::updateBackAction,

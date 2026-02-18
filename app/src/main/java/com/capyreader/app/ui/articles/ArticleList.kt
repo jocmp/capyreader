@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import com.capyreader.app.ui.collectChangesWithDefault
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
@@ -178,15 +179,12 @@ fun rememberCurrentTime(): LocalDateTime {
 fun rememberArticleOptions(appPreferences: AppPreferences = koinInject()): ArticleRowOptions {
     val scope = rememberCoroutineScope()
 
-    val showSummary by appPreferences.articleListOptions.showSummary.stateIn(scope).collectAsState()
-    val showIcon by appPreferences.articleListOptions.showFeedIcons.stateIn(scope).collectAsState()
-    val showFeedName by appPreferences.articleListOptions.showFeedName.stateIn(scope)
-        .collectAsState()
-    val imagePreview by appPreferences.articleListOptions.imagePreview.stateIn(scope)
-        .collectAsState()
-    val fontScale by appPreferences.articleListOptions.fontScale.stateIn(scope).collectAsState()
-    val shortenTitles by appPreferences.articleListOptions.shortenTitles.stateIn(scope)
-        .collectAsState()
+    val showSummary by appPreferences.articleListOptions.showSummary.collectChangesWithDefault()
+    val showIcon by appPreferences.articleListOptions.showFeedIcons.collectChangesWithDefault()
+    val showFeedName by appPreferences.articleListOptions.showFeedName.collectChangesWithDefault()
+    val imagePreview by appPreferences.articleListOptions.imagePreview.collectChangesWithDefault()
+    val fontScale by appPreferences.articleListOptions.fontScale.collectChangesWithDefault()
+    val shortenTitles by appPreferences.articleListOptions.shortenTitles.collectChangesWithDefault()
 
     return ArticleRowOptions(
         showSummary = showSummary,

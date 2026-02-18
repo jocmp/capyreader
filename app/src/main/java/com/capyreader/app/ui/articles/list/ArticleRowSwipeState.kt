@@ -41,8 +41,8 @@ internal fun rememberArticleRowSwipeState(
     val swipeStart by appPreferences.articleListOptions.swipeStart.asState()
     val swipeEnd by appPreferences.articleListOptions.swipeEnd.asState()
 
-    val start = swipeActions(article, swipeStart)
-    val end = swipeActions(article, swipeEnd)
+    val start = swipeActions(article, swipeStart ?: RowSwipeOption.default)
+    val end = swipeActions(article, swipeEnd ?: RowSwipeOption.default)
 
     return ArticleRowSwipeState(
         start = start,

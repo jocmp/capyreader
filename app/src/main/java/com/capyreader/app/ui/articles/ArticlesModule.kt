@@ -34,13 +34,6 @@ internal val articlesModule = module {
 
         ArticleRenderer(
             context = context,
-            textSize = get<AppPreferences>().readerOptions.fontSize,
-            fontOption = get<AppPreferences>().readerOptions.fontFamily,
-            titleFontSize = get<AppPreferences>().readerOptions.titleFontSize,
-            textAlignment = get<AppPreferences>().readerOptions.titleTextAlignment,
-            titleFollowsBodyFont = get<AppPreferences>().readerOptions.titleFollowsBodyFont,
-            hideTopMargin = get<AppPreferences>().readerOptions.pinToolbars,
-            enableHorizontalScroll = get<AppPreferences>().readerOptions.enableHorizontaPagination,
             audioPlayerLabels = AudioPlayerLabels(
                 play = context.getString(R.string.audio_player_play),
                 pause = context.getString(R.string.audio_player_pause),
