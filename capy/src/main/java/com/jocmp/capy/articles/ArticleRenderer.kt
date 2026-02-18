@@ -30,6 +30,7 @@ class ArticleRenderer(
     ): String {
         val fontFamily = fontOption.get()
         val showPlaceholderTitle = article.title.isBlank()
+        val enableHorizontalScroll = enableHorizontalScroll.get()
 
         val title = if (showPlaceholderTitle) {
             article.feedName
@@ -59,7 +60,8 @@ class ArticleRenderer(
             "font_size" to "${textSize.get()}px",
             "font_family" to fontFamily.slug,
             "font_preload" to fontPreload(fontFamily),
-            "pre_white_space" to preWhiteSpace(),
+            "pre_white_space" to preWhiteSpace(enableHorizontalScroll),
+            "table_overflow_x" to tableOverflowX(enableHorizontalScroll),
             "title_font_size" to "${titleFontSize.get()}px",
             "title_text_align" to textAlignment.get().toCSS,
             "title_font_family" to titleFontFamily.slug,
@@ -82,8 +84,16 @@ class ArticleRenderer(
         }
     }
 
-    private fun preWhiteSpace(): String {
-        return if (enableHorizontalScroll.get()) {
+    private fun tableOverflowX(horizontalScroll: Boolean): String {
+        return if (horizontalScroll) {
+            "visible"
+        } else {
+            "auto"
+        }
+    }
+
+    private fun preWhiteSpace(horizontalScroll: Boolean): String {
+        return if (horizontalScroll) {
             "pre-wrap"
         } else {
             "pre"
