@@ -332,4 +332,7 @@
     <string name="article_actions_delete_page_title">刪除</string>
     <string name="article_actions_delete_page_confirm">刪除</string>
     <string name="article_actions_delete_page_message">您確定要刪除此頁面嗎？</string>
+    <string name="article_actions_save_externally">儲存</string>
+    <string name="article_actions_save_externally_success">已儲存</string>
+    <string name="article_actions_save_externally_failure">儲存失敗</string>
 </resources>
