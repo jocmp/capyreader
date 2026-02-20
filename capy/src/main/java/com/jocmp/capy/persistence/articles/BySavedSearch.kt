@@ -22,19 +22,35 @@ class BySavedSearch(private val database: Database) {
     ): Query<Article> {
         val (read, starred) = status.toStatusPair
 
-        return database.articlesBySavedSearchQueries.all(
-            savedSearchID = savedSearchID,
-            query = query,
-            read = read,
-            starred = starred,
-            limit = limit,
-            offset = offset,
-            lastReadAt = mapLastRead(read, since),
-            lastStarredAt = mapLastStarred(starred, since),
-            publishedSince = null,
-            newestFirst = isDescendingOrder(sortOrder),
-            mapper = ::listMapper
-        )
+        val queries = database.articlesBySavedSearchQueries
+
+        return if (isDescendingOrder(sortOrder)) {
+            queries.allNewestFirst(
+                savedSearchID = savedSearchID,
+                query = query,
+                read = read,
+                starred = starred,
+                limit = limit,
+                offset = offset,
+                lastReadAt = mapLastRead(read, since),
+                lastStarredAt = mapLastStarred(starred, since),
+                publishedSince = null,
+                mapper = ::listMapper
+            )
+        } else {
+            queries.allOldestFirst(
+                savedSearchID = savedSearchID,
+                query = query,
+                read = read,
+                starred = starred,
+                limit = limit,
+                offset = offset,
+                lastReadAt = mapLastRead(read, since),
+                lastStarredAt = mapLastStarred(starred, since),
+                publishedSince = null,
+                mapper = ::listMapper
+            )
+        }
     }
 
     fun unreadArticleIDs(

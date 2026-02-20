@@ -19,7 +19,7 @@ LIMIT 1;
 countAll:
 SELECT
  articles.feed_id,
- COUNT(DISTINCT articles.id)
+ COUNT(*)
 FROM articles
 JOIN article_statuses ON articles.id = article_statuses.article_id
 WHERE (article_statuses.read = :read OR :read IS NULL)
@@ -29,7 +29,7 @@ GROUP BY articles.feed_id;
 countAllBySavedSearch:
 SELECT
  saved_search_articles.saved_search_id,
- COUNT(DISTINCT articles.id)
+ COUNT(*)
 FROM articles
 JOIN article_statuses ON articles.id = article_statuses.article_id
 JOIN saved_search_articles ON articles.id = saved_search_articles.article_id

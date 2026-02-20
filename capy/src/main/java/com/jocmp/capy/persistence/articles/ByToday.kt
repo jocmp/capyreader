@@ -20,20 +20,33 @@ class ByToday(private val database: Database) {
         since: OffsetDateTime?,
     ): Query<Article> {
         val (read, starred) = status.toStatusPair
-        val newestFirst = isNewestFirst(sortOrder)
+        val queries = database.articlesByStatusQueries
 
-        return database.articlesByStatusQueries.all(
-            read = read,
-            starred = starred,
-            limit = limit,
-            offset = offset,
-            lastReadAt = mapLastRead(read, since),
-            lastStarredAt = mapLastStarred(starred, since),
-            publishedSince = mapTodayStartDate(),
-            query = query,
-            newestFirst = newestFirst,
-            mapper = ::listMapper
-        )
+        return if (isNewestFirst(sortOrder)) {
+            queries.allNewestFirst(
+                read = read,
+                starred = starred,
+                limit = limit,
+                offset = offset,
+                lastReadAt = mapLastRead(read, since),
+                lastStarredAt = mapLastStarred(starred, since),
+                publishedSince = mapTodayStartDate(),
+                query = query,
+                mapper = ::listMapper
+            )
+        } else {
+            queries.allOldestFirst(
+                read = read,
+                starred = starred,
+                limit = limit,
+                offset = offset,
+                lastReadAt = mapLastRead(read, since),
+                lastStarredAt = mapLastStarred(starred, since),
+                publishedSince = mapTodayStartDate(),
+                query = query,
+                mapper = ::listMapper
+            )
+        }
     }
 
     fun unreadArticleIDs(
