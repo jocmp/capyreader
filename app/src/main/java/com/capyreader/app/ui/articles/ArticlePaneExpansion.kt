@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 private val DetailFullscreenAnchor = PaneExpansionAnchor.Proportion(0f)
+private val ListFullscreenAnchor = PaneExpansionAnchor.Proportion(1f)
 
 const val DefaultPaneExpansionIndex = 4
 
@@ -34,6 +35,7 @@ private val ArticlePaneAnchors: List<PaneExpansionAnchor> = buildList {
 class ArticlePaneExpansion(
     val state: PaneExpansionState,
     val isFullscreen: Boolean,
+    val isDetailHidden: Boolean,
     private val anchors: List<PaneExpansionAnchor>,
     private val lastAnchorIndex: Int,
     private val scope: CoroutineScope,
@@ -100,10 +102,14 @@ fun rememberArticlePaneExpansion(
     val isFullscreen = !compact &&
             paneExpansionState.currentAnchor == DetailFullscreenAnchor
 
-    return remember(paneExpansionState, isFullscreen, lastAnchorIndex, anchors, scope) {
+    val isDetailHidden = !compact &&
+            paneExpansionState.currentAnchor == ListFullscreenAnchor
+
+    return remember(paneExpansionState, isFullscreen, isDetailHidden, lastAnchorIndex, anchors, scope) {
         ArticlePaneExpansion(
             state = paneExpansionState,
             isFullscreen = isFullscreen,
+            isDetailHidden = isDetailHidden,
             anchors = anchors,
             lastAnchorIndex = lastAnchorIndex,
             scope = scope,
