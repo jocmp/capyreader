@@ -145,9 +145,10 @@ interface Miniflux {
         suspend fun verifyCredentials(
             username: String,
             password: String,
-            baseURL: String
+            baseURL: String,
+            client: OkHttpClient = OkHttpClient(),
         ): Boolean {
-            val client = OkHttpClient.Builder()
+            val client = client.newBuilder()
                 .addInterceptor { chain ->
                     val request = chain.request().newBuilder()
                         .header("Authorization", Credentials.basic(username, password))
@@ -168,9 +169,10 @@ interface Miniflux {
 
         suspend fun verifyToken(
             token: String,
-            baseURL: String
+            baseURL: String,
+            client: OkHttpClient = OkHttpClient(),
         ): Response<User>? {
-            val client = OkHttpClient.Builder()
+            val client = client.newBuilder()
                 .addInterceptor { chain ->
                     val request = chain.request().newBuilder()
                         .header("X-Auth-Token", token)
