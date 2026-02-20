@@ -635,7 +635,7 @@ fun ArticleScreen(
                     ) {
                         CapyPlaceholder()
                     }
-                } else if (article != null && !paneExpansion.isDetailHidden) {
+                } else if (article != null) {
                     val isAudioPlaying by audioController.isPlaying.collectAsState()
                     val currentAudio by audioController.currentAudio.collectAsState()
 

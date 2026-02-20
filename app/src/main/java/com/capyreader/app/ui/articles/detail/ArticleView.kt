@@ -1,6 +1,7 @@
 package com.capyreader.app.ui.articles.detail
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
@@ -135,9 +136,10 @@ fun ArticleView(
     CompositionLocalProvider(
         LocalSnackbarHost provides snackbarHostState,
     ) {
-        Box(Modifier
+        BoxWithConstraints(Modifier
             .fillMaxSize()
             .nestedScroll(scrollState.connection)) {
+          if (maxWidth > 0.dp) {
             Box(
                 modifier = Modifier
                     .padding(contentPadding)
@@ -204,6 +206,7 @@ fun ArticleView(
                     .align(Alignment.BottomCenter)
                     .padding(bottom = 80.dp)
             )
+          }
         }
     }
 
