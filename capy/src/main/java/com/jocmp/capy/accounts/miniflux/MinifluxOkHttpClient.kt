@@ -1,8 +1,10 @@
 package com.jocmp.capy.accounts.miniflux
 
 import com.jocmp.capy.AccountPreferences
+import com.jocmp.capy.ClientCertManager
 import com.jocmp.capy.accounts.BasicAuthInterceptor
 import com.jocmp.capy.accounts.Source
+import com.jocmp.capy.accounts.clientCertAlias
 import com.jocmp.capy.accounts.httpClientBuilder
 import okhttp3.Credentials
 import okhttp3.Interceptor
@@ -10,9 +12,10 @@ import okhttp3.OkHttpClient
 import java.net.URI
 
 internal object MinifluxOkHttpClient {
-    fun forAccount(path: URI, preferences: AccountPreferences, source: Source): OkHttpClient {
+    fun forAccount(path: URI, preferences: AccountPreferences, source: Source, clientCertManager: ClientCertManager): OkHttpClient {
         return httpClientBuilder(cachePath = path)
             .addInterceptor(authInterceptor(source, preferences))
+            .clientCertAlias(clientCertManager, preferences.clientCertAlias.get())
             .build()
     }
 

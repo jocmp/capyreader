@@ -4,7 +4,7 @@ import com.jocmp.capy.ClientCertManager
 import com.jocmp.capy.accounts.Credentials
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.baseHttpClient
-import com.jocmp.capy.accounts.reader.ReaderOkHttpClient.clientCertAlias
+import com.jocmp.capy.accounts.clientCertAlias
 import com.jocmp.readerclient.GoogleReader
 import com.jocmp.readerclient.GoogleReader.Companion.UNAUTHORIZED_MESSAGE
 

@@ -82,7 +82,8 @@ data class Account(
             miniflux = Miniflux.forAccount(
                 path = cacheDirectory,
                 preferences = preferences,
-                source = source
+                source = source,
+                clientCertManager = clientCertManager,
             ),
             preferences = preferences,
         )

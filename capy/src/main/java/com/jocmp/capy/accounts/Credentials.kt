@@ -30,7 +30,9 @@ interface Credentials {
                     username = username,
                     secret = password,
                     url = normalizeURL(url),
-                    source = source
+                    clientCertAlias = clientCertAlias,
+                    source = source,
+                    clientCertManager = clientCertManager,
                 )
                 Source.FRESHRSS,
                 Source.READER -> ReaderCredentials(

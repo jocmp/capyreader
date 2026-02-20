@@ -1,5 +1,6 @@
 package com.jocmp.capy.accounts
 
+import com.jocmp.capy.ClientCertManager
 import com.jocmp.capy.UserAgentInterceptor
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -18,6 +19,14 @@ private fun baseHttpClientBuilder() =
         .connectTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
         .readTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
         .writeTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
+
+fun OkHttpClient.Builder.clientCertAlias(manager: ClientCertManager, clientCertAlias: String): OkHttpClient.Builder {
+    if (clientCertAlias.isNotEmpty()) {
+        val clientSSlSocketFactory = manager.buildSslSocketFactory(clientCertAlias)
+        sslSocketFactory(clientSSlSocketFactory.sslSocketFactory, clientSSlSocketFactory.trustManager)
+    }
+    return this
+}
 
 fun httpClientBuilder(cachePath: URI) =
     baseHttpClientBuilder()
