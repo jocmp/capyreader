@@ -75,7 +75,7 @@ class MediaPlaybackService : MediaSessionService() {
             .build()
 
         val notificationProvider = DefaultMediaNotificationProvider(this)
-        notificationProvider.setSmallIcon(R.drawable.capy_icon_inline)
+        notificationProvider.setSmallIcon(R.drawable.capy_icon_small)
         setMediaNotificationProvider(notificationProvider)
 
         val player = object : ForwardingPlayer(exoPlayer) {

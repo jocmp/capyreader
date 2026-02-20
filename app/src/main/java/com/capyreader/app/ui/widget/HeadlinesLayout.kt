@@ -63,7 +63,7 @@ fun HeadlinesLayout(articles: List<Article>) {
                 .fillMaxWidth()
         ) {
             Image(
-                provider = ImageProvider(R.drawable.capy_icon_inline),
+                provider = ImageProvider(R.drawable.capy_icon_small),
                 contentDescription = null,
                 colorFilter = ColorFilter.tint(GlanceTheme.colors.secondary),
                 modifier = GlanceModifier
