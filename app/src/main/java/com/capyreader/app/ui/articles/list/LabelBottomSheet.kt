@@ -19,7 +19,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
@@ -27,7 +26,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -36,7 +34,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -63,16 +60,6 @@ fun LabelBottomSheet(
     val listState = rememberLazyListState()
 
     ModalBottomSheet(onDismissRequest = onDismissRequest) {
-        val dividerAlpha by remember {
-            derivedStateOf {
-                if (listState.firstVisibleItemIndex > 0) {
-                    1f
-                } else {
-                    (listState.firstVisibleItemScrollOffset / 100f).coerceIn(0f, 1f)
-                }
-            }
-        }
-
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -99,7 +86,6 @@ fun LabelBottomSheet(
             }
         }
 
-        HorizontalDivider(modifier = Modifier.alpha(dividerAlpha))
         LazyColumn(state = listState) {
             items(savedSearches, key = { it.id }) { savedSearch ->
                 val isSelected = selectedLabels.contains(savedSearch.id)
