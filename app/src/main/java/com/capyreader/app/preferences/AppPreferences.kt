@@ -66,6 +66,9 @@ class AppPreferences(context: Context) {
     val pureBlackDarkMode: Preference<Boolean>
         get() = preferenceStore.getBoolean("pure_black_dark_mode", false)
 
+    val accentColors: Preference<Boolean>
+        get() = preferenceStore.getBoolean("accent_colors", false)
+
     val openLinksInternally: Preference<Boolean>
         get() = preferenceStore.getBoolean("open_links_internally", true)
 
