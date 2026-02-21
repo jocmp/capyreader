@@ -327,4 +327,7 @@
     <string name="article_actions_delete_page_title">Eliminar</string>
     <string name="article_actions_delete_page_message">Tes certeza de querer eliminar esta páxina?</string>
     <string name="article_actions_delete_page_confirm">Eliminar</string>
+    <string name="article_actions_save_externally">Gardar</string>
+    <string name="article_actions_save_externally_success">Gardado</string>
+    <string name="article_actions_save_externally_failure">Fallo ao gardar</string>
 </resources>

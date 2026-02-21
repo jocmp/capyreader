@@ -331,4 +331,7 @@
     <string name="article_actions_delete_page_title">Supprimer</string>
     <string name="article_actions_delete_page_message">Êtes-vous sûr de vouloir supprimer cette page ?</string>
     <string name="article_actions_delete_page_confirm">Supprimer</string>
+    <string name="article_actions_save_externally">Enregistrer</string>
+    <string name="article_actions_save_externally_success">Enregistré</string>
+    <string name="article_actions_save_externally_failure">Échec de l\'enregistrement</string>
 </resources>
