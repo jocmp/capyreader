@@ -1,0 +1,4 @@
+• Update custom parser for thedrive.com
+• Fix mTLS certificates for Miniflux accounts
+• Fix reader view when opening from fullscreen list on tablets
+• Update translations for French, Galician, Polish, and Chinese thanks to volunteers!
