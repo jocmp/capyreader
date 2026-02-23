@@ -111,7 +111,12 @@ class AccompanistWebViewClient(
                 .url(request.url.toString())
                 .apply {
                     request.requestHeaders.forEach { (key, value) ->
-                        header(key, value)
+                        // Skip Accept-Encoding so OkHttp's BridgeInterceptor manages it.
+                        // If we set it manually, OkHttp disables transparent decompression
+                        // and hands raw gzip/brotli bytes to the WebView, causing garbled text.
+                        if (!key.equals("Accept-Encoding", ignoreCase = true)) {
+                            header(key, value)
+                        }
                     }
                 }
                 .build()
