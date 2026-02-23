@@ -95,8 +95,8 @@ class AccompanistWebViewClient(
         // Strips X-Frame-Options to allow embeds like Slashdot
         // Issue #1605
         val isIframeNavigation = !request.isForMainFrame &&
-            accept?.startsWith("text/html") == true &&
-            url.startsWith("http")
+                accept?.startsWith("text/html") == true &&
+                url.startsWith("http")
 
         return isCorsRequest || isIframeNavigation
     }
@@ -110,14 +110,12 @@ class AccompanistWebViewClient(
             val okRequest = Request.Builder()
                 .url(request.url.toString())
                 .apply {
-                    request.requestHeaders.forEach { (key, value) ->
-                        // Skip Accept-Encoding so OkHttp's BridgeInterceptor manages it.
-                        // If we set it manually, OkHttp disables transparent decompression
-                        // and hands raw gzip/brotli bytes to the WebView, causing garbled text.
-                        if (!key.equals("Accept-Encoding", ignoreCase = true)) {
+                    request
+                        .requestHeaders
+                        .filterNot { it.key.equals("Accept-Encoding", ignoreCase = true) }
+                        .forEach { (key, value) ->
                             header(key, value)
                         }
-                    }
                 }
                 .build()
 
