@@ -95,8 +95,8 @@ class AccompanistWebViewClient(
         // Strips X-Frame-Options to allow embeds like Slashdot
         // Issue #1605
         val isIframeNavigation = !request.isForMainFrame &&
-            accept?.startsWith("text/html") == true &&
-            url.startsWith("http")
+                accept?.startsWith("text/html") == true &&
+                url.startsWith("http")
 
         return isCorsRequest || isIframeNavigation
     }
@@ -110,9 +110,12 @@ class AccompanistWebViewClient(
             val okRequest = Request.Builder()
                 .url(request.url.toString())
                 .apply {
-                    request.requestHeaders.forEach { (key, value) ->
-                        header(key, value)
-                    }
+                    request
+                        .requestHeaders
+                        .filterNot { it.key.equals("Accept-Encoding", ignoreCase = true) }
+                        .forEach { (key, value) ->
+                            header(key, value)
+                        }
                 }
                 .build()
 
