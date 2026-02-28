@@ -1,0 +1,6 @@
+This update is all about squashing bugs
+
+• Add custom parser for jalopnik.com
+• Fix broken text encoding for full content parsers
+•  Fix scroll distance for E-ink tap-to-scroll
+•  Update Bulgarian, Spanish, Indonesian, Italian, and Russian translations thanks to volunteers!
