@@ -334,4 +334,7 @@
     <string name="article_actions_delete_page_title">Изтриване</string>
     <string name="article_actions_delete_page_message">Сигурни ли сте, че искате да изтриете тази страница?</string>
     <string name="article_actions_delete_page_confirm">Изтриване</string>
+    <string name="article_actions_save_externally">Запазване</string>
+    <string name="article_actions_save_externally_success">Запазено</string>
+    <string name="article_actions_save_externally_failure">Запазването не бе успешно</string>
 </resources>

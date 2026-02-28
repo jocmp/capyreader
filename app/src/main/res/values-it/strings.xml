@@ -334,4 +334,7 @@
     <string name="article_actions_delete_page_title">Elimina</string>
     <string name="article_actions_delete_page_message">Sei sicuro di voler eliminare questa pagina?</string>
     <string name="article_actions_delete_page_confirm">Elimina</string>
+    <string name="article_actions_save_externally">Salva</string>
+    <string name="article_actions_save_externally_success">Salvato</string>
+    <string name="article_actions_save_externally_failure">Impossibile salvare</string>
 </resources>

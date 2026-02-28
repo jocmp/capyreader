@@ -293,7 +293,7 @@
     <string name="theme_sunset">Закат</string>
     <string name="settings_section_categories">Категории</string>
     <string name="settings_option_show_today_filter">Сегодня</string>
-    <string name="open_articles_in_browser">Открытые статьи в обозревателе</string>
+    <string name="open_articles_in_browser">Открыть статью в браузере</string>
     <string name="selected">Выбранно</string>
     <string name="auth_fields_freshrss_api_password">API-пароль</string>
     <string name="freshrss_visibility">Видимость</string>
@@ -303,7 +303,7 @@
     <string name="freshrss_visibility_option_main">Основной поток</string>
     <string name="freshrss_nav_headline_categories">Категории</string>
     <string name="theme_mode_label">Режим</string>
-    <string name="audio_player_play">Слушать</string>
+    <string name="audio_player_play">Озвучить</string>
     <string name="audio_player_pause">Перерыв</string>
     <string name="audio_player_close">Закрыть</string>
     <string name="audio_player_skip_back">Назад 30 сек</string>
@@ -331,4 +331,11 @@
     <string name="badge_style_simple">Простой</string>
     <string name="badge_style_exact">Точный</string>
     <string name="show_unread_badge">Показывать счетчик непрочитанных</string>
+    <string name="article_actions_save_externally">Сохранить</string>
+    <string name="article_actions_save_externally_success">Сохранено</string>
+    <string name="article_actions_save_externally_failure">Не удалось сохранить</string>
+    <string name="article_actions_delete_page">Удалить страницу</string>
+    <string name="article_actions_delete_page_title">Удалить</string>
+    <string name="article_actions_delete_page_message">Вы уверены, что хотите удалить эту страницу?</string>
+    <string name="article_actions_delete_page_confirm">Удалить</string>
 </resources>

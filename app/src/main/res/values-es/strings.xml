@@ -18,7 +18,7 @@
     <string name="edit_feed_submit">Guardar</string>
     <string name="dialog_cancel">Cancelar</string>
     <string name="folder_action_delete_title">Eliminar etiqueta</string>
-    <string name="folder_action_edit">Cambiar nombre</string>
+    <string name="folder_action_edit">Renombrar</string>
     <string name="feed_action_unsubscribe_title">Cancelar suscripción</string>
     <string name="settings">Abrir los ajustes</string>
     <string name="settings_remove_account_button_service">Cerrar sesión</string>
@@ -32,7 +32,7 @@
     <string name="account_settings_save_name">Nombre guardado</string>
     <string name="article_view_mark_as_read">Marcar como leído</string>
     <string name="article_view_star">Favorito</string>
-    <string name="refresh_manually_only">Sólo de forma manual</string>
+    <string name="refresh_manually_only">Solo de forma manual</string>
     <string name="refresh_minutes">Cada %1$d minutos</string>
     <plurals name="refresh_hours">
         <item quantity="one">Cada hora</item>
@@ -327,4 +327,11 @@
     <string name="badge_style_simple">Simple</string>
     <string name="badge_style_exact">Exacto</string>
     <string name="show_unread_badge">Mostrar Placa no Leída</string>
+    <string name="article_actions_save_externally">Guardar</string>
+    <string name="article_actions_save_externally_success">Guardado</string>
+    <string name="article_actions_save_externally_failure">Error al guardar</string>
+    <string name="article_actions_delete_page">Borrar página</string>
+    <string name="article_actions_delete_page_title">Borrar</string>
+    <string name="article_actions_delete_page_message">¿Estás seguro de que quieres borrar esta página?</string>
+    <string name="article_actions_delete_page_confirm">Borrar</string>
 </resources>
