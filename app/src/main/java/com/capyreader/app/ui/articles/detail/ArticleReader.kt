@@ -178,6 +178,7 @@ fun ScrollableWebView(webViewState: WebViewState, article: Article, showImages: 
     CornerTapGestureScroll(
         maxArticleHeight = maxHeight,
         scrollState = scrollState,
+        pinToolbars = pinToolbars,
     ) {
         ColumnScrollbar(state = scrollState) {
             Column(
