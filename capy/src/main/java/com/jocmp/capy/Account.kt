@@ -347,6 +347,10 @@ data class Account(
         return OPMLFile(this).opmlDocument()
     }
 
+    suspend fun starredBookmarksDocument(): String {
+        return StarredBookmarksFile(this).bookmarksDocument()
+    }
+
     suspend fun createNotifications(since: ZonedDateTime): List<ArticleNotification> {
         return articleRecords.createNotifications(since = since)
     }

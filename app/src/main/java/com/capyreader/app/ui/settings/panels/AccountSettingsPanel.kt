@@ -36,6 +36,7 @@ import com.capyreader.app.common.RowItem
 import com.capyreader.app.common.titleKey
 import com.capyreader.app.preferences.AppTheme
 import com.capyreader.app.transfers.OPMLExporter
+import com.capyreader.app.transfers.StarredExporter
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.settings.AccountSettingsStrings
 import com.capyreader.app.ui.theme.CapyTheme
@@ -58,11 +59,19 @@ fun AccountSettingsPanel(
         viewModel.startOPMLImport(uri = uri)
     }
 
-    val exporter = rememberLauncherForActivityResult(
+    val opmlExporter = rememberLauncherForActivityResult(
         ActivityResultContracts.CreateDocument("text/xml")
     ) { uri ->
         coroutineScope.launch {
             OPMLExporter(context).export(viewModel.account, target = uri)
+        }
+    }
+
+    val starredExporter = rememberLauncherForActivityResult(
+        ActivityResultContracts.CreateDocument("text/html")
+    ) { uri ->
+        coroutineScope.launch {
+            StarredExporter(context).export(viewModel.account, target = uri)
         }
     }
 
@@ -75,7 +84,10 @@ fun AccountSettingsPanel(
             importer.launch(listOf("text/xml", "text/x-opml", "application/*"))
         },
         onRequestExport = {
-            exporter.launch(OPMLExporter.DEFAULT_FILE_NAME)
+            opmlExporter.launch(OPMLExporter.DEFAULT_FILE_NAME)
+        },
+        onRequestStarredExport = {
+            starredExporter.launch(StarredExporter.DEFAULT_FILE_NAME)
         },
         importProgress = viewModel.importProgress,
         accountSource = viewModel.accountSource,
@@ -89,6 +101,7 @@ fun AccountSettingsPanelView(
     onRequestRemoveAccount: () -> Unit,
     onRequestImport: () -> Unit,
     onRequestExport: () -> Unit,
+    onRequestStarredExport: () -> Unit,
     accountSource: Source,
     accountURL: String,
     accountName: String,
@@ -150,6 +163,11 @@ fun AccountSettingsPanelView(
             RowItem {
                 OPMLExportButton(
                     onClick = onRequestExport,
+                )
+            }
+            RowItem {
+                StarredExportButton(
+                    onClick = onRequestStarredExport,
                 )
             }
         }
@@ -223,6 +241,7 @@ private fun AccountSettingsPanelViewPreview() {
             onRequestRemoveAccount = {},
             onRequestImport = {},
             onRequestExport = {},
+            onRequestStarredExport = {},
             accountSource = Source.FEEDBIN,
             accountURL = "",
             accountName = "test@example.com",
@@ -239,6 +258,7 @@ private fun AccountSettingsPanelViewLocalPreview() {
             onRequestRemoveAccount = {},
             onRequestImport = {},
             onRequestExport = {},
+            onRequestStarredExport = {},
             accountURL = "",
             accountSource = Source.LOCAL,
             accountName = "test@example.com",
