@@ -15,7 +15,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.isCompact
-import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
@@ -95,7 +94,6 @@ fun rememberArticlePaneExpansion(
         if (index in 1..listFullscreenIndex) {
             lastAnchorIndex = index
             appPreferences.paneExpansionIndex.set(index)
-            CapyLog.debug("scaffold_save_anchor", mapOf("index" to index))
         }
     }
 
