@@ -29,7 +29,7 @@ class ByArticleStatus(private val database: Database) {
                 limit = limit,
                 offset = offset,
                 lastReadAt = mapLastRead(read, since),
-                lastStarredAt = mapLastStarred(starred, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
                 publishedSince = null,
                 query = query,
                 mapper = ::listMapper
@@ -41,7 +41,7 @@ class ByArticleStatus(private val database: Database) {
                 limit = limit,
                 offset = offset,
                 lastReadAt = mapLastRead(read, since),
-                lastStarredAt = mapLastStarred(starred, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
                 publishedSince = null,
                 query = query,
                 mapper = ::listMapper
@@ -84,7 +84,7 @@ class ByArticleStatus(private val database: Database) {
             starred = starred,
             query = query,
             lastReadAt = mapLastRead(read, since),
-            lastStarredAt = mapLastStarred(starred, since),
+            lastUnstarredAt = mapLastUnstarred(starred, since),
             publishedSince = null
         )
     }

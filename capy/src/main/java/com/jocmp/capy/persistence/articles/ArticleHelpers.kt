@@ -14,7 +14,7 @@ internal fun mapLastRead(read: Boolean?, value: OffsetDateTime?): Long? {
     return null
 }
 
-internal fun mapLastStarred(starred: Boolean?, value: OffsetDateTime?): Long? {
+internal fun mapLastUnstarred(starred: Boolean?, value: OffsetDateTime?): Long? {
     if (starred != null) {
         return value?.toEpochSecond()
     }

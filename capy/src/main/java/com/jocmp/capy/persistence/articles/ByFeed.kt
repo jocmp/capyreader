@@ -35,7 +35,7 @@ class ByFeed(private val database: Database) {
                 limit = limit,
                 offset = offset,
                 lastReadAt = mapLastRead(read, since),
-                lastStarredAt = mapLastStarred(starred, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
                 publishedSince = null,
                 priorities = priority.inclusivePriorities,
                 mapper = ::listMapper
@@ -49,7 +49,7 @@ class ByFeed(private val database: Database) {
                 limit = limit,
                 offset = offset,
                 lastReadAt = mapLastRead(read, since),
-                lastStarredAt = mapLastStarred(starred, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
                 publishedSince = null,
                 priorities = priority.inclusivePriorities,
                 mapper = ::listMapper
@@ -95,7 +95,7 @@ class ByFeed(private val database: Database) {
             read = read,
             starred = starred,
             lastReadAt = mapLastRead(read, since),
-            lastStarredAt = mapLastStarred(starred, since),
+            lastUnstarredAt = mapLastUnstarred(starred, since),
             priorities = priority.inclusivePriorities,
             publishedSince = null
         )
