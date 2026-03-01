@@ -1,16 +1,19 @@
 package com.capyreader.app.ui.settings.panels
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonGroupDefaults
-import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Surface
@@ -27,6 +30,7 @@ import com.capyreader.app.R
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.common.RowItem
 import com.capyreader.app.preferences.AppPreferences
+import com.capyreader.app.preferences.AppTheme
 import com.capyreader.app.preferences.ReaderImageVisibility
 import com.capyreader.app.preferences.ThemeMode
 import com.capyreader.app.ui.articles.ArticleListFontScale
@@ -47,12 +51,16 @@ fun DisplaySettingsPanel(
     val pinArticleBars by viewModel.pinArticleBars.collectChangesWithCurrent()
     val improveTalkback by viewModel.improveTalkback.collectChangesWithCurrent()
     val markReadButtonPosition by viewModel.markReadButtonPosition.collectChangesWithCurrent()
+    val appTheme by viewModel.appPreferences.appTheme.collectChangesWithCurrent()
 
     DisplaySettingsPanelView(
         themeMode = viewModel.themeMode,
         updateThemeMode = viewModel::updateThemeMode,
+        appTheme = appTheme,
         pureBlackDarkMode = viewModel.pureBlackDarkMode,
         updatePureBlackDarkMode = viewModel::updatePureBlackDarkMode,
+        accentColors = viewModel.accentColors,
+        updateAccentColors = viewModel::updateAccentColors,
         appPreferences = viewModel.appPreferences,
         updatePinArticleBars = viewModel::updatePinArticleBars,
         pinArticleBars = pinArticleBars,
@@ -83,8 +91,11 @@ fun DisplaySettingsPanel(
 fun DisplaySettingsPanelView(
     themeMode: ThemeMode,
     updateThemeMode: (ThemeMode) -> Unit,
+    appTheme: AppTheme = AppTheme.default,
     pureBlackDarkMode: Boolean,
     updatePureBlackDarkMode: (Boolean) -> Unit,
+    accentColors: Boolean = false,
+    updateAccentColors: (Boolean) -> Unit = {},
     appPreferences: AppPreferences?,
     updatePinArticleBars: (enable: Boolean) -> Unit,
     pinArticleBars: Boolean,
@@ -120,6 +131,19 @@ fun DisplaySettingsPanelView(
                     checked = pureBlackDarkMode,
                     title = stringResource(R.string.settings_pure_black_dark_mode)
                 )
+            }
+            AnimatedVisibility(
+                visible = appTheme.supportsFeedAccentColor,
+                enter = expandVertically(),
+                exit = shrinkVertically(),
+            ) {
+                RowItem {
+                    TextSwitch(
+                        onCheckedChange = updateAccentColors,
+                        checked = accentColors,
+                        title = stringResource(R.string.settings_accent_colors)
+                    )
+                }
             }
             Box(Modifier.clickable { onNavigateToUnreadBadges() }) {
                 ListItem(

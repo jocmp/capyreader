@@ -36,6 +36,9 @@ enum class AppTheme {
             MONOCHROME -> R.string.theme_monochrome
         }
 
+    val supportsFeedAccentColor: Boolean
+        get() = this == MONOCHROME || this == MONET
+
     /** On the off chance someone has selected MONET on an older version, default them */
     fun normalized(): AppTheme {
         return if (this === MONET && Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {

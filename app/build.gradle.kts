@@ -132,6 +132,7 @@ dependencies {
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.session)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.palette)
     implementation(libs.androidx.paging.compose)
     implementation(libs.androidx.paging.runtime.ktx)
     implementation(libs.androidx.preferences)

@@ -30,7 +30,12 @@ import com.capyreader.app.ui.theme.colorschemes.SunsetColorScheme
 import com.capyreader.app.ui.theme.colorschemes.TachiyomiColorScheme
 import com.capyreader.app.ui.theme.colorschemes.applyPureBlack
 
-val LocalAppTheme = staticCompositionLocalOf { AppTheme.DEFAULT }
+data class AppThemeState(
+    val value: AppTheme = AppTheme.DEFAULT,
+    val isDark: Boolean = false,
+)
+
+val LocalAppTheme = staticCompositionLocalOf { AppThemeState() }
 
 @Composable
 fun CapyTheme(
@@ -57,7 +62,7 @@ fun CapyTheme(
         StatusBarColorListener(colorScheme, themeMode, pureBlack)
     }
 
-    CompositionLocalProvider(LocalAppTheme provides appTheme) {
+    CompositionLocalProvider(LocalAppTheme provides AppThemeState(appTheme, isDark)) {
         MaterialTheme(
             colorScheme = colorScheme,
             content = content,
