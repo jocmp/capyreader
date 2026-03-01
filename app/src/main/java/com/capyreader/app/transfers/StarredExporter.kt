@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.FileOutputStream
 
-class OPMLExporter(
+class StarredExporter(
     private val context: Context,
 ) {
     suspend fun export(account: Account, target: Uri?) {
@@ -17,7 +17,7 @@ class OPMLExporter(
 
         val result = runCatching {
             withContext(Dispatchers.IO) {
-                val source = account.opmlDocument().toByteArray()
+                val source = account.starredBookmarksDocument().toByteArray()
 
                 context.contentResolver.openFileDescriptor(target, "w")?.use { descriptor ->
                     FileOutputStream(descriptor.fileDescriptor).use {
@@ -28,14 +28,14 @@ class OPMLExporter(
         }
 
         val messageRes = result.fold(
-            onSuccess = { R.string.opml_exporter_success },
-            onFailure = { R.string.opml_exporter_failure }
+            onSuccess = { R.string.starred_exporter_success },
+            onFailure = { R.string.starred_exporter_failure }
         )
 
         context.toast(messageRes)
     }
 
     companion object {
-        const val DEFAULT_FILE_NAME = "subscriptions.xml"
+        const val DEFAULT_FILE_NAME = "starred.html"
     }
 }

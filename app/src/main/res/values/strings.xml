@@ -220,6 +220,9 @@
     <string name="settings_article_list_title">Article List</string>
     <string name="opml_exporter_success">Export complete</string>
     <string name="opml_exporter_failure">Export failed</string>
+    <string name="starred_export_button_text">Export Starred Articles</string>
+    <string name="starred_exporter_success">Export complete</string>
+    <string name="starred_exporter_failure">Export failed</string>
     <string name="settings_reader_title">Reader</string>
     <string name="settings_options_reader_pin_top_toolbar">Pin Toolbars</string>
 

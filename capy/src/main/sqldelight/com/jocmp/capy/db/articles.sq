@@ -204,6 +204,13 @@ markStarred:
 UPDATE article_statuses SET starred = :starred, last_unstarred_at = :lastUnstarredAt
 WHERE article_statuses.article_id = :articleID;
 
+starredExports:
+SELECT articles.title, articles.url, articles.published_at
+FROM articles
+JOIN article_statuses ON articles.id = article_statuses.article_id
+WHERE article_statuses.starred = 1
+ORDER BY articles.published_at DESC;
+
 deleteAllArticles {
   DELETE FROM article_statuses WHERE starred = 0 AND read = 1;
 
