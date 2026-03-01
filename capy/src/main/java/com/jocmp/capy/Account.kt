@@ -73,7 +73,8 @@ data class Account(
             feedbin = Feedbin.forAccount(
                 path = cacheDirectory,
                 preferences = preferences
-            )
+            ),
+            preferences = preferences,
         )
 
         Source.MINIFLUX,

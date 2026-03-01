@@ -44,6 +44,7 @@ internal class LocalAccountDelegate(
             is ArticleFilter.Folders -> refreshFolderFilter(filter, cutoffDate = cutoffDate)
             else -> refreshArticleFilter(cutoffDate)
         }
+        preferences.touchLastRefreshedAt()
 
         return Result.success(Unit)
     }
