@@ -51,6 +51,7 @@ internal class MinifluxAccountDelegate(
             refreshIntegrationStatus()
             refreshFeeds()
             refreshArticles()
+            preferences.touchLastRefreshedAt()
 
             Result.success(Unit)
         } catch (exception: IOException) {

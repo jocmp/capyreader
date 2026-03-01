@@ -21,6 +21,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -51,6 +53,7 @@ fun AccountSettingsPanel(
 ) {
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
+    val lastRefreshedAt by viewModel.lastRefreshedAt.collectAsState()
 
     val importer = rememberLauncherForActivityResult(
         GetOPMLContent()
@@ -81,6 +84,7 @@ fun AccountSettingsPanel(
         accountSource = viewModel.accountSource,
         accountURL = viewModel.accountURL,
         accountName = viewModel.accountName,
+        lastRefreshedAt = lastRefreshedAt,
     )
 }
 
@@ -92,6 +96,7 @@ fun AccountSettingsPanelView(
     accountSource: Source,
     accountURL: String,
     accountName: String,
+    lastRefreshedAt: LastRefreshed,
     importProgress: ImportProgress?,
 ) {
     val strings = AccountSettingsStrings.build(accountSource)
@@ -130,6 +135,17 @@ fun AccountSettingsPanelView(
                         )
                     }
                 }
+            }
+        }
+
+        FormSection(
+            title = stringResource(R.string.settings_section_refresh),
+        ) {
+            RowItem {
+                Text(
+                    text = lastRefreshed(lastRefreshedAt),
+                    color = colorScheme.onSurfaceVariant,
+                )
             }
         }
 
@@ -215,6 +231,15 @@ fun showImportButton(source: Source): Boolean {
     return source == Source.LOCAL
 }
 
+@Composable
+private fun lastRefreshed(lastRefreshed: LastRefreshed): String {
+    return when (lastRefreshed) {
+        is LastRefreshed.Never -> stringResource(R.string.settings_account_never_refreshed)
+        is LastRefreshed.Today -> stringResource(R.string.settings_account_refresh_value_today, lastRefreshed.time)
+        is LastRefreshed.Past -> stringResource(R.string.settings_account_refresh_value, lastRefreshed.date, lastRefreshed.time)
+    }
+}
+
 @Preview
 @Composable
 private fun AccountSettingsPanelViewPreview() {
@@ -226,6 +251,7 @@ private fun AccountSettingsPanelViewPreview() {
             accountSource = Source.FEEDBIN,
             accountURL = "",
             accountName = "test@example.com",
+            lastRefreshedAt = LastRefreshed.from(1700000000L),
             importProgress = null
         )
     }
@@ -242,6 +268,7 @@ private fun AccountSettingsPanelViewLocalPreview() {
             accountURL = "",
             accountSource = Source.LOCAL,
             accountName = "test@example.com",
+            lastRefreshedAt = LastRefreshed.Never,
             importProgress = ImportProgress(currentCount = 3, total = 9001)
         )
     }

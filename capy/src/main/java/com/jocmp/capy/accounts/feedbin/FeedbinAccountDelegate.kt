@@ -1,6 +1,7 @@
 package com.jocmp.capy.accounts.feedbin
 
 import com.jocmp.capy.AccountDelegate
+import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
@@ -42,7 +43,8 @@ import java.time.ZonedDateTime
 
 internal class FeedbinAccountDelegate(
     private val database: Database,
-    private val feedbin: Feedbin
+    private val feedbin: Feedbin,
+    private val preferences: AccountPreferences,
 ) : AccountDelegate {
     private val articleRecords = ArticleRecords(database)
     private val enclosureRecords = EnclosureRecords(database)
@@ -55,7 +57,8 @@ internal class FeedbinAccountDelegate(
             refreshFeeds()
             refreshTaggings()
             refreshSavedSearches()
-            refreshArticles(since = maxArrivedAt())
+            refreshArticles(since = preferences.lastRefreshedAt().toString())
+            preferences.touchLastRefreshedAt()
 
             Result.success(Unit)
         } catch (exception: IOException) {
@@ -69,10 +72,9 @@ internal class FeedbinAccountDelegate(
         val entryIDs = articleIDs.map { it.toLong() }
 
         return withErrorHandling {
-            entryIDs.chunked(MAX_CREATE_UNREAD_LIMIT).map { batchIDs ->
+            entryIDs.chunked(MAX_CREATE_UNREAD_LIMIT).forEach { batchIDs ->
                 feedbin.deleteUnreadEntries(UnreadEntriesRequest(unread_entries = batchIDs))
             }
-            Unit
         }
     }
 
@@ -250,7 +252,7 @@ internal class FeedbinAccountDelegate(
         }
     }
 
-    private suspend fun refreshArticles(since: String = maxArrivedAt()) {
+    private suspend fun refreshArticles(since: String = preferences.lastRefreshedAt().toString()) {
         refreshStarredEntries()
         refreshUnreadEntries()
         refreshAllArticles(since = since)
@@ -497,8 +499,6 @@ internal class FeedbinAccountDelegate(
             query = savedSearch.query
         )
     }
-
-    private fun maxArrivedAt() = articleRecords.maxArrivedAt().toString()
 
     private suspend fun fetchIcons(): List<Icon> {
         val response = feedbin.icons()

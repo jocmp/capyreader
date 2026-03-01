@@ -1,6 +1,7 @@
 package com.jocmp.capy.accounts.reader
 
 import com.jocmp.capy.AccountDelegate
+import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
@@ -46,6 +47,7 @@ internal class ReaderAccountDelegate(
     private val source: Source,
     private val database: Database,
     private val googleReader: GoogleReader,
+    private val preferences: AccountPreferences,
 ) : AccountDelegate {
     private var postToken = AtomicReference<String?>(null)
     private val articleRecords = ArticleRecords(database)
@@ -56,11 +58,19 @@ internal class ReaderAccountDelegate(
 
     override suspend fun refresh(filter: ArticleFilter, cutoffDate: ZonedDateTime?): Result<Unit> {
         return withErrorHandling {
-            if (filter.hasArticlesSelected()) {
-                refreshTopLevelArticles()
+            if (source == Source.FRESHRSS) {
+                refreshFeeds()
+                refreshAllSavedSearches()
+                refreshAllArticles(since = preferences.lastRefreshedAt().toEpochSecond())
+                fetchMissingArticles()
             } else {
-                refreshArticles(filter.toStream(source))
+                if (filter.hasArticlesSelected()) {
+                    refreshTopLevelArticles()
+                } else {
+                    refreshArticles(filter.toStream(source))
+                }
             }
+            preferences.touchLastRefreshedAt()
         }
     }
 
@@ -87,7 +97,10 @@ internal class ReaderAccountDelegate(
     override suspend fun addSavedSearch(articleID: String, savedSearchID: String): Result<Unit> {
         savedSearchRecords.upsertArticle(articleID = articleID, savedSearchID = savedSearchID)
 
-        return editTag(ids = listOf(articleID), addTag = Stream.UserLabel(savedSearchID)).onFailure {
+        return editTag(
+            ids = listOf(articleID),
+            addTag = Stream.UserLabel(savedSearchID)
+        ).onFailure {
             savedSearchRecords.removeArticle(articleID = articleID, savedSearchID = savedSearchID)
         }
     }
@@ -95,7 +108,10 @@ internal class ReaderAccountDelegate(
     override suspend fun removeSavedSearch(articleID: String, savedSearchID: String): Result<Unit> {
         savedSearchRecords.removeArticle(articleID = articleID, savedSearchID = savedSearchID)
 
-        return editTag(ids = listOf(articleID), removeTag = Stream.UserLabel(savedSearchID)).onFailure {
+        return editTag(
+            ids = listOf(articleID),
+            removeTag = Stream.UserLabel(savedSearchID)
+        ).onFailure {
             savedSearchRecords.upsertArticle(articleID = articleID, savedSearchID = savedSearchID)
         }
     }
@@ -260,6 +276,10 @@ internal class ReaderAccountDelegate(
         }
     }
 
+    private suspend fun refreshAllArticles(since: Long?) {
+        fetchPaginatedArticles(since = since, stream = Stream.ReadingList())
+    }
+
     private suspend fun refreshFeeds() {
         withResult(googleReader.subscriptionList()) { result ->
             val subscriptions = result.subscriptions
@@ -376,7 +396,7 @@ internal class ReaderAccountDelegate(
             refreshFeeds()
         }
 
-        if (stream is Stream.UserLabel) {
+        if (stream is UserLabel) {
             fetchPaginatedArticles(stream = stream)
         } else {
             refreshArticleState()

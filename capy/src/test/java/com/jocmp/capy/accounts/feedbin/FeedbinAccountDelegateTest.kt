@@ -1,8 +1,10 @@
 package com.jocmp.capy.accounts.feedbin
 
 import com.jocmp.capy.AccountDelegate
+import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
+import com.jocmp.capy.InMemoryDataStore
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.SubscriptionChoice
@@ -46,6 +48,7 @@ class FeedbinAccountDelegateTest {
     private lateinit var feedbin: Feedbin
     private lateinit var feedFixture: FeedFixture
     private lateinit var delegate: AccountDelegate
+    private lateinit var preferences: AccountPreferences
 
     private val subscriptions = listOf(
         Subscription(
@@ -127,7 +130,8 @@ class FeedbinAccountDelegateTest {
         database = InMemoryDatabaseProvider.build(accountID)
         feedFixture = FeedFixture(database)
         feedbin = mockk()
-        delegate = FeedbinAccountDelegate(database, feedbin)
+        preferences = AccountPreferences(InMemoryDataStore())
+        delegate = FeedbinAccountDelegate(database, feedbin, preferences)
 
         coEvery { feedbin.icons() }.returns(Response.success(listOf()))
     }
@@ -447,8 +451,42 @@ class FeedbinAccountDelegateTest {
     }
 
     @Test
+    fun refresh_setsLastRefreshedAt() = runTest {
+        coEvery { feedbin.subscriptions() }.returns(Response.success(subscriptions))
+        coEvery { feedbin.unreadEntries() }.returns(Response.success(emptyList()))
+        coEvery { feedbin.starredEntries() }.returns(Response.success(emptyList()))
+        coEvery { feedbin.taggings() }.returns(Response.success(taggings))
+        coEvery { feedbin.savedSearches() }.returns(Response.success(emptyList()))
+        coEvery {
+            feedbin.entries(
+                since = any(),
+                perPage = any(),
+                page = any(),
+                ids = any(),
+            )
+        }.returns(Response.success(emptyList()))
+
+        assertEquals(expected = 0L, actual = preferences.lastRefreshedAt.get())
+
+        delegate.refresh(ArticleFilter.default())
+
+        assertTrue(preferences.lastRefreshedAt.get() > 0L)
+    }
+
+    @Test
+    fun refresh_failure_doesNotUpdateLastRefreshedAt() = runTest {
+        coEvery { feedbin.subscriptions() }.throws(SocketTimeoutException("timeout"))
+
+        assertEquals(expected = 0L, actual = preferences.lastRefreshedAt.get())
+
+        delegate.refresh(ArticleFilter.default())
+
+        assertEquals(expected = 0L, actual = preferences.lastRefreshedAt.get())
+    }
+
+    @Test
     fun updateFeed_modifyTitle() = runTest {
-        val delegate = FeedbinAccountDelegate(database, feedbin)
+        val delegate = FeedbinAccountDelegate(database, feedbin, preferences)
         val feed = feedFixture.create()
 
         val subscription = Subscription(

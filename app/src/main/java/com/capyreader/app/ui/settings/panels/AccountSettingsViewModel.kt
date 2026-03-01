@@ -18,6 +18,9 @@ import com.jocmp.capy.Account
 import com.jocmp.capy.AccountManager
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.opml.ImportProgress
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class AccountSettingsViewModel(
@@ -34,6 +37,11 @@ class AccountSettingsViewModel(
     val accountURL = account.preferences.url.get()
 
     val accountName = account.preferences.username.get()
+
+    val lastRefreshedAt = account.preferences.lastRefreshedAt
+        .changes()
+        .map { LastRefreshed.from(it) }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), LastRefreshed.Never)
 
     fun removeAccount() {
         appPreferences.clearAll()
