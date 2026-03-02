@@ -145,7 +145,7 @@ class LoginViewModel(
             clientCertManager = clientCertManager,
         )
 
-    private fun createAccount(credentials: Credentials) {
+    private suspend fun createAccount(credentials: Credentials) {
         val accountID = accountManager.createAccount(
             username = credentials.username,
             password = credentials.secret,
@@ -159,7 +159,7 @@ class LoginViewModel(
         loadAccountModules()
     }
 
-    private fun selectAccount(id: String) {
+    private suspend fun selectAccount(id: String) {
         appPreferences.accountID.set(id)
     }
 

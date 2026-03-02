@@ -10,7 +10,6 @@ import androidx.datastore.preferences.core.edit
 import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.PreferenceStoreProvider
 import com.jocmp.capy.preferences.DataStorePreferenceStore
-import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.util.concurrent.ConcurrentHashMap
 
@@ -27,12 +26,10 @@ class DataStorePreferenceStoreProvider(
         return AccountPreferences(DataStorePreferenceStore(dataStore))
     }
 
-    override fun delete(accountID: String) {
+    override suspend fun delete(accountID: String) {
         val dataStore = instances.remove(accountID)
 
-        runBlocking {
-            dataStore?.edit { it.clear() }
-        }
+        dataStore?.edit { it.clear() }
 
         dataStoreFile(accountID).delete()
     }

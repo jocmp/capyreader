@@ -8,14 +8,14 @@ import kotlinx.coroutines.flow.StateFlow
 
 class InMemoryPreferencesProvider() : PreferenceStoreProvider {
     override fun build(accountID: String): AccountPreferences {
-        return AccountPreferences(store = InMemoryPreferenceStore())
+        return AccountPreferences(store = InMemoryDataStore())
     }
 
-    override fun delete(accountID: String) {
+    override suspend fun delete(accountID: String) {
     }
 }
 
-class InMemoryPreferenceStore : PreferenceStore {
+class InMemoryDataStore : PreferenceStore {
     private val store = mutableMapOf<String, Any>()
 
     override fun getString(key: String, defaultValue: String): Preference<String> {
@@ -51,7 +51,7 @@ class InMemoryPreferenceStore : PreferenceStore {
         return InMemoryPreference(key, defaultValue, store)
     }
 
-    override fun clearAll() {
+    override suspend fun clearAll() {
         store.clear()
     }
 }
@@ -66,15 +66,15 @@ class InMemoryPreference<T>(
     }
 
     @Suppress("UNCHECKED_CAST")
-    override fun get(): T {
+    override suspend fun get(): T {
         return store.getOrDefault(key, defaultValue) as T
     }
 
-    override fun isSet(): Boolean {
+    override suspend fun isSet(): Boolean {
         return store.contains(key)
     }
 
-    override fun delete() {
+    override suspend fun delete() {
         store.remove(key)
     }
 
@@ -90,7 +90,7 @@ class InMemoryPreference<T>(
         TODO("Not yet implemented")
     }
 
-    override fun set(value: T) {
+    override suspend fun set(value: T) {
         store[key] = value as Any
     }
 }

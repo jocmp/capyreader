@@ -2,7 +2,7 @@ package com.jocmp.capy
 
 import com.jocmp.capy.accounts.FakeFaviconPolicy
 import com.jocmp.capy.accounts.Source
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
@@ -29,14 +29,14 @@ class AccountManagerTest {
     }
 
     @Test
-    fun addAccount() {
+    fun addAccount() = runTest {
         val manager = buildManager()
 
         assertNotNull(manager.createAccount("foo", "bar", "", "", Source.LOCAL))
     }
 
     @Test
-    fun findById() = runBlocking {
+    fun findById() = runTest {
         val manager = buildManager()
 
         val accountID = manager.createAccount("foo", "bar", "", "", Source.LOCAL)
@@ -47,7 +47,7 @@ class AccountManagerTest {
     }
 
     @Test
-    fun findByIdMissingAccount() = runBlocking {
+    fun findByIdMissingAccount() = runTest {
         val manager = buildManager()
 
         assertNull(manager.findByID("bogus"))

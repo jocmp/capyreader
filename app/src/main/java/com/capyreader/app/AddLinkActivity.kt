@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.capyreader.app.common.toast
 import com.capyreader.app.preferences.AppPreferences
+import kotlinx.coroutines.runBlocking
 import com.capyreader.app.ui.addintent.AddLinkScreen
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.Account
@@ -21,7 +22,7 @@ class AddLinkActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (appPreferences.accountID.get().isBlank()) {
+        if (runBlocking { appPreferences.accountID.get() }.isBlank()) {
             toast(R.string.widget_headlines_account_error)
             finish()
             return

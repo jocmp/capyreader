@@ -75,7 +75,7 @@ fun rememberArticlePaneExpansion(
 ): ArticlePaneExpansion {
     val anchors = ArticlePaneAnchors
 
-    val savedIndex = appPreferences.paneExpansionIndex.get()
+    val savedIndex = appPreferences.paneExpansionIndex.defaultValue()
         .coerceIn(0, anchors.lastIndex)
 
     val paneExpansionState = rememberPaneExpansionState(

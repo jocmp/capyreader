@@ -4,7 +4,7 @@ import com.jocmp.capy.AccountDelegate
 import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
-import com.jocmp.capy.InMemoryPreferenceStore
+import com.jocmp.capy.InMemoryDataStore
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.SubscriptionChoice
@@ -130,7 +130,7 @@ class FeedbinAccountDelegateTest {
         database = InMemoryDatabaseProvider.build(accountID)
         feedFixture = FeedFixture(database)
         feedbin = mockk()
-        preferences = AccountPreferences(InMemoryPreferenceStore())
+        preferences = AccountPreferences(InMemoryDataStore())
         delegate = FeedbinAccountDelegate(database, feedbin, preferences)
 
         coEvery { feedbin.icons() }.returns(Response.success(listOf()))

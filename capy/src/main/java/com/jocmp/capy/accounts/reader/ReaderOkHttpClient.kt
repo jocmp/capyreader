@@ -9,16 +9,17 @@ import okhttp3.OkHttpClient
 import java.net.URI
 
 internal object ReaderOkHttpClient {
-    fun forAccount(path: URI, preferences: AccountPreferences, clientCertManager: ClientCertManager): OkHttpClient {
+    suspend fun forAccount(path: URI, preferences: AccountPreferences, clientCertManager: ClientCertManager): OkHttpClient {
+        val secret = preferences.password.get()
+        val clientCertAliasValue = preferences.clientCertAlias.get()
+
         return httpClientBuilder(cachePath = path)
             .addInterceptor(
                 BasicAuthInterceptor {
-                    val secret = preferences.password.get()
-
                     "GoogleLogin auth=${secret}"
                 }
             )
-            .clientCertAlias(clientCertManager, preferences.clientCertAlias.get())
+            .clientCertAlias(clientCertManager, clientCertAliasValue)
             .build()
     }
 }

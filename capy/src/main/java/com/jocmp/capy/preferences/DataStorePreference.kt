@@ -34,24 +34,18 @@ sealed class DataStorePreference<T>(
 
     override fun key(): String = key
 
-    override fun get(): T = runBlocking {
+    override suspend fun get(): T =
         dataStore.data.map { read(it) }.first()
+
+    override suspend fun set(value: T) {
+        dataStore.edit { write(it, value) }
     }
 
-    override fun set(value: T) {
-        runBlocking {
-            dataStore.edit { write(it, value) }
-        }
-    }
-
-    override fun isSet(): Boolean = runBlocking {
+    override suspend fun isSet(): Boolean =
         dataStore.data.map { it.contains(prefKey) }.first()
-    }
 
-    override fun delete() {
-        runBlocking {
-            dataStore.edit { it.remove(prefKey) }
-        }
+    override suspend fun delete() {
+        dataStore.edit { it.remove(prefKey) }
     }
 
     override fun defaultValue(): T = defaultValue
@@ -63,7 +57,7 @@ sealed class DataStorePreference<T>(
     }
 
     override fun stateIn(scope: CoroutineScope): StateFlow<T> {
-        return changes().stateIn(scope, SharingStarted.Eagerly, get())
+        return changes().stateIn(scope, SharingStarted.Eagerly, runBlocking { get() })
     }
 
     class StringPrimitive(

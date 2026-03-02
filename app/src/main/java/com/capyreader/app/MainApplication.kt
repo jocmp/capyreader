@@ -16,6 +16,7 @@ import com.google.android.material.color.DynamicColors
 import com.jocmp.capy.accounts.baseHttpClient
 import com.jocmp.capy.common.launchUI
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.runBlocking
 import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.workmanager.koin.workManagerFactory
@@ -32,7 +33,7 @@ class MainApplication : Application(), SingletonImageLoader.Factory {
             setupCommonModules()
         }
 
-        if (get<AppPreferences>().isLoggedIn) {
+        if (runBlocking { get<AppPreferences>().isLoggedIn() }) {
             loadAccountModules()
         }
 

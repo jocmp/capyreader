@@ -17,10 +17,12 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.ToggleButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,6 +43,7 @@ import com.capyreader.app.ui.fixtures.PreviewKoinApplication
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.articles.FontSize
 import com.jocmp.capy.articles.TextAlignment
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 import kotlin.math.roundToInt
 
@@ -49,19 +52,26 @@ fun ArticleStylePicker(
     appPreferences: AppPreferences = koinInject(),
 ) {
     val textSizes = FontSize.scale
+    val scope = rememberCoroutineScope()
 
-    var fontFamily by remember { mutableStateOf(appPreferences.readerOptions.fontFamily.get()) }
+    var fontFamily by remember { mutableStateOf(appPreferences.readerOptions.fontFamily.defaultValue()) }
     val fontSize by appPreferences.readerOptions.fontSize.collectChangesWithCurrent()
     var sliderPosition by remember(fontSize) {
         mutableFloatStateOf(textSizes.indexOf(fontSize).toFloat())
     }
 
-    var titleAlignment by remember { mutableStateOf(appPreferences.readerOptions.titleTextAlignment.get()) }
+    var titleAlignment by remember { mutableStateOf(appPreferences.readerOptions.titleTextAlignment.defaultValue()) }
     val titleFontSize by appPreferences.readerOptions.titleFontSize.collectChangesWithCurrent()
     var titleSliderPosition by remember(titleFontSize) {
         mutableFloatStateOf(textSizes.indexOf(titleFontSize).toFloat())
     }
-    var titleFollowsBodyFont by remember { mutableStateOf(appPreferences.readerOptions.titleFollowsBodyFont.get()) }
+    var titleFollowsBodyFont by remember { mutableStateOf(appPreferences.readerOptions.titleFollowsBodyFont.defaultValue()) }
+
+    LaunchedEffect(Unit) {
+        fontFamily = appPreferences.readerOptions.fontFamily.get()
+        titleAlignment = appPreferences.readerOptions.titleTextAlignment.get()
+        titleFollowsBodyFont = appPreferences.readerOptions.titleFollowsBodyFont.get()
+    }
 
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -71,7 +81,7 @@ fun ArticleStylePicker(
                 ArticleFontMenu(
                     updateFontFamily = { font ->
                         fontFamily = font
-                        appPreferences.readerOptions.fontFamily.set(font)
+                        scope.launch { appPreferences.readerOptions.fontFamily.set(font) }
                     },
                     fontOption = fontFamily
                 )
@@ -95,7 +105,7 @@ fun ArticleStylePicker(
                             onValueChange = {
                                 sliderPosition = it
                                 FontSize.scale.getOrNull(it.roundToInt())?.let { size ->
-                                    appPreferences.readerOptions.fontSize.set(size)
+                                    scope.launch { appPreferences.readerOptions.fontSize.set(size) }
                                 }
                             }
                         )
@@ -121,7 +131,7 @@ fun ArticleStylePicker(
                     alignment = titleAlignment,
                     onAlignmentChange = { alignment ->
                         titleAlignment = alignment
-                        appPreferences.readerOptions.titleTextAlignment.set(alignment)
+                        scope.launch { appPreferences.readerOptions.titleTextAlignment.set(alignment) }
                     }
                 )
             }
@@ -144,7 +154,7 @@ fun ArticleStylePicker(
                             onValueChange = {
                                 titleSliderPosition = it
                                 FontSize.scale.getOrNull(it.roundToInt())?.let { size ->
-                                    appPreferences.readerOptions.titleFontSize.set(size)
+                                    scope.launch { appPreferences.readerOptions.titleFontSize.set(size) }
                                 }
                             }
                         )
@@ -166,7 +176,7 @@ fun ArticleStylePicker(
                 TextSwitch(
                     onCheckedChange = { checked ->
                         titleFollowsBodyFont = checked
-                        appPreferences.readerOptions.titleFollowsBodyFont.set(checked)
+                        scope.launch { appPreferences.readerOptions.titleFollowsBodyFont.set(checked) }
                     },
                     checked = titleFollowsBodyFont,
                     title = stringResource(R.string.article_style_title_follow_body_font)
@@ -211,8 +221,10 @@ private fun TitleAlignmentButtons(
 @Composable
 private fun ArticleStyleBottomSheetPreview() {
     PreviewKoinApplication {
-        val preferences = koinInject<AppPreferences>().apply {
-            readerOptions.fontSize.set(16)
+        val preferences = koinInject<AppPreferences>()
+
+        LaunchedEffect(Unit) {
+            preferences.readerOptions.fontSize.set(16)
         }
 
         CapyTheme {

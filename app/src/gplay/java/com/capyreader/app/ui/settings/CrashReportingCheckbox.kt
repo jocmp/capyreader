@@ -2,6 +2,7 @@ package com.capyreader.app.ui.settings
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -15,20 +16,23 @@ import com.google.firebase.Firebase
 import com.google.firebase.crashlytics.crashlytics
 import org.koin.android.ext.koin.androidContext
 import org.koin.compose.KoinApplication
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 @Composable
 fun CrashReportingCheckbox(
     appPreferences: AppPreferences = koinInject()
 ) {
+    val scope = rememberCoroutineScope()
     val (enableCrashReporting, setCrashReportingEnabled) = rememberSaveable {
-        mutableStateOf(appPreferences.crashReporting.get())
+        mutableStateOf(appPreferences.crashReporting.defaultValue())
     }
 
     val updateCrashReporting = { enabled: Boolean ->
         setCrashReportingEnabled(enabled)
         Firebase.crashlytics.isCrashlyticsCollectionEnabled = enabled
-        appPreferences.crashReporting.set(enabled)
+        scope.launch { appPreferences.crashReporting.set(enabled) }
+        Unit
     }
 
     TextSwitch(

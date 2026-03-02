@@ -3,7 +3,6 @@ package com.jocmp.capy.preferences
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import kotlinx.coroutines.runBlocking
 
 class DataStorePreferenceStore(
     private val dataStore: DataStore<Preferences>,
@@ -48,9 +47,7 @@ class DataStorePreferenceStore(
         )
     }
 
-    override fun clearAll() {
-        runBlocking {
-            dataStore.edit { it.clear() }
-        }
+    override suspend fun clearAll() {
+        dataStore.edit { it.clear() }
     }
 }

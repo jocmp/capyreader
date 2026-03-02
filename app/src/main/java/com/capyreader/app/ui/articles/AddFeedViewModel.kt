@@ -13,6 +13,7 @@ import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.withUIContext
 import com.jocmp.capy.preferences.getAndSet
+import kotlinx.coroutines.launch
 
 class AddFeedViewModel(
     val account: Account,
@@ -61,8 +62,10 @@ class AddFeedViewModel(
     }
 
     fun selectFeed(id: String) {
-        appPreferences.filter.getAndSet {
-            ArticleFilter.Feeds(feedID = id, folderTitle = null, it.status)
+        viewModelScope.launch {
+            appPreferences.filter.getAndSet {
+                ArticleFilter.Feeds(feedID = id, folderTitle = null, it.status)
+            }
         }
     }
 }

@@ -459,7 +459,7 @@ class ArticleScreenViewModel(
 
     fun clearArticle() {
         _article = null
-        appPreferences.articleID.delete()
+        viewModelScope.launch { appPreferences.articleID.delete() }
     }
 
     fun startSearch() {
@@ -568,7 +568,7 @@ class ArticleScreenViewModel(
     }
 
     private fun updateFilter(filter: ArticleFilter) {
-        appPreferences.filter.set(filter)
+        viewModelScope.launch { appPreferences.filter.set(filter) }
 
         clearArticle()
 
@@ -746,8 +746,11 @@ class ArticleScreenViewModel(
     private val latestFilter: ArticleFilter
         get() = filter.value
 
+    private val _enableStickyFullContent =
+        appPreferences.enableStickyFullContent.stateIn(viewModelScope)
+
     private val enableStickyFullContent: Boolean
-        get() = appPreferences.enableStickyFullContent.get()
+        get() = _enableStickyFullContent.value
     private val context: Context
         get() = application.applicationContext
 

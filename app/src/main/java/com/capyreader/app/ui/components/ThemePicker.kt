@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,6 +38,7 @@ import com.capyreader.app.preferences.AppTheme
 import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.fixtures.PreviewKoinApplication
 import com.capyreader.app.ui.theme.CapyTheme
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,6 +47,7 @@ fun ThemePicker(
     appPreferences: AppPreferences = koinInject(),
     onChange: () -> Unit = {}
 ) {
+    val scope = rememberCoroutineScope()
     val currentTheme by appPreferences.appTheme.collectChangesWithCurrent()
     val pureBlackDarkMode by appPreferences.pureBlackDarkMode.collectChangesWithCurrent()
     val themeMode by appPreferences.themeMode.collectChangesWithCurrent()
@@ -112,7 +115,7 @@ fun ThemePicker(
                         }
                     },
                     onClick = {
-                        appPreferences.appTheme.set(appTheme)
+                        scope.launch { appPreferences.appTheme.set(appTheme) }
                         onChange()
                         expanded = false
                     }

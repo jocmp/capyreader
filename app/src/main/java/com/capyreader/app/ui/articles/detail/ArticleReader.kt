@@ -224,7 +224,7 @@ fun rememberImageVisibility(appPreferences: AppPreferences = koinInject()): Bool
     val imagePreference by appPreferences.readerOptions
         .imageVisibility
         .changes()
-        .collectAsState(appPreferences.readerOptions.imageVisibility.get())
+        .collectAsState(appPreferences.readerOptions.imageVisibility.defaultValue())
 
     val connectivity = LocalConnectivity.current
 

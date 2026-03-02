@@ -12,26 +12,27 @@ import okhttp3.OkHttpClient
 import java.net.URI
 
 internal object MinifluxOkHttpClient {
-    fun forAccount(path: URI, preferences: AccountPreferences, source: Source, clientCertManager: ClientCertManager): OkHttpClient {
+    suspend fun forAccount(path: URI, preferences: AccountPreferences, source: Source, clientCertManager: ClientCertManager): OkHttpClient {
+        val username = preferences.username.get()
+        val password = preferences.password.get()
+        val clientCertAliasValue = preferences.clientCertAlias.get()
+
         return httpClientBuilder(cachePath = path)
-            .addInterceptor(authInterceptor(source, preferences))
-            .clientCertAlias(clientCertManager, preferences.clientCertAlias.get())
+            .addInterceptor(authInterceptor(source, username, password))
+            .clientCertAlias(clientCertManager, clientCertAliasValue)
             .build()
     }
 
-    private fun authInterceptor(source: Source, preferences: AccountPreferences): Interceptor {
+    private fun authInterceptor(source: Source, username: String, password: String): Interceptor {
         return if (source == Source.MINIFLUX_TOKEN) {
             Interceptor { chain ->
                 val request = chain.request().newBuilder()
-                    .header("X-Auth-Token", preferences.password.get())
+                    .header("X-Auth-Token", password)
                     .build()
                 chain.proceed(request)
             }
         } else {
             BasicAuthInterceptor {
-                val username = preferences.username.get()
-                val password = preferences.password.get()
-
                 Credentials.basic(username, password)
             }
         }

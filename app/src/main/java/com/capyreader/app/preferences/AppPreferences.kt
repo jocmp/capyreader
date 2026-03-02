@@ -22,8 +22,7 @@ class AppPreferences(private val preferenceStore: PreferenceStore) {
 
     val articleListOptions = ArticleListOptions(preferenceStore)
 
-    val isLoggedIn
-        get() = accountID.get().isNotBlank()
+    suspend fun isLoggedIn() = accountID.get().isNotBlank()
 
     val accountID: Preference<String>
         get() = preferenceStore.getString("account_id")
@@ -82,7 +81,7 @@ class AppPreferences(private val preferenceStore: PreferenceStore) {
     val badgeStyle: Preference<BadgeStyle>
         get() = preferenceStore.getEnum("badge_style", BadgeStyle.default)
 
-    fun clearAll() {
+    suspend fun clearAll() {
         preferenceStore.clearAll()
     }
 

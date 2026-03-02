@@ -7,7 +7,7 @@ import com.jocmp.minifluxclient.Miniflux
 import java.net.URI
 
 
-fun Miniflux.Companion.forAccount(path: URI, preferences: AccountPreferences, source: Source, clientCertManager: ClientCertManager) =
+suspend fun Miniflux.Companion.forAccount(path: URI, preferences: AccountPreferences, source: Source, clientCertManager: ClientCertManager) =
     create(
         client = MinifluxOkHttpClient.forAccount(path, preferences, source, clientCertManager),
         baseURL = preferences.url.get()

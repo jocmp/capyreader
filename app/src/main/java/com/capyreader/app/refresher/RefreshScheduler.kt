@@ -13,11 +13,12 @@ class RefreshScheduler(
     private val context: Context,
     private val appPreferences: AppPreferences,
 ) {
-    val refreshInterval
-        get() = appPreferences.refreshInterval.get()
+    suspend fun refreshInterval() = appPreferences.refreshInterval.get()
 
-    fun update(interval: RefreshInterval) {
-        if (interval == refreshInterval) {
+    suspend fun update(interval: RefreshInterval) {
+        val currentInterval = refreshInterval()
+
+        if (interval == currentInterval) {
             return
         }
 
@@ -28,12 +29,12 @@ class RefreshScheduler(
         val time = interval.toTime
 
         if (time == null) {
-            CapyLog.info("cancel_refresh", mapOf("interval" to refreshInterval))
+            CapyLog.info("cancel_refresh", mapOf("interval" to interval))
             workManager.cancelUniqueWork(WORK_NAME)
             return
         }
 
-        CapyLog.info("enable_refresh", mapOf("interval" to refreshInterval))
+        CapyLog.info("enable_refresh", mapOf("interval" to interval))
 
         val (repeatInterval, timeUnit) = time
 
