@@ -11,6 +11,7 @@ import com.jocmp.capy.accounts.feedbin.FeedbinAccountDelegate.Companion.MAX_CREA
 import com.jocmp.capy.accounts.withErrorHandling
 import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.common.launchIO
+import com.jocmp.capy.common.toDateTimeFromSeconds
 import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.common.withResult
 import com.jocmp.capy.db.Database
@@ -61,7 +62,7 @@ internal class ReaderAccountDelegate(
             if (source == Source.FRESHRSS) {
                 refreshFeeds()
                 refreshAllSavedSearches()
-                refreshAllArticles(since = preferences.lastRefreshedAt().toEpochSecond())
+                refreshAllArticles(since = lastRefreshedAt().toEpochSecond())
                 fetchMissingArticles()
             } else {
                 if (filter.hasArticlesSelected()) {
@@ -593,6 +594,17 @@ internal class ReaderAccountDelegate(
 
     private fun taggingID(subscription: Subscription, category: Category): String {
         return "${subscription.id}:${category.id}"
+    }
+
+
+    suspend fun lastRefreshedAt(): ZonedDateTime {
+        val epoch = preferences.lastRefreshedAt.get()
+
+        return if (epoch > 0L) {
+            epoch.toDateTimeFromSeconds
+        } else {
+            TimeHelpers.nowUTC().minusMonths(3)
+        }
     }
 
     companion object {

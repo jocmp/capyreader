@@ -12,6 +12,7 @@ import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.host
 import com.jocmp.capy.common.toDateTime
+import com.jocmp.capy.common.toDateTimeFromSeconds
 import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.common.withResult
 import com.jocmp.capy.db.Database
@@ -57,7 +58,7 @@ internal class FeedbinAccountDelegate(
             refreshFeeds()
             refreshTaggings()
             refreshSavedSearches()
-            refreshArticles(since = preferences.lastRefreshedAt().toString())
+            refreshArticles(since = lastRefreshedAt())
             preferences.touchLastRefreshedAt()
 
             Result.success(Unit)
@@ -154,7 +155,7 @@ internal class FeedbinAccountDelegate(
 
                 if (feed != null) {
                     coroutineScope {
-                        launch { refreshArticles() }
+                        launch { refreshArticles(since = lastRefreshedAt()) }
                     }
 
                     AddFeedResult.Success(feed)
@@ -252,7 +253,7 @@ internal class FeedbinAccountDelegate(
         }
     }
 
-    private suspend fun refreshArticles(since: String = preferences.lastRefreshedAt().toString()) {
+    private suspend fun refreshArticles(since: String) {
         refreshStarredEntries()
         refreshUnreadEntries()
         refreshAllArticles(since = since)
@@ -499,6 +500,18 @@ internal class FeedbinAccountDelegate(
             query = savedSearch.query
         )
     }
+
+    private suspend fun lastRefreshedAt(): String {
+        val refreshedAt = preferences.lastRefreshedAt.get()
+
+        if (refreshedAt == 0L) {
+            return maxArrivedAt()
+        }
+
+        return refreshedAt.toDateTimeFromSeconds.toString()
+    }
+
+    private fun maxArrivedAt() = articleRecords.maxArrivedAt().toString()
 
     private suspend fun fetchIcons(): List<Icon> {
         val response = feedbin.icons()
