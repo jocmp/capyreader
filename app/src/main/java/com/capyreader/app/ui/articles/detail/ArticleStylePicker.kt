@@ -20,7 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -54,24 +53,18 @@ fun ArticleStylePicker(
     val textSizes = FontSize.scale
     val scope = rememberCoroutineScope()
 
-    var fontFamily by remember { mutableStateOf(appPreferences.readerOptions.fontFamily.defaultValue()) }
+    val fontFamily by appPreferences.readerOptions.fontFamily.collectChangesWithCurrent()
     val fontSize by appPreferences.readerOptions.fontSize.collectChangesWithCurrent()
     var sliderPosition by remember(fontSize) {
         mutableFloatStateOf(textSizes.indexOf(fontSize).toFloat())
     }
 
-    var titleAlignment by remember { mutableStateOf(appPreferences.readerOptions.titleTextAlignment.defaultValue()) }
+    val titleAlignment by appPreferences.readerOptions.titleTextAlignment.collectChangesWithCurrent()
     val titleFontSize by appPreferences.readerOptions.titleFontSize.collectChangesWithCurrent()
     var titleSliderPosition by remember(titleFontSize) {
         mutableFloatStateOf(textSizes.indexOf(titleFontSize).toFloat())
     }
-    var titleFollowsBodyFont by remember { mutableStateOf(appPreferences.readerOptions.titleFollowsBodyFont.defaultValue()) }
-
-    LaunchedEffect(Unit) {
-        fontFamily = appPreferences.readerOptions.fontFamily.get()
-        titleAlignment = appPreferences.readerOptions.titleTextAlignment.get()
-        titleFollowsBodyFont = appPreferences.readerOptions.titleFollowsBodyFont.get()
-    }
+    val titleFollowsBodyFont by appPreferences.readerOptions.titleFollowsBodyFont.collectChangesWithCurrent()
 
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -80,7 +73,6 @@ fun ArticleStylePicker(
             RowItem {
                 ArticleFontMenu(
                     updateFontFamily = { font ->
-                        fontFamily = font
                         scope.launch { appPreferences.readerOptions.fontFamily.set(font) }
                     },
                     fontOption = fontFamily
@@ -130,7 +122,6 @@ fun ArticleStylePicker(
                 TitleAlignmentButtons(
                     alignment = titleAlignment,
                     onAlignmentChange = { alignment ->
-                        titleAlignment = alignment
                         scope.launch { appPreferences.readerOptions.titleTextAlignment.set(alignment) }
                     }
                 )
@@ -175,7 +166,6 @@ fun ArticleStylePicker(
             RowItem {
                 TextSwitch(
                     onCheckedChange = { checked ->
-                        titleFollowsBodyFont = checked
                         scope.launch { appPreferences.readerOptions.titleFollowsBodyFont.set(checked) }
                     },
                     checked = titleFollowsBodyFont,

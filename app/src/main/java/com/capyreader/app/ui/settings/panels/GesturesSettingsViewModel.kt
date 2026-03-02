@@ -11,6 +11,7 @@ import com.capyreader.app.preferences.ArticleVerticalSwipe
 import com.capyreader.app.preferences.BackAction
 import com.capyreader.app.preferences.RowSwipeOption
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class GesturesSettingsViewModel(
     private val appPreferences: AppPreferences
@@ -43,7 +44,7 @@ class GesturesSettingsViewModel(
         private set
 
     init {
-        viewModelScope.launch {
+        runBlocking {
             backAction = listOptions.backAction.get()
             readerTopSwipe = readerOptions.topSwipeGesture.get()
             rowSwipeStart = listOptions.swipeStart.get()
@@ -58,13 +59,11 @@ class GesturesSettingsViewModel(
 
     fun updateBackAction(action: BackAction) {
         backAction = action
-
         viewModelScope.launch { listOptions.backAction.set(action) }
     }
 
     fun updateImproveTalkback(improve: Boolean) {
         improveTalkback = improve
-
         viewModelScope.launch {
             readerOptions.improveTalkback.set(improve)
 
@@ -81,43 +80,36 @@ class GesturesSettingsViewModel(
 
     fun updateReaderTopSwipe(swipe: ArticleVerticalSwipe) {
         readerTopSwipe = swipe
-
         viewModelScope.launch { readerOptions.topSwipeGesture.set(swipe) }
     }
 
     fun updateReaderBottomSwipe(swipe: ArticleVerticalSwipe) {
         readerBottomSwipe = swipe
-
         viewModelScope.launch { readerOptions.bottomSwipeGesture.set(swipe) }
     }
 
     fun updateRowSwipeStart(swipe: RowSwipeOption) {
         rowSwipeStart = swipe
-
         viewModelScope.launch { listOptions.swipeStart.set(swipe) }
     }
 
     fun updateHorizontalPagination(scroll: Boolean) {
         enableHorizontalPagination = scroll
-
         viewModelScope.launch { readerOptions.enableHorizontaPagination.set(scroll) }
     }
 
     fun updateRowSwipeEnd(swipe: RowSwipeOption) {
         rowSwipeEnd = swipe
-
         viewModelScope.launch { listOptions.swipeEnd.set(swipe) }
     }
 
     fun updateListSwipeBottom(swipe: ArticleListVerticalSwipe) {
         listSwipeBottom = swipe
-
         viewModelScope.launch { listOptions.swipeBottom.set(swipe) }
     }
 
     fun updatePagingTapGesture(enabled: Boolean) {
         enablePagingTapGesture = enabled
-
         viewModelScope.launch { readerOptions.enablePagingTapGesture.set(enabled) }
     }
 

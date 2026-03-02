@@ -14,6 +14,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.capyreader.app.preferences.AppPreferences
+import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.isCompact
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -75,7 +76,8 @@ fun rememberArticlePaneExpansion(
 ): ArticlePaneExpansion {
     val anchors = ArticlePaneAnchors
 
-    val savedIndex = appPreferences.paneExpansionIndex.defaultValue()
+    val savedIndex = appPreferences.paneExpansionIndex.collectChangesWithCurrent()
+        .value
         .coerceIn(0, anchors.lastIndex)
 
     val paneExpansionState = rememberPaneExpansionState(

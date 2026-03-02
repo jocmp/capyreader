@@ -5,21 +5,19 @@ import com.jocmp.capy.ClientCertManager
 import com.jocmp.capy.accounts.BasicAuthInterceptor
 import com.jocmp.capy.accounts.clientCertAlias
 import com.jocmp.capy.accounts.httpClientBuilder
+import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import java.net.URI
 
 internal object ReaderOkHttpClient {
-    suspend fun forAccount(path: URI, preferences: AccountPreferences, clientCertManager: ClientCertManager): OkHttpClient {
-        val secret = preferences.password.get()
-        val clientCertAliasValue = preferences.clientCertAlias.get()
-
+    fun forAccount(path: URI, preferences: AccountPreferences, clientCertManager: ClientCertManager): OkHttpClient {
         return httpClientBuilder(cachePath = path)
             .addInterceptor(
                 BasicAuthInterceptor {
-                    "GoogleLogin auth=${secret}"
+                    runBlocking { "GoogleLogin auth=${preferences.password.get()}" }
                 }
             )
-            .clientCertAlias(clientCertManager, clientCertAliasValue)
+            .clientCertAlias(clientCertManager, runBlocking { preferences.clientCertAlias.get() })
             .build()
     }
 }

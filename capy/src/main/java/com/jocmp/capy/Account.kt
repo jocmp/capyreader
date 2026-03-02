@@ -443,10 +443,10 @@ data class Account(
 
 private fun <T> missingFolderError() = Result.failure<T>(Throwable("Folder not found"))
 
-private suspend fun Feedbin.Companion.forAccount(path: URI, preferences: AccountPreferences) =
+private fun Feedbin.Companion.forAccount(path: URI, preferences: AccountPreferences) =
     create(client = FeedbinOkHttpClient.forAccount(path, preferences))
 
-internal suspend fun buildAccountDelegate(
+internal fun buildAccountDelegate(
     source: Source,
     database: Database,
     cacheDirectory: URI,

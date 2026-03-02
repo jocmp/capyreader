@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -35,6 +34,7 @@ import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.articles.ColumnScrollbar
 import com.capyreader.app.ui.articles.media.ImageSaver
+import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.components.WebView
 import com.capyreader.app.ui.components.WebViewState
 import com.capyreader.app.ui.components.rememberSaveableShareLink
@@ -223,8 +223,7 @@ fun ScrollableWebView(webViewState: WebViewState, article: Article, showImages: 
 fun rememberImageVisibility(appPreferences: AppPreferences = koinInject()): Boolean {
     val imagePreference by appPreferences.readerOptions
         .imageVisibility
-        .changes()
-        .collectAsState(appPreferences.readerOptions.imageVisibility.defaultValue())
+        .collectChangesWithCurrent()
 
     val connectivity = LocalConnectivity.current
 

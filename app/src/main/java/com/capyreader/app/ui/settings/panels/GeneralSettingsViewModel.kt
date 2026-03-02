@@ -13,8 +13,8 @@ import com.jocmp.capy.Account
 import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.preferences.getAndSet
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class GeneralSettingsViewModel(
     private val refreshScheduler: RefreshScheduler,
@@ -56,7 +56,7 @@ class GeneralSettingsViewModel(
         .stateIn(viewModelScope)
 
     init {
-        viewModelScope.launch {
+        runBlocking {
             refreshInterval = appPreferences.refreshInterval.get()
             autoDelete = account.preferences.autoDelete.get()
             canOpenLinksInternally = appPreferences.openLinksInternally.get()

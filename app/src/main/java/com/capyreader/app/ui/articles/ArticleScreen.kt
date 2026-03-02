@@ -123,7 +123,7 @@ fun ArticleScreen(
     val scope = rememberCoroutineScope()
     val refreshInterval by appPreferences
         .refreshInterval
-        .collectChangesWithDefault()
+        .collectChangesWithCurrent()
 
     val canSwipeToNextFeed = nextFilter != null
     val context = LocalContext.current
@@ -215,7 +215,7 @@ fun ArticleScreen(
             viewModel.dismissUnauthorizedMessage()
             setUpdatePasswordDialogOpen(true)
         }
-        val enableMarkReadOnScroll by appPreferences.articleListOptions.markReadOnScroll.collectChangesWithDefault()
+        val enableMarkReadOnScroll by appPreferences.articleListOptions.markReadOnScroll.collectChangesWithCurrent()
 
         suspend fun navigateToDetail() {
             scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)

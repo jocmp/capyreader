@@ -4,13 +4,14 @@ import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.ClientCertManager
 import com.jocmp.capy.accounts.miniflux.MinifluxOkHttpClient
 import com.jocmp.minifluxclient.Miniflux
+import kotlinx.coroutines.runBlocking
 import java.net.URI
 
 
-suspend fun Miniflux.Companion.forAccount(path: URI, preferences: AccountPreferences, source: Source, clientCertManager: ClientCertManager) =
+fun Miniflux.Companion.forAccount(path: URI, preferences: AccountPreferences, source: Source, clientCertManager: ClientCertManager) =
     create(
         client = MinifluxOkHttpClient.forAccount(path, preferences, source, clientCertManager),
-        baseURL = preferences.url.get()
+        baseURL = runBlocking { preferences.url.get() }
     )
 
 fun withMinifluxPath(url: String): String {

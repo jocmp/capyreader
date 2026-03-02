@@ -21,7 +21,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,6 +38,7 @@ import com.capyreader.app.common.titleKey
 import com.capyreader.app.preferences.AppTheme
 import com.capyreader.app.transfers.OPMLExporter
 import com.capyreader.app.transfers.StarredExporter
+import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.settings.AccountSettingsStrings
 import com.capyreader.app.ui.theme.CapyTheme
@@ -54,7 +54,9 @@ fun AccountSettingsPanel(
 ) {
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
-    val lastRefreshedAt by viewModel.lastRefreshedAt.collectAsState()
+    val lastRefreshedAt by viewModel.lastRefreshedAt.collectChangesWithCurrent()
+
+    val lastRefreshed = LastRefreshed.from(lastRefreshedAt)
 
     val importer = rememberLauncherForActivityResult(
         GetOPMLContent()
@@ -96,7 +98,7 @@ fun AccountSettingsPanel(
         accountSource = viewModel.accountSource,
         accountURL = viewModel.accountURL,
         accountName = viewModel.accountName,
-        lastRefreshedAt = lastRefreshedAt,
+        lastRefreshedAt = lastRefreshed,
     )
 }
 
