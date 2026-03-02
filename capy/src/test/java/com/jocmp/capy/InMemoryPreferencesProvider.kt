@@ -8,14 +8,14 @@ import kotlinx.coroutines.flow.StateFlow
 
 class InMemoryPreferencesProvider() : PreferenceStoreProvider {
     override fun build(accountID: String): AccountPreferences {
-        return AccountPreferences(store = InMemoryDataStore())
+        return AccountPreferences(store = InMemoryPreferenceStore())
     }
 
     override fun delete(accountID: String) {
     }
 }
 
-class InMemoryDataStore : PreferenceStore {
+class InMemoryPreferenceStore : PreferenceStore {
     private val store = mutableMapOf<String, Any>()
 
     override fun getString(key: String, defaultValue: String): Preference<String> {
@@ -56,7 +56,6 @@ class InMemoryDataStore : PreferenceStore {
     }
 }
 
-
 class InMemoryPreference<T>(
     val key: String,
     val defaultValue: T,
@@ -94,5 +93,4 @@ class InMemoryPreference<T>(
     override fun set(value: T) {
         store[key] = value as Any
     }
-
 }

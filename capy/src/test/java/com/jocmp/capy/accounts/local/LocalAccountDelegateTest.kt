@@ -3,7 +3,7 @@ package com.jocmp.capy.accounts.local
 import com.jocmp.capy.AccountDelegate
 import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.ArticleFilter
-import com.jocmp.capy.InMemoryDataStore
+import com.jocmp.capy.InMemoryPreferenceStore
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.common.TimeHelpers
@@ -87,7 +87,7 @@ class LocalAccountDelegateTest {
     fun setup() {
         mockkObject(CapyLog)
 
-        accountPreferences = AccountPreferences(InMemoryDataStore())
+        accountPreferences = AccountPreferences(InMemoryPreferenceStore())
         every { CapyLog.warn(any(), any()) }.returns(Unit)
         every { CapyLog.error(any(), any()) }.returns(Unit)
         every { CapyLog.info(any(), any()) }.returns(Unit)

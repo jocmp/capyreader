@@ -36,7 +36,7 @@ class OPMLFileTest {
             database = database,
             httpClient = httpClient,
             feedFinder = MockFeedFinder(),
-            preferences = AccountPreferences(InMemoryDataStore()),
+            preferences = AccountPreferences(InMemoryPreferenceStore()),
         )
 
         account = AccountFixture.create(

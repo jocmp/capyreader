@@ -29,13 +29,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.AppTheme
 import com.capyreader.app.ui.collectChangesWithCurrent
+import com.capyreader.app.ui.fixtures.PreviewKoinApplication
 import com.capyreader.app.ui.theme.CapyTheme
 import org.koin.compose.koinInject
 
@@ -152,12 +152,11 @@ private fun ThemePreviewSquare() {
 @PreviewLightDark
 @Composable
 private fun ThemePickerPreview() {
-    val context = LocalContext.current
-    val preferences = AppPreferences(context)
-
-    CapyTheme {
-        Surface {
-            ThemePicker(appPreferences = preferences)
+    PreviewKoinApplication {
+        CapyTheme {
+            Surface {
+                ThemePicker()
+            }
         }
     }
 }

@@ -25,7 +25,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,6 +37,7 @@ import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.components.LabelStyle
 import com.capyreader.app.ui.components.TextSwitch
+import com.capyreader.app.ui.fixtures.PreviewKoinApplication
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.articles.FontSize
 import com.jocmp.capy.articles.TextAlignment
@@ -210,12 +210,13 @@ private fun TitleAlignmentButtons(
 @Preview
 @Composable
 private fun ArticleStyleBottomSheetPreview() {
-    val context = LocalContext.current
-    val preferences = AppPreferences(context).apply {
-        readerOptions.fontSize.set(16)
-    }
+    PreviewKoinApplication {
+        val preferences = koinInject<AppPreferences>().apply {
+            readerOptions.fontSize.set(16)
+        }
 
-    CapyTheme {
-        ArticleStylePicker(preferences)
+        CapyTheme {
+            ArticleStylePicker(preferences)
+        }
     }
 }
