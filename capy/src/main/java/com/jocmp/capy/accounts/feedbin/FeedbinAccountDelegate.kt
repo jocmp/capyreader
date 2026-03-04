@@ -352,7 +352,7 @@ internal class FeedbinAccountDelegate(
             excludedIDs = ids.map { it.toString() }
         )
 
-        ids.chunked(MAX_ENTRY_LIMIT).map { chunkedIDs ->
+        ids.chunked(MAX_ENTRY_LIMIT).forEach { chunkedIDs ->
             fetchPaginatedEntries(
                 ids = chunkedIDs,
                 savedSearchID = savedSearchID
@@ -501,7 +501,7 @@ internal class FeedbinAccountDelegate(
         )
     }
 
-    private suspend fun lastRefreshedAt(): String {
+    private fun lastRefreshedAt(): String {
         val refreshedAt = preferences.lastRefreshedAt.get()
 
         if (refreshedAt == 0L) {

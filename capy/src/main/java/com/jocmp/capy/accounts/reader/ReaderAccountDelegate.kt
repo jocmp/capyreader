@@ -454,14 +454,17 @@ internal class ReaderAccountDelegate(
 
         coroutineScope {
             launch {
-                fetchItemContents(result.itemRefs)
+                val items = result.itemRefs
+
+                items.chunked(MAX_PAGINATED_ITEM_LIMIT).forEach { chunked ->
+                    fetchItemContents(chunked)
+                }
             }
         }
 
         val nextContinuation = result.continuation ?: return
 
         fetchPaginatedArticles(
-            since = since,
             stream = stream,
             continuation = nextContinuation
         )
@@ -608,7 +611,7 @@ internal class ReaderAccountDelegate(
     }
 
     companion object {
-        const val MAX_PAGINATED_ITEM_LIMIT = 100
+        const val MAX_PAGINATED_ITEM_LIMIT = 1_000
 
         private const val TAG = "reader"
 
@@ -616,7 +619,7 @@ internal class ReaderAccountDelegate(
     }
 }
 
-private val ALREADY_SUBSCRIBED_PREFIX = "Already subscribed!"
+private const val ALREADY_SUBSCRIBED_PREFIX = "Already subscribed!"
 
 private val SubscriptionQuickAddResult.alreadySubscribedURL: String?
     get() {
