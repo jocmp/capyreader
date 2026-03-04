@@ -62,6 +62,7 @@ internal class ReaderAccountDelegate(
             if (source == Source.FRESHRSS) {
                 refreshFeeds()
                 refreshAllSavedSearches()
+                refreshStarredItems()
                 refreshAllArticles(since = lastRefreshedAt().toEpochSecond())
                 fetchMissingArticles()
             } else {
