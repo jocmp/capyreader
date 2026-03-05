@@ -188,6 +188,7 @@ class ReaderAccountDelegateTest {
 
         stubSubscriptions()
         stubTags()
+        stubStarred()
         stubStreamItemsIDs(itemRefs)
         stubStreamItemsIDs(stream = Stream.UserLabel(chicagoTag.id), itemRefs = emptyList())
 
@@ -358,6 +359,7 @@ class ReaderAccountDelegateTest {
     fun refresh_freshrss_setsLastRefreshedAt() = runTest {
         stubSubscriptions()
         stubTags()
+        stubStarred()
         stubStreamItemsIDs(emptyList())
         stubStreamItemsIDs(stream = Stream.UserLabel(chicagoTag.id), itemRefs = emptyList())
 
@@ -375,6 +377,7 @@ class ReaderAccountDelegateTest {
 
         stubSubscriptions()
         stubTags()
+        stubStarred()
         stubStreamItemsIDs(stream = Stream.UserLabel(chicagoTag.id), itemRefs = emptyList())
 
         coEvery {
