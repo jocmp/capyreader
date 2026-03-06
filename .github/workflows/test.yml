@@ -35,3 +35,8 @@ jobs:
           bundler-cache: true
       - name: Run tests
         run: make test
+      - name: Test report
+        uses: test-summary/action@v2
+        if: always()
+        with:
+          paths: '**/build/test-results/**/TEST-*.xml'

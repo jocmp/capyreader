@@ -2,7 +2,7 @@ default_platform(:android)
 
 GOOGLE_PLAY_LOCALES = YAML.load_file("google_play_locales.yml").freeze
 
-GPLAY_METADATA_OUT = './.gplay_metadata/android'
+GPLAY_METADATA_OUT = '.gplay_metadata/android'
 
 platform :android do
   desc 'Validate Play Store key'
@@ -20,7 +20,7 @@ platform :android do
     prepare_gplay_metadata
     build_release_bundle
     upload_to_play_store(
-      metadata_path:GPLAY_METADATA_OUT,
+      metadata_path: "fastlane/#{GPLAY_METADATA_OUT}",
       sync_image_upload: true
     )
     cleanup_gplay_metadata

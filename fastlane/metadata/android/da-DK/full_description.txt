@@ -1,0 +1,13 @@
+Som navnet antyder, så er Capy Reader en lille RSS-læser med fokus på at være nem og enkel at gå til.
+
+Nogle af funktionerne er:
+
+• Synkronisering via Feedbin, FreshRSS eller direkte på din enhed
+• Hold styr på læste artikler samt favoritter
+• Søgning blandt artikler
+• Widget med overskrifter
+• Notifikationer
+• Visning af fuldt indhold
+• Mørk tilstand
+• Understøttelse af store skærme
+• Import og eksport af dine gemte feeds

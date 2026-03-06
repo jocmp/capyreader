@@ -5,6 +5,7 @@
     <string name="add_feed_name_title">Název</string>
     <string name="add_feed_new_folder_title">Nový štítek</string>
     <string name="feed_action_edit">Upravit kanál</string>
+    <string name="feed_action_reload_icon">Znovu načíst ikonu</string>
     <string name="feed_action_unsubscribe_message">Opravdu chcete zrušit odběr „%1$s“?</string>
     <string name="folder_action_delete_title">Smazat štítek</string>
     <string name="folder_action_edit">Přejmenovat</string>
@@ -190,8 +191,8 @@
     <string name="add_account_freshrss_signup_prompt">Nemáte instanci FreshRSS?</string>
     <string name="add_account_freshrss_signup_link_text">Zjistit více.</string>
     <string name="edit_feed_tag_section">Vytvořit nebo vybrat štítek</string>
-    <string name="settings_notifications_select_none">Nevybrat nic</string>
-    <string name="settings_notifications_select_all">Vybrat vše</string>
+    <string name="settings_select_none">Nevybrat nic</string>
+    <string name="settings_select_all">Vybrat vše</string>
     <string name="settings_confirm_mark_all_read">Potvrdit označení všeho jako přečtené</string>
     <string name="auth_fields_api_url">Server</string>
     <string name="settings_section_account_server">Server</string>
@@ -204,15 +205,12 @@
     <string name="settings_enable_high_contrast_dark_theme">Zobrazení s vysokým kontrastem</string>
     <string name="settings_section_mark_all_as_read">Označit vše jako přečtené</string>
     <string name="settings_section_browser">Prohlížeč</string>
-    <string name="layout_preference_single">Jeden sloupec</string>
     <string name="auth_fields_username">Uživatelské jméno</string>
     <string name="end_of_feed_text">Vše dohnáno!</string>
     <string name="reader_image_visibility_show_on_wifi">Načítat obrázky pouze přes Wi-Fi</string>
     <string name="reader_image_visibility_always_hide">Blokovat obrázky</string>
     <string name="reader_image_visibility_always_show">Vždy načítat obrázky</string>
     <string name="reader_image_visibility_label">Obrázky</string>
-    <string name="layout_preference_responsive">Adaptivní</string>
-    <string name="layout_preference_label">Preferované rozvržení</string>
     <string name="settings_mark_read_on_scroll">Označit jako přečtené při posunutí</string>
     <string name="settings_donate_button">Přispět</string>
     <string name="after_read_all_behavior_default">Výchozí</string>
@@ -220,6 +218,7 @@
     <string name="after_read_all_behavior_open_next_feed">Otevřít další kanál</string>
     <string name="full_content_error_missing_response">Chyba při načítání článku</string>
     <string name="full_content_error_generic">Chyba při zpracování článku</string>
+    <string name="full_content_error_forbidden">Načítání zablokováno webem</string>
     <string name="after_read_all_behavior_label">Po přečtení všeho</string>
     <string name="article_actions_copy_link">Kopírovat odkaz</string>
     <string name="freshrss_article_actions_label">Štítek</string>
@@ -261,7 +260,6 @@
     <string name="theme_default">Výchozí</string>
     <string name="theme_sunset">Soumrak</string>
     <string name="settings_options_reader_pin_top_toolbar">Připnout na panel</string>
-    <string name="settings_options_reader_show_bottom_toolbar">Zobrazit akce na spodním panelu</string>
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">Navigovat k nadřazenému</string>
     <string name="blocked_keywords">Seznam blokovaných</string>
     <string name="blocked_keywords_supporting_text">Mazat články podle klíčových slov v názvu nebo obsahu</string>

@@ -1,0 +1,9 @@
+• Add Miniflux account support
+• Enable audio player by default
+• Add empty state to article list
+• Show unread counts on saved searches
+• Add custom balloon-juice.com parser with Bluesky embed support
+• Improve blockquote styling
+• Fix bad parsing around apostrophes for itsfoss.com feeds
+• Fix duplicate enclosures on FreshRSS
+• Update translations Arabic, Bulgarian, Chinese, Estonian, French, Galician, Italian, Russian, and Spanish thanks to volunteers!

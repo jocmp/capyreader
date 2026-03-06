@@ -1,0 +1,5 @@
+-- Covering index for the common join + filter pattern on article_statuses
+CREATE INDEX article_statuses_covering_index ON article_statuses(article_id, read, starred);
+
+-- Index for NOT IN subqueries in updateStaleUnreads/updateStaleStars
+CREATE INDEX excluded_statuses_type_article_id_index ON excluded_statuses(type, article_id);

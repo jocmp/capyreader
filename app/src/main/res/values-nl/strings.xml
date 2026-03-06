@@ -12,6 +12,7 @@
     <string name="feed_action_unsubscribe">Abonnement opzeggen</string>
     <string name="filter_action_menu_description">Bewerken</string>
     <string name="feed_action_edit">Feed bewerken</string>
+    <string name="feed_action_reload_icon">Pictogram herladen</string>
     <string name="feed_action_unsubscribe_message">Weet je zeker dat je je “%1$s”-abonnement wil opzeggen?</string>
     <string name="feed_action_unsubscribe_confirm">Uitschrijven</string>
     <string name="edit_feed_submit">Opslaan</string>
@@ -191,7 +192,6 @@
     <string name="opml_exporter_failure">Export mislukt</string>
     <string name="settings_reader_title">Lezer</string>
     <string name="settings_options_reader_pin_top_toolbar">Bovenste werkbalk vastpinnen</string>
-    <string name="settings_options_reader_show_bottom_toolbar">Acties op onderste werkbalk tonen</string>
     <string name="article_bottom_bar_next_article">Ga naar volgend artikel</string>
     <string name="settings_gestures_reader_swipe_down">Veeg omlaag</string>
     <string name="settings_gestures_reader_swipe_up">Veeg omhoog</string>
@@ -224,8 +224,8 @@
     <string name="notifications_permissions_disabled_call_to_action">Instellingen</string>
     <string name="notifications_permission_disabled_title">Notificatie toestemming is uitgeschakeld</string>
     <string name="settings_enable_refresh_call_to_action">Periodiek vernieuwen moet eerst ingeschakeld worden</string>
-    <string name="settings_notifications_select_none">Geen selecteren</string>
-    <string name="settings_notifications_select_all">Alle selecteren</string>
+    <string name="settings_select_none">Geen selecteren</string>
+    <string name="settings_select_all">Alle selecteren</string>
     <string name="article_list_row_swipe_open_externally">Artikel openen in browser</string>
     <string name="article_view_open_externally">Extern openen</string>
     <string name="settings_confirm_mark_all_read">Bevestig alles markeren als gelezen</string>
@@ -241,9 +241,6 @@
     <string name="reader_image_visibility_always_hide">Afbeeldingen blokkeren</string>
     <string name="reader_image_visibility_always_show">Altijd afbeeldingen tonen</string>
     <string name="reader_image_visibility_label">Afbeeldingen</string>
-    <string name="layout_preference_responsive">Responsief</string>
-    <string name="layout_preference_single">Enkele kolom</string>
-    <string name="layout_preference_label">Voorkeurs layout</string>
     <string name="end_of_feed_text">Alles bijgewerkt!</string>
     <string name="after_read_all_behavior_label">Na alles gelezen</string>
     <string name="after_read_all_behavior_default">Standaard</string>
@@ -251,6 +248,7 @@
     <string name="after_read_all_behavior_open_next_feed">Volgende feed openen</string>
     <string name="full_content_error_missing_response">Ophalen artikel mislukt</string>
     <string name="full_content_error_generic">Ontleden artikel mislukt</string>
+    <string name="full_content_error_forbidden">Ophalen geblokkeerd door site</string>
     <string name="feed_nav_drawer_title">Feeds</string>
     <string name="search_bar_placeholder">Zoeken</string>
     <string name="media_save">Opslaan</string>

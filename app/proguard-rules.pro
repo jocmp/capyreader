@@ -35,6 +35,9 @@
 # Readability4J
 -dontwarn org.slf4j.impl.StaticLoggerBinder
 
+# JSoup optional Re2j support
+-dontwarn com.google.re2j.**
+
 # Internal
 -keep class com.jocmp.** { *; }
 

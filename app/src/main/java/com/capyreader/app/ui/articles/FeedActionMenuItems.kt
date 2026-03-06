@@ -13,6 +13,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.capyreader.app.R
+import com.capyreader.app.preferences.BadgeStyle
+import com.capyreader.app.ui.LocalBadgeStyle
 import com.capyreader.app.ui.fixtures.FeedSample
 import com.jocmp.capy.Feed
 
@@ -22,7 +24,10 @@ fun FeedActionMenuItems(
     onMenuClose: () -> Unit,
     onRemoveRequest: () -> Unit,
     onEdit: () -> Unit,
+    onReloadIcon: () -> Unit,
     onToggleOpenInBrowser: () -> Unit,
+    onToggleUnreadBadge: () -> Unit,
+    showReloadIcon: Boolean = false,
 ) {
     DropdownMenuItem(
         text = {
@@ -33,6 +38,17 @@ fun FeedActionMenuItems(
             onEdit()
         }
     )
+    if (showReloadIcon) {
+        DropdownMenuItem(
+            text = {
+                Text(stringResource(R.string.feed_action_reload_icon))
+            },
+            onClick = {
+                onMenuClose()
+                onReloadIcon()
+            }
+        )
+    }
     DropdownMenuItem(
         text = {
             Text(stringResource(R.string.feed_action_unsubscribe))
@@ -57,6 +73,22 @@ fun FeedActionMenuItems(
         },
         onClick = onToggleOpenInBrowser
     )
+    if (LocalBadgeStyle.current == BadgeStyle.SIMPLE) {
+        val unreadBadgeIcon = @Composable {
+            if (feed.showUnreadBadge) {
+                Icon(Icons.Rounded.CheckBox, contentDescription = null)
+            } else {
+                Icon(Icons.Rounded.CheckBoxOutlineBlank, contentDescription = null)
+            }
+        }
+        DropdownMenuItem(
+            trailingIcon = unreadBadgeIcon,
+            text = {
+                Text(stringResource(R.string.show_unread_badge))
+            },
+            onClick = onToggleUnreadBadge
+        )
+    }
 }
 
 @Preview
@@ -67,8 +99,10 @@ fun FeedActionMenuPreview(@PreviewParameter(FeedSample::class) feed: Feed) {
             feed = feed,
             onMenuClose = {},
             onEdit = {},
+            onReloadIcon = {},
             onRemoveRequest = {},
-            onToggleOpenInBrowser = {}
+            onToggleOpenInBrowser = {},
+            onToggleUnreadBadge = {},
         )
     }
 }

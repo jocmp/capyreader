@@ -29,3 +29,6 @@ val String.unescapingHTMLCharacters: String
             .replace("&lt;", "<")
             .replace("&gt;", ">")
     }
+
+val String.escapingSpecialHTMLCharacters: String
+    get() = replace("&", "&amp;")

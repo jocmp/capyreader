@@ -38,7 +38,9 @@ import com.capyreader.app.ui.articles.SavedSearchRow
 import com.capyreader.app.ui.fixtures.FeedSample
 import com.capyreader.app.ui.fixtures.FolderPreviewFixture
 import com.capyreader.app.ui.fixtures.PreviewKoinApplication
+import com.capyreader.app.ui.folderNavTitle
 import com.capyreader.app.ui.navigationTitle
+import com.capyreader.app.ui.savedSearchNavTitle
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
@@ -56,6 +58,7 @@ fun FeedList(
     showTodayFilter: Boolean = true,
     folders: List<Folder> = emptyList(),
     feeds: List<Feed> = emptyList(),
+    pagesFeed: Feed? = null,
     savedSearches: List<SavedSearch> = emptyList(),
     onFilterSelect: () -> Unit,
     onSelectToday: () -> Unit,
@@ -133,7 +136,7 @@ fun FeedList(
                         stringResource(articleStatus.navigationTitle),
                     )
                 },
-                badge = { CountBadge(count = statusCount) },
+                badge = { CountBadge(count = statusCount, status = articleStatus) },
                 selected = filter.hasArticlesSelected(),
                 onClick = {
                     onFilterSelect()
@@ -153,7 +156,7 @@ fun FeedList(
                             stringResource(R.string.filter_today),
                         )
                     },
-                    badge = { CountBadge(count = todayCount) },
+                    badge = { CountBadge(count = todayCount, status = articleStatus) },
                     selected = filter.hasTodaySelected(),
                     onClick = {
                         onSelectToday()
@@ -161,25 +164,30 @@ fun FeedList(
                 )
             }
 
+            if (pagesFeed != null) {
+                FeedRow(
+                    feed = pagesFeed,
+                    onSelect = { onSelectFeed(it, null) },
+                    selected = filter.isFeedSelected(pagesFeed),
+                    status = articleStatus,
+                    showContextMenu = false,
+                )
+            }
+
             Spacer(Modifier.height(8.dp))
 
             if (savedSearches.isNotEmpty()) {
-                val savedSearchesTitle = if (source == Source.FRESHRSS) {
-                    stringResource(R.string.freshrss_nav_headline_my_labels)
-                } else {
-                    stringResource(R.string.nav_headline_saved_searches)
-                }
-
                 FeedListDivider()
                 FeedGroupList(
                     type = FeedGroup.SAVED_SEARCHES,
-                    title = savedSearchesTitle,
+                    title = stringResource(source.savedSearchNavTitle),
                 ) {
                     savedSearches.forEach {
                         SavedSearchRow(
                             onSelect = onSelectSavedSearch,
                             selected = filter.isSavedSearchSelected(it),
                             savedSearch = it,
+                            status = articleStatus,
                         )
                     }
                 }
@@ -189,7 +197,7 @@ fun FeedList(
                 FeedListDivider()
                 FeedGroupList(
                     type = FeedGroup.FOLDERS,
-                    title = stringResource(R.string.nav_headline_tags),
+                    title = stringResource(source.folderNavTitle)
                 ) {
                     folders.forEach { folder ->
                         FolderRow(
@@ -198,7 +206,8 @@ fun FeedList(
                             onFeedSelect = { feed ->
                                 onSelectFeed(feed, folder.title)
                             },
-                            filter = filter
+                            filter = filter,
+                            source = source,
                         )
                     }
                 }
@@ -217,6 +226,8 @@ fun FeedList(
                                 onSelectFeed(it, null)
                             },
                             selected = filter.isFeedSelected(feed),
+                            status = articleStatus,
+                            source = source,
                         )
                     }
                 }
@@ -276,3 +287,4 @@ fun FeedListPreview() {
         }
     }
 }
+

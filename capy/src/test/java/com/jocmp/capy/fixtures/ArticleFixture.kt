@@ -16,6 +16,8 @@ class ArticleFixture(private val database: Database) {
         summary: String = "Test article here",
         feed: Feed = feedFixture.create(feedURL = "https://example.com/${RandomUUID.generate()}"),
         read: Boolean = true,
+        starred: Boolean = false,
+        url: String = "https://example.com/test-article",
         publishedAt: Long = TimeHelpers.nowUTC().toEpochSecond(),
     ): Article {
         database.transaction {
@@ -29,13 +31,21 @@ class ArticleFixture(private val database: Database) {
                 image_url = null,
                 published_at = publishedAt,
                 summary = summary,
-                url = "https://example.com/test-article"
+                url = url,
+                enclosure_type = null
             )
             database.articlesQueries.createStatus(
                 article_id = id,
                 updated_at = publishedAt,
                 read = read,
             )
+            if (starred) {
+                database.articlesQueries.markStarred(
+                    articleID = id,
+                    starred = true,
+                    lastUnstarredAt = null,
+                )
+            }
         }
 
         return database.articlesQueries.findBy(

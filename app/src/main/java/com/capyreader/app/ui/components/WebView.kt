@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.net.Uri
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebView.HitTestResult.SRC_ANCHOR_TYPE
 import android.webkit.WebViewClient
@@ -25,12 +26,14 @@ import com.capyreader.app.common.rememberTalkbackPreference
 import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
+import com.jocmp.capy.BrowserHeadersInterceptor
 import com.jocmp.capy.articles.ArticleRenderer
 import com.jocmp.capy.logging.CapyLog
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.koin.compose.koinInject
 import org.koin.core.component.KoinComponent
+import java.util.Locale
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
@@ -72,26 +75,47 @@ class AccompanistWebViewClient(
             return asset
         }
 
-        val url = request.url.toString()
-        val origin = request.requestHeaders["Origin"]
-        val isCorsRequest = origin == "null" && url.startsWith("http")
-
-        if (!isCorsRequest) {
+        if (!shouldProxyRequest(request)) {
             return null
         }
 
         return proxyCorsRequest(request)
     }
 
-    /** Avoids CORS issues when loading additional pages from Mercury.js */
+    private fun shouldProxyRequest(request: WebResourceRequest): Boolean {
+        val url = request.url.toString()
+        val origin = request.requestHeaders["Origin"]
+        val accept = request.requestHeaders["Accept"]
+
+        // XHR/fetch from null origin (loadDataWithBaseURL)
+        // Issue #1616
+        val isCorsRequest = origin == "null" && url.startsWith("http")
+
+        // iframe document load
+        // Strips X-Frame-Options to allow embeds like Slashdot
+        // Issue #1605
+        val isIframeNavigation = !request.isForMainFrame &&
+                accept?.startsWith("text/html") == true &&
+                url.startsWith("http")
+
+        return isCorsRequest || isIframeNavigation
+    }
+
+    /**
+     * Avoids CORS issues when loading additional pages from Mercury.js
+     * Issue #1616
+     */
     private fun proxyCorsRequest(request: WebResourceRequest): WebResourceResponse? {
         return try {
             val okRequest = Request.Builder()
                 .url(request.url.toString())
                 .apply {
-                    request.requestHeaders.forEach { (key, value) ->
-                        header(key, value)
-                    }
+                    request
+                        .requestHeaders
+                        .filterNot { it.key.equals("Accept-Encoding", ignoreCase = true) }
+                        .forEach { (key, value) ->
+                            header(key, value)
+                        }
                 }
                 .build()
 
@@ -184,6 +208,9 @@ class WebViewState(
     fun updateAudioPlayState(url: String?, isPlaying: Boolean) {
         currentAudioUrl = url
         isAudioPlaying = isPlaying
+        if (htmlId == null) {
+            return
+        }
         webView.post {
             if (url != null) {
                 val escapedUrl = url.replace("'", "\\'")
@@ -228,12 +255,19 @@ fun rememberWebViewState(
     }
 
     val client = remember {
+        val userAgent = WebSettings.getDefaultUserAgent(context)
+        val acceptLanguage = Locale.getDefault().toAcceptLanguageTag()
+        val httpClient = OkHttpClient.Builder()
+            .addInterceptor(BrowserHeadersInterceptor(userAgent, acceptLanguage))
+            .build()
+
         AccompanistWebViewClient(
             assetLoader = WebViewAssetLoader.Builder()
                 .addPathHandler("/assets/", AssetsPathHandler(context))
                 .addPathHandler("/res/", ResourcesPathHandler(context))
                 .build(),
             onOpenLink = onOpenLink,
+            httpClient = httpClient,
         )
     }
 
@@ -277,5 +311,15 @@ fun rememberWebViewState(
                 it.updateAudioPlayState(currentAudioUrlState, isAudioPlayingState)
             }
         }
+    }
+}
+
+private fun Locale.toAcceptLanguageTag(): String {
+    val primary = toLanguageTag()
+    val lang = language
+    return if (primary != lang) {
+        "$primary,$lang;q=0.9"
+    } else {
+        primary
     }
 }

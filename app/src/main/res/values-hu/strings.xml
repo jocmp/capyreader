@@ -13,6 +13,7 @@
     <string name="feed_action_unsubscribe">Leiratkozás</string>
     <string name="filter_action_menu_description">Szerkesztés</string>
     <string name="feed_action_edit">Hírfolyam szerkesztése</string>
+    <string name="feed_action_reload_icon">Ikon újratöltése</string>
     <string name="feed_action_unsubscribe_message">Biztosan le szeretne iratkozni a(z) \"%1$s\" hírfolyamról?</string>
     <string name="feed_action_unsubscribe_confirm">Leiratkozás</string>
     <string name="edit_feed_submit">Mentés</string>
@@ -181,7 +182,6 @@
     <string name="opml_exporter_failure">Exportálás sikertelen</string>
     <string name="settings_reader_title">Olvasó</string>
     <string name="settings_options_reader_pin_top_toolbar">Felső eszköztár rögzítése</string>
-    <string name="settings_options_reader_show_bottom_toolbar">Műveletek megjelenítése az alsó eszköztáron</string>
     <string name="article_bottom_bar_next_article">Ugrás a következő cikkre</string>
     <string name="settings_gestures_reader_swipe_down">Lehúzás</string>
     <string name="settings_gestures_reader_swipe_up">Felhúzás</string>
@@ -214,8 +214,8 @@
     <string name="notifications_permissions_disabled_call_to_action">Beállítások</string>
     <string name="notifications_permission_disabled_title">Értesítési engedély le van tiltva</string>
     <string name="settings_enable_refresh_call_to_action">Először az időszakos frissítést kell engedélyezni</string>
-    <string name="settings_notifications_select_none">Egyik sem</string>
-    <string name="settings_notifications_select_all">Összes kijelölése</string>
+    <string name="settings_select_none">Egyik sem</string>
+    <string name="settings_select_all">Összes kijelölése</string>
     <string name="article_list_row_swipe_open_externally">Cikk megnyitása böngészőben</string>
     <string name="article_view_open_externally">Megnyitás külsőleg</string>
     <string name="settings_confirm_mark_all_read">Összes olvasottként való megjelölés megerősítése</string>
@@ -233,9 +233,6 @@
     <string name="reader_image_visibility_always_hide">Képek blokkolása</string>
     <string name="reader_image_visibility_always_show">Mindig mutassa a képeket</string>
     <string name="reader_image_visibility_label">Képek</string>
-    <string name="layout_preference_responsive">Reszponzív</string>
-    <string name="layout_preference_single">Egy oszlopos</string>
-    <string name="layout_preference_label">Előnyben részesített elrendezés</string>
     <string name="end_of_feed_text">Nincs több olvasatlan cikk!</string>
     <string name="after_read_all_behavior_label">Az Összes Elolvasása után</string>
     <string name="after_read_all_behavior_default">Alapértelmezett</string>
@@ -243,6 +240,7 @@
     <string name="after_read_all_behavior_open_next_feed">Következő hírfolyam megnyitása</string>
     <string name="full_content_error_missing_response">Nem sikerült lekérni a cikket</string>
     <string name="full_content_error_generic">Nem sikerült elemezni a cikket</string>
+    <string name="full_content_error_forbidden">A letöltést a webhely blokkolta</string>
     <string name="feed_nav_drawer_title">Hírfolyamok</string>
     <string name="search_bar_placeholder">Keresés</string>
     <string name="media_save">Mentés</string>
@@ -291,4 +289,14 @@
     <string name="unauthorized_dialog_description">Hiba történt a fiókodhoz való csatlakozáskor. Kérjük, jelentkezz be újra.</string>
     <string name="settings_panel_display_title">Kijelző és megjelenés</string>
     <string name="settings_clear_all_articles_text">Biztosan törölni szeretné az összes olvasott, csillaggal nem jelölt cikket az eszközéről? Ez a művelet nem vonható vissza.</string>
+    <string name="freshrss_nav_headline_categories">Kategóriák</string>
+    <string name="theme_mode_label">Mód</string>
+    <string name="article_list_empty">Nincs semmi</string>
+    <string name="settings_section_experimental">Kísérleti</string>
+    <string name="settings_option_enable_audio_player">Hanglejátszó</string>
+    <string name="audio_player_play">Lejátsz</string>
+    <string name="audio_player_pause">Szünet</string>
+    <string name="audio_player_close">Lejátszó bezárása</string>
+    <string name="audio_player_skip_back">Ugrás vissza 30 másodperccel</string>
+    <string name="audio_player_skip_forward">Ugrás előre 30 másodperccel</string>
 </resources>

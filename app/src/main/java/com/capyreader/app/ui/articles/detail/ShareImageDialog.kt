@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.core.net.toUri
-import coil.compose.AsyncImage
+import coil3.compose.AsyncImage
 import com.capyreader.app.R
 import com.capyreader.app.ui.components.DialogCard
 import com.capyreader.app.ui.theme.CapyTheme

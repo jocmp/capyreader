@@ -7,8 +7,11 @@ import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -20,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.collectChangesWithDefault
@@ -30,6 +34,7 @@ import org.koin.compose.koinInject
 fun CornerTapGestureScroll(
     maxArticleHeight: Float,
     scrollState: ScrollState,
+    pinToolbars: Boolean,
     appPreferences: AppPreferences = koinInject(),
     content: @Composable () -> Unit,
 ) {
@@ -39,8 +44,11 @@ fun CornerTapGestureScroll(
         return content()
     }
 
+    val offset = barOffsetsPx(pinToolbars)
     var columnHeightPx by remember { mutableFloatStateOf(0f) }
-    val jumpHeight by remember { derivedStateOf { columnHeightPx * JUMP_PROPORTION } }
+    val jumpHeight by remember {
+        derivedStateOf { (columnHeightPx - offset) * JUMP_PROPORTION }
+    }
 
     val back = back(jumpHeight = jumpHeight)
     val forward = forward(maxHeight = maxArticleHeight, jumpHeight = jumpHeight)
@@ -114,4 +122,17 @@ private fun forward(
     alignment = Alignment.BottomEnd
 )
 
-private const val JUMP_PROPORTION = 0.98f
+@Composable
+private fun barOffsetsPx(pinToolbars: Boolean): Float {
+    if (pinToolbars) {
+        return 0f
+    }
+
+    val navBarPadding = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+
+    return with(LocalDensity.current) {
+        (ArticleBarDefaults.topBarOffset + ArticleBarDefaults.BottomBarHeight + navBarPadding).toPx()
+    }
+}
+
+private const val JUMP_PROPORTION = 0.96f

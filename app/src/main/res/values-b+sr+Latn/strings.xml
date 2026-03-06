@@ -12,6 +12,7 @@
     <string name="feed_action_unsubscribe">Ukloni Izvor</string>
     <string name="filter_action_menu_description">Uredi</string>
     <string name="feed_action_edit">Uredi Izvor</string>
+    <string name="feed_action_reload_icon">Ponovo učitaj ikonu</string>
     <string name="feed_action_unsubscribe_message">Da li ste sigurni da želite da uklonite Izvor „%1$s“?</string>
     <string name="feed_action_unsubscribe_confirm">Ukloni Izvor</string>
     <string name="edit_feed_submit">Sačuvaj</string>
@@ -167,7 +168,7 @@
     <string name="edit_feed_tags_section">Oznake</string>
     <string name="edit_feed_notifications_title">Omogući obaveštenja</string>
     <string name="settings_enable_refresh_call_to_action">Prvo mora biti omogućeno periodično osvežavanje</string>
-    <string name="settings_notifications_select_none">Izaberite Ništa</string>
+    <string name="settings_select_none">Izaberite Ništa</string>
     <string name="article_list_row_swipe_open_externally">Otvorite članak u pretraživaču</string>
     <string name="article_view_mark_as_unread">Označi kao nepročitano</string>
     <string name="article_view_unstar">Ukloni iz sačuvnog</string>
@@ -181,7 +182,7 @@
     <string name="settings_panel_notifications_title">Obaveštenja</string>
     <string name="crash_log_export_item_subtitle">Čuva evidenciju o padu u datoteku za deljenje sa programerom</string>
     <string name="notifications_permissions_disabled_call_to_action">Podešavanja</string>
-    <string name="settings_notifications_select_all">Izaberite Sve</string>
+    <string name="settings_select_all">Izaberite Sve</string>
     <string name="settings_gestures_list_back_navigation_action">Akcija Navigacije Nazad</string>
     <string name="action_share">Podeli</string>
     <string name="notifications_channel_title_feed_update">Ažuriranja Izvora</string>
@@ -206,9 +207,6 @@
     <string name="reader_image_visibility_always_hide">Blokirajte slike</string>
     <string name="reader_image_visibility_always_show">Uvek prikaži slike</string>
     <string name="reader_image_visibility_label">Slike</string>
-    <string name="layout_preference_responsive">Responzivan</string>
-    <string name="layout_preference_single">Jedna Kolona</string>
-    <string name="layout_preference_label">Željeni raspored</string>
     <string name="settings_enable_high_contrast_dark_theme">Omogućite tamnu temu visokog kontrasta</string>
     <string name="settings_gestures_reader_tap_to_page_title">E Mastilo dodirnite za pomeranje</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Dodirnite donje uglove da biste se kretali po sadržaju članka</string>
@@ -232,5 +230,6 @@
     <string name="search_bar_placeholder">Pretraga</string>
     <string name="end_of_feed_text">Sve pregledano!</string>
     <string name="full_content_error_generic">Raščlanjivanje članka nije uspelo</string>
+    <string name="full_content_error_forbidden">Preuzimanje blokirano od strane sajta</string>
     <string name="after_read_all_behavior_open_drawer">Otvorite fioku za navigaciju</string>
 </resources>

@@ -1,0 +1,4 @@
+Two quick fixes for the article reader
+
+• Fixes toolbar overlap when viewing articles on some devices
+• Fixes article width on tablets when the table overflows past content.

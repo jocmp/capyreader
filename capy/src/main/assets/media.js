@@ -14,7 +14,7 @@ function configureVideoTags() {
 
 function addImageClickListeners() {
   const images = [...document.getElementsByTagName("img")].filter(
-    (img) => !img.classList.contains("iframe-embed__image")
+    (img) => !img.classList.contains("iframe-embed__image"),
   );
 
   /** @type {MediaItem[]} */
@@ -154,7 +154,7 @@ function swapPlaceholder(embed, src, youtubeID) {
   placeholder.classList.add("iframe-embed");
   placeholder.setAttribute(
     "href",
-    `https://www.youtube.com/watch?v=${youtubeID}`
+    `https://www.youtube.com/watch?v=${youtubeID}`,
   );
   placeholder.appendChild(placeholderImage);
   placeholder.appendChild(playButton);
@@ -201,9 +201,13 @@ function postProcessContent(baseUrl, hideImages) {
   const content = document.getElementById("article-body-content");
   if (!content) return;
 
+  content.querySelectorAll("style").forEach((el) => el.remove());
+
   content.querySelectorAll("*").forEach((el) => {
-    el.removeAttribute("style");
+    cleanAttributes(el);
   });
+
+  cleanAttributes(document.body);
 
   content.querySelectorAll("a[onclick]").forEach((anchor) => {
     anchor.removeAttribute("onclick");
@@ -237,6 +241,16 @@ function postProcessContent(baseUrl, hideImages) {
 }
 
 /**
+ * @param {Element} element
+ */
+function cleanAttributes(element) {
+  element.removeAttribute("style");
+  element.removeAttribute("bgcolor");
+  element.removeAttribute("color");
+  element.removeAttribute("background");
+}
+
+/**
  * @param {HTMLElement} element
  * @param {(event: Event) => void} callback
  */
@@ -267,6 +281,22 @@ window.addEventListener("DOMContentLoaded", () => {
   cleanEmbeds();
 });
 
+/**
+ * @param {MessageEvent} event
+ */
+function handleBlueskyEmbedResize(event) {
+  if (event.origin !== "https://embed.bsky.app") return;
+  if (!event.data || typeof event.data.height !== "number") return;
+
+  document.querySelectorAll("iframe").forEach((iframe) => {
+    if (iframe.contentWindow === event.source) {
+      iframe.style.height = event.data.height + "px";
+    }
+  });
+}
+
+window.addEventListener("message", handleBlueskyEmbedResize);
+
 /** @type {string | null} */
 let currentPlayingUrl = null;
 
@@ -290,7 +320,7 @@ function playAudio(url, title, feedName, durationSeconds, artworkUrl) {
       title: title,
       feedName: feedName,
       durationSeconds: durationSeconds,
-      artworkUrl: artworkUrl || null
+      artworkUrl: artworkUrl || null,
     });
     Android.openAudioPlayer(audioData);
   }
@@ -306,16 +336,16 @@ function updateAudioPlayState(url, isPlaying) {
   currentPlayingUrl = url;
   isCurrentlyPlaying = isPlaying;
 
-  const enclosures = document.querySelectorAll('.audio-enclosure');
+  const enclosures = document.querySelectorAll(".audio-enclosure");
   enclosures.forEach((enclosure) => {
-    const enclosureUrl = enclosure.getAttribute('data-url');
-    const playButton = enclosure.querySelector('.audio-enclosure__play-button');
+    const enclosureUrl = enclosure.getAttribute("data-url");
+    const playButton = enclosure.querySelector(".audio-enclosure__play-button");
     if (!playButton) return;
 
     if (enclosureUrl === url) {
-      playButton.classList.toggle('playing', isPlaying);
+      playButton.classList.toggle("playing", isPlaying);
     } else {
-      playButton.classList.remove('playing');
+      playButton.classList.remove("playing");
     }
   });
 }
@@ -327,8 +357,10 @@ function updateAudioPlayState(url, isPlaying) {
 function resetAudioPlayState() {
   currentPlayingUrl = null;
   isCurrentlyPlaying = false;
-  const playButtons = document.querySelectorAll('.audio-enclosure__play-button');
-  playButtons.forEach((btn) => btn.classList.remove('playing'));
+  const playButtons = document.querySelectorAll(
+    ".audio-enclosure__play-button",
+  );
+  playButtons.forEach((btn) => btn.classList.remove("playing"));
 }
 
 window.onload = () => {

@@ -98,6 +98,7 @@
     <string name="opml_import_notification_cancel">Stop</string>
     <string name="filter_action_menu_description">Modifică</string>
     <string name="feed_action_edit">Modifică flux</string>
+    <string name="feed_action_reload_icon">Reîncarcă pictograma</string>
     <string name="update_auth_success_message">Conectare cu succes</string>
     <string name="account_source_freshrss">FreshRSS</string>
     <string name="settings_section_privacy">Confidențialitate</string>
@@ -148,11 +149,8 @@
     <string name="settings_mark_read_on_scroll">Marchează ca citit la derulare</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Atinge colțurile de jos pentru a naviga prin conținutul articolului</string>
     <string name="reader_image_visibility_show_on_wifi">Arată imagini doar prin Wi-Fi</string>
-    <string name="layout_preference_single">O coloană</string>
     <string name="reader_image_visibility_label">Imagini</string>
-    <string name="layout_preference_responsive">Răspuns</string>
     <string name="settings_gestures_list_row_swipe_end">Glisează spre stânga</string>
-    <string name="settings_options_reader_show_bottom_toolbar">Arată acțiuni în bara inferioară</string>
     <string name="article_list_sort_oldest_first">După cel mai vechi</string>
     <string name="settings_article_list_title">Listă articole</string>
     <string name="settings_clear_all_articles_text">Ești sigur că vrei să ștergi toate articolele citite și nesalvate de pe dispozitiv? Această acțiune nu poate fi anulată.</string>
@@ -209,8 +207,8 @@
     <string name="crash_log_export_item_title">Distribuie log-urile de eroare</string>
     <string name="edit_feed_tag_section">Adaugă sau alege etichete</string>
     <string name="edit_feed_notifications_title">Activează notificări</string>
-    <string name="settings_notifications_select_none">Șterge alegerea</string>
-    <string name="settings_notifications_select_all">Alege tot</string>
+    <string name="settings_select_none">Șterge alegerea</string>
+    <string name="settings_select_all">Alege tot</string>
     <string name="settings_confirm_mark_all_read">Marchează elementele alese ca citite</string>
     <string name="settings_gestures_reader_tap_to_page_title">Gest E-Ink de atingere pentru derulare</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">Activează derularea pe orizontală</string>
@@ -233,4 +231,7 @@
     <string name="settings_section_mark_all_as_read">Marchează tot ca citit</string>
     <string name="reader_image_visibility_always_show">Arată mereu imagini</string>
     <string name="auth_fields_freshrss_api_password">Parolă API</string>
+    <string name="full_content_error_missing_response">Nu s-a putut prelua articolul</string>
+    <string name="full_content_error_generic">Nu s-a putut analiza articolul</string>
+    <string name="full_content_error_forbidden">Preluarea blocată de site</string>
 </resources>

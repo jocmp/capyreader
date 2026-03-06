@@ -1,0 +1,4 @@
+import kotlin.Boolean;
+
+ALTER TABLE feeds ADD COLUMN show_unread_counts INTEGER AS Boolean NOT NULL DEFAULT 1;
+ALTER TABLE saved_searches ADD COLUMN show_unread_counts INTEGER AS Boolean NOT NULL DEFAULT 1;

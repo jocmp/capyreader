@@ -1,6 +1,7 @@
 package com.jocmp.capy.accounts.reader
 
 import com.jocmp.capy.AccountDelegate
+import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
@@ -10,6 +11,7 @@ import com.jocmp.capy.accounts.feedbin.FeedbinAccountDelegate.Companion.MAX_CREA
 import com.jocmp.capy.accounts.withErrorHandling
 import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.common.launchIO
+import com.jocmp.capy.common.toDateTimeFromSeconds
 import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.common.withResult
 import com.jocmp.capy.db.Database
@@ -46,6 +48,7 @@ internal class ReaderAccountDelegate(
     private val source: Source,
     private val database: Database,
     private val googleReader: GoogleReader,
+    private val preferences: AccountPreferences,
 ) : AccountDelegate {
     private var postToken = AtomicReference<String?>(null)
     private val articleRecords = ArticleRecords(database)
@@ -56,11 +59,20 @@ internal class ReaderAccountDelegate(
 
     override suspend fun refresh(filter: ArticleFilter, cutoffDate: ZonedDateTime?): Result<Unit> {
         return withErrorHandling {
-            if (filter.hasArticlesSelected()) {
-                refreshTopLevelArticles()
+            if (source == Source.FRESHRSS) {
+                refreshFeeds()
+                refreshAllSavedSearches()
+                refreshStarredItems()
+                refreshAllArticles(since = lastRefreshedAt().toEpochSecond())
+                fetchMissingArticles()
             } else {
-                refreshArticles(filter.toStream(source))
+                if (filter.hasArticlesSelected()) {
+                    refreshTopLevelArticles()
+                } else {
+                    refreshArticles(filter.toStream(source))
+                }
             }
+            preferences.touchLastRefreshedAt()
         }
     }
 
@@ -87,7 +99,10 @@ internal class ReaderAccountDelegate(
     override suspend fun addSavedSearch(articleID: String, savedSearchID: String): Result<Unit> {
         savedSearchRecords.upsertArticle(articleID = articleID, savedSearchID = savedSearchID)
 
-        return editTag(ids = listOf(articleID), addTag = Stream.UserLabel(savedSearchID)).onFailure {
+        return editTag(
+            ids = listOf(articleID),
+            addTag = Stream.UserLabel(savedSearchID)
+        ).onFailure {
             savedSearchRecords.removeArticle(articleID = articleID, savedSearchID = savedSearchID)
         }
     }
@@ -95,7 +110,10 @@ internal class ReaderAccountDelegate(
     override suspend fun removeSavedSearch(articleID: String, savedSearchID: String): Result<Unit> {
         savedSearchRecords.removeArticle(articleID = articleID, savedSearchID = savedSearchID)
 
-        return editTag(ids = listOf(articleID), removeTag = Stream.UserLabel(savedSearchID)).onFailure {
+        return editTag(
+            ids = listOf(articleID),
+            removeTag = Stream.UserLabel(savedSearchID)
+        ).onFailure {
             savedSearchRecords.upsertArticle(articleID = articleID, savedSearchID = savedSearchID)
         }
     }
@@ -105,6 +123,9 @@ internal class ReaderAccountDelegate(
         savedSearchRecords.upsert(id = labelID, name = name)
         return Result.success(labelID)
     }
+
+    override suspend fun createPage(url: String) =
+        Result.failure<Unit>(UnsupportedOperationException("Pages not supported"))
 
     override suspend fun addFeed(
         url: String,
@@ -117,7 +138,19 @@ internal class ReaderAccountDelegate(
                     .quickAddSubscription(url = url.withProtocol, postToken = postToken.get())
             }.body()
 
-            val subscription = result?.toSubscription ?: return AddFeedResult.feedNotFound()
+            val subscription = result?.toSubscription
+
+            if (subscription == null) {
+                val alreadySubscribedURL = result?.alreadySubscribedURL
+                    ?: return AddFeedResult.feedNotFound()
+
+                refreshFeeds()
+
+                val feed = feedRecords.findByFeedURL(alreadySubscribedURL)
+                    ?: return AddFeedResult.feedNotFound()
+
+                return AddFeedResult.Success(feed)
+            }
 
             try {
                 refreshFeeds()
@@ -245,6 +278,10 @@ internal class ReaderAccountDelegate(
         }
     }
 
+    private suspend fun refreshAllArticles(since: Long?) {
+        fetchPaginatedArticles(since = since, stream = Stream.ReadingList())
+    }
+
     private suspend fun refreshFeeds() {
         withResult(googleReader.subscriptionList()) { result ->
             val subscriptions = result.subscriptions
@@ -361,7 +398,7 @@ internal class ReaderAccountDelegate(
             refreshFeeds()
         }
 
-        if (stream is Stream.UserLabel) {
+        if (stream is UserLabel) {
             fetchPaginatedArticles(stream = stream)
         } else {
             refreshArticleState()
@@ -450,6 +487,8 @@ internal class ReaderAccountDelegate(
 
             items.forEach { item ->
                 val updated = TimeHelpers.nowUTC()
+                val enclosures = ReaderEnclosureParsing.validEnclosures(item)
+                val enclosureType = enclosures.firstOrNull()?.type
 
                 database.articlesQueries.create(
                     id = item.hexID,
@@ -461,7 +500,8 @@ internal class ReaderAccountDelegate(
                     summary = item.summary.content?.let { Jsoup.parse(it).text() },
                     url = item.canonical.firstOrNull()?.href,
                     image_url = ReaderEnclosureParsing.parsedImageURL(item),
-                    published_at = item.published
+                    published_at = item.published,
+                    enclosure_type = enclosureType,
                 )
 
                 articleRecords.updateStatus(
@@ -487,7 +527,7 @@ internal class ReaderAccountDelegate(
                     )
                 }
 
-                ReaderEnclosureParsing.validEnclosures(item).forEach {
+                enclosures.forEach {
                     enclosureRecords.create(
                         url = it.url.toString(),
                         type = it.type,
@@ -557,6 +597,17 @@ internal class ReaderAccountDelegate(
         return "${subscription.id}:${category.id}"
     }
 
+
+    suspend fun lastRefreshedAt(): ZonedDateTime {
+        val epoch = preferences.lastRefreshedAt.get()
+
+        return if (epoch > 0L) {
+            epoch.toDateTimeFromSeconds
+        } else {
+            TimeHelpers.nowUTC().minusMonths(3)
+        }
+    }
+
     companion object {
         const val MAX_PAGINATED_ITEM_LIMIT = 100
 
@@ -565,6 +616,16 @@ internal class ReaderAccountDelegate(
         private fun tag(path: String) = "$TAG.$path"
     }
 }
+
+private val ALREADY_SUBSCRIBED_PREFIX = "Already subscribed!"
+
+private val SubscriptionQuickAddResult.alreadySubscribedURL: String?
+    get() {
+        val message = error ?: return null
+        if (!message.startsWith(ALREADY_SUBSCRIBED_PREFIX)) return null
+
+        return message.removePrefix(ALREADY_SUBSCRIBED_PREFIX).trim().ifBlank { null }
+    }
 
 private val SubscriptionQuickAddResult.toSubscription: Subscription?
     get() {

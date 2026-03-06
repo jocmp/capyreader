@@ -2,6 +2,7 @@ package com.jocmp.capy
 
 import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.accounts.Source
+import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.preferences.Preference
 import com.jocmp.capy.preferences.PreferenceStore
 import com.jocmp.capy.preferences.getEnum
@@ -29,4 +30,14 @@ class AccountPreferences(
 
     val keywordBlocklist: Preference<Set<String>>
         get() = store.getStringSet("keyword_blocklist")
+
+    val canSaveArticleExternally: Preference<Boolean>
+        get() = store.getBoolean("can_save_article_externally", false)
+
+    val lastRefreshedAt: Preference<Long>
+        get() = store.getLong("last_refreshed_at", 0L)
+
+    suspend fun touchLastRefreshedAt() {
+        lastRefreshedAt.set(TimeHelpers.nowUTC().toEpochSecond())
+    }
 }

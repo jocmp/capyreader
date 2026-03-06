@@ -31,6 +31,7 @@ fun LoginScreen(
         password = viewModel.password,
         clientCertAlias = viewModel.clientCertAlias,
         loading = viewModel.loading,
-        errorMessage = viewModel.errorMessage
+        errorMessage = viewModel.errorMessage,
+        onUseApiTokenChange = viewModel::updateUseApiToken,
     )
 }

@@ -53,8 +53,6 @@ $font-families: (
 :root {
   --corner-radius: 0.1875rem;
   --article-line-height: 1.6em;
-  --article-title-font-size: 1.5em;
-  --article-title-text-align: left;
 }
 
 ::selection {
@@ -81,6 +79,12 @@ a {
   &:visited {
     color: var(--color-primary);
   }
+}
+
+blockquote {
+  margin: 1em 0;
+  padding: 0.25em 0 0.25em 1em;
+  border-left: 2px solid var(--color-on-surface-variant);
 }
 
 code,
@@ -166,6 +170,7 @@ figure {
 iframe {
   max-width: 100%;
   margin: 0 auto;
+  border: 0;
 
   &[src*="youtube-nocookie.com"],
   &[src*="youtube.com"],
@@ -173,7 +178,6 @@ iframe {
     background-color: #000000;
     width: 100%;
     aspect-ratio: 16 / 9;
-    border: 0;
     border-radius: var(--corner-radius);
   }
 }
@@ -242,7 +246,7 @@ video {
   .audio-enclosure__title {
     font-weight: 500;
     font-size: var(--article-font-size);
-    line-height: 1;
+    line-height: 1.2;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -314,6 +318,7 @@ ul:has(img) {
 
 .table__wrapper {
   width: 100%;
+  overflow-x: var(--table-overflow-x, visible);
 
   table {
     table-layout: fixed;
@@ -322,8 +327,15 @@ ul:has(img) {
   }
 
   table table {
+    table-layout: auto;
     margin-bottom: 0;
     border: none;
+
+    td,
+    th {
+      border: none;
+      padding: 0;
+    }
   }
 
   td,
@@ -381,6 +393,7 @@ ul:has(img) {
 
   img {
     background-color: var(--color-surface-container-highest);
+    border-radius: 0.125rem;
   }
 }
 

@@ -11,22 +11,31 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.AppTheme
 import com.capyreader.app.preferences.ThemeMode
 import com.capyreader.app.ui.EdgeToEdgeHelper.isEdgeToEdgeAvailable
+import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.theme.colorschemes.BaseColorScheme
 import com.capyreader.app.ui.theme.colorschemes.MonochromeColorScheme
 import com.capyreader.app.ui.theme.colorschemes.NewsprintColorScheme
 import com.capyreader.app.ui.theme.colorschemes.SunsetColorScheme
 import com.capyreader.app.ui.theme.colorschemes.TachiyomiColorScheme
+import com.capyreader.app.ui.theme.colorschemes.applyPureBlack
 
-val LocalAppTheme = staticCompositionLocalOf { AppTheme.DEFAULT }
+data class AppThemeState(
+    val value: AppTheme = AppTheme.DEFAULT,
+    val isDark: Boolean = false,
+)
+
+val LocalAppTheme = staticCompositionLocalOf { AppThemeState() }
 
 @Composable
 fun CapyTheme(
@@ -53,12 +62,29 @@ fun CapyTheme(
         StatusBarColorListener(colorScheme, themeMode, pureBlack)
     }
 
-    CompositionLocalProvider(LocalAppTheme provides appTheme) {
+    CompositionLocalProvider(LocalAppTheme provides AppThemeState(appTheme, isDark)) {
         MaterialTheme(
             colorScheme = colorScheme,
             content = content,
         )
     }
+}
+
+@Composable
+fun CapyTheme(
+    appPreferences: AppPreferences,
+    content: @Composable () -> Unit,
+) {
+    val themeMode by appPreferences.themeMode.collectChangesWithCurrent()
+    val appTheme by appPreferences.appTheme.collectChangesWithCurrent()
+    val pureBlack by appPreferences.pureBlackDarkMode.collectChangesWithCurrent()
+
+    CapyTheme(
+        appTheme = appTheme,
+        themeMode = themeMode,
+        pureBlack = pureBlack,
+        content = content,
+    )
 }
 
 @Composable
@@ -73,6 +99,7 @@ private fun getThemeColorScheme(
     return if (theme == AppTheme.MONET && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
         if (isDark) {
             dynamicDarkColorScheme(LocalContext.current)
+                .applyPureBlack(pureBlack)
         } else {
             dynamicLightColorScheme(LocalContext.current)
         }

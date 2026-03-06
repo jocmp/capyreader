@@ -63,7 +63,7 @@ class DefaultFeedFinder internal constructor(
         return listOf(
             XML(response),
             MetaLinks(response = response, request = request),
-            KnownPatterns(response = response, request =request),
+            KnownPatterns(response = response, request = request),
             BodyLinks(response = response, request = request),
             Guess(response = response, request = request)
         )

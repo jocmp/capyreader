@@ -45,6 +45,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
+import com.capyreader.app.ui.translationKey
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.FeedOption
 
@@ -88,14 +89,7 @@ fun AddFeedView(
             isError = isError,
             supportingText = {
                 error?.let {
-                    val resource = when (it) {
-                        is AddFeedResult.Error.FeedNotFound -> R.string.add_feed_feed_not_error
-                        is AddFeedResult.Error.ConnectionError -> R.string.add_feed_network_error
-                        is AddFeedResult.Error.NetworkError -> R.string.add_feed_network_error
-                        is AddFeedResult.Error.SaveFailure -> R.string.add_feed_save_error
-                    }
-
-                    Text(stringResource(resource))
+                    Text(stringResource(it.translationKey))
                 }
             },
             singleLine = true,

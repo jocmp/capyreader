@@ -14,6 +14,7 @@
     <string name="feed_action_unsubscribe">Unsubscribe</string>
     <string name="filter_action_menu_description">Edit</string>
     <string name="feed_action_edit">Edit Feed</string>
+    <string name="feed_action_reload_icon">Reload Icon</string>
     <string name="feed_action_unsubscribe_message">Are you sure you want to unsubscribe from \"%1$s\"?</string>
     <string name="feed_action_unsubscribe_confirm">Unsubscribe</string>
     <string name="edit_feed_submit">Save</string>
@@ -51,6 +52,17 @@
     <string name="add_feed_feed_not_error">Couldn\'t find feed</string>
     <string name="add_feed_save_error">Couldn\'t save feed</string>
     <string name="add_feed_network_error">Couldn\'t find feed. Check your connection.</string>
+    <string name="add_link_title">Add Link</string>
+    <string name="tab_add_feed">Add Feed</string>
+    <string name="tab_save_page">Save Page</string>
+    <string name="save_page_success">Page saved</string>
+    <string name="save_page_error">Couldn\'t save page</string>
+    <string name="save_page_network_error">Couldn\'t save page. Check your connection.</string>
+    <string name="save_page_submit">Save</string>
+    <string name="add_link_searching">Searching for feeds…</string>
+    <string name="add_link_subscribe">Subscribe</string>
+    <string name="add_link_feed_added">Feed added</string>
+    <string name="add_link_page_saved">Page saved</string>
     <string name="delete_tag_error">Error deleting tag</string>
     <string name="relative_time_just_now">Just now</string>
     <string name="relative_time_minutes">%1$dm</string>
@@ -66,6 +78,7 @@
     <string name="article_actions_mark_after_as_read">Mark above as read</string>
     <string name="article_actions_copy_link">Copy link</string>
     <string name="freshrss_article_actions_label">Label</string>
+    <string name="freshrss_nav_headline_categories">Categories</string>
     <string name="freshrss_labels_sheet_title">Labels</string>
     <string name="freshrss_labels_new_label">New Label</string>
     <string name="freshrss_labels_create_dialog_title">New Label</string>
@@ -108,6 +121,9 @@
     <string name="transfers_export_subscriptions">Export Subscriptions</string>
     <string name="settings_section_account">Account</string>
     <string name="settings_section_account_server">Server</string>
+    <string name="settings_account_refresh_value">%1$s at %2$s</string>
+    <string name="settings_account_refresh_value_today">Today at %1$s</string>
+    <string name="settings_account_never_refreshed">Never</string>
     <string name="settings_section_import">Import</string>
     <string name="settings_section_export">Export</string>
     <string name="opml_import_notification_title">Importing subscriptions…</string>
@@ -115,7 +131,7 @@
     <string name="notifications_channel_title_feed_update">Feed Updates</string>
     <string name="notification_mark_as_read_action">Mark as read</string>
     <string name="settings_section_privacy">Privacy</string>
-    <string name="settings_section_refresh">Refresh</string>
+    <string name="settings_section_refresh">Last Updated</string>
     <string name="opml_import_button_text">Import from File</string>
     <string name="opml_export_button_text">Export to OPML</string>
     <string name="opml_import_progress_content_text_start">Starting import</string>
@@ -134,6 +150,7 @@
     <string name="theme_monochrome">Monochrome</string>
     <string name="theme_sunset">Sunset</string>
     <string name="settings_pure_black_dark_mode">Pure black dark mode</string>
+    <string name="settings_accent_colors">Accent colors</string>
     <string name="theme_menu_option_light">Light</string>
     <string name="theme_menu_option_dark">Dark</string>
     <string name="theme_menu_option_system_default">System default</string>
@@ -157,6 +174,7 @@
     <string name="refresh_on_start">On start</string>
     <string name="empty_onboarding_title">No feeds yet</string>
     <string name="empty_onboarding_prompt">Start by adding a feed</string>
+    <string name="article_list_empty">Nothing here</string>
     <string name="article_style_options">Font style options</string>
     <string name="font_option_vollkorn" translatable="false">Vollkorn</string>
     <string name="font_option_atkinson_hyperlegible" translatable="false">Atkinson Hyperlegible</string>
@@ -207,9 +225,12 @@
     <string name="settings_article_list_title">Article List</string>
     <string name="opml_exporter_success">Export complete</string>
     <string name="opml_exporter_failure">Export failed</string>
+    <string name="starred_export_button_text">Export Starred Articles</string>
+    <string name="starred_exporter_success">Export complete</string>
+    <string name="starred_exporter_failure">Export failed</string>
     <string name="settings_reader_title">Reader</string>
-    <string name="settings_options_reader_pin_top_toolbar">Pin Top Toolbar</string>
-    <string name="settings_options_reader_show_bottom_toolbar">Show Actions on Bottom Toolbar</string>
+    <string name="settings_options_reader_pin_top_toolbar">Pin Toolbars</string>
+
     <string name="article_bottom_bar_next_article">Go to next article</string>
     <string name="settings_gestures_reader_swipe_down">Swipe Down</string>
     <string name="settings_gestures_reader_swipe_up">Swipe Up</string>
@@ -242,8 +263,8 @@
     <string name="notifications_permissions_disabled_call_to_action">Settings</string>
     <string name="notifications_permission_disabled_title">Notification permission is disabled</string>
     <string name="settings_enable_refresh_call_to_action">Periodic refresh must be enabled first</string>
-    <string name="settings_notifications_select_none">Select None</string>
-    <string name="settings_notifications_select_all">Select All</string>
+    <string name="settings_select_none">Select None</string>
+    <string name="settings_select_all">Select All</string>
     <string name="article_list_row_swipe_open_externally">Open article in browser</string>
     <string name="article_view_open_externally">Open externally</string>
     <string name="settings_confirm_mark_all_read">Confirm marking all as read</string>
@@ -261,9 +282,6 @@
     <string name="reader_image_visibility_always_hide">Block images</string>
     <string name="reader_image_visibility_always_show">Always show images</string>
     <string name="reader_image_visibility_label">Images</string>
-    <string name="layout_preference_responsive">Responsive</string>
-    <string name="layout_preference_single">Single Column</string>
-    <string name="layout_preference_label">Preferred Layout</string>
     <string name="end_of_feed_text">All caught up!</string>
     <string name="after_read_all_behavior_label">After Read All</string>
     <string name="after_read_all_behavior_default">Default</string>
@@ -271,6 +289,7 @@
     <string name="after_read_all_behavior_open_next_feed">Open Next Feed</string>
     <string name="full_content_error_missing_response">Failed to fetch article</string>
     <string name="full_content_error_generic">Failed to parse article</string>
+    <string name="full_content_error_forbidden">Fetch blocked by site</string>
     <string name="feed_nav_drawer_title">Feeds</string>
     <string name="search_bar_placeholder">Search</string>
     <string name="media_save">Save</string>
@@ -305,14 +324,32 @@
     <string name="open_articles_in_browser">Open Articles In Browser</string>
     <string name="selected">Selected</string>
     <string name="auth_fields_freshrss_api_password">API Password</string>
+    <string name="auth_fields_miniflux_api_token">API Token</string>
+    <string name="auth_fields_miniflux_use_api_token">Use API Token instead</string>
+    <string name="auth_fields_miniflux_use_password">Use Password instead</string>
+    <string name="auth_fields_show_advanced">Advanced options</string>
+    <string name="auth_fields_hide_advanced">Hide advanced options</string>
     <string name="freshrss_visibility">Visibility</string>
     <string name="freshrss_visibility_option_main">Main Stream</string>
     <string name="freshrss_visibility_option_important">Important</string>
     <string name="freshrss_visibility_option_category">Category</string>
     <string name="freshrss_visibility_option_feed">Feed</string>
+    <string name="freshrss_tag_action_edit">Edit Category</string>
     <string name="audio_player_play">Play</string>
     <string name="audio_player_pause">Pause</string>
     <string name="audio_player_close">Close player</string>
     <string name="audio_player_skip_back">Skip back 30 seconds</string>
     <string name="audio_player_skip_forward">Skip forward 30 seconds</string>
+    <string name="settings_panel_unread_counts_title">Unread Badges</string>
+    <string name="settings_option_badge_style">Badge style</string>
+    <string name="badge_style_simple">Simple</string>
+    <string name="badge_style_exact">Exact</string>
+    <string name="show_unread_badge">Show Unread Badge</string>
+    <string name="article_actions_save_externally">Save</string>
+    <string name="article_actions_save_externally_success">Saved</string>
+    <string name="article_actions_save_externally_failure">Failed to save</string>
+    <string name="article_actions_delete_page">Delete page</string>
+    <string name="article_actions_delete_page_title">Delete</string>
+    <string name="article_actions_delete_page_message">Are you sure you want to delete this page?</string>
+    <string name="article_actions_delete_page_confirm">Delete</string>
 </resources>

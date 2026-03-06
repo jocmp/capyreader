@@ -11,13 +11,18 @@ import com.capyreader.app.ui.articles.FaviconBadge
 import com.capyreader.app.ui.articles.ListTitle
 import com.capyreader.app.ui.articles.list.FeedActionMenu
 import com.capyreader.app.ui.fixtures.FeedSample
+import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
+import com.jocmp.capy.accounts.Source
 
 @Composable
 fun FeedRow(
     selected: Boolean,
     feed: Feed,
     onSelect: (feed: Feed) -> Unit,
+    status: ArticleStatus = ArticleStatus.ALL,
+    showContextMenu: Boolean = true,
+    source: Source = Source.LOCAL,
 ) {
     val (showMenu, setShowMenu) = remember { mutableStateOf(false) }
 
@@ -27,23 +32,30 @@ fun FeedRow(
                FaviconBadge(url = feed.faviconURL)
            },
            label = { ListTitle(feed.title) },
-           badge = { CountBadge(count = feed.count) },
+           badge = {
+               CountBadge(count = feed.count, showBadge = feed.showUnreadBadge, status = status)
+           },
            selected = selected,
            onClick = {
                onSelect(feed)
            },
            onLongClick = {
-               setShowMenu(true)
+               if (showContextMenu) {
+                   setShowMenu(true)
+               }
            }
        )
 
-       FeedActionMenu(
-           expanded = showMenu,
-           feed = feed,
-           onDismissMenuRequest = {
-               setShowMenu(false)
-           }
-       )
+       if (showContextMenu) {
+           FeedActionMenu(
+               expanded = showMenu,
+               feed = feed,
+               onDismissMenuRequest = {
+                   setShowMenu(false)
+               },
+               source = source,
+           )
+       }
    }
 }
 

@@ -1,0 +1,103 @@
+#!/usr/bin/env ruby
+
+require "net/http"
+require "json"
+require "fileutils"
+require "openssl"
+
+PACKAGE = "com.tailscale.ipn"
+FDROID_API = "https://f-droid.org/api/v1/packages/#{PACKAGE}"
+FDROID_REPO = "https://f-droid.org/repo"
+
+def cache_dir
+  @cache_dir ||= begin
+    script_dir = File.dirname(File.realpath(__FILE__))
+    dir = File.join(script_dir, "..", "tmp")
+    FileUtils.mkdir_p(dir)
+    dir
+  end
+end
+
+def latest_version
+  puts "Checking F-Droid for latest Tailscale version..."
+  uri = URI(FDROID_API)
+  http = Net::HTTP.new(uri.host, uri.port)
+  http.use_ssl = true
+  http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+  http.verify_callback = ->(preverify_ok, store_ctx) {
+    return true if preverify_ok
+    store_ctx.error == OpenSSL::X509::V_ERR_UNABLE_TO_GET_CRL
+  }
+  response = http.request(Net::HTTP::Get.new(uri)).body
+  version = JSON.parse(response).fetch("suggestedVersionCode").to_s
+  abort "Failed to fetch version info from F-Droid" if version.empty?
+  version
+end
+
+def cached_apk
+  Dir.glob(File.join(cache_dir, "tailscale-*.apk")).first
+end
+
+def cached_version(path)
+  File.basename(path, ".apk").delete_prefix("tailscale-")
+end
+
+def download_apk(version)
+  apk_path = File.join(cache_dir, "tailscale-#{version}.apk")
+  puts "Downloading Tailscale (version code #{version})..."
+  FileUtils.rm_f(Dir.glob(File.join(cache_dir, "tailscale-*.apk")))
+  uri = URI("#{FDROID_REPO}/#{PACKAGE}_#{version}.apk")
+  File.open(apk_path, "wb") do |file|
+    Net::HTTP.start(uri.host, uri.port, use_ssl: true,
+                     verify_mode: OpenSSL::SSL::VERIFY_PEER,
+                     verify_callback: ->(preverify_ok, store_ctx) {
+                       preverify_ok || store_ctx.error == OpenSSL::X509::V_ERR_UNABLE_TO_GET_CRL
+                     }) do |http|
+      http.request(Net::HTTP::Get.new(uri)) do |response|
+        abort "Download failed: #{response.code}" unless response.is_a?(Net::HTTPSuccess)
+        response.read_body { |chunk| file.write(chunk) }
+      end
+    end
+  end
+  puts "Download complete."
+  apk_path
+end
+
+def fetch_apk
+  version = latest_version
+  existing = cached_apk
+
+  if existing && cached_version(existing) == version
+    puts "Cached APK is up to date (version code #{version})."
+    existing
+  else
+    download_apk(version)
+  end
+end
+
+def wait_for_emulator
+  puts "Waiting for emulator..."
+  system("adb", "wait-for-device", exception: true)
+  system("adb", "shell", 'while [ -z "$(getprop sys.boot_completed 2>/dev/null)" ]; do sleep 1; done', exception: true)
+end
+
+def install_apk(apk_path)
+  installed = `adb shell pm list packages`.include?(PACKAGE)
+
+  if installed
+    puts "Updating Tailscale..."
+    system("adb", "install", "-r", apk_path, exception: true)
+  else
+    puts "Installing Tailscale..."
+    system("adb", "install", apk_path, exception: true)
+  end
+end
+
+def main
+  apk_path = fetch_apk
+  wait_for_emulator
+  install_apk(apk_path)
+  puts "Done."
+end
+
+main if __FILE__ == $PROGRAM_NAME

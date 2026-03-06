@@ -1,0 +1,1 @@
+ALTER TABLE article_statuses RENAME COLUMN last_starred_at TO last_unstarred_at;

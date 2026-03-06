@@ -1,0 +1,1 @@
+ALTER TABLE article_statuses ADD COLUMN last_starred_at INTEGER;

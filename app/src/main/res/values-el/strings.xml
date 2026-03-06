@@ -6,6 +6,7 @@
     <string name="feed_action_unsubscribe">Απεγγραφή</string>
     <string name="filter_action_menu_description">Επεξεργασία</string>
     <string name="feed_action_edit">Επεξεργασία Ροής</string>
+    <string name="feed_action_reload_icon">Επαναφόρτωση εικονιδίου</string>
     <string name="feed_action_unsubscribe_message">Σίγουρα θες να απεγγραφείς από το «%1$s»;</string>
     <string name="feed_action_unsubscribe_confirm">Απεγγραφή</string>
     <string name="edit_feed_submit">Αποθήκευση</string>
@@ -138,7 +139,7 @@
     <string name="settings_option_copy_version">Αντιγραφή έκδοσης</string>
     <string name="settings_option_full_content_title">Επίμονο Πλήρες Περιεχόμενο</string>
     <string name="settings_option_full_content_subtitle">Αποθήκευση επιλογής για φόρτωση πλήρους περιεχομένου άρθρου</string>
-    <string name="refresh_on_start">Κατά την εκκκίνηση</string>
+    <string name="refresh_on_start">Κατά την εκκίνηση</string>
     <string name="empty_onboarding_title">Καμία ροή ακόμα</string>
     <string name="empty_onboarding_prompt">Ξεκίνα προσθέτοντας μια ροή</string>
     <string name="article_style_options">Επιλογές στυλ γραμματοσειράς</string>
@@ -180,7 +181,6 @@
     <string name="opml_exporter_failure">Η εξαγωγή απέτυχε</string>
     <string name="settings_reader_title">Αναγνώστης</string>
     <string name="settings_options_reader_pin_top_toolbar">Καρφίτσωμα Πάνω Γραμμής Εργαλειών</string>
-    <string name="settings_options_reader_show_bottom_toolbar">Εμφάνιση Ενεργειών στη Κάτω Γραμμή Εργαλειών</string>
     <string name="article_bottom_bar_next_article">Μετάβαση στο επόμενο άρθρο</string>
     <string name="settings_gestures_reader_swipe_down">Κύλιση Κάτω</string>
     <string name="settings_gestures_reader_swipe_up">Κύλιση Πάνω</string>
@@ -194,7 +194,7 @@
     <string name="article_list_row_swipe_toggle_read">Εναλλαγή Αναγνωσμένου</string>
     <string name="settings_gestures_list_back_navigation_action">Ενέργεια Πλοήγησης Πίσω</string>
     <string name="settings_enable_refresh_call_to_action">Η περιοδική ανανέωση πρέπει να ενεργοποιηθεί πρώτα</string>
-    <string name="settings_notifications_select_all">Επιλογή Όλων</string>
+    <string name="settings_select_all">Επιλογή Όλων</string>
     <string name="article_list_row_swipe_toggle_starred">Εναλλαγή αγαπημένου</string>
     <string name="article_list_swipe_next_feed">Μετάβαση στην επόμενη ροή</string>
     <string name="article_list_swipe_disabled">Ανενεργό</string>
@@ -212,7 +212,7 @@
     <string name="edit_feed_notifications_title">Ενεργοποίηση ειδοποιήσεων</string>
     <string name="notifications_permissions_disabled_call_to_action">Ρυθμίσεις</string>
     <string name="notifications_permission_disabled_title">Η άδεια ειδοποιήσεων είναι ανενεργή</string>
-    <string name="settings_notifications_select_none">Επιλογή Κανενός</string>
+    <string name="settings_select_none">Επιλογή Κανενός</string>
     <string name="article_list_row_swipe_open_externally">Άνοιγμα άρθρου στον περιηγητή</string>
     <string name="article_view_open_externally">Άνοιγμα εξωτερικά</string>
     <string name="settings_confirm_mark_all_read">Επιβεβαίωση ανάγνωσης όλων</string>
@@ -220,16 +220,14 @@
     <string name="settings_gestures_reader_tap_to_page_title">E Ink πάτημα για κύλιση</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">Ενεργοποίηση οριζόντιας κύλισης</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Κύλιση αριστερά ή δεξιά για πλοήγηση σε άρθρα</string>
-    <string name="layout_preference_label">Προτιμώμενη Διάταξη</string>
     <string name="after_read_all_behavior_label">Μετά την Ανάγνωση Όλων</string>
-    <string name="layout_preference_single">Μονή Στήλη</string>
-    <string name="layout_preference_responsive">Αποκρίσιμο</string>
     <string name="after_read_all_behavior_default">Προεπιλογή</string>
     <string name="after_read_all_behavior_open_next_feed">Άνοιγμα Επόμενης Ροής</string>
     <string name="full_content_error_missing_response">Αποτυχία ανάκτησης άρθρου</string>
     <string name="media_save">Αποθήκευση</string>
     <string name="after_read_all_behavior_open_drawer">Άνοιγμα Συρταριού Πλοήγησης</string>
     <string name="full_content_error_generic">Αποτυχία ανάλυσης άρθρου</string>
+    <string name="full_content_error_forbidden">Η ανάκτηση αποκλείστηκε από τον ιστότοπο</string>
     <string name="add_account_miniflux_signup_prompt">Δεν έχετε οντότητα Miniflux;</string>
     <string name="add_account_miniflux_signup_link_text">Μάθε περισσότερα.</string>
     <string name="end_of_feed_text">Τα \'δες όλα!</string>
@@ -293,4 +291,14 @@
     <string name="freshrss_visibility_option_important">Σημαντικό</string>
     <string name="freshrss_visibility_option_category">Κατηγορία</string>
     <string name="freshrss_visibility_option_feed">Ροή</string>
+    <string name="freshrss_nav_headline_categories">Κατηγορίες</string>
+    <string name="theme_mode_label">Λειτουργία</string>
+    <string name="article_list_empty">Τίποτα εδώ</string>
+    <string name="settings_section_experimental">Πειραματικά</string>
+    <string name="settings_option_enable_audio_player">Αναπαραγωγέας ήχου</string>
+    <string name="audio_player_play">Αναπαραγωγή</string>
+    <string name="audio_player_pause">Παύση</string>
+    <string name="audio_player_close">Κλείσιμο αναπαραγωγέα</string>
+    <string name="audio_player_skip_back">Επιστροφή 30 δευτερόλεπτα</string>
+    <string name="audio_player_skip_forward">Παράλειψη 30 δευτερόλεπτα</string>
 </resources>
