@@ -48,7 +48,7 @@ fun FilterAppBarTitle(
         is ArticleFilter.Today -> stringResource(R.string.filter_today)
     }.orEmpty()
 
-    val displayText = if (showUnreadCount && unreadCount > 0) {
+    val displayText = if (showUnreadCount) {
         "$text ($unreadCount)"
     } else {
         text
