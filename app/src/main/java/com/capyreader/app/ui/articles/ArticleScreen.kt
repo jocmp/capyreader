@@ -115,7 +115,7 @@ fun ArticleScreen(
     val todayCount by viewModel.todayCount.collectAsStateWithLifecycle(initialValue = 0)
     val unreadCount by viewModel.unreadCount.collectAsStateWithLifecycle(initialValue = 0L)
     val showTodayFilter by viewModel.showTodayFilter.collectAsStateWithLifecycle(initialValue = true)
-    val filter by viewModel.filter.collectAsStateWithLifecycle(appPreferences.filter.get())
+    val filter by viewModel.filter.collectAsStateWithLifecycle()
     val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle("")
     val searchState by viewModel.searchState.collectAsStateWithLifecycle(SearchState.INACTIVE)
     val nextFilter by viewModel.nextFilter.collectAsStateWithLifecycle(initialValue = null)
@@ -123,7 +123,7 @@ fun ArticleScreen(
     val scope = rememberCoroutineScope()
     val refreshInterval by appPreferences
         .refreshInterval
-        .collectChangesWithDefault(appPreferences.refreshInterval.get())
+        .collectChangesWithCurrent()
 
     val canSwipeToNextFeed = nextFilter != null
     val context = LocalContext.current
@@ -215,7 +215,7 @@ fun ArticleScreen(
             viewModel.dismissUnauthorizedMessage()
             setUpdatePasswordDialogOpen(true)
         }
-        val enableMarkReadOnScroll by appPreferences.articleListOptions.markReadOnScroll.collectChangesWithDefault()
+        val enableMarkReadOnScroll by appPreferences.articleListOptions.markReadOnScroll.collectChangesWithCurrent()
 
         suspend fun navigateToDetail() {
             scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)

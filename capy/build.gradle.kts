@@ -56,7 +56,7 @@ android {
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.paging.runtime.ktx)
-    implementation(libs.androidx.preferences)
+    implementation(libs.androidx.datastore.preferences)
     implementation(libs.jsoup)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.serialization.json)

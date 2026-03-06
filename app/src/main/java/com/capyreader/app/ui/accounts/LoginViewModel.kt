@@ -120,7 +120,7 @@ class LoginViewModel(
 
     private fun normalizeURL() {
         if (!source.hasCustomURL || _url.isBlank()) {
-           return
+            return
         }
 
         _url = _url
@@ -130,6 +130,7 @@ class LoginViewModel(
                 when (source) {
                     Source.MINIFLUX,
                     Source.MINIFLUX_TOKEN -> withMinifluxPath(it)
+
                     else -> withFreshRSSPath(it, source)
                 }
             }
@@ -146,20 +147,22 @@ class LoginViewModel(
         )
 
     private fun createAccount(credentials: Credentials) {
-        val accountID = accountManager.createAccount(
-            username = credentials.username,
-            password = credentials.secret,
-            url = credentials.url,
-            clientCertAlias = credentials.clientCertAlias,
-            source = credentials.source
-        )
+        viewModelScope.launchIO {
+            val accountID = accountManager.createAccount(
+                username = credentials.username,
+                password = credentials.secret,
+                url = credentials.url,
+                clientCertAlias = credentials.clientCertAlias,
+                source = credentials.source
+            )
 
-        selectAccount(accountID)
+            selectAccount(accountID)
 
-        loadAccountModules()
+            loadAccountModules()
+        }
     }
 
-    private fun selectAccount(id: String) {
+    private suspend fun selectAccount(id: String) {
         appPreferences.accountID.set(id)
     }
 

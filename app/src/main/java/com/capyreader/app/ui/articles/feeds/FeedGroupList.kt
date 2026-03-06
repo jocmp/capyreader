@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
@@ -28,6 +29,7 @@ import com.capyreader.app.ui.articles.ListHeadline
 import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.fixtures.PreviewKoinApplication
 import com.capyreader.app.ui.theme.CapyTheme
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 @Composable
@@ -39,9 +41,11 @@ fun FeedGroupList(
 ) {
     val pinPreference = appPreferences.pinFeedGroup(type)
     val expanded by pinPreference.collectChangesWithCurrent()
+    val scope = rememberCoroutineScope()
 
     val toggle = {
-        pinPreference.set(!expanded)
+        scope.launch { pinPreference.set(!expanded) }
+        Unit
     }
 
     Column(

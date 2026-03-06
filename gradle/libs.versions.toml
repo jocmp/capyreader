@@ -3,6 +3,7 @@ androidx-paging = "3.4.1"
 media3 = "1.9.2"
 coil = "3.3.0"
 coroutines = "1.10.2"
+datastore = "1.1.7"
 glance-material3 = "1.2.0-rc01"
 kotlin = "2.3.10"
 ksp = "2.2.20-2.0.4"
@@ -41,7 +42,7 @@ androidx-navigation-compose = { module = "androidx.navigation:navigation-compose
 androidx-palette = { module = "androidx.palette:palette-ktx", version = "1.0.0" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "paging-compose" }
 androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "androidx-paging" }
-androidx-preferences = { module = "androidx.preference:preference-ktx", version = "1.2.1" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 androidx-ui = { module = "androidx.compose.ui:ui" }
 androidx-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
 androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }

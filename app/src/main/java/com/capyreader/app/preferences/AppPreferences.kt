@@ -1,7 +1,5 @@
 package com.capyreader.app.preferences
 
-import android.content.Context
-import androidx.preference.PreferenceManager
 import com.capyreader.app.common.FeedGroup
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.refresher.RefreshInterval
@@ -13,23 +11,18 @@ import com.jocmp.capy.articles.FontOption
 import com.jocmp.capy.articles.FontSize
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.articles.TextAlignment
-import com.jocmp.capy.preferences.AndroidPreferenceStore
 import com.jocmp.capy.preferences.Preference
 import com.jocmp.capy.preferences.PreferenceStore
 import com.jocmp.capy.preferences.getEnum
 import kotlinx.serialization.json.Json
 
-class AppPreferences(context: Context) {
-    private val preferenceStore: PreferenceStore = AndroidPreferenceStore(
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-    )
+class AppPreferences(private val preferenceStore: PreferenceStore) {
 
     val readerOptions = ReaderOptions(preferenceStore)
 
     val articleListOptions = ArticleListOptions(preferenceStore)
 
-    val isLoggedIn
-        get() = accountID.get().isNotBlank()
+    suspend fun isLoggedIn() = accountID.get().isNotBlank()
 
     val accountID: Preference<String>
         get() = preferenceStore.getString("account_id")
@@ -88,7 +81,7 @@ class AppPreferences(context: Context) {
     val badgeStyle: Preference<BadgeStyle>
         get() = preferenceStore.getEnum("badge_style", BadgeStyle.default)
 
-    fun clearAll() {
+    suspend fun clearAll() {
         preferenceStore.clearAll()
     }
 

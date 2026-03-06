@@ -1,21 +1,25 @@
 package com.capyreader.app
 
 import android.webkit.WebSettings
+import androidx.datastore.preferences.SharedPreferencesMigration
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import com.capyreader.app.common.AndroidClientCertManager
 import com.capyreader.app.common.AndroidDatabaseProvider
 import com.capyreader.app.common.AppFaviconPolicy
-import com.capyreader.app.common.SharedPreferenceStoreProvider
+import com.capyreader.app.common.DataStorePreferenceStoreProvider
 import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.AccountManager
 import com.jocmp.capy.ClientCertManager
 import com.jocmp.capy.DatabaseProvider
 import com.jocmp.capy.PreferenceStoreProvider
+import com.jocmp.capy.preferences.DataStorePreferenceStore
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
+import java.io.File
 import java.util.Locale
 
 internal val common = module {
-    single<PreferenceStoreProvider> { SharedPreferenceStoreProvider(get()) }
+    single<PreferenceStoreProvider> { DataStorePreferenceStoreProvider(get()) }
     single<DatabaseProvider> { AndroidDatabaseProvider(context = get()) }
     single<ClientCertManager> { AndroidClientCertManager(context = get()) }
     single {
@@ -30,7 +34,18 @@ internal val common = module {
             acceptLanguage = Locale.getDefault().toAcceptLanguageTag(),
         )
     }
-    single { AppPreferences(get()) }
+    single {
+        val context = androidContext()
+        val dataStore = PreferenceDataStoreFactory.create(
+            migrations = listOf(
+                SharedPreferencesMigration(context, "${context.packageName}_preferences")
+            ),
+            produceFile = {
+                File(context.filesDir, "datastore/${context.packageName}_preferences.preferences_pb")
+            }
+        )
+        AppPreferences(DataStorePreferenceStore(dataStore))
+    }
 }
 
 private fun Locale.toAcceptLanguageTag(): String {

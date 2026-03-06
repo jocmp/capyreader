@@ -4,11 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import com.jocmp.capy.preferences.Preference
+import kotlinx.coroutines.runBlocking
 
 @Composable
 fun <T> Preference<T>.collectChangesWithDefault(initial: T = defaultValue()): State<T> =
     changes().collectAsState(initial = initial)
 
 @Composable
-fun <T> Preference<T>.collectChangesWithCurrent(initial: T = get()): State<T> =
-    changes().collectAsState(initial = initial)
+fun <T> Preference<T>.collectChangesWithCurrent(): State<T> =
+    changes().collectAsState(initial = runBlocking { get() })

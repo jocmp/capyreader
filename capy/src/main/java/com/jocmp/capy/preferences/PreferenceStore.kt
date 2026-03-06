@@ -21,7 +21,7 @@ interface PreferenceStore {
         deserializer: (String) -> T,
     ): Preference<T>
 
-    fun clearAll()
+    suspend fun clearAll()
 }
 
 inline fun <reified T : Enum<T>> PreferenceStore.getEnum(

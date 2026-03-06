@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ReaderImageVisibility
@@ -11,123 +12,123 @@ import com.capyreader.app.preferences.ThemeMode
 import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.capyreader.app.ui.articles.MarkReadPosition
 import com.jocmp.capy.Account
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class DisplaySettingsViewModel(
     val account: Account,
     val appPreferences: AppPreferences,
 ) : ViewModel() {
-    var themeMode by mutableStateOf(appPreferences.themeMode.get())
-        private set
-    
-    var appTheme by mutableStateOf(appPreferences.appTheme.get())
-        private set
-    
-    var pureBlackDarkMode by mutableStateOf(appPreferences.pureBlackDarkMode.get())
+    var themeMode by mutableStateOf(appPreferences.themeMode.defaultValue())
         private set
 
-    var accentColors by mutableStateOf(appPreferences.accentColors.get())
+    var appTheme by mutableStateOf(appPreferences.appTheme.defaultValue())
         private set
 
-    private val _imagePreview = mutableStateOf(appPreferences.articleListOptions.imagePreview.get())
-
-    private val _showSummary = mutableStateOf(appPreferences.articleListOptions.showSummary.get())
-
-    private val _showFeedName = mutableStateOf(appPreferences.articleListOptions.showFeedName.get())
-
-    private val _showFeedIcons =
-        mutableStateOf(appPreferences.articleListOptions.showFeedIcons.get())
-
-    private val _shortenTitles = mutableStateOf(appPreferences.articleListOptions.shortenTitles.get())
-
-    var fontScale by mutableStateOf(appPreferences.articleListOptions.fontScale.get())
+    var pureBlackDarkMode by mutableStateOf(appPreferences.pureBlackDarkMode.defaultValue())
         private set
 
-    val imagePreview: ImagePreview
-        get() = _imagePreview.value
+    var accentColors by mutableStateOf(appPreferences.accentColors.defaultValue())
+        private set
 
-    val showSummary: Boolean
-        get() = _showSummary.value
+    var imagePreview by mutableStateOf(appPreferences.articleListOptions.imagePreview.defaultValue())
+        private set
 
-    val showFeedName: Boolean
-        get() = _showFeedName.value
+    var showSummary by mutableStateOf(appPreferences.articleListOptions.showSummary.defaultValue())
+        private set
 
-    val showFeedIcons: Boolean
-        get() = _showFeedIcons.value
+    var showFeedName by mutableStateOf(appPreferences.articleListOptions.showFeedName.defaultValue())
+        private set
 
-    val shortenTitles: Boolean
-        get() = _shortenTitles.value
+    var showFeedIcons by mutableStateOf(appPreferences.articleListOptions.showFeedIcons.defaultValue())
+        private set
+
+    var shortenTitles by mutableStateOf(appPreferences.articleListOptions.shortenTitles.defaultValue())
+        private set
+
+    var fontScale by mutableStateOf(appPreferences.articleListOptions.fontScale.defaultValue())
+        private set
 
     val pinArticleBars = appPreferences.readerOptions.pinToolbars
 
-    var imageVisibility by mutableStateOf(appPreferences.readerOptions.imageVisibility.get())
+    var imageVisibility by mutableStateOf(appPreferences.readerOptions.imageVisibility.defaultValue())
         private set
 
     val improveTalkback = appPreferences.readerOptions.improveTalkback
 
     val markReadButtonPosition = appPreferences.articleListOptions.markReadButtonPosition
 
+    init {
+        runBlocking {
+            themeMode = appPreferences.themeMode.get()
+            appTheme = appPreferences.appTheme.get()
+            pureBlackDarkMode = appPreferences.pureBlackDarkMode.get()
+            accentColors = appPreferences.accentColors.get()
+            imagePreview = appPreferences.articleListOptions.imagePreview.get()
+            showSummary = appPreferences.articleListOptions.showSummary.get()
+            showFeedName = appPreferences.articleListOptions.showFeedName.get()
+            showFeedIcons = appPreferences.articleListOptions.showFeedIcons.get()
+            shortenTitles = appPreferences.articleListOptions.shortenTitles.get()
+            fontScale = appPreferences.articleListOptions.fontScale.get()
+            imageVisibility = appPreferences.readerOptions.imageVisibility.get()
+        }
+    }
+
     fun updateThemeMode(themeMode: ThemeMode) {
-        appPreferences.themeMode.set(themeMode)
         this.themeMode = themeMode
+        viewModelScope.launch { appPreferences.themeMode.set(themeMode) }
     }
 
     fun updatePureBlackDarkMode(enable: Boolean) {
-        appPreferences.pureBlackDarkMode.set(enable)
         this.pureBlackDarkMode = enable
+        viewModelScope.launch { appPreferences.pureBlackDarkMode.set(enable) }
     }
 
     fun updateAccentColors(enable: Boolean) {
-        appPreferences.accentColors.set(enable)
         this.accentColors = enable
+        viewModelScope.launch { appPreferences.accentColors.set(enable) }
     }
 
     fun updatePinArticleBars(pinBars: Boolean) {
-        appPreferences.readerOptions.pinToolbars.set(pinBars)
+        viewModelScope.launch { appPreferences.readerOptions.pinToolbars.set(pinBars) }
     }
 
     fun updateFontScale(fontScale: ArticleListFontScale) {
-        appPreferences.articleListOptions.fontScale.set(fontScale)
-
         this.fontScale = fontScale
+        viewModelScope.launch { appPreferences.articleListOptions.fontScale.set(fontScale) }
     }
 
     fun updateImagePreview(imagePreview: ImagePreview) {
-        appPreferences.articleListOptions.imagePreview.set(imagePreview)
-
-        _imagePreview.value = imagePreview
+        this.imagePreview = imagePreview
+        viewModelScope.launch { appPreferences.articleListOptions.imagePreview.set(imagePreview) }
     }
 
     fun updateSummary(show: Boolean) {
-        appPreferences.articleListOptions.showSummary.set(show)
-
-        _showSummary.value = show
+        this.showSummary = show
+        viewModelScope.launch { appPreferences.articleListOptions.showSummary.set(show) }
     }
 
     fun updateImageVisibility(option: ReaderImageVisibility) {
-        appPreferences.readerOptions.imageVisibility.set(option)
-
         this.imageVisibility = option
+        viewModelScope.launch { appPreferences.readerOptions.imageVisibility.set(option) }
     }
 
     fun updateMarkReadButtonPosition(position: MarkReadPosition) {
-        appPreferences.articleListOptions.markReadButtonPosition.set(position)
+        viewModelScope.launch { appPreferences.articleListOptions.markReadButtonPosition.set(position) }
     }
 
     fun updateFeedIcons(show: Boolean) {
-        appPreferences.articleListOptions.showFeedIcons.set(show)
-
-        _showFeedIcons.value = show
+        this.showFeedIcons = show
+        viewModelScope.launch { appPreferences.articleListOptions.showFeedIcons.set(show) }
     }
 
     fun updateFeedName(show: Boolean) {
-        appPreferences.articleListOptions.showFeedName.set(show)
-
-        _showFeedName.value = show
+        this.showFeedName = show
+        viewModelScope.launch { appPreferences.articleListOptions.showFeedName.set(show) }
     }
 
     fun updateShortenTitles(shortenTitles: Boolean) {
-        appPreferences.articleListOptions.shortenTitles.set(shortenTitles)
-
-        _shortenTitles.value = shortenTitles
+        this.shortenTitles = shortenTitles
+        viewModelScope.launch { appPreferences.articleListOptions.shortenTitles.set(shortenTitles) }
     }
 }

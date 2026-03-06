@@ -6,6 +6,7 @@ import com.jocmp.capy.ClientCertManager
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.db.Database
 import com.jocmp.readerclient.GoogleReader
+import kotlinx.coroutines.runBlocking
 import java.net.URI
 
 internal fun buildReaderDelegate(
@@ -22,7 +23,7 @@ internal fun buildReaderDelegate(
         database = database,
         googleReader = GoogleReader.create(
             client = httpClient,
-            baseURL = preferences.url.get()
+            baseURL = runBlocking { preferences.url.get() }
         ),
         preferences = preferences,
     )

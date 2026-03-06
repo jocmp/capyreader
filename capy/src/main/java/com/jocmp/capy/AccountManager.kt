@@ -18,7 +18,7 @@ class AccountManager(
     private val userAgent: String,
     private val acceptLanguage: String,
 ) {
-    fun findByID(
+    suspend fun findByID(
         id: String,
         database: Database = databaseProvider.build(id),
     ): Account? {
@@ -27,7 +27,7 @@ class AccountManager(
         return buildAccount(existingAccount, database)
     }
 
-    fun createAccount(
+    suspend fun createAccount(
         username: String,
         password: String,
         url: String,
@@ -46,7 +46,7 @@ class AccountManager(
         return accountID
     }
 
-    fun createAccount(source: Source): String {
+    suspend fun createAccount(source: Source): String {
         val accountID = UUID.randomUUID().toString()
 
         accountFolder().apply {
@@ -62,7 +62,7 @@ class AccountManager(
         return accountID
     }
 
-    fun removeAccount(accountID: String) {
+    suspend fun removeAccount(accountID: String) {
         val accountFile = findAccountFile(accountID)
 
         accountFile?.deleteRecursively()
@@ -76,7 +76,7 @@ class AccountManager(
 
     private fun accountFolder() = File(rootFolder.path, DIRECTORY_NAME)
 
-    private fun buildAccount(
+    private suspend fun buildAccount(
         path: File,
         database: Database,
         preferences: AccountPreferences = preferenceStoreProvider.build(path.name)
@@ -84,18 +84,26 @@ class AccountManager(
         val id = path.name
         val pathURI = path.toURI()
         val cacheDirectory = File(cacheDirectory.path, id).toURI()
+        val source = preferences.source.get()
 
         return Account(
             id = id,
             path = pathURI,
             cacheDirectory = cacheDirectory,
             database = database,
-            source = preferences.source.get(),
+            source = source,
             preferences = preferences,
             faviconPolicy = faviconPolicy,
             clientCertManager = clientCertManager,
             userAgent = userAgent,
             acceptLanguage = acceptLanguage,
+            delegate = buildAccountDelegate(
+                source = source,
+                database = database,
+                cacheDirectory = cacheDirectory,
+                preferences = preferences,
+                clientCertManager = clientCertManager,
+            ),
         )
     }
 

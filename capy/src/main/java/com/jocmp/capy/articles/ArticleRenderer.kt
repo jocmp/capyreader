@@ -4,6 +4,7 @@ import android.content.Context
 import com.jocmp.capy.Article
 import com.jocmp.capy.MacroProcessor
 import com.jocmp.capy.preferences.Preference
+import kotlinx.coroutines.runBlocking
 import com.jocmp.capy.R as CapyRes
 
 class ArticleRenderer(
@@ -27,7 +28,7 @@ class ArticleRenderer(
         byline: String,
         colors: Map<String, String>,
         hideImages: Boolean,
-    ): String {
+    ): String = runBlocking {
         val fontFamily = fontOption.get()
         val showPlaceholderTitle = article.title.isBlank()
         val enableHorizontalScroll = enableHorizontalScroll.get()
@@ -68,7 +69,7 @@ class ArticleRenderer(
             "body" to content,
         )
 
-        return MacroProcessor(template, substitutions).renderedText
+        MacroProcessor(template, substitutions).renderedText
     }
 
     private fun buildContent(article: Article, hideImages: Boolean): String {

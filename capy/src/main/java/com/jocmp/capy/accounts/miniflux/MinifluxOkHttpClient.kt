@@ -6,6 +6,7 @@ import com.jocmp.capy.accounts.BasicAuthInterceptor
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.clientCertAlias
 import com.jocmp.capy.accounts.httpClientBuilder
+import kotlinx.coroutines.runBlocking
 import okhttp3.Credentials
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -15,24 +16,27 @@ internal object MinifluxOkHttpClient {
     fun forAccount(path: URI, preferences: AccountPreferences, source: Source, clientCertManager: ClientCertManager): OkHttpClient {
         return httpClientBuilder(cachePath = path)
             .addInterceptor(authInterceptor(source, preferences))
-            .clientCertAlias(clientCertManager, preferences.clientCertAlias.get())
+            .clientCertAlias(clientCertManager, runBlocking { preferences.clientCertAlias.get() })
             .build()
     }
 
     private fun authInterceptor(source: Source, preferences: AccountPreferences): Interceptor {
         return if (source == Source.MINIFLUX_TOKEN) {
             Interceptor { chain ->
+                val password = runBlocking { preferences.password.get() }
                 val request = chain.request().newBuilder()
-                    .header("X-Auth-Token", preferences.password.get())
+                    .header("X-Auth-Token", password)
                     .build()
                 chain.proceed(request)
             }
         } else {
             BasicAuthInterceptor {
-                val username = preferences.username.get()
-                val password = preferences.password.get()
-
-                Credentials.basic(username, password)
+                runBlocking {
+                    Credentials.basic(
+                        preferences.username.get(),
+                        preferences.password.get(),
+                    )
+                }
             }
         }
     }

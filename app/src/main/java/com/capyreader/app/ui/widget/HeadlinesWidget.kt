@@ -21,6 +21,7 @@ import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.Account
 import com.jocmp.capy.Article
 import com.jocmp.capy.latestArticles
+import kotlinx.coroutines.runBlocking
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.net.URL
@@ -73,7 +74,7 @@ class HeadlinesViewModel : KoinComponent {
     private val repository by lazy { ArticlesRepository() }
 
     val isLoggedIn
-        get() = appPreferences.isLoggedIn
+        get() = runBlocking { appPreferences.isLoggedIn() }
 
     val articles
         get() = repository.articles

@@ -61,43 +61,7 @@ data class Account(
     private val userAgent: String,
     private val acceptLanguage: String,
     private val localHttpClient: OkHttpClient = LocalOkHttpClient.forAccount(path = cacheDirectory),
-    val delegate: AccountDelegate = when (source) {
-        Source.LOCAL -> LocalAccountDelegate(
-            database = database,
-            httpClient = localHttpClient,
-            preferences = preferences,
-        )
-
-        Source.FEEDBIN -> FeedbinAccountDelegate(
-            database = database,
-            feedbin = Feedbin.forAccount(
-                path = cacheDirectory,
-                preferences = preferences
-            ),
-            preferences = preferences,
-        )
-
-        Source.MINIFLUX,
-        Source.MINIFLUX_TOKEN -> MinifluxAccountDelegate(
-            database = database,
-            miniflux = Miniflux.forAccount(
-                path = cacheDirectory,
-                preferences = preferences,
-                source = source,
-                clientCertManager = clientCertManager,
-            ),
-            preferences = preferences,
-        )
-
-        Source.FRESHRSS,
-        Source.READER -> buildReaderDelegate(
-            source = source,
-            database = database,
-            path = cacheDirectory,
-            preferences = preferences,
-            clientCertManager = clientCertManager,
-        )
-    }
+    val delegate: AccountDelegate,
 ) {
     internal val articleRecords = ArticleRecords(database)
     private val enclosureRecords = EnclosureRecords(database)
@@ -481,6 +445,51 @@ private fun <T> missingFolderError() = Result.failure<T>(Throwable("Folder not f
 
 private fun Feedbin.Companion.forAccount(path: URI, preferences: AccountPreferences) =
     create(client = FeedbinOkHttpClient.forAccount(path, preferences))
+
+internal fun buildAccountDelegate(
+    source: Source,
+    database: Database,
+    cacheDirectory: URI,
+    preferences: AccountPreferences,
+    clientCertManager: ClientCertManager,
+    localHttpClient: OkHttpClient = LocalOkHttpClient.forAccount(path = cacheDirectory),
+): AccountDelegate = when (source) {
+    Source.LOCAL -> LocalAccountDelegate(
+        database = database,
+        httpClient = localHttpClient,
+        preferences = preferences,
+    )
+
+    Source.FEEDBIN -> FeedbinAccountDelegate(
+        database = database,
+        feedbin = Feedbin.forAccount(
+            path = cacheDirectory,
+            preferences = preferences
+        ),
+        preferences = preferences,
+    )
+
+    Source.MINIFLUX,
+    Source.MINIFLUX_TOKEN -> MinifluxAccountDelegate(
+        database = database,
+        miniflux = Miniflux.forAccount(
+            path = cacheDirectory,
+            preferences = preferences,
+            source = source,
+            clientCertManager = clientCertManager,
+        ),
+        preferences = preferences,
+    )
+
+    Source.FRESHRSS,
+    Source.READER -> buildReaderDelegate(
+        source = source,
+        database = database,
+        path = cacheDirectory,
+        preferences = preferences,
+        clientCertManager = clientCertManager,
+    )
+}
 
 private fun AutoDelete.cutoffDate(): ZonedDateTime? {
     val now = nowUTC()
