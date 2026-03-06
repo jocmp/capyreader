@@ -63,6 +63,9 @@ class AccompanistWebViewClient(
     lateinit var state: WebViewState
         internal set
 
+    var pageUrl: String? = null
+        internal set
+
     override fun shouldInterceptRequest(
         view: WebView,
         request: WebResourceRequest
@@ -79,7 +82,7 @@ class AccompanistWebViewClient(
             return null
         }
 
-        return proxyCorsRequest(request)
+        return proxyRequest(request)
     }
 
     private fun shouldProxyRequest(request: WebResourceRequest): Boolean {
@@ -98,14 +101,19 @@ class AccompanistWebViewClient(
                 accept?.startsWith("text/html") == true &&
                 url.startsWith("http")
 
-        return isCorsRequest || isIframeNavigation
+        // Sub-resource requests that need a Referer header for CDNs
+        val isMediaRequest = pageUrl != null &&
+                !request.isForMainFrame &&
+                url.startsWith("http")
+
+        return isCorsRequest || isIframeNavigation || isMediaRequest
     }
 
     /**
-     * Avoids CORS issues when loading additional pages from Mercury.js
-     * Issue #1616
+     * Proxies requests to add CORS headers for cross-origin
+     * requests (Issue #1616) and Referer headers for media CDNs (Issue #1878)
      */
-    private fun proxyCorsRequest(request: WebResourceRequest): WebResourceResponse? {
+    private fun proxyRequest(request: WebResourceRequest): WebResourceResponse? {
         return try {
             val okRequest = Request.Builder()
                 .url(request.url.toString())
@@ -116,6 +124,7 @@ class AccompanistWebViewClient(
                         .forEach { (key, value) ->
                             header(key, value)
                         }
+                    pageUrl?.let { header("Referer", it) }
                 }
                 .build()
 
@@ -127,16 +136,19 @@ class AccompanistWebViewClient(
                 .substringBefore(";")
                 .trim()
 
+            val corsHeaders = mapOf(
+                "Access-Control-Allow-Origin" to "*",
+                "Access-Control-Allow-Methods" to "GET, POST, OPTIONS",
+                "Access-Control-Allow-Headers" to "*"
+            )
+            val responseHeaders = response.headers.toMap() + corsHeaders
+
             WebResourceResponse(
                 mimeType,
                 charset,
                 response.code,
                 response.message.ifEmpty { "OK" },
-                mapOf(
-                    "Access-Control-Allow-Origin" to "*",
-                    "Access-Control-Allow-Methods" to "GET, POST, OPTIONS",
-                    "Access-Control-Allow-Headers" to "*"
-                ),
+                responseHeaders,
                 response.body.byteStream()
             )
         } catch (e: Exception) {
@@ -183,6 +195,9 @@ class WebViewState(
         webView.isVerticalScrollBarEnabled = enableNativeScroll
         htmlId = id
         contentHash = hash
+
+        val client = webView.webViewClient as? AccompanistWebViewClient
+        client?.pageUrl = article.url?.toString()
 
         val html = renderer.render(
             article,
