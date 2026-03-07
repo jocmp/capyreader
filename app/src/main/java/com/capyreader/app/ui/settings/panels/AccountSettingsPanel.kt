@@ -157,7 +157,6 @@ fun AccountSettingsPanelView(
             RowItem {
                 Text(
                     text = lastRefreshed(lastRefreshedAt),
-                    color = colorScheme.onSurfaceVariant,
                 )
             }
         }
