@@ -336,4 +336,11 @@
     <string name="article_actions_save_externally">Salvesta</string>
     <string name="article_actions_save_externally_success">Salvestatud</string>
     <string name="article_actions_save_externally_failure">Salvestamine ei õnnestunud</string>
+    <string name="settings_account_refresh_value">%1$s kell %2$s</string>
+    <string name="settings_account_refresh_value_today">Täna kell %1$s</string>
+    <string name="settings_account_never_refreshed">Mitte kunagi</string>
+    <string name="settings_accent_colors">Rõhuvärvid</string>
+    <string name="starred_export_button_text">Ekspordi tähega märgitud artiklid</string>
+    <string name="starred_exporter_success">Eksportimine õnnestus</string>
+    <string name="starred_exporter_failure">Eksportimine ei õnnestunud</string>
 </resources>

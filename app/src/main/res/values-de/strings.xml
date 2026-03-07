@@ -333,4 +333,11 @@
     <string name="article_actions_save_externally">Speichern</string>
     <string name="article_actions_save_externally_success">Gespeichert</string>
     <string name="article_actions_save_externally_failure">Speichern fehlgeschlagen</string>
+    <string name="settings_account_refresh_value">%1$s um %2$s</string>
+    <string name="settings_account_refresh_value_today">Heute um %1$s</string>
+    <string name="settings_account_never_refreshed">Nie</string>
+    <string name="settings_accent_colors">Akzentfarben</string>
+    <string name="starred_export_button_text">Favorisierte Artikel exportieren</string>
+    <string name="starred_exporter_success">Export abgeschlossen</string>
+    <string name="starred_exporter_failure">Export fehlgeschlagen</string>
 </resources>

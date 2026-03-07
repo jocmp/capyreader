@@ -327,4 +327,18 @@
     <string name="show_unread_badge">Mostrar Selo Não-lido</string>
     <string name="settings_panel_unread_counts_title">Selos Não-lidos</string>
     <string name="settings_option_badge_style">Estilo de selo</string>
+    <string name="settings_accent_colors">Cores de destaque</string>
+    <string name="settings_account_refresh_value">%1$s às %2$s</string>
+    <string name="settings_account_refresh_value_today">Hoje às %1$s</string>
+    <string name="settings_account_never_refreshed">Nunca</string>
+    <string name="starred_export_button_text">Exportar Artigos Favoritados</string>
+    <string name="starred_exporter_success">Exportação completa</string>
+    <string name="starred_exporter_failure">Exportação falhou</string>
+    <string name="article_actions_save_externally">Salvar</string>
+    <string name="article_actions_save_externally_success">Salvo</string>
+    <string name="article_actions_save_externally_failure">Falha ao salvar</string>
+    <string name="article_actions_delete_page">Excluir página</string>
+    <string name="article_actions_delete_page_title">Excluir</string>
+    <string name="article_actions_delete_page_message">Tem certeza de que deseja excluir esta página?</string>
+    <string name="article_actions_delete_page_confirm">Excluir</string>
 </resources>

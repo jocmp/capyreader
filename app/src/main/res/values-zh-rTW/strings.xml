@@ -335,4 +335,11 @@
     <string name="article_actions_save_externally">儲存</string>
     <string name="article_actions_save_externally_success">已儲存</string>
     <string name="article_actions_save_externally_failure">儲存失敗</string>
+    <string name="settings_account_refresh_value">%1$s %2$s</string>
+    <string name="settings_account_refresh_value_today">今天 %1$s</string>
+    <string name="settings_account_never_refreshed">從未更新</string>
+    <string name="settings_accent_colors">強調色</string>
+    <string name="starred_export_button_text">匯出星標文章</string>
+    <string name="starred_exporter_success">匯出完成</string>
+    <string name="starred_exporter_failure">匯出失敗</string>
 </resources>

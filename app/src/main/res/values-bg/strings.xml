@@ -337,4 +337,11 @@
     <string name="article_actions_save_externally">Запазване</string>
     <string name="article_actions_save_externally_success">Запазено</string>
     <string name="article_actions_save_externally_failure">Запазването не бе успешно</string>
+    <string name="settings_account_refresh_value">%1$s в %2$s</string>
+    <string name="settings_account_refresh_value_today">Днес в %1$s</string>
+    <string name="settings_account_never_refreshed">Никога</string>
+    <string name="settings_accent_colors">Акцентни цветове</string>
+    <string name="starred_export_button_text">Изнасяне на статии със звезда</string>
+    <string name="starred_exporter_success">Изнасянето завърши</string>
+    <string name="starred_exporter_failure">Неуспешно изнасяне</string>
 </resources>

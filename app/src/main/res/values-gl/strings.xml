@@ -197,7 +197,7 @@
     <string name="auth_fields_show_password">Mostrar contrasinal</string>
     <string name="settings_remove_account_message_local">Tes certeza de querer eliminar a túa conta? Non haberá volta atrás.</string>
     <string name="article_view_mark_as_read">Marcar como lido</string>
-    <string name="settings_section_refresh">Última comprobación</string>
+    <string name="settings_section_refresh">Actualizar</string>
     <string name="nav_add_feed">Engadir canle</string>
     <string name="feed_action_unsubscribe_confirm">Retirar</string>
     <string name="add_account_freshrss_signup_link_text">Aprende máis aquí.</string>
@@ -330,10 +330,10 @@
     <string name="article_actions_save_externally">Gardar</string>
     <string name="article_actions_save_externally_success">Gardado</string>
     <string name="article_actions_save_externally_failure">Fallo ao gardar</string>
+    <string name="settings_accent_colors">Cores de acento</string>
     <string name="settings_account_refresh_value">%1$s ás %2$s</string>
     <string name="settings_account_refresh_value_today">Hoxe ás %1$s</string>
     <string name="settings_account_never_refreshed">Nunca</string>
-    <string name="settings_accent_colors">Cores destacadas</string>
     <string name="starred_export_button_text">Exportar artigos con estrela</string>
     <string name="starred_exporter_success">Exportación completa</string>
     <string name="starred_exporter_failure">Fallou a exportación</string>

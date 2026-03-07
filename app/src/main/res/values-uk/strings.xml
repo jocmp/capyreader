@@ -330,4 +330,11 @@
     <string name="article_actions_delete_page_title">Видалити</string>
     <string name="article_actions_delete_page_message">Точно видалити сторінку?</string>
     <string name="article_actions_delete_page_confirm">Видалити</string>
+    <string name="settings_account_refresh_value">%1$s о %2$s</string>
+    <string name="settings_account_refresh_value_today">Сьогодні о %1$s</string>
+    <string name="settings_account_never_refreshed">Ніколи</string>
+    <string name="settings_accent_colors">Акцентні кольори</string>
+    <string name="starred_export_button_text">Експортувати вподобані статті</string>
+    <string name="starred_exporter_success">Експорт завершено</string>
+    <string name="starred_exporter_failure">Не вдалось експортувати</string>
 </resources>

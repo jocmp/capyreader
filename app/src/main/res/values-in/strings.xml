@@ -128,7 +128,7 @@
     <string name="crash_reporting_checkbox_title">Aktifkan laporan kerusakan</string>
     <string name="account_source_local">Lokal</string>
     <string name="settings_section_privacy">Privasi</string>
-    <string name="settings_section_refresh">Terakhir Diperbarui</string>
+    <string name="settings_section_refresh">Segarkan</string>
     <string name="opml_import_toast_failed">Impor gagal</string>
     <string name="settings_article_list_summary">Ringkasan</string>
     <string name="settings_article_list_shorten_titles">Perpendek judul</string>
@@ -329,11 +329,11 @@
     <string name="article_actions_delete_page_title">Hapus</string>
     <string name="article_actions_delete_page_message">Apakah Anda yakin ingin menghapus halaman ini?</string>
     <string name="article_actions_delete_page_confirm">Hapus</string>
-    <string name="settings_account_refresh_value">%1$s pada %2$s</string>
-    <string name="settings_account_refresh_value_today">Hari ini pada %1$s</string>
-    <string name="settings_account_never_refreshed">Tidak pernah</string>
+    <string name="settings_account_refresh_value">%1$s pukul %2$s</string>
+    <string name="settings_account_refresh_value_today">Hari ini pukul %1$s</string>
+    <string name="settings_account_never_refreshed">Belum pernah</string>
     <string name="settings_accent_colors">Warna aksen</string>
-    <string name="starred_export_button_text">Ekspor Artikel Berbintang</string>
+    <string name="starred_export_button_text">Ekspor Artikel Favorit</string>
     <string name="starred_exporter_success">Ekspor selesai</string>
     <string name="starred_exporter_failure">Ekspor gagal</string>
 </resources>

@@ -332,4 +332,11 @@
     <string name="article_actions_delete_page_title">Usuń</string>
     <string name="article_actions_delete_page_message">Czy na pewno chcesz usunąć tę stronę?</string>
     <string name="article_actions_delete_page_confirm">Usuń</string>
+    <string name="settings_account_refresh_value">%1$s o %2$s</string>
+    <string name="settings_account_refresh_value_today">Dzisiaj o %1$s</string>
+    <string name="settings_account_never_refreshed">Nigdy</string>
+    <string name="settings_accent_colors">Kolory akcentu</string>
+    <string name="starred_export_button_text">Eksportuj artykuły oznaczone gwiazdką</string>
+    <string name="starred_exporter_success">Eksportowanie zakończone</string>
+    <string name="starred_exporter_failure">Eksport nie powiódł się</string>
 </resources>

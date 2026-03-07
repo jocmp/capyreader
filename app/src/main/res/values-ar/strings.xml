@@ -74,7 +74,7 @@
     <string name="opml_import_notification_title">جارٍ استيراد الاشتراكات…</string>
     <string name="notifications_channel_title_opml_import">تم استيراد الإشتراكات</string>
     <string name="settings_section_privacy">الخصوصية</string>
-    <string name="settings_section_refresh">آخر تحديث</string>
+    <string name="settings_section_refresh">تحديث</string>
     <string name="opml_import_button_text">استيراد من ملف</string>
     <string name="opml_export_button_text">تصدير إلى OPML</string>
     <string name="opml_import_progress_content_text_start">بدء الإستيراد</string>
@@ -337,11 +337,11 @@
     <string name="article_actions_save_externally">احفظ</string>
     <string name="article_actions_save_externally_success">حُفظ</string>
     <string name="article_actions_save_externally_failure">فشل الحفظ</string>
-    <string name="settings_account_refresh_value">%1$s على %2$s</string>
-    <string name="settings_account_refresh_value_today">اليوم على %1$s</string>
+    <string name="settings_account_refresh_value">%1$s الساعة %2$s</string>
+    <string name="settings_account_refresh_value_today">اليوم الساعة %1$s</string>
     <string name="settings_account_never_refreshed">أبدًا</string>
     <string name="settings_accent_colors">ألوان التمييز</string>
-    <string name="starred_export_button_text">صدِّر المقالات المميزة بنجمة</string>
+    <string name="starred_export_button_text">تصدير المقالات المميزة بنجمة</string>
     <string name="starred_exporter_success">اكتمل التصدير</string>
     <string name="starred_exporter_failure">فشل التصدير</string>
 </resources>
