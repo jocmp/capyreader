@@ -1,0 +1,6 @@
+• Add list accent color option based on feed favicons
+  - Enable this under Settings > Display & Appearance > Accent colors
+• Improve FreshRSS updates by checking last refresh time
+• Display "Last Updated" time in Settings under Account
+• Update custom parser for 9to5linux.com
+• Fix RSSHub images that require a referer
