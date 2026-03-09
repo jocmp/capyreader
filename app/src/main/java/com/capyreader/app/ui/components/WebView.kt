@@ -85,29 +85,8 @@ class AccompanistWebViewClient(
         return proxyRequest(request)
     }
 
-    private fun shouldProxyRequest(request: WebResourceRequest): Boolean {
-        val url = request.url.toString()
-        val origin = request.requestHeaders["Origin"]
-        val accept = request.requestHeaders["Accept"]
-
-        // XHR/fetch from null origin (loadDataWithBaseURL)
-        // Issue #1616
-        val isCorsRequest = origin == "null" && url.startsWith("http")
-
-        // iframe document load
-        // Strips X-Frame-Options to allow embeds like Slashdot
-        // Issue #1605
-        val isIframeNavigation = !request.isForMainFrame &&
-                accept?.startsWith("text/html") == true &&
-                url.startsWith("http")
-
-        // Sub-resource requests that need a Referer header for CDNs
-        val isMediaRequest = pageUrl != null &&
-                !request.isForMainFrame &&
-                url.startsWith("http")
-
-        return isCorsRequest || isIframeNavigation || isMediaRequest
-    }
+    private fun shouldProxyRequest(request: WebResourceRequest) =
+        WebRequestProxyPolicy.shouldProxy(request.url.toString(), request, pageUrl)
 
     /**
      * Proxies requests to add CORS headers for cross-origin
@@ -131,6 +110,13 @@ class AccompanistWebViewClient(
             val response = httpClient.newCall(okRequest).execute()
             val contentType = response.header("Content-Type") ?: "text/html"
             val mimeType = contentType.substringBefore(";").trim()
+            val acceptsHtml = request.requestHeaders["Accept"]?.startsWith("text/html") == true
+
+            if (mimeType == "text/html" && !acceptsHtml) {
+                response.close()
+                return null
+            }
+
             val charset = contentType
                 .substringAfter("charset=", "UTF-8")
                 .substringBefore(";")
