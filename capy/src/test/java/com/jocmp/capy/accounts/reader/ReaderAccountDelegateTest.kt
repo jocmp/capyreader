@@ -189,8 +189,8 @@ class ReaderAccountDelegateTest {
         stubSubscriptions()
         stubTags()
         stubStarred()
+        stubUnread(itemRefs)
         stubStreamItemsIDs(itemRefs)
-        stubStreamItemsIDs(stream = Stream.UserLabel(chicagoTag.id), itemRefs = emptyList())
 
         delegate.refresh(ArticleFilter.default())
 
@@ -356,47 +356,17 @@ class ReaderAccountDelegateTest {
 
 
     @Test
-    fun refresh_freshrss_setsLastRefreshedAt() = runTest {
+    fun refresh_setsLastRefreshedAt() = runTest {
         stubSubscriptions()
         stubTags()
         stubStarred()
-        stubStreamItemsIDs(emptyList())
-        stubStreamItemsIDs(stream = Stream.UserLabel(chicagoTag.id), itemRefs = emptyList())
+        stubUnread()
 
         assertEquals(expected = 0L, actual = preferences.lastRefreshedAt.get())
 
         delegate.refresh(ArticleFilter.default())
 
         assertTrue(preferences.lastRefreshedAt.get() > 0L)
-    }
-
-    @Test
-    fun refresh_freshrss_usesOtParameter() = runTest {
-        val knownEpoch = 1700000000L
-        preferences.lastRefreshedAt.set(knownEpoch)
-
-        stubSubscriptions()
-        stubTags()
-        stubStarred()
-        stubStreamItemsIDs(stream = Stream.UserLabel(chicagoTag.id), itemRefs = emptyList())
-
-        coEvery {
-            googleReader.streamItemsIDs(
-                streamID = Stream.ReadingList().id,
-                since = knownEpoch,
-                count = 10_000,
-            )
-        }.returns(Response.success(StreamItemIDsResult(itemRefs = emptyList(), continuation = null)))
-
-        delegate.refresh(ArticleFilter.default())
-
-        coVerify {
-            googleReader.streamItemsIDs(
-                streamID = Stream.ReadingList().id,
-                since = knownEpoch,
-                count = 10_000,
-            )
-        }
     }
 
     @Test
