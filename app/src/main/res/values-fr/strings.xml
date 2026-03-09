@@ -338,7 +338,7 @@
     <string name="settings_account_refresh_value_today">Aujourd\'hui à %1$s</string>
     <string name="settings_account_never_refreshed">Jamais</string>
     <string name="settings_accent_colors">Couleurs d\'accentuation</string>
-    <string name="starred_export_button_text">Exporter les articles favoris</string>
+    <string name="starred_export_button_text">Exporter les articles étoilés</string>
     <string name="starred_exporter_success">Exportation terminée</string>
     <string name="starred_exporter_failure">Échec de l\'exportation</string>
 </resources>
