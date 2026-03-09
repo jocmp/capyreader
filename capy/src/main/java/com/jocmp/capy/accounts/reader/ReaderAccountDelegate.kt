@@ -59,18 +59,10 @@ internal class ReaderAccountDelegate(
 
     override suspend fun refresh(filter: ArticleFilter, cutoffDate: ZonedDateTime?): Result<Unit> {
         return withErrorHandling {
-            if (source == Source.FRESHRSS) {
-                refreshFeeds()
-                refreshAllSavedSearches()
-                refreshStarredItems()
-                refreshAllArticles(since = lastRefreshedAt().toEpochSecond())
-                fetchMissingArticles()
+            if (filter.hasArticlesSelected()) {
+                refreshTopLevelArticles()
             } else {
-                if (filter.hasArticlesSelected()) {
-                    refreshTopLevelArticles()
-                } else {
-                    refreshArticles(filter.toStream(source))
-                }
+                refreshArticles(filter.toStream(source))
             }
             preferences.touchLastRefreshedAt()
         }
@@ -276,10 +268,6 @@ internal class ReaderAccountDelegate(
                 throw ValidationError(response.message())
             }
         }
-    }
-
-    private suspend fun refreshAllArticles(since: Long?) {
-        fetchPaginatedArticles(since = since, stream = Stream.ReadingList())
     }
 
     private suspend fun refreshFeeds() {
@@ -595,17 +583,6 @@ internal class ReaderAccountDelegate(
 
     private fun taggingID(subscription: Subscription, category: Category): String {
         return "${subscription.id}:${category.id}"
-    }
-
-
-    suspend fun lastRefreshedAt(): ZonedDateTime {
-        val epoch = preferences.lastRefreshedAt.get()
-
-        return if (epoch > 0L) {
-            epoch.toDateTimeFromSeconds
-        } else {
-            TimeHelpers.nowUTC().minusMonths(3)
-        }
     }
 
     companion object {
