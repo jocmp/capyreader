@@ -296,7 +296,7 @@ fun rememberWebViewState(
 
             addJavascriptInterface(webViewInterface, WebViewInterface.INTERFACE_NAME)
 
-            setBackgroundColor(context.getColor(android.R.color.transparent))
+            setBackgroundColor(android.graphics.Color.TRANSPARENT)
 
             webViewClient = client
         }
