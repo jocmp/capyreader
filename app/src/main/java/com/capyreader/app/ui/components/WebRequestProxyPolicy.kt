@@ -24,8 +24,12 @@ object WebRequestProxyPolicy {
                 url.startsWith("http")
 
         // Sub-resource requests that need a Referer header for CDNs
+        // Only proxy article sub-resources (null origin from loadDataWithBaseURL),
+        // not iframe sub-resources which have their own origin
+        // Issue #1878, Issue #1901
         val isMediaRequest = pageUrl != null &&
                 !request.isForMainFrame &&
+                origin == "null" &&
                 accept?.startsWith("text/html") != true &&
                 url.startsWith("http")
 

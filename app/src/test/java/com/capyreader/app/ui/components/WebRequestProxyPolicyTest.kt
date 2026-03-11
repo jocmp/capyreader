@@ -36,7 +36,7 @@ class WebRequestProxyPolicyTest {
         assertTrue(
             shouldProxy(
                 "https://cdn.example.com/image.jpg",
-                FakeWebResourceRequest(accept = "image/webp,image/apng,*/*;q=0.8"),
+                FakeWebResourceRequest(accept = "image/webp,image/apng,*/*;q=0.8", origin = "null"),
                 pageUrl = "https://example.com/article",
             )
         )
@@ -49,6 +49,20 @@ class WebRequestProxyPolicyTest {
                 "https://example.com/",
                 FakeWebResourceRequest(forMainFrame = true),
                 pageUrl = null,
+            )
+        )
+    }
+
+    @Test
+    fun shouldProxy_iframeSubResourceIsSkipped() {
+        assertFalse(
+            shouldProxy(
+                "https://cdn.iframe-origin.com/script.js",
+                FakeWebResourceRequest(
+                    accept = "application/javascript",
+                    origin = "https://iframe-origin.com",
+                ),
+                pageUrl = "https://example.com/article",
             )
         )
     }
