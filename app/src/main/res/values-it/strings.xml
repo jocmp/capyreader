@@ -126,7 +126,7 @@
     <string name="notifications_channel_title_opml_import">Importazione sottoscrizione</string>
     <string name="opml_import_button_text">Importazione da file</string>
     <string name="settings_section_privacy">Privacy</string>
-    <string name="settings_section_refresh">Aggiornare</string>
+    <string name="settings_section_refresh">Ultimo aggiornamento</string>
     <string name="empty_onboarding_title">Nessun feed ancora</string>
     <string name="font_option_atkinson_hyperlegible">Atkinson Hyperlegible</string>
     <string name="settings_option_auto_delete_articles_title">Eliminazione automatica degli articoli</string>
@@ -337,4 +337,11 @@
     <string name="article_actions_save_externally">Salva</string>
     <string name="article_actions_save_externally_success">Salvato</string>
     <string name="article_actions_save_externally_failure">Impossibile salvare</string>
+    <string name="settings_account_refresh_value">%1$s alle %2$s</string>
+    <string name="settings_account_refresh_value_today">Oggi alle %1$s</string>
+    <string name="settings_account_never_refreshed">Mai</string>
+    <string name="settings_accent_colors">Colori di accento</string>
+    <string name="starred_export_button_text">Esporta articoli contrassegnati</string>
+    <string name="starred_exporter_success">Esportazione completata</string>
+    <string name="starred_exporter_failure">Esportazione non riuscita</string>
 </resources>
