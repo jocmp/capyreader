@@ -110,12 +110,6 @@ class AccompanistWebViewClient(
             val response = httpClient.newCall(okRequest).execute()
             val contentType = response.header("Content-Type") ?: "text/html"
             val mimeType = contentType.substringBefore(";").trim()
-            val acceptsHtml = request.requestHeaders["Accept"]?.startsWith("text/html") == true
-
-            if (mimeType == "text/html" && !acceptsHtml) {
-                response.close()
-                return null
-            }
 
             val charset = contentType
                 .substringAfter("charset=", "UTF-8")
