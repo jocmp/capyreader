@@ -373,6 +373,17 @@ internal class ArticleRecords internal constructor(
         return ids.executeAsList()
     }
 
+    fun updateAiSummary(articleID: String, summary: String) {
+        database.articlesQueries.updateAiSummary(
+            articleID = articleID,
+            aiSummary = summary
+        )
+    }
+
+    fun clearAllAiSummaries() {
+        database.articlesQueries.clearAllAiSummaries()
+    }
+
     private fun folderFeedIDs(filter: ArticleFilter.Folders): List<String> {
         return database
             .taggingsQueries

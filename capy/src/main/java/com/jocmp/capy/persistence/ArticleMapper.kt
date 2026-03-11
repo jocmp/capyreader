@@ -17,6 +17,7 @@ internal fun articleMapper(
     imageURL: String?,
     publishedAt: Long?,
     enclosureType: String?,
+    aiSummary: String?,
     feedTitle: String?,
     faviconURL: String?,
     enableStickyContent: Boolean,
@@ -47,6 +48,7 @@ internal fun articleMapper(
         enableStickyFullContent = enableStickyContent,
         openInBrowser = openInBrowser,
         enclosureType = EnclosureType.from(enclosureType),
+        aiSummary = aiSummary,
     )
 }
 
@@ -94,5 +96,6 @@ internal fun listMapper(
         updatedAt = updatedAt,
         starred = starred ?: false,
         read = read ?: false,
+        aiSummary = null,
     )
 }

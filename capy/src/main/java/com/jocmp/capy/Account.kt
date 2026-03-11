@@ -34,6 +34,7 @@ import com.jocmp.capy.persistence.FolderRecords
 import com.jocmp.capy.persistence.SavedSearchRecords
 import com.jocmp.capy.persistence.TaggingRecords
 import com.jocmp.capy.preferences.Preference
+import com.jocmp.capy.ai.AiSummaryClient
 import com.jocmp.feedbinclient.Feedbin
 import com.jocmp.feedfinder.DefaultFeedFinder
 import com.jocmp.feedfinder.FeedFinder
@@ -461,6 +462,50 @@ data class Account(
 
     val faviconFinder
         get() = FaviconFinder(localHttpClient, faviconPolicy, userAgent, acceptLanguage)
+
+    suspend fun generateAiSummary(
+        articleID: String,
+        enableAiSummaries: Boolean,
+        apiKey: String,
+        baseUrl: String,
+        model: String,
+        systemPrompt: String,
+        force: Boolean = false,
+        articleContent: String? = null,
+    ): Result<String> {
+        if (!enableAiSummaries) {
+            return Result.failure(IllegalStateException("AI Summaries are disabled"))
+        }
+
+        val article = findArticle(articleID) ?: return Result.failure(Exception("Article not found"))
+        if (!force && article.aiSummary != null) {
+            return Result.success(article.aiSummary)
+        }
+
+        if (apiKey.isBlank()) {
+            return Result.failure(IllegalArgumentException("API Key is missing"))
+        }
+
+        return withIOContext {
+            val client = AiSummaryClient(
+                apiKey = apiKey,
+                baseUrl = baseUrl,
+                httpClient = localHttpClient
+            )
+
+            client.generateSummary(
+                articleHtml = articleContent ?: article.content,
+                model = model,
+                systemPrompt = systemPrompt
+            ).onSuccess { summary ->
+                articleRecords.updateAiSummary(articleID, summary)
+            }
+        }
+    }
+
+    suspend fun clearAllAiSummaries() = withIOContext {
+        articleRecords.clearAllAiSummaries()
+    }
 
     internal suspend fun asOPML(): String {
         var opml = ""

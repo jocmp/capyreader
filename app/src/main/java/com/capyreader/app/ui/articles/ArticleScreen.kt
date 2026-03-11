@@ -638,6 +638,7 @@ fun ArticleScreen(
                 } else if (article != null) {
                     val isAudioPlaying by audioController.isPlaying.collectAsState()
                     val currentAudio by audioController.currentAudio.collectAsState()
+                    val isSummarizing = viewModel.isSummarizing
 
                     ArticleView(
                         article = article,
@@ -647,6 +648,8 @@ fun ArticleScreen(
                         },
                         onToggleRead = viewModel::toggleArticleRead,
                         onToggleStar = viewModel::toggleArticleStar,
+                        onToggleSummarize = { id -> viewModel.generateAiSummary(id, force = article.aiSummary != null) },
+                        isSummarizing = isSummarizing,
                         canSaveExternally = canSaveExternally,
                         onDeletePage = {
                             clearArticle()

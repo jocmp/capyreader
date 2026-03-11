@@ -408,3 +408,42 @@ ul:has(img) {
     font-family: $value;
   }
 }
+
+#ai-summary-container {
+  background-color: var(--color-surface-container);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  max-width: 40rem;
+
+  .ai-summary-header {
+    font-size: 0.9em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+
+  .ai-summary-content {
+    font-size: 0.95em;
+    line-height: 1.5;
+
+    ul, ol {
+      margin: 0.25rem 0;
+      padding-left: 1.25rem;
+    }
+
+    li {
+      margin: 0;
+      padding: 0;
+    }
+
+    p {
+      margin: 0.25rem 0;
+    }
+
+    br {
+      display: none;
+    }
+  }
+}

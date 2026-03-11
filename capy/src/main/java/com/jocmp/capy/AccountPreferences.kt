@@ -37,6 +37,21 @@ class AccountPreferences(
     val lastRefreshedAt: Preference<Long>
         get() = store.getLong("last_refreshed_at", 0L)
 
+    val enableAiSummaries: Preference<Boolean>
+        get() = store.getBoolean("enable_ai_summaries", false)
+
+    val aiApiKey: Preference<String>
+        get() = store.getString("ai_api_key", "")
+
+    val aiBaseUrl: Preference<String>
+        get() = store.getString("ai_base_url", "https://api.openai.com/v1/")
+
+    val aiModel: Preference<String>
+        get() = store.getString("ai_model", "gpt-4o-mini")
+
+    val aiSystemPrompt: Preference<String>
+        get() = store.getString("ai_system_prompt", "Summarize this article in a few sentences.")
+
     suspend fun touchLastRefreshedAt() {
         lastRefreshedAt.set(TimeHelpers.nowUTC().toEpochSecond())
     }

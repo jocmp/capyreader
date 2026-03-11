@@ -39,6 +39,14 @@
         </a>
       </header>
       <div class="article__body article__body--font-{{font_family}}">
+        <div id="ai-summary-container" style="display: {{ai_summary_display}};">
+          <div class="ai-summary-header">
+            <strong>AI Summary</strong>
+          </div>
+          <div class="ai-summary-content" id="ai-summary-content">
+            {{ai_summary}}
+          </div>
+        </div>
         <div id="article-body-content">{{body}}</div>
       </div>
     </article>

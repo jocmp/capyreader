@@ -65,6 +65,8 @@ class ArticleRenderer(
             "title_font_size" to "${titleFontSize.get()}px",
             "title_text_align" to textAlignment.get().toCSS,
             "title_font_family" to titleFontFamily.slug,
+            "ai_summary_display" to if (article.aiSummary.isNullOrBlank()) "none" else "block",
+            "ai_summary" to (article.aiSummary ?: ""),
             "body" to content,
         )
 

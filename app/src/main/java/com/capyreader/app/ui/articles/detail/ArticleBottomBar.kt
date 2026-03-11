@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Circle
+import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.Circle
 import androidx.compose.material.icons.rounded.ExpandMore
 import androidx.compose.material.icons.rounded.Share
@@ -29,6 +30,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TooltipAnchorPosition
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -40,11 +42,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.capyreader.app.R
 import com.capyreader.app.common.shareArticle
+import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.articles.FullContentLoadingIcon
+import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.components.ToolbarTooltip
 import com.jocmp.capy.Article
 import com.jocmp.capy.Article.FullContentState.LOADED
 import com.jocmp.capy.Article.FullContentState.LOADING
+import org.koin.compose.koinInject
 
 private val sizeSpec = spring<IntSize>(stiffness = 700f)
 
@@ -57,9 +62,13 @@ fun ArticleBottomBar(
     onToggleExtractContent: () -> Unit,
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
+    onToggleSummarize: () -> Unit,
+    isSummarizing: Boolean = false,
     onSelectNext: () -> Unit,
+    appPreferences: AppPreferences = koinInject()
 ) {
     val context = LocalContext.current
+    val enableAiSummaries by appPreferences.enableAiSummaries.collectChangesWithCurrent()
 
     Box(
         modifier = Modifier
@@ -118,6 +127,34 @@ fun ArticleBottomBar(
                             )
                         }
                     }
+                    
+                    if (enableAiSummaries) {
+                        val hasSummary = article.aiSummary != null
+                        val summaryTooltip = stringResource(
+                            if (hasSummary) R.string.ai_summary_regenerate else R.string.settings_ai_summary_button
+                        )
+                        ToolbarTooltip(
+                            positioning = TooltipAnchorPosition.Above,
+                            message = summaryTooltip
+                        ) {
+                            IconButton(
+                                onClick = { onToggleSummarize() },
+                                enabled = !isSummarizing
+                            ) {
+                                if (isSummarizing) {
+                                    FullContentLoadingIcon()
+                                } else {
+                                    Icon(
+                                        Icons.Rounded.AutoAwesome,
+                                        contentDescription = summaryTooltip,
+                                        modifier = Modifier.size(24.dp),
+                                        tint = if (hasSummary) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                }
+                            }
+                        }
+                    }
+
                     ToolbarTooltip(
                         positioning = TooltipAnchorPosition.Above,
                         message = stringResource(R.string.article_bottom_bar_next_article)

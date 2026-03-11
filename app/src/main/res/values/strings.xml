@@ -351,4 +351,26 @@
     <string name="article_actions_delete_page_title">Delete</string>
     <string name="article_actions_delete_page_message">Are you sure you want to delete this page?</string>
     <string name="article_actions_delete_page_confirm">Delete</string>
+    <string name="settings_ai_summary_title">AI Summaries</string>
+    <string name="settings_ai_summary_enable">Enable AI Summaries</string>
+    <string name="settings_ai_api_key">API Key</string>
+    <string name="settings_ai_base_url">Base URL</string>
+    <string name="settings_ai_base_url_hint">Include the version path, e.g. …/v1/</string>
+    <string name="settings_ai_model">Model</string>
+    <string name="settings_ai_system_prompt">System Prompt</string>
+    <string name="settings_ai_summary_button">Summarize</string>
+    <string name="ai_provider_openai">OpenAI</string>
+    <string name="ai_provider_google">Google Gemini</string>
+    <string name="ai_provider_anthropic">Anthropic Claude</string>
+    <string name="ai_provider_custom">Custom\n(OpenAI-compatible)</string>
+    <string name="ai_provider_label">Provider</string>
+    <string name="ai_configuration_section">Configuration</string>
+    <string name="ai_models_loading">Loading models…</string>
+    <string name="ai_models_enter_manually">No models found — enter manually</string>
+    <string name="ai_api_key_show">Show API key</string>
+    <string name="ai_api_key_hide">Hide API key</string>
+    <string name="ai_base_url_using">URL: %s</string>
+    <string name="ai_summary_regenerate">Regenerate Summary</string>
+    <string name="ai_delete_all_summaries">Delete All AI Summaries</string>
+    <string name="ai_delete_all_summaries_confirm">All cached AI summaries will be permanently deleted.</string>
 </resources>

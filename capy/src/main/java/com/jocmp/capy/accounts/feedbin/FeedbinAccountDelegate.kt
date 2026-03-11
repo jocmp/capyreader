@@ -465,6 +465,7 @@ internal class FeedbinAccountDelegate(
                     image_url = entry.images?.size_1?.cdn_url,
                     published_at = entry.published.toDateTime?.toEpochSecond(),
                     enclosure_type = enclosureType,
+                    ai_summary = null,
                 )
 
                 articleRecords.createStatus(

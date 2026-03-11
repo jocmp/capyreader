@@ -78,6 +78,24 @@ class AppPreferences(context: Context) {
     val paneExpansionIndex: Preference<Int>
         get() = preferenceStore.getInt("pane_expansion_index", DefaultPaneExpansionIndex)
 
+    val enableAiSummaries: Preference<Boolean>
+        get() = preferenceStore.getBoolean("enable_ai_summaries", false)
+
+    val aiProvider: Preference<AiProvider>
+        get() = preferenceStore.getEnum("ai_provider", AiProvider.default)
+
+    val aiApiKey: Preference<String>
+        get() = preferenceStore.getString("ai_api_key", "")
+
+    val aiBaseUrl: Preference<String>
+        get() = preferenceStore.getString("ai_base_url", "https://api.openai.com/v1/")
+
+    val aiModel: Preference<String>
+        get() = preferenceStore.getString("ai_model", "gpt-4o-mini")
+
+    val aiSystemPrompt: Preference<String>
+        get() = preferenceStore.getString("ai_system_prompt", "Summarize the following article succinctly.")
+
     fun pinFeedGroup(type: FeedGroup): Preference<Boolean> {
         return preferenceStore.getBoolean("feed_group_${type.toString().lowercase()}", true)
     }

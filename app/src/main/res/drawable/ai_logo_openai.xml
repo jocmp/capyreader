@@ -1,0 +1,10 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- 8-pointed star representing OpenAI's sparkle mark -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M12,2 L13.53,8.3 L19.07,4.93 L15.7,10.47 L22,12 L15.7,13.53 L19.07,19.07 L13.53,15.7 L12,22 L10.47,15.7 L4.93,19.07 L8.3,13.53 L2,12 L8.3,10.47 L4.93,4.93 L10.47,8.3 Z"/>
+</vector>

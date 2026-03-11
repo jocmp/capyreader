@@ -172,7 +172,7 @@ class WebViewState(
 
     fun loadHtml(article: Article, showImages: Boolean) {
         val id = article.id
-        val hash = article.content.hashCode()
+        val hash = (article.content + (article.aiSummary ?: "")).hashCode()
 
         if (id == htmlId && hash == contentHash) {
             return

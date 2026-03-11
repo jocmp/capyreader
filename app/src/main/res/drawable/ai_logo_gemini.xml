@@ -1,0 +1,10 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- 4-pointed smooth bezier star representing Google Gemini -->
+    <path
+        android:fillColor="#4285F4"
+        android:pathData="M12,2 C13,8 16,11 22,12 C16,13 13,16 12,22 C11,16 8,13 2,12 C8,11 11,8 12,2 Z"/>
+</vector>

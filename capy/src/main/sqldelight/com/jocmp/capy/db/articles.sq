@@ -65,7 +65,8 @@ INSERT INTO articles(
     summary,
     image_url,
     published_at,
-    enclosure_type
+    enclosure_type,
+    ai_summary
 )
 VALUES (
 :id,
@@ -78,7 +79,8 @@ VALUES (
 :summary,
 :image_url,
 :published_at,
-:enclosure_type
+:enclosure_type,
+:ai_summary
 )
 ON CONFLICT(id) DO UPDATE
 SET
@@ -92,7 +94,8 @@ url = excluded.url,
 summary = excluded.summary,
 image_url = excluded.image_url,
 published_at = published_at,
-enclosure_type = excluded.enclosure_type;
+enclosure_type = excluded.enclosure_type,
+ai_summary = COALESCE(articles.ai_summary, excluded.ai_summary);
 
 createStatus:
 INSERT INTO article_statuses(
@@ -203,6 +206,14 @@ WHERE article_statuses.article_id IN :articleIDs;
 markStarred:
 UPDATE article_statuses SET starred = :starred, last_unstarred_at = :lastUnstarredAt
 WHERE article_statuses.article_id = :articleID;
+
+updateAiSummary:
+UPDATE articles SET ai_summary = :aiSummary
+WHERE id = :articleID;
+
+clearAllAiSummaries:
+UPDATE articles SET ai_summary = NULL
+WHERE ai_summary IS NOT NULL;
 
 starredExports:
 SELECT articles.title, articles.url, articles.published_at

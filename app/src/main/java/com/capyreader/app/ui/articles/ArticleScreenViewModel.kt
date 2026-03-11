@@ -72,6 +72,9 @@ class ArticleScreenViewModel(
     var refreshingAll by mutableStateOf(false)
         private set
 
+    var isSummarizing by mutableStateOf(false)
+        private set
+
     val articlesSince = MutableStateFlow<OffsetDateTime>(OffsetDateTime.now())
 
     private var _showUnauthorizedMessage by mutableStateOf(UnauthorizedMessageState.HIDE)
@@ -740,6 +743,27 @@ class ArticleScreenViewModel(
     fun reloadFavicon(feedID: String) {
         viewModelScope.launchIO {
             account.reloadFavicon(feedID)
+        }
+    }
+
+    suspend fun generateAiSummary(articleID: String, force: Boolean = false): Result<String> {
+        isSummarizing = true
+        val articleContent = _article?.takeIf { it.id == articleID }?.content
+        return account.generateAiSummary(
+            articleID = articleID,
+            enableAiSummaries = appPreferences.enableAiSummaries.get(),
+            apiKey = appPreferences.aiApiKey.get(),
+            baseUrl = appPreferences.aiBaseUrl.get(),
+            model = appPreferences.aiModel.get(),
+            systemPrompt = appPreferences.aiSystemPrompt.get(),
+            force = force,
+            articleContent = articleContent,
+        ).onSuccess { summary ->
+            if (_article?.id == articleID) {
+                _article = _article?.copy(aiSummary = summary)
+            }
+        }.also {
+            isSummarizing = false
         }
     }
 

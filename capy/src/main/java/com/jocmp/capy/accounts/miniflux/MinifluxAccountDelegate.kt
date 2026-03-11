@@ -381,6 +381,7 @@ internal class MinifluxAccountDelegate(
                     image_url = imageURL,
                     published_at = entry.published_at.toDateTime?.toEpochSecond(),
                     enclosure_type = enclosures.firstOrNull()?.mime_type,
+                    ai_summary = null,
                 )
 
                 articleRecords.createStatus(

@@ -56,6 +56,11 @@ sealed class SettingsPanel(@StringRes val title: Int) {
 
     fun isNested() = !items.contains(this)
 
+    @Parcelize
+    data object AiSummary : SettingsPanel(title = R.string.settings_ai_summary_title), Parcelable {
+        override fun icon() = Icons.Rounded.Build // Reuse Build icon
+    }
+
     companion object {
         val items: List<SettingsPanel>
             get() = listOf(
@@ -63,6 +68,7 @@ sealed class SettingsPanel(@StringRes val title: Int) {
                 Display,
                 Gestures,
                 Account,
+                AiSummary,
                 About,
             )
     }

@@ -21,6 +21,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -45,6 +46,7 @@ import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.capyreader.app.ui.settings.LocalSnackbarHost
 import com.jocmp.capy.Article
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 @Composable
@@ -58,6 +60,8 @@ fun ArticleView(
     onDeletePage: () -> Unit = {},
     onScrollToArticle: (index: Int) -> Unit,
     onSelectArticle: (id: String) -> Unit,
+    onToggleSummarize: suspend (id: String) -> Result<String>,
+    isSummarizing: Boolean = false,
     onSelectMedia: (media: Media) -> Unit,
     onSelectAudio: (audio: AudioEnclosure) -> Unit = {},
     onPauseAudio: () -> Unit = {},
@@ -70,6 +74,7 @@ fun ArticleView(
     val enableHorizontalPager by appPreferences.readerOptions.enableHorizontaPagination.collectChangesWithDefault()
     val fullContent = LocalFullContent.current
     val openLink = articleOpenLink(article)
+    val scope = rememberCoroutineScope()
 
     val onToggleFullContent = {
         if (article.fullContent == Article.FullContentState.LOADED) {
@@ -197,6 +202,17 @@ fun ArticleView(
                 onToggleExtractContent = onToggleFullContent,
                 onToggleRead = onToggleRead,
                 onToggleStar = onToggleStar,
+                isSummarizing = isSummarizing,
+                onToggleSummarize = { 
+                    scope.launch {
+                        onToggleSummarize(article.id).onFailure { error ->
+                            snackbarHostState.showSnackbar(
+                                message = error.message ?: "Failed to generate summary",
+                                withDismissAction = true
+                            )
+                        }
+                    }
+                },
                 onSelectNext = { selectNext() },
             )
 
@@ -315,4 +331,3 @@ private fun rememberContentPadding(pinToolbars: Boolean): PaddingValues {
         PaddingValues()
     }
 }
-

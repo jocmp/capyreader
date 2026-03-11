@@ -1,0 +1,10 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- 6-pointed star representing Anthropic Claude's asterisk motif -->
+    <path
+        android:fillColor="#D97757"
+        android:pathData="M12,2 L14.5,7.67 L20.66,7 L17,12 L20.66,17 L14.5,16.33 L12,22 L9.5,16.33 L3.34,17 L7,12 L3.34,7 L9.5,7.67 Z"/>
+</vector>
