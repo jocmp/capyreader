@@ -43,6 +43,17 @@ class WebRequestProxyPolicyTest {
     }
 
     @Test
+    fun shouldProxy_iframeSubResourceIsSkipped() {
+        assertFalse(
+            shouldProxy(
+                "https://api.bilibili.com/x/web-interface/view",
+                FakeWebResourceRequest(origin = "https://www.bilibili.com", accept = "*/*"),
+                pageUrl = "https://example.com/article",
+            )
+        )
+    }
+
+    @Test
     fun shouldProxy_mainFrameIsSkipped() {
         assertFalse(
             shouldProxy(

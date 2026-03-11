@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.net.Uri
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
-import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebView.HitTestResult.SRC_ANCHOR_TYPE
 import android.webkit.WebViewClient
@@ -26,14 +25,12 @@ import com.capyreader.app.common.rememberTalkbackPreference
 import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
 import com.jocmp.capy.Article
-import com.jocmp.capy.BrowserHeadersInterceptor
 import com.jocmp.capy.articles.ArticleRenderer
 import com.jocmp.capy.logging.CapyLog
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.koin.compose.koinInject
 import org.koin.core.component.KoinComponent
-import java.util.Locale
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
@@ -116,12 +113,18 @@ class AccompanistWebViewClient(
                 .substringBefore(";")
                 .trim()
 
-            val corsHeaders = mapOf(
+            val strippedHeaders = setOf(
+                "access-control-allow-origin",
+                "access-control-allow-methods",
+                "access-control-allow-headers",
+                "x-frame-options",
+            )
+            val responseHeaders = response.headers.toMap()
+                .filterNot { it.key.lowercase() in strippedHeaders } + mapOf(
                 "Access-Control-Allow-Origin" to "*",
                 "Access-Control-Allow-Methods" to "GET, POST, OPTIONS",
-                "Access-Control-Allow-Headers" to "*"
+                "Access-Control-Allow-Headers" to "*",
             )
-            val responseHeaders = response.headers.toMap() + corsHeaders
 
             WebResourceResponse(
                 mimeType,
@@ -250,19 +253,12 @@ fun rememberWebViewState(
     }
 
     val client = remember {
-        val userAgent = WebSettings.getDefaultUserAgent(context)
-        val acceptLanguage = Locale.getDefault().toAcceptLanguageTag()
-        val httpClient = OkHttpClient.Builder()
-            .addInterceptor(BrowserHeadersInterceptor(userAgent, acceptLanguage))
-            .build()
-
         AccompanistWebViewClient(
             assetLoader = WebViewAssetLoader.Builder()
                 .addPathHandler("/assets/", AssetsPathHandler(context))
                 .addPathHandler("/res/", ResourcesPathHandler(context))
                 .build(),
             onOpenLink = onOpenLink,
-            httpClient = httpClient,
         )
     }
 
@@ -306,15 +302,5 @@ fun rememberWebViewState(
                 it.updateAudioPlayState(currentAudioUrlState, isAudioPlayingState)
             }
         }
-    }
-}
-
-private fun Locale.toAcceptLanguageTag(): String {
-    val primary = toLanguageTag()
-    val lang = language
-    return if (primary != lang) {
-        "$primary,$lang;q=0.9"
-    } else {
-        primary
     }
 }

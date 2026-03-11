@@ -13,7 +13,7 @@ object WebRequestProxyPolicy {
         }
 
         // XHR/fetch from null origin (loadDataWithBaseURL)
-        // Issue #1616
+        // Issue #1616 for Phoronix multipage articles
         val isCorsRequest = origin == "null" && url.startsWith("http")
 
         // iframe document load
