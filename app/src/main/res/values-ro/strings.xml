@@ -6,7 +6,7 @@
     <string name="auth_fields_log_in_button">Conectare</string>
     <string name="add_feed_url_title">URL flux sau site web</string>
     <string name="add_feed_name_title">Nume</string>
-    <string name="settings_section_refresh">Reîmprospătează</string>
+    <string name="settings_section_refresh">Ultima actualizare</string>
     <string name="relative_time_just_now">Acum</string>
     <string name="feed_form_cancel">Renunță</string>
     <string name="dialog_cancel">Renunță</string>
@@ -77,15 +77,14 @@
     <string name="auth_fields_api_url">Server</string>
     <string name="auth_fields_show_password">Arată parola</string>
     <string name="crash_reporting_checkbox_title">Activează raportarea problemelor</string>
-    <string name="account_source_feedbin">Feedbin</string>
     <string name="account_source_reader">Cititor</string>
     <string name="account_source_local">Local</string>
     <string name="add_account_title">Adaugă cont</string>
     <string name="add_account_local_subtitle">Pe dispozitiv</string>
     <string name="add_account_reader_subtitle">API Google Reader propriu</string>
     <string name="add_account_feedbin_signup_prompt">Nu ai cont Feedbin?</string>
-    <string name="add_account_feedbin_signup_link_text">Crează unul aici.</string>
-    <string name="add_account_freshrss_signup_prompt">Nu ai un cont FreshRSS?</string>
+    <string name="add_account_feedbin_signup_link_text">Creează unul aici.</string>
+    <string name="add_account_freshrss_signup_prompt">Nu ai o instanță FreshRSS?</string>
     <string name="settings_section_import">Importă</string>
     <string name="notifications_channel_title_opml_import">Abonamente importate</string>
     <string name="notifications_channel_title_feed_update">Actualizări flux</string>
@@ -100,7 +99,6 @@
     <string name="feed_action_edit">Modifică flux</string>
     <string name="feed_action_reload_icon">Reîncarcă pictograma</string>
     <string name="update_auth_success_message">Conectare cu succes</string>
-    <string name="account_source_freshrss">FreshRSS</string>
     <string name="settings_section_privacy">Confidențialitate</string>
     <string name="opml_import_button_text">Importă din fișier</string>
     <string name="feed_action_unsubscribe_title">Dezabonează-te</string>
@@ -177,7 +175,7 @@
     <string name="image_error_text">Eroare la încărcarea imaginii</string>
     <string name="article_byline">%1$s la %2$s de la %3$s</string>
     <string name="article_byline_date_only">%1$s la %2$s</string>
-    <string name="settings_option_auto_delete_articles_subtitle">Șterge articolele citite, scoate de la salvate articolele mai vechi de 3 luni</string>
+    <string name="settings_option_auto_delete_articles_subtitle">Șterge articolele citite și nemarcate cu stea mai vechi de 3 luni</string>
     <string name="settings_option_auto_delete_articles_title">Șterge automat articole</string>
     <string name="feed_form_feed_url_title">URL flux</string>
     <string name="feed_form_copy_feed_url_to_clipboard">Copiază URL-ul fluxului în clipboard</string>
@@ -207,9 +205,9 @@
     <string name="crash_log_export_item_title">Distribuie log-urile de eroare</string>
     <string name="edit_feed_tag_section">Adaugă sau alege etichete</string>
     <string name="edit_feed_notifications_title">Activează notificări</string>
-    <string name="settings_select_none">Șterge alegerea</string>
+    <string name="settings_select_none">Deselectează tot</string>
     <string name="settings_select_all">Alege tot</string>
-    <string name="settings_confirm_mark_all_read">Marchează elementele alese ca citite</string>
+    <string name="settings_confirm_mark_all_read">Confirmă marcarea tuturor ca citite</string>
     <string name="settings_gestures_reader_tap_to_page_title">Gest E-Ink de atingere pentru derulare</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">Activează derularea pe orizontală</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Glisează spre stânga sau dreapta pentru a naviga articolele</string>
@@ -328,7 +326,7 @@
     <string name="settings_option_badge_style">Stilul insignei</string>
     <string name="badge_style_simple">Simplu</string>
     <string name="badge_style_exact">Exact</string>
-    <string name="show_unread_badge">Arată insigna necitite</string>
+    <string name="show_unread_badge">Arată insigna de necitite</string>
     <string name="article_actions_save_externally">Salvează</string>
     <string name="article_actions_save_externally_success">Salvat</string>
     <string name="article_actions_save_externally_failure">Nu s-a putut salva</string>

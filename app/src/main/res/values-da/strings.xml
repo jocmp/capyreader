@@ -73,7 +73,7 @@
     <string name="freshrss_labels_create_dialog_label_name">Etikettenavn</string>
     <string name="freshrss_labels_create_dialog_save">Gem</string>
     <string name="unauthorized_dialog_title">Du er logget ud</string>
-    <string name="unauthorized_dialog_description">Vi kunne ikke oprette forbindelse til din konto. Prøv venligst at logge ind igen.</string>
+    <string name="unauthorized_dialog_description">Der opstod et problem med forbindelsen til din konto. Log venligst ind igen.</string>
     <string name="unauthorized_dialog_dismiss_text">Senere</string>
     <string name="unauthorized_dialog_confirm_text">Log ind</string>
     <string name="auth_fields_password">Adgangskode</string>
@@ -86,7 +86,7 @@
     <string name="auth_fields_log_in_button">Log ind</string>
     <string name="auth_fields_remove_client_cert">Fjern brugercertifikat</string>
     <string name="settings_top_bar_title">Indstillinger</string>
-    <string name="update_auth_success_message">Login succesfuld</string>
+    <string name="update_auth_success_message">Logget ind</string>
     <string name="crash_reporting_checkbox_title">Tillad fejlrapportering</string>
     <string name="settings_reader_title">Reader</string>
     <string name="account_source_reader">Reader</string>
@@ -109,8 +109,8 @@
     <string name="notifications_channel_title_opml_import">Import af abonnementer</string>
     <string name="notifications_channel_title_feed_update">Feedopdateringer</string>
     <string name="notification_mark_as_read_action">Marker som læst</string>
-    <string name="settings_section_privacy">Privatlivspolitik</string>
-    <string name="settings_section_refresh">Opdater</string>
+    <string name="settings_section_privacy">Privatliv</string>
+    <string name="settings_section_refresh">Sidst opdateret</string>
     <string name="opml_import_button_text">Importer fra fil</string>
     <string name="opml_export_button_text">Eksporter til OPML</string>
     <string name="opml_import_progress_content_text_start">Påbegynder import</string>
@@ -163,7 +163,7 @@
     <string name="article_title_font_scale_label">Skriftstørrelse</string>
     <string name="image_error_text">Fejl ved indlæsning af billede</string>
     <string name="article_byline">%1$s kl. %2$s af %3$s</string>
-    <string name="article_byline_date_only">%1$s af %2$s</string>
+    <string name="article_byline_date_only">%1$s kl. %2$s</string>
     <string name="settings_option_auto_delete_articles_subtitle">Slet læste, ikke favoritmarkerede artikler ældre end 3 måneder</string>
     <string name="settings_option_auto_delete_articles_title">Automatisk sletning af artikler</string>
     <string name="refresh_every_day">Hver dag</string>
@@ -195,7 +195,7 @@
     <string name="settings_article_list_title">Artikelliste</string>
     <string name="opml_exporter_success">Eksport succesfuld</string>
     <string name="opml_exporter_failure">Eksport mislykkedes</string>
-    <string name="settings_options_reader_pin_top_toolbar">Fastgør øverste værktøjslinje</string>
+    <string name="settings_options_reader_pin_top_toolbar">Fastgør værktøjslinjer</string>
     <string name="article_bottom_bar_next_article">Gå til næste artikel</string>
     <string name="settings_gestures_reader_swipe_down">Swipe ned</string>
     <string name="settings_gestures_reader_swipe_up">Swipe op</string>
@@ -227,7 +227,7 @@
     <string name="edit_feed_notifications_title">Slå notifikationer til</string>
     <string name="notifications_permissions_disabled_call_to_action">Indstillinger</string>
     <string name="notifications_permission_disabled_title">Notifikationstilladelse ej givet</string>
-    <string name="settings_enable_refresh_call_to_action">Periodisk opdatering skal først slåes til</string>
+    <string name="settings_enable_refresh_call_to_action">Periodisk opdatering skal først slås til</string>
     <string name="settings_select_none">Vælg ingen</string>
     <string name="settings_select_all">Vælg alle</string>
     <string name="article_list_row_swipe_open_externally">Åbn artikel i browser</string>
@@ -248,7 +248,7 @@
     <string name="reader_image_visibility_always_show">Vis altid billeder</string>
     <string name="reader_image_visibility_label">Billeder</string>
     <string name="end_of_feed_text">Du er ajour!</string>
-    <string name="after_read_all_behavior_label">Efter alle læst</string>
+    <string name="after_read_all_behavior_label">Efter alle er læst</string>
     <string name="after_read_all_behavior_default">Standard</string>
     <string name="after_read_all_behavior_open_drawer">Vis navigation</string>
     <string name="after_read_all_behavior_open_next_feed">Gå til næste feed</string>
@@ -260,7 +260,7 @@
     <string name="media_share_failure">Kunne ikke dele billede</string>
     <string name="media_share">Del</string>
     <string name="feed_nav_drawer_refresh_all">Opdater alle</string>
-    <string name="blocked_keywords">Blacklist</string>
+    <string name="blocked_keywords">Blokeringsliste</string>
     <string name="blocked_keywords_supporting_text">Fjern artikler med nøgleord der matcher titel eller indhold</string>
     <string name="blocked_keywords_remove_keyword">Fjern nøgleord</string>
     <string name="blocked_keywords_add_keyword">Tilføj nøgleord</string>

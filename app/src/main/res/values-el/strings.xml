@@ -45,7 +45,7 @@
     <string name="mark_all_read_dialog_description">Επισήμανση όλων των αντικειμένων ως αναγνωσμένα;</string>
     <string name="mark_all_read_dialog_submit">Επιβεβαίωση</string>
     <string name="add_feed_network_error">Δεν ήταν δυνατό να βρεθεί η ροή. Έλεγξε τη σύνδεσή σου.</string>
-    <string name="article_view_mark_as_unread">Επιήμανση ως μη αναγνωσμένο</string>
+    <string name="article_view_mark_as_unread">Επισήμανση ως μη αναγνωσμένο</string>
     <string name="article_view_star">Αστέρι</string>
     <string name="add_feed_submit">Προσθήκη</string>
     <string name="feed_form_cancel">Ακύρωση</string>
@@ -66,7 +66,7 @@
     <string name="update_auth_success_message">Επιτυχής σύνδεση</string>
     <string name="opml_import_notification_title">Εισαγωγή συνδρομών…</string>
     <string name="add_account_reader_subtitle">Αυτοφιλοξενούμενο Google Reader API</string>
-    <string name="settings_section_refresh">Ανανέωση</string>
+    <string name="settings_section_refresh">Τελευταία Ενημέρωση</string>
     <string name="settings_article_list_feed_name">Όνομα Ροής</string>
     <string name="filter_action_menu_search_articles">Αναζήτηση άρθρων</string>
     <string name="settings_auto_delete_option_keep_for_three_month">3 μήνες</string>
@@ -107,7 +107,7 @@
     <string name="add_account_local_subtitle">Στη συσκευή σου</string>
     <string name="add_account_feedbin_signup_prompt">Δεν έχεις λογαριασμό Feedbin;</string>
     <string name="add_account_feedbin_signup_link_text">Δημιούργησε έναν εδώ.</string>
-    <string name="add_account_freshrss_signup_prompt">Δεν έχεις οντότητα FreshRSS;</string>
+    <string name="add_account_freshrss_signup_prompt">Δεν έχεις εγκατάσταση FreshRSS;</string>
     <string name="add_account_freshrss_signup_link_text">Μάθε περισσότερα.</string>
     <string name="transfers_export_subscriptions">Εξαγωγή Εγγραφών</string>
     <string name="settings_section_account">Λογαριασμός</string>
@@ -153,7 +153,7 @@
     <string name="image_error_text">Σφάλμα φόρτωσης εικόνας</string>
     <string name="article_byline">%1$s στις %2$s από %3$s</string>
     <string name="article_byline_date_only">%1$s στις %2$s</string>
-    <string name="settings_option_auto_delete_articles_subtitle">Διαγραφή αναναγνωσμένων, χωρίς αστέρια άρθρων άνω των 3 μηνών</string>
+    <string name="settings_option_auto_delete_articles_subtitle">Διαγραφή αναγνωσμένων, χωρίς αστέρια άρθρων άνω των 3 μηνών</string>
     <string name="refresh_every_day">Καθημερινά</string>
     <string name="feed_form_feed_url_title">URL Ροής</string>
     <string name="feed_form_copy_feed_url_to_clipboard">Αντιγραφή URL Ροής στο πρόχειρο</string>
@@ -180,7 +180,7 @@
     <string name="opml_exporter_success">Η εξαγωγή ολοκληρώθηκε</string>
     <string name="opml_exporter_failure">Η εξαγωγή απέτυχε</string>
     <string name="settings_reader_title">Αναγνώστης</string>
-    <string name="settings_options_reader_pin_top_toolbar">Καρφίτσωμα Πάνω Γραμμής Εργαλειών</string>
+    <string name="settings_options_reader_pin_top_toolbar">Καρφίτσωμα Γραμμών Εργαλείων</string>
     <string name="article_bottom_bar_next_article">Μετάβαση στο επόμενο άρθρο</string>
     <string name="settings_gestures_reader_swipe_down">Κύλιση Κάτω</string>
     <string name="settings_gestures_reader_swipe_up">Κύλιση Πάνω</string>
@@ -216,7 +216,7 @@
     <string name="article_list_row_swipe_open_externally">Άνοιγμα άρθρου στον περιηγητή</string>
     <string name="article_view_open_externally">Άνοιγμα εξωτερικά</string>
     <string name="settings_confirm_mark_all_read">Επιβεβαίωση ανάγνωσης όλων</string>
-    <string name="settings_mark_read_on_scroll">Ανάγνωση κατά τη κύλιση</string>
+    <string name="settings_mark_read_on_scroll">Ανάγνωση κατά την κύλιση</string>
     <string name="settings_gestures_reader_tap_to_page_title">E Ink πάτημα για κύλιση</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">Ενεργοποίηση οριζόντιας κύλισης</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Κύλιση αριστερά ή δεξιά για πλοήγηση σε άρθρα</string>
@@ -228,7 +228,7 @@
     <string name="after_read_all_behavior_open_drawer">Άνοιγμα Συρταριού Πλοήγησης</string>
     <string name="full_content_error_generic">Αποτυχία ανάλυσης άρθρου</string>
     <string name="full_content_error_forbidden">Η ανάκτηση αποκλείστηκε από τον ιστότοπο</string>
-    <string name="add_account_miniflux_signup_prompt">Δεν έχετε οντότητα Miniflux;</string>
+    <string name="add_account_miniflux_signup_prompt">Δεν έχεις εγκατάσταση Miniflux;</string>
     <string name="add_account_miniflux_signup_link_text">Μάθε περισσότερα.</string>
     <string name="end_of_feed_text">Τα \'δες όλα!</string>
     <string name="feed_nav_drawer_title">Ροές</string>
@@ -258,7 +258,7 @@
     <string name="settings_gestures_improve_talkback_title">Βελτίωση TalkBack</string>
     <string name="settings_gestures_improve_talkback_subtitle">Απενεργοποιεί κάποιες ρυθμίσεις για βελτίωση του κειμένου σε ομιλία TalkBack</string>
     <string name="tag_action_delete_confirm">Διαγραφή</string>
-    <string name="tag_name_title">\'Ονομα</string>
+    <string name="tag_name_title">Όνομα</string>
     <string name="tag_action_edit_success">Ετικέτα ενημερώθηκε</string>
     <string name="tag_action_edit_error">Σφάλμα ενημέρωσης ετικέτας</string>
     <string name="tag_action_edit">Επεξεργασία Ετικέτας</string>

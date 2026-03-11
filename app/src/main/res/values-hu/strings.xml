@@ -100,7 +100,7 @@
     <string name="notifications_channel_title_feed_update">Hírfolyam frissítések</string>
     <string name="notification_mark_as_read_action">Megjelölés olvasottként</string>
     <string name="settings_section_privacy">Adatvédelem</string>
-    <string name="settings_section_refresh">Frissítés</string>
+    <string name="settings_section_refresh">Utolsó frissítés</string>
     <string name="opml_import_button_text">Importálás fájlból</string>
     <string name="opml_export_button_text">Exportálás OPML-be</string>
     <string name="opml_import_progress_content_text_start">Importálás elindítása</string>
@@ -128,7 +128,7 @@
     <string name="image_preview_menu_option_small">Kicsi</string>
     <string name="image_preview_menu_option_medium">Közepes</string>
     <string name="image_preview_menu_option_large">Nagy</string>
-    <string name="image_preview_label">Képretekintet</string>
+    <string name="image_preview_label">Kép előnézet</string>
     <string name="settings_article_list_feed_name">Hírfolyam neve</string>
     <string name="settings_article_list_feed_icons">Hírfolyam ikonok</string>
     <string name="settings_article_list_summary">Összefoglaló</string>
@@ -203,7 +203,7 @@
     <string name="article_list_sort_oldest_first">Legrégebbiek elöl</string>
     <string name="settings_gestures_list_back_navigation_action">Visszalépési művelet</string>
     <string name="settings_gestures_list_back_navigation_system_back">Alapértelmezett</string>
-    <string name="settings_gestures_list_back_navigation_open_drawer">Navigációs fiók megnyitása</string>
+    <string name="settings_gestures_list_back_navigation_open_drawer">Navigációs panel megnyitása</string>
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">Ugrás a szülőre</string>
     <string name="action_share">Megosztás</string>
     <string name="crash_log_export_item_title">Összeomlási naplók megosztása</string>
@@ -234,9 +234,9 @@
     <string name="reader_image_visibility_always_show">Mindig mutassa a képeket</string>
     <string name="reader_image_visibility_label">Képek</string>
     <string name="end_of_feed_text">Nincs több olvasatlan cikk!</string>
-    <string name="after_read_all_behavior_label">Az Összes Elolvasása után</string>
+    <string name="after_read_all_behavior_label">Összes olvasása után</string>
     <string name="after_read_all_behavior_default">Alapértelmezett</string>
-    <string name="after_read_all_behavior_open_drawer">Navigációs fiók megnyitása</string>
+    <string name="after_read_all_behavior_open_drawer">Navigációs panel megnyitása</string>
     <string name="after_read_all_behavior_open_next_feed">Következő hírfolyam megnyitása</string>
     <string name="full_content_error_missing_response">Nem sikerült lekérni a cikket</string>
     <string name="full_content_error_generic">Nem sikerült elemezni a cikket</string>
@@ -283,10 +283,10 @@
     <string name="settings_remove_account_message_local">Biztosan törölni szeretné a fiókját? Ez a művelet nem vonható vissza.</string>
     <plurals name="refresh_hours">
         <item quantity="one">Óránként</item>
-        <item quantity="other">Óránként</item>
+        <item quantity="other">Minden %d órában</item>
     </plurals>
-    <string name="add_feed_network_error">Nem található a hírcsatorna. Ellenőrizd a kapcsolatot.</string>
-    <string name="unauthorized_dialog_description">Hiba történt a fiókodhoz való csatlakozáskor. Kérjük, jelentkezz be újra.</string>
+    <string name="add_feed_network_error">Nem található a hírfolyam. Ellenőrizze a kapcsolatot.</string>
+    <string name="unauthorized_dialog_description">Hiba történt a fiókjához való csatlakozáskor. Kérjük, jelentkezzen be újra.</string>
     <string name="settings_panel_display_title">Kijelző és megjelenés</string>
     <string name="settings_clear_all_articles_text">Biztosan törölni szeretné az összes olvasott, csillaggal nem jelölt cikket az eszközéről? Ez a művelet nem vonható vissza.</string>
     <string name="freshrss_nav_headline_categories">Kategóriák</string>
@@ -294,7 +294,7 @@
     <string name="article_list_empty">Nincs semmi</string>
     <string name="settings_section_experimental">Kísérleti</string>
     <string name="settings_option_enable_audio_player">Hanglejátszó</string>
-    <string name="audio_player_play">Lejátsz</string>
+    <string name="audio_player_play">Lejátszás</string>
     <string name="audio_player_pause">Szünet</string>
     <string name="audio_player_close">Lejátszó bezárása</string>
     <string name="audio_player_skip_back">Ugrás vissza 30 másodperccel</string>
@@ -304,7 +304,7 @@
     <string name="tab_save_page">Oldal mentése</string>
     <string name="save_page_success">Oldal mentve</string>
     <string name="save_page_error">Nem sikerült menteni az oldalt</string>
-    <string name="save_page_network_error">Nem sikerült menteni az oldalt. Ellenőrizd a kapcsolatot.</string>
+    <string name="save_page_network_error">Nem sikerült menteni az oldalt. Ellenőrizze a kapcsolatot.</string>
     <string name="save_page_submit">Mentés</string>
     <string name="add_link_searching">Hírfolyamok keresése…</string>
     <string name="add_link_subscribe">Feliratkozás</string>
@@ -328,7 +328,7 @@
     <string name="article_actions_save_externally_failure">Nem sikerült menteni</string>
     <string name="article_actions_delete_page">Oldal törlése</string>
     <string name="article_actions_delete_page_title">Törlés</string>
-    <string name="article_actions_delete_page_message">Biztosan törölni szeretnéd ezt az oldalt?</string>
+    <string name="article_actions_delete_page_message">Biztosan törölni szeretné ezt az oldalt?</string>
     <string name="article_actions_delete_page_confirm">Törlés</string>
     <string name="auth_fields_miniflux_api_token">API Token</string>
     <string name="auth_fields_miniflux_use_api_token">API Token használata</string>

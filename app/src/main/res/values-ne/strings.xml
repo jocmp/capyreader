@@ -50,7 +50,7 @@
     <string name="settings_gestures_reader_swipe_up">माथि स्वाइप गर्नुहोस्</string>
     <string name="article_vertical_swipe_previous_article">अघिल्लो लेख</string>
     <string name="opml_exporter_failure">निर्यात असफल भयो</string>
-    <string name="settings_top_bar_title">सेटिङ्गहरु</string>
+    <string name="settings_top_bar_title">सेटिङहरू</string>
     <string name="settings_remove_account_confirm_local">पुष्टि गर्नुहोस्</string>
     <string name="account_settings_save_name">नाम सुरक्षित</string>
     <string name="article_view_mark_as_read">पढेको भनी चिन्ह लगाउनुहोस्</string>
@@ -73,10 +73,10 @@
     <string name="settings_auto_delete_option_keep_for_two_week">२ हप्ता</string>
     <string name="settings_auto_delete_option_keep_for_one_week">१ हप्ता</string>
     <string name="settings_auto_delete_option_keep_forever">सधैंभरि</string>
-    <string name="edit_feed_tag_section">ट्याग</string>
+    <string name="edit_feed_tag_section">ट्याग थप्नुहोस् वा चयन गर्नुहोस्</string>
     <string name="edit_feed_tags_section">ट्यागहरू</string>
-    <string name="notifications_permissions_disabled_call_to_action">सेटिङ्गहरु</string>
-    <string name="settings_list_top_bar_title">सेटिङ्गहरु</string>
+    <string name="notifications_permissions_disabled_call_to_action">सेटिङहरू</string>
+    <string name="settings_list_top_bar_title">सेटिङहरू</string>
     <string name="after_read_all_behavior_open_drawer">नेभिगेसन ड्रयर खोल्नुहोस्</string>
     <string name="opml_exporter_success">निर्यात पूरा भयो</string>
     <string name="image_preview_menu_option_large">ठुलो</string>
@@ -99,7 +99,7 @@
     <string name="settings_remove_account_button_local">खाता मेट्नुहोस्</string>
     <string name="settings_remove_account_title_local">खाता मेट्नुहोस्</string>
     <string name="nav_headline_tags">ट्यागहरू</string>
-    <string name="nav_add_feed">फीड थप्नुहोस्</string>
+    <string name="nav_add_feed">फिड थप्नुहोस्</string>
     <string name="add_feed_feed_not_error">फिड फेला पार्न सकिएन</string>
     <string name="add_feed_save_error">फिड सुरक्षित गर्न सकिएन</string>
     <string name="add_feed_network_error">फिड फेला पार्न सकिएन। आफ्नो जडान जाँच गर्नुहोस्।</string>
@@ -113,7 +113,7 @@
     <string name="notifications_channel_title_opml_import">सदस्यता आयातहरू</string>
     <string name="notifications_channel_title_feed_update">फिड अपडेटहरू</string>
     <string name="settings_section_privacy">गोपनीयता</string>
-    <string name="settings_section_refresh">रिफ्रेस गर्नुहोस्</string>
+    <string name="settings_section_refresh">अन्तिम अपडेट</string>
     <string name="opml_export_button_text">OPML मा निर्यात गर्नुहोस्</string>
     <string name="article_share">लेख साझेदारी गर्नुहोस्</string>
     <string name="article_actions_copy_link">लिङ्क प्रतिलिपि गर्नुहोस्</string>
@@ -133,11 +133,9 @@
     <string name="transfers_export_subscriptions">सदस्यताहरू निर्यात गर्नुहोस्</string>
     <string name="mark_all_read_dialog_description">सबै वस्तुहरूलाई पढिएको भनी चिन्ह लगाउने हो?</string>
     <string name="article_actions_open_menu">लेख कार्यहरू खोल्नुहोस्</string>
-    <string name="account_source_feedbin">Feedbin</string>
-    <string name="account_source_freshrss">FreshRSS</string>
     <string name="add_account_reader_subtitle">स्व-होस्ट गरिएको Google Reader API</string>
     <string name="add_account_feedbin_signup_prompt">Feedbin खाता छैन?</string>
-    <string name="add_account_freshrss_signup_prompt">FreshRSS instance छैन?</string>
+    <string name="add_account_freshrss_signup_prompt">FreshRSS इन्स्ट्यान्स छैन?</string>
     <string name="settings_panel_general_title">सामान्य</string>
     <string name="settings_panel_display_title">प्रदर्शन र रूप</string>
     <string name="settings_panel_notifications_title">सूचनाहरू</string>
@@ -323,11 +321,11 @@
     <string name="audio_player_close">प्लेयर बन्द गर्नुहोस्</string>
     <string name="audio_player_skip_back">३० सेकेन्ड पछाडि जानुहोस्</string>
     <string name="audio_player_skip_forward">३० सेकेन्ड अगाडि जानुहोस्</string>
-    <string name="settings_panel_unread_counts_title">नपढिएको ब्याजहरू</string>
-    <string name="settings_option_badge_style">ब्याज शैली</string>
+    <string name="settings_panel_unread_counts_title">नपढिएको चिन्हहरू</string>
+    <string name="settings_option_badge_style">चिन्ह शैली</string>
     <string name="badge_style_simple">सरल</string>
     <string name="badge_style_exact">सटीक</string>
-    <string name="show_unread_badge">नपढिएको ब्याज देखाउनुहोस्</string>
+    <string name="show_unread_badge">नपढिएको चिन्ह देखाउनुहोस्</string>
     <string name="article_actions_save_externally">सुरक्षित गर्नुहोस्</string>
     <string name="article_actions_save_externally_success">सुरक्षित भयो</string>
     <string name="article_actions_save_externally_failure">सुरक्षित गर्न असफल भयो</string>
@@ -335,6 +333,6 @@
     <string name="article_actions_delete_page_title">हटाउनुहोस्</string>
     <string name="article_actions_delete_page_message">के तपाईं यो पृष्ठ हटाउन निश्चित हुनुहुन्छ?</string>
     <string name="article_actions_delete_page_confirm">हटाउनुहोस्</string>
-    <string name="add_account_miniflux_signup_prompt">Miniflux instance छैन?</string>
+    <string name="add_account_miniflux_signup_prompt">Miniflux इन्स्ट्यान्स छैन?</string>
     <string name="add_account_miniflux_signup_link_text">थप पत्ता लगाउनुहोस्।</string>
 </resources>

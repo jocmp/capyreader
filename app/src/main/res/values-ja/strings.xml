@@ -103,7 +103,7 @@
     <string name="notifications_channel_title_feed_update">フィードの更新</string>
     <string name="notification_mark_as_read_action">既読にする</string>
     <string name="settings_section_privacy">プライバシー</string>
-    <string name="settings_section_refresh">更新</string>
+    <string name="settings_section_refresh">最終更新</string>
     <string name="opml_import_button_text">ファイルからインポート</string>
     <string name="opml_export_button_text">OPML にエクスポート</string>
     <string name="opml_import_progress_content_text_start">インポートの開始</string>
@@ -135,7 +135,7 @@
     <string name="settings_article_list_feed_name">フィード名</string>
     <string name="settings_article_list_feed_icons">フィードアイコン</string>
     <string name="settings_article_list_summary">概要</string>
-    <string name="settings_article_list_shorten_titles">短縮版のタイトル</string>
+    <string name="settings_article_list_shorten_titles">タイトルを短縮</string>
     <string name="settings_section_version">バージョン</string>
     <string name="settings_option_copy_version">バージョンをコピー</string>
     <string name="settings_option_full_content_subtitle">すべての記事内容を読み込むかどうかの選択を記憶</string>
@@ -173,7 +173,7 @@
     <string name="settings_auto_delete_option_keep_for_one_month">1ヶ月</string>
     <string name="settings_auto_delete_option_keep_for_three_month">3ヶ月</string>
     <string name="settings_clear_all_articles_text">本当にすべての既読かつスターなしの記事をデバイスから削除してもよろしいですか? この操作は元に戻すことができません。</string>
-    <string name="settings_support_button">支援</string>
+    <string name="settings_support_button">サポート</string>
     <string name="settings_donate_button">寄付</string>
     <string name="settings_article_list_title">記事リスト</string>
     <string name="opml_exporter_success">エクスポート完了</string>
@@ -239,7 +239,7 @@
     <string name="blocked_keywords_remove_keyword">キーワードを削除</string>
     <string name="blocked_keywords_add_keyword">キーワードを追加</string>
     <string name="tag_action_delete_title">削除</string>
-    <string name="tag_action_delete_message">タグ『%1$s』を本当に削除しますか?</string>
+    <string name="tag_action_delete_message">タグ「%1$s」を本当に削除しますか?</string>
     <string name="tag_action_delete_confirm">削除</string>
     <string name="tag_name_title">名前</string>
     <string name="tag_action_edit_success">タグが更新されました</string>
@@ -278,7 +278,7 @@
     <string name="theme_mode_label">モード</string>
     <string name="settings_option_full_content_title">全文を常に表示</string>
     <string name="article_list_empty">ここには何もありません</string>
-    <string name="article_byline">%1$s %2$s %3$s</string>
+    <string name="article_byline">%1$s %2$s · %3$s</string>
     <string name="article_byline_date_only">%1$s %2$s</string>
     <string name="article_list_sort_title">記事の並び順</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">ナビゲーションドロワーを開く</string>

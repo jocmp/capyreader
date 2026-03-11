@@ -43,15 +43,15 @@
     <string name="settings_section_account_server">Serveris</string>
     <string name="settings_section_import">Ievietot</string>
     <string name="settings_section_export">Izgūt</string>
-    <string name="settings_section_privacy">Konfidencialitātes politika</string>
-    <string name="settings_section_refresh">Atsvaidzināt</string>
+    <string name="settings_section_privacy">Privātums</string>
+    <string name="settings_section_refresh">Pēdējo reizi atjaunināts</string>
     <plurals name="refresh_hours">
         <item quantity="zero">Ik pēc %d stundām</item>
-        <item quantity="one">Ik pēc %d stundu</item>
+        <item quantity="one">Katru stundu</item>
         <item quantity="other">Ik pēc %d stundām</item>
     </plurals>
     <string name="filter_starred">Atzīmētie</string>
-    <string name="account_source_freshrss">FreshRSS</string>
+
     <string name="add_feed_url_title">Ziņu plūsma vai vietnes URL</string>
     <string name="add_feed_new_folder_title">Jauna birka</string>
     <string name="article_actions_copy_link">Kopēt saiti</string>
@@ -64,7 +64,7 @@
     <string name="freshrss_nav_headline_my_labels">Manas etiķetes</string>
     <string name="article_view_mark_as_read">Atzīmēt kā lasītu</string>
     <string name="opml_import_button_text">Ievietot no datnes</string>
-    <string name="account_source_feedbin">Feedbin</string>
+
     <string name="theme_menu_option_light">Gaišs</string>
     <string name="settings_article_list_feed_name">Ziņu plūsmas nosaukums</string>
     <string name="settings_option_full_content_subtitle">Atcerēties ielādēt visu (pilnu) raksta saturu</string>
@@ -80,7 +80,7 @@
     <string name="add_feed_save_error">Neizdevās saglabāt ziņu plūsmu</string>
     <string name="add_feed_network_error">Neizdevās atrast ziņu plūsmu. Lūdzu, pārbaudiet savienojumu.</string>
     <string name="relative_time_minutes">%1$dm</string>
-    <string name="relative_time_hours">%1$ds</string>
+    <string name="relative_time_hours">%1$dh</string>
     <string name="relative_time_days">%1$dd</string>
     <string name="article_share">Dalīties ar rakstu</string>
     <string name="extract_full_content">Izvilkt visu (pilnu) saturu</string>
@@ -105,7 +105,7 @@
     <string name="theme_menu_option_dark">Tumšs</string>
     <string name="theme_menu_option_system_default">Izmantot sistēmas noklusējuma iestatījumus</string>
     <string name="edit_feed_tags">Birkas</string>
-    <string name="settings_option_in_app_browser">Izmantot lietotņu pārlūku</string>
+    <string name="settings_option_in_app_browser">Izmantot iebūvēto pārlūku</string>
     <string name="image_preview_menu_option_small">Mazs</string>
     <string name="image_preview_menu_option_medium">Vidējs</string>
     <string name="image_preview_menu_option_large">Liels</string>
@@ -130,7 +130,7 @@
     <string name="filter_action_menu_search_articles">Meklēt rakstus</string>
     <string name="image_error_text">Attēla ielādes kļūda</string>
     <string name="article_byline_date_only">%1$s publicēts %2$s</string>
-    <string name="article_byline">%1$s publicēts %2$s pateicoties %3$s</string>
+    <string name="article_byline">%1$s plkst. %2$s, autors: %3$s</string>
     <string name="settings_option_auto_delete_articles_subtitle">Dzēst lasītos, neatzīmētos rakstus, kas vecāki par 3 mēnešiem</string>
     <string name="settings_option_auto_delete_articles_title">Automātiski dzēst rakstus</string>
     <string name="refresh_every_day">Katru dienu</string>
@@ -231,10 +231,10 @@
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Velciet pa kreisi vai pa labi, lai pārvietotos pa rakstiem</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Pieskarieties apakšējiem stūriem, lai pārvietotos pa raksta saturu</string>
     <string name="settings_enable_high_contrast_dark_theme">Iespējot augsta kontrasta tumšo motīvu</string>
-    <string name="settings_section_mark_all_as_read">Atzīmēt visus kā lasītus⁣</string>
+    <string name="settings_section_mark_all_as_read">Atzīmēt visus kā lasītus</string>
     <string name="after_read_all_behavior_default">Noklusējuma</string>
     <string name="full_content_error_missing_response">Neizdevās ielādēt rakstu</string>
-    <string name="full_content_error_generic">Neizdevās parsēt rakstu</string>
+    <string name="full_content_error_generic">Neizdevās apstrādāt rakstu</string>
     <string name="full_content_error_forbidden">Vietne bloķēja ielādi</string>
     <string name="media_save">Saglabāt</string>
     <string name="media_save_success">Attēls saglabāts</string>
@@ -267,7 +267,7 @@
     <string name="mark_read_position_toolbar">Rīkjosla</string>
     <string name="mark_read_position_floating_action_button">Peldoša darbības poga</string>
     <string name="settings_display_miscellaneous_title">Dažādi</string>
-    <string name="add_account_miniflux_signup_prompt">Ja jums vēl nav Miniflux instances?</string>
+    <string name="add_account_miniflux_signup_prompt">Nav Miniflux instances?</string>
     <string name="add_account_miniflux_signup_link_text">Vairāk informācijas.</string>
     <string name="settings_options_reader_pin_top_toolbar">Piespraust augšējo rīkjoslu</string>
     <string name="theme_mode_system">Sistēmas</string>
@@ -278,8 +278,8 @@
     <string name="theme_sunset">Saulriets</string>
     <string name="auth_fields_remove_client_cert">Noņemt klienta sertifikātu</string>
     <string name="filter_today">Šodienas</string>
-    <string name="theme_newsprint">Laikraksts, avīze</string>
-    <string name="settings_option_show_today_filter">Rādīt šodienas raksti atlases iespēju</string>
+    <string name="theme_newsprint">Avīžpapīrs</string>
+    <string name="settings_option_show_today_filter">Šodiena</string>
     <string name="auth_fields_client_certificate">Klienta sertifikāts (neobligāti, pēc izvēles)</string>
     <string name="theme_default">Noklusētais</string>
     <string name="theme_monochrome">Vienkrāsains</string>

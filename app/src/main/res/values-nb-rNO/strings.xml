@@ -34,8 +34,6 @@
     <string name="auth_fields_show_password">Vis passord</string>
     <string name="settings_top_bar_title">Innstillinger</string>
     <string name="crash_reporting_checkbox_title">Slå på kræsjrapportering</string>
-    <string name="account_source_feedbin">Feedbin</string>
-    <string name="account_source_freshrss">FreshRSS</string>
     <string name="account_source_local">Lokal</string>
     <string name="add_account_title">Legg til konto</string>
     <string name="add_account_local_subtitle">På din enhet</string>
@@ -49,7 +47,7 @@
     <string name="account_source_reader">Reader</string>
     <string name="opml_import_notification_title">Importerer abonnementer…</string>
     <string name="settings_section_privacy">Personvern</string>
-    <string name="settings_section_refresh">Oppdater</string>
+    <string name="settings_section_refresh">Sist oppdatert</string>
     <string name="opml_import_button_text">Importer fra fil</string>
     <string name="opml_export_button_text">Eksporter til OPML</string>
     <string name="opml_import_progress_content_text_start">Starter import</string>
@@ -162,8 +160,8 @@
     <string name="settings_option_auto_delete_articles_title">Automatisk sletting av artikler</string>
     <string name="settings_panel_display_title">Visning og utseende</string>
     <string name="article_style_options">Tekststilinnstillinger</string>
-    <string name="article_byline">%1$s %2$s av %3$s</string>
-    <string name="article_byline_date_only">%1$s %2$s</string>
+    <string name="article_byline">%1$s kl. %2$s av %3$s</string>
+    <string name="article_byline_date_only">%1$s kl. %2$s</string>
     <string name="feed_form_feed_url_title">Kanal-URL</string>
     <string name="feed_form_copy_feed_url_to_clipboard">Kopier kanal-URL til utklippstavle</string>
     <string name="feed_list_top_bar_close_search">Avvis søk</string>
@@ -171,12 +169,12 @@
     <string name="empty_onboarding_title">Ingen kanaler</string>
     <string name="empty_onboarding_prompt">Start med å legge til en kanal</string>
     <string name="settings_clear_all_articles_button">Slett alle artikler</string>
-    <string name="settings_reader_title">Reader</string>
+    <string name="settings_reader_title">Leser</string>
     <string name="article_vertical_swipe_full_content">Last inn fullt innhold</string>
     <string name="settings_gestures_list_back_navigation_system_back">Standard</string>
     <string name="crash_log_export_item_title">Del kræsjlogger</string>
     <string name="edit_feed_tags_section">Etiketter</string>
-    <string name="edit_feed_tag_section">Etikett</string>
+    <string name="edit_feed_tag_section">Legg til eller velg etikett</string>
     <string name="settings_confirm_mark_all_read">Bekreft markering av alle som lest</string>
     <string name="article_list_row_swipe_toggle_read">Veksle lest</string>
     <string name="article_list_row_swipe_toggle_starred">Veksle stjernemerking</string>
@@ -203,7 +201,7 @@
     <string name="freshrss_nav_headline_my_labels">Mine etiketter</string>
     <string name="settings_option_full_content_subtitle">Husk valg for å laste hele artikkelens innhold</string>
     <string name="settings_option_auto_delete_articles_subtitle">Slett leste artikler uten stjernemerke som er eldre enn tre måneder</string>
-    <string name="settings_option_full_content_title">Husk full visning av innholdet</string>
+    <string name="settings_option_full_content_title">Fast full visning</string>
     <string name="settings_clear_all_articles_text">Er du sikker på at du vil slette alle leste artikler uten stjernemerke fra enheten din? Denne handlingen kan ikke angres.</string>
     <string name="settings_gestures_list_back_navigation_action">Handling for tilbakenavigering</string>
     <string name="settings_select_none">Velg ingen</string>
@@ -252,7 +250,7 @@
     <string name="theme_sunset">Solnedgang</string>
     <string name="settings_pure_black_dark_mode">Helsvart mørk modus</string>
     <string name="settings_accent_colors">Aksentfarger</string>
-    <string name="image_preview_menu_option_medium">Medium</string>
+    <string name="image_preview_menu_option_medium">Middels</string>
     <string name="article_list_empty">Ingenting her</string>
     <string name="settings_section_experimental">Eksperimentelt</string>
     <string name="settings_option_enable_audio_player">Lydspiller</string>
@@ -271,7 +269,7 @@
     <string name="settings_section_categories">Kategorier</string>
     <string name="settings_option_show_today_filter">I dag</string>
     <string name="end_of_feed_text">Alt er lest!</string>
-    <string name="after_read_all_behavior_label">Etter les alle</string>
+    <string name="after_read_all_behavior_label">Etter merk alle som lest</string>
     <string name="after_read_all_behavior_default">Standard</string>
     <string name="after_read_all_behavior_open_drawer">Åpne navigasjonsskuff</string>
     <string name="after_read_all_behavior_open_next_feed">Åpne neste kanal</string>
