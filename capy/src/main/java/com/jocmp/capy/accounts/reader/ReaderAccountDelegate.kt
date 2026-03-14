@@ -406,21 +406,17 @@ internal class ReaderAccountDelegate(
             return
         }
 
-        coroutineScope {
-            ids.chunked(MAX_PAGINATED_ITEM_LIMIT).map { chunkedIDs ->
-                launch {
-                    val response = withPostToken {
-                        googleReader.streamItemsContents(
-                            postToken = postToken.get(),
-                            ids = chunkedIDs.map { it }
-                        )
-                    }
-
-                    val result = response.body() ?: return@launch
-
-                    saveArticles(result.items)
-                }
+        ids.chunked(MAX_PAGINATED_ITEM_LIMIT).forEach { chunkedIDs ->
+            val response = withPostToken {
+                googleReader.streamItemsContents(
+                    postToken = postToken.get(),
+                    ids = chunkedIDs.map { it }
+                )
             }
+
+            val result = response.body() ?: return@forEach
+
+            saveArticles(result.items)
         }
     }
 
