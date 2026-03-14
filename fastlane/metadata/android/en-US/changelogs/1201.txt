@@ -1,0 +1,5 @@
+Just a small bug fix update
+
+• Fix iframe videos for Bilibili
+• Fix full content images for qbitai.com
+• Update translations for Arabic, French, Galician, Indonesian, Italian, Spanish, and Chinese thanks to volunteers!
