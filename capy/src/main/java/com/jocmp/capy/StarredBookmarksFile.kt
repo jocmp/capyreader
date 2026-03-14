@@ -14,6 +14,7 @@ class StarredBookmarksFile(
         buildString {
             appendLine("<!DOCTYPE NETSCAPE-Bookmark-file-1>")
             appendLine("<!-- This is an automatically generated file. -->")
+            appendLine("<META HTTP-EQUIV=\"Content-Type\" CONTENT=\"text/html; charset=UTF-8\">")
             appendLine("<TITLE>Starred Articles</TITLE>")
             appendLine("<H1>Starred Articles</H1>")
             appendLine("<DL><p>")
