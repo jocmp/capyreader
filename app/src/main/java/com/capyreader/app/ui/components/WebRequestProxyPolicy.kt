@@ -24,16 +24,23 @@ object WebRequestProxyPolicy {
                 url.startsWith("http")
 
         // Sub-resource requests that need a Referer header for CDNs
-        // Only proxy article sub-resources (null origin from loadDataWithBaseURL),
-        // not iframe sub-resources which have their own origin
-        // Issue #1878, Issue #1901
+        // Only proxy article sub-resources (null or absent origin from loadDataWithBaseURL),
+        // not iframe sub-resources which have their own origin (Issue #1878)
         val isMediaRequest = pageUrl != null &&
                 !request.isForMainFrame &&
-                origin == "null" &&
+               isMediaOrigin(origin) &&
                 accept?.startsWith("text/html") != true &&
                 url.startsWith("http")
 
         return isCorsRequest || isIframeNavigation || isMediaRequest
+    }
+
+    // Skips if the origin is missing which is the case
+    // with Mercury Parser, or if it's a string of "null"
+    // which is the case with main frame images
+    // Issue #1315, Issue #1901
+    fun isMediaOrigin(origin: String?): Boolean {
+        return origin == null || origin == "null"
     }
 
     // Reddit embeds www.reddit.com/media?url=... as image srcs in feeds,
