@@ -10,6 +10,7 @@ class GenericFeed(
     override val siteURL: URL? = null,
     private val valid: Boolean = true,
     override val faviconURL: URL? = null,
+    override val itunesImageURL: String? = null,
     override val items: List<RssItem> = emptyList(),
 ) : Feed {
     override fun isValid() = valid
