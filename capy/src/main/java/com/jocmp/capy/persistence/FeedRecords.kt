@@ -28,6 +28,7 @@ internal class FeedRecords(private val database: Database) {
         siteURL: String?,
         faviconURL: String?,
         priority: String? = null,
+        itunesImageURL: String? = null,
     ): Feed? = withIOContext {
         database.feedsQueries.upsert(
             id = feedID,
@@ -37,6 +38,7 @@ internal class FeedRecords(private val database: Database) {
             site_url = siteURL,
             favicon_url = faviconURL,
             priority = priority,
+            itunes_image_url = itunesImageURL,
         )
 
         find(feedID)
@@ -145,6 +147,7 @@ internal class FeedRecords(private val database: Database) {
         openArticlesInBrowser: Boolean = false,
         priority: String? = null,
         showUnreadBadge: Boolean = true,
+        itunesImageURL: String? = null,
         folderName: String? = "",
         expanded: Boolean? = false,
     ) = Feed(
@@ -154,6 +157,7 @@ internal class FeedRecords(private val database: Database) {
         feedURL = feedURL,
         siteURL = siteURL.orEmpty(),
         faviconURL = faviconURL,
+        itunesImageURL = itunesImageURL,
         folderName = folderName.orEmpty(),
         count = 0,
         enableStickyFullContent = enableStickyFullContent,

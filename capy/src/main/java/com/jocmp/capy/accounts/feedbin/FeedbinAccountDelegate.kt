@@ -299,7 +299,8 @@ internal class FeedbinAccountDelegate(
             feed_url = subscription.feed_url,
             site_url = subscription.site_url,
             favicon_url = icon?.url,
-            priority = null
+            priority = null,
+            itunes_image_url = null,
         )
     }
 
