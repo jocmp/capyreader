@@ -42,6 +42,7 @@ class StarredBookmarksFileTest {
         val expected = """
             |<!DOCTYPE NETSCAPE-Bookmark-file-1>
             |<!-- This is an automatically generated file. -->
+            |<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
             |<TITLE>Starred Articles</TITLE>
             |<H1>Starred Articles</H1>
             |<DL><p>
@@ -87,6 +88,7 @@ class StarredBookmarksFileTest {
         val expected = """
             |<!DOCTYPE NETSCAPE-Bookmark-file-1>
             |<!-- This is an automatically generated file. -->
+            |<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
             |<TITLE>Starred Articles</TITLE>
             |<H1>Starred Articles</H1>
             |<DL><p>
