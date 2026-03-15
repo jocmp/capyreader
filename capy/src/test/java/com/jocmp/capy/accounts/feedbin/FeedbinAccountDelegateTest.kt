@@ -193,7 +193,7 @@ class FeedbinAccountDelegateTest {
 
         assertEquals(expected = 2, actual = articles.size)
 
-        val enclosures = EnclosureRecords(database).byArticle(vergeArticle.id.toString())
+        val enclosures = EnclosureRecords(database).findByArticle(vergeArticle.id.toString())
         assertEquals(expected = 1, actual = enclosures.size)
     }
 

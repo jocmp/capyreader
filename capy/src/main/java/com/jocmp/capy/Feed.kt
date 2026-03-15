@@ -11,6 +11,7 @@ data class Feed(
     val siteURL: String = "",
     val folderName: String = "",
     val faviconURL: String? = null,
+    val itunesImageURL: String? = null,
     /** Unread count */
     override val count: Long = 0,
     val enableStickyFullContent: Boolean = false,

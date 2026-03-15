@@ -351,6 +351,7 @@ class LocalAccountDelegateTest {
         override val feedURL: URL,
         override val siteURL: URL? = null,
         override val faviconURL: URL? = null,
+        override val itunesImageURL: String? = null,
         override val items: List<RssItem> = listOf()
     ) : Feed {
         override fun isValid() = true

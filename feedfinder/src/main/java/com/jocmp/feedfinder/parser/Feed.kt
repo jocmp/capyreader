@@ -14,5 +14,7 @@ interface Feed {
 
     val faviconURL: URL?
 
+    val itunesImageURL: String?
+
     val items: List<RssItem>
 }

@@ -216,7 +216,7 @@ class ReaderAccountDelegateTest {
 
         assertEquals(expected = 1, actual = articles.size)
 
-        val enclosures = EnclosureRecords(database).byArticle("0000000000000010")
+        val enclosures = EnclosureRecords(database).findByArticle("0000000000000010")
         assertEquals(expected = 1, actual = enclosures.size)
     }
 

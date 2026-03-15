@@ -45,7 +45,8 @@ INSERT INTO feeds(
     feed_url,
     site_url,
     favicon_url,
-    priority
+    priority,
+    itunes_image_url
 )
 VALUES (
   :id,
@@ -54,7 +55,8 @@ VALUES (
   :feed_url,
   :site_url,
   :favicon_url,
-  :priority
+  :priority,
+  :itunes_image_url
 )
 ON CONFLICT(id) DO UPDATE
 SET id = id,
@@ -64,7 +66,8 @@ feed_url = excluded.feed_url,
 site_url = excluded.site_url,
 favicon_url = COALESCE(excluded.favicon_url, favicon_url),
 enable_sticky_full_content = enable_sticky_full_content,
-priority = excluded.priority;
+priority = excluded.priority,
+itunes_image_url = COALESCE(excluded.itunes_image_url, itunes_image_url);
 
 update:
 UPDATE feeds SET
@@ -73,6 +76,10 @@ title = :title WHERE feeds.id = :feedID;
 updateFavicon:
 UPDATE feeds SET
 favicon_url = :faviconURL WHERE feeds.id = :feedID;
+
+updateItunesImage:
+UPDATE feeds SET
+itunes_image_url = :itunesImageURL WHERE feeds.id = :feedID;
 
 isFullContentEnabled:
 SELECT enable_sticky_full_content FROM feeds WHERE feeds.id = :feedID LIMIT 1;

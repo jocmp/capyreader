@@ -27,7 +27,7 @@ internal class EnclosureRecords internal constructor(
         )
     }
 
-    suspend fun byArticle(id: String): List<Enclosure> = withIOContext {
+    suspend fun findByArticle(id: String): List<Enclosure> = withIOContext {
         database
             .enclosuresQueries
             .findByArticleID(id, ::mapper)

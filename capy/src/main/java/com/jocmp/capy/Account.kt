@@ -251,7 +251,7 @@ data class Account(
             return null
         }
 
-        val enclosures = enclosureRecords.byArticle(articleID)
+        val enclosures = enclosureRecords.findByArticle(articleID)
         return articleRecords.find(articleID = articleID)?.copy(enclosures = enclosures)
     }
 
