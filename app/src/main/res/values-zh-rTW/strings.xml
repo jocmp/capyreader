@@ -29,7 +29,7 @@
     <string name="add_feed_new_folder_title">新標籤</string>
     <string name="add_feed_success">已新增訂閱源</string>
     <string name="feed_form_cancel">取消</string>
-    <string name="filter_starred">星標</string>
+    <string name="filter_starred">已加星標</string>
     <string name="filter_unread">未讀</string>
     <string name="feed_action_edit">編輯訂閱源</string>
     <string name="feed_action_reload_icon">重新載入圖示</string>
@@ -141,7 +141,7 @@
     <string name="add_account_title">新增帳戶</string>
     <string name="settings_section_account">帳戶</string>
     <string name="settings_section_privacy">隱私</string>
-    <string name="settings_section_refresh">重新整理</string>
+    <string name="settings_section_refresh">上次更新</string>
     <string name="opml_export_button_text">匯出到 OPML</string>
     <string name="opml_import_notification_title">匯入訂閲…</string>
     <string name="opml_import_button_text">從檔案匯入</string>
@@ -335,4 +335,11 @@
     <string name="article_actions_save_externally">儲存</string>
     <string name="article_actions_save_externally_success">已儲存</string>
     <string name="article_actions_save_externally_failure">儲存失敗</string>
+    <string name="settings_account_refresh_value">%1$s 在 %2$s</string>
+    <string name="settings_account_refresh_value_today">今天在 %1$s</string>
+    <string name="settings_account_never_refreshed">永不</string>
+    <string name="settings_accent_colors">強調色</string>
+    <string name="starred_exporter_success">匯出完成</string>
+    <string name="starred_exporter_failure">匯出失敗</string>
+    <string name="starred_export_button_text">匯出已加星標的文章</string>
 </resources>
