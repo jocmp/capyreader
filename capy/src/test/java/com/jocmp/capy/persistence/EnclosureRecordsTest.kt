@@ -31,7 +31,7 @@ class EnclosureRecordsTest {
             itunesDurationSeconds = "3000",
         )
 
-        val result = enclosures.byArticle(id = article.id).first()
+        val result = enclosures.findByArticle(id = article.id).first()
 
         assertEquals(expected = "https://example.com/test.jpg", actual = result.url.toString())
         assertEquals(expected = "image/jpeg", actual = result.type)

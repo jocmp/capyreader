@@ -235,7 +235,7 @@ class MinifluxAccountDelegateTest {
         assertEquals(expected = listOf(null, "Tech"), actual = taggedNames.sortedWith(nullsFirst(naturalOrder())))
         assertEquals(expected = 1, actual = articles.size)
 
-        val enclosures = EnclosureRecords(database).byArticle(vergeArticle.id.toString())
+        val enclosures = EnclosureRecords(database).findByArticle(vergeArticle.id.toString())
         assertEquals(expected = 1, actual = enclosures.size)
     }
 

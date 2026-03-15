@@ -215,6 +215,15 @@ internal class LocalAccountDelegate(
     private suspend fun refreshFeed(feed: Feed, cutoffDate: ZonedDateTime?) {
         try {
             feedFinder.fetch(feed.feedURL).onSuccess { channel ->
+                val itunesImageURL = channel.itunesChannelData?.image
+
+                if (itunesImageURL != null) {
+                    database.feedsQueries.updateItunesImage(
+                        itunesImageURL = itunesImageURL,
+                        feedID = feed.id,
+                    )
+                }
+
                 saveArticles(channel.items, cutoffDate = cutoffDate, feed = feed)
             }
         } catch (e: Throwable) {
@@ -305,7 +314,8 @@ internal class LocalAccountDelegate(
             feed_url = feedURL,
             site_url = feed.siteURL?.toString(),
             favicon_url = feed.faviconURL?.toString(),
-            priority = null
+            priority = null,
+            itunes_image_url = feed.itunesImageURL,
         )
     }
 

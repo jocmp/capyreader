@@ -314,7 +314,8 @@ internal class ReaderAccountDelegate(
                 CapyLog.warn(tag("blank_icon"), mapOf("feed_url" to subscription.url))
                 null
             },
-            priority = subscription.frssPriority
+            priority = subscription.frssPriority,
+            itunes_image_url = null,
         )
 
         upsertTaggings(subscription)
