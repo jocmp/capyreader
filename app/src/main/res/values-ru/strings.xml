@@ -103,7 +103,7 @@
     <string name="settings_section_export">Экспорт</string>
     <string name="opml_import_notification_title">Импортирование подписок…</string>
     <string name="settings_section_privacy">Конфиденциальность</string>
-    <string name="settings_section_refresh">Обновить</string>
+    <string name="settings_section_refresh">Последнее обновление</string>
     <string name="opml_import_button_text">Импорт из файла</string>
     <string name="opml_import_progress_content_text_start">Начало импорта</string>
     <string name="settings_import_progress_placeholder">Импорт подписок…</string>
@@ -338,4 +338,11 @@
     <string name="article_actions_delete_page_title">Удалить</string>
     <string name="article_actions_delete_page_message">Вы уверены, что хотите удалить эту страницу?</string>
     <string name="article_actions_delete_page_confirm">Удалить</string>
+    <string name="settings_account_refresh_value">%1$s ás %2$s</string>
+    <string name="settings_account_refresh_value_today">Сегодня в %1$s</string>
+    <string name="settings_account_never_refreshed">Никогда</string>
+    <string name="settings_accent_colors">Цвета акцентов</string>
+    <string name="starred_export_button_text">Экспорт избранных статей</string>
+    <string name="starred_exporter_success">Экспорт завершён</string>
+    <string name="starred_exporter_failure">Экспорт не удался</string>
 </resources>
