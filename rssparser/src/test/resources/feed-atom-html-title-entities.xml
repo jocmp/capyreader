@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://attackanddefense.dev/feed.xml" rel="self" type="application/atom+xml" /><link href="https://attackanddefense.dev/" rel="alternate" type="text/html" /><updated>2026-03-13T14:09:59+00:00</updated><id>https://attackanddefense.dev/feed.xml</id><title type="html">Attack &amp;amp; Defense</title><subtitle>A blog from the Firefox Application Security Team</subtitle><entry><title type="html">Bug Bounty Program Updates 2026</title><link href="https://attackanddefense.dev/2026/03/13/bug-bounty-program-updates-2026.html" rel="alternate" type="text/html" title="Bug Bounty Program Updates 2026" /><published>2026-03-13T02:13:37+00:00</published><updated>2026-03-13T02:13:37+00:00</updated><id>https://attackanddefense.dev/2026/03/13/bug-bounty-program-updates-2026</id><content type="html" xml:base="https://attackanddefense.dev/2026/03/13/bug-bounty-program-updates-2026.html"><![CDATA[<p>The Firefox bug bounty program is the longest-running security bug bounty program. Born out of <a href="https://en.wikipedia.org/wiki/Bug_bounty_program#History">Netscape’s bug bounty program</a>, we’ve been awarding ingenious security research for over two decades, helping keep our hundreds of millions of users safe.</p>
+
+<p>With the threat landscape changing, we’re updating our security program along with it. As browser security architecture continues to improve, our bug bounty program is evolving to focus incentives on the highest-impact work and the most critical threats.</p>
+
+<h2 id="policy-changes">Policy changes</h2>
+
+<p><strong>We are keeping updates to the reporting process to a minimum so that experienced and successful researchers do not need to change how their security bugs are reported right now.</strong></p>
+
+<p><strong>Raising the bar for report quality and novelty</strong></p>
+
+<p><strong>Quality:</strong> As part of our policy update, we are putting an <strong>increasing emphasis on actionable reports</strong>: Reducing the time spent on validating theoretical concerns and focusing on confirmed vulnerabilities is ensuring faster resolution, faster reward payments and a better Firefox.
+Our existing policy already differentiates between high-quality reports and reports that only provide sufficient information to inform us of a new security vulnerability. Going forward, <strong>we will now require security researchers to provide simple and reproducible test cases</strong> for reports to be eligible for bounty rewards (e.g., demonstrable with an <a href="https://firefox-source-docs.mozilla.org/tools/sanitizer/asan.html#downloading-artifact-builds">Address Sanitizer build</a>). Reports without any credible evidence of a security issue will be assigned a much lower priority.</p>
+
+<p><strong>Novelty:</strong> In light of a recent increase in duplicate security bug reports and timing issues where researchers were able to race some of our internal tools, <strong>we are reserving an increased time window of seven days for our internal automated methods to find security issues</strong>. While this might affect more bug reports than before, we also believe this encourages researchers to focus on novel research that genuinely benefits advancements in the security posture, rather than research that replicates existing open source tools or results already captured by internal processes. This puts original, high-quality research back in the center of our bug bounty program</p>
+
+<p><strong>Aligning Security Architecture and Reward Structure</strong></p>
+
+<p><strong>Security Architecture:</strong> Firefox is already using multiple utility processes to reduce the level of privilege for security-critical code. We are therefore focusing our rewards for “Highest Impact” / “Sandbox Escape” solely on attacks that compromise the parent process. We are also going to release a separate, sandboxed GPU process on all Operating Systems in 2026, which means that <strong>from now on, we will assess vulnerabilities in our graphics stack according to their sandboxed context, rather than treating them as full sandbox escapes.</strong> These bugs will still be considered as “<a href="https://www.mozilla.org/en-US/security/client-bug-bounty/#:~:text=High%20Impact">High Impact</a>” memory corruptions. We are also working on better definitions for compromising other processes and will update the bounty program again with more eligible process pairs in the future.</p>
+
+<p><strong>Changes to our Reward Structure:</strong> We limit our definition of sandbox escapes to true escapes that will allow the attacker to gain control over a higher privileged, unsandboxed process. This definition also excludes memory-reads as well as cross-process exploits targeting other sandboxed processes. As with above, we will continue to rate memory corruptions and attacks on other processes as “<a href="https://www.mozilla.org/en-US/security/client-bug-bounty/#:~:text=High%20Impact">High Impact</a>“ findings. Consequently, the highest reward will be limited to breaches of the most hardened security boundaries.</p>
+
+<h1 id="join-our-bug-bounty-program">Join our bug bounty program</h1>
+
+<p>These updates are a natural step forward in maintaining a highly effective, quality-focused program that addresses the real and evolving security risks facing modern browsers.<br />
+We encourage researchers to engage with these clarified guidelines and focus their efforts on high-impact vulnerabilities and continue working alongside us to strengthen Firefox by focusing on the vulnerabilities that matter most.</p>
+
+<p>We will provide additional guides and tips for improved bug finding and reporting based on previous bug reports in upcoming blog posts. We are also reminding our readers and security community that <a href="https://attackanddefense.dev/about/">we welcome guest articles on our blog</a> where successful researchers can share their discoveries.</p>]]></content><author><name>Frederik Braun, Christoph Kerschbaumer</name></author><summary type="html"><![CDATA[The Firefox bug bounty program is the longest-running security bug bounty program. Born out of Netscape’s bug bounty program, we’ve been awarding ingenious security research for over two decades, helping keep our hundreds of millions of users safe.]]></summary></entry><entry><title type="html">Firefox Security &amp;amp; Privacy Newsletter 2025 Q4</title><link href="https://attackanddefense.dev/2026/01/30/firefox-security-privacy-newsletter-2025-q4.html" rel="alternate" type="text/html" title="Firefox Security &amp;amp; Privacy Newsletter 2025 Q4" /><published>2026-01-30T02:13:37+00:00</published><updated>2026-01-30T02:13:37+00:00</updated><id>https://attackanddefense.dev/2026/01/30/firefox-security-privacy-newsletter-2025-q4</id><content type="html" xml:base="https://attackanddefense.dev/2026/01/30/firefox-security-privacy-newsletter-2025-q4.html"><![CDATA[<p>Welcome to the Q4 2025 edition of the Firefox Security &amp; Privacy Newsletter.</p>
+
+<p>Security and privacy are foundational to <a href="https://www.mozilla.org/en-US/about/manifesto/">Mozilla’s manifesto</a> and central to how we build Firefox. In this edition, we highlight key security and privacy work from <strong>Q4 2025</strong>, organized into the following areas:</p>
+
+<ul>
+  <li><strong>Firefox Product Security &amp; Privacy</strong> — new security and privacy features and integrations in Firefox</li>
+  <li><strong>Core Security</strong> — platform-level security and hardening efforts</li>
+  <li><strong>Community Engagement</strong> — updates from our security research and bug bounty community</li>
+  <li><strong>Web Security &amp; Standards</strong> — advancements that help websites better protect their users from online threats</li>
+</ul>
+
+<h2 id="preface">Preface</h2>
+
+<p>Note: Some of the bugs linked below might not be accessible to the general public and restricted to specific work groups. <a href="https://firefox-source-docs.mozilla.org/bug-mgmt/processes/fixing-security-bugs.html#keeping-private-information-private">We de-restrict fixed security bugs after a grace-period</a>, until the majority of our user population have received Firefox updates. If a link does not work for you, please accept this as a precaution for the safety of all Firefox users.</p>
+
+<h2 id="firefox-product-security--privacy">Firefox Product Security &amp; Privacy</h2>
+
+<p><strong>Functional Privacy.</strong> Firefox empowers users with control and choice - including the option for maximum privacy protections. Yet, our commitment lies in targeting online tracking by default in ways that ensures the web continues to function accurately and smoothly. With focus on this important balance, our protections have blocked more than 1 trillion tracking attempts, while reported site compatibility issues were driven down to an all time low: 500, as compared to 1,100 in Q1 of 2025.</p>
+
+<p><strong>Improved page redirect prevention:</strong> Firefox now <a href="https://support.mozilla.org/en-US/kb/pop-blocker-settings-exceptions-troubleshooting">blocks top-level redirects from iframes</a>. This new prevention mechanism aligns Firefox behaviour with other browsers and protects users against so-called malvertising attacks.</p>
+
+<p><strong>Improved protections against navigational cross-site tracking</strong>: Navigational tracking is used to track users across different websites using browser navigations. <a href="https://developer.mozilla.org/en-US/docs/Web/Privacy/Guides/Bounce_tracking_mitigations">Bounce tracking</a> is a type of navigational tracking that “bounces” user navigations through an intermediary tracking site. <a href="https://developer.mozilla.org/en-US/docs/Web/Privacy/Guides/Bounce_tracking_mitigations">Firefox’s Bounce Tracking Protection</a> already protects against this tracking vector. And Firefox 145 uplevels this by also eliminating cache access for these intermediate redirect pages.</p>
+
+<p><strong>Global Privacy Control (GPC):</strong> Following Firefox’s lead as the first major browser to do this, Thunderbird has also now replaced the legacy “Do Not Track” (DNT) in favor of <a href="https://github.com/w3c/gpc/blob/main/explainer.md">Global Privacy Control (GPC)</a>. This new control has the much needed legal footing to clearly communicate a user’s “do-not-sell-or-share preference” and <a href="https://groups.google.com/a/chromium.org/g/blink-dev/c/ztV1otnl_NQ/m/rvvLFkrdBQAJ">other browsers are expected to follow soon</a>.</p>
+
+<p><strong>Warning prompts for digital identity requests</strong>: When a webpage attempts to open a digital wallet app using custom URL schemes such as <code class="language-plaintext highlighter-rouge">openid4vp</code>, <code class="language-plaintext highlighter-rouge">mdoc</code>, <code class="language-plaintext highlighter-rouge">mdoc-openid4vp</code>, or <code class="language-plaintext highlighter-rouge">haip</code>, Firefox on Desktop and Android (Firefox 145 and newer)  now displays clear warning prompts that explain what’s happening and give users control.</p>
+
+<h2 id="core-security">Core Security</h2>
+
+<p><strong>Certificate Transparency (CT) on Android:</strong> Certificate Transparency enables rapid detection of unauthorized or fraudulent SSL/TLS certificates. CT has been available in Firefox Desktop since Firefox 136 and is now also available on Android starting with Firefox 145.</p>
+
+<p><strong>Post-Quantum Cryptography (ML-KEM):</strong> ML-KEM is a next-generation public-key cryptosystem designed to resist attacks from large-scale quantum computers. Post-quantum (PQ) cryptography with ML-KEM support shipped in Firefox 132 for Desktop. Support is now also available on Android starting with Firefox 145 and in WebRTC starting with Firefox 146.</p>
+
+<h2 id="community-engagement">Community Engagement</h2>
+
+<p><strong>Mozilla and Firefox at the 39th <a href="https://events.ccc.de/tag/chaos-communication-congress/">Chaos Communication Congress</a> (39C3)</strong>: Teams from Firefox Security, Privacy, Networking, Thunderbird, and Public Policy collaborated to raise awareness of their work and gather direct community feedback. A clear highlight was the popularity of our swag, with our folks distributing 1,000 Fox Ears. The high level of engagement was further sustained by a dedicated community meetup and an impromptu AMA session, which drew attention from over 100 people.</p>
+
+<p><strong>Firefox Bug Bounty Hall of Fame</strong>: We just updated the <a href="https://www.mozilla.org/en-US/security/bug-bounty/hall-of-fame/">Hall of Fame</a>, which credits all of the skillful security researchers that strive to keep Firefox secure as of Q4 2025. If you also want to contribute to Firefox security, please look at our <a href="https://www.mozilla.org/en-US/security/bug-bounty/">Bug Bounty pages</a>.</p>
+
+<h2 id="web-security--standards">Web Security &amp; Standards</h2>
+
+<p><strong>Integrity-Policy:</strong> Firefox 145 has added support for the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Integrity-Policy">Integrity-Policy response header</a>. The header allows websites to ensure that only scripts with an integrity attribute will load. Errors will be logged to the console, with support for the Reporting API coming in early 2026.</p>
+
+<p><strong>Compressed Elliptic Curve Points in WebCrypto:</strong> Firefox 146 adds support for compressed elliptic curve points in WebCrypto. This reduces public key sizes by nearly half, saving bandwidth and storage, while still allowing the full point to be reconstructed mathematically. With this addition, Firefox now leads in <a href="https://wpt.fyi/results/WebCryptoAPI?label=experimental&amp;label=master&amp;aligned">WebCrypto web platform test coverage.</a></p>
+
+<h2 id="going-forward">Going Forward</h2>
+
+<p>As a Firefox user, you automatically benefit from the security and privacy improvements described above through Firefox’s regular automatic updates. If you’re not using Firefox yet, you can download it to enjoy a fast, secure browsing experience — while supporting Mozilla’s mission of a healthy, safe, and accessible web for everyone.</p>
+
+<p>We’d like to thank everyone who helps make Firefox and the open web more secure and privacy-respecting.</p>
+
+<p>See you next time with the <strong>Q1 2026 report</strong>.</p>
+
+<p>— <em>The Firefox Security and Privacy Teams</em></p>]]></content><author><name>Frederik Braun, Christoph Kerschbaumer</name></author><summary type="html"><![CDATA[Welcome to the Q4 2025 edition of the Firefox Security &amp; Privacy Newsletter.]]></summary></entry><entry><title type="html">Attempting Cross Translation Unit Taint Analysis for Firefox</title><link href="https://attackanddefense.dev/2025/12/16/attempting-cross-translation-unit-static-analysis.html" rel="alternate" type="text/html" title="Attempting Cross Translation Unit Taint Analysis for Firefox" /><published>2025-12-16T09:06:37+00:00</published><updated>2025-12-16T09:06:37+00:00</updated><id>https://attackanddefense.dev/2025/12/16/attempting-cross-translation-unit-static-analysis</id><content type="html" xml:base="https://attackanddefense.dev/2025/12/16/attempting-cross-translation-unit-static-analysis.html"><![CDATA[<h2 id="preface">Preface</h2>
+
+<p>Browser security is a cutting edge frontier for exploit mitigations,
+addressing bug classes holistically, and identifying vulnerabilities. Not
+everything we try works, and we think it’s important to document our
+shortcomings in addition to our successes. A responsible project uses all
+available tools to find bugs and vulnerabilities before you ship. Besides
+many other tools and techniques, Firefox uses Clang Tidy and the Clang
+Static Analyzer, including many customized checks for enforcing the coding
+conventions in the project. To extend these tools, Mozilla contacted Balázs,
+as one of the maintainers of the Clang Static Analyzer, to help address
+problems encountered when exploring Cross Translation Unit (CTU) Static
+Analysis. Ultimately, we weren’t able to make as much headway with this
+project as we hoped, but we wanted to contribute our experience to the
+community and hopefully inspire future work. Be warned, this is a highly
+technical blog post.</p>
+
+<p>The following sections describe some fundamental concepts, such as taint
+analysis, CTU, the Clang Static Analyzer engine. This will be followed by
+the problem statement and the solution. Finally, some closing words.</p>
+
+<p>Disclaimer: The work described here was sponsored by Mozilla.</p>
+
+<h2 id="static-analysis-fundamentals">Static Analysis Fundamentals</h2>
+
+<h3 id="taint-analysis">Taint analysis</h3>
+
+<p>Vulnerabilities often root from using untrusted data in some way. Data from
+such sources is called “tainted” in static analysis, and “taint analysis” is the
+technique that tracks how such “tainted” values propagate or “flow”
+throughout the program.</p>
+
+<p>In short, “Taint sources” introduce a flow, such as reading from a socket. If
+a tainted value reaches a “taint sink” then we should report an error. These
+“sources” and “sinks” are often configurable.</p>
+
+<p>A <a href="https://clang.llvm.org/docs/analyzer/user-docs/TaintAnalysisConfiguration.html">YAML configuration</a> file can be used with the Clang Static Analyzer
+configuring the taint rules.</p>
+
+<h3 id="cross-translation-unit-ctu-analysis">Cross Translation Unit (CTU) analysis</h3>
+
+<p>The steps involved in bugs or vulnerabilities might cross file boundaries.
+Conventional static analysis tools that operate on a translation-unit basis
+would not find the issue. Luckily, the Clang Static Analyzer offers <a href="https://clang.llvm.org/docs/analyzer/user-docs/CrossTranslationUnit.html">CTU
+mode</a>
+that loads the relevant pieces of the required translation units to
+enhance the contextual view of the analysis target, thus increasing the
+covered execution paths. Running CTU needs a bit of setup, but luckily
+tools like <a href="https://clang.llvm.org/docs/analyzer/user-docs/CommandLineUsage.html#scan-build">scan-build</a>
+or <a href="https://github.com/Ericsson/codechecker">CodeChecker</a> have built-in support.</p>
+
+<h3 id="path-sensitive-analysis">Path-sensitive analysis</h3>
+
+<p>The Clang Static Analyzer implements a path-sensitive symbolic execution.
+<a href="https://www.youtube.com/watch?v=g0Mqx1niUi0">Here is an excellent talk</a>
+but let us give a refresher here.</p>
+
+<p>Basically, it interprets the abstract syntax tree (AST) of the analyzed C/C++
+program and builds up program facts statement by statement as it
+simulates different execution paths of the program. If it sees an <code class="language-plaintext highlighter-rouge">if</code>
+statement, it splits into two execution paths: one where the condition is
+assumed to be false, and another one where it’s assumed to be true. Loops
+are handled slightly differently, but that’s not the point of this post today.</p>
+
+<p>When the engine sees a function call, it will jump to the definition of the
+callee (if available) and continue the analysis there with the arguments we
+had at the call-site. We call this “inlining” in the Clang Static Analyzer. This
+makes this engine inter-procedural, in other words, reason across
+functions. Of course, this only works if it knows the callee. This means that
+without knowing the pointee of a function pointer or the dynamic type of a
+polymorphic object (that has virtual functions), it cannot “inline” the callee,
+which in turn means that the engine must conservatively relax the program
+facts it gathered so far because they might be changed by the callee.</p>
+
+<p>For example, if we have some allocated memory, and we pass that pointer
+to such a function, then the engine must assume that the pointer was
+potentially released, and not raise leak warnings after this point.</p>
+
+<p>The conclusion here is that following the control-flow is critical, and virtual
+functions limit our ability to reason about this if we don’t know the dynamic
+type of objects.</p>
+
+<h2 id="so-taint-analysis-for-firefox">So, taint analysis for Firefox?</h2>
+
+<h3 id="firefox-has-a-lot-of-virtual-functions">Firefox has a lot of virtual functions!</h3>
+
+<p>We discussed that control-flow is critical for taint analysis, and virtual
+functions ruin the control-flow. A browser has almost every code pattern
+you can imagine, and it so happens that many of the motivating use cases
+for this analysis involve virtual functions that also happen to cross file
+boundaries.</p>
+
+<h3 id="once-upon-a-time">Once upon a time…</h3>
+
+<p>It all started by Tom creating a couple of GitHub issues, like 
+<a href="https://github.com/llvm/llvm-project/issues/114270">#114270</a>
+(which prompted a couple smaller fixes that are not the subject of this port),
+and <a href="https://github.com/llvm/llvm-project/issues/62663">#62663</a>.</p>
+
+<p>This latter one was blocked by not being able to follow the callees of virtual
+functions, kicking off this whole subject and the prototype.</p>
+
+<h3 id="plotting-against-virtual-functions">Plotting against virtual functions</h3>
+
+<h4 id="the-idea">The idea</h4>
+<p>Let’s just look at the AST and build the inheritance graph. After that, if we
+see a virtual call to <code class="language-plaintext highlighter-rouge">data()</code>, we could check who overrides this method.</p>
+
+<p>Let’s say only class <code class="language-plaintext highlighter-rouge">A</code> and <code class="language-plaintext highlighter-rouge">B</code> overrides this method in the translation unit.
+This means we could split the path into 2 and assume that on one path we
+call <code class="language-plaintext highlighter-rouge">A::data()</code> and on the other one <code class="language-plaintext highlighter-rouge">B::data()</code>.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// class A... class B deriving from Base</span>
+<span class="kt">void</span> <span class="nf">func</span><span class="p">(</span><span class="n">Base</span> <span class="o">*</span><span class="n">p</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">p</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">();</span> <span class="c1">// ‘p’ might point to an object A or B here.</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This looks nice and simple, and the core of the idea is solid. However, there
+are a couple of problems:</p>
+
+<ol>
+  <li>
+    <p>One translation unit (TU) might define a class <code class="language-plaintext highlighter-rouge">Derived</code>, overriding
+<code class="language-plaintext highlighter-rouge">data()</code>, and then pass a <code class="language-plaintext highlighter-rouge">Base</code> pointer to the other translation unit.
+And when that TU is analyzed, it shouldn’t be sure that only class <code class="language-plaintext highlighter-rouge">A</code>
+and <code class="language-plaintext highlighter-rouge">B</code> overrides <code class="language-plaintext highlighter-rouge">data()</code> just because it didn’t see <code class="language-plaintext highlighter-rouge">Derived</code> from the
+other TU.
+This is the problem with inheritance, which is an “open-set” relation.
+One cannot be sure to see the whole inheritance graph all at once.</p>
+  </li>
+  <li>
+    <p>It’s not only that <code class="language-plaintext highlighter-rouge">Derived</code> might be in a different TU, but it might be in
+a 3rd party library, and dynamically loaded at runtime. In this case,
+assuming a finite set of callees for a virtual function would be wrong.</p>
+  </li>
+</ol>
+
+<h4 id="refining-the-idea">Refining the idea</h4>
+
+<p>Fixing problem (2) is easy, as we should just assume that the list of
+potential callees always has an extra unknown callee, to have an execution
+path where the call is conservatively evaluated and do the invalidations -
+just like before.</p>
+
+<p>Fixing problem (1) is more challenging because we need whole-program
+analysis. We need to create the inheritance graphs of each TU and then
+merge them into a unified graph. Once we’ve built that, we can run the
+Clang Static Analyzer and start reasoning about the overriders of virtual
+functions in the whole project.
+Consequently, in the example we discussed before, we would know that
+class <code class="language-plaintext highlighter-rouge">A</code>, <code class="language-plaintext highlighter-rouge">B</code> and (crucially) <code class="language-plaintext highlighter-rouge">Derived</code> overrides <code class="language-plaintext highlighter-rouge">data()</code>. So after the call,
+we would have 4 execution paths: <code class="language-plaintext highlighter-rouge">A</code>, <code class="language-plaintext highlighter-rouge">B</code>, <code class="language-plaintext highlighter-rouge">Derived</code> and the last path is for
+the unknown case (like potentially dynamically loading some library that
+overrides this method).</p>
+
+<h4 id="it-sounds-great-but-does-it-work">It sounds great, but does it work?</h4>
+
+<p>It does! The analysis gives a list of the potential overriders of a virtual
+function. The Clang Static Analyzer was modified to do the path splits we
+discussed and remember the dynamic type constraints we learn on the
+way. There is one catch though.</p>
+
+<p>Some taint flows cross file boundaries, and the Clang Static Analyzer has
+CTU to counter this, right?</p>
+
+<p>CTU uses the “<a href="https://clang.llvm.org/docs/LibASTImporter.html">ASTImporter</a>”,
+which is known to have infinite recursion,
+crashes and incomplete implementation in terms of what constructs it can
+import. There are plenty of examples, but one we encountered
+was <a href="https://github.com/llvm/llvm-project/issues/123093">#123093</a>.</p>
+
+<p>Usually fixing one of these is time consuming and needs a deep
+understanding of the ASTImporter. And even if you fix one of these, there
+will be plenty of others to follow.</p>
+
+<p>This patch for “devirtualizing” virtual function calls didn’t really help with the
+reliability of the ASTImporter. As the interesting taint flows cross file
+boundaries, the benefits of this new feature are unfortunately limited by the
+ASTImporter for Firefox.</p>
+
+<h3 id="is-it-available-in-the-clang-static-analyzer-already">Is it available in the Clang Static Analyzer already?</h3>
+
+<p>Unfortunately no, and as the contract was over, it is unlikely that these
+patches would merge upstream without others splitting up the patches and
+doing the labor of proposing them upstream. Note that this whole program
+analysis is a brand new feature and it was just a quick prototype to check
+the viability.</p>
+
+<p>Upstreaming would likely also need some wider consensus about the
+design.</p>
+
+<p>Apparently, whole-project analyses could be important for other domains
+besides bug-finding, such as code rewriting tools, which was the motivation
+for a 
+<a href="https://discourse.llvm.org/t/rfc-scalable-static-analysis-framework/88678">recently posted RFC</a>. 
+The proposed framework in that RFC could
+potentially also work for the use-case described in this blog post, but it’s
+important to highlight that this prototype was built before that RFC and
+framework, consequently it’s not using that.</p>
+
+<p>Balázs shared that working on the prototype was really motivating at first,
+but as he started to hit the bugs in the ASTImporter - effectively blocking
+the prototype - development slowed down. All in all, the prototype proved
+that using project-level information, such as “overriders”, could enable
+better control-flow modeling, but CTU analysis as we have it in Clang today
+will show its weaknesses when trying to resolve those calls. Without
+resolving these virtual calls, we can’t track taint flows across file boundaries
+in the Clang Static Analyzer.</p>
+
+<h3 id="what-does-this-mean-for-firefox">What does this mean for Firefox?</h3>
+
+<p>Not much, unfortunately. If the ASTImporter would work as expected, then
+finalizing the prototype would meaningfully improve taint analysis on code
+using virtual functions.</p>
+
+<p>You can find the source code at Balázs’ GitHub repo as
+<a href="https://github.com/steakhal/llvm-project/tree/devirtualize-for-each-overrider">steakhal/llvm-project/devirtualize-for-each-overrider</a>,
+which served well for
+exploring and rapid prototyping but it is far from production quality.</p>
+
+<h3 id="bonus-we-need-to-talk-about-the-astimporter">Bonus: We need to talk about the ASTImporter</h3>
+<p>From the cases Balázs looked at, it seems like qualified names, such as
+<code class="language-plaintext highlighter-rouge">std</code> in <code class="language-plaintext highlighter-rouge">std::unique_ptr</code> for example, will trigger the import of a <code class="language-plaintext highlighter-rouge">std</code>
+<a href="https://clang.llvm.org/doxygen/classclang_1_1DeclContext.html">DeclContext</a>,
+which in turn triggers the import of all the declarations within
+that lexical declaration context. In other words, we start importing a lot
+more things than strictly necessary to make the <code class="language-plaintext highlighter-rouge">std::</code> qualification work.
+This in turn increases the chances of hitting something that causes a crash
+or just fails to import, poisoning the original AST we wanted to import into.
+This is likely not how it should work, and might be a good subject to discuss
+in the future.</p>
+
+<p>Note that the ASTImporter can be configured to do so-called “<a href="https://clang.llvm.org/docs/LibASTImporter.html#api">minimal
+imports</a>” which is
+probably what we should have for the Clang Static
+Analyzer, however, 
+<a href="https://github.com/llvm/llvm-project/blob/4a5692d6b3a6276ef6a8b6a62ef187a16dd3f983/clang/lib/CrossTU/CrossTranslationUnit.cpp#L799-L801">this is not set</a>,
+and setting it would lead to even more crashes. Balázs didn’t investigate this
+further, but it might be something to explore in the future.</p>]]></content><author><name>Balázs Benics, Tom Ritter, Frederik Braun</name></author><summary type="html"><![CDATA[Preface]]></summary></entry><entry><title type="html">Firefox Security &amp;amp; Privacy Newsletter 2025 Q3</title><link href="https://attackanddefense.dev/2025/10/28/firefox-security-privacy-newsletter-2025-q3.html" rel="alternate" type="text/html" title="Firefox Security &amp;amp; Privacy Newsletter 2025 Q3" /><published>2025-10-28T13:06:37+00:00</published><updated>2025-10-28T13:06:37+00:00</updated><id>https://attackanddefense.dev/2025/10/28/firefox-security-privacy-newsletter-2025-q3</id><content type="html" xml:base="https://attackanddefense.dev/2025/10/28/firefox-security-privacy-newsletter-2025-q3.html"><![CDATA[<p>Welcome to the Q3 2025 edition of the Firefox Security and Privacy newsletter!</p>
+
+<p>Security and Privacy on the web are the cornerstones of <a href="https://www.mozilla.org/en-US/about/manifesto/">Mozilla’s manifesto</a>, and they influence how we operate and build our products. Following are the highlights of our work from Q3 2025, grouped into the following categories:</p>
+
+<ul>
+  <li><strong>Firefox Product Security &amp; Privacy</strong>, showcasing new Security &amp; Privacy Features and Integrations in Firefox.</li>
+  <li><strong>Firefox for Enterprise</strong>, highlighting security &amp; privacy updates for administrative features, like Enterprise policies.</li>
+  <li><strong>Core Security</strong>, outlining Security and Hardening efforts within the Firefox Platform.</li>
+  <li><strong>Web Security and Standards</strong>, allowing websites to better protect themselves against online threats.</li>
+</ul>
+
+<h2 id="preface">Preface</h2>
+
+<p>Note: Some of the bugs linked below might not be accessible to the general public and restricted to specific work groups. <a href="https://firefox-source-docs.mozilla.org/bug-mgmt/processes/fixing-security-bugs.html#keeping-private-information-private">We de-restrict fixed security bugs after a grace-period</a>, until the majority of our user population have received Firefox updates. If a link does not work for you, please accept this as a precaution for the safety of all Firefox users.</p>
+
+<h2 id="firefox-product-security--privacy">Firefox Product Security &amp; Privacy</h2>
+
+<ul>
+  <li>As a follow-up to our <a href="https://attackanddefense.dev/2025/07/17/firefox-security-privacy-newsletter-2025-q2.html">last newsletter</a>, <strong>Firefox has won a “Speedrunner” Award</strong> by the TrendMicro Zero Day Initiative for being consistently fast to patch security vulnerabilities. This is the second consecutive year, in which Firefox is recognized for the speedy delivery of security updates.</li>
+  <li><strong>Protecting against Fingerprinting-based tracking:</strong> With Firefox 143, we’ve introduced new defenses against online fingerprinting. Our analysis of the most frequently exploited user data shows that it’s possible to significantly lower the success rate of fingerprinting attacks, without compromising a user’s browsing experience. Specifically, Firefox now standardizes how it reports device attributes such as CPU core count, screen size, and touch input capabilities. By unifying these values across our entire user base, we cut the share of Firefox users who appear unique to fingerprinting scripts from roughly 35% to just 20%.</li>
+  <li><strong>Strict Tracking Protection with web compatibility in mind:</strong> When users set Firefox’s tracking protection to strict, we already warn them that stricter blocking may result in missing content or broken websites. As of Firefox 142, we are providing a list of exceptions that may <a href="https://support.mozilla.org/en-US/kb/manage-enhanced-tracking-protection-exceptions">help unbreak popular websites</a> without compromising the protection. The list of exceptions is transparently shared on <a href="https://etp-exceptions.mozilla.org/">https://etp-exceptions.mozilla.org/</a>.</li>
+  <li><strong>DoH on Android</strong>: We have landed opt-in support for DoH Android in Firefox 143. Opt-in available in Firefox preferences UI, Firefox Android users can enable DoH with <a href="https://support.mozilla.org/en-US/kb/configure-dns-over-https-protection-levels-firefox-android#w_protection-levels-explained">Increased or Max Protection settings</a> to prevent network observers from tracking their browsing behaviour.</li>
+  <li><strong>Improved TLS Error Pages:</strong> We improved non-overridable TLS error pages to provide more context for end users. Starting in Fx140, Firefox contains more information on why a connection was blocked, highlighting that Firefox is not causing the problem but rather that the website has a security problem and Firefox is actually keeping the user safe.</li>
+  <li><strong>SafeBrowsing v5</strong>: Firefox Nightly now supports the <a href="https://developers.google.com/safe-browsing/reference">SafeBrowsing v5 protocol</a>, which protects against threats like phishing or malware sites, in preparation for the upcoming decommissioning of SafeBrowsing v4 server.</li>
+  <li><strong>Private Downloads in Private Browsing:</strong> When downloading a file in Private Browsing mode, Firefox 143 now <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1981504">asks</a> whether to keep or delete the files after that session ends. You can adjust this behavior in Settings, if desired.</li>
+  <li><strong>Improved Video sharing:</strong> As of Firefox 143, the browser permission dialog will now show a preview of the selected Video camera, making it much easier to see and decide what is being shared before providing camera permissions to a page.</li>
+</ul>
+
+<h2 id="firefox-for-enterprise">Firefox for Enterprise</h2>
+
+<ul>
+  <li><strong>Updated Enterprise Policy for Tracking Protection:</strong> The <a href="https://mozilla.github.io/policy-templates/#enabletrackingprotection">EnableTrackingProtection</a> policy has been updated to allow you to set the category to either <code class="language-plaintext highlighter-rouge">strict</code> or <code class="language-plaintext highlighter-rouge">standard</code>. When the category is set using this policy, the user cannot change it. The <a href="https://mozilla.github.io/policy-templates/#enabletrackingprotection">EnableTrackingProtection</a> policy has also been updated to allow you to set control Suspected fingerprinters. For more information, see <a href="https://support.mozilla.org/kb/firefox-protection-against-fingerprinting#w_suspected-fingerprinters">this SUMO page</a>.</li>
+  <li><strong>Improved Control over SVG, MathML, WebGL, CSP reporting and Fingerprinting Protection:</strong> The <a href="https://mozilla.github.io/policy-templates/#preferences">Preferences</a> policy has been updated to allow setting the preferences <code class="language-plaintext highlighter-rouge">mathml.disabled</code>, <code class="language-plaintext highlighter-rouge">svg.context-properties.content.enabled</code>, <code class="language-plaintext highlighter-rouge">svg.disabled</code>, <code class="language-plaintext highlighter-rouge">webgl.disabled</code>, <code class="language-plaintext highlighter-rouge">webgl.force-enabled</code>, <code class="language-plaintext highlighter-rouge">xpinstall.enabled</code>, and <code class="language-plaintext highlighter-rouge">security.csp.reporting.enabled</code> as well as prefs beginning with <code class="language-plaintext highlighter-rouge">privacy.baselineFingerprintingProtection</code> or <code class="language-plaintext highlighter-rouge">privacy.fingerprintingProtection.</code></li>
+</ul>
+
+<h2 id="core-security">Core Security</h2>
+
+<ul>
+  <li><strong>CRLite on Desktop and Mobile</strong>: CRLite is a faster, more reliable and privacy-protecting certificate revocation check mechanism, as compared to the traditional OCSP (Online Certificate Status Protocol). CRLite is available in Desktop versions since Firefox 142 and on Firefox for Android in Firefox 145. Read details on CRLite in the blogpost: <a href="https://hacks.mozilla.org/2025/08/crlite-fast-private-and-comprehensive-certificate-revocation-checking-in-firefox/">CRLite: Fast, private, and comprehensive certificate revocation checking in Firefox</a>.</li>
+  <li><strong>Supporting Certificate Compression in QUIC</strong>: Certificate compression reduces the size of certificate chains during a Transport Layer Security (TLS) handshake, which improves performance by lowering latency and bandwidth consumption. The three compression algorithms zlib, brotli, and zstd are available in QUIC starting with Firefox 143.</li>
+</ul>
+
+<h2 id="web-security--standards">Web Security &amp; Standards</h2>
+
+<ul>
+  <li><strong>Improved Cache removal:</strong> When a website uses the <code class="language-plaintext highlighter-rouge">"cache"</code> directive of the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Clear-Site-Data"><code class="language-plaintext highlighter-rouge">Clear-Site-Data</code></a> response header, Firefox 141 now also clears the backwards-forwards cache (<a href="https://developer.mozilla.org/en-US/docs/Glossary/bfcache">bfcache</a>). This allows a site to ensure that private session details can be removed, even if a user uses the browser back button. (<a href="https://bugzil.la/1930501">bug 1930501</a>).</li>
+  <li><strong>Easy URL Pattern Matching</strong>: The <a href="https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API">URL Pattern API</a> is fully supported as of Firefox 142, enabling you to match and parse URLs using a standardized pattern syntax. (<a href="https://bugzil.la/1731418">bug 1731418</a>).</li>
+</ul>
+
+<h2 id="going-forward">Going Forward</h2>
+
+<p>As a Firefox user, you will automatically benefit from all the mentioned security and privacy benefits with the enabled auto-updates in Firefox. If you aren’t a Firefox user yet, you can <a href="https://www.mozilla.org/firefox/new/?_gl=1*3c2zyd*_ga*MTkzMzM4MjE2NC4xNjc0NzM5NDMy*_ga_X4N05QV93S*MTc0NTg0NzU4Ny4xODIuMS4xNzQ1ODQ3NjM5LjAuMC4w">download Firefox</a> to experience a fast and safe browsing experience while supporting Mozilla’s mission of a healthy, safe and accessible web for everyone.</p>
+
+<p>Thanks to everyone who helps make Firefox and the open web more secure and privacy-respecting.</p>
+
+<p>See you next time with the Q4 2025 Report!<br />
+- Firefox Security and Privacy Teams.</p>]]></content><author><name>Frederik Braun, Christoph Kerschbaumer</name></author><summary type="html"><![CDATA[Welcome to the Q3 2025 edition of the Firefox Security and Privacy newsletter!]]></summary></entry><entry><title type="html">Firefox Security &amp;amp; Privacy newsletter 2025 Q2</title><link href="https://attackanddefense.dev/2025/07/17/firefox-security-privacy-newsletter-2025-q2.html" rel="alternate" type="text/html" title="Firefox Security &amp;amp; Privacy newsletter 2025 Q2" /><published>2025-07-17T09:00:00+00:00</published><updated>2025-07-17T09:00:00+00:00</updated><id>https://attackanddefense.dev/2025/07/17/firefox-security-privacy-newsletter-2025-q2</id><content type="html" xml:base="https://attackanddefense.dev/2025/07/17/firefox-security-privacy-newsletter-2025-q2.html"><![CDATA[<p>Welcome to the Q2 2025 edition of the Firefox Security and Privacy newsletter!</p>
+
+<p>Security and Privacy on the web are the cornerstones of <a href="https://www.mozilla.org/en-US/about/manifesto/">Mozilla’s manifesto</a>, and they influence how we operate and build our products. Following are the highlights of our work from Q2 2025, grouped into the following categories:</p>
+
+<ul>
+  <li><strong>Firefox Product Security &amp; Privacy</strong>, showcasing new Security &amp; Privacy Features and Integrations in Firefox.</li>
+  <li><strong>Core Security</strong>, outlining Security and Hardening efforts within the Firefox Platform.</li>
+  <li><strong>Community Engagement,</strong> news from our security and bug bounty community.</li>
+  <li><strong>Web Security and Standards</strong>, allowing websites to better protect themselves against online threats.</li>
+</ul>
+
+<h2 id="preface">Preface</h2>
+
+<p>Note: Some of the bugs linked below might not be accessible to the general public and restricted to specific work groups. <a href="https://firefox-source-docs.mozilla.org/bug-mgmt/processes/fixing-security-bugs.html#keeping-private-information-private">We de-restrict fixed security bugs after a grace-period</a>, until the majority of our user population have received Firefox updates. If a link does not work for you, please accept this as a precaution for the safety of all Firefox users.</p>
+
+<h2 id="firefox-product-security--privacy">Firefox Product Security &amp; Privacy</h2>
+
+<ul>
+  <li><strong>CHIPS support:</strong> Starting with Firefox 141, Firefox now supports <a href="https://developer.mozilla.org/en-US/docs/Web/Privacy/Guides/Privacy_sandbox/Partitioned_cookies">Cookies Having Independent Partitioned State (CHIPS)</a>, which introduces a new cookie attribute that allows website developers to access partitioned cookies. CHIPS provides the same privacy guarantees as Firefox’s built-in <a href="https://blog.mozilla.org/security/2021/02/23/total-cookie-protection/">Total Cookie Protection (TCP)</a> which we have been shipping by default since 2022.</li>
+  <li><strong>Expanding Total Cookie Protection for Known Trackers:</strong> Beginning with Firefox 141, Firefox has switched to Total Cookie Protection for known trackers. This update replaces the previous method of blocking third-party tracking cookies, offering improved web compatibility while maintaining the same level of cookie privacy.</li>
+  <li><strong>Improving Web compatibility in Firefox:</strong> We have improved the private browsing experience in Firefox based on a recent increase in user reports for <a href="https://support.mozilla.org/en-US/kb/report-breakage-due-blocking?redirectslug=report-breakage-due-blocking-redirect-1&amp;redirectlocale=en-US#w_how-can-i-access-the-report-broken-site-tool">broken websites</a> on <a href="http://webcompat.com">webcompat.com</a>. This improvement alone allowed our users to browse privately in more than 450 additional cases since the beginning of the year, representing a major share of all broken websites reports.</li>
+  <li><strong>Improving non-overrideable Error Pages</strong>: When establishing an HTTPS connection, a browser can encounter a variety of different TLS errors. Firefox used to display different certificate error pages based on the error type (e.g., permanent and temporary). We unified these error pages - starting with Firefox 140 we are now providing additional information, especially when an error is permanent and can not be skipped.</li>
+  <li><strong>Firefox Relay Integration:</strong> Firefox Relay⁩ allows to create new temporary email address that forwards all emails to your true inbox. This allows you to protect your actual identity from hackers and spammers. Firefox Relay is available for all versions after Firefox 135, and we rolled it out to all desktop users on June 16.</li>
+</ul>
+
+<h2 id="core-security">Core Security</h2>
+
+<ul>
+  <li><strong>Firefox Response to Pwn2Own</strong>: The <a href="https://www.zerodayinitiative.com/blog/2025/5/14/pwn2own-berlin-the-full-schedule">Pwn2Own</a> hacking competition targets popular software organized by the TrendMicro Zero Day Initiative (ZDI). This year, Firefox was targeted twice but no team managed to break out of the Firefox sandbox. We immediately responded to the two contained exploits with a new Firefox release that included both security fixes in just 11 hours since the second exploit demonstration. This beats Firefox’s previous record of <a href="https://blog.mozilla.org/security/2024/04/04/rapidly-leveling-up-firefox-security/">21 hours last year</a>. Read more details in this blogpost: <a href="https://blog.mozilla.org/security/2025/05/17/firefox-security-response-to-pwn2own-2025/">Firefox Security Response to pwn2own 2025</a>. You can also read the <a href="https://www.zerodayinitiative.com/blog/2025/7/14/cve-2025-4919-corruption-via-math-space-in-mozilla-firefox">technical analysis</a> of the bug and the exploit from the ZDI.</li>
+  <li><strong>Securing the open source ecosystem</strong>: Firefox developers found a bug upstream in libvpx, a video codec library, which we identified and resolved. As a widely shared library, this fix protects media playback in Firefox as well as many other browsers, and rich media applications (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1962421">Bug 1962421</a>, <a href="https://crbug.com/419467315">Chrome Bug 419467315</a>).</li>
+</ul>
+
+<h2 id="community-engagement">Community Engagement</h2>
+
+<ul>
+  <li><strong>Firefox Bug Bounty Hall of Fame</strong>: We just updated the <a href="https://www.mozilla.org/en-US/security/bug-bounty/hall-of-fame/">Hall of Fame</a>, which credits all of the skillful security researchers that strive to keep Firefox secure. If you also want to contribute to Firefox security, please look at our <a href="https://www.mozilla.org/en-US/security/bug-bounty/">Bug Bounty pages</a>.</li>
+  <li><strong>Call for Guest Blog posts:</strong> We are opening the opportunity for guest blog posts on <a href="https://attackanddefense.dev/about/#guest-blog-posts">attackanddefense.dev</a> for all bug bounty participants. If you are reading this and want to write a blog post about your findings, <a href="https://attackanddefense.dev/about/#guest-blog-posts">let us know</a>!</li>
+</ul>
+
+<h2 id="web-security--standards">Web Security &amp; Standards</h2>
+
+<ul>
+  <li><strong>Abridged Certificates in Firefox Nightly</strong>: <a href="https://datatracker.ietf.org/doc/draft-ietf-tls-cert-abridge/">Abridged Certs is an IETF draft</a> for a new compression scheme which enables a successful transition to Certificates using Post-Quantum Encryption Algorithms by enabling smaller and more performant Certificate Chains. The code is available since Firefox Nightly 141 and we are planning to do partner experiments in the upcoming months.</li>
+  <li><strong>Integrity Policy:</strong> Recent work on the <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity">Subresource Integrity (SRI)</a> standard introduced a new web security policy, called <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Integrity-Policy">Integrity-Policy</a>. This will allow websites to ensure that all of their scripts are protected with <code class="language-plaintext highlighter-rouge">integrity</code> data. Future work will expand this security mechanism to provide full web application integrity.</li>
+  <li><strong>HTTP <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Origin-Agent-Cluster"><code class="language-plaintext highlighter-rouge">Origin-Agent-Cluster</code></a></strong> <strong>header</strong>: Starting with Firefox 138, this new response header can be used by a site to hint that all documents from this origin are using the same operating system process. Besides these security isolation benefits, supporting this header makes it less likely that a resource-intensive document can degrade the performance on other origins (<a href="https://bugzil.la/1665474">Bug 1665474</a>).</li>
+  <li><strong>HTTP <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Clear-Site-Data#cache">Clear-Site-Data: cache</a> header:</strong> Starting with Firefox 141, websites can use the cache directive header to clear caches for the requested origin. This header allows websites to properly clear local data when users sign out of a website. (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1838506">Bug 1838506</a>)</li>
+  <li><strong>WebRTC Security:</strong> The <a href="https://developer.mozilla.org/en-US/docs/Web/API/RTCCertificate/getFingerprints"><code class="language-plaintext highlighter-rouge">getFingerprints()</code></a> method of the <a href="https://developer.mozilla.org/en-US/docs/Web/API/RTCCertificate"><code class="language-plaintext highlighter-rouge">RTCCertificate</code></a> interface is now available in Firefox 138. An application can use this API to get fingerprints for a certificate, which might be shared out-of-band in order to identify a particular user or browser across WebRTC sessions (<a href="https://bugzil.la/1525241">Bug 1525241</a>).</li>
+  <li><strong>Cookie Store API:</strong> The <a href="https://developer.mozilla.org/en-US/docs/Web/API/Cookie_Store_API">Cookie Store API</a> is now supported in Firefox 140 (<a href="https://bugzil.la/1958875">Bug 1958875</a>). This API provides a modern, <a href="https://developer.mozilla.org/en-US/docs/Glossary/Asynchronous">asynchronous</a> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise"><code class="language-plaintext highlighter-rouge">Promise</code></a>-based method of managing cookies, which can be used in both the main thread as well as in <a href="https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API">service workers</a>. Using the CookieStore API is less error-prone than relying on the old <code class="language-plaintext highlighter-rouge">document.cookie</code> property.</li>
+</ul>
+
+<h2 id="going-forward">Going Forward</h2>
+
+<p>As a Firefox user, you will automatically benefit from all the mentioned security and privacy benefits with the enabled auto-updates in Firefox. If you aren’t a Firefox user yet, you can <a href="https://www.mozilla.org/firefox/new/?_gl=1*3c2zyd*_ga*MTkzMzM4MjE2NC4xNjc0NzM5NDMy*_ga_X4N05QV93S*MTc0NTg0NzU4Ny4xODIuMS4xNzQ1ODQ3NjM5LjAuMC4w">download Firefox</a> to experience a fast and safe browsing experience while supporting Mozilla’s mission of a healthy, safe and accessible web for everyone.</p>
+
+<p>Thanks to everyone who helps make Firefox and the open web more secure and privacy-respecting.</p>
+
+<p>See you next time with the Q3 2025 Report!<br />
+- Firefox Security and Privacy Teams.</p>]]></content><author><name>Frederik Braun, Christoph Kerschbaumer</name></author><summary type="html"><![CDATA[Welcome to the Q2 2025 edition of the Firefox Security and Privacy newsletter!]]></summary></entry><entry><title type="html">Firefox Security Privacy Newsletter 2025 Q1</title><link href="https://attackanddefense.dev/2025/05/20/firefox-security-privacy-newsletter-2025-q1.html" rel="alternate" type="text/html" title="Firefox Security Privacy Newsletter 2025 Q1" /><published>2025-05-20T00:00:00+00:00</published><updated>2025-05-20T00:00:00+00:00</updated><id>https://attackanddefense.dev/2025/05/20/firefox-security-privacy-newsletter-2025-q1</id><content type="html" xml:base="https://attackanddefense.dev/2025/05/20/firefox-security-privacy-newsletter-2025-q1.html"><![CDATA[<h1 id="firefox-security-and-privacy-newsletter-2025-q1">Firefox Security and Privacy Newsletter 2025 Q1</h1>
+
+<p>Security and privacy on the web are cornerstones of <a href="https://www.mozilla.org/en-US/about/manifesto/">Mozilla’s manifesto</a>, and they influence how we operate and build our products. Following are the highlights of our work from Q1 2025, grouped into the following categories:</p>
+
+<ul>
+  <li><strong>Firefox Product Security &amp; Privacy</strong>, showcasing new Security &amp; Privacy Features and Integrations in Firefox.</li>
+  <li><strong>Core Security</strong>, outlining Security and Hardening efforts within the Firefox Platform.</li>
+  <li><strong>Web Security</strong>, allowing websites to better protect themselves against online threats.</li>
+</ul>
+
+<h2 id="preface">Preface</h2>
+
+<p>Note: Some of the bugs linked below might not be accessible to the general public and are still restricted to specific work groups. <a href="https://firefox-source-docs.mozilla.org/bug-mgmt/processes/fixing-security-bugs.html#keeping-private-information-private">We de-restrict fixed security bugs after a grace-period</a>, until the majority of our user population have received their updates. If a link does not work for you, please accept this as a precaution for the safety of all of our users.</p>
+
+<h2 id="firefox-product-security--privacy">Firefox Product Security &amp; Privacy</h2>
+
+<p><strong>HTTPS by Default</strong>: After shipping mixed content upgrades last year (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1779757">Bug 1779757</a>), starting with Firefox  136, we now upgrade all navigations to HTTPS (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1921221">Bug 1921221</a>) and provides a fallback to HTTP if a secure and encrypted connection cannot be established. Our telemetry suggests that <strong>HTTPS requests for Firefox users have increased by at least 1.5%</strong>. See <a href="https://attackanddefense.dev/2025/03/31/https-first-in-firefox-136.html">The Evolution of HTTPS Adoption in Firefox</a> for more details. In the same vein, our research paper <a href="https://research.mozilla.org/files/2025/03/the_state_of_https_adoption_on_the_web.pdf">The State of Adoption on the Web</a> (presented at <a href="https://madweb.work/">MADWeb 2025</a>) captures HTTPS adoption around the world as well as the effectiveness of the different upgrading mechanisms.</p>
+
+<p><strong>Introducing CRLite</strong>: CRLite, a faster, more reliable and privacy-preserving certificate revocation check mechanism as compared to the traditional OCSP (Online Certificate Status Protocol), has been rolled out to release (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1429800">Bug 1429800</a>) in Firefox 135. A <a href="https://www.youtube.com/watch?v=gnB76DQI1GE&amp;t=19517s">corresponding talk on CRLite</a> was presented at <a href="https://rwc.iacr.org/2025/">Real World Crypto 2025</a>. Also, <a href="https://research.mozilla.org/files/2025/04/clubcards_for_the_webpki.pdf">a research paper about CRLite</a> was accepted at <a href="https://sp2025.ieee-security.org/">IEEE Symposium on Security and Privacy</a>.</p>
+
+<p><strong>Certificate Transparency:</strong> Firefox is shipping Certificate Transparency (CT) in Firefox 136 (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1927085">Bug 1927085</a>). CT enforces that Firefox will only accept certificates that have been publicly logged, and can be checked for malice or mistake. This change brings Firefox into alignment with other browsers and we are now listed under “User agents using CT” on <a href="https://certificate.transparency.dev/useragents/">https://certificate.transparency.dev/useragents/</a>. CT and CRLite have propelled Firefox to the forefront of TLS security amongst browsers.</p>
+
+<p><strong>TLS Client Auth</strong>: Firefox on Android now supports TLS Client Auth (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1813930">Bug 1813930</a>) starting with Firefox 138. TLS Client Certificates are typically used in enterprise and governmental contexts to authenticate users and offer many desirable security and phishing-resistant properties.</p>
+
+<p><strong>Root Store Policy updates:</strong> Mozilla maintains a policy for inclusions and considerations to the root store as it applies to Certificate authorities operations and the certificates they issue. The new and updated version of the <a href="https://blog.mozilla.org/security/2025/03/12/enhancing-ca-practices-key-updates-in-mozilla-root-store-policy-v3-0/">Mozilla Root Store Policy (MRSP) v3.0</a> went into effect on March 15, 2025.</p>
+
+<p><strong>Safebrowsing updates</strong>: Starting with Firefox 138, Safebrowsing now classifies only top-level loads (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1953088">Bug 1953088</a>) and no longer blocks subresource loads, like external JS scripts, or also images, which reduces the risk of web-compat issues caused by unsupported subresource blocking.</p>
+
+<p><strong>Unbreaking websites from Anti-Tracking mechanisms</strong>: We have worked with <a href="http://disconnect.me">disconnect.me</a> to unblock certain consent management providers (CMP) in private browsing mode and ETP-Strict (see non-exhaustive <a href="https://bugzilla.mozilla.org/buglist.cgi?bug_id=1909809%2C1906427%2C1909418%2C1942290%2C1951065%2C1924998%2C1936252%2C1934494&amp;list_id=17532862">bug list</a>). CMPs - often seen as “Cookie Banners” - are responsible for almost half of all site breakage when they are blocked by our anti tracking protection. This work allowed many websites to work as expected again in private browsing mode.</p>
+
+<p><strong>Smartblock Embeds gives users control over blocked content</strong>: Starting with Firefox 136, SmartBlock Embeds support empowers ETP-Strict and PBM users to consciously opt into highly visible content, and prevents the perception that the page is ‘broken’ - even though our protections are working as intended. Smartblock works for embedded content from Instagram (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1892173">Bug 1892173</a>), TikTok (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1892172">Bug 1892172</a>) and Twitter/X (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1901602">Bug 1901602</a>), which are blocked by default in Private windows or ETP-Strict mode. Embedded blocked content from these domains will show a 1-button click option for users to un-block all content from that domain on that specific website.</p>
+
+<p><strong>Away from DNT and towards GPC</strong>: In Q1, Firefox became the first major browser to remove the “Do Not Track” checkbox from the privacy preferences/settings, recognising that Global Privacy Control (GPC) is a better option for 2025. See <a href="https://support.mozilla.org/en-US/kb/how-do-i-turn-do-not-track-feature">SUMO article</a> for details.</p>
+
+<h2 id="core-security">Core Security</h2>
+
+<p><strong>Hardening Firefox:</strong> Starting in Firefox 135, Firefox UI uses a strict Content-Security-Policy (CSP) in <a href="https://searchfox.org/mozilla-central/source/browser/base/content/browser.xhtml">browser.xhtml</a> to prevent XSS-like sandbox escapes (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1935985">Bug 1935985</a>). This involved modifying over 600 inline event handlers and a careful rollout with notice to people who run modified Firefox configurations. A detailed description of these security hardening efforts are available in our blogpost: <a href="https://attackanddefense.dev/2025/04/09/hardening-the-firefox-frontend-with-content-security-policies.html">Hardening the Firefox Frontend with Content Security Policies</a>.</p>
+
+<p><strong>Sandboxing:</strong> The Windows sandbox for Content Processes has been <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1403931">moved to USER_RESTRICTED</a> and rolled out in Firefox 134 and is enabled by default in Firefox 135. This change removes read access from most of the filesystem and registry for the content process. Before, read access was generally allowed outside of the User’s home directory, which has been blocked since Firefox 56. In Firefox 138, by <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1952926">further differentiating the Gecko Media Plugin process sandbox policy</a>, we were also able to enable win32k lockdown and Arbitrary Code Guard (blocking dynamic code) for the openh264 GMP process.</p>
+
+<p><strong>CSS Fuzzing:</strong> We are also attributing a major piece of our platform goals to <a href="https://wpt.fyi/interop-2025">Interop 2025</a>: Enhancements in CSS syntax generation have shown immediate results and will continue to support the work throughout the year.</p>
+
+<p><strong>XSLT Fuzzing:</strong> Early in Q1, we have incorporated an experimental XSLT fuzzer by Ivan Fratric of Google Project Zero into our infrastructure, where it is now running continuously. Thank you, Ivan!</p>
+
+<p><strong>NSS Fuzzing:</strong> Our fuzzing focus on NSS (Network Security Services) has also shown a significant uptick in NSS fuzzing coverage across both oss-fuzz as well as our internal tools. We also added a TSan target for NSS, ensuring stricter thread-safety going forward.</p>
+
+<p><strong>Site-scout</strong>: Site-scout is a tool that visits web pages with instrumented builds (like Address Sanitizer). We are continuing to enhance site-scout, such that it interacts with websites and ideally teases out more bugs.</p>
+
+<h2 id="community-engagement">Community Engagement</h2>
+
+<p><strong>Bug Bounty:</strong> The <a href="https://www.mozilla.org/en-US/security/client-bug-bounty/">Firefox client bug bounty program</a> rewards contributors for finding security bugs in Firefox. Our award categories ranges from $500 to $20,000 depending on bug severity and report quality. With 31 awarded bounties this quarter, it is one of our main sources of security bug reports. The majority of the reported bugs are <em>low</em> or <em>moderate</em> severity UI spoofs. We are changing the reward structure for these kinds of bugs going forward - please find details on our <a href="https://www.mozilla.org/en-US/security/client-bug-bounty/">Firefox bug bounty pages</a><strong>.</strong> We are also opening the opportunity for <strong>guest blog posts</strong> on attackanddefense.dev. <a href="https://attackanddefense.dev/about/#guest-blog-posts">Please reach out if you want to write about a previous finding of yours!</a></p>
+
+<p><strong>Mozilla Research Summit:</strong> The <a href="https://surf.mozilla.org/events/2025/sandiego/">Mozilla Research Summit</a> took place on March 1, 2025 in San Diego California. We had 56 participants from 3 continents and 25+ different research institutions. The day included some high-caliber talks from Mozillians as well as security and privacy academics and sparked new research collaborations between Mozilla and the academic community.</p>
+
+<p><strong>Co-organized Open-Source Crypto Summit</strong>: We co-organized the <a href="https://opensourcecryptowork.shop/">Open Source Cryptography Workshop (OSCW)</a> which brings together practitioners interested in all sorts of open source crypto projects ranging from production and maintenance challenges to best practices for designing clean-sheet crypto systems with modern primitives.</p>
+
+<h2 id="web-security--standards">Web Security &amp; Standards</h2>
+
+<p><strong>Fingerprinting:</strong> We have taken on co-authorship of the <a href="https://w3c.github.io/fingerprinting-guidance/">W3C’s guidance on Fingerprinting</a>, to ensure that it matches our understanding of the evolving threats and the meaningful defenses we envision.  We have merged some changes already with more under discussion.</p>
+
+<p><strong>Messaging Layer Security</strong>: Firefox is now the first browser to have a prototype implementation of MLS (Messaging Layer Security) (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1876002">Bug 1876002</a>). MLS enables end-to-end security for a wide range of use cases such as secure group messaging. MLS is available in Firefox 136 as an <a href="https://wiki.mozilla.org/Origin_Trials">origin trial</a> (set the preference dom.origin-trials.mls.state to 1) which exposes an experimental Web API that will be used by our partners.</p>
+
+<p><strong>Sanitizer API:</strong> We have <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1956310">updated our implementation of the Sanitizer API</a>, which allows mitigating the risk of DOM-based cross-site scripting (XSS) attacks. This update aligns our implementation of the sanitizer API with recent developments and prepares it for a pre-release.</p>
+
+<p><strong>Integrity:</strong> We presented our plans for improved Web App Integrity at the W3C WebAppSec working group (<a href="https://github.com/beurdouche/explainers/blob/main/waict-explainer.md">explainer</a>) and started to work on <a href="https://github.com/w3c/webappsec-subresource-integrity/pull/133">a first milestone towards script-integrity enforcements</a> as part of the Subresource Integrity specification with Yoav Weis from Shopify. We also <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1945540">implemented integrity for import maps.</a></p>
+
+<h2 id="going-forward">Going Forward</h2>
+
+<p>As a Firefox user, you will automatically benefit from all the mentioned security and privacy benefits with the enabled auto-updates in Firefox. If you are not a Firefox user yet, you can simply <a href="https://www.mozilla.org/firefox/new/?_gl=1*3c2zyd*_ga*MTkzMzM4MjE2NC4xNjc0NzM5NDMy*_ga_X4N05QV93S*MTc0NTg0NzU4Ny4xODIuMS4xNzQ1ODQ3NjM5LjAuMC4w">download Firefox</a> and start benefiting from all the ways that Firefox works to protect you when browsing the internet.</p>
+
+<p>Thanks to everyone who helps make Firefox and the open web more secure and privacy-respecting.</p>
+
+<p>See you next time with the Q2 2025 Report!<br />
+- Firefox Security and Privacy Teams</p>]]></content><author><name></name></author><summary type="html"><![CDATA[Firefox Security and Privacy Newsletter 2025 Q1]]></summary></entry><entry><title type="html">Hardening the Firefox Frontend with Content Security Policies</title><link href="https://attackanddefense.dev/2025/04/09/hardening-the-firefox-frontend-with-content-security-policies.html" rel="alternate" type="text/html" title="Hardening the Firefox Frontend with Content Security Policies" /><published>2025-04-09T09:00:00+00:00</published><updated>2025-04-09T09:00:00+00:00</updated><id>https://attackanddefense.dev/2025/04/09/hardening-the-firefox-frontend-with-content-security-policies</id><content type="html" xml:base="https://attackanddefense.dev/2025/04/09/hardening-the-firefox-frontend-with-content-security-policies.html"><![CDATA[<p>Most of the Firefox User Interface (UI), including the address bar and the tab strip, are implemented using standard web technologies like HTML, CSS and JavaScript plus some additional custom components like <a href="https://firefox-source-docs.mozilla.org/browser/components/storybook/docs/README.xul-and-html.stories.html">XUL</a>. One of the advantages of using web technologies for the front end is that it allows rendering the frontend using the browser engine on all desktop operating systems. However, just like many web applications are susceptible to some form of injection attack (<a href="https://owasp.org/www-project-top-ten/">OWASP Top Ten</a>), Firefox’s use of web technologies for the frontend makes it no exception and hence it is vulnerable to injection attacks as well.</p>
+
+<p>The most well known type of injection attack are Cross-Site Scripting (XSS) attacks. Like the name suggests, these attacks violate the boundary between different sites and circumvent first line security defenses like the <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy">same-origin policy</a>. As with the existence of boundaries between different sites, the Firefox UI, which runs in the parent process, is separated from web content running in <a href="https://hacks.mozilla.org/2021/05/introducing-firefox-new-site-isolation-security-architecture/">lower-privileged content processes</a>. The sandboxed web content should not be able to inject content, especially code, into the parent process. Of course there needs to be some way for both parent and child processes to communicate with each other - otherwise it would, for example, be impossible to update a tab’s title in the UI after a web page sets its own document title. The way Firefox accomplishes this interaction is through a system called IPC - <a href="https://attackanddefense.dev/bug-bounty/firefox-internals/hack-and-tell/2021/04/27/examining-javascript-inter-process-communication-in-firefox.html">inter-process communication</a>.</p>
+
+<p>In Pwn2Own (a computer hacking contest) 2022 a participant managed to find a chain of exploits that allowed them to escape the web content sandbox (cf. <a href="https://www.zerodayinitiative.com/blog/2022/8/23/but-you-told-me-you-were-safe-attacking-the-mozilla-firefox-renderer-part-2">write-up by a ZDI employee</a>, a <a href="https://attackanddefense.dev/bug-bounty/firefox-internals/hack-and-tell/2021/04/27/examining-javascript-inter-process-communication-in-firefox.html">generalized introduction</a> or <a href="https://www.youtube.com/watch?v=StQ_6juJlZY&amp;t=0s">video by LifeOverflow</a>). A part of this exploit chain involved creating a JavaScript inline event handler (using setAttribute) in the Firefox UI, and then triggering the execution of that event handler. For websites, the well known approach of mitigating XSS attacks using inline event handlers usually involves using a <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP">Content-Security-Policy</a> (CSP). CSP allows for restricting what scripts are allowed to execute on a given page. Typically by only allowing scripts from specific URLs, or with specific hashes. In particular, unless <code class="language-plaintext highlighter-rouge">‘unsafe-inline’</code> is specified, all attempts to define inline event handlers are blocked by the browser. And because the Firefox UI uses HTML with some special sauce, we can actually also use CSPs in the same way to harden the Firefox frontend code.</p>
+
+<h2 id="progress">Progress</h2>
+
+<p>The main Firefox UI, which contains the tabs, address bar, menu bar etc. is actually just one big XHTML document called <a href="https://searchfox.org/mozilla-central/source/browser/base/content/browser.xhtml">browser.xhtml</a>. Recently we have removed in total over 600 inline event handlers across <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1890547">50 bugs</a> from this XHTML document. At this point we want to acknowledge the support of the Firefox frontend team, without their co-operation we wouldn’t have been able to land so many changes in such a short amount of time.</p>
+
+<p><img src="/images/2025/inline-event-handlers-in-browser-xhtml-progress.png" alt="Graph showing the number of inline event handlers in brower.xhtml" /></p>
+
+<p>Figure 1: Graph showing the number of inline event handlers in browser.xhtml over time in Firefox Nightly. The numbers were estimated using grep.</p>
+
+<h3 id="interlude-how-to-replace-inline-event-handlers">Interlude: How to replace inline event handlers</h3>
+
+<p>In case you are a Firefox developer, the maintainer of a Firefox fork like the Tor Browser, or just a web developer interested in securing your own website, the following might be relevant to you. The process of removing inline event handlers usually involves finding all the places that define an inline event handler like <code class="language-plaintext highlighter-rouge">&lt;button onclick="buttonClicked()"&gt;</code> and then replacing this with a call to <code class="language-plaintext highlighter-rouge">addEventListener</code> from a new JS file. Roughly like this:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">button</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">"</span><span class="s2">button</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">button</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="nx">buttonClicked</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>However there are some important differences to keep in mind between JS code running as inline event handlers and normal event handlers. Firstly, it’s possible to <code class="language-plaintext highlighter-rouge">return false;</code> from the inline event handler, which is equivalent to calling <code class="language-plaintext highlighter-rouge">event.preventDefault()</code>. Also note that <code class="language-plaintext highlighter-rouge">this</code>, which is <code class="language-plaintext highlighter-rouge">event.currentTarget</code> for inline event handlers, would change if you replaced it with an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions">arrow function</a> as the event listener.</p>
+
+<h2 id="outlook">Outlook</h2>
+
+<p>While browser.xhtml contains most parts of the main Firefox UI, some windows and sidebars are based on their own (X)HTML files. Due to the fact that browser.xhtml provides the largest attack vector of our frontend code we focused our initial efforts on securing and hardening browser.xhtml which already drastically improves the status quo to prevent inline script execution. For other windows, such as the “About Firefox” dialog, we go even further by adding CSPs that are much more restrictive and go beyond just blocking scripts. If you are familiar with CSP, by default we set a baseline CSP like <code class="language-plaintext highlighter-rouge">default-src chrome: resource:;</code>, which basically means we only allow loading resources from files that are shipped with Firefox.
+Historically we have already added CSPs to <code class="language-plaintext highlighter-rouge">about:</code> pages such as <code class="language-plaintext highlighter-rouge">about:preferences</code> that are displayed like normal websites (cf. <a href="https://blog.mozilla.org/attack-and-defense/2020/07/07/hardening-firefox-against-injection-attacks-the-technical-details/">Hardening Firefox against Injection Attacks</a>). Our end goal is to block all dynamic code execution in Firefox (like <code class="language-plaintext highlighter-rouge">eval</code>) entirely, to provide the best and most secure Firefox version possible that is resilient to any kind of XSS attacks.</p>
+
+<h2 id="summary">Summary</h2>
+
+<p>We have rewritten over 600 JavaScript event handlers to mitigate XSS and other injection attacks in the main Firefox user interface. This mitigation will ship in Firefox 138. However, blocking the execution of scripts in the parent process is not the end - we will expand this technique to other contexts in the near future. There is still more work to do as the UI requires JavaScript APIs with a high level of privileges. <strong>However: We still eliminated a whole class of attacks</strong>, significantly raising the bar for attackers to exploit Firefox. In fact, we hopefully just broke someone’s exploit chain.</p>]]></content><author><name>Tom Schuster, Frederik Braun, Christoph Kerschbaumer</name></author><summary type="html"><![CDATA[Most of the Firefox User Interface (UI), including the address bar and the tab strip, are implemented using standard web technologies like HTML, CSS and JavaScript plus some additional custom components like XUL. One of the advantages of using web technologies for the front end is that it allows rendering the frontend using the browser engine on all desktop operating systems. However, just like many web applications are susceptible to some form of injection attack (OWASP Top Ten), Firefox’s use of web technologies for the frontend makes it no exception and hence it is vulnerable to injection attacks as well.]]></summary></entry><entry><title type="html">The Evolution of HTTPS Adoption in Firefox</title><link href="https://attackanddefense.dev/2025/03/31/https-first-in-firefox-136.html" rel="alternate" type="text/html" title="The Evolution of HTTPS Adoption in Firefox" /><published>2025-03-31T16:37:37+00:00</published><updated>2025-03-31T16:37:37+00:00</updated><id>https://attackanddefense.dev/2025/03/31/https-first-in-firefox-136</id><content type="html" xml:base="https://attackanddefense.dev/2025/03/31/https-first-in-firefox-136.html"><![CDATA[<p>We at Mozilla believe that people deserve privacy and one of the most important pieces of web privacy is provided through <a href="https://www.mozilla.org/en-US/about/webvision/full/#ubiquitousencryption">ubiquitous encryption</a>. Because of this, we shipped HTTPS-First by default as of Firefox 136 (March 4th). The mechanism <a href="https://support.mozilla.org/en-US/kb/https-first">upgrades all page loads to HTTPS</a> and also includes an automated fallback to HTTP if the page does not support HTTPS or does not load fast enough. While this opportunistic upgrading mechanism does not protect against active network attackers, it still favours HTTPS and prevents known <a href="https://datatracker.ietf.org/doc/rfc7258/">pervasive internet monitoring attacks</a>.</p>
+
+<p>The HTTPS-First feature was developed over the course of many years, starting with an opt-in feature called <a href="https://blog.mozilla.org/security/2020/11/17/firefox-83-introduces-https-only-mode/">HTTPS-Only mode in 2020</a>: A drastic security feature that disallows all kinds of HTTP connections and asks the user for explicit consent to allow an insecure connection before proceeding. HTTPS-Only mode will live on as a strict protection and has proven a <a href="https://github.com/EFForg/https-everywhere/discussions/20213">useful replacement to extensions like HTTPS Everywhere</a>. Albeit its usefulness, we have learned that HTTPS-Only mode is an expert user mode that is mainly used by security conscious users and as such has a rather low adoption rate. Less than 1% of Firefox users enable it. We presumed that these numbers are due to two factors: First of all, HTTPS-Only mode is opt in. Only people who already know what security protections this feature offers or people who actually go through our long settings pages will discover and enable the feature. Secondly, whenever you face pages that do not use HTTPS, you get a rather scary warning that the site is unprotected. In essence, there is too little uptake to consider HTTPS-Only a meaningful protection for all of our users.</p>
+
+<p>All of the aforementioned reasons encouraged us to start developing HTTPS-First as a mechanism with opportunistic HTTPS upgrades as well as an automated fallback mechanism instead of the warning. We enabled HTTPS-First by <a href="https://blog.mozilla.org/security/2021/08/10/firefox-91-introduces-https-by-default-in-private-browsing/">default for users in Private Browsing Mode</a> in 2021, which provided a really useful experimentation ground and allowed us to protect more users right away. Following this, we started to fine-tune the upgrade heuristics and optimized our changes to align with existing websites and other browsers, which also lead to us shipping <a href="https://blog.mozilla.org/security/2024/06/05/firefox-will-upgrade-more-mixed-content-in-version-127/">mixed content upgrades in June 2024</a>. The following milestone shipped HTTPS-First for all pages loaded through the address bar.<br />
+In the meantime, we learned of misbehaving websites, incompatibilities, and corner cases which resulted in endless upgrade downgrade loops. Over the years, the code underwent dozens of algorithmic improvements, various new heuristics to unbreak many websites and also various changes to our test suites.<br />
+During this time, we also sought to understand HTTPS adoption across our user base and along the various mechanisms that web pages and browsers may apply to improve or simplify the migration from HTTP to HTTPS. Surveying user behavior and web security at scale led to our paper “<a href="https://research.mozilla.org/files/2025/03/the_state_of_https_adoption_on_the_web.pdf">The State of https Adoption on the Web</a>”, which was accepted at <a href="https://madweb.work/">Measurements, Attacks, and Defenses for the Web (MADWeb) 2025</a>.</p>
+
+<p><img src="/images/2025/https-upgrade-mechanisms-before.png" alt="Chart for HTTPS Upgrade mechanisms - Firefox 134" /></p>
+
+<p>Figure 1: Comparison for top-level (document) loads, relying on https, http, local http and the effectiveness of the various upgrading mechanisms for Firefox 134 (as appeared in our whitepaper)</p>
+
+<p>As part of the study, we looked at the different mechanisms in Firefox that may lead to an upgrade of a navigation targeting an HTTP web page towards HTTPS. As we originally found in our study, more than 90% of links and redirects already target HTTPS from the start. Of the remaining loads, Firefox was already upgrading 1.7% using various mechanisms. The remaining 7.9% were therefore left aside as non-upgradable: We looked more deeply into those 7.9% and found that 5.5% of those are web pages on the local network, which likely do not support HTTPS because they cannot easily acquire valid certificates. And only the remaining 2.4% of loads actually happened on an insecure HTTP connection.<br />
+The 1.7% of upgradable content was mostly upgraded by <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Strict-Transport-Security">HTTP Strict Transport Security (HSTS)</a>, followed by HTTPS-First (limited to loads from the address bar, at the time) and Web Extensions.<br />
+With all of these improvements, insights and the early feedback from our beta users, we made the switch and had HTTPS-First ship into release for all page loads with Firefox 136 in March 2025.</p>
+
+<p><img src="/images/2025/https-upgrade-mechanisms-after.png" alt="Chart for HTTPS Upgrade mechanisms - Firefox 136" />
+Figure 2: The same comparison as above, but for the first three weeks of Firefox 136 with HTTPS-First enabled for all users.</p>
+
+<p>We can see that <strong>HTTPS-First is now upgrading 57% of all upgradable content,</strong> surpassing all other known techniques. The chart also shows that HTTPS-First as it is currently implemented is still not the only mechanism to perform upgrades. This is intentional, as we prioritize upgrade mechanisms in the order specified in the <a href="https://fetch.spec.whatwg.org/#main-fetch">Fetch standard</a>. Some pages may still not be upgraded at all, because our heuristics only upgrade websites that immediately return a successful HTTPS connection. Typical examples are websites redirecting to a canonical domain (e.g., redirecting between www and non-www domains) or using the HTTP protocol scheme rather than HTTPS.</p>
+
+<p><img src="/images/2025/https-evolution.png" alt="Evolution of HTTPS over time" /></p>
+
+<p>Figure 3: The ratio of page loads happening via HTTPS compared to HTTP, aggregated over recent major Firefox versions.</p>
+
+<p>Although we are still looking at early data, we can already see that HTTPS-First is a successful and user-friendly upgrading mechanism which allows securing the web for all mainstream Firefox release users. This solves the aforementioned issues we saw with HTTPS-Only Mode: The HTTPS-First feature is enabled for all users and does not trigger any new error pages. While we want to acknowledge that there are seasonal effects on web traffic at this scale, our telemetry suggests that <strong>HTTPS requests for Firefox users have increased by at least 1.5%</strong> with the release of HTTPS-First in Version 136.</p>
+
+<p>While we drastically improved the state of https adoption on the web we are still not quite done on our path to ubiquitous encryption. On the road ahead we have to find better answers to questions about seasonal and regional effects (as highlighted in our <a href="https://research.mozilla.org/files/2025/03/the_state_of_https_adoption_on_the_web.pdf">paper</a>). In addition, we also want to tune the aforementioned heuristics such that we can upgrade even more connections. At the same time, we can proudly say that HTTPS in Firefox is at an historic high and will trend upwards as we polish and optimize our latest improvements, without sacrificing user experience, performance or compatibility with the web at large.<br />
+And for those of you who want to be informed when visiting a page over an insecure HTTP connection or also those of you who do not shy away from error pages for unencrypted connections, we still recommend <a href="https://support.mozilla.org/en-US/kb/https-only-prefs">using HTTPS-Only mode.</a></p>]]></content><author><name>Frederik Braun, Simon Friedberger, Malte Jürgens, Christoph Kerschbaumer</name></author><summary type="html"><![CDATA[We at Mozilla believe that people deserve privacy and one of the most important pieces of web privacy is provided through ubiquitous encryption. Because of this, we shipped HTTPS-First by default as of Firefox 136 (March 4th). The mechanism upgrades all page loads to HTTPS and also includes an automated fallback to HTTP if the page does not support HTTPS or does not load fast enough. While this opportunistic upgrading mechanism does not protect against active network attackers, it still favours HTTPS and prevents known pervasive internet monitoring attacks.]]></summary></entry><entry><title type="html">IPC Fuzzing with Snapshots</title><link href="https://attackanddefense.dev/firefox-internals/security-internals/2024/06/24/ipc-fuzzing-with-snapshots.html" rel="alternate" type="text/html" title="IPC Fuzzing with Snapshots" /><published>2024-06-24T00:00:00+00:00</published><updated>2024-06-24T00:00:00+00:00</updated><id>https://attackanddefense.dev/firefox-internals/security-internals/2024/06/24/ipc-fuzzing-with-snapshots</id><content type="html" xml:base="https://attackanddefense.dev/firefox-internals/security-internals/2024/06/24/ipc-fuzzing-with-snapshots.html"><![CDATA[<p>Process separation remains one of the most important parts of the Firefox security model and securing our IPC (Inter-Process Communication) interfaces is crucial to keep privileges in the different processes separated. Today, we will take a more detailed look at our newest tool for finding vulnerabilities in these interfaces - snapshot fuzzing.</p>
+
+<h2 id="snapshot-fuzzing">Snapshot Fuzzing</h2>
+
+<p>One of the challenges  when fuzzing the IPC Layer is that isolating the interfaces that are to be tested isn’t easily doable. Instead, one needs to run an entire Firefox instance to effectively fuzz these interfaces. However, having to run a Firefox instance for fuzzing comes with another set of downsides: First, we cannot easily reset the system back into a known-good state other than restarting the entire browser. This causes issues with reproducibility and breaks determinism required by coverage-guided fuzzing. And second, many errors in the parent process are still handled by crashing, again forcing a full and time consuming restart of the browser. Both cases are essentially a performance problem - restarting the browser is simply too slow to allow for efficient and productive  fuzzing. This is where snapshot fuzzing comes into play - it allows us to take a snapshot at the point where we are “ready” to perform fuzzing and reset to that snapshot point after each fuzzing iteration at practically no cost. This snapshot technique even works when we find a bug in the parent process which would normally force us to restart the browser.</p>
+
+<h2 id="technical-implementation">Technical Implementation</h2>
+
+<p>As Firefox consists of multiple processes that need to be kept in sync, we decided to use <a href="https://github.com/nyx-fuzz">Nyx</a>, <em>a full-vm snapshot fuzzing tool</em>. In this setup, Firefox runs in a guest operating system (usually Linux) and the snapshot taken is a snapshot of the whole guest including all of its processes. Nyx is also compatible with <a href="https://github.com/AFLplusplus/AFLplusplus">AFL++</a> as a frontend, a tool we already employ for other fuzzing targets.</p>
+
+<p>To facilitate communication between Firefox and Nyx, we use a <a href="https://github.com/MozillaSecurity/snapshot-fuzzing">custom agent</a>, essentially glue-code that is preloaded into Firefox. This code handles the low-level communication with Nyx and is also responsible for providing the trace buffer (for coverage measurements) to the AFL++ runtime linked to Firefox as well as passing through fuzzing data from AFL++. Both of these tasks are more complex in this configuration as AFL++ is not directly launching and communicating with the target binary. The agent further exposes <a href="https://searchfox.org/mozilla-central/source/tools/fuzzing/nyx/Nyx.h">a clean interface</a> to Firefox that can be used to implement the actual fuzzer in Firefox itself without having to worry about the low-level details.</p>
+
+<p><img src="/images/snapshot-stack.png" alt="The snapshot fuzzing technology stack depicted from bottom to top: AFL++, QEMU-Nyx, Linux Guest with Firefox, Preloader Code, Mozilla Nyx Interface and on top of this multiple fuzzing targets.QEMU-Nyx is launched by AFL++, which then launches the Linux guest with Firefox in a fuzzing configuration. The preloader code is injected with LD_PRELOAD and manages low-level tasks as well as providing the communication interface to the Mozilla Nyx interface." /></p>
+
+<p>Technology stack for snapshot fuzzing at a glance.</p>
+
+<p>On top of this interface, we have implemented <a href="https://searchfox.org/mozilla-central/source/tools/fuzzing/ipc/IPCFuzzController.cpp">multiple IPC fuzzing targets</a>, the simplest one being <a href="https://searchfox.org/mozilla-central/rev/159929cd10b8fba135c72a497d815ab2dd5a521c/tools/fuzzing/ipc/IPCFuzzController.cpp#1171-1323">IPC_SingleMessage</a>, which we will look at in more detail now.</p>
+
+<h2 id="fuzzing-a-single-ipc-message">Fuzzing a single IPC message</h2>
+
+<p>Modifying a single IPC message in transit is one of the rudimentary approaches  for IPC fuzzing in general. It is especially useful if the message type being targeted is in itself complex (lots of data contained in a single message rather than a complex interface being composed of a large number of simpler messages).</p>
+
+<p>For this purpose, we intercept messages in the parent process on the target thread <a href="https://searchfox.org/mozilla-central/rev/893f350260faac2ee6bf2b14c627d55eb2babfb0/ipc/glue/MessageChannel.cpp#1713-1718">before they are dispatched</a> to the generated IPC code that ultimately calls the IPC method. Most of the logic is then contained in IPCFuzzController::replaceIPCMessage which primarily does either of these two things:</p>
+
+<ol>
+  <li>If the message type does not match our configured target message, we can optionally dump it to a file (this is useful to create seeds for different types of single message fuzzing), but otherwise we pass the message through.</li>
+  <li>If the message matches our target specification, take the snapshot, replace the payload of the original message with our fuzzing data and return the new (fuzzed) message to be dispatched.</li>
+</ol>
+
+<p>Once the fuzzed message is dispatched (most commonly to a different thread), we face an important challenge  of multi-threaded snapshot fuzzing: synchronization. Coverage-guided fuzzing generally operates under the assumption that we know when our fuzzing data has been processed. Depending on the fuzzing target, it can be fairly difficult to tell when we are “done” but in our case, because we are already on the target thread that is running the actual IPC method. So unless that method again performs an asynchronous dispatch, we can just wait for the dispatch to return and we do so <a href="https://searchfox.org/mozilla-central/rev/893f350260faac2ee6bf2b14c627d55eb2babfb0/ipc/glue/MessageChannel.cpp#1755">at the end of DispatchMessage() where we call back into IPCFuzzController</a> to release (revert back to the snapshot).</p>
+
+<p>By combining this target with a CI test¹, we are now able to find implementation flaws like for example a <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1820389">vulnerability in the accessibility code</a> that involved the <a href="https://searchfox.org/mozilla-central/rev/f60bb10a5fe6936f9e9f9e8a90d52c18a0ffd818/accessible/ipc/PDocAccessible.ipdl#59">ShowEvent</a> message. This message contains an array of serialized AccessibleData, making this message type a good target for single message fuzzing.</p>
+
+<h2 id="measuring-code-coverage-in-snapshot-fuzzing">Measuring Code Coverage in Snapshot Fuzzing</h2>
+
+<p>Code coverage is probably the most important metric for long-term fuzzing campaigns as it highlights potential shortcomings of the fuzzing. While for most fuzzing, it is rather straightforward to generate code coverage, doing so in snapshot fuzzing is less trivial. Traditional source code coverage provided by tools like <a href="https://gcc.gnu.org/onlinedocs/gcc/Gcov.html">gcov</a> which find usage with other fuzzing, aren’t easily deployable because the data would have to be pulled out of the VM on every iteration so it can be saved before the snapshot revert resets the data. Doing so would make the process of obtaining code coverage unfeasibly slow.</p>
+
+<p>Instead, we decided to build our own code coverage measurement on top of the existing instrumentation. For this purpose, we added a <a href="https://github.com/AFLplusplus/AFLplusplus/pull/1720">new AFL++ instrumentation type</a> that instruments all basic blocks and then <a href="https://github.com/AFLplusplus/AFLplusplus/pull/2129">creates a second, permanent trace buffer in AFL++</a> that accumulates the coverage of the regular trace buffer. Finally, we create a third buffer called the <em>pcmap</em> which maps every entry in the trace buffer to an address in the binary that can later be resolved to a source code location using debug information. As this information is <a href="https://github.com/AFLplusplus/AFLplusplus/blob/36db3428ab16156dd72196213d2a02a5eadaed11/instrumentation/afl-compiler-rt.o.c#L1616">contained</a> in the AFL++ runtime, we need to obtain it within our custom Nyx agent and <a href="https://github.com/MozillaSecurity/snapshot-fuzzing/blob/953c67882ecf61905683b290d6c2065e4e94d357/preload/harness/src/moz_interface.c#L57">write it out to the host</a>. The same holds for <a href="https://github.com/MozillaSecurity/snapshot-fuzzing/blob/953c67882ecf61905683b290d6c2065e4e94d357/preload/harness/src/afl_runtime.c#L20"><em>module information</em></a> that denotes at which addresses Firefox modules were loaded. By combining these three sources of information, we can map the progress of Nyx fuzzing onto actual source code. We also built <a href="https://github.com/MozillaSecurity/snapshot-fuzzing/tree/main/code-coverage">additional tooling</a> to turn this basic block coverage into line-based coverage using information from a gcov build². As a result, we can generate metrics like percentage of code covered to evaluate the overall effectiveness of snapshot-based fuzzing.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>While snapshot fuzzing is a rather complex technology with many moving parts, it allows us to effectively stress code regions  of the browser that would otherwise  remain beyond the  capabilities  of traditional fuzzing techniques,  but are critical for providing adequate security guarantees. We are happy to report that this new fuzzing technology is becoming the norm and is now an essential part of our security testing strategy. We would like to thank the authors of Nyx and AFL++ for making this technology available and hope that our combined efforts will help others to adapt snapshot fuzzing for their projects.</p>
+
+<hr />
+
+<p>¹ Firefox runs many <strong>C</strong>ontinuous <strong>I</strong>ntegration tests to ensure every functionality of the browser is automatically tested.</p>
+
+<p>² Unfortunately, gcov and debug information deviate in some cases, so the result is not a 100% accurate mapping yet and can’t be seamlessly merged with other gcov data. This could likely be improved using LLVM annotations for additional basic block information.</p>]]></content><author><name>Christian Holler</name></author><category term="firefox-internals" /><category term="security-internals" /><category term="fuzzing" /><category term="ipc" /><category term="ipc-fuzzing" /><category term="nyx" /><category term="snapshot" /><category term="snapshot-fuzzing" /><summary type="html"><![CDATA[Process separation remains one of the most important parts of the Firefox security model and securing our IPC (Inter-Process Communication) interfaces is crucial to keep privileges in the different processes separated. Today, we will take a more detailed look at our newest tool for finding vulnerabilities in these interfaces - snapshot fuzzing.]]></summary></entry><entry><title type="html">New Year, New Blog</title><link href="https://attackanddefense.dev/2024/01/02/new-year-new-blog.html" rel="alternate" type="text/html" title="New Year, New Blog" /><published>2024-01-02T08:37:37+00:00</published><updated>2024-01-02T08:37:37+00:00</updated><id>https://attackanddefense.dev/2024/01/02/new-year-new-blog</id><content type="html" xml:base="https://attackanddefense.dev/2024/01/02/new-year-new-blog.html"><![CDATA[<p>Nothing to see here yet. <!-- Oh, you're still here? Have some chocolate 🍫 --></p>]]></content><author><name></name></author><summary type="html"><![CDATA[Nothing to see here yet.]]></summary></entry></feed>

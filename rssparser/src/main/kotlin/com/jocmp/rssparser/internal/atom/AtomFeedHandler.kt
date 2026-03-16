@@ -10,6 +10,7 @@ import com.jocmp.rssparser.internal.atom.AtomKeyword.Title
 import com.jocmp.rssparser.internal.atom.AtomKeyword.Updated
 import com.jocmp.rssparser.model.RssChannel
 import org.jsoup.nodes.Element
+import org.jsoup.parser.Parser
 
 internal class AtomFeedHandler(val atom: Element) : FeedHandler {
     private var channelFactory = ChannelFactory()
@@ -24,7 +25,7 @@ internal class AtomFeedHandler(val atom: Element) : FeedHandler {
                 )
 
                 Title() -> channelFactory.channelBuilder.title(
-                    node.wholeText().trim()
+                    titleText(node)
                 )
 
                 Link() -> withLink(node) { href ->
@@ -52,7 +53,7 @@ internal class AtomFeedHandler(val atom: Element) : FeedHandler {
 
                 Updated() -> channelFactory.articleBuilder.pubDateIfNull(node.text())
                 Title() -> channelFactory.articleBuilder.title(
-                    node.wholeText().trim()
+                    titleText(node)
                 )
 
                 Entry.Author.Author() -> {
@@ -113,6 +114,16 @@ internal class AtomFeedHandler(val atom: Element) : FeedHandler {
                 Entry.Media.Description() -> channelFactory.articleMediaBuilder.description(node.wholeText())
             }
         }
+    }
+
+    private fun titleText(node: Element): String {
+        val text = node.wholeText().trim()
+
+        if (node.attr("type") == "html") {
+            return Parser.unescapeEntities(text, false)
+        }
+
+        return text
     }
 
     private fun withLink(element: Element, callback: (href: String) -> Unit) {
