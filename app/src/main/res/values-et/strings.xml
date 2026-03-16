@@ -61,7 +61,7 @@
     <string name="settings_section_export">Ekspordi</string>
     <string name="opml_import_notification_title">Impordime tellimusi…</string>
     <string name="settings_section_privacy">Privaatsus</string>
-    <string name="settings_section_refresh">Värskenda</string>
+    <string name="settings_section_refresh">Viimati uuendatud</string>
     <string name="opml_import_button_text">Impordi failist</string>
     <string name="opml_import_progress_content_text_start">Alustame importi</string>
     <string name="settings_import_progress_placeholder">Impordime tellimusi…</string>
@@ -336,4 +336,11 @@
     <string name="article_actions_save_externally">Salvesta</string>
     <string name="article_actions_save_externally_success">Salvestatud</string>
     <string name="article_actions_save_externally_failure">Salvestamine ei õnnestunud</string>
+    <string name="settings_account_refresh_value">%1$s kell %2$s</string>
+    <string name="settings_account_refresh_value_today">Täna kell %1$s</string>
+    <string name="settings_account_never_refreshed">Mitte kunagi</string>
+    <string name="settings_accent_colors">Aktsentvärvid</string>
+    <string name="starred_export_button_text">Ekspordi lemmikuks märgitud artiklid</string>
+    <string name="starred_exporter_success">Eksportimine lõppes</string>
+    <string name="starred_exporter_failure">Eksportimine ei õnnestunud</string>
 </resources>
