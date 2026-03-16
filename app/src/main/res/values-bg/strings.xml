@@ -100,7 +100,7 @@
     <string name="opml_import_notification_title">Внасяне на абонаменти…</string>
     <string name="notifications_channel_title_opml_import">Внасяне на абонаменти</string>
     <string name="settings_section_privacy">Поверителност</string>
-    <string name="settings_section_refresh">Обновяване</string>
+    <string name="settings_section_refresh">Последна актуализация</string>
     <string name="opml_export_button_text">Изнасяне в OPML</string>
     <string name="opml_import_progress_content_text_start">Внасянето започва</string>
     <string name="settings_import_progress_placeholder">Внасяне на абонаменти…</string>
@@ -337,4 +337,11 @@
     <string name="article_actions_save_externally">Запазване</string>
     <string name="article_actions_save_externally_success">Запазено</string>
     <string name="article_actions_save_externally_failure">Запазването не бе успешно</string>
+    <string name="settings_account_refresh_value">%1$s в %2$s</string>
+    <string name="settings_account_refresh_value_today">Днес в %1$s</string>
+    <string name="settings_account_never_refreshed">Никога</string>
+    <string name="settings_accent_colors">Акцентни цветове</string>
+    <string name="starred_export_button_text">Изнасяне на статии със звезда</string>
+    <string name="starred_exporter_success">Изнасянето е завършено</string>
+    <string name="starred_exporter_failure">Изнасянето не бе успешно</string>
 </resources>
