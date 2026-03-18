@@ -1,0 +1,4 @@
+• Ensure audio stops at the end of a podcast
+• Display an icon in the list when an article includes audio
+• Update custom parsers for numerama.com and videogameschronicle.com
+• Update translations for Galician, Chinese, Bulgarian, Arabic, Estonian, Ukrainian, Danish and French thanks to volunteers!

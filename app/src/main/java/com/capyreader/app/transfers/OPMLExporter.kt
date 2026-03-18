@@ -36,6 +36,6 @@ class OPMLExporter(
     }
 
     companion object {
-        val DEFAULT_FILE_NAME = "subscriptions.xml"
+        const val DEFAULT_FILE_NAME = "subscriptions.xml"
     }
 }

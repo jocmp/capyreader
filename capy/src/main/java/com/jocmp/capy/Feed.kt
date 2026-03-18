@@ -11,11 +11,16 @@ data class Feed(
     val siteURL: String = "",
     val folderName: String = "",
     val faviconURL: String? = null,
+    val itunesImageURL: String? = null,
     /** Unread count */
     override val count: Long = 0,
     val enableStickyFullContent: Boolean = false,
     val enableNotifications: Boolean = false,
     val openArticlesInBrowser: Boolean = false,
     val folderExpanded: Boolean = false,
-    val priority: FeedPriority? = null
-): Countable
+    val priority: FeedPriority? = null,
+    val showUnreadBadge: Boolean = true,
+): Countable {
+    val isPages: Boolean
+        get() = feedURL.startsWith("http://pages.feedbinusercontent.com/")
+}

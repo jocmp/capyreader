@@ -1,8 +1,10 @@
 package com.jocmp.capy.accounts.reader
 
 import com.jocmp.capy.AccountDelegate
+import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
+import com.jocmp.capy.InMemoryDataStore
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.Source
@@ -55,6 +57,7 @@ class ReaderAccountDelegateTest {
     private lateinit var feedFixture: FeedFixture
     private lateinit var folderFixture: FolderFixture
     private lateinit var delegate: AccountDelegate
+    private lateinit var preferences: AccountPreferences
 
     private val arsTechnica = Subscription(
         id = "feed/2",
@@ -174,8 +177,9 @@ class ReaderAccountDelegateTest {
         feedFixture = FeedFixture(database)
         folderFixture = FolderFixture(database)
         googleReader = mockk()
+        preferences = AccountPreferences(InMemoryDataStore())
 
-        delegate = ReaderAccountDelegate(source = Source.FRESHRSS, database, googleReader)
+        delegate = ReaderAccountDelegate(source = Source.FRESHRSS, database, googleReader, preferences)
     }
 
     @Test
@@ -184,11 +188,9 @@ class ReaderAccountDelegateTest {
 
         stubSubscriptions()
         stubTags()
-        stubUnread(itemRefs)
         stubStarred()
+        stubUnread(itemRefs)
         stubStreamItemsIDs(itemRefs)
-        stubStreamItemsIDs(stream = Stream.UserLabel(chicagoTag.id), itemRefs = emptyList())
-        stubStreamItemsIDs(stream = Stream.Read(), itemRefs = emptyList())
 
         delegate.refresh(ArticleFilter.default())
 
@@ -214,12 +216,14 @@ class ReaderAccountDelegateTest {
 
         assertEquals(expected = 1, actual = articles.size)
 
-        val enclosures = EnclosureRecords(database).byArticle("0000000000000010")
+        val enclosures = EnclosureRecords(database).findByArticle("0000000000000010")
         assertEquals(expected = 1, actual = enclosures.size)
     }
 
     @Test
     fun refresh_feedOnly() = runTest {
+        delegate = ReaderAccountDelegate(source = Source.READER, database, googleReader, preferences)
+
         val id = "feed/2"
         val itemRefs = listOf(ItemRef("16"))
 
@@ -245,6 +249,8 @@ class ReaderAccountDelegateTest {
 
     @Test
     fun refresh_folderOnly() = runTest {
+        delegate = ReaderAccountDelegate(source = Source.READER, database, googleReader, preferences)
+
         val folderTitle = "Tech"
         val feed = feedFixture.create(feedID = "feed/2")
         folderFixture.create(name = folderTitle, feed = feed)
@@ -254,7 +260,7 @@ class ReaderAccountDelegateTest {
         stubStarred()
         stubUnread()
         stubSubscriptions()
-        stubStreamItemsIDs(itemRefs, stream = Stream.Label(folderTitle))
+        stubStreamItemsIDs(itemRefs, stream = Stream.ReadingList())
 
         delegate.refresh(
             ArticleFilter.Folders(
@@ -273,7 +279,7 @@ class ReaderAccountDelegateTest {
 
     @Test
     fun `refresh Miniflux folder`() = runTest {
-        delegate = ReaderAccountDelegate(source = Source.READER, database, googleReader)
+        delegate = ReaderAccountDelegate(source = Source.READER, database, googleReader, preferences)
 
         val folderTitle = "Tech"
         val feed = feedFixture.create(feedID = "feed/2")
@@ -303,6 +309,8 @@ class ReaderAccountDelegateTest {
 
     @Test
     fun refresh_findsMissingArticles() = runTest {
+        delegate = ReaderAccountDelegate(source = Source.READER, database, googleReader, preferences)
+
         val readingListItems = listOf(unreadStarredItem, unreadItem)
         val readingListItemRefs = listOf("1", "16").map { ItemRef(it) }
 
@@ -346,6 +354,20 @@ class ReaderAccountDelegateTest {
         assertTrue(readArticle.read)
     }
 
+
+    @Test
+    fun refresh_setsLastRefreshedAt() = runTest {
+        stubSubscriptions()
+        stubTags()
+        stubStarred()
+        stubUnread()
+
+        assertEquals(expected = 0L, actual = preferences.lastRefreshedAt.get())
+
+        delegate.refresh(ArticleFilter.default())
+
+        assertTrue(preferences.lastRefreshedAt.get() > 0L)
+    }
 
     @Test
     fun refresh_IOException() = runTest {

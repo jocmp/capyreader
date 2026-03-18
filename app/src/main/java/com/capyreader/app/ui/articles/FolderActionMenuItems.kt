@@ -45,7 +45,7 @@ fun FolderActionMenuPreview() {
             folder = FolderPreviewFixture().values.first(),
             onMenuClose = {},
             onEdit = {},
-            onRequestRemove = {}
+            onRequestRemove = {},
         )
     }
 }

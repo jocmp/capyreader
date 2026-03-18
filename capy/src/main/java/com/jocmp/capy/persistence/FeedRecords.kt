@@ -16,6 +16,10 @@ internal class FeedRecords(private val database: Database) {
         database.feedsQueries.find(id, mapper = ::feedMapper).executeAsOneOrNull()
     }
 
+    suspend fun findByFeedURL(feedURL: String): Feed? = withIOContext {
+        database.feedsQueries.findByFeedURL(feedURL, mapper = ::feedMapper).executeAsOneOrNull()
+    }
+
     suspend fun upsert(
         feedID: String,
         subscriptionID: String,
@@ -24,6 +28,7 @@ internal class FeedRecords(private val database: Database) {
         siteURL: String?,
         faviconURL: String?,
         priority: String? = null,
+        itunesImageURL: String? = null,
     ): Feed? = withIOContext {
         database.feedsQueries.upsert(
             id = feedID,
@@ -33,6 +38,7 @@ internal class FeedRecords(private val database: Database) {
             site_url = siteURL,
             favicon_url = faviconURL,
             priority = priority,
+            itunes_image_url = itunesImageURL,
         )
 
         find(feedID)
@@ -47,6 +53,10 @@ internal class FeedRecords(private val database: Database) {
 
     fun clearFavicon(feedID: String) {
         database.feedsQueries.updateFavicon(faviconURL = null, feedID = feedID)
+    }
+
+    fun updateFavicon(feedID: String, faviconURL: String) {
+        database.feedsQueries.updateFavicon(faviconURL = faviconURL, feedID = feedID)
     }
 
     suspend fun isFullContentEnabled(feedID: String): Boolean = withIOContext {
@@ -76,6 +86,17 @@ internal class FeedRecords(private val database: Database) {
 
     suspend fun toggleAllNotifications(enabled: Boolean) = withIOContext {
         database.feedsQueries.toggleAllNotifications(enabled = enabled)
+    }
+
+    suspend fun updateShowUnreadBadge(feedID: String, enabled: Boolean) = withIOContext {
+        database.feedsQueries.updateShowUnreadBadge(
+            enabled = enabled,
+            feedID = feedID
+        )
+    }
+
+    suspend fun toggleAllShowUnreadBadge(enabled: Boolean) = withIOContext {
+        database.feedsQueries.toggleAllShowUnreadBadge(enabled = enabled)
     }
 
     suspend fun clearStickyFullContent() = withIOContext {
@@ -125,6 +146,8 @@ internal class FeedRecords(private val database: Database) {
         enableNotifications: Boolean = false,
         openArticlesInBrowser: Boolean = false,
         priority: String? = null,
+        showUnreadBadge: Boolean = true,
+        itunesImageURL: String? = null,
         folderName: String? = "",
         expanded: Boolean? = false,
     ) = Feed(
@@ -134,12 +157,14 @@ internal class FeedRecords(private val database: Database) {
         feedURL = feedURL,
         siteURL = siteURL.orEmpty(),
         faviconURL = faviconURL,
+        itunesImageURL = itunesImageURL,
         folderName = folderName.orEmpty(),
         count = 0,
         enableStickyFullContent = enableStickyFullContent,
         enableNotifications = enableNotifications,
         openArticlesInBrowser = openArticlesInBrowser,
         folderExpanded = expanded ?: false,
-        priority = FeedPriority.parse(priority)
+        priority = FeedPriority.parse(priority),
+        showUnreadBadge = showUnreadBadge,
     )
 }

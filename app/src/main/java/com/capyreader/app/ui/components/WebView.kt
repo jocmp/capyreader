@@ -60,6 +60,9 @@ class AccompanistWebViewClient(
     lateinit var state: WebViewState
         internal set
 
+    var pageUrl: String? = null
+        internal set
+
     override fun shouldInterceptRequest(
         view: WebView,
         request: WebResourceRequest
@@ -72,47 +75,57 @@ class AccompanistWebViewClient(
             return asset
         }
 
-        val url = request.url.toString()
-        val origin = request.requestHeaders["Origin"]
-        val isCorsRequest = origin == "null" && url.startsWith("http")
-
-        if (!isCorsRequest) {
+        if (!shouldProxyRequest(request)) {
             return null
         }
 
-        return proxyCorsRequest(request)
+        return proxyRequest(request)
     }
 
-    /** Avoids CORS issues when loading additional pages from Mercury.js */
-    private fun proxyCorsRequest(request: WebResourceRequest): WebResourceResponse? {
+    private fun shouldProxyRequest(request: WebResourceRequest) =
+        WebRequestProxyPolicy.shouldProxy(request.url.toString(), request, pageUrl)
+
+    /**
+     * Proxies requests to add CORS headers for cross-origin
+     * requests (Issue #1616) and Referer headers for media CDNs (Issue #1878)
+     */
+    private fun proxyRequest(request: WebResourceRequest): WebResourceResponse? {
         return try {
-            val okRequest = Request.Builder()
+            val okHttpRequest = Request.Builder()
                 .url(request.url.toString())
                 .apply {
-                    request.requestHeaders.forEach { (key, value) ->
-                        header(key, value)
-                    }
+                    request
+                        .requestHeaders
+                        .filterNot { it.key.equals("Accept-Encoding", ignoreCase = true) }
+                        .forEach { (key, value) ->
+                            header(key, value)
+                        }
+                    pageUrl?.let { header("Referer", it) }
                 }
                 .build()
 
-            val response = httpClient.newCall(okRequest).execute()
+            val response = httpClient.newCall(okHttpRequest).execute()
             val contentType = response.header("Content-Type") ?: "text/html"
             val mimeType = contentType.substringBefore(";").trim()
+
             val charset = contentType
                 .substringAfter("charset=", "UTF-8")
                 .substringBefore(";")
                 .trim()
+
+            val corsHeaders = mapOf(
+                "Access-Control-Allow-Origin" to "*",
+                "Access-Control-Allow-Methods" to "GET, POST, OPTIONS",
+                "Access-Control-Allow-Headers" to "*"
+            )
+            val responseHeaders = response.headers.toMap() + corsHeaders
 
             WebResourceResponse(
                 mimeType,
                 charset,
                 response.code,
                 response.message.ifEmpty { "OK" },
-                mapOf(
-                    "Access-Control-Allow-Origin" to "*",
-                    "Access-Control-Allow-Methods" to "GET, POST, OPTIONS",
-                    "Access-Control-Allow-Headers" to "*"
-                ),
+                responseHeaders,
                 response.body.byteStream()
             )
         } catch (e: Exception) {
@@ -160,6 +173,9 @@ class WebViewState(
         htmlId = id
         contentHash = hash
 
+        val client = webView.webViewClient as? AccompanistWebViewClient
+        client?.pageUrl = article.url?.toString()
+
         val html = renderer.render(
             article,
             hideImages = !showImages,
@@ -184,6 +200,9 @@ class WebViewState(
     fun updateAudioPlayState(url: String?, isPlaying: Boolean) {
         currentAudioUrl = url
         isAudioPlaying = isPlaying
+        if (htmlId == null) {
+            return
+        }
         webView.post {
             if (url != null) {
                 val escapedUrl = url.replace("'", "\\'")
@@ -261,7 +280,7 @@ fun rememberWebViewState(
 
             addJavascriptInterface(webViewInterface, WebViewInterface.INTERFACE_NAME)
 
-            setBackgroundColor(context.getColor(android.R.color.transparent))
+            setBackgroundColor(android.graphics.Color.TRANSPARENT)
 
             webViewClient = client
         }

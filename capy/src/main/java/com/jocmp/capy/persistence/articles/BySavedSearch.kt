@@ -23,18 +23,35 @@ class BySavedSearch(private val database: Database) {
     ): Query<Article> {
         val (read, starred) = status.toStatusPair
 
-        return database.articlesBySavedSearchQueries.all(
-            savedSearchID = savedSearchID,
-            query = query,
-            read = read,
-            starred = starred,
-            limit = limit,
-            offset = offset,
-            lastReadAt = mapLastRead(read, since),
-            publishedSince = null,
-            newestFirst = isDescendingOrder(sortOrder),
-            mapper = ::listMapper
-        )
+        val queries = database.articlesBySavedSearchQueries
+
+        return if (isDescendingOrder(sortOrder)) {
+            queries.allNewestFirst(
+                savedSearchID = savedSearchID,
+                query = query,
+                read = read,
+                starred = starred,
+                limit = limit,
+                offset = offset,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
+                publishedSince = null,
+                mapper = ::listMapper
+            )
+        } else {
+            queries.allOldestFirst(
+                savedSearchID = savedSearchID,
+                query = query,
+                read = read,
+                starred = starred,
+                limit = limit,
+                offset = offset,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
+                publishedSince = null,
+                mapper = ::listMapper
+            )
+        }
     }
 
     fun unreadArticleIDs(
@@ -73,6 +90,7 @@ class BySavedSearch(private val database: Database) {
             read = read,
             starred = starred,
             lastReadAt = mapLastRead(read, since),
+            lastUnstarredAt = mapLastUnstarred(starred, since),
             publishedSince = null
         )
     }
@@ -91,6 +109,7 @@ class BySavedSearch(private val database: Database) {
             read = read,
             starred = starred,
             lastReadAt = mapLastRead(read, since),
+            lastUnstarredAt = mapLastUnstarred(starred, since),
             publishedSince = null
         )
     }

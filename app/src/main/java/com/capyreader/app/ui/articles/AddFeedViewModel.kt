@@ -9,6 +9,7 @@ import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.FeedOption
+import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.withUIContext
 import com.jocmp.capy.preferences.getAndSet
@@ -45,6 +46,10 @@ class AddFeedViewModel(
 
             val result = account.addFeed(url = url)
             _loading.value = false
+
+            if (result is AddFeedResult.Success && account.source == Source.LOCAL) {
+                viewModelScope.launchIO { account.reloadFavicon(result.feed.id) }
+            }
 
             withUIContext {
                 when (result) {

@@ -1,6 +1,7 @@
 package com.jocmp.capy.accounts.feedbin
 
 import com.jocmp.capy.AccountDelegate
+import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
@@ -11,6 +12,7 @@ import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.host
 import com.jocmp.capy.common.toDateTime
+import com.jocmp.capy.common.toDateTimeFromSeconds
 import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.common.withResult
 import com.jocmp.capy.db.Database
@@ -19,6 +21,7 @@ import com.jocmp.capy.persistence.EnclosureRecords
 import com.jocmp.capy.persistence.FeedRecords
 import com.jocmp.capy.persistence.SavedSearchRecords
 import com.jocmp.capy.persistence.TaggingRecords
+import com.jocmp.feedbinclient.CreatePageRequest
 import com.jocmp.feedbinclient.CreateSubscriptionRequest
 import com.jocmp.feedbinclient.CreateTaggingRequest
 import com.jocmp.feedbinclient.DeleteTagRequest
@@ -41,7 +44,8 @@ import java.time.ZonedDateTime
 
 internal class FeedbinAccountDelegate(
     private val database: Database,
-    private val feedbin: Feedbin
+    private val feedbin: Feedbin,
+    private val preferences: AccountPreferences,
 ) : AccountDelegate {
     private val articleRecords = ArticleRecords(database)
     private val enclosureRecords = EnclosureRecords(database)
@@ -54,7 +58,8 @@ internal class FeedbinAccountDelegate(
             refreshFeeds()
             refreshTaggings()
             refreshSavedSearches()
-            refreshArticles(since = maxArrivedAt())
+            refreshArticles(since = lastRefreshedAt())
+            preferences.touchLastRefreshedAt()
 
             Result.success(Unit)
         } catch (exception: IOException) {
@@ -68,10 +73,9 @@ internal class FeedbinAccountDelegate(
         val entryIDs = articleIDs.map { it.toLong() }
 
         return withErrorHandling {
-            entryIDs.chunked(MAX_CREATE_UNREAD_LIMIT).map { batchIDs ->
+            entryIDs.chunked(MAX_CREATE_UNREAD_LIMIT).forEach { batchIDs ->
                 feedbin.deleteUnreadEntries(UnreadEntriesRequest(unread_entries = batchIDs))
             }
-            Unit
         }
     }
 
@@ -114,6 +118,21 @@ internal class FeedbinAccountDelegate(
         return Result.failure(UnsupportedOperationException("Labels not supported"))
     }
 
+    override suspend fun createPage(url: String): Result<Unit> {
+        return withErrorHandling {
+            val response = feedbin.createPage(CreatePageRequest(url = url))
+            val entry = response.body()
+
+            if (!response.isSuccessful || entry == null) {
+                throw IOException("Failed to save page")
+            }
+
+            saveEntries(listOf(entry), read = false)
+
+            Unit
+        }
+    }
+
     override suspend fun addFeed(
         url: String,
         title: String?,
@@ -136,7 +155,7 @@ internal class FeedbinAccountDelegate(
 
                 if (feed != null) {
                     coroutineScope {
-                        launch { refreshArticles() }
+                        launch { refreshArticles(since = lastRefreshedAt()) }
                     }
 
                     AddFeedResult.Success(feed)
@@ -223,11 +242,23 @@ internal class FeedbinAccountDelegate(
         Unit
     }
 
-    private suspend fun refreshArticles(since: String = maxArrivedAt()) {
+    override suspend fun deletePage(articleID: String): Result<Unit> {
+        val response = feedbin.deletePage(articleID)
+
+        return if (response.isSuccessful) {
+            database.articlesQueries.deletePageByID(articleID)
+            Result.success(Unit)
+        } else {
+            Result.failure(Throwable("Failed to delete page"))
+        }
+    }
+
+    private suspend fun refreshArticles(since: String) {
         refreshStarredEntries()
         refreshUnreadEntries()
         refreshAllArticles(since = since)
         fetchMissingArticles()
+        refreshPages()
     }
 
     private suspend fun refreshFeeds() {
@@ -268,7 +299,8 @@ internal class FeedbinAccountDelegate(
             feed_url = subscription.feed_url,
             site_url = subscription.site_url,
             favicon_url = icon?.url,
-            priority = null
+            priority = null,
+            itunes_image_url = null,
         )
     }
 
@@ -345,6 +377,45 @@ internal class FeedbinAccountDelegate(
         }
     }
 
+    private suspend fun refreshPages() {
+        val feedID = database.feedsQueries
+            .findPagesFeedID()
+            .executeAsOneOrNull() ?: return
+
+        val remoteIDs = fetchAllFeedEntryIDs(feedID)
+
+        val localIDs = database.articlesQueries
+            .findIDsByFeed(feedID)
+            .executeAsList()
+            .toSet()
+
+        val orphanedIDs = localIDs - remoteIDs
+
+        if (orphanedIDs.isNotEmpty()) {
+            database.articlesQueries.deleteArticlesByID(orphanedIDs)
+        }
+    }
+
+    private suspend fun fetchAllFeedEntryIDs(feedID: String): Set<String> {
+        val remoteIDs = mutableSetOf<String>()
+        var nextPage: Int? = 1
+
+        while (nextPage != null) {
+            val response = feedbin.feedEntries(
+                feedID = feedID,
+                page = nextPage.toString()
+            )
+            val entries = response.body().orEmpty()
+
+            saveEntries(entries)
+            entries.forEach { remoteIDs.add(it.id.toString()) }
+
+            nextPage = response.pagingInfo?.nextPage
+        }
+
+        return remoteIDs
+    }
+
     private suspend fun fetchPaginatedEntries(
         since: String? = null,
         nextPage: Int? = 1,
@@ -374,11 +445,14 @@ internal class FeedbinAccountDelegate(
     private fun saveEntries(
         entries: List<Entry>,
         savedSearchID: String? = null,
+        read: Boolean = true,
     ) {
         database.transactionWithErrorHandling {
             entries.forEach { entry ->
                 val updated = TimeHelpers.nowUTC()
                 val articleID = entry.id.toString()
+                val enclosure = entry.enclosure
+                val enclosureType = enclosure?.enclosure_type
 
                 database.articlesQueries.create(
                     id = articleID,
@@ -391,16 +465,14 @@ internal class FeedbinAccountDelegate(
                     summary = entry.summary,
                     image_url = entry.images?.size_1?.cdn_url,
                     published_at = entry.published.toDateTime?.toEpochSecond(),
+                    enclosure_type = enclosureType,
                 )
 
                 articleRecords.createStatus(
                     articleID = articleID,
                     updatedAt = updated,
-                    read = true
+                    read = read
                 )
-
-                val enclosure = entry.enclosure
-                val enclosureType = enclosure?.enclosure_type
 
                 if (enclosure != null && enclosureType != null) {
                     enclosureRecords.create(
@@ -428,6 +500,16 @@ internal class FeedbinAccountDelegate(
             name = savedSearch.name,
             query = savedSearch.query
         )
+    }
+
+    private suspend fun lastRefreshedAt(): String {
+        val refreshedAt = preferences.lastRefreshedAt.get()
+
+        if (refreshedAt == 0L) {
+            return maxArrivedAt()
+        }
+
+        return refreshedAt.toDateTimeFromSeconds.toString()
     }
 
     private fun maxArrivedAt() = articleRecords.maxArrivedAt().toString()

@@ -59,6 +59,7 @@
     <string name="feed_form_cancel">Vazgeç</string>
     <string name="relative_time_days">%1$dgün</string>
     <string name="feed_action_edit">Yayını Düzenle</string>
+    <string name="feed_action_reload_icon">Simgeyi yeniden yükle</string>
     <string name="filter_unread">Okunmamış</string>
     <string name="settings_remove_account_title_local">Hesabı Sil</string>
     <string name="filter_all">Hepsi</string>
@@ -178,14 +179,14 @@
     <string name="crash_log_export_item_subtitle">Geliştirici ile paylaşmak için çökme günlüklerini bir dosyaya kaydeder</string>
     <string name="crash_log_export_item_title">Çökme günlüklerini paylaş</string>
     <string name="settings_panel_notifications_title">Bildirimler</string>
-    <string name="settings_notifications_select_all">Tümünü Seç</string>
+    <string name="settings_select_all">Tümünü Seç</string>
     <string name="notifications_permission_disabled_title">Bildirim izni reddedildi</string>
     <string name="notifications_channel_title_feed_update">Yayın Güncellemeleri</string>
     <string name="edit_feed_tags_section">Etiketler</string>
     <string name="edit_feed_notifications_title">Bildirimleri etkinleştir</string>
     <string name="notifications_permissions_disabled_call_to_action">Ayarlar</string>
     <string name="settings_enable_refresh_call_to_action">Önce düzenli yenileme etkinleştirilmelidir</string>
-    <string name="settings_notifications_select_none">Hiçbirini Seçme</string>
+    <string name="settings_select_none">Hiçbirini Seçme</string>
     <string name="article_list_row_swipe_open_externally">Makaleyi tarayıcıda aç</string>
     <string name="article_view_open_externally">Harici olarak aç</string>
     <string name="feed_nav_drawer_title">Akışlar</string>
@@ -198,7 +199,6 @@
     <string name="settings_mark_read_on_scroll">Kaydırınca okundu olarak işaretle</string>
     <string name="settings_enable_high_contrast_dark_theme">Yüksek karşıtlıklı karanlık temayı etkinleştir</string>
     <string name="settings_section_mark_all_as_read">Tümünü Okundu Olarak İşaretle</string>
-    <string name="layout_preference_responsive">Duyarlı</string>
     <string name="article_actions_copy_link">Bağlantıyı kopyala</string>
     <string name="freshrss_article_actions_label">Etiket</string>
     <string name="freshrss_labels_sheet_title">Etiketler</string>
@@ -210,7 +210,6 @@
     <string name="add_account_local_subtitle">Cihazınızda</string>
     <string name="add_account_feedbin_signup_link_text">Buradan oluşturun.</string>
     <string name="add_account_freshrss_signup_link_text">Daha fazlasını öğrenin.</string>
-    <string name="layout_preference_single">Tek Sütun</string>
     <string name="image_preview_menu_option_medium">Orta</string>
     <string name="settings_donate_button">Bağış Yap</string>
     <string name="settings_gestures_list_swipe_up">Yukarı Kaydır</string>
@@ -224,11 +223,11 @@
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">Üste Git</string>
     <string name="settings_confirm_mark_all_read">Hepsini okundu olarak işaretlemeyi doğrula</string>
     <string name="reader_image_visibility_always_hide">Görselleri engelle</string>
-    <string name="layout_preference_label">Tercih Edilen Düzen</string>
     <string name="after_read_all_behavior_label">Hepsi Okunduktan Sonra</string>
     <string name="after_read_all_behavior_default">Varsayılan</string>
     <string name="full_content_error_missing_response">Makaleyi getirmek başarısız oldu</string>
     <string name="full_content_error_generic">Makaleyi ayrıştırmak başarısız oldu</string>
+    <string name="full_content_error_forbidden">Site tarafından getirme engellendi</string>
     <string name="search_bar_placeholder">Ara</string>
     <string name="media_save">Kaydet</string>
     <string name="media_share">Paylaş</string>
@@ -269,7 +268,6 @@
     <string name="settings_gestures_improve_talkback_subtitle">Talkback metnini iyileştirmek için bazı ayarları devre dışı bırakır</string>
     <string name="settings_gestures_improve_talkback_title">Talkback\'i iyileştir</string>
     <string name="settings_options_reader_pin_top_toolbar">Üst araç çubuğunu sabitle</string>
-    <string name="settings_options_reader_show_bottom_toolbar">Eylemleri alt araç çubuğunda göster</string>
     <string name="add_account_miniflux_signup_prompt">Miniflux örneğiniz yok mu?</string>
     <string name="add_account_miniflux_signup_link_text">Daha fazlasını öğrenin.</string>
     <string name="theme_dynamic">Dinamik</string>

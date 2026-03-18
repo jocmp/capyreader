@@ -21,7 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
-import com.capyreader.app.ui.isAtMostMedium
+import com.capyreader.app.ui.isCompact
 import com.capyreader.app.ui.isExpanded
 import com.capyreader.app.ui.settings.panels.SettingsPanel
 
@@ -48,7 +48,7 @@ fun SettingsPanelScaffold(
                         Text(stringResource(panel.title))
                     },
                     navigationIcon = {
-                        if (isAtMostMedium() || panel.isNested()) {
+                        if (isCompact() || panel.isNested()) {
                             IconButton(
                                 onClick = {
                                     onBack()

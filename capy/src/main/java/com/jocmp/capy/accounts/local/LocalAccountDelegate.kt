@@ -5,8 +5,8 @@ import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
-import com.jocmp.capy.accounts.FaviconFetcher
 import com.jocmp.capy.accounts.FeedOption
+import com.jocmp.capy.common.ContentFormatter
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.TimeHelpers.published
 import com.jocmp.capy.common.transactionWithErrorHandling
@@ -23,7 +23,6 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
-import org.jsoup.Jsoup
 import java.net.UnknownHostException
 import java.time.ZonedDateTime
 import com.jocmp.feedfinder.parser.Feed as ParserFeed
@@ -31,7 +30,6 @@ import com.jocmp.feedfinder.parser.Feed as ParserFeed
 internal class LocalAccountDelegate(
     private val database: Database,
     private val httpClient: OkHttpClient,
-    private val faviconFetcher: FaviconFetcher,
     private val feedFinder: FeedFinder = DefaultFeedFinder(httpClient),
     private val preferences: AccountPreferences,
 ) : AccountDelegate {
@@ -46,9 +44,13 @@ internal class LocalAccountDelegate(
             is ArticleFilter.Folders -> refreshFolderFilter(filter, cutoffDate = cutoffDate)
             else -> refreshArticleFilter(cutoffDate)
         }
+        preferences.touchLastRefreshedAt()
 
         return Result.success(Unit)
     }
+
+    override suspend fun createPage(url: String) =
+        Result.failure<Unit>(UnsupportedOperationException("Pages not supported"))
 
     override suspend fun addFeed(
         url: String,
@@ -93,7 +95,6 @@ internal class LocalAccountDelegate(
                 return if (feed != null) {
                     upsertFolders(feed, folderTitles)
                     saveArticles(resultFeed.items, cutoffDate = null, feed = feed)
-                    verifyFavicon(feed)
 
                     AddFeedResult.Success(feed)
                 } else {
@@ -214,6 +215,15 @@ internal class LocalAccountDelegate(
     private suspend fun refreshFeed(feed: Feed, cutoffDate: ZonedDateTime?) {
         try {
             feedFinder.fetch(feed.feedURL).onSuccess { channel ->
+                val itunesImageURL = channel.itunesChannelData?.image
+
+                if (itunesImageURL != null) {
+                    database.feedsQueries.updateItunesImage(
+                        itunesImageURL = itunesImageURL,
+                        feedID = feed.id,
+                    )
+                }
+
                 saveArticles(channel.items, cutoffDate = cutoffDate, feed = feed)
             }
         } catch (e: Throwable) {
@@ -241,6 +251,8 @@ internal class LocalAccountDelegate(
                 val blocked = containsBlockedText(parsedItem, blocklist)
 
                 if (parsedItem.id != null && withinCutoff && !blocked) {
+                    val enclosureType = parsedItem.enclosures.firstOrNull()?.type
+
                     database.articlesQueries.create(
                         id = parsedItem.id,
                         feed_id = feed.id,
@@ -252,6 +264,7 @@ internal class LocalAccountDelegate(
                         extracted_content_url = null,
                         image_url = parsedItem.imageURL,
                         published_at = publishedAt,
+                        enclosure_type = enclosureType,
                     )
 
                     articleRecords.createStatus(
@@ -301,7 +314,8 @@ internal class LocalAccountDelegate(
             feed_url = feedURL,
             site_url = feed.siteURL?.toString(),
             favicon_url = feed.faviconURL?.toString(),
-            priority = null
+            priority = null,
+            itunes_image_url = feed.itunesImageURL,
         )
     }
 
@@ -317,21 +331,6 @@ internal class LocalAccountDelegate(
                 )
             }
         }
-    }
-
-    private suspend fun verifyFavicon(feed: Feed) {
-        if (faviconFetcher.isValid(feed.faviconURL)) {
-            return
-        }
-
-        CapyLog.warn(
-            tag("favicon"), data = mapOf(
-                "invalid_favicon_url" to feed.faviconURL,
-                "feed_url" to feed.feedURL,
-            )
-        )
-
-        feedRecords.clearFavicon(feed.id)
     }
 
     companion object {
@@ -360,5 +359,5 @@ internal val RssItem.summary: String?
             return null
         }
 
-        return Jsoup.parse(it).text()
+        return ContentFormatter.summary(it)
     }

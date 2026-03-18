@@ -7,8 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.capyreader.app.preferences.AppTheme
-import com.capyreader.app.preferences.ThemeMode
+import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.accounts.accountsGraph
 import com.capyreader.app.ui.articles.articleGraph
 import com.capyreader.app.ui.theme.CapyTheme
@@ -17,17 +16,11 @@ import com.capyreader.app.unloadAccountModules
 @Composable
 fun App(
     startDestination: Route,
-    themeMode: ThemeMode,
-    appTheme: AppTheme = AppTheme.DEFAULT,
-    pureBlackDarkMode: Boolean = false,
+    appPreferences: AppPreferences,
 ) {
     val navController = rememberNavController()
 
-    CapyTheme(
-        appTheme = appTheme,
-        themeMode = themeMode,
-        pureBlack = pureBlackDarkMode
-    ) {
+    CapyTheme(appPreferences) {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background

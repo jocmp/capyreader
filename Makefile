@@ -50,6 +50,10 @@ shared-release-secrets:
 	echo ${ENCODED_RELEASE_KEYSTORE} | base64 --decode > ./release.keystore
 	echo ${ENCODED_SECRETS_PROPERTIES} | base64 --decode > ./secrets.properties
 
+.PHONY: install-tailscale
+install-tailscale: ## Install Tailscale on emulator
+	./script/install-tailscale
+
 .PHONY: help
 help:
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' Makefile | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'

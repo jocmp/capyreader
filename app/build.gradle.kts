@@ -29,8 +29,8 @@ android {
         applicationId = "com.capyreader.app"
         minSdk = 30
         targetSdk = 36
-        versionCode = 1185
-        versionName = "2026.01.1185-dev"
+        versionCode = 1201
+        versionName = "2026.03.1201"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -132,6 +132,7 @@ dependencies {
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.session)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.palette)
     implementation(libs.androidx.paging.compose)
     implementation(libs.androidx.paging.runtime.ktx)
     implementation(libs.androidx.preferences)
@@ -142,6 +143,7 @@ dependencies {
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.coil.compose)
     implementation(libs.coil.gif)
+    implementation(libs.coil.network.okhttp)
     implementation(libs.coil.svg)
     implementation(libs.coil.video)
     implementation(libs.lazycolumnscrollbar)

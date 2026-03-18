@@ -18,6 +18,7 @@
     <string name="feed_action_unsubscribe">Cancelar inscrição</string>
     <string name="filter_action_menu_description">Editar</string>
     <string name="feed_action_edit">Editar Feed</string>
+    <string name="feed_action_reload_icon">Recarregar ícone</string>
     <string name="settings_remove_account_title_service">Sair da sessão</string>
     <string name="refresh_minutes">Cada %1$d minuto(s)</string>
     <string name="refresh_feeds_menu_label">Atualizar Feeds</string>
@@ -48,6 +49,7 @@
     <string name="article_list_swipe_disabled">Desativado</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Deslizar para a esquerda ou para a direita para navegar entre artigos</string>
     <string name="full_content_error_generic">Falha ao analisar artigo</string>
+    <string name="full_content_error_forbidden">Obtenção bloqueada pelo site</string>
     <string name="media_save">Gravar</string>
     <string name="media_save_success">Imagem gravada</string>
     <string name="media_save_failure">Falha ao gravar imagem</string>
@@ -209,8 +211,8 @@
     <string name="edit_feed_tags_section">Etiquetas</string>
     <string name="edit_feed_notifications_title">Ativar notificações</string>
     <string name="notifications_permissions_disabled_call_to_action">Configurações</string>
-    <string name="settings_notifications_select_none">Desmarcar Todas</string>
-    <string name="settings_notifications_select_all">Marcar Todas</string>
+    <string name="settings_select_none">Desmarcar Todas</string>
+    <string name="settings_select_all">Marcar Todas</string>
     <string name="article_list_row_swipe_open_externally">Abrir artigo no navegador</string>
     <string name="notifications_permission_disabled_title">Permissão de notificação está desativada</string>
     <string name="settings_enable_refresh_call_to_action">Atualização periódica deve ser ativada primeiro</string>
@@ -227,9 +229,6 @@
     <string name="reader_image_visibility_always_hide">Bloquear imagens</string>
     <string name="reader_image_visibility_always_show">Sempre mostrar imagens</string>
     <string name="reader_image_visibility_label">Imagens</string>
-    <string name="layout_preference_responsive">Responsivo</string>
-    <string name="layout_preference_single">Uma Coluna</string>
-    <string name="layout_preference_label">Layout Preferido</string>
     <string name="end_of_feed_text">Tudo em dia!</string>
     <string name="full_content_error_missing_response">Falha ao buscar artigo</string>
     <string name="after_read_all_behavior_label">Depois de Ler Tudo</string>
@@ -246,7 +245,6 @@
         <item quantity="many">A cada %d horas</item>
         <item quantity="other">A cada %d horas</item>
     </plurals>
-    <string name="settings_options_reader_show_bottom_toolbar">Mostrar ações na barra de ferramentas inferior</string>
     <string name="blocked_keywords">Lista de bloqueio</string>
     <string name="blocked_keywords_supporting_text">Remover artigos em que o título ou conteúdo batem com palavras-chave</string>
     <string name="blocked_keywords_remove_keyword">Remover palavras-chave</string>
@@ -291,4 +289,17 @@
     <string name="settings_option_show_today_filter">Hoje</string>
     <string name="selected">Selecionado</string>
     <string name="auth_fields_freshrss_api_password">Palavra-passe da API</string>
+    <string name="freshrss_nav_headline_categories">Categorias</string>
+    <string name="theme_mode_label">Modo</string>
+    <string name="article_list_empty">Nada aqui</string>
+    <string name="freshrss_visibility">Visibilidade</string>
+    <string name="freshrss_visibility_option_main">Principal</string>
+    <string name="freshrss_visibility_option_important">Importante</string>
+    <string name="freshrss_visibility_option_category">Categoria</string>
+    <string name="freshrss_visibility_option_feed">Feed</string>
+    <string name="audio_player_play">Tocar</string>
+    <string name="audio_player_pause">Pausar</string>
+    <string name="audio_player_close">Fechar tocador</string>
+    <string name="audio_player_skip_back">Retroceder 30 segundos</string>
+    <string name="audio_player_skip_forward">Pular 30 segundos</string>
 </resources>

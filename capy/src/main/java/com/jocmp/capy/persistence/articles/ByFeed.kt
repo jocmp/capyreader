@@ -25,19 +25,37 @@ class ByFeed(private val database: Database) {
     ): Query<Article> {
         val (read, starred) = status.toStatusPair
 
-        return database.articlesByFeedQueries.all(
-            feedIDs = feedIDs,
-            query = query,
-            read = read,
-            starred = starred,
-            limit = limit,
-            offset = offset,
-            lastReadAt = mapLastRead(read, since),
-            publishedSince = null,
-            newestFirst = isDescendingOrder(sortOrder),
-            priorities = priority.inclusivePriorities,
-            mapper = ::listMapper
-        )
+        val queries = database.articlesByFeedQueries
+
+        return if (isDescendingOrder(sortOrder)) {
+            queries.allNewestFirst(
+                feedIDs = feedIDs,
+                query = query,
+                read = read,
+                starred = starred,
+                limit = limit,
+                offset = offset,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
+                publishedSince = null,
+                priorities = priority.inclusivePriorities,
+                mapper = ::listMapper
+            )
+        } else {
+            queries.allOldestFirst(
+                feedIDs = feedIDs,
+                query = query,
+                read = read,
+                starred = starred,
+                limit = limit,
+                offset = offset,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
+                publishedSince = null,
+                priorities = priority.inclusivePriorities,
+                mapper = ::listMapper
+            )
+        }
     }
 
     fun unreadArticleIDs(
@@ -78,6 +96,7 @@ class ByFeed(private val database: Database) {
             read = read,
             starred = starred,
             lastReadAt = mapLastRead(read, since),
+            lastUnstarredAt = mapLastUnstarred(starred, since),
             priorities = priority.inclusivePriorities,
             publishedSince = null
         )
@@ -98,6 +117,7 @@ class ByFeed(private val database: Database) {
             read = read,
             starred = starred,
             lastReadAt = mapLastRead(read, since),
+            lastUnstarredAt = mapLastUnstarred(starred, since),
             priorities = priority.inclusivePriorities,
             publishedSince = null
         )

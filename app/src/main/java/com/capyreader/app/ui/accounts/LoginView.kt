@@ -55,6 +55,7 @@ fun LoginView(
     clientCertAlias: String,
     loading: Boolean = false,
     errorMessage: String? = null,
+    onUseApiTokenChange: (Boolean) -> Unit = {},
 ) {
     Scaffold(
         topBar = {
@@ -121,6 +122,7 @@ fun LoginView(
                             onChooseClientCert = onChooseClientCert,
                             onClearClientCert = onClearClientCert,
                             clientCertAlias = clientCertAlias,
+                            setApiTokenPreference = onUseApiTokenChange,
                         )
                     }
                 }
@@ -165,6 +167,48 @@ private fun LoginViewPreview() {
     ) {
         LoginView(
             source = Source.FEEDBIN,
+            url = "",
+            clientCertAlias = "",
+            username = "test@example.com",
+            password = "",
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun MinifluxLoginViewPreview() {
+    val context = LocalContext.current
+
+    KoinApplication(
+        application = {
+            androidContext(context)
+            setupCommonModules()
+        }
+    ) {
+        LoginView(
+            source = Source.MINIFLUX,
+            url = "",
+            clientCertAlias = "",
+            username = "test@example.com",
+            password = "",
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun FreshRSSLoginViewPreview() {
+    val context = LocalContext.current
+
+    KoinApplication(
+        application = {
+            androidContext(context)
+            setupCommonModules()
+        }
+    ) {
+        LoginView(
+            source = Source.FRESHRSS,
             url = "",
             clientCertAlias = "",
             username = "test@example.com",

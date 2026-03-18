@@ -20,6 +20,8 @@ interface AccountDelegate {
 
     suspend fun createSavedSearch(name: String): Result<String>
 
+    suspend fun createPage(url: String): Result<Unit>
+
     suspend fun addFeed(
         url: String,
         title: String?,
@@ -40,4 +42,10 @@ interface AccountDelegate {
     suspend fun removeFeed(feed: Feed): Result<Unit>
 
     suspend fun removeFolder(folderTitle: String): Result<Unit>
+
+    suspend fun deletePage(articleID: String): Result<Unit> =
+        Result.failure(UnsupportedOperationException())
+
+    suspend fun saveArticleExternally(articleID: String): Result<Unit> =
+        Result.failure(UnsupportedOperationException())
 }

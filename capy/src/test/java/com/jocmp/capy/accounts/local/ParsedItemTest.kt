@@ -54,6 +54,15 @@ class ParsedItemTest {
     }
 
     @Test
+    fun title_withNumericHtmlEntity() {
+        val title = "It&#x27;s FOSS"
+        val item = RssItem.Builder().title(title).build()
+        val parsedItem = ParsedItem(item, siteURL = "")
+
+        assertEquals(expected = "It's FOSS", actual = parsedItem.title)
+    }
+
+    @Test
     fun title_whenNull() {
         val item = RssItem.Builder().title(null).build()
         val parsedItem = ParsedItem(item, siteURL = "")

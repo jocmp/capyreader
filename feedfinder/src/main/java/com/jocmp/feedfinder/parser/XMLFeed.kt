@@ -25,6 +25,9 @@ internal class XMLFeed(
     override val faviconURL: URL?
         get() = channel?.image?.url?.let { optionalURL(it) }
 
+    override val itunesImageURL: String?
+        get() = channel?.itunesChannelData?.image
+
     override val items: List<RssItem>
         get() = channel?.items.orEmpty()
 

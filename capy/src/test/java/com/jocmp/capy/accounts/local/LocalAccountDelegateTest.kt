@@ -3,15 +3,14 @@ package com.jocmp.capy.accounts.local
 import com.jocmp.capy.AccountDelegate
 import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.ArticleFilter
+import com.jocmp.capy.InMemoryDataStore
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.accounts.AddFeedResult
-import com.jocmp.capy.accounts.FakeFaviconFetcher
 import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.FeedFixture
 import com.jocmp.capy.logging.CapyLog
 import com.jocmp.capy.persistence.ArticleRecords
-import com.jocmp.capy.preferences.Preference
 import com.jocmp.capy.rssItemFixture
 import com.jocmp.feedfinder.FeedFinder
 import com.jocmp.feedfinder.parser.Feed
@@ -88,10 +87,7 @@ class LocalAccountDelegateTest {
     fun setup() {
         mockkObject(CapyLog)
 
-        accountPreferences = mockk()
-        val blocklist = mockk<Preference<Set<String>>>()
-        every { blocklist.get() }.returns(emptySet())
-        every { accountPreferences.keywordBlocklist }.returns(blocklist)
+        accountPreferences = AccountPreferences(InMemoryDataStore())
         every { CapyLog.warn(any(), any()) }.returns(Unit)
         every { CapyLog.error(any(), any()) }.returns(Unit)
         every { CapyLog.info(any(), any()) }.returns(Unit)
@@ -103,7 +99,6 @@ class LocalAccountDelegateTest {
             database,
             httpClient,
             feedFinder = feedFinder,
-            faviconFetcher = FakeFaviconFetcher,
             preferences = accountPreferences
         )
     }
@@ -133,9 +128,7 @@ class LocalAccountDelegateTest {
 
     @Test
     fun refreshAll_updatesEntries_filteredByBlocklist() = runTest {
-        val blocklist = mockk<Preference<Set<String>>>()
-        every { blocklist.get() }.returns(setOf("Apple Intelligence"))
-        every { accountPreferences.keywordBlocklist }.returns(blocklist)
+        accountPreferences.keywordBlocklist.set(setOf("Apple Intelligence"))
         coEvery { feedFinder.fetch(url = any()) }.returns(Result.success(channel))
 
         FeedFixture(database).create(feedID = channel.link!!)
@@ -358,6 +351,7 @@ class LocalAccountDelegateTest {
         override val feedURL: URL,
         override val siteURL: URL? = null,
         override val faviconURL: URL? = null,
+        override val itunesImageURL: String? = null,
         override val items: List<RssItem> = listOf()
     ) : Feed {
         override fun isValid() = true

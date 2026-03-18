@@ -8,6 +8,7 @@
     <string name="feed_action_unsubscribe">सदस्यता रद्द गर्नुहोस्</string>
     <string name="filter_action_menu_description">सम्पादन गर्नुहोस्</string>
     <string name="feed_action_edit">फिड सम्पादन गर्नुहोस्</string>
+    <string name="feed_action_reload_icon">आइकन पुन: लोड गर्नुहोस्</string>
     <string name="feed_action_unsubscribe_confirm">सदस्यता रद्द गर्नुहोस्</string>
     <string name="dialog_cancel">रद्द गर्नुहोस्</string>
     <string name="folder_action_edit">पुन: नामाकरण गर्नुहोस्</string>
@@ -25,8 +26,8 @@
     <string name="after_read_all_behavior_open_next_feed">अर्को फिड खोल्नुहोस्</string>
     <string name="full_content_error_missing_response">लेख ल्याउन असफल भयो</string>
     <string name="full_content_error_generic">लेख पार्स गर्न असफल भयो</string>
+    <string name="full_content_error_forbidden">साइटद्वारा फेच ब्लक गरियो</string>
     <string name="reader_image_visibility_label">तस्बिरहरू</string>
-    <string name="layout_preference_label">रुचाइएको लेआउट</string>
     <string name="after_read_all_behavior_label">सबै पढेपछि</string>
     <string name="after_read_all_behavior_default">पूर्वनिर्धारित</string>
     <string name="settings_remove_account_button_service">बाहिर निस्कनुहोस्</string>
@@ -166,8 +167,8 @@
     <string name="crash_log_export_item_title">क्र्यास लगहरू साझा गर्नुहोस्</string>
     <string name="notifications_permission_disabled_title">सूचना अनुमति असक्षम गरिएको छ</string>
     <string name="settings_enable_refresh_call_to_action">आवधिक रिफ्रेस पहिले सक्षम हुनुपर्छ</string>
-    <string name="settings_notifications_select_none">कुनै पनि चयन नगर्नुहोस्</string>
-    <string name="settings_notifications_select_all">सबै चयन गर्नुहोस्</string>
+    <string name="settings_select_none">कुनै पनि चयन नगर्नुहोस्</string>
+    <string name="settings_select_all">सबै चयन गर्नुहोस्</string>
     <string name="settings_section_browser">ब्राउजर</string>
     <string name="settings_section_mark_all_as_read">सबैलाई पढिएको चिन्ह लगाउनुहोस्</string>
     <string name="opml_import_button_text">फाइलबाट आयात गर्नुहोस्</string>

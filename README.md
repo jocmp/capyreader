@@ -2,9 +2,9 @@
 
 <img src="./site/capy.png" width="100px">
 
-_A smallish RSS reader with support for Feedbin, FreshRSS, and local feeds._
+_A smallish RSS reader with support for Feedbin, FreshRSS, Miniflux and local feeds._
 
-![Tests](https://github.com/jocmp/capyreader/actions/workflows/ci.yml/badge.svg) <a href="https://hosted.weblate.org/engage/capy-reader/">
+![Tests](https://github.com/jocmp/capyreader/actions/workflows/test.yml/badge.svg) <a href="https://hosted.weblate.org/engage/capy-reader/">
  <img src="https://hosted.weblate.org/widget/capy-reader/strings/svg-badge.svg" alt="Translation status" />
 </a>
 
@@ -19,25 +19,26 @@ Capy Reader is free across all sources. It is available for devices running Andr
 
 ### Releases
 
-- Google Play releases happen every week or so depending on new features, bugfixes and translations.
-- GitHub releases are marked with a "-dev" suffix and happen more frequently. They are always stable, tested builds.
+- Google Play and F-Droid releases happen every week or so depending on new features, bugfixes and translations.
 - Nightly releases are a separate package marked with a "-nightly" suffix. These are unstable, untested builds.
 
 ## Reporting a bug
 
-Bug reports are always welcome and are my top priority.
+Bug reports are always welcome and are a top priority. Please search the [discussions](https://github.com/jocmp/capyreader/discussions) first and issues to make sure the bug is new and hasn't been reported yet.
 
-If you run into an issue, let me know by submitting a [bug report](https://github.com/jocmp/capyreader/issues/new?labels=bug&template=1-bug-report.yml).
+If you're in doubt or run into an unreported issue, go ahead and submit a bug report. Please include details like app version, OS version, and steps to reproduce the bug. Screenshots are also useful!
+
+[Report a bug](https://github.com/jocmp/capyreader/discussions/new?category=bugs)
 
 ## Feature Requests
 
-If you have questions or a general feature request, please post them to [Discussions](https://github.com/jocmp/capyreader/discussions).
+If you have questions or a general feature request, please post them to discussions as a [feature request](https://github.com/jocmp/capyreader/discussions/new?category=feature-requests).
 
 ### Full Content Support
 
 Sometimes Capy's full content mode doesn't work as expected on a site due to the chaos of the web.
 
-When this happens, please submit a separate feature request to support full content for that site: [Full Content Request form](https://github.com/jocmp/capyreader/issues/new?labels=full%20content%20request&template=2-full-content-request.yml)
+When this happens, please submit a separate issue to support full content for that site: [Full Content Request form](https://github.com/jocmp/capyreader/issues/new?template=2-full-content-request.yml)
 
 Writing and verifying full content parsers can be time consuming. If you find this useful, [consider donating](https://ko-fi.com/capyreader) to show your support.
 

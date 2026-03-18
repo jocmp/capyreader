@@ -13,13 +13,14 @@ import androidx.compose.runtime.Composable
 @Composable
 fun ToolbarTooltip(
     message: String,
+    positioning: TooltipAnchorPosition = TooltipAnchorPosition.Below,
     content: @Composable () -> Unit,
 ) {
     val tooltipState = rememberTooltipState()
 
     TooltipBox(
         positionProvider = rememberTooltipPositionProvider(
-            positioning = TooltipAnchorPosition.Below
+            positioning = positioning
         ),
         tooltip = {
             PlainTooltip {

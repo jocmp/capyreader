@@ -19,12 +19,23 @@ LIMIT 1;
 countAll:
 SELECT
  articles.feed_id,
- COUNT(DISTINCT articles.id)
+ COUNT(*)
 FROM articles
 JOIN article_statuses ON articles.id = article_statuses.article_id
 WHERE (article_statuses.read = :read OR :read IS NULL)
 AND (article_statuses.starred = :starred OR :starred IS NULL)
 GROUP BY articles.feed_id;
+
+countAllBySavedSearch:
+SELECT
+ saved_search_articles.saved_search_id,
+ COUNT(*)
+FROM articles
+JOIN article_statuses ON articles.id = article_statuses.article_id
+JOIN saved_search_articles ON articles.id = saved_search_articles.article_id
+WHERE (article_statuses.read = :read OR :read IS NULL)
+AND (article_statuses.starred = :starred OR :starred IS NULL)
+GROUP BY saved_search_articles.saved_search_id;
 
 lastUpdatedAt:
 SELECT MAX(article_statuses.updated_at)
@@ -53,7 +64,8 @@ INSERT INTO articles(
     url,
     summary,
     image_url,
-    published_at
+    published_at,
+    enclosure_type
 )
 VALUES (
 :id,
@@ -65,7 +77,8 @@ VALUES (
 :url,
 :summary,
 :image_url,
-:published_at
+:published_at,
+:enclosure_type
 )
 ON CONFLICT(id) DO UPDATE
 SET
@@ -78,7 +91,8 @@ extracted_content_url = excluded.extracted_content_url,
 url = excluded.url,
 summary = excluded.summary,
 image_url = excluded.image_url,
-published_at = published_at;
+published_at = published_at,
+enclosure_type = excluded.enclosure_type;
 
 createStatus:
 INSERT INTO article_statuses(
@@ -187,8 +201,15 @@ UPDATE article_statuses SET read = :read, last_read_at = :lastReadAt
 WHERE article_statuses.article_id IN :articleIDs;
 
 markStarred:
-UPDATE article_statuses SET starred = :starred
+UPDATE article_statuses SET starred = :starred, last_unstarred_at = :lastUnstarredAt
 WHERE article_statuses.article_id = :articleID;
+
+starredExports:
+SELECT articles.title, articles.url, articles.published_at
+FROM articles
+JOIN article_statuses ON articles.id = article_statuses.article_id
+WHERE article_statuses.starred = 1
+ORDER BY articles.published_at DESC;
 
 deleteAllArticles {
   DELETE FROM article_statuses WHERE starred = 0 AND read = 1;
@@ -220,6 +241,11 @@ deleteArticles {
     SELECT 1 FROM article_statuses
     WHERE article_statuses.article_id = articles.id
     AND starred = 0 AND read = 1
+  )
+  AND NOT EXISTS (
+    SELECT 1 FROM feeds
+    WHERE feeds.id = articles.feed_id
+    AND feeds.feed_url LIKE 'http://pages.feedbinusercontent.com/%'
   );
 
   DELETE FROM article_notifications
@@ -247,3 +273,22 @@ WHERE starred = 0
 
 deleteByID:
 DELETE FROM articles WHERE id = :articleID;
+
+deletePageByID {
+  DELETE FROM article_statuses WHERE article_id = :articleID;
+  DELETE FROM saved_search_articles WHERE article_id = :articleID;
+  DELETE FROM article_notifications WHERE article_id = :articleID;
+  DELETE FROM enclosures WHERE article_id = :articleID;
+  DELETE FROM articles WHERE id = :articleID;
+}
+
+findIDsByFeed:
+SELECT id FROM articles WHERE feed_id = :feedID;
+
+deleteArticlesByID {
+  DELETE FROM article_statuses WHERE article_id IN :articleIDs;
+  DELETE FROM saved_search_articles WHERE article_id IN :articleIDs;
+  DELETE FROM article_notifications WHERE article_id IN :articleIDs;
+  DELETE FROM enclosures WHERE article_id IN :articleIDs;
+  DELETE FROM articles WHERE id IN :articleIDs;
+}

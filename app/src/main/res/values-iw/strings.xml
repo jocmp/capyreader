@@ -9,6 +9,7 @@
     <string name="filter_starred">מסומן בכוכב</string>
     <string name="feed_form_cancel">ביטול</string>
     <string name="feed_action_edit">ערוך פיד</string>
+    <string name="feed_action_reload_icon">טען מחדש סמל</string>
     <string name="feed_action_unsubscribe_message">האם אתה בטוח שברצונך לבטל את המנוי שלך ל-\"%1$s\"?</string>
     <string name="feed_action_unsubscribe_confirm">ביטול מינוי</string>
     <string name="edit_feed_submit">שמור</string>
@@ -177,7 +178,6 @@
     <string name="opml_exporter_failure">יצוא נכשל</string>
     <string name="settings_reader_title">קורא</string>
     <string name="settings_options_reader_pin_top_toolbar">הצמד תפריט עליון</string>
-    <string name="settings_options_reader_show_bottom_toolbar">הצג פעולות בתפריט התחתון</string>
     <string name="article_bottom_bar_next_article">עבור למאמר הבא</string>
     <string name="settings_gestures_reader_swipe_down">גלוש למטה</string>
     <string name="settings_gestures_reader_swipe_up">גלוש למעלה</string>
@@ -210,8 +210,8 @@
     <string name="notifications_permissions_disabled_call_to_action">אפשרויות</string>
     <string name="notifications_permission_disabled_title">הרשאת התראות מכובה</string>
     <string name="settings_enable_refresh_call_to_action">רענון מתוזמן חייב להיות פעיל</string>
-    <string name="settings_notifications_select_none">בחר בכלום</string>
-    <string name="settings_notifications_select_all">בחר בהכל</string>
+    <string name="settings_select_none">בחר בכלום</string>
+    <string name="settings_select_all">בחר בהכל</string>
     <string name="article_list_row_swipe_open_externally">פתח מאמר בדפדפן</string>
     <string name="article_view_open_externally">פתח חיצונית</string>
     <string name="settings_confirm_mark_all_read">אשר סימון כולם כנקרא</string>
@@ -226,9 +226,6 @@
     <string name="reader_image_visibility_always_hide">חסום תמונות</string>
     <string name="reader_image_visibility_always_show">הצג תמונות תמיד</string>
     <string name="reader_image_visibility_label">תמונות</string>
-    <string name="layout_preference_responsive">תגובתי</string>
-    <string name="layout_preference_single">עמודה אחת</string>
-    <string name="layout_preference_label">תצוגה מעודפת</string>
     <string name="end_of_feed_text">אין יותר מאמרים לקריאה!</string>
     <string name="after_read_all_behavior_label">אחרי קריאת הכל</string>
     <string name="after_read_all_behavior_default">ברירת מחדל</string>
@@ -236,6 +233,7 @@
     <string name="after_read_all_behavior_open_next_feed">פתח פיד הבא</string>
     <string name="full_content_error_missing_response">שגיאה בטעינת מאמר</string>
     <string name="full_content_error_generic">שגיאה בהצגת מאמר</string>
+    <string name="full_content_error_forbidden">האתר חסם את הבקשה</string>
     <string name="feed_nav_drawer_title">פידים</string>
     <string name="search_bar_placeholder">חיפוש</string>
     <string name="media_save">שמירה</string>

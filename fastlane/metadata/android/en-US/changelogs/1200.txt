@@ -1,0 +1,2 @@
+• Restore previous FreshRSS sync behavior to fix bug with read articles
+• Fix bug where Reddit images could not be displayed in articles

@@ -6,6 +6,7 @@ import com.capyreader.app.common.FeedGroup
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.ArticleListFontScale
+import com.capyreader.app.ui.articles.DefaultPaneExpansionIndex
 import com.capyreader.app.ui.articles.MarkReadPosition
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.articles.FontOption
@@ -65,15 +66,17 @@ class AppPreferences(context: Context) {
     val pureBlackDarkMode: Preference<Boolean>
         get() = preferenceStore.getBoolean("pure_black_dark_mode", false)
 
+    val accentColors: Preference<Boolean>
+        get() = preferenceStore.getBoolean("accent_colors", false)
+
     val openLinksInternally: Preference<Boolean>
         get() = preferenceStore.getBoolean("open_links_internally", true)
 
     val enableStickyFullContent: Preference<Boolean>
         get() = preferenceStore.getBoolean("enable_sticky_full_content", false)
 
-
-    val layout: Preference<LayoutPreference>
-        get() = preferenceStore.getEnum("layout_preference", LayoutPreference.RESPONSIVE)
+    val paneExpansionIndex: Preference<Int>
+        get() = preferenceStore.getInt("pane_expansion_index", DefaultPaneExpansionIndex)
 
     fun pinFeedGroup(type: FeedGroup): Preference<Boolean> {
         return preferenceStore.getBoolean("feed_group_${type.toString().lowercase()}", true)
@@ -82,19 +85,16 @@ class AppPreferences(context: Context) {
     val showTodayFilter: Preference<Boolean>
         get() = preferenceStore.getBoolean("show_today_filter", true)
 
-    val enableAudioPlayer: Preference<Boolean>
-        get() = preferenceStore.getBoolean("enable_audio_player", false)
+    val badgeStyle: Preference<BadgeStyle>
+        get() = preferenceStore.getEnum("badge_style", BadgeStyle.default)
 
     fun clearAll() {
         preferenceStore.clearAll()
     }
 
     class ReaderOptions(private val preferenceStore: PreferenceStore) {
-        val pinTopToolbar: Preference<Boolean>
-            get() = preferenceStore.getBoolean("article_pin_top_bar", true)
-
-        val bottomBarActions: Preference<Boolean>
-            get() = preferenceStore.getBoolean("article_bottom_bar_actions", false)
+        val pinToolbars: Preference<Boolean>
+            get() = preferenceStore.getBoolean("article_pin_top_bar", false)
 
         val fontSize: Preference<Int>
             get() = preferenceStore.getInt("article_font_size", FontSize.DEFAULT)
@@ -124,7 +124,7 @@ class AppPreferences(context: Context) {
             get() = preferenceStore.getBoolean("article_enable_paging_tap_gesture", false)
 
         val enableHorizontaPagination: Preference<Boolean>
-            get() = preferenceStore.getBoolean("article_enable_horizontal_pagination", true)
+            get() = preferenceStore.getBoolean("article_enable_horizontal_pagination", false)
 
         val improveTalkback: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_improve_talkback", false)

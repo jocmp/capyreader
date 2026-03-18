@@ -8,4 +8,5 @@ data class SubscriptionQuickAddResult(
     val query: String? = null,
     val streamId: String? = null,
     val streamName: String? = null,
+    val error: String? = null,
 )

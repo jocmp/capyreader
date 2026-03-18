@@ -1,0 +1,3 @@
+• Improve contrast on Monochrome theme for E-Ink devices
+• Add Podcast support. This is experimental and can be enabled under Settings > General > Audio player
+• Update translations for Arabic, Bulgarian, Galician, Estonian, French, Italian, Ukrainian, and Chinese thanks to volunteers!

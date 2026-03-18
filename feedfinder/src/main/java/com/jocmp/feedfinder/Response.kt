@@ -8,7 +8,8 @@ import java.nio.charset.Charset
 internal class Response(
     val url: URL,
     val body: String,
-    val charset: Charset?
+    val charset: Charset?,
+    val headers: Map<String, List<String>> = emptyMap(),
 ) {
     suspend fun parse(validate: Boolean = true): Parser.Result {
         if (parsed == null) {

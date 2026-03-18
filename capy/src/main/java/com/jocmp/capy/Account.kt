@@ -5,13 +5,16 @@ import app.cash.sqldelight.coroutines.mapToOne
 import com.jocmp.capy.ArticleStatus.UNREAD
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.AutoDelete
-import com.jocmp.capy.accounts.FaviconFetcher
+import com.jocmp.capy.accounts.FaviconFinder
+import com.jocmp.capy.accounts.FaviconPolicy
 import com.jocmp.capy.accounts.LocalOkHttpClient
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.asOPML
 import com.jocmp.capy.accounts.feedbin.FeedbinAccountDelegate
 import com.jocmp.capy.accounts.feedbin.FeedbinOkHttpClient
+import com.jocmp.capy.accounts.forAccount
 import com.jocmp.capy.accounts.local.LocalAccountDelegate
+import com.jocmp.capy.accounts.miniflux.MinifluxAccountDelegate
 import com.jocmp.capy.accounts.reader.buildReaderDelegate
 import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.articles.SortOrder
@@ -30,7 +33,11 @@ import com.jocmp.capy.persistence.FeedRecords
 import com.jocmp.capy.persistence.FolderRecords
 import com.jocmp.capy.persistence.SavedSearchRecords
 import com.jocmp.capy.persistence.TaggingRecords
+import com.jocmp.capy.preferences.Preference
 import com.jocmp.feedbinclient.Feedbin
+import com.jocmp.feedfinder.DefaultFeedFinder
+import com.jocmp.feedfinder.FeedFinder
+import com.jocmp.minifluxclient.Miniflux
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -49,14 +56,15 @@ data class Account(
     val database: Database,
     val preferences: AccountPreferences,
     val source: Source = Source.LOCAL,
-    val faviconFetcher: FaviconFetcher,
+    val faviconPolicy: FaviconPolicy,
     private val clientCertManager: ClientCertManager,
+    private val userAgent: String,
+    private val acceptLanguage: String,
     private val localHttpClient: OkHttpClient = LocalOkHttpClient.forAccount(path = cacheDirectory),
     val delegate: AccountDelegate = when (source) {
         Source.LOCAL -> LocalAccountDelegate(
             database = database,
             httpClient = localHttpClient,
-            faviconFetcher = faviconFetcher,
             preferences = preferences,
         )
 
@@ -65,11 +73,23 @@ data class Account(
             feedbin = Feedbin.forAccount(
                 path = cacheDirectory,
                 preferences = preferences
-            )
+            ),
+            preferences = preferences,
+        )
+
+        Source.MINIFLUX,
+        Source.MINIFLUX_TOKEN -> MinifluxAccountDelegate(
+            database = database,
+            miniflux = Miniflux.forAccount(
+                path = cacheDirectory,
+                preferences = preferences,
+                source = source,
+                clientCertManager = clientCertManager,
+            ),
+            preferences = preferences,
         )
 
         Source.FRESHRSS,
-        Source.MINIFLUX,
         Source.READER -> buildReaderDelegate(
             source = source,
             database = database,
@@ -86,7 +106,9 @@ data class Account(
     private val taggingRecords = TaggingRecords(database)
     private val savedSearchRecords = SavedSearchRecords(database)
 
-    private val articleContent = ArticleContent(localHttpClient)
+    private val feedFinder: FeedFinder by lazy { DefaultFeedFinder(localHttpClient) }
+
+    private val articleContent = ArticleContent(localHttpClient, userAgent, acceptLanguage)
 
     val taggedFeeds = feedRecords.taggedFeeds().map {
         it.sortedByTitle()
@@ -109,10 +131,21 @@ data class Account(
             Folder(
                 title = it.key,
                 feeds = it.value.sortedByTitle(),
-                expanded = it.value.firstOrNull()?.folderExpanded ?: false
+                expanded = it.value.firstOrNull()?.folderExpanded ?: false,
             )
         }.sortedByTitle()
     }
+
+    val canSaveArticleExternally: Preference<Boolean>
+        get() = preferences.canSaveArticleExternally
+
+    suspend fun createPage(url: String) = delegate.createPage(url)
+
+    suspend fun deletePage(articleID: String) = delegate.deletePage(articleID)
+
+    suspend fun saveArticleExternally(articleID: String) = delegate.saveArticleExternally(articleID)
+
+    suspend fun searchFeed(url: String) = feedFinder.find(url)
 
     suspend fun addFeed(
         url: String,
@@ -218,7 +251,7 @@ data class Account(
             return null
         }
 
-        val enclosures = enclosureRecords.byArticle(articleID)
+        val enclosures = enclosureRecords.findByArticle(articleID)
         return articleRecords.find(articleID = articleID)?.copy(enclosures = enclosures)
     }
 
@@ -315,6 +348,10 @@ data class Account(
         return OPMLFile(this).opmlDocument()
     }
 
+    suspend fun starredBookmarksDocument(): String {
+        return StarredBookmarksFile(this).bookmarksDocument()
+    }
+
     suspend fun createNotifications(since: ZonedDateTime): List<ArticleNotification> {
         return articleRecords.createNotifications(since = since)
     }
@@ -329,6 +366,9 @@ data class Account(
 
     fun countAll(status: ArticleStatus) =
         articleRecords.countAll(status)
+
+    fun countAllBySavedSearch(status: ArticleStatus) =
+        articleRecords.countAllBySavedSearch(status)
 
     fun countAllByStatus(status: ArticleStatus): Flow<Long> {
         return articleRecords.byStatus.count(status).asFlow().mapToOne(Dispatchers.IO)
@@ -369,6 +409,27 @@ data class Account(
         feedRecords.updateOpenInBrowser(feedID, enabled)
     }
 
+    suspend fun toggleFeedUnreadBadge(feedID: String, enabled: Boolean) {
+        feedRecords.updateShowUnreadBadge(feedID, enabled)
+    }
+
+    suspend fun toggleAllFeedUnreadBadges(enabled: Boolean) {
+        feedRecords.toggleAllShowUnreadBadge(enabled)
+    }
+
+    suspend fun toggleSavedSearchUnreadBadge(id: String, enabled: Boolean) {
+        savedSearchRecords.updateShowUnreadBadge(id, enabled)
+    }
+
+    suspend fun toggleAllSavedSearchUnreadBadges(enabled: Boolean) {
+        savedSearchRecords.toggleAllShowUnreadBadge(enabled)
+    }
+
+    suspend fun toggleAllUnreadBadges(enabled: Boolean) {
+        toggleAllFeedUnreadBadges(enabled)
+        toggleAllSavedSearchUnreadBadges(enabled)
+    }
+
     suspend fun disableStickyContent(feedID: String) {
         feedRecords.updateStickyFullContent(enabled = false, feedID = feedID)
     }
@@ -381,8 +442,25 @@ data class Account(
         feedRecords.clearStickyFullContent()
     }
 
+    suspend fun reloadFavicon(feedID: String) {
+        findFeed(feedID)?.let { findFavicon(it) }
+    }
+
+    private suspend fun findFavicon(feed: Feed) {
+        withIOContext {
+            val siteURL = FaviconFinder.siteURL(feed) ?: return@withIOContext
+            
+            faviconFinder.find(siteURL)?.let {
+                feedRecords.updateFavicon(feed.id, it)
+            }
+        }
+    }
+
     val supportsMultiFolderFeeds: Boolean
         get() = source == Source.FEEDBIN || source == Source.LOCAL
+
+    val faviconFinder
+        get() = FaviconFinder(localHttpClient, faviconPolicy, userAgent, acceptLanguage)
 
     internal suspend fun asOPML(): String {
         var opml = ""

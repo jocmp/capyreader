@@ -1,6 +1,7 @@
 package com.jocmp.capy.persistence
 
 import com.jocmp.capy.Article
+import com.jocmp.capy.EnclosureType
 import com.jocmp.capy.common.optionalURL
 import com.jocmp.capy.common.toDateTimeFromSeconds
 
@@ -10,11 +11,12 @@ internal fun articleMapper(
     title: String?,
     author: String?,
     contentHtml: String?,
-    extractedContentURL: String? = null,
+    extractedContentURL: String?,
     url: String?,
     summary: String?,
     imageURL: String?,
     publishedAt: Long?,
+    enclosureType: String?,
     feedTitle: String?,
     faviconURL: String?,
     enableStickyContent: Boolean,
@@ -44,6 +46,7 @@ internal fun articleMapper(
         feedName = feedTitle ?: "",
         enableStickyFullContent = enableStickyContent,
         openInBrowser = openInBrowser,
+        enclosureType = EnclosureType.from(enclosureType),
     )
 }
 
@@ -56,6 +59,7 @@ internal fun listMapper(
     summary: String?,
     imageURL: String?,
     publishedAt: Long?,
+    enclosureType: String?,
     feedTitle: String?,
     faviconURL: String?,
     openInBrowser: Boolean,
@@ -66,16 +70,11 @@ internal fun listMapper(
     return articleMapper(
         id = id,
         feedID = feedID.toString(),
-        faviconURL = faviconURL,
         title = title ?: "",
         author = author,
         contentHtml = "",
-        enableStickyContent = false,
-        feedURL = null,
-        siteURL = null,
+        extractedContentURL = null,
         url = url,
-        feedTitle = feedTitle,
-        imageURL = imageURL,
         summary = if (!summary.isNullOrBlank()) {
             summary
         } else if (title.isNullOrBlank()) {
@@ -83,10 +82,17 @@ internal fun listMapper(
         } else {
             ""
         },
-        updatedAt = updatedAt,
-        read = read ?: false,
-        starred = starred ?: false,
+        imageURL = imageURL,
         publishedAt = publishedAt,
-        openInBrowser = openInBrowser ?: false,
+        enclosureType = enclosureType,
+        feedTitle = feedTitle,
+        faviconURL = faviconURL,
+        enableStickyContent = false,
+        openInBrowser = openInBrowser,
+        feedURL = null,
+        siteURL = null,
+        updatedAt = updatedAt,
+        starred = starred ?: false,
+        read = read ?: false,
     )
 }

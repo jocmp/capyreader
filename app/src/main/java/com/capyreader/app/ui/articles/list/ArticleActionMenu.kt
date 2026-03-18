@@ -41,7 +41,6 @@ fun ArticleActionMenu(
     onDismissRequest: () -> Unit = {},
 ) {
     val unreadCount = LocalUnreadCount.current
-
     DropdownMenu(
         expanded = expanded,
         onDismissRequest = { onDismissRequest() },

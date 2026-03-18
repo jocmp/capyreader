@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
-gem 'fastlane', "~> 2.226.0"
-gem "rexml", "~> 3.4"
+gem 'fastlane', "~> 2.232.1"
+gem "rexml", "~> 3.4.4"
 
 
 # Deps for fastlane

@@ -33,6 +33,7 @@ import com.jocmp.capy.buildArticlePager
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
+import com.jocmp.capy.common.withUIContext
 import com.jocmp.capy.countToday
 import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -87,6 +88,10 @@ class ArticleScreenViewModel(
         account.countAll(latestFilter.status)
     }
 
+    private val _savedSearchCounts = filter.flatMapLatest { latestFilter ->
+        account.countAllBySavedSearch(latestFilter.status)
+    }
+
     val articles: Flow<PagingData<Article>> =
         combine(
             filter,
@@ -111,11 +116,20 @@ class ArticleScreenViewModel(
             .withPositiveCount(filter.status)
     }
 
-    val savedSearches = account.savedSearches
+    val savedSearches: Flow<List<SavedSearch>> = combine(
+        account.savedSearches,
+        _savedSearchCounts,
+        filter,
+    ) { searches, latestCounts, filter ->
+        searches.map { copySavedSearchCounts(it, latestCounts) }
+            .withPositiveCount(filter.status)
+    }
 
     val allFeeds = account.taggedFeeds
 
     val showOnboarding = allFeeds.map { it.isEmpty() }
+
+    val allSavedSearches = account.savedSearches
 
     val allFolders = account.folders
 
@@ -124,8 +138,19 @@ class ArticleScreenViewModel(
         _counts,
         filter,
     ) { feeds, latestCounts, filter ->
-        feeds.map { copyFeedCounts(it, latestCounts) }
+        feeds.filter { !it.isPages }
+            .map { copyFeedCounts(it, latestCounts) }
             .withPositiveCount(filter.status)
+    }
+
+    val pagesFeed: Flow<Feed?> = combine(
+        account.feeds,
+        _counts,
+        filter,
+    ) { feeds, latestCounts, filter ->
+        feeds.find { it.isPages }
+            ?.let { copyFeedCounts(it, latestCounts) }
+            ?.takeIf { it.count > 0 || filter.status != ArticleStatus.UNREAD }
     }
 
     val currentFeed: Flow<Feed?> = combine(allFeeds, filter) { feeds, filter ->
@@ -288,6 +313,21 @@ class ArticleScreenViewModel(
             } else if (afterReadAll.value == AfterReadAllBehavior.OPEN_NEXT_FEED) {
                 openNextFeedOnAllRead(onArticlesCleared, searches, folders, feeds)
             }
+        }
+    }
+
+    val canSaveArticleExternally = account.canSaveArticleExternally.stateIn(viewModelScope)
+
+    fun saveArticleExternallyAsync(articleID: String, onComplete: (Result<Unit>) -> Unit) {
+        viewModelScope.launchIO {
+            val result = account.saveArticleExternally(articleID)
+            withUIContext { onComplete(result) }
+        }
+    }
+
+    fun deletePage(articleID: String) {
+        viewModelScope.launchIO {
+            account.deletePage(articleID)
         }
     }
 
@@ -564,6 +604,13 @@ class ArticleScreenViewModel(
         return feed.copy(count = counts.getOrDefault(feed.id, 0))
     }
 
+    private fun copySavedSearchCounts(
+        savedSearch: SavedSearch,
+        counts: Map<String, Long>
+    ): SavedSearch {
+        return savedSearch.copy(count = counts.getOrDefault(savedSearch.id, 0))
+    }
+
     private suspend fun buildArticle(articleID: String): Article? {
         val article = account.findArticle(articleID = articleID) ?: return null
 
@@ -686,6 +733,24 @@ class ArticleScreenViewModel(
         }
     }
 
+    fun toggleFeedUnreadBadge(feedID: String, enabled: Boolean) {
+        viewModelScope.launchIO {
+            account.toggleFeedUnreadBadge(feedID, enabled)
+        }
+    }
+
+    fun toggleSavedSearchUnreadBadge(id: String, enabled: Boolean) {
+        viewModelScope.launchIO {
+            account.toggleSavedSearchUnreadBadge(id, enabled)
+        }
+    }
+
+    fun reloadFavicon(feedID: String) {
+        viewModelScope.launchIO {
+            account.reloadFavicon(feedID)
+        }
+    }
+
     private val latestFilter: ArticleFilter
         get() = filter.value
 
@@ -734,8 +799,13 @@ class ArticleScreenViewModel(
 }
 
 fun Context.showFullContentErrorToast(throwable: Throwable) {
-    val message = when (throwable) {
-        is ArticleContent.MissingBodyError -> R.string.full_content_error_missing_response
+    val message = when {
+        throwable is ArticleContent.HttpError && throwable.code == 403 ->
+            R.string.full_content_error_forbidden
+
+        throwable is ArticleContent.MissingBodyError ->
+            R.string.full_content_error_missing_response
+
         else -> R.string.full_content_error_generic
     }
 

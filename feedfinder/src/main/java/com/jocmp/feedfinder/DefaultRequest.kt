@@ -35,7 +35,8 @@ internal class DefaultRequest(private val client: OkHttpClient = OkHttpClient())
         return Response(
             url = url,
             body = body,
-            charset = response.header("content-type")?.toMediaTypeOrNull()?.charset()
+            charset = response.header("content-type")?.toMediaTypeOrNull()?.charset(),
+            headers = response.headers.toMultimap(),
         )
     }
 }

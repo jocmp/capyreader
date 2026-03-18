@@ -209,6 +209,7 @@ internal class ArticleRecords internal constructor(
         database.articlesQueries.markStarred(
             articleID = articleID,
             starred = true,
+            lastUnstarredAt = null,
         )
     }
 
@@ -216,6 +217,7 @@ internal class ArticleRecords internal constructor(
         database.articlesQueries.markStarred(
             articleID = articleID,
             starred = false,
+            lastUnstarredAt = nowUTC().toEpochSecond(),
         )
     }
 
@@ -234,6 +236,20 @@ internal class ArticleRecords internal constructor(
 
                     feedID to it.COUNT
                 }
+            }
+    }
+
+    fun countAllBySavedSearch(status: ArticleStatus): Flow<Map<String, Long>> {
+        val (read, starred) = status.forCounts
+
+        return database.articlesQueries.countAllBySavedSearch(
+            read = read,
+            starred = starred,
+        )
+            .asFlow()
+            .mapToList(Dispatchers.IO)
+            .map { list ->
+                list.associate { it.saved_search_id to it.COUNT }
             }
     }
 

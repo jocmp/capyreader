@@ -131,11 +131,11 @@
     <string name="edit_feed_notifications_title">Galluogi hysbysiadau</string>
     <string name="notifications_permissions_disabled_call_to_action">Gosodiadau</string>
     <string name="article_list_row_swipe_open_externally">Agor yr erthygl mewn porwr</string>
-    <string name="layout_preference_single">Un colofn</string>
     <string name="filter_all">Popeth</string>
     <string name="feed_action_unsubscribe">Dad-danysgrifio</string>
     <string name="filter_action_menu_description">Golygu</string>
     <string name="feed_action_edit">Golygu\'r ffrwd</string>
+    <string name="feed_action_reload_icon">Ail-lwytho\'r eicon</string>
     <string name="feed_action_unsubscribe_message">Ydych chi\'n siŵr eich bod chi am ddad-danysgrifio o \"%1$s\"?</string>
     <string name="edit_feed_submit">Cadw</string>
     <string name="dialog_cancel">Diddymu</string>
@@ -179,7 +179,6 @@
     <string name="reader_image_visibility_always_hide">Rhwystro delweddau</string>
     <string name="reader_image_visibility_always_show">Dangos delweddau bob amser</string>
     <string name="reader_image_visibility_label">Delweddau</string>
-    <string name="layout_preference_responsive">Ymatebol</string>
     <string name="end_of_feed_text">Wedi darllen popeth!</string>
     <string name="unauthorized_dialog_description">Roedd broblem wrth gysylltu â\'ch cyfrif. Mewngofnodwch eto.</string>
     <string name="add_account_reader_subtitle">API Google Reader hunan-gynnal</string>
@@ -202,12 +201,11 @@
     <string name="settings_gestures_list_back_navigation_open_drawer">Agor y drôr llywio</string>
     <string name="crash_log_export_item_subtitle">Mae logiau chwalu yn cael eu cadw mewn ffeil i\'w rhannu gyda\'r datblygwr</string>
     <string name="settings_enable_refresh_call_to_action">Yn gyntaf, galluogwch adnewyddu\'n gyfnodol</string>
-    <string name="settings_notifications_select_none">Dewis dim</string>
-    <string name="settings_notifications_select_all">Dewis y cwbl</string>
+    <string name="settings_select_none">Dewis dim</string>
+    <string name="settings_select_all">Dewis y cwbl</string>
     <string name="settings_mark_read_on_scroll">Nodi fel ei ddarllen wrth sgrolio</string>
     <string name="settings_gestures_reader_tap_to_page_title">Sgrolio sgrin bapur electronig</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Tapio cornel i\'r gwaelod i lywio cynnwys yr erthygl</string>
-    <string name="layout_preference_label">Llunwedd a ffafrir</string>
     <string name="add_account_feedbin_signup_link_text">Crëwch gyfrif yma.</string>
     <string name="add_account_freshrss_signup_prompt">Nid oes gennych weinydd FreshRSS?</string>
     <string name="add_account_freshrss_signup_link_text">Dysgu mwy.</string>
@@ -238,6 +236,7 @@
     <string name="freshrss_labels_create_dialog_save">Cadw</string>
     <string name="freshrss_nav_headline_my_labels">Fy Labeli</string>
     <string name="full_content_error_generic">Wedi methu dehongli erthygl</string>
+    <string name="full_content_error_forbidden">Nôl wedi\'i rwystro gan y wefan</string>
     <string name="image_preview_menu_option_medium">Canolig</string>
     <string name="settings_gestures_list_swipe_up">Llusgo i fyny</string>
     <string name="article_vertical_open_article_in_browser">Agor yr erthygl mewn porwr</string>
@@ -254,7 +253,6 @@
     <string name="nav_headline_saved_searches">Chwiliadau</string>
     <string name="delete_tag_error">Bu gwall wrth ddileu tag</string>
     <string name="tag_name_title">Enw</string>
-    <string name="settings_options_reader_show_bottom_toolbar">Dangos gweithredoedd ar y bar offer gwaelod</string>
     <string name="article_list_swipe_disabled">Wedi\'i analluogi</string>
     <string name="article_list_swipe_next_feed">Mynd i\'r ffrwd nesaf</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Llusgo i\'r chwith neu\'r dde i lywio erthyglau</string>

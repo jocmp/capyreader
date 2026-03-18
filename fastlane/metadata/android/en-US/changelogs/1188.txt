@@ -1,0 +1,4 @@
+• Ensure pure black mode works with "Dynamic" theme
+• Fix article parser handling for characters with umlauts
+• Update custom article parsers for radio-canada.ca and terminaltrove.com
+• Update translations for Danish and Spanish thanks to volunteers!
