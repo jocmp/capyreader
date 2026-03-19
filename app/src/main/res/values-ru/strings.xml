@@ -338,7 +338,7 @@
     <string name="article_actions_delete_page_title">Удалить</string>
     <string name="article_actions_delete_page_message">Вы уверены, что хотите удалить эту страницу?</string>
     <string name="article_actions_delete_page_confirm">Удалить</string>
-    <string name="settings_account_refresh_value">%1$s ás %2$s</string>
+    <string name="settings_account_refresh_value">%1$s в %2$s</string>
     <string name="settings_account_refresh_value_today">Сегодня в %1$s</string>
     <string name="settings_account_never_refreshed">Никогда</string>
     <string name="settings_accent_colors">Цвета акцентов</string>
