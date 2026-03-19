@@ -1,0 +1,4 @@
+• Fix formatting for attackanddefense.dev title
+• Fix bookmarks export encoding for German umlauts
+• Fall back to top-level feed image for podcasts items without an image
+• Update translations for Bulgarian, German, Estonian, Russian, and Chinese thanks to volunteers!
