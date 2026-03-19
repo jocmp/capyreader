@@ -1,0 +1,13 @@
+Wie sein Namensgeber (Capy = Wasserschwein) ist Capy Reader eine kleine RSS Leseapp mit Fokus auf Zugänglichkeit und Einfachheit.
+
+Eine Auswahl der verfügbaren Funktionen:
+
+• Synchronisierung mit Feedbin, FreshRSS oder direkt auf dein Gerät
+• Behalte die Übersicht über gelesene und gemerkte Artikel
+• Artikelsuche
+• Schlagzeilen-Widget
+• Benachrichtigungen
+• Integrierte Anzeige der Artikel
+• Dunkler Modus
+• Unterstützung für große Bildschirme
+• Import und Export von gesicherten Feeds
