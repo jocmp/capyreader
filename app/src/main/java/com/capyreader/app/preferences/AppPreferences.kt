@@ -219,5 +219,8 @@ class AppPreferences(context: Context) {
 
         val toggleStarKeyCode: Preference<Int>
             get() = preferenceStore.getInt("controls_toggle_star", KeyEvent.KEYCODE_BUTTON_A)
+
+        val scrollDistancePercent: Preference<Float>
+            get() = preferenceStore.getFloat("controls_scroll_distance_percent", 0.85f)
     }
 }

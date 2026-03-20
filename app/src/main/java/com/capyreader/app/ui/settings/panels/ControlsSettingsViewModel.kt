@@ -1,6 +1,7 @@
 package com.capyreader.app.ui.settings.panels
 
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
@@ -22,6 +23,9 @@ class ControlsSettingsViewModel(
         private set
 
     var toggleStarKeyCode by mutableIntStateOf(controlsOptions.toggleStarKeyCode.get())
+        private set
+
+    var scrollDistancePercent by mutableFloatStateOf(controlsOptions.scrollDistancePercent.get())
         private set
 
     fun updateScrollUpKeyCode(keyCode: Int) {
@@ -47,6 +51,11 @@ class ControlsSettingsViewModel(
     fun updateToggleStarKeyCode(keyCode: Int) {
         toggleStarKeyCode = keyCode
         controlsOptions.toggleStarKeyCode.set(keyCode)
+    }
+
+    fun updateScrollDistancePercent(percent: Float) {
+        scrollDistancePercent = percent
+        controlsOptions.scrollDistancePercent.set(percent)
     }
 
     private val controlsOptions: AppPreferences.ControlsOptions

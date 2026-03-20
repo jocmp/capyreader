@@ -31,6 +31,8 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
@@ -145,6 +147,13 @@ fun ArticleView(
 
     val contentPadding = rememberContentPadding(pinToolbars)
 
+    val scrollDistancePercent by appPreferences.controlsOptions.scrollDistancePercent.collectChangesWithDefault()
+    val configuration = LocalConfiguration.current
+    val density = LocalDensity.current
+    val scrollAmount = with(density) {
+        configuration.screenHeightDp.dp.toPx() * scrollDistancePercent
+    }
+
     CompositionLocalProvider(
         LocalSnackbarHost provides snackbarHostState,
     ) {
@@ -163,6 +172,7 @@ fun ArticleView(
                     previousArticleKeyCode = appPreferences.controlsOptions.previousArticleKeyCode.get(),
                     nextArticleKeyCode = appPreferences.controlsOptions.nextArticleKeyCode.get(),
                     toggleStarKeyCode = appPreferences.controlsOptions.toggleStarKeyCode.get(),
+                    scrollAmount = scrollAmount,
                 )
                 .nestedScroll(scrollState.connection)
         ) {

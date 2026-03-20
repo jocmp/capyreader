@@ -2,15 +2,22 @@ package com.capyreader.app.ui.settings.panels
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Slider
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlin.math.roundToInt
 import com.capyreader.app.R
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.settings.KeyBindingPreference
@@ -27,11 +34,13 @@ fun ControlsSettingsPanel(
         previousArticleKeyCode = viewModel.previousArticleKeyCode,
         nextArticleKeyCode = viewModel.nextArticleKeyCode,
         toggleStarKeyCode = viewModel.toggleStarKeyCode,
+        scrollDistancePercent = viewModel.scrollDistancePercent,
         updateScrollUpKeyCode = viewModel::updateScrollUpKeyCode,
         updateScrollDownKeyCode = viewModel::updateScrollDownKeyCode,
         updatePreviousArticleKeyCode = viewModel::updatePreviousArticleKeyCode,
         updateNextArticleKeyCode = viewModel::updateNextArticleKeyCode,
         updateToggleStarKeyCode = viewModel::updateToggleStarKeyCode,
+        updateScrollDistancePercent = viewModel::updateScrollDistancePercent,
     )
 }
 
@@ -42,11 +51,13 @@ private fun ControlsSettingsPanelView(
     previousArticleKeyCode: Int,
     nextArticleKeyCode: Int,
     toggleStarKeyCode: Int,
+    scrollDistancePercent: Float,
     updateScrollUpKeyCode: (Int) -> Unit,
     updateScrollDownKeyCode: (Int) -> Unit,
     updatePreviousArticleKeyCode: (Int) -> Unit,
     updateNextArticleKeyCode: (Int) -> Unit,
     updateToggleStarKeyCode: (Int) -> Unit,
+    updateScrollDistancePercent: (Float) -> Unit,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -85,6 +96,27 @@ private fun ControlsSettingsPanelView(
                 )
             }
         }
+        FormSection(title = stringResource(R.string.settings_controls_scroll_distance)) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(text = stringResource(R.string.settings_controls_scroll_distance))
+                    Text(text = "${(scrollDistancePercent * 100).roundToInt()}%")
+                }
+                Slider(
+                    value = scrollDistancePercent,
+                    onValueChange = updateScrollDistancePercent,
+                    valueRange = 0.1f..1.0f,
+                )
+            }
+        }
         Spacer(Modifier.height(16.dp))
     }
 }
@@ -99,11 +131,13 @@ fun ControlsSettingsPanelPreview() {
             previousArticleKeyCode = 21,
             nextArticleKeyCode = 22,
             toggleStarKeyCode = 96,
+            scrollDistancePercent = 0.85f,
             updateScrollUpKeyCode = {},
             updateScrollDownKeyCode = {},
             updatePreviousArticleKeyCode = {},
             updateNextArticleKeyCode = {},
             updateToggleStarKeyCode = {},
+            updateScrollDistancePercent = {},
         )
     }
 }

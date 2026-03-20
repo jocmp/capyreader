@@ -211,6 +211,7 @@
     <string name="settings_controls_previous_article">Previous Article</string>
     <string name="settings_controls_next_article">Next Article</string>
     <string name="settings_controls_toggle_star">Toggle Star</string>
+    <string name="settings_controls_scroll_distance">Scroll Distance</string>
     <string name="settings_controls_press_a_key">Press a key…</string>
     <string name="settings_controls_clear">Clear</string>
     <string name="settings_account_title">Account</string>

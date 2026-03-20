@@ -12,8 +12,6 @@ import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
 import kotlinx.coroutines.launch
 
-private const val SCROLL_AMOUNT = 300f
-
 fun Modifier.inputKeyHandler(
     scrollState: ScrollState?,
     onSelectPrevious: () -> Unit,
@@ -24,6 +22,7 @@ fun Modifier.inputKeyHandler(
     previousArticleKeyCode: Int,
     nextArticleKeyCode: Int,
     toggleStarKeyCode: Int,
+    scrollAmount: Float,
 ): Modifier = composed {
     val scope = rememberCoroutineScope()
 
@@ -33,11 +32,11 @@ fun Modifier.inputKeyHandler(
         val keyCode = keyEvent.key.nativeKeyCode
         when (keyCode) {
             scrollUpKeyCode -> {
-                scrollState?.let { scope.launch { it.scrollBy(-SCROLL_AMOUNT) } }
+                scrollState?.let { scope.launch { it.scrollBy(-scrollAmount) } }
                 true
             }
             scrollDownKeyCode -> {
-                scrollState?.let { scope.launch { it.scrollBy(SCROLL_AMOUNT) } }
+                scrollState?.let { scope.launch { it.scrollBy(scrollAmount) } }
                 true
             }
             previousArticleKeyCode -> {

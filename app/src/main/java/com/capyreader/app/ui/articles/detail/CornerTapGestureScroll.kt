@@ -44,10 +44,12 @@ fun CornerTapGestureScroll(
         return content()
     }
 
+    val scrollDistancePercent by appPreferences.controlsOptions.scrollDistancePercent.collectChangesWithDefault()
+
     val offset = barOffsetsPx(pinToolbars)
     var columnHeightPx by remember { mutableFloatStateOf(0f) }
-    val jumpHeight by remember {
-        derivedStateOf { (columnHeightPx - offset) * JUMP_PROPORTION }
+    val jumpHeight by remember(scrollDistancePercent) {
+        derivedStateOf { (columnHeightPx - offset) * scrollDistancePercent }
     }
 
     val back = back(jumpHeight = jumpHeight)
@@ -134,5 +136,3 @@ private fun barOffsetsPx(pinToolbars: Boolean): Float {
         (ArticleBarDefaults.topBarOffset + ArticleBarDefaults.BottomBarHeight + navBarPadding).toPx()
     }
 }
-
-private const val JUMP_PROPORTION = 0.96f
