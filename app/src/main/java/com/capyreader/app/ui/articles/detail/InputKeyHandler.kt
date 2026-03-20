@@ -1,6 +1,5 @@
 package com.capyreader.app.ui.articles.detail
 
-import android.view.KeyEvent
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.runtime.rememberCoroutineScope
@@ -15,35 +14,41 @@ import kotlinx.coroutines.launch
 
 private const val SCROLL_AMOUNT = 300f
 
-fun Modifier.gameControllerHandler(
+fun Modifier.inputKeyHandler(
     scrollState: ScrollState?,
     onSelectPrevious: () -> Unit,
     onSelectNext: () -> Unit,
     onToggleStar: () -> Unit,
+    scrollUpKeyCode: Int,
+    scrollDownKeyCode: Int,
+    previousArticleKeyCode: Int,
+    nextArticleKeyCode: Int,
+    toggleStarKeyCode: Int,
 ): Modifier = composed {
     val scope = rememberCoroutineScope()
 
     onPreviewKeyEvent { keyEvent ->
         if (keyEvent.type != KeyEventType.KeyDown) return@onPreviewKeyEvent false
 
-        when (keyEvent.key.nativeKeyCode) {
-            KeyEvent.KEYCODE_DPAD_UP -> {
+        val keyCode = keyEvent.key.nativeKeyCode
+        when (keyCode) {
+            scrollUpKeyCode -> {
                 scrollState?.let { scope.launch { it.scrollBy(-SCROLL_AMOUNT) } }
                 true
             }
-            KeyEvent.KEYCODE_DPAD_DOWN -> {
+            scrollDownKeyCode -> {
                 scrollState?.let { scope.launch { it.scrollBy(SCROLL_AMOUNT) } }
                 true
             }
-            KeyEvent.KEYCODE_DPAD_LEFT -> {
+            previousArticleKeyCode -> {
                 onSelectPrevious()
                 true
             }
-            KeyEvent.KEYCODE_DPAD_RIGHT -> {
+            nextArticleKeyCode -> {
                 onSelectNext()
                 true
             }
-            KeyEvent.KEYCODE_BUTTON_A -> {
+            toggleStarKeyCode -> {
                 onToggleStar()
                 true
             }

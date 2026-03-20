@@ -204,6 +204,15 @@
     <string name="settings_panel_display_title">Display &amp; Appearance</string>
     <string name="settings_panel_notifications_title">Notifications</string>
     <string name="settings_panel_gestures_title">Gestures</string>
+    <string name="settings_panel_controls_title">Controls</string>
+    <string name="settings_controls_reader_controls">Reader Controls</string>
+    <string name="settings_controls_scroll_up">Scroll Up</string>
+    <string name="settings_controls_scroll_down">Scroll Down</string>
+    <string name="settings_controls_previous_article">Previous Article</string>
+    <string name="settings_controls_next_article">Next Article</string>
+    <string name="settings_controls_toggle_star">Toggle Star</string>
+    <string name="settings_controls_press_a_key">Press a key…</string>
+    <string name="settings_controls_clear">Clear</string>
     <string name="settings_account_title">Account</string>
     <string name="settings_about_title">About</string>
     <string name="settings_list_top_bar_title">Settings</string>

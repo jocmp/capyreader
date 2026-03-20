@@ -1,6 +1,7 @@
 package com.capyreader.app.preferences
 
 import android.content.Context
+import android.view.KeyEvent
 import androidx.preference.PreferenceManager
 import com.capyreader.app.common.FeedGroup
 import com.capyreader.app.common.ImagePreview
@@ -27,6 +28,8 @@ class AppPreferences(context: Context) {
     val readerOptions = ReaderOptions(preferenceStore)
 
     val articleListOptions = ArticleListOptions(preferenceStore)
+
+    val controlsOptions = ControlsOptions(preferenceStore)
 
     val isLoggedIn
         get() = accountID.get().isNotBlank()
@@ -199,5 +202,22 @@ class AppPreferences(context: Context) {
                 "after_read_all_behavior",
                 AfterReadAllBehavior.default
             )
+    }
+
+    class ControlsOptions(private val preferenceStore: PreferenceStore) {
+        val scrollUpKeyCode: Preference<Int>
+            get() = preferenceStore.getInt("controls_scroll_up", KeyEvent.KEYCODE_DPAD_UP)
+
+        val scrollDownKeyCode: Preference<Int>
+            get() = preferenceStore.getInt("controls_scroll_down", KeyEvent.KEYCODE_DPAD_DOWN)
+
+        val previousArticleKeyCode: Preference<Int>
+            get() = preferenceStore.getInt("controls_previous_article", KeyEvent.KEYCODE_DPAD_LEFT)
+
+        val nextArticleKeyCode: Preference<Int>
+            get() = preferenceStore.getInt("controls_next_article", KeyEvent.KEYCODE_DPAD_RIGHT)
+
+        val toggleStarKeyCode: Preference<Int>
+            get() = preferenceStore.getInt("controls_toggle_star", KeyEvent.KEYCODE_BUTTON_A)
     }
 }

@@ -152,11 +152,16 @@ fun ArticleView(
                 .fillMaxSize()
                 .focusRequester(focusRequester)
                 .focusable()
-                .gameControllerHandler(
+                .inputKeyHandler(
                     scrollState = controllerScrollState,
                     onSelectPrevious = { selectPrevious() },
                     onSelectNext = { selectNext() },
                     onToggleStar = onToggleStar,
+                    scrollUpKeyCode = appPreferences.controlsOptions.scrollUpKeyCode.get(),
+                    scrollDownKeyCode = appPreferences.controlsOptions.scrollDownKeyCode.get(),
+                    previousArticleKeyCode = appPreferences.controlsOptions.previousArticleKeyCode.get(),
+                    nextArticleKeyCode = appPreferences.controlsOptions.nextArticleKeyCode.get(),
+                    toggleStarKeyCode = appPreferences.controlsOptions.toggleStarKeyCode.get(),
                 )
                 .nestedScroll(scrollState.connection)
         ) {
