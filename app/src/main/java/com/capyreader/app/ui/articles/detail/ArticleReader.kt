@@ -56,6 +56,7 @@ fun ArticleReader(
     onPauseAudio: () -> Unit = {},
     currentAudioUrl: String? = null,
     isAudioPlaying: Boolean = false,
+    scrollState: ScrollState? = null,
 ) {
     val (shareLink, setShareLink) = rememberSaveableShareLink()
     val (shareImageUrl, setImageUrl) = rememberSaveable { mutableStateOf<String?>(null) }
@@ -140,7 +141,7 @@ fun ArticleReader(
             )
         }
     } else {
-        ScrollableWebView(webViewState, article, showImages, pinToolbars)
+        ScrollableWebView(webViewState, article, showImages, pinToolbars, scrollState)
     }
 
     ArticleStyleListener(webView = webViewState.webView)
@@ -167,9 +168,15 @@ fun ArticleReader(
 }
 
 @Composable
-fun ScrollableWebView(webViewState: WebViewState, article: Article, showImages: Boolean, pinToolbars: Boolean) {
+fun ScrollableWebView(
+    webViewState: WebViewState,
+    article: Article,
+    showImages: Boolean,
+    pinToolbars: Boolean,
+    externalScrollState: ScrollState? = null,
+) {
     var maxHeight by remember { mutableFloatStateOf(0f) }
-    val scrollState = rememberSaveable(article.id, saver = ScrollState.Saver) {
+    val scrollState = externalScrollState ?: rememberSaveable(article.id, saver = ScrollState.Saver) {
         ScrollState(initial = 0)
     }
 

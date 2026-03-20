@@ -1,5 +1,7 @@
 package com.capyreader.app.ui.articles.detail
 
+import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
@@ -21,8 +23,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -125,8 +130,14 @@ fun ArticleView(
     val scrollState = rememberArticleScrollState()
     val showToolBar = pinToolbars || !scrollState.isScrollingDown
 
+    val controllerScrollState = rememberSaveable(article.id, saver = ScrollState.Saver) {
+        ScrollState(initial = 0)
+    }
+    val focusRequester = remember { FocusRequester() }
+
     LaunchedEffect(article.id) {
         scrollState.reset()
+        focusRequester.requestFocus()
     }
 
     val snackbarHostState = remember { SnackbarHostState() }
@@ -136,9 +147,19 @@ fun ArticleView(
     CompositionLocalProvider(
         LocalSnackbarHost provides snackbarHostState,
     ) {
-        BoxWithConstraints(Modifier
-            .fillMaxSize()
-            .nestedScroll(scrollState.connection)) {
+        BoxWithConstraints(
+            Modifier
+                .fillMaxSize()
+                .focusRequester(focusRequester)
+                .focusable()
+                .gameControllerHandler(
+                    scrollState = controllerScrollState,
+                    onSelectPrevious = { selectPrevious() },
+                    onSelectNext = { selectNext() },
+                    onToggleStar = onToggleStar,
+                )
+                .nestedScroll(scrollState.connection)
+        ) {
           if (maxWidth > 0.dp) {
             Box(
                 modifier = Modifier
@@ -172,6 +193,7 @@ fun ArticleView(
                                 onPauseAudio = onPauseAudio,
                                 currentAudioUrl = currentAudioUrl,
                                 isAudioPlaying = isAudioPlaying,
+                                scrollState = controllerScrollState,
                             )
                         }
                     }
