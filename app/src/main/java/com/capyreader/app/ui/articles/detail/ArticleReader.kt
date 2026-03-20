@@ -211,17 +211,21 @@ fun ScrollableWebView(
         }
     }
 
-    LaunchedEffect(Unit) {
-        snapshotFlow { scrollState.value to maxHeight }
-            .collect { (value, height) ->
-                if (value > 0 && height > 0f) {
-                    lastScrollYPercent = value / height
+    // Only track/restore scroll position when using internal scroll state.
+    // When external scroll state is provided, the caller manages scroll position.
+    if (externalScrollState == null) {
+        LaunchedEffect(Unit) {
+            snapshotFlow { scrollState.value to maxHeight }
+                .collect { (value, height) ->
+                    if (value > 0 && height > 0f) {
+                        lastScrollYPercent = value / height
+                    }
                 }
+        }
+        LaunchedEffect(scrollState.maxValue, maxHeight) {
+            if (scrollState.maxValue > 0 && maxHeight > 0) {
+                scrollState.scrollTo((lastScrollYPercent * maxHeight).roundToInt())
             }
-    }
-    LaunchedEffect(scrollState.maxValue, maxHeight) {
-        if (scrollState.maxValue > 0 && maxHeight > 0) {
-            scrollState.scrollTo((lastScrollYPercent * maxHeight).roundToInt())
         }
     }
 }

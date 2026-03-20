@@ -137,6 +137,7 @@ fun ArticleView(
 
     LaunchedEffect(article.id) {
         scrollState.reset()
+        controllerScrollState.scrollTo(0)
         focusRequester.requestFocus()
     }
 
