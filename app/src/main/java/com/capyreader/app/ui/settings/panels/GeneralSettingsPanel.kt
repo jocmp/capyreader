@@ -234,7 +234,7 @@ fun GeneralSettingsPanelView(
             title = stringResource(R.string.settings_section_advanced)
         ) {
             Column {
-                CrashLogExportItem()
+                CrashLogExportItem(source = source)
 
                 AutoDeleteMenu(
                     updateAutoDelete = updateAutoDelete,

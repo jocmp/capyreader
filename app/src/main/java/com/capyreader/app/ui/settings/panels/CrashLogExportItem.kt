@@ -13,18 +13,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.capyreader.app.R
 import com.capyreader.app.logging.CrashLogExport
 import com.capyreader.app.ui.theme.CapyTheme
+import com.jocmp.capy.accounts.Source
 import kotlinx.coroutines.launch
 
 @Composable
 fun CrashLogExportItem(
-    exception: Exception? = null
+    source: Source,
+    exception: Exception? = null,
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
     val export = {
         coroutineScope.launch {
-            CrashLogExport(context).export(exception)
+            CrashLogExport(context, source).export(exception)
         }
     }
 
@@ -44,6 +46,6 @@ fun CrashLogExportItem(
 @Composable
 private fun CrashScreenPreview() {
     CapyTheme() {
-        CrashLogExportItem(exception = RuntimeException("Dummy"))
+        CrashLogExportItem(source = Source.LOCAL, exception = RuntimeException("Dummy"))
     }
 }
