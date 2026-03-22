@@ -288,10 +288,10 @@ internal class ReaderAccountDelegate(
     }
 
     private suspend fun refreshTopLevelArticles() {
-        CapyLog.measureAsync("refresh.feeds") { refreshFeeds() }
-        CapyLog.measureAsync("refresh.saved_searches") { refreshAllSavedSearches() }
-        CapyLog.measureAsync("refresh.article_state") { refreshArticleState() }
-        CapyLog.measureAsync("refresh.fetch_articles") { fetchMissingArticles() }
+        refreshFeeds()
+        refreshAllSavedSearches()
+        refreshArticleState()
+        fetchMissingArticles()
     }
 
     private fun upsertTaggings(subscription: Subscription) {
@@ -418,18 +418,15 @@ internal class ReaderAccountDelegate(
                 }
             }
 
-            chunks.forEachIndexed { index, chunkedIDs ->
-                var response: Response<com.jocmp.readerclient.StreamItemsContentsResult>? = null
-                CapyLog.measureAsync("fetch_chunk", mapOf("chunk" to index, "ids" to chunkedIDs.size)) {
-                    response = withPostToken {
-                        googleReader.streamItemsContents(
-                            postToken = postToken.get(),
-                            ids = chunkedIDs.map { it }
-                        )
-                    }
+            chunks.forEach { chunkedIDs ->
+                val response = withPostToken {
+                    googleReader.streamItemsContents(
+                        postToken = postToken.get(),
+                        ids = chunkedIDs.map { it }
+                    )
                 }
 
-                val result = response?.body() ?: return@forEachIndexed
+                val result = response.body() ?: return@forEach
 
                 writeChannel.send(result.items)
             }
@@ -486,14 +483,11 @@ internal class ReaderAccountDelegate(
 
     private fun saveArticles(items: List<Item>) {
         val summaries = mutableMapOf<String, String?>()
-        CapyLog.measure("save_articles.jsoup", mapOf("count" to items.size)) {
-            items.forEach { item ->
-                summaries[item.hexID] = item.summary.content?.let { Jsoup.parse(it).text() }
-            }
+        items.forEach { item ->
+            summaries[item.hexID] = item.summary.content?.let { Jsoup.parse(it).text() }
         }
 
-        CapyLog.measure("save_articles.db", mapOf("count" to items.size)) {
-            database.transactionWithErrorHandling {
+        database.transactionWithErrorHandling {
                 val labels = savedSearchRecords.allIDs()
 
                 items.forEach { item ->
@@ -546,7 +540,6 @@ internal class ReaderAccountDelegate(
                     )
                 }
             }
-        }
         }
     }
 
