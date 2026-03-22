@@ -22,6 +22,16 @@ class StdErrLogging : Logging {
         error.printStackTrace(System.err)
     }
 
+    override fun measure(event: String, data: Map<String, Any?>, block: () -> Unit) {
+        val duration = kotlin.time.measureTime(block)
+        System.err.println("$TAG T ${serializeData(event, data + ("ms" to duration.inWholeMilliseconds))}")
+    }
+
+    override suspend fun measureAsync(event: String, data: Map<String, Any?>, block: suspend () -> Unit) {
+        val duration = kotlin.time.measureTime { block() }
+        System.err.println("$TAG T ${serializeData(event, data + ("ms" to duration.inWholeMilliseconds))}")
+    }
+
     private fun serializeData(event: String, data: Map<String, Any?>): String {
         return "event=${event.padEnd(15, ' ')}" + data.map { (key, value) -> "$key=$value" }.joinToString(" ")
     }

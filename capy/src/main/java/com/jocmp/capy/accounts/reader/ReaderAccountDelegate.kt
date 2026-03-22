@@ -11,7 +11,6 @@ import com.jocmp.capy.accounts.feedbin.FeedbinAccountDelegate.Companion.MAX_CREA
 import com.jocmp.capy.accounts.withErrorHandling
 import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.common.launchIO
-import com.jocmp.capy.common.toDateTimeFromSeconds
 import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.common.withResult
 import com.jocmp.capy.db.Database
@@ -36,6 +35,8 @@ import com.jocmp.readerclient.SubscriptionQuickAddResult
 import com.jocmp.readerclient.Tag
 import com.jocmp.readerclient.ext.editSubscription
 import com.jocmp.readerclient.ext.streamItemsIDs
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import org.jsoup.Jsoup
@@ -287,10 +288,10 @@ internal class ReaderAccountDelegate(
     }
 
     private suspend fun refreshTopLevelArticles() {
-        refreshFeeds()
-        refreshAllSavedSearches()
-        refreshArticleState()
-        fetchMissingArticles()
+        CapyLog.measureAsync("refresh.feeds") { refreshFeeds() }
+        CapyLog.measureAsync("refresh.saved_searches") { refreshAllSavedSearches() }
+        CapyLog.measureAsync("refresh.article_state") { refreshArticleState() }
+        CapyLog.measureAsync("refresh.fetch_articles") { fetchMissingArticles() }
     }
 
     private fun upsertTaggings(subscription: Subscription) {
@@ -407,17 +408,34 @@ internal class ReaderAccountDelegate(
             return
         }
 
-        ids.chunked(MAX_PAGINATED_ITEM_LIMIT).forEach { chunkedIDs ->
-            val response = withPostToken {
-                googleReader.streamItemsContents(
-                    postToken = postToken.get(),
-                    ids = chunkedIDs.map { it }
-                )
+        val chunks = ids.chunked(MAX_PAGINATED_ITEM_LIMIT)
+        val writeChannel = Channel<List<Item>>(capacity = 1)
+
+        coroutineScope {
+            val writer = launch(Dispatchers.IO) {
+                for (items in writeChannel) {
+                    saveArticles(items)
+                }
             }
 
-            val result = response.body() ?: return@forEach
+            chunks.forEachIndexed { index, chunkedIDs ->
+                var response: Response<com.jocmp.readerclient.StreamItemsContentsResult>? = null
+                CapyLog.measureAsync("fetch_chunk", mapOf("chunk" to index, "ids" to chunkedIDs.size)) {
+                    response = withPostToken {
+                        googleReader.streamItemsContents(
+                            postToken = postToken.get(),
+                            ids = chunkedIDs.map { it }
+                        )
+                    }
+                }
 
-            saveArticles(result.items)
+                val result = response?.body() ?: return@forEachIndexed
+
+                writeChannel.send(result.items)
+            }
+
+            writeChannel.close()
+            writer.join()
         }
     }
 
@@ -467,27 +485,35 @@ internal class ReaderAccountDelegate(
     }
 
     private fun saveArticles(items: List<Item>) {
-        database.transactionWithErrorHandling {
-            val labels = savedSearchRecords.allIDs()
-
+        val summaries = mutableMapOf<String, String?>()
+        CapyLog.measure("save_articles.jsoup", mapOf("count" to items.size)) {
             items.forEach { item ->
-                val updated = TimeHelpers.nowUTC()
-                val enclosures = ReaderEnclosureParsing.validEnclosures(item)
-                val enclosureType = enclosures.firstOrNull()?.type
+                summaries[item.hexID] = item.summary.content?.let { Jsoup.parse(it).text() }
+            }
+        }
 
-                database.articlesQueries.create(
-                    id = item.hexID,
-                    feed_id = item.origin.streamId,
-                    title = item.title,
-                    author = item.author,
-                    content_html = item.content?.content ?: item.summary.content,
-                    extracted_content_url = null,
-                    summary = item.summary.content?.let { Jsoup.parse(it).text() },
-                    url = item.canonical.firstOrNull()?.href,
-                    image_url = ReaderEnclosureParsing.parsedImageURL(item),
-                    published_at = item.published,
-                    enclosure_type = enclosureType,
-                )
+        CapyLog.measure("save_articles.db", mapOf("count" to items.size)) {
+            database.transactionWithErrorHandling {
+                val labels = savedSearchRecords.allIDs()
+
+                items.forEach { item ->
+                    val updated = TimeHelpers.nowUTC()
+                    val enclosures = ReaderEnclosureParsing.validEnclosures(item)
+                    val enclosureType = enclosures.firstOrNull()?.type
+
+                    database.articlesQueries.create(
+                        id = item.hexID,
+                        feed_id = item.origin.streamId,
+                        title = item.title,
+                        author = item.author,
+                        content_html = item.content?.content ?: item.summary.content,
+                        extracted_content_url = null,
+                        summary = summaries[item.hexID],
+                        url = item.canonical.firstOrNull()?.href,
+                        image_url = ReaderEnclosureParsing.parsedImageURL(item),
+                        published_at = item.published,
+                        enclosure_type = enclosureType,
+                    )
 
                 articleRecords.updateStatus(
                     articleID = item.hexID,
@@ -520,6 +546,7 @@ internal class ReaderAccountDelegate(
                     )
                 }
             }
+        }
         }
     }
 
@@ -583,7 +610,7 @@ internal class ReaderAccountDelegate(
     }
 
     companion object {
-        const val MAX_PAGINATED_ITEM_LIMIT = 100
+        const val MAX_PAGINATED_ITEM_LIMIT = 250
 
         private const val TAG = "reader"
 
@@ -591,7 +618,7 @@ internal class ReaderAccountDelegate(
     }
 }
 
-private val ALREADY_SUBSCRIBED_PREFIX = "Already subscribed!"
+private const val ALREADY_SUBSCRIBED_PREFIX = "Already subscribed!"
 
 private val SubscriptionQuickAddResult.alreadySubscribedURL: String?
     get() {

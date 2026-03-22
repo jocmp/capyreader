@@ -26,4 +26,12 @@ object CapyLog : Logging {
     ) {
         delegate.error(event, error, data)
     }
+
+    override fun measure(event: String, data: Map<String, Any?>, block: () -> Unit) {
+        delegate.measure(event, data, block)
+    }
+
+    override suspend fun measureAsync(event: String, data: Map<String, Any?>, block: suspend () -> Unit) {
+        delegate.measureAsync(event, data, block)
+    }
 }

@@ -15,7 +15,7 @@
 .idea/deviceManager.xml
 
 .DS_Store
-/build
+**/build
 /captures
 .externalNativeBuild
 .cxx
@@ -25,6 +25,7 @@ fastlane/.gplay_metadata/
 app/release/
 app/google-services.json
 bench/bench.properties
+bench/data/
 
 # Secrets
 google-play-service-account.json
