@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import java.time.ZonedDateTime
 
-internal class ArticleRecords internal constructor(
+class ArticleRecords(
     private val database: Database
 ) {
     val byStatus = ByArticleStatus(database)

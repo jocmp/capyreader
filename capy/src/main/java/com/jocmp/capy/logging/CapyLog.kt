@@ -1,18 +1,22 @@
 package com.jocmp.capy.logging
 
-import android.util.Log
-
 object CapyLog : Logging {
+    private var delegate: Logging = StdErrLogging()
+
+    fun install(logging: Logging) {
+        delegate = logging
+    }
+
     override fun debug(event: String, data: Map<String, Any?>) {
-        Log.d(TAG, serializeData(event, data))
+        delegate.debug(event, data)
     }
 
     override fun info(event: String, data: Map<String, Any?>) {
-        Log.i(TAG, serializeData(event, data))
+        delegate.info(event, data)
     }
 
     override fun warn(event: String, data: Map<String, String?>) {
-        Log.w(TAG, serializeData(event, data))
+        delegate.warn(event, data)
     }
 
     override fun error(
@@ -20,12 +24,6 @@ object CapyLog : Logging {
         error: Throwable,
         data: Map<String, Any?>
     ) {
-        Log.e(TAG, serializeData(event, data), error)
+        delegate.error(event, error, data)
     }
-
-    private fun serializeData(event: String, data: Map<String, Any?>): String {
-        return "event=${event.padEnd(15, ' ')}" + data.map { (key, value) -> "$key=$value" }.joinToString(" ")
-    }
-
-    private const val TAG = "capy"
 }

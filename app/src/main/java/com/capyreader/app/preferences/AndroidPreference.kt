@@ -1,8 +1,9 @@
-package com.jocmp.capy.preferences
+package com.capyreader.app.preferences
 
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
 import androidx.core.content.edit
+import com.jocmp.capy.preferences.Preference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted

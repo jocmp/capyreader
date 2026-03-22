@@ -21,8 +21,8 @@ interface Credentials {
             username: String,
             password: String,
             url: String,
-            clientCertAlias: String,
-            clientCertManager: ClientCertManager,
+            clientCertAlias: String = "",
+            clientCertManager: ClientCertManager = ClientCertManager { builder, _ -> builder },
         ): Credentials {
             return when (source) {
                 Source.FEEDBIN -> FeedbinCredentials(username, password)

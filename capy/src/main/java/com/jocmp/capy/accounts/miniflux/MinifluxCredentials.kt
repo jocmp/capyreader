@@ -11,9 +11,9 @@ internal data class MinifluxCredentials(
     override val username: String,
     override val secret: String,
     override val url: String,
-    override val clientCertAlias: String,
+    override val clientCertAlias: String = "",
     override val source: Source,
-    private val clientCertManager: ClientCertManager,
+    private val clientCertManager: ClientCertManager = ClientCertManager { builder, _ -> builder },
 ) : Credentials {
     override suspend fun verify(): Result<Credentials> {
         val client = baseHttpClient()

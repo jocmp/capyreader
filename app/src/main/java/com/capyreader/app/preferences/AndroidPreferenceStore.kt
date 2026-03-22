@@ -1,13 +1,8 @@
-package com.jocmp.capy.preferences
+package com.capyreader.app.preferences
 
 import android.content.SharedPreferences
-import com.jocmp.capy.preferences.AndroidPreference.BooleanPrimitive
-import com.jocmp.capy.preferences.AndroidPreference.FloatPrimitive
-import com.jocmp.capy.preferences.AndroidPreference.IntPrimitive
-import com.jocmp.capy.preferences.AndroidPreference.LongPrimitive
-import com.jocmp.capy.preferences.AndroidPreference.Object
-import com.jocmp.capy.preferences.AndroidPreference.StringPrimitive
-import com.jocmp.capy.preferences.AndroidPreference.StringSetPrimitive
+import com.jocmp.capy.preferences.Preference
+import com.jocmp.capy.preferences.PreferenceStore
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 
@@ -17,27 +12,27 @@ class AndroidPreferenceStore(
     private val keyFlow = sharedPreferences.keyFlow
 
     override fun getString(key: String, defaultValue: String): Preference<String> {
-        return StringPrimitive(sharedPreferences, keyFlow, key, defaultValue)
+        return AndroidPreference.StringPrimitive(sharedPreferences, keyFlow, key, defaultValue)
     }
 
     override fun getLong(key: String, defaultValue: Long): Preference<Long> {
-        return LongPrimitive(sharedPreferences, keyFlow, key, defaultValue)
+        return AndroidPreference.LongPrimitive(sharedPreferences, keyFlow, key, defaultValue)
     }
 
     override fun getInt(key: String, defaultValue: Int): Preference<Int> {
-        return IntPrimitive(sharedPreferences, keyFlow, key, defaultValue)
+        return AndroidPreference.IntPrimitive(sharedPreferences, keyFlow, key, defaultValue)
     }
 
     override fun getFloat(key: String, defaultValue: Float): Preference<Float> {
-        return FloatPrimitive(sharedPreferences, keyFlow, key, defaultValue)
+        return AndroidPreference.FloatPrimitive(sharedPreferences, keyFlow, key, defaultValue)
     }
 
     override fun getBoolean(key: String, defaultValue: Boolean): Preference<Boolean> {
-        return BooleanPrimitive(sharedPreferences, keyFlow, key, defaultValue)
+        return AndroidPreference.BooleanPrimitive(sharedPreferences, keyFlow, key, defaultValue)
     }
 
     override fun getStringSet(key: String, defaultValue: Set<String>): Preference<Set<String>> {
-        return StringSetPrimitive(sharedPreferences, keyFlow, key, defaultValue)
+        return AndroidPreference.StringSetPrimitive(sharedPreferences, keyFlow, key, defaultValue)
     }
 
     override fun <T> getObject(
@@ -46,7 +41,7 @@ class AndroidPreferenceStore(
         serializer: (T) -> String,
         deserializer: (String) -> T,
     ): Preference<T> {
-        return Object(
+        return AndroidPreference.Object(
             preferences = sharedPreferences,
             keyFlow = keyFlow,
             key = key,

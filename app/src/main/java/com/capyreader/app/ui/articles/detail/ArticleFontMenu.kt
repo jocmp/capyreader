@@ -87,10 +87,10 @@ private fun Context.translationKey(option: FontOption): String {
 
 private fun findFont(fontOption: FontOption) = when (fontOption) {
     FontOption.SYSTEM_DEFAULT -> null
-    FontOption.ATKINSON_HYPERLEGIBLE -> Font(resId = com.jocmp.capy.R.font.atkinson_hyperlegible)
-    FontOption.INTER -> Font(resId = com.jocmp.capy.R.font.inter)
-    FontOption.JOST -> Font(resId = com.jocmp.capy.R.font.jost)
-    FontOption.LITERATA -> Font(resId = com.jocmp.capy.R.font.literata)
-    FontOption.POPPINS -> Font(resId = com.jocmp.capy.R.font.poppins)
-    FontOption.VOLLKORN -> Font(resId = com.jocmp.capy.R.font.vollkorn)
+    FontOption.ATKINSON_HYPERLEGIBLE -> Font(resId = R.font.atkinson_hyperlegible)
+    FontOption.INTER -> Font(resId = R.font.inter)
+    FontOption.JOST -> Font(resId = R.font.jost)
+    FontOption.LITERATA -> Font(resId = R.font.literata)
+    FontOption.POPPINS -> Font(resId = R.font.poppins)
+    FontOption.VOLLKORN -> Font(resId = R.font.vollkorn)
 }?.toFontFamily()

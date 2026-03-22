@@ -13,7 +13,7 @@ import com.jocmp.capy.articles.FontOption
 import com.jocmp.capy.articles.FontSize
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.articles.TextAlignment
-import com.jocmp.capy.preferences.AndroidPreferenceStore
+import com.capyreader.app.preferences.AndroidPreferenceStore
 import com.jocmp.capy.preferences.Preference
 import com.jocmp.capy.preferences.PreferenceStore
 import com.jocmp.capy.preferences.getEnum

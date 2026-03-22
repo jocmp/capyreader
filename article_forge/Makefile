@@ -1,9 +1,9 @@
 
 STYLE_OUT =  ./dist/stylesheet.css
-STYLE_RES ?= ../capy/src/main/assets/stylesheet.css
+STYLE_RES ?= ../app/src/main/assets/stylesheet.css
 TEMPLATE_OUT = ./dist/template.html
-TEMPLATE_RES ?= ../capy/src/main/res/raw/template.html
-MERCURY_JS_RES = ../capy/src/main/assets/mercury-parser.js
+TEMPLATE_RES ?= ../app/src/main/res/raw/template.html
+MERCURY_JS_RES = ../app/src/main/assets/mercury-parser.js
 
 SHELL:=/usr/bin/env bash
 

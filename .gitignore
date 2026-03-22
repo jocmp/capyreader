@@ -24,6 +24,7 @@ fastlane/report.xml
 fastlane/.gplay_metadata/
 app/release/
 app/google-services.json
+bench/bench.properties
 
 # Secrets
 google-play-service-account.json
