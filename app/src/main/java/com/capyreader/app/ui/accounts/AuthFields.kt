@@ -71,7 +71,7 @@ fun AuthFields(
     source: Source,
     onChooseClientCert: () -> Unit = {},
     onClearClientCert: () -> Unit = {},
-    clientCertAlias: String,
+    clientCertAlias: String = "",
     setApiTokenPreference: (Boolean) -> Unit = {},
 ) {
     val hasApiToken = source == Source.MINIFLUX_TOKEN
@@ -360,7 +360,6 @@ private fun AuthFieldsPreview() {
             onSubmit = {},
             username = "test@example.com",
             password = "its a secret to everyone",
-            clientCertAlias = "test certificate",
             loading = true,
             source = Source.FRESHRSS,
         )
@@ -377,7 +376,6 @@ private fun MinifluxAuthFieldsPreview() {
             onSubmit = {},
             username = "test@example.com",
             password = "its a secret to everyone",
-            clientCertAlias = "test certificate",
             loading = true,
             source = Source.MINIFLUX,
             errorMessage = "Oh drats",
@@ -394,7 +392,6 @@ private fun FreshRSSAuthFieldsPreview() {
             onSubmit = {},
             username = "test@example.com",
             password = "its a secret to everyone",
-            clientCertAlias = "test certificate",
             loading = true,
             source = Source.FRESHRSS,
         )

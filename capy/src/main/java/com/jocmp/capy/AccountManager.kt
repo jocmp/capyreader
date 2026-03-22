@@ -14,7 +14,7 @@ class AccountManager(
     private val databaseProvider: DatabaseProvider,
     private val preferenceStoreProvider: PreferenceStoreProvider,
     private val faviconPolicy: FaviconPolicy,
-    private val clientCertManager: ClientCertManager,
+    private val clientCertManager: ClientCertManager = ClientCertManager { builder, _ -> builder },
     private val userAgent: String,
     private val acceptLanguage: String,
 ) {
@@ -31,8 +31,8 @@ class AccountManager(
         username: String,
         password: String,
         url: String,
-        clientCertAlias: String,
-        source: Source
+        source: Source,
+        clientCertAlias: String = "",
     ): String {
         val accountID = createAccount(source = source)
 

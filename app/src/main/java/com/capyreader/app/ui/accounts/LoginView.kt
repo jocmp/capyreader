@@ -52,7 +52,7 @@ fun LoginView(
     url: String,
     username: String,
     password: String,
-    clientCertAlias: String,
+    clientCertAlias: String = "",
     loading: Boolean = false,
     errorMessage: String? = null,
     onUseApiTokenChange: (Boolean) -> Unit = {},
@@ -168,7 +168,6 @@ private fun LoginViewPreview() {
         LoginView(
             source = Source.FEEDBIN,
             url = "",
-            clientCertAlias = "",
             username = "test@example.com",
             password = "",
         )
@@ -189,7 +188,6 @@ private fun MinifluxLoginViewPreview() {
         LoginView(
             source = Source.MINIFLUX,
             url = "",
-            clientCertAlias = "",
             username = "test@example.com",
             password = "",
         )
@@ -210,7 +208,6 @@ private fun FreshRSSLoginViewPreview() {
         LoginView(
             source = Source.FRESHRSS,
             url = "",
-            clientCertAlias = "",
             username = "test@example.com",
             password = "",
         )
