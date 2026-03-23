@@ -50,7 +50,7 @@
     <string name="account_source_local">Lokalne</string>
     <string name="mark_all_read_dialog_submit">Potwierdź</string>
     <string name="auth_fields_password">Hasło</string>
-    <string name="settings_section_refresh">Odśwież</string>
+    <string name="settings_section_refresh">Ostatnia aktualizacja</string>
     <string name="theme_menu_option_light">Jasny</string>
     <string name="image_preview_menu_option_small">Mały</string>
     <string name="settings_panel_general_title">Ogólne</string>
@@ -332,4 +332,11 @@
     <string name="article_actions_delete_page_title">Usuń</string>
     <string name="article_actions_delete_page_message">Czy na pewno chcesz usunąć tę stronę?</string>
     <string name="article_actions_delete_page_confirm">Usuń</string>
+    <string name="settings_account_refresh_value">%1$s o %2$s</string>
+    <string name="settings_account_refresh_value_today">Dziś o %1$s</string>
+    <string name="settings_account_never_refreshed">Nigdy</string>
+    <string name="settings_accent_colors">Kolory akcentujące</string>
+    <string name="starred_export_button_text">Eksportuj artykuły oznaczone gwiazdką</string>
+    <string name="starred_exporter_success">Eksport zakończony</string>
+    <string name="starred_exporter_failure">Eksport nie powiódł się</string>
 </resources>
