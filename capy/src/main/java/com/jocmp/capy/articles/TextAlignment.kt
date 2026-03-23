@@ -2,7 +2,8 @@ package com.jocmp.capy.articles
 
 enum class TextAlignment {
     LEFT,
-    CENTER;
+    CENTER,
+    RIGHT;
 
     val toCSS: String
         get() = name.lowercase()
