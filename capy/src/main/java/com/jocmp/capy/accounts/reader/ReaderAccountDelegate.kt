@@ -35,10 +35,10 @@ import com.jocmp.readerclient.SubscriptionQuickAddResult
 import com.jocmp.readerclient.Tag
 import com.jocmp.readerclient.ext.editSubscription
 import com.jocmp.readerclient.ext.streamItemsIDs
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
 import org.jsoup.Jsoup
 import retrofit2.Response
 import java.io.IOException
@@ -408,31 +408,25 @@ internal class ReaderAccountDelegate(
             return
         }
 
-        val chunks = ids.chunked(MAX_PAGINATED_ITEM_LIMIT)
-        val writeChannel = Channel<List<Item>>(capacity = 1)
+        val semaphore = Semaphore(MAX_CONCURRENT_FETCHES)
 
         coroutineScope {
-            val writer = launch(Dispatchers.IO) {
-                for (items in writeChannel) {
-                    saveArticles(items)
+            ids.chunked(MAX_PAGINATED_ITEM_LIMIT).map { chunkedIDs ->
+                launch {
+                    semaphore.withPermit {
+                        val response = withPostToken {
+                            googleReader.streamItemsContents(
+                                postToken = postToken.get(),
+                                ids = chunkedIDs
+                            )
+                        }
+
+                        val result = response.body() ?: return@launch
+
+                        saveArticles(result.items)
+                    }
                 }
             }
-
-            chunks.forEach { chunkedIDs ->
-                val response = withPostToken {
-                    googleReader.streamItemsContents(
-                        postToken = postToken.get(),
-                        ids = chunkedIDs.map { it }
-                    )
-                }
-
-                val result = response.body() ?: return@forEach
-
-                writeChannel.send(result.items)
-            }
-
-            writeChannel.close()
-            writer.join()
         }
     }
 
@@ -604,6 +598,7 @@ internal class ReaderAccountDelegate(
 
     companion object {
         const val MAX_PAGINATED_ITEM_LIMIT = 250
+        private const val MAX_CONCURRENT_FETCHES = 8
 
         private const val TAG = "reader"
 
