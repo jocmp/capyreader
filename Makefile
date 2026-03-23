@@ -50,6 +50,14 @@ shared-release-secrets:
 	echo ${ENCODED_RELEASE_KEYSTORE} | base64 --decode > ./release.keystore
 	echo ${ENCODED_SECRETS_PROPERTIES} | base64 --decode > ./secrets.properties
 
+.PHONY: bench-profile
+bench-profile: ## Run refresh profile benchmark
+	./gradlew :bench:run --args="refresh-profile"
+
+.PHONY: bench-reset
+bench-reset: ## Delete bench data
+	./gradlew :bench:run --args="reset"
+
 .PHONY: install-tailscale
 install-tailscale: ## Install Tailscale on emulator
 	./script/install-tailscale
