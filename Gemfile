@@ -10,3 +10,11 @@ gem 'abbrev'
 gem 'logger'
 gem 'mutex_m'
 gem 'csv'
+
+# Article forge dependencies
+gem "sass-embedded", require: false
+gem "sinatra", require: false
+gem "puma", require: false
+gem "rackup", require: false
+gem "rerun", require: false
+gem "liquid"

@@ -1,0 +1,201 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# A minimal replacement for the Python bumpver tool.
+# Reads bumpver.toml and bumps version strings in configured files.
+#
+# Usage:
+#   script/bumpver update --tag=dev --push
+#   script/bumpver update --tag=final
+
+require "date"
+require "optparse"
+require "open3"
+
+TOML_PATH = File.join(__dir__, "..", "bumpver.toml")
+
+def parse_toml(path)
+  content = File.read(path)
+  config = {}
+  file_patterns = {}
+  current_section = nil
+
+  content.each_line do |line|
+    line = line.strip
+    next if line.empty? || line.start_with?("#")
+
+    if line =~ /\A\[(.+)\]\z/
+      current_section = $1
+      next
+    end
+
+    case current_section
+    when "bumpver"
+      if line =~ /\A(\w+)\s*=\s*(.+)\z/
+        key, value = $1, $2.strip
+        value = value.delete_prefix('"').delete_suffix('"') if value.start_with?('"')
+        value = true if value == "true"
+        value = false if value == "false"
+        config[key] = value
+      end
+    when "bumpver.file_patterns"
+      if line =~ /\A"([^"]+)"\s*=\s*\[(.+)\]\z/
+        filename = $1
+        raw_patterns = $2
+        patterns = raw_patterns.scan(/'([^']*)'/).flatten
+        file_patterns[filename] = patterns
+      end
+    end
+  end
+
+  config["file_patterns"] = file_patterns
+  config
+end
+
+def parse_current_version(version_str)
+  if version_str =~ /\A(\d{4})\.(\d{2})\.(\d+)(?:-(.+))?\z/
+    { year: $1.to_i, month: $2.to_i, build: $3.to_i, tag: $4 }
+  else
+    abort "ERROR: Cannot parse current version: #{version_str}"
+  end
+end
+
+def next_version(current, tag)
+  today = Date.today
+  year = today.year
+  month = today.month
+
+  # Increment build number
+  build = current[:build] + 1
+
+  base = format("%04d.%02d.%d", year, month, build)
+  if tag == "final"
+    base
+  else
+    "#{base}-#{tag}"
+  end
+end
+
+def build_number(version_str)
+  parts = parse_current_version(version_str)
+  parts[:build]
+end
+
+def replace_in_file(filepath, patterns, old_version, new_version)
+  root = File.join(__dir__, "..")
+  full_path = File.join(root, filepath)
+
+  unless File.exist?(full_path)
+    abort "ERROR: File not found: #{full_path}"
+  end
+
+  content = File.read(full_path)
+  old_build = build_number(old_version)
+  new_build = build_number(new_version)
+
+  patterns.each do |pattern|
+    old_pattern = pattern
+      .gsub("{version}", old_version)
+      .gsub("BUILD", old_build.to_s)
+
+    new_pattern = pattern
+      .gsub("{version}", new_version)
+      .gsub("BUILD", new_build.to_s)
+
+    unless content.include?(old_pattern)
+      abort "ERROR: Pattern not found in #{filepath}:\n  expected: #{old_pattern}\n  file may be out of sync with bumpver.toml"
+    end
+
+    content = content.gsub(old_pattern, new_pattern)
+  end
+
+  File.write(full_path, content)
+  puts "  updated #{filepath}"
+end
+
+def git(*args)
+  cmd = ["git"] + args
+  stdout, stderr, status = Open3.capture3(*cmd, chdir: File.join(__dir__, ".."))
+  unless status.success?
+    abort "ERROR: git #{args.join(' ')} failed:\n#{stderr}"
+  end
+  stdout.strip
+end
+
+def main
+  command = ARGV.shift
+  unless command == "update"
+    abort "Usage: script/bumpver update --tag=TAG [--push]"
+  end
+
+  tag = nil
+  push = false
+  dry_run = false
+
+  parser = OptionParser.new do |opts|
+    opts.on("--tag=TAG", "Version tag (dev or final)") { |t| tag = t }
+    opts.on("--push", "Push commit and tag to remote") { push = true }
+    opts.on("--dry-run", "Show what would change without writing") { dry_run = true }
+  end
+  parser.parse!(ARGV)
+
+  unless tag
+    abort "ERROR: --tag is required (dev or final)"
+  end
+
+  config = parse_toml(TOML_PATH)
+  old_version = config["current_version"]
+  current = parse_current_version(old_version)
+  new_version = next_version(current, tag)
+
+  commit_message = config["commit_message"]
+    .gsub("{old_version}", old_version)
+    .gsub("{new_version}", new_version)
+
+  should_commit = config["commit"] == true
+  should_tag = config["tag"] == true
+
+  puts "Bumping version: #{old_version} -> #{new_version}"
+
+  if dry_run
+    puts "  (dry run — no files will be modified)"
+    config["file_patterns"].each do |filepath, patterns|
+      patterns.each do |pattern|
+        old_pat = pattern.gsub("{version}", old_version).gsub("BUILD", build_number(old_version).to_s)
+        new_pat = pattern.gsub("{version}", new_version).gsub("BUILD", build_number(new_version).to_s)
+        puts "  #{filepath}: #{old_pat} -> #{new_pat}"
+      end
+    end
+    puts "  commit: #{commit_message}" if should_commit
+    puts "  tag: v#{new_version}" if should_tag
+    puts "  push: yes" if push
+    return
+  end
+
+  config["file_patterns"].each do |filepath, patterns|
+    replace_in_file(filepath, patterns, old_version, new_version)
+  end
+
+  if should_commit
+    files = config["file_patterns"].keys
+    git("add", *files)
+    git("commit", "-m", commit_message)
+    puts "  committed: #{commit_message}"
+  end
+
+  if should_tag
+    tag_name = "v#{new_version}"
+    git("tag", tag_name)
+    puts "  tagged: #{tag_name}"
+  end
+
+  if push
+    git("push")
+    git("push", "--tags") if should_tag
+    puts "  pushed to remote"
+  end
+
+  puts "Done."
+end
+
+main
