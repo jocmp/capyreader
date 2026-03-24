@@ -2,11 +2,13 @@ package com.jocmp.capy.articles
 
 enum class TextAlignment {
     LEFT,
-    CENTER,
-    RIGHT;
+    CENTER;
 
     val toCSS: String
-        get() = name.lowercase()
+        get() = when (this) {
+            LEFT -> "start"
+            CENTER -> "center"
+        }
 
     companion object {
         val default = LEFT
