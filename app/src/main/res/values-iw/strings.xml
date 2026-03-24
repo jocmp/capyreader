@@ -302,7 +302,7 @@
     <string name="theme_sunset">שקיעה</string>
     <string name="settings_pure_black_dark_mode">מצב כהה שחור טהור</string>
     <string name="settings_section_experimental">נסיוני</string>
-    <string name="starred_export_button_text">ייצא מאמרים המסומלים בכוכב</string>
+    <string name="starred_export_button_text">ייצא מאמרים המסומנים בכוכב</string>
     <string name="starred_exporter_success">הייצוא הושלם</string>
     <string name="settings_section_categories">קטגוריות</string>
     <string name="open_articles_in_browser">פתח מאמרים בדפדפן</string>
