@@ -1,90 +1,132 @@
+# frozen_string_literal: true
+
 require "sinatra"
-require "rack"
-require "./color_picker"
-require "./font_picker"
-require "./style_minifier"
-require "securerandom"
+require "sass-embedded"
 require "liquid"
 
-js_context = nil
+PORT = 8484
 
-article_cache = {}
+set :port, PORT
+set :bind, "0.0.0.0"
 
-configure do
-  Sinatra::Application.reset!
-  StyleMinifier.minify
+ASSETS_DIR = File.expand_path("../app/src/main/assets", __dir__)
+FONT_DIR = File.expand_path("../app/src/main/res/font", __dir__)
+STYLE_DIR = File.join(__dir__, "style")
+VIEWS_DIR = File.join(__dir__, "views")
+
+# Compile SCSS to CSS (expanded, not compressed, for dev readability)
+def compile_css
+  css = Sass.compile(File.join(STYLE_DIR, "stylesheet.scss"), style: :expanded).css
+  # In dev mode, rewrite font URLs to point at our local server instead of appassets
+  css
 end
 
+# Render the Liquid template with placeholder values for development
+def render_template
+  source = File.read(File.join(VIEWS_DIR, "template.liquid"))
+
+  debug_script = %(<script>document.write('<script src="http://' + (location.host || 'localhost:#{PORT}') + '/reload.js"><\\/script>')</script>)
+
+  template = Liquid::Template.parse(source)
+  template.render(
+    "color_primary" => "#6750A4",
+    "color_surface" => "#FFFBFE",
+    "color_surface_container_highest" => "#E6E1E5",
+    "color_on_surface" => "#1C1B1F",
+    "color_on_surface_variant" => "#49454F",
+    "color_surface_variant" => "#E7E0EC",
+    "color_primary_container" => "#EADDFF",
+    "color_on_primary_container" => "#21005D",
+    "color_secondary" => "#625B71",
+    "color_surface_container" => "#F3EDF7",
+    "color_surface_tint" => "#6750A4",
+    "font_size" => "1.0rem",
+    "title_font_size" => "1.5rem",
+    "title_text_align" => "start",
+    "pre_white_space" => "pre-wrap",
+    "table_overflow_x" => "auto",
+    "debug_script" => debug_script,
+    "font_preload" => "",
+    "external_link" => "#",
+    "title" => "Article Title",
+    "byline" => "By Author",
+    "feed_name" => "Feed Name",
+    "body" => "<p>Article body content goes here. Edit <code>views/template.liquid</code> or <code>style/stylesheet.scss</code> and the page will reload.</p>",
+    "font_family" => "default",
+    "title_font_family" => "default"
+  )
+end
+
+# --- Routes ---
+
+# Serve compiled CSS
+get "/assets/stylesheet.css" do
+  content_type "text/css"
+  compile_css
+end
+
+# Serve JS files from Android assets
+get "/assets/:filename" do |filename|
+  file = File.join(ASSETS_DIR, filename)
+  pass unless File.exist?(file)
+
+  case File.extname(filename)
+  when ".js"  then content_type "application/javascript"
+  when ".svg" then content_type "image/svg+xml"
+  else content_type "application/octet-stream"
+  end
+
+  send_file file
+end
+
+# Serve font files
+get "/res/font/:filename" do |filename|
+  file = File.join(FONT_DIR, filename)
+  pass unless File.exist?(file)
+  content_type "font/ttf"
+  send_file file
+end
+
+# Simple auto-reload script (polls for changes)
+get "/reload.js" do
+  content_type "application/javascript"
+  <<~JS
+    (function() {
+      var lastETag = null;
+      setInterval(function() {
+        fetch('//__reload_check')
+          .then(function(r) {
+            var etag = r.headers.get('etag');
+            if (lastETag && etag !== lastETag) {
+              location.reload();
+            }
+            lastETag = etag;
+          })
+          .catch(function() {});
+      }, 1000);
+    })();
+  JS
+end
+
+# Reload check endpoint - returns an ETag based on file modification times
+get "/__reload_check" do
+  scss_files = Dir.glob(File.join(STYLE_DIR, "**/*.scss"))
+  liquid_files = Dir.glob(File.join(VIEWS_DIR, "**/*.liquid"))
+  all_files = scss_files + liquid_files
+
+  mtime_hash = all_files.sort.map { |f| "#{f}:#{File.mtime(f).to_i}" }.join("|")
+  etag Digest::MD5.hexdigest(mtime_hash)
+  ""
+end
+
+# Root serves the rendered template
 get "/" do
-  colors = ColorPicker.pick(params["theme"])
-
-  liquid :article_form, locals: colors
+  content_type "text/html"
+  render_template
 end
 
-get "/articles" do
-  colors = ColorPicker.pick(params["theme"])
-
-  font_family = FontPicker.pick(params["font_family"])
-
-  article_url = params["article_url"]
-  article_content = article_cache[article_url] || JSON.parse(`cd ../../mercury-parser && npx mercury-parser #{article_url}`)
-
-  article_cache[article_url] = article_content
-
-  liquid :template, locals: {
-    title: article_content["title"],
-    byline: "#{article_content["author"]}#{published(article_content["date_published"])}",
-    external_link: article_url,
-    feed_name: article_content["domain"],
-    body: article_content["content"],
-    text_size: params["text_size"],
-    font_family:,
-    debug_script: '<script type="text/javascript" src="/assets/debug.js"></script>',
-    font_size: "16px",
-  }.merge(colors)
-end
-
-get "/image" do
-  image_src = Base64.decode64(params["src"])
-  image_caption = params["caption"].to_s
-
-  liquid :image, locals: {
-    image_src:,
-    image_caption:,
-  }
-end
-
-get "/test-room" do
-  colors = ColorPicker.pick(params["theme"])
-
-  liquid :"test-room", locals: {
-    unvisited_link: "https://example.com/#{SecureRandom.uuid}"
-  }.merge(colors)
-end
-
-get "/audio-enclosure" do
-  colors = ColorPicker.pick(params["theme"])
-
-  examples = [
-    { "label" => "With artwork and duration", "title" => "Episode Title Here", "feed" => "Podcast Name", "duration" => "52:02", "artwork" => "https://picsum.photos/200", "playing" => false },
-    { "label" => "With artwork, no duration", "title" => "Another Episode", "feed" => "Another Podcast", "duration" => nil, "artwork" => "https://picsum.photos/201", "playing" => false },
-    { "label" => "Without artwork (placeholder)", "title" => "No Artwork Episode", "feed" => "Minimal Podcast", "duration" => "2:02:35", "artwork" => nil, "playing" => false },
-    { "label" => "Long title (truncation test)", "title" => "This Is A Very Long Episode Title That Should Be Truncated At Some Point", "feed" => "The Extremely Long Podcast Name That Goes On And On", "duration" => "30:00", "artwork" => "https://picsum.photos/202", "playing" => false },
-    { "label" => "Playing state", "title" => "Currently Playing Episode", "feed" => "Active Podcast", "duration" => "45:30", "artwork" => "https://picsum.photos/203", "playing" => true },
-    { "label" => "Very long title", "title" => "Episode 247: Why Do We Dream? The Science Behind Sleep, REM Cycles, and What Your Subconscious Might Be Trying to Tell You About Your Waking Life", "feed" => "The Extremely Curious Science Podcast With Dr. Jane Smith and Professor John Doe", "duration" => "1:42:15", "artwork" => "https://picsum.photos/204", "playing" => false },
-  ]
-
-  liquid :"audio-enclosure", locals: {
-    font_size: params["font_size"] || "16px",
-    title_font_size: params["title_font_size"] || "1.5em",
-    examples: examples,
-  }.merge(colors)
-end
-
-def published(timestamp)
-  return "" if !timestamp
-
-  published = Time.parse(timestamp).strftime("%B %-d, %Y at %I:%M %p")
-
-  "on #{published}"
-end
+puts ""
+puts "=== Capy Reader Asset Forge ==="
+puts "Local:    http://localhost:#{PORT}"
+puts "Emulator: http://10.0.2.2:#{PORT}"
+puts ""

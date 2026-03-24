@@ -12,17 +12,13 @@ assets:
 check: ## Type-check JavaScript files
 	npx -p typescript tsc --noEmit
 
-.PHONY: deps
-deps: ## Install bumpver
-	pip install bumpver==2024.1130
-
 .PHONY: bump-release-dev
 bump-release-dev: ## Bump GitHub version
-	bumpver update --tag=dev --push
+	./script/bumpver update --tag=dev --push
 
 .PHONY: bump-release-production
 bump-release-production: ## Bump Google Play version
-	bumpver update --tag=final
+	./script/bumpver update --tag=final
 
 .PHONY: changelog
 changelog: ## Prep next release notes

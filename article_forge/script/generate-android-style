@@ -5,7 +5,7 @@ require "./style_minifier"
 
 def main
   FileUtils.mkdir_p("dist")
-  StyleMinifier.minify(destination: "dist")
+  StyleMinifier.minify
 end
 
 main
