@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 # A minimal replacement for the Python bumpver tool.
-# Reads bumpver.toml and bumps version strings in configured files.
+# Reads bumpver.yml and bumps version strings in configured files.
 #
 # Usage:
 #   script/bumpver update --tag=dev --push
@@ -11,46 +11,9 @@
 require "date"
 require "optparse"
 require "open3"
+require "yaml"
 
-TOML_PATH = File.join(__dir__, "..", "bumpver.toml")
-
-def parse_toml(path)
-  content = File.read(path)
-  config = {}
-  file_patterns = {}
-  current_section = nil
-
-  content.each_line do |line|
-    line = line.strip
-    next if line.empty? || line.start_with?("#")
-
-    if line =~ /\A\[(.+)\]\z/
-      current_section = $1
-      next
-    end
-
-    case current_section
-    when "bumpver"
-      if line =~ /\A(\w+)\s*=\s*(.+)\z/
-        key, value = $1, $2.strip
-        value = value.delete_prefix('"').delete_suffix('"') if value.start_with?('"')
-        value = true if value == "true"
-        value = false if value == "false"
-        config[key] = value
-      end
-    when "bumpver.file_patterns"
-      if line =~ /\A"([^"]+)"\s*=\s*\[(.+)\]\z/
-        filename = $1
-        raw_patterns = $2
-        patterns = raw_patterns.scan(/'([^']*)'/).flatten
-        file_patterns[filename] = patterns
-      end
-    end
-  end
-
-  config["file_patterns"] = file_patterns
-  config
-end
+CONFIG_PATH = File.join(__dir__, "..", "bumpver.yml")
 
 def parse_current_version(version_str)
   if version_str =~ /\A(\d{4})\.(\d{2})\.(\d+)(?:-(.+))?\z/
@@ -77,8 +40,7 @@ def next_version(current, tag)
 end
 
 def build_number(version_str)
-  parts = parse_current_version(version_str)
-  parts[:build]
+  parse_current_version(version_str)[:build]
 end
 
 def replace_in_file(filepath, patterns, old_version, new_version)
@@ -103,7 +65,7 @@ def replace_in_file(filepath, patterns, old_version, new_version)
       .gsub("BUILD", new_build.to_s)
 
     unless content.include?(old_pattern)
-      abort "ERROR: Pattern not found in #{filepath}:\n  expected: #{old_pattern}\n  file may be out of sync with bumpver.toml"
+      abort "ERROR: Pattern not found in #{filepath}:\n  expected: #{old_pattern}\n  file may be out of sync with bumpver.yml"
     end
 
     content = content.gsub(old_pattern, new_pattern)
@@ -143,7 +105,7 @@ def main
     abort "ERROR: --tag is required (dev or final)"
   end
 
-  config = parse_toml(TOML_PATH)
+  config = YAML.load_file(CONFIG_PATH)
   old_version = config["current_version"]
   current = parse_current_version(old_version)
   new_version = next_version(current, tag)
