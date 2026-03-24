@@ -1,0 +1,4 @@
+• Fix refresh performance regression for FreshRSS/Google Reader accounts.
+  - P.S. Thanks to everyone who reached out about this on GitHub. Many eyes make all bugs shallow.
+• Fix right-to-left (RTL) article title preferences thanks to a volunteer!
+•
