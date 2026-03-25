@@ -30,6 +30,8 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
 import okio.IOException
 import org.jsoup.Jsoup
 import retrofit2.Response
@@ -277,17 +279,20 @@ internal class MinifluxAccountDelegate(
     }
 
     private suspend fun refreshFeeds() {
-        val refreshResponse = miniflux.feeds()
-        val initialFeeds = refreshResponse.body()
+        val feedsResponse = miniflux.feeds()
+        val feeds = feedsResponse.body()
 
-        if (!refreshResponse.isSuccessful || initialFeeds == null) {
+        if (!feedsResponse.isSuccessful || feeds == null) {
             return
         }
 
-        val feedsResponse = miniflux.feeds()
-        val feeds = feedsResponse.body() ?: return
+        val feedIDsWithIcons = database.feedsQueries.all()
+            .executeAsList()
+            .filter { it.favicon_url != null }
+            .map { it.id }
+            .toSet()
 
-        val icons = fetchIcons(feeds)
+        val icons = fetchIcons(feeds.filterNot { it.id.toString() in feedIDsWithIcons })
 
         database.transactionWithErrorHandling {
             feeds.forEach { feed ->
@@ -299,9 +304,11 @@ internal class MinifluxAccountDelegate(
         database.feedsQueries.deleteAllExcept(feedsToKeep)
     }
 
-    private suspend fun refreshArticles() {
-        refreshStarredEntries()
-        refreshUnreadEntries()
+    private suspend fun refreshArticles() = coroutineScope {
+        val starred = async { refreshStarredEntries() }
+        val unread = async { refreshUnreadEntries() }
+        starred.await()
+        unread.await()
         fetchAllEntries()
     }
 
@@ -342,22 +349,42 @@ internal class MinifluxAccountDelegate(
         return ids
     }
 
-    private suspend fun fetchAllEntries() {
-        var offset = 0
-        val limit = MAX_ENTRY_LIMIT
-        var hasMore = true
+    private suspend fun fetchAllEntries() = coroutineScope {
+        val changedAfter = preferences.lastRefreshedAt.get().takeIf { it > 0 }
 
-        while (hasMore) {
-            val result = miniflux.entries(
-                limit = limit,
-                offset = offset,
-                order = "published_at",
-                direction = "desc"
-            ).body() ?: return
+        val firstResult = miniflux.entries(
+            limit = MAX_ENTRY_LIMIT,
+            offset = 0,
+            order = "published_at",
+            direction = "desc",
+            changedAfter = changedAfter,
+        ).body() ?: return@coroutineScope
 
-            saveEntries(result.entries)
-            offset += limit
-            hasMore = result.entries.size >= limit
+        val total = firstResult.total
+
+        val semaphore = Semaphore(MAX_CONCURRENT_FETCHES)
+
+        val remainingPages = (MAX_ENTRY_LIMIT until total step MAX_ENTRY_LIMIT)
+            .map { offset ->
+                async {
+                    semaphore.withPermit {
+                        miniflux.entries(
+                            limit = MAX_ENTRY_LIMIT,
+                            offset = offset,
+                            order = "published_at",
+                            direction = "desc",
+                            changedAfter = changedAfter,
+                        ).body()?.entries
+                    }
+                }
+            }
+            .awaitAll()
+
+        saveEntries(firstResult.entries)
+        remainingPages.forEach { entries ->
+            if (entries != null) {
+                saveEntries(entries)
+            }
         }
     }
 
@@ -462,6 +489,7 @@ internal class MinifluxAccountDelegate(
     }
 
     companion object {
-        const val MAX_ENTRY_LIMIT = 100
+        const val MAX_ENTRY_LIMIT = 250
+        private const val MAX_CONCURRENT_FETCHES = 8
     }
 }
