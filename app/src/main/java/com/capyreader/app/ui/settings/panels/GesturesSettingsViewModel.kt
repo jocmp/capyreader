@@ -7,15 +7,11 @@ import androidx.lifecycle.ViewModel
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleListVerticalSwipe
 import com.capyreader.app.preferences.ArticleVerticalSwipe
-import com.capyreader.app.preferences.BackAction
 import com.capyreader.app.preferences.RowSwipeOption
 
 class GesturesSettingsViewModel(
     private val appPreferences: AppPreferences
 ) : ViewModel() {
-    var backAction by mutableStateOf(listOptions.backAction.get())
-        private set
-
     var readerTopSwipe by mutableStateOf(readerOptions.topSwipeGesture.get())
         private set
 
@@ -39,12 +35,6 @@ class GesturesSettingsViewModel(
 
     var improveTalkback by mutableStateOf(readerOptions.improveTalkback.get())
         private set
-
-    fun updateBackAction(action: BackAction) {
-        backAction = action
-
-        listOptions.backAction.set(action)
-    }
 
     fun updateImproveTalkback(improve: Boolean) {
         improveTalkback = improve

@@ -20,6 +20,7 @@ import androidx.compose.material.icons.automirrored.outlined.Label
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.FormatSize
 import androidx.compose.material.icons.outlined.Save
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -95,11 +96,12 @@ fun ArticleTopBar(
             ) {
                 TopAppBar(
                     navigationIcon = {
-                        ArticleNavigationIcon(
-                            isFullscreen = isFullscreen,
-                            onToggleFullscreen = onToggleFullscreen,
-                            onClose = onClose,
-                        )
+                        IconButton(onClick = onClose) {
+                            Icon(
+                                imageVector = Icons.Rounded.Close,
+                                contentDescription = null
+                            )
+                        }
                     },
                     title = {},
                     actions = {

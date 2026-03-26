@@ -50,6 +50,21 @@ internal val articlesModule = module {
         )
     }
     viewModel {
+        FeedListViewModel(
+            account = get(),
+            appPreferences = get(),
+            application = get(),
+        )
+    }
+    viewModel {
+        ArticleViewModel(
+            account = get(),
+            appPreferences = get(),
+            notificationHelper = get(),
+            application = get(),
+        )
+    }
+    viewModel {
         val appPreferences = get<AppPreferences>()
 
         ArticleScreenViewModel(

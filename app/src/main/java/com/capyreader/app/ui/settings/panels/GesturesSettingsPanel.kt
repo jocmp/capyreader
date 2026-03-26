@@ -15,7 +15,6 @@ import com.capyreader.app.R
 import com.capyreader.app.common.RowItem
 import com.capyreader.app.preferences.ArticleListVerticalSwipe
 import com.capyreader.app.preferences.ArticleVerticalSwipe
-import com.capyreader.app.preferences.BackAction
 import com.capyreader.app.preferences.RowSwipeOption
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.components.TextSwitch
@@ -28,7 +27,6 @@ fun GesturesSettingPanel(
     viewModel: GesturesSettingsViewModel = koinViewModel(),
 ) {
     GesturesSettingsPanelView(
-        updateBackAction = viewModel::updateBackAction,
         updatePagingTapGesture = viewModel::updatePagingTapGesture,
         updateReaderBottomSwipe = viewModel::updateReaderBottomSwipe,
         updateReaderTopSwipe = viewModel::updateReaderTopSwipe,
@@ -37,7 +35,6 @@ fun GesturesSettingPanel(
         updateListSwipeBottom = viewModel::updateListSwipeBottom,
         updateHorizontalPagination = viewModel::updateHorizontalPagination,
         enableHorizontalPagination = viewModel.enableHorizontalPagination,
-        backAction = viewModel.backAction,
         bottomSwipe = viewModel.readerBottomSwipe,
         enablePagingTapGesture = viewModel.enablePagingTapGesture,
         rowSwipeStart = viewModel.rowSwipeStart,
@@ -51,7 +48,6 @@ fun GesturesSettingPanel(
 
 @Composable
 private fun GesturesSettingsPanelView(
-    updateBackAction: (BackAction) -> Unit,
     updatePagingTapGesture: (enabled: Boolean) -> Unit,
     updateReaderBottomSwipe: (swipe: ArticleVerticalSwipe) -> Unit,
     updateReaderTopSwipe: (swipe: ArticleVerticalSwipe) -> Unit,
@@ -60,7 +56,6 @@ private fun GesturesSettingsPanelView(
     updateListSwipeBottom: (swipe: ArticleListVerticalSwipe) -> Unit,
     updateHorizontalPagination: (enable: Boolean) -> Unit,
     enableHorizontalPagination: Boolean,
-    backAction: BackAction,
     bottomSwipe: ArticleVerticalSwipe,
     enablePagingTapGesture: Boolean,
     rowSwipeStart: RowSwipeOption,
@@ -155,14 +150,6 @@ private fun GesturesSettingsPanelView(
                     disabledOption = ArticleListVerticalSwipe.DISABLED,
                     optionText = { stringResource(it.translationKey) }
                 )
-
-                PreferenceSelect(
-                    selected = backAction,
-                    update = updateBackAction,
-                    options = BackAction.entries,
-                    label = R.string.settings_gestures_list_back_navigation_action,
-                    optionText = { stringResource(it.translationKey) }
-                )
             }
         }
         Spacer(Modifier.height(16.dp))
@@ -174,7 +161,6 @@ private fun GesturesSettingsPanelView(
 fun GesturesSettingsPanelPreview() {
     CapyTheme {
         GesturesSettingsPanelView(
-            updateBackAction = {},
             updateRowSwipeStart = {},
             updateRowSwipeEnd = {},
             updateReaderTopSwipe = {},
@@ -182,7 +168,6 @@ fun GesturesSettingsPanelPreview() {
             updatePagingTapGesture = {},
             updateHorizontalPagination = {},
             updateListSwipeBottom = {},
-            backAction = BackAction.OPEN_DRAWER,
             topSwipe = ArticleVerticalSwipe.PREVIOUS_ARTICLE,
             bottomSwipe = ArticleVerticalSwipe.NEXT_ARTICLE,
             rowSwipeStart = RowSwipeOption.TOGGLE_READ,

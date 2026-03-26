@@ -10,6 +10,8 @@ androidx-lifecycle-runtime = "2.10.0"
 mockk = "1.14.9"
 mockwebserver3 = "5.3.2"
 navigation-compose = "2.9.7"
+navigation3 = "1.0.1"
+navigation3-adaptive = "1.3.0-alpha09"
 okhttp = "5.3.2"
 retrofit = "3.0.0"
 paging-compose = "3.4.1"
@@ -38,6 +40,10 @@ androidx-media3-datasource-okhttp = { module = "androidx.media3:media3-datasourc
 androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "media3" }
 androidx-media3-session = { module = "androidx.media3:media3-session", version.ref = "media3" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
+androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "navigation3" }
+androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "navigation3" }
+androidx-navigation3-adaptive = { module = "androidx.compose.material3.adaptive:adaptive-navigation3", version.ref = "navigation3-adaptive" }
+androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "androidx-lifecycle-runtime" }
 androidx-palette = { module = "androidx.palette:palette-ktx", version = "1.0.0" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "paging-compose" }
 androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "androidx-paging" }

@@ -29,13 +29,9 @@ import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.articles.NextFilter
-import com.capyreader.app.ui.articles.buildArticlePager
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
-import com.jocmp.capy.common.launchUI
 import com.jocmp.capy.common.withUIContext
-import com.jocmp.capy.countToday
-import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -43,7 +39,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.time.OffsetDateTime
 
@@ -54,9 +49,8 @@ class ArticleScreenViewModel(
     private val application: Application,
     private val notificationHelper: NotificationHelper,
 ) : AndroidViewModel(application) {
-    private var refreshJob: Job? = null
 
-    private var fullContentJob: Job? = null
+    private var refreshJob: Job? = null
 
     val filter = appPreferences.filter.stateIn(viewModelScope)
 
@@ -64,10 +58,8 @@ class ArticleScreenViewModel(
         appPreferences.articleListOptions.swipeBottom.stateIn(viewModelScope)
 
     private val _searchQuery = MutableStateFlow("")
-
     private val _searchState = MutableStateFlow(SearchState.INACTIVE)
-
-    private var _article by mutableStateOf<Article?>(null)
+    private val _nextFilter = MutableStateFlow<NextFilter?>(null)
 
     var refreshingAll by mutableStateOf(false)
         private set
@@ -77,99 +69,40 @@ class ArticleScreenViewModel(
     private var _showUnauthorizedMessage by mutableStateOf(UnauthorizedMessageState.HIDE)
 
     val sortOrder = appPreferences.articleListOptions.sortOrder.stateIn(viewModelScope)
-
-    val afterReadAll =
-        appPreferences.articleListOptions.afterReadAllBehavior.stateIn(viewModelScope)
-
-    private val _counts = filter.flatMapLatest { latestFilter ->
-        account.countAll(latestFilter.status)
-    }
-
-    private val _savedSearchCounts = filter.flatMapLatest { latestFilter ->
-        account.countAllBySavedSearch(latestFilter.status)
-    }
+    val afterReadAll = appPreferences.articleListOptions.afterReadAllBehavior.stateIn(viewModelScope)
 
     val articles: Flow<PagingData<Article>> =
-        combine(
-            filter,
-            _searchQuery,
-            articlesSince,
-            sortOrder
-        ) { filter, query, since, sort ->
-            account.buildArticlePager(
-                filter = filter,
-                query = query,
-                sortOrder = sort,
-                since = since
-            ).flow
+        combine(filter, _searchQuery, articlesSince, sortOrder) { filter, query, since, sort ->
+            account.buildArticlePager(filter = filter, query = query, sortOrder = sort, since = since).flow
         }.flatMapLatest { it }
 
-    val folders: Flow<List<Folder>> = combine(
-        account.folders,
-        _counts,
+    val unreadCount: Flow<Long> = combine(
         filter,
-    ) { folders, latestCounts, filter ->
-        folders.map { copyFolderCounts(it, latestCounts, filter) }
-            .withPositiveCount(filter.status)
-    }
+        _searchQuery,
+    ) { filter, query ->
+        account.countUnread(filter = filter, query = query)
+    }.flatMapLatest { it }
 
-    val savedSearches: Flow<List<SavedSearch>> = combine(
-        account.savedSearches,
-        _savedSearchCounts,
-        filter,
-    ) { searches, latestCounts, filter ->
-        searches.map { copySavedSearchCounts(it, latestCounts) }
-            .withPositiveCount(filter.status)
-    }
+    val searchQuery: Flow<String> get() = _searchQuery
+    val searchState: Flow<SearchState> get() = _searchState
+    val nextFilter: Flow<NextFilter?> get() = _nextFilter
 
-    val allFeeds = account.taggedFeeds
+    val showUnauthorizedMessage: Boolean
+        get() = _showUnauthorizedMessage == UnauthorizedMessageState.SHOW
 
-    val showOnboarding = allFeeds.map { it.isEmpty() }
+    val source = account.source
 
-    val allSavedSearches = account.savedSearches
-
-    val allFolders = account.folders
-
-    val topLevelFeeds = combine(
-        account.feeds,
-        _counts,
-        filter,
-    ) { feeds, latestCounts, filter ->
-        feeds.filter { !it.isPages }
-            .map { copyFeedCounts(it, latestCounts) }
-            .withPositiveCount(filter.status)
-    }
-
-    val pagesFeed: Flow<Feed?> = combine(
-        account.feeds,
-        _counts,
-        filter,
-    ) { feeds, latestCounts, filter ->
-        feeds.find { it.isPages }
-            ?.let { copyFeedCounts(it, latestCounts) }
-            ?.takeIf { it.count > 0 || filter.status != ArticleStatus.UNREAD }
-    }
-
-    val currentFeed: Flow<Feed?> = combine(allFeeds, filter) { feeds, filter ->
-        if (filter is ArticleFilter.Feeds) {
-            feeds.find { it.id == filter.feedID }
-        } else {
-            null
-        }
-    }
+    val canSaveArticleExternally = account.canSaveArticleExternally.stateIn(viewModelScope)
 
     private val nextFilterListener: Flow<NextFilter?> =
         combine(
             listSwipeBottom,
-            savedSearches,
-            topLevelFeeds,
-            folders,
+            account.savedSearches,
+            account.feeds,
+            account.folders,
             filter
         ) { swipeBottom, savedSearches, feeds, folders, filter ->
-            if (swipeBottom == ArticleListVerticalSwipe.DISABLED) {
-                return@combine null
-            }
-
+            if (swipeBottom == ArticleListVerticalSwipe.DISABLED) return@combine null
             NextFilter.findSwipeDestination(
                 filter,
                 searches = savedSearches,
@@ -178,105 +111,68 @@ class ArticleScreenViewModel(
             )
         }
 
-    private val _nextFilter = MutableStateFlow<NextFilter?>(null)
-
-    val statusCount: Flow<Long> = filter.flatMapLatest { latestFilter ->
-        account.countAllByStatus(countableStatus(latestFilter))
-    }
-
-    val todayCount: Flow<Long> = _counts.combine(filter) { _, filter ->
-        account.countToday(countableStatus(filter))
-    }
-
-    val unreadCount: Flow<Long> = combine(
-        filter,
-        _searchQuery,
-    ) { filter, query ->
-        account.countUnread(filter = filter, query = query)
-    }.flatMapLatest {
-        it
-    }
-
-    val showTodayFilter: Flow<Boolean> = appPreferences.showTodayFilter.stateIn(viewModelScope)
-
-    val showUnauthorizedMessage: Boolean
-        get() = _showUnauthorizedMessage == UnauthorizedMessageState.SHOW
-
-    val article: Article?
-        get() = _article
-
-    val searchQuery: Flow<String>
-        get() = _searchQuery
-
-    val searchState: Flow<SearchState>
-        get() = _searchState
-
-    val nextFilter: Flow<NextFilter?>
-        get() = _nextFilter
-
     init {
         viewModelScope.launch {
-            nextFilterListener.collect {
-                _nextFilter.value = it
-            }
+            nextFilterListener.collect { _nextFilter.value = it }
         }
     }
 
-    fun selectArticleFilter() {
-        val filter = ArticleFilter.default().withStatus(status = latestFilter.status)
+    // region Filter selection
 
-        updateFilter(filter)
+    fun selectArticleFilter() {
+        updateFilter(ArticleFilter.default().withStatus(status = latestFilter.status))
     }
 
     fun selectStatus(status: ArticleStatus) {
-        val filter = latestFilter.withStatus(status = status)
-
-        updateFilter(filter)
+        updateFilter(latestFilter.withStatus(status = status))
     }
 
     fun selectToday() {
-        val filter = ArticleFilter.Today(todayStatus = latestFilter.status)
-
-        updateFilter(filter)
+        updateFilter(ArticleFilter.Today(todayStatus = latestFilter.status))
     }
 
     fun selectFeed(feedID: String, folderTitle: String? = null) {
         viewModelScope.launchIO {
             val feed = account.findFeed(feedID) ?: return@launchIO
-            val feedFilter = ArticleFilter.Feeds(
-                feedID = feed.id,
-                folderTitle = folderTitle,
-                feedStatus = latestFilter.status
+            updateFilter(
+                ArticleFilter.Feeds(
+                    feedID = feed.id,
+                    folderTitle = folderTitle,
+                    feedStatus = latestFilter.status
+                )
             )
-
-            updateFilter(feedFilter)
         }
     }
 
     fun selectSavedSearch(savedSearchID: String) {
         viewModelScope.launchIO {
             val savedSearch = account.findSavedSearch(savedSearchID) ?: return@launchIO
-            val searchFilter = ArticleFilter.SavedSearches(
-                savedSearch.id,
-                savedSearchStatus = latestFilter.status
+            updateFilter(
+                ArticleFilter.SavedSearches(savedSearch.id, savedSearchStatus = latestFilter.status)
             )
-
-            updateFilter(searchFilter)
         }
     }
 
     fun selectFolder(title: String) {
         viewModelScope.launchIO {
             val folder = account.findFolder(title) ?: return@launchIO
-            val feedFilter =
-                ArticleFilter.Folders(
-                    folderTitle = folder.title,
-                    folderStatus = latestFilter.status
-                )
-
-            updateFilter(feedFilter)
+            updateFilter(
+                ArticleFilter.Folders(folderTitle = folder.title, folderStatus = latestFilter.status)
+            )
         }
     }
+
+    fun requestNextFeed() {
+        _nextFilter.value?.let(::selectNextFilter)
+    }
+
+    internal fun resetToDefaultFilter() {
+        updateFilter(ArticleFilter.default().copy(latestFilter.status))
+    }
+
+    // endregion
+
+    // region Article list actions
 
     fun markAllRead(
         onArticlesCleared: () -> Unit,
@@ -297,89 +193,46 @@ class ArticleScreenViewModel(
                 Sync.markReadAsync(articleIDs, context)
             }
 
-            launchIO {
-                notificationHelper.dismissNotifications(articleIDs)
-            }
+            launchIO { notificationHelper.dismissNotifications(articleIDs) }
 
-            if (range != MarkRead.All) {
-                return@launchIO
-            }
+            if (range != MarkRead.All) return@launchIO
 
-            if (afterReadAll.value == AfterReadAllBehavior.OPEN_DRAWER) {
-                onArticlesCleared()
-            } else if (afterReadAll.value == AfterReadAllBehavior.OPEN_NEXT_FEED) {
-                openNextFeedOnAllRead(onArticlesCleared, searches, folders, feeds)
+            when (afterReadAll.value) {
+                AfterReadAllBehavior.OPEN_DRAWER -> onArticlesCleared()
+                AfterReadAllBehavior.OPEN_NEXT_FEED ->
+                    openNextFeedOnAllRead(onArticlesCleared, searches, folders, feeds)
+                else -> Unit
             }
         }
     }
 
-    val canSaveArticleExternally = account.canSaveArticleExternally.stateIn(viewModelScope)
+    fun markReadAsync(articleID: String) = viewModelScope.launchIO { markRead(articleID) }
 
-    fun saveArticleExternallyAsync(articleID: String, onComplete: (Result<Unit>) -> Unit) {
-        viewModelScope.launchIO {
-            val result = account.saveArticleExternally(articleID)
-            withUIContext { onComplete(result) }
-        }
+    fun markUnreadAsync(articleID: String) = viewModelScope.launchIO { markUnread(articleID) }
+
+    fun addStarAsync(articleID: String) = viewModelScope.launchIO { addStar(articleID) }
+
+    fun removeStarAsync(articleID: String) = viewModelScope.launchIO { removeStar(articleID) }
+
+    // endregion
+
+    // region Search
+
+    fun startSearch() { _searchState.value = SearchState.ACTIVE }
+
+    fun clearSearch() {
+        _searchQuery.value = ""
+        _searchState.value = SearchState.INACTIVE
     }
 
-    fun deletePage(articleID: String) {
-        viewModelScope.launchIO {
-            account.deletePage(articleID)
-        }
-    }
+    fun updateSearch(query: String) { _searchQuery.value = query }
 
-    fun removeFeed(
-        feedID: String,
-    ) {
-        viewModelScope.launchIO {
-            account.removeFeed(feedID = feedID)
-                .onSuccess {
-                    resetToDefaultFilter()
-                }
-        }
-    }
+    // endregion
 
-    fun removeFolder(
-        folderTitle: String,
-        completion: (result: Result<Unit>) -> Unit
-    ) {
-        viewModelScope.launchIO {
-            account.removeFolder(folderTitle).fold(
-                onSuccess = {
-                    resetToDefaultFilter()
-                    completion(Result.success(Unit))
-                },
-                onFailure = {
-                    completion(Result.failure(it))
-                }
-            )
-        }
-    }
-
-    private fun refreshFilter(
-        filter: ArticleFilter,
-        onComplete: () -> Unit,
-    ) {
-        refreshJob?.cancel()
-
-        refreshJob = viewModelScope.launchIO {
-            account.refresh(filter).onFailure { throwable ->
-                if (throwable is UnauthorizedError && _showUnauthorizedMessage == UnauthorizedMessageState.HIDE) {
-                    _showUnauthorizedMessage = UnauthorizedMessageState.SHOW
-                }
-            }
-
-            launchIO {
-                WidgetUpdater.update(context)
-            }
-
-            onComplete()
-        }
-    }
+    // region Refresh
 
     fun refresh(filter: ArticleFilter, onComplete: () -> Unit) {
         updateArticlesSince()
-
         refreshFilter(filter) {
             updateArticlesSince()
             onComplete()
@@ -388,387 +241,27 @@ class ArticleScreenViewModel(
 
     fun refreshAll(onComplete: () -> Unit) {
         refreshingAll = true
-
         refresh(ArticleFilter.default()) {
             onComplete()
-
-            refreshJob?.invokeOnCompletion {
-                refreshingAll = false
-            }
+            refreshJob?.invokeOnCompletion { refreshingAll = false }
         }
     }
 
-    fun selectArticle(articleID: String, onComplete: (article: Article) -> Unit = {}) {
-        if (_article?.id == articleID) {
-            return
-        }
+    // endregion
 
-        viewModelScope.launchIO {
-            val article = buildArticle(articleID) ?: return@launchIO
-            _article = article
-
-            appPreferences.articleID.set(articleID)
-
-            launchIO {
-                markRead(articleID)
-            }
-
-            launchUI {
-                onComplete(article)
-            }
-
-            if (article.fullContent == Article.FullContentState.LOADING) {
-                fullContentJob?.cancel()
-
-                fullContentJob = viewModelScope.launchIO { fetchFullContent(article) }
-            }
-        }
-    }
-
-    fun toggleArticleRead() {
-        _article?.let { article ->
-            viewModelScope.launch {
-                if (article.read) {
-                    markUnread(article.id)
-                } else {
-                    markRead(article.id)
-                }
-            }
-
-            _article = article.copy(read = !article.read)
-        }
-    }
-
-    fun toggleArticleStar() {
-        _article?.let { article ->
-            viewModelScope.launch {
-                if (article.starred) {
-                    removeStar(article.id)
-                } else {
-                    addStar(article.id)
-                }
-
-                _article = article.copy(starred = !article.starred)
-            }
-        }
-    }
-
-    fun dismissUnauthorizedMessage() {
-        _showUnauthorizedMessage = UnauthorizedMessageState.LATER
-    }
-
-    fun clearArticle() {
-        _article = null
-        appPreferences.articleID.delete()
-    }
-
-    fun startSearch() {
-        _searchState.value = SearchState.ACTIVE
-    }
-
-    fun clearSearch() {
-        if (_searchQuery.value.isNotBlank()) {
-            clearArticle()
-        }
-        _searchQuery.value = ""
-        _searchState.value = SearchState.INACTIVE
-    }
-
-    fun updateSearch(query: String) {
-        clearArticle()
-        _searchQuery.value = query
-    }
-
-    fun addStarAsync(articleID: String) {
-        toggleCurrentStarred(articleID)
-        addStar(articleID)
-    }
-
-    fun removeStarAsync(articleID: String) = viewModelScope.launchIO {
-        toggleCurrentStarred(articleID)
-        removeStar(articleID)
-    }
-
-    fun markReadAsync(articleID: String) = viewModelScope.launchIO {
-        toggleCurrentRead(articleID)
-        markRead(articleID)
-    }
-
-    fun markUnreadAsync(articleID: String) = viewModelScope.launchIO {
-        toggleCurrentRead(articleID)
-        markUnread(articleID)
-    }
-
-    fun requestNextFeed() {
-        _nextFilter.value?.let(::selectNextFilter)
-    }
-
-    private fun selectNextFilter(filter: NextFilter) {
-        when (filter) {
-            is NextFilter.FeedFilter -> selectFeed(
-                feedID = filter.feedID,
-                folderTitle = filter.folderTitle
-            )
-
-            is NextFilter.FolderFilter -> selectFolder(title = filter.folderTitle)
-            is NextFilter.SearchFilter -> selectSavedSearch(filter.savedSearchID)
-        }
-    }
-
-    private fun addStar(articleID: String) {
-        viewModelScope.launchIO {
-            account.addStar(articleID)
-                .onFailure {
-                    Sync.addStarAsync(articleID, context)
-                }
-        }
-    }
-
-    private suspend fun removeStar(articleID: String) {
-        account.removeStar(articleID)
-            .onFailure {
-                Sync.removeStarAsync(articleID, context)
-            }
-    }
-
-    private suspend fun markRead(articleID: String) {
-        account.markRead(articleID)
-            .onFailure {
-                Sync.markReadAsync(listOf(articleID), context)
-            }
-
-        notificationHelper.dismissNotifications(listOf(articleID))
-    }
-
-    private suspend fun markUnread(articleID: String) {
-        account.markUnread(articleID)
-            .onFailure {
-                Sync.markUnreadAsync(articleID, context)
-            }
-    }
-
-    private fun resetToDefaultFilter() {
-        updateFilter(ArticleFilter.default().copy(latestFilter.status))
-    }
-
-    private fun toggleCurrentStarred(articleID: String) {
-        _article?.let { article ->
-            if (articleID == article.id) {
-                _article = article.copy(starred = !article.starred)
-            }
-        }
-    }
-
-    private fun toggleCurrentRead(articleID: String) {
-        _article?.let { article ->
-            if (articleID == article.id) {
-                _article = article.copy(read = !article.read)
-            }
-        }
-    }
-
-    private fun updateFilter(filter: ArticleFilter) {
-        appPreferences.filter.set(filter)
-
-        clearArticle()
-
-        updateArticlesSince()
-    }
-
-    private fun updateArticlesSince() {
-        articlesSince.value = OffsetDateTime.now().plusSeconds(1)
-    }
-
-    private fun copyFolderCounts(
-        folder: Folder,
-        counts: Map<String, Long>,
-        filter: ArticleFilter
-    ): Folder {
-        val folderFeeds = folder.feeds.map { copyFeedCounts(it, counts) }
-
-        return folder.copy(
-            feeds = folderFeeds.withPositiveCount(filter.status).toMutableList(),
-            count = folderFeeds.sumOf { it.count }
-        )
-    }
-
-    private fun copyFeedCounts(feed: Feed, counts: Map<String, Long>): Feed {
-        return feed.copy(count = counts.getOrDefault(feed.id, 0))
-    }
-
-    private fun copySavedSearchCounts(
-        savedSearch: SavedSearch,
-        counts: Map<String, Long>
-    ): SavedSearch {
-        return savedSearch.copy(count = counts.getOrDefault(savedSearch.id, 0))
-    }
-
-    private suspend fun buildArticle(articleID: String): Article? {
-        val article = account.findArticle(articleID = articleID) ?: return null
-
-        val fullContent = if (enableStickyFullContent && article.enableStickyFullContent) {
-            Article.FullContentState.LOADING
-        } else {
-            Article.FullContentState.NONE
-        }
-
-        val content = if (fullContent == Article.FullContentState.LOADING) {
-            ""
-        } else {
-            article.defaultContent
-        }
-
-        return article.copy(
-            read = true,
-            content = content,
-            fullContent = fullContent
-        )
-    }
-
-    fun fetchFullContentAsync(article: Article? = _article) {
-        article ?: return
-
-        viewModelScope.launchIO {
-            if (enableStickyFullContent && !account.isFullContentEnabled(feedID = article.feedID)) {
-                account.enableStickyContent(article.feedID)
-            }
-
-            _article = article.copy(fullContent = Article.FullContentState.LOADING)
-
-            _article?.let { fetchFullContent(it) }
-        }
-    }
-
-    fun resetFullContent() {
-        val article = _article ?: return
-
-        _article = article.copy(
-            content = article.defaultContent,
-            fullContent = Article.FullContentState.NONE
-        )
-
-        if (enableStickyFullContent) {
-            viewModelScope.launch {
-                account.disableStickyContent(article.feedID)
-            }
-        }
-    }
-
-    private suspend fun fetchFullContent(article: Article) {
-        account.fetchFullContent(article)
-            .fold(
-                onSuccess = { value ->
-                    if (_article?.id == article.id) {
-                        _article = article.copy(
-                            content = value,
-                            fullContent = Article.FullContentState.LOADED
-                        )
-                    }
-                },
-                onFailure = {
-                    if (_article?.id != article.id) {
-                        return
-                    }
-                    _article = article.copy(
-                        content = article.defaultContent,
-                        fullContent = Article.FullContentState.ERROR
-                    )
-
-                    CapyLog.warn(
-                        "full_content",
-                        mapOf(
-                            "error_type" to it::class.simpleName,
-                            "error_message" to it.message
-                        )
-                    )
-
-                    viewModelScope.launchUI {
-                        context.showFullContentErrorToast(it)
-                    }
-                }
-            )
-    }
-
-    private fun openNextFeedOnAllRead(
-        onArticlesCleared: () -> Unit,
-        searches: List<SavedSearch>,
-        folders: List<Folder>,
-        feeds: List<Feed>,
-    ) {
-        val nextFilter = NextFilter.findMarkReadDestination(
-            latestFilter,
-            searches,
-            folders,
-            feeds,
-        )
-
-        if (nextFilter != null) {
-            selectNextFilter(nextFilter)
-        } else {
-            if (latestFilter.status == UNREAD) {
-                selectArticleFilter()
-            }
-            onArticlesCleared()
-        }
-    }
-
-    fun expandFolder(folderName: String, expanded: Boolean) {
-        viewModelScope.launchIO {
-            account.expandFolder(folderName, expanded = expanded)
-        }
-    }
-
-    fun updateOpenInBrowser(feedID: String, enabled: Boolean) {
-        viewModelScope.launchIO {
-            account.updateOpenInBrowser(feedID, enabled = enabled)
-            WidgetUpdater.update(context = application.applicationContext)
-        }
-    }
-
-    fun toggleFeedUnreadBadge(feedID: String, enabled: Boolean) {
-        viewModelScope.launchIO {
-            account.toggleFeedUnreadBadge(feedID, enabled)
-        }
-    }
-
-    fun toggleSavedSearchUnreadBadge(id: String, enabled: Boolean) {
-        viewModelScope.launchIO {
-            account.toggleSavedSearchUnreadBadge(id, enabled)
-        }
-    }
-
-    fun reloadFavicon(feedID: String) {
-        viewModelScope.launchIO {
-            account.reloadFavicon(feedID)
-        }
-    }
-
-    private val latestFilter: ArticleFilter
-        get() = filter.value
-
-    private val enableStickyFullContent: Boolean
-        get() = appPreferences.enableStickyFullContent.get()
-    private val context: Context
-        get() = application.applicationContext
-
-    val source = account.source
+    // region Labels & external save
 
     fun getArticleLabels(articleID: String?): Flow<List<String>> {
         articleID ?: return emptyFlow()
-
         return account.getArticleSavedSearches(articleID)
     }
 
     fun addLabelAsync(articleID: String, savedSearchID: String) {
-        viewModelScope.launchIO {
-            account.addSavedSearch(articleID, savedSearchID)
-        }
+        viewModelScope.launchIO { account.addSavedSearch(articleID, savedSearchID) }
     }
 
     fun removeLabelAsync(articleID: String, savedSearchID: String) {
-        viewModelScope.launchIO {
-            account.removeSavedSearch(articleID, savedSearchID)
-        }
+        viewModelScope.launchIO { account.removeSavedSearch(articleID, savedSearchID) }
     }
 
     suspend fun createLabel(articleID: String, name: String): Result<String> {
@@ -783,11 +276,89 @@ class ArticleScreenViewModel(
         )
     }
 
-    enum class UnauthorizedMessageState {
-        HIDE,
-        SHOW,
-        LATER,
+    fun saveArticleExternallyAsync(articleID: String, onComplete: (Result<Unit>) -> Unit) {
+        viewModelScope.launchIO {
+            val result = account.saveArticleExternally(articleID)
+            withUIContext { onComplete(result) }
+        }
     }
+
+    // endregion
+
+    // region Auth
+
+    fun dismissUnauthorizedMessage() {
+        _showUnauthorizedMessage = UnauthorizedMessageState.LATER
+    }
+
+    // endregion
+
+    private fun updateFilter(filter: ArticleFilter) {
+        appPreferences.filter.set(filter)
+        updateArticlesSince()
+    }
+
+    private fun updateArticlesSince() {
+        articlesSince.value = OffsetDateTime.now().plusSeconds(1)
+    }
+
+    private fun refreshFilter(filter: ArticleFilter, onComplete: () -> Unit) {
+        refreshJob?.cancel()
+        refreshJob = viewModelScope.launchIO {
+            account.refresh(filter).onFailure { throwable ->
+                if (throwable is UnauthorizedError && _showUnauthorizedMessage == UnauthorizedMessageState.HIDE) {
+                    _showUnauthorizedMessage = UnauthorizedMessageState.SHOW
+                }
+            }
+            launchIO { WidgetUpdater.update(context) }
+            onComplete()
+        }
+    }
+
+    private fun openNextFeedOnAllRead(
+        onArticlesCleared: () -> Unit,
+        searches: List<SavedSearch>,
+        folders: List<Folder>,
+        feeds: List<Feed>,
+    ) {
+        val nextFilter = NextFilter.findMarkReadDestination(latestFilter, searches, folders, feeds)
+        if (nextFilter != null) {
+            selectNextFilter(nextFilter)
+        } else {
+            if (latestFilter.status == UNREAD) selectArticleFilter()
+            onArticlesCleared()
+        }
+    }
+
+    private fun selectNextFilter(filter: NextFilter) {
+        when (filter) {
+            is NextFilter.FeedFilter -> selectFeed(feedID = filter.feedID, folderTitle = filter.folderTitle)
+            is NextFilter.FolderFilter -> selectFolder(title = filter.folderTitle)
+            is NextFilter.SearchFilter -> selectSavedSearch(filter.savedSearchID)
+        }
+    }
+
+    private suspend fun markRead(articleID: String) {
+        account.markRead(articleID).onFailure { Sync.markReadAsync(listOf(articleID), context) }
+        notificationHelper.dismissNotifications(listOf(articleID))
+    }
+
+    private suspend fun markUnread(articleID: String) {
+        account.markUnread(articleID).onFailure { Sync.markUnreadAsync(articleID, context) }
+    }
+
+    private suspend fun addStar(articleID: String) {
+        account.addStar(articleID).onFailure { Sync.addStarAsync(articleID, context) }
+    }
+
+    private suspend fun removeStar(articleID: String) {
+        account.removeStar(articleID).onFailure { Sync.removeStarAsync(articleID, context) }
+    }
+
+    private val latestFilter: ArticleFilter get() = filter.value
+    private val context: Context get() = application.applicationContext
+
+    enum class UnauthorizedMessageState { HIDE, SHOW, LATER }
 }
 
 fun Context.showFullContentErrorToast(throwable: Throwable) {

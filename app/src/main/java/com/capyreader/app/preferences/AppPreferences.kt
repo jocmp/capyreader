@@ -6,7 +6,6 @@ import com.capyreader.app.common.FeedGroup
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.ArticleListFontScale
-import com.capyreader.app.ui.articles.DefaultPaneExpansionIndex
 import com.capyreader.app.ui.articles.MarkReadPosition
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.articles.FontOption
@@ -51,10 +50,7 @@ class AppPreferences(context: Context) {
     val refreshInterval: Preference<RefreshInterval>
         get() = preferenceStore.getEnum("refresh_interval", RefreshInterval.default)
 
-    val articleID: Preference<String>
-        get() = preferenceStore.getString("article_id")
-
-    val crashReporting: Preference<Boolean>
+val crashReporting: Preference<Boolean>
         get() = preferenceStore.getBoolean("enable_crash_reporting", false)
 
     val themeMode: Preference<ThemeMode>
@@ -75,10 +71,7 @@ class AppPreferences(context: Context) {
     val enableStickyFullContent: Preference<Boolean>
         get() = preferenceStore.getBoolean("enable_sticky_full_content", false)
 
-    val paneExpansionIndex: Preference<Int>
-        get() = preferenceStore.getInt("pane_expansion_index", DefaultPaneExpansionIndex)
-
-    fun pinFeedGroup(type: FeedGroup): Preference<Boolean> {
+fun pinFeedGroup(type: FeedGroup): Preference<Boolean> {
         return preferenceStore.getBoolean("feed_group_${type.toString().lowercase()}", true)
     }
 
@@ -140,10 +133,7 @@ class AppPreferences(context: Context) {
     }
 
     class ArticleListOptions(private val preferenceStore: PreferenceStore) {
-        val backAction: Preference<BackAction>
-            get() = preferenceStore.getEnum("article_list_back_action", BackAction.default)
-
-        val sortOrder: Preference<SortOrder>
+val sortOrder: Preference<SortOrder>
             get() = preferenceStore.getEnum(
                 "article_list_sort_order",
                 SortOrder.default
