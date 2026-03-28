@@ -86,7 +86,6 @@ class ByToday(private val database: Database) {
     }
 
     private fun mapTodayStartDate(): Long {
-        return OffsetDateTime.now().toLocalDate().atStartOfDay()
-            .atOffset(OffsetDateTime.now().offset).toEpochSecond()
+        return OffsetDateTime.now().minusHours(24).toEpochSecond()
     }
 }

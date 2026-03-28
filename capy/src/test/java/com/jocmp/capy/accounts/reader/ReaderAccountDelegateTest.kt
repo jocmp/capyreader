@@ -811,6 +811,7 @@ class ReaderAccountDelegateTest {
         coEvery {
             googleReader.streamItemsIDs(
                 streamID = Stream.Starred().id,
+                count = 10_000,
             )
         }.returns(
             Response.success(

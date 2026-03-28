@@ -10,6 +10,7 @@ import com.jocmp.capy.accounts.ValidationError
 import com.jocmp.capy.accounts.feedbin.FeedbinAccountDelegate.Companion.MAX_CREATE_UNREAD_LIMIT
 import com.jocmp.capy.accounts.withErrorHandling
 import com.jocmp.capy.common.TimeHelpers
+import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.common.withResult
@@ -105,7 +106,7 @@ internal class ReaderAccountDelegate(
 
         return editTag(
             ids = listOf(articleID),
-            removeTag = Stream.UserLabel(savedSearchID)
+            removeTag = UserLabel(savedSearchID)
         ).onFailure {
             savedSearchRecords.upsertArticle(articleID = articleID, savedSearchID = savedSearchID)
         }
@@ -359,27 +360,23 @@ internal class ReaderAccountDelegate(
     }
 
     private suspend fun refreshUnreadItems() {
-        withResult(
-            googleReader.streamItemsIDs(
-                stream = Stream.ReadingList(),
-                excludedStream = Read()
-            )
-        ) { result ->
-            articleRecords.markAllUnread(articleIDs = result.itemRefs.map { it.hexID })
-        }
+        val ids = fetchAllItemIDs(
+            stream = Stream.ReadingList(),
+            excludedStream = Read()
+        )
+        articleRecords.markAllUnread(articleIDs = ids)
     }
 
     private suspend fun refreshStarredItems() {
-        withResult(googleReader.streamItemsIDs(stream = Stream.Starred())) { result ->
-            articleRecords.markAllStarred(articleIDs = result.itemRefs.map { it.hexID })
-        }
+        val ids = fetchAllItemIDs(stream = Stream.Starred())
+        articleRecords.markAllStarred(articleIDs = ids)
     }
 
     /**
      * This is a slightly different algorithm than [refreshTopLevelArticles].
      *
      *   - Assume the category (folder or feed) exists so it skips refreshing the subscription list
-     *   - Fetches up to 10k IDs
+     *   - Fetches all IDs via pagination
      *   - On result, the [fetchMissingArticles] will only fetch articles that are not already
      *     saved
      */
@@ -393,12 +390,43 @@ internal class ReaderAccountDelegate(
         } else {
             refreshArticleState()
 
-            withResult(googleReader.streamItemsIDs(stream = stream)) { result ->
-                articleRecords.createStatuses(articleIDs = result.itemRefs.map { it.hexID })
-            }
+            val ids = fetchAllItemIDs(stream = stream)
+            articleRecords.createStatuses(articleIDs = ids)
 
             fetchMissingArticles()
         }
+    }
+
+    private suspend fun fetchAllItemIDs(
+        stream: Stream,
+        excludedStream: Stream? = null,
+    ): List<String> {
+        val allIDs = mutableListOf<String>()
+        var continuation: String? = null
+
+        do {
+            val response = googleReader.streamItemsIDs(
+                stream = stream,
+                excludedStream = excludedStream,
+                count = STREAM_ITEMS_PAGE_SIZE,
+                continuation = continuation,
+            )
+
+            val result = response.body()
+
+            if (response.code() == 401) {
+                throw UnauthorizedError()
+            }
+
+            if (!response.isSuccessful || result == null) {
+                break
+            }
+
+            allIDs.addAll(result.itemRefs.map { it.hexID })
+            continuation = result.continuation
+        } while (continuation != null)
+
+        return allIDs
     }
 
     private suspend fun fetchMissingArticles() {
@@ -599,6 +627,7 @@ internal class ReaderAccountDelegate(
     companion object {
         const val MAX_PAGINATED_ITEM_LIMIT = 250
         private const val MAX_CONCURRENT_FETCHES = 8
+        private const val STREAM_ITEMS_PAGE_SIZE = 10_000
 
         private const val TAG = "reader"
 
