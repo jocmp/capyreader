@@ -19,12 +19,11 @@ import androidx.compose.material.icons.rounded.Today
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -35,8 +34,6 @@ import com.capyreader.app.ui.articles.ArticleStatusIcon
 import com.capyreader.app.ui.articles.CountBadge
 import com.capyreader.app.ui.articles.ListTitle
 import com.capyreader.app.ui.articles.SavedSearchRow
-import com.capyreader.app.ui.fixtures.FeedSample
-import com.capyreader.app.ui.fixtures.FolderPreviewFixture
 import com.capyreader.app.ui.fixtures.PreviewKoinApplication
 import com.capyreader.app.ui.folderNavTitle
 import com.capyreader.app.ui.savedSearchNavTitle
@@ -90,14 +87,13 @@ fun FeedList(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    stringResource(R.string.feed_nav_drawer_title),
-                    style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier
-                        .padding(
-                            vertical = 18.dp,
-                            horizontal = 12.dp
-                        ),
+                Icon(
+                    painterResource(R.drawable.capy_icon_small),
+                    contentDescription = null,
+                    modifier = Modifier.padding(
+                        vertical = 18.dp,
+                        horizontal = 16.dp
+                    ),
                 )
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -109,9 +105,7 @@ fun FeedList(
                             contentDescription = stringResource(R.string.settings)
                         )
                     }
-                    IconButton(onClick = {
-                        onRefresh()
-                    }) {
+                    IconButton(onClick = { onRefresh() }) {
                         Icon(
                             imageVector = Icons.Rounded.Refresh,
                             contentDescription = stringResource(R.string.feed_nav_drawer_refresh_all),
@@ -122,9 +116,7 @@ fun FeedList(
                     }
                     AddFeedButton(
                         iconOnly = true,
-                        onComplete = {
-                            onFeedAdded(it)
-                        }
+                        onComplete = { onFeedAdded(it) }
                     )
                 }
             }
@@ -261,15 +253,10 @@ private fun FeedListDivider() {
 @Preview
 @Composable
 fun FeedListPreview() {
-    val folders = FolderPreviewFixture().values.take(2).toList()
-    val feeds = FeedSample().values.take(2).toList()
-
     PreviewKoinApplication {
         CapyTheme {
             FeedList(
                 source = Source.LOCAL,
-                folders = folders,
-                feeds = feeds,
                 onSelectFolder = {},
                 onSelectFeed = { _, _ -> },
                 onNavigateToSettings = {},
