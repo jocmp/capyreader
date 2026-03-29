@@ -9,13 +9,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.preferences.BadgeStyle
 import com.capyreader.app.ui.LocalBadgeStyle
-import com.jocmp.capy.ArticleStatus
 
 @Composable
 fun CountBadge(
     count: Long,
     showBadge: Boolean = true,
-    status: ArticleStatus = ArticleStatus.ALL,
 ) {
     if (count < 1) {
         return
@@ -24,7 +22,7 @@ fun CountBadge(
     when (LocalBadgeStyle.current) {
         BadgeStyle.EXACT -> Text(count.toString())
         BadgeStyle.SIMPLE -> {
-            if (!showBadge || status == ArticleStatus.STARRED) {
+            if (!showBadge) {
                 return
             }
 

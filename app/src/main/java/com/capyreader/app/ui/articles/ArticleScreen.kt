@@ -83,7 +83,6 @@ import com.capyreader.app.ui.rememberLocalConnectivity
 import com.capyreader.app.ui.settings.LocalSnackbarHost
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
-import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
@@ -113,6 +112,7 @@ fun ArticleScreen(
     val allSavedSearches by viewModel.allSavedSearches.collectAsStateWithLifecycle(initialValue = emptyList())
     val statusCount by viewModel.statusCount.collectAsStateWithLifecycle(initialValue = 0)
     val todayCount by viewModel.todayCount.collectAsStateWithLifecycle(initialValue = 0)
+    val starredCount by viewModel.starredCount.collectAsStateWithLifecycle(initialValue = 0)
     val unreadCount by viewModel.unreadCount.collectAsStateWithLifecycle(initialValue = 0L)
     val showTodayFilter by viewModel.showTodayFilter.collectAsStateWithLifecycle(initialValue = true)
     val filter by viewModel.filter.collectAsStateWithLifecycle(appPreferences.filter.get())
@@ -120,6 +120,7 @@ fun ArticleScreen(
     val searchState by viewModel.searchState.collectAsStateWithLifecycle(SearchState.INACTIVE)
     val nextFilter by viewModel.nextFilter.collectAsStateWithLifecycle(initialValue = null)
     val afterReadAll by viewModel.afterReadAll.collectAsStateWithLifecycle()
+    val hideReadArticles by viewModel.hideReadArticles.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
     val refreshInterval by appPreferences
         .refreshInterval
@@ -205,7 +206,6 @@ fun ArticleScreen(
         val paneExpansion = rememberArticlePaneExpansion()
         var isPullToRefreshing by remember { mutableStateOf(false) }
         val addFeedSuccessMessage = stringResource(R.string.add_feed_success)
-        val currentFeed by viewModel.currentFeed.collectAsStateWithLifecycle(null)
         val scrollBehavior = pinnedScrollBehavior()
         var media by rememberSaveable(saver = Media.Saver) { mutableStateOf(null) }
         val audioController: AudioPlayerController = koinInject()
@@ -427,10 +427,9 @@ fun ArticleScreen(
             }
         }
 
-        val selectStatus = { status: ArticleStatus ->
-            coroutineScope.launchUI {
-                openNextStatus { viewModel.selectStatus(status) }
-            }
+        val selectStarred = {
+            if (!filter.hasStarredSelected()) openNextList { viewModel.selectStarred() }
+            else closeDrawer()
         }
 
         val selectFeed = { feed: Feed, folderTitle: String? ->
@@ -493,6 +492,7 @@ fun ArticleScreen(
                     },
                     onFilterSelect = selectFilter,
                     onSelectToday = { selectToday() },
+                    onSelectStarred = { selectStarred() },
                     refreshState = refreshAllState,
                     onRefresh = {
                         refreshAll()
@@ -500,8 +500,8 @@ fun ArticleScreen(
                     filter = filter,
                     statusCount = statusCount,
                     todayCount = todayCount,
+                    starredCount = starredCount,
                     showTodayFilter = showTodayFilter,
-                    onSelectStatus = { selectStatus(it) }
                 )
             },
             listPane = {
@@ -526,29 +526,17 @@ fun ArticleScreen(
                         }),
                     topBar = {
                         ArticleListTopBar(
-                            onRequestJumpToTop = {
-                                scrollToTop()
-                            },
-                            onNavigateToDrawer = {
-                                openDrawer()
-                            },
-                            onRemoveFolder = { folderTitle, completion ->
-                                viewModel.removeFolder(
-                                    folderTitle,
-                                    completion
-                                )
-                            },
+                            onRequestJumpToTop = { scrollToTop() },
+                            onNavigateToDrawer = { openDrawer() },
                             scrollBehavior = scrollBehavior,
-                            onMarkAllRead = {
-                                markAllRead(MarkRead.All)
-                            },
+                            onMarkAllRead = { markAllRead(MarkRead.All) },
                             search = search,
                             filter = filter,
-                            currentFeed = currentFeed,
                             feeds = allFeeds,
                             savedSearches = savedSearches,
                             folders = allFolders,
-                            source = viewModel.source,
+                            hideReadArticles = hideReadArticles,
+                            onToggleHideReadArticles = { viewModel.toggleHideReadArticles() },
                         )
                     },
                     snackbarHost = {
@@ -612,7 +600,7 @@ fun ArticleScreen(
                                         listState = listState,
                                         enableMarkReadOnScroll = enableMarkReadOnScroll,
                                         refreshingAll = viewModel.refreshingAll,
-                                        filterStatus = filter.status,
+                                        dimReadArticles = filter !is ArticleFilter.Starred,
                                         onMarkAllRead = { range ->
                                             onMarkAllRead(range)
                                         },

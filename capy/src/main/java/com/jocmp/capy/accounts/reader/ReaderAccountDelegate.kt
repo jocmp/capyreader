@@ -663,7 +663,7 @@ private val SubscriptionQuickAddResult.toSubscription: Subscription?
 
 private fun ArticleFilter.toStream(source: Source): Stream {
     return when (this) {
-        is ArticleFilter.Articles, is ArticleFilter.Today -> Read()
+        is ArticleFilter.Articles, is ArticleFilter.Today, is ArticleFilter.Starred -> Read()
         is ArticleFilter.Feeds -> Stream.Feed(feedID)
         is ArticleFilter.Folders -> folderStream(this, source)
         is ArticleFilter.SavedSearches -> UserLabel(savedSearchID)

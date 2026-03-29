@@ -54,7 +54,7 @@ fun FolderRow(
                 onClick = { onFolderSelect(folder) },
                 onLongClick = { setShowMenu(true) },
                 badge = {
-                    CountBadge(count = folder.count, showBadge = showFolderBadge, status = filter.status)
+                    CountBadge(count = folder.count, showBadge = showFolderBadge)
                 },
                 icon = {
                     IconDropdown(
@@ -89,7 +89,6 @@ fun FolderRow(
                             feed = feed,
                             onSelect = { onFeedSelect(feed) },
                             selected = filter.isFeedSelected(feed),
-                            status = filter.status,
                             source = source,
                         )
                     }
