@@ -38,6 +38,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.autofill.ContentType
+import androidx.compose.ui.autofill.contentType
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -50,7 +51,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.ui.articles.feeds.IconDropdown
-import androidx.compose.ui.autofill.contentType
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.accounts.Source
 
@@ -114,6 +114,7 @@ fun AuthFields(
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
+                    .contentType(ContentType.Username)
                     .contentType(ContentType.EmailAddress)
             )
         }
