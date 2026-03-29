@@ -23,7 +23,7 @@ WHERE saved_search_id = :savedSearchID
 AND ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
 AND ((article_statuses.starred = :starred AND article_statuses.last_unstarred_at IS NULL OR article_statuses.last_unstarred_at >= :lastUnstarredAt) OR :starred IS NULL)
 AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
-AND (articles.title LIKE '%' || :query || '%' OR articles.summary  LIKE '%' || :query || '%' OR :query IS NULL)
+AND (:query IS NULL OR articles.title LIKE '%' || :query || '%' OR articles.summary LIKE '%' || :query || '%')
 ORDER BY articles.published_at DESC
 LIMIT :limit OFFSET :offset;
 
@@ -52,7 +52,7 @@ WHERE saved_search_id = :savedSearchID
 AND ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
 AND ((article_statuses.starred = :starred AND article_statuses.last_unstarred_at IS NULL OR article_statuses.last_unstarred_at >= :lastUnstarredAt) OR :starred IS NULL)
 AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
-AND (articles.title LIKE '%' || :query || '%' OR articles.summary  LIKE '%' || :query || '%' OR :query IS NULL)
+AND (:query IS NULL OR articles.title LIKE '%' || :query || '%' OR articles.summary LIKE '%' || :query || '%')
 ORDER BY articles.published_at ASC
 LIMIT :limit OFFSET :offset;
 
@@ -64,7 +64,7 @@ JOIN saved_search_articles ON articles.id = saved_search_articles.article_id
 WHERE saved_search_id = :savedSearchID
 AND ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
 AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
-AND (articles.title LIKE '%' || :query || '%' OR articles.summary  LIKE '%' || :query || '%' OR :query IS NULL)
+AND (:query IS NULL OR articles.title LIKE '%' || :query || '%' OR articles.summary LIKE '%' || :query || '%')
 AND ((article_statuses.starred = :starred AND article_statuses.last_unstarred_at IS NULL OR article_statuses.last_unstarred_at >= :lastUnstarredAt) OR :starred IS NULL);
 
 findArticleIDs:
@@ -76,7 +76,7 @@ JOIN saved_search_articles ON articles.id = saved_search_articles.article_id
 WHERE article_statuses.read = 0
 AND (article_statuses.starred = :starred OR :starred IS NULL)
 AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
-AND (articles.title LIKE '%' || :query || '%' OR articles.summary  LIKE '%' || :query || '%' OR :query IS NULL)
+AND (:query IS NULL OR articles.title LIKE '%' || :query || '%' OR articles.summary LIKE '%' || :query || '%')
 AND saved_search_id = :savedSearchID
 AND (
     :afterArticleID IS NULL
