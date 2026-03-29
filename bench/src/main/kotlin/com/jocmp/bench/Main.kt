@@ -26,6 +26,7 @@ fun main(args: Array<String>) {
         when (command) {
             "refresh" -> commandRefresh(account)
             "refresh-profile" -> commandRefreshProfile(account)
+            "select-profile" -> commandSelectProfile(account)
             "add-feed" -> {
                 val url = args.getOrNull(1) ?: error("Usage: add-feed <url>")
                 commandAddFeed(account, url)
