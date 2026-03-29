@@ -2,6 +2,7 @@ package com.capyreader.app.ui.articles.list
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Label
+import androidx.compose.material.icons.outlined.BookmarkBorder
 import androidx.compose.material.icons.rounded.ContentCopy
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.DropdownMenu
@@ -36,8 +37,10 @@ fun ArticleActionMenu(
     article: Article,
     index: Int,
     showLabels: Boolean = false,
+    showSaveForLater: Boolean = false,
     onMarkAllRead: (range: MarkRead) -> Unit = {},
     onOpenLabels: () -> Unit = {},
+    onSaveForLater: (url: String) -> Unit = {},
     onDismissRequest: () -> Unit = {},
 ) {
     val unreadCount = LocalUnreadCount.current
@@ -48,6 +51,9 @@ fun ArticleActionMenu(
     ) {
         ToggleStarMenuItem(onDismissRequest, article)
         ToggleReadMenuItem(onDismissRequest, article)
+        if (showSaveForLater) {
+            SaveForLaterMenuItem(onDismissRequest, article, onSaveForLater)
+        }
         if (showLabels) {
             LabelMenuItem(onDismissRequest, onOpenLabels)
         }
@@ -96,6 +102,29 @@ private fun LabelMenuItem(
         onClick = {
             onDismissRequest()
             onOpenLabels()
+        },
+    )
+}
+
+@Composable
+private fun SaveForLaterMenuItem(
+    onDismissRequest: () -> Unit,
+    article: Article,
+    onSaveForLater: (url: String) -> Unit,
+) {
+    val url = article.url?.toString() ?: return
+
+    DropdownMenuItem(
+        leadingIcon = {
+            Icon(
+                Icons.Outlined.BookmarkBorder,
+                contentDescription = null
+            )
+        },
+        text = { Text(stringResource(R.string.article_actions_save_for_later)) },
+        onClick = {
+            onDismissRequest()
+            onSaveForLater(url)
         },
     )
 }

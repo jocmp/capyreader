@@ -24,6 +24,7 @@ import com.capyreader.app.common.WebViewInterface
 import com.capyreader.app.common.rememberTalkbackPreference
 import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
+import com.capyreader.app.ui.articles.displayFeedName
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
 import com.jocmp.capy.logging.CapyLog
@@ -180,7 +181,8 @@ class WebViewState(
             article,
             hideImages = !showImages,
             byline = article.byline(context = webView.context),
-            colors = colors
+            colors = colors,
+            feedName = article.displayFeedName(webView.context),
         )
 
         webView.loadDataWithBaseURL(

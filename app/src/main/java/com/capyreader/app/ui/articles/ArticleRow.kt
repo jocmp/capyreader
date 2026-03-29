@@ -33,12 +33,14 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
@@ -60,6 +62,7 @@ import com.capyreader.app.ui.articles.list.ArticleListItem
 import com.capyreader.app.ui.articles.list.ArticleRowSwipeBox
 import com.capyreader.app.ui.fixtures.ArticleSample
 import com.capyreader.app.ui.fixtures.PreviewKoinApplication
+import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.capyreader.app.ui.theme.CapyTheme
 import com.capyreader.app.ui.theme.LocalAppTheme
 import com.jocmp.capy.Article
@@ -67,6 +70,7 @@ import com.jocmp.capy.EnclosureType
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.articles.relativeTime
 import java.net.URL
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
@@ -108,6 +112,9 @@ fun ArticleRow(
     val haptics = LocalHapticFeedback.current
     val (isArticleMenuOpen, setArticleMenuOpen) = remember { mutableStateOf(false) }
     val labelsActions = LocalLabelsActions.current
+    val snackbarHost = LocalSnackbarHost.current
+    val scope = rememberCoroutineScope()
+    val savedForLaterMessage = stringResource(R.string.saved_for_later_success)
     val openArticleMenu = {
         haptics.performHapticFeedback(HapticFeedbackType.LongPress)
         setArticleMenuOpen(true)
@@ -141,7 +148,7 @@ fun ArticleRow(
 
                         if (options.showFeedName) {
                             Text(
-                                text = article.feedName,
+                                text = article.displayFeedName(LocalContext.current),
                                 color = feedNameColor,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
@@ -223,11 +230,14 @@ fun ArticleRow(
                 colors = colors
             )
 
+            val articleActions = LocalArticleActions.current
+
             ArticleActionMenu(
                 expanded = isArticleMenuOpen,
                 article = article,
                 index = index,
                 showLabels = labelsActions.showLabels,
+                showSaveForLater = articleActions.showSaveForLater,
                 onMarkAllRead = {
                     setArticleMenuOpen(false)
                     onMarkAllRead(it)
@@ -235,6 +245,14 @@ fun ArticleRow(
                 onOpenLabels = {
                     setArticleMenuOpen(false)
                     labelsActions.openSheet(article.id)
+                },
+                onSaveForLater = { url ->
+                    setArticleMenuOpen(false)
+                    articleActions.saveForLater(url) { result ->
+                        if (result.isSuccess) {
+                            scope.launch { snackbarHost.showSnackbar(savedForLaterMessage) }
+                        }
+                    }
                 },
                 onDismissRequest = {
                     setArticleMenuOpen(false)

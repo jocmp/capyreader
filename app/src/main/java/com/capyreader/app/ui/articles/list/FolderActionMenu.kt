@@ -10,7 +10,7 @@ import androidx.compose.ui.res.stringResource
 import com.capyreader.app.R
 import com.capyreader.app.ui.articles.EditFolderDialog
 import com.capyreader.app.ui.articles.RemoveFolderDialog
-import com.capyreader.app.ui.settings.localSnackbarDisplay
+import com.capyreader.app.ui.components.localSnackbarDisplay
 import com.jocmp.capy.accounts.Source
 
 @Composable

@@ -8,6 +8,9 @@
     <string name="add_feed_success">Feed added</string>
     <string name="feed_form_cancel">Cancel</string>
     <string name="filter_starred">Starred</string>
+    <string name="filter_read_later">Saved for Later</string>
+    <string name="article_actions_save_for_later">Save for Later</string>
+    <string name="saved_for_later_success">Saved for Later</string>
     <string name="filter_unread">Unread</string>
     <string name="filter_all">All</string>
     <string name="filter_today">Today</string>

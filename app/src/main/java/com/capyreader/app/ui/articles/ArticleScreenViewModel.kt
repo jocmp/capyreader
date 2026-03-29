@@ -38,6 +38,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -56,7 +57,10 @@ class ArticleScreenViewModel(
 
     private var fullContentJob: Job? = null
 
-    val filter = appPreferences.filter.stateIn(viewModelScope)
+    private val _filter = MutableStateFlow(appPreferences.homePage.get().toArticleFilter())
+
+    val filter: StateFlow<ArticleFilter>
+        get() = _filter
 
     val hideReadArticles =
         appPreferences.articleListOptions.hideReadArticles.stateIn(viewModelScope)
@@ -136,17 +140,17 @@ class ArticleScreenViewModel(
         _counts,
         filter,
     ) { feeds, latestCounts, filter ->
-        feeds.filter { !it.isPages }
+        feeds.filter { !it.isReadLater }
             .map { copyFeedCounts(it, latestCounts) }
             .withPositiveCount(filter.status)
     }
 
-    val pagesFeed: Flow<Feed?> = combine(
+    val readLaterFeed: Flow<Feed?> = combine(
         account.feeds,
         _counts,
         filter,
     ) { feeds, latestCounts, filter ->
-        feeds.find { it.isPages }
+        feeds.find { it.isReadLater }
             ?.let { copyFeedCounts(it, latestCounts) }
             ?.takeIf { it.count > 0 || filter.status != ArticleStatus.UNREAD }
     }
@@ -217,8 +221,6 @@ class ArticleScreenViewModel(
         get() = _nextFilter
 
     init {
-        appPreferences.filter.set(appPreferences.homePage.get().toArticleFilter())
-
         viewModelScope.launch {
             nextFilterListener.collect {
                 _nextFilter.value = it
@@ -325,6 +327,13 @@ class ArticleScreenViewModel(
     fun deletePage(articleID: String) {
         viewModelScope.launchIO {
             account.deletePage(articleID)
+        }
+    }
+
+    fun saveForLater(url: String, onComplete: (Result<Unit>) -> Unit) {
+        viewModelScope.launchIO {
+            val result = account.createPage(url)
+            withUIContext { onComplete(result) }
         }
     }
 
@@ -568,7 +577,7 @@ class ArticleScreenViewModel(
     }
 
     private fun updateFilter(filter: ArticleFilter) {
-        appPreferences.filter.set(filter)
+        _filter.value = filter
 
         clearArticle()
 
@@ -612,10 +621,9 @@ class ArticleScreenViewModel(
             Article.FullContentState.NONE
         }
 
-        val content = if (fullContent == Article.FullContentState.LOADING) {
-            ""
-        } else {
-            article.defaultContent
+        val content = when (fullContent) {
+            Article.FullContentState.LOADING -> ""
+            else -> article.defaultContent
         }
 
         return article.copy(

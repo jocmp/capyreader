@@ -80,7 +80,7 @@ import com.capyreader.app.ui.components.SearchState
 import com.capyreader.app.ui.provideLinkOpener
 import com.capyreader.app.ui.rememberLazyListState
 import com.capyreader.app.ui.rememberLocalConnectivity
-import com.capyreader.app.ui.settings.LocalSnackbarHost
+import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
@@ -104,7 +104,7 @@ fun ArticleScreen(
     onNavigateToSettings: () -> Unit,
 ) {
     val feeds by viewModel.topLevelFeeds.collectAsStateWithLifecycle(initialValue = emptyList())
-    val pagesFeed by viewModel.pagesFeed.collectAsStateWithLifecycle(initialValue = null)
+    val readLaterFeed by viewModel.readLaterFeed.collectAsStateWithLifecycle(initialValue = null)
     val allFeeds by viewModel.allFeeds.collectAsStateWithLifecycle(initialValue = emptyList())
     val allFolders by viewModel.allFolders.collectAsStateWithLifecycle(initialValue = emptyList())
     val folders by viewModel.folders.collectAsStateWithLifecycle(initialValue = emptyList())
@@ -114,7 +114,7 @@ fun ArticleScreen(
     val todayCount by viewModel.todayCount.collectAsStateWithLifecycle(initialValue = 0)
     val starredCount by viewModel.starredCount.collectAsStateWithLifecycle(initialValue = 0)
     val unreadCount by viewModel.unreadCount.collectAsStateWithLifecycle(initialValue = 0L)
-    val filter by viewModel.filter.collectAsStateWithLifecycle(appPreferences.homePage.get().toArticleFilter())
+    val filter by viewModel.filter.collectAsStateWithLifecycle()
     val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle("")
     val searchState by viewModel.searchState.collectAsStateWithLifecycle(SearchState.INACTIVE)
     val nextFilter by viewModel.nextFilter.collectAsStateWithLifecycle(initialValue = null)
@@ -476,7 +476,7 @@ fun ArticleScreen(
                     source = viewModel.source,
                     folders = folders,
                     feeds = feeds,
-                    pagesFeed = pagesFeed,
+                    readLaterFeed = readLaterFeed,
                     onSelectFolder = selectFolder,
                     onSelectFeed = selectFeed,
                     onFeedAdded = { onFeedAdded(it) },
@@ -767,6 +767,9 @@ fun rememberArticleActions(viewModel: ArticleScreenViewModel): ArticleActions {
             star = viewModel::addStarAsync,
             unstar = viewModel::removeStarAsync,
             saveExternally = viewModel::saveArticleExternallyAsync,
+            saveForLater = viewModel::saveForLater,
+
+            showSaveForLater = viewModel.source.supportsReadLater,
         )
     }
 }

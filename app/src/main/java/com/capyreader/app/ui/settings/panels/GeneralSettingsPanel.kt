@@ -49,7 +49,7 @@ import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.components.TextSwitch
 import com.capyreader.app.ui.fixtures.PreviewKoinApplication
 import com.capyreader.app.ui.settings.CrashReportingCheckbox
-import com.capyreader.app.ui.settings.LocalSnackbarHost
+import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.capyreader.app.ui.settings.PreferenceSelect
 import com.capyreader.app.ui.settings.keywordblocklist.BlockedKeywords
 import com.capyreader.app.ui.settings.keywordblocklist.KeywordBlocklistItem
@@ -67,6 +67,7 @@ fun GeneralSettingsPanel(
     viewModel: GeneralSettingsViewModel = koinViewModel(),
     onNavigateToNotifications: () -> Unit,
 ) {
+    val hasReadLaterFeed by viewModel.hasReadLaterFeed.collectAsStateWithLifecycle(initialValue = false)
     val keywords by viewModel.keywordBlocklist.collectAsStateWithLifecycle()
     val blockedKeywords = BlockedKeywords(
         keywords = keywords.toList().sortedWith(compareBy(CASE_INSENSITIVE_ORDER) { it }),
@@ -99,6 +100,7 @@ fun GeneralSettingsPanel(
             enableStickyFullContent = viewModel.enableStickyFullContent,
             homePage = viewModel.homePage,
             updateHomePage = viewModel::updateHomePage,
+            hasReadLaterFeed = hasReadLaterFeed,
         )
     }
 }
@@ -126,6 +128,7 @@ fun GeneralSettingsPanelView(
     markReadOnScroll: Boolean,
     homePage: HomePage = HomePage.default,
     updateHomePage: (HomePage) -> Unit = {},
+    hasReadLaterFeed: Boolean = false,
 ) {
     val (isClearArticlesDialogOpen, setClearArticlesDialogOpen) = remember { mutableStateOf(false) }
 
@@ -150,6 +153,7 @@ fun GeneralSettingsPanelView(
         HomePageSelect(
             selected = homePage,
             update = updateHomePage,
+            showReadLater = hasReadLaterFeed,
         )
 
         FormSection(title = stringResource(R.string.settings_section_refresh)) {
