@@ -11,9 +11,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Star
@@ -276,6 +278,33 @@ private fun ArticleImage(
 @Composable
 fun PlaceholderArticleRow(imagePreview: ImagePreview = ImagePreview.NONE) {
     ListItem(
+        leadingContent = {
+            Box(
+                Modifier
+                    .size(16.dp)
+                    .clip(RoundedCornerShape(2.dp))
+                    .background(colorScheme.surfaceContainer)
+            )
+        },
+        overlineContent = {
+            Box(
+                Modifier
+                    .fillMaxWidth(0.4f)
+                    .height(12.dp)
+                    .clip(MaterialTheme.shapes.small)
+                    .background(colorScheme.surfaceContainer)
+            )
+        },
+        headlineContent = {
+            Box(
+                Modifier
+                    .padding(top = 4.dp)
+                    .fillMaxWidth(0.75f)
+                    .height(14.dp)
+                    .clip(MaterialTheme.shapes.small)
+                    .background(colorScheme.surfaceContainer)
+            )
+        },
         supportingContent = {
             if (imagePreview == ImagePreview.LARGE) {
                 Surface(
@@ -291,17 +320,17 @@ fun PlaceholderArticleRow(imagePreview: ImagePreview = ImagePreview.NONE) {
             if (imagePreview.showInline()) {
                 Box(
                     Modifier
-                        .background(colorScheme.surfaceContainer)
                         .size(
                             when (imagePreview) {
                                 ImagePreview.MEDIUM -> MEDIUM_IMAGE_SIZE
                                 else -> SMALL_IMAGE_SIZE
                             }
                         )
+                        .clip(MaterialTheme.shapes.small)
+                        .background(colorScheme.surfaceContainer)
                 )
             }
         },
-        headlineContent = {}
     )
 }
 
