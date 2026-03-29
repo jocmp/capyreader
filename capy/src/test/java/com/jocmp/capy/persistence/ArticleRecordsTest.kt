@@ -344,8 +344,7 @@ class ArticleRecordsTest {
 
         val results = articleRecords
             .byStatus
-            .all(
-                status = ArticleStatus.STARRED,
+            .allStarred(
                 limit = 10,
                 offset = 0,
                 sortOrder = SortOrder.NEWEST_FIRST,

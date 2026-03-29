@@ -294,6 +294,11 @@ class ArticleRecords(
                 query = query,
                 since = null
             )
+
+            is ArticleFilter.Starred -> byStatus.countStarred(
+                status = filter.status,
+                query = query,
+            )
         }
 
         return count.asFlow().mapToOneOrDefault(0L, Dispatchers.IO)
@@ -364,6 +369,13 @@ class ArticleRecords(
 
             is ArticleFilter.Today -> byToday.unreadArticleIDs(
                 filter.status,
+                range = range,
+                sortOrder = sortOrder,
+                query = query,
+            )
+
+            is ArticleFilter.Starred -> byStatus.unreadArticleIDs(
+                ArticleStatus.ALL,
                 range = range,
                 sortOrder = sortOrder,
                 query = query,
