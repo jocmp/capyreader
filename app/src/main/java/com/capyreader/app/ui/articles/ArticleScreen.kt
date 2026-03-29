@@ -663,7 +663,8 @@ fun ArticleScreen(
         )
 
         LaunchedEffect(scaffoldNavigator.currentDestination) {
-            val isOnList = scaffoldNavigator.currentDestination?.pane != ListDetailPaneScaffoldRole.Detail
+            val isOnList =
+                scaffoldNavigator.currentDestination?.pane != ListDetailPaneScaffoldRole.Detail
             if (isOnList && article != null) {
                 viewModel.clearArticle()
             }

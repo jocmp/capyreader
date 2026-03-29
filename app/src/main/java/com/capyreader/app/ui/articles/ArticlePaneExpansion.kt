@@ -34,7 +34,6 @@ private val ArticlePaneAnchors: List<PaneExpansionAnchor> = buildList {
 class ArticlePaneExpansion(
     val state: PaneExpansionState,
     val isFullscreen: Boolean,
-    val isDetailHidden: Boolean,
     private val anchors: List<PaneExpansionAnchor>,
     private val lastAnchorIndex: Int,
     private val scope: CoroutineScope,
@@ -107,7 +106,6 @@ fun rememberArticlePaneExpansion(
         ArticlePaneExpansion(
             state = paneExpansionState,
             isFullscreen = isFullscreen,
-            isDetailHidden = isDetailHidden,
             anchors = anchors,
             lastAnchorIndex = lastAnchorIndex,
             scope = scope,
