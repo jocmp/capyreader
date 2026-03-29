@@ -92,3 +92,4 @@ zoomable-image-coil = { module = "me.saket.telephoto:zoomable-image-coil3", vers
 [plugins]
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+jetbrains-compose = { id = "org.jetbrains.compose", version = "1.10.3" }
