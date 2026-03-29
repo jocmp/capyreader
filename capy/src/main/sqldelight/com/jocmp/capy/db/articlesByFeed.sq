@@ -107,6 +107,7 @@ SELECT
   feeds.title AS feed_title,
   feeds.favicon_url,
   feeds.open_articles_in_browser,
+  feeds.read_later,
   article_statuses.updated_at,
   article_statuses.starred,
   article_statuses.read
@@ -137,6 +138,7 @@ SELECT
   feeds.title AS feed_title,
   feeds.favicon_url,
   feeds.open_articles_in_browser,
+  feeds.read_later,
   article_statuses.updated_at,
   article_statuses.starred,
   article_statuses.read

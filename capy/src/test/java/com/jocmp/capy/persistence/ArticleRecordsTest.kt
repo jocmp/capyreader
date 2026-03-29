@@ -356,6 +356,77 @@ class ArticleRecordsTest {
     }
 
     @Test
+    fun keyedPaging_returnsArticlesInOrder() = runTest {
+        val now = nowUTC()
+        val total = 5
+        val articles = (1..total).map { i ->
+            articleFixture.create(
+                publishedAt = now.minusHours(i.toLong()).toEpochSecond()
+            )
+        }
+
+        val records = ArticleRecords(database)
+        val pageSize = 2L
+
+        val boundariesProvider = records.byStatus.pageBoundaries(
+            status = ArticleStatus.ALL,
+        )
+        val queryProvider = records.byStatus.keyed(
+            status = ArticleStatus.ALL,
+            sortOrder = SortOrder.NEWEST_FIRST,
+        )
+
+        val boundaries = boundariesProvider(null, pageSize).executeAsList()
+        assertEquals(expected = 3, actual = boundaries.size)
+
+        val allResults = boundaries.flatMapIndexed { i, begin ->
+            val end = boundaries.getOrNull(i + 1)
+            queryProvider(begin, end).executeAsList()
+        }
+
+        assertEquals(expected = 5, actual = allResults.size)
+        assertEquals(
+            expected = articles.map { it.id },
+            actual = allResults.map { it.id },
+        )
+    }
+
+    @Test
+    fun keyedPaging_oldestFirst() = runTest {
+        val now = nowUTC()
+        val total = 5
+        val articles = (1..total).map { i ->
+            articleFixture.create(
+                publishedAt = now.minusHours(i.toLong()).toEpochSecond()
+            )
+        }
+
+        val records = ArticleRecords(database)
+        val pageSize = 2L
+
+        val boundariesProvider = records.byStatus.pageBoundaries(
+            status = ArticleStatus.ALL,
+        )
+        val queryProvider = records.byStatus.keyed(
+            status = ArticleStatus.ALL,
+            sortOrder = SortOrder.OLDEST_FIRST,
+        )
+
+        val boundaries = boundariesProvider(null, pageSize).executeAsList()
+
+        val allResults = boundaries.flatMapIndexed { i, begin ->
+            val end = boundaries.getOrNull(i + 1)
+            queryProvider(begin, end).executeAsList()
+        }
+
+        assertEquals(expected = total, actual = allResults.size)
+        assertEquals(
+            expected = articles.reversed().map { it.id },
+            actual = allResults.map { it.id },
+        )
+    }
+
+    @Test
     fun markAllUnread() = runTest {
         val articleIDs = 3.repeated { RandomUUID.generate() }
         val articleRecords = ArticleRecords(database)

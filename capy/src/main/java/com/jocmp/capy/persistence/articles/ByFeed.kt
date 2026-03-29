@@ -23,7 +23,6 @@ class ByFeed(private val database: Database) {
         priority: FeedPriority,
     ): Query<Article> {
         val (read, starred) = status.toStatusPair
-
         val queries = database.articlesByFeedQueries
 
         return if (isDescendingOrder(sortOrder)) {

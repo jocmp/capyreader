@@ -11,44 +11,6 @@ import com.jocmp.capy.persistence.toStatusPair
 import java.time.OffsetDateTime
 
 class ByToday(private val database: Database) {
-    fun all(
-        status: ArticleStatus,
-        query: String? = null,
-        limit: Long,
-        offset: Long,
-        sortOrder: SortOrder,
-        since: OffsetDateTime?,
-    ): Query<Article> {
-        val (read, starred) = status.toStatusPair
-        val queries = database.articlesByStatusQueries
-
-        return if (isNewestFirst(sortOrder)) {
-            queries.allNewestFirst(
-                read = read,
-                starred = starred,
-                limit = limit,
-                offset = offset,
-                lastReadAt = mapLastRead(read, since),
-                lastUnstarredAt = mapLastUnstarred(starred, since),
-                publishedSince = mapTodayStartDate(),
-                query = query,
-                mapper = ::listMapper
-            )
-        } else {
-            queries.allOldestFirst(
-                read = read,
-                starred = starred,
-                limit = limit,
-                offset = offset,
-                lastReadAt = mapLastRead(read, since),
-                lastUnstarredAt = mapLastUnstarred(starred, since),
-                publishedSince = mapTodayStartDate(),
-                query = query,
-                mapper = ::listMapper
-            )
-        }
-    }
-
     fun unreadArticleIDs(
         status: ArticleStatus,
         range: MarkRead,

@@ -11,48 +11,6 @@ import com.jocmp.capy.persistence.toStatusPair
 import java.time.OffsetDateTime
 
 class BySavedSearch(private val database: Database) {
-    fun all(
-        savedSearchID: String,
-        status: ArticleStatus,
-        query: String? = null,
-        since: OffsetDateTime,
-        limit: Long,
-        sortOrder: SortOrder,
-        offset: Long,
-    ): Query<Article> {
-        val (read, starred) = status.toStatusPair
-
-        val queries = database.articlesBySavedSearchQueries
-
-        return if (isDescendingOrder(sortOrder)) {
-            queries.allNewestFirst(
-                savedSearchID = savedSearchID,
-                query = query,
-                read = read,
-                starred = starred,
-                limit = limit,
-                offset = offset,
-                lastReadAt = mapLastRead(read, since),
-                lastUnstarredAt = mapLastUnstarred(starred, since),
-                publishedSince = null,
-                mapper = ::listMapper
-            )
-        } else {
-            queries.allOldestFirst(
-                savedSearchID = savedSearchID,
-                query = query,
-                read = read,
-                starred = starred,
-                limit = limit,
-                offset = offset,
-                lastReadAt = mapLastRead(read, since),
-                lastUnstarredAt = mapLastUnstarred(starred, since),
-                publishedSince = null,
-                mapper = ::listMapper
-            )
-        }
-    }
-
     fun unreadArticleIDs(
         status: ArticleStatus,
         savedSearchID: String,
