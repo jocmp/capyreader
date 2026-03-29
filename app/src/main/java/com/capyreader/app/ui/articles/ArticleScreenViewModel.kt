@@ -404,8 +404,6 @@ class ArticleScreenViewModel(
             val article = buildArticle(articleID) ?: return@launchIO
             _article = article
 
-            appPreferences.articleID.set(articleID)
-
             launchIO {
                 markRead(articleID)
             }
@@ -456,7 +454,6 @@ class ArticleScreenViewModel(
 
     fun clearArticle() {
         _article = null
-        appPreferences.articleID.delete()
     }
 
     fun startSearch() {

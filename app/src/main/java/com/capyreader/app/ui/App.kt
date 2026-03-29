@@ -17,6 +17,8 @@ import com.capyreader.app.unloadAccountModules
 fun App(
     startDestination: Route,
     appPreferences: AppPreferences,
+    pendingArticleID: String? = null,
+    onPendingArticleSelected: () -> Unit = {},
 ) {
     val navController = rememberNavController()
 
@@ -54,7 +56,11 @@ fun App(
                         unloadAccountModules()
                     }
                 )
-                articleGraph(navController = navController)
+                articleGraph(
+                    navController = navController,
+                    pendingArticleID = pendingArticleID,
+                    onPendingArticleSelected = onPendingArticleSelected,
+                )
             }
         }
     }
