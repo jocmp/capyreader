@@ -72,6 +72,68 @@ class ByArticleStatus(private val database: Database) {
         return database.articlesQueries.lastUpdatedAt().executeAsOne().MAX
     }
 
+    fun pageBoundaries(
+        status: ArticleStatus,
+        query: String? = null,
+        since: OffsetDateTime? = null,
+    ): (anchor: Long?, limit: Long) -> Query<Long> {
+        val (read, starred) = status.toStatusPair
+
+        return { anchor, limit ->
+            database.articlesByStatusQueries.pageBoundaries(
+                read = read,
+                starred = starred,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
+                publishedSince = null,
+                query = query,
+                anchor = anchor,
+                limit = limit,
+                mapper = { publishedAt -> publishedAt ?: 0L }
+            )
+        }
+    }
+
+    fun keyed(
+        status: ArticleStatus,
+        query: String? = null,
+        sortOrder: SortOrder,
+        since: OffsetDateTime? = null,
+    ): (beginInclusive: Long, endExclusive: Long?) -> Query<Article> {
+        val (read, starred) = status.toStatusPair
+        val queries = database.articlesByStatusQueries
+
+        return if (isNewestFirst(sortOrder)) {
+            { begin, end ->
+                queries.keyedNewestFirst(
+                    read = read,
+                    starred = starred,
+                    lastReadAt = mapLastRead(read, since),
+                    lastUnstarredAt = mapLastUnstarred(starred, since),
+                    publishedSince = null,
+                    query = query,
+                    beginInclusive = begin,
+                    endExclusive = end,
+                    mapper = ::listMapper,
+                )
+            }
+        } else {
+            { begin, end ->
+                queries.keyedOldestFirst(
+                    read = read,
+                    starred = starred,
+                    lastReadAt = mapLastRead(read, since),
+                    lastUnstarredAt = mapLastUnstarred(starred, since),
+                    publishedSince = null,
+                    query = query,
+                    beginInclusive = begin,
+                    endExclusive = end,
+                    mapper = ::listMapper,
+                )
+            }
+        }
+    }
+
     fun count(
         status: ArticleStatus,
         query: String? = null,

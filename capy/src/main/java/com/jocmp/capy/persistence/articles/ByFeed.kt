@@ -80,6 +80,78 @@ class ByFeed(private val database: Database) {
         )
     }
 
+    fun pageBoundaries(
+        feedIDs: List<String>,
+        status: ArticleStatus,
+        query: String? = null,
+        since: OffsetDateTime? = null,
+        priority: FeedPriority,
+    ): (anchor: Long?, limit: Long) -> Query<Long> {
+        val (read, starred) = status.toStatusPair
+
+        return { anchor, limit ->
+            database.articlesByFeedQueries.pageBoundaries(
+                feedIDs = feedIDs,
+                read = read,
+                starred = starred,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
+                publishedSince = null,
+                query = query,
+                priorities = priority.inclusivePriorities,
+                anchor = anchor,
+                limit = limit,
+                mapper = { publishedAt -> publishedAt ?: 0L }
+            )
+        }
+    }
+
+    fun keyed(
+        feedIDs: List<String>,
+        status: ArticleStatus,
+        query: String? = null,
+        sortOrder: SortOrder,
+        since: OffsetDateTime? = null,
+        priority: FeedPriority,
+    ): (beginInclusive: Long, endExclusive: Long?) -> Query<Article> {
+        val (read, starred) = status.toStatusPair
+        val queries = database.articlesByFeedQueries
+
+        return if (isDescendingOrder(sortOrder)) {
+            { begin, end ->
+                queries.keyedNewestFirst(
+                    feedIDs = feedIDs,
+                    read = read,
+                    starred = starred,
+                    lastReadAt = mapLastRead(read, since),
+                    lastUnstarredAt = mapLastUnstarred(starred, since),
+                    publishedSince = null,
+                    query = query,
+                    priorities = priority.inclusivePriorities,
+                    beginInclusive = begin,
+                    endExclusive = end,
+                    mapper = ::listMapper,
+                )
+            }
+        } else {
+            { begin, end ->
+                queries.keyedOldestFirst(
+                    feedIDs = feedIDs,
+                    read = read,
+                    starred = starred,
+                    lastReadAt = mapLastRead(read, since),
+                    lastUnstarredAt = mapLastUnstarred(starred, since),
+                    publishedSince = null,
+                    query = query,
+                    priorities = priority.inclusivePriorities,
+                    beginInclusive = begin,
+                    endExclusive = end,
+                    mapper = ::listMapper,
+                )
+            }
+        }
+    }
+
     fun count(
         feedIDs: List<String>,
         status: ArticleStatus,

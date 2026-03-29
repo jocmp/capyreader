@@ -75,6 +75,73 @@ class BySavedSearch(private val database: Database) {
         )
     }
 
+    fun pageBoundaries(
+        savedSearchID: String,
+        status: ArticleStatus,
+        query: String? = null,
+        since: OffsetDateTime? = null,
+    ): (anchor: Long?, limit: Long) -> Query<Long> {
+        val (read, starred) = status.toStatusPair
+
+        return { anchor, limit ->
+            database.articlesBySavedSearchQueries.pageBoundaries(
+                savedSearchID = savedSearchID,
+                read = read,
+                starred = starred,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
+                publishedSince = null,
+                query = query,
+                anchor = anchor,
+                limit = limit,
+                mapper = { publishedAt -> publishedAt ?: 0L }
+            )
+        }
+    }
+
+    fun keyed(
+        savedSearchID: String,
+        status: ArticleStatus,
+        query: String? = null,
+        sortOrder: SortOrder,
+        since: OffsetDateTime? = null,
+    ): (beginInclusive: Long, endExclusive: Long?) -> Query<Article> {
+        val (read, starred) = status.toStatusPair
+        val queries = database.articlesBySavedSearchQueries
+
+        return if (isDescendingOrder(sortOrder)) {
+            { begin, end ->
+                queries.keyedNewestFirst(
+                    savedSearchID = savedSearchID,
+                    read = read,
+                    starred = starred,
+                    lastReadAt = mapLastRead(read, since),
+                    lastUnstarredAt = mapLastUnstarred(starred, since),
+                    publishedSince = null,
+                    query = query,
+                    beginInclusive = begin,
+                    endExclusive = end,
+                    mapper = ::listMapper,
+                )
+            }
+        } else {
+            { begin, end ->
+                queries.keyedOldestFirst(
+                    savedSearchID = savedSearchID,
+                    read = read,
+                    starred = starred,
+                    lastReadAt = mapLastRead(read, since),
+                    lastUnstarredAt = mapLastUnstarred(starred, since),
+                    publishedSince = null,
+                    query = query,
+                    beginInclusive = begin,
+                    endExclusive = end,
+                    mapper = ::listMapper,
+                )
+            }
+        }
+    }
+
     fun count(
         savedSearchID: String,
         status: ArticleStatus,
