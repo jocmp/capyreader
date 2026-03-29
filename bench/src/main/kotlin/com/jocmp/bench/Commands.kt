@@ -85,7 +85,7 @@ suspend fun commandArticles(account: Account) {
 
 suspend fun commandSelectProfile(account: Account) {
     val records = ArticleRecords(account.database)
-    val pageSize = 50L
+    val pageSize = 100L
 
     val total = account.countAllByStatus(ArticleStatus.ALL).first()
 
