@@ -11,6 +11,7 @@
     <string name="filter_unread">Unread</string>
     <string name="filter_all">All</string>
     <string name="filter_today">Today</string>
+    <string name="settings_home_page">Home page</string>
     <string name="feed_action_unsubscribe">Unsubscribe</string>
     <string name="filter_action_menu_description">Edit</string>
     <string name="feed_action_edit">Edit Feed</string>

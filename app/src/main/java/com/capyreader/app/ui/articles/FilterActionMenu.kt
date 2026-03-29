@@ -16,6 +16,7 @@ import com.capyreader.app.ui.LocalMarkAllReadButtonPosition
 import com.capyreader.app.ui.articles.list.MarkAllReadButton
 import com.capyreader.app.ui.components.ToolbarTooltip
 import com.capyreader.app.ui.fixtures.FeedSample
+import com.capyreader.app.ui.fixtures.PreviewKoinApplication
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
@@ -75,14 +76,35 @@ fun FilterActionMenu(
 @Preview
 @Composable
 fun FeedActionsPreview(@PreviewParameter(FeedSample::class) feed: Feed) {
-    FilterActionMenu(
-        onMarkAllRead = {},
-        onRequestSearch = {},
-        filter = ArticleFilter.Feeds(
-            feedID = feed.id,
-            folderTitle = null,
-            feedStatus = ArticleStatus.ALL
-        ),
-        hideSearchIcon = false,
-    )
+    PreviewKoinApplication {
+        FilterActionMenu(
+            onMarkAllRead = {},
+            onRequestSearch = {},
+            filter = ArticleFilter.Feeds(
+                feedID = feed.id,
+                folderTitle = null,
+                feedStatus = ArticleStatus.ALL
+            ),
+            hideReadArticles = true,
+            hideSearchIcon = true,
+        )
+    }
+}
+
+@Preview
+@Composable
+fun FeedActionsPreviewFilterOff(@PreviewParameter(FeedSample::class) feed: Feed) {
+    PreviewKoinApplication {
+        FilterActionMenu(
+            onMarkAllRead = {},
+            onRequestSearch = {},
+            filter = ArticleFilter.Feeds(
+                feedID = feed.id,
+                folderTitle = null,
+                feedStatus = ArticleStatus.ALL
+            ),
+            hideReadArticles = false,
+            hideSearchIcon = true,
+        )
+    }
 }
