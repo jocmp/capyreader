@@ -28,7 +28,6 @@ import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.articles.NextFilter
-import com.capyreader.app.ui.articles.buildArticlePager
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
@@ -59,7 +58,8 @@ class ArticleScreenViewModel(
 
     val filter = appPreferences.filter.stateIn(viewModelScope)
 
-    val hideReadArticles = appPreferences.articleListOptions.hideReadArticles.stateIn(viewModelScope)
+    val hideReadArticles =
+        appPreferences.articleListOptions.hideReadArticles.stateIn(viewModelScope)
 
     private val listSwipeBottom =
         appPreferences.articleListOptions.swipeBottom.stateIn(viewModelScope)
@@ -200,7 +200,6 @@ class ArticleScreenViewModel(
         it
     }
 
-    val showTodayFilter: Flow<Boolean> = appPreferences.showTodayFilter.stateIn(viewModelScope)
 
     val showUnauthorizedMessage: Boolean
         get() = _showUnauthorizedMessage == UnauthorizedMessageState.SHOW
@@ -218,6 +217,8 @@ class ArticleScreenViewModel(
         get() = _nextFilter
 
     init {
+        appPreferences.filter.set(appPreferences.homePage.get().toArticleFilter())
+
         viewModelScope.launch {
             nextFilterListener.collect {
                 _nextFilter.value = it
@@ -226,7 +227,7 @@ class ArticleScreenViewModel(
     }
 
     fun selectArticleFilter() {
-        updateFilter(ArticleFilter.Articles(articleStatus = ArticleStatus.UNREAD))
+        updateFilter(ArticleFilter.Articles(articleStatus = UNREAD))
     }
 
     fun selectToday() {
@@ -240,7 +241,9 @@ class ArticleScreenViewModel(
     fun toggleHideReadArticles() {
         val newValue = !hideReadArticles.value
         appPreferences.articleListOptions.hideReadArticles.set(newValue)
-        val status = if (newValue) ArticleStatus.UNREAD else ArticleStatus.ALL
+
+        val status = if (newValue) UNREAD else ArticleStatus.ALL
+
         updateFilter(latestFilter.withStatus(status))
     }
 
@@ -742,7 +745,7 @@ class ArticleScreenViewModel(
 
     private val latestFilter: ArticleFilter get() = filter.value
     private val currentStatus: ArticleStatus
-        get() = if (hideReadArticles.value) ArticleStatus.UNREAD else ArticleStatus.ALL
+        get() = if (hideReadArticles.value) UNREAD else ArticleStatus.ALL
 
     private val enableStickyFullContent: Boolean
         get() = appPreferences.enableStickyFullContent.get()
@@ -789,13 +792,11 @@ class ArticleScreenViewModel(
 }
 
 fun Context.showFullContentErrorToast(throwable: Throwable) {
-    val message = when {
-        throwable is ArticleContent.HttpError && throwable.code == 403 ->
+    val message = when (throwable) {
+        is ArticleContent.HttpError if throwable.code == 403 ->
             R.string.full_content_error_forbidden
 
-        throwable is ArticleContent.MissingBodyError ->
-            R.string.full_content_error_missing_response
-
+        is ArticleContent.MissingBodyError -> R.string.full_content_error_missing_response
         else -> R.string.full_content_error_generic
     }
 

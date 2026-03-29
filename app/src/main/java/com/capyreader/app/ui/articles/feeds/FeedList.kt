@@ -52,7 +52,6 @@ fun FeedList(
     statusCount: Long,
     todayCount: Long,
     starredCount: Long,
-    showTodayFilter: Boolean = true,
     folders: List<Folder> = emptyList(),
     feeds: List<Feed> = emptyList(),
     pagesFeed: Feed? = null,
@@ -120,26 +119,24 @@ fun FeedList(
                     )
                 }
             }
-            if (showTodayFilter) {
-                DrawerItem(
-                    icon = {
-                        Icon(
-                            Icons.Rounded.Today,
-                            contentDescription = null
-                        )
-                    },
-                    label = {
-                        ListTitle(
-                            stringResource(R.string.filter_today),
-                        )
-                    },
-                    badge = { CountBadge(count = todayCount) },
-                    selected = filter.hasTodaySelected(),
-                    onClick = {
-                        onSelectToday()
-                    }
-                )
-            }
+            DrawerItem(
+                icon = {
+                    Icon(
+                        Icons.Rounded.Today,
+                        contentDescription = null
+                    )
+                },
+                label = {
+                    ListTitle(
+                        stringResource(R.string.filter_today),
+                    )
+                },
+                badge = { CountBadge(count = todayCount) },
+                selected = filter.hasTodaySelected(),
+                onClick = {
+                    onSelectToday()
+                }
+            )
 
             DrawerItem(
                 icon = { ArticleStatusIcon(status = ArticleStatus.UNREAD) },
@@ -268,7 +265,6 @@ fun FeedListPreview() {
                 statusCount = 10,
                 todayCount = 5,
                 starredCount = 3,
-                showTodayFilter = true,
                 onFeedAdded = {},
                 onSelectSavedSearch = {},
                 refreshState = AngleRefreshState.STOPPED,

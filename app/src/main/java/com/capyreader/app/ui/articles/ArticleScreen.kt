@@ -114,8 +114,7 @@ fun ArticleScreen(
     val todayCount by viewModel.todayCount.collectAsStateWithLifecycle(initialValue = 0)
     val starredCount by viewModel.starredCount.collectAsStateWithLifecycle(initialValue = 0)
     val unreadCount by viewModel.unreadCount.collectAsStateWithLifecycle(initialValue = 0L)
-    val showTodayFilter by viewModel.showTodayFilter.collectAsStateWithLifecycle(initialValue = true)
-    val filter by viewModel.filter.collectAsStateWithLifecycle(appPreferences.filter.get())
+    val filter by viewModel.filter.collectAsStateWithLifecycle(appPreferences.homePage.get().toArticleFilter())
     val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle("")
     val searchState by viewModel.searchState.collectAsStateWithLifecycle(SearchState.INACTIVE)
     val nextFilter by viewModel.nextFilter.collectAsStateWithLifecycle(initialValue = null)
@@ -501,7 +500,6 @@ fun ArticleScreen(
                     statusCount = statusCount,
                     todayCount = todayCount,
                     starredCount = starredCount,
-                    showTodayFilter = showTodayFilter,
                 )
             },
             listPane = {
