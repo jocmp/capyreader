@@ -16,7 +16,7 @@ fun Account.buildArticlePager(
 ): Pager<Int, Article> {
     return Pager(
         config = PagingConfig(
-            pageSize = 50,
+            pageSize = 100,
             prefetchDistance = 10,
         ),
         pagingSourceFactory = {
