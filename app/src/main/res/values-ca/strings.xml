@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_feed_url_title">URL del canal o de la pàgina web</string>
+    <string name="add_feed_name_title">Nom</string>
+    <string name="add_feed_new_folder_title">Nova etiqueta</string>
+    <string name="add_feed_submit">Afegeix</string>
+    <string name="add_feed_success">S\'ha afegit el canal</string>
+    <string name="feed_form_cancel">Cancel·la</string>
+    <string name="filter_starred">Destacat</string>
+    <string name="filter_unread">Sense llegir</string>
+    <string name="filter_all">Tot</string>
+    <string name="filter_today">Avui</string>
+    <string name="feed_action_unsubscribe">Cancel·la la subscripció</string>
+    <string name="filter_action_menu_description">Edita</string>
+    <string name="feed_action_edit">Edita el canal</string>
+    <string name="feed_action_reload_icon">Icona de recarregar</string>
+    <string name="feed_action_unsubscribe_message">Esteu segur que voleu cancel·lar la subscripció de \"%1$s\"?</string>
+    <string name="feed_action_unsubscribe_confirm">Cancel.la la subscripció</string>
+    <string name="edit_feed_submit">Desa</string>
+</resources>
