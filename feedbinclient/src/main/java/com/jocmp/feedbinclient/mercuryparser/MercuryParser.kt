@@ -20,7 +20,7 @@ class MercuryParser(
         val signature = hmacSHA1(secret, url)
         val base64Url = Base64.getUrlEncoder().encodeToString(url.toByteArray())
         val request = Request.Builder()
-            .url("https://extract.feedbin.com/parser/$username/$signature?base64_url=$base64Url")
+            .url("$EXTRACT_URL/parser/$username/$signature?base64_url=$base64Url")
             .get()
             .build()
 
@@ -43,5 +43,9 @@ class MercuryParser(
         val mac = Mac.getInstance("HmacSHA1")
         mac.init(SecretKeySpec(key.toByteArray(), "HmacSHA1"))
         return mac.doFinal(data.toByteArray()).joinToString("") { "%02x".format(it) }
+    }
+
+    companion object {
+        const val EXTRACT_URL = "https://extract.feedbin.com"
     }
 }

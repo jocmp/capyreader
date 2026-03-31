@@ -8,6 +8,7 @@ import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.capyreader.app.ui.articles.DefaultPaneExpansionIndex
 import com.capyreader.app.ui.articles.MarkReadPosition
+import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.articles.FontOption
 import com.jocmp.capy.articles.FontSize
 import com.jocmp.capy.articles.SortOrder
@@ -32,6 +33,20 @@ class AppPreferences(context: Context) {
 
     val accountID: Preference<String>
         get() = preferenceStore.getString("account_id")
+
+    val filter: Preference<ArticleFilter>
+        get() = preferenceStore.getObject(
+            key = "article_filter",
+            defaultValue = ArticleFilter.default(),
+            serializer = { Json.encodeToString(it) },
+            deserializer = {
+                try {
+                    Json.decodeFromString(it)
+                } catch (e: Throwable) {
+                    ArticleFilter.default()
+                }
+            }
+        )
 
     val refreshInterval: Preference<RefreshInterval>
         get() = preferenceStore.getEnum("refresh_interval", RefreshInterval.default)

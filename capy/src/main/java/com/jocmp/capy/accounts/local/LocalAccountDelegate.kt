@@ -36,11 +36,13 @@ internal class LocalAccountDelegate(
     private val extractUsername: String = "",
     private val extractSecret: String = "",
 ) : AccountDelegate {
-    private val mercuryParser get() = MercuryParser(
-        username = extractUsername,
-        secret = extractSecret,
-        httpClient = httpClient,
-    )
+    private val mercuryParser
+        get() = MercuryParser(
+            username = extractUsername,
+            secret = extractSecret,
+            httpClient = httpClient,
+        )
+
     private val feedRecords = FeedRecords(database)
     private val articleRecords = ArticleRecords(database)
     private val taggingRecords = TaggingRecords(database)
@@ -59,7 +61,8 @@ internal class LocalAccountDelegate(
 
     override suspend fun createPage(url: String): Result<Unit> {
         val feedID = findOrCreateReadLaterFeed()
-        val page = mercuryParser.parse(url) ?: return Result.failure(Throwable("Failed to fetch page"))
+        val page =
+            mercuryParser.parse(url) ?: return Result.failure(Throwable("Failed to fetch page"))
         val updatedAt = nowUTC()
 
         database.transactionWithErrorHandling {

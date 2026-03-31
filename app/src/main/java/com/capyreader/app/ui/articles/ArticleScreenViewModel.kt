@@ -38,7 +38,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -57,10 +56,7 @@ class ArticleScreenViewModel(
 
     private var fullContentJob: Job? = null
 
-    private val _filter = MutableStateFlow(appPreferences.homePage.get().toArticleFilter())
-
-    val filter: StateFlow<ArticleFilter>
-        get() = _filter
+    val filter = appPreferences.filter.stateIn(viewModelScope)
 
     val hideReadArticles =
         appPreferences.articleListOptions.hideReadArticles.stateIn(viewModelScope)
@@ -115,7 +111,6 @@ class ArticleScreenViewModel(
         filter,
     ) { folders, latestCounts, filter ->
         folders.map { copyFolderCounts(it, latestCounts, filter) }
-            .withPositiveCount(filter.status)
     }
 
     val savedSearches: Flow<List<SavedSearch>> = combine(
@@ -124,7 +119,6 @@ class ArticleScreenViewModel(
         filter,
     ) { searches, latestCounts, filter ->
         searches.map { copySavedSearchCounts(it, latestCounts) }
-            .withPositiveCount(filter.status)
     }
 
     val allFeeds = account.taggedFeeds
@@ -142,7 +136,6 @@ class ArticleScreenViewModel(
     ) { feeds, latestCounts, filter ->
         feeds.filter { !it.isReadLater }
             .map { copyFeedCounts(it, latestCounts) }
-            .withPositiveCount(filter.status)
     }
 
     val readLaterFeed: Flow<Feed?> = combine(
@@ -153,14 +146,6 @@ class ArticleScreenViewModel(
         feeds.find { it.isReadLater }
             ?.let { copyFeedCounts(it, latestCounts) }
             ?.takeIf { it.count > 0 || filter.status != ArticleStatus.UNREAD }
-    }
-
-    val currentFeed: Flow<Feed?> = combine(allFeeds, filter) { feeds, filter ->
-        if (filter is ArticleFilter.Feeds) {
-            feeds.find { it.id == filter.feedID }
-        } else {
-            null
-        }
     }
 
     private val nextFilterListener: Flow<NextFilter?> =
@@ -577,7 +562,7 @@ class ArticleScreenViewModel(
     }
 
     private fun updateFilter(filter: ArticleFilter) {
-        _filter.value = filter
+        appPreferences.filter.set(filter)
 
         clearArticle()
 
@@ -596,7 +581,7 @@ class ArticleScreenViewModel(
         val folderFeeds = folder.feeds.map { copyFeedCounts(it, counts) }
 
         return folder.copy(
-            feeds = folderFeeds.withPositiveCount(filter.status).toMutableList(),
+            feeds = folderFeeds,
             count = folderFeeds.sumOf { it.count }
         )
     }
