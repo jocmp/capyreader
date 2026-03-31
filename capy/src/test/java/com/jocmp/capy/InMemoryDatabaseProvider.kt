@@ -14,6 +14,8 @@ object InMemoryDatabaseProvider : DatabaseProvider {
 
     override fun delete(accountID: String) {
     }
+
+    operator fun invoke(): Database = build("777")
 }
 
 internal suspend fun Database.reload(article: Article) = ArticleRecords(this).reload(article)

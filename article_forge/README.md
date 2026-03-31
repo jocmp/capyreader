@@ -1,16 +1,14 @@
-# Article Forge
+# Reader Assets
 
-A testbed to modify the HTML layout and stylesheet for [Capy Reader](https://github.com/jocmp/capyreader).
+Build pipeline for the article reader stylesheet and HTML template used by [Capy Reader](https://github.com/jocmp/capyreader).
 
-## Getting started
+## Building
 
-1. Ensure you have Ruby installed with the version found in `.ruby-version`.
+From the project root:
 
-2. Run the following command to start the server and navigate to http://127.0.0.1:4567.
-
-    ```sh
-    make forge
-    ```
+```sh
+make assets
+```
 
 ## Fonts
 

@@ -1,4 +1,4 @@
-package com.jocmp.capy.persistence
+package com.capyreader.app.ui.articles
 
 import androidx.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
@@ -7,6 +7,7 @@ import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.FeedPriority
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.db.Database
+import com.jocmp.capy.persistence.ArticleRecords
 import kotlinx.coroutines.Dispatchers
 import java.time.OffsetDateTime
 

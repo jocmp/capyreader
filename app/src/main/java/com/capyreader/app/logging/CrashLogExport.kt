@@ -28,10 +28,11 @@ import com.capyreader.app.R
 import com.capyreader.app.common.createCacheFile
 import com.capyreader.app.common.fileURI
 import com.capyreader.app.common.toast
+import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.common.withNonCancellableContext
 import com.jocmp.capy.common.withUIContext
 
-class CrashLogExport(private val context: Context) {
+class CrashLogExport(private val context: Context, private val source: Source) {
     suspend fun export(exception: Throwable? = null) = withNonCancellableContext {
         try {
             val file = context.createCacheFile("capy_crash_logs.txt")
@@ -56,6 +57,7 @@ class CrashLogExport(private val context: Context) {
             Device manufacturer: ${Build.MANUFACTURER}
             Device name: ${Build.DEVICE} (${Build.PRODUCT})
             Device model: ${Build.MODEL}
+            Account source: ${source.name}
         """.trimIndent()
     }
 }

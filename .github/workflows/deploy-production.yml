@@ -23,8 +23,6 @@ jobs:
           java-version: "21"
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
-      - name: Setup build dependencies
-        run: make deps
       - name: Configure Git user
         run: |
           git config user.name "jocmp"

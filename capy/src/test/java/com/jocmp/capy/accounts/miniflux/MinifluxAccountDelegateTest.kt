@@ -181,7 +181,7 @@ class MinifluxAccountDelegateTest {
         coEvery { miniflux.icon(1) }.returns(
             Response.success(IconData(id = 1, data = "image/png;base64,abc", mime_type = "image/png"))
         )
-        coEvery { miniflux.entries(starred = true, limit = 100, offset = 0) }.returns(
+        coEvery { miniflux.entries(starred = true, limit = 250, offset = 0) }.returns(
             Response.success(
                 EntryResultSet(
                     total = 0,
@@ -189,7 +189,7 @@ class MinifluxAccountDelegateTest {
                 )
             )
         )
-        coEvery { miniflux.entries(status = EntryStatus.UNREAD.value, limit = 100, offset = 0) }.returns(
+        coEvery { miniflux.entries(status = EntryStatus.UNREAD.value, limit = 250, offset = 0) }.returns(
             Response.success(
                 EntryResultSet(
                     total = 1,
@@ -199,10 +199,11 @@ class MinifluxAccountDelegateTest {
         )
         coEvery {
             miniflux.entries(
-                limit = 100,
+                limit = 250,
                 offset = 0,
                 order = "published_at",
-                direction = "desc"
+                direction = "desc",
+                changedAfter = null,
             )
         }.returns(
             Response.success(

@@ -36,10 +36,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.autofill.AutofillType.EmailAddress
-import androidx.compose.ui.autofill.AutofillType.Password
+import androidx.compose.ui.autofill.ContentType
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -52,11 +50,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.ui.articles.feeds.IconDropdown
-import com.capyreader.app.ui.autofill
+import androidx.compose.ui.autofill.contentType
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.accounts.Source
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun AuthFields(
     onUsernameChange: (username: String) -> Unit = {},
@@ -71,7 +68,7 @@ fun AuthFields(
     source: Source,
     onChooseClientCert: () -> Unit = {},
     onClearClientCert: () -> Unit = {},
-    clientCertAlias: String,
+    clientCertAlias: String = "",
     setApiTokenPreference: (Boolean) -> Unit = {},
 ) {
     val hasApiToken = source == Source.MINIFLUX_TOKEN
@@ -117,10 +114,7 @@ fun AuthFields(
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .autofill(
-                        listOf(EmailAddress),
-                        onFill = onUsernameChange
-                    )
+                    .contentType(ContentType.EmailAddress)
             )
         }
         Column {
@@ -159,10 +153,7 @@ fun AuthFields(
                     singleLine = true,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .autofill(
-                            listOf(Password),
-                            onFill = onPasswordChange
-                        ),
+                        .contentType(ContentType.Password),
                     trailingIcon = {
                         val image = if (showPassword) {
                             Icons.Filled.Visibility
@@ -360,7 +351,6 @@ private fun AuthFieldsPreview() {
             onSubmit = {},
             username = "test@example.com",
             password = "its a secret to everyone",
-            clientCertAlias = "test certificate",
             loading = true,
             source = Source.FRESHRSS,
         )
@@ -377,7 +367,6 @@ private fun MinifluxAuthFieldsPreview() {
             onSubmit = {},
             username = "test@example.com",
             password = "its a secret to everyone",
-            clientCertAlias = "test certificate",
             loading = true,
             source = Source.MINIFLUX,
             errorMessage = "Oh drats",
@@ -394,7 +383,6 @@ private fun FreshRSSAuthFieldsPreview() {
             onSubmit = {},
             username = "test@example.com",
             password = "its a secret to everyone",
-            clientCertAlias = "test certificate",
             loading = true,
             source = Source.FRESHRSS,
         )

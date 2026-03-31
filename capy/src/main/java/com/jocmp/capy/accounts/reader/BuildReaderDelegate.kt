@@ -13,7 +13,7 @@ internal fun buildReaderDelegate(
     database: Database,
     path: URI,
     preferences: AccountPreferences,
-    clientCertManager: ClientCertManager,
+    clientCertManager: ClientCertManager = ClientCertManager { builder, _ -> builder },
 ): AccountDelegate {
     val httpClient = ReaderOkHttpClient.forAccount(path, preferences, clientCertManager)
 

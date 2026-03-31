@@ -2,12 +2,13 @@ package com.jocmp.capy.fixtures
 
 import com.jocmp.capy.Article
 import com.jocmp.capy.Feed
+import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.RandomUUID
 import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.persistence.articleMapper
 
-class ArticleFixture(private val database: Database) {
+class ArticleFixture(private val database: Database = InMemoryDatabaseProvider()) {
     private val feedFixture = FeedFixture(database)
 
     fun create(

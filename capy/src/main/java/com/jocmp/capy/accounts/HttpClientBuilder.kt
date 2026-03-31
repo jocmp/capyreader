@@ -20,14 +20,6 @@ private fun baseHttpClientBuilder() =
         .readTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
         .writeTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
 
-fun OkHttpClient.Builder.clientCertAlias(manager: ClientCertManager, clientCertAlias: String): OkHttpClient.Builder {
-    if (clientCertAlias.isNotEmpty()) {
-        val clientSSlSocketFactory = manager.buildSslSocketFactory(clientCertAlias)
-        sslSocketFactory(clientSSlSocketFactory.sslSocketFactory, clientSSlSocketFactory.trustManager)
-    }
-    return this
-}
-
 fun httpClientBuilder(cachePath: URI) =
     baseHttpClientBuilder()
         .cache(
@@ -36,3 +28,13 @@ fun httpClientBuilder(cachePath: URI) =
                 maxSize = 50L * 1024L * 1024L // 50 MiB
             )
         )
+
+fun OkHttpClient.Builder.clientCertAlias(
+    clientCertManager: ClientCertManager,
+    certAlias: String
+): OkHttpClient.Builder {
+    if (certAlias.isNotEmpty()) {
+        return clientCertManager.configure(this, certAlias)
+    }
+    return this
+}

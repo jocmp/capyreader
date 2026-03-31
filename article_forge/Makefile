@@ -1,19 +1,19 @@
 
 STYLE_OUT =  ./dist/stylesheet.css
-STYLE_RES ?= ../capy/src/main/assets/stylesheet.css
+STYLE_RES ?= ../app/src/main/assets/stylesheet.css
 TEMPLATE_OUT = ./dist/template.html
-TEMPLATE_RES ?= ../capy/src/main/res/raw/template.html
-MERCURY_JS_RES = ../capy/src/main/assets/mercury-parser.js
+TEMPLATE_RES ?= ../app/src/main/res/raw/template.html
+MERCURY_JS_RES = ../app/src/main/assets/mercury-parser.js
 
 SHELL:=/usr/bin/env bash
 
-.PHONY: forge clean
+.PHONY: clean
 
 build: $(TEMPLATE_RES) $(STYLE_RES) $(MERCURY_JS_RES)
 
 $(STYLE_OUT): style/stylesheet.scss
 	@echo "Style..."
-	ruby ./script/generate-android-style
+	bundle exec ruby ./script/generate-android-style
 
 $(STYLE_RES): $(STYLE_OUT)
 	cp $(STYLE_OUT) $(STYLE_RES)
@@ -34,11 +34,9 @@ $(MERCURY_JS_RES):
 build-mercury:
 	cd ../../mercury-parser && yarn build yarn build:web
 
-.PHONY: forge
-forge:
-	bundle install
-	bundle exec rerun main.rb -b --ignore "*.css"
-
 clean:
 	rm -f dist/*
 
+.PHONY: forge
+forge:
+	bundle exec rerun --dir style,views --pattern '**/*.{scss,liquid}' -- ruby main.rb

@@ -12,17 +12,13 @@ assets:
 check: ## Type-check JavaScript files
 	npx -p typescript tsc --noEmit
 
-.PHONY: deps
-deps: ## Install bumpver
-	pip install bumpver==2024.1130
-
 .PHONY: bump-release-dev
 bump-release-dev: ## Bump GitHub version
-	bumpver update --tag=dev --push
+	./script/bumpver update --tag=dev --push
 
 .PHONY: bump-release-production
 bump-release-production: ## Bump Google Play version
-	bumpver update --tag=final
+	./script/bumpver update --tag=final
 
 .PHONY: changelog
 changelog: ## Prep next release notes
@@ -49,6 +45,14 @@ shared-release-secrets:
 	echo ${ENCODED_GOOGLE_SERVICES} | base64 --decode > ./app/google-services.json
 	echo ${ENCODED_RELEASE_KEYSTORE} | base64 --decode > ./release.keystore
 	echo ${ENCODED_SECRETS_PROPERTIES} | base64 --decode > ./secrets.properties
+
+.PHONY: bench-profile
+bench-profile: ## Run refresh profile benchmark
+	./gradlew :bench:run --args="refresh-profile"
+
+.PHONY: bench-reset
+bench-reset: ## Delete bench data
+	./gradlew :bench:run --args="reset"
 
 .PHONY: install-tailscale
 install-tailscale: ## Install Tailscale on emulator

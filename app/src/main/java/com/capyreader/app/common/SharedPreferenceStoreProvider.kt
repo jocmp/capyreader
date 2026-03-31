@@ -6,7 +6,7 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.PreferenceStoreProvider
-import com.jocmp.capy.preferences.AndroidPreferenceStore
+import com.capyreader.app.preferences.AndroidPreferenceStore
 
 
 class SharedPreferenceStoreProvider(

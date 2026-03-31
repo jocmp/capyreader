@@ -31,9 +31,12 @@ internal val articlesModule = module {
     }
     single {
         val context = get<Context>()
+        val template = context.resources.openRawResource(R.raw.template)
+            .bufferedReader()
+            .readText()
 
         ArticleRenderer(
-            context = context,
+            template = template,
             textSize = get<AppPreferences>().readerOptions.fontSize,
             fontOption = get<AppPreferences>().readerOptions.fontFamily,
             titleFontSize = get<AppPreferences>().readerOptions.titleFontSize,

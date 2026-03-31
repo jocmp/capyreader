@@ -3,7 +3,6 @@ package com.jocmp.capy.fixtures
 import com.jocmp.capy.Account
 import com.jocmp.capy.AccountDelegate
 import com.jocmp.capy.AccountPreferences
-import com.jocmp.capy.FakeClientCertManager
 import com.jocmp.capy.InMemoryDataStore
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.RandomUUID
@@ -27,7 +26,6 @@ object AccountFixture {
             preferences = AccountPreferences(InMemoryDataStore()),
             delegate = accountDelegate,
             faviconPolicy = FakeFaviconPolicy,
-            clientCertManager = FakeClientCertManager,
             userAgent = "TestUserAgent",
             acceptLanguage = "en-US",
         )

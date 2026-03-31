@@ -1,13 +1,11 @@
 package com.jocmp.capy.articles
 
-import android.content.Context
 import com.jocmp.capy.Article
 import com.jocmp.capy.MacroProcessor
 import com.jocmp.capy.preferences.Preference
-import com.jocmp.capy.R as CapyRes
 
 class ArticleRenderer(
-    private val context: Context,
+    private val template: String,
     private val textSize: Preference<Int>,
     private val fontOption: Preference<FontOption>,
     private val titleFontSize: Preference<Int>,
@@ -16,11 +14,6 @@ class ArticleRenderer(
     private val enableHorizontalScroll: Preference<Boolean>,
     private val audioPlayerLabels: AudioPlayerLabels = AudioPlayerLabels(),
 ) {
-    private val template by lazy {
-        context.resources.openRawResource(CapyRes.raw.template)
-            .bufferedReader()
-            .readText()
-    }
 
     fun render(
         article: Article,

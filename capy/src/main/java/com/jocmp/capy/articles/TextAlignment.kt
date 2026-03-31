@@ -5,7 +5,10 @@ enum class TextAlignment {
     CENTER;
 
     val toCSS: String
-        get() = name.lowercase()
+        get() = when (this) {
+            LEFT -> "start"
+            CENTER -> "center"
+        }
 
     companion object {
         val default = LEFT

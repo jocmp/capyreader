@@ -8,4 +8,12 @@ interface Logging {
     fun warn(event: String, data: Map<String, String?> = emptyMap())
 
     fun error(event: String, error: Throwable, data: Map<String, Any?> = emptyMap())
+
+    fun measure(event: String, data: Map<String, Any?> = emptyMap(), block: () -> Unit) {
+        block()
+    }
+
+    suspend fun measureAsync(event: String, data: Map<String, Any?> = emptyMap(), block: suspend () -> Unit) {
+        block()
+    }
 }

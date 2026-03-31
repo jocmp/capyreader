@@ -33,7 +33,7 @@ fun UpdateAuthView(
     onClearClientCert: () -> Unit = {},
     username: String,
     password: String,
-    clientCertAlias: String,
+    clientCertAlias: String = "",
     loading: Boolean = false,
     errorMessage: String? = null
 ) {
@@ -86,7 +86,6 @@ private fun UpdateAuthViewPreview() {
             source = Source.FRESHRSS,
             username = "test@example.com",
             password = "secrets",
-            clientCertAlias = "test",
         )
     }
 }

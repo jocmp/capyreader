@@ -30,3 +30,4 @@ Capy Reader is an RSS reader for Android split into several gradle modules
 - Prefer explicit named parameters when passing arguments to Jetpack Compose functions over positional arguments.
 - JavaScript files are written using JSDoc to ensure typechecking without the overhead of TypeScript.
 - Prefer `orEmpty()` instead of `?: ""`
+- Prefer functional iteration (map, forEach) as opposed to for-loops

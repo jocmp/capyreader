@@ -29,8 +29,8 @@ android {
         applicationId = "com.capyreader.app"
         minSdk = 30
         targetSdk = 36
-        versionCode = 1201
-        versionName = "2026.03.1201"
+        versionCode = 1203
+        versionName = "2026.03.1203"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -157,6 +157,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.okhttp.client)
     implementation(libs.sqldelight.android.driver)
+    implementation(libs.sqldelight.androidx.paging.extensions)
     implementation(libs.zoomable)
     implementation(libs.zoomable.image.coil)
     implementation(platform(libs.androidx.compose.bom))

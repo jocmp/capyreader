@@ -1,0 +1,13 @@
+current_version: "2026.03.1203"
+version_pattern: "YYYY.0M.BUILD[-TAG]"
+commit_message: "Bump version {old_version} to {new_version}"
+commit: true
+tag: true
+push: false
+
+file_patterns:
+  bumpver.yml:
+    - 'current_version: "{version}"'
+  app/build.gradle.kts:
+    - 'versionName = "{version}"'
+    - 'versionCode = BUILD'

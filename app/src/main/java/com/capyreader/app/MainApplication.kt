@@ -10,9 +10,11 @@ import coil3.gif.AnimatedImageDecoder
 import coil3.network.okhttp.OkHttpNetworkFetcherFactory
 import coil3.svg.SvgDecoder
 import coil3.video.VideoFrameDecoder
+import com.capyreader.app.common.AndroidLogging
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.widget.HeadlinesWidgetReceiver
 import com.google.android.material.color.DynamicColors
+import com.jocmp.capy.logging.CapyLog
 import com.jocmp.capy.accounts.baseHttpClient
 import com.jocmp.capy.common.launchUI
 import kotlinx.coroutines.MainScope
@@ -24,6 +26,7 @@ import org.koin.core.context.startKoin
 class MainApplication : Application(), SingletonImageLoader.Factory {
     override fun onCreate() {
         super.onCreate()
+        CapyLog.install(AndroidLogging())
         DynamicColors.applyToActivitiesIfAvailable(this)
 
         startKoin {

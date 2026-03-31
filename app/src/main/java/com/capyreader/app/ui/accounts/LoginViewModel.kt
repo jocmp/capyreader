@@ -1,6 +1,7 @@
 package com.capyreader.app.ui.accounts
 
 import android.app.Activity
+import android.security.KeyChain
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -57,9 +58,6 @@ class LoginViewModel(
     val url
         get() = _url
 
-    val clientCertAlias
-        get() = _clientCertAlias
-
     val loading: Boolean
         get() = _result is Async.Loading
 
@@ -78,10 +76,13 @@ class LoginViewModel(
         _url = url
     }
 
+    val clientCertAlias
+        get() = _clientCertAlias
+
     fun chooseClientCert(activity: Activity) {
-        clientCertManager.chooseClientCert(activity) { alias ->
-            _clientCertAlias = alias
-        }
+        KeyChain.choosePrivateKeyAlias(activity, { alias ->
+            _clientCertAlias = alias ?: ""
+        }, null, null, null, null)
     }
 
     fun clearClientCert() {
@@ -150,8 +151,8 @@ class LoginViewModel(
             username = credentials.username,
             password = credentials.secret,
             url = credentials.url,
-            clientCertAlias = credentials.clientCertAlias,
-            source = credentials.source
+            source = credentials.source,
+            clientCertAlias = clientCertAlias,
         )
 
         selectAccount(accountID)

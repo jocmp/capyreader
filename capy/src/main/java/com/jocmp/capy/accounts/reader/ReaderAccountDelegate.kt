@@ -10,8 +10,8 @@ import com.jocmp.capy.accounts.ValidationError
 import com.jocmp.capy.accounts.feedbin.FeedbinAccountDelegate.Companion.MAX_CREATE_UNREAD_LIMIT
 import com.jocmp.capy.accounts.withErrorHandling
 import com.jocmp.capy.common.TimeHelpers
+import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
-import com.jocmp.capy.common.toDateTimeFromSeconds
 import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.common.withResult
 import com.jocmp.capy.db.Database
@@ -38,6 +38,8 @@ import com.jocmp.readerclient.ext.editSubscription
 import com.jocmp.readerclient.ext.streamItemsIDs
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
 import org.jsoup.Jsoup
 import retrofit2.Response
 import java.io.IOException
@@ -104,7 +106,7 @@ internal class ReaderAccountDelegate(
 
         return editTag(
             ids = listOf(articleID),
-            removeTag = Stream.UserLabel(savedSearchID)
+            removeTag = UserLabel(savedSearchID)
         ).onFailure {
             savedSearchRecords.upsertArticle(articleID = articleID, savedSearchID = savedSearchID)
         }
@@ -358,27 +360,23 @@ internal class ReaderAccountDelegate(
     }
 
     private suspend fun refreshUnreadItems() {
-        withResult(
-            googleReader.streamItemsIDs(
-                stream = Stream.ReadingList(),
-                excludedStream = Read()
-            )
-        ) { result ->
-            articleRecords.markAllUnread(articleIDs = result.itemRefs.map { it.hexID })
-        }
+        val ids = fetchAllItemIDs(
+            stream = Stream.ReadingList(),
+            excludedStream = Read()
+        )
+        articleRecords.markAllUnread(articleIDs = ids)
     }
 
     private suspend fun refreshStarredItems() {
-        withResult(googleReader.streamItemsIDs(stream = Stream.Starred())) { result ->
-            articleRecords.markAllStarred(articleIDs = result.itemRefs.map { it.hexID })
-        }
+        val ids = fetchAllItemIDs(stream = Stream.Starred())
+        articleRecords.markAllStarred(articleIDs = ids)
     }
 
     /**
      * This is a slightly different algorithm than [refreshTopLevelArticles].
      *
      *   - Assume the category (folder or feed) exists so it skips refreshing the subscription list
-     *   - Fetches up to 10k IDs
+     *   - Fetches all IDs via pagination
      *   - On result, the [fetchMissingArticles] will only fetch articles that are not already
      *     saved
      */
@@ -392,12 +390,43 @@ internal class ReaderAccountDelegate(
         } else {
             refreshArticleState()
 
-            withResult(googleReader.streamItemsIDs(stream = stream)) { result ->
-                articleRecords.createStatuses(articleIDs = result.itemRefs.map { it.hexID })
-            }
+            val ids = fetchAllItemIDs(stream = stream)
+            articleRecords.createStatuses(articleIDs = ids)
 
             fetchMissingArticles()
         }
+    }
+
+    private suspend fun fetchAllItemIDs(
+        stream: Stream,
+        excludedStream: Stream? = null,
+    ): List<String> {
+        val allIDs = mutableListOf<String>()
+        var continuation: String? = null
+
+        do {
+            val response = googleReader.streamItemsIDs(
+                stream = stream,
+                excludedStream = excludedStream,
+                count = STREAM_ITEMS_PAGE_SIZE,
+                continuation = continuation,
+            )
+
+            val result = response.body()
+
+            if (response.code() == 401) {
+                throw UnauthorizedError()
+            }
+
+            if (!response.isSuccessful || result == null) {
+                break
+            }
+
+            allIDs.addAll(result.itemRefs.map { it.hexID })
+            continuation = result.continuation
+        } while (continuation != null)
+
+        return allIDs
     }
 
     private suspend fun fetchMissingArticles() {
@@ -407,17 +436,25 @@ internal class ReaderAccountDelegate(
             return
         }
 
-        ids.chunked(MAX_PAGINATED_ITEM_LIMIT).forEach { chunkedIDs ->
-            val response = withPostToken {
-                googleReader.streamItemsContents(
-                    postToken = postToken.get(),
-                    ids = chunkedIDs.map { it }
-                )
+        val semaphore = Semaphore(MAX_CONCURRENT_FETCHES)
+
+        coroutineScope {
+            ids.chunked(MAX_PAGINATED_ITEM_LIMIT).map { chunkedIDs ->
+                launch {
+                    semaphore.withPermit {
+                        val response = withPostToken {
+                            googleReader.streamItemsContents(
+                                postToken = postToken.get(),
+                                ids = chunkedIDs
+                            )
+                        }
+
+                        val result = response.body() ?: return@launch
+
+                        saveArticles(result.items)
+                    }
+                }
             }
-
-            val result = response.body() ?: return@forEach
-
-            saveArticles(result.items)
         }
     }
 
@@ -467,27 +504,32 @@ internal class ReaderAccountDelegate(
     }
 
     private fun saveArticles(items: List<Item>) {
+        val summaries = mutableMapOf<String, String?>()
+        items.forEach { item ->
+            summaries[item.hexID] = item.summary.content?.let { Jsoup.parse(it).text() }
+        }
+
         database.transactionWithErrorHandling {
-            val labels = savedSearchRecords.allIDs()
+                val labels = savedSearchRecords.allIDs()
 
-            items.forEach { item ->
-                val updated = TimeHelpers.nowUTC()
-                val enclosures = ReaderEnclosureParsing.validEnclosures(item)
-                val enclosureType = enclosures.firstOrNull()?.type
+                items.forEach { item ->
+                    val updated = TimeHelpers.nowUTC()
+                    val enclosures = ReaderEnclosureParsing.validEnclosures(item)
+                    val enclosureType = enclosures.firstOrNull()?.type
 
-                database.articlesQueries.create(
-                    id = item.hexID,
-                    feed_id = item.origin.streamId,
-                    title = item.title,
-                    author = item.author,
-                    content_html = item.content?.content ?: item.summary.content,
-                    extracted_content_url = null,
-                    summary = item.summary.content?.let { Jsoup.parse(it).text() },
-                    url = item.canonical.firstOrNull()?.href,
-                    image_url = ReaderEnclosureParsing.parsedImageURL(item),
-                    published_at = item.published,
-                    enclosure_type = enclosureType,
-                )
+                    database.articlesQueries.create(
+                        id = item.hexID,
+                        feed_id = item.origin.streamId,
+                        title = item.title,
+                        author = item.author,
+                        content_html = item.content?.content ?: item.summary.content,
+                        extracted_content_url = null,
+                        summary = summaries[item.hexID],
+                        url = item.canonical.firstOrNull()?.href,
+                        image_url = ReaderEnclosureParsing.parsedImageURL(item),
+                        published_at = item.published,
+                        enclosure_type = enclosureType,
+                    )
 
                 articleRecords.updateStatus(
                     articleID = item.hexID,
@@ -583,7 +625,9 @@ internal class ReaderAccountDelegate(
     }
 
     companion object {
-        const val MAX_PAGINATED_ITEM_LIMIT = 100
+        const val MAX_PAGINATED_ITEM_LIMIT = 250
+        private const val MAX_CONCURRENT_FETCHES = 8
+        private const val STREAM_ITEMS_PAGE_SIZE = 10_000
 
         private const val TAG = "reader"
 
@@ -591,7 +635,7 @@ internal class ReaderAccountDelegate(
     }
 }
 
-private val ALREADY_SUBSCRIBED_PREFIX = "Already subscribed!"
+private const val ALREADY_SUBSCRIBED_PREFIX = "Already subscribed!"
 
 private val SubscriptionQuickAddResult.alreadySubscribedURL: String?
     get() {

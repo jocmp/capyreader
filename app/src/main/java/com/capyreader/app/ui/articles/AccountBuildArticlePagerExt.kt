@@ -1,9 +1,11 @@
-package com.jocmp.capy
+package com.capyreader.app.ui.articles
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import com.jocmp.capy.Account
+import com.jocmp.capy.Article
+import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.articles.SortOrder
-import com.jocmp.capy.persistence.ArticlePagerFactory
 import java.time.OffsetDateTime
 
 fun Account.buildArticlePager(
@@ -14,7 +16,7 @@ fun Account.buildArticlePager(
 ): Pager<Int, Article> {
     return Pager(
         config = PagingConfig(
-            pageSize = 50,
+            pageSize = 100,
             prefetchDistance = 10,
         ),
         pagingSourceFactory = {

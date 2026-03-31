@@ -1,0 +1,5 @@
+• Add custom parsers for blick.de and transfermarkt.de
+• Update translations for Hebrew thanks to a volunteer!
+• Fix right-to-left (RTL) article title preferences thanks to a volunteer!
+• Fix refresh performance bug for FreshRSS/Google Reader accounts
+  - P.S. Thanks to everyone who reached out about this on GitHub. Many eyes make all bugs shallow.
