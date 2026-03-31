@@ -15,6 +15,7 @@ retrofit = "3.0.0"
 paging-compose = "3.4.1"
 sqldelight = "2.2.1"
 zoomable = "0.18.0"
+runtime = "1.10.6"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version = "1.12.4" }
@@ -88,6 +89,7 @@ tests-mockk-mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 tests-okhttp-mock = { module = "com.github.gmazzo.okhttp.mock:mock-client", version = "2.1.0" }
 zoomable = { module = "me.saket.telephoto:zoomable", version.ref = "zoomable" }
 zoomable-image-coil = { module = "me.saket.telephoto:zoomable-image-coil3", version.ref = "zoomable" }
+androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "runtime" }
 
 [plugins]
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

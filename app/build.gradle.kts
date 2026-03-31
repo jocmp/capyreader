@@ -166,6 +166,7 @@ dependencies {
     implementation(libs.androidx.glance.material3)
     implementation(libs.androidx.glance.preview)
     implementation(libs.androidx.glance.appwidget.preview)
+    implementation(libs.androidx.compose.runtime)
     "gplayImplementation"(libs.firebase.crashlytics)
     testImplementation(libs.tests.junit)
     androidTestImplementation(libs.tests.androidx.test.ext)

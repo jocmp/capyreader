@@ -21,13 +21,16 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import com.capyreader.app.BuildConfig.VERSION_NAME
@@ -102,7 +105,11 @@ fun AboutSettingsPanel() {
         FormSection {
             Box(Modifier.padding(horizontal = 4.dp)) {
                 TextButton(onClick = { linkOpener.open(Support.ABOUT_URL.toUri()) }) {
-                    Text("Made with ♥ in ✶✶✶✶")
+                    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr ) {
+                        Text(
+                            text = "Made with ♥ in ✶✶✶✶",
+                        )
+                    }
                 }
             }
         }
