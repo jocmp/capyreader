@@ -69,7 +69,6 @@
     <string name="image_preview_label">Bildeforhåndsvisning</string>
     <string name="font_option_system_default">Systemstandard</string>
     <string name="article_font_menu_label">Skrifttype</string>
-    <string name="refresh_every_day">Hver dag</string>
     <string name="settings_panel_general_title">Generelt</string>
     <string name="settings_panel_notifications_title">Varsler</string>
     <string name="settings_account_title">Konto</string>

@@ -53,7 +53,6 @@
     <string name="feed_form_feed_url_title">Yayın URL</string>
     <string name="settings_option_auto_delete_articles_subtitle">3 aydan eski okunmuş, yıldızsız makaleleri sil</string>
     <string name="settings_option_auto_delete_articles_title">Makaleleri Otomatik Sil</string>
-    <string name="refresh_every_day">Hergün</string>
     <string name="relative_time_hours">%1$dsaat</string>
     <string name="add_feed_name_title">Ad</string>
     <string name="feed_form_cancel">Vazgeç</string>

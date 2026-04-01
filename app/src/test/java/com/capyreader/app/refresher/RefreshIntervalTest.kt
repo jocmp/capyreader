@@ -1,6 +1,6 @@
 package com.capyreader.app.refresher
 
-import com.capyreader.app.refresher.RefreshInterval.EVERY_12_HOURS
+import com.capyreader.app.refresher.RefreshInterval.EVERY_EIGHT_HOURS
 import com.capyreader.app.refresher.RefreshInterval.MANUALLY_ONLY
 import com.capyreader.app.refresher.RefreshInterval.ON_START
 import org.junit.Assert.assertFalse
@@ -20,6 +20,6 @@ class RefreshIntervalTest {
 
     @Test
     fun isPeriodic_periodic() {
-        assertTrue(EVERY_12_HOURS.isPeriodic)
+        assertTrue(EVERY_EIGHT_HOURS.isPeriodic)
     }
 }

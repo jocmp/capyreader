@@ -138,7 +138,6 @@
     <string name="image_error_text">Грешка при зареждане на изображение</string>
     <string name="article_byline">%1$s при %2$s от %3$s</string>
     <string name="article_byline_date_only">%1$s при %2$s</string>
-    <string name="refresh_every_day">Всеки ден</string>
     <string name="feed_form_feed_url_title">URL адрес на емисия</string>
     <string name="feed_form_copy_feed_url_to_clipboard">Копиране на URL адреса на емисията в клипборда</string>
     <string name="filter_action_menu_search_articles">Търсене на статии</string>

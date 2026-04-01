@@ -161,7 +161,6 @@
     <string name="article_byline_date_only">%1$s om %2$s</string>
     <string name="settings_option_auto_delete_articles_subtitle">Gelezen, niet-gefavoriseerde artikelen ouder dan 3 maanden verwijderen</string>
     <string name="settings_option_auto_delete_articles_title">Artikelen automatisch verwijderen</string>
-    <string name="refresh_every_day">Elke dag</string>
     <string name="feed_form_feed_url_title">Feed URL</string>
     <string name="feed_form_copy_feed_url_to_clipboard">Feed URL naar klembord kopiëren</string>
     <string name="filter_action_menu_search_articles">Artikelen zoeken</string>

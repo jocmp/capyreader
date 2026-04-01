@@ -62,7 +62,6 @@
     <string name="settings_section_version">संस्करण</string>
     <string name="font_option_system_default">सिस्टम पूर्वनिर्धारित</string>
     <string name="article_font_menu_label">फन्ट</string>
-    <string name="refresh_every_day">हरेक दिन</string>
     <string name="feed_form_feed_url_title">फिड URL</string>
     <string name="settings_article_list_title">लेख सूची</string>
     <string name="settings_donate_button">दान गर्नुहोस्</string>

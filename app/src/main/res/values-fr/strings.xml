@@ -160,7 +160,6 @@
     <string name="settings_option_full_content_subtitle">Mémoriser le choix de chargement du contenu complet de l’article</string>
     <string name="empty_onboarding_title">Aucun flux pour l’instant</string>
     <string name="article_font_menu_label">Police</string>
-    <string name="refresh_every_day">Chaque jour</string>
     <string name="article_byline">%1$s à %2$s de %3$s</string>
     <string name="settings_option_auto_delete_articles_subtitle">Supprimer les articles lus et non favoris de plus de 3 mois</string>
     <string name="feed_list_top_bar_close_search">Annuler la recherche</string>

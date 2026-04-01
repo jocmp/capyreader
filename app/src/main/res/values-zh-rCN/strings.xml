@@ -86,7 +86,6 @@
     <string name="settings_option_auto_delete_articles_title">自动删除文章</string>
     <string name="settings_article_list_feed_name">订阅源名称</string>
     <string name="settings_article_list_feed_icons">订阅源图标</string>
-    <string name="refresh_every_day">每天</string>
     <string name="feed_form_copy_feed_url_to_clipboard">复制订阅源 URL 到剪贴板</string>
     <string name="feed_form_feed_url_title">订阅源 URL</string>
     <string name="feed_action_unsubscribe_title">取消订阅</string>

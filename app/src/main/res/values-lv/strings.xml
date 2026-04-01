@@ -133,7 +133,6 @@
     <string name="article_byline">%1$s publicēts %2$s pateicoties %3$s</string>
     <string name="settings_option_auto_delete_articles_subtitle">Dzēst lasītos, neatzīmētos rakstus, kas vecāki par 3 mēnešiem</string>
     <string name="settings_option_auto_delete_articles_title">Automātiski dzēst rakstus</string>
-    <string name="refresh_every_day">Katru dienu</string>
     <string name="settings_panel_general_title">Vispārīgie</string>
     <string name="settings_panel_display_title">Displejs un izskats</string>
     <string name="settings_panel_notifications_title">Paziņojumi</string>

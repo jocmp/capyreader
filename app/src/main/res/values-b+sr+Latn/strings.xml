@@ -129,7 +129,6 @@
     <string name="article_byline_date_only">%1$s u %2$s</string>
     <string name="settings_option_auto_delete_articles_subtitle">Izbrišite pročitane nesačuvane članke starije od 3 meseca</string>
     <string name="settings_option_auto_delete_articles_title">Automatsko Brisanje Članaka</string>
-    <string name="refresh_every_day">Svakog dana</string>
     <string name="feed_form_feed_url_title">Link izvora</string>
     <string name="feed_form_copy_feed_url_to_clipboard">Kopiraj Link Izvora</string>
     <string name="filter_action_menu_search_articles">Pretraži članke</string>

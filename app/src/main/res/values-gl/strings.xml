@@ -44,7 +44,6 @@
     <string name="settings_section_version">Versión</string>
     <string name="font_option_system_default">Predeterminada do sistema</string>
     <string name="image_error_text">Erro ao cargar a imaxe</string>
-    <string name="refresh_every_day">Cada día</string>
     <string name="settings_gestures_list_back_navigation_system_back">Predeterminada</string>
     <string name="auth_fields_hide_password">Agochar contrasinal</string>
     <string name="notifications_channel_title_opml_import">Importación das subscricións</string>

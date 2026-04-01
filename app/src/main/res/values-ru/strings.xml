@@ -125,7 +125,6 @@
     <string name="font_option_vollkorn">Vollkorn</string>
     <string name="image_error_text">Ошибка загрузки изображения</string>
     <string name="article_byline_date_only">%1$s в %2$s</string>
-    <string name="refresh_every_day">Каждый день</string>
     <string name="filter_action_menu_search_articles">Поиск статей</string>
     <string name="feed_list_top_bar_close_search">Прекратить поиск</string>
     <string name="settings_panel_display_title">Отображение и Облик</string>

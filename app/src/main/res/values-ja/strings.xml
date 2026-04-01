@@ -155,7 +155,6 @@
     <string name="image_error_text">画像の読み込みでエラーが発生しました</string>
     <string name="settings_option_auto_delete_articles_subtitle">3ヶ月以上前の既読かつスターなしの記事を削除</string>
     <string name="settings_option_auto_delete_articles_title">記事の自動削除</string>
-    <string name="refresh_every_day">毎日</string>
     <string name="feed_form_feed_url_title">フィードのURL</string>
     <string name="feed_form_copy_feed_url_to_clipboard">フィードのURLをクリップボードにコピー</string>
     <string name="filter_action_menu_search_articles">記事を検索</string>

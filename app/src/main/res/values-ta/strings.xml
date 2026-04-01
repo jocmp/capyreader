@@ -124,7 +124,6 @@
     <string name="article_byline_date_only">%2$s இல் %1$s</string>
     <string name="settings_option_auto_delete_articles_subtitle">3 மாதங்களுக்கும் மேலான வாசிப்பு, நிறுவப்படாத கட்டுரைகளை நீக்கு</string>
     <string name="settings_option_auto_delete_articles_title">தானாக நீக்கு கட்டுரைகள்</string>
-    <string name="refresh_every_day">தினமும்</string>
     <string name="feed_form_feed_url_title">முகவரி க்கு உணவளிக்கவும்</string>
     <string name="feed_form_copy_feed_url_to_clipboard">கிளிப்போர்டுக்கு ஊட்ட முகவரி ஐ நகலெடுக்கவும்</string>
     <string name="filter_action_menu_search_articles">கட்டுரைகளைத் தேடுங்கள்</string>

@@ -127,7 +127,6 @@
     <string name="empty_onboarding_title">Momentan niciun flux</string>
     <string name="refresh_on_start">La pornire</string>
     <string name="article_font_menu_label">Font</string>
-    <string name="refresh_every_day">Zilnic</string>
     <string name="settings_list_top_bar_title">Setări</string>
     <string name="settings_auto_delete_option_keep_for_three_month">3 luni</string>
     <string name="settings_clear_all_articles_button">Șterge toate articolele</string>
