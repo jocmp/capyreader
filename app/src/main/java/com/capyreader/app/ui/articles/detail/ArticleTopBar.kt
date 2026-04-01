@@ -47,7 +47,7 @@ import com.capyreader.app.ui.articles.LocalArticleActions
 import com.capyreader.app.ui.articles.LocalLabelsActions
 import com.capyreader.app.ui.components.ToolbarTooltip
 import com.capyreader.app.ui.fixtures.PreviewKoinApplication
-import com.capyreader.app.ui.settings.LocalSnackbarHost
+import com.capyreader.app.ui.components.LocalSnackbarHost
 import kotlinx.coroutines.launch
 
 private val sizeSpec = spring<IntSize>(stiffness = 700f)

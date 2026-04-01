@@ -20,7 +20,5 @@ data class Feed(
     val folderExpanded: Boolean = false,
     val priority: FeedPriority? = null,
     val showUnreadBadge: Boolean = true,
-): Countable {
-    val isPages: Boolean
-        get() = feedURL.startsWith("http://pages.feedbinusercontent.com/")
-}
+    val isReadLater: Boolean = false,
+): Countable

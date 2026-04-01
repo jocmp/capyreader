@@ -1,4 +1,4 @@
-package com.capyreader.app.ui.settings
+package com.capyreader.app.ui.components
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable

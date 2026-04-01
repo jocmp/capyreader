@@ -318,6 +318,7 @@ internal class ReaderAccountDelegate(
             },
             priority = subscription.frssPriority,
             itunes_image_url = null,
+            read_later = false,
         )
 
         upsertTaggings(subscription)

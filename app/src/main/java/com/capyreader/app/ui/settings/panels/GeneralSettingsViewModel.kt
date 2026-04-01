@@ -15,6 +15,7 @@ import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.preferences.getAndSet
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class GeneralSettingsViewModel(
@@ -50,6 +51,8 @@ class GeneralSettingsViewModel(
 
     var homePage by mutableStateOf(appPreferences.homePage.get())
         private set
+
+    val hasReadLaterFeed = account.feeds.map { feeds -> feeds.any { it.isReadLater } }
 
     val filterKeywords = account
         .preferences

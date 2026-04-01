@@ -441,6 +441,7 @@ internal class MinifluxAccountDelegate(
             favicon_url = icon,
             priority = null,
             itunes_image_url = null,
+            read_later = false,
         )
 
         feed.category?.let { category ->

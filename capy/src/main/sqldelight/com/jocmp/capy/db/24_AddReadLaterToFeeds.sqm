@@ -1,0 +1,5 @@
+import kotlin.Boolean;
+
+ALTER TABLE feeds ADD COLUMN read_later INTEGER AS Boolean NOT NULL DEFAULT 0;
+
+CREATE UNIQUE INDEX feeds_read_later_unique ON feeds(read_later) WHERE read_later = 1;

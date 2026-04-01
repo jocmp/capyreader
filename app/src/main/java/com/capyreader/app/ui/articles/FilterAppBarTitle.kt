@@ -32,7 +32,7 @@ fun FilterAppBarTitle(
     val text = when (filter) {
         is ArticleFilter.Articles -> stringResource(R.string.filter_unread)
         is ArticleFilter.Feeds -> {
-            allFeeds.find { it.id == filter.feedID }?.title
+            allFeeds.find { it.id == filter.feedID }?.displayTitle()
         }
 
         is ArticleFilter.Folders -> {

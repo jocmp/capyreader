@@ -3,22 +3,18 @@ package com.capyreader.app.ui.addintent
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.Account
-import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.FeedOption
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.withUIContext
-import com.jocmp.capy.preferences.getAndSet
 import okio.IOException
 import java.net.UnknownHostException
 
 class AddLinkViewModel(
     private val account: Account,
-    private val appPreferences: AppPreferences,
 ) : ViewModel() {
     private val _feedResult = mutableStateOf<AddFeedResult?>(null)
     private val _feedLoading = mutableStateOf(false)
@@ -87,12 +83,6 @@ class AddLinkViewModel(
                     else -> _feedResult.value = result
                 }
             }
-        }
-    }
-
-    fun selectFeed(id: String) {
-        appPreferences.filter.getAndSet {
-            ArticleFilter.Feeds(feedID = id, folderTitle = null, it.status)
         }
     }
 

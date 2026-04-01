@@ -29,6 +29,7 @@ internal class FeedRecords(private val database: Database) {
         faviconURL: String?,
         priority: String? = null,
         itunesImageURL: String? = null,
+        readLater: Boolean = false,
     ): Feed? = withIOContext {
         database.feedsQueries.upsert(
             id = feedID,
@@ -39,6 +40,7 @@ internal class FeedRecords(private val database: Database) {
             favicon_url = faviconURL,
             priority = priority,
             itunes_image_url = itunesImageURL,
+            read_later = readLater,
         )
 
         find(feedID)
@@ -148,6 +150,7 @@ internal class FeedRecords(private val database: Database) {
         priority: String? = null,
         showUnreadBadge: Boolean = true,
         itunesImageURL: String? = null,
+        readLater: Boolean = false,
         folderName: String? = "",
         expanded: Boolean? = false,
     ) = Feed(
@@ -166,5 +169,6 @@ internal class FeedRecords(private val database: Database) {
         folderExpanded = expanded ?: false,
         priority = FeedPriority.parse(priority),
         showUnreadBadge = showUnreadBadge,
+        isReadLater = readLater,
     )
 }

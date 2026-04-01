@@ -111,7 +111,6 @@ class ArticleScreenViewModel(
         filter,
     ) { folders, latestCounts, filter ->
         folders.map { copyFolderCounts(it, latestCounts, filter) }
-            .withPositiveCount(filter.status)
     }
 
     val savedSearches: Flow<List<SavedSearch>> = combine(
@@ -120,7 +119,6 @@ class ArticleScreenViewModel(
         filter,
     ) { searches, latestCounts, filter ->
         searches.map { copySavedSearchCounts(it, latestCounts) }
-            .withPositiveCount(filter.status)
     }
 
     val allFeeds = account.taggedFeeds
@@ -136,27 +134,18 @@ class ArticleScreenViewModel(
         _counts,
         filter,
     ) { feeds, latestCounts, filter ->
-        feeds.filter { !it.isPages }
+        feeds.filter { !it.isReadLater }
             .map { copyFeedCounts(it, latestCounts) }
-            .withPositiveCount(filter.status)
     }
 
-    val pagesFeed: Flow<Feed?> = combine(
+    val readLaterFeed: Flow<Feed?> = combine(
         account.feeds,
         _counts,
         filter,
     ) { feeds, latestCounts, filter ->
-        feeds.find { it.isPages }
+        feeds.find { it.isReadLater }
             ?.let { copyFeedCounts(it, latestCounts) }
             ?.takeIf { it.count > 0 || filter.status != ArticleStatus.UNREAD }
-    }
-
-    val currentFeed: Flow<Feed?> = combine(allFeeds, filter) { feeds, filter ->
-        if (filter is ArticleFilter.Feeds) {
-            feeds.find { it.id == filter.feedID }
-        } else {
-            null
-        }
     }
 
     private val nextFilterListener: Flow<NextFilter?> =
@@ -217,8 +206,6 @@ class ArticleScreenViewModel(
         get() = _nextFilter
 
     init {
-        appPreferences.filter.set(appPreferences.homePage.get().toArticleFilter())
-
         viewModelScope.launch {
             nextFilterListener.collect {
                 _nextFilter.value = it
@@ -325,6 +312,13 @@ class ArticleScreenViewModel(
     fun deletePage(articleID: String) {
         viewModelScope.launchIO {
             account.deletePage(articleID)
+        }
+    }
+
+    fun saveForLater(url: String, onComplete: (Result<Unit>) -> Unit) {
+        viewModelScope.launchIO {
+            val result = account.createPage(url)
+            withUIContext { onComplete(result) }
         }
     }
 
@@ -587,7 +581,7 @@ class ArticleScreenViewModel(
         val folderFeeds = folder.feeds.map { copyFeedCounts(it, counts) }
 
         return folder.copy(
-            feeds = folderFeeds.withPositiveCount(filter.status).toMutableList(),
+            feeds = folderFeeds,
             count = folderFeeds.sumOf { it.count }
         )
     }
@@ -612,10 +606,9 @@ class ArticleScreenViewModel(
             Article.FullContentState.NONE
         }
 
-        val content = if (fullContent == Article.FullContentState.LOADING) {
-            ""
-        } else {
-            article.defaultContent
+        val content = when (fullContent) {
+            Article.FullContentState.LOADING -> ""
+            else -> article.defaultContent
         }
 
         return article.copy(

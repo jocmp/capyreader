@@ -7,6 +7,7 @@ SELECT
   feeds.open_articles_in_browser,
   feeds.feed_url,
   feeds.site_url,
+  feeds.read_later,
   article_statuses.updated_at,
   article_statuses.starred,
   article_statuses.read
@@ -245,7 +246,7 @@ deleteArticles {
   AND NOT EXISTS (
     SELECT 1 FROM feeds
     WHERE feeds.id = articles.feed_id
-    AND feeds.feed_url LIKE 'http://pages.feedbinusercontent.com/%'
+    AND feeds.read_later = 1
   );
 
   DELETE FROM article_notifications

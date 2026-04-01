@@ -43,7 +43,7 @@ import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.articles.LocalFullContent
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
-import com.capyreader.app.ui.settings.LocalSnackbarHost
+import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.jocmp.capy.Article
 import org.koin.compose.koinInject
 
@@ -182,7 +182,7 @@ fun ArticleView(
                 show = showToolBar,
                 isScrolled = scrollState.showTopDivider,
                 articleId = article.id,
-                canDeletePage = article.isPages,
+                canDeletePage = article.isReadLater,
                 canSaveExternally = canSaveExternally,
                 onDeletePage = onDeletePage,
                 isFullscreen = isFullscreen,

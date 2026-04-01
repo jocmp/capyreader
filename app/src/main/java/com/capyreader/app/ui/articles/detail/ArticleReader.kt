@@ -39,7 +39,7 @@ import com.capyreader.app.ui.components.WebView
 import com.capyreader.app.ui.components.WebViewState
 import com.capyreader.app.ui.components.rememberSaveableShareLink
 import com.capyreader.app.ui.components.rememberWebViewState
-import com.capyreader.app.ui.settings.LocalSnackbarHost
+import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.jocmp.capy.Article
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
