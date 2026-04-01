@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Bookmark
 import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Star
@@ -54,7 +55,7 @@ fun FeedList(
     starredCount: Long,
     folders: List<Folder> = emptyList(),
     feeds: List<Feed> = emptyList(),
-    pagesFeed: Feed? = null,
+    readLaterFeed: Feed? = null,
     savedSearches: List<SavedSearch> = emptyList(),
     onFilterSelect: () -> Unit,
     onSelectToday: () -> Unit,
@@ -171,12 +172,24 @@ fun FeedList(
                 }
             )
 
-            if (pagesFeed != null) {
-                FeedRow(
-                    feed = pagesFeed,
-                    onSelect = { onSelectFeed(it, null) },
-                    selected = filter.isFeedSelected(pagesFeed),
-                    showContextMenu = false,
+            if (readLaterFeed != null) {
+                DrawerItem(
+                    icon = {
+                        Icon(
+                            Icons.Rounded.Bookmark,
+                            contentDescription = null
+                        )
+                    },
+                    label = {
+                        ListTitle(
+                            stringResource(R.string.filter_read_later),
+                        )
+                    },
+                    badge = { CountBadge(count = readLaterFeed.count) },
+                    selected = filter.isFeedSelected(readLaterFeed),
+                    onClick = {
+                        onSelectFeed(readLaterFeed, null)
+                    }
                 )
             }
 

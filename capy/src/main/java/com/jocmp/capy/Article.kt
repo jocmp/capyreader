@@ -26,14 +26,11 @@ data class Article(
     val content: String = contentHTML.ifBlank { summary },
     val enclosures: List<Enclosure> = emptyList(),
     val enclosureType: EnclosureType? = null,
+    val isReadLater: Boolean = false,
 ) {
     val defaultContent = contentHTML.ifBlank { summary }
 
     val parseFullContent = fullContent == FullContentState.LOADED
-
-    val isPages: Boolean
-        get() = feedName == "Pages" &&
-                feedURL?.startsWith("http://pages.feedbinusercontent.com/") == true
 
     enum class FullContentState {
         NONE,

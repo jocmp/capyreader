@@ -42,7 +42,7 @@ class AddLinkActivity : BaseActivity() {
                         AddLinkScreen(
                             defaultQueryURL = defaultQueryURL,
                             pageTitle = pageTitle,
-                            supportsPages = account.source.supportsPages,
+                            supportsReadLater = account.source.supportsReadLater,
                             onBack = {
                                 finish()
                             }

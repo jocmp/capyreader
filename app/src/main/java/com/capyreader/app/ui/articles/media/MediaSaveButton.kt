@@ -12,7 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.capyreader.app.R
-import com.capyreader.app.ui.settings.LocalSnackbarHost
+import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
 

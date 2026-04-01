@@ -1,4 +1,5 @@
 import com.android.build.gradle.internal.tasks.factory.dependsOn
+import java.security.SecureRandom
 import java.util.Properties
 
 plugins {
@@ -193,4 +194,42 @@ tasks.register("useGMSDebugFile") {
     }
 }
 
+val generateSecretKey = tasks.register("generateSecretKey") {
+    val outputDir = layout.buildDirectory.dir("generated/source/secrets/com/capyreader/app")
+    outputs.dir(outputDir)
+
+    doLast {
+        val username = secrets.getProperty("extract_username", "")
+        val secret = secrets.getProperty("extract_secret", "")
+        val salt = ByteArray(64).also { SecureRandom().nextBytes(it) }
+
+        fun encode(value: String) = value.toByteArray()
+            .mapIndexed { i, b -> (b.toInt() xor salt[i % salt.size].toInt()).toByte() }
+            .toByteArray()
+
+        fun ByteArray.toHexLiteral() = joinToString { "0x%02x.toByte()".format(it) }
+
+        val file = outputDir.get().file("SecretKey.kt").asFile
+        file.parentFile.mkdirs()
+        file.writeText(
+            """
+            package com.capyreader.app
+
+            internal object SecretKey {
+                private val salt = byteArrayOf(${salt.toHexLiteral()})
+
+                private fun decode(encoded: ByteArray) =
+                    String(ByteArray(encoded.size) { i -> (encoded[i].toInt() xor salt[i % salt.size].toInt()).toByte() })
+
+                val extractUsername = decode(byteArrayOf(${encode(username).toHexLiteral()}))
+                val extractSecret = decode(byteArrayOf(${encode(secret).toHexLiteral()}))
+            }
+            """.trimIndent()
+        )
+    }
+}
+
 project.tasks.preBuild.dependsOn("useGMSDebugFile")
+project.tasks.preBuild.dependsOn("generateSecretKey")
+
+android.sourceSets["main"].kotlin.srcDir(layout.buildDirectory.dir("generated/source/secrets"))

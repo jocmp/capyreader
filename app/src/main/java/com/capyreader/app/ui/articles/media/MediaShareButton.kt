@@ -8,7 +8,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.capyreader.app.R
 import com.capyreader.app.common.shareImage
-import com.capyreader.app.ui.settings.LocalSnackbarHost
+import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
 import com.jocmp.capy.common.withUIContext
