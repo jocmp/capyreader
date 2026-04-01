@@ -392,6 +392,6 @@ private val FeedPriority.translationKey: Int
     get() = when (this) {
         FeedPriority.MAIN_STREAM -> R.string.freshrss_visibility_option_main
         FeedPriority.IMPORTANT -> R.string.freshrss_visibility_option_important
-        FeedPriority.CATEGORY -> R.string.freshrss_visibility_option_category
+        FeedPriority.CATEGORY -> R.string.freshrss_visibility_option_folder
         FeedPriority.FEED -> R.string.freshrss_visibility_option_feed
     }

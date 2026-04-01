@@ -41,14 +41,14 @@
         <item quantity="other">Elke %d uur</item>
     </plurals>
     <string name="refresh_feeds_menu_label">Alle feeds vernieuwen</string>
-    <string name="nav_headline_tags">Tags</string>
+    <string name="nav_headline_folders">Tags</string>
     <string name="nav_headline_saved_searches">Zoekopdrachten</string>
     <string name="nav_headline_feeds">Feeds</string>
     <string name="nav_add_feed">Feed toevoegen</string>
     <string name="add_feed_feed_not_error">Kon feed niet vinden</string>
     <string name="add_feed_save_error">Kon feed niet opslaan</string>
     <string name="add_feed_network_error">Kon feed niet vinden. Controleer je verbinding.</string>
-    <string name="delete_tag_error">Fout bij verwijderen tag</string>
+    <string name="delete_folder_error">Fout bij verwijderen tag</string>
     <string name="relative_time_just_now">Zojuist</string>
     <string name="relative_time_minutes">%1$dm</string>
     <string name="relative_time_hours">%1$du</string>
@@ -127,7 +127,7 @@
     <string name="theme_menu_option_light">Licht</string>
     <string name="theme_menu_option_dark">Donker</string>
     <string name="theme_menu_option_system_default">Systeem standaard</string>
-    <string name="edit_feed_tags">Tags</string>
+    <string name="edit_feed_folders">Tags</string>
     <string name="settings_option_in_app_browser">In-app browser gebruiken</string>
     <string name="opml_import_notification_cancel">Stop</string>
     <string name="image_preview_menu_option_none">Geen</string>
@@ -218,8 +218,7 @@
     <string name="action_share">Delen</string>
     <string name="crash_log_export_item_title">Crash logs delen</string>
     <string name="crash_log_export_item_subtitle">Bewaart crash logs naar een bestand om te delen met de ontwikkelaar</string>
-    <string name="edit_feed_tags_section">Tags</string>
-    <string name="edit_feed_tag_section">Tag toevoegen of selecteren</string>
+    <string name="edit_feed_folders_section">Tags</string>
     <string name="edit_feed_notifications_title">Notificaties inschakelen</string>
     <string name="notifications_permissions_disabled_call_to_action">Instellingen</string>
     <string name="notifications_permission_disabled_title">Notificatie toestemming is uitgeschakeld</string>
@@ -261,13 +260,11 @@
     <string name="blocked_keywords_supporting_text">Artikelen verwijderen met titel of inhoud trefwoord overeenkomsten</string>
     <string name="blocked_keywords_remove_keyword">Trefwoord verwijderen</string>
     <string name="blocked_keywords_add_keyword">Trefwoord toevoegen</string>
-    <string name="tag_action_delete_title">Verwijderen</string>
-    <string name="tag_action_delete_message">Weet je zeker dat je tag \"%1$s\" wilt verwijderen?</string>
-    <string name="tag_action_delete_confirm">Verwijderen</string>
-    <string name="tag_name_title">Naam</string>
-    <string name="tag_action_edit_success">Tag bijgewerkt</string>
-    <string name="tag_action_edit_error">Fout bij bijwerken tag</string>
-    <string name="tag_action_edit">Tag bewerken</string>
+    <string name="folder_action_delete_message">Weet je zeker dat je tag \"%1$s\" wilt verwijderen?</string>
+    <string name="folder_action_delete_confirm">Verwijderen</string>
+    <string name="folder_name_title">Naam</string>
+    <string name="folder_action_edit_success">Tag bijgewerkt</string>
+    <string name="folder_action_edit_error">Fout bij bijwerken tag</string>
     <string name="actions_copy_link">Link kopiëren</string>
     <string name="actions_share_link">Link delen</string>
     <string name="widget_receiver_headlines_title">Koppen</string>
@@ -286,9 +283,9 @@
     <string name="settings_section_categories">Categoriën</string>
     <string name="settings_option_show_today_filter">Vandaag</string>
     <string name="auth_fields_freshrss_api_password">API Paswoord</string>
-    <string name="freshrss_visibility">Zichtbaarheid</string>
-    <string name="freshrss_visibility_option_main">Mainstream</string>
+    <string name="feed_visibility">Zichtbaarheid</string>
+    <string name="feed_visibility_option_unread">Mainstream</string>
     <string name="freshrss_visibility_option_important">Belangrijk</string>
-    <string name="freshrss_visibility_option_category">Categorie</string>
+    <string name="freshrss_visibility_option_folder">Categorie</string>
     <string name="freshrss_visibility_option_feed">feed</string>
 </resources>

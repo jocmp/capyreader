@@ -77,7 +77,7 @@
     <string name="relative_time_hours">%1$dh</string>
     <string name="relative_time_days">%1$dd</string>
     <string name="article_actions_open_menu">Öppna åtgärder för artiklar</string>
-    <string name="nav_headline_tags">Etiketter</string>
+    <string name="nav_headline_folders">Etiketter</string>
     <string name="relative_time_just_now">Just nu</string>
     <plurals name="refresh_hours">
         <item quantity="one">Varje timma</item>
@@ -109,7 +109,7 @@
     <string name="add_account_feedbin_signup_prompt">Har du inget Feedbin konto?</string>
     <string name="opml_import_button_text">Importera från fil</string>
     <string name="settings_import_progress">Importerar prenumerationer %1$d av %2$d</string>
-    <string name="edit_feed_tags">Etiketter</string>
+    <string name="edit_feed_folders">Etiketter</string>
     <string name="opml_import_notification_cancel">Avbryt</string>
     <string name="image_preview_menu_option_none">Ingen</string>
     <string name="add_account_reader_subtitle">Självhanterad hosting av Google Reader API</string>
@@ -180,8 +180,7 @@
     <string name="notifications_permissions_disabled_call_to_action">Inställningar</string>
     <string name="settings_select_none">Välj inga</string>
     <string name="crash_log_export_item_title">Dela kraschloggar</string>
-    <string name="edit_feed_tags_section">Etiketter</string>
-    <string name="edit_feed_tag_section">Etikett</string>
+    <string name="edit_feed_folders_section">Etiketter</string>
     <string name="settings_enable_refresh_call_to_action">Periodisk uppdatering måste vara aktiverad först</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">Öppna navigationsfält</string>
     <string name="notifications_permission_disabled_title">Behörighet till aviseringar avaktiverad</string>
@@ -233,10 +232,10 @@
     <string name="article_list_swipe_disabled">Inaktiverad</string>
     <string name="notification_mark_as_read_action">Markera som läst</string>
     <string name="filter_today">Idag</string>
-    <string name="freshrss_visibility_option_category">Kategori</string>
+    <string name="freshrss_visibility_option_folder">Kategori</string>
     <string name="freshrss_visibility_option_feed">Flöde</string>
     <string name="freshrss_visibility_option_important">Viktigt</string>
-    <string name="freshrss_visibility">Synlighet</string>
+    <string name="feed_visibility">Synlighet</string>
     <string name="auth_fields_freshrss_api_password">API-lösenord</string>
     <string name="settings_display_miscellaneous_title">Diverse</string>
     <string name="widget_headlines_see_more_button">Se fler artiklar</string>
@@ -245,8 +244,8 @@
     <string name="widget_receiver_headlines_title">Rubriker</string>
     <string name="actions_share_link">Dela länk</string>
     <string name="actions_copy_link">Kopiera länk</string>
-    <string name="tag_name_title">Namn</string>
-    <string name="tag_action_delete_confirm">Ta bort</string>
+    <string name="folder_name_title">Namn</string>
+    <string name="folder_action_delete_confirm">Ta bort</string>
     <string name="blocked_keywords_remove_keyword">Ta bort nyckelord</string>
     <string name="blocked_keywords_add_keyword">Lägg till nyckelord</string>
     <string name="feed_nav_drawer_refresh_all">Uppdatera alla</string>

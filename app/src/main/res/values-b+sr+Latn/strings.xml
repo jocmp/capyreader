@@ -40,7 +40,7 @@
         <item quantity="other">Svako %d sati</item>
     </plurals>
     <string name="refresh_feeds_menu_label">Osveži izvore</string>
-    <string name="nav_headline_tags">Tagovi</string>
+    <string name="nav_headline_folders">Tagovi</string>
     <string name="nav_headline_feeds">Izvori</string>
     <string name="nav_add_feed">Dodaj Izvor</string>
     <string name="add_feed_feed_not_error">Nije moguće pronaći Izvor</string>
@@ -93,7 +93,7 @@
     <string name="theme_menu_option_light">Svetla</string>
     <string name="theme_menu_option_dark">Tamna</string>
     <string name="theme_menu_option_system_default">Podrazumevana tema sistema</string>
-    <string name="edit_feed_tags">Tagovi</string>
+    <string name="edit_feed_folders">Tagovi</string>
     <string name="settings_option_in_app_browser">Koristite pregledač u aplikaciji</string>
     <string name="opml_import_notification_cancel">Odustani</string>
     <string name="image_preview_menu_option_none">Bez Slike</string>
@@ -165,7 +165,7 @@
     <string name="article_list_sort_oldest_first">Prvo Najstariji</string>
     <string name="settings_gestures_list_back_navigation_system_back">Podrazumevano</string>
     <string name="crash_log_export_item_title">Delite evidenciju o pada aplikacije</string>
-    <string name="edit_feed_tags_section">Oznake</string>
+    <string name="edit_feed_folders_section">Oznake</string>
     <string name="edit_feed_notifications_title">Omogući obaveštenja</string>
     <string name="settings_enable_refresh_call_to_action">Prvo mora biti omogućeno periodično osvežavanje</string>
     <string name="settings_select_none">Izaberite Ništa</string>
@@ -198,7 +198,6 @@
     <string name="add_account_freshrss_signup_prompt">Nemate FreshRSS instancu?</string>
     <string name="add_account_freshrss_signup_link_text">Saznajte više.</string>
     <string name="settings_section_account_server">Server</string>
-    <string name="edit_feed_tag_section">Tag</string>
     <string name="auth_fields_api_url">Server</string>
     <string name="settings_mark_read_on_scroll">Označi kao pročitano na skrolovanju</string>
     <string name="settings_section_mark_all_as_read">Označi sve kao pročitano</string>

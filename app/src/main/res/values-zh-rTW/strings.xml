@@ -17,7 +17,7 @@
         <item quantity="other">每 %d 小時</item>
     </plurals>
     <string name="refresh_feeds_menu_label">重新整理訂閱源</string>
-    <string name="nav_headline_tags">標籤</string>
+    <string name="nav_headline_folders">標籤</string>
     <string name="nav_headline_feeds">訂閱源</string>
     <string name="nav_add_feed">新增訂閱源</string>
     <string name="add_feed_feed_not_error">無法找到訂閱源</string>
@@ -119,7 +119,7 @@
     <string name="settings_panel_notifications_title">通知</string>
     <string name="notifications_channel_title_opml_import">匯入訂閲</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">開啟導覽匣</string>
-    <string name="edit_feed_tags_section">標籤</string>
+    <string name="edit_feed_folders_section">標籤</string>
     <string name="edit_feed_notifications_title">啟用通知</string>
     <string name="notifications_permissions_disabled_call_to_action">設定</string>
     <string name="settings_enable_refresh_call_to_action">必須先啟用定期重新整理</string>
@@ -167,7 +167,7 @@
     <string name="empty_onboarding_prompt">從新增一個訂閱源開始</string>
     <string name="settings_option_copy_version">複製版本號</string>
     <string name="theme_menu_option_system_default">系統預設</string>
-    <string name="edit_feed_tags">標籤</string>
+    <string name="edit_feed_folders">標籤</string>
     <string name="settings_option_in_app_browser">使用應用程式内建瀏覽器</string>
     <string name="opml_import_notification_cancel">停止</string>
     <string name="image_preview_menu_option_none">無</string>
@@ -202,7 +202,6 @@
     <string name="add_account_freshrss_signup_prompt">沒有 FreshRSS 實例？</string>
     <string name="add_account_feedbin_signup_link_text">在這裡建立一個。</string>
     <string name="add_account_freshrss_signup_link_text">了解更多。</string>
-    <string name="edit_feed_tag_section">新增或選擇標籤</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">點擊底部角落上下翻頁</string>
     <string name="settings_gestures_reader_tap_to_page_title">E Ink 手勢</string>
     <string name="settings_enable_high_contrast_dark_theme">高對比度深色主題</string>
@@ -252,14 +251,12 @@
     <string name="blocked_keywords_remove_keyword">移除關鍵字</string>
     <string name="blocked_keywords_add_keyword">新增關鍵字</string>
     <string name="blocked_keywords">封鎖清單</string>
-    <string name="delete_tag_error">刪除標籤時發生錯誤</string>
-    <string name="tag_name_title">名稱</string>
-    <string name="tag_action_delete_message">您確定要刪除標籤 \"%1$s\" 嗎？</string>
-    <string name="tag_action_delete_confirm">刪除</string>
-    <string name="tag_action_edit_success">標籤已更新</string>
-    <string name="tag_action_edit_error">更新標籤時發生錯誤</string>
-    <string name="tag_action_edit">編輯標籤</string>
-    <string name="tag_action_delete_title">刪除</string>
+    <string name="delete_folder_error">刪除標籤時發生錯誤</string>
+    <string name="folder_name_title">名稱</string>
+    <string name="folder_action_delete_message">您確定要刪除標籤 \"%1$s\" 嗎？</string>
+    <string name="folder_action_delete_confirm">刪除</string>
+    <string name="folder_action_edit_success">標籤已更新</string>
+    <string name="folder_action_edit_error">更新標籤時發生錯誤</string>
     <string name="actions_share_link">分享連結</string>
     <string name="actions_copy_link">複製連結</string>
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">導覽到上一階</string>
@@ -298,18 +295,18 @@
     <string name="freshrss_nav_headline_categories">類別</string>
     <string name="theme_sunset">日落</string>
     <string name="settings_section_categories">類別</string>
-    <string name="freshrss_visibility_option_category">類別</string>
+    <string name="freshrss_visibility_option_folder">類別</string>
     <string name="auth_fields_miniflux_api_token">API 權杖</string>
     <string name="auth_fields_miniflux_use_password">改為使用密碼</string>
     <string name="auth_fields_miniflux_use_api_token">改為使用 API 權杖</string>
     <string name="auth_fields_show_advanced">進階選項</string>
     <string name="auth_fields_hide_advanced">隱藏進階選項</string>
-    <string name="freshrss_visibility">能見度</string>
+    <string name="feed_visibility">能見度</string>
     <string name="freshrss_visibility_option_feed">訂閱源</string>
     <string name="audio_player_close">關閉播放器</string>
     <string name="audio_player_skip_back">倒轉 30 秒</string>
     <string name="audio_player_skip_forward">快轉 30 秒</string>
-    <string name="freshrss_visibility_option_main">主資訊流</string>
+    <string name="feed_visibility_option_unread">主資訊流</string>
     <string name="open_articles_in_browser">在瀏覽器中開啟文章</string>
     <string name="freshrss_tag_action_edit">編輯類別</string>
     <string name="settings_panel_unread_counts_title">未讀徽章</string>

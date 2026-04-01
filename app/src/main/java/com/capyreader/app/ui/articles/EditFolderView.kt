@@ -40,7 +40,7 @@ fun EditFolderView(
             onValueChange = setTitle,
             placeholder = { Text(folderTitle) },
             label = {
-                Text(stringResource(id = R.string.tag_name_title))
+                Text(stringResource(id = R.string.folder_name_title))
             },
             keyboardOptions = KeyboardOptions(
                 capitalization = KeyboardCapitalization.Words,
