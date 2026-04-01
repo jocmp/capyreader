@@ -17,16 +17,12 @@ import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuAnchorType.Companion.PrimaryNotEditable
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -35,6 +31,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.toMutableStateMap
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -145,7 +143,7 @@ fun EditFeedView(
             if (showMultiselect) {
                 FormSection(
                     modifier = Modifier.padding(bottom = 16.dp),
-                    title = stringResource(R.string.edit_feed_tags_section)
+                    title = stringResource(R.string.edit_feed_folders_section)
                 ) {
                     FolderMultiselect(
                         folders,
@@ -161,15 +159,14 @@ fun EditFeedView(
                     )
                 }
             } else {
-                Column(
-                    Modifier
-                        .padding(horizontal = 16.dp)
-                        .padding(bottom = 16.dp)
+                FormSection(
+                    modifier = Modifier.padding(bottom = 16.dp),
+                    title = stringResource(R.string.edit_feed_folders_section)
                 ) {
-                    FolderSelect(
-                        onChange = setSelectedFolder,
-                        value = selectedFolder,
-                        options = folders.map { it.title }
+                    FolderRadioSelect(
+                        folders = folders,
+                        selectedFolder = selectedFolder,
+                        onSelectFolder = setSelectedFolder,
                     )
                 }
             }
@@ -192,44 +189,70 @@ fun EditFeedView(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun FolderSelect(
-    options: List<String>,
-    onChange: (value: String) -> Unit,
-    value: String,
+private fun FolderRadioSelect(
+    folders: List<Folder>,
+    selectedFolder: String,
+    onSelectFolder: (String) -> Unit,
 ) {
-    val (expanded, setExpanded) = remember { mutableStateOf(false) }
+    val (newFolderText, setNewFolderText) = remember { mutableStateOf("") }
+    val (isFocused, setFocused) = remember { mutableStateOf(false) }
+    val previousFolder = remember { mutableStateOf(selectedFolder) }
+    val focusManager = LocalFocusManager.current
 
-    ExposedDropdownMenuBox(
-        expanded = expanded,
-        onExpandedChange = { setExpanded(it) },
-    ) {
-        OutlinedTextField(
-            modifier = Modifier
-                .menuAnchor(PrimaryNotEditable)
-                .fillMaxWidth(),
-            value = value,
-            onValueChange = onChange,
-            label = { Text(stringResource(R.string.edit_feed_tag_section)) },
-            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-            colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(),
-        )
-        ExposedDropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { setExpanded(false) }
+    Column {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            options.forEach { option ->
-                DropdownMenuItem(
-                    text = {
-                        Text(text = option)
-                    },
-                    onClick = {
-                        onChange(option)
-                        setExpanded(false)
+            OutlinedTextField(
+                value = newFolderText,
+                onValueChange = { value ->
+                    setNewFolderText(value)
+                    if (value.isNotBlank()) {
+                        onSelectFolder(value)
+                    } else {
+                        onSelectFolder(previousFolder.value)
                     }
-                )
-            }
+                },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Rounded.Add,
+                        contentDescription = stringResource(R.string.blocked_keywords_add_keyword)
+                    )
+                },
+                label = { Text(stringResource(id = R.string.add_feed_new_folder_title)) },
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Words,
+                    autoCorrectEnabled = false,
+                    imeAction = ImeAction.Done
+                ),
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 16.dp)
+                    .padding(bottom = 8.dp)
+                    .fillMaxWidth()
+                    .onFocusChanged { state ->
+                        if (state.isFocused && !isFocused) {
+                            previousFolder.value = selectedFolder
+                        }
+                        setFocused(state.isFocused)
+                    }
+            )
+        }
+
+        folders.forEach { folder ->
+            RadioRow(
+                title = folder.title,
+                selected = !isFocused && selectedFolder == folder.title,
+                onClick = {
+                    focusManager.clearFocus()
+                    setNewFolderText("")
+                    previousFolder.value = folder.title
+                    onSelectFolder(folder.title)
+                }
+            )
         }
     }
 }
@@ -297,6 +320,29 @@ private fun FolderMultiselect(
                 switchFolders[folder.title] = value
             }
         }
+    }
+}
+
+@Composable
+private fun RadioRow(title: String, selected: Boolean, onClick: () -> Unit) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClick() }
+    ) {
+        RadioButton(
+            selected = selected,
+            onClick = onClick,
+            modifier = Modifier.padding(start = 8.dp)
+        )
+        Text(
+            text = title,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.padding(end = 16.dp)
+        )
     }
 }
 
