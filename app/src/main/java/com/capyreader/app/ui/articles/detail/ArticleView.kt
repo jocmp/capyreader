@@ -41,6 +41,7 @@ import com.capyreader.app.preferences.ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWS
 import com.capyreader.app.preferences.ArticleVerticalSwipe.PREVIOUS_ARTICLE
 import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.articles.LocalFullContent
+import com.capyreader.app.ui.isCompact
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.capyreader.app.ui.settings.LocalSnackbarHost
@@ -124,6 +125,9 @@ fun ArticleView(
     val pinToolbars by appPreferences.readerOptions.pinToolbars.collectChangesWithDefault()
     val scrollState = rememberArticleScrollState()
     val showToolBar = pinToolbars || !scrollState.isScrollingDown
+    val compact = isCompact()
+
+    ImmersiveMode(enabled = !pinToolbars && compact)
 
     LaunchedEffect(article.id) {
         scrollState.reset()
