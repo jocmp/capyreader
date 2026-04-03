@@ -108,7 +108,7 @@
     <plurals name="refresh_hours">
         <item quantity="other">每 %d 小时</item>
     </plurals>
-    <string name="nav_headline_tags">标签</string>
+    <string name="nav_headline_folders">标签</string>
     <string name="article_share">分享文章</string>
     <string name="article_actions_open_menu">打开文章操作</string>
     <string name="settings_top_bar_title">设置</string>
@@ -119,7 +119,7 @@
     <string name="image_preview_menu_option_none">无</string>
     <string name="settings_section_refresh">上次更新</string>
     <string name="opml_import_notification_cancel">停止</string>
-    <string name="edit_feed_tags">标签</string>
+    <string name="edit_feed_folders">标签</string>
     <string name="image_preview_menu_option_small">小</string>
     <string name="theme_menu_option_light">浅色</string>
     <string name="theme_menu_option_system_default">系统默认</string>
@@ -181,7 +181,7 @@
     <string name="settings_enable_refresh_call_to_action">必须首先启用定期刷新</string>
     <string name="settings_select_none">全不选</string>
     <string name="settings_panel_notifications_title">通知</string>
-    <string name="edit_feed_tags_section">标签</string>
+    <string name="edit_feed_folders_section">标签</string>
     <string name="edit_feed_notifications_title">启用通知</string>
     <string name="notifications_permissions_disabled_call_to_action">设置</string>
     <string name="notifications_permission_disabled_title">通知权限已禁用</string>
@@ -200,7 +200,6 @@
     <string name="add_account_feedbin_signup_link_text">在这里创建一个。</string>
     <string name="add_account_freshrss_signup_prompt">没有 FreshRSS 实例？</string>
     <string name="add_account_freshrss_signup_link_text">了解更多。</string>
-    <string name="edit_feed_tag_section">添加或选择标签</string>
     <string name="add_account_freshrss_subtitle">freshrss.org</string>
     <string name="add_account_reader_subtitle">自托管的 Google Reader API</string>
     <string name="settings_gestures_reader_tap_to_page_title">轻按电子墨水屏滚动</string>
@@ -293,10 +292,10 @@
     <string name="settings_option_show_today_filter">今天</string>
     <string name="settings_section_categories">类别</string>
     <string name="auth_fields_freshrss_api_password">API 密码</string>
-    <string name="freshrss_visibility">可见性</string>
-    <string name="freshrss_visibility_option_main">主信息流</string>
+    <string name="feed_visibility">可见性</string>
+    <string name="feed_visibility_option_unread">主信息流</string>
     <string name="freshrss_visibility_option_important">重要</string>
-    <string name="freshrss_visibility_option_category">类别</string>
+    <string name="freshrss_visibility_option_folder">类别</string>
     <string name="freshrss_visibility_option_feed">订阅源</string>
     <string name="theme_mode_label">模式</string>
     <string name="audio_player_play">播放</string>

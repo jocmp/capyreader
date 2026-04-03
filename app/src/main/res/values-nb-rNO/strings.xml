@@ -24,7 +24,7 @@
     <string name="settings_remove_account_message_local">Er du sikker på at du vil slette kontoen din? Handlingen kan ikke angres.</string>
     <string name="refresh_manually_only">Kun manuell</string>
     <string name="refresh_minutes">Hvert %1$d. minutt</string>
-    <string name="nav_headline_tags">Etiketter</string>
+    <string name="nav_headline_folders">Etiketter</string>
     <string name="article_share">Del artikkel</string>
     <string name="action_mark_all_read">Marker alle som lest</string>
     <string name="mark_all_read_dialog_description">Marker alle oppføringer som lest?</string>
@@ -65,7 +65,7 @@
     <string name="settings_article_list_shorten_titles">Forkort titler</string>
     <string name="settings_section_version">Versjon</string>
     <string name="settings_option_copy_version">Kopier versjonsnummer</string>
-    <string name="edit_feed_tags">Etiketter</string>
+    <string name="edit_feed_folders">Etiketter</string>
     <string name="image_preview_label">Bildeforhåndsvisning</string>
     <string name="font_option_system_default">Systemstandard</string>
     <string name="article_font_menu_label">Skrifttype</string>
@@ -175,8 +175,7 @@
     <string name="article_vertical_swipe_full_content">Last inn fullt innhold</string>
     <string name="settings_gestures_list_back_navigation_system_back">Standard</string>
     <string name="crash_log_export_item_title">Del kræsjlogger</string>
-    <string name="edit_feed_tags_section">Etiketter</string>
-    <string name="edit_feed_tag_section">Etikett</string>
+    <string name="edit_feed_folders_section">Etiketter</string>
     <string name="settings_confirm_mark_all_read">Bekreft markering av alle som lest</string>
     <string name="article_list_row_swipe_toggle_read">Veksle lest</string>
     <string name="article_list_row_swipe_toggle_starred">Veksle stjernemerking</string>

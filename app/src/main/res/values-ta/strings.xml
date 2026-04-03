@@ -15,8 +15,6 @@
     <string name="feed_action_unsubscribe_confirm">குழுவிலகவும்</string>
     <string name="edit_feed_submit">சேமி</string>
     <string name="dialog_cancel">ரத்துசெய்</string>
-    <string name="folder_action_delete_title">குறிச்சொல்லை நீக்கு</string>
-    <string name="folder_action_edit">மறுபெயரிடுங்கள்</string>
     <string name="feed_action_unsubscribe_title">குழுவிலகவும்</string>
     <string name="settings">திறந்த அமைப்புகள்</string>
     <string name="settings_remove_account_button_service">விடுபதிகை</string>
@@ -39,7 +37,7 @@
         <item quantity="other">ஒவ்வொரு %d மணிநேரமும்</item>
     </plurals>
     <string name="refresh_feeds_menu_label">ஊட்டங்களைப் புதுப்பிக்கவும்</string>
-    <string name="nav_headline_tags">குறிச்சொற்கள்</string>
+    <string name="nav_headline_folders">குறிச்சொற்கள்</string>
     <string name="nav_headline_feeds">ஊட்டங்கள்</string>
     <string name="nav_add_feed">ஊட்டத்தைச் சேர்க்கவும்</string>
     <string name="add_feed_feed_not_error">ஊட்டத்தைக் கண்டுபிடிக்க முடியவில்லை</string>
@@ -92,7 +90,7 @@
     <string name="theme_menu_option_light">ஒளி</string>
     <string name="theme_menu_option_dark">இருண்ட</string>
     <string name="theme_menu_option_system_default">கணினி இயல்புநிலை</string>
-    <string name="edit_feed_tags">குறிச்சொற்கள்</string>
+    <string name="edit_feed_folders">குறிச்சொற்கள்</string>
     <string name="settings_option_in_app_browser">பயன்பாட்டு உலாவியில் பயன்படுத்தவும்</string>
     <string name="opml_import_notification_cancel">நிறுத்து</string>
     <string name="image_preview_menu_option_none">எதுவுமில்லை</string>
@@ -171,8 +169,7 @@
     <string name="settings_gestures_list_back_navigation_open_drawer">திறந்த வழிசெலுத்தல் அலமாரியை</string>
     <string name="crash_log_export_item_title">செயலிழப்பு பதிவுகளைப் பகிரவும்</string>
     <string name="crash_log_export_item_subtitle">டெவலப்பருடன் பகிர்ந்து கொள்ள ஒரு கோப்பில் செயலிழப்பு பதிவுகளை சேமிக்கிறது</string>
-    <string name="edit_feed_tags_section">குறிச்சொற்கள்</string>
-    <string name="edit_feed_tag_section">குறிச்சொல் சேர் அல்லது தேர்வுசெய்</string>
+    <string name="edit_feed_folders_section">குறிச்சொற்கள்</string>
     <string name="edit_feed_notifications_title">அறிவிப்புகளை இயக்கவும்</string>
     <string name="notifications_permissions_disabled_call_to_action">அமைப்புகள்</string>
     <string name="notifications_permission_disabled_title">அறிவிப்பு இசைவு முடக்கப்பட்டுள்ளது</string>
@@ -231,13 +228,13 @@
     <string name="search_bar_placeholder">தேடல்</string>
     <string name="media_save_success">படம் சேமிக்கப்பட்டது</string>
     <string name="media_save_failure">படத்தை சேமிப்பதில் தோல்வி</string>
-    <string name="tag_action_edit_success">குறிச்சொல் புதுப்பிக்கப்பட்டது</string>
-    <string name="tag_action_edit_error">குறிச்சொல்லைப் புதுப்பிப்பதில் பிழை</string>
-    <string name="delete_tag_error">குறிச்சொல்லை நீக்குவதில் பிழை</string>
-    <string name="tag_action_delete_title">நீக்கு</string>
+    <string name="folder_action_edit_success">குறிச்சொல் புதுப்பிக்கப்பட்டது</string>
+    <string name="folder_action_edit_error">குறிச்சொல்லைப் புதுப்பிப்பதில் பிழை</string>
+    <string name="delete_folder_error">குறிச்சொல்லை நீக்குவதில் பிழை</string>
+    <string name="folder_action_delete_title">நீக்கு</string>
     <string name="article_vertical_open_article_in_browser">உலாவியில் திறந்த கட்டுரை</string>
     <string name="after_read_all_behavior_label">அனைத்தையும் படித்த பிறகு</string>
-    <string name="tag_action_delete_confirm">நீக்கு</string>
+    <string name="folder_action_delete_confirm">நீக்கு</string>
     <string name="actions_copy_link">இணைப்பை நகலெடுக்கவும்</string>
     <string name="actions_share_link">இணைப்பைப் பகிரவும்</string>
     <string name="widget_receiver_headlines_title">தலைப்புச் செய்திகள்</string>
@@ -256,7 +253,7 @@
     <string name="tag_action_delete_message">\"%1$s\" என்ற குறிச்சொல்லை நீக்க விரும்புகிறீர்களா?</string>
     <string name="tag_name_title">பெயர்</string>
     <string name="widget_headlines_title">அண்மைக் கால தலைப்புச் செய்திகள்</string>
-    <string name="tag_action_edit">குறிச்சொல்லைத் திருத்து</string>
+    <string name="folder_action_edit">குறிச்சொல்லைத் திருத்து</string>
     <string name="notification_mark_as_read_action">படித்தபடி குறி</string>
     <string name="media_save">சேமி</string>
     <string name="media_share">பங்கு</string>

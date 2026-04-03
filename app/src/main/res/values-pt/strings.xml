@@ -22,7 +22,7 @@
     <string name="settings_remove_account_title_service">Sair da sessão</string>
     <string name="refresh_minutes">Cada %1$d minuto(s)</string>
     <string name="refresh_feeds_menu_label">Atualizar Feeds</string>
-    <string name="nav_headline_tags">Etiquetas</string>
+    <string name="nav_headline_folders">Etiquetas</string>
     <string name="nav_headline_saved_searches">Pesquisas</string>
     <string name="nav_headline_feeds">Feeds</string>
     <string name="nav_add_feed">Adicionar Feed</string>
@@ -37,7 +37,7 @@
     <string name="theme_menu_option_light">Claro</string>
     <string name="theme_menu_option_dark">Escuro</string>
     <string name="theme_menu_option_system_default">Padrão do sistema</string>
-    <string name="edit_feed_tags">Etiquetas</string>
+    <string name="edit_feed_folders">Etiquetas</string>
     <string name="opml_import_notification_cancel">Parar</string>
     <string name="image_preview_menu_option_medium">Médio</string>
     <string name="settings_panel_general_title">Geral</string>
@@ -208,7 +208,7 @@
     <string name="action_share">Partilhar</string>
     <string name="crash_log_export_item_title">Partilhar registos de falhas</string>
     <string name="crash_log_export_item_subtitle">Gravar registos de falhas num ficheiro para partilhar com o programador</string>
-    <string name="edit_feed_tags_section">Etiquetas</string>
+    <string name="edit_feed_folders_section">Etiquetas</string>
     <string name="edit_feed_notifications_title">Ativar notificações</string>
     <string name="notifications_permissions_disabled_call_to_action">Configurações</string>
     <string name="settings_select_none">Desmarcar Todas</string>
@@ -237,8 +237,7 @@
     <string name="after_read_all_behavior_open_next_feed">Abrir Próximo Feed</string>
     <string name="feed_nav_drawer_title">Feeds</string>
     <string name="search_bar_placeholder">Pesquisar</string>
-    <string name="delete_tag_error">Erro ao excluir etiqueta</string>
-    <string name="edit_feed_tag_section">Adicionar ou Selecionar Etiqueta</string>
+    <string name="delete_folder_error">Erro ao excluir etiqueta</string>
     <string name="settings_options_reader_pin_top_toolbar">Fixar no topo a barra de ferramentas</string>
     <plurals name="refresh_hours">
         <item quantity="one">A cada hora</item>
@@ -252,10 +251,9 @@
     <string name="tag_action_delete_message">Você têm certeza que quer exluir a etiqueta \"%1$s\"?</string>
     <string name="tag_action_delete_title">Excluir</string>
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">Navegar para Pai</string>
-    <string name="tag_action_delete_confirm">Excluir</string>
-    <string name="tag_action_edit_success">Etiqueta atualizada</string>
-    <string name="tag_action_edit_error">Erro ao atualizar etiqueta</string>
-    <string name="tag_action_edit">Editar etiqueta</string>
+    <string name="folder_action_delete_confirm">Excluir</string>
+    <string name="folder_action_edit_success">Etiqueta atualizada</string>
+    <string name="folder_action_edit_error">Erro ao atualizar etiqueta</string>
     <string name="actions_copy_link">Copiar link</string>
     <string name="settings_gestures_improve_talkback_title">Melhorar o TalkBack</string>
     <string name="settings_gestures_improve_talkback_subtitle">Desativa algumas configurações para melhorar o TalkBack text-to-speech</string>
@@ -264,7 +262,7 @@
     <string name="widget_headlines_see_more_button">Ver mais artigos</string>
     <string name="widget_headlines_title">Títulos mais recentes</string>
     <string name="actions_share_link">Compartilhar link</string>
-    <string name="tag_name_title">Nome</string>
+    <string name="folder_name_title">Nome</string>
     <string name="add_account_miniflux_signup_link_text">Saiba mais.</string>
     <string name="add_account_miniflux_signup_prompt">Não tem uma instância do Miniflux?</string>
     <string name="settings_article_list_shorten_titles">Encurtar títulos</string>
@@ -292,10 +290,10 @@
     <string name="freshrss_nav_headline_categories">Categorias</string>
     <string name="theme_mode_label">Modo</string>
     <string name="article_list_empty">Nada aqui</string>
-    <string name="freshrss_visibility">Visibilidade</string>
-    <string name="freshrss_visibility_option_main">Principal</string>
+    <string name="feed_visibility">Visibilidade</string>
+    <string name="feed_visibility_option_unread">Principal</string>
     <string name="freshrss_visibility_option_important">Importante</string>
-    <string name="freshrss_visibility_option_category">Categoria</string>
+    <string name="freshrss_visibility_option_folder">Categoria</string>
     <string name="freshrss_visibility_option_feed">Feed</string>
     <string name="audio_player_play">Tocar</string>
     <string name="audio_player_pause">Pausar</string>

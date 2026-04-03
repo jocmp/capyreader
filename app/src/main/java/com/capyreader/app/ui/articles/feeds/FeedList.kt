@@ -36,7 +36,6 @@ import com.capyreader.app.ui.articles.CountBadge
 import com.capyreader.app.ui.articles.ListTitle
 import com.capyreader.app.ui.articles.SavedSearchRow
 import com.capyreader.app.ui.fixtures.PreviewKoinApplication
-import com.capyreader.app.ui.folderNavTitle
 import com.capyreader.app.ui.savedSearchNavTitle
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.ArticleFilter
@@ -215,7 +214,7 @@ fun FeedList(
                 FeedListDivider()
                 FeedGroupList(
                     type = FeedGroup.FOLDERS,
-                    title = stringResource(source.folderNavTitle)
+                    title = stringResource(R.string.nav_headline_folders)
                 ) {
                     folders.forEach { folder ->
                         FolderRow(

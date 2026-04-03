@@ -30,7 +30,7 @@
         <item quantity="other">Κάθε %d ώρες</item>
     </plurals>
     <string name="refresh_feeds_menu_label">Ανανέωση Ροών</string>
-    <string name="nav_headline_tags">Ετικέτες</string>
+    <string name="nav_headline_folders">Ετικέτες</string>
     <string name="nav_headline_saved_searches">Αναζητήσεις</string>
     <string name="nav_headline_feeds">Ροές</string>
     <string name="nav_add_feed">Προσθήκη Ροής</string>
@@ -57,7 +57,7 @@
     <string name="add_feed_success">Προστέθηκε ροή</string>
     <string name="filter_all">Όλα</string>
     <string name="relative_time_minutes">%1$dλ</string>
-    <string name="delete_tag_error">Σφάλμα διαγραφής ετικέτας</string>
+    <string name="delete_folder_error">Σφάλμα διαγραφής ετικέτας</string>
     <string name="account_source_feedbin">Feedbin</string>
     <string name="auth_fields_hide_password">Απόκρυψη κωδικού</string>
     <string name="auth_fields_log_in_button">Σύνδεση</string>
@@ -127,7 +127,7 @@
     <string name="theme_menu_option_light">Φωτεινό</string>
     <string name="theme_menu_option_dark">Σκοτεινό</string>
     <string name="theme_menu_option_system_default">Προεπιλογή συστήματος</string>
-    <string name="edit_feed_tags">Ετικέτες</string>
+    <string name="edit_feed_folders">Ετικέτες</string>
     <string name="settings_option_in_app_browser">Χρήση περιηγητή εντός εφαρμογής</string>
     <string name="opml_import_notification_cancel">Διακοπή</string>
     <string name="image_preview_menu_option_none">Καμία</string>
@@ -207,8 +207,7 @@
     <string name="action_share">Κοινοποίηση</string>
     <string name="crash_log_export_item_title">Κοινοποίηση καταγραφής σφαλμάτων</string>
     <string name="crash_log_export_item_subtitle">Αποθηκεύει αρχεία καταγραφής σε ένα αρχείο για να τα κοινοποιήσεις με τον προγραμματιστή</string>
-    <string name="edit_feed_tags_section">Ετικέτες</string>
-    <string name="edit_feed_tag_section">Προσθήκη ή Επιλογή Ετικέτας</string>
+    <string name="edit_feed_folders_section">Ετικέτες</string>
     <string name="edit_feed_notifications_title">Ενεργοποίηση ειδοποιήσεων</string>
     <string name="notifications_permissions_disabled_call_to_action">Ρυθμίσεις</string>
     <string name="notifications_permission_disabled_title">Η άδεια ειδοποιήσεων είναι ανενεργή</string>
@@ -257,11 +256,10 @@
     <string name="widget_headlines_account_error">Πρόσθεσε ένα λογαριασμό πρώτα</string>
     <string name="settings_gestures_improve_talkback_title">Βελτίωση TalkBack</string>
     <string name="settings_gestures_improve_talkback_subtitle">Απενεργοποιεί κάποιες ρυθμίσεις για βελτίωση του κειμένου σε ομιλία TalkBack</string>
-    <string name="tag_action_delete_confirm">Διαγραφή</string>
-    <string name="tag_name_title">\'Ονομα</string>
-    <string name="tag_action_edit_success">Ετικέτα ενημερώθηκε</string>
-    <string name="tag_action_edit_error">Σφάλμα ενημέρωσης ετικέτας</string>
-    <string name="tag_action_edit">Επεξεργασία Ετικέτας</string>
+    <string name="folder_action_delete_confirm">Διαγραφή</string>
+    <string name="folder_name_title">\'Ονομα</string>
+    <string name="folder_action_edit_success">Ετικέτα ενημερώθηκε</string>
+    <string name="folder_action_edit_error">Σφάλμα ενημέρωσης ετικέτας</string>
     <string name="actions_copy_link">Αντιγραφή συνδέσμου</string>
     <string name="actions_share_link">Κοινοποίηση συνδέσμου</string>
     <string name="widget_receiver_headlines_title">Επικεφαλίδες</string>
@@ -286,10 +284,10 @@
     <string name="settings_section_categories">Κατηγορίες</string>
     <string name="settings_option_show_today_filter">Σήμερα</string>
     <string name="auth_fields_freshrss_api_password">Κωδικός API</string>
-    <string name="freshrss_visibility">Ορατότητα</string>
-    <string name="freshrss_visibility_option_main">Κύρια Ροή</string>
+    <string name="feed_visibility">Ορατότητα</string>
+    <string name="feed_visibility_option_unread">Κύρια Ροή</string>
     <string name="freshrss_visibility_option_important">Σημαντικό</string>
-    <string name="freshrss_visibility_option_category">Κατηγορία</string>
+    <string name="freshrss_visibility_option_folder">Κατηγορία</string>
     <string name="freshrss_visibility_option_feed">Ροή</string>
     <string name="freshrss_nav_headline_categories">Κατηγορίες</string>
     <string name="theme_mode_label">Λειτουργία</string>

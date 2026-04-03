@@ -104,7 +104,7 @@
     <string name="opml_import_toast_failed">A importación fallou</string>
     <string name="theme_menu_label">Decorado</string>
     <string name="theme_menu_option_system_default">Seguir ao sistema</string>
-    <string name="edit_feed_tags">Etiquetas</string>
+    <string name="edit_feed_folders">Etiquetas</string>
     <string name="image_preview_menu_option_small">Pequena</string>
     <string name="image_preview_menu_option_large">Grande</string>
     <string name="image_preview_label">Vista previa de imaxes</string>
@@ -168,8 +168,7 @@
     <string name="action_share">Compartir</string>
     <string name="crash_log_export_item_title">Compartir informe de fallos</string>
     <string name="crash_log_export_item_subtitle">Garda un informe do fallo nun ficheiro para compartilo coas desenvolvedoras</string>
-    <string name="edit_feed_tags_section">Etiquetas</string>
-    <string name="edit_feed_tag_section">Engadir ou seleccionar etiqueta</string>
+    <string name="edit_feed_folders_section">Etiquetas</string>
     <string name="edit_feed_notifications_title">Activar notificacións</string>
     <string name="settings_enable_refresh_call_to_action">Primeiro debes activar a actualización periódica</string>
     <string name="settings_select_none">Sen selección</string>
@@ -192,7 +191,7 @@
     <string name="settings_section_import">Importar</string>
     <string name="dialog_cancel">Desbotar</string>
     <string name="article_view_unstar">Retirar estrela</string>
-    <string name="nav_headline_tags">Etiquetas</string>
+    <string name="nav_headline_folders">Etiquetas</string>
     <string name="add_feed_feed_not_error">Non se atopou a canle</string>
     <string name="auth_fields_show_password">Mostrar contrasinal</string>
     <string name="settings_remove_account_message_local">Tes certeza de querer eliminar a túa conta? Non haberá volta atrás.</string>
@@ -286,10 +285,10 @@
     <string name="settings_section_categories">Categorías</string>
     <string name="settings_option_show_today_filter">Hoxe</string>
     <string name="auth_fields_freshrss_api_password">Contrasinal da API</string>
-    <string name="freshrss_visibility">Visibilidade</string>
-    <string name="freshrss_visibility_option_main">Cronoloxía principal</string>
+    <string name="feed_visibility">Visibilidade</string>
+    <string name="feed_visibility_option_unread">Cronoloxía principal</string>
     <string name="freshrss_visibility_option_important">Importante</string>
-    <string name="freshrss_visibility_option_category">Categoría</string>
+    <string name="freshrss_visibility_option_folder">Categoría</string>
     <string name="freshrss_visibility_option_feed">Cronoloxía</string>
     <string name="theme_mode_label">Modo</string>
     <string name="settings_section_experimental">Experimental</string>

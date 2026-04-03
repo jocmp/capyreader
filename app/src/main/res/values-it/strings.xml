@@ -19,7 +19,7 @@
     <string name="dialog_cancel">Annulla</string>
     <string name="settings_remove_account_confirm_local">Conferma</string>
     <string name="account_settings_save_name">Nome salvato</string>
-    <string name="nav_headline_tags">Tag</string>
+    <string name="nav_headline_folders">Tag</string>
     <string name="nav_headline_feeds">Feed</string>
     <string name="settings_remove_account_message_local">Vuoi davvero eliminare il tuo account? Non è possibile annullare questa operazione.</string>
     <string name="add_feed_network_error">Impossibile trovare il feed. Controllare la connessione.</string>
@@ -59,7 +59,7 @@
     <string name="theme_menu_option_light">Chiaro</string>
     <string name="theme_menu_option_dark">Scuro</string>
     <string name="theme_menu_option_system_default">Predefinito dal sistema</string>
-    <string name="edit_feed_tags">Tag</string>
+    <string name="edit_feed_folders">Tag</string>
     <string name="settings_option_in_app_browser">Usa il browser in-app</string>
     <string name="opml_import_notification_cancel">Stop</string>
     <string name="image_preview_menu_option_none">Nessuna</string>
@@ -186,7 +186,7 @@
     <string name="notifications_channel_title_feed_update">Aggiornamento dei feed</string>
     <string name="settings_panel_notifications_title">Notifiche</string>
     <string name="notifications_permission_disabled_title">Le notifiche sono disabilitate</string>
-    <string name="edit_feed_tags_section">Tag</string>
+    <string name="edit_feed_folders_section">Tag</string>
     <string name="notifications_permissions_disabled_call_to_action">Impostazioni</string>
     <string name="article_list_row_swipe_open_externally">Apri l\'articolo nel browser</string>
     <string name="article_view_open_externally">Apri esternamente</string>
@@ -202,7 +202,6 @@
     <string name="add_account_feedbin_signup_prompt">Non hai un account Feedbin?</string>
     <string name="add_account_feedbin_signup_link_text">Creane uno qui.</string>
     <string name="add_account_freshrss_signup_prompt">Non hai un\'istanza FreshRSS?</string>
-    <string name="edit_feed_tag_section">Aggiungi o Seleziona Tag</string>
     <string name="add_account_feedbin_subtitle">feedbin.com</string>
     <string name="add_account_freshrss_signup_link_text">Per saperne di più.</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Tocca gli angoli inferiori per navigare nel contenuto dell\'articolo</string>
@@ -295,10 +294,10 @@
     <string name="settings_section_categories">Categorie</string>
     <string name="settings_option_show_today_filter">Oggi</string>
     <string name="auth_fields_freshrss_api_password">Password API</string>
-    <string name="freshrss_visibility">Visibilità</string>
-    <string name="freshrss_visibility_option_main">Flusso principale</string>
+    <string name="feed_visibility">Visibilità</string>
+    <string name="feed_visibility_option_unread">Flusso principale</string>
     <string name="freshrss_visibility_option_important">Importante</string>
-    <string name="freshrss_visibility_option_category">Categoria</string>
+    <string name="freshrss_visibility_option_folder">Categoria</string>
     <string name="freshrss_visibility_option_feed">Feed</string>
     <string name="theme_mode_label">Modalità</string>
     <string name="audio_player_play">Riproduci</string>
