@@ -15,6 +15,6 @@
     <string name="feed_action_edit">Edita el canal</string>
     <string name="feed_action_reload_icon">Icona de recarregar</string>
     <string name="feed_action_unsubscribe_message">Esteu segur que voleu cancel·lar la subscripció de \"%1$s\"?</string>
-    <string name="feed_action_unsubscribe_confirm">Cancel.la la subscripció</string>
+    <string name="feed_action_unsubscribe_confirm">Cancel·la la subscripció</string>
     <string name="edit_feed_submit">Desa</string>
 </resources>
