@@ -1,21 +1,20 @@
-#!/bin/bash
+#!/usr/bin/env ruby
+# frozen_string_literal: true
 
-# Function to fetch config and extract BID
-fetch_bid() {
-    local result
-    result=$(bumpver show -n --environ)
+require "fileutils"
+require "yaml"
 
-    echo "$result" | grep "^BID=" | cut -d'=' -f2
-}
+config = YAML.load_file(File.join(__dir__, "..", "bumpver.yml"))
+version = config["current_version"]
+build = version.match(/\d{4}\.\d{2}\.(\d+)/)[1].to_i
+next_build = build + 1
 
-build=$(fetch_bid)
-next_build=$((build + 1))
+path = "fastlane/metadata/android/en-US/changelogs/#{next_build}.txt"
+full_path = File.join(__dir__, "..", path)
 
-path="fastlane/metadata/android/en-US/changelogs/${next_build}.txt"
+FileUtils.touch(full_path)
 
-touch "./${path}"
+puts "Added changelog for next build (#{next_build})"
+puts "./#{path}"
 
-echo "Added changelog for next build (${next_build})"
-echo "./${path}"
-
-exec code "$path"
+exec("code", full_path)
