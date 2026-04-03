@@ -101,6 +101,8 @@ import org.koin.compose.koinInject
 fun ArticleScreen(
     viewModel: ArticleScreenViewModel = koinViewModel(),
     appPreferences: AppPreferences = koinInject(),
+    pendingArticleID: String? = null,
+    onPendingArticleSelected: () -> Unit = {},
     onNavigateToSettings: () -> Unit,
 ) {
     val feeds by viewModel.topLevelFeeds.collectAsStateWithLifecycle(initialValue = emptyList())
@@ -463,8 +465,10 @@ fun ArticleScreen(
             }
         }
 
-        ArticleHandler(article) { articleID ->
-            selectArticle(articleID)
+        LaunchedEffect(pendingArticleID) {
+            val id = pendingArticleID ?: return@LaunchedEffect
+            onPendingArticleSelected()
+            selectArticle(id)
         }
 
         ArticleScaffold(
