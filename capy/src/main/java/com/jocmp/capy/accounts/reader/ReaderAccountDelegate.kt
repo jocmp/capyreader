@@ -518,7 +518,7 @@ internal class ReaderAccountDelegate(
                     val enclosureType = enclosures.firstOrNull()?.type
 
                     database.articlesQueries.create(
-                        id = item.hexID,
+                        external_id = item.hexID,
                         feed_id = item.origin.streamId,
                         title = item.title,
                         author = item.author,

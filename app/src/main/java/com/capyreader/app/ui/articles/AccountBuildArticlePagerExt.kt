@@ -13,11 +13,13 @@ fun Account.buildArticlePager(
     query: String? = null,
     sortOrder: SortOrder = SortOrder.NEWEST_FIRST,
     since: OffsetDateTime = OffsetDateTime.now()
-): Pager<Int, Article> {
+): Pager<Long, Article> {
+    val pageSize = 100
+
     return Pager(
         config = PagingConfig(
-            pageSize = 100,
-            prefetchDistance = 10,
+            pageSize = pageSize,
+            initialLoadSize = pageSize,
         ),
         pagingSourceFactory = {
             ArticlePagerFactory(database).findArticles(

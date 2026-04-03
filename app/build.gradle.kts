@@ -156,6 +156,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.okhttp.client)
+    implementation(libs.requery.sqlite.android)
     implementation(libs.sqldelight.android.driver)
     implementation(libs.sqldelight.androidx.paging.extensions)
     implementation(libs.zoomable)

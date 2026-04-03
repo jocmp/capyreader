@@ -92,7 +92,6 @@ import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
@@ -251,14 +250,15 @@ fun ArticleScreen(
             }
         }
 
-        LaunchedEffect(listState) {
-            snapshotFlow { listState.layoutInfo.totalItemsCount }
-                .drop(if (enableMarkReadOnScroll) 0 else 1)
-                .distinctUntilChanged()
-                .collect {
-                    listState.scrollToItem(0)
-                    resetScrollBehaviorOffset()
-                }
+        if (enableMarkReadOnScroll) {
+            LaunchedEffect(listState) {
+                snapshotFlow { listState.layoutInfo.totalItemsCount }
+                    .distinctUntilChanged()
+                    .collect {
+                        listState.scrollToItem(0)
+                        resetScrollBehaviorOffset()
+                    }
+            }
         }
 
         val (scrolledFilter, setScrolledFilter) = rememberSaveable(

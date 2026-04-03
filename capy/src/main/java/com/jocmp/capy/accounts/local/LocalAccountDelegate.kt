@@ -254,7 +254,7 @@ internal class LocalAccountDelegate(
                     val enclosureType = parsedItem.enclosures.firstOrNull()?.type
 
                     database.articlesQueries.create(
-                        id = parsedItem.id,
+                        external_id = parsedItem.id,
                         feed_id = feed.id,
                         title = parsedItem.title,
                         author = item.author,

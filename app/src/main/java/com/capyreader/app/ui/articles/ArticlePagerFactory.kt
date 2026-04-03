@@ -19,7 +19,7 @@ class ArticlePagerFactory(private val database: Database) {
         query: String?,
         sortOrder: SortOrder,
         since: OffsetDateTime
-    ): PagingSource<Int, Article> {
+    ): PagingSource<Long, Article> {
         return when (filter) {
             is ArticleFilter.Articles -> articleSource(filter, query, sortOrder, since)
             is ArticleFilter.Feeds -> feedSource(filter, query, sortOrder, since)
@@ -34,23 +34,28 @@ class ArticlePagerFactory(private val database: Database) {
         query: String?,
         sortOrder: SortOrder,
         since: OffsetDateTime
-    ): PagingSource<Int, Article> {
+    ): PagingSource<Long, Article> {
         return QueryPagingSource(
-            countQuery = articles.byStatus.count(
-                status = filter.status,
-                query = query,
-                since = since
-            ),
             transacter = database.articlesQueries,
             context = Dispatchers.IO,
-            queryProvider = { limit, offset ->
-                articles.byStatus.all(
+            pageBoundariesProvider = { anchor, limit ->
+                articles.byStatus.pageBoundaries(
                     status = filter.status,
                     query = query,
                     since = since,
-                    limit = limit,
                     sortOrder = sortOrder,
-                    offset = offset,
+                    anchor = anchor,
+                    limit = limit,
+                )
+            },
+            queryProvider = { beginInclusive, endExclusive ->
+                articles.byStatus.keyed(
+                    status = filter.status,
+                    query = query,
+                    since = since,
+                    sortOrder = sortOrder,
+                    beginInclusive = beginInclusive,
+                    endExclusive = endExclusive,
                 )
             }
         )
@@ -61,7 +66,7 @@ class ArticlePagerFactory(private val database: Database) {
         query: String?,
         sortOrder: SortOrder,
         since: OffsetDateTime,
-    ): PagingSource<Int, Article> {
+    ): PagingSource<Long, Article> {
         val feedIDs = listOf(filter.feedID)
 
         return feedsSource(
@@ -79,7 +84,7 @@ class ArticlePagerFactory(private val database: Database) {
         query: String?,
         sortOrder: SortOrder,
         since: OffsetDateTime
-    ): PagingSource<Int, Article> {
+    ): PagingSource<Long, Article> {
         val feedIDs = database
             .taggingsQueries
             .findFeedIDs(folderTitle = filter.folderTitle)
@@ -102,27 +107,32 @@ class ArticlePagerFactory(private val database: Database) {
         sortOrder: SortOrder,
         priority: FeedPriority,
         since: OffsetDateTime
-    ): PagingSource<Int, Article> {
+    ): PagingSource<Long, Article> {
         return QueryPagingSource(
-            countQuery = articles.byFeed.count(
-                feedIDs = feedIDs,
-                status = filter.status,
-                query = query,
-                since = since,
-                priority = priority,
-            ),
             transacter = database.articlesQueries,
             context = Dispatchers.IO,
-            queryProvider = { limit, offset ->
-                articles.byFeed.all(
+            pageBoundariesProvider = { anchor, limit ->
+                articles.byFeed.pageBoundaries(
                     feedIDs = feedIDs,
                     status = filter.status,
                     query = query,
                     since = since,
-                    limit = limit,
                     sortOrder = sortOrder,
-                    offset = offset,
                     priority = priority,
+                    anchor = anchor,
+                    limit = limit,
+                )
+            },
+            queryProvider = { beginInclusive, endExclusive ->
+                articles.byFeed.keyed(
+                    feedIDs = feedIDs,
+                    status = filter.status,
+                    query = query,
+                    since = since,
+                    sortOrder = sortOrder,
+                    priority = priority,
+                    beginInclusive = beginInclusive,
+                    endExclusive = endExclusive,
                 )
             }
         )
@@ -133,25 +143,30 @@ class ArticlePagerFactory(private val database: Database) {
         query: String?,
         sortOrder: SortOrder,
         since: OffsetDateTime
-    ): PagingSource<Int, Article> {
+    ): PagingSource<Long, Article> {
         return QueryPagingSource(
-            countQuery = articles.bySavedSearch.count(
-                savedSearchID = filter.savedSearchID,
-                status = filter.status,
-                query = query,
-                since = since
-            ),
             transacter = database.articlesQueries,
             context = Dispatchers.IO,
-            queryProvider = { limit, offset ->
-                articles.bySavedSearch.all(
+            pageBoundariesProvider = { anchor, limit ->
+                articles.bySavedSearch.pageBoundaries(
                     savedSearchID = filter.savedSearchID,
                     status = filter.status,
                     query = query,
                     since = since,
-                    limit = limit,
                     sortOrder = sortOrder,
-                    offset = offset,
+                    anchor = anchor,
+                    limit = limit,
+                )
+            },
+            queryProvider = { beginInclusive, endExclusive ->
+                articles.bySavedSearch.keyed(
+                    savedSearchID = filter.savedSearchID,
+                    status = filter.status,
+                    query = query,
+                    since = since,
+                    sortOrder = sortOrder,
+                    beginInclusive = beginInclusive,
+                    endExclusive = endExclusive,
                 )
             }
         )
@@ -162,23 +177,28 @@ class ArticlePagerFactory(private val database: Database) {
         query: String?,
         sortOrder: SortOrder,
         since: OffsetDateTime
-    ): PagingSource<Int, Article> {
+    ): PagingSource<Long, Article> {
         return QueryPagingSource(
-            countQuery = articles.byToday.count(
-                status = filter.status,
-                query = query,
-                since = since
-            ),
             transacter = database.articlesQueries,
             context = Dispatchers.IO,
-            queryProvider = { limit, offset ->
-                articles.byToday.all(
+            pageBoundariesProvider = { anchor, limit ->
+                articles.byToday.pageBoundaries(
                     status = filter.status,
                     query = query,
-                    limit = limit,
-                    sortOrder = sortOrder,
-                    offset = offset,
                     since = since,
+                    sortOrder = sortOrder,
+                    anchor = anchor,
+                    limit = limit,
+                )
+            },
+            queryProvider = { beginInclusive, endExclusive ->
+                articles.byToday.keyed(
+                    status = filter.status,
+                    query = query,
+                    sortOrder = sortOrder,
+                    since = since,
+                    beginInclusive = beginInclusive,
+                    endExclusive = endExclusive,
                 )
             }
         )

@@ -49,6 +49,80 @@ class ByArticleStatus(private val database: Database) {
         }
     }
 
+    fun keyed(
+        status: ArticleStatus,
+        query: String? = null,
+        sortOrder: SortOrder,
+        since: OffsetDateTime? = null,
+        beginInclusive: Long,
+        endExclusive: Long?,
+    ): Query<Article> {
+        val (read, starred) = status.toStatusPair
+        val queries = database.articlesByStatusQueries
+
+        return if (isNewestFirst(sortOrder)) {
+            queries.keyedNewestFirst(
+                beginInclusive = beginInclusive,
+                endExclusive = endExclusive,
+                read = read,
+                starred = starred,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
+                publishedSince = null,
+                query = query,
+                mapper = ::listMapper
+            )
+        } else {
+            queries.keyedOldestFirst(
+                beginInclusive = beginInclusive,
+                endExclusive = endExclusive,
+                read = read,
+                starred = starred,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
+                publishedSince = null,
+                query = query,
+                mapper = ::listMapper
+            )
+        }
+    }
+
+    fun pageBoundaries(
+        status: ArticleStatus,
+        query: String? = null,
+        sortOrder: SortOrder,
+        since: OffsetDateTime? = null,
+        anchor: Long?,
+        limit: Long,
+    ): Query<Long> {
+        val (read, starred) = status.toStatusPair
+        val queries = database.articlesByStatusQueries
+
+        return if (isNewestFirst(sortOrder)) {
+            queries.pageBoundariesNewestFirst(
+                limit = limit,
+                anchor = anchor,
+                read = read,
+                starred = starred,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
+                publishedSince = null,
+                query = query,
+            )
+        } else {
+            queries.pageBoundariesOldestFirst(
+                limit = limit,
+                anchor = anchor,
+                read = read,
+                starred = starred,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
+                publishedSince = null,
+                query = query,
+            )
+        }
+    }
+
     fun unreadArticleIDs(
         status: ArticleStatus,
         range: MarkRead,

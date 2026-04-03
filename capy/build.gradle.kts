@@ -19,7 +19,7 @@ sqldelight {
             packageName.set("com.jocmp.capy.db")
             verifyMigrations.set(true)
             deriveSchemaFromMigrations.set(true)
-            dialect("app.cash.sqldelight:sqlite-3-25-dialect:$sqldelightVersion")
+            dialect("app.cash.sqldelight:sqlite-3-35-dialect:$sqldelightVersion")
         }
     }
 }

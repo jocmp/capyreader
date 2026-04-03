@@ -90,29 +90,34 @@ suspend fun commandSelectProfile(account: Account) {
     val total = account.countAllByStatus(ArticleStatus.ALL).first()
 
     val (pageCount, pageDuration) = measureTimedValue {
-        var offset = 0L
-        var pages = 0
+        val boundaries = records.byStatus.pageBoundaries(
+            status = ArticleStatus.ALL,
+            sortOrder = SortOrder.NEWEST_FIRST,
+            anchor = null,
+            limit = pageSize,
+        ).executeAsList()
 
-        while (offset < total) {
-            records.byStatus.all(
+        var pages = 0
+        boundaries.forEachIndexed { index, beginInclusive ->
+            val endExclusive = boundaries.getOrNull(index + 1)
+            records.byStatus.keyed(
                 status = ArticleStatus.ALL,
-                limit = pageSize,
-                offset = offset,
                 sortOrder = SortOrder.NEWEST_FIRST,
+                beginInclusive = beginInclusive,
+                endExclusive = endExclusive,
             ).executeAsList()
-            offset += pageSize
             pages++
         }
 
         pages
     }
 
-    val firstArticleID = records.byStatus.all(
+    val firstArticleID = records.byStatus.keyed(
         status = ArticleStatus.ALL,
-        limit = 1,
-        offset = 0,
         sortOrder = SortOrder.NEWEST_FIRST,
-    ).executeAsOneOrNull()?.id
+        beginInclusive = Long.MAX_VALUE,
+        endExclusive = null,
+    ).executeAsList().firstOrNull()?.id
 
     val (_, findDuration) = measureTimedValue {
         if (firstArticleID != null) {

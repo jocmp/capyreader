@@ -53,6 +53,86 @@ class BySavedSearch(private val database: Database) {
         }
     }
 
+    fun keyed(
+        savedSearchID: String,
+        status: ArticleStatus,
+        query: String? = null,
+        since: OffsetDateTime,
+        sortOrder: SortOrder,
+        beginInclusive: Long,
+        endExclusive: Long?,
+    ): Query<Article> {
+        val (read, starred) = status.toStatusPair
+        val queries = database.articlesBySavedSearchQueries
+
+        return if (isDescendingOrder(sortOrder)) {
+            queries.keyedNewestFirst(
+                beginInclusive = beginInclusive,
+                endExclusive = endExclusive,
+                savedSearchID = savedSearchID,
+                query = query,
+                read = read,
+                starred = starred,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
+                publishedSince = null,
+                mapper = ::listMapper
+            )
+        } else {
+            queries.keyedOldestFirst(
+                beginInclusive = beginInclusive,
+                endExclusive = endExclusive,
+                savedSearchID = savedSearchID,
+                query = query,
+                read = read,
+                starred = starred,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
+                publishedSince = null,
+                mapper = ::listMapper
+            )
+        }
+    }
+
+    fun pageBoundaries(
+        savedSearchID: String,
+        status: ArticleStatus,
+        query: String? = null,
+        since: OffsetDateTime,
+        sortOrder: SortOrder,
+        anchor: Long?,
+        limit: Long,
+    ): Query<Long> {
+        val (read, starred) = status.toStatusPair
+        val queries = database.articlesBySavedSearchQueries
+
+        return if (isDescendingOrder(sortOrder)) {
+            queries.pageBoundariesNewestFirst(
+                limit = limit,
+                anchor = anchor,
+                savedSearchID = savedSearchID,
+                query = query,
+                read = read,
+                starred = starred,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
+                publishedSince = null,
+            )
+        } else {
+            queries.pageBoundariesOldestFirst(
+                limit = limit,
+                anchor = anchor,
+                savedSearchID = savedSearchID,
+                query = query,
+                read = read,
+                starred = starred,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
+                publishedSince = null,
+            )
+        }
+    }
+
     fun unreadArticleIDs(
         status: ArticleStatus,
         savedSearchID: String,
