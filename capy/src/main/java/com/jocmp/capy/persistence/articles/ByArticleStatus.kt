@@ -130,12 +130,12 @@ class ByArticleStatus(private val database: Database) {
         query: String?,
     ): Query<String> {
         val (_, starred) = status.toStatusPair
-        val (afterArticleID, beforeArticleID) = range.toPair
+        val (afterSnowflakeID, beforeSnowflakeID) = range.toPair
 
         return database.articlesByStatusQueries.findArticleIDs(
             starred = starred,
-            afterArticleID = afterArticleID,
-            beforeArticleID = beforeArticleID,
+            afterSnowflakeID = afterSnowflakeID,
+            beforeSnowflakeID = beforeSnowflakeID,
             publishedSince = null,
             newestFirst = isNewestFirst(sortOrder),
             query = query,

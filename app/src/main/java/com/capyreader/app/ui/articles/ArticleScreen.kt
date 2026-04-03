@@ -28,7 +28,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -91,7 +90,6 @@ import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
@@ -252,12 +250,12 @@ fun ArticleScreen(
 
         if (enableMarkReadOnScroll) {
             LaunchedEffect(listState) {
-                snapshotFlow { listState.layoutInfo.totalItemsCount }
-                    .distinctUntilChanged()
-                    .collect {
-                        listState.scrollToItem(0)
-                        resetScrollBehaviorOffset()
-                    }
+//                snapshotFlow { listState.layoutInfo.totalItemsCount }
+//                    .distinctUntilChanged()
+//                    .collect {
+//                        listState.scrollToItem(0)
+//                        resetScrollBehaviorOffset()
+//                    }
             }
         }
 

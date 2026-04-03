@@ -9,6 +9,7 @@ SELECT
   articles.image_url,
   articles.published_at,
   articles.enclosure_type,
+  articles.snowflake_id,
   feeds.title AS feed_title,
   feeds.favicon_url,
   feeds.open_articles_in_browser,
@@ -38,6 +39,7 @@ SELECT
   articles.image_url,
   articles.published_at,
   articles.enclosure_type,
+  articles.snowflake_id,
   feeds.title AS feed_title,
   feeds.favicon_url,
   feeds.open_articles_in_browser,
@@ -67,6 +69,7 @@ SELECT
   articles.image_url,
   articles.published_at,
   articles.enclosure_type,
+  articles.snowflake_id,
   feeds.title AS feed_title,
   feeds.favicon_url,
   feeds.open_articles_in_browser,
@@ -97,6 +100,7 @@ SELECT
   articles.image_url,
   articles.published_at,
   articles.enclosure_type,
+  articles.snowflake_id,
   feeds.title AS feed_title,
   feeds.favicon_url,
   feeds.open_articles_in_browser,
@@ -184,16 +188,16 @@ AND (:query IS NULL OR articles.title LIKE '%' || :query || '%' OR articles.summ
 AND articles.feed_id IN :feedIDs
 AND (feeds.priority IN :priorities OR feeds.priority IS NULL)
 AND (
-    :afterArticleID IS NULL
+    :afterSnowflakeID IS NULL
     OR CASE WHEN :newestFirst
-        THEN articles.snowflake_id >= (SELECT snowflake_id FROM articles WHERE external_id = :afterArticleID)
-        ELSE articles.snowflake_id <= (SELECT snowflake_id FROM articles WHERE external_id = :afterArticleID)
+        THEN articles.snowflake_id >= :afterSnowflakeID
+        ELSE articles.snowflake_id <= :afterSnowflakeID
     END
 )
 AND (
-    :beforeArticleID IS NULL
+    :beforeSnowflakeID IS NULL
     OR CASE WHEN :newestFirst
-        THEN articles.snowflake_id <= (SELECT snowflake_id FROM articles WHERE external_id = :beforeArticleID)
-        ELSE articles.snowflake_id >= (SELECT snowflake_id FROM articles WHERE external_id = :beforeArticleID)
+        THEN articles.snowflake_id <= :beforeSnowflakeID
+        ELSE articles.snowflake_id >= :beforeSnowflakeID
     END
 );

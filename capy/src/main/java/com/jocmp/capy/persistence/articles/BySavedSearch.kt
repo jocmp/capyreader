@@ -142,13 +142,13 @@ class BySavedSearch(private val database: Database) {
     ): Query<String> {
         val (_, starred) = status.toStatusPair
 
-        val (afterArticleID, beforeArticleID) = range.toPair
+        val (afterSnowflakeID, beforeSnowflakeID) = range.toPair
 
         return database.articlesBySavedSearchQueries.findArticleIDs(
             savedSearchID = savedSearchID,
             starred = starred,
-            afterArticleID = afterArticleID,
-            beforeArticleID = beforeArticleID,
+            afterSnowflakeID = afterSnowflakeID,
+            beforeSnowflakeID = beforeSnowflakeID,
             publishedSince = null,
             newestFirst = isNewestFirst(sortOrder),
             query = query,

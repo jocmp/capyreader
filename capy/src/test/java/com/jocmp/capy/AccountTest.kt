@@ -98,7 +98,7 @@ class AccountTest {
         val articleFixture = ArticleFixture(account.database)
         val time = nowUTC().minusMonths(1)
 
-        val unreadArticleIDs = 3
+        val unreadArticles = 3
             .repeated { offset ->
                 articleFixture.create(
                     id = "id:${offset + 1}",
@@ -106,16 +106,15 @@ class AccountTest {
                     publishedAt = time.minusDays(offset.toLong()).toEpochSecond()
                 )
             }
-            .map { it.id }
 
         val ids = account.unreadArticleIDs(
             filter = ArticleFilter.Articles(ArticleStatus.UNREAD),
-            range = MarkRead.Before(unreadArticleIDs[1]),
+            range = MarkRead.Before(unreadArticles[1].snowflakeId),
             sortOrder = SortOrder.NEWEST_FIRST,
             query = null,
         )
 
-        val result = unreadArticleIDs.takeLast(2)
+        val result = unreadArticles.takeLast(2).map { it.id }
 
         assertEquals(expected = result, actual = ids)
     }
@@ -131,7 +130,7 @@ class AccountTest {
         val articleFixture = ArticleFixture(account.database)
         val time = nowUTC().minusMonths(1)
 
-        val unreadArticleIDs = 3
+        val unreadArticles = 3
             .repeated { offset ->
                 articleFixture.create(
                     id = "id:${offset + 1}",
@@ -139,16 +138,15 @@ class AccountTest {
                     publishedAt = time.minusDays(offset.toLong()).toEpochSecond()
                 )
             }
-            .map { it.id }
 
         val ids = account.unreadArticleIDs(
             filter = ArticleFilter.Articles(ArticleStatus.UNREAD),
-            range = MarkRead.After(unreadArticleIDs[1]),
+            range = MarkRead.After(unreadArticles[1].snowflakeId),
             sortOrder = SortOrder.NEWEST_FIRST,
             query = null,
         )
 
-        val result = unreadArticleIDs.take(2)
+        val result = unreadArticles.take(2).map { it.id }
 
         assertEquals(result, ids)
     }
@@ -164,7 +162,7 @@ class AccountTest {
         val articleFixture = ArticleFixture(account.database)
         val time = nowUTC().minusMonths(1)
 
-        val unreadArticleIDs = 3
+        val unreadArticles = 3
             .repeated { offset ->
                 articleFixture.create(
                     id = "${offset + 1}_${RandomUUID.generate()}",
@@ -172,16 +170,15 @@ class AccountTest {
                     publishedAt = time.plusDays(offset.toLong()).toEpochSecond()
                 )
             }
-            .map { it.id }
 
         val ids = account.unreadArticleIDs(
             filter = ArticleFilter.Articles(ArticleStatus.UNREAD),
-            range = MarkRead.Before(unreadArticleIDs[1]),
+            range = MarkRead.Before(unreadArticles[1].snowflakeId),
             sortOrder = SortOrder.OLDEST_FIRST,
             query = null,
         )
 
-        val result = unreadArticleIDs.takeLast(2)
+        val result = unreadArticles.takeLast(2).map { it.id }
 
         assertEquals(result, ids)
     }

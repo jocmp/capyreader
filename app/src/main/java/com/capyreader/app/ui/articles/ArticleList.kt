@@ -155,7 +155,7 @@ fun MarkReadOnScroll(
                     return@collect
                 }
 
-                articles.getOrNull(offscreenIndex)?.let { onRead(MarkRead.After(it.id)) }
+                articles.getOrNull(offscreenIndex)?.let { onRead(MarkRead.After(it.snowflakeId)) }
             }
     }
 }

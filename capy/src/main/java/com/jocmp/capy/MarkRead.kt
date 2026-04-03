@@ -2,28 +2,28 @@ package com.jocmp.capy
 
 sealed class MarkRead {
     data class Pair(
-        val afterArticleID: String? = null,
-        val beforeArticleID: String? = null,
+        val afterSnowflakeID: Long? = null,
+        val beforeSnowflakeID: Long? = null,
     )
 
     data object All : MarkRead()
 
-    data class Before(val articleID: String): MarkRead()
+    data class Before(val snowflakeId: Long): MarkRead()
 
-    data class After(val articleID: String): MarkRead()
+    data class After(val snowflakeId: Long): MarkRead()
 
     fun reversed(): MarkRead {
         return when(this) {
             is All -> All
-            is Before -> After(articleID)
-            is After -> Before(articleID)
+            is Before -> After(snowflakeId)
+            is After -> Before(snowflakeId)
         }
     }
 
     val toPair: Pair
         get() = when(this) {
-            is After -> Pair(afterArticleID = articleID)
-            is Before -> Pair(beforeArticleID = articleID)
+            is After -> Pair(afterSnowflakeID = snowflakeId)
+            is Before -> Pair(beforeSnowflakeID = snowflakeId)
             All -> Pair()
         }
 }
