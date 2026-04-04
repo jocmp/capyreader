@@ -365,9 +365,11 @@ ul:has(img) {
   margin: 0 auto 1rem;
   text-align: var(--article-title-text-align);
 
-  &:link,
-  &:visited {
-    text-decoration: none;
+  a {
+    &:link,
+    &:visited {
+      text-decoration: none;
+    }
   }
 }
 

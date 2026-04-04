@@ -6,12 +6,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ContentCopy
-import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.Text
@@ -26,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.capyreader.app.R
 import com.capyreader.app.common.shareLink
+import com.capyreader.app.common.shareText
 import com.capyreader.app.ui.components.DialogCard
 import com.capyreader.app.ui.components.ShareLink
 import com.capyreader.app.ui.components.buildCopyToClipboard
@@ -40,8 +37,14 @@ fun ShareLinkDialog(
         ListItemDefaults.colors(containerColor = CardDefaults.cardColors().containerColor)
 
     val context = LocalContext.current
+
     val shareLink = {
         context.shareLink(url = link.url, title = link.text)
+        onClose()
+    }
+
+    val shareLinkWithText = {
+        context.shareText(link.string())
         onClose()
     }
 
@@ -85,12 +88,6 @@ fun ShareLinkDialog(
                             copyLink()
                         },
                         colors = listItemColors,
-                        leadingContent = {
-                            Icon(
-                                Icons.Rounded.ContentCopy,
-                                contentDescription = null
-                            )
-                        },
                         headlineContent = { Text(stringResource(R.string.actions_copy_link)) }
                     )
 
@@ -99,13 +96,15 @@ fun ShareLinkDialog(
                             shareLink()
                         },
                         colors = listItemColors,
-                        leadingContent = {
-                            Icon(
-                                Icons.Rounded.Share,
-                                contentDescription = null
-                            )
-                        },
                         headlineContent = { Text(stringResource(R.string.actions_share_link)) }
+                    )
+
+                    ListItem(
+                        modifier = Modifier.clickable {
+                            shareLinkWithText()
+                        },
+                        colors = listItemColors,
+                        headlineContent = { Text(stringResource(R.string.actions_share_link_with_title)) }
                     )
                 }
             }

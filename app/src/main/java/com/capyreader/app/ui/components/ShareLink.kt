@@ -6,14 +6,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 @Serializable
 data class ShareLink(
     val text: String,
     val url: String,
-)
+) {
+    fun string(): String {
+        return "$text $url"
+    }
+}
 
 val ShareLink.Companion.Saver
     get() = Saver<MutableState<ShareLink?>, String>(

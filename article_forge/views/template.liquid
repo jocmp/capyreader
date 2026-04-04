@@ -33,11 +33,13 @@
   <body>
     <article role="main">
       <header>
-        <a class="article__header" href="{{external_link}}">
-          <h1 class="article__title article__title--font-{{title_font_family}}">{{title}}</h1>
+        <div class="article__header">
+          <a href="{{external_link}}">
+            <h1 class="article__title article__title--font-{{title_font_family}}">{{title}}</h1>
+          </a>
           <div>{{byline}}</div>
           <div>{{feed_name}}</div>
-        </a>
+        </div>
       </header>
       <div class="article__body article__body--font-{{font_family}}">
         <div id="article-body-content">{{body}}</div>
