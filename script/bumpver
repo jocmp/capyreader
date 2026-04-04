@@ -129,7 +129,7 @@ def main
       end
     end
     puts "  commit: #{commit_message}" if should_commit
-    puts "  tag: v#{new_version}" if should_tag
+    puts "  tag: #{new_version}" if should_tag
     puts "  push: yes" if push
     return
   end
@@ -146,7 +146,7 @@ def main
   end
 
   if should_tag
-    tag_name = "v#{new_version}"
+    tag_name = new_version
     git("tag", "-a", tag_name, "-m", tag_name)
     puts "  tagged: #{tag_name}"
   end
