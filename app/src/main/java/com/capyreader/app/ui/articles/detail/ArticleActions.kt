@@ -4,9 +4,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Label
-import androidx.compose.material.icons.outlined.Circle
 import androidx.compose.material.icons.outlined.FormatSize
-import androidx.compose.material.icons.rounded.Circle
+import androidx.compose.material.icons.outlined.FiberManualRecord
+import androidx.compose.material.icons.rounded.FiberManualRecord
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarOutline
@@ -140,9 +140,9 @@ fun ArticleActions(
 @Composable
 private fun readIcon(article: Article) =
     if (article.read) {
-        Icons.Outlined.Circle
+        Icons.Outlined.FiberManualRecord
     } else {
-        Icons.Rounded.Circle
+        Icons.Rounded.FiberManualRecord
     }
 
 @Composable

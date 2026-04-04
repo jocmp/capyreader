@@ -2,10 +2,9 @@ package com.capyreader.app.ui.articles
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Notes
+import androidx.compose.material.icons.rounded.FiberManualRecord
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.painterResource
-import com.capyreader.app.R
 import com.jocmp.capy.ArticleStatus
 
 @Composable
@@ -17,7 +16,7 @@ fun ArticleStatusIcon(status: ArticleStatus) {
         )
 
         ArticleStatus.UNREAD -> Icon(
-            painterResource(R.drawable.icon_circle_filled),
+            Icons.Rounded.FiberManualRecord,
             contentDescription = null,
         )
     }

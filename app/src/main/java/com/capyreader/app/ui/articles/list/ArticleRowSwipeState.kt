@@ -2,12 +2,13 @@ package com.capyreader.app.ui.articles.list
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.OpenInNew
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
@@ -72,7 +73,7 @@ private fun swipeActions(article: Article, option: RowSwipeOption): List<SwipeAc
             icon = {
                 Box(Modifier.padding(16.dp)) {
                     Icon(
-                        painterResource(action.icon),
+                        action.icon,
                         contentDescription = stringResource(action.translationKey)
                     )
                 }
@@ -83,7 +84,7 @@ private fun swipeActions(article: Article, option: RowSwipeOption): List<SwipeAc
 
 private fun LinkOpener.openLink(article: Article, actions: ArticleActions) =
     ArticleAction(
-        R.drawable.icon_open_in_new,
+        Icons.Rounded.OpenInNew,
         R.string.article_view_open_externally,
     ) {
         val url = article.url ?: return@ArticleAction
