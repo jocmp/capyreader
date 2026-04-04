@@ -215,7 +215,7 @@
     <string name="media_save_failure">Wedi methu cadw\'r ddelwedd</string>
     <string name="media_share_failure">Wedi methu rhannu\'r ddelwedd</string>
     <string name="media_share">Rhannu</string>
-    <string name="blocked_keywords_add_keyword">Ychwanegu allweddair</string>
+    <string name="filters_add_keyword">Ychwanegu allweddair</string>
     <string name="tag_action_delete_title">Dileu</string>
     <string name="tag_action_delete_message">Ydych chi\'n sicr eich bod chi am ddileu\'r tag \"%1$s\"?</string>
     <string name="tag_action_delete_confirm">Dileu</string>
@@ -248,7 +248,7 @@
     <string name="search_bar_placeholder">Chwilio</string>
     <string name="media_save">Cadw</string>
     <string name="media_save_success">Delwedd wedi\'i chadw</string>
-    <string name="blocked_keywords_supporting_text">Dileu erthyglau gydag allweddeiriau yn y teitl neu\'r cynnwys</string>
+    <string name="filters_supporting_text">Dileu erthyglau gydag allweddeiriau yn y teitl neu\'r cynnwys</string>
     <string name="actions_share_link">Rhannu\'r ddolen</string>
     <string name="nav_headline_saved_searches">Chwiliadau</string>
     <string name="delete_tag_error">Bu gwall wrth ddileu tag</string>
@@ -261,11 +261,11 @@
     <string name="after_read_all_behavior_open_drawer">Agor y drôr llywio</string>
     <string name="after_read_all_behavior_open_next_feed">Agor y ffrwd nesaf</string>
     <string name="full_content_error_missing_response">Wedi methu nôl erthygl</string>
-    <string name="blocked_keywords_remove_keyword">Dileu allweddair</string>
+    <string name="filters_remove_keyword">Dileu allweddair</string>
     <string name="settings_gestures_improve_talkback_title">Gwella TalkBack</string>
     <string name="settings_gestures_improve_talkback_subtitle">Analluogi gosodiadau i wella testun-i-leferydd TalkBack</string>
     <string name="widget_receiver_headlines_title">Penawdau</string>
-    <string name="blocked_keywords">Rhestr rhwystro</string>
+    <string name="filters_title">Rhestr rhwystro</string>
     <string name="add_account_miniflux_signup_link_text">Dysgu mwy.</string>
     <string name="settings_article_list_shorten_titles">Byrhau teitlau</string>
     <string name="mark_read_position_toolbar">Bar offer</string>

@@ -264,10 +264,10 @@
     <string name="widget_receiver_headlines_title">Manchetes</string>
     <string name="widget_headlines_title">Últimas Manchetes</string>
     <string name="widget_headlines_account_error">Adicionar uma conta primeiro</string>
-    <string name="blocked_keywords">Lista de bloqueio</string>
-    <string name="blocked_keywords_supporting_text">Remove artigos com correspondência de palavras-chave de títulos ou de conteúdo</string>
-    <string name="blocked_keywords_add_keyword">Adicionar palavra-chave</string>
-    <string name="blocked_keywords_remove_keyword">Remover palavra-chave</string>
+    <string name="filters_title">Lista de bloqueio</string>
+    <string name="filters_supporting_text">Remove artigos com correspondência de palavras-chave de títulos ou de conteúdo</string>
+    <string name="filters_add_keyword">Adicionar palavra-chave</string>
+    <string name="filters_remove_keyword">Remover palavra-chave</string>
     <string name="media_share">Compartilhar</string>
     <string name="add_account_miniflux_signup_link_text">Saiba mais.</string>
     <string name="add_account_miniflux_signup_prompt">Não tem um instância Miniflux?</string>

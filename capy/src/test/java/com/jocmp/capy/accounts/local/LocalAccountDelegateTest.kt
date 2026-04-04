@@ -127,8 +127,8 @@ class LocalAccountDelegateTest {
     }
 
     @Test
-    fun refreshAll_updatesEntries_filteredByBlocklist() = runTest {
-        accountPreferences.keywordBlocklist.set(setOf("Apple Intelligence"))
+    fun refreshAll_updatesEntries_filteredByFilters() = runTest {
+        accountPreferences.filterKeywords.set(setOf("Apple Intelligence"))
         coEvery { feedFinder.fetch(url = any()) }.returns(Result.success(channel))
 
         FeedFixture(database).create(feedID = channel.link!!)

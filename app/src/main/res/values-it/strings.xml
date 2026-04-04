@@ -250,10 +250,10 @@
     <string name="media_share_failure">Impossibile condividere l\'immagine</string>
     <string name="feed_nav_drawer_refresh_all">Aggiorna tutto</string>
     <string name="image_preview_menu_option_medium">Media</string>
-    <string name="blocked_keywords">Lista nera</string>
-    <string name="blocked_keywords_add_keyword">Aggiungi parola chiave</string>
-    <string name="blocked_keywords_remove_keyword">Rimuovi parola chiave</string>
-    <string name="blocked_keywords_supporting_text">Rimuovi gli articoli che hanno una corrispondenza con le parole chiave del titolo o del contenuto</string>
+    <string name="filters_title">Lista nera</string>
+    <string name="filters_add_keyword">Aggiungi parola chiave</string>
+    <string name="filters_remove_keyword">Rimuovi parola chiave</string>
+    <string name="filters_supporting_text">Rimuovi gli articoli che hanno una corrispondenza con le parole chiave del titolo o del contenuto</string>
     <string name="delete_tag_error">Errore nell\'eliminazione del tag</string>
     <string name="tag_action_delete_title">Elimina</string>
     <string name="tag_action_delete_message">Confermi di voler eliminare il tag \"%1$s\"?</string>

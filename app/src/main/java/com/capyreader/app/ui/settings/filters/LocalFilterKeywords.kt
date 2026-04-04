@@ -1,10 +1,10 @@
-package com.capyreader.app.ui.settings.keywordblocklist
+package com.capyreader.app.ui.settings.filters
 
 import androidx.compose.runtime.compositionLocalOf
 
-val LocalBlockedKeywords = compositionLocalOf { BlockedKeywords() }
+val LocalFilterKeywords = compositionLocalOf { FilterKeywords() }
 
-data class BlockedKeywords(
+data class FilterKeywords(
     val add: (keyword: String) -> Unit = {},
     val remove: (keyword: String) -> Unit = {},
     val keywords: List<String> = emptyList(),

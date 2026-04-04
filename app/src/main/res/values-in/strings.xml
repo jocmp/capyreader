@@ -236,9 +236,9 @@
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">Navigasikan ke Induk</string>
     <string name="media_share_failure">Gagal membagikan gambar</string>
     <string name="media_save_failure">Gagal menyimpan gambar</string>
-    <string name="blocked_keywords_remove_keyword">Hapus kata kunci</string>
-    <string name="blocked_keywords_supporting_text">Hapus artikel dengan kata kunci judul atau konten yg cocok</string>
-    <string name="blocked_keywords_add_keyword">Tambah kata kunci</string>
+    <string name="filters_remove_keyword">Hapus kata kunci</string>
+    <string name="filters_supporting_text">Hapus artikel dengan kata kunci judul atau konten yg cocok</string>
+    <string name="filters_add_keyword">Tambah kata kunci</string>
     <string name="tag_action_edit_success">Label diperbarui</string>
     <string name="tag_action_edit_error">Kesalahan saat perbarui label</string>
     <string name="tag_name_title">Nama</string>
@@ -249,7 +249,7 @@
     <string name="media_save">Simpan</string>
     <string name="media_save_success">Gambar disimpan</string>
     <string name="feed_nav_drawer_refresh_all">Segarkan semua</string>
-    <string name="blocked_keywords">Daftar blokir</string>
+    <string name="filters_title">Daftar blokir</string>
     <string name="tag_action_delete_title">Hapus</string>
     <string name="tag_action_delete_message">Anda yakin ingin menghapus label \"%1$s\"?</string>
     <string name="tag_action_delete_confirm">Hapus</string>

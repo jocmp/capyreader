@@ -237,7 +237,7 @@ internal class LocalAccountDelegate(
         cutoffDate: ZonedDateTime?,
         updatedAt: ZonedDateTime = nowUTC()
     ) {
-        val blocklist = preferences.keywordBlocklist.get()
+        val filters = preferences.filterKeywords.get()
 
         database.transactionWithErrorHandling {
             items.forEach { item ->
@@ -248,7 +248,7 @@ internal class LocalAccountDelegate(
                 )
 
                 val withinCutoff = cutoffDate == null || publishedAt > cutoffDate.toEpochSecond()
-                val blocked = containsBlockedText(parsedItem, blocklist)
+                val blocked = containsFilteredText(parsedItem, filters)
 
                 if (parsedItem.id != null && withinCutoff && !blocked) {
                     val enclosureType = parsedItem.enclosures.firstOrNull()?.type
@@ -287,8 +287,8 @@ internal class LocalAccountDelegate(
         }
     }
 
-    private fun containsBlockedText(parsedItem: ParsedItem, blocklist: Set<String>): Boolean {
-        return blocklist.any { keyword ->
+    private fun containsFilteredText(parsedItem: ParsedItem, filters: Set<String>): Boolean {
+        return filters.any { keyword ->
             parsedItem.title.contains(keyword, ignoreCase = true) ||
                     parsedItem.summary.orEmpty().contains(keyword, ignoreCase = true) ||
                     parsedItem.contentHTML.orEmpty().contains(keyword, ignoreCase = true)

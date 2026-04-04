@@ -248,10 +248,10 @@
     <string name="media_share_failure">分享图片失败</string>
     <string name="feed_nav_drawer_refresh_all">刷新全部</string>
     <string name="image_preview_menu_option_medium">中</string>
-    <string name="blocked_keywords_supporting_text">移除标题或内容中与关键词匹配的文章</string>
-    <string name="blocked_keywords_remove_keyword">移除关键词</string>
-    <string name="blocked_keywords_add_keyword">添加关键词</string>
-    <string name="blocked_keywords">屏蔽列表</string>
+    <string name="filters_supporting_text">移除标题或内容中与关键词匹配的文章</string>
+    <string name="filters_remove_keyword">移除关键词</string>
+    <string name="filters_add_keyword">添加关键词</string>
+    <string name="filters_title">屏蔽列表</string>
     <string name="tag_action_delete_title">删除</string>
     <string name="tag_action_delete_message">确定要删除标签“%1$s” 吗？</string>
     <string name="tag_name_title">名称</string>

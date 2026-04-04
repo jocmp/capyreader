@@ -253,8 +253,8 @@
     <string name="settings_options_reader_pin_top_toolbar">ثبّت أشرطة الأدوات</string>
     <string name="widget_headlines_account_error">أضف حسابًا أولاً</string>
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">إنتقل إلى قائمة الكل</string>
-    <string name="blocked_keywords_remove_keyword">إزالة الكلمة المفتاحية</string>
-    <string name="blocked_keywords_add_keyword">إضافة كلمة مفتاحية</string>
+    <string name="filters_remove_keyword">إزالة الكلمة المفتاحية</string>
+    <string name="filters_add_keyword">إضافة كلمة مفتاحية</string>
     <string name="tag_action_delete_title">حذف</string>
     <string name="tag_action_edit_error">خطأ في تحديث المجلد</string>
     <string name="tag_action_edit">تعديل المجلد</string>
@@ -268,8 +268,8 @@
     <string name="widget_receiver_headlines_title">العناوين الرئيسية</string>
     <string name="widget_headlines_title">أحدث العناوين</string>
     <string name="widget_headlines_see_more_button">عرض المزيد من المقالات</string>
-    <string name="blocked_keywords">قائمة الحظر</string>
-    <string name="blocked_keywords_supporting_text">إزالة المقالات التي تحتوي على عنوان أو محتوى تطابق الكلمات المفتاحية</string>
+    <string name="filters_title">قائمة الحظر</string>
+    <string name="filters_supporting_text">إزالة المقالات التي تحتوي على عنوان أو محتوى تطابق الكلمات المفتاحية</string>
     <string name="settings_gestures_improve_talkback_title">تحسين TalkBack</string>
     <string name="settings_gestures_improve_talkback_subtitle">يعطل بعض الإعدادات لتحسين تحويل النص إلى كلام من TalkBack</string>
     <string name="add_account_miniflux_signup_link_text">اكتشف المزيد.</string>

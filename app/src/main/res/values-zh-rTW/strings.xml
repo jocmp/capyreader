@@ -248,10 +248,10 @@
     <string name="article_list_swipe_next_feed">轉到下個訂閱源</string>
     <string name="media_share">分享</string>
     <string name="image_preview_menu_option_medium">中</string>
-    <string name="blocked_keywords_supporting_text">移除標題或內容中與關鍵字相符的文章</string>
-    <string name="blocked_keywords_remove_keyword">移除關鍵字</string>
-    <string name="blocked_keywords_add_keyword">新增關鍵字</string>
-    <string name="blocked_keywords">封鎖清單</string>
+    <string name="filters_supporting_text">移除標題或內容中與關鍵字相符的文章</string>
+    <string name="filters_remove_keyword">移除關鍵字</string>
+    <string name="filters_add_keyword">新增關鍵字</string>
+    <string name="filters_title">封鎖清單</string>
     <string name="delete_tag_error">刪除標籤時發生錯誤</string>
     <string name="tag_name_title">名稱</string>
     <string name="tag_action_delete_message">您確定要刪除標籤 \"%1$s\" 嗎？</string>

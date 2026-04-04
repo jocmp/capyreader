@@ -272,7 +272,7 @@ private fun FolderMultiselect(
         ) {
             Icon(
                 imageVector = Icons.Rounded.Add,
-                contentDescription = stringResource(R.string.blocked_keywords_add_keyword)
+                contentDescription = stringResource(R.string.filters_add_keyword)
             )
         }
     }

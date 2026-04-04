@@ -249,10 +249,10 @@
     <string name="media_share_failure">Не вдалося поширити зображення</string>
     <string name="media_share">Поширити</string>
     <string name="feed_nav_drawer_refresh_all">Оновити всі</string>
-    <string name="blocked_keywords">Блокування</string>
-    <string name="blocked_keywords_supporting_text">Видаляти статті, заголовок чи текст яких містить</string>
-    <string name="blocked_keywords_remove_keyword">Вилучити ключове слово</string>
-    <string name="blocked_keywords_add_keyword">Додати ключове слово</string>
+    <string name="filters_title">Блокування</string>
+    <string name="filters_supporting_text">Видаляти статті, заголовок чи текст яких містить</string>
+    <string name="filters_remove_keyword">Вилучити ключове слово</string>
+    <string name="filters_add_keyword">Додати ключове слово</string>
     <string name="tag_action_delete_title">Видалити</string>
     <string name="tag_action_delete_message">Точно видалити тег «%1$s»?</string>
     <string name="tag_action_delete_confirm">Видалити</string>

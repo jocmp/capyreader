@@ -240,10 +240,10 @@
     <string name="article_list_swipe_next_feed">Ir á seguinte canle</string>
     <string name="media_share">Compartir</string>
     <string name="image_preview_menu_option_medium">Medio</string>
-    <string name="blocked_keywords_remove_keyword">Retirar palabra clave</string>
-    <string name="blocked_keywords">Lista de bloqueo</string>
-    <string name="blocked_keywords_add_keyword">Engadir palabra clave</string>
-    <string name="blocked_keywords_supporting_text">Retirar artigos que teñen determinada palabra no título ou contido</string>
+    <string name="filters_remove_keyword">Retirar palabra clave</string>
+    <string name="filters_title">Lista de bloqueo</string>
+    <string name="filters_add_keyword">Engadir palabra clave</string>
+    <string name="filters_supporting_text">Retirar artigos que teñen determinada palabra no título ou contido</string>
     <string name="tag_action_delete_message">Tes certeza de querer eliminar «%1$s»?</string>
     <string name="tag_name_title">Nome</string>
     <string name="tag_action_edit">Editar etiqueta</string>

@@ -246,12 +246,12 @@
     <string name="feed_nav_drawer_refresh_all">Ανανέωση όλων</string>
     <string name="media_save_success">Εικόνα αποθηκεύτηκε</string>
     <string name="media_save_failure">Αποτυχία αποθήκευσης εικόνας</string>
-    <string name="blocked_keywords_remove_keyword">Αφαίρεση λέξης-κλειδί</string>
-    <string name="blocked_keywords_add_keyword">Προσθήκη λέξης-κλειδί</string>
+    <string name="filters_remove_keyword">Αφαίρεση λέξης-κλειδί</string>
+    <string name="filters_add_keyword">Προσθήκη λέξης-κλειδί</string>
     <string name="tag_action_delete_title">Διαγραφή</string>
     <string name="tag_action_delete_message">Σίγουρα θες να διαγράψεις την ετικέτα \"%1$s\";</string>
-    <string name="blocked_keywords">Μαύρη λίστα</string>
-    <string name="blocked_keywords_supporting_text">Αφαίρεση άρθρων με τίτλο ή περιεχόμενο που ταιριάζει με λέξη-κλειδί</string>
+    <string name="filters_title">Μαύρη λίστα</string>
+    <string name="filters_supporting_text">Αφαίρεση άρθρων με τίτλο ή περιεχόμενο που ταιριάζει με λέξη-κλειδί</string>
     <string name="widget_headlines_title">Τελευταίες Επικεφαλίδες</string>
     <string name="widget_headlines_see_more_button">Δες περισσότερα άρθρα</string>
     <string name="widget_headlines_account_error">Πρόσθεσε ένα λογαριασμό πρώτα</string>

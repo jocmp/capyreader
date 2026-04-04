@@ -250,10 +250,10 @@
     <string name="after_read_all_behavior_open_drawer">Abrir el cajón de navegación</string>
     <string name="full_content_error_generic">Falló al analizar el artículo</string>
     <string name="full_content_error_forbidden">Obtención bloqueada por el sitio</string>
-    <string name="blocked_keywords_supporting_text">Eliminar artículos con coincidencias de palabras clave en el título o el contenido</string>
-    <string name="blocked_keywords">Palabras Clave Bloqueadas</string>
-    <string name="blocked_keywords_remove_keyword">Eliminar palabra clave</string>
-    <string name="blocked_keywords_add_keyword">Añadir palabra clave</string>
+    <string name="filters_supporting_text">Eliminar artículos con coincidencias de palabras clave en el título o el contenido</string>
+    <string name="filters_title">Palabras Clave Bloqueadas</string>
+    <string name="filters_remove_keyword">Eliminar palabra clave</string>
+    <string name="filters_add_keyword">Añadir palabra clave</string>
     <string name="delete_tag_error">Error al eliminar etiqueta</string>
     <string name="tag_action_edit">Editar Etiqueta</string>
     <string name="actions_copy_link">Copiar enlace</string>

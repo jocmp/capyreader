@@ -297,10 +297,10 @@
     <string name="media_share_failure">Failed to share image</string>
     <string name="media_share">Share</string>
     <string name="feed_nav_drawer_refresh_all">Refresh all</string>
-    <string name="blocked_keywords">Blocklist</string>
-    <string name="blocked_keywords_supporting_text">Remove articles with title or content keyword matches</string>
-    <string name="blocked_keywords_remove_keyword">Remove keyword</string>
-    <string name="blocked_keywords_add_keyword">Add keyword</string>
+    <string name="filters_title">Filters</string>
+    <string name="filters_supporting_text">Remove articles with title or content keyword matches</string>
+    <string name="filters_remove_keyword">Remove keyword</string>
+    <string name="filters_add_keyword">Add keyword</string>
     <string name="tag_action_delete_title">Delete</string>
     <string name="tag_action_delete_message">Are you sure you want to delete tag \"%1$s\"?</string>
     <string name="tag_action_delete_confirm">Delete</string>

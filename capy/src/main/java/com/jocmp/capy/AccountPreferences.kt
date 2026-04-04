@@ -28,7 +28,7 @@ class AccountPreferences(
     val autoDelete: Preference<AutoDelete>
         get() = store.getEnum("auto_delete_articles", AutoDelete.default)
 
-    val keywordBlocklist: Preference<Set<String>>
+    val filterKeywords: Preference<Set<String>>
         get() = store.getStringSet("keyword_blocklist")
 
     val canSaveArticleExternally: Preference<Boolean>
