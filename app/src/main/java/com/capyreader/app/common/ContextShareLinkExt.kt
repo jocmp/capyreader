@@ -14,6 +14,15 @@ fun Context.shareLink(url: String, title: String) {
     startActivity(share)
 }
 
+fun Context.shareText(text: String) {
+    val share = Intent.createChooser(Intent().apply {
+        type = "text/plain"
+        action = Intent.ACTION_SEND
+        putExtra(Intent.EXTRA_TEXT, text)
+    }, null)
+    startActivity(share)
+}
+
 fun Context.shareImage(uri: Uri) {
     val shareIntent = Intent(Intent.ACTION_SEND).apply {
         putExtra(Intent.EXTRA_STREAM, uri)
