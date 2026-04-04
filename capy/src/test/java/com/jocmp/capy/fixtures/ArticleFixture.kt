@@ -33,7 +33,8 @@ class ArticleFixture(private val database: Database = InMemoryDatabaseProvider()
                 published_at = publishedAt,
                 summary = summary,
                 url = url,
-                enclosure_type = null
+                enclosure_type = null,
+                content_hash = null,
             )
             database.articlesQueries.createStatus(
                 article_id = id,

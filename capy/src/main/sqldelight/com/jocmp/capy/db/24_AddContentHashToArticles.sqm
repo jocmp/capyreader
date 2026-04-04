@@ -1,0 +1,3 @@
+ALTER TABLE articles ADD COLUMN content_hash TEXT;
+
+CREATE INDEX articles_feed_content_hash ON articles(feed_id, content_hash);

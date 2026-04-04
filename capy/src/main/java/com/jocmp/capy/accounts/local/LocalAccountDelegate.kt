@@ -7,6 +7,7 @@ import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.FeedOption
 import com.jocmp.capy.common.ContentFormatter
+import com.jocmp.capy.common.MD5
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.TimeHelpers.published
 import com.jocmp.capy.common.transactionWithErrorHandling
@@ -239,49 +240,62 @@ internal class LocalAccountDelegate(
     ) {
         val filters = preferences.filterKeywords.get()
 
+        val parsedItems = items.mapNotNull { item ->
+            val publishedAt = published(item.pubDate, fallback = updatedAt).toEpochSecond()
+            val parsedItem = ParsedItem(item, siteURL = feed.siteURL)
+            val withinCutoff = cutoffDate == null || publishedAt > cutoffDate.toEpochSecond()
+            val blocked = containsFilteredText(parsedItem, filters)
+
+            if (parsedItem.id != null && withinCutoff && !blocked) {
+                val contentHash = MD5.from(parsedItem.title + parsedItem.contentHTML.orEmpty())
+                ParsedArticle(parsedItem, item, publishedAt, contentHash)
+            } else {
+                null
+            }
+        }
+
+        val contentHashes = parsedItems.map { it.contentHash }
+        val existingHashes = database.articlesQueries
+            .findExistingHashes(feedID = feed.id, contentHashes = contentHashes)
+            .executeAsList()
+            .mapNotNull { it.content_hash }
+            .toSet()
+
+        val newItems = parsedItems.filter { it.contentHash !in existingHashes }
+
         database.transactionWithErrorHandling {
-            items.forEach { item ->
-                val publishedAt = published(item.pubDate, fallback = updatedAt).toEpochSecond()
-                val parsedItem = ParsedItem(
-                    item,
-                    siteURL = feed.siteURL
+            newItems.forEach { (parsedItem, item, publishedAt, contentHash) ->
+                val enclosureType = parsedItem.enclosures.firstOrNull()?.type
+
+                database.articlesQueries.create(
+                    id = parsedItem.id!!,
+                    feed_id = feed.id,
+                    title = parsedItem.title,
+                    author = item.author,
+                    content_html = parsedItem.contentHTML,
+                    url = parsedItem.url,
+                    summary = item.summary,
+                    extracted_content_url = null,
+                    image_url = parsedItem.imageURL,
+                    published_at = publishedAt,
+                    enclosure_type = enclosureType,
+                    content_hash = contentHash,
                 )
 
-                val withinCutoff = cutoffDate == null || publishedAt > cutoffDate.toEpochSecond()
-                val blocked = containsFilteredText(parsedItem, filters)
+                articleRecords.createStatus(
+                    articleID = parsedItem.id,
+                    updatedAt = updatedAt,
+                    read = false,
+                )
 
-                if (parsedItem.id != null && withinCutoff && !blocked) {
-                    val enclosureType = parsedItem.enclosures.firstOrNull()?.type
-
-                    database.articlesQueries.create(
-                        id = parsedItem.id,
-                        feed_id = feed.id,
-                        title = parsedItem.title,
-                        author = item.author,
-                        content_html = parsedItem.contentHTML,
-                        url = parsedItem.url,
-                        summary = item.summary,
-                        extracted_content_url = null,
-                        image_url = parsedItem.imageURL,
-                        published_at = publishedAt,
-                        enclosure_type = enclosureType,
-                    )
-
-                    articleRecords.createStatus(
+                parsedItem.enclosures.forEach {
+                    enclosureRecords.create(
+                        url = it.url.toString(),
+                        type = it.type,
                         articleID = parsedItem.id,
-                        updatedAt = updatedAt,
-                        read = false
+                        itunesDurationSeconds = it.itunesDurationSeconds?.toString(),
+                        itunesImage = it.itunesImage,
                     )
-
-                    parsedItem.enclosures.forEach {
-                        enclosureRecords.create(
-                            url = it.url.toString(),
-                            type = it.type,
-                            articleID = parsedItem.id,
-                            itunesDurationSeconds = it.itunesDurationSeconds?.toString(),
-                            itunesImage = it.itunesImage,
-                        )
-                    }
                 }
             }
         }
@@ -339,6 +353,13 @@ internal class LocalAccountDelegate(
         private const val TAG = "local"
     }
 }
+
+private data class ParsedArticle(
+    val parsedItem: ParsedItem,
+    val item: RssItem,
+    val publishedAt: Long,
+    val contentHash: String,
+)
 
 internal val RssItem.contentHTML: String?
     get() {
