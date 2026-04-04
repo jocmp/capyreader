@@ -218,7 +218,7 @@
     <string name="after_read_all_behavior_open_next_feed">Atvērt nākamo ziņu plūsmu</string>
     <string name="feed_nav_drawer_title">Ziņu plūsmas</string>
     <string name="feed_nav_drawer_refresh_all">Atsvaidzināt visu</string>
-    <string name="blocked_keywords_add_keyword">Pievienot atslēgvārdu</string>
+    <string name="filters_add_keyword">Pievienot atslēgvārdu</string>
     <string name="unauthorized_dialog_description">Veidojot savienojumu ar jūsu kontu, radās problēma. Lūdzu, atkārtojiet autorizāciju.</string>
     <string name="unauthorized_dialog_title">Jūs esiet atslēgušies</string>
     <string name="update_auth_success_message">Veiksmīgi autorizējušies</string>
@@ -242,9 +242,9 @@
     <string name="search_bar_placeholder">Meklēt</string>
     <string name="media_share_failure">Neizdevās dalīties ar attēlu</string>
     <string name="media_share">Dalīties</string>
-    <string name="blocked_keywords">Atslēgvārdu melnais saraksts</string>
-    <string name="blocked_keywords_supporting_text">Noņem rakstus, kuru virsraksts vai saturs satur atslēgvārdu melnajā sarakstā</string>
-    <string name="blocked_keywords_remove_keyword">Noņemt atslēgvārdu</string>
+    <string name="filters_title">Atslēgvārdu melnais saraksts</string>
+    <string name="filters_supporting_text">Noņem rakstus, kuru virsraksts vai saturs satur atslēgvārdu melnajā sarakstā</string>
+    <string name="filters_remove_keyword">Noņemt atslēgvārdu</string>
     <string name="delete_tag_error">Birkas dzēšanas kļūda</string>
     <string name="tag_action_delete_title">Dzēst</string>
     <string name="tag_action_delete_message">Vai tiešām vēlaties dzēst \"%1$s\" birku?</string>

@@ -255,10 +255,10 @@
     <string name="widget_headlines_account_error">İlk önce hesap ekleyin</string>
     <string name="add_account_feedbin_signup_prompt">Feedbin hesabınız yok mu?</string>
     <string name="widget_headlines_title">En Son Başlıklar</string>
-    <string name="blocked_keywords_supporting_text">Başlık ya da içerik eşleşmesi olan makaleleri kaldır</string>
-    <string name="blocked_keywords_remove_keyword">Anahtar kelimeyi kaldır</string>
-    <string name="blocked_keywords">Engel listesi</string>
-    <string name="blocked_keywords_add_keyword">Anahtar kelime ekle</string>
+    <string name="filters_supporting_text">Başlık ya da içerik eşleşmesi olan makaleleri kaldır</string>
+    <string name="filters_remove_keyword">Anahtar kelimeyi kaldır</string>
+    <string name="filters_title">Engel listesi</string>
+    <string name="filters_add_keyword">Anahtar kelime ekle</string>
     <string name="settings_section_browser">Tarayıcı</string>
     <string name="reader_image_visibility_show_on_wifi">Sadece Wi-Fi üzerinde görselleri göster</string>
     <string name="notification_mark_as_read_action">Okundu olarak işaretle</string>

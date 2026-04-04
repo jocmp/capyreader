@@ -246,10 +246,10 @@
     <string name="media_share">Jaga</string>
     <string name="feed_nav_drawer_refresh_all">Uuenda kõik</string>
     <string name="image_preview_menu_option_medium">Keskmised pildid</string>
-    <string name="blocked_keywords">Keeluloend</string>
-    <string name="blocked_keywords_supporting_text">Eemalda artiklid, mille pealkirjas või sisus leidub vastav märksõna</string>
-    <string name="blocked_keywords_remove_keyword">Eemalda märksõna</string>
-    <string name="blocked_keywords_add_keyword">Lisa märksõna</string>
+    <string name="filters_title">Keeluloend</string>
+    <string name="filters_supporting_text">Eemalda artiklid, mille pealkirjas või sisus leidub vastav märksõna</string>
+    <string name="filters_remove_keyword">Eemalda märksõna</string>
+    <string name="filters_add_keyword">Lisa märksõna</string>
     <string name="delete_tag_error">Viga sildi kustutamisel</string>
     <string name="tag_action_delete_title">Kustuta</string>
     <string name="tag_action_delete_confirm">Kustuta</string>

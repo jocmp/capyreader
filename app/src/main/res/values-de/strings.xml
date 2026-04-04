@@ -257,10 +257,10 @@
     <string name="tag_action_edit">Bezeichnung bearbeiten</string>
     <string name="tag_action_delete_confirm">Löschen</string>
     <string name="feed_nav_drawer_title">Feeds</string>
-    <string name="blocked_keywords_supporting_text">Artikel entfernen welche dieses Schlagwort im Titel oder Inhalt enthalten</string>
-    <string name="blocked_keywords_remove_keyword">Schlagwort entfernen</string>
-    <string name="blocked_keywords">Blockliste</string>
-    <string name="blocked_keywords_add_keyword">Schlagwort hinzufügen</string>
+    <string name="filters_supporting_text">Artikel entfernen welche dieses Schlagwort im Titel oder Inhalt enthalten</string>
+    <string name="filters_remove_keyword">Schlagwort entfernen</string>
+    <string name="filters_title">Blockliste</string>
+    <string name="filters_add_keyword">Schlagwort hinzufügen</string>
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">Zum übergeordneten Element wechseln</string>
     <string name="actions_share_link">Link teilen</string>
     <string name="actions_copy_link">Link kopieren</string>

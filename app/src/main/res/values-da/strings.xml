@@ -260,10 +260,10 @@
     <string name="media_share_failure">Kunne ikke dele billede</string>
     <string name="media_share">Del</string>
     <string name="feed_nav_drawer_refresh_all">Opdater alle</string>
-    <string name="blocked_keywords">Blacklist</string>
-    <string name="blocked_keywords_supporting_text">Fjern artikler med nøgleord der matcher titel eller indhold</string>
-    <string name="blocked_keywords_remove_keyword">Fjern nøgleord</string>
-    <string name="blocked_keywords_add_keyword">Tilføj nøgleord</string>
+    <string name="filters_title">Blacklist</string>
+    <string name="filters_supporting_text">Fjern artikler med nøgleord der matcher titel eller indhold</string>
+    <string name="filters_remove_keyword">Fjern nøgleord</string>
+    <string name="filters_add_keyword">Tilføj nøgleord</string>
     <string name="tag_action_delete_title">Slet</string>
     <string name="tag_action_delete_message">Er du sikker på at du vil slette etiketten \"%1$s\"?</string>
     <string name="tag_action_delete_confirm">Slet</string>

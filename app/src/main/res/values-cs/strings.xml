@@ -261,10 +261,10 @@
     <string name="theme_sunset">Soumrak</string>
     <string name="settings_options_reader_pin_top_toolbar">Připnout na panel</string>
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">Navigovat k nadřazenému</string>
-    <string name="blocked_keywords">Seznam blokovaných</string>
-    <string name="blocked_keywords_supporting_text">Mazat články podle klíčových slov v názvu nebo obsahu</string>
-    <string name="blocked_keywords_remove_keyword">Odebrat klíčové slovo</string>
-    <string name="blocked_keywords_add_keyword">Přidat klíčové slovo</string>
+    <string name="filters_title">Seznam blokovaných</string>
+    <string name="filters_supporting_text">Mazat články podle klíčových slov v názvu nebo obsahu</string>
+    <string name="filters_remove_keyword">Odebrat klíčové slovo</string>
+    <string name="filters_add_keyword">Přidat klíčové slovo</string>
     <string name="tag_action_delete_title">Smazat</string>
     <string name="tag_action_delete_message">Opravdu si přejete smazat štítek \"%1$s\"?</string>
     <string name="tag_action_delete_confirm">Smazat</string>

@@ -253,10 +253,10 @@
     <string name="media_share_failure">שגיאה בשיתוף תמונה</string>
     <string name="media_share">שיתוף</string>
     <string name="feed_nav_drawer_refresh_all">רענן הכל</string>
-    <string name="blocked_keywords">רשימת חסימה</string>
-    <string name="blocked_keywords_supporting_text">הסר מאמרים עם כותרת או תוכן שמכיל</string>
-    <string name="blocked_keywords_remove_keyword">הסר מילה שמורה</string>
-    <string name="blocked_keywords_add_keyword">הוסף מילה שמורה</string>
+    <string name="filters_title">רשימת חסימה</string>
+    <string name="filters_supporting_text">הסר מאמרים עם כותרת או תוכן שמכיל</string>
+    <string name="filters_remove_keyword">הסר מילה שמורה</string>
+    <string name="filters_add_keyword">הוסף מילה שמורה</string>
     <string name="tag_action_delete_title">מחק</string>
     <string name="tag_action_delete_message">האם אתה בטוח שאתה רוצה למחוק תגית \"%1$s\"?</string>
     <string name="tag_action_delete_confirm">מחק</string>

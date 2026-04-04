@@ -1,4 +1,4 @@
-package com.capyreader.app.ui.settings.keywordblocklist
+package com.capyreader.app.ui.settings.filters
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -37,7 +37,7 @@ import com.capyreader.app.R
 import com.capyreader.app.ui.theme.CapyTheme
 
 @Composable
-fun KeywordBlocklistView(
+fun FiltersView(
     onAdd: (keyword: String) -> Unit,
     onRemove: (keyword: String) -> Unit,
     keywords: List<String>,
@@ -60,7 +60,7 @@ fun KeywordBlocklistView(
             .imePadding()
     ) {
         Text(
-            stringResource(R.string.blocked_keywords),
+            stringResource(R.string.filters_title),
             style = typography.headlineSmall,
             modifier = Modifier
                 .padding(top = 24.dp, bottom = 8.dp)
@@ -84,7 +84,7 @@ fun KeywordBlocklistView(
                         ) {
                             Icon(
                                 imageVector = Icons.Rounded.Close,
-                                contentDescription = stringResource(R.string.blocked_keywords_remove_keyword)
+                                contentDescription = stringResource(R.string.filters_remove_keyword)
                             )
                         }
                     }
@@ -101,7 +101,7 @@ fun KeywordBlocklistView(
                 value = text,
                 singleLine = true,
                 onValueChange = updateText,
-                placeholder = { Text(stringResource(R.string.blocked_keywords_add_keyword)) },
+                placeholder = { Text(stringResource(R.string.filters_add_keyword)) },
                 keyboardOptions = KeyboardOptions(
                     autoCorrectEnabled = false,
                     imeAction = ImeAction.Default,
@@ -123,7 +123,7 @@ fun KeywordBlocklistView(
             ) {
                 Icon(
                     imageVector = Icons.Rounded.Add,
-                    contentDescription = stringResource(R.string.blocked_keywords_add_keyword)
+                    contentDescription = stringResource(R.string.filters_add_keyword)
                 )
             }
         }
@@ -132,11 +132,11 @@ fun KeywordBlocklistView(
 
 @Preview
 @Composable
-fun KeywordBlocklistViewPreview() {
+fun FiltersViewPreview() {
     val keywords = remember { mutableSetOf("Advertisement", "Sponsored Post") }
 
     CapyTheme {
-        KeywordBlocklistView(
+        FiltersView(
             onAdd = {
                 keywords.add(it)
             },

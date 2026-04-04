@@ -247,8 +247,8 @@
     <string name="actions_copy_link">Kopiera länk</string>
     <string name="tag_name_title">Namn</string>
     <string name="tag_action_delete_confirm">Ta bort</string>
-    <string name="blocked_keywords_remove_keyword">Ta bort nyckelord</string>
-    <string name="blocked_keywords_add_keyword">Lägg till nyckelord</string>
+    <string name="filters_remove_keyword">Ta bort nyckelord</string>
+    <string name="filters_add_keyword">Lägg till nyckelord</string>
     <string name="feed_nav_drawer_refresh_all">Uppdatera alla</string>
     <string name="media_save">Spara</string>
     <string name="settings_option_show_today_filter">Idag</string>

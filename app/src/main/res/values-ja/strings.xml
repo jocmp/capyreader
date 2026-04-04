@@ -234,10 +234,10 @@
     <string name="media_share_failure">画像の共有に失敗しました</string>
     <string name="media_share">共有</string>
     <string name="feed_nav_drawer_refresh_all">すべて更新</string>
-    <string name="blocked_keywords">ブロックリスト</string>
-    <string name="blocked_keywords_supporting_text">タイトルや内容にキーワードがマッチする記事を削除します</string>
-    <string name="blocked_keywords_remove_keyword">キーワードを削除</string>
-    <string name="blocked_keywords_add_keyword">キーワードを追加</string>
+    <string name="filters_title">ブロックリスト</string>
+    <string name="filters_supporting_text">タイトルや内容にキーワードがマッチする記事を削除します</string>
+    <string name="filters_remove_keyword">キーワードを削除</string>
+    <string name="filters_add_keyword">キーワードを追加</string>
     <string name="tag_action_delete_title">削除</string>
     <string name="tag_action_delete_message">タグ『%1$s』を本当に削除しますか?</string>
     <string name="tag_action_delete_confirm">削除</string>

@@ -1,4 +1,4 @@
-package com.capyreader.app.ui.settings.keywordblocklist
+package com.capyreader.app.ui.settings.filters
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -14,7 +14,7 @@ import com.capyreader.app.R
 import com.capyreader.app.ui.components.DialogCard
 
 @Composable
-fun KeywordBlocklistItem() {
+fun FiltersItem() {
     val (isOpen, setOpen) = remember { mutableStateOf(false) }
 
     val dismiss = { setOpen(false) }
@@ -25,17 +25,17 @@ fun KeywordBlocklistItem() {
         }
     ) {
         ListItem(
-            headlineContent = { Text(stringResource(R.string.blocked_keywords)) },
-            supportingContent = { Text(stringResource(R.string.blocked_keywords_supporting_text)) }
+            headlineContent = { Text(stringResource(R.string.filters_title)) },
+            supportingContent = { Text(stringResource(R.string.filters_supporting_text)) }
         )
     }
 
     if (isOpen) {
-        val keywords = LocalBlockedKeywords.current
+        val keywords = LocalFilterKeywords.current
 
         Dialog(onDismissRequest = dismiss) {
             DialogCard {
-                KeywordBlocklistView(
+                FiltersView(
                     keywords = keywords.keywords,
                     onAdd = {
                         keywords.add(it)

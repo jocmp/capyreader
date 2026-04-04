@@ -257,10 +257,10 @@
     <string name="media_share_failure">Delen afbeelding mislukt</string>
     <string name="media_share">Delen</string>
     <string name="feed_nav_drawer_refresh_all">Alles vernieuwen</string>
-    <string name="blocked_keywords">Blokkeerlijst</string>
-    <string name="blocked_keywords_supporting_text">Artikelen verwijderen met titel of inhoud trefwoord overeenkomsten</string>
-    <string name="blocked_keywords_remove_keyword">Trefwoord verwijderen</string>
-    <string name="blocked_keywords_add_keyword">Trefwoord toevoegen</string>
+    <string name="filters_title">Blokkeerlijst</string>
+    <string name="filters_supporting_text">Artikelen verwijderen met titel of inhoud trefwoord overeenkomsten</string>
+    <string name="filters_remove_keyword">Trefwoord verwijderen</string>
+    <string name="filters_add_keyword">Trefwoord toevoegen</string>
     <string name="tag_action_delete_title">Verwijderen</string>
     <string name="tag_action_delete_message">Weet je zeker dat je tag \"%1$s\" wilt verwijderen?</string>
     <string name="tag_action_delete_confirm">Verwijderen</string>

@@ -249,10 +249,10 @@
     <string name="media_share_failure">Nem sikerült megosztani a képet</string>
     <string name="media_share">Megosztás</string>
     <string name="feed_nav_drawer_refresh_all">Összes frissítése</string>
-    <string name="blocked_keywords">Tiltólista</string>
-    <string name="blocked_keywords_supporting_text">Eltávolítja azokat a cikkeket, amelyeknek a címe vagy tartalma illeszkedik a kulcsszavakhoz</string>
-    <string name="blocked_keywords_remove_keyword">Kulcsszó eltávolítása</string>
-    <string name="blocked_keywords_add_keyword">Kulcsszó hozzáadása</string>
+    <string name="filters_title">Tiltólista</string>
+    <string name="filters_supporting_text">Eltávolítja azokat a cikkeket, amelyeknek a címe vagy tartalma illeszkedik a kulcsszavakhoz</string>
+    <string name="filters_remove_keyword">Kulcsszó eltávolítása</string>
+    <string name="filters_add_keyword">Kulcsszó hozzáadása</string>
     <string name="tag_action_delete_title">Törlés</string>
     <string name="tag_action_delete_message">Biztosan törölni szeretné a(z) \"%1$s\" címkét?</string>
     <string name="tag_action_delete_confirm">Törlés</string>
