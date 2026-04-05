@@ -1,4 +1,4 @@
-Kā norāda nosaukums, Capy Reader ir mazs RSS lasītājs, kas koncentrējas uz pieejamību un vienkāršību.
+Kā norāda nosaukums, Capy Reader — kompakts RSS lasītājs, kas koncentrējas uz lietošanas ērtumu un vienkāršību.
 
 Pāris galvenās funkcijas:
 
