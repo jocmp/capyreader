@@ -40,7 +40,9 @@ class HeadlinesWidget : GlanceAppWidget() {
 
     override suspend fun providePreview(context: Context, widgetCategory: Int) {
         provideContent {
-            HeadlinesLayout(sampleArticles())
+            GlanceTheme {
+                HeadlinesLayout(sampleArticles())
+            }
         }
     }
 
