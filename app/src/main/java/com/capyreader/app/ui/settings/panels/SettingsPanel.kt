@@ -54,6 +54,12 @@ sealed class SettingsPanel(@StringRes val title: Int) {
         override fun icon() = Icons.Rounded.Visibility
     }
 
+    @Parcelize
+    data object ArticleList : SettingsPanel(title = R.string.settings_article_list_title),
+        Parcelable {
+        override fun icon() = Icons.Rounded.Visibility
+    }
+
     fun isNested() = !items.contains(this)
 
     companion object {
