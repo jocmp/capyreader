@@ -13,8 +13,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
 import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -27,13 +30,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
-import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.common.RowItem
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.AppTheme
 import com.capyreader.app.preferences.ReaderImageVisibility
 import com.capyreader.app.preferences.ThemeMode
-import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.capyreader.app.ui.articles.MarkReadPosition
 import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.components.FormSection
@@ -47,6 +48,7 @@ import org.koin.androidx.compose.koinViewModel
 fun DisplaySettingsPanel(
     viewModel: DisplaySettingsViewModel = koinViewModel(),
     onNavigateToUnreadBadges: () -> Unit = {},
+    onNavigateToArticleList: () -> Unit = {},
 ) {
     val pinArticleBars by viewModel.pinArticleBars.collectChangesWithCurrent()
     val improveTalkback by viewModel.improveTalkback.collectChangesWithCurrent()
@@ -70,20 +72,7 @@ fun DisplaySettingsPanel(
         markReadButtonPosition = markReadButtonPosition,
         updateMarkReadButtonPosition = viewModel::updateMarkReadButtonPosition,
         onNavigateToUnreadBadges = onNavigateToUnreadBadges,
-        articleListOptions = ArticleListOptions(
-            imagePreview = viewModel.imagePreview,
-            showSummary = viewModel.showSummary,
-            fontScale = viewModel.fontScale,
-            showFeedIcons = viewModel.showFeedIcons,
-            showFeedName = viewModel.showFeedName,
-            shortenTitles = viewModel.shortenTitles,
-            updateImagePreview = viewModel::updateImagePreview,
-            updateSummary = viewModel::updateSummary,
-            updateFeedName = viewModel::updateFeedName,
-            updateFeedIcons = viewModel::updateFeedIcons,
-            updateFontScale = viewModel::updateFontScale,
-            updateShortenTitles = viewModel::updateShortenTitles,
-        )
+        onNavigateToArticleList = onNavigateToArticleList,
     )
 }
 
@@ -105,7 +94,7 @@ fun DisplaySettingsPanelView(
     updateImageVisibility: (option: ReaderImageVisibility) -> Unit,
     updateMarkReadButtonPosition: (position: MarkReadPosition) -> Unit,
     onNavigateToUnreadBadges: () -> Unit = {},
-    articleListOptions: ArticleListOptions,
+    onNavigateToArticleList: () -> Unit = {},
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -145,14 +134,16 @@ fun DisplaySettingsPanelView(
                     )
                 }
             }
-            Box(Modifier.clickable { onNavigateToUnreadBadges() }) {
-                ListItem(
-                    headlineContent = {
-                        Text(stringResource(R.string.settings_panel_unread_counts_title))
-                    }
-                )
-            }
+            SettingsDisclosureRow(
+                title = stringResource(R.string.settings_panel_unread_counts_title),
+                onClick = onNavigateToUnreadBadges,
+            )
         }
+
+        SettingsDisclosureRow(
+            title = stringResource(R.string.settings_article_list_title),
+            onClick = onNavigateToArticleList,
+        )
 
         FormSection(
             title = stringResource(R.string.settings_reader_title)
@@ -176,14 +167,6 @@ fun DisplaySettingsPanelView(
             }
         }
 
-        FormSection(
-            title = stringResource(R.string.settings_article_list_title)
-        ) {
-            ArticleListSettings(
-                options = articleListOptions
-            )
-        }
-
         FormSection(title = stringResource(R.string.settings_display_miscellaneous_title)) {
             PreferenceSelect(
                 selected = markReadButtonPosition,
@@ -197,6 +180,24 @@ fun DisplaySettingsPanelView(
         }
 
         Spacer(Modifier.height(16.dp))
+    }
+}
+
+@Composable
+private fun SettingsDisclosureRow(
+    title: String,
+    onClick: () -> Unit,
+) {
+    Box(Modifier.clickable { onClick() }) {
+        ListItem(
+            headlineContent = { Text(title) },
+            trailingContent = {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
+                    contentDescription = null,
+                )
+            }
+        )
     }
 }
 
@@ -240,20 +241,6 @@ private fun DisplaySettingsPanelViewPreview() {
                 pureBlackDarkMode = false,
                 updatePureBlackDarkMode = {},
                 appPreferences = null,
-                articleListOptions = ArticleListOptions(
-                    imagePreview = ImagePreview.default,
-                    showSummary = true,
-                    fontScale = ArticleListFontScale.MEDIUM,
-                    showFeedIcons = true,
-                    showFeedName = false,
-                    shortenTitles = true,
-                    updateImagePreview = {},
-                    updateSummary = {},
-                    updateFeedName = {},
-                    updateFeedIcons = {},
-                    updateFontScale = {},
-                    updateShortenTitles = {},
-                ),
                 updatePinArticleBars = {},
                 pinArticleBars = false,
                 updateImageVisibility = {},
