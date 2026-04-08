@@ -141,11 +141,9 @@ class ArticleScreenViewModel(
     val readLaterFeed: Flow<Feed?> = combine(
         account.feeds,
         _counts,
-        filter,
-    ) { feeds, latestCounts, filter ->
+    ) { feeds, latestCounts ->
         feeds.find { it.isReadLater }
             ?.let { copyFeedCounts(it, latestCounts) }
-            ?.takeIf { it.count > 0 || filter.status != ArticleStatus.UNREAD }
     }
 
     private val nextFilterListener: Flow<NextFilter?> =
