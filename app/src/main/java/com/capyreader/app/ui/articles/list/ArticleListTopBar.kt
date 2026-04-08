@@ -43,7 +43,6 @@ fun ArticleListTopBar(
     onRequestJumpToTop: () -> Unit,
     onNavigateToDrawer: () -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
-    onMarkAllRead: () -> Unit,
     search: ArticleSearch,
     filter: ArticleFilter,
     feeds: List<Feed>,
@@ -139,7 +138,6 @@ fun ArticleListTopBar(
             FilterActionMenu(
                 filter = filter,
                 onRequestSearch = { search.start() },
-                onMarkAllRead = { onMarkAllRead() },
                 hideSearchIcon = enableSearch,
                 hideReadArticles = hideReadArticles,
                 onToggleHideReadArticles = onToggleHideReadArticles,
@@ -157,7 +155,6 @@ private fun FeedListTopBarPreview() {
         onRequestJumpToTop = { },
         onNavigateToDrawer = { },
         scrollBehavior = scrollBehavior,
-        onMarkAllRead = {},
         search = ArticleSearch(),
         filter = ArticleFilter.default(),
         feeds = listOf(),

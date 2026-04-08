@@ -10,7 +10,7 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 
 @Composable
-fun PullToNextFeedBox(
+fun SwipeUpActionBox(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     onRequestNext: () -> Unit,
