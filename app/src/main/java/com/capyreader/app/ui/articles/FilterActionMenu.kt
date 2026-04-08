@@ -24,7 +24,6 @@ import com.jocmp.capy.Feed
 @Composable
 fun FilterActionMenu(
     filter: ArticleFilter,
-    onMarkAllRead: () -> Unit,
     onRequestSearch: () -> Unit,
     hideSearchIcon: Boolean,
     hideReadArticles: Boolean = false,
@@ -64,11 +63,7 @@ fun FilterActionMenu(
         }
 
         if (markReadPosition == MarkReadPosition.TOOLBAR) {
-            MarkAllReadButton(
-                onMarkAllRead = {
-                    onMarkAllRead()
-                },
-            )
+            MarkAllReadButton()
         }
     }
 }
@@ -78,7 +73,6 @@ fun FilterActionMenu(
 fun FeedActionsPreview(@PreviewParameter(FeedSample::class) feed: Feed) {
     PreviewKoinApplication {
         FilterActionMenu(
-            onMarkAllRead = {},
             onRequestSearch = {},
             filter = ArticleFilter.Feeds(
                 feedID = feed.id,
@@ -96,7 +90,6 @@ fun FeedActionsPreview(@PreviewParameter(FeedSample::class) feed: Feed) {
 fun FeedActionsPreviewFilterOff(@PreviewParameter(FeedSample::class) feed: Feed) {
     PreviewKoinApplication {
         FilterActionMenu(
-            onMarkAllRead = {},
             onRequestSearch = {},
             filter = ArticleFilter.Feeds(
                 feedID = feed.id,

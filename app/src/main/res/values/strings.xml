@@ -256,6 +256,7 @@
     <string name="article_list_row_swipe_toggle_read">Toggle Read</string>
     <string name="article_list_row_swipe_toggle_starred">Toggle Starred</string>
     <string name="article_list_swipe_next_feed">Go to next feed</string>
+    <string name="article_list_swipe_mark_all_read">Mark all as read</string>
     <string name="article_list_swipe_disabled">Disabled</string>
     <string name="article_list_sort_title">Article Sort</string>
     <string name="article_list_sort_newest_first">Newest First</string>

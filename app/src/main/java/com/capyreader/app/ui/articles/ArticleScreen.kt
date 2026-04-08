@@ -46,8 +46,10 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.R
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.Saver
+import com.capyreader.app.common.asState
 import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
+import com.capyreader.app.preferences.ArticleListVerticalSwipe
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.LocalBadgeStyle
 import com.capyreader.app.ui.LocalConnectivity
@@ -69,8 +71,10 @@ import com.capyreader.app.ui.articles.feeds.SavedSearchActions
 import com.capyreader.app.ui.articles.list.ArticleListTopBar
 import com.capyreader.app.ui.articles.list.EmptyOnboardingView
 import com.capyreader.app.ui.articles.list.LabelBottomSheet
+import com.capyreader.app.ui.articles.list.LocalMarkAllRead
 import com.capyreader.app.ui.articles.list.MarkAllReadButton
-import com.capyreader.app.ui.articles.list.PullToNextFeedBox
+import com.capyreader.app.ui.articles.list.MarkAllReadDialog
+import com.capyreader.app.ui.articles.list.SwipeUpActionBox
 import com.capyreader.app.ui.articles.list.resetScrollBehaviorListener
 import com.capyreader.app.ui.articles.media.ArticleMediaView
 import com.capyreader.app.ui.collectChangesWithCurrent
@@ -120,6 +124,7 @@ fun ArticleScreen(
     val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle("")
     val searchState by viewModel.searchState.collectAsStateWithLifecycle(SearchState.INACTIVE)
     val nextFilter by viewModel.nextFilter.collectAsStateWithLifecycle(initialValue = null)
+    val swipeBottom by viewModel.listSwipeBottom.collectAsStateWithLifecycle()
     val afterReadAll by viewModel.afterReadAll.collectAsStateWithLifecycle()
     val hideReadArticles by viewModel.hideReadArticles.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
@@ -127,7 +132,11 @@ fun ArticleScreen(
         .refreshInterval
         .collectChangesWithDefault(appPreferences.refreshInterval.get())
 
-    val canSwipeToNextFeed = nextFilter != null
+    val canSwipeBottom = when (swipeBottom) {
+        ArticleListVerticalSwipe.DISABLED -> false
+        ArticleListVerticalSwipe.NEXT_FEED -> nextFilter != null
+        ArticleListVerticalSwipe.MARK_ALL_READ -> true
+    }
     val context = LocalContext.current
 
     val canSaveExternally by viewModel.canSaveArticleExternally.collectAsStateWithLifecycle()
@@ -156,9 +165,6 @@ fun ArticleScreen(
                     drawerState.open()
                 }
             },
-            searches = savedSearches,
-            folders = folders,
-            feeds = feeds,
             range = range,
         )
     }
@@ -174,6 +180,9 @@ fun ArticleScreen(
     )
 
     val snackbarHostState = remember { SnackbarHostState() }
+
+    val confirmMarkAllReadEnabled by appPreferences.articleListOptions.confirmMarkAllRead.asState()
+    var isMarkAllReadDialogOpen by remember { mutableStateOf(false) }
 
     CompositionLocalProvider(
         LocalFullContent provides fullContent,
@@ -280,17 +289,14 @@ fun ArticleScreen(
             scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
         }
 
-        fun requestNextFeed() {
-            coroutineScope.launchUI {
-                openNextStatus {
-                    viewModel.requestNextFeed()
-                }
-            }
-        }
-
         fun markAllRead(range: MarkRead) {
+            if (range == MarkRead.All && confirmMarkAllReadEnabled) {
+                isMarkAllReadDialogOpen = true
+                return
+            }
+
             val animateMarkRead = openNextFeedOnReadAll &&
-                    canSwipeToNextFeed &&
+                    nextFilter != null &&
                     canOpenNextFeed(filter, range)
 
             if (animateMarkRead) {
@@ -301,6 +307,24 @@ fun ArticleScreen(
                 }
             } else {
                 onMarkAllRead(range)
+            }
+        }
+
+        fun onSwipeUp() {
+            when (swipeBottom) {
+                ArticleListVerticalSwipe.NEXT_FEED -> {
+                    coroutineScope.launchUI {
+                        openNextStatus {
+                            viewModel.requestNextFeed()
+                        }
+                    }
+                }
+
+                ArticleListVerticalSwipe.MARK_ALL_READ -> {
+                    markAllRead(MarkRead.All)
+                }
+
+                ArticleListVerticalSwipe.DISABLED -> {}
             }
         }
 
@@ -510,107 +534,106 @@ fun ArticleScreen(
                 val keyboardManager = LocalSoftwareKeyboardController.current
                 val markReadPosition = LocalMarkAllReadButtonPosition.current
 
-                Scaffold(
-                    modifier = Modifier
-                        .nestedScroll(scrollBehavior.nestedScrollConnection)
-                        .nestedScroll(object : NestedScrollConnection {
-                            override fun onPostScroll(
-                                consumed: Offset,
-                                available: Offset,
-                                source: NestedScrollSource
-                            ): Offset {
-                                if (search.isActive) {
-                                    keyboardManager?.hide()
-                                }
-
-                                return Offset.Zero
-                            }
-                        }),
-                    topBar = {
-                        ArticleListTopBar(
-                            onRequestJumpToTop = { scrollToTop() },
-                            onNavigateToDrawer = { openDrawer() },
-                            scrollBehavior = scrollBehavior,
-                            onMarkAllRead = { markAllRead(MarkRead.All) },
-                            search = search,
-                            filter = filter,
-                            feeds = allFeeds,
-                            savedSearches = savedSearches,
-                            folders = allFolders,
-                            hideReadArticles = hideReadArticles,
-                            onToggleHideReadArticles = { viewModel.toggleHideReadArticles() },
-                        )
-                    },
-                    snackbarHost = {
-                        SnackbarHost(hostState = snackbarHostState)
-                    },
-                    floatingActionButton = {
-                        if (markReadPosition == MarkReadPosition.FLOATING_ACTION_BUTTON) {
-                            MarkAllReadButton(
-                                onMarkAllRead = {
-                                    markAllRead(MarkRead.All)
-                                },
-                                position = MarkReadPosition.FLOATING_ACTION_BUTTON,
-                            )
-                        }
-                    },
-                    bottomBar = {
-                        audioEnclosure?.let { audio ->
-                            FloatingAudioPlayer(
-                                audio = audio,
-                                controller = audioController,
-                                onDismiss = {
-                                    audioController.dismiss()
-                                },
-                            )
-                        }
-                    }
-                ) { innerPadding ->
-                    ArticleListScaffold(
-                        padding = innerPadding,
-                        showOnboarding = showOnboarding,
-                        onboarding = {
-                            EmptyOnboardingView {
-                                AddFeedButton(
-                                    onComplete = {
-                                        onFeedAdded(it)
+                CompositionLocalProvider(
+                    LocalMarkAllRead provides { markAllRead(MarkRead.All) },
+                ) {
+                    Scaffold(
+                        modifier = Modifier
+                            .nestedScroll(scrollBehavior.nestedScrollConnection)
+                            .nestedScroll(object : NestedScrollConnection {
+                                override fun onPostScroll(
+                                    consumed: Offset,
+                                    available: Offset,
+                                    source: NestedScrollSource
+                                ): Offset {
+                                    if (search.isActive) {
+                                        keyboardManager?.hide()
                                     }
+
+                                    return Offset.Zero
+                                }
+                            }),
+                        topBar = {
+                            ArticleListTopBar(
+                                onRequestJumpToTop = { scrollToTop() },
+                                onNavigateToDrawer = { openDrawer() },
+                                scrollBehavior = scrollBehavior,
+                                search = search,
+                                filter = filter,
+                                feeds = allFeeds,
+                                savedSearches = savedSearches,
+                                folders = allFolders,
+                                hideReadArticles = hideReadArticles,
+                                onToggleHideReadArticles = { viewModel.toggleHideReadArticles() },
+                            )
+                        },
+                        snackbarHost = {
+                            SnackbarHost(hostState = snackbarHostState)
+                        },
+                        floatingActionButton = {
+                            if (markReadPosition == MarkReadPosition.FLOATING_ACTION_BUTTON) {
+                                MarkAllReadButton(
+                                    position = MarkReadPosition.FLOATING_ACTION_BUTTON,
                                 )
                             }
                         },
-                    ) {
-                        PullToRefreshBox(
-                            isRefreshing = isPullToRefreshing,
-                            onRefresh = {
-                                refreshFeeds()
-                            },
-                            modifier = Modifier.fillMaxSize()
-                        ) {
-                            PullToNextFeedBox(
-                                modifier = Modifier.fillMaxSize(),
-                                enabled = canSwipeToNextFeed,
-                                onRequestNext = {
-                                    requestNextFeed()
-                                },
-                            ) {
-                                if (isRefreshInitialized && articles.itemCount == 0) {
-                                    ArticleListEmptyView()
-                                } else {
-                                    ArticleList(
-                                        articles = articles,
-                                        selectedArticleKey = article?.id,
-                                        listState = listState,
-                                        enableMarkReadOnScroll = enableMarkReadOnScroll,
-                                        refreshingAll = viewModel.refreshingAll,
-                                        dimReadArticles = filter !is ArticleFilter.Starred,
-                                        showIcons = !filter.isReadLaterFeed(readLaterFeed),
-                                        onMarkAllRead = { range ->
-                                            onMarkAllRead(range)
-                                        },
-                                        onSelect = { articleID ->
-                                            selectArticle(articleID)
-                                        },
+                        bottomBar = {
+                            audioEnclosure?.let { audio ->
+                                FloatingAudioPlayer(
+                                    audio = audio,
+                                    controller = audioController,
+                                    onDismiss = {
+                                        audioController.dismiss()
+                                    },
+                                )
+                            }
+                        }
+                    ) { innerPadding ->
+                        ArticleListScaffold(
+                            padding = innerPadding,
+                            showOnboarding = showOnboarding,
+                            onboarding = {
+                                EmptyOnboardingView {
+                                    AddFeedButton(
+                                        onComplete = {
+                                            onFeedAdded(it)
+                                        }
                                     )
+                                }
+                            },
+                        ) {
+                            PullToRefreshBox(
+                                isRefreshing = isPullToRefreshing,
+                                onRefresh = {
+                                    refreshFeeds()
+                                },
+                                modifier = Modifier.fillMaxSize()
+                            ) {
+                                SwipeUpActionBox(
+                                    modifier = Modifier.fillMaxSize(),
+                                    enabled = canSwipeBottom,
+                                    onRequestNext = {
+                                        onSwipeUp()
+                                    },
+                                ) {
+                                    if (isRefreshInitialized && articles.itemCount == 0) {
+                                        ArticleListEmptyView()
+                                    } else {
+                                        ArticleList(
+                                            articles = articles,
+                                            selectedArticleKey = article?.id,
+                                            listState = listState,
+                                            enableMarkReadOnScroll = enableMarkReadOnScroll,
+                                            refreshingAll = viewModel.refreshingAll,
+                                            dimReadArticles = filter !is ArticleFilter.Starred,
+                                            onMarkAllRead = { range ->
+                                                onMarkAllRead(range)
+                                            },
+                                            onSelect = { articleID ->
+                                                selectArticle(articleID)
+                                            },
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -686,6 +709,18 @@ fun ArticleScreen(
             )
         }
 
+
+        if (isMarkAllReadDialogOpen) {
+            MarkAllReadDialog(
+                onConfirm = {
+                    isMarkAllReadDialogOpen = false
+                    onMarkAllRead(MarkRead.All)
+                },
+                onDismissRequest = {
+                    isMarkAllReadDialogOpen = false
+                },
+            )
+        }
 
         if (viewModel.showUnauthorizedMessage) {
             UnauthorizedAlertDialog(
