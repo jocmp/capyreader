@@ -1,0 +1,13 @@
+Igual que el seu homònim, Capy Reader és un petit lector RSS centrat en l'accessibilitat i la simplicitat.
+
+Algunes funcionalitats inclouen:
+
+• Sincronització amb Feedbin, FreshRSS o directament al teu dispositiu
+• Seguiment d'articles llegits i destacats
+• Cerca d'articles
+• Widget de titulars
+• Notificacions
+• Mode de contingut complet
+• Mode fosc
+• Compatibilitat amb pantalles grans
+• Importació i exportació dels teus canals desats
