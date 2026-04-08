@@ -603,6 +603,7 @@ fun ArticleScreen(
                                         enableMarkReadOnScroll = enableMarkReadOnScroll,
                                         refreshingAll = viewModel.refreshingAll,
                                         dimReadArticles = filter !is ArticleFilter.Starred,
+                                        showIcons = currentFeed?.isReadLater != true,
                                         onMarkAllRead = { range ->
                                             onMarkAllRead(range)
                                         },

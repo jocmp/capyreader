@@ -49,9 +49,12 @@ fun ArticleList(
     refreshingAll: Boolean,
     enableMarkReadOnScroll: Boolean = false,
     dimReadArticles: Boolean = true,
+    showIcons: Boolean = true,
 ) {
-    val articleOptions = rememberArticleOptions().copy(
+    val options = rememberArticleOptions()
+    val articleOptions = options.copy(
         dim = dimReadArticles,
+        showIcon = options.showIcon && showIcons,
     )
     val currentTime = rememberCurrentTime()
     val localDensity = LocalDensity.current
