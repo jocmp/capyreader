@@ -247,7 +247,6 @@
     <string name="tag_name_title">Nome</string>
     <string name="tag_action_edit">Editar etiqueta</string>
     <string name="tag_action_delete_confirm">Eliminar</string>
-    <string name="delete_tag_error">Erro ao eliminar a etiqueta</string>
     <string name="tag_action_edit_success">Actulizouse a etiqueta</string>
     <string name="tag_action_edit_error">Erro ao actualizar a etiqueta</string>
     <string name="tag_action_delete_title">Eliminar</string>
@@ -282,11 +281,8 @@
     <string name="settings_pure_black_dark_mode">Negro puro modo escuro</string>
     <string name="selected">Seleccionado</string>
     <string name="filter_today">Hoxe</string>
-    <string name="settings_section_categories">Categorías</string>
     <string name="settings_option_show_today_filter">Hoxe</string>
     <string name="auth_fields_freshrss_api_password">Contrasinal da API</string>
-    <string name="feed_visibility">Visibilidade</string>
-    <string name="feed_visibility_option_unread">Cronoloxía principal</string>
     <string name="freshrss_visibility_option_important">Importante</string>
     <string name="freshrss_visibility_option_folder">Categoría</string>
     <string name="freshrss_visibility_option_feed">Cronoloxía</string>
@@ -305,7 +301,6 @@
     <string name="auth_fields_miniflux_use_password">Alternativa, usar contrasinal</string>
     <string name="auth_fields_show_advanced">Opcións avanzadas</string>
     <string name="auth_fields_hide_advanced">Ocultar opcións avanzadas</string>
-    <string name="freshrss_tag_action_edit">Editar categoría</string>
     <string name="settings_panel_unread_counts_title">Marcas de non lidos</string>
     <string name="settings_option_badge_style">Estilo da marca</string>
     <string name="badge_style_simple">Simple</string>

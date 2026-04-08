@@ -240,7 +240,6 @@
     <string name="settings_enable_high_contrast_dark_theme">Slå mørkt tema med høj kontrast til</string>
     <string name="settings_section_mark_all_as_read">Marker alle som læst</string>
     <string name="settings_section_browser">Browser</string>
-    <string name="settings_section_categories">Kategorier</string>
     <string name="settings_option_show_today_filter">I dag</string>
     <string name="reader_image_visibility_show_on_wifi">Vis kun billeder på Wi-Fi</string>
     <string name="reader_image_visibility_always_hide">Bloker billeder</string>
@@ -285,8 +284,6 @@
     <string name="open_articles_in_browser">Åbn artikler i browser</string>
     <string name="selected">Valgt</string>
     <string name="auth_fields_freshrss_api_password">API adgangskode</string>
-    <string name="feed_visibility">Synlighed</string>
-    <string name="feed_visibility_option_unread">Hovedstrøm</string>
     <string name="freshrss_visibility_option_important">Vigtigt</string>
     <string name="freshrss_visibility_option_folder">Kategori</string>
     <string name="freshrss_visibility_option_feed">Feed</string>

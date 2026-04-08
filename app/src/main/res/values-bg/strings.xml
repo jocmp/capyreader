@@ -257,7 +257,6 @@
     <string name="tag_action_edit_success">Етикетът е актуализиран</string>
     <string name="tag_action_edit">Редактиране на етикет</string>
     <string name="tag_action_edit_error">Грешка при актуализиране на етикет</string>
-    <string name="delete_tag_error">Грешка при изтриване на етикет</string>
     <string name="tag_action_delete_message">Сигурни ли сте, че искате да изтриете етикета \"%1$s\"?</string>
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">Преминаване към източник</string>
     <string name="actions_copy_link">Копирай връзката</string>
@@ -289,11 +288,8 @@
     <string name="theme_newsprint">Вестникарска хартия</string>
     <string name="theme_sunset">Залез</string>
     <string name="filter_today">Днес</string>
-    <string name="settings_section_categories">Категории</string>
     <string name="settings_option_show_today_filter">Днес</string>
     <string name="auth_fields_freshrss_api_password">Парола за API</string>
-    <string name="feed_visibility">Видимост</string>
-    <string name="feed_visibility_option_unread">Основен поток</string>
     <string name="freshrss_visibility_option_important">Важно</string>
     <string name="freshrss_visibility_option_folder">Категория</string>
     <string name="freshrss_visibility_option_feed">Емисия</string>
@@ -312,7 +308,6 @@
     <string name="auth_fields_miniflux_use_password">Използвайте парола вместо това</string>
     <string name="auth_fields_show_advanced">Разширени опции</string>
     <string name="auth_fields_hide_advanced">Скриване на разширени опции</string>
-    <string name="freshrss_tag_action_edit">Редактиране на категория</string>
     <string name="settings_panel_unread_counts_title">Непрочетени значки</string>
     <string name="settings_option_badge_style">Стил на значката</string>
     <string name="badge_style_simple">Просто</string>

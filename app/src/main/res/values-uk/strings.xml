@@ -284,13 +284,10 @@
     <string name="settings_gestures_reader_tap_to_page_subtitle">Гортати текст статті дотиком до нижніх країв</string>
     <string name="theme_newsprint">Газета</string>
     <string name="filter_today">Сьогодні</string>
-    <string name="settings_section_categories">Категорії</string>
     <string name="settings_option_show_today_filter">Сьогодні</string>
     <string name="auth_fields_freshrss_api_password">Пароль API</string>
-    <string name="feed_visibility_option_unread">Головний потік</string>
     <string name="freshrss_visibility_option_folder">Категорія</string>
     <string name="freshrss_visibility_option_feed">Стрічка</string>
-    <string name="feed_visibility">Видимість</string>
     <string name="freshrss_visibility_option_important">Важливе</string>
     <string name="audio_player_play">Відтворити</string>
     <string name="audio_player_pause">Призупинити</string>
@@ -316,7 +313,6 @@
     <string name="add_link_subscribe">Підписатись</string>
     <string name="add_link_feed_added">Стрічку додано</string>
     <string name="add_link_page_saved">Сторінку збережено</string>
-    <string name="freshrss_tag_action_edit">Редагувати категорію</string>
     <string name="settings_panel_unread_counts_title">Підписи непрочитаних</string>
     <string name="settings_option_badge_style">Стиль підпису</string>
     <string name="badge_style_simple">Простий</string>

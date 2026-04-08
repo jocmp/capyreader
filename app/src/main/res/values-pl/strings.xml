@@ -248,7 +248,6 @@
     <string name="filters_title">Lista zablokowanych</string>
     <string name="filters_remove_keyword">Usuń słowo kluczowe</string>
     <string name="filters_add_keyword">Dodaj słowo kluczowe</string>
-    <string name="delete_tag_error">Błąd podczas usuwania kategorii</string>
     <string name="tag_action_delete_title">Usuń</string>
     <string name="tag_action_delete_message">Czy na pewno chcesz usunąć kategorię \"%1$s\"?</string>
     <string name="tag_action_delete_confirm">Usuń</string>
@@ -285,7 +284,6 @@
     <string name="theme_default">Domyślny</string>
     <string name="theme_sunset">Zachód słońca</string>
     <string name="selected">Wybrano</string>
-    <string name="settings_section_categories">Kategorie</string>
     <string name="filter_today">Dzisiejsze</string>
     <string name="settings_option_show_today_filter">Dzisiejsze</string>
     <string name="add_link_title">Dodaj link</string>
@@ -308,12 +306,9 @@
     <string name="auth_fields_miniflux_use_password">Użyj hasła zamiast tego</string>
     <string name="auth_fields_show_advanced">Opcje zaawansowane</string>
     <string name="auth_fields_hide_advanced">Ukryj opcje zaawansowane</string>
-    <string name="feed_visibility">Widoczność</string>
-    <string name="feed_visibility_option_unread">Główny strumień</string>
     <string name="freshrss_visibility_option_important">Ważne</string>
     <string name="freshrss_visibility_option_folder">Kategoria</string>
     <string name="freshrss_visibility_option_feed">Kanał</string>
-    <string name="freshrss_tag_action_edit">Edytuj kategorię</string>
     <string name="audio_player_play">Odtwórz</string>
     <string name="audio_player_pause">Wstrzymaj</string>
     <string name="audio_player_close">Zamknij odtwarzacz</string>

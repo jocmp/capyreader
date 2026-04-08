@@ -258,7 +258,6 @@
     <string name="tag_action_edit_error">更新标签时出错</string>
     <string name="tag_action_edit">编辑标签</string>
     <string name="tag_action_delete_confirm">删除</string>
-    <string name="delete_tag_error">删除标签时出错</string>
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">导航至上级</string>
     <string name="actions_copy_link">复制链接</string>
     <string name="actions_share_link">分享链接</string>
@@ -290,10 +289,7 @@
     <string name="theme_sunset">日落</string>
     <string name="filter_today">今天</string>
     <string name="settings_option_show_today_filter">今天</string>
-    <string name="settings_section_categories">类别</string>
     <string name="auth_fields_freshrss_api_password">API 密码</string>
-    <string name="feed_visibility">可见性</string>
-    <string name="feed_visibility_option_unread">主信息流</string>
     <string name="freshrss_visibility_option_important">重要</string>
     <string name="freshrss_visibility_option_folder">类别</string>
     <string name="freshrss_visibility_option_feed">订阅源</string>
@@ -310,7 +306,6 @@
     <string name="auth_fields_miniflux_use_password">改为使用密码</string>
     <string name="auth_fields_show_advanced">高级选项</string>
     <string name="auth_fields_hide_advanced">隐藏高级选项</string>
-    <string name="freshrss_tag_action_edit">编辑类别</string>
     <string name="settings_panel_unread_counts_title">未读徽章</string>
     <string name="settings_option_badge_style">徽章样式</string>
     <string name="badge_style_simple">简约</string>

@@ -303,7 +303,6 @@
     <string name="settings_section_experimental">נסיוני</string>
     <string name="starred_export_button_text">ייצא מאמרים המסומנים בכוכב</string>
     <string name="starred_exporter_success">הייצוא הושלם</string>
-    <string name="settings_section_categories">קטגוריות</string>
     <string name="open_articles_in_browser">פתח מאמרים בדפדפן</string>
     <string name="selected">נבחר</string>
     <string name="auth_fields_freshrss_api_password">סיסמת API</string>
@@ -312,12 +311,9 @@
     <string name="auth_fields_miniflux_use_password">השתמש בסיסמה במקום</string>
     <string name="auth_fields_show_advanced">אפשרויות מתקדמות</string>
     <string name="auth_fields_hide_advanced">הסתר אפשרויות מתקדמות</string>
-    <string name="feed_visibility">נראות</string>
-    <string name="feed_visibility_option_unread">זרם מרכזי</string>
     <string name="freshrss_visibility_option_important">חשוב</string>
     <string name="freshrss_visibility_option_folder">קטגוריה</string>
     <string name="freshrss_visibility_option_feed">פיד</string>
-    <string name="freshrss_tag_action_edit">ערוך קטגוריה</string>
     <string name="audio_player_play">נגן</string>
     <string name="audio_player_pause">השהיה</string>
     <string name="audio_player_close">סגור נגן</string>

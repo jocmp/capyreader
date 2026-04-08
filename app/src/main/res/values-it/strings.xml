@@ -253,7 +253,6 @@
     <string name="filters_add_keyword">Aggiungi parola chiave</string>
     <string name="filters_remove_keyword">Rimuovi parola chiave</string>
     <string name="filters_supporting_text">Rimuovi gli articoli che hanno una corrispondenza con le parole chiave del titolo o del contenuto</string>
-    <string name="delete_tag_error">Errore nell\'eliminazione del tag</string>
     <string name="tag_action_delete_title">Elimina</string>
     <string name="tag_action_delete_message">Confermi di voler eliminare il tag \"%1$s\"?</string>
     <string name="tag_action_delete_confirm">Elimina</string>
@@ -291,11 +290,8 @@
     <string name="theme_sunset">Tramonto</string>
     <string name="selected">Selezionato</string>
     <string name="filter_today">Oggi</string>
-    <string name="settings_section_categories">Categorie</string>
     <string name="settings_option_show_today_filter">Oggi</string>
     <string name="auth_fields_freshrss_api_password">Password API</string>
-    <string name="feed_visibility">Visibilità</string>
-    <string name="feed_visibility_option_unread">Flusso principale</string>
     <string name="freshrss_visibility_option_important">Importante</string>
     <string name="freshrss_visibility_option_folder">Categoria</string>
     <string name="freshrss_visibility_option_feed">Feed</string>
@@ -323,7 +319,6 @@
     <string name="auth_fields_miniflux_use_password">Utilizza la password</string>
     <string name="auth_fields_show_advanced">Opzioni avanzate</string>
     <string name="auth_fields_hide_advanced">Nascondi opzioni avanzate</string>
-    <string name="freshrss_tag_action_edit">Modifica categoria</string>
     <string name="settings_panel_unread_counts_title">Badge non letti</string>
     <string name="settings_option_badge_style">Stile Badge</string>
     <string name="badge_style_simple">Semplice</string>

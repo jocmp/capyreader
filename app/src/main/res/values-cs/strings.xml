@@ -286,11 +286,8 @@
     <string name="open_articles_in_browser">Otevřít články v prohlížeči</string>
     <string name="selected">Vybrané</string>
     <string name="filter_today">Dnešní</string>
-    <string name="settings_section_categories">Kategorie</string>
     <string name="settings_option_show_today_filter">Dnešní</string>
     <string name="auth_fields_freshrss_api_password">API heslo</string>
-    <string name="feed_visibility">Viditelnost</string>
-    <string name="feed_visibility_option_unread">Hlavní kanál</string>
     <string name="freshrss_visibility_option_important">Důležité</string>
     <string name="freshrss_visibility_option_folder">Kategorie</string>
 </resources>

@@ -279,7 +279,6 @@
     <string name="theme_mode_dark">Koyu</string>
     <string name="theme_default">Öntanımlı</string>
     <string name="theme_sunset">Gün batımı</string>
-    <string name="settings_section_categories">Kategoriler</string>
     <string name="settings_option_show_today_filter">Bugün</string>
     <string name="mark_read_position_toolbar">Araç çubuğu</string>
     <string name="mark_read_position_floating_action_button">Yüzen Eylem Düğmesi</string>
@@ -311,7 +310,5 @@
     <string name="auth_fields_hide_advanced">Gelişmiş seçenekleri gizle</string>
     <string name="freshrss_visibility">Görünürlük</string>
     <string name="freshrss_visibility_option_important">Önemli</string>
-    <string name="freshrss_visibility_option_category">Kategori</string>
     <string name="freshrss_visibility_option_feed">Yayın</string>
-    <string name="freshrss_tag_action_edit">Kategoriyi Düzenle</string>
 </resources>

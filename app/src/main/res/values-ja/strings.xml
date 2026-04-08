@@ -212,7 +212,6 @@
     <string name="settings_enable_high_contrast_dark_theme">ハイコントラストなダークテーマを有効化</string>
     <string name="settings_section_mark_all_as_read">すべてを既読にする</string>
     <string name="settings_section_browser">ブラウザ</string>
-    <string name="settings_section_categories">カテゴリー</string>
     <string name="settings_option_show_today_filter">今日</string>
     <string name="reader_image_visibility_show_on_wifi">Wi-Fi使用時のみ画像を表示</string>
     <string name="reader_image_visibility_always_hide">画像を非表示</string>

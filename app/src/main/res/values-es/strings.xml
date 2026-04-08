@@ -253,7 +253,6 @@
     <string name="filters_title">Palabras Clave Bloqueadas</string>
     <string name="filters_remove_keyword">Eliminar palabra clave</string>
     <string name="filters_add_keyword">Añadir palabra clave</string>
-    <string name="delete_tag_error">Error al eliminar etiqueta</string>
     <string name="tag_action_edit">Editar Etiqueta</string>
     <string name="actions_copy_link">Copiar enlace</string>
     <string name="actions_share_link">Compartir enlace</string>
@@ -285,12 +284,10 @@
     <string name="theme_default">Por defecto</string>
     <string name="theme_sunset">Atardecer</string>
     <string name="settings_pure_black_dark_mode">Modo oscuro puro</string>
-    <string name="settings_section_categories">Categorías</string>
     <string name="settings_option_show_today_filter">Hoy</string>
     <string name="open_articles_in_browser">Abrir artículos en el navegador</string>
     <string name="selected">Seleccionado</string>
     <string name="auth_fields_freshrss_api_password">Contraseña de API</string>
-    <string name="feed_visibility">Visibilidad</string>
     <string name="freshrss_visibility_option_important">Importante</string>
     <string name="freshrss_visibility_option_folder">Categoría</string>
     <string name="theme_mode_label">Modo</string>
@@ -302,7 +299,6 @@
     <string name="freshrss_nav_headline_categories">Categorías</string>
     <string name="article_list_empty">Nada por aquí</string>
     <string name="freshrss_visibility_option_feed">Contenido</string>
-    <string name="feed_visibility_option_unread">Corriente principal</string>
     <string name="auth_fields_miniflux_api_token">Token de API</string>
     <string name="auth_fields_miniflux_use_password">Usar Contraseña en su lugar</string>
     <string name="auth_fields_show_advanced">Opciones avanzadas</string>
@@ -319,7 +315,6 @@
     <string name="add_link_subscribe">Suscribirse</string>
     <string name="add_link_feed_added">Feed añadido</string>
     <string name="add_link_page_saved">Página guardada</string>
-    <string name="freshrss_tag_action_edit">Editar categoría</string>
     <string name="settings_panel_unread_counts_title">Placas no leídas</string>
     <string name="settings_option_badge_style">Estilo de Placa</string>
     <string name="badge_style_simple">Simple</string>

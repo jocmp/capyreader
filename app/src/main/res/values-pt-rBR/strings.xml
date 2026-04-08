@@ -287,13 +287,10 @@
     <string name="theme_default">Padrão</string>
     <string name="theme_sunset">Pôr do sol</string>
     <string name="article_list_empty">Nada aqui</string>
-    <string name="settings_section_categories">Categorias</string>
     <string name="settings_option_show_today_filter">Hoje</string>
     <string name="open_articles_in_browser">Abrir Artigos no Navegador</string>
     <string name="selected">Selecionado</string>
     <string name="auth_fields_freshrss_api_password">API Senha</string>
-    <string name="feed_visibility">Visibilidade</string>
-    <string name="feed_visibility_option_unread">Principal</string>
     <string name="freshrss_visibility_option_important">Importante</string>
     <string name="freshrss_visibility_option_folder">Categoria</string>
     <string name="freshrss_visibility_option_feed">Feed</string>
@@ -318,7 +315,6 @@
     <string name="auth_fields_miniflux_use_password">Usar Senha</string>
     <string name="auth_fields_show_advanced">Opções avançadas</string>
     <string name="auth_fields_hide_advanced">Ocultar opções avançadas</string>
-    <string name="freshrss_tag_action_edit">Editar Categoria</string>
     <string name="badge_style_simple">Simples</string>
     <string name="badge_style_exact">Exato</string>
     <string name="show_unread_badge">Mostrar Selo Não-lido</string>

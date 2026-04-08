@@ -282,11 +282,8 @@
     <string name="open_articles_in_browser">Artikelen openen in browser</string>
     <string name="selected">Geselecteerd</string>
     <string name="filter_today">Vandaag</string>
-    <string name="settings_section_categories">Categoriën</string>
     <string name="settings_option_show_today_filter">Vandaag</string>
     <string name="auth_fields_freshrss_api_password">API Paswoord</string>
-    <string name="feed_visibility">Zichtbaarheid</string>
-    <string name="feed_visibility_option_unread">Mainstream</string>
     <string name="freshrss_visibility_option_important">Belangrijk</string>
     <string name="freshrss_visibility_option_folder">Categorie</string>
     <string name="freshrss_visibility_option_feed">feed</string>

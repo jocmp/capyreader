@@ -249,7 +249,6 @@
     <string name="filters_supporting_text">Eemalda artiklid, mille pealkirjas või sisus leidub vastav märksõna</string>
     <string name="filters_remove_keyword">Eemalda märksõna</string>
     <string name="filters_add_keyword">Lisa märksõna</string>
-    <string name="delete_tag_error">Viga sildi kustutamisel</string>
     <string name="tag_action_delete_title">Kustuta</string>
     <string name="tag_action_delete_confirm">Kustuta</string>
     <string name="tag_name_title">Nimi</string>
@@ -288,11 +287,8 @@
     <string name="settings_pure_black_dark_mode">Süsimust kujundus</string>
     <string name="selected">Valitud</string>
     <string name="filter_today">Täna</string>
-    <string name="settings_section_categories">Kategooriad</string>
     <string name="settings_option_show_today_filter">Täna</string>
     <string name="auth_fields_freshrss_api_password">API salasõna</string>
-    <string name="feed_visibility">Nähtavus</string>
-    <string name="feed_visibility_option_unread">Põhiline uudisvoog</string>
     <string name="freshrss_visibility_option_important">Oluline</string>
     <string name="freshrss_visibility_option_folder">Kategooria</string>
     <string name="freshrss_visibility_option_feed">Uudisvoog</string>
@@ -322,7 +318,6 @@
     <string name="add_link_subscribe">Telli</string>
     <string name="add_link_feed_added">Uudisvoog on lisatud</string>
     <string name="add_link_page_saved">Leht on salvestatud</string>
-    <string name="freshrss_tag_action_edit">Muuda kategooriat</string>
     <string name="settings_panel_unread_counts_title">Lugemata tunnused</string>
     <string name="settings_option_badge_style">Tunnuse stiil</string>
     <string name="badge_style_simple">Lihtne</string>

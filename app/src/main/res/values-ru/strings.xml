@@ -250,7 +250,6 @@
     <string name="media_share">Поделиться</string>
     <string name="feed_nav_drawer_refresh_all">Обновить все</string>
     <string name="image_preview_menu_option_medium">Средний</string>
-    <string name="delete_tag_error">Ошибка при удалении тега</string>
     <string name="tag_action_delete_title">Удалить</string>
     <string name="tag_action_delete_confirm">Удалить</string>
     <string name="tag_name_title">Имя</string>
@@ -290,16 +289,13 @@
     <string name="theme_mode_dark">Тёмная</string>
     <string name="theme_default">По умолчанию</string>
     <string name="theme_sunset">Закат</string>
-    <string name="settings_section_categories">Категории</string>
     <string name="settings_option_show_today_filter">Сегодня</string>
     <string name="open_articles_in_browser">Открыть статью в браузере</string>
     <string name="selected">Выбранно</string>
     <string name="auth_fields_freshrss_api_password">API-пароль</string>
-    <string name="feed_visibility">Видимость</string>
     <string name="freshrss_visibility_option_important">Важный</string>
     <string name="freshrss_visibility_option_folder">Категория</string>
     <string name="freshrss_visibility_option_feed">Лента</string>
-    <string name="feed_visibility_option_unread">Основной поток</string>
     <string name="freshrss_nav_headline_categories">Категории</string>
     <string name="theme_mode_label">Режим</string>
     <string name="audio_player_play">Озвучить</string>
@@ -325,7 +321,6 @@
     <string name="add_link_feed_added">Лента добавлена</string>
     <string name="add_link_page_saved">Страница сохранена</string>
     <string name="settings_option_badge_style">Стиль счётчиков</string>
-    <string name="freshrss_tag_action_edit">Изменить категорию</string>
     <string name="settings_panel_unread_counts_title">Счётчики непрочитанных</string>
     <string name="badge_style_simple">Простой</string>
     <string name="badge_style_exact">Точный</string>

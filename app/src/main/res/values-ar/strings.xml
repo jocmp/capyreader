@@ -291,11 +291,8 @@
     <string name="selected">محدّدة</string>
     <string name="theme_sunset">الغروب</string>
     <string name="filter_today">اليوم</string>
-    <string name="settings_section_categories">الفئات</string>
     <string name="settings_option_show_today_filter">اليوم</string>
     <string name="auth_fields_freshrss_api_password">كلمة مرور API</string>
-    <string name="feed_visibility">الرؤية</string>
-    <string name="feed_visibility_option_unread">التيار الرئيسي</string>
     <string name="freshrss_visibility_option_important">مهم</string>
     <string name="freshrss_visibility_option_folder">فئة</string>
     <string name="freshrss_visibility_option_feed">موجز</string>
@@ -312,7 +309,6 @@
     <string name="auth_fields_miniflux_use_password">استخدم كلمة المرور بدلاً من ذلك</string>
     <string name="auth_fields_show_advanced">خيارات متقدمة</string>
     <string name="auth_fields_hide_advanced">أخفِ الإعدادات المتقدمة</string>
-    <string name="freshrss_tag_action_edit">عدِّل الفئة</string>
     <string name="settings_panel_unread_counts_title">شارات غير مقروءة</string>
     <string name="settings_option_badge_style">نمط الشارة</string>
     <string name="badge_style_simple">بسيط</string>

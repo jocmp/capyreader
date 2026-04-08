@@ -253,7 +253,6 @@
     <string name="filters_supporting_text">Supprimer les articles dont le titre ou le contenu correspondent à des mots-clés</string>
     <string name="filters_add_keyword">Ajouter un mot-clé</string>
     <string name="filters_remove_keyword">Supprimer le mot-clé</string>
-    <string name="delete_tag_error">Erreur de suppression de l\'étiquette</string>
     <string name="tag_action_delete_title">Supprimer</string>
     <string name="tag_action_delete_message">Êtes-vous sûr de vouloir supprimer l\'étiquette « %1$s » ?</string>
     <string name="tag_action_delete_confirm">Supprimer</string>
@@ -288,11 +287,8 @@
     <string name="selected">Sélectionné</string>
     <string name="theme_sunset">Crépuscule</string>
     <string name="filter_today">Aujourd\'hui</string>
-    <string name="settings_section_categories">Catégories</string>
     <string name="settings_option_show_today_filter">Aujourd\'hui</string>
     <string name="auth_fields_freshrss_api_password">Mot de passe API</string>
-    <string name="feed_visibility">Visibilité</string>
-    <string name="feed_visibility_option_unread">Flux Principal</string>
     <string name="freshrss_visibility_option_important">Important</string>
     <string name="freshrss_visibility_option_folder">Catégorie</string>
     <string name="freshrss_visibility_option_feed">Flux</string>
@@ -309,7 +305,6 @@
     <string name="auth_fields_miniflux_use_password">Utiliser plutôt un mot de passe</string>
     <string name="auth_fields_show_advanced">Options avancées</string>
     <string name="auth_fields_hide_advanced">Masquer les options avancées</string>
-    <string name="freshrss_tag_action_edit">Modifier la catégorie</string>
     <string name="settings_panel_unread_counts_title">Badges non lus</string>
     <string name="settings_option_badge_style">Style de badge</string>
     <string name="badge_style_simple">Simple</string>

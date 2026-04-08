@@ -291,7 +291,6 @@
     <string name="article_list_empty">Tidak ada konten di sini</string>
     <string name="settings_section_experimental">Eksperimental</string>
     <string name="settings_option_enable_audio_player">Pemutar audio</string>
-    <string name="settings_section_categories">Kategori</string>
     <string name="settings_option_show_today_filter">Hari ini</string>
     <string name="mark_read_position_toolbar">Bilah Alat</string>
     <string name="mark_read_position_floating_action_button">Tombol Tindakan Mengambang</string>
@@ -305,12 +304,9 @@
     <string name="auth_fields_miniflux_use_password">Gunakan Kata Sandi sebagai gantinya</string>
     <string name="auth_fields_show_advanced">Opsi lanjutan</string>
     <string name="auth_fields_hide_advanced">Sembunyikan opsi lanjutan</string>
-    <string name="feed_visibility">Visibilitas</string>
-    <string name="feed_visibility_option_unread">Aliran Utama</string>
     <string name="freshrss_visibility_option_important">Penting</string>
     <string name="freshrss_visibility_option_folder">Kategori</string>
     <string name="freshrss_visibility_option_feed">Umpan</string>
-    <string name="freshrss_tag_action_edit">Edit Kategori</string>
     <string name="audio_player_play">Putar</string>
     <string name="audio_player_pause">Jeda</string>
     <string name="audio_player_close">Tutup pemutar</string>

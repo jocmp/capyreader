@@ -285,10 +285,8 @@
     <string name="selected">Ausgewählt</string>
     <string name="filter_today">Heute</string>
     <string name="theme_sunset">Sonnenuntergang</string>
-    <string name="settings_section_categories">Kategorien</string>
     <string name="settings_option_show_today_filter">Heute</string>
     <string name="auth_fields_freshrss_api_password">API-Passwort</string>
-    <string name="feed_visibility">Sichtbarkeit</string>
     <string name="freshrss_nav_headline_categories">Kategorien</string>
     <string name="theme_mode_label">Modus</string>
     <string name="article_list_empty">Leer hier</string>
@@ -306,7 +304,6 @@
     <string name="freshrss_visibility_option_feed">Feed</string>
     <string name="badge_style_exact">Exakt</string>
     <string name="freshrss_visibility_option_important">Wichtig</string>
-    <string name="freshrss_tag_action_edit">Kategorie bearbeiten</string>
     <string name="badge_style_simple">Einfach</string>
     <string name="add_link_title">Link hinzufügen</string>
     <string name="tab_add_feed">Feed hinzufügen</string>
@@ -326,7 +323,6 @@
     <string name="article_actions_delete_page_title">Löschen</string>
     <string name="article_actions_delete_page_message">Bist du sicher, dass du diese Seite löschen willst?</string>
     <string name="article_actions_delete_page_confirm">Löschen</string>
-    <string name="feed_visibility_option_unread">Main Stream</string>
     <string name="article_actions_save_externally">Speichern</string>
     <string name="article_actions_save_externally_success">Gespeichert</string>
     <string name="article_actions_save_externally_failure">Speichern fehlgeschlagen</string>

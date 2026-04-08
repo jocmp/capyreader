@@ -242,7 +242,6 @@
     <string name="filters_title">Atslēgvārdu melnais saraksts</string>
     <string name="filters_supporting_text">Noņem rakstus, kuru virsraksts vai saturs satur atslēgvārdu melnajā sarakstā</string>
     <string name="filters_remove_keyword">Noņemt atslēgvārdu</string>
-    <string name="delete_tag_error">Birkas dzēšanas kļūda</string>
     <string name="tag_action_delete_title">Dzēst</string>
     <string name="tag_action_delete_message">Vai tiešām vēlaties dzēst \"%1$s\" birku?</string>
     <string name="tag_action_delete_confirm">Dzēst</string>
@@ -271,7 +270,6 @@
     <string name="theme_mode_light">Gaišs</string>
     <string name="theme_mode_dark">Tumšs</string>
     <string name="theme_dynamic">Dinamisks</string>
-    <string name="settings_section_categories">Kategorijas</string>
     <string name="theme_sunset">Saulriets</string>
     <string name="auth_fields_remove_client_cert">Noņemt klienta sertifikātu</string>
     <string name="filter_today">Šodienas</string>
@@ -290,7 +288,6 @@
     <string name="save_page_error">Nevarēja saglabāt lapu</string>
     <string name="freshrss_visibility">Redzamība</string>
     <string name="freshrss_visibility_option_important">Svarīgs</string>
-    <string name="freshrss_visibility_option_category">Kategorija</string>
     <string name="freshrss_visibility_option_feed">Ziņu plūsma</string>
     <string name="settings_section_experimental">Eksperimentālie</string>
     <string name="audio_player_play">Atskaņot</string>
@@ -308,7 +305,6 @@
     <string name="settings_option_enable_audio_player">Audio atskaņotājs</string>
     <string name="audio_player_close">Aizvērt atskaņotāju</string>
     <string name="auth_fields_miniflux_api_token">API pilnvara</string>
-    <string name="freshrss_tag_action_edit">Rediģēt kategoriju</string>
     <string name="add_link_feed_added">Ziņu plūsma pievienota</string>
     <string name="add_link_page_saved">Lapa saglabāta</string>
     <string name="article_actions_delete_page">Dzēst lapu</string>
