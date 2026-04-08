@@ -108,6 +108,17 @@ UPDATE feeds SET show_unread_badge = :enabled WHERE id = :feedID;
 toggleAllShowUnreadBadge:
 UPDATE feeds SET show_unread_badge = :enabled;
 
+dailyArticleCounts:
+SELECT date(published_at, 'unixepoch') AS day, COUNT(*) AS count
+FROM articles
+WHERE feed_id = :feedID
+AND published_at >= :since
+GROUP BY day
+ORDER BY day;
+
+latestArticleDate:
+SELECT MAX(published_at) FROM articles WHERE feed_id = :feedID;
+
 delete {
   DELETE FROM article_statuses WHERE article_statuses.article_id IN (
       SELECT id

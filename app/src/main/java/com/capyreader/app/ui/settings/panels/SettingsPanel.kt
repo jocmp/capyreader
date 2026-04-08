@@ -9,6 +9,7 @@ import androidx.compose.material.icons.rounded.Gesture
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material.icons.rounded.Palette
+import androidx.compose.material.icons.rounded.RssFeed
 import androidx.compose.material.icons.rounded.Visibility
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.capyreader.app.R
@@ -20,6 +21,11 @@ sealed class SettingsPanel(@StringRes val title: Int) {
     @Parcelize
     data object General : SettingsPanel(title = R.string.settings_panel_general_title), Parcelable {
         override fun icon() = Icons.Rounded.Build
+    }
+
+    @Parcelize
+    data object Subscriptions : SettingsPanel(title = R.string.settings_panel_subscriptions_title), Parcelable {
+        override fun icon() = Icons.Rounded.RssFeed
     }
 
     @Parcelize
@@ -66,6 +72,7 @@ sealed class SettingsPanel(@StringRes val title: Int) {
         val items: List<SettingsPanel>
             get() = listOf(
                 General,
+                Subscriptions,
                 Display,
                 Gestures,
                 Account,

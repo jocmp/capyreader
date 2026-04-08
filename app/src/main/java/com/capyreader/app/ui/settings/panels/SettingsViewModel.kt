@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.BadgeStyle
 import com.jocmp.capy.Account
+import com.jocmp.capy.FeedStats
 import kotlinx.coroutines.launch
 
 class SettingsViewModel(
@@ -17,6 +18,9 @@ class SettingsViewModel(
     val source = account.source
     val feeds = account.allFeeds
     val savedSearches = account.savedSearches
+
+    var feedStats by mutableStateOf<FeedStats?>(null)
+        private set
 
     var badgeStyle by mutableStateOf(appPreferences.badgeStyle.get())
         private set
@@ -71,6 +75,12 @@ class SettingsViewModel(
     fun selectNoBadges() {
         viewModelScope.launch {
             account.toggleAllUnreadBadges(enabled = false)
+        }
+    }
+
+    fun loadFeedStats(feedID: String) {
+        viewModelScope.launch {
+            feedStats = account.feedStats(feedID)
         }
     }
 }

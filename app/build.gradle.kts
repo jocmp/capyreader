@@ -157,6 +157,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.okhttp.client)
+    implementation(libs.vico.compose.m3)
     implementation(libs.sqldelight.android.driver)
     implementation(libs.sqldelight.androidx.paging.extensions)
     implementation(libs.zoomable)

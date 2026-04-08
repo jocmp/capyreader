@@ -2,6 +2,7 @@ package com.jocmp.capy.persistence
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
+import com.jocmp.capy.DailyCount
 import com.jocmp.capy.Feed
 import com.jocmp.capy.FeedPriority
 import com.jocmp.capy.Folder
@@ -10,6 +11,7 @@ import com.jocmp.capy.db.Database
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
+import java.time.LocalDate
 
 internal class FeedRecords(private val database: Database) {
     suspend fun find(id: String): Feed? = withIOContext {
@@ -99,6 +101,23 @@ internal class FeedRecords(private val database: Database) {
 
     suspend fun toggleAllShowUnreadBadge(enabled: Boolean) = withIOContext {
         database.feedsQueries.toggleAllShowUnreadBadge(enabled = enabled)
+    }
+
+    suspend fun dailyArticleCounts(feedID: String, since: Long): List<DailyCount> = withIOContext {
+        database.feedsQueries.dailyArticleCounts(
+            feedID = feedID,
+            since = since
+        ).executeAsList().mapNotNull { row ->
+            val day = row.day ?: return@mapNotNull null
+            DailyCount(
+                day = LocalDate.parse(day),
+                count = row.count.toInt()
+            )
+        }
+    }
+
+    suspend fun latestArticleDate(feedID: String): Long? = withIOContext {
+        database.feedsQueries.latestArticleDate(feedID).executeAsOneOrNull()?.MAX
     }
 
     suspend fun clearStickyFullContent() = withIOContext {

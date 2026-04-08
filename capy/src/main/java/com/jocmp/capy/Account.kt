@@ -47,6 +47,9 @@ import kotlinx.coroutines.flow.map
 import okhttp3.OkHttpClient
 import java.io.InputStream
 import java.net.URI
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
 import java.time.ZonedDateTime
 
 data class Account(
@@ -442,6 +445,35 @@ data class Account(
         feedRecords.updateStickyFullContent(enabled = false, feedID = feedID)
     }
 
+    suspend fun feedStats(feedID: String): FeedStats? {
+        val feed = taggedFeeds.first().find { it.id == feedID }
+            ?: findFeed(feedID)
+            ?: return null
+        val autoDelete = preferences.autoDelete.get()
+
+        val chartDays = autoDelete.chartDays()
+        val sinceDate = nowUTC().minusDays(chartDays)
+        val since = sinceDate.toEpochSecond()
+
+        val dailyCounts = feedRecords.dailyArticleCounts(feedID, since)
+
+        val thirtyDaysAgo = nowUTC().minusDays(30).toLocalDate()
+        val volume = dailyCounts.filter { it.day >= thirtyDaysAgo }.sumOf { it.count }
+
+        val latestEpoch = feedRecords.latestArticleDate(feedID)
+        val latestArticleAt = latestEpoch?.let {
+            ZonedDateTime.ofInstant(Instant.ofEpochSecond(it), ZoneId.systemDefault())
+        }
+
+        return FeedStats(
+            feed = feed,
+            dailyCounts = dailyCounts,
+            chartDays = chartDays,
+            volume = volume,
+            latestArticleAt = latestArticleAt,
+        )
+    }
+
     suspend fun clearAllArticles() {
         articleRecords.deleteAllArticles()
     }
@@ -499,5 +531,15 @@ private fun AutoDelete.cutoffDate(): ZonedDateTime? {
         AutoDelete.EVERY_TWO_WEEKS -> now.minusWeeks(2)
         AutoDelete.EVERY_MONTH -> now.minusMonths(1)
         AutoDelete.EVERY_THREE_MONTHS -> now.minusMonths(3)
+    }
+}
+
+private fun AutoDelete.chartDays(): Long {
+    return when (this) {
+        AutoDelete.DISABLED -> 90
+        AutoDelete.WEEKLY -> 7
+        AutoDelete.EVERY_TWO_WEEKS -> 14
+        AutoDelete.EVERY_MONTH -> 30
+        AutoDelete.EVERY_THREE_MONTHS -> 90
     }
 }

@@ -9,7 +9,10 @@ import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaf
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -28,6 +31,8 @@ import com.capyreader.app.ui.settings.panels.GeneralSettingsPanel
 import com.capyreader.app.ui.settings.panels.GesturesSettingPanel
 import com.capyreader.app.ui.settings.panels.NotificationsSettingsPanel
 import com.capyreader.app.ui.settings.panels.SettingsPanel
+import com.capyreader.app.ui.settings.panels.SubscriptionDetailView
+import com.capyreader.app.ui.settings.panels.SubscriptionsSettingsPanel
 import com.capyreader.app.ui.settings.panels.UnreadBadgesSettingsPanel
 import com.capyreader.app.ui.settings.panels.SettingsViewModel
 import com.jocmp.capy.common.launchUI
@@ -48,6 +53,7 @@ fun SettingsView(
     val currentPanel = navigator.currentDestination?.contentKey
     val feeds by viewModel.feeds.collectAsStateWithLifecycle(emptyList())
     val savedSearches by viewModel.savedSearches.collectAsStateWithLifecycle(emptyList())
+    var subscriptionDetailFeedId by rememberSaveable { mutableStateOf<String?>(null) }
 
     val navigateToPanel = { panel: SettingsPanel ->
         coroutineScope.launchUI {
@@ -86,15 +92,37 @@ fun SettingsView(
                     SettingsPanelScaffold(
                         panel = currentPanel,
                         onBack = {
-                            navigateBack()
+                            if (currentPanel == SettingsPanel.Subscriptions && subscriptionDetailFeedId != null) {
+                                subscriptionDetailFeedId = null
+                            } else {
+                                navigateBack()
+                            }
                         },
                     ) {
                         when (currentPanel) {
-                            SettingsPanel.General -> GeneralSettingsPanel(
-                                onNavigateToNotifications = {
-                                    navigateToPanel(SettingsPanel.Notifications)
+                            SettingsPanel.General -> GeneralSettingsPanel()
+
+                            SettingsPanel.Subscriptions -> {
+                                val detailFeedId = subscriptionDetailFeedId
+                                if (detailFeedId != null) {
+                                    SubscriptionDetailView(
+                                        feedStats = viewModel.feedStats,
+                                        onLoadStats = {
+                                            viewModel.loadFeedStats(detailFeedId)
+                                        },
+                                    )
+                                } else {
+                                    SubscriptionsSettingsPanel(
+                                        feeds = feeds,
+                                        onSelectAll = viewModel::selectAllFeedNotifications,
+                                        onSelectNone = viewModel::deselectAllFeedNotifications,
+                                        onToggleNotifications = viewModel::toggleNotifications,
+                                        onNavigateToDetail = { feedID ->
+                                            subscriptionDetailFeedId = feedID
+                                        },
+                                    )
                                 }
-                            )
+                            }
 
                             SettingsPanel.Notifications -> NotificationsSettingsPanel(
                                 onSelectNone = viewModel::deselectAllFeedNotifications,
