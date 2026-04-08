@@ -28,6 +28,10 @@ sealed class ArticleFilter(open val status: ArticleStatus) {
         return this is Starred
     }
 
+    fun isReadLaterFeed(feed: Feed?): Boolean {
+        return feed != null && isFeedSelected(feed)
+    }
+
     fun withStatus(status: ArticleStatus): ArticleFilter {
         return when (this) {
             is Articles -> copy(articleStatus = status)

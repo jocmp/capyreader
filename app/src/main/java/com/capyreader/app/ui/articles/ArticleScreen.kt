@@ -76,11 +76,11 @@ import com.capyreader.app.ui.articles.media.ArticleMediaView
 import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.ArticleSearch
+import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.capyreader.app.ui.components.SearchState
 import com.capyreader.app.ui.provideLinkOpener
 import com.capyreader.app.ui.rememberLazyListState
 import com.capyreader.app.ui.rememberLocalConnectivity
-import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
@@ -603,7 +603,7 @@ fun ArticleScreen(
                                         enableMarkReadOnScroll = enableMarkReadOnScroll,
                                         refreshingAll = viewModel.refreshingAll,
                                         dimReadArticles = filter !is ArticleFilter.Starred,
-                                        showIcons = currentFeed?.isReadLater != true,
+                                        showIcons = !filter.isReadLaterFeed(readLaterFeed),
                                         onMarkAllRead = { range ->
                                             onMarkAllRead(range)
                                         },
