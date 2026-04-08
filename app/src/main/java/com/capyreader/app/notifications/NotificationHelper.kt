@@ -155,7 +155,7 @@ class NotificationHelper(
             }
         }
 
-        fun openFromIntent(intent: Intent, appPreferences: AppPreferences) {
+        fun openFromIntent(intent: Intent, appPreferences: AppPreferences): String? {
             val openFromShowMore = intent.getBooleanExtra(UNREAD_ONLY_KEY, false)
             val articleID = intent.getStringExtra(ARTICLE_ID_KEY)
             val feedID = intent.getStringExtra(FEED_ID_KEY)
@@ -167,24 +167,22 @@ class NotificationHelper(
                     ArticleFilter.Articles(articleStatus = ArticleStatus.UNREAD)
                 )
 
-                appPreferences.articleID.delete()
+                return null
             } else if (articleID != null && feedID != null) {
                 intent.replaceExtras(Bundle())
 
                 appPreferences.filter.getAndSet { currentFilter ->
                     ArticleFilter.Feeds(
                         feedID,
-                        feedStatus = if (currentFilter.status != ArticleStatus.STARRED) {
-                            currentFilter.status
-                        } else {
-                            ArticleStatus.UNREAD
-                        },
+                        feedStatus = currentFilter.status,
                         folderTitle = null
                     )
                 }
 
-                appPreferences.articleID.set(articleID)
+                return articleID
             }
+
+            return null
         }
     }
 }

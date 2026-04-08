@@ -43,7 +43,6 @@ fun ArticleStatusBar(
 val options = listOf(
     ArticleStatus.ALL,
     ArticleStatus.UNREAD,
-    ArticleStatus.STARRED,
 )
 
 @Composable

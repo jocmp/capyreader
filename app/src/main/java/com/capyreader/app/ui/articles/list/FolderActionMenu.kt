@@ -10,7 +10,7 @@ import androidx.compose.ui.res.stringResource
 import com.capyreader.app.R
 import com.capyreader.app.ui.articles.EditFolderDialog
 import com.capyreader.app.ui.articles.RemoveFolderDialog
-import com.capyreader.app.ui.settings.localSnackbarDisplay
+import com.capyreader.app.ui.components.localSnackbarDisplay
 import com.jocmp.capy.accounts.Source
 
 @Composable
@@ -21,9 +21,9 @@ fun FolderActionMenu(
     expanded: Boolean,
     source: Source,
 ) {
-    val editSuccessMessage = stringResource(R.string.tag_action_edit_success)
-    val editErrorMessage = stringResource(R.string.tag_action_edit_error)
-    val deleteErrorMessage = stringResource(R.string.delete_tag_error)
+    val editSuccessMessage = stringResource(R.string.folder_action_edit_success)
+    val editErrorMessage = stringResource(R.string.folder_action_edit_error)
+    val deleteErrorMessage = stringResource(R.string.delete_folder_error)
     val showSnackbar = localSnackbarDisplay()
 
     val (isRemoveDialogOpen, setRemoveDialogOpen) = remember { mutableStateOf(false) }
@@ -39,14 +39,9 @@ fun FolderActionMenu(
         expanded = expanded,
         onDismissRequest = onDismissMenuRequest,
     ) {
-        val editTitle = if (source == Source.FRESHRSS) {
-            R.string.freshrss_tag_action_edit
-        } else {
-            R.string.tag_action_edit
-        }
         DropdownMenuItem(
             text = {
-                Text(stringResource(editTitle))
+                Text(stringResource(R.string.folder_action_edit))
             },
             onClick = {
                 onDismissMenuRequest()
@@ -56,7 +51,7 @@ fun FolderActionMenu(
         if (source.supportsTagDeletion) {
             DropdownMenuItem(
                 text = {
-                    Text(stringResource(R.string.tag_action_delete_title))
+                    Text(stringResource(R.string.folder_action_delete_title))
                 },
                 onClick = {
                     onDismissMenuRequest()

@@ -301,6 +301,7 @@ internal class FeedbinAccountDelegate(
             favicon_url = icon?.url,
             priority = null,
             itunes_image_url = null,
+            read_later = subscription.feed_url.startsWith("http://pages.feedbinusercontent.com/"),
         )
     }
 
@@ -379,7 +380,7 @@ internal class FeedbinAccountDelegate(
 
     private suspend fun refreshPages() {
         val feedID = database.feedsQueries
-            .findPagesFeedID()
+            .findReadLaterFeedID()
             .executeAsOneOrNull() ?: return
 
         val remoteIDs = fetchAllFeedEntryIDs(feedID)

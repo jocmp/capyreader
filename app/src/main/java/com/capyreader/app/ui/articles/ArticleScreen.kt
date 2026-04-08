@@ -80,10 +80,9 @@ import com.capyreader.app.ui.components.SearchState
 import com.capyreader.app.ui.provideLinkOpener
 import com.capyreader.app.ui.rememberLazyListState
 import com.capyreader.app.ui.rememberLocalConnectivity
-import com.capyreader.app.ui.settings.LocalSnackbarHost
+import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
-import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
@@ -102,10 +101,12 @@ import org.koin.compose.koinInject
 fun ArticleScreen(
     viewModel: ArticleScreenViewModel = koinViewModel(),
     appPreferences: AppPreferences = koinInject(),
+    pendingArticleID: String? = null,
+    onPendingArticleSelected: () -> Unit = {},
     onNavigateToSettings: () -> Unit,
 ) {
     val feeds by viewModel.topLevelFeeds.collectAsStateWithLifecycle(initialValue = emptyList())
-    val pagesFeed by viewModel.pagesFeed.collectAsStateWithLifecycle(initialValue = null)
+    val readLaterFeed by viewModel.readLaterFeed.collectAsStateWithLifecycle(initialValue = null)
     val allFeeds by viewModel.allFeeds.collectAsStateWithLifecycle(initialValue = emptyList())
     val allFolders by viewModel.allFolders.collectAsStateWithLifecycle(initialValue = emptyList())
     val folders by viewModel.folders.collectAsStateWithLifecycle(initialValue = emptyList())
@@ -113,13 +114,14 @@ fun ArticleScreen(
     val allSavedSearches by viewModel.allSavedSearches.collectAsStateWithLifecycle(initialValue = emptyList())
     val statusCount by viewModel.statusCount.collectAsStateWithLifecycle(initialValue = 0)
     val todayCount by viewModel.todayCount.collectAsStateWithLifecycle(initialValue = 0)
+    val starredCount by viewModel.starredCount.collectAsStateWithLifecycle(initialValue = 0)
     val unreadCount by viewModel.unreadCount.collectAsStateWithLifecycle(initialValue = 0L)
-    val showTodayFilter by viewModel.showTodayFilter.collectAsStateWithLifecycle(initialValue = true)
-    val filter by viewModel.filter.collectAsStateWithLifecycle(appPreferences.filter.get())
+    val filter by viewModel.filter.collectAsStateWithLifecycle()
     val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle("")
     val searchState by viewModel.searchState.collectAsStateWithLifecycle(SearchState.INACTIVE)
     val nextFilter by viewModel.nextFilter.collectAsStateWithLifecycle(initialValue = null)
     val afterReadAll by viewModel.afterReadAll.collectAsStateWithLifecycle()
+    val hideReadArticles by viewModel.hideReadArticles.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
     val refreshInterval by appPreferences
         .refreshInterval
@@ -205,7 +207,6 @@ fun ArticleScreen(
         val paneExpansion = rememberArticlePaneExpansion()
         var isPullToRefreshing by remember { mutableStateOf(false) }
         val addFeedSuccessMessage = stringResource(R.string.add_feed_success)
-        val currentFeed by viewModel.currentFeed.collectAsStateWithLifecycle(null)
         val scrollBehavior = pinnedScrollBehavior()
         var media by rememberSaveable(saver = Media.Saver) { mutableStateOf(null) }
         val audioController: AudioPlayerController = koinInject()
@@ -427,10 +428,9 @@ fun ArticleScreen(
             }
         }
 
-        val selectStatus = { status: ArticleStatus ->
-            coroutineScope.launchUI {
-                openNextStatus { viewModel.selectStatus(status) }
-            }
+        val selectStarred = {
+            if (!filter.hasStarredSelected()) openNextList { viewModel.selectStarred() }
+            else closeDrawer()
         }
 
         val selectFeed = { feed: Feed, folderTitle: String? ->
@@ -465,8 +465,10 @@ fun ArticleScreen(
             }
         }
 
-        ArticleHandler(article) { articleID ->
-            selectArticle(articleID)
+        LaunchedEffect(pendingArticleID) {
+            val id = pendingArticleID ?: return@LaunchedEffect
+            onPendingArticleSelected()
+            selectArticle(id)
         }
 
         ArticleScaffold(
@@ -478,7 +480,7 @@ fun ArticleScreen(
                     source = viewModel.source,
                     folders = folders,
                     feeds = feeds,
-                    pagesFeed = pagesFeed,
+                    readLaterFeed = readLaterFeed,
                     onSelectFolder = selectFolder,
                     onSelectFeed = selectFeed,
                     onFeedAdded = { onFeedAdded(it) },
@@ -493,6 +495,7 @@ fun ArticleScreen(
                     },
                     onFilterSelect = selectFilter,
                     onSelectToday = { selectToday() },
+                    onSelectStarred = { selectStarred() },
                     refreshState = refreshAllState,
                     onRefresh = {
                         refreshAll()
@@ -500,8 +503,7 @@ fun ArticleScreen(
                     filter = filter,
                     statusCount = statusCount,
                     todayCount = todayCount,
-                    showTodayFilter = showTodayFilter,
-                    onSelectStatus = { selectStatus(it) }
+                    starredCount = starredCount,
                 )
             },
             listPane = {
@@ -526,29 +528,17 @@ fun ArticleScreen(
                         }),
                     topBar = {
                         ArticleListTopBar(
-                            onRequestJumpToTop = {
-                                scrollToTop()
-                            },
-                            onNavigateToDrawer = {
-                                openDrawer()
-                            },
-                            onRemoveFolder = { folderTitle, completion ->
-                                viewModel.removeFolder(
-                                    folderTitle,
-                                    completion
-                                )
-                            },
+                            onRequestJumpToTop = { scrollToTop() },
+                            onNavigateToDrawer = { openDrawer() },
                             scrollBehavior = scrollBehavior,
-                            onMarkAllRead = {
-                                markAllRead(MarkRead.All)
-                            },
+                            onMarkAllRead = { markAllRead(MarkRead.All) },
                             search = search,
                             filter = filter,
-                            currentFeed = currentFeed,
                             feeds = allFeeds,
                             savedSearches = savedSearches,
                             folders = allFolders,
-                            source = viewModel.source,
+                            hideReadArticles = hideReadArticles,
+                            onToggleHideReadArticles = { viewModel.toggleHideReadArticles() },
                         )
                     },
                     snackbarHost = {
@@ -612,7 +602,7 @@ fun ArticleScreen(
                                         listState = listState,
                                         enableMarkReadOnScroll = enableMarkReadOnScroll,
                                         refreshingAll = viewModel.refreshingAll,
-                                        filterStatus = filter.status,
+                                        dimReadArticles = filter !is ArticleFilter.Starred,
                                         onMarkAllRead = { range ->
                                             onMarkAllRead(range)
                                         },
@@ -675,7 +665,8 @@ fun ArticleScreen(
         )
 
         LaunchedEffect(scaffoldNavigator.currentDestination) {
-            val isOnList = scaffoldNavigator.currentDestination?.pane != ListDetailPaneScaffoldRole.Detail
+            val isOnList =
+                scaffoldNavigator.currentDestination?.pane != ListDetailPaneScaffoldRole.Detail
             if (isOnList && article != null) {
                 viewModel.clearArticle()
             }
@@ -780,6 +771,9 @@ fun rememberArticleActions(viewModel: ArticleScreenViewModel): ArticleActions {
             star = viewModel::addStarAsync,
             unstar = viewModel::removeStarAsync,
             saveExternally = viewModel::saveArticleExternallyAsync,
+            saveForLater = viewModel::saveForLater,
+
+            showSaveForLater = viewModel.source.supportsReadLater,
         )
     }
 }

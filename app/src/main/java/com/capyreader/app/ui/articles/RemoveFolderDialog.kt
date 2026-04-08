@@ -13,9 +13,9 @@ fun RemoveFolderDialog(
     onConfirm: () -> Unit,
     onDismissRequest: () -> Unit
 ) {
-    val title = stringResource(R.string.tag_action_delete_title)
-    val message = stringResource(R.string.tag_action_delete_message, folderTitle)
-    val confirmText = stringResource(R.string.tag_action_delete_confirm)
+    val title = stringResource(R.string.folder_action_delete_title)
+    val message = stringResource(R.string.folder_action_delete_message, folderTitle)
+    val confirmText = stringResource(R.string.folder_action_delete_confirm)
 
     AlertDialog(
         onDismissRequest = onDismissRequest,

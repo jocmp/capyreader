@@ -26,6 +26,7 @@ class ArticlePagerFactory(private val database: Database) {
             is ArticleFilter.Folders -> folderSource(filter, query, sortOrder, since)
             is ArticleFilter.SavedSearches -> savedSearchSource(filter, query, sortOrder, since)
             is ArticleFilter.Today -> todaySource(filter, query, sortOrder, since)
+            is ArticleFilter.Starred -> starredSource(filter, query, sortOrder, since)
         }
     }
 
@@ -152,6 +153,32 @@ class ArticlePagerFactory(private val database: Database) {
                     limit = limit,
                     sortOrder = sortOrder,
                     offset = offset,
+                )
+            }
+        )
+    }
+
+    private fun starredSource(
+        filter: ArticleFilter.Starred,
+        query: String?,
+        sortOrder: SortOrder,
+        since: OffsetDateTime
+    ): PagingSource<Int, Article> {
+        return QueryPagingSource(
+            countQuery = articles.byStatus.countStarred(
+                status = filter.status,
+                query = query,
+            ),
+            transacter = database.articlesQueries,
+            context = Dispatchers.IO,
+            queryProvider = { limit, offset ->
+                articles.byStatus.allStarred(
+                    status = filter.status,
+                    query = query,
+                    limit = limit,
+                    sortOrder = sortOrder,
+                    offset = offset,
+                    since = since,
                 )
             }
         )

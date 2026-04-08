@@ -1,5 +1,6 @@
 package com.capyreader.app.ui.settings
 
+import com.capyreader.app.ui.components.LocalSnackbarHost
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons

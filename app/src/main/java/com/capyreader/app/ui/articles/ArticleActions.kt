@@ -12,4 +12,6 @@ data class ArticleActions(
     val markUnread: (articleID: String) -> Unit = {},
     val unstar: (articleID: String) -> Unit = {},
     val saveExternally: (articleID: String, onComplete: (Result<Unit>) -> Unit) -> Unit = { _, _ -> },
+    val saveForLater: (url: String, onComplete: (Result<Unit>) -> Unit) -> Unit = { _, _ -> },
+    val showSaveForLater: Boolean = false,
 )

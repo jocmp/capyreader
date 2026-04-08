@@ -36,23 +36,21 @@ import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.SavedSearch
-import com.jocmp.capy.accounts.Source
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArticleListTopBar(
     onRequestJumpToTop: () -> Unit,
     onNavigateToDrawer: () -> Unit,
-    onRemoveFolder: (folderTitle: String, completion: (result: Result<Unit>) -> Unit) -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
     onMarkAllRead: () -> Unit,
     search: ArticleSearch,
     filter: ArticleFilter,
-    currentFeed: Feed?,
     feeds: List<Feed>,
     savedSearches: List<SavedSearch>,
     folders: List<Folder>,
-    source: Source,
+    hideReadArticles: Boolean = false,
+    onToggleHideReadArticles: () -> Unit = {},
 ) {
     val enableSearch = search.isActive
 
@@ -140,12 +138,11 @@ fun ArticleListTopBar(
         actions = {
             FilterActionMenu(
                 filter = filter,
-                currentFeed = currentFeed,
-                onRemoveFolder = onRemoveFolder,
                 onRequestSearch = { search.start() },
                 onMarkAllRead = { onMarkAllRead() },
                 hideSearchIcon = enableSearch,
-                source = source,
+                hideReadArticles = hideReadArticles,
+                onToggleHideReadArticles = onToggleHideReadArticles,
             )
         }
     )
@@ -159,15 +156,12 @@ private fun FeedListTopBarPreview() {
     ArticleListTopBar(
         onRequestJumpToTop = { },
         onNavigateToDrawer = { },
-        onRemoveFolder = { _, _ -> },
         scrollBehavior = scrollBehavior,
         onMarkAllRead = {},
         search = ArticleSearch(),
         filter = ArticleFilter.default(),
-        currentFeed = null,
         feeds = listOf(),
         savedSearches = emptyList(),
         folders = emptyList(),
-        source = Source.LOCAL
     )
 }

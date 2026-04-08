@@ -9,10 +9,3 @@ val Source.savedSearchNavTitle: Int
     } else {
         R.string.nav_headline_saved_searches
     }
-
-val Source.folderNavTitle: Int
-    get() = if (this == Source.FRESHRSS) {
-        R.string.freshrss_nav_headline_categories
-    } else {
-        R.string.nav_headline_tags
-    }

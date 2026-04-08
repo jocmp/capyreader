@@ -4,7 +4,6 @@ import com.jocmp.capy.ArticleStatus
 import org.junit.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertNull
-import kotlin.test.assertTrue
 
 class ArticleStatusPairTest {
     @Test
@@ -23,11 +22,4 @@ class ArticleStatusPairTest {
         assertNull(starred)
     }
 
-    @Test
-    fun toStatusPair_starredStatus() {
-        val (read, starred) = ArticleStatus.STARRED.toStatusPair
-
-        assertNull(read)
-        assertTrue(starred!!)
-    }
 }

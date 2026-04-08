@@ -61,11 +61,15 @@ data class Account(
     private val userAgent: String,
     private val acceptLanguage: String,
     private val localHttpClient: OkHttpClient = LocalOkHttpClient.forAccount(path = cacheDirectory),
+    private val extractUsername: String = "",
+    private val extractSecret: String = "",
     val delegate: AccountDelegate = when (source) {
         Source.LOCAL -> LocalAccountDelegate(
             database = database,
             httpClient = localHttpClient,
             preferences = preferences,
+            extractUsername = extractUsername,
+            extractSecret = extractSecret,
         )
 
         Source.FEEDBIN -> FeedbinAccountDelegate(
@@ -372,6 +376,10 @@ data class Account(
 
     fun countAllByStatus(status: ArticleStatus): Flow<Long> {
         return articleRecords.byStatus.count(status).asFlow().mapToOne(Dispatchers.IO)
+    }
+
+    fun countAllStarred(): Flow<Long> {
+        return articleRecords.byStatus.countStarred().asFlow().mapToOne(Dispatchers.IO)
     }
 
     suspend fun dismissNotifications(ids: List<String>) {

@@ -7,9 +7,13 @@ import com.capyreader.app.ui.Route
 
 fun NavGraphBuilder.articleGraph(
     navController: NavController,
+    pendingArticleID: String? = null,
+    onPendingArticleSelected: () -> Unit = {},
 ) {
     composable<Route.Articles> {
         ArticleScreen(
+            pendingArticleID = pendingArticleID,
+            onPendingArticleSelected = onPendingArticleSelected,
             onNavigateToSettings = {
                 navController.navigate(Route.Settings) {
                     launchSingleTop = true

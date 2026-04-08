@@ -34,7 +34,7 @@
     <string name="refresh_manually_only">Hanya secara manual</string>
     <string name="refresh_minutes">Setiap %1$d menit</string>
     <string name="refresh_feeds_menu_label">Segarkan Umpan</string>
-    <string name="nav_headline_tags">Label</string>
+    <string name="nav_headline_folders">Label</string>
     <string name="nav_headline_feeds">Umpan</string>
     <string name="add_feed_feed_not_error">Umpan tidak ditemukan</string>
     <string name="add_feed_save_error">Umpan tidak dapat disimpan</string>
@@ -75,7 +75,7 @@
     <string name="settings_section_export">Ekspor</string>
     <string name="theme_menu_label">Tema</string>
     <string name="theme_menu_option_light">Terang</string>
-    <string name="edit_feed_tags">Label</string>
+    <string name="edit_feed_folders">Label</string>
     <string name="settings_account_title">Akun</string>
     <string name="settings_about_title">Tentang</string>
     <string name="settings_list_top_bar_title">Pengaturan</string>
@@ -177,7 +177,7 @@
     <string name="settings_article_list_title">Daftar Artikel</string>
     <string name="settings_gestures_list_back_navigation_action">Tindakan Navigasi Kembali</string>
     <string name="crash_log_export_item_subtitle">Simpan catatan kerusakan ke file untuk dibagikan dengan pengembang</string>
-    <string name="edit_feed_tags_section">Label</string>
+    <string name="edit_feed_folders_section">Label</string>
     <string name="notifications_permission_disabled_title">Izin notifikasi dinonaktifkan</string>
     <string name="notifications_permissions_disabled_call_to_action">Pengaturan</string>
     <string name="auth_fields_username">Nama pengguna</string>
@@ -207,7 +207,6 @@
     <string name="feed_list_top_bar_close_search">Batalkan pencarian</string>
     <string name="settings_gestures_list_back_navigation_system_back">Bawaan</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">Buka Laci Navigasi</string>
-    <string name="edit_feed_tag_section">Tambah atau Pilih Label</string>
     <string name="edit_feed_notifications_title">Hidupkan notifikasi</string>
     <string name="settings_enable_refresh_call_to_action">Penyegaran berkala harus diaktifkan terlebih dahulu</string>
     <string name="settings_select_all">Pilih Semuanya</string>
@@ -243,7 +242,7 @@
     <string name="tag_action_edit_error">Kesalahan saat perbarui label</string>
     <string name="tag_name_title">Nama</string>
     <string name="actions_share_link">Bagikan tautan</string>
-    <string name="delete_tag_error">Kesalahan saat menghapus label</string>
+    <string name="delete_folder_error">Kesalahan saat menghapus label</string>
     <string name="settings_gestures_list_swipe_up">Usap ke Atas</string>
     <string name="article_list_swipe_next_feed">Ke umpan selanjutnya</string>
     <string name="media_save">Simpan</string>
@@ -306,10 +305,10 @@
     <string name="auth_fields_miniflux_use_password">Gunakan Kata Sandi sebagai gantinya</string>
     <string name="auth_fields_show_advanced">Opsi lanjutan</string>
     <string name="auth_fields_hide_advanced">Sembunyikan opsi lanjutan</string>
-    <string name="freshrss_visibility">Visibilitas</string>
-    <string name="freshrss_visibility_option_main">Aliran Utama</string>
+    <string name="feed_visibility">Visibilitas</string>
+    <string name="feed_visibility_option_unread">Aliran Utama</string>
     <string name="freshrss_visibility_option_important">Penting</string>
-    <string name="freshrss_visibility_option_category">Kategori</string>
+    <string name="freshrss_visibility_option_folder">Kategori</string>
     <string name="freshrss_visibility_option_feed">Umpan</string>
     <string name="freshrss_tag_action_edit">Edit Kategori</string>
     <string name="audio_player_play">Putar</string>

@@ -3,14 +3,18 @@
     <string name="app_name" translatable="false">Capy Reader</string>
     <string name="add_feed_url_title">Feed or Website URL</string>
     <string name="add_feed_name_title">Name</string>
-    <string name="add_feed_new_folder_title">New Tag</string>
+    <string name="add_feed_new_folder_title">New Folder</string>
     <string name="add_feed_submit">Add</string>
     <string name="add_feed_success">Feed added</string>
     <string name="feed_form_cancel">Cancel</string>
     <string name="filter_starred">Starred</string>
+    <string name="filter_read_later">Saved for Later</string>
+    <string name="article_actions_save_for_later">Save for Later</string>
+    <string name="saved_for_later_success">Saved for Later</string>
     <string name="filter_unread">Unread</string>
     <string name="filter_all">All</string>
     <string name="filter_today">Today</string>
+    <string name="settings_home_page">Home page</string>
     <string name="feed_action_unsubscribe">Unsubscribe</string>
     <string name="filter_action_menu_description">Edit</string>
     <string name="feed_action_edit">Edit Feed</string>
@@ -19,8 +23,13 @@
     <string name="feed_action_unsubscribe_confirm">Unsubscribe</string>
     <string name="edit_feed_submit">Save</string>
     <string name="dialog_cancel">Cancel</string>
-    <string name="folder_action_delete_title">Delete Tag</string>
+    <string name="folder_action_delete_title">Delete Folder</string>
+    <string name="folder_action_delete_message">Are you sure you want to delete tag \"%1$s\"?</string>
+    <string name="folder_action_delete_confirm">Delete</string>
     <string name="folder_action_edit">Rename</string>
+    <string name="folder_action_edit_success">Tag updated</string>
+    <string name="folder_action_edit_error">Error updating tag</string>
+    <string name="folder_name_title">Name</string>
     <string name="feed_action_unsubscribe_title">Unsubscribe</string>
     <string name="settings">Open settings</string>
     <string name="settings_remove_account_button_service">Log Out</string>
@@ -44,7 +53,7 @@
         <item quantity="other">Every %d hours</item>
     </plurals>
     <string name="refresh_feeds_menu_label">Refresh Feeds</string>
-    <string name="nav_headline_tags">Tags</string>
+    <string name="nav_headline_folders">Folders</string>
     <string name="nav_headline_saved_searches">Searches</string>
     <string name="freshrss_nav_headline_my_labels">My Labels</string>
     <string name="nav_headline_feeds">Feeds</string>
@@ -63,7 +72,7 @@
     <string name="add_link_subscribe">Subscribe</string>
     <string name="add_link_feed_added">Feed added</string>
     <string name="add_link_page_saved">Page saved</string>
-    <string name="delete_tag_error">Error deleting tag</string>
+    <string name="delete_folder_error">Error deleting folder</string>
     <string name="relative_time_just_now">Just now</string>
     <string name="relative_time_minutes">%1$dm</string>
     <string name="relative_time_hours">%1$dh</string>
@@ -154,7 +163,7 @@
     <string name="theme_menu_option_light">Light</string>
     <string name="theme_menu_option_dark">Dark</string>
     <string name="theme_menu_option_system_default">System default</string>
-    <string name="edit_feed_tags">Tags</string>
+    <string name="edit_feed_folders">Folders</string>
     <string name="settings_option_in_app_browser">Use in-app browser</string>
     <string name="opml_import_notification_cancel">Stop</string>
     <string name="image_preview_menu_option_none">None</string>
@@ -174,6 +183,8 @@
     <string name="empty_onboarding_title">No feeds yet</string>
     <string name="empty_onboarding_prompt">Start by adding a feed</string>
     <string name="article_list_empty">Nothing here</string>
+    <string name="article_list_hide_read">Hide read articles</string>
+    <string name="article_list_show_read">Show read articles</string>
     <string name="article_style_options">Font style options</string>
     <string name="font_option_vollkorn" translatable="false">Vollkorn</string>
     <string name="font_option_atkinson_hyperlegible" translatable="false">Atkinson Hyperlegible</string>
@@ -256,8 +267,7 @@
     <string name="action_share">Share</string>
     <string name="crash_log_export_item_title">Share crash logs</string>
     <string name="crash_log_export_item_subtitle">Saves crash logs to a file to share with the developer</string>
-    <string name="edit_feed_tags_section">Tags</string>
-    <string name="edit_feed_tag_section">Add or Select Tag</string>
+    <string name="edit_feed_folders_section">Folders</string>
     <string name="edit_feed_notifications_title">Enable notifications</string>
     <string name="notifications_permissions_disabled_call_to_action">Settings</string>
     <string name="notifications_permission_disabled_title">Notification permission is disabled</string>
@@ -275,7 +285,6 @@
     <string name="settings_enable_high_contrast_dark_theme">Enable high contrast dark theme</string>
     <string name="settings_section_mark_all_as_read">Mark All As Read</string>
     <string name="settings_section_browser">Browser</string>
-    <string name="settings_section_categories">Categories</string>
     <string name="settings_option_show_today_filter">Today</string>
     <string name="reader_image_visibility_show_on_wifi">Only show images on Wi-Fi</string>
     <string name="reader_image_visibility_always_hide">Block images</string>
@@ -332,9 +341,8 @@
     <string name="freshrss_visibility">Visibility</string>
     <string name="freshrss_visibility_option_main">Main Stream</string>
     <string name="freshrss_visibility_option_important">Important</string>
-    <string name="freshrss_visibility_option_category">Category</string>
+    <string name="freshrss_visibility_option_folder">Folder</string>
     <string name="freshrss_visibility_option_feed">Feed</string>
-    <string name="freshrss_tag_action_edit">Edit Category</string>
     <string name="audio_player_play">Play</string>
     <string name="audio_player_pause">Pause</string>
     <string name="audio_player_close">Close player</string>

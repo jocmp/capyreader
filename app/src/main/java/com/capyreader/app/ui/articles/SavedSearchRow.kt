@@ -8,7 +8,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
 import com.capyreader.app.ui.articles.feeds.DrawerItem
 import com.capyreader.app.ui.articles.list.SavedSearchActionMenu
-import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.SavedSearch
 
 @Composable
@@ -16,7 +15,6 @@ fun SavedSearchRow(
     onSelect: (savedSearch: SavedSearch) -> Unit,
     selected: Boolean,
     savedSearch: SavedSearch,
-    status: ArticleStatus = ArticleStatus.ALL,
 ) {
     val (showMenu, setShowMenu) = remember { mutableStateOf(false) }
 
@@ -24,7 +22,7 @@ fun SavedSearchRow(
         DrawerItem(
             label = { ListTitle(savedSearch.name) },
             badge = {
-                CountBadge(count = savedSearch.count, showBadge = savedSearch.showUnreadBadge, status = status)
+                CountBadge(count = savedSearch.count, showBadge = savedSearch.showUnreadBadge)
             },
             selected = selected,
             onClick = {

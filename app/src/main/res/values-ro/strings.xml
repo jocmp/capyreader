@@ -46,11 +46,11 @@
         <item quantity="few">La fiecare %d ore</item>
         <item quantity="other">La fiecare %d de ore</item>
     </plurals>
-    <string name="nav_headline_tags">Etichete</string>
+    <string name="nav_headline_folders">Etichete</string>
     <string name="add_feed_feed_not_error">Nu s-a putut găsi un flux</string>
     <string name="add_feed_save_error">Nu s-a putut salva fluxul</string>
     <string name="add_feed_network_error">Nu am găsit niciun flux. Verifică conexiunea.</string>
-    <string name="delete_tag_error">Eroare la ștergerea etichetei</string>
+    <string name="delete_folder_error">Eroare la ștergerea etichetei</string>
     <string name="relative_time_days">%1$dz</string>
     <string name="article_share">Distribuie articol</string>
     <string name="extract_full_content">Extrage conținutul complet</string>
@@ -115,7 +115,7 @@
     <string name="notification_mark_as_read_action">Marchează ca citit</string>
     <string name="auth_fields_username">Nume de utilizator</string>
     <string name="settings_option_in_app_browser">Folosește browser-ul încorporat</string>
-    <string name="edit_feed_tags">Etichete</string>
+    <string name="edit_feed_folders">Etichete</string>
     <string name="theme_menu_option_light">Luminoasă</string>
     <string name="opml_import_progress_content_text_start">Începe importarea</string>
     <string name="settings_import_progress_placeholder">Se importă abonamentele…</string>
@@ -205,7 +205,6 @@
     <string name="article_list_swipe_next_feed">Mergi la următorul flux</string>
     <string name="article_list_swipe_disabled">Dezactivat</string>
     <string name="crash_log_export_item_title">Distribuie log-urile de eroare</string>
-    <string name="edit_feed_tag_section">Adaugă sau alege etichete</string>
     <string name="edit_feed_notifications_title">Activează notificări</string>
     <string name="settings_select_none">Șterge alegerea</string>
     <string name="settings_select_all">Alege tot</string>
@@ -221,7 +220,7 @@
     <string name="settings_donate_button">Donează</string>
     <string name="article_list_row_swipe_disabled">Dezactivat</string>
     <string name="image_preview_menu_option_small">Mică</string>
-    <string name="edit_feed_tags_section">Etichete</string>
+    <string name="edit_feed_folders_section">Etichete</string>
     <string name="settings_section_version">Versiunea</string>
     <string name="font_option_system_default">Implicit</string>
     <string name="feed_list_top_bar_close_search">Anulează căutarea</string>

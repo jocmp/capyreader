@@ -12,34 +12,30 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Bookmark
 import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.Today
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.common.FeedGroup
 import com.capyreader.app.ui.articles.AddFeedButton
-import com.capyreader.app.ui.articles.ArticleStatusBar
 import com.capyreader.app.ui.articles.ArticleStatusIcon
 import com.capyreader.app.ui.articles.CountBadge
 import com.capyreader.app.ui.articles.ListTitle
 import com.capyreader.app.ui.articles.SavedSearchRow
-import com.capyreader.app.ui.fixtures.FeedSample
-import com.capyreader.app.ui.fixtures.FolderPreviewFixture
 import com.capyreader.app.ui.fixtures.PreviewKoinApplication
-import com.capyreader.app.ui.folderNavTitle
-import com.capyreader.app.ui.navigationTitle
 import com.capyreader.app.ui.savedSearchNavTitle
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.ArticleFilter
@@ -55,23 +51,22 @@ fun FeedList(
     filter: ArticleFilter,
     statusCount: Long,
     todayCount: Long,
-    showTodayFilter: Boolean = true,
+    starredCount: Long,
     folders: List<Folder> = emptyList(),
     feeds: List<Feed> = emptyList(),
-    pagesFeed: Feed? = null,
+    readLaterFeed: Feed? = null,
     savedSearches: List<SavedSearch> = emptyList(),
     onFilterSelect: () -> Unit,
     onSelectToday: () -> Unit,
+    onSelectStarred: () -> Unit,
     onSelectSavedSearch: (search: SavedSearch) -> Unit,
     refreshState: AngleRefreshState,
     onRefresh: () -> Unit,
     onSelectFolder: (folder: Folder) -> Unit,
     onSelectFeed: (feed: Feed, folderTitle: String?) -> Unit,
     onFeedAdded: (feedID: String) -> Unit,
-    onSelectStatus: (status: ArticleStatus) -> Unit,
     onNavigateToSettings: () -> Unit,
 ) {
-    val articleStatus = filter.status
     val scrollState = rememberScrollState()
     val buttonState = rememberRefreshButtonState(refreshState)
 
@@ -91,14 +86,13 @@ fun FeedList(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    stringResource(R.string.feed_nav_drawer_title),
-                    style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier
-                        .padding(
-                            vertical = 18.dp,
-                            horizontal = 12.dp
-                        ),
+                Icon(
+                    painterResource(R.drawable.capy_icon_small),
+                    contentDescription = null,
+                    modifier = Modifier.padding(
+                        vertical = 18.dp,
+                        horizontal = 16.dp
+                    ),
                 )
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -110,9 +104,7 @@ fun FeedList(
                             contentDescription = stringResource(R.string.settings)
                         )
                     }
-                    IconButton(onClick = {
-                        onRefresh()
-                    }) {
+                    IconButton(onClick = { onRefresh() }) {
                         Icon(
                             imageVector = Icons.Rounded.Refresh,
                             contentDescription = stringResource(R.string.feed_nav_drawer_refresh_all),
@@ -123,54 +115,80 @@ fun FeedList(
                     }
                     AddFeedButton(
                         iconOnly = true,
-                        onComplete = {
-                            onFeedAdded(it)
-                        }
+                        onComplete = { onFeedAdded(it) }
                     )
                 }
             }
             DrawerItem(
-                icon = { ArticleStatusIcon(status = articleStatus) },
-                label = {
-                    ListTitle(
-                        stringResource(articleStatus.navigationTitle),
+                icon = {
+                    Icon(
+                        Icons.Rounded.Today,
+                        contentDescription = null
                     )
                 },
-                badge = { CountBadge(count = statusCount, status = articleStatus) },
+                label = {
+                    ListTitle(
+                        stringResource(R.string.filter_today),
+                    )
+                },
+                badge = { CountBadge(count = todayCount) },
+                selected = filter.hasTodaySelected(),
+                onClick = {
+                    onSelectToday()
+                }
+            )
+
+            DrawerItem(
+                icon = { ArticleStatusIcon(status = ArticleStatus.UNREAD) },
+                label = {
+                    ListTitle(
+                        stringResource(R.string.filter_unread),
+                    )
+                },
+                badge = { CountBadge(count = statusCount) },
                 selected = filter.hasArticlesSelected(),
                 onClick = {
                     onFilterSelect()
                 }
             )
 
-            if (showTodayFilter) {
+            DrawerItem(
+                icon = {
+                    Icon(
+                        Icons.Rounded.Star,
+                        contentDescription = null
+                    )
+                },
+                label = {
+                    ListTitle(
+                        stringResource(R.string.filter_starred),
+                    )
+                },
+                badge = { CountBadge(count = starredCount) },
+                selected = filter.hasStarredSelected(),
+                onClick = {
+                    onSelectStarred()
+                }
+            )
+
+            if (readLaterFeed != null) {
                 DrawerItem(
                     icon = {
                         Icon(
-                            Icons.Rounded.Today,
+                            Icons.Rounded.Bookmark,
                             contentDescription = null
                         )
                     },
                     label = {
                         ListTitle(
-                            stringResource(R.string.filter_today),
+                            stringResource(R.string.filter_read_later),
                         )
                     },
-                    badge = { CountBadge(count = todayCount, status = articleStatus) },
-                    selected = filter.hasTodaySelected(),
+                    badge = { CountBadge(count = readLaterFeed.count) },
+                    selected = filter.isFeedSelected(readLaterFeed),
                     onClick = {
-                        onSelectToday()
+                        onSelectFeed(readLaterFeed, null)
                     }
-                )
-            }
-
-            if (pagesFeed != null) {
-                FeedRow(
-                    feed = pagesFeed,
-                    onSelect = { onSelectFeed(it, null) },
-                    selected = filter.isFeedSelected(pagesFeed),
-                    status = articleStatus,
-                    showContextMenu = false,
                 )
             }
 
@@ -187,7 +205,6 @@ fun FeedList(
                             onSelect = onSelectSavedSearch,
                             selected = filter.isSavedSearchSelected(it),
                             savedSearch = it,
-                            status = articleStatus,
                         )
                     }
                 }
@@ -197,7 +214,7 @@ fun FeedList(
                 FeedListDivider()
                 FeedGroupList(
                     type = FeedGroup.FOLDERS,
-                    title = stringResource(source.folderNavTitle)
+                    title = stringResource(R.string.nav_headline_folders)
                 ) {
                     folders.forEach { folder ->
                         FolderRow(
@@ -226,7 +243,6 @@ fun FeedList(
                                 onSelectFeed(it, null)
                             },
                             selected = filter.isFeedSelected(feed),
-                            status = articleStatus,
                             source = source,
                         )
                     }
@@ -234,20 +250,6 @@ fun FeedList(
             }
 
             Box(Modifier.padding(vertical = 16.dp))
-        }
-
-        HorizontalDivider()
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 12.dp, vertical = 8.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            ArticleStatusBar(
-                status = filter.status,
-                onSelectStatus = onSelectStatus,
-            )
         }
     }
 }
@@ -260,27 +262,22 @@ private fun FeedListDivider() {
 @Preview
 @Composable
 fun FeedListPreview() {
-    val folders = FolderPreviewFixture().values.take(2).toList()
-    val feeds = FeedSample().values.take(2).toList()
-
     PreviewKoinApplication {
         CapyTheme {
             FeedList(
                 source = Source.LOCAL,
-                folders = folders,
-                feeds = feeds,
                 onSelectFolder = {},
                 onSelectFeed = { _, _ -> },
                 onNavigateToSettings = {},
                 onRefresh = {},
                 onFilterSelect = {},
                 onSelectToday = {},
+                onSelectStarred = {},
                 filter = ArticleFilter.default(),
                 statusCount = 10,
                 todayCount = 5,
-                showTodayFilter = true,
+                starredCount = 3,
                 onFeedAdded = {},
-                onSelectStatus = {},
                 onSelectSavedSearch = {},
                 refreshState = AngleRefreshState.STOPPED,
             )

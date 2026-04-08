@@ -21,7 +21,6 @@ import com.jocmp.capy.Account
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
-import com.jocmp.capy.ArticleStatus.STARRED
 import com.jocmp.capy.ArticleStatus.UNREAD
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
@@ -29,7 +28,6 @@ import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.articles.NextFilter
-import com.capyreader.app.ui.articles.buildArticlePager
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
@@ -59,6 +57,9 @@ class ArticleScreenViewModel(
     private var fullContentJob: Job? = null
 
     val filter = appPreferences.filter.stateIn(viewModelScope)
+
+    val hideReadArticles =
+        appPreferences.articleListOptions.hideReadArticles.stateIn(viewModelScope)
 
     private val listSwipeBottom =
         appPreferences.articleListOptions.swipeBottom.stateIn(viewModelScope)
@@ -110,7 +111,6 @@ class ArticleScreenViewModel(
         filter,
     ) { folders, latestCounts, filter ->
         folders.map { copyFolderCounts(it, latestCounts, filter) }
-            .withPositiveCount(filter.status)
     }
 
     val savedSearches: Flow<List<SavedSearch>> = combine(
@@ -119,7 +119,6 @@ class ArticleScreenViewModel(
         filter,
     ) { searches, latestCounts, filter ->
         searches.map { copySavedSearchCounts(it, latestCounts) }
-            .withPositiveCount(filter.status)
     }
 
     val allFeeds = account.taggedFeeds
@@ -135,27 +134,18 @@ class ArticleScreenViewModel(
         _counts,
         filter,
     ) { feeds, latestCounts, filter ->
-        feeds.filter { !it.isPages }
+        feeds.filter { !it.isReadLater }
             .map { copyFeedCounts(it, latestCounts) }
-            .withPositiveCount(filter.status)
     }
 
-    val pagesFeed: Flow<Feed?> = combine(
+    val readLaterFeed: Flow<Feed?> = combine(
         account.feeds,
         _counts,
         filter,
     ) { feeds, latestCounts, filter ->
-        feeds.find { it.isPages }
+        feeds.find { it.isReadLater }
             ?.let { copyFeedCounts(it, latestCounts) }
             ?.takeIf { it.count > 0 || filter.status != ArticleStatus.UNREAD }
-    }
-
-    val currentFeed: Flow<Feed?> = combine(allFeeds, filter) { feeds, filter ->
-        if (filter is ArticleFilter.Feeds) {
-            feeds.find { it.id == filter.feedID }
-        } else {
-            null
-        }
     }
 
     private val nextFilterListener: Flow<NextFilter?> =
@@ -188,6 +178,8 @@ class ArticleScreenViewModel(
         account.countToday(countableStatus(filter))
     }
 
+    val starredCount: Flow<Long> = account.countAllStarred()
+
     val unreadCount: Flow<Long> = combine(
         filter,
         _searchQuery,
@@ -197,7 +189,6 @@ class ArticleScreenViewModel(
         it
     }
 
-    val showTodayFilter: Flow<Boolean> = appPreferences.showTodayFilter.stateIn(viewModelScope)
 
     val showUnauthorizedMessage: Boolean
         get() = _showUnauthorizedMessage == UnauthorizedMessageState.SHOW
@@ -223,58 +214,54 @@ class ArticleScreenViewModel(
     }
 
     fun selectArticleFilter() {
-        val filter = ArticleFilter.default().withStatus(status = latestFilter.status)
-
-        updateFilter(filter)
-    }
-
-    fun selectStatus(status: ArticleStatus) {
-        val filter = latestFilter.withStatus(status = status)
-
-        updateFilter(filter)
+        updateFilter(ArticleFilter.Articles(articleStatus = UNREAD))
     }
 
     fun selectToday() {
-        val filter = ArticleFilter.Today(todayStatus = latestFilter.status)
+        updateFilter(ArticleFilter.Today(todayStatus = currentStatus))
+    }
 
-        updateFilter(filter)
+    fun selectStarred() {
+        updateFilter(ArticleFilter.Starred(starredStatus = currentStatus))
+    }
+
+    fun toggleHideReadArticles() {
+        val newValue = !hideReadArticles.value
+        appPreferences.articleListOptions.hideReadArticles.set(newValue)
+
+        val status = if (newValue) UNREAD else ArticleStatus.ALL
+
+        updateFilter(latestFilter.withStatus(status))
     }
 
     fun selectFeed(feedID: String, folderTitle: String? = null) {
         viewModelScope.launchIO {
             val feed = account.findFeed(feedID) ?: return@launchIO
-            val feedFilter = ArticleFilter.Feeds(
-                feedID = feed.id,
-                folderTitle = folderTitle,
-                feedStatus = latestFilter.status
+            updateFilter(
+                ArticleFilter.Feeds(
+                    feedID = feed.id,
+                    folderTitle = folderTitle,
+                    feedStatus = currentStatus
+                )
             )
-
-            updateFilter(feedFilter)
         }
     }
 
     fun selectSavedSearch(savedSearchID: String) {
         viewModelScope.launchIO {
             val savedSearch = account.findSavedSearch(savedSearchID) ?: return@launchIO
-            val searchFilter = ArticleFilter.SavedSearches(
-                savedSearch.id,
-                savedSearchStatus = latestFilter.status
+            updateFilter(
+                ArticleFilter.SavedSearches(savedSearch.id, savedSearchStatus = currentStatus)
             )
-
-            updateFilter(searchFilter)
         }
     }
 
     fun selectFolder(title: String) {
         viewModelScope.launchIO {
             val folder = account.findFolder(title) ?: return@launchIO
-            val feedFilter =
-                ArticleFilter.Folders(
-                    folderTitle = folder.title,
-                    folderStatus = latestFilter.status
-                )
-
-            updateFilter(feedFilter)
+            updateFilter(
+                ArticleFilter.Folders(folderTitle = folder.title, folderStatus = currentStatus)
+            )
         }
     }
 
@@ -325,6 +312,13 @@ class ArticleScreenViewModel(
     fun deletePage(articleID: String) {
         viewModelScope.launchIO {
             account.deletePage(articleID)
+        }
+    }
+
+    fun saveForLater(url: String, onComplete: (Result<Unit>) -> Unit) {
+        viewModelScope.launchIO {
+            val result = account.createPage(url)
+            withUIContext { onComplete(result) }
         }
     }
 
@@ -407,8 +401,6 @@ class ArticleScreenViewModel(
             val article = buildArticle(articleID) ?: return@launchIO
             _article = article
 
-            appPreferences.articleID.set(articleID)
-
             launchIO {
                 markRead(articleID)
             }
@@ -459,7 +451,6 @@ class ArticleScreenViewModel(
 
     fun clearArticle() {
         _article = null
-        appPreferences.articleID.delete()
     }
 
     fun startSearch() {
@@ -548,7 +539,7 @@ class ArticleScreenViewModel(
     }
 
     private fun resetToDefaultFilter() {
-        updateFilter(ArticleFilter.default().copy(latestFilter.status))
+        updateFilter(ArticleFilter.default().copy(currentStatus))
     }
 
     private fun toggleCurrentStarred(articleID: String) {
@@ -587,7 +578,7 @@ class ArticleScreenViewModel(
         val folderFeeds = folder.feeds.map { copyFeedCounts(it, counts) }
 
         return folder.copy(
-            feeds = folderFeeds.withPositiveCount(filter.status).toMutableList(),
+            feeds = folderFeeds,
             count = folderFeeds.sumOf { it.count }
         )
     }
@@ -612,10 +603,9 @@ class ArticleScreenViewModel(
             Article.FullContentState.NONE
         }
 
-        val content = if (fullContent == Article.FullContentState.LOADING) {
-            ""
-        } else {
-            article.defaultContent
+        val content = when (fullContent) {
+            Article.FullContentState.LOADING -> ""
+            else -> article.defaultContent
         }
 
         return article.copy(
@@ -743,8 +733,9 @@ class ArticleScreenViewModel(
         }
     }
 
-    private val latestFilter: ArticleFilter
-        get() = filter.value
+    private val latestFilter: ArticleFilter get() = filter.value
+    private val currentStatus: ArticleStatus
+        get() = if (hideReadArticles.value) UNREAD else ArticleStatus.ALL
 
     private val enableStickyFullContent: Boolean
         get() = appPreferences.enableStickyFullContent.get()
@@ -791,13 +782,11 @@ class ArticleScreenViewModel(
 }
 
 fun Context.showFullContentErrorToast(throwable: Throwable) {
-    val message = when {
-        throwable is ArticleContent.HttpError && throwable.code == 403 ->
+    val message = when (throwable) {
+        is ArticleContent.HttpError if throwable.code == 403 ->
             R.string.full_content_error_forbidden
 
-        throwable is ArticleContent.MissingBodyError ->
-            R.string.full_content_error_missing_response
-
+        is ArticleContent.MissingBodyError -> R.string.full_content_error_missing_response
         else -> R.string.full_content_error_generic
     }
 
@@ -805,9 +794,5 @@ fun Context.showFullContentErrorToast(throwable: Throwable) {
 }
 
 fun countableStatus(filter: ArticleFilter): ArticleStatus {
-    return if (filter.status == STARRED) {
-        STARRED
-    } else {
-        UNREAD
-    }
+    return UNREAD
 }

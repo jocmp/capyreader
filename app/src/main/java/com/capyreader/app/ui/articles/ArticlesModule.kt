@@ -15,13 +15,11 @@ internal val articlesModule = module {
     factory {
         AddFeedViewModel(
             account = get(),
-            appPreferences = get()
         )
     }
     factory {
         AddLinkViewModel(
             account = get(),
-            appPreferences = get()
         )
     }
     single {
@@ -62,13 +60,11 @@ internal val articlesModule = module {
     viewModel {
         EditFeedViewModel(
             account = get(),
-            appPreferences = get()
         )
     }
     viewModel {
         EditFolderViewModel(
             account = get(),
-            appPreferences = get()
         )
     }
 }

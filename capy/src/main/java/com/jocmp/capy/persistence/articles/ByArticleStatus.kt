@@ -88,4 +88,58 @@ class ByArticleStatus(private val database: Database) {
             publishedSince = null
         )
     }
+
+    fun countStarred(
+        status: ArticleStatus = ArticleStatus.ALL,
+        query: String? = null,
+    ): Query<Long> {
+        val (read, _) = status.toStatusPair
+
+        return database.articlesByStatusQueries.countAll(
+            read = read,
+            starred = true,
+            query = query,
+            lastReadAt = null,
+            lastUnstarredAt = null,
+            publishedSince = null
+        )
+    }
+
+    fun allStarred(
+        status: ArticleStatus = ArticleStatus.ALL,
+        query: String? = null,
+        limit: Long,
+        offset: Long,
+        sortOrder: SortOrder,
+        since: OffsetDateTime? = null,
+    ): Query<Article> {
+        val (read, _) = status.toStatusPair
+        val queries = database.articlesByStatusQueries
+
+        return if (isNewestFirst(sortOrder)) {
+            queries.allNewestFirst(
+                read = read,
+                starred = true,
+                limit = limit,
+                offset = offset,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(true, since),
+                publishedSince = null,
+                query = query,
+                mapper = ::listMapper
+            )
+        } else {
+            queries.allOldestFirst(
+                read = read,
+                starred = true,
+                limit = limit,
+                offset = offset,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(true, since),
+                publishedSince = null,
+                query = query,
+                mapper = ::listMapper
+            )
+        }
+    }
 }

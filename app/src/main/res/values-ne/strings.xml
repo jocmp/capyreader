@@ -44,7 +44,7 @@
     <string name="settings_gestures_reader_swipe_down">तल स्वाइप गर्नुहोस्</string>
     <string name="article_bottom_bar_next_article">अर्को लेखमा जानुहोस्</string>
     <string name="mark_all_read_dialog_submit">पुष्टि गर्नुहोस्</string>
-    <string name="edit_feed_tags">ट्यागहरू</string>
+    <string name="edit_feed_folders">ट्यागहरू</string>
     <string name="settings_clear_all_articles_confirm">पुष्टि गर्नुहोस्</string>
     <string name="article_vertical_swipe_next_article">अर्को लेख</string>
     <string name="settings_gestures_reader_swipe_up">माथि स्वाइप गर्नुहोस्</string>
@@ -73,8 +73,7 @@
     <string name="settings_auto_delete_option_keep_for_two_week">२ हप्ता</string>
     <string name="settings_auto_delete_option_keep_for_one_week">१ हप्ता</string>
     <string name="settings_auto_delete_option_keep_forever">सधैंभरि</string>
-    <string name="edit_feed_tag_section">ट्याग</string>
-    <string name="edit_feed_tags_section">ट्यागहरू</string>
+    <string name="edit_feed_folders_section">ट्यागहरू</string>
     <string name="notifications_permissions_disabled_call_to_action">सेटिङ्गहरु</string>
     <string name="settings_list_top_bar_title">सेटिङ्गहरु</string>
     <string name="after_read_all_behavior_open_drawer">नेभिगेसन ड्रयर खोल्नुहोस्</string>
@@ -98,7 +97,7 @@
     <string name="settings_remove_account_message_service">के तपाइँ निश्चित हुनुहुन्छ कि तपाइँ लग आउट गर्न चाहनुहुन्छ?</string>
     <string name="settings_remove_account_button_local">खाता मेट्नुहोस्</string>
     <string name="settings_remove_account_title_local">खाता मेट्नुहोस्</string>
-    <string name="nav_headline_tags">ट्यागहरू</string>
+    <string name="nav_headline_folders">ट्यागहरू</string>
     <string name="nav_add_feed">फीड थप्नुहोस्</string>
     <string name="add_feed_feed_not_error">फिड फेला पार्न सकिएन</string>
     <string name="add_feed_save_error">फिड सुरक्षित गर्न सकिएन</string>

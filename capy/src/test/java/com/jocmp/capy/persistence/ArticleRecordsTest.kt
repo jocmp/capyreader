@@ -344,8 +344,7 @@ class ArticleRecordsTest {
 
         val results = articleRecords
             .byStatus
-            .all(
-                status = ArticleStatus.STARRED,
+            .allStarred(
                 limit = 10,
                 offset = 0,
                 sortOrder = SortOrder.NEWEST_FIRST,
@@ -637,6 +636,39 @@ class ArticleRecordsTest {
 
         assertEquals(expected = 3, actual = counts[firstSearch.id])
         assertEquals(expected = 2, actual = counts[secondSearch.id])
+    }
+
+    @Test
+    fun allByStatus_excludesReadLaterArticles() {
+        val feedFixture = FeedFixture(database)
+        val readLaterFeed = feedFixture.create(
+            feedURL = "https://pages.capyreader.com",
+            readLater = true,
+        )
+        val regularFeed = feedFixture.create(
+            feedURL = "https://example.com/${RandomUUID.generate()}",
+        )
+
+        articleFixture.create(feed = readLaterFeed, read = false)
+        val regularArticle = articleFixture.create(feed = regularFeed, read = false)
+
+        val results = articleRecords
+            .byStatus
+            .all(
+                ArticleStatus.UNREAD,
+                limit = 10,
+                offset = 0,
+                sortOrder = SortOrder.NEWEST_FIRST,
+            )
+            .executeAsList()
+
+        val count = articleRecords
+            .byStatus
+            .count(ArticleStatus.UNREAD)
+            .executeAsOne()
+
+        assertEquals(expected = listOf(regularArticle.id), actual = results.map { it.id })
+        assertEquals(expected = 1, actual = count)
     }
 }
 

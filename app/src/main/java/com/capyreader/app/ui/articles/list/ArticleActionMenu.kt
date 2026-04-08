@@ -2,6 +2,9 @@ package com.capyreader.app.ui.articles.list
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Label
+import androidx.compose.material.icons.outlined.BookmarkBorder
+import androidx.compose.material.icons.rounded.ArrowDownward
+import androidx.compose.material.icons.rounded.ArrowUpward
 import androidx.compose.material.icons.rounded.ContentCopy
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.DropdownMenu
@@ -10,7 +13,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -36,8 +38,10 @@ fun ArticleActionMenu(
     article: Article,
     index: Int,
     showLabels: Boolean = false,
+    showSaveForLater: Boolean = false,
     onMarkAllRead: (range: MarkRead) -> Unit = {},
     onOpenLabels: () -> Unit = {},
+    onSaveForLater: (url: String) -> Unit = {},
     onDismissRequest: () -> Unit = {},
 ) {
     val unreadCount = LocalUnreadCount.current
@@ -48,6 +52,9 @@ fun ArticleActionMenu(
     ) {
         ToggleStarMenuItem(onDismissRequest, article)
         ToggleReadMenuItem(onDismissRequest, article)
+        if (showSaveForLater) {
+            SaveForLaterMenuItem(onDismissRequest, article, onSaveForLater)
+        }
         if (showLabels) {
             LabelMenuItem(onDismissRequest, onOpenLabels)
         }
@@ -56,7 +63,7 @@ fun ArticleActionMenu(
                 DropdownMenuItem(
                     leadingIcon = {
                         Icon(
-                            painterResource(R.drawable.icon_rounded_arrow_upward),
+                            Icons.Rounded.ArrowUpward,
                             contentDescription = null
                         )
                     },
@@ -67,7 +74,7 @@ fun ArticleActionMenu(
             DropdownMenuItem(
                 leadingIcon = {
                     Icon(
-                        painterResource(R.drawable.icon_rounded_arrow_downward),
+                        Icons.Rounded.ArrowDownward,
                         contentDescription = null
                     )
                 },
@@ -96,6 +103,29 @@ private fun LabelMenuItem(
         onClick = {
             onDismissRequest()
             onOpenLabels()
+        },
+    )
+}
+
+@Composable
+private fun SaveForLaterMenuItem(
+    onDismissRequest: () -> Unit,
+    article: Article,
+    onSaveForLater: (url: String) -> Unit,
+) {
+    val url = article.url?.toString() ?: return
+
+    DropdownMenuItem(
+        leadingIcon = {
+            Icon(
+                Icons.Outlined.BookmarkBorder,
+                contentDescription = null
+            )
+        },
+        text = { Text(stringResource(R.string.article_actions_save_for_later)) },
+        onClick = {
+            onDismissRequest()
+            onSaveForLater(url)
         },
     )
 }
@@ -168,7 +198,7 @@ private fun ToggleActionMenuItem(
     DropdownMenuItem(
         leadingIcon = {
             Icon(
-                painterResource(action.icon),
+                action.icon,
                 contentDescription = null
             )
         },

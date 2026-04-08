@@ -118,7 +118,7 @@ sealed class NextFilter {
                 }
 
                 is ArticleFilter.Feeds -> findNextFeed(filter, folders, feeds)
-                is ArticleFilter.Today -> {
+                is ArticleFilter.Today, is ArticleFilter.Starred -> {
                     val firstFeed = feeds.firstOrNull()
                     val firstFolder = folders.firstOrNull()
                     val firstSearch = searches.firstOrNull()

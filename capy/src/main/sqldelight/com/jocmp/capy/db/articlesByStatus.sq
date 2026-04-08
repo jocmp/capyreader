@@ -12,6 +12,7 @@ SELECT
   feeds.title AS feed_title,
   feeds.favicon_url,
   feeds.open_articles_in_browser,
+  feeds.read_later,
   article_statuses.updated_at,
   article_statuses.starred,
   article_statuses.read
@@ -20,6 +21,7 @@ JOIN feeds ON articles.feed_id = feeds.id
 JOIN article_statuses ON articles.id = article_statuses.article_id
 WHERE ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
 AND (feeds.priority IS NULL OR feeds.priority IN ('main', 'important'))
+AND feeds.read_later = 0
 AND ((article_statuses.starred = :starred AND article_statuses.last_unstarred_at IS NULL OR article_statuses.last_unstarred_at >= :lastUnstarredAt) OR :starred IS NULL)
 AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
 AND (:query IS NULL OR articles.title LIKE '%' || :query || '%' OR articles.summary LIKE '%' || :query || '%')
@@ -40,6 +42,7 @@ SELECT
   feeds.title AS feed_title,
   feeds.favicon_url,
   feeds.open_articles_in_browser,
+  feeds.read_later,
   article_statuses.updated_at,
   article_statuses.starred,
   article_statuses.read
@@ -48,6 +51,7 @@ JOIN feeds ON articles.feed_id = feeds.id
 JOIN article_statuses ON articles.id = article_statuses.article_id
 WHERE ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
 AND (feeds.priority IS NULL OR feeds.priority IN ('main', 'important'))
+AND feeds.read_later = 0
 AND ((article_statuses.starred = :starred AND article_statuses.last_unstarred_at IS NULL OR article_statuses.last_unstarred_at >= :lastUnstarredAt) OR :starred IS NULL)
 AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
 AND (:query IS NULL OR articles.title LIKE '%' || :query || '%' OR articles.summary LIKE '%' || :query || '%')
@@ -61,6 +65,7 @@ JOIN feeds ON articles.feed_id = feeds.id
 JOIN article_statuses ON articles.id = article_statuses.article_id
 WHERE ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
 AND (feeds.priority IS NULL OR feeds.priority IN ('main', 'important'))
+AND feeds.read_later = 0
 AND ((article_statuses.starred = :starred AND article_statuses.last_unstarred_at IS NULL OR article_statuses.last_unstarred_at >= :lastUnstarredAt) OR :starred IS NULL)
 AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
 AND (:query IS NULL OR articles.title LIKE '%' || :query || '%' OR articles.summary LIKE '%' || :query || '%');
@@ -73,6 +78,7 @@ JOIN article_statuses ON articles.id = article_statuses.article_id
 WHERE article_statuses.read = 0
 AND (article_statuses.starred = :starred OR :starred IS NULL)
 AND (feeds.priority IS NULL OR feeds.priority IN ('main', 'important'))
+AND feeds.read_later = 0
 AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
 AND (:query IS NULL OR articles.title LIKE '%' || :query || '%' OR articles.summary LIKE '%' || :query || '%')
 AND (

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
+import com.capyreader.app.preferences.HomePage
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.refresher.RefreshScheduler
 import com.jocmp.capy.Account
@@ -14,6 +15,7 @@ import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.preferences.getAndSet
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class GeneralSettingsViewModel(
@@ -47,8 +49,10 @@ class GeneralSettingsViewModel(
     var enableStickyFullContent by mutableStateOf(appPreferences.enableStickyFullContent.get())
         private set
 
-    var showTodayFilter by mutableStateOf(appPreferences.showTodayFilter.get())
+    var homePage by mutableStateOf(appPreferences.homePage.get())
         private set
+
+    val hasReadLaterFeed = account.feeds.map { feeds -> feeds.any { it.isReadLater } }
 
     val filterKeywords = account
         .preferences
@@ -127,9 +131,9 @@ class GeneralSettingsViewModel(
         }
     }
 
-    fun updateShowTodayFilter(show: Boolean) {
-        appPreferences.showTodayFilter.set(show)
+    fun updateHomePage(homePage: HomePage) {
+        appPreferences.homePage.set(homePage)
 
-        showTodayFilter = show
+        this.homePage = homePage
     }
 }

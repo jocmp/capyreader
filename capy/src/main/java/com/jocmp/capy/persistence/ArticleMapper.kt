@@ -23,6 +23,7 @@ internal fun articleMapper(
     openInBrowser: Boolean,
     feedURL: String?,
     siteURL: String?,
+    readLater: Boolean,
     updatedAt: Long?,
     starred: Boolean,
     read: Boolean,
@@ -47,6 +48,7 @@ internal fun articleMapper(
         enableStickyFullContent = enableStickyContent,
         openInBrowser = openInBrowser,
         enclosureType = EnclosureType.from(enclosureType),
+        isReadLater = readLater,
     )
 }
 
@@ -63,6 +65,7 @@ internal fun listMapper(
     feedTitle: String?,
     faviconURL: String?,
     openInBrowser: Boolean,
+    readLater: Boolean,
     updatedAt: Long?,
     starred: Boolean?,
     read: Boolean?,
@@ -91,6 +94,7 @@ internal fun listMapper(
         openInBrowser = openInBrowser,
         feedURL = null,
         siteURL = null,
+        readLater = readLater,
         updatedAt = updatedAt,
         starred = starred ?: false,
         read = read ?: false,

@@ -42,13 +42,14 @@ import com.capyreader.app.R
 import com.capyreader.app.common.RowItem
 import com.capyreader.app.notifications.Notifications
 import com.capyreader.app.preferences.AfterReadAllBehavior
+import com.capyreader.app.preferences.HomePage
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.CrashReporting
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.components.TextSwitch
 import com.capyreader.app.ui.fixtures.PreviewKoinApplication
 import com.capyreader.app.ui.settings.CrashReportingCheckbox
-import com.capyreader.app.ui.settings.LocalSnackbarHost
+import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.capyreader.app.ui.settings.PreferenceSelect
 import com.capyreader.app.ui.settings.filters.FilterKeywords
 import com.capyreader.app.ui.settings.filters.FiltersItem
@@ -66,6 +67,7 @@ fun GeneralSettingsPanel(
     viewModel: GeneralSettingsViewModel = koinViewModel(),
     onNavigateToNotifications: () -> Unit,
 ) {
+    val hasReadLaterFeed by viewModel.hasReadLaterFeed.collectAsStateWithLifecycle(initialValue = false)
     val keywords by viewModel.filterKeywords.collectAsStateWithLifecycle()
 
     val filterKeywords = FilterKeywords(
@@ -97,8 +99,9 @@ fun GeneralSettingsPanel(
             updateAfterReadAll = viewModel::updateAfterReadAll,
             updateStickyFullContent = viewModel::updateStickyFullContent,
             enableStickyFullContent = viewModel.enableStickyFullContent,
-            showTodayFilter = viewModel.showTodayFilter,
-            updateShowTodayFilter = viewModel::updateShowTodayFilter,
+            homePage = viewModel.homePage,
+            updateHomePage = viewModel::updateHomePage,
+            hasReadLaterFeed = hasReadLaterFeed,
         )
     }
 }
@@ -124,8 +127,9 @@ fun GeneralSettingsPanelView(
     updateAfterReadAll: (behavior: AfterReadAllBehavior) -> Unit,
     confirmMarkAllRead: Boolean,
     markReadOnScroll: Boolean,
-    showTodayFilter: Boolean,
-    updateShowTodayFilter: (show: Boolean) -> Unit,
+    homePage: HomePage = HomePage.default,
+    updateHomePage: (HomePage) -> Unit = {},
+    hasReadLaterFeed: Boolean = false,
 ) {
     val (isClearArticlesDialogOpen, setClearArticlesDialogOpen) = remember { mutableStateOf(false) }
 
@@ -147,15 +151,11 @@ fun GeneralSettingsPanelView(
             updateSortOrder
         )
 
-        FormSection(title = stringResource(R.string.settings_section_categories)) {
-            RowItem {
-                TextSwitch(
-                    checked = showTodayFilter,
-                    onCheckedChange = updateShowTodayFilter,
-                    title = stringResource(R.string.settings_option_show_today_filter)
-                )
-            }
-        }
+        HomePageSelect(
+            selected = homePage,
+            update = updateHomePage,
+            showReadLater = hasReadLaterFeed,
+        )
 
         FormSection(title = stringResource(R.string.settings_section_refresh)) {
             Column {
@@ -371,8 +371,6 @@ private fun GeneralSettingsPanelPreview() {
                 enableStickyFullContent = true,
                 afterReadAll = AfterReadAllBehavior.NOTHING,
                 updateAfterReadAll = {},
-                showTodayFilter = true,
-                updateShowTodayFilter = {},
             )
         }
     }

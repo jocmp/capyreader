@@ -30,7 +30,7 @@
     <string name="refresh_manually_only">Vaid käsitsi</string>
     <string name="refresh_minutes">Iga %1$d minuti järel</string>
     <string name="refresh_feeds_menu_label">Uuenda uudisvooge</string>
-    <string name="nav_headline_tags">Sildid</string>
+    <string name="nav_headline_folders">Sildid</string>
     <string name="nav_headline_feeds">Uudisvood</string>
     <string name="nav_add_feed">Lisa uudisvoog</string>
     <string name="add_feed_feed_not_error">Uudisvoogu ei õnnestunud leida</string>
@@ -67,7 +67,7 @@
     <string name="settings_import_progress_placeholder">Impordime tellimusi…</string>
     <string name="settings_import_progress">Impordime tellimusi: %1$d/%2$d</string>
     <string name="opml_import_toast_complete">Imporditud</string>
-    <string name="edit_feed_tags">Sildid</string>
+    <string name="edit_feed_folders">Sildid</string>
     <string name="settings_option_in_app_browser">Kasuta rakenduse-sisest veebibrauserit</string>
     <string name="image_preview_menu_option_none">Pole kasutusel</string>
     <string name="image_preview_menu_option_small">Väikesed pildid</string>
@@ -176,7 +176,7 @@
     <string name="crash_log_export_item_subtitle">Jagamiseks arendajaga salvesta rakenduse kokkujooksmise andmed tekstifaili</string>
     <string name="settings_gestures_list_back_navigation_system_back">Vaikimisi määratud</string>
     <string name="notifications_channel_title_feed_update">Uudisvoo uuendused</string>
-    <string name="edit_feed_tags_section">Sildid</string>
+    <string name="edit_feed_folders_section">Sildid</string>
     <string name="edit_feed_notifications_title">Võta teavitused kasutusele</string>
     <string name="notifications_permission_disabled_title">Puuduvad õigused teavituse saatmiseks</string>
     <string name="settings_enable_refresh_call_to_action">Esmalt võta kasutusele korraline andmete uuendus</string>
@@ -198,7 +198,6 @@
     <string name="auth_fields_api_url_placeholder">https://example.com/</string>
     <string name="account_source_reader">Uudistelugeja</string>
     <string name="add_account_reader_subtitle">Oma serveris asuv Google Readeri API</string>
-    <string name="edit_feed_tag_section">Lisa või vali silt</string>
     <string name="add_account_feedbin_signup_prompt">Kas sul pole Feedbin kontot?</string>
     <string name="add_account_freshrss_signup_prompt">Sul pole FreshRSSi serverit?</string>
     <string name="settings_gestures_reader_tap_to_page_title">Kerimiseks klõpsi</string>
@@ -292,10 +291,10 @@
     <string name="settings_section_categories">Kategooriad</string>
     <string name="settings_option_show_today_filter">Täna</string>
     <string name="auth_fields_freshrss_api_password">API salasõna</string>
-    <string name="freshrss_visibility">Nähtavus</string>
-    <string name="freshrss_visibility_option_main">Põhiline uudisvoog</string>
+    <string name="feed_visibility">Nähtavus</string>
+    <string name="feed_visibility_option_unread">Põhiline uudisvoog</string>
     <string name="freshrss_visibility_option_important">Oluline</string>
-    <string name="freshrss_visibility_option_category">Kategooria</string>
+    <string name="freshrss_visibility_option_folder">Kategooria</string>
     <string name="freshrss_visibility_option_feed">Uudisvoog</string>
     <string name="theme_mode_label">Režiim</string>
     <string name="settings_section_experimental">Katseline</string>

@@ -15,9 +15,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Circle
-import androidx.compose.material.icons.rounded.Circle
+import androidx.compose.material.icons.outlined.FiberManualRecord
 import androidx.compose.material.icons.rounded.ExpandMore
+import androidx.compose.material.icons.rounded.FiberManualRecord
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarOutline
@@ -98,7 +98,7 @@ fun ArticleBottomBar(
                             onClick = { onToggleRead() },
                         ) {
                             Icon(
-                                if (article.read) Icons.Outlined.Circle else Icons.Rounded.Circle,
+                                if (article.read) Icons.Outlined.FiberManualRecord else Icons.Rounded.FiberManualRecord,
                                 contentDescription = stringResource(R.string.article_view_mark_as_read),
                                 modifier = Modifier.size(24.dp)
                             )

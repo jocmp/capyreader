@@ -35,8 +35,8 @@ enum class Source(val value: String) {
     val supportsTagDeletion
         get() = !isMiniflux
 
-    val supportsPages
-        get() = this == FEEDBIN
+    val supportsReadLater
+        get() = this == FEEDBIN || this == LOCAL
 
     private val isMiniflux
         get() = this == MINIFLUX || this == MINIFLUX_TOKEN

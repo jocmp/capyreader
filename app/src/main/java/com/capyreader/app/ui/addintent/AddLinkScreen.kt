@@ -49,14 +49,14 @@ fun AddLinkScreen(
     onBack: () -> Unit,
     defaultQueryURL: String,
     pageTitle: String,
-    supportsPages: Boolean,
+    supportsReadLater: Boolean,
 ) {
     val (successMessage, setSuccessMessage) = remember { mutableStateOf<String?>(null) }
 
     AddLinkView(
         defaultQueryURL = defaultQueryURL,
         pageTitle = pageTitle,
-        supportsPages = supportsPages,
+        supportsReadLater = supportsReadLater,
         onBack = onBack,
         feedChoices = viewModel.feedChoices,
         onSearchFeed = { url ->
@@ -66,7 +66,6 @@ fun AddLinkScreen(
             viewModel.addFeed(
                 url = url,
                 onComplete = {
-                    viewModel.selectFeed(it.id)
                     setSuccessMessage("feed")
                 },
             )
@@ -92,7 +91,7 @@ fun AddLinkScreen(
 fun AddLinkView(
     defaultQueryURL: String,
     pageTitle: String = "",
-    supportsPages: Boolean,
+    supportsReadLater: Boolean,
     onBack: () -> Unit,
     feedChoices: List<FeedOption> = emptyList(),
     onSearchFeed: (url: String) -> Unit = {},
@@ -104,7 +103,7 @@ fun AddLinkView(
     savePageError: String? = null,
     successMessage: String? = null,
 ) {
-    val defaultTab = if (supportsPages && defaultQueryURL.isNotBlank()) {
+    val defaultTab = if (supportsReadLater && defaultQueryURL.isNotBlank()) {
         AddLinkTab.SAVE_PAGE
     } else {
         AddLinkTab.ADD_FEED
@@ -140,7 +139,7 @@ fun AddLinkView(
             Column(
                 modifier = Modifier.navigationBarsPadding()
             ) {
-                if (supportsPages && successMessage == null) {
+                if (supportsReadLater && successMessage == null) {
                     val tabs = AddLinkTab.entries
 
                     Row(
@@ -259,7 +258,7 @@ private enum class AddLinkTab(val title: Int, val icon: ImageVector) {
 private fun AddLinkViewPreview() {
     AddLinkView(
         defaultQueryURL = "",
-        supportsPages = true,
+        supportsReadLater = true,
         onBack = {},
     )
 }

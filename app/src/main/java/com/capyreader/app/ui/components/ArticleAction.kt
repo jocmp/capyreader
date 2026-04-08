@@ -1,20 +1,18 @@
 package com.capyreader.app.ui.components
 
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Circle
-import androidx.compose.material.icons.rounded.Circle
+import androidx.compose.material.icons.rounded.FiberManualRecord
+import androidx.compose.material.icons.outlined.FiberManualRecord
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarOutline
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.capyreader.app.R
 import com.capyreader.app.ui.articles.ArticleActions
 import com.jocmp.capy.Article
 
 data class ArticleAction(
-    @DrawableRes val icon: Int,
+    val icon: ImageVector,
     @StringRes val translationKey: Int,
     val commit: () -> Unit,
 )
@@ -22,14 +20,14 @@ data class ArticleAction(
 fun readAction(article: Article, actions: ArticleActions) =
     if (article.read) {
         ArticleAction(
-            R.drawable.icon_circle_filled,
+            Icons.Outlined.FiberManualRecord,
             R.string.article_view_mark_as_unread,
         ) {
             actions.markUnread(article.id)
         }
     } else {
         ArticleAction(
-            R.drawable.icon_circle_outline,
+            Icons.Rounded.FiberManualRecord,
             R.string.article_view_mark_as_read,
         ) {
             actions.markRead(article.id)
@@ -39,14 +37,14 @@ fun readAction(article: Article, actions: ArticleActions) =
 fun starAction(article: Article, actions: ArticleActions) =
     if (article.starred) {
         ArticleAction(
-            R.drawable.icon_star_outline,
+            Icons.Rounded.StarOutline,
             R.string.article_view_unstar,
         ) {
             actions.unstar(article.id)
         }
     } else {
         ArticleAction(
-            R.drawable.icon_star_filled,
+            Icons.Rounded.Star,
             R.string.article_view_star,
         ) {
             actions.star(article.id)

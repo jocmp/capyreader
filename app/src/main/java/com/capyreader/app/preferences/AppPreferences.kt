@@ -51,9 +51,6 @@ class AppPreferences(context: Context) {
     val refreshInterval: Preference<RefreshInterval>
         get() = preferenceStore.getEnum("refresh_interval", RefreshInterval.default)
 
-    val articleID: Preference<String>
-        get() = preferenceStore.getString("article_id")
-
     val crashReporting: Preference<Boolean>
         get() = preferenceStore.getBoolean("enable_crash_reporting", false)
 
@@ -82,8 +79,19 @@ class AppPreferences(context: Context) {
         return preferenceStore.getBoolean("feed_group_${type.toString().lowercase()}", true)
     }
 
-    val showTodayFilter: Preference<Boolean>
-        get() = preferenceStore.getBoolean("show_today_filter", true)
+    val homePage: Preference<HomePage>
+        get() = preferenceStore.getObject(
+            key = "home_page",
+            defaultValue = HomePage.default,
+            serializer = { Json.encodeToString(it) },
+            deserializer = {
+                try {
+                    Json.decodeFromString(it)
+                } catch (e: Throwable) {
+                    HomePage.default
+                }
+            }
+        )
 
     val badgeStyle: Preference<BadgeStyle>
         get() = preferenceStore.getEnum("badge_style", BadgeStyle.default)
@@ -199,5 +207,8 @@ class AppPreferences(context: Context) {
                 "after_read_all_behavior",
                 AfterReadAllBehavior.default
             )
+
+        val hideReadArticles: Preference<Boolean>
+            get() = preferenceStore.getBoolean("article_list_hide_read", false)
     }
 }

@@ -62,7 +62,7 @@ import com.capyreader.app.ui.components.LoadingView
 import com.capyreader.app.ui.components.Swiper
 import com.capyreader.app.ui.components.rememberSwiperState
 import com.capyreader.app.ui.isCompact
-import com.capyreader.app.ui.settings.LocalSnackbarHost
+import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.capyreader.app.ui.theme.CapyTheme
 import com.capyreader.app.ui.theme.findStatusBarColor
 import com.capyreader.app.ui.theme.showAppearanceLightStatusBars

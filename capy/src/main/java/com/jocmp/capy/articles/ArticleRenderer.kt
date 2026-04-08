@@ -20,21 +20,22 @@ class ArticleRenderer(
         byline: String,
         colors: Map<String, String>,
         hideImages: Boolean,
+        feedName: String = article.feedName,
     ): String {
         val fontFamily = fontOption.get()
         val showPlaceholderTitle = article.title.isBlank()
         val enableHorizontalScroll = enableHorizontalScroll.get()
 
         val title = if (showPlaceholderTitle) {
-            article.feedName
+            feedName
         } else {
             article.title
         }
 
-        val feedName = if (showPlaceholderTitle) {
+        val displayFeedName = if (showPlaceholderTitle) {
             ""
         } else {
-            article.feedName
+            feedName
         }
 
         val content = buildContent(article, hideImages)
@@ -49,7 +50,7 @@ class ArticleRenderer(
             "external_link" to article.externalLink(),
             "title" to title,
             "byline" to byline,
-            "feed_name" to feedName,
+            "feed_name" to displayFeedName,
             "font_size" to "${textSize.get()}px",
             "font_family" to fontFamily.slug,
             "font_preload" to fontPreload(fontFamily),

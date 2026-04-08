@@ -26,7 +26,7 @@
         <item quantity="few">Každé %d hodiny</item>
         <item quantity="other">Každých %d hodin</item>
     </plurals>
-    <string name="nav_headline_tags">Štítky</string>
+    <string name="nav_headline_folders">Štítky</string>
     <string name="relative_time_just_now">Právě teď</string>
     <string name="relative_time_minutes">%1$dmin</string>
     <string name="relative_time_hours">%1$dhod</string>
@@ -56,7 +56,7 @@
     <string name="theme_menu_option_light">Světlý</string>
     <string name="theme_menu_option_dark">Tmavý</string>
     <string name="theme_menu_option_system_default">Stejný jako systém</string>
-    <string name="edit_feed_tags">štítky</string>
+    <string name="edit_feed_folders">štítky</string>
     <string name="settings_option_in_app_browser">Otevírat odkazy uvnitř aplikace</string>
     <string name="image_preview_menu_option_none">Bez náhledu</string>
     <string name="image_preview_menu_option_small">Malá</string>
@@ -180,7 +180,7 @@
     <string name="notifications_channel_title_feed_update">Aktualizace zdroje</string>
     <string name="article_view_open_externally">Otevřít externě</string>
     <string name="settings_panel_notifications_title">Upozornění</string>
-    <string name="edit_feed_tags_section">Štítky</string>
+    <string name="edit_feed_folders_section">Štítky</string>
     <string name="notifications_permissions_disabled_call_to_action">Nastavení</string>
     <string name="notifications_permission_disabled_title">Odesílání oznámení není povoleno</string>
     <string name="account_source_reader">Reader</string>
@@ -190,7 +190,6 @@
     <string name="add_account_feedbin_signup_link_text">Vytvořte si ho zde.</string>
     <string name="add_account_freshrss_signup_prompt">Nemáte instanci FreshRSS?</string>
     <string name="add_account_freshrss_signup_link_text">Zjistit více.</string>
-    <string name="edit_feed_tag_section">Vytvořit nebo vybrat štítek</string>
     <string name="settings_select_none">Nevybrat nic</string>
     <string name="settings_select_all">Vybrat vše</string>
     <string name="settings_confirm_mark_all_read">Potvrdit označení všeho jako přečtené</string>
@@ -249,7 +248,7 @@
     <string name="theme_newsprint">Novinový papír</string>
     <string name="theme_monochrome">Monochromatický</string>
     <string name="settings_pure_black_dark_mode">Čistě černý tmavý režim</string>
-    <string name="delete_tag_error">Štítek se nepodařilo odstranit</string>
+    <string name="delete_folder_error">Štítek se nepodařilo odstranit</string>
     <string name="auth_fields_client_certificate">Klientský certifikát (nepovinné)</string>
     <string name="auth_fields_remove_client_cert">Odebrat klientský certifikát</string>
     <string name="add_account_miniflux_signup_prompt">Nemáte nainstalovaný Miniflux?</string>
@@ -290,8 +289,8 @@
     <string name="settings_section_categories">Kategorie</string>
     <string name="settings_option_show_today_filter">Dnešní</string>
     <string name="auth_fields_freshrss_api_password">API heslo</string>
-    <string name="freshrss_visibility">Viditelnost</string>
-    <string name="freshrss_visibility_option_main">Hlavní kanál</string>
+    <string name="feed_visibility">Viditelnost</string>
+    <string name="feed_visibility_option_unread">Hlavní kanál</string>
     <string name="freshrss_visibility_option_important">Důležité</string>
-    <string name="freshrss_visibility_option_category">Kategorie</string>
+    <string name="freshrss_visibility_option_folder">Kategorie</string>
 </resources>
