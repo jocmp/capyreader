@@ -6,5 +6,6 @@ import androidx.glance.appwidget.updateAll
 object WidgetUpdater {
     suspend fun update(context: Context) {
         HeadlinesWidget().updateAll(context)
+        SpotlightWidget().updateAll(context)
     }
 }

@@ -13,10 +13,11 @@ import coil3.video.VideoFrameDecoder
 import com.capyreader.app.common.AndroidLogging
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.widget.HeadlinesWidgetReceiver
+import com.capyreader.app.ui.widget.SpotlightWidgetReceiver
 import com.google.android.material.color.DynamicColors
-import com.jocmp.capy.logging.CapyLog
 import com.jocmp.capy.accounts.baseHttpClient
 import com.jocmp.capy.common.launchUI
+import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.MainScope
 import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
@@ -59,7 +60,9 @@ class MainApplication : Application(), SingletonImageLoader.Factory {
     private fun loadWidgetPreview() {
         MainScope().launchUI {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
-                GlanceAppWidgetManager(applicationContext).setWidgetPreviews(HeadlinesWidgetReceiver::class)
+                val manager = GlanceAppWidgetManager(applicationContext)
+                manager.setWidgetPreviews(HeadlinesWidgetReceiver::class)
+                manager.setWidgetPreviews(SpotlightWidgetReceiver::class)
             }
         }
     }

@@ -39,10 +39,7 @@ import com.capyreader.app.MainActivity
 import com.capyreader.app.R
 import com.capyreader.app.notifications.NotificationHelper.Companion.UNREAD_ONLY_KEY
 import com.jocmp.capy.Article
-import java.net.URL
 import java.time.LocalDateTime
-import java.time.ZoneOffset
-import java.time.ZonedDateTime
 
 @Composable
 fun HeadlinesLayout(articles: List<Article>) {
@@ -109,56 +106,24 @@ private fun Context.openUnread() =
         })
 
 @OptIn(ExperimentalGlancePreviewApi::class)
-@Preview
+@Preview(widthDp = 240, heightDp = 180)
 @Composable
 fun HeadlinesLayoutPreview() {
-    val article = Article(
-        id = "288",
-        feedID = "123",
-        title = "How to use the Galaxy S24's AI photo editing tool",
-        author = "Andrew Romero",
-        contentHTML = "<div>Test</div>",
-        imageURL = "https://example.com",
-        summary = "The Galaxy S24 series, while bringing little physical change, packs a lot of AI narrative. One of the biggest Galaxy S24 features is the AI Generative Edit",
-        url = URL("https://9to5google.com/?p=605559"),
-        updatedAt = ZonedDateTime.of(2025, 4, 6, 8, 33, 0, 0, ZoneOffset.UTC),
-        publishedAt = ZonedDateTime.of(2025, 4, 6, 8, 33, 0, 0, ZoneOffset.UTC),
-        read = true,
-        starred = false,
-        feedName = "9to5Google - Google news, Pixel, Android, Home, Chrome OS, more"
-    )
-
     GlanceTheme {
-        HeadlinesLayout(listOf(article))
+        HeadlinesLayout(sampleArticles())
     }
 }
 
 @OptIn(ExperimentalGlancePreviewApi::class)
-@Preview
+@Preview(widthDp = 240, heightDp = 180)
 @Composable
 fun HeadlinesLayoutDarkPreview() {
-    val article = Article(
-        id = "288",
-        feedID = "123",
-        title = "How to use the Galaxy S24's AI photo editing tool",
-        author = "Andrew Romero",
-        contentHTML = "<div>Test</div>",
-        imageURL = "https://example.com",
-        summary = "The Galaxy S24 series, while bringing little physical change, packs a lot of AI narrative. One of the biggest Galaxy S24 features is the AI Generative Edit",
-        url = URL("https://9to5google.com/?p=605559"),
-        updatedAt = ZonedDateTime.of(2025, 4, 6, 8, 33, 0, 0, ZoneOffset.UTC),
-        publishedAt = ZonedDateTime.of(2025, 4, 6, 8, 33, 0, 0, ZoneOffset.UTC),
-        read = true,
-        starred = false,
-        feedName = "9to5Google - Google news, Pixel, Android, Home, Chrome OS, more"
-    )
-
     GlanceTheme(
         colors = ColorProviders(
             light = darkColorScheme(),
             dark = darkColorScheme(),
         ),
     ) {
-        HeadlinesLayout(listOf(article))
+        HeadlinesLayout(sampleArticles())
     }
 }
