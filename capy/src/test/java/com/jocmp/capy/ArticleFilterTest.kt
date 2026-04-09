@@ -7,11 +7,15 @@ import kotlin.test.assertNotEquals
 class ArticleFilterTest {
     @Test
     fun withStatus_copiesExistingFilter() {
-        val articles = ArticleFilter.default()
+        val filter = ArticleFilter.Feeds(
+            feedID = "1",
+            folderTitle = null,
+            feedStatus = ArticleStatus.ALL
+        )
 
-        val nextFilter = articles.withStatus(status = ArticleStatus.UNREAD)
+        val nextFilter = filter.withStatus(status = ArticleStatus.UNREAD)
 
-        assertNotEquals(articles.status, nextFilter.status)
+        assertNotEquals(filter.status, nextFilter.status)
         assertEquals(expected = ArticleStatus.UNREAD, actual = nextFilter.status)
     }
 }

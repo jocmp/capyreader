@@ -18,7 +18,6 @@ import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.Account
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleNotification
-import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.logging.CapyLog
 import com.jocmp.capy.preferences.getAndSet
 import java.time.ZonedDateTime
@@ -164,7 +163,7 @@ class NotificationHelper(
                 intent.replaceExtras(Bundle())
 
                 appPreferences.filter.set(
-                    ArticleFilter.Articles(articleStatus = ArticleStatus.UNREAD)
+                    ArticleFilter.Unread()
                 )
 
                 return null

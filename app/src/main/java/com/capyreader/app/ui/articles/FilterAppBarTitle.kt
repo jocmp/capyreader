@@ -30,7 +30,7 @@ fun FilterAppBarTitle(
     onRequestJumpToTop: () -> Unit
 ) {
     val text = when (filter) {
-        is ArticleFilter.Articles -> stringResource(R.string.filter_unread)
+        is ArticleFilter.Unread -> stringResource(R.string.filter_unread)
         is ArticleFilter.Feeds -> {
             allFeeds.find { it.id == filter.feedID }?.displayTitle()
         }

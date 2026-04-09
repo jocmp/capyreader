@@ -78,7 +78,7 @@ class AccountTest {
             .map { it.id }
 
         val ids = account.unreadArticleIDs(
-            filter = ArticleFilter.Articles(ArticleStatus.ALL),
+            filter = ArticleFilter.Unread(ArticleStatus.ALL),
             range = MarkRead.All,
             sortOrder = SortOrder.NEWEST_FIRST,
             query = null,
@@ -109,7 +109,7 @@ class AccountTest {
             .map { it.id }
 
         val ids = account.unreadArticleIDs(
-            filter = ArticleFilter.Articles(ArticleStatus.UNREAD),
+            filter = ArticleFilter.Unread(),
             range = MarkRead.Before(unreadArticleIDs[1]),
             sortOrder = SortOrder.NEWEST_FIRST,
             query = null,
@@ -142,7 +142,7 @@ class AccountTest {
             .map { it.id }
 
         val ids = account.unreadArticleIDs(
-            filter = ArticleFilter.Articles(ArticleStatus.UNREAD),
+            filter = ArticleFilter.Unread(),
             range = MarkRead.After(unreadArticleIDs[1]),
             sortOrder = SortOrder.NEWEST_FIRST,
             query = null,
@@ -175,7 +175,7 @@ class AccountTest {
             .map { it.id }
 
         val ids = account.unreadArticleIDs(
-            filter = ArticleFilter.Articles(ArticleStatus.UNREAD),
+            filter = ArticleFilter.Unread(),
             range = MarkRead.Before(unreadArticleIDs[1]),
             sortOrder = SortOrder.OLDEST_FIRST,
             query = null,

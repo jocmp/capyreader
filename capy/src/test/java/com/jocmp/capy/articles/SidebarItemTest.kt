@@ -78,7 +78,7 @@ class SidebarItemTest {
 
     @Test
     fun `next from article filter with a folder`() {
-        val filter = ArticleFilter.Articles(articleStatus = ArticleStatus.UNREAD)
+        val filter = ArticleFilter.Unread()
         val folder = Folder(title = "This Is My Next Folder")
 
         val next = findNext(
@@ -92,7 +92,7 @@ class SidebarItemTest {
 
     @Test
     fun `next from article filter with a feed`() {
-        val filter = ArticleFilter.Articles(articleStatus = ArticleStatus.UNREAD)
+        val filter = ArticleFilter.Unread()
         val feed = feedFixture.create()
 
         val next = findNext(
@@ -106,7 +106,7 @@ class SidebarItemTest {
 
     @Test
     fun `next from article filter that is empty`() {
-        val filter = ArticleFilter.Articles(articleStatus = ArticleStatus.UNREAD)
+        val filter = ArticleFilter.Unread()
 
         val next = findNext(filter)
 
@@ -362,7 +362,7 @@ class SidebarItemTest {
 
         val filters = items.map { it.toFilter(ArticleStatus.ALL) }
         assertIs<ArticleFilter.Today>(filters[0])
-        assertIs<ArticleFilter.Articles>(filters[1])
+        assertIs<ArticleFilter.Unread>(filters[1])
         assertIs<ArticleFilter.Starred>(filters[2])
         assertIs<ArticleFilter.SavedSearches>(filters[3])
         assertIs<ArticleFilter.Folders>(filters[4])
@@ -382,7 +382,7 @@ class SidebarItemTest {
         val today = items[0]
         assertTrue(today.isSelected(ArticleFilter.Today(ArticleStatus.ALL)))
         assertNotNull(today.next)
-        assertTrue(today.next!!.isSelected(ArticleFilter.Articles(ArticleStatus.ALL)))
+        assertTrue(today.next!!.isSelected(ArticleFilter.Unread()))
         assertNotNull(today.next?.next)
         assertTrue(today.next!!.next!!.isSelected(ArticleFilter.Starred()))
         assertNotNull(today.next?.next?.next)

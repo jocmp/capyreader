@@ -41,7 +41,7 @@ fun FilterActionMenu(
             }
         }
 
-        if (filter !is ArticleFilter.Articles) {
+        if (filter !is ArticleFilter.Unread && filter !is ArticleFilter.Starred) {
             val tooltip = if (hideReadArticles) {
                 stringResource(R.string.article_list_show_read)
             } else {
