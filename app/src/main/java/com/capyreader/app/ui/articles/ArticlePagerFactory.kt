@@ -21,7 +21,7 @@ class ArticlePagerFactory(private val database: Database) {
         since: OffsetDateTime
     ): PagingSource<Int, Article> {
         return when (filter) {
-            is ArticleFilter.Articles -> articleSource(filter, query, sortOrder, since)
+            is ArticleFilter.Unread -> articleSource(filter, query, sortOrder, since)
             is ArticleFilter.Feeds -> feedSource(filter, query, sortOrder, since)
             is ArticleFilter.Folders -> folderSource(filter, query, sortOrder, since)
             is ArticleFilter.SavedSearches -> savedSearchSource(filter, query, sortOrder, since)
@@ -31,7 +31,7 @@ class ArticlePagerFactory(private val database: Database) {
     }
 
     private fun articleSource(
-        filter: ArticleFilter.Articles,
+        filter: ArticleFilter.Unread,
         query: String?,
         sortOrder: SortOrder,
         since: OffsetDateTime

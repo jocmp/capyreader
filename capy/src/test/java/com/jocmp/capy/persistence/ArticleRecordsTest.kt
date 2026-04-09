@@ -547,7 +547,7 @@ class ArticleRecordsTest {
             articleRecords.markUnread(article.id)
         }
 
-        val filter = ArticleFilter.Articles(ArticleStatus.UNREAD)
+        val filter = ArticleFilter.Unread()
 
         val count = articleRecords.countUnread(
             filter = filter,
@@ -601,7 +601,7 @@ class ArticleRecordsTest {
             )
         }
 
-        val filter = ArticleFilter.Articles(ArticleStatus.UNREAD)
+        val filter = ArticleFilter.Unread()
 
         val count = articleRecords.countUnread(
             filter = filter,

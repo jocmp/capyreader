@@ -146,7 +146,7 @@ fun FeedList(
                     )
                 },
                 badge = { CountBadge(count = statusCount) },
-                selected = filter.hasArticlesSelected(),
+                selected = filter.hasUnreadSelected(),
                 onClick = {
                     onFilterSelect()
                 }

@@ -445,7 +445,7 @@ fun ArticleScreen(
         }
 
         val selectFilter = {
-            if (!filter.hasArticlesSelected()) {
+            if (!filter.hasUnreadSelected()) {
                 openNextList { viewModel.selectArticleFilter() }
             } else {
                 closeDrawer()
@@ -897,7 +897,7 @@ fun canOpenNextFeed(
     filter: ArticleFilter,
     range: MarkRead,
 ): Boolean {
-    return range is MarkRead.All && filter !is ArticleFilter.Articles
+    return range is MarkRead.All && filter !is ArticleFilter.Unread
 }
 
 fun isFeedActive(

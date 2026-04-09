@@ -219,7 +219,7 @@ class ArticleScreenViewModel(
     }
 
     fun selectArticleFilter() {
-        updateFilter(ArticleFilter.Articles(articleStatus = UNREAD))
+        updateFilter(ArticleFilter.Unread())
     }
 
     fun selectToday() {
@@ -534,7 +534,7 @@ class ArticleScreenViewModel(
     }
 
     private fun resetToDefaultFilter() {
-        updateFilter(ArticleFilter.default().copy(currentStatus))
+        updateFilter(ArticleFilter.default())
     }
 
     private fun toggleCurrentStarred(articleID: String) {
