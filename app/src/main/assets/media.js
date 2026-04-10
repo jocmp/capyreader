@@ -213,11 +213,13 @@ function postProcessContent(baseUrl, hideImages) {
     anchor.removeAttribute("onclick");
   });
 
-  content.querySelectorAll("img").forEach((img) => {
+  content.querySelectorAll("img").forEach((img, index) => {
     if (hideImages) {
       img.remove();
     } else {
-      img.loading = "lazy";
+      if (index > 0) {
+        img.loading = "lazy";
+      }
       if (baseUrl) {
         const src = img.getAttribute("src");
         if (src && !src.startsWith("http") && !src.startsWith("data:")) {

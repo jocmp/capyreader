@@ -10,11 +10,16 @@ import com.jocmp.capy.AccountManager
 import com.jocmp.capy.ClientCertManager
 import com.jocmp.capy.DatabaseProvider
 import com.jocmp.capy.PreferenceStoreProvider
+import com.jocmp.capy.accounts.httpClientBuilder
+import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import java.util.Locale
 
 internal val common = module {
+    single<OkHttpClient> {
+        httpClientBuilder(cachePath = androidContext().cacheDir.toURI()).build()
+    }
     single<PreferenceStoreProvider> { SharedPreferenceStoreProvider(get()) }
     single<DatabaseProvider> { AndroidDatabaseProvider(context = get()) }
     single<ClientCertManager> { AndroidClientCertManager(context = get()) }
