@@ -28,7 +28,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -94,8 +93,6 @@ import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
@@ -225,8 +222,6 @@ fun ArticleScreen(
             viewModel.dismissUnauthorizedMessage()
             setUpdatePasswordDialogOpen(true)
         }
-        val enableMarkReadOnScroll by appPreferences.articleListOptions.markReadOnScroll.collectChangesWithDefault()
-
         suspend fun navigateToDetail() {
             scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
             if (showMultipleColumns) {
@@ -259,16 +254,6 @@ fun ArticleScreen(
                 listState.scrollToItem(0)
                 resetScrollBehaviorOffset()
             }
-        }
-
-        LaunchedEffect(listState) {
-            snapshotFlow { listState.layoutInfo.totalItemsCount }
-                .drop(if (enableMarkReadOnScroll) 0 else 1)
-                .distinctUntilChanged()
-                .collect {
-                    listState.scrollToItem(0)
-                    resetScrollBehaviorOffset()
-                }
         }
 
         val (scrolledFilter, setScrolledFilter) = rememberSaveable(
@@ -335,10 +320,6 @@ fun ArticleScreen(
         }
 
         fun refreshAll() {
-            if (enableMarkReadOnScroll) {
-                scrollToTop()
-            }
-
             if (refreshAllState == AngleRefreshState.RUNNING) {
                 return
             }
@@ -623,7 +604,6 @@ fun ArticleScreen(
                                             articles = articles,
                                             selectedArticleKey = article?.id,
                                             listState = listState,
-                                            enableMarkReadOnScroll = enableMarkReadOnScroll,
                                             refreshingAll = viewModel.refreshingAll,
                                             dimReadArticles = filter !is ArticleFilter.Starred,
                                             onMarkAllRead = { range ->

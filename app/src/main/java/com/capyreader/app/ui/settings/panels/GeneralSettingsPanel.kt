@@ -92,9 +92,7 @@ fun GeneralSettingsPanel(
             updateSortOrder = viewModel::updateSortOrder,
             sortOrder = viewModel.sortOrder,
             updateConfirmMarkAllRead = viewModel::updateConfirmMarkAllRead,
-            updateMarkReadOnScroll = viewModel::updateMarkReadOnScroll,
             confirmMarkAllRead = viewModel.confirmMarkAllRead,
-            markReadOnScroll = viewModel.markReadOnScroll,
             afterReadAll = viewModel.afterReadAll,
             updateAfterReadAll = viewModel::updateAfterReadAll,
             updateStickyFullContent = viewModel::updateStickyFullContent,
@@ -122,11 +120,9 @@ fun GeneralSettingsPanelView(
     updateStickyFullContent: (enable: Boolean) -> Unit,
     enableStickyFullContent: Boolean,
     updateConfirmMarkAllRead: (enable: Boolean) -> Unit,
-    updateMarkReadOnScroll: (enable: Boolean) -> Unit,
     afterReadAll: AfterReadAllBehavior,
     updateAfterReadAll: (behavior: AfterReadAllBehavior) -> Unit,
     confirmMarkAllRead: Boolean,
-    markReadOnScroll: Boolean,
     homePage: HomePage = HomePage.default,
     updateHomePage: (HomePage) -> Unit = {},
     hasReadLaterFeed: Boolean = false,
@@ -211,11 +207,6 @@ fun GeneralSettingsPanelView(
                         onCheckedChange = updateConfirmMarkAllRead,
                         checked = confirmMarkAllRead,
                         title = stringResource(R.string.settings_confirm_mark_all_read),
-                    )
-                    TextSwitch(
-                        onCheckedChange = updateMarkReadOnScroll,
-                        checked = markReadOnScroll,
-                        title = stringResource(R.string.settings_mark_read_on_scroll),
                     )
                 }
                 PreferenceSelect(
@@ -363,9 +354,7 @@ private fun GeneralSettingsPanelPreview() {
                 sortOrder = SortOrder.NEWEST_FIRST,
                 updateSortOrder = {},
                 onNavigateToNotifications = {},
-                markReadOnScroll = true,
                 updateConfirmMarkAllRead = {},
-                updateMarkReadOnScroll = {},
                 confirmMarkAllRead = true,
                 updateStickyFullContent = {},
                 enableStickyFullContent = true,
