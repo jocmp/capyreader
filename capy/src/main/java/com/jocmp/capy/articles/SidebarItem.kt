@@ -54,12 +54,12 @@ class SidebarItem(
         )
 
         private fun articlesItem() = SidebarItem(
-            toFilter = { ArticleFilter.Unread(it) },
+            toFilter = { ArticleFilter.Unread },
             isSelected = { it is ArticleFilter.Unread },
         )
 
         private fun starredItem() = SidebarItem(
-            toFilter = { ArticleFilter.Starred(it) },
+            toFilter = { ArticleFilter.Starred },
             isSelected = { it is ArticleFilter.Starred },
         )
 

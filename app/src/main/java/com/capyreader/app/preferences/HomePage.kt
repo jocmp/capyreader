@@ -21,8 +21,8 @@ sealed class HomePage {
     fun toArticleFilter(readLaterFeedID: String? = null): ArticleFilter {
         return when (this) {
             is Today -> ArticleFilter.Today(todayStatus = ArticleStatus.ALL)
-            is Unread -> ArticleFilter.Unread()
-            is Starred -> ArticleFilter.Starred()
+            is Unread -> ArticleFilter.Unread
+            is Starred -> ArticleFilter.Starred
             is ReadLater -> if (readLaterFeedID != null) {
                 ArticleFilter.Feeds(
                     feedID = readLaterFeedID,
@@ -30,7 +30,7 @@ sealed class HomePage {
                     feedStatus = ArticleStatus.ALL,
                 )
             } else {
-                ArticleFilter.Unread()
+                ArticleFilter.Unread
             }
         }
     }

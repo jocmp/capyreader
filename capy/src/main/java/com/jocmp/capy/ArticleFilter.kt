@@ -30,20 +30,16 @@ sealed class ArticleFilter(open val status: ArticleStatus) {
 
     fun withStatus(status: ArticleStatus): ArticleFilter {
         return when (this) {
-            is Unread -> copy(unreadStatus = status)
+            is Unread -> this
             is Feeds -> copy(feedStatus = status)
             is Folders -> copy(folderStatus = status)
             is SavedSearches -> copy(savedSearchStatus = status)
             is Today -> copy(todayStatus = status)
-            is Starred -> copy(starredStatus = status)
+            is Starred -> this
         }
     }
 
-    @Serializable
-    data class Unread(val unreadStatus: ArticleStatus = ArticleStatus.UNREAD) : ArticleFilter(unreadStatus) {
-        override val status: ArticleStatus
-            get() = unreadStatus
-    }
+    @Serializable object Unread : ArticleFilter(ArticleStatus.UNREAD)
 
     @Serializable
     data class Feeds(val feedID: String, val folderTitle: String?, val feedStatus: ArticleStatus) :
@@ -75,12 +71,9 @@ sealed class ArticleFilter(open val status: ArticleStatus) {
     }
 
     @Serializable
-    data class Starred(val starredStatus: ArticleStatus = ArticleStatus.ALL) : ArticleFilter(starredStatus) {
-        override val status: ArticleStatus
-            get() = starredStatus
-    }
+    object Starred : ArticleFilter(ArticleStatus.ALL)
 
     companion object {
-        fun default() = Unread()
+        fun default() = Unread
     }
 }

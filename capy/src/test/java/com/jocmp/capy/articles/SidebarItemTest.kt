@@ -40,7 +40,7 @@ class SidebarItemTest {
 
     @Test
     fun `next from starred with a saved search`() {
-        val filter = ArticleFilter.Starred()
+        val filter = ArticleFilter.Starred
         val search = SavedSearch(id = "1", name = "My Search", query = null)
 
         val next = findNext(
@@ -78,7 +78,7 @@ class SidebarItemTest {
 
     @Test
     fun `next from article filter with a folder`() {
-        val filter = ArticleFilter.Unread()
+        val filter = ArticleFilter.Unread
         val folder = Folder(title = "This Is My Next Folder")
 
         val next = findNext(
@@ -92,7 +92,7 @@ class SidebarItemTest {
 
     @Test
     fun `next from article filter with a feed`() {
-        val filter = ArticleFilter.Unread()
+        val filter = ArticleFilter.Unread
         val feed = feedFixture.create()
 
         val next = findNext(
@@ -106,7 +106,7 @@ class SidebarItemTest {
 
     @Test
     fun `next from article filter that is empty`() {
-        val filter = ArticleFilter.Unread()
+        val filter = ArticleFilter.Unread
 
         val next = findNext(filter)
 
@@ -116,7 +116,7 @@ class SidebarItemTest {
 
     @Test
     fun `next from starred when empty`() {
-        val filter = ArticleFilter.Starred()
+        val filter = ArticleFilter.Starred
 
         val next = findNext(filter)
 
@@ -125,7 +125,7 @@ class SidebarItemTest {
 
     @Test
     fun `next from starred with a folder`() {
-        val filter = ArticleFilter.Starred()
+        val filter = ArticleFilter.Starred
         val folder = Folder(title = "My Folder")
 
         val next = findNext(
@@ -382,9 +382,9 @@ class SidebarItemTest {
         val today = items[0]
         assertTrue(today.isSelected(ArticleFilter.Today(ArticleStatus.ALL)))
         assertNotNull(today.next)
-        assertTrue(today.next!!.isSelected(ArticleFilter.Unread()))
+        assertTrue(today.next!!.isSelected(ArticleFilter.Unread))
         assertNotNull(today.next?.next)
-        assertTrue(today.next!!.next!!.isSelected(ArticleFilter.Starred()))
+        assertTrue(today.next!!.next!!.isSelected(ArticleFilter.Starred))
         assertNotNull(today.next?.next?.next)
         assertTrue(today.next!!.next!!.next!!.isSelected(
             ArticleFilter.Feeds(feedID = feed.id, folderTitle = null, feedStatus = ArticleStatus.ALL)

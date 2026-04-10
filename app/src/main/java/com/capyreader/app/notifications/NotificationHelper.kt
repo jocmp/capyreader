@@ -163,7 +163,7 @@ class NotificationHelper(
                 intent.replaceExtras(Bundle())
 
                 appPreferences.filter.set(
-                    ArticleFilter.Unread()
+                    ArticleFilter.Unread
                 )
 
                 return null
