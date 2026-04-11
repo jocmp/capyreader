@@ -16,6 +16,7 @@ data class Article(
     val publishedAt: ZonedDateTime,
     val read: Boolean,
     val starred: Boolean,
+    val snowflakeId: Long = 0,
     val feedName: String = "",
     val faviconURL: String? = null,
     val feedURL: String? = null,

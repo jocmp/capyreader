@@ -11,44 +11,6 @@ import com.jocmp.capy.persistence.toStatusPair
 import java.time.OffsetDateTime
 
 class ByToday(private val database: Database) {
-    fun all(
-        status: ArticleStatus,
-        query: String? = null,
-        limit: Long,
-        offset: Long,
-        sortOrder: SortOrder,
-        since: OffsetDateTime?,
-    ): Query<Article> {
-        val (read, starred) = status.toStatusPair
-        val queries = database.articlesByStatusQueries
-
-        return if (isNewestFirst(sortOrder)) {
-            queries.allNewestFirst(
-                read = read,
-                starred = starred,
-                limit = limit,
-                offset = offset,
-                lastReadAt = mapLastRead(read, since),
-                lastUnstarredAt = mapLastUnstarred(starred, since),
-                publishedSince = mapTodayStartDate(),
-                query = query,
-                mapper = ::listMapper
-            )
-        } else {
-            queries.allOldestFirst(
-                read = read,
-                starred = starred,
-                limit = limit,
-                offset = offset,
-                lastReadAt = mapLastRead(read, since),
-                lastUnstarredAt = mapLastUnstarred(starred, since),
-                publishedSince = mapTodayStartDate(),
-                query = query,
-                mapper = ::listMapper
-            )
-        }
-    }
-
     fun unreadArticleIDs(
         status: ArticleStatus,
         range: MarkRead,
@@ -56,16 +18,84 @@ class ByToday(private val database: Database) {
         query: String?,
     ): Query<String> {
         val (_, starred) = status.toStatusPair
-        val (afterArticleID, beforeArticleID) = range.toPair
+        val (afterSnowflakeID, beforeSnowflakeID) = range.toPair
 
         return database.articlesByStatusQueries.findArticleIDs(
             starred = starred,
-            afterArticleID = afterArticleID,
-            beforeArticleID = beforeArticleID,
+            afterSnowflakeID = afterSnowflakeID,
+            beforeSnowflakeID = beforeSnowflakeID,
             publishedSince = mapTodayStartDate(),
             newestFirst = isNewestFirst(sortOrder),
             query = query,
         )
+    }
+
+    fun pageBoundaries(
+        status: ArticleStatus,
+        query: String? = null,
+        since: OffsetDateTime? = null,
+        sortOrder: SortOrder = SortOrder.NEWEST_FIRST,
+    ): (anchor: Long?, limit: Long) -> Query<Long> {
+        val (read, starred) = status.toStatusPair
+        val queries = database.articlesByStatusQueries
+        val boundaryQuery = if (isNewestFirst(sortOrder)) {
+            queries::pageBoundaries
+        } else {
+            queries::pageBoundariesOldestFirst
+        }
+
+        return { anchor, limit ->
+            boundaryQuery(
+                limit,
+                anchor ?: 0L,
+                read,
+                mapLastRead(read, since),
+                starred,
+                mapLastUnstarred(starred, since),
+                mapTodayStartDate(),
+                query,
+            )
+        }
+    }
+
+    fun keyed(
+        status: ArticleStatus,
+        query: String? = null,
+        sortOrder: SortOrder,
+        since: OffsetDateTime? = null,
+    ): (beginInclusive: Long, endExclusive: Long?) -> Query<Article> {
+        val (read, starred) = status.toStatusPair
+        val queries = database.articlesByStatusQueries
+
+        return if (isNewestFirst(sortOrder)) {
+            { begin, end ->
+                queries.keyedNewestFirst(
+                    read = read,
+                    starred = starred,
+                    lastReadAt = mapLastRead(read, since),
+                    lastUnstarredAt = mapLastUnstarred(starred, since),
+                    publishedSince = mapTodayStartDate(),
+                    query = query,
+                    beginInclusive = begin,
+                    endExclusive = end,
+                    mapper = ::listMapper,
+                )
+            }
+        } else {
+            { begin, end ->
+                queries.keyedOldestFirst(
+                    read = read,
+                    starred = starred,
+                    lastReadAt = mapLastRead(read, since),
+                    lastUnstarredAt = mapLastUnstarred(starred, since),
+                    publishedSince = mapTodayStartDate(),
+                    query = query,
+                    beginInclusive = begin,
+                    endExclusive = end,
+                    mapper = ::listMapper,
+                )
+            }
+        }
     }
 
     fun count(

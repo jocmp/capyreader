@@ -6,7 +6,8 @@ import com.jocmp.capy.common.optionalURL
 import com.jocmp.capy.common.toDateTimeFromSeconds
 
 internal fun articleMapper(
-    id: String,
+    id: Long,
+    externalId: String,
     feedID: String?,
     title: String?,
     author: String?,
@@ -17,6 +18,7 @@ internal fun articleMapper(
     imageURL: String?,
     publishedAt: Long?,
     enclosureType: String?,
+    snowflakeId: Long,
     feedTitle: String?,
     faviconURL: String?,
     enableStickyContent: Boolean,
@@ -29,7 +31,7 @@ internal fun articleMapper(
     read: Boolean,
 ): Article {
     return Article(
-        id = id,
+        id = externalId,
         feedID = feedID.toString(),
         faviconURL = faviconURL,
         title = title ?: "",
@@ -44,6 +46,7 @@ internal fun articleMapper(
         publishedAt = publishedAt!!.toDateTimeFromSeconds,
         read = read,
         starred = starred,
+        snowflakeId = snowflakeId,
         feedName = feedTitle ?: "",
         enableStickyFullContent = enableStickyContent,
         openInBrowser = openInBrowser,
@@ -53,7 +56,7 @@ internal fun articleMapper(
 }
 
 internal fun listMapper(
-    id: String,
+    externalId: String,
     feedID: String?,
     title: String?,
     author: String?,
@@ -62,6 +65,7 @@ internal fun listMapper(
     imageURL: String?,
     publishedAt: Long?,
     enclosureType: String?,
+    snowflakeId: Long,
     feedTitle: String?,
     faviconURL: String?,
     openInBrowser: Boolean,
@@ -71,7 +75,8 @@ internal fun listMapper(
     read: Boolean?,
 ): Article {
     return articleMapper(
-        id = id,
+        id = 0,
+        externalId = externalId,
         feedID = feedID.toString(),
         title = title ?: "",
         author = author,
@@ -88,6 +93,7 @@ internal fun listMapper(
         imageURL = imageURL,
         publishedAt = publishedAt,
         enclosureType = enclosureType,
+        snowflakeId = snowflakeId,
         feedTitle = feedTitle,
         faviconURL = faviconURL,
         enableStickyContent = false,

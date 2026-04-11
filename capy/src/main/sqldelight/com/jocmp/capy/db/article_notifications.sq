@@ -7,9 +7,9 @@ SELECT
     feeds.title AS feed_title,
     feeds.favicon_url AS feed_favicon_url
 FROM article_notifications
-JOIN articles ON article_notifications.article_id = articles.id
+JOIN articles ON article_notifications.article_id = articles.external_id
 JOIN feeds ON articles.feed_id = feeds.id
-WHERE articles.id IN :article_ids;
+WHERE articles.external_id IN :article_ids;
 
 createNotification:
 INSERT INTO article_notifications(
@@ -35,11 +35,11 @@ dismissed_at = :deleted_at WHERE dismissed_at IS NULL;
 
 articlesToNotify:
 SELECT
-    articles.id AS article_id
+    articles.external_id AS article_id
 FROM articles
-JOIN article_statuses ON articles.id = article_statuses.article_id
+JOIN article_statuses ON articles.external_id = article_statuses.article_id
 JOIN feeds ON articles.feed_id = feeds.id
-LEFT JOIN article_notifications ON article_notifications.article_id = articles.id
+LEFT JOIN article_notifications ON article_notifications.article_id = articles.external_id
 WHERE article_statuses.updated_at >= :since
 AND article_statuses.read = 0
 AND feeds.enable_notifications = 1

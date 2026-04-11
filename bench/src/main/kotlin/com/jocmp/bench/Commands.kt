@@ -89,30 +89,34 @@ suspend fun commandSelectProfile(account: Account) {
 
     val total = account.countAllByStatus(ArticleStatus.ALL).first()
 
+    val boundariesProvider = records.byStatus.pageBoundaries(
+        status = ArticleStatus.ALL,
+    )
+    val queryProvider = records.byStatus.keyed(
+        status = ArticleStatus.ALL,
+        sortOrder = SortOrder.NEWEST_FIRST,
+    )
+
     val (pageCount, pageDuration) = measureTimedValue {
-        var offset = 0L
+        val boundaries = boundariesProvider(null, pageSize).executeAsList()
         var pages = 0
 
-        while (offset < total) {
-            records.byStatus.all(
-                status = ArticleStatus.ALL,
-                limit = pageSize,
-                offset = offset,
-                sortOrder = SortOrder.NEWEST_FIRST,
-            ).executeAsList()
-            offset += pageSize
+        for (i in boundaries.indices) {
+            val begin = boundaries[i]
+            val end = boundaries.getOrNull(i + 1)
+            queryProvider(begin, end).executeAsList()
             pages++
         }
 
         pages
     }
 
-    val firstArticleID = records.byStatus.all(
-        status = ArticleStatus.ALL,
-        limit = 1,
-        offset = 0,
-        sortOrder = SortOrder.NEWEST_FIRST,
-    ).executeAsOneOrNull()?.id
+    val firstPage = boundariesProvider(null, 1).executeAsList()
+    val firstArticleID = if (firstPage.isNotEmpty()) {
+        queryProvider(firstPage.first(), null).executeAsList().firstOrNull()?.id
+    } else {
+        null
+    }
 
     val (_, findDuration) = measureTimedValue {
         if (firstArticleID != null) {
