@@ -1,0 +1,32 @@
+CREATE TABLE articles_new(
+  id INTEGER PRIMARY KEY,
+  external_id TEXT NOT NULL,
+  feed_id TEXT REFERENCES feeds(id),
+  title TEXT,
+  author TEXT,
+  content_html TEXT,
+  extracted_content_url TEXT,
+  url TEXT,
+  summary TEXT,
+  image_url TEXT,
+  published_at INTEGER NOT NULL,
+  enclosure_type TEXT,
+  snowflake_id INTEGER NOT NULL GENERATED ALWAYS AS (published_at * 65536 + id)
+);
+
+INSERT INTO articles_new(external_id, feed_id, title, author, content_html, extracted_content_url, url, summary, image_url, published_at, enclosure_type)
+SELECT id, feed_id, title, author, content_html, extracted_content_url, url, summary, image_url, COALESCE(published_at, 0), enclosure_type
+FROM articles
+ORDER BY published_at;
+
+DROP INDEX IF EXISTS articles_feed_id_index;
+DROP INDEX IF EXISTS articles_published_at_index;
+
+DROP TABLE articles;
+
+ALTER TABLE articles_new RENAME TO articles;
+
+CREATE UNIQUE INDEX articles_external_id_index ON articles(external_id);
+CREATE INDEX articles_feed_id_index ON articles(feed_id);
+CREATE INDEX articles_published_at_index ON articles(published_at);
+CREATE UNIQUE INDEX articles_snowflake_id_index ON articles(snowflake_id);

@@ -76,20 +76,25 @@ class ByArticleStatus(private val database: Database) {
         status: ArticleStatus,
         query: String? = null,
         since: OffsetDateTime? = null,
+        sortOrder: SortOrder = SortOrder.NEWEST_FIRST,
     ): (anchor: Long?, limit: Long) -> Query<Long> {
         val (read, starred) = status.toStatusPair
+        val queries = database.articlesByStatusQueries
+        val boundaryQuery = if (isNewestFirst(sortOrder))
+            queries::pageBoundaries
+        else
+            queries::pageBoundariesOldestFirst
 
         return { anchor, limit ->
-            database.articlesByStatusQueries.pageBoundaries(
-                read = read,
-                starred = starred,
-                lastReadAt = mapLastRead(read, since),
-                lastUnstarredAt = mapLastUnstarred(starred, since),
-                publishedSince = null,
-                query = query,
-                anchor = anchor,
-                limit = limit,
-                mapper = { publishedAt -> publishedAt ?: 0L }
+            boundaryQuery(
+                limit,
+                anchor ?: 0L,
+                read,
+                mapLastRead(read, since),
+                starred,
+                mapLastUnstarred(starred, since),
+                null,
+                query,
             )
         }
     }

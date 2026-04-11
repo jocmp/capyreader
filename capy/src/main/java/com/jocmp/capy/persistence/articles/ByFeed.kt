@@ -85,22 +85,27 @@ class ByFeed(private val database: Database) {
         query: String? = null,
         since: OffsetDateTime? = null,
         priority: FeedPriority,
+        sortOrder: SortOrder = SortOrder.NEWEST_FIRST,
     ): (anchor: Long?, limit: Long) -> Query<Long> {
         val (read, starred) = status.toStatusPair
+        val queries = database.articlesByFeedQueries
+        val boundaryQuery = if (isDescendingOrder(sortOrder))
+            queries::pageBoundaries
+        else
+            queries::pageBoundariesOldestFirst
 
         return { anchor, limit ->
-            database.articlesByFeedQueries.pageBoundaries(
-                feedIDs = feedIDs,
-                read = read,
-                starred = starred,
-                lastReadAt = mapLastRead(read, since),
-                lastUnstarredAt = mapLastUnstarred(starred, since),
-                publishedSince = null,
-                query = query,
-                priorities = priority.inclusivePriorities,
-                anchor = anchor,
-                limit = limit,
-                mapper = { publishedAt -> publishedAt ?: 0L }
+            boundaryQuery(
+                limit,
+                anchor ?: 0L,
+                feedIDs,
+                read,
+                mapLastRead(read, since),
+                starred,
+                mapLastUnstarred(starred, since),
+                null,
+                query,
+                priority.inclusivePriorities,
             )
         }
     }

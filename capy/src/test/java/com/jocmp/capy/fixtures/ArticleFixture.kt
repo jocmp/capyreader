@@ -23,7 +23,7 @@ class ArticleFixture(private val database: Database = InMemoryDatabaseProvider()
     ): Article {
         database.transaction {
             database.articlesQueries.create(
-                id = id,
+                external_id = id,
                 feed_id = feed.id,
                 title = title,
                 author = "John Writer",

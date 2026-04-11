@@ -456,7 +456,7 @@ internal class FeedbinAccountDelegate(
                 val enclosureType = enclosure?.enclosure_type
 
                 database.articlesQueries.create(
-                    id = articleID,
+                    external_id = articleID,
                     feed_id = entry.feed_id.toString(),
                     title = entry.title?.let { Jsoup.parse(it).text() },
                     author = entry.author,
@@ -465,7 +465,7 @@ internal class FeedbinAccountDelegate(
                     url = entry.url,
                     summary = entry.summary,
                     image_url = entry.images?.size_1?.cdn_url,
-                    published_at = entry.published.toDateTime?.toEpochSecond(),
+                    published_at = entry.published.toDateTime?.toEpochSecond() ?: 0L,
                     enclosure_type = enclosureType,
                 )
 

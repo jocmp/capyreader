@@ -42,6 +42,7 @@ class ArticlePagerFactory(private val database: Database) {
                 status = filter.status,
                 query = query,
                 since = since,
+                sortOrder = sortOrder,
             ),
             queryProvider = articles.byStatus.keyed(
                 status = filter.status,
@@ -108,6 +109,7 @@ class ArticlePagerFactory(private val database: Database) {
                 query = query,
                 since = since,
                 priority = priority,
+                sortOrder = sortOrder,
             ),
             queryProvider = articles.byFeed.keyed(
                 feedIDs = feedIDs,
@@ -134,6 +136,7 @@ class ArticlePagerFactory(private val database: Database) {
                 status = filter.status,
                 query = query,
                 since = since,
+                sortOrder = sortOrder,
             ),
             queryProvider = articles.bySavedSearch.keyed(
                 savedSearchID = filter.savedSearchID,
@@ -158,6 +161,7 @@ class ArticlePagerFactory(private val database: Database) {
                 status = filter.status,
                 query = query,
                 since = since,
+                sortOrder = sortOrder,
             ),
             queryProvider = articles.byToday.keyed(
                 status = filter.status,

@@ -13,8 +13,8 @@ SELECT
   article_statuses.read
 FROM articles
 JOIN feeds ON articles.feed_id = feeds.id
-JOIN article_statuses ON articles.id = article_statuses.article_id
-WHERE articles.id = :articleID
+JOIN article_statuses ON articles.external_id = article_statuses.article_id
+WHERE articles.external_id = :articleID
 LIMIT 1;
 
 countAll:
@@ -22,7 +22,7 @@ SELECT
  articles.feed_id,
  COUNT(*)
 FROM articles
-JOIN article_statuses ON articles.id = article_statuses.article_id
+JOIN article_statuses ON articles.external_id = article_statuses.article_id
 WHERE (article_statuses.read = :read OR :read IS NULL)
 AND (article_statuses.starred = :starred OR :starred IS NULL)
 GROUP BY articles.feed_id;
@@ -32,8 +32,8 @@ SELECT
  saved_search_articles.saved_search_id,
  COUNT(*)
 FROM articles
-JOIN article_statuses ON articles.id = article_statuses.article_id
-JOIN saved_search_articles ON articles.id = saved_search_articles.article_id
+JOIN article_statuses ON articles.external_id = article_statuses.article_id
+JOIN saved_search_articles ON articles.external_id = saved_search_articles.article_id
 WHERE (article_statuses.read = :read OR :read IS NULL)
 AND (article_statuses.starred = :starred OR :starred IS NULL)
 GROUP BY saved_search_articles.saved_search_id;
@@ -45,8 +45,8 @@ FROM article_statuses;
 findMissingArticles:
 SELECT article_id
 FROM article_statuses
-LEFT OUTER JOIN articles ON article_statuses.article_id = articles.id
-WHERE articles.id IS NULL;
+LEFT OUTER JOIN articles ON article_statuses.article_id = articles.external_id
+WHERE articles.external_id IS NULL;
 
 filterUnreadStatuses:
 SELECT article_id
@@ -56,7 +56,7 @@ AND article_statuses.article_id IN :articleIDs;
 
 create:
 INSERT INTO articles(
-    id,
+    external_id,
     feed_id,
     title,
     author,
@@ -69,7 +69,7 @@ INSERT INTO articles(
     enclosure_type
 )
 VALUES (
-:id,
+:external_id,
 :feed_id,
 :title,
 :author,
@@ -81,9 +81,9 @@ VALUES (
 :published_at,
 :enclosure_type
 )
-ON CONFLICT(id) DO UPDATE
+ON CONFLICT(external_id) DO UPDATE
 SET
-id = id,
+external_id = external_id,
 feed_id = excluded.feed_id,
 title = excluded.title,
 author = excluded.author,
@@ -208,14 +208,14 @@ WHERE article_statuses.article_id = :articleID;
 starredExports:
 SELECT articles.title, articles.url, articles.published_at
 FROM articles
-JOIN article_statuses ON articles.id = article_statuses.article_id
+JOIN article_statuses ON articles.external_id = article_statuses.article_id
 WHERE article_statuses.starred = 1
 ORDER BY articles.published_at DESC;
 
 deleteAllArticles {
   DELETE FROM article_statuses WHERE starred = 0 AND read = 1;
 
-  DELETE FROM articles WHERE id NOT IN (
+  DELETE FROM articles WHERE external_id NOT IN (
     SELECT article_id FROM article_statuses
   );
 
@@ -240,7 +240,7 @@ deleteArticles {
   WHERE published_at < :publishedBefore
   AND EXISTS (
     SELECT 1 FROM article_statuses
-    WHERE article_statuses.article_id = articles.id
+    WHERE article_statuses.article_id = articles.external_id
     AND starred = 0 AND read = 1
   )
   AND NOT EXISTS (
@@ -251,17 +251,17 @@ deleteArticles {
 
   DELETE FROM article_notifications
   WHERE NOT EXISTS (
-    SELECT 1 FROM articles WHERE articles.id = article_notifications.article_id
+    SELECT 1 FROM articles WHERE articles.external_id = article_notifications.article_id
   );
 
   DELETE FROM saved_search_articles
   WHERE NOT EXISTS (
-    SELECT 1 FROM articles WHERE articles.id = saved_search_articles.article_id
+    SELECT 1 FROM articles WHERE articles.external_id = saved_search_articles.article_id
   );
 
   DELETE FROM enclosures
   WHERE NOT EXISTS (
-    SELECT 1 FROM articles WHERE articles.id = enclosures.article_id
+    SELECT 1 FROM articles WHERE articles.external_id = enclosures.article_id
   );
 }
 
@@ -270,26 +270,26 @@ DELETE FROM article_statuses
 WHERE starred = 0
   AND read = 1
   AND updated_at < :cutoffDate
-  AND NOT EXISTS (SELECT 1 FROM articles WHERE articles.id = article_statuses.article_id);
+  AND NOT EXISTS (SELECT 1 FROM articles WHERE articles.external_id = article_statuses.article_id);
 
 deleteByID:
-DELETE FROM articles WHERE id = :articleID;
+DELETE FROM articles WHERE external_id = :articleID;
 
 deletePageByID {
   DELETE FROM article_statuses WHERE article_id = :articleID;
   DELETE FROM saved_search_articles WHERE article_id = :articleID;
   DELETE FROM article_notifications WHERE article_id = :articleID;
   DELETE FROM enclosures WHERE article_id = :articleID;
-  DELETE FROM articles WHERE id = :articleID;
+  DELETE FROM articles WHERE external_id = :articleID;
 }
 
 findIDsByFeed:
-SELECT id FROM articles WHERE feed_id = :feedID;
+SELECT external_id FROM articles WHERE feed_id = :feedID;
 
 deleteArticlesByID {
   DELETE FROM article_statuses WHERE article_id IN :articleIDs;
   DELETE FROM saved_search_articles WHERE article_id IN :articleIDs;
   DELETE FROM article_notifications WHERE article_id IN :articleIDs;
   DELETE FROM enclosures WHERE article_id IN :articleIDs;
-  DELETE FROM articles WHERE id IN :articleIDs;
+  DELETE FROM articles WHERE external_id IN :articleIDs;
 }
