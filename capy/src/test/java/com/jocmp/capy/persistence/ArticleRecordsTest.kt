@@ -51,15 +51,11 @@ class ArticleRecordsTest {
 
         val articleRecords = ArticleRecords(database)
 
-        val results = articleRecords
-            .byStatus
-            .all(
-                ArticleStatus.ALL,
-                limit = 3,
-                offset = 0,
-                sortOrder = SortOrder.NEWEST_FIRST,
-            )
-            .executeAsList()
+        val results = queryKeyed(
+            articleRecords,
+            status = ArticleStatus.ALL,
+            sortOrder = SortOrder.NEWEST_FIRST,
+        )
 
         val count = articleRecords
             .byStatus
@@ -97,15 +93,11 @@ class ArticleRecordsTest {
             articleRecords.markUnread(it)
         }
 
-        val results = articleRecords
-            .byStatus
-            .all(
-                ArticleStatus.UNREAD,
-                limit = 3,
-                offset = 0,
-                sortOrder = SortOrder.NEWEST_FIRST,
-            )
-            .executeAsList()
+        val results = queryKeyed(
+            articleRecords,
+            status = ArticleStatus.UNREAD,
+            sortOrder = SortOrder.NEWEST_FIRST,
+        )
 
         val count = articleRecords
             .byStatus
@@ -139,15 +131,11 @@ class ArticleRecordsTest {
             articleRecords.markUnread(it)
         }
 
-        val results = articleRecords
-            .byStatus
-            .all(
-                ArticleStatus.UNREAD,
-                limit = 3,
-                offset = 0,
-                sortOrder = SortOrder.OLDEST_FIRST,
-            )
-            .executeAsList()
+        val results = queryKeyed(
+            articleRecords,
+            status = ArticleStatus.UNREAD,
+            sortOrder = SortOrder.OLDEST_FIRST,
+        )
 
         val count = articleRecords
             .byStatus
@@ -171,21 +159,17 @@ class ArticleRecordsTest {
         }
         val articleResult = articleFixture.create(
             title = "The Pixel 9 is great — and a problem",
-            summary = "On The Vergecast: AI photos, Chick-fil-A’s foray into streaming, headphone screens, and more.",
+            summary = "On The Vergecast: AI photos, Chick-fil-A's foray into streaming, headphone screens, and more.",
         )
         val articleRecords = ArticleRecords(database)
         val query = "problem"
 
-        val results = articleRecords
-            .byStatus
-            .all(
-                status = ArticleStatus.ALL,
-                query = query,
-                limit = 3,
-                offset = 0,
-                sortOrder = SortOrder.NEWEST_FIRST,
-            )
-            .executeAsList()
+        val results = queryKeyed(
+            articleRecords,
+            status = ArticleStatus.ALL,
+            sortOrder = SortOrder.NEWEST_FIRST,
+            query = query,
+        )
 
         val count = articleRecords
             .byStatus
@@ -211,21 +195,17 @@ class ArticleRecordsTest {
         }
         val articleResult = articleFixture.create(
             title = "The Pixel 9 is great — and a problem",
-            summary = "On The Vergecast: AI photos, Chick-fil-A’s foray into streaming, headphone screens, and more.",
+            summary = "On The Vergecast: AI photos, Chick-fil-A's foray into streaming, headphone screens, and more.",
         )
         val articleRecords = ArticleRecords(database)
         val query = "Chick-fil-A"
 
-        val results = articleRecords
-            .byStatus
-            .all(
-                status = ArticleStatus.ALL,
-                query = query,
-                limit = 3,
-                offset = 0,
-                sortOrder = SortOrder.NEWEST_FIRST,
-            )
-            .executeAsList()
+        val results = queryKeyed(
+            articleRecords,
+            status = ArticleStatus.ALL,
+            sortOrder = SortOrder.NEWEST_FIRST,
+            query = query,
+        )
 
         val count = articleRecords
             .byStatus
@@ -261,26 +241,22 @@ class ArticleRecordsTest {
         }
         val articleResult = articleFixture.create(
             title = "The Pixel 9 is great — and a problem",
-            summary = "On The Vergecast: AI photos, Chick-fil-A’s foray into streaming, headphone screens, and more.",
+            summary = "On The Vergecast: AI photos, Chick-fil-A's foray into streaming, headphone screens, and more.",
             feed = vergeFeed,
         )
         val articleRecords = ArticleRecords(database)
         val query = "Chick-fil-A"
 
         val since = OffsetDateTime.now().minusDays(1)
-        val results = articleRecords
-            .byFeed
-            .all(
-                status = ArticleStatus.ALL,
-                query = query,
-                feedIDs = listOf(vergeFeed.id),
-                since = since,
-                limit = 10,
-                offset = 0,
-                sortOrder = SortOrder.NEWEST_FIRST,
-                priority = FeedPriority.FEED,
-            )
-            .executeAsList()
+
+        val results = queryKeyedByFeed(
+            articleRecords,
+            feedIDs = listOf(vergeFeed.id),
+            status = ArticleStatus.ALL,
+            sortOrder = SortOrder.NEWEST_FIRST,
+            query = query,
+            priority = FeedPriority.FEED,
+        )
 
         val count = articleRecords
             .byFeed
@@ -342,15 +318,12 @@ class ArticleRecordsTest {
         articles.forEach { articleRecords.addStar(it.id) }
         articleRecords.removeStar(articles.last().id)
 
-        val results = articleRecords
-            .byStatus
-            .all(
-                status = ArticleStatus.STARRED,
-                limit = 10,
-                offset = 0,
-                sortOrder = SortOrder.NEWEST_FIRST,
-            )
-            .executeAsList()
+        val results = queryKeyed(
+            articleRecords,
+            status = ArticleStatus.ALL,
+            sortOrder = SortOrder.NEWEST_FIRST,
+            starred = true,
+        )
 
         assertEquals(expected = 2, actual = results.size)
     }
@@ -406,6 +379,7 @@ class ArticleRecordsTest {
 
         val boundariesProvider = records.byStatus.pageBoundaries(
             status = ArticleStatus.ALL,
+            sortOrder = SortOrder.OLDEST_FIRST,
         )
         val queryProvider = records.byStatus.keyed(
             status = ArticleStatus.ALL,
@@ -724,15 +698,11 @@ class ArticleRecordsTest {
         articleFixture.create(feed = readLaterFeed, read = false)
         val regularArticle = articleFixture.create(feed = regularFeed, read = false)
 
-        val results = articleRecords
-            .byStatus
-            .all(
-                ArticleStatus.UNREAD,
-                limit = 10,
-                offset = 0,
-                sortOrder = SortOrder.NEWEST_FIRST,
-            )
-            .executeAsList()
+        val results = queryKeyed(
+            articleRecords,
+            status = ArticleStatus.UNREAD,
+            sortOrder = SortOrder.NEWEST_FIRST,
+        )
 
         val count = articleRecords
             .byStatus
@@ -742,6 +712,56 @@ class ArticleRecordsTest {
         assertEquals(expected = listOf(regularArticle.id), actual = results.map { it.id })
         assertEquals(expected = 1, actual = count)
     }
+}
+
+private fun queryKeyed(
+    records: ArticleRecords,
+    status: ArticleStatus,
+    sortOrder: SortOrder,
+    query: String? = null,
+    starred: Boolean? = null,
+): List<Article> {
+    val boundaries = records.byStatus.pageBoundaries(
+        status = status,
+        sortOrder = sortOrder,
+        query = query,
+    )(null, 1000).executeAsList()
+
+    if (boundaries.isEmpty()) return emptyList()
+
+    return records.byStatus.keyed(
+        status = status,
+        sortOrder = sortOrder,
+        query = query,
+        starred = starred,
+    )(boundaries.first(), null).executeAsList()
+}
+
+private fun queryKeyedByFeed(
+    records: ArticleRecords,
+    feedIDs: List<String>,
+    status: ArticleStatus,
+    sortOrder: SortOrder,
+    query: String? = null,
+    priority: FeedPriority = FeedPriority.FEED,
+): List<Article> {
+    val boundaries = records.byFeed.pageBoundaries(
+        feedIDs = feedIDs,
+        status = status,
+        sortOrder = sortOrder,
+        query = query,
+        priority = priority,
+    )(null, 1000).executeAsList()
+
+    if (boundaries.isEmpty()) return emptyList()
+
+    return records.byFeed.keyed(
+        feedIDs = feedIDs,
+        status = status,
+        sortOrder = sortOrder,
+        query = query,
+        priority = priority,
+    )(boundaries.first(), null).executeAsList()
 }
 
 fun sortedMessage(expected: List<Article>, actual: List<Article>): String {

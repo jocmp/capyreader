@@ -465,7 +465,7 @@ internal class FeedbinAccountDelegate(
                     url = entry.url,
                     summary = entry.summary,
                     image_url = entry.images?.size_1?.cdn_url,
-                    published_at = entry.published.toDateTime?.toEpochSecond() ?: 0L,
+                    published_at = entry.published.toDateTime?.toEpochSecond() ?: updated.toEpochSecond(),
                     enclosure_type = enclosureType,
                 )
 

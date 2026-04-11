@@ -12,50 +12,6 @@ import com.jocmp.capy.persistence.toStatusPair
 import java.time.OffsetDateTime
 
 class ByFeed(private val database: Database) {
-    fun all(
-        feedIDs: List<String>,
-        status: ArticleStatus,
-        query: String? = null,
-        since: OffsetDateTime,
-        limit: Long,
-        sortOrder: SortOrder,
-        offset: Long,
-        priority: FeedPriority,
-    ): Query<Article> {
-        val (read, starred) = status.toStatusPair
-        val queries = database.articlesByFeedQueries
-
-        return if (isDescendingOrder(sortOrder)) {
-            queries.allNewestFirst(
-                feedIDs = feedIDs,
-                query = query,
-                read = read,
-                starred = starred,
-                limit = limit,
-                offset = offset,
-                lastReadAt = mapLastRead(read, since),
-                lastUnstarredAt = mapLastUnstarred(starred, since),
-                publishedSince = null,
-                priorities = priority.inclusivePriorities,
-                mapper = ::listMapper
-            )
-        } else {
-            queries.allOldestFirst(
-                feedIDs = feedIDs,
-                query = query,
-                read = read,
-                starred = starred,
-                limit = limit,
-                offset = offset,
-                lastReadAt = mapLastRead(read, since),
-                lastUnstarredAt = mapLastUnstarred(starred, since),
-                publishedSince = null,
-                priorities = priority.inclusivePriorities,
-                mapper = ::listMapper
-            )
-        }
-    }
-
     fun unreadArticleIDs(
         status: ArticleStatus,
         feedIDs: List<String>,
@@ -65,13 +21,13 @@ class ByFeed(private val database: Database) {
         query: String?,
     ): Query<String> {
         val (_, starred) = status.toStatusPair
-        val (afterArticleID, beforeArticleID) = range.toPair
+        val (afterSnowflakeID, beforeSnowflakeID) = range.toPair
 
         return database.articlesByFeedQueries.findArticleIDs(
             feedIDs = feedIDs,
             starred = starred,
-            afterArticleID = afterArticleID,
-            beforeArticleID = beforeArticleID,
+            afterSnowflakeID = afterSnowflakeID,
+            beforeSnowflakeID = beforeSnowflakeID,
             publishedSince = null,
             newestFirst = isNewestFirst(sortOrder),
             query = query,
@@ -89,10 +45,11 @@ class ByFeed(private val database: Database) {
     ): (anchor: Long?, limit: Long) -> Query<Long> {
         val (read, starred) = status.toStatusPair
         val queries = database.articlesByFeedQueries
-        val boundaryQuery = if (isDescendingOrder(sortOrder))
+        val boundaryQuery = if (isDescendingOrder(sortOrder)) {
             queries::pageBoundaries
-        else
+        } else {
             queries::pageBoundariesOldestFirst
+        }
 
         return { anchor, limit ->
             boundaryQuery(

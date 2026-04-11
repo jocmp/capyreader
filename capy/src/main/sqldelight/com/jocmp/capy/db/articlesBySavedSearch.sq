@@ -129,16 +129,16 @@ AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
 AND (:query IS NULL OR articles.title LIKE '%' || :query || '%' OR articles.summary LIKE '%' || :query || '%')
 AND saved_search_id = :savedSearchID
 AND (
-    :afterArticleID IS NULL
+    :afterSnowflakeID IS NULL
     OR CASE WHEN :newestFirst
-        THEN articles.snowflake_id >= (SELECT snowflake_id FROM articles WHERE external_id = :afterArticleID)
-        ELSE articles.snowflake_id <= (SELECT snowflake_id FROM articles WHERE external_id = :afterArticleID)
+        THEN articles.snowflake_id >= :afterSnowflakeID
+        ELSE articles.snowflake_id <= :afterSnowflakeID
     END
 )
 AND (
-    :beforeArticleID IS NULL
+    :beforeSnowflakeID IS NULL
     OR CASE WHEN :newestFirst
-        THEN articles.snowflake_id <= (SELECT snowflake_id FROM articles WHERE external_id = :beforeArticleID)
-        ELSE articles.snowflake_id >= (SELECT snowflake_id FROM articles WHERE external_id = :beforeArticleID)
+        THEN articles.snowflake_id <= :beforeSnowflakeID
+        ELSE articles.snowflake_id >= :beforeSnowflakeID
     END
 );

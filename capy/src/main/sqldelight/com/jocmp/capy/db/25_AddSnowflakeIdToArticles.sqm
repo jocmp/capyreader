@@ -30,3 +30,4 @@ CREATE UNIQUE INDEX articles_external_id_index ON articles(external_id);
 CREATE INDEX articles_feed_id_index ON articles(feed_id);
 CREATE INDEX articles_published_at_index ON articles(published_at);
 CREATE UNIQUE INDEX articles_snowflake_id_index ON articles(snowflake_id);
+CREATE INDEX articles_snowflake_read_starred_index ON article_statuses(article_id, read, starred);

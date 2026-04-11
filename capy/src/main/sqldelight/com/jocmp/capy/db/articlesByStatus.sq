@@ -1,4 +1,4 @@
-allNewestFirst:
+latestUnread:
 SELECT
   articles.external_id,
   articles.feed_id,
@@ -20,45 +20,11 @@ SELECT
 FROM articles
 JOIN feeds ON articles.feed_id = feeds.id
 JOIN article_statuses ON articles.external_id = article_statuses.article_id
-WHERE ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
+WHERE article_statuses.read = 0
 AND (feeds.priority IS NULL OR feeds.priority IN ('main', 'important'))
 AND feeds.read_later = 0
-AND ((article_statuses.starred = :starred AND article_statuses.last_unstarred_at IS NULL OR article_statuses.last_unstarred_at >= :lastUnstarredAt) OR :starred IS NULL)
-AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
-AND (:query IS NULL OR articles.title LIKE '%' || :query || '%' OR articles.summary LIKE '%' || :query || '%')
 ORDER BY articles.snowflake_id DESC
-LIMIT :limit OFFSET :offset;
-
-allOldestFirst:
-SELECT
-  articles.external_id,
-  articles.feed_id,
-  articles.title,
-  articles.author,
-  articles.url,
-  articles.summary,
-  articles.image_url,
-  articles.published_at,
-  articles.enclosure_type,
-  articles.snowflake_id,
-  feeds.title AS feed_title,
-  feeds.favicon_url,
-  feeds.open_articles_in_browser,
-  feeds.read_later,
-  article_statuses.updated_at,
-  article_statuses.starred,
-  article_statuses.read
-FROM articles
-JOIN feeds ON articles.feed_id = feeds.id
-JOIN article_statuses ON articles.external_id = article_statuses.article_id
-WHERE ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
-AND (feeds.priority IS NULL OR feeds.priority IN ('main', 'important'))
-AND feeds.read_later = 0
-AND ((article_statuses.starred = :starred AND article_statuses.last_unstarred_at IS NULL OR article_statuses.last_unstarred_at >= :lastUnstarredAt) OR :starred IS NULL)
-AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
-AND (:query IS NULL OR articles.title LIKE '%' || :query || '%' OR articles.summary LIKE '%' || :query || '%')
-ORDER BY articles.snowflake_id ASC
-LIMIT :limit OFFSET :offset;
+LIMIT :limit;
 
 countAll:
 SELECT COUNT(*)
@@ -194,16 +160,16 @@ AND feeds.read_later = 0
 AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
 AND (:query IS NULL OR articles.title LIKE '%' || :query || '%' OR articles.summary LIKE '%' || :query || '%')
 AND (
-    :afterArticleID IS NULL
+    :afterSnowflakeID IS NULL
     OR CASE WHEN :newestFirst
-        THEN articles.snowflake_id >= (SELECT snowflake_id FROM articles WHERE external_id = :afterArticleID)
-        ELSE articles.snowflake_id <= (SELECT snowflake_id FROM articles WHERE external_id = :afterArticleID)
+        THEN articles.snowflake_id >= :afterSnowflakeID
+        ELSE articles.snowflake_id <= :afterSnowflakeID
     END
 )
 AND (
-    :beforeArticleID IS NULL
+    :beforeSnowflakeID IS NULL
     OR CASE WHEN :newestFirst
-        THEN articles.snowflake_id <= (SELECT snowflake_id FROM articles WHERE external_id = :beforeArticleID)
-        ELSE articles.snowflake_id >= (SELECT snowflake_id FROM articles WHERE external_id = :beforeArticleID)
+        THEN articles.snowflake_id <= :beforeSnowflakeID
+        ELSE articles.snowflake_id >= :beforeSnowflakeID
     END
 );

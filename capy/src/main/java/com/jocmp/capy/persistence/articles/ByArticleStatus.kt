@@ -11,44 +11,6 @@ import com.jocmp.capy.persistence.toStatusPair
 import java.time.OffsetDateTime
 
 class ByArticleStatus(private val database: Database) {
-    fun all(
-        status: ArticleStatus,
-        query: String? = null,
-        limit: Long,
-        offset: Long,
-        sortOrder: SortOrder,
-        since: OffsetDateTime? = null
-    ): Query<Article> {
-        val (read, starred) = status.toStatusPair
-        val queries = database.articlesByStatusQueries
-
-        return if (isNewestFirst(sortOrder)) {
-            queries.allNewestFirst(
-                read = read,
-                starred = starred,
-                limit = limit,
-                offset = offset,
-                lastReadAt = mapLastRead(read, since),
-                lastUnstarredAt = mapLastUnstarred(starred, since),
-                publishedSince = null,
-                query = query,
-                mapper = ::listMapper
-            )
-        } else {
-            queries.allOldestFirst(
-                read = read,
-                starred = starred,
-                limit = limit,
-                offset = offset,
-                lastReadAt = mapLastRead(read, since),
-                lastUnstarredAt = mapLastUnstarred(starred, since),
-                publishedSince = null,
-                query = query,
-                mapper = ::listMapper
-            )
-        }
-    }
-
     fun unreadArticleIDs(
         status: ArticleStatus,
         range: MarkRead,
@@ -56,12 +18,12 @@ class ByArticleStatus(private val database: Database) {
         query: String?,
     ): Query<String> {
         val (_, starred) = status.toStatusPair
-        val (afterArticleID, beforeArticleID) = range.toPair
+        val (afterSnowflakeID, beforeSnowflakeID) = range.toPair
 
         return database.articlesByStatusQueries.findArticleIDs(
             starred = starred,
-            afterArticleID = afterArticleID,
-            beforeArticleID = beforeArticleID,
+            afterSnowflakeID = afterSnowflakeID,
+            beforeSnowflakeID = beforeSnowflakeID,
             publishedSince = null,
             newestFirst = isNewestFirst(sortOrder),
             query = query,
@@ -80,10 +42,11 @@ class ByArticleStatus(private val database: Database) {
     ): (anchor: Long?, limit: Long) -> Query<Long> {
         val (read, starred) = status.toStatusPair
         val queries = database.articlesByStatusQueries
-        val boundaryQuery = if (isNewestFirst(sortOrder))
+        val boundaryQuery = if (isNewestFirst(sortOrder)) {
             queries::pageBoundaries
-        else
+        } else {
             queries::pageBoundariesOldestFirst
+        }
 
         return { anchor, limit ->
             boundaryQuery(
@@ -104,8 +67,10 @@ class ByArticleStatus(private val database: Database) {
         query: String? = null,
         sortOrder: SortOrder,
         since: OffsetDateTime? = null,
+        starred: Boolean? = null,
     ): (beginInclusive: Long, endExclusive: Long?) -> Query<Article> {
-        val (read, starred) = status.toStatusPair
+        val (read, defaultStarred) = status.toStatusPair
+        val starred = starred ?: defaultStarred
         val queries = database.articlesByStatusQueries
 
         return if (isNewestFirst(sortOrder)) {

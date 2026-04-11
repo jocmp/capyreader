@@ -406,7 +406,7 @@ internal class MinifluxAccountDelegate(
                     url = entry.url,
                     summary = ContentFormatter.summary(entry.content),
                     image_url = imageURL,
-                    published_at = entry.published_at.toDateTime?.toEpochSecond() ?: 0L,
+                    published_at = entry.published_at.toDateTime?.toEpochSecond() ?: updated.toEpochSecond(),
                     enclosure_type = enclosures.firstOrNull()?.mime_type,
                 )
 
