@@ -67,7 +67,7 @@ fun GeneralSettingsPanel(
     viewModel: GeneralSettingsViewModel = koinViewModel(),
     onNavigateToNotifications: () -> Unit,
 ) {
-    val hasReadLaterFeed by viewModel.hasReadLaterFeed.collectAsStateWithLifecycle(initialValue = false)
+    val readLaterFeedID by viewModel.readLaterFeedID.collectAsStateWithLifecycle(initialValue = null)
     val keywords by viewModel.filterKeywords.collectAsStateWithLifecycle()
 
     val filterKeywords = FilterKeywords(
@@ -99,7 +99,7 @@ fun GeneralSettingsPanel(
             enableStickyFullContent = viewModel.enableStickyFullContent,
             homePage = viewModel.homePage,
             updateHomePage = viewModel::updateHomePage,
-            hasReadLaterFeed = hasReadLaterFeed,
+            readLaterFeedID = readLaterFeedID,
         )
     }
 }
@@ -125,7 +125,7 @@ fun GeneralSettingsPanelView(
     confirmMarkAllRead: Boolean,
     homePage: HomePage = HomePage.default,
     updateHomePage: (HomePage) -> Unit = {},
-    hasReadLaterFeed: Boolean = false,
+    readLaterFeedID: String? = null,
 ) {
     val (isClearArticlesDialogOpen, setClearArticlesDialogOpen) = remember { mutableStateOf(false) }
 
@@ -150,7 +150,7 @@ fun GeneralSettingsPanelView(
         HomePageSelect(
             selected = homePage,
             update = updateHomePage,
-            showReadLater = hasReadLaterFeed,
+            readLaterFeedID = readLaterFeedID,
         )
 
         FormSection(title = stringResource(R.string.settings_section_refresh)) {

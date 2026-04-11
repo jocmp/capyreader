@@ -56,7 +56,7 @@ class ArticleScreenViewModel(
 
     private var fullContentJob: Job? = null
 
-    val filter = appPreferences.filter.stateIn(viewModelScope)
+    val filter = MutableStateFlow(appPreferences.homePage.get().toArticleFilter())
 
     val hideReadArticles =
         appPreferences.articleListOptions.hideReadArticles.stateIn(viewModelScope)
@@ -553,8 +553,8 @@ class ArticleScreenViewModel(
         }
     }
 
-    private fun updateFilter(filter: ArticleFilter) {
-        appPreferences.filter.set(filter)
+    fun updateFilter(filter: ArticleFilter) {
+        this.filter.value = filter
 
         clearArticle()
 

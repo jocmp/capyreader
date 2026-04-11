@@ -16,22 +16,18 @@ sealed class HomePage {
     data object Starred : HomePage()
 
     @Serializable
-    data object ReadLater : HomePage()
+    data class ReadLater(val feedID: String) : HomePage()
 
-    fun toArticleFilter(readLaterFeedID: String? = null): ArticleFilter {
+    fun toArticleFilter(): ArticleFilter {
         return when (this) {
             is Today -> ArticleFilter.Today(todayStatus = ArticleStatus.ALL)
             is Unread -> ArticleFilter.Unread
             is Starred -> ArticleFilter.Starred
-            is ReadLater -> if (readLaterFeedID != null) {
-                ArticleFilter.Feeds(
-                    feedID = readLaterFeedID,
-                    folderTitle = null,
-                    feedStatus = ArticleStatus.ALL,
-                )
-            } else {
-                ArticleFilter.Unread
-            }
+            is ReadLater -> ArticleFilter.Feeds(
+                feedID = feedID,
+                folderTitle = null,
+                feedStatus = ArticleStatus.ALL,
+            )
         }
     }
 

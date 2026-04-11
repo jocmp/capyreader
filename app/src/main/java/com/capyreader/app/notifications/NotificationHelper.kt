@@ -14,12 +14,11 @@ import com.capyreader.app.MainActivity
 import com.capyreader.app.R
 import com.capyreader.app.notifications.NotificationHelper.Companion.ARTICLE_ID_KEY
 import com.capyreader.app.notifications.NotificationHelper.Companion.FEED_ID_KEY
-import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.Account
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleNotification
+import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.logging.CapyLog
-import com.jocmp.capy.preferences.getAndSet
 import java.time.ZonedDateTime
 
 class NotificationHelper(
@@ -154,7 +153,7 @@ class NotificationHelper(
             }
         }
 
-        fun openFromIntent(intent: Intent, appPreferences: AppPreferences): String? {
+        fun openFromIntent(intent: Intent): NotificationIntent {
             val openFromShowMore = intent.getBooleanExtra(UNREAD_ONLY_KEY, false)
             val articleID = intent.getStringExtra(ARTICLE_ID_KEY)
             val feedID = intent.getStringExtra(FEED_ID_KEY)
@@ -162,26 +161,23 @@ class NotificationHelper(
             if (openFromShowMore) {
                 intent.replaceExtras(Bundle())
 
-                appPreferences.filter.set(
-                    ArticleFilter.Unread
+                return NotificationIntent(
+                    filter = ArticleFilter.Unread,
                 )
-
-                return null
             } else if (articleID != null && feedID != null) {
                 intent.replaceExtras(Bundle())
 
-                appPreferences.filter.getAndSet { currentFilter ->
-                    ArticleFilter.Feeds(
-                        feedID,
-                        feedStatus = currentFilter.status,
-                        folderTitle = null
-                    )
-                }
-
-                return articleID
+                return NotificationIntent(
+                    articleID = articleID,
+                    filter = ArticleFilter.Feeds(
+                        feedID = feedID,
+                        feedStatus = ArticleStatus.ALL,
+                        folderTitle = null,
+                    ),
+                )
             }
 
-            return null
+            return NotificationIntent()
         }
     }
 }

@@ -11,15 +11,15 @@ import com.capyreader.app.ui.settings.PreferenceSelect
 fun HomePageSelect(
     selected: HomePage,
     update: (HomePage) -> Unit,
-    showReadLater: Boolean = false,
+    readLaterFeedID: String? = null,
 ) {
-    val options = remember(showReadLater) {
+    val options = remember(readLaterFeedID) {
         buildList {
             add(HomePage.Today)
             add(HomePage.Unread)
             add(HomePage.Starred)
-            if (showReadLater) {
-                add(HomePage.ReadLater)
+            if (readLaterFeedID != null) {
+                add(HomePage.ReadLater(feedID = readLaterFeedID))
             }
         }
     }

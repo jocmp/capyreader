@@ -12,13 +12,16 @@ import com.capyreader.app.ui.accounts.accountsGraph
 import com.capyreader.app.ui.articles.articleGraph
 import com.capyreader.app.ui.theme.CapyTheme
 import com.capyreader.app.unloadAccountModules
+import com.jocmp.capy.ArticleFilter
+import org.koin.compose.koinInject
 
 @Composable
 fun App(
     startDestination: Route,
-    appPreferences: AppPreferences,
+    appPreferences: AppPreferences = koinInject(),
     pendingArticleID: String? = null,
-    onPendingArticleSelected: () -> Unit = {},
+    pendingFilter: ArticleFilter? = null,
+    onPendingNotificationHandled: () -> Unit = {},
 ) {
     val navController = rememberNavController()
 
@@ -59,7 +62,8 @@ fun App(
                 articleGraph(
                     navController = navController,
                     pendingArticleID = pendingArticleID,
-                    onPendingArticleSelected = onPendingArticleSelected,
+                    pendingFilter = pendingFilter,
+                    onPendingNotificationHandled = onPendingNotificationHandled,
                 )
             }
         }

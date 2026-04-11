@@ -103,7 +103,8 @@ fun ArticleScreen(
     viewModel: ArticleScreenViewModel = koinViewModel(),
     appPreferences: AppPreferences = koinInject(),
     pendingArticleID: String? = null,
-    onPendingArticleSelected: () -> Unit = {},
+    pendingFilter: ArticleFilter? = null,
+    onPendingNotificationHandled: () -> Unit = {},
     onNavigateToSettings: () -> Unit,
 ) {
     val feeds by viewModel.topLevelFeeds.collectAsStateWithLifecycle(initialValue = emptyList())
@@ -470,10 +471,16 @@ fun ArticleScreen(
             }
         }
 
-        LaunchedEffect(pendingArticleID) {
-            val id = pendingArticleID ?: return@LaunchedEffect
-            onPendingArticleSelected()
-            selectArticle(id)
+        LaunchedEffect(pendingArticleID, pendingFilter) {
+            if (pendingFilter != null) {
+                viewModel.updateFilter(pendingFilter)
+            }
+            if (pendingArticleID != null) {
+                selectArticle(pendingArticleID)
+            }
+            if (pendingArticleID != null || pendingFilter != null) {
+                onPendingNotificationHandled()
+            }
         }
 
         ArticleScaffold(

@@ -49,7 +49,7 @@ class GeneralSettingsViewModel(
     var homePage by mutableStateOf(appPreferences.homePage.get())
         private set
 
-    val hasReadLaterFeed = account.feeds.map { feeds -> feeds.any { it.isReadLater } }
+    val readLaterFeedID = account.feeds.map { feeds -> feeds.find { it.isReadLater }?.id }
 
     val filterKeywords = account
         .preferences
