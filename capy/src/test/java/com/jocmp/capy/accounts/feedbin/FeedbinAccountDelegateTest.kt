@@ -275,7 +275,8 @@ class FeedbinAccountDelegateTest {
 
         val starredArticles = ArticleRecords(database)
             .byStatus
-            .allStarred(
+            .all(
+                status = ArticleStatus.STARRED,
                 limit = 2,
                 offset = 0,
                 sortOrder = SortOrder.NEWEST_FIRST,

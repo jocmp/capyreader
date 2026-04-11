@@ -22,7 +22,6 @@ class SidebarItem(
 
             items += todayItem()
             items += articlesItem()
-            items += starredItem()
 
             if (readLaterFeed != null) {
                 items += feedItem(feedID = readLaterFeed.id, folderTitle = null)
@@ -54,13 +53,8 @@ class SidebarItem(
         )
 
         private fun articlesItem() = SidebarItem(
-            toFilter = { ArticleFilter.Unread },
-            isSelected = { it is ArticleFilter.Unread },
-        )
-
-        private fun starredItem() = SidebarItem(
-            toFilter = { ArticleFilter.Starred },
-            isSelected = { it is ArticleFilter.Starred },
+            toFilter = { ArticleFilter.Articles(articleStatus = it) },
+            isSelected = { it is ArticleFilter.Articles },
         )
 
         private fun savedSearchItem(savedSearchID: String) = SidebarItem(

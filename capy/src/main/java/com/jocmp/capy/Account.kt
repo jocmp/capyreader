@@ -378,10 +378,6 @@ data class Account(
         return articleRecords.byStatus.count(status).asFlow().mapToOne(Dispatchers.IO)
     }
 
-    fun countAllStarred(): Flow<Long> {
-        return articleRecords.byStatus.countStarred().asFlow().mapToOne(Dispatchers.IO)
-    }
-
     suspend fun dismissNotifications(ids: List<String>) {
         articleRecords.dismissNotifications(ids)
     }

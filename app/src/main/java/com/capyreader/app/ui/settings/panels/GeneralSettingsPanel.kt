@@ -42,7 +42,6 @@ import com.capyreader.app.R
 import com.capyreader.app.common.RowItem
 import com.capyreader.app.notifications.Notifications
 import com.capyreader.app.preferences.AfterReadAllBehavior
-import com.capyreader.app.preferences.HomePage
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.CrashReporting
 import com.capyreader.app.ui.components.FormSection
@@ -67,7 +66,6 @@ fun GeneralSettingsPanel(
     viewModel: GeneralSettingsViewModel = koinViewModel(),
     onNavigateToNotifications: () -> Unit,
 ) {
-    val hasReadLaterFeed by viewModel.hasReadLaterFeed.collectAsStateWithLifecycle(initialValue = false)
     val keywords by viewModel.filterKeywords.collectAsStateWithLifecycle()
 
     val filterKeywords = FilterKeywords(
@@ -97,9 +95,6 @@ fun GeneralSettingsPanel(
             updateAfterReadAll = viewModel::updateAfterReadAll,
             updateStickyFullContent = viewModel::updateStickyFullContent,
             enableStickyFullContent = viewModel.enableStickyFullContent,
-            homePage = viewModel.homePage,
-            updateHomePage = viewModel::updateHomePage,
-            hasReadLaterFeed = hasReadLaterFeed,
         )
     }
 }
@@ -123,9 +118,6 @@ fun GeneralSettingsPanelView(
     afterReadAll: AfterReadAllBehavior,
     updateAfterReadAll: (behavior: AfterReadAllBehavior) -> Unit,
     confirmMarkAllRead: Boolean,
-    homePage: HomePage = HomePage.default,
-    updateHomePage: (HomePage) -> Unit = {},
-    hasReadLaterFeed: Boolean = false,
 ) {
     val (isClearArticlesDialogOpen, setClearArticlesDialogOpen) = remember { mutableStateOf(false) }
 
@@ -145,12 +137,6 @@ fun GeneralSettingsPanelView(
         SortOrderSelect(
             sortOrder,
             updateSortOrder
-        )
-
-        HomePageSelect(
-            selected = homePage,
-            update = updateHomePage,
-            showReadLater = hasReadLaterFeed,
         )
 
         FormSection(title = stringResource(R.string.settings_section_refresh)) {

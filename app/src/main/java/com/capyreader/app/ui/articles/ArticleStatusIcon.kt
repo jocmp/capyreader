@@ -3,6 +3,7 @@ package com.capyreader.app.ui.articles
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Notes
 import androidx.compose.material.icons.rounded.FiberManualRecord
+import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import com.jocmp.capy.ArticleStatus
@@ -17,6 +18,11 @@ fun ArticleStatusIcon(status: ArticleStatus) {
 
         ArticleStatus.UNREAD -> Icon(
             Icons.Rounded.FiberManualRecord,
+            contentDescription = null,
+        )
+
+        ArticleStatus.STARRED -> Icon(
+            Icons.Rounded.Star,
             contentDescription = null,
         )
     }

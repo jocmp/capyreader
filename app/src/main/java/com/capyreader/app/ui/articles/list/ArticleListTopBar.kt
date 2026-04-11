@@ -48,8 +48,6 @@ fun ArticleListTopBar(
     feeds: List<Feed>,
     savedSearches: List<SavedSearch>,
     folders: List<Folder>,
-    hideReadArticles: Boolean = false,
-    onToggleHideReadArticles: () -> Unit = {},
 ) {
     val enableSearch = search.isActive
 
@@ -139,8 +137,6 @@ fun ArticleListTopBar(
                 filter = filter,
                 onRequestSearch = { search.start() },
                 hideSearchIcon = enableSearch,
-                hideReadArticles = hideReadArticles,
-                onToggleHideReadArticles = onToggleHideReadArticles,
             )
         }
     )

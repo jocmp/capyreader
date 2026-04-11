@@ -14,7 +14,6 @@
     <string name="filter_unread">Unread</string>
     <string name="filter_all">All</string>
     <string name="filter_today">Today</string>
-    <string name="settings_home_page">Home page</string>
     <string name="feed_action_unsubscribe">Unsubscribe</string>
     <string name="filter_action_menu_description">Edit</string>
     <string name="feed_action_edit">Edit Feed</string>
@@ -183,8 +182,6 @@
     <string name="empty_onboarding_title">No feeds yet</string>
     <string name="empty_onboarding_prompt">Start by adding a feed</string>
     <string name="article_list_empty">Nothing here</string>
-    <string name="article_list_hide_read">Hide read articles</string>
-    <string name="article_list_show_read">Show read articles</string>
     <string name="article_style_options">Font style options</string>
     <string name="font_option_vollkorn" translatable="false">Vollkorn</string>
     <string name="font_option_atkinson_hyperlegible" translatable="false">Atkinson Hyperlegible</string>
