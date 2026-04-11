@@ -40,9 +40,6 @@ class GeneralSettingsViewModel(
     var confirmMarkAllRead by mutableStateOf(appPreferences.articleListOptions.confirmMarkAllRead.get())
         private set
 
-    var markReadOnScroll by mutableStateOf(appPreferences.articleListOptions.markReadOnScroll.get())
-        private set
-
     var afterReadAll by mutableStateOf(appPreferences.articleListOptions.afterReadAllBehavior.get())
         private set
 
@@ -105,12 +102,6 @@ class GeneralSettingsViewModel(
                 account.clearStickyFullContent()
             }
         }
-    }
-
-    fun updateMarkReadOnScroll(enable: Boolean) {
-        appPreferences.articleListOptions.markReadOnScroll.set(enable)
-
-        markReadOnScroll = enable
     }
 
     fun clearAllArticles() {
