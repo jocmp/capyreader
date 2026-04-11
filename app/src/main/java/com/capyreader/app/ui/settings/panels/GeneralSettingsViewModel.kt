@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
-import com.capyreader.app.preferences.HomePage
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.refresher.RefreshScheduler
 import com.jocmp.capy.Account
@@ -45,11 +44,6 @@ class GeneralSettingsViewModel(
 
     var enableStickyFullContent by mutableStateOf(appPreferences.enableStickyFullContent.get())
         private set
-
-    var homePage by mutableStateOf(appPreferences.homePage.get())
-        private set
-
-    val hasReadLaterFeed = account.feeds.map { feeds -> feeds.any { it.isReadLater } }
 
     val filterKeywords = account
         .preferences
@@ -122,9 +116,4 @@ class GeneralSettingsViewModel(
         }
     }
 
-    fun updateHomePage(homePage: HomePage) {
-        appPreferences.homePage.set(homePage)
-
-        this.homePage = homePage
-    }
 }

@@ -21,17 +21,16 @@ class ArticlePagerFactory(private val database: Database) {
         since: OffsetDateTime
     ): PagingSource<Int, Article> {
         return when (filter) {
-            is ArticleFilter.Unread -> articleSource(filter, query, sortOrder, since)
+            is ArticleFilter.Articles -> articleSource(filter, query, sortOrder, since)
             is ArticleFilter.Feeds -> feedSource(filter, query, sortOrder, since)
             is ArticleFilter.Folders -> folderSource(filter, query, sortOrder, since)
             is ArticleFilter.SavedSearches -> savedSearchSource(filter, query, sortOrder, since)
             is ArticleFilter.Today -> todaySource(filter, query, sortOrder, since)
-            is ArticleFilter.Starred -> starredSource(filter, query, sortOrder, since)
         }
     }
 
     private fun articleSource(
-        filter: ArticleFilter.Unread,
+        filter: ArticleFilter.Articles,
         query: String?,
         sortOrder: SortOrder,
         since: OffsetDateTime
@@ -153,32 +152,6 @@ class ArticlePagerFactory(private val database: Database) {
                     limit = limit,
                     sortOrder = sortOrder,
                     offset = offset,
-                )
-            }
-        )
-    }
-
-    private fun starredSource(
-        filter: ArticleFilter.Starred,
-        query: String?,
-        sortOrder: SortOrder,
-        since: OffsetDateTime
-    ): PagingSource<Int, Article> {
-        return QueryPagingSource(
-            countQuery = articles.byStatus.countStarred(
-                status = filter.status,
-                query = query,
-            ),
-            transacter = database.articlesQueries,
-            context = Dispatchers.IO,
-            queryProvider = { limit, offset ->
-                articles.byStatus.allStarred(
-                    status = filter.status,
-                    query = query,
-                    limit = limit,
-                    sortOrder = sortOrder,
-                    offset = offset,
-                    since = since,
                 )
             }
         )

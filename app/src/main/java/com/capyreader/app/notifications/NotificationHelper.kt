@@ -17,6 +17,7 @@ import com.capyreader.app.notifications.NotificationHelper.Companion.FEED_ID_KEY
 import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.Account
 import com.jocmp.capy.ArticleFilter
+import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.ArticleNotification
 import com.jocmp.capy.logging.CapyLog
 import com.jocmp.capy.preferences.getAndSet
@@ -163,7 +164,7 @@ class NotificationHelper(
                 intent.replaceExtras(Bundle())
 
                 appPreferences.filter.set(
-                    ArticleFilter.Unread
+                    ArticleFilter.Articles(articleStatus = ArticleStatus.UNREAD)
                 )
 
                 return null

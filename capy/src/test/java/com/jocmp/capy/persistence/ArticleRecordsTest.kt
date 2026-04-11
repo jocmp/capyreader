@@ -344,7 +344,8 @@ class ArticleRecordsTest {
 
         val results = articleRecords
             .byStatus
-            .allStarred(
+            .all(
+                status = ArticleStatus.STARRED,
                 limit = 10,
                 offset = 0,
                 sortOrder = SortOrder.NEWEST_FIRST,
@@ -547,7 +548,7 @@ class ArticleRecordsTest {
             articleRecords.markUnread(article.id)
         }
 
-        val filter = ArticleFilter.Unread
+        val filter = ArticleFilter.Articles(articleStatus = ArticleStatus.UNREAD)
 
         val count = articleRecords.countUnread(
             filter = filter,
@@ -601,7 +602,7 @@ class ArticleRecordsTest {
             )
         }
 
-        val filter = ArticleFilter.Unread
+        val filter = ArticleFilter.Articles(articleStatus = ArticleStatus.ALL)
 
         val count = articleRecords.countUnread(
             filter = filter,

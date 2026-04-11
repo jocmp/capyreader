@@ -6,4 +6,5 @@ import kotlinx.serialization.Serializable
 enum class ArticleStatus {
     ALL,
     UNREAD,
+    STARRED,
 }

@@ -86,6 +86,7 @@ import com.capyreader.app.ui.rememberLazyListState
 import com.capyreader.app.ui.rememberLocalConnectivity
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
+import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
@@ -115,7 +116,6 @@ fun ArticleScreen(
     val allSavedSearches by viewModel.allSavedSearches.collectAsStateWithLifecycle(initialValue = emptyList())
     val statusCount by viewModel.statusCount.collectAsStateWithLifecycle(initialValue = 0)
     val todayCount by viewModel.todayCount.collectAsStateWithLifecycle(initialValue = 0)
-    val starredCount by viewModel.starredCount.collectAsStateWithLifecycle(initialValue = 0)
     val unreadCount by viewModel.unreadCount.collectAsStateWithLifecycle(initialValue = 0L)
     val filter by viewModel.filter.collectAsStateWithLifecycle()
     val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle("")
@@ -123,7 +123,6 @@ fun ArticleScreen(
     val nextFilter by viewModel.nextFilter.collectAsStateWithLifecycle(initialValue = null)
     val swipeBottom by viewModel.listSwipeBottom.collectAsStateWithLifecycle()
     val afterReadAll by viewModel.afterReadAll.collectAsStateWithLifecycle()
-    val hideReadArticles by viewModel.hideReadArticles.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
     val refreshInterval by appPreferences
         .refreshInterval
@@ -426,16 +425,15 @@ fun ArticleScreen(
         }
 
         val selectFilter = {
-            if (!filter.hasUnreadSelected()) {
+            if (!filter.hasArticlesSelected()) {
                 openNextList { viewModel.selectArticleFilter() }
             } else {
                 closeDrawer()
             }
         }
 
-        val selectStarred = {
-            if (!filter.hasStarredSelected()) openNextList { viewModel.selectStarred() }
-            else closeDrawer()
+        val selectStatus = { status: ArticleStatus ->
+            viewModel.selectStatus(status)
         }
 
         val selectFeed = { feed: Feed, folderTitle: String? ->
@@ -500,7 +498,7 @@ fun ArticleScreen(
                     },
                     onFilterSelect = selectFilter,
                     onSelectToday = { selectToday() },
-                    onSelectStarred = { selectStarred() },
+                    onSelectStatus = { selectStatus(it) },
                     refreshState = refreshAllState,
                     onRefresh = {
                         refreshAll()
@@ -508,7 +506,6 @@ fun ArticleScreen(
                     filter = filter,
                     statusCount = statusCount,
                     todayCount = todayCount,
-                    starredCount = starredCount,
                 )
             },
             listPane = {
@@ -544,8 +541,6 @@ fun ArticleScreen(
                                 feeds = allFeeds,
                                 savedSearches = savedSearches,
                                 folders = allFolders,
-                                hideReadArticles = hideReadArticles,
-                                onToggleHideReadArticles = { viewModel.toggleHideReadArticles() },
                             )
                         },
                         snackbarHost = {
@@ -605,7 +600,7 @@ fun ArticleScreen(
                                             selectedArticleKey = article?.id,
                                             listState = listState,
                                             refreshingAll = viewModel.refreshingAll,
-                                            dimReadArticles = filter !is ArticleFilter.Starred,
+                                            dimReadArticles = filter.status != ArticleStatus.STARRED,
                                             onMarkAllRead = { range ->
                                                 onMarkAllRead(range)
                                             },
@@ -877,7 +872,7 @@ fun canOpenNextFeed(
     filter: ArticleFilter,
     range: MarkRead,
 ): Boolean {
-    return range is MarkRead.All && filter !is ArticleFilter.Unread
+    return range is MarkRead.All && filter !is ArticleFilter.Articles
 }
 
 fun isFeedActive(

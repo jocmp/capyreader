@@ -16,30 +16,29 @@ sealed class ArticleFilter(open val status: ArticleStatus) {
         return this is SavedSearches && this.savedSearchID == savedSearch.id
     }
 
-    fun hasUnreadSelected(): Boolean {
-        return this is Unread
+    fun hasArticlesSelected(): Boolean {
+        return this is Articles
     }
 
     fun hasTodaySelected(): Boolean {
         return this is Today
     }
 
-    fun hasStarredSelected(): Boolean {
-        return this is Starred
-    }
-
     fun withStatus(status: ArticleStatus): ArticleFilter {
         return when (this) {
-            is Unread -> this
+            is Articles -> copy(articleStatus = status)
             is Feeds -> copy(feedStatus = status)
             is Folders -> copy(folderStatus = status)
             is SavedSearches -> copy(savedSearchStatus = status)
             is Today -> copy(todayStatus = status)
-            is Starred -> this
         }
     }
 
-    @Serializable object Unread : ArticleFilter(ArticleStatus.UNREAD)
+    @Serializable
+    data class Articles(val articleStatus: ArticleStatus) : ArticleFilter(articleStatus) {
+        override val status: ArticleStatus
+            get() = articleStatus
+    }
 
     @Serializable
     data class Feeds(val feedID: String, val folderTitle: String?, val feedStatus: ArticleStatus) :
@@ -70,10 +69,7 @@ sealed class ArticleFilter(open val status: ArticleStatus) {
             get() = todayStatus
     }
 
-    @Serializable
-    object Starred : ArticleFilter(ArticleStatus.ALL)
-
     companion object {
-        fun default() = Unread
+        fun default() = Articles(articleStatus = ArticleStatus.ALL)
     }
 }

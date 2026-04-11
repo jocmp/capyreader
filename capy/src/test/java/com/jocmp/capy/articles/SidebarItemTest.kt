@@ -39,8 +39,8 @@ class SidebarItemTest {
     }
 
     @Test
-    fun `next from starred with a saved search`() {
-        val filter = ArticleFilter.Starred
+    fun `next from articles with a saved search`() {
+        val filter = ArticleFilter.Articles(articleStatus = ArticleStatus.ALL)
         val search = SavedSearch(id = "1", name = "My Search", query = null)
 
         val next = findNext(
@@ -78,7 +78,7 @@ class SidebarItemTest {
 
     @Test
     fun `next from article filter with a folder`() {
-        val filter = ArticleFilter.Unread
+        val filter = ArticleFilter.Articles(articleStatus = ArticleStatus.ALL)
         val folder = Folder(title = "This Is My Next Folder")
 
         val next = findNext(
@@ -87,12 +87,12 @@ class SidebarItemTest {
         )
 
         assertNotNull(next)
-        assertIs<ArticleFilter.Starred>(next.toFilter(ArticleStatus.ALL))
+        assertIs<ArticleFilter.Folders>(next.toFilter(ArticleStatus.ALL))
     }
 
     @Test
     fun `next from article filter with a feed`() {
-        val filter = ArticleFilter.Unread
+        val filter = ArticleFilter.Articles(articleStatus = ArticleStatus.ALL)
         val feed = feedFixture.create()
 
         val next = findNext(
@@ -101,22 +101,12 @@ class SidebarItemTest {
         )
 
         assertNotNull(next)
-        assertIs<ArticleFilter.Starred>(next.toFilter(ArticleStatus.ALL))
+        assertIs<ArticleFilter.Feeds>(next.toFilter(ArticleStatus.ALL))
     }
 
     @Test
     fun `next from article filter that is empty`() {
-        val filter = ArticleFilter.Unread
-
-        val next = findNext(filter)
-
-        assertNotNull(next)
-        assertIs<ArticleFilter.Starred>(next.toFilter(ArticleStatus.ALL))
-    }
-
-    @Test
-    fun `next from starred when empty`() {
-        val filter = ArticleFilter.Starred
+        val filter = ArticleFilter.Articles(articleStatus = ArticleStatus.ALL)
 
         val next = findNext(filter)
 
@@ -124,8 +114,8 @@ class SidebarItemTest {
     }
 
     @Test
-    fun `next from starred with a folder`() {
-        val filter = ArticleFilter.Starred
+    fun `next from articles with a folder`() {
+        val filter = ArticleFilter.Articles(articleStatus = ArticleStatus.ALL)
         val folder = Folder(title = "My Folder")
 
         val next = findNext(
@@ -362,14 +352,13 @@ class SidebarItemTest {
 
         val filters = items.map { it.toFilter(ArticleStatus.ALL) }
         assertIs<ArticleFilter.Today>(filters[0])
-        assertIs<ArticleFilter.Unread>(filters[1])
-        assertIs<ArticleFilter.Starred>(filters[2])
-        assertIs<ArticleFilter.SavedSearches>(filters[3])
-        assertIs<ArticleFilter.Folders>(filters[4])
-        val folderFeedFilter = filters[5]
+        assertIs<ArticleFilter.Articles>(filters[1])
+        assertIs<ArticleFilter.SavedSearches>(filters[2])
+        assertIs<ArticleFilter.Folders>(filters[3])
+        val folderFeedFilter = filters[4]
         assertIs<ArticleFilter.Feeds>(folderFeedFilter)
         assertEquals(expected = folder.title, actual = folderFeedFilter.folderTitle)
-        val topLevelFilter = filters[6]
+        val topLevelFilter = filters[5]
         assertIs<ArticleFilter.Feeds>(topLevelFilter)
         assertNull(topLevelFilter.folderTitle)
     }
@@ -382,13 +371,11 @@ class SidebarItemTest {
         val today = items[0]
         assertTrue(today.isSelected(ArticleFilter.Today(ArticleStatus.ALL)))
         assertNotNull(today.next)
-        assertTrue(today.next!!.isSelected(ArticleFilter.Unread))
+        assertTrue(today.next!!.isSelected(ArticleFilter.Articles(ArticleStatus.ALL)))
         assertNotNull(today.next?.next)
-        assertTrue(today.next!!.next!!.isSelected(ArticleFilter.Starred))
-        assertNotNull(today.next?.next?.next)
-        assertTrue(today.next!!.next!!.next!!.isSelected(
+        assertTrue(today.next!!.next!!.isSelected(
             ArticleFilter.Feeds(feedID = feed.id, folderTitle = null, feedStatus = ArticleStatus.ALL)
         ))
-        assertNull(today.next?.next?.next?.next)
+        assertNull(today.next?.next?.next)
     }
 }

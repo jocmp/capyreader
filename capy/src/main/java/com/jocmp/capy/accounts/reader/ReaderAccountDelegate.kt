@@ -61,7 +61,7 @@ internal class ReaderAccountDelegate(
 
     override suspend fun refresh(filter: ArticleFilter, cutoffDate: ZonedDateTime?): Result<Unit> {
         return withErrorHandling {
-            if (filter.hasUnreadSelected()) {
+            if (filter.hasArticlesSelected()) {
                 refreshTopLevelArticles()
             } else {
                 refreshArticles(filter.toStream(source))
@@ -664,7 +664,7 @@ private val SubscriptionQuickAddResult.toSubscription: Subscription?
 
 private fun ArticleFilter.toStream(source: Source): Stream {
     return when (this) {
-        is ArticleFilter.Unread, is ArticleFilter.Today, is ArticleFilter.Starred -> Read()
+        is ArticleFilter.Articles, is ArticleFilter.Today -> Read()
         is ArticleFilter.Feeds -> Stream.Feed(feedID)
         is ArticleFilter.Folders -> folderStream(this, source)
         is ArticleFilter.SavedSearches -> UserLabel(savedSearchID)

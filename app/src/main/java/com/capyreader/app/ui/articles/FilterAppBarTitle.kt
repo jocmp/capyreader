@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.capyreader.app.R
+import com.capyreader.app.ui.navigationTitle
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
@@ -30,7 +31,7 @@ fun FilterAppBarTitle(
     onRequestJumpToTop: () -> Unit
 ) {
     val text = when (filter) {
-        is ArticleFilter.Unread -> stringResource(R.string.filter_unread)
+        is ArticleFilter.Articles -> stringResource(filter.articleStatus.navigationTitle)
         is ArticleFilter.Feeds -> {
             allFeeds.find { it.id == filter.feedID }?.displayTitle()
         }
@@ -43,7 +44,6 @@ fun FilterAppBarTitle(
             allSavedSearches.find { it.id == filter.savedSearchID }?.name
 
         is ArticleFilter.Today -> stringResource(R.string.filter_today)
-        is ArticleFilter.Starred -> stringResource(R.string.filter_starred)
     }.orEmpty()
 
     Box(

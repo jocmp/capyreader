@@ -79,20 +79,6 @@ class AppPreferences(context: Context) {
         return preferenceStore.getBoolean("feed_group_${type.toString().lowercase()}", true)
     }
 
-    val homePage: Preference<HomePage>
-        get() = preferenceStore.getObject(
-            key = "home_page",
-            defaultValue = HomePage.default,
-            serializer = { Json.encodeToString(it) },
-            deserializer = {
-                try {
-                    Json.decodeFromString(it)
-                } catch (e: Throwable) {
-                    HomePage.default
-                }
-            }
-        )
-
     val badgeStyle: Preference<BadgeStyle>
         get() = preferenceStore.getEnum("badge_style", BadgeStyle.default)
 
@@ -205,7 +191,5 @@ class AppPreferences(context: Context) {
                 AfterReadAllBehavior.default
             )
 
-        val hideReadArticles: Preference<Boolean>
-            get() = preferenceStore.getBoolean("article_list_hide_read", false)
     }
 }

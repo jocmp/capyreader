@@ -58,9 +58,6 @@ class ArticleScreenViewModel(
 
     val filter = appPreferences.filter.stateIn(viewModelScope)
 
-    val hideReadArticles =
-        appPreferences.articleListOptions.hideReadArticles.stateIn(viewModelScope)
-
     val listSwipeBottom =
         appPreferences.articleListOptions.swipeBottom.stateIn(viewModelScope)
 
@@ -111,6 +108,7 @@ class ArticleScreenViewModel(
         filter,
     ) { folders, latestCounts, filter ->
         folders.map { copyFolderCounts(it, latestCounts, filter) }
+            .withPositiveCount(filter.status)
     }
 
     val savedSearches: Flow<List<SavedSearch>> = combine(
@@ -119,6 +117,7 @@ class ArticleScreenViewModel(
         filter,
     ) { searches, latestCounts, filter ->
         searches.map { copySavedSearchCounts(it, latestCounts) }
+            .withPositiveCount(filter.status)
     }
 
     val allFeeds = account.taggedFeeds
@@ -136,6 +135,7 @@ class ArticleScreenViewModel(
     ) { feeds, latestCounts, filter ->
         feeds.filter { !it.isReadLater }
             .map { copyFeedCounts(it, latestCounts) }
+            .withPositiveCount(filter.status)
     }
 
     val readLaterFeed: Flow<Feed?> = combine(
@@ -183,8 +183,6 @@ class ArticleScreenViewModel(
         account.countToday(countableStatus(filter))
     }
 
-    val starredCount: Flow<Long> = account.countAllStarred()
-
     val unreadCount: Flow<Long> = combine(
         filter,
         _searchQuery,
@@ -219,23 +217,14 @@ class ArticleScreenViewModel(
     }
 
     fun selectArticleFilter() {
-        updateFilter(ArticleFilter.Unread)
+        updateFilter(ArticleFilter.Articles(articleStatus = currentStatus))
     }
 
     fun selectToday() {
         updateFilter(ArticleFilter.Today(todayStatus = currentStatus))
     }
 
-    fun selectStarred() {
-        updateFilter(ArticleFilter.Starred)
-    }
-
-    fun toggleHideReadArticles() {
-        val newValue = !hideReadArticles.value
-        appPreferences.articleListOptions.hideReadArticles.set(newValue)
-
-        val status = if (newValue) UNREAD else ArticleStatus.ALL
-
+    fun selectStatus(status: ArticleStatus) {
         updateFilter(latestFilter.withStatus(status))
     }
 
@@ -573,7 +562,7 @@ class ArticleScreenViewModel(
         val folderFeeds = folder.feeds.map { copyFeedCounts(it, counts) }
 
         return folder.copy(
-            feeds = folderFeeds,
+            feeds = folderFeeds.withPositiveCount(filter.status).toMutableList(),
             count = folderFeeds.sumOf { it.count }
         )
     }
@@ -722,7 +711,7 @@ class ArticleScreenViewModel(
 
     private val latestFilter: ArticleFilter get() = filter.value
     private val currentStatus: ArticleStatus
-        get() = if (hideReadArticles.value) UNREAD else ArticleStatus.ALL
+        get() = latestFilter.status
 
     private val enableStickyFullContent: Boolean
         get() = appPreferences.enableStickyFullContent.get()

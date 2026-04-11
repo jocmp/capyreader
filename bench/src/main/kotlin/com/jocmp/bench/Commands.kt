@@ -75,7 +75,7 @@ suspend fun commandFeeds(account: Account) {
 suspend fun commandArticles(account: Account) {
     val all = account.countAllByStatus(ArticleStatus.ALL).first()
     val unread = account.countAllByStatus(ArticleStatus.UNREAD).first()
-    val starred = account.countAllStarred().first()
+    val starred = account.countAllByStatus(ArticleStatus.STARRED).first()
 
     println("articles:")
     println("  all:     $all")

@@ -35,7 +35,7 @@ fun ArticleListBackHandler(
         closeDrawer()
     }
 
-    BackHandler(backAction == BackAction.NAVIGATE_TO_PARENT && filter !is ArticleFilter.Unread) {
+    BackHandler(backAction == BackAction.NAVIGATE_TO_PARENT && filter !is ArticleFilter.Articles) {
         when(filter) {
             is ArticleFilter.Feeds -> {
                 val folderTitle = filter.folderTitle
