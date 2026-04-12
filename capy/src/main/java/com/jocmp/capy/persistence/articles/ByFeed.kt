@@ -66,13 +66,13 @@ class ByFeed(private val database: Database) {
         query: String?,
     ): Query<String> {
         val (_, starred) = status.toStatusPair
-        val (afterSnowflakeID, beforeSnowflakeID) = range.toPair
+        val (afterArticleID, beforeArticleID) = range.toPair
 
         return database.articlesByFeedQueries.findArticleIDs(
             feedIDs = feedIDs,
             starred = starred,
-            afterSnowflakeID = afterSnowflakeID,
-            beforeSnowflakeID = beforeSnowflakeID,
+            afterArticleID = afterArticleID,
+            beforeArticleID = beforeArticleID,
             publishedSince = null,
             newestFirst = isNewestFirst(sortOrder),
             query = query,

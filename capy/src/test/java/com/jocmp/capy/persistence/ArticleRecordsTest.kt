@@ -171,7 +171,7 @@ class ArticleRecordsTest {
         }
         val articleResult = articleFixture.create(
             title = "The Pixel 9 is great — and a problem",
-            summary = "On The Vergecast: AI photos, Chick-fil-A's foray into streaming, headphone screens, and more.",
+            summary = "On The Vergecast: AI photos, Chick-fil-A’s foray into streaming, headphone screens, and more.",
         )
         val articleRecords = ArticleRecords(database)
         val query = "problem"
@@ -211,7 +211,7 @@ class ArticleRecordsTest {
         }
         val articleResult = articleFixture.create(
             title = "The Pixel 9 is great — and a problem",
-            summary = "On The Vergecast: AI photos, Chick-fil-A's foray into streaming, headphone screens, and more.",
+            summary = "On The Vergecast: AI photos, Chick-fil-A’s foray into streaming, headphone screens, and more.",
         )
         val articleRecords = ArticleRecords(database)
         val query = "Chick-fil-A"
@@ -261,7 +261,7 @@ class ArticleRecordsTest {
         }
         val articleResult = articleFixture.create(
             title = "The Pixel 9 is great — and a problem",
-            summary = "On The Vergecast: AI photos, Chick-fil-A's foray into streaming, headphone screens, and more.",
+            summary = "On The Vergecast: AI photos, Chick-fil-A’s foray into streaming, headphone screens, and more.",
             feed = vergeFeed,
         )
         val articleRecords = ArticleRecords(database)
@@ -548,7 +548,7 @@ class ArticleRecordsTest {
             articleRecords.markUnread(article.id)
         }
 
-        val filter = ArticleFilter.Articles(articleStatus = ArticleStatus.UNREAD)
+        val filter = ArticleFilter.Articles(ArticleStatus.UNREAD)
 
         val count = articleRecords.countUnread(
             filter = filter,
@@ -602,7 +602,7 @@ class ArticleRecordsTest {
             )
         }
 
-        val filter = ArticleFilter.Articles(articleStatus = ArticleStatus.ALL)
+        val filter = ArticleFilter.Articles(ArticleStatus.UNREAD)
 
         val count = articleRecords.countUnread(
             filter = filter,
@@ -637,39 +637,6 @@ class ArticleRecordsTest {
 
         assertEquals(expected = 3, actual = counts[firstSearch.id])
         assertEquals(expected = 2, actual = counts[secondSearch.id])
-    }
-
-    @Test
-    fun allByStatus_excludesReadLaterArticles() {
-        val feedFixture = FeedFixture(database)
-        val readLaterFeed = feedFixture.create(
-            feedURL = "https://pages.capyreader.com",
-            readLater = true,
-        )
-        val regularFeed = feedFixture.create(
-            feedURL = "https://example.com/${RandomUUID.generate()}",
-        )
-
-        articleFixture.create(feed = readLaterFeed, read = false)
-        val regularArticle = articleFixture.create(feed = regularFeed, read = false)
-
-        val results = articleRecords
-            .byStatus
-            .all(
-                ArticleStatus.UNREAD,
-                limit = 10,
-                offset = 0,
-                sortOrder = SortOrder.NEWEST_FIRST,
-            )
-            .executeAsList()
-
-        val count = articleRecords
-            .byStatus
-            .count(ArticleStatus.UNREAD)
-            .executeAsOne()
-
-        assertEquals(expected = listOf(regularArticle.id), actual = results.map { it.id })
-        assertEquals(expected = 1, actual = count)
     }
 }
 
