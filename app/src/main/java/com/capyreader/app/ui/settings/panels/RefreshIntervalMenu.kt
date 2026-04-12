@@ -11,6 +11,7 @@ import com.capyreader.app.refresher.RefreshInterval.EVERY_DAY
 import com.capyreader.app.refresher.RefreshInterval.EVERY_FIFTEEN_MINUTES
 import com.capyreader.app.refresher.RefreshInterval.EVERY_HOUR
 import com.capyreader.app.refresher.RefreshInterval.EVERY_THIRTY_MINUTES
+import com.capyreader.app.refresher.RefreshInterval.EVERY_TWO_HOURS
 import com.capyreader.app.refresher.RefreshInterval.MANUALLY_ONLY
 import com.capyreader.app.refresher.RefreshInterval.ON_START
 import com.capyreader.app.ui.settings.PreferenceSelect
@@ -39,6 +40,7 @@ private fun Context.translationKey(refreshInterval: RefreshInterval): String {
         EVERY_FIFTEEN_MINUTES -> getString(R.string.refresh_minutes, 15)
         EVERY_THIRTY_MINUTES -> getString(R.string.refresh_minutes, 30)
         EVERY_HOUR -> resources.getQuantityString(R.plurals.refresh_hours, 1, 1)
+        EVERY_TWO_HOURS -> resources.getQuantityString(R.plurals.refresh_hours, 2, 2)
         EVERY_12_HOURS -> resources.getQuantityString(R.plurals.refresh_hours, 12, 12)
         EVERY_DAY -> getString(R.string.refresh_every_day)
     }
