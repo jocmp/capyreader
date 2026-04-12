@@ -196,7 +196,7 @@ fun ArticleScreen(
     ) {
         val openNextFeedOnReadAll = afterReadAll == AfterReadAllBehavior.OPEN_NEXT_FEED
 
-        val skipInitialRefresh = refreshInterval != RefreshInterval.ON_START
+        val skipInitialRefresh = refreshInterval == RefreshInterval.MANUALLY_ONLY
 
         val (isRefreshInitialized, setRefreshInitialized) = rememberSaveable {
             mutableStateOf(skipInitialRefresh)
