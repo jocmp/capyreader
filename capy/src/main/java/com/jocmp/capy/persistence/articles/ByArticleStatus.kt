@@ -11,6 +11,44 @@ import com.jocmp.capy.persistence.toStatusPair
 import java.time.OffsetDateTime
 
 class ByArticleStatus(private val database: Database) {
+    fun all(
+        status: ArticleStatus,
+        query: String? = null,
+        limit: Long,
+        offset: Long,
+        sortOrder: SortOrder,
+        since: OffsetDateTime? = null
+    ): Query<Article> {
+        val (read, starred) = status.toStatusPair
+        val queries = database.articlesByStatusQueries
+
+        return if (isNewestFirst(sortOrder)) {
+            queries.allNewestFirst(
+                read = read,
+                starred = starred,
+                limit = limit,
+                offset = offset,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
+                publishedSince = null,
+                query = query,
+                mapper = ::listMapper
+            )
+        } else {
+            queries.allOldestFirst(
+                read = read,
+                starred = starred,
+                limit = limit,
+                offset = offset,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
+                publishedSince = null,
+                query = query,
+                mapper = ::listMapper
+            )
+        }
+    }
+
     fun unreadArticleIDs(
         status: ArticleStatus,
         range: MarkRead,
@@ -32,76 +70,6 @@ class ByArticleStatus(private val database: Database) {
 
     fun maxArrivedAt(): Long? {
         return database.articlesQueries.lastUpdatedAt().executeAsOne().MAX
-    }
-
-    fun pageBoundaries(
-        status: ArticleStatus,
-        query: String? = null,
-        since: OffsetDateTime? = null,
-        sortOrder: SortOrder = SortOrder.NEWEST_FIRST,
-    ): (anchor: Long?, limit: Long) -> Query<Long> {
-        val (read, starred) = status.toStatusPair
-        val queries = database.articlesByStatusQueries
-        val boundaryQuery = if (isNewestFirst(sortOrder)) {
-            queries::pageBoundaries
-        } else {
-            queries::pageBoundariesOldestFirst
-        }
-
-        return { anchor, limit ->
-            boundaryQuery(
-                limit,
-                anchor ?: 0L,
-                read,
-                mapLastRead(read, since),
-                starred,
-                mapLastUnstarred(starred, since),
-                null,
-                query,
-            )
-        }
-    }
-
-    fun keyed(
-        status: ArticleStatus,
-        query: String? = null,
-        sortOrder: SortOrder,
-        since: OffsetDateTime? = null,
-        starred: Boolean? = null,
-    ): (beginInclusive: Long, endExclusive: Long?) -> Query<Article> {
-        val (read, defaultStarred) = status.toStatusPair
-        val starred = starred ?: defaultStarred
-        val queries = database.articlesByStatusQueries
-
-        return if (isNewestFirst(sortOrder)) {
-            { begin, end ->
-                queries.keyedNewestFirst(
-                    read = read,
-                    starred = starred,
-                    lastReadAt = mapLastRead(read, since),
-                    lastUnstarredAt = mapLastUnstarred(starred, since),
-                    publishedSince = null,
-                    query = query,
-                    beginInclusive = begin,
-                    endExclusive = end,
-                    mapper = ::listMapper,
-                )
-            }
-        } else {
-            { begin, end ->
-                queries.keyedOldestFirst(
-                    read = read,
-                    starred = starred,
-                    lastReadAt = mapLastRead(read, since),
-                    lastUnstarredAt = mapLastUnstarred(starred, since),
-                    publishedSince = null,
-                    query = query,
-                    beginInclusive = begin,
-                    endExclusive = end,
-                    mapper = ::listMapper,
-                )
-            }
-        }
     }
 
     fun count(

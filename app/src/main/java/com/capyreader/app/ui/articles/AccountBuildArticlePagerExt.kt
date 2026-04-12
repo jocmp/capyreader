@@ -13,12 +13,11 @@ fun Account.buildArticlePager(
     query: String? = null,
     sortOrder: SortOrder = SortOrder.NEWEST_FIRST,
     since: OffsetDateTime = OffsetDateTime.now()
-): Pager<Long, Article> {
+): Pager<Int, Article> {
     return Pager(
         config = PagingConfig(
             pageSize = 100,
             prefetchDistance = 10,
-            initialLoadSize = 50,
         ),
         pagingSourceFactory = {
             ArticlePagerFactory(database).findArticles(

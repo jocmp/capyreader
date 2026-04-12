@@ -12,6 +12,51 @@ import com.jocmp.capy.persistence.toStatusPair
 import java.time.OffsetDateTime
 
 class ByFeed(private val database: Database) {
+    fun all(
+        feedIDs: List<String>,
+        status: ArticleStatus,
+        query: String? = null,
+        since: OffsetDateTime,
+        limit: Long,
+        sortOrder: SortOrder,
+        offset: Long,
+        priority: FeedPriority,
+    ): Query<Article> {
+        val (read, starred) = status.toStatusPair
+
+        val queries = database.articlesByFeedQueries
+
+        return if (isDescendingOrder(sortOrder)) {
+            queries.allNewestFirst(
+                feedIDs = feedIDs,
+                query = query,
+                read = read,
+                starred = starred,
+                limit = limit,
+                offset = offset,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
+                publishedSince = null,
+                priorities = priority.inclusivePriorities,
+                mapper = ::listMapper
+            )
+        } else {
+            queries.allOldestFirst(
+                feedIDs = feedIDs,
+                query = query,
+                read = read,
+                starred = starred,
+                limit = limit,
+                offset = offset,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
+                publishedSince = null,
+                priorities = priority.inclusivePriorities,
+                mapper = ::listMapper
+            )
+        }
+    }
+
     fun unreadArticleIDs(
         status: ArticleStatus,
         feedIDs: List<String>,
@@ -33,84 +78,6 @@ class ByFeed(private val database: Database) {
             query = query,
             priorities = priority.inclusivePriorities,
         )
-    }
-
-    fun pageBoundaries(
-        feedIDs: List<String>,
-        status: ArticleStatus,
-        query: String? = null,
-        since: OffsetDateTime? = null,
-        priority: FeedPriority,
-        sortOrder: SortOrder = SortOrder.NEWEST_FIRST,
-    ): (anchor: Long?, limit: Long) -> Query<Long> {
-        val (read, starred) = status.toStatusPair
-        val queries = database.articlesByFeedQueries
-        val boundaryQuery = if (isDescendingOrder(sortOrder)) {
-            queries::pageBoundaries
-        } else {
-            queries::pageBoundariesOldestFirst
-        }
-
-        return { anchor, limit ->
-            boundaryQuery(
-                limit,
-                anchor ?: 0L,
-                feedIDs,
-                read,
-                mapLastRead(read, since),
-                starred,
-                mapLastUnstarred(starred, since),
-                null,
-                query,
-                priority.inclusivePriorities,
-            )
-        }
-    }
-
-    fun keyed(
-        feedIDs: List<String>,
-        status: ArticleStatus,
-        query: String? = null,
-        sortOrder: SortOrder,
-        since: OffsetDateTime? = null,
-        priority: FeedPriority,
-    ): (beginInclusive: Long, endExclusive: Long?) -> Query<Article> {
-        val (read, starred) = status.toStatusPair
-        val queries = database.articlesByFeedQueries
-
-        return if (isDescendingOrder(sortOrder)) {
-            { begin, end ->
-                queries.keyedNewestFirst(
-                    feedIDs = feedIDs,
-                    read = read,
-                    starred = starred,
-                    lastReadAt = mapLastRead(read, since),
-                    lastUnstarredAt = mapLastUnstarred(starred, since),
-                    publishedSince = null,
-                    query = query,
-                    priorities = priority.inclusivePriorities,
-                    beginInclusive = begin,
-                    endExclusive = end,
-                    mapper = ::listMapper,
-                )
-            }
-        } else {
-            { begin, end ->
-                queries.keyedOldestFirst(
-                    feedIDs = feedIDs,
-                    read = read,
-                    starred = starred,
-                    lastReadAt = mapLastRead(read, since),
-                    lastUnstarredAt = mapLastUnstarred(starred, since),
-                    publishedSince = null,
-                    query = query,
-                    priorities = priority.inclusivePriorities,
-                    beginInclusive = begin,
-                    endExclusive = end,
-                    mapper = ::listMapper,
-                )
-            }
-        }
     }
 
     fun count(
