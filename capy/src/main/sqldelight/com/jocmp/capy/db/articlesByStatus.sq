@@ -23,7 +23,7 @@ AND (feeds.priority IS NULL OR feeds.priority IN ('main', 'important'))
 AND ((article_statuses.starred = :starred AND article_statuses.last_unstarred_at IS NULL OR article_statuses.last_unstarred_at >= :lastUnstarredAt) OR :starred IS NULL)
 AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
 AND (:query IS NULL OR articles.title LIKE '%' || :query || '%' OR articles.summary LIKE '%' || :query || '%')
-ORDER BY articles.published_at DESC
+ORDER BY articles.published_at DESC, articles.id DESC
 LIMIT :limit OFFSET :offset;
 
 allOldestFirst:
@@ -51,7 +51,7 @@ AND (feeds.priority IS NULL OR feeds.priority IN ('main', 'important'))
 AND ((article_statuses.starred = :starred AND article_statuses.last_unstarred_at IS NULL OR article_statuses.last_unstarred_at >= :lastUnstarredAt) OR :starred IS NULL)
 AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
 AND (:query IS NULL OR articles.title LIKE '%' || :query || '%' OR articles.summary LIKE '%' || :query || '%')
-ORDER BY articles.published_at ASC
+ORDER BY articles.published_at ASC, articles.id ASC
 LIMIT :limit OFFSET :offset;
 
 countAll:
@@ -70,6 +70,8 @@ SELECT articles.id
 FROM articles
 JOIN feeds ON articles.feed_id = feeds.id
 JOIN article_statuses ON articles.id = article_statuses.article_id
+LEFT JOIN articles AS after_articles ON after_articles.id = :afterArticleID
+LEFT JOIN articles AS before_articles ON before_articles.id = :beforeArticleID
 WHERE article_statuses.read = 0
 AND (article_statuses.starred = :starred OR :starred IS NULL)
 AND (feeds.priority IS NULL OR feeds.priority IN ('main', 'important'))
@@ -78,14 +80,18 @@ AND (:query IS NULL OR articles.title LIKE '%' || :query || '%' OR articles.summ
 AND (
     :afterArticleID IS NULL
     OR CASE WHEN :newestFirst
-        THEN articles.published_at >= (SELECT published_at FROM articles WHERE id = :afterArticleID)
-        ELSE articles.published_at <= (SELECT published_at FROM articles WHERE id = :afterArticleID)
+        THEN articles.published_at > after_articles.published_at
+             OR (articles.published_at = after_articles.published_at AND articles.id >= :afterArticleID)
+        ELSE articles.published_at < after_articles.published_at
+             OR (articles.published_at = after_articles.published_at AND articles.id <= :afterArticleID)
     END
 )
 AND (
     :beforeArticleID IS NULL
     OR CASE WHEN :newestFirst
-        THEN articles.published_at <= (SELECT published_at FROM articles WHERE id = :beforeArticleID)
-        ELSE articles.published_at >= (SELECT published_at FROM articles WHERE id = :beforeArticleID)
+        THEN articles.published_at < before_articles.published_at
+             OR (articles.published_at = before_articles.published_at AND articles.id <= :beforeArticleID)
+        ELSE articles.published_at > before_articles.published_at
+             OR (articles.published_at = before_articles.published_at AND articles.id >= :beforeArticleID)
     END
 );

@@ -95,6 +95,8 @@ fun GeneralSettingsPanel(
             updateAfterReadAll = viewModel::updateAfterReadAll,
             updateStickyFullContent = viewModel::updateStickyFullContent,
             enableStickyFullContent = viewModel.enableStickyFullContent,
+            markReadOnScroll = viewModel.markReadOnScroll,
+            updateMarkReadOnScroll = viewModel::updateMarkReadOnScroll,
         )
     }
 }
@@ -118,6 +120,8 @@ fun GeneralSettingsPanelView(
     afterReadAll: AfterReadAllBehavior,
     updateAfterReadAll: (behavior: AfterReadAllBehavior) -> Unit,
     confirmMarkAllRead: Boolean,
+    markReadOnScroll: Boolean,
+    updateMarkReadOnScroll: (enable: Boolean) -> Unit,
 ) {
     val (isClearArticlesDialogOpen, setClearArticlesDialogOpen) = remember { mutableStateOf(false) }
 
@@ -188,6 +192,13 @@ fun GeneralSettingsPanelView(
             title = stringResource(R.string.settings_section_mark_all_as_read),
         ) {
             Column {
+                RowItem {
+                    TextSwitch(
+                        onCheckedChange = updateMarkReadOnScroll,
+                        checked = markReadOnScroll,
+                        title = stringResource(R.string.settings_mark_read_on_scroll),
+                    )
+                }
                 RowItem {
                     TextSwitch(
                         onCheckedChange = updateConfirmMarkAllRead,
@@ -346,6 +357,8 @@ private fun GeneralSettingsPanelPreview() {
                 enableStickyFullContent = true,
                 afterReadAll = AfterReadAllBehavior.NOTHING,
                 updateAfterReadAll = {},
+                markReadOnScroll = false,
+                updateMarkReadOnScroll = {},
             )
         }
     }

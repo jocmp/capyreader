@@ -6,6 +6,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -28,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -41,6 +43,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.R
 import com.capyreader.app.common.Media
@@ -92,12 +95,16 @@ import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
+import com.jocmp.capy.logging.CapyLog
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
 
-@OptIn(ExperimentalMaterial3AdaptiveApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3AdaptiveApi::class, ExperimentalMaterial3Api::class, FlowPreview::class)
 @Composable
 fun ArticleScreen(
     viewModel: ArticleScreenViewModel = koinViewModel(),
@@ -204,7 +211,7 @@ fun ArticleScreen(
         val scaffoldNavigator = rememberListDetailPaneScaffoldNavigator()
         val showMultipleColumns = scaffoldNavigator.scaffoldDirective.maxHorizontalPartitions > 1
         val paneExpansion = rememberArticlePaneExpansion()
-        var isPullToRefreshing by remember { mutableStateOf(false) }
+        val isPullToRefreshing = viewModel.isPullToRefreshing
         val addFeedSuccessMessage = stringResource(R.string.add_feed_success)
         val scrollBehavior = pinnedScrollBehavior()
         var media by rememberSaveable(saver = Media.Saver) { mutableStateOf(null) }
@@ -262,6 +269,14 @@ fun ArticleScreen(
             }
         }
 
+        MarkReadOnScroll(
+            listState = listState,
+            articles = articles,
+            scrollHighWaterMark = viewModel.scrollHighWaterMark,
+            updateScrollHighWaterMark = viewModel::updateScrollHighWaterMark,
+            markReadOnScroll = viewModel::markReadOnScroll,
+        )
+
         suspend fun openNextStatus(action: suspend () -> Unit) {
             scope.launchIO { action() }
             scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
@@ -306,24 +321,19 @@ fun ArticleScreen(
             }
         }
 
-        val refreshPagination = {
-            coroutineScope.launch {
-                resetScrollBehaviorOffset()
-            }
-        }
-
         fun refreshAll() {
             viewModel.refreshAll {
-                refreshPagination()
+                if (viewModel.markReadOnScrollEnabled) {
+                    scrollToTop()
+                }
             }
         }
 
         fun refreshFeeds() {
-            isPullToRefreshing = true
-
             viewModel.refresh(filter) {
-                isPullToRefreshing = false
-                refreshPagination()
+                if (viewModel.markReadOnScrollEnabled) {
+                    scrollToTop()
+                }
             }
         }
 
@@ -859,4 +869,53 @@ fun isFeedActive(
     return media == null &&
             article == null &&
             !search.isActive
+}
+
+@OptIn(FlowPreview::class)
+@Composable
+private fun MarkReadOnScroll(
+    listState: LazyListState,
+    articles: LazyPagingItems<Article>,
+    scrollHighWaterMark: Int,
+    updateScrollHighWaterMark: (Int) -> Unit,
+    markReadOnScroll: (String) -> Unit,
+) {
+    val appPreferences = koinInject<AppPreferences>()
+
+    val enabled by appPreferences
+        .articleListOptions
+        .markReadOnScroll
+        .collectChangesWithCurrent()
+
+    if (enabled) {
+        LaunchedEffect(listState) {
+            snapshotFlow {
+                listState.firstVisibleItemIndex - 1
+            }
+                .distinctUntilChanged()
+                .debounce(500)
+                .collect { scrolledPastIndex ->
+                    CapyLog.debug(
+                        "mark_read_on_scroll:collect", mapOf(
+                            "scrolledPastIndex" to scrolledPastIndex,
+                            "highWaterMark" to scrollHighWaterMark,
+                            "itemCount" to articles.itemCount,
+                        )
+                    )
+                    if (scrolledPastIndex > scrollHighWaterMark && scrolledPastIndex < articles.itemCount) {
+                        updateScrollHighWaterMark(scrolledPastIndex)
+                        val boundaryArticle = articles[scrolledPastIndex]
+                        if (boundaryArticle != null) {
+                            CapyLog.debug(
+                                "mark_read_on_scroll:boundary", mapOf(
+                                    "articleID" to boundaryArticle.id,
+                                    "index" to scrolledPastIndex,
+                                )
+                            )
+                            markReadOnScroll(boundaryArticle.id)
+                        }
+                    }
+                }
+        }
+    }
 }

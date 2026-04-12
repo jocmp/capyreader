@@ -3,6 +3,7 @@ package com.capyreader.app.ui.articles
 import android.app.Application
 import android.content.Context
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
@@ -30,6 +31,7 @@ import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.articles.SidebarItem
+import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
 import kotlinx.coroutines.CoroutineDispatcher
@@ -80,8 +82,19 @@ class ArticleScreenViewModel(
     var refreshingAll by mutableStateOf(false)
         private set
 
+    var isPullToRefreshing by mutableStateOf(false)
+        private set
+
     var refreshInitialized by mutableStateOf(false)
         private set
+
+    private var _scrollHighWaterMark by mutableIntStateOf(-1)
+
+    val scrollHighWaterMark: Int
+        get() = _scrollHighWaterMark
+
+    val markReadOnScrollEnabled: Boolean
+        get() = appPreferences.articleListOptions.markReadOnScroll.get()
 
     val articlesSince = MutableStateFlow<OffsetDateTime>(OffsetDateTime.now())
 
@@ -383,11 +396,14 @@ class ArticleScreenViewModel(
         }
     }
 
-    fun refresh(filter: ArticleFilter, onComplete: () -> Unit) {
+    fun refresh(filter: ArticleFilter, onComplete: () -> Unit = {}) {
+        isPullToRefreshing = true
         updateArticlesSince()
 
         refreshFilter(filter) {
             updateArticlesSince()
+            isPullToRefreshing = false
+            resetScrollHighWaterMark()
             onComplete()
         }
     }
@@ -403,10 +419,75 @@ class ArticleScreenViewModel(
         refresh(ArticleFilter.default()) {
             _refreshAllState.value = AngleRefreshState.SETTLING
             refreshInitialized = true
+            resetScrollHighWaterMark()
             onComplete()
 
             refreshJob?.invokeOnCompletion {
                 refreshingAll = false
+            }
+        }
+    }
+
+    fun updateScrollHighWaterMark(index: Int) {
+        if (index > _scrollHighWaterMark) {
+            CapyLog.debug(
+                "scroll_high_water_mark:update",
+                mapOf("previous" to _scrollHighWaterMark, "new" to index)
+            )
+            _scrollHighWaterMark = index
+        }
+    }
+
+    fun resetScrollHighWaterMark() {
+        CapyLog.debug(
+            "scroll_high_water_mark:reset",
+            mapOf("previous" to _scrollHighWaterMark)
+        )
+        _scrollHighWaterMark = -1
+    }
+
+    fun markReadOnScroll(articleID: String) {
+        if (isPullToRefreshing) {
+            CapyLog.debug("mark_read_on_scroll:skip", mapOf("reason" to "pull_to_refresh"))
+            return
+        }
+
+        if (_refreshAllState.value == AngleRefreshState.RUNNING) {
+            CapyLog.debug("mark_read_on_scroll:skip", mapOf("reason" to "refresh_all_running"))
+            return
+        }
+
+        val range = MarkRead.After(articleID)
+
+        CapyLog.debug(
+            "mark_read_on_scroll",
+            mapOf(
+                "articleID" to articleID,
+                "range" to range.toString(),
+                "sortOrder" to sortOrder.value.toString(),
+                "highWaterMark" to _scrollHighWaterMark,
+            )
+        )
+
+        viewModelScope.launchIO {
+            val articleIDs = account.unreadArticleIDs(
+                filter = latestFilter,
+                range = range,
+                sortOrder = sortOrder.value,
+                query = _searchQuery.value,
+            )
+
+            CapyLog.debug(
+                "mark_read_on_scroll:marking",
+                mapOf("count" to articleIDs.size)
+            )
+
+            account.markAllRead(articleIDs).onFailure {
+                Sync.markReadAsync(articleIDs, context)
+            }
+
+            launchIO {
+                notificationHelper.dismissNotifications(articleIDs)
             }
         }
     }
@@ -482,11 +563,13 @@ class ArticleScreenViewModel(
         }
         _searchQuery.value = ""
         _searchState.value = SearchState.INACTIVE
+        resetScrollHighWaterMark()
     }
 
     fun updateSearch(query: String) {
         clearArticle()
         _searchQuery.value = query
+        resetScrollHighWaterMark()
     }
 
     fun addStarAsync(articleID: String) {
@@ -574,6 +657,7 @@ class ArticleScreenViewModel(
         appPreferences.filter.set(filter)
 
         clearArticle()
+        resetScrollHighWaterMark()
 
         updateArticlesSince()
     }

@@ -191,5 +191,8 @@ class AppPreferences(context: Context) {
                 AfterReadAllBehavior.default
             )
 
+        val markReadOnScroll: Preference<Boolean>
+            get() = preferenceStore.getBoolean("article_list_mark_read_on_scroll", false)
+
     }
 }
