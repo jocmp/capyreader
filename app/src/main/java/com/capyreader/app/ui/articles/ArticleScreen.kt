@@ -49,7 +49,6 @@ import com.capyreader.app.common.asState
 import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleListVerticalSwipe
-import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.LocalBadgeStyle
 import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.LocalLinkOpener
@@ -124,9 +123,6 @@ fun ArticleScreen(
     val swipeBottom by viewModel.listSwipeBottom.collectAsStateWithLifecycle()
     val afterReadAll by viewModel.afterReadAll.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
-    val refreshInterval by appPreferences
-        .refreshInterval
-        .collectChangesWithDefault(appPreferences.refreshInterval.get())
 
     val canSwipeBottom = when (swipeBottom) {
         ArticleListVerticalSwipe.DISABLED -> false
@@ -196,12 +192,10 @@ fun ArticleScreen(
     ) {
         val openNextFeedOnReadAll = afterReadAll == AfterReadAllBehavior.OPEN_NEXT_FEED
 
-        val skipInitialRefresh = refreshInterval == RefreshInterval.MANUALLY_ONLY
-
-        val (isRefreshInitialized, setRefreshInitialized) = rememberSaveable {
-            mutableStateOf(skipInitialRefresh)
-        }
-        var refreshAllState by remember { mutableStateOf(AngleRefreshState.STOPPED) }
+        val refreshAllState by viewModel.refreshAllState.collectAsStateWithLifecycle(
+            initialValue = AngleRefreshState.STOPPED
+        )
+        val isRefreshInitialized = viewModel.refreshInitialized
 
         val (isUpdatePasswordDialogOpen, setUpdatePasswordDialogOpen) = rememberSaveable {
             mutableStateOf(false)
@@ -319,20 +313,8 @@ fun ArticleScreen(
         }
 
         fun refreshAll() {
-            if (refreshAllState == AngleRefreshState.RUNNING) {
-                return
-            }
-
-
-            refreshAllState = AngleRefreshState.RUNNING
-
             viewModel.refreshAll {
-                refreshAllState = AngleRefreshState.SETTLING
                 refreshPagination()
-
-                if (!isRefreshInitialized) {
-                    setRefreshInitialized(true)
-                }
             }
         }
 
@@ -730,12 +712,6 @@ fun ArticleScreen(
                 onCreateLabel = labelsActions.createLabel,
                 onDismissRequest = labelsActions.closeSheet
             )
-        }
-
-        LaunchedEffect(Unit) {
-            if (!isRefreshInitialized) {
-                refreshAll()
-            }
         }
 
         BackHandler(media != null) {

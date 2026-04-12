@@ -14,7 +14,9 @@ import com.capyreader.app.notifications.NotificationHelper
 import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleListVerticalSwipe
+import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.sync.Sync
+import com.capyreader.app.ui.articles.feeds.AngleRefreshState
 import com.capyreader.app.ui.components.SearchState
 import com.capyreader.app.ui.widget.WidgetUpdater
 import com.jocmp.capy.Account
@@ -67,7 +69,15 @@ class ArticleScreenViewModel(
 
     private var _article by mutableStateOf<Article?>(null)
 
+    private val _refreshAllState = MutableStateFlow(AngleRefreshState.STOPPED)
+
+    val refreshAllState: Flow<AngleRefreshState>
+        get() = _refreshAllState
+
     var refreshingAll by mutableStateOf(false)
+        private set
+
+    var refreshInitialized by mutableStateOf(false)
         private set
 
     val articlesSince = MutableStateFlow<OffsetDateTime>(OffsetDateTime.now())
@@ -213,6 +223,14 @@ class ArticleScreenViewModel(
             nextItemListener.collect {
                 _nextItem.value = it
             }
+        }
+
+        val skipInitialRefresh = appPreferences.refreshInterval.get() == RefreshInterval.MANUALLY_ONLY
+
+        if (skipInitialRefresh) {
+            refreshInitialized = true
+        } else {
+            refreshAll()
         }
     }
 
@@ -371,10 +389,17 @@ class ArticleScreenViewModel(
         }
     }
 
-    fun refreshAll(onComplete: () -> Unit) {
+    fun refreshAll(onComplete: () -> Unit = {}) {
+        if (_refreshAllState.value == AngleRefreshState.RUNNING) {
+            return
+        }
+
+        _refreshAllState.value = AngleRefreshState.RUNNING
         refreshingAll = true
 
         refresh(ArticleFilter.default()) {
+            _refreshAllState.value = AngleRefreshState.SETTLING
+            refreshInitialized = true
             onComplete()
 
             refreshJob?.invokeOnCompletion {

@@ -39,6 +39,12 @@ android {
         }
     }
 
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
+
     dependenciesInfo {
         includeInApk = false
         includeInBundle = false
@@ -170,6 +176,10 @@ dependencies {
     implementation(libs.androidx.glance.appwidget.preview)
     "gplayImplementation"(libs.firebase.crashlytics)
     testImplementation(libs.tests.junit)
+    testImplementation(libs.tests.kotlinx.coroutines)
+    testImplementation(libs.tests.mockk.mockk)
+    testImplementation(libs.tests.robolectric)
+    testImplementation(libs.tests.turbine)
     androidTestImplementation(libs.tests.androidx.test.ext)
     androidTestImplementation(libs.tests.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
