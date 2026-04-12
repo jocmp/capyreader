@@ -146,6 +146,7 @@ class ArticleScreenViewModelTest {
             appPreferences = appPreferences,
             application = application,
             notificationHelper = notificationHelper,
+            ioDispatcher = testDispatcher,
         )
     }
 

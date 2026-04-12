@@ -32,6 +32,8 @@ import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.articles.SidebarItem
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import com.jocmp.capy.common.launchUI
 import com.jocmp.capy.common.withUIContext
 import com.jocmp.capy.countToday
@@ -53,6 +55,7 @@ class ArticleScreenViewModel(
     private val appPreferences: AppPreferences,
     private val application: Application,
     private val notificationHelper: NotificationHelper,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : AndroidViewModel(application) {
     private var refreshJob: Job? = null
 
@@ -365,7 +368,7 @@ class ArticleScreenViewModel(
     ) {
         refreshJob?.cancel()
 
-        refreshJob = viewModelScope.launchIO {
+        refreshJob = viewModelScope.launch(ioDispatcher) {
             account.refresh(filter).onFailure { throwable ->
                 if (throwable is UnauthorizedError && _showUnauthorizedMessage == UnauthorizedMessageState.HIDE) {
                     _showUnauthorizedMessage = UnauthorizedMessageState.SHOW
