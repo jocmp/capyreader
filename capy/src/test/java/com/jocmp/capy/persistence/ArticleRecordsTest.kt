@@ -51,11 +51,15 @@ class ArticleRecordsTest {
 
         val articleRecords = ArticleRecords(database)
 
-        val results = queryKeyed(
-            articleRecords,
-            status = ArticleStatus.ALL,
-            sortOrder = SortOrder.NEWEST_FIRST,
-        )
+        val results = articleRecords
+            .byStatus
+            .all(
+                ArticleStatus.ALL,
+                limit = 3,
+                offset = 0,
+                sortOrder = SortOrder.NEWEST_FIRST,
+            )
+            .executeAsList()
 
         val count = articleRecords
             .byStatus
@@ -93,11 +97,15 @@ class ArticleRecordsTest {
             articleRecords.markUnread(it)
         }
 
-        val results = queryKeyed(
-            articleRecords,
-            status = ArticleStatus.UNREAD,
-            sortOrder = SortOrder.NEWEST_FIRST,
-        )
+        val results = articleRecords
+            .byStatus
+            .all(
+                ArticleStatus.UNREAD,
+                limit = 3,
+                offset = 0,
+                sortOrder = SortOrder.NEWEST_FIRST,
+            )
+            .executeAsList()
 
         val count = articleRecords
             .byStatus
@@ -131,11 +139,15 @@ class ArticleRecordsTest {
             articleRecords.markUnread(it)
         }
 
-        val results = queryKeyed(
-            articleRecords,
-            status = ArticleStatus.UNREAD,
-            sortOrder = SortOrder.OLDEST_FIRST,
-        )
+        val results = articleRecords
+            .byStatus
+            .all(
+                ArticleStatus.UNREAD,
+                limit = 3,
+                offset = 0,
+                sortOrder = SortOrder.OLDEST_FIRST,
+            )
+            .executeAsList()
 
         val count = articleRecords
             .byStatus
@@ -164,12 +176,16 @@ class ArticleRecordsTest {
         val articleRecords = ArticleRecords(database)
         val query = "problem"
 
-        val results = queryKeyed(
-            articleRecords,
-            status = ArticleStatus.ALL,
-            sortOrder = SortOrder.NEWEST_FIRST,
-            query = query,
-        )
+        val results = articleRecords
+            .byStatus
+            .all(
+                status = ArticleStatus.ALL,
+                query = query,
+                limit = 3,
+                offset = 0,
+                sortOrder = SortOrder.NEWEST_FIRST,
+            )
+            .executeAsList()
 
         val count = articleRecords
             .byStatus
@@ -200,12 +216,16 @@ class ArticleRecordsTest {
         val articleRecords = ArticleRecords(database)
         val query = "Chick-fil-A"
 
-        val results = queryKeyed(
-            articleRecords,
-            status = ArticleStatus.ALL,
-            sortOrder = SortOrder.NEWEST_FIRST,
-            query = query,
-        )
+        val results = articleRecords
+            .byStatus
+            .all(
+                status = ArticleStatus.ALL,
+                query = query,
+                limit = 3,
+                offset = 0,
+                sortOrder = SortOrder.NEWEST_FIRST,
+            )
+            .executeAsList()
 
         val count = articleRecords
             .byStatus
@@ -248,15 +268,19 @@ class ArticleRecordsTest {
         val query = "Chick-fil-A"
 
         val since = OffsetDateTime.now().minusDays(1)
-
-        val results = queryKeyedByFeed(
-            articleRecords,
-            feedIDs = listOf(vergeFeed.id),
-            status = ArticleStatus.ALL,
-            sortOrder = SortOrder.NEWEST_FIRST,
-            query = query,
-            priority = FeedPriority.FEED,
-        )
+        val results = articleRecords
+            .byFeed
+            .all(
+                status = ArticleStatus.ALL,
+                query = query,
+                feedIDs = listOf(vergeFeed.id),
+                since = since,
+                limit = 10,
+                offset = 0,
+                sortOrder = SortOrder.NEWEST_FIRST,
+                priority = FeedPriority.FEED,
+            )
+            .executeAsList()
 
         val count = articleRecords
             .byFeed
@@ -318,86 +342,17 @@ class ArticleRecordsTest {
         articles.forEach { articleRecords.addStar(it.id) }
         articleRecords.removeStar(articles.last().id)
 
-        val results = queryKeyed(
-            articleRecords,
-            status = ArticleStatus.ALL,
-            sortOrder = SortOrder.NEWEST_FIRST,
-            starred = true,
-        )
+        val results = articleRecords
+            .byStatus
+            .all(
+                status = ArticleStatus.STARRED,
+                limit = 10,
+                offset = 0,
+                sortOrder = SortOrder.NEWEST_FIRST,
+            )
+            .executeAsList()
 
         assertEquals(expected = 2, actual = results.size)
-    }
-
-    @Test
-    fun keyedPaging_returnsArticlesInOrder() = runTest {
-        val now = nowUTC()
-        val total = 5
-        val articles = (1..total).map { i ->
-            articleFixture.create(
-                publishedAt = now.minusHours(i.toLong()).toEpochSecond()
-            )
-        }
-
-        val records = ArticleRecords(database)
-        val pageSize = 2L
-
-        val boundariesProvider = records.byStatus.pageBoundaries(
-            status = ArticleStatus.ALL,
-        )
-        val queryProvider = records.byStatus.keyed(
-            status = ArticleStatus.ALL,
-            sortOrder = SortOrder.NEWEST_FIRST,
-        )
-
-        val boundaries = boundariesProvider(null, pageSize).executeAsList()
-        assertEquals(expected = 3, actual = boundaries.size)
-
-        val allResults = boundaries.flatMapIndexed { i, begin ->
-            val end = boundaries.getOrNull(i + 1)
-            queryProvider(begin, end).executeAsList()
-        }
-
-        assertEquals(expected = 5, actual = allResults.size)
-        assertEquals(
-            expected = articles.map { it.id },
-            actual = allResults.map { it.id },
-        )
-    }
-
-    @Test
-    fun keyedPaging_oldestFirst() = runTest {
-        val now = nowUTC()
-        val total = 5
-        val articles = (1..total).map { i ->
-            articleFixture.create(
-                publishedAt = now.minusHours(i.toLong()).toEpochSecond()
-            )
-        }
-
-        val records = ArticleRecords(database)
-        val pageSize = 2L
-
-        val boundariesProvider = records.byStatus.pageBoundaries(
-            status = ArticleStatus.ALL,
-            sortOrder = SortOrder.OLDEST_FIRST,
-        )
-        val queryProvider = records.byStatus.keyed(
-            status = ArticleStatus.ALL,
-            sortOrder = SortOrder.OLDEST_FIRST,
-        )
-
-        val boundaries = boundariesProvider(null, pageSize).executeAsList()
-
-        val allResults = boundaries.flatMapIndexed { i, begin ->
-            val end = boundaries.getOrNull(i + 1)
-            queryProvider(begin, end).executeAsList()
-        }
-
-        assertEquals(expected = total, actual = allResults.size)
-        assertEquals(
-            expected = articles.reversed().map { it.id },
-            actual = allResults.map { it.id },
-        )
     }
 
     @Test
@@ -698,11 +653,15 @@ class ArticleRecordsTest {
         articleFixture.create(feed = readLaterFeed, read = false)
         val regularArticle = articleFixture.create(feed = regularFeed, read = false)
 
-        val results = queryKeyed(
-            articleRecords,
-            status = ArticleStatus.UNREAD,
-            sortOrder = SortOrder.NEWEST_FIRST,
-        )
+        val results = articleRecords
+            .byStatus
+            .all(
+                ArticleStatus.UNREAD,
+                limit = 10,
+                offset = 0,
+                sortOrder = SortOrder.NEWEST_FIRST,
+            )
+            .executeAsList()
 
         val count = articleRecords
             .byStatus
@@ -712,56 +671,6 @@ class ArticleRecordsTest {
         assertEquals(expected = listOf(regularArticle.id), actual = results.map { it.id })
         assertEquals(expected = 1, actual = count)
     }
-}
-
-private fun queryKeyed(
-    records: ArticleRecords,
-    status: ArticleStatus,
-    sortOrder: SortOrder,
-    query: String? = null,
-    starred: Boolean? = null,
-): List<Article> {
-    val boundaries = records.byStatus.pageBoundaries(
-        status = status,
-        sortOrder = sortOrder,
-        query = query,
-    )(null, 1000).executeAsList()
-
-    if (boundaries.isEmpty()) return emptyList()
-
-    return records.byStatus.keyed(
-        status = status,
-        sortOrder = sortOrder,
-        query = query,
-        starred = starred,
-    )(boundaries.first(), null).executeAsList()
-}
-
-private fun queryKeyedByFeed(
-    records: ArticleRecords,
-    feedIDs: List<String>,
-    status: ArticleStatus,
-    sortOrder: SortOrder,
-    query: String? = null,
-    priority: FeedPriority = FeedPriority.FEED,
-): List<Article> {
-    val boundaries = records.byFeed.pageBoundaries(
-        feedIDs = feedIDs,
-        status = status,
-        sortOrder = sortOrder,
-        query = query,
-        priority = priority,
-    )(null, 1000).executeAsList()
-
-    if (boundaries.isEmpty()) return emptyList()
-
-    return records.byFeed.keyed(
-        feedIDs = feedIDs,
-        status = status,
-        sortOrder = sortOrder,
-        query = query,
-        priority = priority,
-    )(boundaries.first(), null).executeAsList()
 }
 
 fun sortedMessage(expected: List<Article>, actual: List<Article>): String {

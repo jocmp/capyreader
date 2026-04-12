@@ -273,16 +273,15 @@ class FeedbinAccountDelegateTest {
 
         delegate.refresh(ArticleFilter.default())
 
-        val records = ArticleRecords(database)
-        val boundaries = records.byStatus.pageBoundaries(
-            status = ArticleStatus.ALL,
-            sortOrder = SortOrder.NEWEST_FIRST,
-        )(null, 1000).executeAsList()
-        val starredArticles = records.byStatus.keyed(
-            status = ArticleStatus.ALL,
-            sortOrder = SortOrder.NEWEST_FIRST,
-            starred = true,
-        )(boundaries.first(), null).executeAsList()
+        val starredArticles = ArticleRecords(database)
+            .byStatus
+            .all(
+                status = ArticleStatus.STARRED,
+                limit = 2,
+                offset = 0,
+                sortOrder = SortOrder.NEWEST_FIRST,
+            )
+            .executeAsList()
 
         val unreadArticle = starredArticles.find { it.id == unreadEntry.id.toString() }!!
         val readArticle = starredArticles.find { it.id == readEntry.id.toString() }!!
