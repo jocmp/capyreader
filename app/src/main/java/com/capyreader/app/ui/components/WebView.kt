@@ -55,7 +55,7 @@ fun WebView(
 class AccompanistWebViewClient(
     private val assetLoader: WebViewAssetLoader,
     private val onOpenLink: (url: Uri) -> Unit,
-    private val httpClient: OkHttpClient = OkHttpClient(),
+    private val httpClient: OkHttpClient,
 ) : WebViewClient(),
     KoinComponent {
     lateinit var state: WebViewState
@@ -226,6 +226,7 @@ class WebViewState(
 @Composable
 fun rememberWebViewState(
     renderer: ArticleRenderer = koinInject(),
+    httpClient: OkHttpClient = koinInject(),
     onNavigateToMedia: (media: Media) -> Unit,
     onRequestLinkDialog: (link: ShareLink) -> Unit,
     onRequestImageDialog: (imageUrl: String) -> Unit = {},
@@ -255,6 +256,7 @@ fun rememberWebViewState(
                 .addPathHandler("/res/", ResourcesPathHandler(context))
                 .build(),
             onOpenLink = onOpenLink,
+            httpClient = httpClient,
         )
     }
 

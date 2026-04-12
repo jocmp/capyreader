@@ -15,7 +15,7 @@ import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.widget.HeadlinesWidgetReceiver
 import com.capyreader.app.ui.widget.SpotlightWidgetReceiver
 import com.google.android.material.color.DynamicColors
-import com.jocmp.capy.accounts.baseHttpClient
+import okhttp3.OkHttpClient
 import com.jocmp.capy.common.launchUI
 import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.MainScope
@@ -46,7 +46,7 @@ class MainApplication : Application(), SingletonImageLoader.Factory {
     override fun newImageLoader(context: PlatformContext): ImageLoader {
         return ImageLoader.Builder(context)
             .components {
-                add(OkHttpNetworkFetcherFactory(callFactory = { baseHttpClient() }))
+                add(OkHttpNetworkFetcherFactory(callFactory = { get<OkHttpClient>() }))
                 add(AnimatedImageDecoder.Factory())
                 add(SvgDecoder.Factory())
                 add(VideoFrameDecoder.Factory())
