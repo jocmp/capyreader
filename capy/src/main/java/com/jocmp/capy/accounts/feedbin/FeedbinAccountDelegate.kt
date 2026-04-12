@@ -456,7 +456,7 @@ internal class FeedbinAccountDelegate(
                 val enclosureType = enclosure?.enclosure_type
 
                 database.articlesQueries.create(
-                    external_id = articleID,
+                    id = articleID,
                     feed_id = entry.feed_id.toString(),
                     title = entry.title?.let { Jsoup.parse(it).text() },
                     author = entry.author,

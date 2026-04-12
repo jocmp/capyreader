@@ -9,8 +9,7 @@ class ArticleMapperTest {
     @Test
     fun `it maps to UTC`() {
         val article = articleMapper(
-            id = 1,
-            externalId = "1",
+            id = "1",
             feedID = "1",
             title = "Vizio agrees to pay $3 million for alleged 'false' refresh rate claims",
             author = "Wes Davis",
@@ -21,14 +20,12 @@ class ArticleMapperTest {
             imageURL = "https://cdn.vox-cdn.com/thumbor/r-eWiuX74LfGvTxwenExmwmkPlk=/0x0:1800x1200/1310x873/cdn.vox-cdn.com/uploads/chorus_image/image/73010063/Vizio_TV_D_Series_Lifestyle.0.jpg",
             publishedAt = 1703960809,
             enclosureType = null,
-            snowflakeId = 0,
             feedTitle = "",
             faviconURL = null,
             enableStickyContent = false,
             openInBrowser = false,
             feedURL = null,
             siteURL = null,
-            readLater = false,
             updatedAt = 1703960809,
             starred = false,
             read = false,

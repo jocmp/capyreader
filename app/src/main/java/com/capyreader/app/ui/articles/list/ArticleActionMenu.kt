@@ -68,7 +68,7 @@ fun ArticleActionMenu(
                         )
                     },
                     text = { Text(stringResource(R.string.article_actions_mark_after_as_read)) },
-                    onClick = { onMarkAllRead(After(article.snowflakeId)) },
+                    onClick = { onMarkAllRead(After(article.id)) },
                 )
             }
             DropdownMenuItem(
@@ -79,7 +79,7 @@ fun ArticleActionMenu(
                     )
                 },
                 text = { Text(stringResource(R.string.article_actions_mark_below_as_read)) },
-                onClick = { onMarkAllRead(Before(article.snowflakeId)) },
+                onClick = { onMarkAllRead(Before(article.id)) },
             )
         }
         CopyLinkMenuItem(onDismissRequest, article)

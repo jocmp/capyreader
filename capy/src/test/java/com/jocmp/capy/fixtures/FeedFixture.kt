@@ -18,7 +18,6 @@ internal class FeedFixture(
         title: String = "My Feed",
         folderNames: List<String> = emptyList(),
         enableNotifications: Boolean = false,
-        readLater: Boolean = false,
     ): Feed = runBlocking {
         val feed = records.upsert(
             feedID = feedID,
@@ -27,7 +26,6 @@ internal class FeedFixture(
             feedURL = feedURL,
             siteURL = feedURL,
             faviconURL = null,
-            readLater = readLater,
         )!!
 
         if (enableNotifications) {

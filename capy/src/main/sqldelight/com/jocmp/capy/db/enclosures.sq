@@ -9,9 +9,9 @@ SELECT
         ELSE enclosures.itunes_image
     END AS itunes_image
 FROM enclosures
-JOIN articles ON articles.external_id = enclosures.article_id
+JOIN articles ON articles.id = enclosures.article_id
 JOIN feeds ON feeds.id = articles.feed_id
-WHERE articles.external_id = :articleID;
+WHERE articles.id = :articleID;
 
 create:
 INSERT INTO enclosures(

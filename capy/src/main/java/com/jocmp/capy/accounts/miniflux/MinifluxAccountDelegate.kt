@@ -397,7 +397,7 @@ internal class MinifluxAccountDelegate(
                 val enclosures = entry.enclosures.orEmpty()
 
                 database.articlesQueries.create(
-                    external_id = articleID,
+                    id = articleID,
                     feed_id = entry.feed_id.toString(),
                     title = Jsoup.parse(entry.title).text(),
                     author = entry.author,

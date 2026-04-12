@@ -67,7 +67,7 @@ internal class LocalAccountDelegate(
 
         database.transactionWithErrorHandling {
             database.articlesQueries.create(
-                external_id = url,
+                id =url,
                 feed_id = feedID,
                 title = page.title ?: url,
                 author = page.author,
@@ -313,7 +313,7 @@ internal class LocalAccountDelegate(
                     val enclosureType = parsedItem.enclosures.firstOrNull()?.type
 
                     database.articlesQueries.create(
-                        external_id = parsedItem.id,
+                        id =parsedItem.id,
                         feed_id = feed.id,
                         title = parsedItem.title,
                         author = item.author,

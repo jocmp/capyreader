@@ -261,7 +261,7 @@ class ArticleRecords(
 
         val count = when (filter) {
             is ArticleFilter.Articles -> byStatus.count(
-                status = filter.status,
+                status = filter.articleStatus,
                 query = query,
                 since = null
             )
@@ -328,7 +328,7 @@ class ArticleRecords(
     ): List<String> {
         val ids = when (filter) {
             is ArticleFilter.Articles -> byStatus.unreadArticleIDs(
-                filter.status,
+                filter.articleStatus,
                 range = range,
                 sortOrder = sortOrder,
                 query = query,
