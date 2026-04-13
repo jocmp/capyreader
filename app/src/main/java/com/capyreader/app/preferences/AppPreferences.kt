@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.preference.PreferenceManager
 import com.capyreader.app.common.FeedGroup
 import com.capyreader.app.common.ImagePreview
+import com.capyreader.app.keyboard.ShortcutOverrides
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.capyreader.app.ui.articles.DefaultPaneExpansionIndex
@@ -81,6 +82,20 @@ class AppPreferences(context: Context) {
 
     val badgeStyle: Preference<BadgeStyle>
         get() = preferenceStore.getEnum("badge_style", BadgeStyle.default)
+
+    val shortcutOverrides: Preference<ShortcutOverrides>
+        get() = preferenceStore.getObject(
+            key = "keyboard_shortcut_overrides",
+            defaultValue = ShortcutOverrides(),
+            serializer = { Json.encodeToString(it) },
+            deserializer = {
+                try {
+                    Json.decodeFromString(it)
+                } catch (e: Throwable) {
+                    ShortcutOverrides()
+                }
+            }
+        )
 
     fun clearAll() {
         preferenceStore.clearAll()
