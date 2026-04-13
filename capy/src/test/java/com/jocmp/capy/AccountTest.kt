@@ -186,6 +186,37 @@ class AccountTest {
         assertEquals(result, ids)
     }
 
+    /**
+     * Newest-first display order:
+     *   "hij" published_at t-1
+     *   "lmn" published_at t-2
+     *   "efg" published_at t-3
+     *   "abc" published_at t-3
+     *
+     * Scroll boundary is "efg". Only hij, lmn, efg should be
+     * marked — not abc, even though it shares the same timestamp.
+     */
+    @Test
+    fun `unreadArticleIDs_afterID excludes timestamp sibling below boundary`() = runTest {
+        val articleFixture = ArticleFixture(account.database)
+        val time = nowUTC().minusMonths(1)
+        val sharedTime = time.minusDays(3).toEpochSecond()
+
+        val hij = articleFixture.create(id = "hij", read = false, publishedAt = time.minusDays(1).toEpochSecond())
+        val lmn = articleFixture.create(id = "lmn", read = false, publishedAt = time.minusDays(2).toEpochSecond())
+        val efg = articleFixture.create(id = "efg", read = false, publishedAt = sharedTime)
+        val abc = articleFixture.create(id = "abc", read = false, publishedAt = sharedTime)
+
+        val ids = account.unreadArticleIDs(
+            filter = ArticleFilter.Articles(ArticleStatus.UNREAD),
+            range = MarkRead.After("efg"),
+            sortOrder = SortOrder.NEWEST_FIRST,
+            query = null,
+        )
+
+        assertEquals(listOf("hij", "lmn", "efg"), ids)
+    }
+
     @Test
     fun markAllRead() = runTest {
         coEvery { account.delegate.markRead(any()) }.returns(Result.success(Unit))

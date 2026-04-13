@@ -45,6 +45,9 @@ class GeneralSettingsViewModel(
     var enableStickyFullContent by mutableStateOf(appPreferences.enableStickyFullContent.get())
         private set
 
+    var markReadOnScroll by mutableStateOf(appPreferences.articleListOptions.markReadOnScroll.get())
+        private set
+
     val filterKeywords = account
         .preferences
         .filterKeywords
@@ -84,6 +87,12 @@ class GeneralSettingsViewModel(
         appPreferences.articleListOptions.afterReadAllBehavior.set(behavior)
 
         afterReadAll = behavior
+    }
+
+    fun updateMarkReadOnScroll(enabled: Boolean) {
+        appPreferences.articleListOptions.markReadOnScroll.set(enabled)
+
+        markReadOnScroll = enabled
     }
 
     fun updateStickyFullContent(enable: Boolean) {

@@ -1,10 +1,13 @@
 package com.capyreader.app.common
 
 import android.util.Log
+import com.capyreader.app.BuildConfig
 import com.jocmp.capy.logging.Logging
 
 class AndroidLogging : Logging {
     override fun debug(event: String, data: Map<String, Any?>) {
+        if (!BuildConfig.DEBUG) return
+
         Log.d(TAG, serializeData(event, data))
     }
 
@@ -25,7 +28,7 @@ class AndroidLogging : Logging {
     }
 
     private fun serializeData(event: String, data: Map<String, Any?>): String {
-        return "event=${event.padEnd(15, ' ')}" + data.map { (key, value) -> "$key=$value" }.joinToString(" ")
+        return "event=${event.padEnd(15, ' ')} " + data.map { (key, value) -> "$key=$value" }.joinToString(" ")
     }
 
     companion object {
