@@ -63,7 +63,7 @@ class SpotlightWidget : GlanceAppWidget() {
     }
 
     override suspend fun providePreview(context: Context, widgetCategory: Int) {
-        val previewBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.spotlight_widget_preview)
+        val previewBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.hello_world)
 
         provideContent {
             GlanceTheme {

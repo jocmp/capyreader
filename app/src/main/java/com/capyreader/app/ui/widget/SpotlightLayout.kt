@@ -10,13 +10,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
+import androidx.glance.Button
 import androidx.glance.ColorFilter
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.Image
 import androidx.glance.ImageProvider
 import androidx.glance.LocalContext
-import androidx.glance.LocalSize
 import androidx.glance.action.Action
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.action.actionRunCallback
@@ -46,6 +46,7 @@ import com.capyreader.app.OpenArticleInBrowserActivity.Companion.ARTICLE_URL_KEY
 import com.capyreader.app.R
 import com.capyreader.app.notifications.NotificationHelper.Companion.ARTICLE_ID_KEY
 import com.capyreader.app.notifications.NotificationHelper.Companion.FEED_ID_KEY
+import com.capyreader.app.notifications.NotificationHelper.Companion.SHOW_ALL_KEY
 
 @Composable
 fun SpotlightLayout(
@@ -53,13 +54,12 @@ fun SpotlightLayout(
     imageBitmap: Bitmap?,
 ) {
     val context = LocalContext.current
-    val size = LocalSize.current
-    val isCompact = size.width < 220.dp
+    val textColor = ColorProvider(Color.White, Color.White)
 
     Box(
         modifier = GlanceModifier
             .fillMaxSize()
-            .background(GlanceTheme.colors.widgetBackground)
+            .background(GlanceTheme.colors.primaryContainer)
             .cornerRadius(16.dp)
     ) {
         if (entry == null) {
@@ -81,68 +81,57 @@ fun SpotlightLayout(
             Box(
                 modifier = GlanceModifier
                     .fillMaxSize()
+                    .background(ImageProvider(R.drawable.spotlight_scrim))
+            ) {}
+
+            Box(
+                contentAlignment = Alignment.BottomStart,
+                modifier = GlanceModifier
+                    .fillMaxSize()
                     .clickable(openAction)
-                    .background(ImageProvider(R.drawable.spotlight_gradient))
+                    .padding(start = 16.dp, end = 16.dp, top = 48.dp, bottom = 16.dp)
             ) {
-                Box(
-                    contentAlignment = Alignment.TopStart,
-                    modifier = GlanceModifier.fillMaxSize()
-                ) {
-                    Image(
-                        provider = ImageProvider(R.drawable.capy_icon_small),
-                        contentDescription = null,
-                        colorFilter = ColorFilter.tint(ColorProvider(Color.White, Color.White)),
-                        modifier = GlanceModifier
-                            .padding(12.dp)
-                            .size(48.dp)
+                Column(modifier = GlanceModifier.fillMaxWidth()) {
+                    Text(
+                        entry.feedName,
+                        maxLines = 1,
+                        style = TextStyle(
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = textColor,
+                        ),
                     )
-                }
-
-                Box(
-                    contentAlignment = Alignment.BottomStart,
-                    modifier = GlanceModifier.fillMaxSize()
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.Bottom,
-                        modifier = GlanceModifier
-                            .fillMaxWidth()
-                            .padding(start = 16.dp, end = 8.dp, bottom = 12.dp, top = 32.dp)
-                    ) {
-                        Column(modifier = GlanceModifier.defaultWeight()) {
-                            Text(
-                                entry.feedName,
-                                maxLines = 1,
-                                style = TextStyle(
-                                    fontSize = 12.sp,
-                                    fontWeight = FontWeight.Medium,
-                                    color = ColorProvider(Color.White, Color.White),
-                                ),
-                            )
-                            Text(
-                                entry.title,
-                                maxLines = 2,
-                                style = TextStyle(
-                                    fontSize = 16.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    color = ColorProvider(Color.White, Color.White),
-                                ),
-                            )
-                        }
-
-                        if (!isCompact) {
-                            NavButtons(modifier = GlanceModifier.padding(start = 8.dp))
-                        }
-                    }
+                    Text(
+                        entry.title,
+                        maxLines = 3,
+                        style = TextStyle(
+                            fontSize = 22.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = textColor,
+                        ),
+                    )
                 }
             }
 
-            if (isCompact) {
-                Box(
-                    contentAlignment = Alignment.TopEnd,
-                    modifier = GlanceModifier.fillMaxSize()
-                ) {
-                    NavButtons(modifier = GlanceModifier.padding(8.dp))
-                }
+            Box(
+                contentAlignment = Alignment.TopStart,
+                modifier = GlanceModifier.fillMaxSize()
+            ) {
+                Image(
+                    provider = ImageProvider(R.drawable.capy_icon_small),
+                    contentDescription = null,
+                    colorFilter = ColorFilter.tint(textColor),
+                    modifier = GlanceModifier
+                        .padding(12.dp)
+                        .size(48.dp)
+                )
+            }
+
+            Box(
+                contentAlignment = Alignment.TopEnd,
+                modifier = GlanceModifier.fillMaxSize()
+            ) {
+                NavButtons(modifier = GlanceModifier.padding(8.dp))
             }
         }
     }
@@ -188,8 +177,9 @@ private fun NavButtons(modifier: GlanceModifier = GlanceModifier) {
 
 @Composable
 private fun EmptyState(context: Context) {
-    Box(
-        contentAlignment = Alignment.Center,
+    Column(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = GlanceModifier.fillMaxSize()
     ) {
         Text(
@@ -198,8 +188,21 @@ private fun EmptyState(context: Context) {
                 color = GlanceTheme.colors.onSurface
             )
         )
+        Spacer(GlanceModifier.size(8.dp))
+        Button(
+            text = context.getString(R.string.widget_spotlight_see_all),
+            onClick = context.openAll(),
+        )
     }
 }
+
+private fun Context.openAll() =
+    actionStartActivity(
+        Intent(this, MainActivity::class.java).apply {
+            putExtra(SHOW_ALL_KEY, true)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+    )
 
 private fun Context.openArticle(entry: SpotlightEntry): Action {
     return if (entry.openInBrowser && entry.articleURL != null) {
@@ -226,7 +229,7 @@ private fun Context.openArticle(entry: SpotlightEntry): Action {
 @Composable
 fun SpotlightLayoutPreview() {
     val previewBitmap =
-        BitmapFactory.decodeResource(LocalContext.current.resources, R.drawable.spotlight_widget_preview)
+        BitmapFactory.decodeResource(LocalContext.current.resources, R.drawable.hello_world)
 
     GlanceTheme {
         SpotlightLayout(
@@ -245,7 +248,27 @@ fun SpotlightLayoutPreview() {
 }
 
 @OptIn(ExperimentalGlancePreviewApi::class)
-@Preview
+@Preview(widthDp = 320, heightDp = 180)
+@Composable
+fun SpotlightLayoutTextOnlyPreview() {
+    GlanceTheme {
+        SpotlightLayout(
+            entry = SpotlightEntry(
+                id = "1",
+                feedID = "nasa",
+                feedName = "NASA Image of the Day",
+                title = "Circular Star Trails Over the Austrian Alps",
+                imageURL = null,
+                articleURL = "https://www.nasa.gov/image-article/hello-world/",
+                openInBrowser = false,
+            ),
+            imageBitmap = null,
+        )
+    }
+}
+
+@OptIn(ExperimentalGlancePreviewApi::class)
+@Preview(widthDp = 320, heightDp = 180)
 @Composable
 fun SpotlightLayoutDarkPreview() {
     GlanceTheme(

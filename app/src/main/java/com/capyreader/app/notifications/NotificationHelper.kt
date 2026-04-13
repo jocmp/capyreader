@@ -138,6 +138,7 @@ class NotificationHelper(
         const val ARTICLE_ID_KEY = "article_id"
         const val FEED_ID_KEY = "feed_id"
         const val UNREAD_ONLY_KEY = "unread_only"
+        const val SHOW_ALL_KEY = "show_all"
 
         private const val ARTICLE_REFRESH_GROUP = "article_refresh"
 
@@ -157,6 +158,7 @@ class NotificationHelper(
 
         fun openFromIntent(intent: Intent, appPreferences: AppPreferences): String? {
             val openFromShowMore = intent.getBooleanExtra(UNREAD_ONLY_KEY, false)
+            val openShowAll = intent.getBooleanExtra(SHOW_ALL_KEY, false)
             val articleID = intent.getStringExtra(ARTICLE_ID_KEY)
             val feedID = intent.getStringExtra(FEED_ID_KEY)
 
@@ -165,6 +167,14 @@ class NotificationHelper(
 
                 appPreferences.filter.set(
                     ArticleFilter.Articles(articleStatus = ArticleStatus.UNREAD)
+                )
+
+                return null
+            } else if (openShowAll) {
+                intent.replaceExtras(Bundle())
+
+                appPreferences.filter.set(
+                    ArticleFilter.Articles(articleStatus = ArticleStatus.ALL)
                 )
 
                 return null
