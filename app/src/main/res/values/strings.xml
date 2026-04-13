@@ -212,6 +212,7 @@
     <string name="settings_panel_display_title">Display &amp; Appearance</string>
     <string name="settings_panel_notifications_title">Notifications</string>
     <string name="settings_panel_gestures_title">Gestures</string>
+    <string name="settings_panel_shortcuts_title">Shortcuts</string>
     <string name="settings_account_title">Account</string>
     <string name="settings_about_title">About</string>
     <string name="settings_list_top_bar_title">Settings</string>
@@ -363,4 +364,20 @@
     <string name="article_actions_delete_page_title">Delete</string>
     <string name="article_actions_delete_page_message">Are you sure you want to delete this page?</string>
     <string name="article_actions_delete_page_confirm">Delete</string>
+    <string name="shortcut_next_article">Next article</string>
+    <string name="shortcut_previous_article">Previous article</string>
+    <string name="shortcut_toggle_star">Toggle star</string>
+    <string name="shortcut_toggle_read">Toggle read</string>
+    <string name="shortcut_toggle_full_content">Toggle full content</string>
+    <string name="shortcut_open_in_browser">Open in browser</string>
+    <string name="shortcut_refresh">Refresh</string>
+    <string name="shortcut_go_back">Go back</string>
+    <string name="shortcut_mark_all_read">Mark all as read</string>
+    <string name="shortcut_focus_search">Search</string>
+    <string name="shortcut_toggle_fullscreen">Toggle fullscreen</string>
+    <string name="shortcuts_group_title">Article Reader</string>
+    <string name="shortcuts_press_key_prompt">Press a key to assign</string>
+    <string name="shortcuts_reset_to_default">Reset to default</string>
+    <string name="shortcuts_conflict_warning">Already assigned to %s</string>
+    <string name="shortcuts_reset_all">Reset all</string>
 </resources>

@@ -3,6 +3,7 @@ package com.capyreader.app.ui.articles
 import android.content.res.Configuration
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -95,6 +96,7 @@ fun ArticleRow(
     onMarkAllRead: (range: MarkRead) -> Unit = {},
     currentTime: LocalDateTime,
     options: ArticleRowOptions = ArticleRowOptions(),
+    keyboardNavigated: Boolean = false,
 ) {
     val imageURL = article.imageURL
     val isMonochrome = LocalAppTheme.current.value == AppTheme.MONOCHROME
@@ -125,6 +127,7 @@ fun ArticleRow(
             onClick = { onSelect(article.id) },
             onLongClick = openArticleMenu,
             article = article,
+            showBorder = selected && keyboardNavigated,
         ) {
             ArticleListItem(
                 headlineContent = {
@@ -415,11 +418,22 @@ private fun ArticleBox(
     onClick: () -> Unit,
     onLongClick: () -> Unit,
     article: Article,
+    showBorder: Boolean,
     content: @Composable () -> Unit
 ) {
     ArticleRowSwipeBox(article) {
-        Box(
+        val borderModifier = if (showBorder) {
+            Modifier.border(
+                width = 2.dp,
+                color = colorScheme.primary,
+                shape = RoundedCornerShape(4.dp),
+            )
+        } else {
             Modifier
+        }
+
+        Box(
+            borderModifier
                 .combinedClickable(
                     onClick = onClick,
                     onLongClick = onLongClick,

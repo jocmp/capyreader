@@ -4,6 +4,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyListState
@@ -32,7 +33,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -49,6 +55,9 @@ import com.capyreader.app.R
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.Saver
 import com.capyreader.app.common.asState
+import com.capyreader.app.keyboard.KeyboardShortcutManager
+import com.capyreader.app.keyboard.ShortcutAction
+import com.capyreader.app.keyboard.ShortcutKey
 import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleListVerticalSwipe
@@ -466,6 +475,70 @@ fun ArticleScreen(
             selectArticle(id)
         }
 
+        fun selectFirstVisibleArticle() {
+            val firstVisibleIndex = listState.firstVisibleItemIndex
+            articles.itemSnapshotList.getOrNull(firstVisibleIndex)?.let {
+                setArticle(it.id)
+            }
+        }
+
+        fun selectNextArticle() {
+            val currentArticle = article
+            if (currentArticle == null) {
+                selectFirstVisibleArticle()
+                return
+            }
+            val snapshot = articles.itemSnapshotList
+            val index = snapshot.indexOfFirst { it?.id == currentArticle.id }
+            val nextIndex = index + 1
+            if (nextIndex < snapshot.size) {
+                snapshot[nextIndex]?.let {
+                    setArticle(it.id)
+                    scrollToArticle(nextIndex)
+                }
+            }
+        }
+
+        fun selectPreviousArticle() {
+            val currentArticle = article
+            if (currentArticle == null) {
+                selectFirstVisibleArticle()
+                return
+            }
+            val snapshot = articles.itemSnapshotList
+            val index = snapshot.indexOfFirst { it?.id == currentArticle.id }
+            val previousIndex = index - 1
+            if (previousIndex >= 0) {
+                snapshot[previousIndex]?.let {
+                    setArticle(it.id)
+                    scrollToArticle(previousIndex)
+                }
+            }
+        }
+
+        fun onKeyboardOpenInBrowser() {
+            val currentArticle = article ?: return
+            val url = currentArticle.url?.toString() ?: return
+            linkOpener.open(url.toUri())
+        }
+
+        fun onKeyboardToggleFullContent() {
+            val currentArticle = article ?: return
+            if (currentArticle.fullContent == Article.FullContentState.LOADED) {
+                fullContent.reset()
+            } else if (currentArticle.fullContent != Article.FullContentState.LOADING) {
+                fullContent.fetch()
+            }
+        }
+
+        var keyboardNavigated by remember { mutableStateOf(false) }
+        val shortcutManager: KeyboardShortcutManager = koinInject()
+        val listFocusRequester = remember { FocusRequester() }
+
+        LaunchedEffect(Unit) {
+            listFocusRequester.requestFocus()
+        }
+
         ArticleScaffold(
             drawerState = drawerState,
             scaffoldNavigator = scaffoldNavigator,
@@ -509,6 +582,44 @@ fun ArticleScreen(
                 ) {
                     Scaffold(
                         modifier = Modifier
+                            .focusRequester(listFocusRequester)
+                            .focusable()
+                            .onPreviewKeyEvent { event ->
+                                if (event.type != KeyEventType.KeyDown) {
+                                    return@onPreviewKeyEvent false
+                                }
+
+                                val nativeEvent = event.nativeKeyEvent
+                                val meta = ShortcutKey.metaState(nativeEvent)
+
+                                if (search.isActive && nativeEvent.keyCode in android.view.KeyEvent.KEYCODE_A..android.view.KeyEvent.KEYCODE_Z && meta == 0) {
+                                    return@onPreviewKeyEvent false
+                                }
+
+                                val action = shortcutManager.resolve(nativeEvent.keyCode, meta)
+                                    ?: return@onPreviewKeyEvent false
+
+                                when (action) {
+                                    ShortcutAction.NEXT_ARTICLE -> {
+                                        keyboardNavigated = true
+                                        selectNextArticle()
+                                    }
+                                    ShortcutAction.PREVIOUS_ARTICLE -> {
+                                        keyboardNavigated = true
+                                        selectPreviousArticle()
+                                    }
+                                    ShortcutAction.TOGGLE_STAR -> viewModel.toggleArticleStar()
+                                    ShortcutAction.TOGGLE_READ -> viewModel.toggleArticleRead()
+                                    ShortcutAction.TOGGLE_FULL_CONTENT -> onKeyboardToggleFullContent()
+                                    ShortcutAction.OPEN_IN_BROWSER -> onKeyboardOpenInBrowser()
+                                    ShortcutAction.REFRESH -> refreshFeeds()
+                                    ShortcutAction.GO_BACK -> clearArticle()
+                                    ShortcutAction.MARK_ALL_READ -> markAllRead(MarkRead.All)
+                                    ShortcutAction.FOCUS_SEARCH -> search.start()
+                                    ShortcutAction.TOGGLE_FULLSCREEN -> paneExpansion.toggleFullscreen()
+                                }
+                                true
+                            }
                             .nestedScroll(scrollBehavior.nestedScrollConnection)
                             .nestedScroll(object : NestedScrollConnection {
                                 override fun onPostScroll(
@@ -593,10 +704,12 @@ fun ArticleScreen(
                                             listState = listState,
                                             refreshingAll = viewModel.refreshingAll,
                                             dimReadArticles = filter.status != ArticleStatus.STARRED,
+                                            keyboardNavigated = keyboardNavigated,
                                             onMarkAllRead = { range ->
                                                 onMarkAllRead(range)
                                             },
                                             onSelect = { articleID ->
+                                                keyboardNavigated = false
                                                 selectArticle(articleID)
                                             },
                                         )

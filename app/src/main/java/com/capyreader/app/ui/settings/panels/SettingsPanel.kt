@@ -7,6 +7,7 @@ import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.material.icons.rounded.Build
 import androidx.compose.material.icons.rounded.Gesture
 import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.Keyboard
 import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.Visibility
@@ -39,6 +40,12 @@ sealed class SettingsPanel(@StringRes val title: Int) {
     }
 
     @Parcelize
+    data object Shortcuts : SettingsPanel(title = R.string.settings_panel_shortcuts_title),
+        Parcelable {
+        override fun icon() = Icons.Rounded.Keyboard
+    }
+
+    @Parcelize
     data object Account : SettingsPanel(title = R.string.settings_account_title), Parcelable {
         override fun icon() = Icons.Rounded.AccountCircle
     }
@@ -68,6 +75,7 @@ sealed class SettingsPanel(@StringRes val title: Int) {
                 General,
                 Display,
                 Gestures,
+                Shortcuts,
                 Account,
                 About,
             )

@@ -35,6 +35,7 @@ fun ArticleList(
     onMarkAllRead: (range: MarkRead) -> Unit = {},
     refreshingAll: Boolean,
     dimReadArticles: Boolean = true,
+    keyboardNavigated: Boolean = false,
 ) {
     val articleOptions = rememberArticleOptions().copy(
         dim = dimReadArticles,
@@ -58,6 +59,7 @@ fun ArticleList(
                                 article = item,
                                 index = index,
                                 selected = selectedArticleKey == item.id,
+                                keyboardNavigated = keyboardNavigated,
                                 onSelect = {
                                     onSelect(it)
                                 },
