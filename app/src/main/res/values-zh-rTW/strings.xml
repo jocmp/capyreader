@@ -26,7 +26,7 @@
     <string name="add_feed_url_title">訂閱源或網站 URL</string>
     <string name="add_feed_submit">新增</string>
     <string name="add_feed_name_title">名稱</string>
-    <string name="add_feed_new_folder_title">新標籤</string>
+    <string name="add_feed_new_folder_title">新資料夾</string>
     <string name="add_feed_success">訂閱源已新增</string>
     <string name="feed_form_cancel">取消</string>
     <string name="filter_starred">已加星標</string>
@@ -39,7 +39,7 @@
     <string name="feed_action_unsubscribe_title">取消訂閱</string>
     <string name="feed_action_unsubscribe_confirm">取消訂閱</string>
     <string name="dialog_cancel">取消</string>
-    <string name="folder_action_delete_title">刪除標籤</string>
+    <string name="folder_action_delete_title">刪除資料夾</string>
     <string name="settings">開啟設定</string>
     <string name="settings_remove_account_message_service">您確定要登出嗎？</string>
     <string name="settings_remove_account_button_service">登出</string>
@@ -336,4 +336,16 @@
     <string name="starred_exporter_success">匯出完成</string>
     <string name="starred_exporter_failure">匯出失敗</string>
     <string name="starred_export_button_text">匯出已加星標的文章</string>
+    <string name="settings_home_page">主頁面</string>
+    <string name="folder_action_delete_confirm">刪除</string>
+    <string name="folder_name_title">名稱</string>
+    <string name="article_list_hide_read">隱藏已讀文章</string>
+    <string name="article_list_show_read">顯示已讀文章</string>
+    <string name="article_list_swipe_mark_all_read">標記全部為已讀</string>
+    <string name="actions_share_link_with_title">分享文字和連結</string>
+    <string name="widget_spotlight_empty">無未讀文章</string>
+    <string name="widget_spotlight_previous">上一個</string>
+    <string name="widget_spotlight_next">下一個</string>
+    <string name="freshrss_visibility">可見性</string>
+    <string name="widget_receiver_spotlight_title">亮點</string>
 </resources>
