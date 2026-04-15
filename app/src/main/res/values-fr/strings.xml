@@ -2,7 +2,7 @@
 <resources>
     <string name="add_feed_url_title">URL du flux ou du site Web</string>
     <string name="add_feed_name_title">Nom</string>
-    <string name="add_feed_new_folder_title">Nouvelle étiquette</string>
+    <string name="add_feed_new_folder_title">Nouveau dossier</string>
     <string name="add_feed_submit">Ajouter</string>
     <string name="feed_form_cancel">Annuler</string>
     <string name="filter_starred">Favoris</string>
@@ -10,7 +10,7 @@
     <string name="filter_all">Tous</string>
     <string name="edit_feed_submit">Enregistrer</string>
     <string name="dialog_cancel">Annuler</string>
-    <string name="folder_action_delete_title">Supprimer l’étiquette</string>
+    <string name="folder_action_delete_title">Supprimer le dossier</string>
     <string name="settings_remove_account_button_service">Se déconnecter</string>
     <string name="settings_remove_account_title_service">Se déconnecter</string>
     <string name="settings_remove_account_message_service">Voulez-vous vraiment vous déconnecter ?</string>
@@ -335,4 +335,25 @@
     <string name="starred_export_button_text">Exporter les articles favoris</string>
     <string name="starred_exporter_success">Exportation terminée</string>
     <string name="starred_exporter_failure">Échec de l\'exportation</string>
+    <string name="actions_share_link_with_title">Partager le texte et le lien</string>
+    <string name="filter_read_later">Enregistré pour plus tard</string>
+    <string name="article_actions_save_for_later">Enregistrer pour plus tard</string>
+    <string name="saved_for_later_success">Enregistré pour plus tard</string>
+    <string name="settings_home_page">Page d\'accueil</string>
+    <string name="folder_action_delete_message">Êtes-vous sûr de vouloir supprimer le tag « %1$s » ?</string>
+    <string name="folder_action_delete_confirm">Supprimer</string>
+    <string name="folder_action_edit_success">Tag mis à jour</string>
+    <string name="folder_action_edit_error">Erreur lors de la mise à jour du tag</string>
+    <string name="folder_name_title">Nom</string>
+    <string name="delete_folder_error">Erreur lors de la suppression du dossier</string>
+    <string name="article_list_hide_read">Masquer les articles lus</string>
+    <string name="article_list_show_read">Afficher les articles lus</string>
+    <string name="article_list_swipe_mark_all_read">Tout marquer comme lu</string>
+    <string name="widget_receiver_spotlight_title">Mettre en lumière</string>
+    <string name="widget_spotlight_empty">Aucun article non lu</string>
+    <string name="widget_spotlight_previous">Précédent</string>
+    <string name="widget_spotlight_next">Suivant</string>
+    <string name="freshrss_visibility">Visibilité</string>
+    <string name="freshrss_visibility_option_main">Flux principal</string>
+    <string name="widget_spotlight_see_all">Tout voir</string>
 </resources>
