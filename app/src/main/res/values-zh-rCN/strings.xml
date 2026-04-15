@@ -355,4 +355,6 @@
     <string name="widget_receiver_spotlight_title">Spotlight</string>
     <string name="widget_spotlight_previous">上一个</string>
     <string name="widget_spotlight_next">下一个</string>
+    <string name="article_list_swipe_mark_all_read">标记所有为已读</string>
+    <string name="widget_spotlight_see_all">查看所有</string>
 </resources>
