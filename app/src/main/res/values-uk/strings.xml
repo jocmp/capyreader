@@ -2,7 +2,7 @@
 <resources>
     <string name="add_feed_url_title">URL-адреса стрічки чи сайту</string>
     <string name="add_feed_name_title">Назва</string>
-    <string name="add_feed_new_folder_title">Новий тег</string>
+    <string name="add_feed_new_folder_title">Нова тека</string>
     <string name="add_feed_submit">Додати</string>
     <string name="add_feed_success">Стрічку додано</string>
     <string name="feed_form_cancel">Скасувати</string>
@@ -17,7 +17,7 @@
     <string name="feed_action_unsubscribe_confirm">Відписатися</string>
     <string name="edit_feed_submit">Зберегти</string>
     <string name="dialog_cancel">Скасувати</string>
-    <string name="folder_action_delete_title">Видалити тег</string>
+    <string name="folder_action_delete_title">Видалити теку</string>
     <string name="folder_action_edit">Перейменувати</string>
     <string name="feed_action_unsubscribe_title">Відписатися</string>
     <string name="settings">Відкрити параметри</string>
@@ -108,7 +108,7 @@
     <string name="notifications_channel_title_feed_update">Оновлення стрічок</string>
     <string name="notification_mark_as_read_action">Позначити прочитаною</string>
     <string name="settings_section_privacy">Приватність</string>
-    <string name="settings_section_refresh">Оновлення</string>
+    <string name="settings_section_refresh">Востаннє оновлено</string>
     <string name="opml_import_button_text">Імпорт із файлу</string>
     <string name="opml_export_button_text">Експорт до OPML</string>
     <string name="opml_import_progress_content_text_start">Початок імпорту</string>
@@ -325,4 +325,28 @@
     <string name="article_actions_delete_page_title">Видалити</string>
     <string name="article_actions_delete_page_message">Точно видалити сторінку?</string>
     <string name="article_actions_delete_page_confirm">Видалити</string>
+    <string name="settings_account_refresh_value_today">Сьогодні о %1$s</string>
+    <string name="settings_account_never_refreshed">Ніколи</string>
+    <string name="settings_accent_colors">Акцентні кольори</string>
+    <string name="starred_export_button_text">Експорт вподобаних статей</string>
+    <string name="starred_exporter_success">Експорт завершено</string>
+    <string name="starred_exporter_failure">Помилка експорту</string>
+    <string name="actions_share_link_with_title">Поділитись текстом і посиланням</string>
+    <string name="settings_account_refresh_value">%1$s о %2$s</string>
+    <string name="filter_read_later">Збережено на потім</string>
+    <string name="article_actions_save_for_later">Зберегти на потім</string>
+    <string name="saved_for_later_success">Збережено на потім</string>
+    <string name="folder_action_delete_message">Точно видалити теку «%1$s»?</string>
+    <string name="folder_action_delete_confirm">Видалити</string>
+    <string name="folder_action_edit_success">Тег оновлено</string>
+    <string name="folder_action_edit_error">Помилка оновлення тегу</string>
+    <string name="folder_name_title">Назва</string>
+    <string name="article_list_swipe_mark_all_read">Позначити всі прочитаними</string>
+    <string name="widget_spotlight_empty">Всі статті прочитано</string>
+    <string name="widget_spotlight_see_all">Переглянути всі</string>
+    <string name="widget_spotlight_previous">Назад</string>
+    <string name="widget_spotlight_next">Уперед</string>
+    <string name="freshrss_visibility">Видимість</string>
+    <string name="freshrss_visibility_option_main">Головний потік</string>
+    <string name="widget_receiver_spotlight_title">Прожектор</string>
 </resources>
