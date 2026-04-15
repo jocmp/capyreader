@@ -35,7 +35,7 @@
     <string name="add_feed_url_title">Емисия или URL адрес на уебсайт</string>
     <string name="feed_form_cancel">Отказ</string>
     <string name="filter_unread">Непрочетени</string>
-    <string name="folder_action_delete_title">Изтриване на категория</string>
+    <string name="folder_action_delete_title">Изтриване на папка</string>
     <string name="feed_action_unsubscribe_message">Сигурни ли сте, че искате да се отпишете от \"%1$s\"?</string>
     <string name="folder_action_edit">Преименувай</string>
     <string name="feed_action_unsubscribe_title">Отписване</string>
@@ -46,7 +46,7 @@
     <string name="article_view_mark_as_read">Маркирай като прочетено</string>
     <string name="article_view_mark_as_unread">Маркирай като непрочетено</string>
     <string name="add_feed_name_title">Име</string>
-    <string name="add_feed_new_folder_title">Нова категория</string>
+    <string name="add_feed_new_folder_title">Нова папка</string>
     <string name="add_feed_submit">Добави</string>
     <string name="add_feed_success">Добавена емисия</string>
     <string name="filter_starred">Със звезда</string>
@@ -338,4 +338,25 @@
     <string name="starred_export_button_text">Изнасяне на статии със звезда</string>
     <string name="starred_exporter_success">Изнасянето е завършено</string>
     <string name="starred_exporter_failure">Изнасянето не бе успешно</string>
+    <string name="actions_share_link_with_title">Споделяне на текст и връзка</string>
+    <string name="filter_read_later">Запазено за по-късно</string>
+    <string name="article_actions_save_for_later">Запази за по-късно</string>
+    <string name="saved_for_later_success">Запазено за по-късно</string>
+    <string name="settings_home_page">Начална страница</string>
+    <string name="folder_action_delete_message">Сигурни ли сте, че искате да изтриете етикета „%1$s“?</string>
+    <string name="folder_action_delete_confirm">Изтриване</string>
+    <string name="folder_action_edit_success">Етикетът е актуализиран</string>
+    <string name="folder_action_edit_error">Грешка при актуализиране на етикета</string>
+    <string name="folder_name_title">Име</string>
+    <string name="delete_folder_error">Грешка при изтриване на папката</string>
+    <string name="article_list_hide_read">Скриване на прочетени статии</string>
+    <string name="article_list_show_read">Показване на прочетени статии</string>
+    <string name="article_list_swipe_mark_all_read">Маркиране на всички като прочетени</string>
+    <string name="widget_receiver_spotlight_title">В светлината на прожекторите</string>
+    <string name="widget_spotlight_empty">Няма непрочетени статии</string>
+    <string name="widget_spotlight_previous">Предишен</string>
+    <string name="widget_spotlight_next">Следващ</string>
+    <string name="freshrss_visibility">Видимост</string>
+    <string name="freshrss_visibility_option_main">Основен поток</string>
+    <string name="widget_spotlight_see_all">Вижте всички</string>
 </resources>
