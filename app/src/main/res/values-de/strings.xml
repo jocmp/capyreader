@@ -333,4 +333,20 @@
     <string name="starred_export_button_text">Gemerkte Artikel exportieren</string>
     <string name="starred_exporter_success">Export abgeschlossen</string>
     <string name="starred_exporter_failure">Export fehlgeschlagen</string>
+    <string name="actions_share_link_with_title">Teile Titel und Link</string>
+    <string name="article_list_swipe_mark_all_read">Alle als gelesen markieren</string>
+    <string name="filter_read_later">Für später gespeichert</string>
+    <string name="article_actions_save_for_later">Für später speichern</string>
+    <string name="saved_for_later_success">Für später gespeichert</string>
+    <string name="tag_action_delete_title">Löschen</string>
+    <string name="tag_action_delete_confirm">Löschen</string>
+    <string name="tag_name_title">Name</string>
+    <string name="widget_spotlight_empty">Keine ungelesenen Artikel</string>
+    <string name="widget_spotlight_previous">Vorheriges</string>
+    <string name="widget_spotlight_next">Nächstes</string>
+    <string name="freshrss_visibility">Sichtbarkeit</string>
+    <string name="tag_action_delete_message">Bist Du sicher, dass Du \"%1$s\" löschen möchtest?</string>
+    <string name="tag_action_edit_success">Bezeichnung aktualisiert</string>
+    <string name="tag_action_edit_error">Fehler bei der Aktualisierung der Bezeichnung</string>
+    <string name="tag_action_edit">Bezeichnung bearbeiten</string>
 </resources>
