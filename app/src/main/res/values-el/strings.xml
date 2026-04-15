@@ -299,7 +299,6 @@
     <string name="filter_read_later">Αποθηκεύτηκε για Αργότερα</string>
     <string name="article_actions_save_for_later">Αποθήκευση για Αργότερα</string>
     <string name="saved_for_later_success">Αποθηκεύτηκε για Αργότερα</string>
-    <string name="settings_home_page">Αρχική σελίδα</string>
     <string name="folder_action_delete_message">Σίγουρα θες να διαγράψεις την ετικέτα \"%1$s\";</string>
     <string name="add_link_title">Προσθήκη Συνδέσμου</string>
     <string name="tab_add_feed">Προσθήκη Ροής</string>
@@ -316,8 +315,6 @@
     <string name="settings_account_refresh_value_today">Σήμερα στις %1$s</string>
     <string name="settings_account_never_refreshed">Ποτέ</string>
     <string name="settings_accent_colors">Χρώματα έμφασης</string>
-    <string name="article_list_hide_read">Απόκρυψη αναγνωσμένων άρθρων</string>
-    <string name="article_list_show_read">Εμφάνιση αναγνωσμένων άρθρων</string>
     <string name="starred_export_button_text">Εξαγωγή Άρθρων με Αστέρι</string>
     <string name="starred_exporter_success">Η εξαγωγή ολοκληρώθηκε</string>
     <string name="starred_exporter_failure">Η εξαγωγή απέτυχε</string>

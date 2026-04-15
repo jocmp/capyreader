@@ -337,15 +337,12 @@
     <string name="filter_read_later">Zapisane na Później</string>
     <string name="article_actions_save_for_later">Zapisz na Później</string>
     <string name="saved_for_later_success">Zapisano na Później</string>
-    <string name="settings_home_page">Stróna główna</string>
     <string name="folder_action_delete_message">Czy na pewno chcesz usunąć tag \"%1$s\"?</string>
     <string name="folder_action_delete_confirm">Usuń</string>
     <string name="folder_action_edit_success">Zaktualizowano tag</string>
     <string name="folder_action_edit_error">Wystąpił błąd podczas aktualizacji tagu</string>
     <string name="folder_name_title">Nazwa</string>
     <string name="delete_folder_error">Wystąpił błąd podczas usuwania folderu</string>
-    <string name="article_list_hide_read">Ukryj przeczytane artykuły</string>
-    <string name="article_list_show_read">Pokaż przeczytane artykuły</string>
     <string name="article_list_swipe_mark_all_read">Oznacz wszystko jako przeczytane</string>
     <string name="widget_receiver_spotlight_title">W centrum uwagi</string>
     <string name="widget_spotlight_empty">Brak nieprzeczytanych artykułów</string>

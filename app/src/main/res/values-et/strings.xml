@@ -341,15 +341,12 @@
     <string name="filter_read_later">Salvestatud hilisemaks</string>
     <string name="article_actions_save_for_later">Salvesta hilisemaks</string>
     <string name="saved_for_later_success">Salvestatud hilisemaks</string>
-    <string name="settings_home_page">Avaleht</string>
     <string name="folder_action_delete_message">Kas oled kindel, et soovid kustutada „%1$s“ sildi?</string>
     <string name="folder_action_delete_confirm">Kustuta</string>
     <string name="folder_action_edit_success">Silt on uuendatud</string>
     <string name="folder_action_edit_error">Viga sildi uuendamisel</string>
     <string name="folder_name_title">Nimi</string>
     <string name="delete_folder_error">Viga kausta kustutamisel</string>
-    <string name="article_list_hide_read">Peida loetud artiklid</string>
-    <string name="article_list_show_read">Näita loetud artikleid</string>
     <string name="article_list_swipe_mark_all_read">Märgi kõik loetuks</string>
     <string name="widget_receiver_spotlight_title">Rambivalguses</string>
     <string name="widget_spotlight_empty">Pole lugemata artikleid</string>

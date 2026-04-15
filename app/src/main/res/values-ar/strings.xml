@@ -343,10 +343,7 @@
     <string name="filter_read_later">حُفظ لوقتٍ لاحق</string>
     <string name="article_actions_save_for_later">احفظ لوقتٍ لاحق</string>
     <string name="saved_for_later_success">حُفظ لوقتٍ لاحق</string>
-    <string name="settings_home_page">الصفحة الرئيسية</string>
     <string name="folder_action_edit_error">خطأ في تحديث الوسم</string>
-    <string name="article_list_hide_read">أخفِ المقالات المقروءة</string>
-    <string name="article_list_show_read">أظهر المقالات المقروءة</string>
     <string name="article_list_swipe_mark_all_read">حدّد الكل كمقروء</string>
     <string name="tag_action_delete_message">أمتأكد أنك تريد حذف الوسم \"%1$s\"؟</string>
     <string name="tag_action_delete_confirm">احذف</string>

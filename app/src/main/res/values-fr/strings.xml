@@ -339,15 +339,12 @@
     <string name="filter_read_later">Enregistré pour plus tard</string>
     <string name="article_actions_save_for_later">Enregistrer pour plus tard</string>
     <string name="saved_for_later_success">Enregistré pour plus tard</string>
-    <string name="settings_home_page">Page d\'accueil</string>
     <string name="folder_action_delete_message">Êtes-vous sûr de vouloir supprimer le tag « %1$s » ?</string>
     <string name="folder_action_delete_confirm">Supprimer</string>
     <string name="folder_action_edit_success">Tag mis à jour</string>
     <string name="folder_action_edit_error">Erreur lors de la mise à jour du tag</string>
     <string name="folder_name_title">Nom</string>
     <string name="delete_folder_error">Erreur lors de la suppression du dossier</string>
-    <string name="article_list_hide_read">Masquer les articles lus</string>
-    <string name="article_list_show_read">Afficher les articles lus</string>
     <string name="article_list_swipe_mark_all_read">Tout marquer comme lu</string>
     <string name="widget_receiver_spotlight_title">Mettre en lumière</string>
     <string name="widget_spotlight_empty">Aucun article non lu</string>

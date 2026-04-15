@@ -337,15 +337,12 @@
     <string name="starred_export_button_text">导出已加星标的文章</string>
     <string name="starred_exporter_success">导出完成</string>
     <string name="actions_share_link_with_title">分享文本和链接</string>
-    <string name="settings_home_page">首页</string>
     <string name="folder_action_delete_message">确定要删除标签“%1$s” 吗？</string>
     <string name="folder_action_delete_confirm">删除</string>
     <string name="folder_action_edit_success">标签已更新</string>
     <string name="folder_action_edit_error">更新标签时出错</string>
     <string name="folder_name_title">名称</string>
     <string name="delete_folder_error">删除文件夹时出错</string>
-    <string name="article_list_hide_read">隐藏已读文章</string>
-    <string name="article_list_show_read">显示已读文章</string>
     <string name="widget_spotlight_empty">没有未读文章</string>
     <string name="freshrss_visibility">可见性</string>
     <string name="freshrss_visibility_option_main">主信息流</string>
