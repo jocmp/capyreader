@@ -12,7 +12,7 @@
     <string name="notifications_permission_disabled_title">O permiso de notificación está desactivado</string>
     <string name="article_view_open_externally">Abrir en app externa</string>
     <string name="article_actions_mark_after_as_read">Marcar o de arriba como lido</string>
-    <string name="add_feed_new_folder_title">Nova etiqueta</string>
+    <string name="add_feed_new_folder_title">Novo cartafol</string>
     <string name="nav_headline_feeds">Canles</string>
     <string name="crash_reporting_checkbox_title">Activar informe de fallos</string>
     <string name="settings_option_copy_version">Copiar versión</string>
@@ -65,7 +65,7 @@
     <string name="feed_action_edit">Editar canle</string>
     <string name="feed_action_reload_icon">Recargar icona</string>
     <string name="feed_action_unsubscribe_message">Tes certeza de querer retirar a subscrición a «%1$s»?</string>
-    <string name="folder_action_delete_title">Eliminar etiqueta</string>
+    <string name="folder_action_delete_title">Eliminar cartafol</string>
     <string name="folder_action_edit">Cambiar nome</string>
     <string name="settings">Abrir axustes</string>
     <string name="settings_remove_account_button_service">Saír</string>
@@ -331,4 +331,25 @@
     <string name="starred_export_button_text">Exportar artigos con estrela</string>
     <string name="starred_exporter_success">Exportación completa</string>
     <string name="starred_exporter_failure">Fallou a exportación</string>
+    <string name="actions_share_link_with_title">Compartir texto e ligazón</string>
+    <string name="filter_read_later">Gardado para máis tarde</string>
+    <string name="article_actions_save_for_later">Gardar para máis tarde</string>
+    <string name="saved_for_later_success">Gardado para máis tarde</string>
+    <string name="settings_home_page">Páxina de inicio</string>
+    <string name="folder_action_delete_message">Tes certeza de querer eliminar a etiqueta «%1$s»?</string>
+    <string name="folder_action_delete_confirm">Eliminar</string>
+    <string name="folder_action_edit_success">Etiqueta actualizada</string>
+    <string name="folder_action_edit_error">Erro ao actualizar a etiqueta</string>
+    <string name="folder_name_title">Nome</string>
+    <string name="delete_folder_error">Erro ao eliminar o cartafol</string>
+    <string name="article_list_hide_read">Ocultar artigos lidos</string>
+    <string name="article_list_show_read">Mostrar artigos lidos</string>
+    <string name="article_list_swipe_mark_all_read">Marcar todo como lido</string>
+    <string name="widget_receiver_spotlight_title">Destacado</string>
+    <string name="widget_spotlight_empty">Sen artigos sen ler</string>
+    <string name="widget_spotlight_previous">Anterior</string>
+    <string name="widget_spotlight_next">Seguinte</string>
+    <string name="freshrss_visibility">Visibilidade</string>
+    <string name="freshrss_visibility_option_main">Cronoloxía principal</string>
+    <string name="widget_spotlight_see_all">Ver todo</string>
 </resources>
