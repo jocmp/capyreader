@@ -2,7 +2,7 @@
 <resources>
     <string name="add_feed_url_title">Uudistevoo või veebisaidi aadress</string>
     <string name="add_feed_name_title">Nimi</string>
-    <string name="add_feed_new_folder_title">Uus silt</string>
+    <string name="add_feed_new_folder_title">Uus kaust</string>
     <string name="add_feed_submit">Lisa</string>
     <string name="add_feed_success">Uudisvoog on lisatud</string>
     <string name="feed_form_cancel">Katkesta</string>
@@ -118,7 +118,7 @@
     <string name="article_list_row_swipe_disabled">Ära tee midagi</string>
     <string name="article_list_row_swipe_toggle_read">Märgi artikkel loetuks/mitteloetuks</string>
     <string name="article_list_row_swipe_toggle_starred">Märgi artikkel tähega / eemalda täht</string>
-    <string name="folder_action_delete_title">Kustuta silt</string>
+    <string name="folder_action_delete_title">Kustuta kaust</string>
     <string name="feed_action_unsubscribe_confirm">Loobu tellimusest</string>
     <string name="folder_action_edit">Muuda nime</string>
     <string name="dialog_cancel">Katkesta</string>
@@ -337,4 +337,25 @@
     <string name="starred_export_button_text">Ekspordi lemmikuks märgitud artiklid</string>
     <string name="starred_exporter_success">Eksportimine lõppes</string>
     <string name="starred_exporter_failure">Eksportimine ei õnnestunud</string>
+    <string name="actions_share_link_with_title">Jaga teksti ja linki</string>
+    <string name="filter_read_later">Salvestatud hilisemaks</string>
+    <string name="article_actions_save_for_later">Salvesta hilisemaks</string>
+    <string name="saved_for_later_success">Salvestatud hilisemaks</string>
+    <string name="settings_home_page">Avaleht</string>
+    <string name="folder_action_delete_message">Kas oled kindel, et soovid kustutada „%1$s“ sildi?</string>
+    <string name="folder_action_delete_confirm">Kustuta</string>
+    <string name="folder_action_edit_success">Silt on uuendatud</string>
+    <string name="folder_action_edit_error">Viga sildi uuendamisel</string>
+    <string name="folder_name_title">Nimi</string>
+    <string name="delete_folder_error">Viga kausta kustutamisel</string>
+    <string name="article_list_hide_read">Peida loetud artiklid</string>
+    <string name="article_list_show_read">Näita loetud artikleid</string>
+    <string name="article_list_swipe_mark_all_read">Märgi kõik loetuks</string>
+    <string name="widget_receiver_spotlight_title">Rambivalguses</string>
+    <string name="widget_spotlight_empty">Pole lugemata artikleid</string>
+    <string name="widget_spotlight_previous">Eelmine</string>
+    <string name="widget_spotlight_next">Järgmine</string>
+    <string name="freshrss_visibility">Nähtavus</string>
+    <string name="freshrss_visibility_option_main">Põhiline uudisvoog</string>
+    <string name="widget_spotlight_see_all">Vaata kõiki</string>
 </resources>
