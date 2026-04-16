@@ -2,6 +2,7 @@ package com.capyreader.app.ui.articles.list
 
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -18,6 +19,7 @@ fun FolderActionMenu(
     onDismissMenuRequest: () -> Unit,
     folderTitle: String,
     onRemoveRequest: (folderTitle: String, completion: (result: Result<Unit>) -> Unit) -> Unit,
+    onMarkAllRead: () -> Unit,
     expanded: Boolean,
     source: Source,
 ) {
@@ -39,6 +41,16 @@ fun FolderActionMenu(
         expanded = expanded,
         onDismissRequest = onDismissMenuRequest,
     ) {
+        DropdownMenuItem(
+            text = {
+                Text(stringResource(R.string.action_mark_all_read))
+            },
+            onClick = {
+                onMarkAllRead()
+                onDismissMenuRequest()
+            }
+        )
+        HorizontalDivider()
         DropdownMenuItem(
             text = {
                 Text(stringResource(R.string.folder_action_edit))

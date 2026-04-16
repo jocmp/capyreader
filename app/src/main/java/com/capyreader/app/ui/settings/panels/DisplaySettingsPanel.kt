@@ -134,16 +134,17 @@ fun DisplaySettingsPanelView(
                     )
                 }
             }
+
+            SettingsDisclosureRow(
+                title = stringResource(R.string.settings_article_list_title),
+                onClick = onNavigateToArticleList,
+            )
+
             SettingsDisclosureRow(
                 title = stringResource(R.string.settings_panel_unread_counts_title),
                 onClick = onNavigateToUnreadBadges,
             )
         }
-
-        SettingsDisclosureRow(
-            title = stringResource(R.string.settings_article_list_title),
-            onClick = onNavigateToArticleList,
-        )
 
         FormSection(
             title = stringResource(R.string.settings_reader_title)

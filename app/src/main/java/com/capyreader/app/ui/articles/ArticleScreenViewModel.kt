@@ -295,15 +295,17 @@ class ArticleScreenViewModel(
     }
 
     fun markAllRead(
-        onArticlesCleared: () -> Unit,
-        range: MarkRead,
+        onArticlesCleared: () -> Unit = {},
+        range: MarkRead = MarkRead.All,
+        filter: ArticleFilter = latestFilter,
+        query: String? = _searchQuery.value,
     ) {
         viewModelScope.launchIO {
             val articleIDs = account.unreadArticleIDs(
-                filter = latestFilter,
+                filter = filter,
                 range = range,
                 sortOrder = sortOrder.value,
-                query = _searchQuery.value,
+                query = query,
             )
 
             account.markAllRead(articleIDs).onFailure {

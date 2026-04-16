@@ -28,8 +28,8 @@ import com.capyreader.app.ui.settings.panels.GeneralSettingsPanel
 import com.capyreader.app.ui.settings.panels.GesturesSettingPanel
 import com.capyreader.app.ui.settings.panels.NotificationsSettingsPanel
 import com.capyreader.app.ui.settings.panels.SettingsPanel
-import com.capyreader.app.ui.settings.panels.UnreadBadgesSettingsPanel
 import com.capyreader.app.ui.settings.panels.SettingsViewModel
+import com.capyreader.app.ui.settings.panels.UnreadBadgesSettingsPanel
 import com.jocmp.capy.common.launchUI
 import org.koin.android.ext.koin.androidContext
 import org.koin.compose.KoinApplication
@@ -44,7 +44,9 @@ fun SettingsView(
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
-    val navigator = rememberListDetailPaneScaffoldNavigator<SettingsPanel>()
+    val navigator = rememberListDetailPaneScaffoldNavigator<SettingsPanel>(
+
+    )
     val currentPanel = navigator.currentDestination?.contentKey
     val feeds by viewModel.feeds.collectAsStateWithLifecycle(emptyList())
     val savedSearches by viewModel.savedSearches.collectAsStateWithLifecycle(emptyList())
@@ -132,7 +134,6 @@ fun SettingsView(
             }
         )
     }
-
 }
 
 @Preview

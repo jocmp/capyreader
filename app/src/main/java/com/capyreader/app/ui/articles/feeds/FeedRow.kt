@@ -19,6 +19,7 @@ fun FeedRow(
     selected: Boolean,
     feed: Feed,
     onSelect: (feed: Feed) -> Unit,
+    onMarkAllRead: () -> Unit = {},
     showContextMenu: Boolean = true,
     source: Source = Source.LOCAL,
 ) {
@@ -51,6 +52,7 @@ fun FeedRow(
                onDismissMenuRequest = {
                    setShowMenu(false)
                },
+               onMarkAllRead = onMarkAllRead,
                source = source,
            )
        }

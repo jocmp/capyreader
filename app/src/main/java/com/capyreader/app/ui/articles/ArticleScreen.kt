@@ -478,6 +478,7 @@ fun ArticleScreen(
                     readLaterFeed = readLaterFeed,
                     onSelectFolder = selectFolder,
                     onSelectFeed = selectFeed,
+                    onMarkAllRead = { viewModel.markAllRead(filter = it) },
                     onFeedAdded = { onFeedAdded(it) },
                     savedSearches = savedSearches,
                     onSelectSavedSearch = selectSavedSearch,
