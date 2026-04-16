@@ -1,5 +1,9 @@
 package com.capyreader.app.ui.settings
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
@@ -14,6 +18,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import com.capyreader.app.ui.shared.materialSharedAxisXIn
+import com.capyreader.app.ui.shared.materialSharedAxisXOut
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.capyreader.app.setupCommonModules
 import com.capyreader.app.ui.LocalLinkOpener
@@ -76,58 +82,89 @@ fun SettingsView(
                 )
             },
             detailPane = {
-                if (currentPanel == null && !isCompact()) {
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier
-                            .fillMaxSize()
-                    ) {
-                        CapyPlaceholder()
-                    }
-                } else if (currentPanel != null) {
-                    SettingsPanelScaffold(
-                        panel = currentPanel,
-                        onBack = {
-                            navigateBack()
-                        },
-                    ) {
-                        when (currentPanel) {
-                            SettingsPanel.General -> GeneralSettingsPanel(
-                                onNavigateToNotifications = {
-                                    navigateToPanel(SettingsPanel.Notifications)
-                                }
-                            )
+                AnimatedContent(
+                    targetState = currentPanel,
+                    transitionSpec = {
+                        val isSubPanelNavigation =
+                            initialState != null && targetState != null &&
+                                    (initialState!!.isNested() || targetState!!.isNested())
 
-                            SettingsPanel.Notifications -> NotificationsSettingsPanel(
-                                onSelectNone = viewModel::deselectAllFeedNotifications,
-                                onSelectAll = viewModel::selectAllFeedNotifications,
-                                onToggleNotifications = viewModel::toggleNotifications,
-                                feeds = feeds,
-                            )
+                        if (isSubPanelNavigation) {
+                            val forward = targetState!!.isNested()
+                            val offsetFactor = 0.10f
 
-                            SettingsPanel.Display -> DisplaySettingsPanel(
-                                onNavigateToUnreadBadges = {
-                                    navigateToPanel(SettingsPanel.UnreadBadges)
-                                },
-                                onNavigateToArticleList = {
-                                    navigateToPanel(SettingsPanel.ArticleList)
-                                }
-                            )
-                            SettingsPanel.Gestures -> GesturesSettingPanel()
-                            SettingsPanel.Account -> AccountSettingsPanel(onRemoveAccount = onRemoveAccount)
-                            SettingsPanel.About -> AboutSettingsPanel()
-                            SettingsPanel.ArticleList -> ArticleListSettingsPanel()
-                            SettingsPanel.UnreadBadges -> UnreadBadgesSettingsPanel(
-                                badgeStyle = viewModel.badgeStyle,
-                                updateBadgeStyle = viewModel::updateBadgeStyle,
-                                source = viewModel.source,
-                                feeds = feeds,
-                                savedSearches = savedSearches,
-                                onSelectAll = viewModel::selectAllBadges,
-                                onSelectNone = viewModel::selectNoBadges,
-                                onToggleFeed = viewModel::toggleFeedUnreadBadge,
-                                onToggleSavedSearch = viewModel::toggleSavedSearchUnreadBadge,
-                            )
+                            if (forward) {
+                                materialSharedAxisXIn(
+                                    initialOffsetX = { (it * offsetFactor).toInt() }
+                                ) togetherWith materialSharedAxisXOut(
+                                    targetOffsetX = { -(it * offsetFactor).toInt() }
+                                )
+                            } else {
+                                materialSharedAxisXIn(
+                                    initialOffsetX = { -(it * offsetFactor).toInt() }
+                                ) togetherWith materialSharedAxisXOut(
+                                    targetOffsetX = { (it * offsetFactor).toInt() }
+                                )
+                            }
+                        } else {
+                            EnterTransition.None togetherWith ExitTransition.None
+                        }
+                    },
+                    label = "SettingsPanel",
+                ) { panel ->
+                    if (panel == null && !isCompact()) {
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier
+                                .fillMaxSize()
+                        ) {
+                            CapyPlaceholder()
+                        }
+                    } else if (panel != null) {
+                        SettingsPanelScaffold(
+                            panel = panel,
+                            onBack = {
+                                navigateBack()
+                            },
+                        ) {
+                            when (panel) {
+                                SettingsPanel.General -> GeneralSettingsPanel(
+                                    onNavigateToNotifications = {
+                                        navigateToPanel(SettingsPanel.Notifications)
+                                    }
+                                )
+
+                                SettingsPanel.Notifications -> NotificationsSettingsPanel(
+                                    onSelectNone = viewModel::deselectAllFeedNotifications,
+                                    onSelectAll = viewModel::selectAllFeedNotifications,
+                                    onToggleNotifications = viewModel::toggleNotifications,
+                                    feeds = feeds,
+                                )
+
+                                SettingsPanel.Display -> DisplaySettingsPanel(
+                                    onNavigateToUnreadBadges = {
+                                        navigateToPanel(SettingsPanel.UnreadBadges)
+                                    },
+                                    onNavigateToArticleList = {
+                                        navigateToPanel(SettingsPanel.ArticleList)
+                                    }
+                                )
+                                SettingsPanel.Gestures -> GesturesSettingPanel()
+                                SettingsPanel.Account -> AccountSettingsPanel(onRemoveAccount = onRemoveAccount)
+                                SettingsPanel.About -> AboutSettingsPanel()
+                                SettingsPanel.ArticleList -> ArticleListSettingsPanel()
+                                SettingsPanel.UnreadBadges -> UnreadBadgesSettingsPanel(
+                                    badgeStyle = viewModel.badgeStyle,
+                                    updateBadgeStyle = viewModel::updateBadgeStyle,
+                                    source = viewModel.source,
+                                    feeds = feeds,
+                                    savedSearches = savedSearches,
+                                    onSelectAll = viewModel::selectAllBadges,
+                                    onSelectNone = viewModel::selectNoBadges,
+                                    onToggleFeed = viewModel::toggleFeedUnreadBadge,
+                                    onToggleSavedSearch = viewModel::toggleSavedSearchUnreadBadge,
+                                )
+                            }
                         }
                     }
                 }

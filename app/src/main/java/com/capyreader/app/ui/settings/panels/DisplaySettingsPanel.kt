@@ -3,9 +3,7 @@ package com.capyreader.app.ui.settings.panels
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,12 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
 import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.Icon
-import androidx.compose.material3.ListItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.ToggleButton
@@ -135,15 +129,17 @@ fun DisplaySettingsPanelView(
                 }
             }
 
-            SettingsDisclosureRow(
-                title = stringResource(R.string.settings_article_list_title),
-                onClick = onNavigateToArticleList,
-            )
+            Column {
+                SettingsDisclosureRow(
+                    title = stringResource(R.string.settings_article_list_title),
+                    onClick = onNavigateToArticleList,
+                )
 
-            SettingsDisclosureRow(
-                title = stringResource(R.string.settings_panel_unread_counts_title),
-                onClick = onNavigateToUnreadBadges,
-            )
+                SettingsDisclosureRow(
+                    title = stringResource(R.string.settings_panel_unread_counts_title),
+                    onClick = onNavigateToUnreadBadges,
+                )
+            }
         }
 
         FormSection(
@@ -181,24 +177,6 @@ fun DisplaySettingsPanelView(
         }
 
         Spacer(Modifier.height(16.dp))
-    }
-}
-
-@Composable
-private fun SettingsDisclosureRow(
-    title: String,
-    onClick: () -> Unit,
-) {
-    Box(Modifier.clickable { onClick() }) {
-        ListItem(
-            headlineContent = { Text(title) },
-            trailingContent = {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
-                    contentDescription = null,
-                )
-            }
-        )
     }
 }
 

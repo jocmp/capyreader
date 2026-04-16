@@ -23,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import com.capyreader.app.ui.isCompact
-import com.capyreader.app.ui.isExpanded
 import com.capyreader.app.ui.settings.panels.SettingsPanel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,11 +55,7 @@ fun SettingsPanelScaffold(
                                 }
                             ) {
                                 Icon(
-                                    imageVector = if (isExpanded() && panel.isNested()) {
-                                        Icons.Rounded.Close
-                                    } else {
-                                        Icons.AutoMirrored.Rounded.ArrowBack
-                                    },
+                                    imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
                                     contentDescription = null
                                 )
                             }
