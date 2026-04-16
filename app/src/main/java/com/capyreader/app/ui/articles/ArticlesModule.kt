@@ -65,6 +65,7 @@ internal val articlesModule = module {
     viewModel {
         EditFolderViewModel(
             account = get(),
+            appPreferences = get(),
         )
     }
 }

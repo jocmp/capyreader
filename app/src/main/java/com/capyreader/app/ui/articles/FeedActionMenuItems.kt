@@ -28,19 +28,24 @@ fun FeedActionMenuItems(
     onToggleOpenInBrowser: () -> Unit,
     onToggleUnreadBadge: () -> Unit,
     onMarkAllRead: () -> Unit,
+    showMarkAllRead: Boolean = true,
     showReloadIcon: Boolean = false,
 ) {
-    DropdownMenuItem(
-        text = {
-            Text(stringResource(R.string.action_mark_all_read))
-        },
-        onClick = {
-            onMarkAllRead()
-            onMenuClose()
-        }
-    )
+    if (showMarkAllRead) {
+        DropdownMenuItem(
+            text = {
+                Text(stringResource(R.string.action_mark_all_read))
+            },
+            onClick = {
+                onMarkAllRead()
+                onMenuClose()
+            }
+        )
+    }
     if (!feed.isReadLater) {
-        HorizontalDivider()
+        if (showMarkAllRead) {
+            HorizontalDivider()
+        }
         DropdownMenuItem(
             text = {
                 Text(stringResource(R.string.feed_action_edit))

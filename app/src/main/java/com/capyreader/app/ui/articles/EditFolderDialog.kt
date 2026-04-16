@@ -5,7 +5,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.window.Dialog
 import com.capyreader.app.ui.components.DialogCard
 import com.jocmp.capy.EditFolderFormEntry
-import com.jocmp.capy.Folder
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -15,7 +14,7 @@ fun EditFolderDialog(
     isOpen: Boolean,
     viewModel: EditFolderViewModel = koinViewModel(),
     onDismiss: () -> Unit,
-    completion: (result: Result<Folder>) -> Unit,
+    completion: (result: Result<Unit>) -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
 

@@ -19,7 +19,8 @@ fun FolderActionMenu(
     onDismissMenuRequest: () -> Unit,
     folderTitle: String,
     onRemoveRequest: (folderTitle: String, completion: (result: Result<Unit>) -> Unit) -> Unit,
-    onMarkAllRead: () -> Unit,
+    onMarkAllRead: () -> Unit = {},
+    showMarkAllRead: Boolean = true,
     expanded: Boolean,
     source: Source,
 ) {
@@ -41,16 +42,18 @@ fun FolderActionMenu(
         expanded = expanded,
         onDismissRequest = onDismissMenuRequest,
     ) {
-        DropdownMenuItem(
-            text = {
-                Text(stringResource(R.string.action_mark_all_read))
-            },
-            onClick = {
-                onMarkAllRead()
-                onDismissMenuRequest()
-            }
-        )
-        HorizontalDivider()
+        if (showMarkAllRead) {
+            DropdownMenuItem(
+                text = {
+                    Text(stringResource(R.string.action_mark_all_read))
+                },
+                onClick = {
+                    onMarkAllRead()
+                    onDismissMenuRequest()
+                }
+            )
+            HorizontalDivider()
+        }
         DropdownMenuItem(
             text = {
                 Text(stringResource(R.string.folder_action_edit))

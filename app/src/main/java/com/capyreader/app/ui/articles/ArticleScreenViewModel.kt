@@ -171,6 +171,14 @@ class ArticleScreenViewModel(
             ?.let { copyFeedCounts(it, latestCounts) }
     }
 
+    val currentFeed: Flow<Feed?> = combine(allFeeds, filter) { feeds, filter ->
+        if (filter is ArticleFilter.Feeds) {
+            feeds.find { it.id == filter.feedID }
+        } else {
+            null
+        }
+    }
+
     private val sidebar: Flow<List<SidebarItem>> = combine(
         readLaterFeed,
         savedSearches,

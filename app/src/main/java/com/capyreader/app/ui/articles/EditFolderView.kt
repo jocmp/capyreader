@@ -26,7 +26,7 @@ fun EditFolderView(
     onSubmit: (form: EditFolderFormEntry) -> Unit,
     onCancel: () -> Unit
 ) {
-    val (title, setTitle) = remember { mutableStateOf(folderTitle) }
+    val (title, setTitle) = remember(folderTitle) { mutableStateOf(folderTitle) }
 
     val submit = {
         onSubmit(EditFolderFormEntry(previousTitle = folderTitle, folderTitle = title))

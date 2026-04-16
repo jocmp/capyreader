@@ -113,6 +113,7 @@ fun ArticleScreen(
     onPendingArticleSelected: () -> Unit = {},
     onNavigateToSettings: () -> Unit,
 ) {
+    val currentFeed by viewModel.currentFeed.collectAsStateWithLifecycle(initialValue = null)
     val feeds by viewModel.topLevelFeeds.collectAsStateWithLifecycle(initialValue = emptyList())
     val readLaterFeed by viewModel.readLaterFeed.collectAsStateWithLifecycle(initialValue = null)
     val allFeeds by viewModel.allFeeds.collectAsStateWithLifecycle(initialValue = emptyList())
@@ -528,12 +529,20 @@ fun ArticleScreen(
                             ArticleListTopBar(
                                 onRequestJumpToTop = { scrollToTop() },
                                 onNavigateToDrawer = { openDrawer() },
+                                onRemoveFolder = { folderTitle, completion ->
+                                    viewModel.removeFolder(
+                                        folderTitle,
+                                        completion
+                                    )
+                                },
                                 scrollBehavior = scrollBehavior,
                                 search = search,
                                 filter = filter,
+                                currentFeed = currentFeed,
                                 feeds = allFeeds,
                                 savedSearches = savedSearches,
                                 folders = allFolders,
+                                source = viewModel.source,
                             )
                         },
                         snackbarHost = {

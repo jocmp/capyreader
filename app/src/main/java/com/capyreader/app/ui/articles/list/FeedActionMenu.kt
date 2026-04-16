@@ -19,7 +19,8 @@ fun FeedActionMenu(
     onDismissMenuRequest: () -> Unit,
     feed: Feed,
     expanded: Boolean,
-    onMarkAllRead: () -> Unit,
+    onMarkAllRead: () -> Unit = {},
+    showMarkAllRead: Boolean = true,
     source: Source = Source.LOCAL,
 ) {
     val actions = LocalFeedActions.current
@@ -66,6 +67,7 @@ fun FeedActionMenu(
                 onToggleUnreadBadge()
             },
             onMarkAllRead = onMarkAllRead,
+            showMarkAllRead = showMarkAllRead,
             showReloadIcon = source == Source.LOCAL,
         )
     }
