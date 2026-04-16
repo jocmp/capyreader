@@ -5,6 +5,8 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -67,7 +69,7 @@ fun ArticleListSettings(
 ) {
     val fontScales = ArticleListFontScale.entries
 
-    Column {
+    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         PreviewArticleRow(options = options)
 
         FormSection(

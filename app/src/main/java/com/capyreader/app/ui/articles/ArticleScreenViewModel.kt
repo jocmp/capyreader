@@ -31,15 +31,14 @@ import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.articles.SidebarItem
-import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import com.jocmp.capy.common.launchUI
 import com.jocmp.capy.common.withUIContext
 import com.jocmp.capy.countToday
 import com.jocmp.capy.logging.CapyLog
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -177,12 +176,14 @@ class ArticleScreenViewModel(
         savedSearches,
         folders,
         topLevelFeeds,
-    ) { readLater, searches, fldrs, fds ->
+        filter,
+    ) { readLater, searches, folders, feeds, filter ->
         SidebarItem.buildList(
+            status = filter.status,
             readLaterFeed = readLater,
             savedSearches = searches,
-            folders = fldrs,
-            feeds = fds,
+            folders = folders,
+            feeds = feeds,
         )
     }
 
@@ -294,15 +295,17 @@ class ArticleScreenViewModel(
     }
 
     fun markAllRead(
-        onArticlesCleared: () -> Unit,
-        range: MarkRead,
+        onArticlesCleared: () -> Unit = {},
+        range: MarkRead = MarkRead.All,
+        filter: ArticleFilter = latestFilter,
+        query: String? = _searchQuery.value,
     ) {
         viewModelScope.launchIO {
             val articleIDs = account.unreadArticleIDs(
-                filter = latestFilter,
+                filter = filter,
                 range = range,
                 sortOrder = sortOrder.value,
-                query = _searchQuery.value,
+                query = query,
             )
 
             account.markAllRead(articleIDs).onFailure {
@@ -882,5 +885,8 @@ fun Context.showFullContentErrorToast(throwable: Throwable) {
 }
 
 fun countableStatus(filter: ArticleFilter): ArticleStatus {
-    return UNREAD
+    return when (filter.status) {
+        ArticleStatus.STARRED -> ArticleStatus.STARRED
+        else -> UNREAD
+    }
 }

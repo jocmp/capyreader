@@ -33,6 +33,7 @@ fun FolderRow(
     folder: Folder,
     onFolderSelect: (folder: Folder) -> Unit,
     onFeedSelect: (feed: Feed) -> Unit,
+    onMarkAllRead: (filter: ArticleFilter) -> Unit,
     source: Source,
 ) {
     val actions = LocalFolderActions.current
@@ -74,6 +75,14 @@ fun FolderRow(
                 onRemoveRequest = { title, completion ->
                     actions.removeFolder(title, completion)
                 },
+                onMarkAllRead = {
+                    onMarkAllRead(
+                        ArticleFilter.Folders(
+                            folderTitle = folder.title,
+                            folderStatus = filter.status,
+                        )
+                    )
+                },
                 source = source,
             )
         }
@@ -88,6 +97,15 @@ fun FolderRow(
                         FeedRow(
                             feed = feed,
                             onSelect = { onFeedSelect(feed) },
+                            onMarkAllRead = {
+                                onMarkAllRead(
+                                    ArticleFilter.Feeds(
+                                        feedID = feed.id,
+                                        folderTitle = folder.title,
+                                        feedStatus = filter.status,
+                                    )
+                                )
+                            },
                             selected = filter.isFeedSelected(feed),
                             source = source,
                         )
@@ -113,6 +131,7 @@ fun FolderRowPreview() {
             folder = folder,
             onFolderSelect = {},
             onFeedSelect = {},
+            onMarkAllRead = {},
             filter = filter,
             source = Source.LOCAL,
         )

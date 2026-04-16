@@ -27,37 +27,50 @@ fun FeedActionMenuItems(
     onReloadIcon: () -> Unit,
     onToggleOpenInBrowser: () -> Unit,
     onToggleUnreadBadge: () -> Unit,
+    onMarkAllRead: () -> Unit,
     showReloadIcon: Boolean = false,
 ) {
     DropdownMenuItem(
         text = {
-            Text(stringResource(R.string.feed_action_edit))
+            Text(stringResource(R.string.action_mark_all_read))
         },
         onClick = {
+            onMarkAllRead()
             onMenuClose()
-            onEdit()
         }
     )
-    if (showReloadIcon) {
+    if (!feed.isReadLater) {
+        HorizontalDivider()
         DropdownMenuItem(
             text = {
-                Text(stringResource(R.string.feed_action_reload_icon))
+                Text(stringResource(R.string.feed_action_edit))
             },
             onClick = {
                 onMenuClose()
-                onReloadIcon()
+                onEdit()
+            }
+        )
+        if (showReloadIcon) {
+            DropdownMenuItem(
+                text = {
+                    Text(stringResource(R.string.feed_action_reload_icon))
+                },
+                onClick = {
+                    onMenuClose()
+                    onReloadIcon()
+                }
+            )
+        }
+        DropdownMenuItem(
+            text = {
+                Text(stringResource(R.string.feed_action_unsubscribe))
+            },
+            onClick = {
+                onMenuClose()
+                onRemoveRequest()
             }
         )
     }
-    DropdownMenuItem(
-        text = {
-            Text(stringResource(R.string.feed_action_unsubscribe))
-        },
-        onClick = {
-            onMenuClose()
-            onRemoveRequest()
-        }
-    )
     HorizontalDivider()
     val trailingIcon = @Composable {
         if (feed.openArticlesInBrowser) {
@@ -103,6 +116,7 @@ fun FeedActionMenuPreview(@PreviewParameter(FeedSample::class) feed: Feed) {
             onRemoveRequest = {},
             onToggleOpenInBrowser = {},
             onToggleUnreadBadge = {},
+            onMarkAllRead = {},
         )
     }
 }
