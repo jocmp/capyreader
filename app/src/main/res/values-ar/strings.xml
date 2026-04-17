@@ -14,7 +14,7 @@
     <string name="feed_action_unsubscribe_confirm">ألغِ الإشتراك</string>
     <string name="edit_feed_submit">احفظ</string>
     <string name="dialog_cancel">إلغاء</string>
-    <string name="folder_action_delete_title">حذف المجلد</string>
+    <string name="folder_action_delete_title">احذف المجلد</string>
     <string name="folder_action_edit">إعادة تسمية</string>
     <string name="settings">فتح الإعدادات</string>
     <string name="settings_remove_account_button_service">‌تسجيل الخروج</string>
@@ -339,4 +339,21 @@
     <string name="starred_export_button_text">صدِّر المقالات المميزة بنجمة</string>
     <string name="starred_exporter_success">اكتمل التصدير</string>
     <string name="starred_exporter_failure">فشل التصدير</string>
+    <string name="actions_share_link_with_title">شارك نص ورابط</string>
+    <string name="filter_read_later">حُفظ لوقتٍ لاحق</string>
+    <string name="article_actions_save_for_later">احفظ لوقتٍ لاحق</string>
+    <string name="saved_for_later_success">حُفظ لوقتٍ لاحق</string>
+    <string name="folder_action_edit_error">خطأ في تحديث الوسم</string>
+    <string name="article_list_swipe_mark_all_read">حدّد الكل كمقروء</string>
+    <string name="tag_action_delete_message">أمتأكد أنك تريد حذف الوسم \"%1$s\"؟</string>
+    <string name="tag_action_delete_confirm">احذف</string>
+    <string name="tag_name_title">الاسم</string>
+    <string name="tag_action_edit_success">حُدِّث الوسم</string>
+    <string name="widget_receiver_spotlight_title">تسليط الضوء</string>
+    <string name="widget_spotlight_empty">لا توجد مقالات غير مقروءة</string>
+    <string name="widget_spotlight_previous">السابق</string>
+    <string name="widget_spotlight_next">التالي</string>
+    <string name="freshrss_visibility">الرؤية</string>
+    <string name="freshrss_visibility_option_main">التيار الرئيسي</string>
+    <string name="widget_spotlight_see_all">أظهر الكل</string>
 </resources>

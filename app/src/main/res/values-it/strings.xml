@@ -338,4 +338,5 @@
     <string name="starred_export_button_text">Esporta articoli contrassegnati</string>
     <string name="starred_exporter_success">Esportazione completata</string>
     <string name="starred_exporter_failure">Esportazione non riuscita</string>
+    <string name="actions_share_link_with_title">Condividi testo e link</string>
 </resources>
