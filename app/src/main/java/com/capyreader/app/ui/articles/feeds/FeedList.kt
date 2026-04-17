@@ -68,6 +68,7 @@ fun FeedList(
     onSelectFeed: (feed: Feed, folderTitle: String?) -> Unit,
     onMarkAllRead: (filter: ArticleFilter) -> Unit,
     onFeedAdded: (feedID: String) -> Unit,
+    onBeforeFeedAdd: () -> Unit = {},
     onNavigateToSettings: () -> Unit,
 ) {
     val scrollState = rememberScrollState()
@@ -111,7 +112,8 @@ fun FeedList(
                     }
                     AddFeedButton(
                         iconOnly = true,
-                        onComplete = { onFeedAdded(it) }
+                        onComplete = { onFeedAdded(it) },
+                        onBeforeAdd = onBeforeFeedAdd,
                     )
                 }
             }

@@ -9,6 +9,7 @@ import org.koin.compose.koinInject
 fun AddFeedDialog(
     viewModel: AddFeedViewModel = koinInject(),
     onCancel: () -> Unit,
+    onBeforeAdd: () -> Unit = {},
     onComplete: (feedID: String) -> Unit,
 ) {
     Dialog(onDismissRequest = onCancel) {
@@ -16,6 +17,7 @@ fun AddFeedDialog(
             AddFeedView(
                 feedChoices = viewModel.feedChoices,
                 onAddFeed = { url ->
+                    onBeforeAdd()
                     viewModel.addFeed(
                         url = url,
                         onComplete = { onComplete(it.id) },

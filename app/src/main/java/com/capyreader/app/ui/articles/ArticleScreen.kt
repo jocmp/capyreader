@@ -393,6 +393,12 @@ fun ArticleScreen(
             }
         }
 
+        val onBeforeFeedAdd = {
+            if (viewModel.markReadOnScrollEnabled) {
+                scrollToTop()
+            }
+        }
+
         fun setArticle(articleID: String, onComplete: (article: Article) -> Unit = {}) {
             viewModel.selectArticle(articleID, onComplete)
         }
@@ -481,6 +487,7 @@ fun ArticleScreen(
                     onSelectFeed = selectFeed,
                     onMarkAllRead = { viewModel.markAllRead(filter = it) },
                     onFeedAdded = { onFeedAdded(it) },
+                    onBeforeFeedAdd = { onBeforeFeedAdd() },
                     savedSearches = savedSearches,
                     onSelectSavedSearch = selectSavedSearch,
                     onNavigateToSettings = {
@@ -575,7 +582,8 @@ fun ArticleScreen(
                                     AddFeedButton(
                                         onComplete = {
                                             onFeedAdded(it)
-                                        }
+                                        },
+                                        onBeforeAdd = { onBeforeFeedAdd() },
                                     )
                                 }
                             },
