@@ -1,4 +1,4 @@
-current_version: "2026.04.1204"
+current_version: "2026.04.1205"
 version_pattern: "YYYY.0M.BUILD[-TAG]"
 commit_message: "Bump version {old_version} to {new_version}"
 commit: true
