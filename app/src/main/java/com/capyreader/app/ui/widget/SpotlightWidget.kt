@@ -4,8 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.Preferences
@@ -47,8 +45,12 @@ class SpotlightWidget : GlanceAppWidget() {
     private val viewModel by lazy { SpotlightViewModel() }
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
-        if (viewModel.isLoggedIn) {
-            cacheImages(context)
+        val entries = if (viewModel.isLoggedIn) {
+            val articles = viewModel.fetchArticles()
+            cacheImages(context, articles)
+            articles.map { it.toSpotlightEntry() }
+        } else {
+            emptyList()
         }
 
         provideContent {
@@ -56,7 +58,7 @@ class SpotlightWidget : GlanceAppWidget() {
                 if (!viewModel.isLoggedIn) {
                     LoggedOutContent()
                 } else {
-                    Content()
+                    Content(entries)
                 }
             }
         }
@@ -84,16 +86,14 @@ class SpotlightWidget : GlanceAppWidget() {
     }
 
     @Composable
-    private fun Content() {
+    private fun Content(entries: List<SpotlightEntry>) {
         val context = LocalContext.current
         val prefs = currentState<Preferences>()
-        val articles by viewModel.articles.collectAsState(emptyList())
-        val entries = articles.map { it.toSpotlightEntry() }
         val manualOffset = prefs[CURRENT_INDEX_KEY] ?: 0
         val currentIndex =
             if (entries.isEmpty()) 0 else (lcgIndex(entries.size) + manualOffset).mod(entries.size)
         val entry = entries.getOrNull(currentIndex)
-        val imageBitmap = entry?.let { readCachedImage(context, currentIndex) }
+        val imageBitmap = entry?.let { readCachedImage(context, it.id) }
 
         SpotlightLayout(
             entry = entry,
@@ -122,10 +122,6 @@ class SpotlightWidget : GlanceAppWidget() {
         val CURRENT_INDEX_KEY = intPreferencesKey("spotlight_current_index")
 
         suspend fun refresh(context: Context, glanceId: GlanceId) {
-            try {
-                cacheImages(context)
-            } catch (_: Exception) {
-            }
             SpotlightWidget().update(context, glanceId)
         }
 
@@ -137,15 +133,12 @@ class SpotlightWidget : GlanceAppWidget() {
             SpotlightWidget().update(context, glanceId)
         }
 
-        private suspend fun cacheImages(context: Context) {
-            val viewModel = SpotlightViewModel()
-            val articles = viewModel.fetchArticles()
-
+        private suspend fun cacheImages(context: Context, articles: List<Article>) {
             clearImageCache(context)
 
-            articles.forEachIndexed { index, article ->
+            articles.forEach { article ->
                 article.imageURL?.let { url ->
-                    cacheImage(context, url, index)
+                    cacheImage(context, url, article.id)
                 }
             }
         }
@@ -153,10 +146,13 @@ class SpotlightWidget : GlanceAppWidget() {
         private fun imageDir(context: Context): File =
             File(context.cacheDir, "spotlight_images").apply { mkdirs() }
 
-        private fun imageFile(context: Context, index: Int): File =
-            File(imageDir(context), "spotlight_$index.jpg")
+        private fun imageFile(context: Context, id: String): File =
+            File(imageDir(context), "spotlight_${safeFileName(id)}.jpg")
 
-        private suspend fun cacheImage(context: Context, url: String, index: Int) {
+        private fun safeFileName(id: String): String =
+            id.hashCode().toUInt().toString(16)
+
+        private suspend fun cacheImage(context: Context, url: String, id: String) {
             try {
                 val request = ImageRequest.Builder(context)
                     .data(url)
@@ -166,15 +162,15 @@ class SpotlightWidget : GlanceAppWidget() {
                 val result = context.imageLoader.execute(request)
                 val image = result.image ?: return
                 val bitmap = image.toBitmap()
-                imageFile(context, index).outputStream().use { out ->
+                imageFile(context, id).outputStream().use { out ->
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out)
                 }
             } catch (_: Exception) {
             }
         }
 
-        fun readCachedImage(context: Context, index: Int): Bitmap? {
-            val file = imageFile(context, index)
+        fun readCachedImage(context: Context, id: String): Bitmap? {
+            val file = imageFile(context, id)
             if (!file.exists()) return null
             return BitmapFactory.decodeFile(file.absolutePath)
         }
@@ -191,9 +187,6 @@ private class SpotlightViewModel : KoinComponent {
 
     val isLoggedIn
         get() = appPreferences.isLoggedIn
-
-    val articles
-        get() = account.latestArticles(limit = 10)
 
     suspend fun fetchArticles() =
         account.latestArticles(limit = 10).first()
