@@ -610,6 +610,7 @@ fun ArticleScreen(
                                             selectedArticleKey = article?.id,
                                             listState = listState,
                                             refreshingAll = viewModel.refreshingAll,
+                                            enableMarkReadOnScroll = viewModel.markReadOnScrollEnabled,
                                             dimReadArticles = filter.status != ArticleStatus.STARRED,
                                             onMarkAllRead = { range ->
                                                 onMarkAllRead(range)
