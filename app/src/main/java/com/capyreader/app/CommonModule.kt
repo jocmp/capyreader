@@ -33,8 +33,6 @@ internal val common = module {
             clientCertManager = get(),
             userAgent = WebSettings.getDefaultUserAgent(androidContext()),
             acceptLanguage = Locale.getDefault().toAcceptLanguageTag(),
-            extractUsername = SecretKey.extractUsername,
-            extractSecret = SecretKey.extractSecret,
         )
     }
     single { AppPreferences(get()) }

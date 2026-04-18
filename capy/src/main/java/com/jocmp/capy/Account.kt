@@ -61,15 +61,11 @@ data class Account(
     private val userAgent: String,
     private val acceptLanguage: String,
     private val localHttpClient: OkHttpClient = LocalOkHttpClient.forAccount(path = cacheDirectory),
-    private val extractUsername: String = "",
-    private val extractSecret: String = "",
     val delegate: AccountDelegate = when (source) {
         Source.LOCAL -> LocalAccountDelegate(
             database = database,
             httpClient = localHttpClient,
             preferences = preferences,
-            extractUsername = extractUsername,
-            extractSecret = extractSecret,
         )
 
         Source.FEEDBIN -> FeedbinAccountDelegate(
