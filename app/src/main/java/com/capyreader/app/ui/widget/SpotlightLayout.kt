@@ -96,7 +96,7 @@ fun SpotlightLayout(
                         entry.feedName,
                         maxLines = 1,
                         style = TextStyle(
-                            fontSize = 14.sp,
+                            fontSize = 12.sp,
                             fontWeight = FontWeight.Medium,
                             color = textColor,
                         ),
@@ -105,7 +105,7 @@ fun SpotlightLayout(
                         entry.title,
                         maxLines = 3,
                         style = TextStyle(
-                            fontSize = 22.sp,
+                            fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
                             color = textColor,
                         ),
