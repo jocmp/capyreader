@@ -3,16 +3,15 @@ package com.capyreader.app.ui.articles
 import android.app.Application
 import app.cash.turbine.test
 import com.capyreader.app.notifications.NotificationHelper
-import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleListVerticalSwipe
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.feeds.AngleRefreshState
 import com.jocmp.capy.Account
 import com.jocmp.capy.ArticleFilter
+import com.jocmp.capy.ArticleStatus
+import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.Source
-import com.jocmp.capy.articles.SortOrder
-import com.jocmp.capy.preferences.Preference
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -54,20 +53,20 @@ class ArticleScreenViewModelTest {
             every { feeds } returns flowOf(emptyList())
             every { taggedFeeds } returns flowOf(emptyList())
             every { savedSearches } returns flowOf(emptyList())
-            every { canSaveArticleExternally } returns mockPreference(false)
+            every { canSaveArticleExternally } returns mockk(relaxed = true) {
+                every { get() } returns false
+                every { stateIn(any()) } returns MutableStateFlow(false)
+                every { changes() } returns flowOf(false)
+            }
+            every { countAll(any()) } returns flowOf(emptyMap())
+            every { countAllBySavedSearch(any()) } returns flowOf(emptyMap())
             every { source } returns Source.LOCAL
             coEvery { refresh(any()) } returns Result.success(Unit)
         }
 
-        appPreferences = mockk(relaxed = true) {
-            every { filter } returns mockPreference(ArticleFilter.default())
-            every { refreshInterval } returns mockPreference(RefreshInterval.EVERY_TWO_HOURS)
-            every { enableStickyFullContent } returns mockPreference(false)
-            every { articleListOptions } returns mockk(relaxed = true) {
-                every { swipeBottom } returns mockPreference(ArticleListVerticalSwipe.DISABLED)
-                every { sortOrder } returns mockPreference(SortOrder.default)
-                every { afterReadAllBehavior } returns mockPreference(AfterReadAllBehavior.default)
-            }
+        appPreferences = AppPreferences(RuntimeEnvironment.getApplication()).also {
+            it.clearAll()
+            it.refreshInterval.set(RefreshInterval.EVERY_TWO_HOURS)
         }
 
         notificationHelper = mockk(relaxed = true)
@@ -92,7 +91,7 @@ class ArticleScreenViewModelTest {
 
     @Test
     fun `skips initial refresh when refresh interval is manual only`() = runTest {
-        every { appPreferences.refreshInterval } returns mockPreference(RefreshInterval.MANUALLY_ONLY)
+        appPreferences.refreshInterval.set(RefreshInterval.MANUALLY_ONLY)
 
         val viewModel = buildViewModel()
 
@@ -102,7 +101,7 @@ class ArticleScreenViewModelTest {
 
     @Test
     fun `refreshAll transitions from stopped, running, to settling`() = runTest {
-        every { appPreferences.refreshInterval } returns mockPreference(RefreshInterval.MANUALLY_ONLY)
+        appPreferences.refreshInterval.set(RefreshInterval.MANUALLY_ONLY)
 
         val viewModel = buildViewModel()
 
@@ -120,7 +119,7 @@ class ArticleScreenViewModelTest {
 
     @Test
     fun `refreshAll guards against double calls while running`() = runTest {
-        every { appPreferences.refreshInterval } returns mockPreference(RefreshInterval.MANUALLY_ONLY)
+        appPreferences.refreshInterval.set(RefreshInterval.MANUALLY_ONLY)
 
         val viewModel = buildViewModel()
 
@@ -138,6 +137,42 @@ class ArticleScreenViewModelTest {
         }
     }
 
+    @Test
+    fun `requestNextFeed opens next feed after current feed's unread count drops to zero`() = runTest {
+        val initialFilter = ArticleFilter.Feeds(
+            feedID = "1",
+            folderTitle = null,
+            feedStatus = ArticleStatus.UNREAD
+        )
+        appPreferences.filter.set(initialFilter)
+        appPreferences.articleListOptions.swipeBottom.set(ArticleListVerticalSwipe.NEXT_FEED)
+
+        val feedA = Feed(id = "1", subscriptionID = "1", title = "A", feedURL = "a", count = 3)
+        val feedB = Feed(id = "2", subscriptionID = "2", title = "B", feedURL = "b", count = 3)
+
+        val feeds = MutableStateFlow(listOf(feedA, feedB))
+        val counts = MutableStateFlow<Map<String, Long>>(mapOf("1" to 3, "2" to 3))
+
+        every { account.feeds } returns feeds
+        every { account.countAll(any()) } returns counts
+
+        val viewModel = buildViewModel()
+        advanceUntilIdle()
+
+        counts.value = mapOf("1" to 0, "2" to 3)
+        advanceUntilIdle()
+
+        viewModel.requestNextFeed()
+        advanceUntilIdle()
+
+        val expectedNext = ArticleFilter.Feeds(
+            feedID = "2",
+            folderTitle = null,
+            feedStatus = ArticleStatus.UNREAD
+        )
+        assertEquals(expectedNext, appPreferences.filter.get())
+    }
+
     private fun buildViewModel(): ArticleScreenViewModel {
         val application = RuntimeEnvironment.getApplication() as Application
 
@@ -148,13 +183,5 @@ class ArticleScreenViewModelTest {
             notificationHelper = notificationHelper,
             ioDispatcher = testDispatcher,
         )
-    }
-
-    private inline fun <reified T> mockPreference(value: T): Preference<T> {
-        return mockk {
-            every { get() } returns value
-            every { stateIn(any()) } returns MutableStateFlow(value)
-            every { changes() } returns flowOf(value)
-        }
     }
 }

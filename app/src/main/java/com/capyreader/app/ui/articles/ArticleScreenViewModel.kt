@@ -196,6 +196,7 @@ class ArticleScreenViewModel(
     }
 
     private val _nextItem = MutableStateFlow<SidebarItem?>(null)
+    private var _nextItemFilter: ArticleFilter? = null
 
     private val nextItemListener: Flow<SidebarItem?> =
         combine(
@@ -204,10 +205,21 @@ class ArticleScreenViewModel(
             filter,
         ) { swipeBottom, sidebar, filter ->
             if (swipeBottom == ArticleListVerticalSwipe.DISABLED) {
+                _nextItemFilter = null
                 return@combine null
             }
 
-            sidebar.find { it.isSelected(filter) }?.next
+            val current = sidebar.find { it.isSelected(filter) }
+
+            if (current != null) {
+                _nextItemFilter = filter
+                current.next
+            } else if (_nextItemFilter == filter) {
+                _nextItem.value
+            } else {
+                _nextItemFilter = filter
+                null
+            }
         }
 
     val statusCount: Flow<Long> = filter.flatMapLatest { latestFilter ->
