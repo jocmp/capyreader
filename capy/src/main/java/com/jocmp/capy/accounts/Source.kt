@@ -36,7 +36,7 @@ enum class Source(val value: String) {
         get() = !isMiniflux
 
     val supportsReadLater
-        get() = this == FEEDBIN || this == LOCAL
+        get() = this == FEEDBIN
 
     private val isMiniflux
         get() = this == MINIFLUX || this == MINIFLUX_TOKEN
