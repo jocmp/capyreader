@@ -74,7 +74,7 @@ fun ArticleBottomBar(
                 expanded = true,
                 modifier = Modifier
                     .navigationBarsPadding()
-                    .padding(bottom = 12.dp),
+                    .padding(bottom = ArticleBarDefaults.FloatingToolbarBottomGap),
             ) {
                 ToolbarTooltip(
                     positioning = TooltipAnchorPosition.Above,
