@@ -309,7 +309,7 @@ private fun rememberContentPadding(pinToolbars: Boolean): PaddingValues {
     return if (pinToolbars) {
         PaddingValues(
             top = ArticleBarDefaults.topBarOffset,
-            bottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding() + ArticleBarDefaults.BottomBarHeight,
+            bottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding(),
         )
     } else {
         PaddingValues()
