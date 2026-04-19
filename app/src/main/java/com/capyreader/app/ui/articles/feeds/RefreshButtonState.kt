@@ -2,6 +2,7 @@ package com.capyreader.app.ui.articles.feeds
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
@@ -45,11 +46,24 @@ fun rememberRefreshButtonState(
             return@LaunchedEffect
         }
 
+        val current = angle.value
+        val settleFrom = maxOf(current, SettleStartAngle)
+
+        if (current < SettleStartAngle) {
+            angle.animateTo(
+                SettleStartAngle,
+                animationSpec = tween(
+                    ((SettleStartAngle - current) * MillisPerDegree).toInt(),
+                    easing = LinearEasing
+                )
+            )
+        }
+
         angle.animateTo(
             360f,
             animationSpec = tween(
-                RotationDuration - (angle.value.toInt() * MillisPerDegree),
-                easing = LinearEasing
+                (SettleDuration * (360f - settleFrom) / SettleAngleSpan).toInt(),
+                easing = LinearOutSlowInEasing
             )
         )
 
@@ -70,3 +84,9 @@ enum class AngleRefreshState {
 private const val RotationDuration = 1080
 
 private const val MillisPerDegree = 3
+
+private const val SettleStartAngle = 270f
+
+private const val SettleAngleSpan = 360f - SettleStartAngle
+
+private const val SettleDuration = 600

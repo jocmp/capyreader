@@ -3,16 +3,14 @@ package com.capyreader.app.ui.articles.detail
 import android.view.HapticFeedbackConstants
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.FiberManualRecord
@@ -21,12 +19,10 @@ import androidx.compose.material.icons.rounded.FiberManualRecord
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarOutline
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.HorizontalFloatingToolbar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.TooltipAnchorPosition
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -35,7 +31,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.capyreader.app.R
@@ -46,9 +42,9 @@ import com.jocmp.capy.Article
 import com.jocmp.capy.Article.FullContentState.LOADED
 import com.jocmp.capy.Article.FullContentState.LOADING
 
-private val sizeSpec = spring<IntSize>(stiffness = 700f)
+private val slideSpec = spring<IntOffset>(stiffness = 700f)
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ArticleBottomBar(
     show: Boolean,
@@ -69,107 +65,87 @@ fun ArticleBottomBar(
     ) {
         AnimatedVisibility(
             visible = show,
-            enter = expandVertically(expandFrom = Alignment.Top, animationSpec = sizeSpec),
-            exit = shrinkVertically(shrinkTowards = Alignment.Top, animationSpec = sizeSpec)
+            enter = slideInVertically(initialOffsetY = { it }, animationSpec = slideSpec) + fadeIn(),
+            exit = slideOutVertically(targetOffsetY = { it }, animationSpec = slideSpec) + fadeOut(),
         ) {
             val view = LocalView.current
 
-            Column {
-                HorizontalDivider(
-                    color = MaterialTheme.colorScheme.surfaceContainerHighest,
-                    thickness = 0.5f.dp,
-                )
-                Surface(
-                    color = MaterialTheme.colorScheme.surface
+            HorizontalFloatingToolbar(
+                expanded = true,
+                modifier = Modifier
+                    .navigationBarsPadding()
+                    .padding(bottom = 12.dp),
+            ) {
+                ToolbarTooltip(
+                    positioning = TooltipAnchorPosition.Above,
+                    message = stringResource(R.string.article_view_mark_as_read)
                 ) {
-                    Row(
-                    modifier = Modifier
-                        .navigationBarsPadding()
-                        .fillMaxWidth()
-                        .height(ArticleBarDefaults.BottomBarHeight),
-                    horizontalArrangement = Arrangement.SpaceAround,
-                    verticalAlignment = Alignment.CenterVertically,
+                    IconButton(onClick = { onToggleRead() }) {
+                        Icon(
+                            if (article.read) Icons.Outlined.FiberManualRecord else Icons.Rounded.FiberManualRecord,
+                            contentDescription = stringResource(R.string.article_view_mark_as_read),
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
+                }
+                ToolbarTooltip(
+                    positioning = TooltipAnchorPosition.Above,
+                    message = stringResource(R.string.article_view_star)
                 ) {
-                    ToolbarTooltip(
-                        positioning = TooltipAnchorPosition.Above,
-                        message = stringResource(R.string.article_view_mark_as_read)
-                    ) {
-                        IconButton(
-                            onClick = { onToggleRead() },
-                        ) {
-                            Icon(
-                                if (article.read) Icons.Outlined.FiberManualRecord else Icons.Rounded.FiberManualRecord,
-                                contentDescription = stringResource(R.string.article_view_mark_as_read),
-                                modifier = Modifier.size(24.dp)
-                            )
-                        }
+                    IconButton(onClick = { onToggleStar() }) {
+                        Icon(
+                            if (article.starred) Icons.Rounded.Star else Icons.Rounded.StarOutline,
+                            contentDescription = stringResource(R.string.article_view_star),
+                            modifier = Modifier.size(24.dp)
+                        )
                     }
-                    ToolbarTooltip(
-                        positioning = TooltipAnchorPosition.Above,
-                        message = stringResource(R.string.article_view_star)
+                }
+                ToolbarTooltip(
+                    positioning = TooltipAnchorPosition.Above,
+                    message = stringResource(R.string.article_bottom_bar_next_article)
+                ) {
+                    IconButton(
+                        enabled = hasNextArticle,
+                        onClick = {
+                            view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
+                            onSelectNext()
+                        },
                     ) {
-                        IconButton(
-                            onClick = { onToggleStar() },
-                        ) {
-                            Icon(
-                                if (article.starred) Icons.Rounded.Star else Icons.Rounded.StarOutline,
-                                contentDescription = stringResource(R.string.article_view_star),
-                                modifier = Modifier.size(24.dp)
-                            )
-                        }
+                        Icon(
+                            Icons.Rounded.ExpandMore,
+                            contentDescription = stringResource(R.string.article_bottom_bar_next_article),
+                            modifier = Modifier.size(24.dp)
+                        )
                     }
-                    ToolbarTooltip(
-                        positioning = TooltipAnchorPosition.Above,
-                        message = stringResource(R.string.article_bottom_bar_next_article)
-                    ) {
-                        IconButton(
-                            enabled = hasNextArticle,
-                            onClick = {
-                                view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
-                                onSelectNext()
-                            },
-                        ) {
+                }
+                ToolbarTooltip(
+                    positioning = TooltipAnchorPosition.Above,
+                    message = stringResource(R.string.extract_full_content)
+                ) {
+                    IconButton(onClick = { onToggleExtractContent() }) {
+                        if (article.fullContent == LOADING) {
+                            FullContentLoadingIcon()
+                        } else {
                             Icon(
-                                Icons.Rounded.ExpandMore,
-                                contentDescription = stringResource(R.string.article_bottom_bar_next_article),
-                                modifier = Modifier.size(24.dp)
-                            )
-                        }
-                    }
-                    ToolbarTooltip(
-                        positioning = TooltipAnchorPosition.Above,
-                        message = stringResource(R.string.extract_full_content)
-                    ) {
-                        IconButton(
-                            onClick = { onToggleExtractContent() },
-                        ) {
-                            if (article.fullContent == LOADING) {
-                                FullContentLoadingIcon()
-                            } else {
-                                Icon(
-                                    painterResource(id = extractIcon(article.fullContent)),
-                                    contentDescription = stringResource(R.string.extract_full_content),
-                                    modifier = Modifier.size(24.dp)
-                                )
-                            }
-                        }
-                    }
-                    ToolbarTooltip(
-                        positioning = TooltipAnchorPosition.Above,
-                        message = stringResource(R.string.article_share)
-                    ) {
-                        IconButton(
-                            onClick = { context.shareArticle(article = article) },
-                        ) {
-                            Icon(
-                                Icons.Rounded.Share,
-                                contentDescription = stringResource(R.string.article_share),
+                                painterResource(id = extractIcon(article.fullContent)),
+                                contentDescription = stringResource(R.string.extract_full_content),
                                 modifier = Modifier.size(24.dp)
                             )
                         }
                     }
                 }
-            }
+                ToolbarTooltip(
+                    positioning = TooltipAnchorPosition.Above,
+                    message = stringResource(R.string.article_share)
+                ) {
+                    IconButton(onClick = { context.shareArticle(article = article) }) {
+                        Icon(
+                            Icons.Rounded.Share,
+                            contentDescription = stringResource(R.string.article_share),
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
+                }
             }
         }
     }
