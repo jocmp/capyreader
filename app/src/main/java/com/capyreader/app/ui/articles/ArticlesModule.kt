@@ -8,7 +8,7 @@ import com.capyreader.app.ui.articles.audio.AudioPlayerController
 import com.capyreader.app.ui.articles.feeds.edit.EditFeedViewModel
 import com.jocmp.capy.articles.ArticleRenderer
 import com.jocmp.capy.articles.AudioPlayerLabels
-import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 internal val articlesModule = module {

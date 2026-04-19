@@ -6,6 +6,7 @@ import com.jocmp.capy.common.baseURL
 import com.jocmp.capy.common.optionalURL
 import okhttp3.OkHttpClient
 import org.jsoup.Jsoup
+import java.net.URI
 import java.net.URL
 
 class FaviconFinder(
@@ -30,7 +31,7 @@ class FaviconFinder(
             iconURLs.add(it.attr("abs:href"))
         }
 
-        iconURLs.add(URL(baseURL).toURI().resolve("/favicon.ico").toString())
+        iconURLs.add(URI(baseURL).resolve("/favicon.ico").toString())
 
         return iconURLs.firstOrNull { faviconPolicy.isValid(it) }
     }

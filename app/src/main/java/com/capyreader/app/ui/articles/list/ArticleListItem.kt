@@ -54,7 +54,7 @@ fun ArticleListItem(
             overlineContent?.let {
                 Row(Modifier.padding(start = overlineStartPadding)) {
                     ProvideTextStyleFromToken(
-                        colors.overlineColor,
+                        colors.overlineContentColor,
                         typography.labelSmall,
                         it,
                     )
@@ -68,7 +68,7 @@ fun ArticleListItem(
                 }
                 Column(Modifier.weight(1f)) {
                     ProvideTextStyleFromToken(
-                        colors.headlineColor,
+                        colors.contentColor,
                         typography.bodyLarge,
                     ) {
                         headlineContent()
@@ -76,7 +76,7 @@ fun ArticleListItem(
 
                     supportingContent?.let {
                         ProvideTextStyleFromToken(
-                            colors.supportingTextColor,
+                            colors.supportingContentColor,
                             typography.bodyMedium,
                             it,
                         )
@@ -85,7 +85,7 @@ fun ArticleListItem(
                 trailingContent?.let {
                     Column {
                         ProvideTextStyleFromToken(
-                            colors.trailingIconColor,
+                            colors.trailingContentColor,
                             typography.labelSmall,
                             it,
                         )

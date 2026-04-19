@@ -3,7 +3,7 @@ package com.capyreader.app.ui.articles.list
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.OpenInNew
+import androidx.compose.material.icons.automirrored.rounded.OpenInNew
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -84,7 +84,7 @@ private fun swipeActions(article: Article, option: RowSwipeOption): List<SwipeAc
 
 private fun LinkOpener.openLink(article: Article, actions: ArticleActions) =
     ArticleAction(
-        Icons.Rounded.OpenInNew,
+        Icons.AutoMirrored.Rounded.OpenInNew,
         R.string.article_view_open_externally,
     ) {
         val url = article.url ?: return@ArticleAction

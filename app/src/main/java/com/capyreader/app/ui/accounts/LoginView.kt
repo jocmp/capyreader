@@ -37,6 +37,7 @@ import com.capyreader.app.widthMaxSingleColumn
 import com.jocmp.capy.accounts.Source
 import org.koin.android.ext.koin.androidContext
 import org.koin.compose.KoinApplication
+import org.koin.dsl.koinConfiguration
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -160,7 +161,7 @@ private fun LoginViewPreview() {
     val context = LocalContext.current
 
     KoinApplication(
-        application = {
+        configuration = koinConfiguration {
             androidContext(context)
             setupCommonModules()
         }
@@ -180,7 +181,7 @@ private fun MinifluxLoginViewPreview() {
     val context = LocalContext.current
 
     KoinApplication(
-        application = {
+        configuration = koinConfiguration {
             androidContext(context)
             setupCommonModules()
         }
@@ -200,7 +201,7 @@ private fun FreshRSSLoginViewPreview() {
     val context = LocalContext.current
 
     KoinApplication(
-        application = {
+        configuration = koinConfiguration {
             androidContext(context)
             setupCommonModules()
         }

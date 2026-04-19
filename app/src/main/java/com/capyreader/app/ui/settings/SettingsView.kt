@@ -39,6 +39,7 @@ import com.capyreader.app.ui.settings.panels.UnreadBadgesSettingsPanel
 import com.jocmp.capy.common.launchUI
 import org.koin.android.ext.koin.androidContext
 import org.koin.compose.KoinApplication
+import org.koin.dsl.koinConfiguration
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
@@ -179,7 +180,7 @@ fun AccountSettingsViewPreview() {
     val context = LocalContext.current
 
     KoinApplication(
-        application = {
+        configuration = koinConfiguration {
             androidContext(context)
             setupCommonModules()
         }

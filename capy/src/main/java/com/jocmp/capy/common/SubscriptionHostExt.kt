@@ -1,14 +1,13 @@
 package com.jocmp.capy.common
 
 import com.jocmp.feedbinclient.Subscription
-import java.net.MalformedURLException
-import java.net.URL
+import java.net.URI
 
 internal val Subscription.host: String?
     get() {
         return try {
-            URL(site_url).host
-        } catch (e: MalformedURLException) {
+            URI(site_url).toURL().host
+        } catch (_: Throwable) {
             null
         }
     }

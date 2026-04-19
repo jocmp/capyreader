@@ -4,7 +4,7 @@ import com.jocmp.capy.Enclosure
 import com.jocmp.capy.common.optionalURL
 import com.jocmp.capy.common.withIOContext
 import com.jocmp.capy.db.Database
-import java.net.URL
+import java.net.URI
 
 internal class EnclosureRecords internal constructor(
     private val database: Database
@@ -41,7 +41,7 @@ internal class EnclosureRecords internal constructor(
         itunesImage: String?
     ): Enclosure {
         return Enclosure(
-            url = URL(url),
+            url = URI(url).toURL(),
             type = type,
             itunesDurationSeconds = itunesDurationSeconds,
             itunesImage = itunesImage,

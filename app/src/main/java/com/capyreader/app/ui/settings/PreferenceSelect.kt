@@ -54,8 +54,8 @@ fun <T> PreferenceSelect(
     val dismiss = { setOpen(false) }
     val defaults = ListItemDefaults.colors()
     val colors = ListItemDefaults.colors(
-        headlineColor = if (enabled) defaults.headlineColor else defaults.disabledHeadlineColor,
-        supportingColor = if (enabled) defaults.supportingTextColor else defaults.disabledSupportingTextColor,
+        headlineColor = if (enabled) defaults.contentColor else defaults.disabledContentColor,
+        supportingColor = if (enabled) defaults.supportingContentColor else defaults.disabledSupportingTextColor,
         containerColor = MaterialTheme.colorScheme.background,
     )
 
@@ -150,6 +150,6 @@ private fun PreferenceSelectPreview() {
 }
 
 private val ListItemColors.disabledSupportingTextColor: Color
-    get() = supportingTextColor.copy(
+    get() = supportingContentColor.copy(
         alpha = ListItemDisabledLabelTextOpacity
     )
