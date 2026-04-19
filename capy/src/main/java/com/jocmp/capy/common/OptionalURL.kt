@@ -1,5 +1,6 @@
 package com.jocmp.capy.common
 
+import java.net.URI
 import java.net.URL
 
 fun URL.baseURL(): URL? {
@@ -13,7 +14,7 @@ fun optionalURL(string: String?): URL? {
     }
 
     return try {
-        URL(string)
+        URI(string).toURL()
     } catch (_: Throwable) {
         null
     }
