@@ -8,6 +8,7 @@ import com.capyreader.app.setupCommonModules
 import com.capyreader.app.ui.theme.CapyTheme
 import org.koin.android.ext.koin.androidContext
 import org.koin.compose.KoinApplication
+import org.koin.dsl.koinConfiguration
 import org.koin.compose.koinInject
 
 @Composable
@@ -21,7 +22,7 @@ private fun CrashReportingCheckboxPreview() {
     val context = LocalContext.current
 
     KoinApplication(
-        application = {
+        configuration = koinConfiguration {
             androidContext(context)
             setupCommonModules()
         }

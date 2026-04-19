@@ -39,7 +39,7 @@ fun UpdateAuthView(
 ) {
     DialogCard {
         MediumTopAppBar(
-            colors = TopAppBarDefaults.mediumTopAppBarColors().copy(
+            colors = TopAppBarDefaults.topAppBarColors().copy(
                 containerColor = colorScheme.surfaceVariant
             ),
             title = {

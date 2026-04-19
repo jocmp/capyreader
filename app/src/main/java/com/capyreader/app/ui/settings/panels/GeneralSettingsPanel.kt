@@ -293,8 +293,8 @@ fun NotificationsListItem(
     }
 
     val colors = ListItemDefaults.colors(
-        headlineColor = if (enabled) defaultColors.headlineColor else defaultColors.disabledHeadlineColor,
-        supportingColor = if (enabled) defaultColors.supportingTextColor else defaultColors.disabledHeadlineColor,
+        headlineColor = if (enabled) defaultColors.contentColor else defaultColors.disabledContentColor,
+        supportingColor = if (enabled) defaultColors.supportingContentColor else defaultColors.disabledContentColor,
     )
 
     val permissions = rememberLauncherForActivityResult(RequestPermission()) { allowed ->

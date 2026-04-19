@@ -35,6 +35,7 @@ import com.capyreader.app.common.RowItem
 import com.capyreader.app.ui.theme.CapyTheme
 import org.koin.android.ext.koin.androidContext
 import org.koin.compose.KoinApplication
+import org.koin.dsl.koinConfiguration
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -58,7 +59,7 @@ fun MiniSettings() {
         Dialog(onDismissRequest = onNavigateBack) {
             DialogCard {
                 TopAppBar(
-                    colors = TopAppBarDefaults.mediumTopAppBarColors().copy(
+                    colors = TopAppBarDefaults.topAppBarColors().copy(
                         containerColor = colorScheme.surfaceVariant
                     ),
                     title = {
@@ -99,7 +100,7 @@ private fun MiniSettingsPreview() {
     val context = LocalContext.current
 
     KoinApplication(
-        application = {
+        configuration = koinConfiguration {
             androidContext(context)
             setupCommonModules()
         }
