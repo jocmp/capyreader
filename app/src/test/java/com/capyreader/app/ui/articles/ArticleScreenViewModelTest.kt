@@ -11,6 +11,7 @@ import com.jocmp.capy.Account
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
+import com.jocmp.capy.Folder
 import com.jocmp.capy.accounts.Source
 import io.mockk.coEvery
 import io.mockk.every
@@ -171,6 +172,46 @@ class ArticleScreenViewModelTest {
             feedStatus = ArticleStatus.UNREAD
         )
         assertEquals(expectedNext, appPreferences.filter.get())
+    }
+
+    @Test
+    fun `requestNextFeed skips empty children when current folder is marked read`() = runTest {
+        val initialFilter = ArticleFilter.Folders(
+            folderTitle = "X",
+            folderStatus = ArticleStatus.UNREAD,
+        )
+        appPreferences.filter.set(initialFilter)
+        appPreferences.articleListOptions.swipeBottom.set(ArticleListVerticalSwipe.NEXT_FEED)
+
+        val x1 = Feed(id = "x1", subscriptionID = "x1", title = "X1", feedURL = "x1", folderName = "X")
+        val x2 = Feed(id = "x2", subscriptionID = "x2", title = "X2", feedURL = "x2", folderName = "X")
+        val y1 = Feed(id = "y1", subscriptionID = "y1", title = "Y1", feedURL = "y1", folderName = "Y")
+
+        val folderX = Folder(title = "X", feeds = listOf(x1, x2), expanded = true)
+        val folderY = Folder(title = "Y", feeds = listOf(y1), expanded = true)
+
+        val folders = MutableStateFlow(listOf(folderX, folderY))
+        val counts = MutableStateFlow<Map<String, Long>>(
+            mapOf("x1" to 2L, "x2" to 2L, "y1" to 3L)
+        )
+
+        every { account.folders } returns folders
+        every { account.feeds } returns flowOf(emptyList())
+        every { account.countAll(any()) } returns counts
+
+        val viewModel = buildViewModel()
+        advanceUntilIdle()
+
+        counts.value = mapOf("x1" to 0L, "x2" to 0L, "y1" to 3L)
+        advanceUntilIdle()
+
+        viewModel.requestNextFeed()
+        advanceUntilIdle()
+
+        assertEquals(
+            ArticleFilter.Folders(folderTitle = "Y", folderStatus = ArticleStatus.UNREAD),
+            appPreferences.filter.get()
+        )
     }
 
     private fun buildViewModel(): ArticleScreenViewModel {

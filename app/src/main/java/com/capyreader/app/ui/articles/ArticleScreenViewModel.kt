@@ -195,32 +195,49 @@ class ArticleScreenViewModel(
         )
     }
 
-    private val _nextItem = MutableStateFlow<SidebarItem?>(null)
-    private var _nextItemFilter: ArticleFilter? = null
+    private val _sidebarItem = MutableStateFlow<SidebarItem?>(null)
 
-    private val nextItemListener: Flow<SidebarItem?> =
+    private val sidebarListener: Flow<SidebarItem?> =
         combine(
             listSwipeBottom,
             sidebar,
             filter,
         ) { swipeBottom, sidebar, filter ->
             if (swipeBottom == ArticleListVerticalSwipe.DISABLED) {
-                _nextItemFilter = null
                 return@combine null
             }
 
-            val current = sidebar.find { it.isSelected(filter) }
+            val found = sidebar.find { it.isSelected(filter) }
+            if (found != null) return@combine found
 
-            if (current != null) {
-                _nextItemFilter = filter
-                current.next
-            } else if (_nextItemFilter == filter) {
-                _nextItem.value
-            } else {
-                _nextItemFilter = filter
-                null
-            }
+            val stale = _sidebarItem.value?.takeIf { it.isSelected(filter) }
+                ?: return@combine null
+
+            SidebarItem(
+                toFilter = stale.toFilter,
+                isSelected = stale.isSelected,
+                next = findFreshItem(stale, sidebar, filter.status),
+            )
         }
+
+    private fun findFreshItem(
+        stale: SidebarItem,
+        sidebar: List<SidebarItem>,
+        status: ArticleStatus,
+    ): SidebarItem? {
+        var search: SidebarItem? = stale.next
+
+        while (search != null) {
+            val searchFilter = search.toFilter(status)
+            val match = sidebar.find { it.isSelected(searchFilter) }
+            if (match != null) {
+                return match
+            }
+            search = search.next
+        }
+
+        return null
+    }
 
     val statusCount: Flow<Long> = filter.flatMapLatest { latestFilter ->
         account.countAllByStatus(countableStatus(latestFilter))
@@ -252,17 +269,17 @@ class ArticleScreenViewModel(
     val searchState: Flow<SearchState>
         get() = _searchState
 
-    val nextFilter: Flow<SidebarItem?>
-        get() = _nextItem
+    val nextFilter: Flow<SidebarItem?> = _sidebarItem.map { it?.next }
 
     init {
         viewModelScope.launch {
-            nextItemListener.collect {
-                _nextItem.value = it
+            sidebarListener.collect {
+                _sidebarItem.value = it
             }
         }
 
-        val skipInitialRefresh = appPreferences.refreshInterval.get() == RefreshInterval.MANUALLY_ONLY
+        val skipInitialRefresh =
+            appPreferences.refreshInterval.get() == RefreshInterval.MANUALLY_ONLY
 
         if (skipInitialRefresh) {
             refreshInitialized = true
@@ -616,7 +633,7 @@ class ArticleScreenViewModel(
     }
 
     fun requestNextFeed() {
-        _nextItem.value?.let(::selectSidebarItem)
+        _sidebarItem.value?.next?.let(::selectSidebarItem)
     }
 
     private fun selectSidebarItem(item: SidebarItem) {
@@ -801,7 +818,7 @@ class ArticleScreenViewModel(
     private fun openNextFeedOnAllRead(
         onArticlesCleared: () -> Unit,
     ) {
-        val nextItem = _nextItem.value
+        val nextItem = _sidebarItem.value?.next
 
         if (nextItem != null) {
             selectSidebarItem(nextItem)
