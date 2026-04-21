@@ -51,7 +51,7 @@
     <string name="filter_starred">Atzīmētie</string>
     <string name="account_source_freshrss">FreshRSS</string>
     <string name="add_feed_url_title">Ziņu plūsma vai vietnes URL</string>
-    <string name="add_feed_new_folder_title">Jauna birka</string>
+    <string name="add_feed_new_folder_title">Jauna mape</string>
     <string name="article_actions_copy_link">Kopēt saiti</string>
     <string name="freshrss_article_actions_label">Pievienot birku</string>
     <string name="freshrss_labels_sheet_title">Birkas</string>
@@ -85,13 +85,13 @@
     <string name="action_mark_all_read">Atzīmēt visus kā lasītus</string>
     <string name="mark_all_read_dialog_description">Atzīmēt visus rakstus kā lasītus?</string>
     <string name="article_actions_open_menu">Atvērt rakstu darbības</string>
-    <string name="crash_reporting_checkbox_title">Ieslēgt avārijas ziņošanu</string>
+    <string name="crash_reporting_checkbox_title">Ieslēgt lietotnes nobrukšanas ziņošanu</string>
     <string name="account_source_local">Vietējais (lokālais)</string>
     <string name="add_account_local_subtitle">Jūsu ierīcē</string>
     <string name="add_account_reader_subtitle">Pašmitināts Google Reader API</string>
     <string name="add_account_feedbin_signup_prompt">Nav Feedbin konta?</string>
     <string name="add_account_feedbin_signup_link_text">Izveidojiet to šeit.</string>
-    <string name="add_account_freshrss_signup_prompt">Nav FreshRSS kopija?</string>
+    <string name="add_account_freshrss_signup_prompt">Jums nav pašizmitināta FreshRSS servera (instances)?</string>
     <string name="add_account_freshrss_signup_link_text">Uzzināt vairāk.</string>
     <string name="opml_import_notification_title">Ievieto abonementus…</string>
     <string name="notifications_channel_title_feed_update">Ziņu plūsmas atjauninājumi</string>
@@ -115,7 +115,7 @@
     <string name="settings_option_full_content_title">Rādīt visu (pilnu) raksta saturu</string>
     <string name="refresh_on_start">Kad atver lietotni</string>
     <string name="empty_onboarding_title">Pagaidām nav nevienas ziņu plūsmas</string>
-    <string name="article_style_options">Fonta stila opcijas</string>
+    <string name="article_style_options">Fonta stila varianti</string>
     <string name="font_option_system_default">Izmantot sistēmas noklusējuma iestatījumus</string>
     <string name="article_font_menu_label">Fonts</string>
     <string name="article_font_scale_label">Fonta lielums</string>
@@ -175,8 +175,8 @@
     <string name="article_list_sort_oldest_first">Vecākos augšgalā</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">Atvērt navigācijas paneli</string>
     <string name="action_share">Dalīties</string>
-    <string name="crash_log_export_item_title">Dalīties ar avārijas pierakstiem</string>
-    <string name="crash_log_export_item_subtitle">Saglabā avārijas pierakstus datnē, lai nosūtītu to izstrādātājam</string>
+    <string name="crash_log_export_item_title">Dalīties ar lietotnes nobrukšanas pierakstiem</string>
+    <string name="crash_log_export_item_subtitle">Saglabā lietotnes nobrukšanas pierakstus datnē, lai nosūtītu to izstrādātājam</string>
     <string name="edit_feed_folders_section">Birkas</string>
     <string name="edit_feed_notifications_title">Iespējot paziņojumus</string>
     <string name="settings_select_all">Atlasīt visus</string>
@@ -254,7 +254,7 @@
     <string name="widget_headlines_see_more_button">Skatīt vairāk rakstus</string>
     <string name="widget_headlines_account_error">Vispirms pievienojiet kontu</string>
     <string name="settings_gestures_improve_talkback_title">Uzlabot ekrānā redzamo teksta elementu pārveidošanu runā (TalkBack)</string>
-    <string name="actions_share_link">Nosūtīt saiti</string>
+    <string name="actions_share_link">Dalīties ar raksta saiti</string>
     <string name="widget_receiver_headlines_title">Rakstu virsraksti</string>
     <string name="widget_headlines_title">Svaigie rakstu virsraksti</string>
     <string name="settings_gestures_improve_talkback_subtitle">Atspējo dažus iestatījumus, lai uzlabotu ekrānā redzamo teksta elementu pārveidošanu runā (TalkBack)</string>
@@ -331,4 +331,23 @@
     <string name="auth_fields_show_advanced">Papildu iestatījumi</string>
     <string name="auth_fields_hide_advanced">Paslēpt papildu iestatījumus</string>
     <string name="audio_player_pause">Iepauzēt</string>
+    <string name="filter_read_later">Saglabāts vēlākam laikam</string>
+    <string name="article_actions_save_for_later">Saglabāt vēlākam laikam</string>
+    <string name="saved_for_later_success">Raksts saglabāts vēlākai lasīšanai</string>
+    <string name="folder_action_delete_title">Dzēst mapi</string>
+    <string name="folder_action_edit">Pārsaukt</string>
+    <string name="folder_action_delete_confirm">Dzēst</string>
+    <string name="folder_name_title">Nosaukums</string>
+    <string name="widget_receiver_spotlight_title">Uzmanības centrā</string>
+    <string name="widget_spotlight_previous">Iepriekšējais</string>
+    <string name="widget_spotlight_next">Nākamais</string>
+    <string name="freshrss_visibility_option_folder">Kategorija</string>
+    <string name="folder_action_delete_message">Vai tiešām vēlaties dzēst \"%1$s\" birku?</string>
+    <string name="folder_action_edit_success">Birkas nosaukums atjaunināts</string>
+    <string name="folder_action_edit_error">Kļūda, atjauninot birkas nosaukumu</string>
+    <string name="delete_folder_error">Kļūda, dzēšot mapi</string>
+    <string name="article_list_swipe_mark_all_read">Atzīmēt visus rakstus kā lasītus</string>
+    <string name="actions_share_link_with_title">Dalīties ar raksta saiti un tā virsrakstu</string>
+    <string name="widget_spotlight_empty">Nav nelasītu rakstu</string>
+    <string name="widget_spotlight_see_all">Skatīt visus</string>
 </resources>
