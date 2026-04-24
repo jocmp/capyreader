@@ -56,7 +56,9 @@ import com.capyreader.app.ui.LocalBadgeStyle
 import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.LocalMarkAllReadButtonPosition
+import com.capyreader.app.ui.LocalTimeFormats
 import com.capyreader.app.ui.LocalUnreadCount
+import com.capyreader.app.ui.rememberDisplayTimeFormats
 import com.capyreader.app.ui.articles.audio.AudioPlayerController
 import com.capyreader.app.ui.articles.audio.FloatingAudioPlayer
 import com.capyreader.app.ui.articles.detail.ArticleView
@@ -197,6 +199,7 @@ fun ArticleScreen(
         LocalBadgeStyle provides badgeStyle,
         LocalUnreadCount provides unreadCount,
         LocalSnackbarHost provides snackbarHostState,
+        LocalTimeFormats provides rememberDisplayTimeFormats(),
     ) {
         val openNextFeedOnReadAll = afterReadAll == AfterReadAllBehavior.OPEN_NEXT_FEED
 

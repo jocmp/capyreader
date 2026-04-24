@@ -34,6 +34,10 @@ import com.capyreader.app.notifications.NotificationHelper.Companion.ARTICLE_ID_
 import com.capyreader.app.notifications.NotificationHelper.Companion.FEED_ID_KEY
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.relativeTime
+import com.jocmp.capy.common.DisplayTimeFormats
+import android.text.format.DateFormat
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import java.net.URL
 import java.time.LocalDateTime
 import java.time.ZoneOffset
@@ -76,6 +80,7 @@ fun ArticleHeadline(article: Article, currentTime: LocalDateTime) {
                 relativeTime(
                     time = article.publishedAt,
                     currentTime = currentTime,
+                    formats = widgetTimeFormats(context),
                 ),
                 style = TextStyle(
                     fontSize = 12.sp,
@@ -84,6 +89,19 @@ fun ArticleHeadline(article: Article, currentTime: LocalDateTime) {
             )
         }
     }
+}
+
+private fun widgetTimeFormats(context: Context): DisplayTimeFormats {
+    val time = if (DateFormat.is24HourFormat(context)) {
+        DateTimeFormatter.ofPattern("HH:mm")
+    } else {
+        DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)
+    }
+    return DisplayTimeFormats(
+        time = time,
+        shortDate = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM),
+        longDate = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG),
+    )
 }
 
 private fun Context.openArticle(article: Article): Action {
