@@ -22,11 +22,13 @@ import com.capyreader.app.common.AudioEnclosure
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.WebViewInterface
 import com.capyreader.app.common.rememberTalkbackPreference
+import com.capyreader.app.ui.LocalTimeFormats
 import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
 import com.capyreader.app.ui.articles.displayFeedName
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
+import com.jocmp.capy.common.DisplayTimeFormats
 import com.jocmp.capy.logging.CapyLog
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -41,12 +43,13 @@ fun WebView(
     article: Article? = null,
     showImages: Boolean = true,
 ) {
+    val timeFormats = LocalTimeFormats.current
     AndroidView(
         modifier = modifier,
         factory = { state.webView },
         update = {
             article?.let {
-                state.loadHtml(article, showImages)
+                state.loadHtml(article, showImages, timeFormats)
             }
         }
     )
@@ -162,7 +165,7 @@ class WebViewState(
         loadEmpty()
     }
 
-    fun loadHtml(article: Article, showImages: Boolean) {
+    fun loadHtml(article: Article, showImages: Boolean, timeFormats: DisplayTimeFormats) {
         val id = article.id
         val hash = article.content.hashCode()
 
@@ -180,7 +183,7 @@ class WebViewState(
         val html = renderer.render(
             article,
             hideImages = !showImages,
-            byline = article.byline(context = webView.context),
+            byline = article.byline(context = webView.context, formats = timeFormats),
             colors = colors,
             feedName = article.displayFeedName(webView.context),
         )
