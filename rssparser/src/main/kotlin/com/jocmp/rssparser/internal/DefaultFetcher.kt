@@ -1,6 +1,8 @@
 package com.jocmp.rssparser.internal
 
 import com.jocmp.rssparser.exception.HttpException
+import com.jocmp.rssparser.exception.NonFeedResponseException
+import com.jocmp.rssparser.model.ConditionalGetInfo
 import kotlinx.coroutines.suspendCancellableCoroutine
 import okhttp3.Call
 import okhttp3.Callback
@@ -14,17 +16,23 @@ import kotlin.coroutines.resumeWithException
 internal class DefaultFetcher(
     private val callFactory: Call.Factory,
 ) : Fetcher {
-    override suspend fun fetch(url: String): ParserInput {
-        val request = createRequest(url)
-        return callFactory.newCall(request).awaitForInputStream()
+    override suspend fun fetch(url: String, conditionalGet: ConditionalGetInfo): FetchResponse {
+        val request = createRequest(url, conditionalGet)
+        return callFactory.newCall(request).awaitForResponse()
     }
 
-    private fun createRequest(url: String): Request =
-        Request.Builder()
-            .url(url)
-            .build()
+    private fun createRequest(url: String, conditionalGet: ConditionalGetInfo): Request {
+        val builder = Request.Builder().url(url)
+        conditionalGet.etag?.takeIf { it.isNotBlank() }?.let {
+            builder.header("If-None-Match", it)
+        }
+        conditionalGet.lastModified?.takeIf { it.isNotBlank() }?.let {
+            builder.header("If-Modified-Since", it)
+        }
+        return builder.build()
+    }
 
-    private suspend fun Call.awaitForInputStream(): ParserInput =
+    private suspend fun Call.awaitForResponse(): FetchResponse =
         suspendCancellableCoroutine { continuation ->
             continuation.invokeOnCancellation {
                 cancel()
@@ -32,19 +40,41 @@ internal class DefaultFetcher(
 
             enqueue(object : Callback {
                 override fun onResponse(call: Call, response: Response) {
-                    if (response.isSuccessful) {
-                        val body = requireNotNull(response.body)
-                        val charset = response.header("content-type")?.toMediaTypeOrNull()?.charset()
+                    if (response.code == 304) {
+                        response.close()
                         continuation.resume(
-                            ParserInput(body.bytes(), charset = charset)
+                            FetchResponse(parserInput = null, conditionalGet = ConditionalGetInfo.EMPTY)
                         )
-                    } else {
-                        val exception = HttpException(
-                            code = response.code,
-                            message = response.message,
-                        )
-                        continuation.resumeWithException(exception)
+                        return
                     }
+
+                    if (!response.isSuccessful) {
+                        continuation.resumeWithException(
+                            HttpException(code = response.code, message = response.message)
+                        )
+                        return
+                    }
+
+                    val body = requireNotNull(response.body)
+                    val source = body.source()
+
+                    if (source.isDefinitelyNotFeed()) {
+                        response.close()
+                        continuation.resumeWithException(
+                            NonFeedResponseException(call.request().url.toString(), "image")
+                        )
+                        return
+                    }
+
+                    val charset = response.header("content-type")?.toMediaTypeOrNull()?.charset()
+                    val parserInput = ParserInput(body.bytes(), charset = charset)
+                    val responseConditionalGet = ConditionalGetInfo(
+                        etag = response.header("ETag"),
+                        lastModified = response.header("Last-Modified"),
+                    )
+                    continuation.resume(
+                        FetchResponse(parserInput = parserInput, conditionalGet = responseConditionalGet)
+                    )
                 }
 
                 override fun onFailure(call: Call, e: IOException) {
@@ -53,3 +83,4 @@ internal class DefaultFetcher(
             })
         }
 }
+

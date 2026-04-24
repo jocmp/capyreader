@@ -84,6 +84,17 @@ updateItunesImage:
 UPDATE feeds SET
 itunes_image_url = :itunesImageURL WHERE feeds.id = :feedID;
 
+findConditionalGet:
+SELECT etag, last_modified, conditional_get_refreshed_at
+FROM feeds WHERE id = :feedID LIMIT 1;
+
+updateConditionalGet:
+UPDATE feeds SET
+etag = :etag,
+last_modified = :last_modified,
+conditional_get_refreshed_at = :refreshed_at
+WHERE id = :feedID;
+
 isFullContentEnabled:
 SELECT enable_sticky_full_content FROM feeds WHERE feeds.id = :feedID LIMIT 1;
 
