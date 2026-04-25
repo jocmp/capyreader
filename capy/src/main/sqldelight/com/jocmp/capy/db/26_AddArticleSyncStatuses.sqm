@@ -1,0 +1,9 @@
+import kotlin.Boolean;
+
+CREATE TABLE article_sync_statuses (
+  article_id TEXT NOT NULL,
+  "key" TEXT NOT NULL,
+  flag INTEGER AS Boolean NOT NULL DEFAULT 0,
+  selected INTEGER AS Boolean NOT NULL DEFAULT 0,
+  PRIMARY KEY (article_id, "key")
+);

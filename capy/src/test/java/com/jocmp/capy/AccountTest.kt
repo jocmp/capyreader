@@ -7,6 +7,7 @@ import com.jocmp.capy.fixtures.AccountFixture
 import com.jocmp.capy.fixtures.ArticleFixture
 import com.jocmp.capy.fixtures.FeedFixture
 import com.jocmp.capy.logging.CapyLog
+import com.jocmp.capy.persistence.SyncStatusRecords
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -219,32 +220,81 @@ class AccountTest {
 
     @Test
     fun markAllRead() = runTest {
-        coEvery { account.delegate.markRead(any()) }.returns(Result.success(Unit))
         var articles = 5.repeated { ArticleFixture(account.database).create(read = false) }
-
-        assertFalse(articles.all { it.read })
-
-        val articleIDs = articles.map { it.id }
-        account.markAllRead(articleIDs, batchSize = 5)
-
-        articles = articles.map { account.database.reload(it)!! }
-
-        assertTrue(articles.all { it.read })
-        coVerify(exactly = 1) { account.delegate.markRead(any()) }
-    }
-
-    @Test
-    fun markAllRead_onFailure() = runTest {
-        coEvery { account.delegate.markRead(any()) }.returns(Result.failure(Throwable("Failure!!")))
-        val articles = 10.repeated { ArticleFixture(account.database).create(read = false) }
 
         assertFalse(articles.all { it.read })
 
         val articleIDs = articles.map { it.id }
         val result = account.markAllRead(articleIDs, batchSize = 5)
 
-        coVerify(exactly = 2) { account.delegate.markRead(any()) }
+        articles = articles.map { account.database.reload(it)!! }
+
+        assertTrue(articles.all { it.read })
+        assertTrue(result.isSuccess)
+        coVerify(exactly = 0) { account.delegate.markRead(any()) }
+    }
+
+    @Test
+    fun markAllRead_queuesSyncStatusesForRemoteAccount() = runTest {
+        val remoteAccount = AccountFixture.create(
+            parentFolder = folder,
+            source = com.jocmp.capy.accounts.Source.FEEDBIN,
+        )
+
+        val articles = 3.repeated { ArticleFixture(remoteAccount.database).create(read = false) }
+        val articleIDs = articles.map { it.id }
+
+        remoteAccount.markAllRead(articleIDs)
+
+        val pending = SyncStatusRecords(remoteAccount.database).pendingArticleIDs(SyncStatus.Key.READ)
+        assertEquals(articleIDs.sorted(), pending.sorted())
+    }
+
+    @Test
+    fun sendArticleStatus_drainsPendingAndCallsDelegate() = runTest {
+        val remoteAccount = AccountFixture.create(
+            parentFolder = folder,
+            source = com.jocmp.capy.accounts.Source.FEEDBIN,
+        )
+        val syncRecords = SyncStatusRecords(remoteAccount.database)
+
+        coEvery { remoteAccount.delegate.markRead(any()) }.returns(Result.success(Unit))
+        coEvery { remoteAccount.delegate.addStar(any()) }.returns(Result.success(Unit))
+
+        val articles = 2.repeated { ArticleFixture(remoteAccount.database).create(read = false) }
+        val articleIDs = articles.map { it.id }
+        remoteAccount.markAllRead(articleIDs)
+        remoteAccount.addStar(articleIDs.first())
+
+        val result = remoteAccount.sendArticleStatus()
+
+        assertTrue(result.isSuccess)
+        assertEquals(0, syncRecords.pendingCount())
+        coVerify(exactly = 1) { remoteAccount.delegate.markRead(match { it.toSet() == articleIDs.toSet() }) }
+        coVerify(exactly = 1) { remoteAccount.delegate.addStar(listOf(articleIDs.first())) }
+    }
+
+    @Test
+    fun sendArticleStatus_onFailureLeavesRowsForRetry() = runTest {
+        val remoteAccount = AccountFixture.create(
+            parentFolder = folder,
+            source = com.jocmp.capy.accounts.Source.FEEDBIN,
+        )
+        val syncRecords = SyncStatusRecords(remoteAccount.database)
+
+        coEvery { remoteAccount.delegate.markRead(any()) }.returns(Result.failure(Throwable("nope")))
+
+        val articles = 2.repeated { ArticleFixture(remoteAccount.database).create(read = false) }
+        val articleIDs = articles.map { it.id }
+        remoteAccount.markAllRead(articleIDs)
+
+        val result = remoteAccount.sendArticleStatus()
+
         assertTrue(result.isFailure)
+        assertEquals(articleIDs.size.toLong(), syncRecords.pendingCount())
+        // Rows are reset to selected = 0 so the next flush picks them up.
+        val pending = syncRecords.pendingArticleIDs(SyncStatus.Key.READ)
+        assertEquals(articleIDs.sorted(), pending.sorted())
     }
 
     @Test
