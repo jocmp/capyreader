@@ -13,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDragHandle
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffold
-import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
 import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.material3.rememberDrawerState
@@ -23,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.capyreader.app.ui.components.CapyAnimatedPane
-import com.capyreader.app.ui.isCompact
 import com.capyreader.app.ui.theme.CapyTheme
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
@@ -36,12 +34,9 @@ fun ArticleScaffold(
     listPane: @Composable () -> Unit,
     detailPane: @Composable () -> Unit,
 ) {
-    val enableGesture = drawerState.isOpen ||
-            isCompact() && scaffoldNavigator.currentDestination?.pane != ThreePaneScaffoldRole.Primary
-
     ModalNavigationDrawer(
         drawerState = drawerState,
-        gesturesEnabled = enableGesture,
+        gesturesEnabled = false,
         drawerContent = {
             ModalDrawerSheet {
                 drawerPane()
