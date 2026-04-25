@@ -2,7 +2,8 @@ package com.jocmp.capy
 
 import com.jocmp.feedfinder.FeedFinder
 import com.jocmp.feedfinder.parser.Feed
-import com.jocmp.rssparser.model.RssChannel
+import com.jocmp.rssparser.model.ConditionalGetInfo
+import com.jocmp.rssparser.model.RssChannelResult
 
 class MockFeedFinder(private val sites: Map<String, Feed> = emptyMap()) : FeedFinder {
     override suspend fun find(url: String): Result<List<Feed>> {
@@ -11,7 +12,7 @@ class MockFeedFinder(private val sites: Map<String, Feed> = emptyMap()) : FeedFi
         return Result.success(listOf(feed))
     }
 
-    override suspend fun fetch(url: String): Result<RssChannel> {
+    override suspend fun fetch(url: String, conditionalGet: ConditionalGetInfo): Result<RssChannelResult> {
         TODO("Not yet implemented")
     }
 }

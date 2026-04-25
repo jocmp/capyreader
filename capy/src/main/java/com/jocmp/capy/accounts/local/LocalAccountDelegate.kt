@@ -220,18 +220,44 @@ internal class LocalAccountDelegate(
 
     private suspend fun refreshFeed(feed: Feed, cutoffDate: ZonedDateTime?) {
         try {
-            feedFinder.fetch(feed.feedURL).onSuccess { channel ->
-                val itunesImageURL = channel.itunesChannelData?.image
+            val conditionalGet = feedRecords.findConditionalGet(feed.id)
 
-                if (itunesImageURL != null) {
-                    database.feedsQueries.updateItunesImage(
-                        itunesImageURL = itunesImageURL,
-                        feedID = feed.id,
-                    )
-                }
+            val result = feedFinder.fetch(
+                url = feed.feedURL,
+                conditionalGet = conditionalGet,
+            ).getOrElse { throw it }
 
-                saveArticles(channel.items, cutoffDate = cutoffDate, feed = feed)
+            val refreshedAt = nowUTC().toEpochSecond()
+            val channel = result.channel
+
+            if (channel == null) {
+                feedRecords.updateConditionalGet(
+                    feedID = feed.id,
+                    conditionalGet = conditionalGet,
+                    refreshedAt = refreshedAt,
+                )
+                CapyLog.debug("refresh_feed_skip", mapOf("id" to feed.id))
+                return
             }
+
+            val itunesImageURL = channel.itunesChannelData?.image
+
+            if (itunesImageURL != null) {
+                database.feedsQueries.updateItunesImage(
+                    itunesImageURL = itunesImageURL,
+                    feedID = feed.id,
+                )
+            }
+
+            saveArticles(channel.items, cutoffDate = cutoffDate, feed = feed)
+
+            feedRecords.updateConditionalGet(
+                feedID = feed.id,
+                conditionalGet = result.conditionalGet,
+                refreshedAt = refreshedAt,
+            )
+
+            CapyLog.debug("refresh_feed_complete", mapOf("id" to feed.id))
         } catch (e: Throwable) {
             CapyLog.error("refresh", e)
         }
@@ -260,7 +286,7 @@ internal class LocalAccountDelegate(
                     val enclosureType = parsedItem.enclosures.firstOrNull()?.type
 
                     database.articlesQueries.create(
-                        id =parsedItem.id,
+                        id = parsedItem.id,
                         feed_id = feed.id,
                         title = parsedItem.title,
                         author = item.author,

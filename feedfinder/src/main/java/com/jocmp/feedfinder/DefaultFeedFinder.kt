@@ -9,7 +9,8 @@ import com.jocmp.feedfinder.sources.Source
 import com.jocmp.feedfinder.sources.XML
 import com.jocmp.rssparser.RssParser
 import com.jocmp.rssparser.RssParserBuilder
-import com.jocmp.rssparser.model.RssChannel
+import com.jocmp.rssparser.model.ConditionalGetInfo
+import com.jocmp.rssparser.model.RssChannelResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
@@ -51,9 +52,12 @@ class DefaultFeedFinder internal constructor(
     }
 
 
-    override suspend fun fetch(url: String): Result<RssChannel> {
+    override suspend fun fetch(
+        url: String,
+        conditionalGet: ConditionalGetInfo,
+    ): Result<RssChannelResult> {
         return try {
-            Result.success(rssParser.getRssChannel(url))
+            Result.success(rssParser.getRssChannel(url, conditionalGet))
         } catch (e: Throwable) {
             Result.failure(e)
         }
