@@ -58,7 +58,6 @@ import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.LocalMarkAllReadButtonPosition
 import com.capyreader.app.ui.LocalTimeFormats
 import com.capyreader.app.ui.LocalUnreadCount
-import com.capyreader.app.ui.rememberDisplayTimeFormats
 import com.capyreader.app.ui.articles.audio.AudioPlayerController
 import com.capyreader.app.ui.articles.audio.FloatingAudioPlayer
 import com.capyreader.app.ui.articles.detail.ArticleView
@@ -86,6 +85,7 @@ import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.capyreader.app.ui.components.SearchState
 import com.capyreader.app.ui.provideLinkOpener
+import com.capyreader.app.ui.rememberDisplayTimeFormats
 import com.capyreader.app.ui.rememberLazyListState
 import com.capyreader.app.ui.rememberLocalConnectivity
 import com.jocmp.capy.Article
@@ -279,6 +279,7 @@ fun ArticleScreen(
             scrollHighWaterMark = viewModel.scrollHighWaterMark,
             updateScrollHighWaterMark = viewModel::updateScrollHighWaterMark,
             markReadOnScroll = viewModel::markReadOnScroll,
+            resetScrollBehaviorOffset = resetScrollBehaviorOffset,
         )
 
         suspend fun openNextStatus(action: suspend () -> Unit) {
@@ -326,19 +327,11 @@ fun ArticleScreen(
         }
 
         fun refreshAll() {
-            viewModel.refreshAll {
-                if (viewModel.markReadOnScrollEnabled) {
-                    scrollToTop()
-                }
-            }
+            viewModel.refreshAll()
         }
 
         fun refreshFeeds() {
-            viewModel.refresh(filter) {
-                if (viewModel.markReadOnScrollEnabled) {
-                    scrollToTop()
-                }
-            }
+            viewModel.refresh(filter)
         }
 
         fun openNextList(action: suspend () -> Unit) {
@@ -393,12 +386,6 @@ fun ArticleScreen(
                 openNextList { viewModel.selectFeed(feedID) }
 
                 showSnackbar(addFeedSuccessMessage)
-            }
-        }
-
-        val onBeforeFeedAdd = {
-            if (viewModel.markReadOnScrollEnabled) {
-                scrollToTop()
             }
         }
 
@@ -490,7 +477,6 @@ fun ArticleScreen(
                     onSelectFeed = selectFeed,
                     onMarkAllRead = { viewModel.markAllRead(filter = it) },
                     onFeedAdded = { onFeedAdded(it) },
-                    onBeforeFeedAdd = { onBeforeFeedAdd() },
                     savedSearches = savedSearches,
                     onSelectSavedSearch = selectSavedSearch,
                     onNavigateToSettings = {
@@ -586,7 +572,6 @@ fun ArticleScreen(
                                         onComplete = {
                                             onFeedAdded(it)
                                         },
-                                        onBeforeAdd = { onBeforeFeedAdd() },
                                     )
                                 }
                             },
@@ -612,9 +597,9 @@ fun ArticleScreen(
                                             articles = articles,
                                             selectedArticleKey = article?.id,
                                             listState = listState,
-                                            refreshingAll = viewModel.refreshingAll,
                                             enableMarkReadOnScroll = viewModel.markReadOnScrollEnabled,
                                             dimReadArticles = filter.status != ArticleStatus.STARRED,
+                                            scrollToTop = { scrollToTop() },
                                             onMarkAllRead = { range ->
                                                 onMarkAllRead(range)
                                             },
@@ -901,6 +886,7 @@ private fun MarkReadOnScroll(
     scrollHighWaterMark: Int,
     updateScrollHighWaterMark: (Int) -> Unit,
     markReadOnScroll: (String) -> Unit,
+    resetScrollBehaviorOffset: () -> Unit,
 ) {
     val appPreferences = koinInject<AppPreferences>()
 
@@ -910,6 +896,15 @@ private fun MarkReadOnScroll(
         .collectChangesWithCurrent()
 
     if (enabled) {
+        LaunchedEffect(listState) {
+            snapshotFlow { listState.layoutInfo.totalItemsCount }
+                .distinctUntilChanged()
+                .collect {
+                    listState.scrollToItem(0)
+                    resetScrollBehaviorOffset()
+                }
+        }
+
         LaunchedEffect(listState) {
             snapshotFlow {
                 listState.firstVisibleItemIndex - 1
