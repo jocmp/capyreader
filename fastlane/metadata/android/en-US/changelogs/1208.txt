@@ -1,0 +1,8 @@
+• Adopt Material 3 Expressive floating toolbar and motion specs
+• Fix pinned toolbar visuals
+• Honor system 24-hour time format
+• Add refresh bandwidth checks
+• Disable nav default gestures
+• Allow drawer swipe-to-close when open
+• Fix mark-read-on-scroll position on refresh
+• Add Basque as a language option
