@@ -58,7 +58,6 @@ import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.LocalMarkAllReadButtonPosition
 import com.capyreader.app.ui.LocalTimeFormats
 import com.capyreader.app.ui.LocalUnreadCount
-import com.capyreader.app.ui.rememberDisplayTimeFormats
 import com.capyreader.app.ui.articles.audio.AudioPlayerController
 import com.capyreader.app.ui.articles.audio.FloatingAudioPlayer
 import com.capyreader.app.ui.articles.detail.ArticleView
@@ -86,6 +85,7 @@ import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.capyreader.app.ui.components.SearchState
 import com.capyreader.app.ui.provideLinkOpener
+import com.capyreader.app.ui.rememberDisplayTimeFormats
 import com.capyreader.app.ui.rememberLazyListState
 import com.capyreader.app.ui.rememberLocalConnectivity
 import com.jocmp.capy.Article
@@ -597,9 +597,9 @@ fun ArticleScreen(
                                             articles = articles,
                                             selectedArticleKey = article?.id,
                                             listState = listState,
-                                            refreshingAll = viewModel.refreshingAll,
                                             enableMarkReadOnScroll = viewModel.markReadOnScrollEnabled,
                                             dimReadArticles = filter.status != ArticleStatus.STARRED,
+                                            scrollToTop = { scrollToTop() },
                                             onMarkAllRead = { range ->
                                                 onMarkAllRead(range)
                                             },
