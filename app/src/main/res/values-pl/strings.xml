@@ -114,7 +114,6 @@
     <string name="settings_article_list_feed_name">Nazwa kanału</string>
     <string name="settings_article_list_feed_icons">Ikony kanałów</string>
     <string name="settings_option_copy_version">Kopiuj wersję</string>
-    <string name="refresh_on_start">Przy uruchamianiu</string>
     <string name="font_option_system_default">Domyślne ustawienia systemu</string>
     <string name="article_font_scale_label">Rozmiar czcionki</string>
     <string name="article_style_title_section">Tytuł</string>

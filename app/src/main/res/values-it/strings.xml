@@ -95,7 +95,6 @@
     <string name="filter_action_menu_search_articles">Cerca gli articoli</string>
     <string name="feed_list_top_bar_close_search">Interrompi la ricerca</string>
     <string name="settings_option_auto_delete_articles_subtitle">Elimina gli articoli letti e non contrassegnati più vecchi di 3 mesi</string>
-    <string name="refresh_on_start">All\'avvio</string>
     <string name="add_feed_name_title">Nome</string>
     <string name="feed_action_unsubscribe">Annulla l\'iscrizione</string>
     <string name="add_feed_submit">Aggiungi</string>

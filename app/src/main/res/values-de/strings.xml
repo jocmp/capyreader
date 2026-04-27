@@ -89,7 +89,6 @@
     <string name="settings_option_copy_version">Version kopieren</string>
     <string name="settings_option_full_content_title">Permanent vollständigen Text zeigen</string>
     <string name="settings_option_full_content_subtitle">Auswahl, den vollständigen Text zu laden, merken</string>
-    <string name="refresh_on_start">Beim Start</string>
     <string name="empty_onboarding_prompt">Beginne mit dem Hinzufügen eines Feeds</string>
     <string name="empty_onboarding_title">Keine Feeds vorhanden</string>
     <string name="article_style_options">Schriftart</string>

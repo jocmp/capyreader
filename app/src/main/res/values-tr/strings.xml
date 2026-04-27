@@ -91,7 +91,6 @@
     <string name="account_source_feedbin">Feedbin</string>
     <string name="account_source_local">Yerel</string>
     <string name="font_option_system_default">Sistem varsayılanı</string>
-    <string name="refresh_on_start">Başlangıçta</string>
     <string name="opml_import_progress_content_text_start">İçeri aktarım başlatılıyor</string>
     <string name="add_feed_new_folder_title">Yeni Etiket</string>
     <string name="update_auth_success_message">Başarıyla giriş yapıldı</string>

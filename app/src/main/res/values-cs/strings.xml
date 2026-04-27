@@ -68,7 +68,6 @@
     <string name="settings_option_copy_version">Kopírovat verzi</string>
     <string name="settings_option_full_content_title">Načítat celý obsah</string>
     <string name="settings_option_full_content_subtitle">Zapamatovat si volbu načítání celého obsahu</string>
-    <string name="refresh_on_start">Po otevření</string>
     <string name="empty_onboarding_title">Žádné kanály</string>
     <string name="empty_onboarding_prompt">Začněte přidáním kanálu</string>
     <string name="image_error_text">Chyba při načítání obrázku</string>

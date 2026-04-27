@@ -139,7 +139,6 @@
     <string name="settings_option_copy_version">Αντιγραφή έκδοσης</string>
     <string name="settings_option_full_content_title">Επίμονο Πλήρες Περιεχόμενο</string>
     <string name="settings_option_full_content_subtitle">Αποθήκευση επιλογής για φόρτωση πλήρους περιεχομένου άρθρου</string>
-    <string name="refresh_on_start">Κατά την εκκίνηση</string>
     <string name="empty_onboarding_title">Καμία ροή ακόμα</string>
     <string name="empty_onboarding_prompt">Ξεκίνα προσθέτοντας μια ροή</string>
     <string name="article_style_options">Επιλογές στυλ γραμματοσειράς</string>

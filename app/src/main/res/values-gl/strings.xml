@@ -112,7 +112,6 @@
     <string name="settings_article_list_summary">Resumo</string>
     <string name="settings_option_full_content_title">Lembrar opción Contido completo</string>
     <string name="settings_option_full_content_subtitle">Para a canle, lembrar que queres o artigo completo</string>
-    <string name="refresh_on_start">Ao inicio</string>
     <string name="empty_onboarding_title">Aínda non hai canles</string>
     <string name="empty_onboarding_prompt">Engade unha canle para comezar</string>
     <string name="article_style_options">Opcións do tipo de letra</string>

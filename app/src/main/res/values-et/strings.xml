@@ -78,7 +78,6 @@
     <string name="settings_option_copy_version">Kopeeri versioon</string>
     <string name="settings_option_full_content_title">Jäta täissisuvaade meelde</string>
     <string name="settings_option_full_content_subtitle">Jäta meelde, kui otsustad laadida artikli tervikliku sisu</string>
-    <string name="refresh_on_start">Rakenduse käivitamisel</string>
     <string name="empty_onboarding_title">Uudisvoogusid veel pole</string>
     <string name="article_style_options">Kirjatüübi välimuse eelistused</string>
     <string name="font_option_atkinson_hyperlegible">Atkinson Hyperlegible</string>

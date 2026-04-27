@@ -157,7 +157,6 @@
     <string name="settings_article_list_shorten_titles">縮短標題</string>
     <string name="settings_section_version">版本</string>
     <string name="settings_option_full_content_title">保持全文</string>
-    <string name="refresh_on_start">啟動時</string>
     <string name="article_style_options">字體樣式選項</string>
     <string name="font_option_vollkorn">Vollkorn</string>
     <string name="settings_article_list_feed_name">訂閱源名稱</string>

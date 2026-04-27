@@ -108,7 +108,6 @@
     <string name="settings_option_copy_version">Copiar versão</string>
     <string name="settings_option_full_content_title">Conteúdo Completo Fixo</string>
     <string name="settings_option_full_content_subtitle">Lembrar escolha para carregar o conteúdo completo do artigo</string>
-    <string name="refresh_on_start">Ao abrir</string>
     <string name="empty_onboarding_title">Sem artigos ainda</string>
     <string name="empty_onboarding_prompt">Comece adicionando um feed</string>
     <string name="article_style_options">Opções de estilo de fonte</string>

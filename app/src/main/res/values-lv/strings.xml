@@ -113,7 +113,6 @@
     <string name="settings_section_version">Versija</string>
     <string name="settings_option_copy_version">Kopēt versiju</string>
     <string name="settings_option_full_content_title">Rādīt visu (pilnu) raksta saturu</string>
-    <string name="refresh_on_start">Kad atver lietotni</string>
     <string name="empty_onboarding_title">Pagaidām nav nevienas ziņu plūsmas</string>
     <string name="article_style_options">Fonta stila varianti</string>
     <string name="font_option_system_default">Izmantot sistēmas noklusējuma iestatījumus</string>

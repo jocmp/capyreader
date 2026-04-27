@@ -61,7 +61,6 @@
     <string name="image_preview_menu_option_none">ഒന്നുമില്ല</string>
     <string name="settings_section_version">പതിപ്പ്</string>
     <string name="settings_option_copy_version">പതിപ്പ് പകർപ്പ്</string>
-    <string name="refresh_on_start">തുടക്കത്തിൽ</string>
     <string name="settings_option_auto_delete_articles_title">ലേഖനങ്ങൾ സ്വയമേവ ഇല്ലാതാക്കുക</string>
     <string name="settings_option_auto_delete_articles_subtitle">3 മാസത്തിലധികം പഴക്കമുള്ള വായിച്ചതും നക്ഷത്രമിടാത്തതുമായ ലേഖനങ്ങൾ ഇല്ലാതാക്കുക</string>
     <string name="refresh_every_day">എല്ലാ ദിവസവും</string>

@@ -92,7 +92,6 @@
     <string name="settings_article_list_shorten_titles">Raccourcir les titres</string>
     <string name="settings_option_copy_version">Copier la version</string>
     <string name="settings_option_full_content_title">Maintenir l\'affichage complet</string>
-    <string name="refresh_on_start">Au démarrage</string>
     <string name="article_style_options">Option de style de police</string>
     <string name="font_option_vollkorn">Vollkorn</string>
     <string name="font_option_atkinson_hyperlegible">Atkinson Hyperlegible</string>

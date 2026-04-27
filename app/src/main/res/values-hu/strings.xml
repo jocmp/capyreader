@@ -137,7 +137,6 @@
     <string name="settings_option_copy_version">Verzió másolása</string>
     <string name="settings_option_full_content_title">Rögzített teljes tartalom</string>
     <string name="settings_option_full_content_subtitle">Megjegyzi a teljes cikk tartalmának betöltésére vonatkozó választást</string>
-    <string name="refresh_on_start">Indításkor</string>
     <string name="empty_onboarding_title">Még nincsenek hírfolyamok</string>
     <string name="empty_onboarding_prompt">Kezdje egy hírfolyam hozzáadásával</string>
     <string name="article_style_options">Betűtípus-beállítások</string>

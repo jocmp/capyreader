@@ -119,7 +119,6 @@
     <string name="settings_article_list_feed_icons">Значки лент</string>
     <string name="settings_section_version">Версия</string>
     <string name="settings_option_copy_version">Скопировать версию</string>
-    <string name="refresh_on_start">При запуске</string>
     <string name="empty_onboarding_title">Пока нет лент</string>
     <string name="article_style_options">Варианты стиля шрифта</string>
     <string name="font_option_vollkorn">Vollkorn</string>

@@ -120,7 +120,6 @@
     <string name="settings_article_list_shorten_titles">Съкращаване на заглавията</string>
     <string name="settings_section_version">Версия</string>
     <string name="settings_option_full_content_title">Приложи пълно съдържание</string>
-    <string name="refresh_on_start">При стартиране</string>
     <string name="empty_onboarding_title">Все още няма емисии</string>
     <string name="empty_onboarding_prompt">Започни с добавяне на емисия</string>
     <string name="article_style_options">Опции за стил на шрифта</string>

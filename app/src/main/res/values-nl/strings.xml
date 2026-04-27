@@ -143,7 +143,6 @@
     <string name="settings_option_copy_version">Versie kopiëren</string>
     <string name="settings_option_full_content_title">Volledige inhoud onthouden</string>
     <string name="settings_option_full_content_subtitle">Keuze onthouden om volledige artikel inhoud te laden</string>
-    <string name="refresh_on_start">Bij opstarten</string>
     <string name="empty_onboarding_title">Nog geen feeds</string>
     <string name="empty_onboarding_prompt">Begin door een feed toe te voegen</string>
     <string name="article_style_options">Lettertype stijl opties</string>

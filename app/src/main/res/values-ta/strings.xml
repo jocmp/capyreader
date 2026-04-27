@@ -104,7 +104,6 @@
     <string name="settings_option_copy_version">நகல் பதிப்பு</string>
     <string name="settings_option_full_content_title">ஒட்டும் முழு உள்ளடக்கம்</string>
     <string name="settings_option_full_content_subtitle">முழு கட்டுரை உள்ளடக்கத்தை ஏற்றுவதற்கான தேர்வை நினைவில் கொள்ளுங்கள்</string>
-    <string name="refresh_on_start">தொடக்கத்தில்</string>
     <string name="empty_onboarding_title">இன்னும் ஊட்டங்கள் இல்லை</string>
     <string name="empty_onboarding_prompt">ஊட்டத்தைச் சேர்ப்பதன் மூலம் தொடங்கவும்</string>
     <string name="article_style_options">எழுத்துரு நடை விருப்பங்கள்</string>

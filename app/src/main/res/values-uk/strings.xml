@@ -144,7 +144,6 @@
     <string name="settings_option_copy_version">Копіювати версію</string>
     <string name="settings_option_full_content_title">Постійно повний текст</string>
     <string name="settings_option_full_content_subtitle">Пам\'ятати прохання завантажувати повний текст статті</string>
-    <string name="refresh_on_start">При запуску</string>
     <string name="empty_onboarding_title">Стрічок ще нема</string>
     <string name="empty_onboarding_prompt">Щоб почати, додайте стрічку</string>
     <string name="article_style_options">Параметри шрифту</string>

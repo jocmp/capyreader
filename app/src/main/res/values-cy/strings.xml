@@ -94,7 +94,6 @@
     <string name="settings_article_list_summary">Crynodeb</string>
     <string name="settings_section_version">Fersiwn</string>
     <string name="settings_option_copy_version">Copïo\'r fersiwn</string>
-    <string name="refresh_on_start">Ar ddechrau</string>
     <string name="empty_onboarding_prompt">Dechreuwch gan ychwanegu ffrwd</string>
     <string name="font_option_system_default">Rhagosodiad y system</string>
     <string name="image_error_text">Bu gwall wrth llwytho delwedd</string>

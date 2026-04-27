@@ -104,7 +104,6 @@
     <string name="image_preview_menu_option_large">Besar</string>
     <string name="settings_article_list_feed_name">Nama Umpan</string>
     <string name="settings_option_full_content_subtitle">Ingat pilihan untuk memuat konten artikel lengkap</string>
-    <string name="refresh_on_start">Saat mulai</string>
     <string name="settings_option_auto_delete_articles_subtitle">Hapus artikel yang telah dibaca dan tidak masuk favorit lebih lama dari 3 bulan</string>
     <string name="filter_action_menu_search_articles">Cari artikel</string>
     <string name="opml_import_button_text">Impor dari Berkas</string>

@@ -148,7 +148,6 @@
     <string name="settings_option_copy_version">Kopier version</string>
     <string name="settings_option_full_content_title">Fastgjort fuldt indhold</string>
     <string name="settings_option_full_content_subtitle">Husk valg om at indlæse fuldt indhold af artikler</string>
-    <string name="refresh_on_start">Ved start</string>
     <string name="empty_onboarding_title">Ingen feeds endnu</string>
     <string name="empty_onboarding_prompt">Start ved at tilføje et feed</string>
     <string name="article_style_options">Skrifttypeindstillinger</string>

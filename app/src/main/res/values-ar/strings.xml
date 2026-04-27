@@ -102,7 +102,6 @@
     <string name="settings_option_copy_version">نسخ الإصدار</string>
     <string name="settings_option_full_content_title">تحميل المحتوى الكامل دائماً</string>
     <string name="settings_option_full_content_subtitle">تذكر خيار تحميل محتوى المقالة بالكامل</string>
-    <string name="refresh_on_start">عند تشغيل التطبيق</string>
     <string name="empty_onboarding_title">لا يوجد موجز حتى الآن</string>
     <string name="empty_onboarding_prompt">ابدأ بإضافة موجز</string>
     <string name="article_style_options">خيارات نمط الخط</string>
