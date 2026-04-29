@@ -32,6 +32,7 @@ import com.jocmp.capy.persistence.EnclosureRecords
 import com.jocmp.capy.persistence.FeedRecords
 import com.jocmp.capy.persistence.FolderRecords
 import com.jocmp.capy.persistence.SavedSearchRecords
+import com.jocmp.capy.persistence.SyncStatusRecords
 import com.jocmp.capy.persistence.TaggingRecords
 import com.jocmp.capy.preferences.Preference
 import com.jocmp.feedbinclient.Feedbin
@@ -105,6 +106,7 @@ data class Account(
     private val folderRecords = FolderRecords(database)
     private val taggingRecords = TaggingRecords(database)
     private val savedSearchRecords = SavedSearchRecords(database)
+    private val syncStatusRecords = SyncStatusRecords(database)
 
     private val feedFinder: FeedFinder by lazy { DefaultFeedFinder(localHttpClient) }
 
@@ -217,6 +219,8 @@ data class Account(
 
     suspend fun refresh(filter: ArticleFilter = ArticleFilter.default()): Result<Unit> {
         return try {
+            sendArticleStatus()
+
             val cutoffDate = preferences.autoDelete.get().cutoffDate()
 
             val result = delegate.refresh(filter, cutoffDate = cutoffDate)
@@ -232,6 +236,56 @@ data class Account(
             CapyLog.error("refresh", e)
             Result.failure(e)
         }
+    }
+
+    suspend fun sendArticleStatus(): Result<Unit> {
+        if (source == Source.LOCAL) {
+            return Result.success(Unit)
+        }
+
+        return withIOContext {
+            val statuses = syncStatusRecords.selectForProcessing()
+
+            if (statuses.isEmpty()) {
+                return@withIOContext Result.success(Unit)
+            }
+
+            val readToTrue = statuses.filter { it.key == SyncStatus.Key.READ && it.flag }
+            val readToFalse = statuses.filter { it.key == SyncStatus.Key.READ && !it.flag }
+            val starredToTrue = statuses.filter { it.key == SyncStatus.Key.STARRED && it.flag }
+            val starredToFalse = statuses.filter { it.key == SyncStatus.Key.STARRED && !it.flag }
+
+            val errors = mutableListOf<Throwable>()
+
+            dispatch(readToTrue, SyncStatus.Key.READ, errors) { delegate.markRead(it) }
+            dispatch(readToFalse, SyncStatus.Key.READ, errors) { delegate.markUnread(it) }
+            dispatch(starredToTrue, SyncStatus.Key.STARRED, errors) { delegate.addStar(it) }
+            dispatch(starredToFalse, SyncStatus.Key.STARRED, errors) { delegate.removeStar(it) }
+
+            errors.firstOrNull()?.let { Result.failure(it) } ?: Result.success(Unit)
+        }
+    }
+
+    private suspend fun dispatch(
+        statuses: List<SyncStatus>,
+        key: SyncStatus.Key,
+        errors: MutableList<Throwable>,
+        apiCall: suspend (List<String>) -> Result<Unit>
+    ) {
+        if (statuses.isEmpty()) return
+
+        val articleIDs = statuses.map { it.articleID }
+
+        apiCall(articleIDs).fold(
+            onSuccess = {
+                syncStatusRecords.deleteSelected(articleIDs, key)
+            },
+            onFailure = { error ->
+                syncStatusRecords.resetSelected(articleIDs, key)
+                errors.add(error)
+                CapyLog.error("send_article_status", error)
+            }
+        )
     }
 
     suspend fun findFeed(feedID: String): Feed? {
@@ -257,14 +311,16 @@ data class Account(
 
     suspend fun addStar(articleID: String): Result<Unit> {
         articleRecords.addStar(articleID = articleID)
+        queueStatus(articleID, SyncStatus.Key.STARRED, flag = true)
 
-        return delegate.addStar(listOf(articleID))
+        return Result.success(Unit)
     }
 
     suspend fun removeStar(articleID: String): Result<Unit> {
         articleRecords.removeStar(articleID = articleID)
+        queueStatus(articleID, SyncStatus.Key.STARRED, flag = false)
 
-        return delegate.removeStar(listOf(articleID))
+        return Result.success(Unit)
     }
 
     suspend fun addSavedSearch(articleID: String, savedSearchID: String): Result<Unit> {
@@ -308,26 +364,18 @@ data class Account(
     }
 
     suspend fun markAllRead(articleIDs: List<String>, batchSize: Int = 500): Result<Unit> {
-        val result = withIOContext {
+        withIOContext {
             articleIDs.chunked(batchSize).map { batchIDs ->
                 async {
                     val changesetIDs = articleRecords.filterUnreadStatuses(batchIDs)
 
                     articleRecords.markAllRead(changesetIDs)
-
-                    delegate.markRead(changesetIDs)
+                    queueStatuses(changesetIDs, SyncStatus.Key.READ, flag = true)
                 }
             }.awaitAll()
         }
 
-        if (result.all { it.isSuccess }) {
-            return Result.success(Unit)
-        } else {
-            val failure =
-                result.firstNotNullOfOrNull { it.exceptionOrNull() } ?: Throwable("Unknown error")
-
-            return Result.failure(failure)
-        }
+        return Result.success(Unit)
     }
 
     suspend fun markRead(articleID: String): Result<Unit> {
@@ -336,8 +384,19 @@ data class Account(
 
     suspend fun markUnread(articleID: String): Result<Unit> {
         articleRecords.markUnread(articleID = articleID)
+        queueStatus(articleID, SyncStatus.Key.READ, flag = false)
 
-        return delegate.markUnread(listOf(articleID))
+        return Result.success(Unit)
+    }
+
+    private fun queueStatus(articleID: String, key: SyncStatus.Key, flag: Boolean) {
+        if (source == Source.LOCAL) return
+        syncStatusRecords.insertStatus(articleID = articleID, key = key, flag = flag)
+    }
+
+    private fun queueStatuses(articleIDs: Collection<String>, key: SyncStatus.Key, flag: Boolean) {
+        if (source == Source.LOCAL || articleIDs.isEmpty()) return
+        syncStatusRecords.insertStatuses(articleIDs = articleIDs, key = key, flag = flag)
     }
 
     suspend fun fetchFullContent(article: Article): Result<String> {

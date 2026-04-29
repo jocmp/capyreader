@@ -1,0 +1,53 @@
+insertStatus:
+INSERT INTO article_sync_statuses(
+  article_id,
+  "key",
+  flag,
+  selected
+)
+VALUES (
+  :articleID,
+  :key,
+  :flag,
+  0
+)
+ON CONFLICT(article_id, "key") DO UPDATE
+SET
+  flag = excluded.flag,
+  selected = 0;
+
+selectAll:
+SELECT *
+FROM article_sync_statuses;
+
+selectSelected:
+SELECT *
+FROM article_sync_statuses
+WHERE selected = 1;
+
+markAllSelected:
+UPDATE article_sync_statuses SET selected = 1;
+
+resetAllSelected:
+UPDATE article_sync_statuses SET selected = 0;
+
+resetSelectedByID:
+UPDATE article_sync_statuses
+SET selected = 0
+WHERE article_id IN :articleIDs
+  AND "key" = :key;
+
+deleteSelectedByID:
+DELETE FROM article_sync_statuses
+WHERE selected = 1
+  AND article_id IN :articleIDs
+  AND "key" = :key;
+
+selectPendingCount:
+SELECT COUNT(*) FROM article_sync_statuses;
+
+selectPendingByKey:
+SELECT article_id
+FROM article_sync_statuses
+WHERE "key" = :key
+  AND selected = 0;

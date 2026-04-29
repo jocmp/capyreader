@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.capyreader.app.notifications.NotificationHelper
-import com.capyreader.app.sync.Sync
+import com.jocmp.capy.Account
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,7 +25,7 @@ class ArticleStatusBroadcastReceiver : BroadcastReceiver(), KoinComponent {
                         handler.dismissNotification(articleID)
 
                     ACTION_MARK_AS_READ -> {
-                        handler.markAsRead(articleID, context = context)
+                        handler.markAsRead(articleID)
                         handler.dismissNotification(articleID)
                     }
                 }
@@ -37,13 +37,14 @@ class ArticleStatusBroadcastReceiver : BroadcastReceiver(), KoinComponent {
 
     class BroadcastHandler : KoinComponent {
         private val notificationHelper by inject<NotificationHelper>()
+        private val account by inject<Account>()
 
         suspend fun dismissNotification(articleID: String) {
             notificationHelper.dismissNotifications(listOf(articleID))
         }
 
-        fun markAsRead(articleID: String, context: Context) {
-            Sync.markReadAsync(listOf(articleID), context)
+        suspend fun markAsRead(articleID: String) {
+            account.markRead(articleID)
         }
     }
 
