@@ -18,7 +18,7 @@
     <string name="settings_option_copy_version">Copiar versión</string>
     <string name="settings_auto_delete_option_keep_for_two_week">2 semanas</string>
     <string name="settings_remove_account_title_service">Saír</string>
-    <string name="action_mark_all_read">Marcar todo como lido</string>
+    <string name="action_mark_all_read">Marcar Todo como lido</string>
     <string name="auth_fields_api_url">Servidor</string>
     <string name="refresh_manually_only">Manualmente</string>
     <string name="settings_remove_account_confirm_service">Saír</string>
@@ -178,7 +178,7 @@
     <string name="settings_gestures_reader_tap_to_page_title">Toque eReader para desprazar</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Toca nos cantos inferiores para navegar no contido do artigo</string>
     <string name="settings_enable_high_contrast_dark_theme">Activar decorado escuro de alto contraste</string>
-    <string name="settings_section_mark_all_as_read">Marcar todo como lido</string>
+    <string name="settings_section_mark_all_as_read">Marcar Todo Como Lido</string>
     <string name="settings_section_browser">Navegador</string>
     <string name="reader_image_visibility_show_on_wifi">Só con Wi-Fi</string>
     <string name="reader_image_visibility_always_hide">Bloquear imaxes</string>
