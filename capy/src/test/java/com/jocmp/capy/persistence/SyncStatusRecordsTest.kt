@@ -30,13 +30,13 @@ class SyncStatusRecordsTest {
     }
 
     @Test
-    fun selectForProcessing_marksRowsSelected() {
+    fun selectForSync_marksRowsSelected() {
         records.insertStatus("a", SyncStatus.Key.READ, flag = true)
         records.insertStatus("b", SyncStatus.Key.READ, flag = true)
 
-        val processing = records.selectForProcessing()
-        assertEquals(2, processing.size)
-        assertTrue(processing.all { it.selected })
+        val pending = records.selectForSync()
+        assertEquals(2, pending.size)
+        assertTrue(pending.all { it.selected })
 
         // Once selected, pendingArticleIDs (which only sees selected = 0) returns empty.
         assertTrue(records.pendingArticleIDs(SyncStatus.Key.READ).isEmpty())
@@ -46,7 +46,7 @@ class SyncStatusRecordsTest {
     fun deleteSelected_clearsOnlyMatchingSelectedRows() {
         records.insertStatus("a", SyncStatus.Key.READ, flag = true)
         records.insertStatus("b", SyncStatus.Key.READ, flag = true)
-        records.selectForProcessing()
+        records.selectForSync()
 
         // User re-toggles "a" while in flight: upsert resets selected to 0 with new flag.
         records.insertStatus("a", SyncStatus.Key.READ, flag = false)
@@ -61,7 +61,7 @@ class SyncStatusRecordsTest {
     @Test
     fun resetSelected_returnsRowsForRetry() {
         records.insertStatus("a", SyncStatus.Key.READ, flag = true)
-        records.selectForProcessing()
+        records.selectForSync()
 
         records.resetSelected(listOf("a"), SyncStatus.Key.READ)
 
@@ -72,7 +72,7 @@ class SyncStatusRecordsTest {
     fun resetAllSelected_clearsLeases() {
         records.insertStatus("a", SyncStatus.Key.READ, flag = true)
         records.insertStatus("b", SyncStatus.Key.STARRED, flag = true)
-        records.selectForProcessing()
+        records.selectForSync()
 
         records.resetAllSelected()
 

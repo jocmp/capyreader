@@ -7,9 +7,9 @@ import com.jocmp.capy.db.Database
 class SyncStatusRecords(
     private val database: Database
 ) {
-    private val queries get() = database.article_sync_statusesQueries
+    private val queries get() = database.articleSyncStatusQueries
 
-    fun insertStatuses(articleIDs: Collection<String>, key: SyncStatus.Key, flag: Boolean) {
+    fun insertStatuses(articleIDs: List<String>, key: SyncStatus.Key, flag: Boolean) {
         if (articleIDs.isEmpty()) return
 
         database.transactionWithErrorHandling {
@@ -27,10 +27,10 @@ class SyncStatusRecords(
         insertStatuses(listOf(articleID), key = key, flag = flag)
     }
 
-    fun selectForProcessing(): List<SyncStatus> {
+    fun selectForSync(): List<SyncStatus> {
         return database.transactionWithResult {
             queries.markAllSelected()
-            queries.selectSelected().executeAsList().mapNotNull(::toDomain)
+            queries.selectSelected(::mapSyncStatus).executeAsList()
         }
     }
 
@@ -38,13 +38,15 @@ class SyncStatusRecords(
         queries.resetAllSelected()
     }
 
-    fun deleteSelected(articleIDs: Collection<String>, key: SyncStatus.Key) {
+    fun deleteSelected(articleIDs: List<String>, key: SyncStatus.Key) {
         if (articleIDs.isEmpty()) return
+
         queries.deleteSelectedByID(articleIDs = articleIDs.toList(), key = key.raw)
     }
 
-    fun resetSelected(articleIDs: Collection<String>, key: SyncStatus.Key) {
+    fun resetSelected(articleIDs: List<String>, key: SyncStatus.Key) {
         if (articleIDs.isEmpty()) return
+
         queries.resetSelectedByID(articleIDs = articleIDs.toList(), key = key.raw)
     }
 
@@ -55,16 +57,16 @@ class SyncStatusRecords(
     fun pendingArticleIDs(key: SyncStatus.Key): List<String> {
         return queries.selectPendingByKey(key.raw).executeAsList()
     }
-
-    private fun toDomain(
-        row: com.jocmp.capy.db.Article_sync_statuses
-    ): SyncStatus? {
-        val key = SyncStatus.Key.from(row.key) ?: return null
-        return SyncStatus(
-            articleID = row.article_id,
-            key = key,
-            flag = row.flag,
-            selected = row.selected,
-        )
-    }
 }
+
+private fun mapSyncStatus(
+    articleID: String,
+    key: String,
+    flag: Boolean,
+    selected: Boolean,
+): SyncStatus = SyncStatus(
+    articleID = articleID,
+    key = SyncStatus.Key.from(key)!!,
+    flag = flag,
+    selected = selected,
+)

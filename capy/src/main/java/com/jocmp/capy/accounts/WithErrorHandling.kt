@@ -1,7 +1,7 @@
 package com.jocmp.capy.accounts
 
-import com.jocmp.capy.common.UnauthorizedError
-import java.io.IOException
+import com.jocmp.capy.logging.CapyLog
+import retrofit2.HttpException
 
 class ValidationError(override val message: String? = null): Throwable(message)
 
@@ -12,13 +12,20 @@ internal suspend fun <T> withErrorHandling(func: suspend () -> T?): Result<T> {
         if (result != null) {
             Result.success(result)
         } else {
-            Result.failure(Throwable("Unexpected error"))
+            val error = Throwable("Unexpected error")
+            CapyLog.error("with_error_handling", error)
+            Result.failure(error)
         }
-    } catch (e: IOException) {
-        return Result.failure(e)
-    } catch (e: UnauthorizedError) {
-        return Result.failure(e)
-    } catch (e: ValidationError) {
-        return Result.failure(e)
+    } catch (e: HttpException) {
+        CapyLog.error("with_error_handling", e, httpData(e))
+        Result.failure(e)
+    } catch (e: Throwable) {
+        CapyLog.error("with_error_handling", e)
+        Result.failure(e)
     }
 }
+
+private fun httpData(e: HttpException): Map<String, Any?> = mapOf(
+    "code" to e.code(),
+    "body" to runCatching { e.response()?.errorBody()?.string() }.getOrNull(),
+)

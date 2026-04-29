@@ -239,44 +239,45 @@ data class Account(
     }
 
     suspend fun sendArticleStatus(): Result<Unit> {
-        if (source == Source.LOCAL) {
+        val statuses = syncStatusRecords.selectForSync()
+
+        if (statuses.isEmpty()) {
             return Result.success(Unit)
         }
 
-        return withIOContext {
-            val statuses = syncStatusRecords.selectForProcessing()
+        val readToTrue = statuses.filter { it.key == SyncStatus.Key.READ && it.flag }
+        val readToFalse = statuses.filter { it.key == SyncStatus.Key.READ && !it.flag }
+        val starredToTrue = statuses.filter { it.key == SyncStatus.Key.STARRED && it.flag }
+        val starredToFalse = statuses.filter { it.key == SyncStatus.Key.STARRED && !it.flag }
 
-            if (statuses.isEmpty()) {
-                return@withIOContext Result.success(Unit)
-            }
+        val errors = mutableListOf<Throwable>()
 
-            val readToTrue = statuses.filter { it.key == SyncStatus.Key.READ && it.flag }
-            val readToFalse = statuses.filter { it.key == SyncStatus.Key.READ && !it.flag }
-            val starredToTrue = statuses.filter { it.key == SyncStatus.Key.STARRED && it.flag }
-            val starredToFalse = statuses.filter { it.key == SyncStatus.Key.STARRED && !it.flag }
+        dispatch(readToTrue, SyncStatus.Key.READ, errors, delegate::markRead)
+        dispatch(readToFalse, SyncStatus.Key.READ, errors, delegate::markUnread)
+        dispatch(starredToTrue, SyncStatus.Key.STARRED, errors, delegate::addStar)
+        dispatch(starredToFalse, SyncStatus.Key.STARRED, errors, delegate::removeStar)
 
-            val errors = mutableListOf<Throwable>()
+        val firstError = errors.firstOrNull()
 
-            dispatch(readToTrue, SyncStatus.Key.READ, errors) { delegate.markRead(it) }
-            dispatch(readToFalse, SyncStatus.Key.READ, errors) { delegate.markUnread(it) }
-            dispatch(starredToTrue, SyncStatus.Key.STARRED, errors) { delegate.addStar(it) }
-            dispatch(starredToFalse, SyncStatus.Key.STARRED, errors) { delegate.removeStar(it) }
-
-            errors.firstOrNull()?.let { Result.failure(it) } ?: Result.success(Unit)
+        if (firstError != null) {
+            return Result.failure(firstError)
         }
+
+        return Result.success(Unit)
+
     }
 
     private suspend fun dispatch(
         statuses: List<SyncStatus>,
         key: SyncStatus.Key,
         errors: MutableList<Throwable>,
-        apiCall: suspend (List<String>) -> Result<Unit>
+        callDelegate: suspend (List<String>) -> Result<Unit>
     ) {
         if (statuses.isEmpty()) return
 
         val articleIDs = statuses.map { it.articleID }
 
-        apiCall(articleIDs).fold(
+        callDelegate(articleIDs).fold(
             onSuccess = {
                 syncStatusRecords.deleteSelected(articleIDs, key)
             },
@@ -394,7 +395,7 @@ data class Account(
         syncStatusRecords.insertStatus(articleID = articleID, key = key, flag = flag)
     }
 
-    private fun queueStatuses(articleIDs: Collection<String>, key: SyncStatus.Key, flag: Boolean) {
+    private fun queueStatuses(articleIDs: List<String>, key: SyncStatus.Key, flag: Boolean) {
         if (source == Source.LOCAL || articleIDs.isEmpty()) return
         syncStatusRecords.insertStatuses(articleIDs = articleIDs, key = key, flag = flag)
     }
@@ -508,7 +509,7 @@ data class Account(
     private suspend fun findFavicon(feed: Feed) {
         withIOContext {
             val siteURL = FaviconFinder.siteURL(feed) ?: return@withIOContext
-            
+
             faviconFinder.find(siteURL)?.let {
                 feedRecords.updateFavicon(feed.id, it)
             }
