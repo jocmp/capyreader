@@ -162,7 +162,6 @@
     <string name="settings_section_version">Bertsioa</string>
     <string name="settings_option_copy_version">Kopiatu bertsioa</string>
     <string name="settings_option_full_content_subtitle">Gogoratu artikuluaren eduki osoa kargatzeko aukera</string>
-    <string name="refresh_on_start">Hasieran</string>
     <string name="empty_onboarding_title">Jariorik ez oraindik</string>
     <string name="empty_onboarding_prompt">Hasi jario bat gehituz</string>
     <string name="article_list_empty">Ezer ez hemen</string>
