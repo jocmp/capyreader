@@ -30,6 +30,16 @@ class SyncStatusRecordsTest {
     }
 
     @Test
+    fun `pendingCount excludes in-flight rows`() {
+        records.insertStatus("a", SyncStatus.Key.READ, flag = true)
+        records.insertStatus("b", SyncStatus.Key.READ, flag = true)
+
+        records.selectForSync()
+
+        assertEquals(0, records.pendingCount())
+    }
+
+    @Test
     fun selectForSync_marksRowsSelected() {
         records.insertStatus("a", SyncStatus.Key.READ, flag = true)
         records.insertStatus("b", SyncStatus.Key.READ, flag = true)

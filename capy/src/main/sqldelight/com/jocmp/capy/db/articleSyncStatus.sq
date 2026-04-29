@@ -44,7 +44,8 @@ WHERE selected = 1
   AND "key" = :key;
 
 selectPendingCount:
-SELECT COUNT(*) FROM article_sync_statuses;
+SELECT COUNT(*) FROM article_sync_statuses
+WHERE selected = 0;
 
 selectPendingByKey:
 SELECT article_id
