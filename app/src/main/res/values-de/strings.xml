@@ -348,4 +348,5 @@
     <string name="tag_action_edit_success">Bezeichnung aktualisiert</string>
     <string name="tag_action_edit_error">Fehler bei der Aktualisierung der Bezeichnung</string>
     <string name="tag_action_edit">Bezeichnung bearbeiten</string>
+    <string name="widget_spotlight_see_all">Alle anzeigen</string>
 </resources>
