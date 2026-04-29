@@ -600,6 +600,7 @@ fun ArticleScreen(
                                             enableMarkReadOnScroll = viewModel.markReadOnScrollEnabled,
                                             dimReadArticles = filter.status != ArticleStatus.STARRED,
                                             scrollToTop = { scrollToTop() },
+                                            isRefreshing = isPullToRefreshing,
                                             onMarkAllRead = { range ->
                                                 onMarkAllRead(range)
                                             },
