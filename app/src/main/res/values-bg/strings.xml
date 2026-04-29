@@ -355,4 +355,5 @@
     <string name="freshrss_visibility">Видимост</string>
     <string name="freshrss_visibility_option_main">Основен поток</string>
     <string name="widget_spotlight_see_all">Вижте всички</string>
+    <string name="article_list_new_articles_pill">Нови статии</string>
 </resources>
