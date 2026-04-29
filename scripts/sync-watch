@@ -1,0 +1,171 @@
+#!/usr/bin/env ruby
+# Live-tails the article_sync_statuses outbox on a connected Android device.
+#
+# Each poll, the app's SQLite DB (and WAL) is streamed out via
+# `adb exec-out run-as <pkg> cat`, then queried with the host's sqlite3.
+# The on-device sqlite3 binary is missing on most AOSP emulators, so we
+# don't rely on it.
+#
+# Usage:
+#   scripts/sync-watch                      # auto-detect debug build
+#   scripts/sync-watch -p com.capyreader.app.nightly
+#   scripts/sync-watch -i 2                 # 2-second poll
+#
+# Requires `adb` and `sqlite3` on the host PATH and a debuggable build
+# installed on the device.
+
+require "optparse"
+require "shellwords"
+require "tmpdir"
+require "fileutils"
+
+CANDIDATE_PACKAGES = %w[
+  com.capyreader.app.debug
+  com.capyreader.app.nightly
+  com.capyreader.app
+].freeze
+
+def event_label(key, flag)
+  case [key, flag.to_i]
+  when ["read", 1] then "READ"
+  when ["read", 0] then "UNREAD"
+  when ["starred", 1] then "STAR"
+  when ["starred", 0] then "UNSTAR"
+  else "#{key}/#{flag}"
+  end
+end
+
+options = { interval: 1.0, package: nil, rows: 10 }
+OptionParser.new do |o|
+  o.banner = "Usage: scripts/sync-watch [options]"
+  o.on("-p", "--package PKG", "Application id (auto-detected if omitted)") { |v| options[:package] = v }
+  o.on("-i", "--interval SECONDS", Float, "Poll interval (default 1.0)") { |v| options[:interval] = v }
+  o.on("-n", "--rows N", Integer, "Recent rows to display (default 10)") { |v| options[:rows] = v }
+  o.on("-h", "--help") { puts o; exit }
+end.parse!
+
+abort("adb not found on PATH") unless system("command -v adb > /dev/null 2>&1")
+abort("sqlite3 not found on PATH") unless system("command -v sqlite3 > /dev/null 2>&1")
+
+def adb_shell(cmd)
+  out = `adb shell #{Shellwords.escape(cmd)} 2>&1`
+  [out, $?.success?]
+end
+
+def detect_package(explicit)
+  return explicit if explicit
+  out, ok = adb_shell("pm list packages")
+  abort("adb shell failed: #{out}") unless ok
+  installed = out.lines.map { |l| l.strip.sub(/^package:/, "") }
+  pkg = CANDIDATE_PACKAGES.find { |p| installed.include?(p) }
+  abort("No capyreader build found. Tried: #{CANDIDATE_PACKAGES.join(", ")}") unless pkg
+  pkg
+end
+
+def detect_database(pkg)
+  out, ok = adb_shell("run-as #{pkg} ls /data/data/#{pkg}/databases")
+  abort("Cannot access #{pkg} databases (is it debuggable?)\n#{out}") unless ok
+  candidates = out.split.select { |f| f.start_with?("articles_") && !f.match?(/-(journal|wal|shm)$/) }
+  abort("No articles_* database found for #{pkg}") if candidates.empty?
+  warn("Multiple databases found, using #{candidates.first}: #{candidates.join(", ")}") if candidates.size > 1
+  candidates.first
+end
+
+def pull_db(pkg, db_name, dest_dir)
+  remote_dir = "/data/data/#{pkg}/databases"
+  %W[#{db_name} #{db_name}-wal #{db_name}-shm].each do |name|
+    cmd = %(adb exec-out run-as #{pkg} sh -c #{Shellwords.escape("test -f #{remote_dir}/#{name} && cat #{remote_dir}/#{name} || true")})
+    bytes = `#{cmd}`
+    next if bytes.empty?
+    File.binwrite(File.join(dest_dir, name), bytes)
+  end
+end
+
+def query(local_db, sql)
+  out = IO.popen(["sqlite3", "-separator", "\t", local_db], "r+") do |io|
+    io.write(sql)
+    io.close_write
+    io.read
+  end
+  return nil unless $?.success?
+  out.lines.map { |l| l.chomp.split("\t") }
+end
+
+def render(pkg, db_name, local_db, rows_limit, last_error)
+  buckets = query(local_db, <<~SQL) || []
+    SELECT "key", flag, selected, COUNT(*)
+    FROM article_sync_statuses
+    GROUP BY "key", flag, selected
+    ORDER BY "key", flag, selected;
+  SQL
+
+  recent = query(local_db, <<~SQL) || []
+    SELECT s.article_id, s."key", s.flag, s.selected,
+           COALESCE(a.title, ''), COALESCE(f.title, '')
+    FROM article_sync_statuses s
+    LEFT JOIN articles a ON a.id = s.article_id
+    LEFT JOIN feeds f ON f.id = a.feed_id
+    ORDER BY s.selected DESC, s."key", s.article_id
+    LIMIT #{rows_limit};
+  SQL
+
+  pending = buckets.select { |r| r[2].to_i == 0 }.sum { |r| r[3].to_i }
+  in_flight = buckets.select { |r| r[2].to_i == 1 }.sum { |r| r[3].to_i }
+
+  print "\e[H\e[2J"
+  puts "\e[1mcapyreader sync-watch\e[0m  #{pkg}"
+  puts "  db: #{db_name}"
+  puts "  ts: #{Time.now.strftime("%H:%M:%S")}    pending: #{pending}    in-flight: #{in_flight}"
+  puts
+
+  if buckets.empty?
+    puts "  (outbox empty)"
+  else
+    puts "  \e[2mevent    state       count\e[0m"
+    buckets.each do |key, flag, selected, count|
+      label = event_label(key, flag)
+      state = selected.to_i == 1 ? "in-flight" : "pending  "
+      printf("  %-7s  %-10s  %5d\n", label, state, count.to_i)
+    end
+  end
+
+  puts
+  puts "  \e[2mrecent rows\e[0m"
+  if recent.empty?
+    puts "  —"
+  else
+    recent.each do |article_id, key, flag, selected, title, feed|
+      label = event_label(key, flag)
+      marker = selected.to_i == 1 ? "\e[33m●\e[0m" : "\e[2m○\e[0m"
+      title_s = (title.to_s.empty? ? article_id : title)[0, 60]
+      feed_s = feed.to_s[0, 24]
+      printf("  %s %-7s  %-60s  \e[2m%s\e[0m\n", marker, label, title_s, feed_s)
+    end
+  end
+  puts
+  puts "  \e[31m#{last_error}\e[0m" if last_error
+  puts "  \e[2m(ctrl-c to quit)\e[0m"
+end
+
+pkg = detect_package(options[:package])
+db_name = detect_database(pkg)
+work_dir = Dir.mktmpdir("sync-watch-")
+local_db = File.join(work_dir, db_name)
+
+trap("INT") do
+  print "\e[?25h"
+  FileUtils.remove_entry(work_dir) if File.directory?(work_dir)
+  exit 0
+end
+
+print "\e[?25l"
+loop do
+  last_error = nil
+  begin
+    pull_db(pkg, db_name, work_dir)
+  rescue => e
+    last_error = "pull failed: #{e.message}"
+  end
+  render(pkg, db_name, local_db, options[:rows], last_error)
+  sleep options[:interval]
+end

@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+# Force-stops capyreader and relaunches it, which drains the sync outbox via
+# the on-launch refreshAll() path.
+#
+# WorkManager's PeriodicWorkRequest gate refuses to run RefreshFeedsWorker out
+# of schedule even with `cmd jobscheduler run -f`, so we cheat: kill the
+# process and restart it. Same code path as a periodic refresh, just sooner.
+#
+# Usage:
+#   scripts/force-refresh                  # auto-detect debug build
+#   scripts/force-refresh -p com.capyreader.app.nightly
+
+set -euo pipefail
+
+CANDIDATE_PACKAGES=(
+  com.capyreader.app.debug
+  com.capyreader.app.nightly
+  com.capyreader.app
+)
+
+package=""
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -p|--package) package="$2"; shift 2 ;;
+    -h|--help)
+      sed -n '2,/^$/p' "$0" | sed 's/^# \?//'
+      exit 0
+      ;;
+    *) echo "unknown option: $1" >&2; exit 2 ;;
+  esac
+done
+
+command -v adb >/dev/null 2>&1 || { echo "adb not found on PATH" >&2; exit 1; }
+
+if [[ -z "$package" ]]; then
+  installed=$(adb shell pm list packages | tr -d '\r' | sed 's/^package://')
+  for candidate in "${CANDIDATE_PACKAGES[@]}"; do
+    if grep -qx "$candidate" <<<"$installed"; then
+      package="$candidate"
+      break
+    fi
+  done
+  [[ -n "$package" ]] || { echo "No capyreader build found. Tried: ${CANDIDATE_PACKAGES[*]}" >&2; exit 1; }
+fi
+
+activity=$(adb shell cmd package resolve-activity --brief "$package" | tr -d '\r' | tail -1)
+[[ "$activity" == */* ]] || { echo "Could not resolve launcher activity for $package: $activity" >&2; exit 1; }
+
+echo "Force-stopping $package..."
+adb shell am force-stop "$package"
+
+echo "Launching $activity to trigger refreshAll on startup..."
+adb shell am start -n "$activity"

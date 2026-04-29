@@ -214,7 +214,9 @@ class ArticleScreenViewModelTest {
         )
     }
 
-    private fun buildViewModel(): ArticleScreenViewModel {
+    private fun buildViewModel(
+        syncFlushInterval: kotlin.time.Duration? = null,
+    ): ArticleScreenViewModel {
         val application = RuntimeEnvironment.getApplication() as Application
 
         return ArticleScreenViewModel(
@@ -223,6 +225,7 @@ class ArticleScreenViewModelTest {
             application = application,
             notificationHelper = notificationHelper,
             ioDispatcher = testDispatcher,
+            syncFlushInterval = syncFlushInterval,
         )
     }
 }

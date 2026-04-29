@@ -16,7 +16,6 @@ import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleListVerticalSwipe
 import com.capyreader.app.refresher.RefreshInterval
-import com.capyreader.app.sync.Sync
 import com.capyreader.app.ui.articles.feeds.AngleRefreshState
 import com.capyreader.app.ui.components.SearchState
 import com.capyreader.app.ui.widget.WidgetUpdater
@@ -34,6 +33,7 @@ import com.jocmp.capy.articles.SidebarItem
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
+import com.jocmp.capy.common.withIOContext
 import com.jocmp.capy.common.withUIContext
 import com.jocmp.capy.countToday
 import com.jocmp.capy.logging.CapyLog
@@ -41,6 +41,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
@@ -49,6 +50,8 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.time.OffsetDateTime
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.minutes
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ArticleScreenViewModel(
@@ -57,6 +60,7 @@ class ArticleScreenViewModel(
     private val application: Application,
     private val notificationHelper: NotificationHelper,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val syncFlushInterval: Duration? = SYNC_FLUSH_INTERVAL,
 ) : AndroidViewModel(application) {
     private var refreshJob: Job? = null
 
@@ -278,6 +282,15 @@ class ArticleScreenViewModel(
             }
         }
 
+        if (syncFlushInterval != null) {
+            viewModelScope.launch {
+                while (true) {
+                    delay(syncFlushInterval)
+                    withIOContext { account.sendArticleStatus() }
+                }
+            }
+        }
+
         val skipInitialRefresh =
             appPreferences.refreshInterval.get() == RefreshInterval.MANUALLY_ONLY
 
@@ -345,9 +358,7 @@ class ArticleScreenViewModel(
                 query = query,
             )
 
-            account.markAllRead(articleIDs).onFailure {
-                Sync.markReadAsync(articleIDs, context)
-            }
+            account.markAllRead(articleIDs)
 
             launchIO {
                 notificationHelper.dismissNotifications(articleIDs)
@@ -522,9 +533,7 @@ class ArticleScreenViewModel(
                 mapOf("count" to articleIDs.size)
             )
 
-            account.markAllRead(articleIDs).onFailure {
-                Sync.markReadAsync(articleIDs, context)
-            }
+            account.markAllRead(articleIDs)
 
             launchIO {
                 notificationHelper.dismissNotifications(articleIDs)
@@ -644,33 +653,20 @@ class ArticleScreenViewModel(
     private fun addStar(articleID: String) {
         viewModelScope.launchIO {
             account.addStar(articleID)
-                .onFailure {
-                    Sync.addStarAsync(articleID, context)
-                }
         }
     }
 
     private suspend fun removeStar(articleID: String) {
         account.removeStar(articleID)
-            .onFailure {
-                Sync.removeStarAsync(articleID, context)
-            }
     }
 
     private suspend fun markRead(articleID: String) {
         account.markRead(articleID)
-            .onFailure {
-                Sync.markReadAsync(listOf(articleID), context)
-            }
-
         notificationHelper.dismissNotifications(listOf(articleID))
     }
 
     private suspend fun markUnread(articleID: String) {
         account.markUnread(articleID)
-            .onFailure {
-                Sync.markUnreadAsync(articleID, context)
-            }
     }
 
     private fun resetToDefaultFilter() {
@@ -906,6 +902,10 @@ class ArticleScreenViewModel(
         HIDE,
         SHOW,
         LATER,
+    }
+
+    companion object {
+        val SYNC_FLUSH_INTERVAL = 2.minutes
     }
 }
 
