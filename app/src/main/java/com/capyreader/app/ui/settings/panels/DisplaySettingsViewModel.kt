@@ -39,6 +39,9 @@ class DisplaySettingsViewModel(
 
     private val _shortenTitles = mutableStateOf(appPreferences.articleListOptions.shortenTitles.get())
 
+    private val _showReadingTime =
+        mutableStateOf(appPreferences.articleListOptions.showReadingTime.get())
+
     var fontScale by mutableStateOf(appPreferences.articleListOptions.fontScale.get())
         private set
 
@@ -56,6 +59,9 @@ class DisplaySettingsViewModel(
 
     val shortenTitles: Boolean
         get() = _shortenTitles.value
+
+    val showReadingTime: Boolean
+        get() = _showReadingTime.value
 
     val pinArticleBars = appPreferences.readerOptions.pinToolbars
 
@@ -129,5 +135,11 @@ class DisplaySettingsViewModel(
         appPreferences.articleListOptions.shortenTitles.set(shortenTitles)
 
         _shortenTitles.value = shortenTitles
+    }
+
+    fun updateShowReadingTime(show: Boolean) {
+        appPreferences.articleListOptions.showReadingTime.set(show)
+
+        _showReadingTime.value = show
     }
 }
