@@ -39,6 +39,15 @@ class LoginViewModel(
     private var _useApiToken by mutableStateOf(false)
     private val routeSource = handle.toRoute<Route.Login>().source
 
+    init {
+        // BazQux is a hosted service at a fixed URL — prefill it so users don't
+        // have to type the host. Mirrors NetNewsWire's
+        // ReaderAPIVariant.bazQux.host (NNW: Modules/Account/Sources/Account/ReaderAPI/ReaderAPIVariant.swift).
+        if (routeSource == Source.BAZQUX) {
+            _url = BAZQUX_DEFAULT_URL
+        }
+    }
+
     val source: Source
         get() = if (routeSource == Source.MINIFLUX && _useApiToken) {
             Source.MINIFLUX_TOKEN
@@ -165,4 +174,8 @@ class LoginViewModel(
     }
 
     private fun loginError() = Error("Error logging in")
+
+    companion object {
+        const val BAZQUX_DEFAULT_URL = "https://bazqux.com/"
+    }
 }

@@ -55,6 +55,12 @@ private fun buildPrompt(source: Source): SignupPrompt? {
             link = "https://miniflux.app/"
         )
 
+        Source.BAZQUX -> SignupPrompt(
+            text = stringResource(R.string.add_account_bazqux_signup_prompt),
+            linkText = stringResource(R.string.add_account_bazqux_signup_link_text),
+            link = "https://bazqux.com/"
+        )
+
         else -> null
     }
 }

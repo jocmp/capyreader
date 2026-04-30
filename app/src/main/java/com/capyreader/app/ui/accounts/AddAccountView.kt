@@ -78,6 +78,10 @@ fun AddAccountView(
                     onSelectService,
                     source = Source.READER
                 )
+                SyncServiceRow(
+                    onSelectService,
+                    source = Source.BAZQUX
+                )
             }
             if (CrashReporting.isAvailable) {
                 Box(

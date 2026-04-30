@@ -24,7 +24,8 @@ data class AccountSettingsStrings(
                 Source.FRESHRSS,
                 Source.MINIFLUX,
                 Source.MINIFLUX_TOKEN,
-                Source.READER -> AccountSettingsStrings(
+                Source.READER,
+                Source.BAZQUX -> AccountSettingsStrings(
                     dialogTitle = R.string.settings_remove_account_title_service,
                     dialogMessage = R.string.settings_remove_account_message_service,
                     dialogConfirmText = R.string.settings_remove_account_confirm_service,
