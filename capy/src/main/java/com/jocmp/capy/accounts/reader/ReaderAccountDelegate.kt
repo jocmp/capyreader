@@ -27,6 +27,7 @@ import com.jocmp.readerclient.GoogleReader
 import com.jocmp.readerclient.GoogleReader.Companion.BAD_TOKEN_HEADER_KEY
 import com.jocmp.readerclient.Item
 import com.jocmp.readerclient.ItemRef
+import com.jocmp.readerclient.taggedItemID
 import com.jocmp.readerclient.Stream
 import com.jocmp.readerclient.Stream.Read
 import com.jocmp.readerclient.Stream.UserLabel
@@ -446,7 +447,7 @@ internal class ReaderAccountDelegate(
                         val response = withPostToken {
                             googleReader.streamItemsContents(
                                 postToken = postToken.get(),
-                                ids = chunkedIDs
+                                ids = chunkedIDs.map { it.taggedItemID }
                             )
                         }
 
@@ -495,7 +496,7 @@ internal class ReaderAccountDelegate(
         val response = withPostToken {
             googleReader.streamItemsContents(
                 postToken = postToken.get(),
-                ids = items.map { it.hexID }
+                ids = items.map { it.hexID.taggedItemID }
             )
         }
 
@@ -574,7 +575,7 @@ internal class ReaderAccountDelegate(
         return withErrorHandling {
             val response = withPostToken {
                 googleReader.editTag(
-                    ids,
+                    ids.map { it.taggedItemID },
                     postToken = postToken.get(),
                     addTag = addTag?.id,
                     removeTag = removeTag?.id
