@@ -1,6 +1,7 @@
 package com.capyreader.app.ui.articles
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
@@ -123,7 +124,8 @@ fun ArticleList(
 
         AnimatedVisibility(
             visible = hasNewArticles,
-            enter = slideInVertically { -it } + fadeIn(),
+            enter = slideInVertically(animationSpec = pillEnterSpec()) { -it } +
+                    fadeIn(animationSpec = pillEnterSpec()),
             exit = slideOutVertically { -it } + fadeOut(),
             modifier = Modifier
                 .align(Alignment.TopCenter)
@@ -138,6 +140,8 @@ fun ArticleList(
         }
     }
 }
+
+private fun <T> pillEnterSpec() = tween<T>(delayMillis = 100)
 
 @Composable
 fun FeedOverScrollBox(height: Dp) {

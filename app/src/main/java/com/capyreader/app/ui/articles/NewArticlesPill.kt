@@ -1,7 +1,6 @@
 package com.capyreader.app.ui.articles
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -18,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.capyreader.app.R
 import com.capyreader.app.ui.theme.CapyTheme
 
@@ -33,16 +33,14 @@ fun NewArticlesPill(onClick: () -> Unit) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(6.dp),
-            modifier = Modifier.padding(
-                PaddingValues(start = 12.dp, end = 16.dp, top = 8.dp, bottom = 8.dp)
-            )
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
         ) {
             Icon(
                 imageVector = Icons.Filled.ArrowUpward,
                 contentDescription = null,
-                modifier = Modifier.size(16.dp),
+                modifier = Modifier.size(14.dp),
             )
-            Text(stringResource(R.string.article_list_new_articles_pill))
+            Text(stringResource(R.string.article_list_new_articles_pill), fontSize = 14.sp)
         }
     }
 }
