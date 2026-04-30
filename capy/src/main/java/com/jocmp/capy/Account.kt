@@ -93,7 +93,8 @@ data class Account(
         )
 
         Source.FRESHRSS,
-        Source.READER -> buildReaderDelegate(
+        Source.READER,
+        Source.BAZQUX -> buildReaderDelegate(
             source = source,
             database = database,
             path = cacheDirectory,

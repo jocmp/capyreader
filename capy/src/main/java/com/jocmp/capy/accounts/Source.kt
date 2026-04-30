@@ -13,13 +13,22 @@ enum class Source(val value: String) {
 
     /** Miniflux with API Token */
     MINIFLUX_TOKEN("miniflux_token"),
-    READER("reader");
+    READER("reader"),
+
+    /**
+     * BazQux Reader — hosted Google Reader-compatible service at bazqux.com.
+     * NetNewsWire treats BazQux as a fixed-host generic ReaderAPI variant
+     * (NNW: Modules/Account/Sources/Account/ReaderAPI/ReaderAPIVariant.swift).
+     * We follow the same pattern, plugging into the shared [ReaderAccountDelegate].
+     */
+    BAZQUX("bazqux");
 
     val hasCustomURL
         get() = this == FRESHRSS ||
                 this == MINIFLUX ||
                 this == MINIFLUX_TOKEN ||
-                this == READER
+                this == READER ||
+                this == BAZQUX
 
     val requiresUsername
         get() = this != MINIFLUX_TOKEN

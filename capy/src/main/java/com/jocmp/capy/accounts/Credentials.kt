@@ -35,7 +35,8 @@ interface Credentials {
                     clientCertManager = clientCertManager,
                 )
                 Source.FRESHRSS,
-                Source.READER -> ReaderCredentials(
+                Source.READER,
+                Source.BAZQUX -> ReaderCredentials(
                     username,
                     password,
                     url = normalizeURL(url),
