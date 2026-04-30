@@ -87,6 +87,7 @@ tests-mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk"
 tests-mockk-mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 tests-robolectric = { module = "org.robolectric:robolectric", version = "4.16.1" }
 tests-turbine = { module = "app.cash.turbine:turbine", version = "1.2.1" }
+tests-work-testing = { module = "androidx.work:work-testing", version = "2.11.2" }
 tests-okhttp-mock = { module = "com.github.gmazzo.okhttp.mock:mock-client", version = "2.1.0" }
 zoomable = { module = "me.saket.telephoto:zoomable", version.ref = "zoomable" }
 zoomable-image-coil = { module = "me.saket.telephoto:zoomable-image-coil3", version.ref = "zoomable" }

@@ -16,6 +16,24 @@ class RefreshScheduler(
     val refreshInterval
         get() = appPreferences.refreshInterval.get()
 
+    fun initialize() {
+        val time = refreshInterval.toTime ?: return
+
+        val (repeatInterval, timeUnit) = time
+
+        val request = PeriodicWorkRequestBuilder<RefreshFeedsWorker>(repeatInterval, timeUnit)
+            .setConstraints(constraints)
+            .build()
+
+        CapyLog.info("init_refresh", mapOf("interval" to refreshInterval))
+
+        WorkManager.getInstance(context).enqueueUniquePeriodicWork(
+            WORK_NAME,
+            ExistingPeriodicWorkPolicy.KEEP,
+            request
+        )
+    }
+
     fun update(interval: RefreshInterval) {
         if (interval == refreshInterval) {
             return
