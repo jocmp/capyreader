@@ -352,4 +352,5 @@
     <string name="freshrss_visibility">Visibilité</string>
     <string name="freshrss_visibility_option_main">Flux principal</string>
     <string name="widget_spotlight_see_all">Tout voir</string>
+    <string name="article_list_new_articles_pill">Nouveaux articles</string>
 </resources>

@@ -151,7 +151,7 @@
     <string name="settings_panel_gestures_title">Viiped</string>
     <string name="settings_list_top_bar_title">Seadistused</string>
     <string name="settings_auto_delete_option_keep_for_one_month">1 kuu</string>
-    <string name="settings_auto_delete_option_keep_for_one_week">1 nädala</string>
+    <string name="settings_auto_delete_option_keep_for_one_week">1 nädal</string>
     <string name="settings_auto_delete_option_keep_for_two_week">2 nädalat</string>
     <string name="settings_auto_delete_option_keep_for_three_month">3 kuud</string>
     <string name="settings_clear_all_articles_button">Kustuta kõik artiklid</string>
@@ -354,4 +354,5 @@
     <string name="freshrss_visibility">Nähtavus</string>
     <string name="freshrss_visibility_option_main">Põhiline uudisvoog</string>
     <string name="widget_spotlight_see_all">Vaata kõiki</string>
+    <string name="article_list_new_articles_pill">Uued artiklid</string>
 </resources>

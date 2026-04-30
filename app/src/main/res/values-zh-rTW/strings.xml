@@ -348,4 +348,10 @@
     <string name="widget_spotlight_see_all">查看全部</string>
     <string name="freshrss_visibility_option_main">主資訊流</string>
     <string name="folder_action_delete_message">您確定要刪除標籤 \"%1$s\" 嗎？</string>
+    <string name="article_actions_save_for_later">儲存以稍後閱讀</string>
+    <string name="saved_for_later_success">已儲存供稍後閱讀</string>
+    <string name="filter_read_later">已儲存供稍後閱讀</string>
+    <string name="delete_folder_error">刪除資料夾時出現錯誤</string>
+    <string name="folder_action_edit_error">更新標籤時出現錯誤</string>
+    <string name="article_list_new_articles_pill">新文章</string>
 </resources>

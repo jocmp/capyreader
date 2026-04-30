@@ -355,4 +355,5 @@
     <string name="freshrss_visibility">الرؤية</string>
     <string name="freshrss_visibility_option_main">التيار الرئيسي</string>
     <string name="widget_spotlight_see_all">أظهر الكل</string>
+    <string name="article_list_new_articles_pill">مقالات جديدة</string>
 </resources>
