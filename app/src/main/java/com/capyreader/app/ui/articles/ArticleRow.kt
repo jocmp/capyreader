@@ -69,6 +69,7 @@ import com.capyreader.app.ui.theme.LocalAppTheme
 import com.jocmp.capy.Article
 import com.jocmp.capy.EnclosureType
 import com.jocmp.capy.MarkRead
+import com.jocmp.capy.articles.readingTimeMinutes
 import com.jocmp.capy.articles.relativeTime
 import java.net.URL
 import kotlinx.coroutines.launch
@@ -84,6 +85,7 @@ data class ArticleRowOptions(
     val fontScale: ArticleListFontScale = ArticleListFontScale.MEDIUM,
     val shortenTitles: Boolean = true,
     val accentColors: Boolean = false,
+    val showReadingTime: Boolean = false,
     val dim: Boolean = true,
 )
 
@@ -181,12 +183,27 @@ fun ArticleRow(
                                         .padding(end = 2.dp)
                                 )
                             }
+                            val time = relativeTime(
+                                time = article.publishedAt,
+                                currentTime = currentTime,
+                                formats = LocalTimeFormats.current,
+                            )
+                            val readingTime = remember(article.id, options.showReadingTime) {
+                                if (options.showReadingTime) {
+                                    article.readingTimeMinutes()
+                                } else {
+                                    0
+                                }
+                            }
+                            val overlineText = if (readingTime > 0) {
+                                "$time  ${
+                                    stringResource(R.string.article_reading_time, readingTime)
+                                }"
+                            } else {
+                                time
+                            }
                             Text(
-                                text = relativeTime(
-                                    time = article.publishedAt,
-                                    currentTime = currentTime,
-                                    formats = LocalTimeFormats.current,
-                                ),
+                                text = overlineText,
                                 color = feedNameColor,
                                 maxLines = 1,
                             )
