@@ -310,10 +310,10 @@ internal class ReaderAccountDelegate(
             id = subscription.id,
             subscription_id = subscription.id,
             title = subscription.title,
-            feed_url = subscription.url,
+            feed_url = subscription.feedURL,
             site_url = subscription.htmlUrl,
             favicon_url = subscription.iconUrl?.ifBlank {
-                CapyLog.warn(tag("blank_icon"), mapOf("feed_url" to subscription.url))
+                CapyLog.warn(tag("blank_icon"), mapOf("feed_url" to subscription.feedURL))
                 null
             },
             priority = subscription.frssPriority,
