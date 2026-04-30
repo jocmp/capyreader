@@ -6,6 +6,7 @@ enum class FontOption {
     INTER,
     JOST,
     LITERATA,
+    OPEN_DYSLEXIC,
     POPPINS,
     VOLLKORN;
 
@@ -16,6 +17,7 @@ enum class FontOption {
             INTER -> "inter"
             JOST -> "jost"
             LITERATA -> "literata"
+            OPEN_DYSLEXIC -> "opendyslexic"
             POPPINS -> "poppins"
             VOLLKORN -> "vollkorn"
         }

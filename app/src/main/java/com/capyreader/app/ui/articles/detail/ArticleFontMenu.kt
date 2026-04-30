@@ -80,6 +80,7 @@ private fun Context.translationKey(option: FontOption): String {
         FontOption.INTER -> getString(R.string.font_option_inter)
         FontOption.JOST -> getString(R.string.font_option_jost)
         FontOption.LITERATA -> getString(R.string.font_option_literata)
+        FontOption.OPEN_DYSLEXIC -> getString(R.string.font_option_opendyslexic)
         FontOption.POPPINS -> getString(R.string.font_option_poppins)
         FontOption.VOLLKORN -> getString(R.string.font_option_vollkorn)
     }
@@ -91,6 +92,7 @@ private fun findFont(fontOption: FontOption) = when (fontOption) {
     FontOption.INTER -> Font(resId = R.font.inter)
     FontOption.JOST -> Font(resId = R.font.jost)
     FontOption.LITERATA -> Font(resId = R.font.literata)
+    FontOption.OPEN_DYSLEXIC -> Font(resId = R.font.opendyslexic)
     FontOption.POPPINS -> Font(resId = R.font.poppins)
     FontOption.VOLLKORN -> Font(resId = R.font.vollkorn)
 }?.toFontFamily()

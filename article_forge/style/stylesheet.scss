@@ -4,6 +4,7 @@ $font-families: (
   "inter": "Inter",
   "jost": "Jost",
   "literata": "Literata",
+  "opendyslexic": "OpenDyslexic",
   "poppins": "Poppins",
   "vollkorn": "Vollkorn",
 );
@@ -34,6 +35,13 @@ $font-families: (
   font-style: normal;
   font-weight: normal;
   src: url("/res/font/literata.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "OpenDyslexic";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/res/font/opendyslexic.otf") format("opentype");
 }
 
 @font-face {

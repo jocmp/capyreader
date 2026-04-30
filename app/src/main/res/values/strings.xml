@@ -189,6 +189,7 @@
     <string name="font_option_inter" translatable="false">Inter</string>
     <string name="font_option_jost" translatable="false">Jost</string>
     <string name="font_option_literata" translatable="false">Literata</string>
+    <string name="font_option_opendyslexic" translatable="false">OpenDyslexic</string>
     <string name="article_font_menu_label">Font</string>
     <string name="article_font_scale_label">Font size</string>
     <string name="article_style_title_section">Title</string>
