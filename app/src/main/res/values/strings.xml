@@ -113,6 +113,7 @@
     <string name="account_source_freshrss" translatable="false">FreshRSS</string>
     <string name="account_source_miniflux" translatable="false">Miniflux</string>
     <string name="account_source_reader">Reader</string>
+    <string name="account_source_newsblur" translatable="false">NewsBlur</string>
     <string name="account_source_local">Local</string>
     <string name="add_account_title">Add Account</string>
     <string name="add_account_local_subtitle">On your device</string>

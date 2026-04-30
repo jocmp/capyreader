@@ -3,12 +3,29 @@ package com.jocmp.bench
 import com.jocmp.capy.Account
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
+import com.jocmp.capy.accounts.Credentials
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.persistence.ArticleRecords
 import kotlinx.coroutines.flow.first
 import java.io.File
 import kotlin.time.measureTime
 import kotlin.time.measureTimedValue
+
+suspend fun commandLogin(config: BenchConfig) {
+    val credentials = Credentials.from(
+        source = config.source,
+        username = config.username,
+        password = config.password,
+        url = config.url,
+    )
+
+    val verified = credentials.verify().getOrElse { error ->
+        println("Login failed: ${error.message}")
+        return
+    }
+
+    println("Authenticated as ${verified.username}")
+}
 
 suspend fun commandRefresh(account: Account) {
     val (result, totalDuration) = measureTimedValue {

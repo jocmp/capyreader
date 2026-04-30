@@ -13,7 +13,8 @@ enum class Source(val value: String) {
 
     /** Miniflux with API Token */
     MINIFLUX_TOKEN("miniflux_token"),
-    READER("reader");
+    READER("reader"),
+    NEWSBLUR("newsblur");
 
     val hasCustomURL
         get() = this == FRESHRSS ||

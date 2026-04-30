@@ -36,6 +36,7 @@ dependencies {
     implementation(project(":minifluxclient"))
     implementation(project(":rssparser"))
     implementation(project(":readerclient"))
+    implementation(project(":newsblurclient"))
     testImplementation(kotlin("test"))
     testImplementation(libs.sqldelight.sqlite.driver)
     testImplementation(libs.tests.junit)

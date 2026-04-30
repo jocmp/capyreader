@@ -3,6 +3,7 @@ package com.jocmp.capy.accounts
 import com.jocmp.capy.ClientCertManager
 import com.jocmp.capy.accounts.feedbin.FeedbinCredentials
 import com.jocmp.capy.accounts.miniflux.MinifluxCredentials
+import com.jocmp.capy.accounts.newsblur.NewsBlurCredentials
 import com.jocmp.capy.accounts.reader.ReaderCredentials
 import com.jocmp.capy.common.optionalURL
 
@@ -42,6 +43,14 @@ interface Credentials {
                     clientCertAlias = clientCertAlias,
                     source = source,
                     clientCertManager = clientCertManager,
+                )
+
+                Source.NEWSBLUR -> NewsBlurCredentials(
+                    username = username,
+                    secret = password,
+                    url = normalizeURL(url).ifBlank {
+                        com.jocmp.newsblurclient.NewsBlur.DEFAULT_URL
+                    },
                 )
 
                 Source.LOCAL -> throw UnsupportedOperationException()

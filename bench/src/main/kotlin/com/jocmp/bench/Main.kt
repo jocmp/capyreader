@@ -19,6 +19,12 @@ fun main(args: Array<String>) {
         return
     }
 
+    if (command == "login") {
+        val config = loadConfig(benchDir)
+        runBlocking { commandLogin(config) }
+        exitProcess(0)
+    }
+
     val config = loadConfig(benchDir)
     val (_, account) = loadOrCreateAccount(benchDir, config)
 
@@ -53,6 +59,7 @@ private fun printUsage() {
           add-feed <url>    Add a feed by URL
           feeds             List all feeds
           articles          Count articles by status
+          login             Verify credentials only (no account write)
           reset             Delete bench/data/ and start fresh
     """.trimIndent())
 }

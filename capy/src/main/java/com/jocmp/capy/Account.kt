@@ -15,6 +15,8 @@ import com.jocmp.capy.accounts.feedbin.FeedbinOkHttpClient
 import com.jocmp.capy.accounts.forAccount
 import com.jocmp.capy.accounts.local.LocalAccountDelegate
 import com.jocmp.capy.accounts.miniflux.MinifluxAccountDelegate
+import com.jocmp.capy.accounts.newsblur.NewsBlurAccountDelegate
+import com.jocmp.capy.accounts.newsblur.NewsBlurOkHttpClient
 import com.jocmp.capy.accounts.reader.buildReaderDelegate
 import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.articles.SortOrder
@@ -36,6 +38,7 @@ import com.jocmp.capy.persistence.SyncStatusRecords
 import com.jocmp.capy.persistence.TaggingRecords
 import com.jocmp.capy.preferences.Preference
 import com.jocmp.feedbinclient.Feedbin
+import com.jocmp.newsblurclient.NewsBlur
 import com.jocmp.feedfinder.DefaultFeedFinder
 import com.jocmp.feedfinder.FeedFinder
 import com.jocmp.minifluxclient.Miniflux
@@ -99,6 +102,14 @@ data class Account(
             path = cacheDirectory,
             preferences = preferences,
             clientCertManager = clientCertManager,
+        )
+
+        Source.NEWSBLUR -> NewsBlurAccountDelegate(
+            database = database,
+            newsblur = NewsBlur.create(
+                client = NewsBlurOkHttpClient.forAccount(path = cacheDirectory),
+            ),
+            preferences = preferences,
         )
     }
 ) {

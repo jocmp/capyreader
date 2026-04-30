@@ -82,6 +82,13 @@ private fun buildItem(source: Source): SourceModel {
                 iconID = R.drawable.rss_logo,
                 subtitle = stringResource(R.string.add_account_reader_subtitle),
             )
+
+        Source.NEWSBLUR ->
+            SourceModel(
+                title = stringResource(source.titleKey),
+                iconID = R.drawable.rss_logo,
+                subtitle = "",
+            )
     }
 }
 
