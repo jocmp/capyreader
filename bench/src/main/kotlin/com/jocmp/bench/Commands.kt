@@ -72,15 +72,101 @@ suspend fun commandFeeds(account: Account) {
     }
 }
 
-suspend fun commandArticles(account: Account) {
-    val all = account.countAllByStatus(ArticleStatus.ALL).first()
-    val unread = account.countAllByStatus(ArticleStatus.UNREAD).first()
-    val starred = account.countAllByStatus(ArticleStatus.STARRED).first()
+suspend fun commandArticles(account: Account, status: String? = null) {
+    val filter = when (status?.lowercase()) {
+        null -> null
+        "all" -> ArticleStatus.ALL
+        "unread" -> ArticleStatus.UNREAD
+        "starred" -> ArticleStatus.STARRED
+        else -> {
+            System.err.println("Unknown status: $status. Expected: all|unread|starred")
+            return
+        }
+    }
 
-    println("articles:")
-    println("  all:     $all")
-    println("  unread:  $unread")
-    println("  starred: $starred")
+    if (filter == null) {
+        val all = account.countAllByStatus(ArticleStatus.ALL).first()
+        val unread = account.countAllByStatus(ArticleStatus.UNREAD).first()
+        val starred = account.countAllByStatus(ArticleStatus.STARRED).first()
+
+        println("articles:")
+        println("  all:     $all")
+        println("  unread:  $unread")
+        println("  starred: $starred")
+        return
+    }
+
+    val records = ArticleRecords(account.database)
+    val articles = records.byStatus.all(
+        status = filter,
+        limit = 50,
+        offset = 0,
+        sortOrder = SortOrder.NEWEST_FIRST,
+    ).executeAsList()
+
+    val count = account.countAllByStatus(filter).first()
+    println("articles ($filter): $count total — showing first ${articles.size}")
+    articles.forEach { article ->
+        val flags = buildString {
+            if (article.read) append("r") else append("-")
+            if (article.starred) append("s") else append("-")
+        }
+        println("  [${article.id}] [$flags] ${article.title}")
+    }
+}
+
+suspend fun commandLogin(account: Account) {
+    println("Logged in as ${account.preferences.username.get()}")
+    println("  source: ${account.source.value}")
+    println("  url:    ${account.preferences.url.get()}")
+}
+
+suspend fun commandFolders(account: Account) {
+    val folders = account.folders.first()
+    val ungrouped = account.feeds.first()
+    println("${folders.size} folders, ${ungrouped.size} ungrouped feeds:")
+    folders.forEach { folder ->
+        println("  ${folder.title} (${folder.feeds.size} feeds)")
+    }
+    if (ungrouped.isNotEmpty()) {
+        println("  (no folder): ${ungrouped.size} feeds")
+    }
+}
+
+suspend fun commandMarkRead(account: Account, articleID: String) {
+    val article = account.findArticle(articleID) ?: run {
+        System.err.println("Article $articleID not found locally. Try 'refresh' first.")
+        return
+    }
+
+    if (article.read) {
+        account.markUnread(articleID).getOrThrow()
+        println("marked unread: $articleID")
+    } else {
+        account.markRead(articleID).getOrThrow()
+        println("marked read: $articleID")
+    }
+
+    account.sendArticleStatus().getOrThrow()
+    println("synced status to remote")
+}
+
+suspend fun commandMarkStarred(account: Account, articleID: String) {
+    val article = account.findArticle(articleID) ?: run {
+        System.err.println("Article $articleID not found locally. Try 'refresh' first.")
+        return
+    }
+
+    if (article.starred) {
+        account.removeStar(articleID).getOrThrow()
+        println("unstarred: $articleID")
+    } else {
+        account.addStar(articleID).getOrThrow()
+        println("starred: $articleID")
+    }
+
+    account.sendArticleStatus().getOrThrow()
+    println("synced status to remote")
 }
 
 suspend fun commandSelectProfile(account: Account) {
