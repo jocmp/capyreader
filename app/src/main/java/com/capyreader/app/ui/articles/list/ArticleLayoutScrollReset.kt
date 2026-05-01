@@ -8,6 +8,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshotFlow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -24,18 +25,26 @@ fun resetScrollBehaviorListener(
 
     val resetScrollBehaviorOffset = {
         val maxCardSize = listState.layoutInfo.visibleItemsInfo.maxOfOrNull { it.size } ?: 0
-        val nextContentOffset = -( maxCardSize * listState.firstVisibleItemIndex).toFloat()
+        val nextContentOffset = -(maxCardSize * listState.firstVisibleItemIndex).toFloat()
         scrollBehavior.state.contentOffset = nextContentOffset
-    }
-
-    val scrollToTop = {
-        val maxCardSize = listState.layoutInfo.visibleItemsInfo.maxOfOrNull { it.size } ?: 0
     }
 
     LaunchedEffect(resetContentOffset) {
         if (resetContentOffset) {
             scrollBehavior.state.contentOffset = 0f
         }
+    }
+
+    LaunchedEffect(listState) {
+        var previousIndex = listState.firstVisibleItemIndex
+        snapshotFlow { listState.firstVisibleItemIndex }
+            .collect { index ->
+                val jumped = index > previousIndex && !listState.isScrollInProgress
+                previousIndex = index
+                if (jumped) {
+                    resetScrollBehaviorOffset()
+                }
+            }
     }
 
     return resetScrollBehaviorOffset

@@ -6,6 +6,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -40,6 +41,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
@@ -542,7 +544,10 @@ fun ArticleScreen(
                             )
                         },
                         snackbarHost = {
-                            SnackbarHost(hostState = snackbarHostState)
+                            SnackbarHost(
+                                hostState = snackbarHostState,
+                                modifier = Modifier.padding(bottom = 56.dp),
+                            )
                         },
                         floatingActionButton = {
                             if (markReadPosition == MarkReadPosition.FLOATING_ACTION_BUTTON) {
@@ -600,7 +605,6 @@ fun ArticleScreen(
                                             enableMarkReadOnScroll = viewModel.markReadOnScrollEnabled,
                                             dimReadArticles = filter.status != ArticleStatus.STARRED,
                                             scrollToTop = { scrollToTop() },
-                                            isRefreshing = isPullToRefreshing,
                                             onMarkAllRead = { range ->
                                                 onMarkAllRead(range)
                                             },
