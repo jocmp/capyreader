@@ -329,4 +329,9 @@
     <string name="widget_spotlight_previous">Προηγούμενο</string>
     <string name="widget_spotlight_next">Επόμενο</string>
     <string name="auth_fields_miniflux_api_token">Αναγνωριστικό API</string>
+    <string name="article_list_new_articles_pill">Νέα άρθρα</string>
+    <string name="widget_spotlight_see_all">Εμφάνιση όλων</string>
+    <string name="auth_fields_miniflux_use_api_token">Χρήση API Token αντ \'αυτού</string>
+    <string name="auth_fields_miniflux_use_password">Χρήση Κωδικού αντ \'αυτού</string>
+    <string name="auth_fields_show_advanced">Προχωρημένες ρυθμίσεις</string>
 </resources>
