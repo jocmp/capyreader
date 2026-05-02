@@ -1,0 +1,1 @@
+• Fix incorrect sidebar folder selection on mark all read
