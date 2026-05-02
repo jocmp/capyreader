@@ -1,0 +1,1 @@
+ALTER TABLE feeds ADD COLUMN velocity_hours INTEGER DEFAULT 336;

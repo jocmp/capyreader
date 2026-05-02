@@ -1,6 +1,5 @@
 package com.jocmp.capy
 
-import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.fixtures.AccountFixture
@@ -48,7 +47,10 @@ class AccountTest {
 
     @Test
     fun refresh() = runTest {
+        val feedFixture = FeedFixture(database = account.database)
+        val feed = feedFixture.create(velocity = Velocity.TwoWeeks)
         val oldArticle = ArticleFixture(database = account.database).create(
+            feed = feed,
             publishedAt = nowUTC().minusMonths(4).toEpochSecond()
         )
 
@@ -58,11 +60,15 @@ class AccountTest {
     }
 
     @Test
-    fun refresh_autoDeleteDisabled() = runTest {
+    fun refresh_velocityForeverPreservesOldArticles() = runTest {
+        val feedFixture = FeedFixture(database = account.database)
+        val foreverFeed = feedFixture.create()
+        account.updateVelocity(feedID = foreverFeed.id, velocity = Velocity.Forever)
+
         val oldArticle = ArticleFixture(database = account.database).create(
+            feed = foreverFeed,
             publishedAt = nowUTC().minusMonths(4).toEpochSecond()
         )
-        account.preferences.autoDelete.set(AutoDelete.DISABLED)
 
         assertEquals(account.refresh(), Result.success(Unit))
         assertNotNull(account.database.reload(oldArticle))

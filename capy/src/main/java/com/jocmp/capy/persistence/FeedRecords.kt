@@ -5,6 +5,7 @@ import app.cash.sqldelight.coroutines.mapToList
 import com.jocmp.capy.Feed
 import com.jocmp.capy.FeedPriority
 import com.jocmp.capy.Folder
+import com.jocmp.capy.Velocity
 import com.jocmp.capy.common.withIOContext
 import com.jocmp.capy.db.Database
 import com.jocmp.rssparser.model.ConditionalGetInfo
@@ -111,6 +112,17 @@ internal class FeedRecords(private val database: Database) {
         )
     }
 
+    suspend fun updateVelocity(feedID: String, velocity: Velocity) = withIOContext {
+        database.feedsQueries.updateVelocity(
+            velocityHours = velocity.hours,
+            feedID = feedID,
+        )
+    }
+
+    suspend fun migrateVelocityForAll(velocityHours: Long?) = withIOContext {
+        database.feedsQueries.migrateVelocityForAll(velocityHours = velocityHours)
+    }
+
     suspend fun enableNotifications(feedID: String, enabled: Boolean) = withIOContext {
         database.feedsQueries.enableNotifications(
             enabled = enabled,
@@ -186,6 +198,7 @@ internal class FeedRecords(private val database: Database) {
         etag: String? = null,
         lastModified: String? = null,
         conditionalGetRefreshedAt: Long? = null,
+        velocityHours: Long? = null,
         folderName: String? = "",
         expanded: Boolean? = false,
     ) = Feed(
@@ -205,5 +218,6 @@ internal class FeedRecords(private val database: Database) {
         priority = FeedPriority.parse(priority),
         showUnreadBadge = showUnreadBadge,
         isReadLater = readLater,
+        velocity = Velocity.fromHours(velocityHours),
     )
 }

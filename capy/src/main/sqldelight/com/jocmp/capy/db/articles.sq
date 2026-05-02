@@ -211,29 +211,6 @@ JOIN article_statuses ON articles.id = article_statuses.article_id
 WHERE article_statuses.starred = 1
 ORDER BY articles.published_at DESC;
 
-deleteAllArticles {
-  DELETE FROM article_statuses WHERE starred = 0 AND read = 1;
-
-  DELETE FROM articles WHERE id NOT IN (
-    SELECT article_id FROM article_statuses
-  );
-
-  DELETE FROM saved_search_articles
-  WHERE article_id NOT IN (
-    SELECT article_id FROM article_statuses
-  );
-
-  DELETE FROM article_notifications
-  WHERE article_id NOT IN (
-   SELECT article_id FROM article_statuses
-  );
-
-  DELETE FROM enclosures
-  WHERE article_id NOT IN (
-    SELECT article_id FROM article_statuses
-  );
-}
-
 deleteArticles {
   DELETE FROM articles
   WHERE published_at < :publishedBefore
@@ -242,10 +219,12 @@ deleteArticles {
     WHERE article_statuses.article_id = articles.id
     AND starred = 0 AND read = 1
   )
-  AND NOT EXISTS (
+  AND EXISTS (
     SELECT 1 FROM feeds
     WHERE feeds.id = articles.feed_id
-    AND feeds.feed_url LIKE 'http://pages.feedbinusercontent.com/%'
+    AND feeds.read_later = 0
+    AND feeds.velocity_hours IS NOT NULL
+    AND feeds.feed_url NOT LIKE 'http://pages.feedbinusercontent.com/%'
   );
 
   DELETE FROM article_notifications

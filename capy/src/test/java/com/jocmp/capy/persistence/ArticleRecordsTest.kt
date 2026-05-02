@@ -377,11 +377,13 @@ class ArticleRecordsTest {
     fun deleteOldArticles() = runTest {
         val oldPublishedAt = nowUTC().minusMonths(4).toEpochSecond()
         val articleRecords = ArticleRecords(database)
+        val feedFixture = FeedFixture(database)
+        val feed = feedFixture.create(velocity = com.jocmp.capy.Velocity.TwoWeeks)
 
-        val oldArticle = articleFixture.create(publishedAt = oldPublishedAt)
-        val oldUnreadArticle = articleFixture.create(publishedAt = oldPublishedAt, read = false)
-        val newArticle = articleFixture.create()
-        val oldStarredArticle = articleFixture.create(publishedAt = oldPublishedAt).run {
+        val oldArticle = articleFixture.create(feed = feed, publishedAt = oldPublishedAt)
+        val oldUnreadArticle = articleFixture.create(feed = feed, publishedAt = oldPublishedAt, read = false)
+        val newArticle = articleFixture.create(feed = feed)
+        val oldStarredArticle = articleFixture.create(feed = feed, publishedAt = oldPublishedAt).run {
             articleRecords.markAllStarred(listOf(id))
             articleRecords.find(id)!!
         }
@@ -422,31 +424,6 @@ class ArticleRecordsTest {
         assertNotNull(articleRecords.reload(freshArticle))
     }
 
-    @Test
-    fun deleteAllArticles() = runTest {
-        val oldPublishedAt = nowUTC().minusMonths(4).toEpochSecond()
-        val articleRecords = ArticleRecords(database)
-
-        val oldArticle = articleFixture.create(publishedAt = oldPublishedAt)
-        val oldUnreadArticle = articleFixture.create(publishedAt = oldPublishedAt, read = false)
-        val newReadArticle = articleFixture.create()
-        val oldStarredArticle = articleFixture.create(publishedAt = oldPublishedAt).run {
-            articleRecords.markAllStarred(listOf(id))
-            articleRecords.find(id)!!
-        }
-
-        assertNotNull(articleRecords.reload(newReadArticle))
-        assertNotNull(articleRecords.reload(oldUnreadArticle))
-        assertNotNull(articleRecords.reload(oldStarredArticle))
-        assertNotNull(articleRecords.reload(oldArticle))
-
-        articleRecords.deleteAllArticles()
-
-        assertNull(articleRecords.reload(oldArticle))
-        assertNull(articleRecords.reload(newReadArticle))
-        assertNotNull(articleRecords.reload(oldUnreadArticle))
-        assertNotNull(articleRecords.reload(oldStarredArticle))
-    }
 
     @Test
     fun createStatus() = runTest {

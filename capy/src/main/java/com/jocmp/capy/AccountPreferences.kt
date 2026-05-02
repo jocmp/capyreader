@@ -1,6 +1,5 @@
 package com.jocmp.capy
 
-import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.preferences.Preference
@@ -25,8 +24,11 @@ class AccountPreferences(
     val password: Preference<String>
         get() = store.getString("password", "")
 
-    val autoDelete: Preference<AutoDelete>
-        get() = store.getEnum("auto_delete_articles", AutoDelete.default)
+    val legacyAutoDeleteRaw: Preference<String>
+        get() = store.getString("auto_delete_articles", "")
+
+    val velocityMigrated: Preference<Boolean>
+        get() = store.getBoolean("velocity_migrated", false)
 
     val filterKeywords: Preference<Set<String>>
         get() = store.getStringSet("keyword_blocklist")

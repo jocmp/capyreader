@@ -6,6 +6,7 @@ import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.FeedPriority
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.articles.SortOrder
+import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.persistence.listMapper
 import com.jocmp.capy.persistence.toStatusPair
@@ -37,6 +38,7 @@ class ByFeed(private val database: Database) {
                 lastReadAt = mapLastRead(read, since),
                 lastUnstarredAt = mapLastUnstarred(starred, since),
                 publishedSince = null,
+                nowSeconds = nowSeconds(),
                 priorities = priority.inclusivePriorities,
                 mapper = ::listMapper
             )
@@ -51,6 +53,7 @@ class ByFeed(private val database: Database) {
                 lastReadAt = mapLastRead(read, since),
                 lastUnstarredAt = mapLastUnstarred(starred, since),
                 publishedSince = null,
+                nowSeconds = nowSeconds(),
                 priorities = priority.inclusivePriorities,
                 mapper = ::listMapper
             )
@@ -74,6 +77,7 @@ class ByFeed(private val database: Database) {
             afterArticleID = afterArticleID,
             beforeArticleID = beforeArticleID,
             publishedSince = null,
+            nowSeconds = nowSeconds(),
             newestFirst = isNewestFirst(sortOrder),
             query = query,
             priorities = priority.inclusivePriorities,
@@ -97,7 +101,10 @@ class ByFeed(private val database: Database) {
             lastReadAt = mapLastRead(read, since),
             lastUnstarredAt = mapLastUnstarred(starred, since),
             priorities = priority.inclusivePriorities,
-            publishedSince = null
+            publishedSince = null,
+            nowSeconds = nowSeconds(),
         )
     }
 }
+
+internal fun nowSeconds(): Long = nowUTC().toEpochSecond()

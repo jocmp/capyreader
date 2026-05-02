@@ -15,23 +15,17 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -57,7 +51,6 @@ import com.capyreader.app.ui.settings.filters.FilterKeywords
 import com.capyreader.app.ui.settings.filters.FiltersItem
 import com.capyreader.app.ui.settings.filters.LocalFilterKeywords
 import com.capyreader.app.ui.theme.CapyTheme
-import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.common.launchUI
@@ -87,9 +80,6 @@ fun GeneralSettingsPanel(
             updateRefreshInterval = viewModel::updateRefreshInterval,
             canOpenLinksInternally = viewModel.canOpenLinksInternally,
             updateOpenLinksInternally = viewModel::updateOpenLinksInternally,
-            updateAutoDelete = viewModel::updateAutoDelete,
-            autoDelete = viewModel.autoDelete,
-            onClearArticles = viewModel::clearAllArticles,
             updateSortOrder = viewModel::updateSortOrder,
             sortOrder = viewModel.sortOrder,
             updateConfirmMarkAllRead = viewModel::updateConfirmMarkAllRead,
@@ -108,13 +98,10 @@ fun GeneralSettingsPanel(
 fun GeneralSettingsPanelView(
     source: Source,
     onNavigateToNotifications: () -> Unit,
-    onClearArticles: () -> Unit,
     refreshInterval: RefreshInterval,
     updateRefreshInterval: (RefreshInterval) -> Unit,
     canOpenLinksInternally: Boolean,
     updateOpenLinksInternally: (canOpenLinksInternally: Boolean) -> Unit,
-    updateAutoDelete: (AutoDelete) -> Unit,
-    autoDelete: AutoDelete,
     updateSortOrder: (SortOrder) -> Unit,
     sortOrder: SortOrder,
     updateStickyFullContent: (enable: Boolean) -> Unit,
@@ -126,17 +113,6 @@ fun GeneralSettingsPanelView(
     markReadOnScroll: Boolean,
     updateMarkReadOnScroll: (enable: Boolean) -> Unit,
 ) {
-    val (isClearArticlesDialogOpen, setClearArticlesDialogOpen) = remember { mutableStateOf(false) }
-
-    val onClearArticlesCancel = {
-        setClearArticlesDialogOpen(false)
-    }
-
-    val onRequestClearArticles = {
-        setClearArticlesDialogOpen(false)
-        onClearArticles()
-    }
-
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier.verticalScroll(rememberScrollState())
@@ -226,20 +202,6 @@ fun GeneralSettingsPanelView(
         ) {
             Column {
                 CrashLogExportItem(source = source)
-
-                AutoDeleteMenu(
-                    updateAutoDelete = updateAutoDelete,
-                    autoDelete = autoDelete,
-                )
-            }
-
-            RowItem {
-                FilledTonalButton(
-                    onClick = { setClearArticlesDialogOpen(true) },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(stringResource(R.string.settings_clear_all_articles_button))
-                }
             }
 
             if (BuildConfig.DEBUG && !LocalView.current.isInEditMode) {
@@ -247,23 +209,6 @@ fun GeneralSettingsPanelView(
             }
         }
         Spacer(Modifier.height(16.dp))
-    }
-
-    if (isClearArticlesDialogOpen) {
-        AlertDialog(
-            onDismissRequest = onClearArticlesCancel,
-            text = { Text(stringResource(R.string.settings_clear_all_articles_text)) },
-            dismissButton = {
-                TextButton(onClick = onClearArticlesCancel) {
-                    Text(stringResource(R.string.dialog_cancel))
-                }
-            },
-            confirmButton = {
-                TextButton(onClick = onRequestClearArticles) {
-                    Text(text = stringResource(R.string.settings_clear_all_articles_confirm))
-                }
-            }
-        )
     }
 }
 
@@ -355,10 +300,7 @@ private fun GeneralSettingsPanelPreview() {
                 refreshInterval = RefreshInterval.EVERY_HOUR,
                 updateRefreshInterval = {},
                 canOpenLinksInternally = false,
-                onClearArticles = {},
                 updateOpenLinksInternally = {},
-                updateAutoDelete = {},
-                autoDelete = AutoDelete.WEEKLY,
                 sortOrder = SortOrder.NEWEST_FIRST,
                 updateSortOrder = {},
                 onNavigateToNotifications = {},

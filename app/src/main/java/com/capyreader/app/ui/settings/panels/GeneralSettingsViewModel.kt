@@ -10,11 +10,9 @@ import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.refresher.RefreshScheduler
 import com.jocmp.capy.Account
-import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.preferences.getAndSet
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class GeneralSettingsViewModel(
@@ -25,9 +23,6 @@ class GeneralSettingsViewModel(
     val source = account.source
 
     var refreshInterval by mutableStateOf(refreshScheduler.refreshInterval)
-        private set
-
-    var autoDelete by mutableStateOf(account.preferences.autoDelete.get())
         private set
 
     var canOpenLinksInternally by mutableStateOf(appPreferences.openLinksInternally.get())
@@ -65,12 +60,6 @@ class GeneralSettingsViewModel(
         this.sortOrder = sort
     }
 
-    fun updateAutoDelete(autoDelete: AutoDelete) {
-        account.preferences.autoDelete.set(autoDelete)
-
-        this.autoDelete = autoDelete
-    }
-
     fun updateOpenLinksInternally(openLinksInternally: Boolean) {
         appPreferences.openLinksInternally.set(openLinksInternally)
 
@@ -104,12 +93,6 @@ class GeneralSettingsViewModel(
             viewModelScope.launch(Dispatchers.IO) {
                 account.clearStickyFullContent()
             }
-        }
-    }
-
-    fun clearAllArticles() {
-        viewModelScope.launch {
-            account.clearAllArticles()
         }
     }
 

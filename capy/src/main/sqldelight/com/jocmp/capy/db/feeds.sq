@@ -104,6 +104,12 @@ UPDATE feeds SET enable_sticky_full_content = :enabled WHERE feeds.id = :feedID;
 updateOpenInBrowser:
 UPDATE feeds SET open_articles_in_browser = :enabled WHERE feeds.id = :feedID;
 
+updateVelocity:
+UPDATE feeds SET velocity_hours = :velocityHours WHERE feeds.id = :feedID;
+
+migrateVelocityForAll:
+UPDATE feeds SET velocity_hours = :velocityHours;
+
 clearStickyFullContent:
 UPDATE feeds SET enable_sticky_full_content = 0;
 

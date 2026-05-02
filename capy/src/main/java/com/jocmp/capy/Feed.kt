@@ -21,4 +21,5 @@ data class Feed(
     val priority: FeedPriority? = null,
     val showUnreadBadge: Boolean = true,
     val isReadLater: Boolean = false,
+    val velocity: Velocity = Velocity.default,
 ): Countable

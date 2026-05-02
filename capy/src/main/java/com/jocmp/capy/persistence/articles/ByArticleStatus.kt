@@ -31,6 +31,7 @@ class ByArticleStatus(private val database: Database) {
                 lastReadAt = mapLastRead(read, since),
                 lastUnstarredAt = mapLastUnstarred(starred, since),
                 publishedSince = null,
+                nowSeconds = nowSeconds(),
                 query = query,
                 mapper = ::listMapper
             )
@@ -43,6 +44,7 @@ class ByArticleStatus(private val database: Database) {
                 lastReadAt = mapLastRead(read, since),
                 lastUnstarredAt = mapLastUnstarred(starred, since),
                 publishedSince = null,
+                nowSeconds = nowSeconds(),
                 query = query,
                 mapper = ::listMapper
             )
@@ -63,6 +65,7 @@ class ByArticleStatus(private val database: Database) {
             afterArticleID = afterArticleID,
             beforeArticleID = beforeArticleID,
             publishedSince = null,
+            nowSeconds = nowSeconds(),
             newestFirst = isNewestFirst(sortOrder),
             query = query,
         )
@@ -85,7 +88,8 @@ class ByArticleStatus(private val database: Database) {
             query = query,
             lastReadAt = mapLastRead(read, since),
             lastUnstarredAt = mapLastUnstarred(starred, since),
-            publishedSince = null
+            publishedSince = null,
+            nowSeconds = nowSeconds(),
         )
     }
 }

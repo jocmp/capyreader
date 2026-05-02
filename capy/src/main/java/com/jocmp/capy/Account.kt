@@ -4,7 +4,6 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
 import com.jocmp.capy.ArticleStatus.UNREAD
 import com.jocmp.capy.accounts.AddFeedResult
-import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.accounts.FaviconFinder
 import com.jocmp.capy.accounts.FaviconPolicy
 import com.jocmp.capy.accounts.LocalOkHttpClient
@@ -168,6 +167,8 @@ data class Account(
     suspend fun editFeed(form: EditFeedFormEntry): Result<Feed> {
         val feed = findFeed(form.feedID) ?: return Result.failure(Throwable("Feed not found"))
 
+        feedRecords.updateVelocity(feedID = feed.id, velocity = form.velocity)
+
         return delegate.updateFeed(
             feed = feed,
             title = form.title,
@@ -223,23 +224,47 @@ data class Account(
 
     suspend fun refresh(filter: ArticleFilter = ArticleFilter.default()): Result<Unit> {
         return try {
+            migrateAutoDeleteToVelocityIfNeeded()
+
             sendArticleStatus()
 
-            val cutoffDate = preferences.autoDelete.get().cutoffDate()
+            val cutoffDate = nowUTC().minusMonths(3)
 
             val result = delegate.refresh(filter, cutoffDate = cutoffDate)
 
-            if (cutoffDate != null) {
-                articleRecords.deleteOldArticles(before = cutoffDate)
-
-                articleRecords.deleteOrphanedStatuses()
-            }
+            articleRecords.deleteOldArticles(before = cutoffDate)
+            articleRecords.deleteOrphanedStatuses()
 
             result
         } catch (e: Throwable) {
             CapyLog.error("refresh", e)
             Result.failure(e)
         }
+    }
+
+    private suspend fun migrateAutoDeleteToVelocityIfNeeded() {
+        if (preferences.velocityMigrated.get()) return
+
+        val rawAutoDelete = preferences.legacyAutoDeleteRaw.get()
+        val velocityHours: Long? = when (rawAutoDelete) {
+            "DISABLED" -> null
+            "WEEKLY" -> 24L * 7
+            "EVERY_TWO_WEEKS" -> 24L * 14
+            "EVERY_MONTH" -> 24L * 30
+            "EVERY_THREE_MONTHS" -> 24L * 90
+            else -> null
+        }
+
+        if (rawAutoDelete.isNotBlank()) {
+            feedRecords.migrateVelocityForAll(velocityHours)
+        }
+
+        preferences.velocityMigrated.set(true)
+        preferences.legacyAutoDeleteRaw.delete()
+    }
+
+    suspend fun updateVelocity(feedID: String, velocity: Velocity) {
+        feedRecords.updateVelocity(feedID = feedID, velocity = velocity)
     }
 
     suspend fun sendArticleStatus(): Result<Unit> = sendArticleStatusMutex.withLock {
@@ -493,10 +518,6 @@ data class Account(
         feedRecords.updateStickyFullContent(enabled = false, feedID = feedID)
     }
 
-    suspend fun clearAllArticles() {
-        articleRecords.deleteAllArticles()
-    }
-
     suspend fun clearStickyFullContent() {
         feedRecords.clearStickyFullContent()
     }
@@ -540,15 +561,3 @@ private fun <T> missingFolderError() = Result.failure<T>(Throwable("Folder not f
 
 private fun Feedbin.Companion.forAccount(path: URI, preferences: AccountPreferences) =
     create(client = FeedbinOkHttpClient.forAccount(path, preferences))
-
-private fun AutoDelete.cutoffDate(): ZonedDateTime? {
-    val now = nowUTC()
-
-    return when (this) {
-        AutoDelete.DISABLED -> null
-        AutoDelete.WEEKLY -> now.minusWeeks(1)
-        AutoDelete.EVERY_TWO_WEEKS -> now.minusWeeks(2)
-        AutoDelete.EVERY_MONTH -> now.minusMonths(1)
-        AutoDelete.EVERY_THREE_MONTHS -> now.minusMonths(3)
-    }
-}

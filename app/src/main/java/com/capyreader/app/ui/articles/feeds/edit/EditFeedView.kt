@@ -1,7 +1,11 @@
 package com.capyreader.app.ui.articles.feeds.edit
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -17,18 +22,26 @@ import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateMap
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.window.Dialog
+import com.capyreader.app.ui.components.DialogCard
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
@@ -48,6 +61,7 @@ import com.jocmp.capy.EditFeedFormEntry
 import com.jocmp.capy.Feed
 import com.jocmp.capy.FeedPriority
 import com.jocmp.capy.Folder
+import com.jocmp.capy.Velocity
 
 @Composable
 fun EditFeedView(
@@ -73,6 +87,7 @@ fun EditFeedView(
 
     val scrollState = rememberScrollState()
     val (name, setName) = remember { mutableStateOf(feed.title) }
+    val (velocity, setVelocity) = remember { mutableStateOf(feed.velocity) }
     val (selectedFolder, setSelectedFolder) = remember { mutableStateOf(defaultFolder()) }
     val switchFolders = remember {
         folders
@@ -93,7 +108,8 @@ fun EditFeedView(
             EditFeedFormEntry(
                 feedID = feed.id,
                 title = name,
-                folderTitles = folderNames
+                folderTitles = folderNames,
+                velocity = velocity,
             )
         )
     }
@@ -137,6 +153,16 @@ fun EditFeedView(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp)
+                )
+            }
+
+            FormSection(
+                modifier = Modifier.padding(bottom = 16.dp),
+                title = stringResource(R.string.edit_feed_velocity_section)
+            ) {
+                VelocitySelect(
+                    velocity = velocity,
+                    onSelect = setVelocity,
                 )
             }
 
@@ -368,6 +394,149 @@ private fun CheckboxRow(title: String, checked: Boolean, onCheck: (value: Boolea
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.padding(end = 16.dp)
         )
+    }
+}
+
+@Composable
+private fun VelocitySelect(
+    velocity: Velocity,
+    onSelect: (Velocity) -> Unit,
+) {
+    val (isOpen, setOpen) = remember { mutableStateOf(false) }
+    val initialCustomDays = (velocity as? Velocity.Custom)?.days ?: 7
+    var customDaysText by remember { mutableStateOf(initialCustomDays.toString()) }
+
+    val isCustom = velocity is Velocity.Custom
+    val defaults = ListItemDefaults.colors()
+    val colors = ListItemDefaults.colors(
+        containerColor = MaterialTheme.colorScheme.background,
+        headlineColor = defaults.contentColor,
+        supportingColor = defaults.supportingContentColor,
+    )
+
+    val presetOptions = listOf(
+        Velocity.EightHours,
+        Velocity.Day,
+        Velocity.ThreeDays,
+        Velocity.TwoWeeks,
+        Velocity.Forever,
+    )
+
+    Column {
+        Box(Modifier.clickable { setOpen(true) }) {
+            ListItem(
+                colors = colors,
+                headlineContent = { Text(stringResource(R.string.edit_feed_velocity_label)) },
+                supportingContent = { Text(velocityLabel(velocity)) },
+            )
+        }
+
+        AnimatedVisibility(
+            visible = isCustom,
+            enter = expandVertically(),
+            exit = shrinkVertically(),
+        ) {
+            OutlinedTextField(
+                value = customDaysText,
+                onValueChange = { value ->
+                    val digits = value.filter { it.isDigit() }.take(5)
+                    customDaysText = digits
+                    val days = digits.toIntOrNull()
+                    if (days != null && days > 0) {
+                        onSelect(Velocity.Custom(days = days))
+                    }
+                },
+                label = { Text(stringResource(R.string.edit_feed_velocity_custom_days_label)) },
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+            )
+        }
+    }
+
+    if (isOpen) {
+        Dialog(onDismissRequest = { setOpen(false) }) {
+            DialogCard {
+                Column(
+                    Modifier
+                        .verticalScroll(rememberScrollState())
+                        .padding(bottom = 16.dp)
+                ) {
+                    Text(
+                        stringResource(R.string.edit_feed_velocity_label),
+                        style = MaterialTheme.typography.headlineSmall,
+                        modifier = Modifier
+                            .padding(top = 24.dp, bottom = 8.dp)
+                            .padding(horizontal = 24.dp)
+                    )
+
+                    presetOptions.forEach { option ->
+                        VelocityRadioRow(
+                            label = velocityLabel(option),
+                            selected = matchesPreset(velocity, option),
+                            onClick = {
+                                onSelect(option)
+                                setOpen(false)
+                            }
+                        )
+                    }
+
+                    HorizontalDivider()
+
+                    VelocityRadioRow(
+                        label = stringResource(R.string.edit_feed_velocity_option_custom),
+                        selected = isCustom,
+                        onClick = {
+                            val days = customDaysText.toIntOrNull()?.takeIf { it > 0 } ?: 7
+                            customDaysText = days.toString()
+                            onSelect(Velocity.Custom(days = days))
+                            setOpen(false)
+                        }
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun VelocityRadioRow(label: String, selected: Boolean, onClick: () -> Unit) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .height(56.dp)
+            .selectable(
+                selected = selected,
+                onClick = onClick,
+                role = Role.RadioButton,
+            )
+            .padding(horizontal = 24.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        RadioButton(selected = selected, onClick = null)
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.padding(start = 16.dp)
+        )
+    }
+}
+
+private fun matchesPreset(velocity: Velocity, preset: Velocity): Boolean {
+    return velocity::class == preset::class
+}
+
+@Composable
+private fun velocityLabel(velocity: Velocity): String {
+    return when (velocity) {
+        Velocity.EightHours -> stringResource(R.string.edit_feed_velocity_option_eight_hours)
+        Velocity.Day -> stringResource(R.string.edit_feed_velocity_option_day)
+        Velocity.ThreeDays -> stringResource(R.string.edit_feed_velocity_option_three_days)
+        Velocity.TwoWeeks -> stringResource(R.string.edit_feed_velocity_option_two_weeks)
+        Velocity.Forever -> stringResource(R.string.edit_feed_velocity_option_forever)
+        is Velocity.Custom -> stringResource(R.string.edit_feed_velocity_option_custom_days, velocity.days)
     }
 }
 

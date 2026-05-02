@@ -1,6 +1,7 @@
 package com.jocmp.capy.fixtures
 
 import com.jocmp.capy.Feed
+import com.jocmp.capy.Velocity
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.persistence.FeedRecords
 import com.jocmp.capy.persistence.TaggingRecords
@@ -18,6 +19,7 @@ internal class FeedFixture(
         title: String = "My Feed",
         folderNames: List<String> = emptyList(),
         enableNotifications: Boolean = false,
+        velocity: Velocity = Velocity.Forever,
     ): Feed = runBlocking {
         val feed = records.upsert(
             feedID = feedID,
@@ -31,6 +33,8 @@ internal class FeedFixture(
         if (enableNotifications) {
             records.enableNotifications(feed.id, enabled = true)
         }
+
+        records.updateVelocity(feed.id, velocity = velocity)
 
         folderNames.distinct().forEach { name ->
             taggings.upsert("${feed.id}:${name}", name = name, feedID = feed.id)

@@ -35,6 +35,7 @@ class BySavedSearch(private val database: Database) {
                 lastReadAt = mapLastRead(read, since),
                 lastUnstarredAt = mapLastUnstarred(starred, since),
                 publishedSince = null,
+                nowSeconds = nowSeconds(),
                 mapper = ::listMapper
             )
         } else {
@@ -48,6 +49,7 @@ class BySavedSearch(private val database: Database) {
                 lastReadAt = mapLastRead(read, since),
                 lastUnstarredAt = mapLastUnstarred(starred, since),
                 publishedSince = null,
+                nowSeconds = nowSeconds(),
                 mapper = ::listMapper
             )
         }
@@ -70,6 +72,7 @@ class BySavedSearch(private val database: Database) {
             afterArticleID = afterArticleID,
             beforeArticleID = beforeArticleID,
             publishedSince = null,
+            nowSeconds = nowSeconds(),
             newestFirst = isNewestFirst(sortOrder),
             query = query,
         )
@@ -90,7 +93,8 @@ class BySavedSearch(private val database: Database) {
             starred = starred,
             lastReadAt = mapLastRead(read, since),
             lastUnstarredAt = mapLastUnstarred(starred, since),
-            publishedSince = null
+            publishedSince = null,
+            nowSeconds = nowSeconds(),
         )
     }
 }

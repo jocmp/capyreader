@@ -135,10 +135,6 @@ class ArticleRecords(
         }
     }
 
-    suspend fun deleteAllArticles() = withIOContext {
-        database.articlesQueries.deleteAllArticles()
-    }
-
     fun deleteOldArticles(before: ZonedDateTime) {
         database.transactionWithErrorHandling {
             val maxDate = before.toEpochSecond()

@@ -31,6 +31,7 @@ class ByToday(private val database: Database) {
                 lastReadAt = mapLastRead(read, since),
                 lastUnstarredAt = mapLastUnstarred(starred, since),
                 publishedSince = mapTodayStartDate(),
+                nowSeconds = nowSeconds(),
                 query = query,
                 mapper = ::listMapper
             )
@@ -43,6 +44,7 @@ class ByToday(private val database: Database) {
                 lastReadAt = mapLastRead(read, since),
                 lastUnstarredAt = mapLastUnstarred(starred, since),
                 publishedSince = mapTodayStartDate(),
+                nowSeconds = nowSeconds(),
                 query = query,
                 mapper = ::listMapper
             )
@@ -63,6 +65,7 @@ class ByToday(private val database: Database) {
             afterArticleID = afterArticleID,
             beforeArticleID = beforeArticleID,
             publishedSince = mapTodayStartDate(),
+            nowSeconds = nowSeconds(),
             newestFirst = isNewestFirst(sortOrder),
             query = query,
         )
@@ -81,7 +84,8 @@ class ByToday(private val database: Database) {
             query = query,
             lastReadAt = mapLastRead(read, since),
             lastUnstarredAt = mapLastUnstarred(starred, since),
-            publishedSince = mapTodayStartDate()
+            publishedSince = mapTodayStartDate(),
+            nowSeconds = nowSeconds(),
         )
     }
 

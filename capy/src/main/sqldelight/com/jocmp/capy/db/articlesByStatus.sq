@@ -22,6 +22,12 @@ WHERE ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL 
 AND (feeds.priority IS NULL OR feeds.priority IN ('main', 'important'))
 AND ((article_statuses.starred = :starred AND article_statuses.last_unstarred_at IS NULL OR article_statuses.last_unstarred_at >= :lastUnstarredAt) OR :starred IS NULL)
 AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
+AND (
+  article_statuses.starred = 1
+  OR feeds.read_later = 1
+  OR feeds.velocity_hours IS NULL
+  OR articles.published_at >= (:nowSeconds - feeds.velocity_hours * 3600)
+)
 AND (:query IS NULL OR articles.title LIKE '%' || :query || '%' OR articles.summary LIKE '%' || :query || '%')
 ORDER BY articles.published_at DESC, articles.id DESC
 LIMIT :limit OFFSET :offset;
@@ -50,6 +56,12 @@ WHERE ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL 
 AND (feeds.priority IS NULL OR feeds.priority IN ('main', 'important'))
 AND ((article_statuses.starred = :starred AND article_statuses.last_unstarred_at IS NULL OR article_statuses.last_unstarred_at >= :lastUnstarredAt) OR :starred IS NULL)
 AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
+AND (
+  article_statuses.starred = 1
+  OR feeds.read_later = 1
+  OR feeds.velocity_hours IS NULL
+  OR articles.published_at >= (:nowSeconds - feeds.velocity_hours * 3600)
+)
 AND (:query IS NULL OR articles.title LIKE '%' || :query || '%' OR articles.summary LIKE '%' || :query || '%')
 ORDER BY articles.published_at ASC, articles.id ASC
 LIMIT :limit OFFSET :offset;
@@ -63,6 +75,12 @@ WHERE ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL 
 AND (feeds.priority IS NULL OR feeds.priority IN ('main', 'important'))
 AND ((article_statuses.starred = :starred AND article_statuses.last_unstarred_at IS NULL OR article_statuses.last_unstarred_at >= :lastUnstarredAt) OR :starred IS NULL)
 AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
+AND (
+  article_statuses.starred = 1
+  OR feeds.read_later = 1
+  OR feeds.velocity_hours IS NULL
+  OR articles.published_at >= (:nowSeconds - feeds.velocity_hours * 3600)
+)
 AND (:query IS NULL OR articles.title LIKE '%' || :query || '%' OR articles.summary LIKE '%' || :query || '%');
 
 findArticleIDs:
@@ -76,6 +94,12 @@ WHERE article_statuses.read = 0
 AND (article_statuses.starred = :starred OR :starred IS NULL)
 AND (feeds.priority IS NULL OR feeds.priority IN ('main', 'important'))
 AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
+AND (
+  article_statuses.starred = 1
+  OR feeds.read_later = 1
+  OR feeds.velocity_hours IS NULL
+  OR articles.published_at >= (:nowSeconds - feeds.velocity_hours * 3600)
+)
 AND (:query IS NULL OR articles.title LIKE '%' || :query || '%' OR articles.summary LIKE '%' || :query || '%')
 AND (
     :afterArticleID IS NULL
