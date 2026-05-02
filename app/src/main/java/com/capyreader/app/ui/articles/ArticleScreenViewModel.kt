@@ -46,6 +46,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -811,10 +812,16 @@ class ArticleScreenViewModel(
             )
     }
 
-    private fun openNextFeedOnAllRead(
+    private suspend fun openNextFeedOnAllRead(
         onArticlesCleared: () -> Unit,
     ) {
-        val nextItem = _sidebarItem.value?.next
+        val current = _sidebarItem.value
+        val next = sidebar.first()
+
+        val nextItem = current?.let { stale ->
+            val matched = next.find { it.isSelected(stale.toFilter(latestFilter.status)) }
+            matched?.next ?: findFreshItem(stale, next, latestFilter.status)
+        }
 
         if (nextItem != null) {
             selectSidebarItem(nextItem)

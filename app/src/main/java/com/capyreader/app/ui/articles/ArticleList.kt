@@ -1,10 +1,5 @@
 package com.capyreader.app.ui.articles
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,7 +18,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -39,9 +33,6 @@ import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.Article
 import com.jocmp.capy.MarkRead
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.first
 import org.koin.compose.koinInject
 import java.time.LocalDateTime
 
@@ -55,7 +46,6 @@ fun ArticleList(
     enableMarkReadOnScroll: Boolean = false,
     dimReadArticles: Boolean = true,
     scrollToTop: () -> Unit = {},
-    isRefreshing: Boolean = false,
 ) {
     val articleOptions = rememberArticleOptions().copy(
         dim = dimReadArticles,
@@ -63,17 +53,6 @@ fun ArticleList(
     val currentTime = rememberCurrentTime()
     val localDensity = LocalDensity.current
     var listHeight by remember { mutableStateOf(0.dp) }
-    var hasNewArticles by remember { mutableStateOf(false) }
-
-    if (!enableMarkReadOnScroll) {
-        NewArticleObserver(
-            articles = articles,
-            listState = listState,
-            isRefreshing = isRefreshing,
-            onNewArticles = { hasNewArticles = true },
-            onScrollToTop = { hasNewArticles = false },
-        )
-    }
 
     Box(Modifier.fillMaxSize()) {
         key(listState) {
@@ -121,21 +100,6 @@ fun ArticleList(
             }
         }
 
-        AnimatedVisibility(
-            visible = hasNewArticles,
-            enter = slideInVertically { -it } + fadeIn(),
-            exit = slideOutVertically { -it } + fadeOut(),
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .padding(top = 12.dp)
-        ) {
-            NewArticlesPill(
-                onClick = {
-                    hasNewArticles = false
-                    scrollToTop()
-                }
-            )
-        }
     }
 }
 
@@ -153,39 +117,6 @@ fun FeedOverScrollBox(height: Dp) {
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 32.dp)
         )
-    }
-}
-
-@Composable
-private fun NewArticleObserver(
-    articles: LazyPagingItems<Article>,
-    listState: LazyListState,
-    isRefreshing: Boolean,
-    onNewArticles: () -> Unit,
-    onScrollToTop: () -> Unit,
-) {
-    LaunchedEffect(Unit) {
-        snapshotFlow { isRefreshing }
-            .filter { it }
-            .collectLatest {
-                val baseline = articles.itemCount
-
-                snapshotFlow { articles.itemCount }
-                    .first { it > baseline }
-
-                if (listState.firstVisibleItemIndex > 0) {
-                    onNewArticles()
-                }
-            }
-    }
-
-    LaunchedEffect(listState) {
-        snapshotFlow { listState.firstVisibleItemIndex }
-            .collect { index ->
-                if (index == 0) {
-                    onScrollToTop()
-                }
-            }
     }
 }
 
