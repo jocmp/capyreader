@@ -54,6 +54,7 @@ data class ArticleListOptions(
     val showFeedName: Boolean,
     val showSummary: Boolean,
     val shortenTitles: Boolean,
+    val showReadingTime: Boolean,
     val fontScale: ArticleListFontScale,
     val updateFeedIcons: (show: Boolean) -> Unit,
     val updateFeedName: (show: Boolean) -> Unit,
@@ -61,6 +62,7 @@ data class ArticleListOptions(
     val updateSummary: (show: Boolean) -> Unit,
     val updateFontScale: (scale: ArticleListFontScale) -> Unit,
     val updateShortenTitles: (show: Boolean) -> Unit,
+    val updateShowReadingTime: (show: Boolean) -> Unit,
 )
 
 @Composable
@@ -109,6 +111,11 @@ fun ArticleListSettings(
                 checked = options.shortenTitles,
                 title = stringResource(R.string.settings_article_list_shorten_titles)
             )
+            TextSwitch(
+                onCheckedChange = options.updateShowReadingTime,
+                checked = options.showReadingTime,
+                title = stringResource(R.string.settings_article_list_reading_time)
+            )
         }
 
         PreferenceSelect(
@@ -133,6 +140,7 @@ private fun PreviewArticleRow(options: ArticleListOptions) {
         imagePreview = options.imagePreview,
         fontScale = options.fontScale,
         shortenTitles = options.shortenTitles,
+        showReadingTime = options.showReadingTime,
         dim = false,
     )
     val colors = ListItemDefaults.colors()
@@ -176,7 +184,11 @@ private fun PreviewArticleRow(options: ArticleListOptions) {
                         Spacer(Modifier.width(16.dp))
                     }
                     Text(
-                        text = PREVIEW_TIME,
+                        text = if (options.showReadingTime) {
+                            "$PREVIEW_TIME  $PREVIEW_READING_TIME"
+                        } else {
+                            PREVIEW_TIME
+                        },
                         color = overlineColor,
                         maxLines = 1,
                     )
@@ -268,6 +280,7 @@ private fun Modifier.monochromeBorder(shape: Shape): Modifier {
 private const val PREVIEW_TITLE = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
 private const val PREVIEW_FEED_NAME = "Lorem Ipsum"
 private const val PREVIEW_TIME = "3h"
+private const val PREVIEW_READING_TIME = "5 min read"
 private const val PREVIEW_SUMMARY = "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."
 
 @Preview
@@ -281,12 +294,14 @@ private fun ArticleListSettingsPreview() {
             fontScale = ArticleListFontScale.LARGE,
             showFeedName = false,
             shortenTitles = true,
+            showReadingTime = true,
             updateImagePreview = {},
             updateSummary = {},
             updateFeedName = {},
             updateFeedIcons = {},
             updateFontScale = {},
             updateShortenTitles = {},
+            updateShowReadingTime = {},
         )
     )
 }
