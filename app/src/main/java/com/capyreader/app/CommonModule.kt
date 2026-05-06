@@ -1,16 +1,19 @@
 package com.capyreader.app
 
 import android.webkit.WebSettings
+import android.app.Application
 import com.capyreader.app.common.AndroidDatabaseProvider
 import com.capyreader.app.common.AndroidClientCertManager
 import com.capyreader.app.common.AppFaviconPolicy
 import com.capyreader.app.common.SharedPreferenceStoreProvider
+import com.capyreader.app.common.WebViewContentExtractor
 import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.AccountManager
 import com.jocmp.capy.ClientCertManager
 import com.jocmp.capy.DatabaseProvider
 import com.jocmp.capy.PreferenceStoreProvider
 import com.jocmp.capy.accounts.httpClientBuilder
+import com.jocmp.capy.articles.ContentExtractor
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -36,6 +39,7 @@ internal val common = module {
         )
     }
     single { AppPreferences(get()) }
+    single<ContentExtractor> { WebViewContentExtractor(androidContext() as Application) }
 }
 
 private fun Locale.toAcceptLanguageTag(): String {

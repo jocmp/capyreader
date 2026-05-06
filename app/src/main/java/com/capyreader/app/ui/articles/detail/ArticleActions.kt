@@ -4,16 +4,21 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Label
+import androidx.compose.material.icons.outlined.FileDownload
+import androidx.compose.material.icons.outlined.FileDownloadOff
 import androidx.compose.material.icons.outlined.FormatSize
 import androidx.compose.material.icons.outlined.FiberManualRecord
 import androidx.compose.material.icons.rounded.FiberManualRecord
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarOutline
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -25,8 +30,12 @@ import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.common.shareArticle
 import com.capyreader.app.ui.articles.FullContentLoadingIcon
+import com.capyreader.app.ui.articles.LocalArticleActions
 import com.capyreader.app.ui.articles.LocalLabelsActions
+import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.capyreader.app.ui.components.ToolbarTooltip
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
 import com.jocmp.capy.Article
 import com.jocmp.capy.Article.FullContentState.LOADED
 import com.jocmp.capy.Article.FullContentState.LOADING
@@ -41,6 +50,10 @@ fun ArticleActions(
 ) {
     val context = LocalContext.current
     val labelsActions = LocalLabelsActions.current
+    val articleActions = LocalArticleActions.current
+    val snackbarHost = LocalSnackbarHost.current
+    val scope = rememberCoroutineScope()
+    val downloadErrorMessage = stringResource(R.string.article_actions_download_error)
     val (isStyleSheetOpen, setStyleSheetOpen) = rememberSaveable { mutableStateOf(false) }
 
     ToolbarTooltip(
@@ -78,6 +91,41 @@ fun ArticleActions(
                 Icon(
                     Icons.AutoMirrored.Outlined.Label,
                     contentDescription = stringResource(R.string.freshrss_article_actions_label)
+                )
+            }
+        }
+    }
+    ToolbarTooltip(
+        message = if (article.isDownloaded) {
+            stringResource(R.string.article_actions_remove_download)
+        } else {
+            stringResource(R.string.article_actions_download)
+        }
+    ) {
+        val downloading = articleActions.isDownloading(article.id)
+        IconButton(
+            onClick = {
+                if (downloading) return@IconButton
+                if (article.isDownloaded) {
+                    articleActions.clearDownload(article.id)
+                } else {
+                    articleActions.download(article.id) { result ->
+                        if (result.isFailure) {
+                            scope.launch { snackbarHost.showSnackbar(downloadErrorMessage) }
+                        }
+                    }
+                }
+            },
+        ) {
+            if (downloading) {
+                CircularProgressIndicator(
+                    strokeWidth = 1.dp,
+                    modifier = androidx.compose.ui.Modifier.size(12.dp),
+                )
+            } else {
+                Icon(
+                    if (article.isDownloaded) Icons.Outlined.FileDownloadOff else Icons.Outlined.FileDownload,
+                    contentDescription = null,
                 )
             }
         }

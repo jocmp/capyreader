@@ -17,8 +17,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Download
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemColors
@@ -116,6 +118,7 @@ fun ArticleRow(
     val snackbarHost = LocalSnackbarHost.current
     val scope = rememberCoroutineScope()
     val savedForLaterMessage = stringResource(R.string.saved_for_later_success)
+    val downloadErrorMessage = stringResource(R.string.article_actions_download_error)
     val openArticleMenu = {
         haptics.performHapticFeedback(HapticFeedbackType.LongPress)
         setArticleMenuOpen(true)
@@ -165,6 +168,22 @@ fun ArticleRow(
                             if (article.starred) {
                                 Icon(
                                     Icons.Rounded.Star,
+                                    contentDescription = null,
+                                    tint = feedNameColor,
+                                    modifier = Modifier
+                                        .width(12.dp.relative(options.fontScale))
+                                )
+                            }
+                            val downloading = LocalArticleActions.current.isDownloading(article.id)
+                            if (downloading) {
+                                CircularProgressIndicator(
+                                    color = feedNameColor,
+                                    strokeWidth = 1.dp,
+                                    modifier = Modifier.size(12.dp.relative(options.fontScale))
+                                )
+                            } else if (article.isDownloaded) {
+                                Icon(
+                                    Icons.Rounded.Download,
                                     contentDescription = null,
                                     tint = feedNameColor,
                                     modifier = Modifier
@@ -255,6 +274,18 @@ fun ArticleRow(
                             scope.launch { snackbarHost.showSnackbar(savedForLaterMessage) }
                         }
                     }
+                },
+                onDownload = { target ->
+                    setArticleMenuOpen(false)
+                    articleActions.download(target.id) { result ->
+                        if (result.isFailure) {
+                            scope.launch { snackbarHost.showSnackbar(downloadErrorMessage) }
+                        }
+                    }
+                },
+                onClearDownload = { target ->
+                    setArticleMenuOpen(false)
+                    articleActions.clearDownload(target.id)
                 },
                 onDismissRequest = {
                     setArticleMenuOpen(false)

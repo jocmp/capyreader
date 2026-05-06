@@ -781,6 +781,9 @@ fun rememberArticleActions(viewModel: ArticleScreenViewModel): ArticleActions {
             unstar = viewModel::removeStarAsync,
             saveExternally = viewModel::saveArticleExternallyAsync,
             saveForLater = viewModel::saveForLater,
+            download = viewModel::downloadArticleAsync,
+            clearDownload = viewModel::clearDownloadAsync,
+            isDownloading = viewModel::isDownloading,
 
             showSaveForLater = viewModel.source.supportsReadLater,
         )

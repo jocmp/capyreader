@@ -29,6 +29,7 @@ import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.articles.ArticleContent
+import com.jocmp.capy.articles.ContentExtractor
 import com.jocmp.capy.articles.SidebarItem
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
@@ -60,6 +61,7 @@ class ArticleScreenViewModel(
     private val appPreferences: AppPreferences,
     private val application: Application,
     private val notificationHelper: NotificationHelper,
+    private val contentExtractor: ContentExtractor,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
     private val syncFlushInterval: Duration? = SYNC_FLUSH_INTERVAL,
 ) : AndroidViewModel(application) {
@@ -77,6 +79,10 @@ class ArticleScreenViewModel(
     private val _searchState = MutableStateFlow(SearchState.INACTIVE)
 
     private var _article by mutableStateOf<Article?>(null)
+
+    private var _downloadingIDs by mutableStateOf<Set<String>>(emptySet())
+
+    fun isDownloading(articleID: String): Boolean = _downloadingIDs.contains(articleID)
 
     private val _refreshAllState = MutableStateFlow(AngleRefreshState.STOPPED)
 
@@ -730,6 +736,16 @@ class ArticleScreenViewModel(
     private suspend fun buildArticle(articleID: String): Article? {
         val article = account.findArticle(articleID = articleID) ?: return null
 
+        val offlineHtml = article.offlineHtml
+
+        if (!offlineHtml.isNullOrBlank()) {
+            return article.copy(
+                read = true,
+                content = offlineHtml,
+                fullContent = Article.FullContentState.NONE,
+            )
+        }
+
         val fullContent = if (enableStickyFullContent && article.enableStickyFullContent) {
             Article.FullContentState.LOADING
         } else {
@@ -746,6 +762,42 @@ class ArticleScreenViewModel(
             content = content,
             fullContent = fullContent
         )
+    }
+
+    fun downloadArticleAsync(articleID: String, onComplete: (Result<Unit>) -> Unit = {}) {
+        if (_downloadingIDs.contains(articleID)) return
+        _downloadingIDs = _downloadingIDs + articleID
+        viewModelScope.launchIO {
+            val result = account.download(articleID, contentExtractor)
+            if (result.isSuccess && _article?.id == articleID) {
+                account.findArticle(articleID)?.let { refreshed ->
+                    val offline = refreshed.offlineHtml
+                    _article = if (!offline.isNullOrBlank()) {
+                        refreshed.copy(content = offline, fullContent = Article.FullContentState.NONE)
+                    } else {
+                        refreshed
+                    }
+                }
+            }
+            withUIContext {
+                _downloadingIDs = _downloadingIDs - articleID
+                onComplete(result)
+            }
+        }
+    }
+
+    fun clearDownloadAsync(articleID: String) {
+        viewModelScope.launchIO {
+            account.clearDownload(articleID)
+            if (_article?.id == articleID) {
+                account.findArticle(articleID)?.let { refreshed ->
+                    _article = refreshed.copy(
+                        content = refreshed.defaultContent,
+                        fullContent = Article.FullContentState.NONE,
+                    )
+                }
+            }
+        }
     }
 
     fun fetchFullContentAsync(article: Article? = _article) {

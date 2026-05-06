@@ -3,6 +3,8 @@ package com.capyreader.app.ui.articles.list
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Label
 import androidx.compose.material.icons.outlined.BookmarkBorder
+import androidx.compose.material.icons.outlined.FileDownload
+import androidx.compose.material.icons.outlined.FileDownloadOff
 import androidx.compose.material.icons.rounded.ArrowDownward
 import androidx.compose.material.icons.rounded.ArrowUpward
 import androidx.compose.material.icons.rounded.ContentCopy
@@ -42,6 +44,8 @@ fun ArticleActionMenu(
     onMarkAllRead: (range: MarkRead) -> Unit = {},
     onOpenLabels: () -> Unit = {},
     onSaveForLater: (url: String) -> Unit = {},
+    onDownload: (article: Article) -> Unit = {},
+    onClearDownload: (article: Article) -> Unit = {},
     onDismissRequest: () -> Unit = {},
 ) {
     val unreadCount = LocalUnreadCount.current
@@ -52,6 +56,7 @@ fun ArticleActionMenu(
     ) {
         ToggleStarMenuItem(onDismissRequest, article)
         ToggleReadMenuItem(onDismissRequest, article)
+        DownloadMenuItem(onDismissRequest, article, onDownload, onClearDownload)
         if (showSaveForLater) {
             SaveForLaterMenuItem(onDismissRequest, article, onSaveForLater)
         }
@@ -172,6 +177,33 @@ private fun ShareLinkMenuItem(onDismissRequest: () -> Unit, article: Article) {
         onClick = {
             shareLink()
             onDismissRequest()
+        },
+    )
+}
+
+@Composable
+private fun DownloadMenuItem(
+    onDismissRequest: () -> Unit,
+    article: Article,
+    onDownload: (article: Article) -> Unit,
+    onClearDownload: (article: Article) -> Unit,
+) {
+    val (icon, label) = if (article.isDownloaded) {
+        Icons.Outlined.FileDownloadOff to R.string.article_actions_remove_download
+    } else {
+        Icons.Outlined.FileDownload to R.string.article_actions_download
+    }
+
+    DropdownMenuItem(
+        leadingIcon = { Icon(icon, contentDescription = null) },
+        text = { Text(stringResource(label)) },
+        onClick = {
+            onDismissRequest()
+            if (article.isDownloaded) {
+                onClearDownload(article)
+            } else {
+                onDownload(article)
+            }
         },
     )
 }

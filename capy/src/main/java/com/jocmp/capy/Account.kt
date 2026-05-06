@@ -17,6 +17,8 @@ import com.jocmp.capy.accounts.local.LocalAccountDelegate
 import com.jocmp.capy.accounts.miniflux.MinifluxAccountDelegate
 import com.jocmp.capy.accounts.reader.buildReaderDelegate
 import com.jocmp.capy.articles.ArticleContent
+import com.jocmp.capy.articles.ContentExtractor
+import com.jocmp.capy.articles.OfflineAssetCache
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.sortedByName
@@ -115,6 +117,8 @@ data class Account(
     private val feedFinder: FeedFinder by lazy { DefaultFeedFinder(localHttpClient) }
 
     private val articleContent = ArticleContent(localHttpClient, userAgent, acceptLanguage)
+
+    val offlineAssets = OfflineAssetCache(rootDirectory = path, httpClient = localHttpClient)
 
     val taggedFeeds = feedRecords.taggedFeeds().map {
         it.sortedByTitle()
@@ -401,6 +405,25 @@ data class Account(
 
     suspend fun fetchFullContent(article: Article): Result<String> {
         return articleContent.fetch(article.url)
+    }
+
+    suspend fun download(articleID: String, extractor: ContentExtractor): Result<Unit> = withIOContext {
+        val article = findArticle(articleID)
+            ?: return@withIOContext Result.failure(Throwable("Article not found"))
+
+        val raw = articleContent.fetch(article.url).getOrElse { return@withIOContext Result.failure(it) }
+        val parsed = extractor.extract(article.url?.toString(), raw)
+            .getOrElse { return@withIOContext Result.failure(it) }
+        val rewritten = offlineAssets.download(articleID, parsed)
+            .getOrElse { return@withIOContext Result.failure(it) }
+
+        articleRecords.saveOffline(articleID = articleID, html = rewritten)
+        Result.success(Unit)
+    }
+
+    suspend fun clearDownload(articleID: String) = withIOContext {
+        articleRecords.clearOffline(articleID)
+        offlineAssets.clear(articleID)
     }
 
     suspend fun opmlDocument(): String {

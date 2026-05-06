@@ -13,5 +13,8 @@ data class ArticleActions(
     val unstar: (articleID: String) -> Unit = {},
     val saveExternally: (articleID: String, onComplete: (Result<Unit>) -> Unit) -> Unit = { _, _ -> },
     val saveForLater: (url: String, onComplete: (Result<Unit>) -> Unit) -> Unit = { _, _ -> },
+    val download: (articleID: String, onComplete: (Result<Unit>) -> Unit) -> Unit = { _, _ -> },
+    val clearDownload: (articleID: String) -> Unit = {},
+    val isDownloading: (articleID: String) -> Boolean = { false },
     val showSaveForLater: Boolean = false,
 )

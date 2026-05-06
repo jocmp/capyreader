@@ -10,6 +10,9 @@
     <string name="filter_starred">Starred</string>
     <string name="filter_read_later">Saved for Later</string>
     <string name="article_actions_save_for_later">Save for Later</string>
+    <string name="article_actions_download">Download</string>
+    <string name="article_actions_remove_download">Remove download</string>
+    <string name="article_actions_download_error">Couldn\'t download article</string>
     <string name="saved_for_later_success">Saved for Later</string>
     <string name="filter_unread">Unread</string>
     <string name="filter_all">All</string>

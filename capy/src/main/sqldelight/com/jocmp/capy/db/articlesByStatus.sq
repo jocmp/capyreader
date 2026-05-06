@@ -14,7 +14,8 @@ SELECT
   feeds.open_articles_in_browser,
   article_statuses.updated_at,
   article_statuses.starred,
-  article_statuses.read
+  article_statuses.read,
+  (articles.offline_html IS NOT NULL) AS is_downloaded
 FROM articles
 JOIN feeds ON articles.feed_id = feeds.id
 JOIN article_statuses ON articles.id = article_statuses.article_id
@@ -42,7 +43,8 @@ SELECT
   feeds.open_articles_in_browser,
   article_statuses.updated_at,
   article_statuses.starred,
-  article_statuses.read
+  article_statuses.read,
+  (articles.offline_html IS NOT NULL) AS is_downloaded
 FROM articles
 JOIN feeds ON articles.feed_id = feeds.id
 JOIN article_statuses ON articles.id = article_statuses.article_id
