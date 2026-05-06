@@ -33,6 +33,7 @@ import com.capyreader.app.ui.settings.panels.DisplaySettingsPanel
 import com.capyreader.app.ui.settings.panels.GeneralSettingsPanel
 import com.capyreader.app.ui.settings.panels.GesturesSettingPanel
 import com.capyreader.app.ui.settings.panels.NotificationsSettingsPanel
+import com.capyreader.app.ui.settings.panels.OfflineReadingSettingsPanel
 import com.capyreader.app.ui.settings.panels.SettingsPanel
 import com.capyreader.app.ui.settings.panels.SettingsViewModel
 import com.capyreader.app.ui.settings.panels.UnreadBadgesSettingsPanel
@@ -132,8 +133,13 @@ fun SettingsView(
                                 SettingsPanel.General -> GeneralSettingsPanel(
                                     onNavigateToNotifications = {
                                         navigateToPanel(SettingsPanel.Notifications)
-                                    }
+                                    },
+                                    onNavigateToOfflineReading = {
+                                        navigateToPanel(SettingsPanel.OfflineReading)
+                                    },
                                 )
+
+                                SettingsPanel.OfflineReading -> OfflineReadingSettingsPanel()
 
                                 SettingsPanel.Notifications -> NotificationsSettingsPanel(
                                     onSelectNone = viewModel::deselectAllFeedNotifications,

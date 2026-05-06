@@ -8,6 +8,7 @@ import androidx.compose.material.icons.rounded.Build
 import androidx.compose.material.icons.rounded.Gesture
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Notifications
+import androidx.compose.material.icons.rounded.OfflinePin
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.Visibility
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -58,6 +59,12 @@ sealed class SettingsPanel(@StringRes val title: Int) {
     data object ArticleList : SettingsPanel(title = R.string.settings_article_list_title),
         Parcelable {
         override fun icon() = Icons.Rounded.Visibility
+    }
+
+    @Parcelize
+    data object OfflineReading :
+        SettingsPanel(title = R.string.settings_section_offline_reading), Parcelable {
+        override fun icon() = Icons.Rounded.OfflinePin
     }
 
     fun isNested() = !items.contains(this)

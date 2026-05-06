@@ -221,6 +221,22 @@ class ArticleRecords(
         )
     }
 
+    fun findStarredMissingOffline(): List<String> {
+        return database.articlesQueries.findStarredMissingOffline().executeAsList()
+    }
+
+    fun saveOffline(articleID: String, html: String) {
+        database.articlesQueries.saveOffline(articleID = articleID, offlineHtml = html)
+    }
+
+    fun clearOffline(articleID: String) {
+        database.articlesQueries.clearOffline(articleID = articleID)
+    }
+
+    fun clearAllOffline() {
+        database.articlesQueries.clearAllOffline()
+    }
+
     fun countAll(status: ArticleStatus): Flow<Map<String, Long>> {
         val (read, starred) = status.forCounts
 

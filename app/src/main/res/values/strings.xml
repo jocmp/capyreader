@@ -221,6 +221,14 @@
     <string name="settings_auto_delete_option_keep_for_one_month">1 month</string>
     <string name="settings_auto_delete_option_keep_for_three_month">3 months</string>
     <string name="settings_section_advanced">Advanced</string>
+    <string name="settings_section_offline_reading">Offline Reading</string>
+    <string name="settings_section_offline_reading_storage">Storage</string>
+    <string name="settings_clear_offline_cache_button">Clear cache</string>
+    <string name="settings_clear_offline_cache_title">Clear cache?</string>
+    <string name="settings_clear_offline_cache_text">Your articles won\'t be deleted.</string>
+    <string name="settings_offline_starred_title">Offline Starred Articles</string>
+    <string name="settings_offline_starred_subtitle">Save full content and article media offline</string>
+    <string name="settings_offline_cache_usage">%1$s of %2$s used</string>
     <string name="settings_section_experimental">Experimental</string>
     <string name="settings_option_enable_audio_player">Audio player</string>
     <string name="settings_clear_all_articles_confirm">Confirm</string>

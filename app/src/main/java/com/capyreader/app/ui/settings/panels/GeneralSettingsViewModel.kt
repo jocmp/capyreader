@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 class GeneralSettingsViewModel(
     private val refreshScheduler: RefreshScheduler,
     val account: Account,
-    private val appPreferences: AppPreferences
+    private val appPreferences: AppPreferences,
 ) : ViewModel() {
     val source = account.source
 
