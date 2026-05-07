@@ -27,8 +27,6 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -77,27 +75,6 @@ class ArticleScreenViewModelTest {
     fun tearDown() {
         Dispatchers.resetMain()
         stopKoin()
-    }
-
-    @Test
-    fun `refreshAll triggers initial refresh`() = runTest {
-        val viewModel = buildViewModel()
-
-        assertFalse(viewModel.refreshInitialized)
-
-        advanceUntilIdle()
-
-        assertTrue(viewModel.refreshInitialized)
-    }
-
-    @Test
-    fun `skips initial refresh when refresh interval is manual only`() = runTest {
-        appPreferences.refreshInterval.set(RefreshInterval.MANUALLY_ONLY)
-
-        val viewModel = buildViewModel()
-
-        assertTrue(viewModel.refreshInitialized)
-        assertFalse(viewModel.refreshingAll)
     }
 
     @Test

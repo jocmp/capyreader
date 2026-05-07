@@ -208,8 +208,6 @@ fun ArticleScreen(
         val refreshAllState by viewModel.refreshAllState.collectAsStateWithLifecycle(
             initialValue = AngleRefreshState.STOPPED
         )
-        val isRefreshInitialized = viewModel.refreshInitialized
-
         val (isUpdatePasswordDialogOpen, setUpdatePasswordDialogOpen) = rememberSaveable {
             mutableStateOf(false)
         }
@@ -595,7 +593,7 @@ fun ArticleScreen(
                                         onSwipeUp()
                                     },
                                 ) {
-                                    if (isRefreshInitialized && articles.itemCount == 0) {
+                                    if (articles.itemCount == 0) {
                                         ArticleListEmptyView()
                                     } else {
                                         ArticleList(

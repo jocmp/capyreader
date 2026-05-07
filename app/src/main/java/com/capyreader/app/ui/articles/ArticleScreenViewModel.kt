@@ -15,7 +15,6 @@ import com.capyreader.app.notifications.NotificationHelper
 import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleListVerticalSwipe
-import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.feeds.AngleRefreshState
 import com.capyreader.app.ui.components.SearchState
 import com.capyreader.app.ui.widget.WidgetUpdater
@@ -87,9 +86,6 @@ class ArticleScreenViewModel(
         private set
 
     var isPullToRefreshing by mutableStateOf(false)
-        private set
-
-    var refreshInitialized by mutableStateOf(false)
         private set
 
     private var _scrollHighWaterMark by mutableIntStateOf(-1)
@@ -291,15 +287,6 @@ class ArticleScreenViewModel(
                 }
             }
         }
-
-        val skipInitialRefresh =
-            appPreferences.refreshInterval.get() == RefreshInterval.MANUALLY_ONLY
-
-        if (skipInitialRefresh) {
-            refreshInitialized = true
-        } else {
-            refreshAll()
-        }
     }
 
     fun selectArticleFilter() {
@@ -470,7 +457,6 @@ class ArticleScreenViewModel(
 
         refresh(ArticleFilter.default()) {
             _refreshAllState.value = AngleRefreshState.SETTLING
-            refreshInitialized = true
             resetScrollHighWaterMark()
             onComplete()
 

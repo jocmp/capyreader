@@ -491,6 +491,6 @@ internal class MinifluxAccountDelegate(
 
     companion object {
         const val MAX_ENTRY_LIMIT = 250
-        private const val MAX_CONCURRENT_FETCHES = 8
+        private const val MAX_CONCURRENT_FETCHES = 4
     }
 }
