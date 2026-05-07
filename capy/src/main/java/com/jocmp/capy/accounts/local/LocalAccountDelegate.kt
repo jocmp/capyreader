@@ -22,6 +22,8 @@ import com.jocmp.rssparser.model.RssItem
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
 import okhttp3.OkHttpClient
 import java.net.UnknownHostException
 import java.time.ZonedDateTime
@@ -185,10 +187,13 @@ internal class LocalAccountDelegate(
     }
 
     private suspend fun refreshFeeds(feeds: List<Feed>, cutoffDate: ZonedDateTime?) {
+        val gate = Semaphore(MAX_CONCURRENT_FETCHES)
         coroutineScope {
             feeds.forEach { feed ->
                 launch {
-                    refreshFeed(feed, cutoffDate = cutoffDate)
+                    gate.withPermit {
+                        refreshFeed(feed, cutoffDate = cutoffDate)
+                    }
                 }
             }
         }
@@ -370,6 +375,8 @@ internal class LocalAccountDelegate(
         private fun tag(path: String) = "$TAG.$path"
 
         private const val TAG = "local"
+
+        private const val MAX_CONCURRENT_FETCHES = 4
     }
 }
 

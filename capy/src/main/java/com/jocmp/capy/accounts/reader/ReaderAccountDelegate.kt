@@ -628,7 +628,7 @@ internal class ReaderAccountDelegate(
 
     companion object {
         const val MAX_PAGINATED_ITEM_LIMIT = 250
-        private const val MAX_CONCURRENT_FETCHES = 8
+        private const val MAX_CONCURRENT_FETCHES = 4
         private const val STREAM_ITEMS_PAGE_SIZE = 10_000
 
         private const val TAG = "reader"
