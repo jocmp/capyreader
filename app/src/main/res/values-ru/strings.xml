@@ -356,4 +356,5 @@
     <string name="widget_spotlight_next">Следующий</string>
     <string name="freshrss_visibility">Видимость</string>
     <string name="freshrss_visibility_option_main">Главный поток</string>
+    <string name="article_list_new_articles_pill">Новые публикации</string>
 </resources>
