@@ -73,7 +73,7 @@ class AppPreferences(context: Context) {
         get() = preferenceStore.getBoolean("enable_sticky_full_content", false)
 
     val offlineStarredArticles: Preference<Boolean>
-        get() = preferenceStore.getBoolean("offline_starred_articles", true)
+        get() = preferenceStore.getBoolean("offline_starred_articles", false)
 
     val paneExpansionIndex: Preference<Int>
         get() = preferenceStore.getInt("pane_expansion_index", DefaultPaneExpansionIndex)

@@ -435,15 +435,40 @@ data class Account(
     }
 
     suspend fun downloadStarredArticles(limitBytes: Long? = null) = withIOContext {
-        val articleIDs = articleRecords.findStarredMissingOffline()
-        for (articleID in articleIDs) {
+        val entries = articleRecords.findStarredOrderedByStarredAt().toMutableList()
+
+        suspend fun evictOlderThan(currentIndex: Int): Boolean {
+            if (limitBytes == null) return true
+            var idx = entries.lastIndex
+            while (idx > currentIndex && offlineAssets.totalSizeBytes() > limitBytes) {
+                val victim = entries[idx]
+                if (victim.hasOffline) {
+                    clearDownload(victim.id)
+                    entries[idx] = victim.copy(hasOffline = false)
+                }
+                idx--
+            }
+            return offlineAssets.totalSizeBytes() <= limitBytes
+        }
+
+        if (limitBytes != null) {
+            evictOlderThan(currentIndex = -1)
+        }
+
+        for (i in entries.indices) {
+            val entry = entries[i]
+            if (entry.hasOffline) continue
+
             if (limitBytes != null && offlineAssets.totalSizeBytes() >= limitBytes) {
-                CapyLog.info("download_starred", mapOf("status" to "cache_full"))
-                break
+                if (!evictOlderThan(currentIndex = i)) {
+                    CapyLog.info("download_starred", mapOf("status" to "cache_full"))
+                    break
+                }
             }
-            download(articleID, backgroundExtractor).onFailure { error ->
-                CapyLog.error("download_starred", error)
-            }
+
+            download(entry.id, backgroundExtractor)
+                .onSuccess { entries[i] = entry.copy(hasOffline = true) }
+                .onFailure { error -> CapyLog.error("download_starred", error) }
         }
     }
 

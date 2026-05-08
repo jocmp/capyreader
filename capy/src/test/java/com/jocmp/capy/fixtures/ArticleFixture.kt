@@ -45,6 +45,7 @@ class ArticleFixture(private val database: Database = InMemoryDatabaseProvider()
                     articleID = id,
                     starred = true,
                     lastUnstarredAt = null,
+                    lastStarredAt = publishedAt,
                 )
             }
         }

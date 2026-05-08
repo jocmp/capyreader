@@ -13,6 +13,7 @@ import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.accounts.Source
+import com.jocmp.capy.articles.ContentExtractor
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -224,6 +225,7 @@ class ArticleScreenViewModelTest {
             appPreferences = appPreferences,
             application = application,
             notificationHelper = notificationHelper,
+            contentExtractor = mockk<ContentExtractor>(relaxed = true),
             ioDispatcher = testDispatcher,
             syncFlushInterval = syncFlushInterval,
         )
