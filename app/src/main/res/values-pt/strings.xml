@@ -296,4 +296,16 @@
     <string name="audio_player_close">Fechar tocador</string>
     <string name="audio_player_skip_back">Retroceder 30 segundos</string>
     <string name="audio_player_skip_forward">Pular 30 segundos</string>
+    <string name="filter_read_later">Guardado para Depois</string>
+    <string name="article_actions_save_for_later">Guardar para Depois</string>
+    <string name="saved_for_later_success">Guardado para Depois</string>
+    <string name="add_link_title">Adicionar Ligação</string>
+    <string name="tab_add_feed">Adicionar Feed</string>
+    <string name="tab_save_page">Guardar Página</string>
+    <string name="save_page_success">Página guardada</string>
+    <string name="save_page_error">Não foi possível guardar a página</string>
+    <string name="save_page_submit">Guardar</string>
+    <string name="add_link_subscribe">Subscrever</string>
+    <string name="add_link_feed_added">Feed adicionada</string>
+    <string name="add_link_page_saved">Página guardada</string>
 </resources>
