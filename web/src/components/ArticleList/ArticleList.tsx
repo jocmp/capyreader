@@ -25,6 +25,9 @@ export default function ArticleList({
   emptyLabel = "No articles.",
 }: ArticleListProps) {
   const [openMenuEntryId, setOpenMenuEntryId] = useState<number | null>(null);
+  const [markAboveAnchorId, setMarkAboveAnchorId] = useState<number | null>(
+    null,
+  );
   const parentRef = useRef<HTMLDivElement>(null);
 
   const rowVirtualizer = useVirtualizer({
@@ -39,6 +42,23 @@ export default function ArticleList({
     const idx = entries.findIndex((e) => e.id === selectedEntryId);
     if (idx >= 0) rowVirtualizer.scrollToIndex(idx, { align: "auto" });
   }, [selectedEntryId, entries, rowVirtualizer]);
+
+  // After "mark above as read", the entries list shrinks (in the unread
+  // filter) but the scroll container's scrollTop is preserved, leaving
+  // the viewport pointing well past the anchor row. Re-anchor the
+  // viewport on each entries change until the anchor settles, then
+  // forget it so subsequent unrelated refetches don't yank the scroll.
+  useEffect(() => {
+    if (markAboveAnchorId === null || !entries) return;
+    const idx = entries.findIndex((e) => e.id === markAboveAnchorId);
+    if (idx < 0) {
+      setMarkAboveAnchorId(null);
+      return;
+    }
+    rowVirtualizer.scrollToIndex(idx, { align: "start" });
+    const timer = setTimeout(() => setMarkAboveAnchorId(null), 1500);
+    return () => clearTimeout(timer);
+  }, [markAboveAnchorId, entries, rowVirtualizer]);
 
   if (isError) {
     return (
@@ -109,6 +129,9 @@ export default function ArticleList({
                           .slice(0, virtualRow.index)
                           .filter((e) => e.status === "unread")
                           .map((e) => e.id);
+                        if (above.length > 0) {
+                          setMarkAboveAnchorId(entry.id);
+                        }
                         onMarkAboveAsRead(above);
                         setOpenMenuEntryId(null);
                       }
