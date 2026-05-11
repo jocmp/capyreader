@@ -28,7 +28,7 @@ export default function ArticleList({
   const [markAboveAnchorId, setMarkAboveAnchorId] = useState<number | null>(
     null,
   );
-  const markAboveInitialLengthRef = useRef(0);
+  const markAboveInitialIndexRef = useRef(-1);
   const parentRef = useRef<HTMLDivElement>(null);
 
   const rowVirtualizer = useVirtualizer({
@@ -44,19 +44,21 @@ export default function ArticleList({
     if (idx >= 0) rowVirtualizer.scrollToIndex(idx, { align: "auto" });
   }, [selectedEntryId, entries, rowVirtualizer]);
 
-  // After "mark above as read" in the unread filter, the list shrinks and the
-  // scroll container's scrollTop is preserved, leaving the viewport past the
-  // anchor row. Only re-anchor when entries actually shrink below the count at
-  // action time — this avoids a spurious jump in the All-articles filter where
-  // no rows are removed.
+  // After "mark above as read", the scroll container's scrollTop is preserved,
+  // leaving the viewport past the anchor row. Re-anchor whenever the anchor
+  // article has moved to an earlier index (its row shifted upward). This covers
+  // both the partial-page case (list shrinks) and the full-page case (list
+  // stays at 100 entries but older items fill in above). Skip when the index is
+  // unchanged — that happens in the All-articles filter where no rows are
+  // removed and scrolling would be a spurious jump.
   useEffect(() => {
     if (markAboveAnchorId === null || !entries) return;
-    if (entries.length >= markAboveInitialLengthRef.current) return;
     const idx = entries.findIndex((e) => e.id === markAboveAnchorId);
     if (idx < 0) {
       setMarkAboveAnchorId(null);
       return;
     }
+    if (idx >= markAboveInitialIndexRef.current) return;
     rowVirtualizer.scrollToIndex(idx, { align: "start" });
     const timer = setTimeout(() => setMarkAboveAnchorId(null), 1500);
     return () => clearTimeout(timer);
@@ -132,7 +134,7 @@ export default function ArticleList({
                           .filter((e) => e.status === "unread")
                           .map((e) => e.id);
                         if (above.length > 0) {
-                          markAboveInitialLengthRef.current = entries?.length ?? 0;
+                          markAboveInitialIndexRef.current = virtualRow.index;
                           setMarkAboveAnchorId(entry.id);
                         }
                         onMarkAboveAsRead(above);
