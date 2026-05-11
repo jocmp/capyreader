@@ -30,7 +30,6 @@ export default function ArticleList({
   );
   const markAboveInitialIndexRef = useRef(-1);
   const markAboveInitialEntriesRef = useRef<Entry[] | undefined>(undefined);
-  const markAboveEntriesChangeCountRef = useRef(0);
   const parentRef = useRef<HTMLDivElement>(null);
 
   const rowVirtualizer = useVirtualizer({
@@ -50,27 +49,28 @@ export default function ArticleList({
   // leaving the viewport past the anchor row. Re-anchor whenever the anchor
   // article has moved to an earlier index after the list is refreshed. This
   // covers both the partial-page case (list shrinks) and the full-page case
-  // (list stays at 100 entries but older items fill in above). Guard against
-  // the first run (entries === initial ref) and also against the optimistic
-  // cache update — useMarkEntriesAsRead's onMutate produces a new entries
-  // reference with statuses changed but entries still present and anchor at
-  // the same index. Count post-initial entries changes; clear the anchor in
-  // the same-index case only on the second change (the real network refetch),
-  // which is the All-filter path where nothing moves.
+  // (list stays at 100 entries but older items fill in above).
+  //
+  // Guard against the first run (entries === initial ref) — that fires
+  // synchronously before the mutation has a chance to refetch.
+  //
+  // When the index is unchanged (optimistic-update pass, or All-filter where
+  // React Query structurally shares the refetched array), schedule a cleanup
+  // so the anchor is not armed indefinitely. In the Unread filter, the real
+  // refetch fires before the timeout and its effect cleanup cancels the timer;
+  // in the All filter no further entries change arrives, so the timer clears
+  // the anchor automatically.
   useEffect(() => {
     if (markAboveAnchorId === null || !entries) return;
     if (entries === markAboveInitialEntriesRef.current) return;
-    markAboveEntriesChangeCountRef.current++;
     const idx = entries.findIndex((e) => e.id === markAboveAnchorId);
     if (idx < 0) {
       setMarkAboveAnchorId(null);
       return;
     }
     if (idx >= markAboveInitialIndexRef.current) {
-      if (markAboveEntriesChangeCountRef.current >= 2) {
-        setMarkAboveAnchorId(null);
-      }
-      return;
+      const timer = setTimeout(() => setMarkAboveAnchorId(null), 3000);
+      return () => clearTimeout(timer);
     }
     rowVirtualizer.scrollToIndex(idx, { align: "start" });
     const timer = setTimeout(() => setMarkAboveAnchorId(null), 1500);
@@ -149,7 +149,6 @@ export default function ArticleList({
                         if (above.length > 0) {
                           markAboveInitialIndexRef.current = virtualRow.index;
                           markAboveInitialEntriesRef.current = entries;
-                          markAboveEntriesChangeCountRef.current = 0;
                           setMarkAboveAnchorId(entry.id);
                         }
                         onMarkAboveAsRead(above);
