@@ -29,6 +29,7 @@ export default function ArticleList({
     null,
   );
   const markAboveInitialIndexRef = useRef(-1);
+  const markAboveInitialEntriesRef = useRef<Entry[] | undefined>(undefined);
   const parentRef = useRef<HTMLDivElement>(null);
 
   const rowVirtualizer = useVirtualizer({
@@ -46,19 +47,25 @@ export default function ArticleList({
 
   // After "mark above as read", the scroll container's scrollTop is preserved,
   // leaving the viewport past the anchor row. Re-anchor whenever the anchor
-  // article has moved to an earlier index (its row shifted upward). This covers
-  // both the partial-page case (list shrinks) and the full-page case (list
-  // stays at 100 entries but older items fill in above). Skip when the index is
-  // unchanged — that happens in the All-articles filter where no rows are
-  // removed and scrolling would be a spurious jump.
+  // article has moved to an earlier index after the list is refreshed. This
+  // covers both the partial-page case (list shrinks) and the full-page case
+  // (list stays at 100 entries but older items fill in above). Guard against
+  // the first run — triggered immediately when the anchor is set before the
+  // refetch — by comparing the entries reference. When the index is unchanged
+  // after a real refresh (All filter), clear the anchor right away to prevent
+  // a stale scroll if a later refetch or filter change happens to move the row.
   useEffect(() => {
     if (markAboveAnchorId === null || !entries) return;
+    if (entries === markAboveInitialEntriesRef.current) return;
     const idx = entries.findIndex((e) => e.id === markAboveAnchorId);
     if (idx < 0) {
       setMarkAboveAnchorId(null);
       return;
     }
-    if (idx >= markAboveInitialIndexRef.current) return;
+    if (idx >= markAboveInitialIndexRef.current) {
+      setMarkAboveAnchorId(null);
+      return;
+    }
     rowVirtualizer.scrollToIndex(idx, { align: "start" });
     const timer = setTimeout(() => setMarkAboveAnchorId(null), 1500);
     return () => clearTimeout(timer);
@@ -135,6 +142,7 @@ export default function ArticleList({
                           .map((e) => e.id);
                         if (above.length > 0) {
                           markAboveInitialIndexRef.current = virtualRow.index;
+                          markAboveInitialEntriesRef.current = entries;
                           setMarkAboveAnchorId(entry.id);
                         }
                         onMarkAboveAsRead(above);
