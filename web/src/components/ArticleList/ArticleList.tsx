@@ -28,6 +28,7 @@ export default function ArticleList({
   const [markAboveAnchorId, setMarkAboveAnchorId] = useState<number | null>(
     null,
   );
+  const markAboveInitialLengthRef = useRef(0);
   const parentRef = useRef<HTMLDivElement>(null);
 
   const rowVirtualizer = useVirtualizer({
@@ -43,13 +44,14 @@ export default function ArticleList({
     if (idx >= 0) rowVirtualizer.scrollToIndex(idx, { align: "auto" });
   }, [selectedEntryId, entries, rowVirtualizer]);
 
-  // After "mark above as read", the entries list shrinks (in the unread
-  // filter) but the scroll container's scrollTop is preserved, leaving
-  // the viewport pointing well past the anchor row. Re-anchor the
-  // viewport on each entries change until the anchor settles, then
-  // forget it so subsequent unrelated refetches don't yank the scroll.
+  // After "mark above as read" in the unread filter, the list shrinks and the
+  // scroll container's scrollTop is preserved, leaving the viewport past the
+  // anchor row. Only re-anchor when entries actually shrink below the count at
+  // action time — this avoids a spurious jump in the All-articles filter where
+  // no rows are removed.
   useEffect(() => {
     if (markAboveAnchorId === null || !entries) return;
+    if (entries.length >= markAboveInitialLengthRef.current) return;
     const idx = entries.findIndex((e) => e.id === markAboveAnchorId);
     if (idx < 0) {
       setMarkAboveAnchorId(null);
@@ -130,6 +132,7 @@ export default function ArticleList({
                           .filter((e) => e.status === "unread")
                           .map((e) => e.id);
                         if (above.length > 0) {
+                          markAboveInitialLengthRef.current = entries?.length ?? 0;
                           setMarkAboveAnchorId(entry.id);
                         }
                         onMarkAboveAsRead(above);
