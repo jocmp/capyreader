@@ -30,6 +30,7 @@ export default function ArticleList({
   );
   const markAboveInitialIndexRef = useRef(-1);
   const markAboveInitialEntriesRef = useRef<Entry[] | undefined>(undefined);
+  const markAboveEntriesChangeCountRef = useRef(0);
   const parentRef = useRef<HTMLDivElement>(null);
 
   const rowVirtualizer = useVirtualizer({
@@ -50,20 +51,25 @@ export default function ArticleList({
   // article has moved to an earlier index after the list is refreshed. This
   // covers both the partial-page case (list shrinks) and the full-page case
   // (list stays at 100 entries but older items fill in above). Guard against
-  // the first run — triggered immediately when the anchor is set before the
-  // refetch — by comparing the entries reference. When the index is unchanged
-  // after a real refresh (All filter), clear the anchor right away to prevent
-  // a stale scroll if a later refetch or filter change happens to move the row.
+  // the first run (entries === initial ref) and also against the optimistic
+  // cache update — useMarkEntriesAsRead's onMutate produces a new entries
+  // reference with statuses changed but entries still present and anchor at
+  // the same index. Count post-initial entries changes; clear the anchor in
+  // the same-index case only on the second change (the real network refetch),
+  // which is the All-filter path where nothing moves.
   useEffect(() => {
     if (markAboveAnchorId === null || !entries) return;
     if (entries === markAboveInitialEntriesRef.current) return;
+    markAboveEntriesChangeCountRef.current++;
     const idx = entries.findIndex((e) => e.id === markAboveAnchorId);
     if (idx < 0) {
       setMarkAboveAnchorId(null);
       return;
     }
     if (idx >= markAboveInitialIndexRef.current) {
-      setMarkAboveAnchorId(null);
+      if (markAboveEntriesChangeCountRef.current >= 2) {
+        setMarkAboveAnchorId(null);
+      }
       return;
     }
     rowVirtualizer.scrollToIndex(idx, { align: "start" });
@@ -143,6 +149,7 @@ export default function ArticleList({
                         if (above.length > 0) {
                           markAboveInitialIndexRef.current = virtualRow.index;
                           markAboveInitialEntriesRef.current = entries;
+                          markAboveEntriesChangeCountRef.current = 0;
                           setMarkAboveAnchorId(entry.id);
                         }
                         onMarkAboveAsRead(above);
