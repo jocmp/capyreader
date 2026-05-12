@@ -210,6 +210,7 @@ class ArticleRecords(
             articleID = articleID,
             starred = true,
             lastUnstarredAt = null,
+            lastStarredAt = nowUTC().toEpochSecond(),
         )
     }
 
@@ -218,7 +219,30 @@ class ArticleRecords(
             articleID = articleID,
             starred = false,
             lastUnstarredAt = nowUTC().toEpochSecond(),
+            lastStarredAt = null,
         )
+    }
+
+    data class StarredEntry(val id: String, val hasOffline: Boolean)
+
+    fun findStarredOrderedByStarredAt(): List<StarredEntry> {
+        return database.articlesQueries
+            .findStarredOrderedByStarredAt { id, hasOffline ->
+                StarredEntry(id = id, hasOffline = hasOffline == 1L)
+            }
+            .executeAsList()
+    }
+
+    fun saveOffline(articleID: String, html: String) {
+        database.articlesQueries.saveOffline(articleID = articleID, offlineHtml = html)
+    }
+
+    fun clearOffline(articleID: String) {
+        database.articlesQueries.clearOffline(articleID = articleID)
+    }
+
+    fun clearAllOffline() {
+        database.articlesQueries.clearAllOffline()
     }
 
     fun countAll(status: ArticleStatus): Flow<Map<String, Long>> {

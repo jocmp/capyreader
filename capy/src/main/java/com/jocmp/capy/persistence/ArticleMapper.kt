@@ -17,6 +17,7 @@ internal fun articleMapper(
     imageURL: String?,
     publishedAt: Long?,
     enclosureType: String?,
+    offlineHtml: String?,
     feedTitle: String?,
     faviconURL: String?,
     enableStickyContent: Boolean,
@@ -47,6 +48,8 @@ internal fun articleMapper(
         enableStickyFullContent = enableStickyContent,
         openInBrowser = openInBrowser,
         enclosureType = EnclosureType.from(enclosureType),
+        offlineHtml = offlineHtml,
+        isDownloaded = offlineHtml != null,
     )
 }
 
@@ -66,6 +69,7 @@ internal fun listMapper(
     updatedAt: Long?,
     starred: Boolean?,
     read: Boolean?,
+    isDownloaded: Boolean,
 ): Article {
     return articleMapper(
         id = id,
@@ -85,6 +89,7 @@ internal fun listMapper(
         imageURL = imageURL,
         publishedAt = publishedAt,
         enclosureType = enclosureType,
+        offlineHtml = null,
         feedTitle = feedTitle,
         faviconURL = faviconURL,
         enableStickyContent = false,
@@ -94,5 +99,5 @@ internal fun listMapper(
         updatedAt = updatedAt,
         starred = starred ?: false,
         read = read ?: false,
-    )
+    ).copy(isDownloaded = isDownloaded)
 }

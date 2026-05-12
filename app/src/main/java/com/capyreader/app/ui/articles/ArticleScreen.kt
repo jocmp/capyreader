@@ -781,7 +781,6 @@ fun rememberArticleActions(viewModel: ArticleScreenViewModel): ArticleActions {
             unstar = viewModel::removeStarAsync,
             saveExternally = viewModel::saveArticleExternallyAsync,
             saveForLater = viewModel::saveForLater,
-
             showSaveForLater = viewModel.source.supportsReadLater,
         )
     }

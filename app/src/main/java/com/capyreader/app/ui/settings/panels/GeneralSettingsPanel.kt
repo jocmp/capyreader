@@ -68,6 +68,7 @@ import java.lang.String.CASE_INSENSITIVE_ORDER
 fun GeneralSettingsPanel(
     viewModel: GeneralSettingsViewModel = koinViewModel(),
     onNavigateToNotifications: () -> Unit,
+    onNavigateToOfflineReading: () -> Unit,
 ) {
     val keywords by viewModel.filterKeywords.collectAsStateWithLifecycle()
 
@@ -83,6 +84,7 @@ fun GeneralSettingsPanel(
         GeneralSettingsPanelView(
             source = viewModel.source,
             onNavigateToNotifications = onNavigateToNotifications,
+            onNavigateToOfflineReading = onNavigateToOfflineReading,
             refreshInterval = viewModel.refreshInterval,
             updateRefreshInterval = viewModel::updateRefreshInterval,
             canOpenLinksInternally = viewModel.canOpenLinksInternally,
@@ -108,6 +110,7 @@ fun GeneralSettingsPanel(
 fun GeneralSettingsPanelView(
     source: Source,
     onNavigateToNotifications: () -> Unit,
+    onNavigateToOfflineReading: () -> Unit,
     onClearArticles: () -> Unit,
     refreshInterval: RefreshInterval,
     updateRefreshInterval: (RefreshInterval) -> Unit,
@@ -225,6 +228,11 @@ fun GeneralSettingsPanelView(
             title = stringResource(R.string.settings_section_advanced)
         ) {
             Column {
+                NavigationRow(
+                    title = stringResource(R.string.settings_section_offline_reading),
+                    onClick = onNavigateToOfflineReading,
+                )
+
                 CrashLogExportItem(source = source)
 
                 AutoDeleteMenu(
@@ -338,6 +346,21 @@ fun NotificationsListItem(
     }
 }
 
+@Composable
+fun NavigationRow(title: String, onClick: () -> Unit) {
+    Box(Modifier.clickable(onClick = onClick)) {
+        ListItem(
+            headlineContent = { Text(title) },
+            trailingContent = {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
+                    contentDescription = null,
+                )
+            },
+        )
+    }
+}
+
 private fun Context.openAppSettings() {
     startActivity(Intent().apply {
         action = ACTION_APPLICATION_DETAILS_SETTINGS
@@ -370,6 +393,7 @@ private fun GeneralSettingsPanelPreview() {
                 updateAfterReadAll = {},
                 markReadOnScroll = false,
                 updateMarkReadOnScroll = {},
+                onNavigateToOfflineReading = {},
             )
         }
     }

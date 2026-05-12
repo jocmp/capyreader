@@ -94,6 +94,26 @@ image_url = excluded.image_url,
 published_at = published_at,
 enclosure_type = excluded.enclosure_type;
 
+findStarredOrderedByStarredAt:
+SELECT
+  articles.id,
+  CASE WHEN articles.offline_html IS NOT NULL AND articles.offline_html != '' THEN 1 ELSE 0 END AS has_offline
+FROM articles
+JOIN article_statuses ON articles.id = article_statuses.article_id
+WHERE article_statuses.starred = 1
+  AND articles.url IS NOT NULL
+  AND articles.url != ''
+ORDER BY article_statuses.last_starred_at IS NULL, article_statuses.last_starred_at DESC, articles.published_at DESC;
+
+saveOffline:
+UPDATE articles SET offline_html = :offlineHtml WHERE id = :articleID;
+
+clearOffline:
+UPDATE articles SET offline_html = NULL WHERE id = :articleID;
+
+clearAllOffline:
+UPDATE articles SET offline_html = NULL WHERE offline_html IS NOT NULL;
+
 createStatus:
 INSERT INTO article_statuses(
   article_id,
@@ -175,16 +195,19 @@ upsertStarred {
     INSERT INTO article_statuses(
       article_id,
       updated_at,
-      starred
+      starred,
+      last_starred_at
     )
     VALUES (
       :articleID,
       :updatedAt,
-      1
+      1,
+      :updatedAt
     )
     ON CONFLICT(article_id) DO UPDATE
     SET
-    starred = excluded.starred;
+    starred = excluded.starred,
+    last_starred_at = COALESCE(article_statuses.last_starred_at, excluded.last_starred_at);
 
     INSERT INTO excluded_statuses(
         article_id,
@@ -201,7 +224,10 @@ UPDATE article_statuses SET read = :read, last_read_at = :lastReadAt
 WHERE article_statuses.article_id IN :articleIDs;
 
 markStarred:
-UPDATE article_statuses SET starred = :starred, last_unstarred_at = :lastUnstarredAt
+UPDATE article_statuses
+SET starred = :starred,
+    last_unstarred_at = :lastUnstarredAt,
+    last_starred_at = COALESCE(:lastStarredAt, last_starred_at)
 WHERE article_statuses.article_id = :articleID;
 
 starredExports:

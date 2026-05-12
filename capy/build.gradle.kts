@@ -26,6 +26,7 @@ sqldelight {
 
 dependencies {
     implementation(libs.jsoup)
+    implementation(libs.readability4j)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.retrofit2.retrofit)

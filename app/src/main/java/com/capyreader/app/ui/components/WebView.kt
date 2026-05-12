@@ -26,6 +26,7 @@ import com.capyreader.app.ui.LocalTimeFormats
 import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
 import com.capyreader.app.ui.articles.displayFeedName
+import com.jocmp.capy.Account
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
 import com.jocmp.capy.common.DisplayTimeFormats
@@ -252,11 +253,14 @@ fun rememberWebViewState(
         null
     }
 
+    val account = koinInject<Account>()
+
     val client = remember {
         AccompanistWebViewClient(
             assetLoader = WebViewAssetLoader.Builder()
                 .addPathHandler("/assets/", AssetsPathHandler(context))
                 .addPathHandler("/res/", ResourcesPathHandler(context))
+                .addPathHandler("/offline/", OfflineAssetPathHandler(account.offlineAssets))
                 .build(),
             onOpenLink = onOpenLink,
             httpClient = httpClient,

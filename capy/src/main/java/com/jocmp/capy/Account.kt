@@ -17,6 +17,9 @@ import com.jocmp.capy.accounts.local.LocalAccountDelegate
 import com.jocmp.capy.accounts.miniflux.MinifluxAccountDelegate
 import com.jocmp.capy.accounts.reader.buildReaderDelegate
 import com.jocmp.capy.articles.ArticleContent
+import com.jocmp.capy.articles.ContentExtractor
+import com.jocmp.capy.articles.OfflineAssetCache
+import com.jocmp.capy.articles.Readability4JExtractor
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.sortedByName
@@ -115,6 +118,10 @@ data class Account(
     private val feedFinder: FeedFinder by lazy { DefaultFeedFinder(localHttpClient) }
 
     private val articleContent = ArticleContent(localHttpClient, userAgent, acceptLanguage)
+
+    private val backgroundExtractor: ContentExtractor = Readability4JExtractor()
+
+    val offlineAssets = OfflineAssetCache(rootDirectory = path, httpClient = localHttpClient)
 
     val taggedFeeds = feedRecords.taggedFeeds().map {
         it.sortedByTitle()
@@ -401,6 +408,68 @@ data class Account(
 
     suspend fun fetchFullContent(article: Article): Result<String> {
         return articleContent.fetch(article.url)
+    }
+
+    suspend fun download(articleID: String, extractor: ContentExtractor): Result<Unit> = withIOContext {
+        val article = findArticle(articleID)
+            ?: return@withIOContext Result.failure(Throwable("Article not found"))
+
+        val raw = articleContent.fetch(article.url).getOrElse { return@withIOContext Result.failure(it) }
+        val parsed = extractor.extract(article.url?.toString(), raw)
+            .getOrElse { return@withIOContext Result.failure(it) }
+        val rewritten = offlineAssets.download(articleID, parsed, article.enclosures)
+            .getOrElse { return@withIOContext Result.failure(it) }
+
+        articleRecords.saveOffline(articleID = articleID, html = rewritten)
+        Result.success(Unit)
+    }
+
+    suspend fun clearDownload(articleID: String) = withIOContext {
+        articleRecords.clearOffline(articleID)
+        offlineAssets.clear(articleID)
+    }
+
+    suspend fun clearOfflineCache() = withIOContext {
+        articleRecords.clearAllOffline()
+        offlineAssets.clearAll()
+    }
+
+    suspend fun downloadStarredArticles(limitBytes: Long? = null) = withIOContext {
+        val entries = articleRecords.findStarredOrderedByStarredAt().toMutableList()
+
+        suspend fun evictOlderThan(currentIndex: Int): Boolean {
+            if (limitBytes == null) return true
+            var idx = entries.lastIndex
+            while (idx > currentIndex && offlineAssets.totalSizeBytes() > limitBytes) {
+                val victim = entries[idx]
+                if (victim.hasOffline) {
+                    clearDownload(victim.id)
+                    entries[idx] = victim.copy(hasOffline = false)
+                }
+                idx--
+            }
+            return offlineAssets.totalSizeBytes() <= limitBytes
+        }
+
+        if (limitBytes != null) {
+            evictOlderThan(currentIndex = -1)
+        }
+
+        for (i in entries.indices) {
+            val entry = entries[i]
+            if (entry.hasOffline) continue
+
+            if (limitBytes != null && offlineAssets.totalSizeBytes() >= limitBytes) {
+                if (!evictOlderThan(currentIndex = i)) {
+                    CapyLog.info("download_starred", mapOf("status" to "cache_full"))
+                    break
+                }
+            }
+
+            download(entry.id, backgroundExtractor)
+                .onSuccess { entries[i] = entry.copy(hasOffline = true) }
+                .onFailure { error -> CapyLog.error("download_starred", error) }
+        }
     }
 
     suspend fun opmlDocument(): String {
