@@ -83,11 +83,12 @@ fun FeedActionMenu(
         )
     }
 
-    EditFeedDialog(
-        isOpen = isEditDialogOpen,
-        feed = feed,
-        onDismiss = {
-            setEditDialogOpen(false)
-        },
-    )
+    if (isEditDialogOpen) {
+        EditFeedDialog(
+            feed = feed,
+            onDismiss = {
+                setEditDialogOpen(false)
+            },
+        )
+    }
 }
