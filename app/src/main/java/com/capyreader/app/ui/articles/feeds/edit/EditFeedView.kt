@@ -74,7 +74,7 @@ fun EditFeedView(
     val scrollState = rememberScrollState()
     val (name, setName) = remember { mutableStateOf(feed.title) }
     val (selectedFolder, setSelectedFolder) = remember { mutableStateOf(defaultFolder()) }
-    val switchFolders = remember {
+    val switchFolders = remember(folders) {
         folders
             .map { it.title to feedFolderTitles.contains(it.title) }
             .toMutableStateMap()
