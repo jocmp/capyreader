@@ -37,6 +37,28 @@ import com.capyreader.app.ui.articles.ColumnScrollbar
 import com.capyreader.app.ui.articles.media.ImageSaver
 import com.capyreader.app.ui.components.WebView
 import com.capyreader.app.ui.components.WebViewState
+import com.capyreader.app.ui.collectChangesWithDefault
+import com.jocmp.hyperview.HtmlClick
+import com.jocmp.hyperview.HtmlContent
+import com.jocmp.hyperview.HtmlLongClick
+import com.jocmp.hyperview.HtmlParser
+import com.jocmp.hyperview.images
+import com.capyreader.app.common.MediaItem
+import com.capyreader.app.ui.components.ShareLink
+import com.capyreader.app.ui.articles.displayFeedName
+import com.jocmp.capy.articles.TextAlignment
+import com.capyreader.app.ui.LocalTimeFormats
+import androidx.compose.ui.Alignment
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import com.capyreader.app.ui.components.rememberSaveableShareLink
 import com.capyreader.app.ui.components.rememberWebViewState
 import com.capyreader.app.ui.components.LocalSnackbarHost
@@ -127,6 +149,20 @@ fun ArticleReader(
 
     val showImages = rememberImageVisibility()
     val improveTalkback by rememberTalkbackPreference()
+    val appPreferences = koinInject<AppPreferences>()
+    val useNativeRenderer by appPreferences.readerOptions.useNativeRenderer.collectChangesWithDefault()
+
+    if (useNativeRenderer) {
+        NativeArticleReader(
+            article = article,
+            pinToolbars = pinToolbars,
+            onLinkClick = { linkOpener.open(it.toUri()) },
+            onSelectMedia = onSelectMedia,
+            onRequestLinkDialog = setShareLink,
+            onRequestImageDialog = { setImageUrl(it) },
+        )
+        return
+    }
 
     if (improveTalkback) {
         Column(
@@ -234,3 +270,105 @@ fun rememberImageVisibility(appPreferences: AppPreferences = koinInject()): Bool
 
 private val ConnectivityType.isOnWifi
     get() = this == ConnectivityType.WIFI || this == ConnectivityType.ETHERNET
+
+@Composable
+private fun NativeArticleReader(
+    article: com.jocmp.capy.Article,
+    pinToolbars: Boolean,
+    onLinkClick: (String) -> Unit,
+    onSelectMedia: (media: Media) -> Unit,
+    onRequestLinkDialog: (link: ShareLink?) -> Unit,
+    onRequestImageDialog: (url: String) -> Unit,
+) {
+    val scrollState = rememberSaveable(article.id, saver = ScrollState.Saver) {
+        ScrollState(initial = 0)
+    }
+    val document = remember(article.id, article.content) { HtmlParser.parse(article.content) }
+    val gallery = remember(document) {
+        document.images()
+            .map { MediaItem(url = it.src, altText = it.alt) }
+    }
+    val htmlStyle = rememberArticleHtmlStyle()
+    val titleAlignment by koinInject<AppPreferences>().readerOptions.titleTextAlignment
+        .collectChangesWithDefault()
+    val titleSize by koinInject<AppPreferences>().readerOptions.titleFontSize.collectChangesWithDefault()
+    val context = LocalContext.current
+
+    fun openMedia(src: String) {
+        val index = gallery.indexOfFirst { it.url == src }.coerceAtLeast(0)
+        if (gallery.isEmpty()) return
+        onSelectMedia(Media(images = gallery, startIndex = index))
+    }
+
+    Column(
+        Modifier
+            .fillMaxSize()
+            .verticalScroll(scrollState)
+    ) {
+        if (!pinToolbars) {
+            Spacer(Modifier.height(ArticleBarDefaults.topBarOffset))
+        }
+        Column(
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .widthIn(max = ArticleHtmlMaxWidth)
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            Text(
+                text = article.title.orEmpty(),
+                style = htmlStyle.heading(1).copy(
+                    fontSize = titleSize.sp,
+                    lineHeight = (titleSize * 1.2f).sp,
+                ),
+                textAlign = if (titleAlignment == TextAlignment.CENTER) TextAlign.Center else TextAlign.Start,
+                modifier = Modifier.fillMaxWidth(),
+            )
+            val timeFormats = LocalTimeFormats.current
+            val byline = article.byline(context, timeFormats)
+            if (!byline.isNullOrBlank()) {
+                Text(
+                    text = byline,
+                    style = htmlStyle.body.copy(
+                        color = LocalContentColor.current.copy(alpha = 0.7f),
+                        fontSize = (htmlStyle.body.fontSize.value * 0.9f).sp,
+                    ),
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
+            val feedName = article.displayFeedName(context)
+            if (feedName.isNotBlank()) {
+                Text(
+                    text = feedName,
+                    style = htmlStyle.body.copy(
+                        color = LocalContentColor.current.copy(alpha = 0.7f),
+                        fontSize = (htmlStyle.body.fontSize.value * 0.9f).sp,
+                    ),
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
+            HtmlContent(
+                document = document,
+                style = htmlStyle,
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { click ->
+                    when (click) {
+                        is HtmlClick.Link -> onLinkClick(click.href)
+                        is HtmlClick.Image -> openMedia(click.src)
+                        else -> Unit
+                    }
+                },
+                onLongClick = { longClick ->
+                    when (longClick) {
+                        is HtmlLongClick.Link -> onRequestLinkDialog(
+                            ShareLink(text = longClick.text, url = longClick.href)
+                        )
+                        is HtmlLongClick.Image -> onRequestImageDialog(longClick.src)
+                    }
+                },
+            )
+            Spacer(Modifier.height(64.dp))
+        }
+    }
+}

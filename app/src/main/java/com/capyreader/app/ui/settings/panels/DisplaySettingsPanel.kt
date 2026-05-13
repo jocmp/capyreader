@@ -48,6 +48,7 @@ fun DisplaySettingsPanel(
     val improveTalkback by viewModel.improveTalkback.collectChangesWithCurrent()
     val markReadButtonPosition by viewModel.markReadButtonPosition.collectChangesWithCurrent()
     val appTheme by viewModel.appPreferences.appTheme.collectChangesWithCurrent()
+    val useNativeRenderer by viewModel.useNativeRenderer.collectChangesWithCurrent()
 
     DisplaySettingsPanelView(
         themeMode = viewModel.themeMode,
@@ -65,6 +66,8 @@ fun DisplaySettingsPanel(
         imageVisibility = viewModel.imageVisibility,
         markReadButtonPosition = markReadButtonPosition,
         updateMarkReadButtonPosition = viewModel::updateMarkReadButtonPosition,
+        useNativeRenderer = useNativeRenderer,
+        updateUseNativeRenderer = viewModel::updateUseNativeRenderer,
         onNavigateToUnreadBadges = onNavigateToUnreadBadges,
         onNavigateToArticleList = onNavigateToArticleList,
     )
@@ -87,6 +90,8 @@ fun DisplaySettingsPanelView(
     markReadButtonPosition: MarkReadPosition,
     updateImageVisibility: (option: ReaderImageVisibility) -> Unit,
     updateMarkReadButtonPosition: (position: MarkReadPosition) -> Unit,
+    useNativeRenderer: Boolean = false,
+    updateUseNativeRenderer: (Boolean) -> Unit = {},
     onNavigateToUnreadBadges: () -> Unit = {},
     onNavigateToArticleList: () -> Unit = {},
 ) {
@@ -174,6 +179,14 @@ fun DisplaySettingsPanelView(
                     stringResource(it.translationKey)
                 }
             )
+            RowItem {
+                TextSwitch(
+                    onCheckedChange = updateUseNativeRenderer,
+                    checked = useNativeRenderer,
+                    title = stringResource(R.string.settings_display_native_renderer_title),
+                    subtitle = stringResource(R.string.settings_display_native_renderer_subtitle),
+                )
+            }
         }
 
         Spacer(Modifier.height(16.dp))

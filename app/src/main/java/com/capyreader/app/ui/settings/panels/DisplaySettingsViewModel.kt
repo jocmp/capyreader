@@ -66,6 +66,12 @@ class DisplaySettingsViewModel(
 
     val markReadButtonPosition = appPreferences.articleListOptions.markReadButtonPosition
 
+    val useNativeRenderer = appPreferences.readerOptions.useNativeRenderer
+
+    fun updateUseNativeRenderer(enable: Boolean) {
+        appPreferences.readerOptions.useNativeRenderer.set(enable)
+    }
+
     fun updateThemeMode(themeMode: ThemeMode) {
         appPreferences.themeMode.set(themeMode)
         this.themeMode = themeMode

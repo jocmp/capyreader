@@ -131,6 +131,12 @@ class AppPreferences(context: Context) {
 
         val titleFollowsBodyFont: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_title_follows_body_font", false)
+
+        val useNativeRenderer: Preference<Boolean>
+            get() = preferenceStore.getBoolean(
+                "article_use_native_renderer",
+                com.capyreader.app.BuildConfig.DEBUG,
+            )
     }
 
     class ArticleListOptions(private val preferenceStore: PreferenceStore) {
