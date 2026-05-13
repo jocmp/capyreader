@@ -12,12 +12,3 @@ declare const Android: {
   requestAudioState(): void;
 };
 
-declare const Mercury: {
-  parse(
-    url: string | null,
-    options: { html: string }
-  ): Promise<{
-    lead_image_url: string | null;
-    content: string;
-  }>;
-};
