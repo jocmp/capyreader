@@ -21,6 +21,15 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Capy Reader"
+
+// Composite build for local mercury-parser-kt iteration. Uncomment to test
+// against the working tree at ../mercury-parser-kt instead of Maven Central.
+// includeBuild("../mercury-parser-kt") {
+//     dependencySubstitution {
+//         substitute(module("com.jocmp:mercury-parser")).using(project(":mercury-parser"))
+//     }
+// }
+
 include(":app")
 include(":feedbinclient")
 include(":feedfinder")

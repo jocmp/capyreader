@@ -10,7 +10,6 @@
   },
   "include": [
     "capy/src/main/assets/media.js",
-    "capy/src/main/assets/full-content.js",
     "types.d.ts"
   ]
 }

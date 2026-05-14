@@ -66,16 +66,12 @@ class ArticleRenderer(
     }
 
     private fun buildContent(article: Article, hideImages: Boolean): String {
-        return if (article.parseFullContent) {
-            parseHtml(article, hideImages)
-        } else {
-            val audioEnclosures = article.audioEnclosureHTML(
-                playLabel = audioPlayerLabels.play,
-                pauseLabel = audioPlayerLabels.pause,
-            )
-            val otherEnclosures = article.enclosureHTML()
-            audioEnclosures + article.content + otherEnclosures + postProcessScript(article, hideImages)
-        }
+        val audioEnclosures = article.audioEnclosureHTML(
+            playLabel = audioPlayerLabels.play,
+            pauseLabel = audioPlayerLabels.pause,
+        )
+        val otherEnclosures = article.enclosureHTML()
+        return audioEnclosures + article.content + otherEnclosures + postProcessScript(article, hideImages)
     }
 
     private fun tableOverflowX(horizontalScroll: Boolean): String {
