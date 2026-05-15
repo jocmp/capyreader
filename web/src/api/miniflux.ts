@@ -7,6 +7,7 @@ import type {
   EntryStatus,
   Feed,
   FeedCounters,
+  IconData,
   User,
 } from "@/api/types";
 
@@ -89,6 +90,9 @@ export const minifluxApi = {
 
   feedCounters: (creds: MinifluxCredentials) =>
     request<FeedCounters>(creds, "/v1/feeds/counters"),
+
+  icon: (creds: MinifluxCredentials, iconId: number) =>
+    request<IconData>(creds, `/v1/icons/${iconId}`),
 
   entries: (creds: MinifluxCredentials, query?: EntriesQuery) =>
     request<EntriesResponse>(creds, "/v1/entries", undefined, query as Record<string, unknown> | undefined),

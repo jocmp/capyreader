@@ -58,6 +58,12 @@ export interface Entry {
   }> | null;
 }
 
+export interface IconData {
+  id: number;
+  data: string;
+  mime_type: string;
+}
+
 export interface EntriesResponse {
   total: number;
   entries: Entry[];
