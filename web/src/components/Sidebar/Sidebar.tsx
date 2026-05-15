@@ -1,4 +1,4 @@
-import { useMemo, useState, type RefObject } from "react";
+import { useMemo, useState, type CSSProperties, type RefObject } from "react";
 import {
   ChevronDown,
   ChevronRight,
@@ -7,7 +7,6 @@ import {
   Loader2,
   LogOut,
   RefreshCw,
-  Rss,
   Settings,
   Star,
 } from "lucide-react";
@@ -18,10 +17,12 @@ import { MinifluxError } from "@/api/miniflux";
 import { Button } from "@/components/ui/Button";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { SearchBar } from "@/components/SearchBar";
+import FeedIcon from "@/components/FeedIcon";
 import ManageFeedsDialog from "@/features/subscriptions/ManageFeedsDialog";
 import { cn } from "@/lib/cn";
 import type { Category, Feed } from "@/api/types";
 import { useSelection, type Scope } from "@/hooks/useSelection";
+import { feedTint, useFeedColors } from "@/hooks/useFeedColors";
 
 interface SidebarProps {
   className?: string;
@@ -41,6 +42,7 @@ export default function Sidebar({ className, searchInputRef }: SidebarProps) {
   const categoriesQ = useCategories();
   const feedsQ = useFeeds();
   const countersQ = useFeedCounters();
+  const feedColors = useFeedColors();
   const { selection, setScope } = useSelection();
   const [manageOpen, setManageOpen] = useState(false);
 
@@ -164,6 +166,7 @@ export default function Sidebar({ className, searchInputRef }: SidebarProps) {
             currentScope={selection.scope}
             counters={countersQ.data?.unreads ?? {}}
             onSelect={setScope}
+            feedColors={feedColors}
           />
         ))}
       </nav>
@@ -272,6 +275,7 @@ interface SidebarItemProps {
   active?: boolean;
   onClick: () => void;
   indent?: boolean;
+  style?: CSSProperties;
 }
 
 function SidebarItem({
@@ -281,17 +285,19 @@ function SidebarItem({
   active,
   onClick,
   indent,
+  style,
 }: SidebarItemProps) {
   return (
     <button
       type="button"
       onClick={onClick}
+      style={style}
       className={cn(
         "flex w-full items-center gap-2 rounded-md px-3 py-1.5 text-left transition-colors",
         indent && "pl-8",
         active
-          ? "bg-accent text-accent-foreground"
-          : "text-foreground/80 hover:bg-accent/50 hover:text-foreground",
+          ? "text-accent-foreground ring-1 ring-inset ring-accent-foreground/40"
+          : "text-foreground/80 hover:text-foreground hover:brightness-95 dark:hover:brightness-105",
       )}
     >
       <span className="flex h-5 w-5 items-center justify-center">{icon}</span>
@@ -317,6 +323,7 @@ interface CategoryBlockProps {
   currentScope: Scope;
   counters: Record<string, number>;
   onSelect: (scope: Scope) => void;
+  feedColors: ReturnType<typeof useFeedColors>;
 }
 
 function CategoryBlock({
@@ -324,6 +331,7 @@ function CategoryBlock({
   currentScope,
   counters,
   onSelect,
+  feedColors,
 }: CategoryBlockProps) {
   const [open, setOpen] = useState(true);
   const categoryActive =
@@ -355,20 +363,31 @@ function CategoryBlock({
         />
       </div>
       {open && (
-        <div>
-          {group.feeds.map((feed) => (
-            <SidebarItem
-              key={feed.id}
-              icon={<Rss className="h-3.5 w-3.5" />}
-              label={feed.title}
-              count={counters[String(feed.id)] ?? 0}
-              active={
-                currentScope.kind === "feed" && currentScope.id === feed.id
-              }
-              onClick={() => onSelect({ kind: "feed", id: feed.id })}
-              indent
-            />
-          ))}
+        <div className="mt-0.5 space-y-0.5">
+          {group.feeds.map((feed) => {
+            const active =
+              currentScope.kind === "feed" && currentScope.id === feed.id;
+            const color = feedColors.get(feed.id);
+            const tint = feedTint(color, active ? "strong" : "subtle");
+            return (
+              <SidebarItem
+                key={feed.id}
+                icon={
+                  <FeedIcon
+                    iconId={feed.icon?.icon_id}
+                    title={feed.title}
+                    sizeClassName="h-4 w-4"
+                  />
+                }
+                label={feed.title}
+                count={counters[String(feed.id)] ?? 0}
+                active={active}
+                onClick={() => onSelect({ kind: "feed", id: feed.id })}
+                indent
+                style={tint ? { backgroundColor: tint } : undefined}
+              />
+            );
+          })}
         </div>
       )}
     </div>

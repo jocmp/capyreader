@@ -4,6 +4,8 @@ import { CheckCheck, Loader2, MoreHorizontal, Star } from "lucide-react";
 import type { Entry } from "@/api/types";
 import { cn } from "@/lib/cn";
 import { relativeTime } from "@/lib/time";
+import FeedIcon from "@/components/FeedIcon";
+import { feedTint, useFeedColors } from "@/hooks/useFeedColors";
 
 interface ArticleListProps {
   entries: Entry[] | undefined;
@@ -31,6 +33,7 @@ export default function ArticleList({
   const markAboveInitialIndexRef = useRef(-1);
   const markAboveInitialEntriesRef = useRef<Entry[] | undefined>(undefined);
   const parentRef = useRef<HTMLDivElement>(null);
+  const feedColors = useFeedColors();
 
   const rowVirtualizer = useVirtualizer({
     count: entries?.length ?? 0,
@@ -128,6 +131,10 @@ export default function ArticleList({
               <ArticleRow
                 entry={entry}
                 selected={selectedEntryId === entry.id}
+                tint={feedTint(
+                  feedColors.get(entry.feed_id),
+                  selectedEntryId === entry.id ? "strong" : "subtle",
+                )}
                 onClick={() => onSelect(entry)}
                 menuOpen={openMenuEntryId === entry.id}
                 onMenuOpenChange={(open) =>
@@ -168,6 +175,7 @@ export default function ArticleList({
 interface ArticleRowProps {
   entry: Entry;
   selected: boolean;
+  tint: string | undefined;
   onClick: () => void;
   menuOpen: boolean;
   onMenuOpenChange: (open: boolean) => void;
@@ -178,6 +186,7 @@ interface ArticleRowProps {
 function ArticleRow({
   entry,
   selected,
+  tint,
   onClick,
   menuOpen,
   onMenuOpenChange,
@@ -208,9 +217,12 @@ function ArticleRow({
 
   return (
     <div
+      style={tint ? { backgroundColor: tint } : undefined}
       className={cn(
         "group relative border-b transition-colors",
-        selected ? "bg-accent/80" : "hover:bg-accent/40",
+        selected
+          ? "ring-1 ring-inset ring-accent-foreground/40"
+          : "hover:brightness-95 dark:hover:brightness-105",
       )}
     >
       <button
@@ -225,6 +237,11 @@ function ArticleRow({
               className="inline-block h-2 w-2 flex-shrink-0 rounded-full bg-primary"
             />
           )}
+          <FeedIcon
+            iconId={entry.feed.icon?.icon_id}
+            title={entry.feed.title}
+            sizeClassName="h-3.5 w-3.5"
+          />
           <span className="truncate font-medium">{entry.feed.title}</span>
           <span className="ml-auto flex-shrink-0">
             {relativeTime(entry.published_at)}

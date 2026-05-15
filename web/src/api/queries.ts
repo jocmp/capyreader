@@ -19,6 +19,7 @@ export const queryKeys = {
   counters: () => ["counters"] as const,
   entries: (query: EntriesQuery | undefined) => ["entries", query ?? {}] as const,
   entry: (id: number) => ["entry", id] as const,
+  icon: (iconId: number | "none") => ["icon", iconId] as const,
 };
 
 export function useMe() {
@@ -74,6 +75,24 @@ export function useEntries(query?: EntriesQuery, enabled = true) {
       };
     },
     enabled,
+  });
+}
+
+export function useFeedIcon(iconId: number | null | undefined) {
+  const credentials = useCredentials();
+  const enabled = typeof iconId === "number" && iconId > 0;
+  return useQuery({
+    // `"none"` keeps the disabled-lookup cache slot distinct from any real
+    // icon id — including a hypothetical `0` — so we never read a hole as a
+    // hit.
+    queryKey: queryKeys.icon(enabled ? (iconId as number) : "none"),
+    queryFn: () => minifluxApi.icon(credentials, iconId as number),
+    enabled,
+    // Favicons rarely change once Miniflux has cached them — keep the data
+    // for the session but bound gcTime so a long-running tab with hundreds
+    // of feeds doesn't accumulate megabytes of base64 in JS heap.
+    staleTime: 24 * 60 * 60 * 1000,
+    gcTime: 60 * 60 * 1000,
   });
 }
 
