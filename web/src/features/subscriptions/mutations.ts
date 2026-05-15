@@ -36,6 +36,23 @@ export function useDeleteFeed() {
   });
 }
 
+export function useUpdateFeed() {
+  const credentials = useCredentials();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (params: {
+      feedId: number;
+      category_id?: number;
+      title?: string;
+    }) =>
+      minifluxApi.updateFeed(credentials, params.feedId, {
+        category_id: params.category_id,
+        title: params.title,
+      }),
+    onSuccess: () => invalidateSubscriptionQueries(queryClient),
+  });
+}
+
 export function useDiscoverFeeds() {
   const credentials = useCredentials();
   return useMutation({
