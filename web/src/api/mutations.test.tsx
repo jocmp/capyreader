@@ -98,10 +98,14 @@ describe("entry status mutations", () => {
     queryClient.setQueryData(queryKeys.entries(unreadQuery), seed);
 
     // Simulate an active list view so removeQueries({ type: "inactive" }) in
-    // onSettled does not evict the cache before we can assert on it.
+    // onSettled does not evict the cache before we can assert on it. The
+    // observer must be enabled with a queryFn — TanStack Query's isActive()
+    // check skips observers whose enabled resolves to false, which would
+    // otherwise let the inactive eviction run.
     const observer = new QueryObserver<EntriesResponse>(queryClient, {
       queryKey: queryKeys.entries(unreadQuery),
-      enabled: false,
+      queryFn: () => seed,
+      staleTime: Infinity,
     });
     const unsubscribe = observer.subscribe(() => {});
 
