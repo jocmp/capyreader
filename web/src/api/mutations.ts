@@ -71,14 +71,10 @@ export function useUpdateEntryStatus() {
         // up the article even if it was not already cached there.
         queryClient.invalidateQueries({ queryKey: ["entries"] });
       } else {
-        // Marking read: mark all entry caches stale without refetching so the
-        // active list keeps its optimistic update visible for the rest of the
-        // session, but any cached Unread query (active or inactive) will
-        // refetch fresh data the next time it is observed.
-        queryClient.invalidateQueries({
-          queryKey: ["entries"],
-          refetchType: "none",
-        });
+        // Marking read: evict inactive entry caches so stale Unread lists are
+        // not reused when switching views. The active list is left untouched so
+        // refetchOnWindowFocus cannot remove the article mid-session.
+        queryClient.removeQueries({ queryKey: ["entries"], type: "inactive" });
       }
       queryClient.invalidateQueries({ queryKey: ["entry", vars.entryId] });
       queryClient.invalidateQueries({ queryKey: ["counters"] });

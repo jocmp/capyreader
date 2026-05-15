@@ -113,8 +113,9 @@ describe("entry status mutations", () => {
     expect(after?.entries.find((e) => e.id === 7)?.status).toBe("read");
   });
 
-  it("useUpdateEntryStatus marks entries stale without refetching when marking read", async () => {
+  it("useUpdateEntryStatus removes inactive entry caches when marking read", async () => {
     const { queryClient, Wrapper } = makeWrapper();
+    const removeSpy = vi.spyOn(queryClient, "removeQueries");
     const invalidateSpy = vi.spyOn(queryClient, "invalidateQueries");
 
     const { result } = renderHook(() => useUpdateEntryStatus(), {
@@ -129,18 +130,25 @@ describe("entry status mutations", () => {
       expect(updateEntries).toHaveBeenCalled();
     });
 
-    type InvalidateOpts = { queryKey: readonly unknown[]; refetchType?: string };
+    // Inactive caches are evicted so stale Unread lists are not reused when
+    // switching views. The active list is never marked stale, preventing
+    // refetchOnWindowFocus from removing the article mid-session.
+    type RemoveOpts = { queryKey?: readonly unknown[]; type?: string };
+    expect(
+      removeSpy.mock.calls.some((call) => {
+        const opts = call[0] as RemoveOpts;
+        return (
+          Array.isArray(opts?.queryKey) &&
+          opts.queryKey[0] === "entries" &&
+          opts.type === "inactive"
+        );
+      }),
+    ).toBe(true);
+    // Counters and the per-entry cache should still invalidate normally.
+    type InvalidateOpts = { queryKey: readonly unknown[] };
     const invalidateCalls = invalidateSpy.mock.calls.map(
       (call) => call[0] as InvalidateOpts,
     );
-    const entriesCall = invalidateCalls.find(
-      (opts) => Array.isArray(opts.queryKey) && opts.queryKey[0] === "entries",
-    );
-    // Entries are marked stale (invalidated) but with refetchType:"none" so the
-    // active list keeps its optimistic update during the current reading session.
-    expect(entriesCall).toBeDefined();
-    expect(entriesCall?.refetchType).toBe("none");
-    // Counters and the per-entry cache should still invalidate normally.
     expect(
       invalidateCalls.some(
         (opts) => Array.isArray(opts.queryKey) && opts.queryKey[0] === "counters",
