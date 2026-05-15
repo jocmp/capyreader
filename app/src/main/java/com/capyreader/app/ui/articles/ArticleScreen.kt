@@ -335,9 +335,7 @@ fun ArticleScreen(
 
         fun refreshFeeds() {
             viewModel.refresh(filter) {
-                if (viewModel.markReadOnScrollEnabled) {
-                    scrollToTop()
-                }
+                scrollToTop()
             }
         }
 

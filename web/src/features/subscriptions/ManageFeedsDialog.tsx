@@ -1,5 +1,7 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
+  Check,
+  Copy,
   Download,
   Loader2,
   Plus,
@@ -44,6 +46,13 @@ export default function ManageFeedsDialog({
   const [movingFeedIds, setMovingFeedIds] = useState<ReadonlySet<number>>(
     () => new Set(),
   );
+  const [copiedFeedId, setCopiedFeedId] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (copiedFeedId === null) return;
+    const timer = setTimeout(() => setCopiedFeedId(null), 1500);
+    return () => clearTimeout(timer);
+  }, [copiedFeedId]);
 
   async function handleMoveFeed(feedId: number, categoryId: number) {
     setStatus(null);
@@ -63,6 +72,15 @@ export default function ManageFeedsDialog({
         next.delete(feedId);
         return next;
       });
+    }
+  }
+
+  async function handleCopyFeedUrl(feedId: number, url: string) {
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopiedFeedId(feedId);
+    } catch (err) {
+      setStatus(err instanceof Error ? err.message : "Copy failed.");
     }
   }
 
@@ -261,6 +279,29 @@ export default function ManageFeedsDialog({
                               </option>
                             ))}
                           </select>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            aria-label={
+                              copiedFeedId === feed.id
+                                ? `Copied feed URL for ${feed.title}`
+                                : `Copy feed URL for ${feed.title}`
+                            }
+                            title={
+                              copiedFeedId === feed.id
+                                ? "Copied"
+                                : "Copy feed URL"
+                            }
+                            onClick={() =>
+                              handleCopyFeedUrl(feed.id, feed.feed_url)
+                            }
+                          >
+                            {copiedFeedId === feed.id ? (
+                              <Check className="h-3.5 w-3.5" />
+                            ) : (
+                              <Copy className="h-3.5 w-3.5" />
+                            )}
+                          </Button>
                           <Button
                             variant="ghost"
                             size="icon"

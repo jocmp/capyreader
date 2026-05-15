@@ -17,15 +17,14 @@ function addImageClickListeners() {
     (img) => !img.classList.contains("iframe-embed__image"),
   );
 
-  /** @type {MediaItem[]} */
-  const galleryImages = images.map((i) => ({
-    url: i.src,
-    altText: i.alt || null,
-  }));
-
   images.forEach((img, index) => {
     img.addEventListener("click", (e) => {
       e.preventDefault();
+      /** @type {MediaItem[]} */
+      const galleryImages = images.map((i) => ({
+        url: i.src,
+        altText: i.alt || null,
+      }));
       Android.openImageGallery(JSON.stringify(galleryImages), index);
     });
 
@@ -36,6 +35,63 @@ function addImageClickListeners() {
   });
 }
 
+// Decode the upstream URL embedded in a Miniflux media-proxy path. Miniflux
+// encodes proxy URLs as `/proxy/{HMAC}/{base64url-original}` where the second
+// segment is the original upstream URL in URL-safe base64 (`-`/`_` instead of
+// `+`/`/`). When Miniflux's own server-side fetch fails — Heroku egress IPs
+// are commonly blocked by hotlink-protected CDNs like *.jintiankansha.me —
+// the proxy returns a non-image body and the WebView reports a load failure.
+// Retry by decoding the upstream URL from the path and pointing the <img>
+// directly at it; the phone's egress is different and the OkHttp WebView
+// interceptor already attaches the per-image Referer that those CDNs accept.
+//
+// Mirrors web/src/article/decodeMinifluxProxyUrl.ts. Keep them in sync.
+/**
+ * @param {string} src
+ * @returns {string | null}
+ */
+function decodeMinifluxProxyUpstream(src) {
+  if (!src) return null;
+  // Match `/proxy/HMAC/base64url-original` anywhere in the URL or path so
+  // we cover root deployments, subfolder deployments
+  // (BASE_URL=https://example.org/rss/), and articles synced before the
+  // proxy resolver landed (those keep relative `/proxy/...` paths in
+  // content_html). The decode failure path returns null for any false
+  // positive — only valid base64url decoding to an http(s) URL succeeds.
+  const match = src.match(/\/proxy\/[^/]+\/([^/?#]+)(?:[?#]|$)/i);
+  if (!match) return null;
+  const standardB64 = match[1].replace(/-/g, "+").replace(/_/g, "/");
+  let decoded;
+  try {
+    const bytes = Uint8Array.from(atob(standardB64), (c) => c.charCodeAt(0));
+    decoded = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+  } catch (e) {
+    return null;
+  }
+  return /^https?:\/\//i.test(decoded) ? decoded : null;
+}
+
+/**
+ * @param {HTMLImageElement} img
+ */
+function handleImageError(img) {
+  // Single retry only — flag the element so a subsequent failure of the
+  // upstream URL does not loop.
+  if (img.dataset.capyMinifluxFallbackTried === "1") {
+    img.classList.add("loaded");
+    return;
+  }
+  const currentSrc = img.currentSrc || img.getAttribute("src") || "";
+  const upstream = decodeMinifluxProxyUpstream(currentSrc);
+  if (!upstream) {
+    img.classList.add("loaded");
+    return;
+  }
+  img.dataset.capyMinifluxFallbackTried = "1";
+  if (img.hasAttribute("srcset")) img.removeAttribute("srcset");
+  img.setAttribute("src", upstream);
+}
+
 /**
  * @param {HTMLImageElement} img
  */
@@ -43,14 +99,22 @@ function setupImageLoadHandler(img) {
   if (img.classList.contains("loaded")) {
     return;
   }
+  if (img.dataset.capyHandlerAttached === "1") {
+    return;
+  }
+  img.dataset.capyHandlerAttached = "1";
 
-  const markLoaded = () => img.classList.add("loaded");
-  img.addEventListener("load", markLoaded, { once: true });
-  img.addEventListener("error", markLoaded, { once: true });
+  img.addEventListener("load", () => img.classList.add("loaded"));
+  img.addEventListener("error", () => handleImageError(img));
 
-  // Check after attaching - catches race condition
+  // Check after attaching - catches race condition where the image already
+  // resolved before the listeners were wired up.
   if (img.complete) {
-    markLoaded();
+    if (img.naturalWidth > 0) {
+      img.classList.add("loaded");
+    } else {
+      handleImageError(img);
+    }
   }
 }
 
@@ -70,11 +134,23 @@ function reconcileImageLoadState() {
     );
     let outstanding = 0;
     pending.forEach((img) => {
-      if (img.complete) {
-        img.classList.add("loaded");
-      } else {
+      if (!img.complete) {
         outstanding += 1;
+        return;
       }
+      // Failed Miniflux-proxy fetches arrive here without ever firing `error`
+      // when the WebView caches the proxy's non-image error body. Funnel them
+      // into the same upstream-retry path as the `error` listener so the
+      // poll doesn't pin a broken proxy fetch as "loaded" before the retry
+      // has a chance to kick in.
+      if (img.naturalWidth === 0 && img.dataset.capyMinifluxFallbackTried !== "1") {
+        handleImageError(img);
+        if (img.dataset.capyMinifluxFallbackTried === "1") {
+          outstanding += 1;
+          return;
+        }
+      }
+      img.classList.add("loaded");
     });
     if (outstanding === 0 || Date.now() > deadline) {
       clearInterval(interval);
