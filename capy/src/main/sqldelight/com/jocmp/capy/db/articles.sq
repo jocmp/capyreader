@@ -271,6 +271,26 @@ WHERE starred = 0
   AND updated_at < :cutoffDate
   AND NOT EXISTS (SELECT 1 FROM articles WHERE articles.id = article_statuses.article_id);
 
+setOfflineHtml:
+UPDATE articles SET offline_html = :html WHERE id = :articleID;
+
+clearOfflineHtmlForIDs:
+UPDATE articles SET offline_html = NULL WHERE id IN :articleIDs;
+
+findOfflineCandidates:
+SELECT articles.id, articles.url
+FROM articles
+JOIN feeds ON feeds.id = articles.feed_id
+WHERE feeds.offline_enabled = 1
+ORDER BY articles.published_at DESC
+LIMIT :limit;
+
+findCachedArticleIDs:
+SELECT id FROM articles WHERE offline_html IS NOT NULL;
+
+findURLsByIDs:
+SELECT id, url FROM articles WHERE id IN :articleIDs;
+
 deleteByID:
 DELETE FROM articles WHERE id = :articleID;
 

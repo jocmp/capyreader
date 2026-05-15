@@ -19,14 +19,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -85,11 +82,12 @@ fun GeneralSettingsPanel(
             onNavigateToNotifications = onNavigateToNotifications,
             refreshInterval = viewModel.refreshInterval,
             updateRefreshInterval = viewModel::updateRefreshInterval,
+            refreshOnWiFiOnly = viewModel.refreshOnWiFiOnly,
+            updateRefreshOnWiFiOnly = viewModel::updateRefreshOnWiFiOnly,
             canOpenLinksInternally = viewModel.canOpenLinksInternally,
             updateOpenLinksInternally = viewModel::updateOpenLinksInternally,
             updateAutoDelete = viewModel::updateAutoDelete,
             autoDelete = viewModel.autoDelete,
-            onClearArticles = viewModel::clearAllArticles,
             updateSortOrder = viewModel::updateSortOrder,
             sortOrder = viewModel.sortOrder,
             updateConfirmMarkAllRead = viewModel::updateConfirmMarkAllRead,
@@ -108,9 +106,10 @@ fun GeneralSettingsPanel(
 fun GeneralSettingsPanelView(
     source: Source,
     onNavigateToNotifications: () -> Unit,
-    onClearArticles: () -> Unit,
     refreshInterval: RefreshInterval,
     updateRefreshInterval: (RefreshInterval) -> Unit,
+    refreshOnWiFiOnly: Boolean,
+    updateRefreshOnWiFiOnly: (enabled: Boolean) -> Unit,
     canOpenLinksInternally: Boolean,
     updateOpenLinksInternally: (canOpenLinksInternally: Boolean) -> Unit,
     updateAutoDelete: (AutoDelete) -> Unit,
@@ -126,17 +125,6 @@ fun GeneralSettingsPanelView(
     markReadOnScroll: Boolean,
     updateMarkReadOnScroll: (enable: Boolean) -> Unit,
 ) {
-    val (isClearArticlesDialogOpen, setClearArticlesDialogOpen) = remember { mutableStateOf(false) }
-
-    val onClearArticlesCancel = {
-        setClearArticlesDialogOpen(false)
-    }
-
-    val onRequestClearArticles = {
-        setClearArticlesDialogOpen(false)
-        onClearArticles()
-    }
-
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier.verticalScroll(rememberScrollState())
@@ -152,6 +140,13 @@ fun GeneralSettingsPanelView(
                     refreshInterval = refreshInterval,
                     updateRefreshInterval = updateRefreshInterval,
                 )
+                RowItem {
+                    TextSwitch(
+                        checked = refreshOnWiFiOnly,
+                        onCheckedChange = updateRefreshOnWiFiOnly,
+                        title = stringResource(R.string.settings_refresh_on_wifi_only),
+                    )
+                }
                 NotificationsListItem(
                     onNavigate = onNavigateToNotifications,
                     refreshInterval = refreshInterval,
@@ -233,37 +228,11 @@ fun GeneralSettingsPanelView(
                 )
             }
 
-            RowItem {
-                FilledTonalButton(
-                    onClick = { setClearArticlesDialogOpen(true) },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(stringResource(R.string.settings_clear_all_articles_button))
-                }
-            }
-
             if (BuildConfig.DEBUG && !LocalView.current.isInEditMode) {
                 TestNotificationRow()
             }
         }
         Spacer(Modifier.height(16.dp))
-    }
-
-    if (isClearArticlesDialogOpen) {
-        AlertDialog(
-            onDismissRequest = onClearArticlesCancel,
-            text = { Text(stringResource(R.string.settings_clear_all_articles_text)) },
-            dismissButton = {
-                TextButton(onClick = onClearArticlesCancel) {
-                    Text(stringResource(R.string.dialog_cancel))
-                }
-            },
-            confirmButton = {
-                TextButton(onClick = onRequestClearArticles) {
-                    Text(text = stringResource(R.string.settings_clear_all_articles_confirm))
-                }
-            }
-        )
     }
 }
 
@@ -354,8 +323,9 @@ private fun GeneralSettingsPanelPreview() {
                 source = Source.LOCAL,
                 refreshInterval = RefreshInterval.EVERY_HOUR,
                 updateRefreshInterval = {},
+                refreshOnWiFiOnly = false,
+                updateRefreshOnWiFiOnly = {},
                 canOpenLinksInternally = false,
-                onClearArticles = {},
                 updateOpenLinksInternally = {},
                 updateAutoDelete = {},
                 autoDelete = AutoDelete.WEEKLY,

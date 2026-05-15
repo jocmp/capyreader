@@ -29,9 +29,14 @@ class SyncStatusRecords(
 
     fun selectForSync(): List<SyncStatus> {
         return database.transactionWithResult {
-            queries.markAllSelected()
+            queries.markAllSelected(SyncStatus.Key.remoteSyncKeys.map { it.raw })
             queries.selectSelected(::mapSyncStatus).executeAsList()
         }
+    }
+
+    fun deletePending(articleIDs: List<String>, key: SyncStatus.Key) {
+        if (articleIDs.isEmpty()) return
+        queries.deleteByKey(articleIDs = articleIDs, key = key.raw)
     }
 
     fun resetAllSelected() {

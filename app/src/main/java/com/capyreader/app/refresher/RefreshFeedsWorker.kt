@@ -18,6 +18,7 @@ class RefreshFeedsWorker(
         return try {
             refresher.refresh()
             CapyLog.info("refresh_feeds_worker:success")
+            OfflineCacheWorker.enqueue(applicationContext)
             Result.success()
         } catch (e: Exception) {
             CapyLog.error("refresh_feeds_worker", e)

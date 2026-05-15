@@ -18,6 +18,7 @@ internal class FeedFixture(
         title: String = "My Feed",
         folderNames: List<String> = emptyList(),
         enableNotifications: Boolean = false,
+        offlineEnabled: Boolean = true,
     ): Feed = runBlocking {
         val feed = records.upsert(
             feedID = feedID,
@@ -30,6 +31,10 @@ internal class FeedFixture(
 
         if (enableNotifications) {
             records.enableNotifications(feed.id, enabled = true)
+        }
+
+        if (offlineEnabled) {
+            records.updateOfflineEnabled(feed.id, enabled = true)
         }
 
         folderNames.distinct().forEach { name ->

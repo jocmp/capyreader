@@ -104,6 +104,9 @@ UPDATE feeds SET enable_sticky_full_content = :enabled WHERE feeds.id = :feedID;
 updateOpenInBrowser:
 UPDATE feeds SET open_articles_in_browser = :enabled WHERE feeds.id = :feedID;
 
+updateOfflineEnabled:
+UPDATE feeds SET offline_enabled = :enabled WHERE feeds.id = :feedID;
+
 clearStickyFullContent:
 UPDATE feeds SET enable_sticky_full_content = 0;
 

@@ -5,6 +5,7 @@ import com.capyreader.app.ui.settings.panels.AccountSettingsViewModel
 import com.capyreader.app.ui.settings.panels.DisplaySettingsViewModel
 import com.capyreader.app.ui.settings.panels.GeneralSettingsViewModel
 import com.capyreader.app.ui.settings.panels.GesturesSettingsViewModel
+import com.capyreader.app.ui.settings.panels.OfflineReadingViewModel
 import com.capyreader.app.ui.settings.panels.SettingsViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.androidx.workmanager.dsl.worker
@@ -35,6 +36,11 @@ val settingsModule = module {
     viewModel {
         GesturesSettingsViewModel(
             appPreferences = get(),
+        )
+    }
+    viewModel {
+        OfflineReadingViewModel(
+            account = get(),
         )
     }
     viewModel {

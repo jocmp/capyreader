@@ -140,6 +140,14 @@
     <string name="notification_mark_as_read_action">Mark as read</string>
     <string name="settings_section_privacy">Privacy</string>
     <string name="settings_section_refresh">Last Updated</string>
+    <string name="settings_refresh_on_wifi_only">Refresh on Wi-Fi only</string>
+    <string name="refresh_skipped_mobile">Refresh skipped on mobile network</string>
+    <string name="settings_panel_offline_reading_title">Offline Reading</string>
+    <string name="settings_section_offline_cache">Saved articles</string>
+    <string name="offline_cache_size_label">Maximum cached articles</string>
+    <string name="offline_cache_size_off">Off</string>
+    <string name="offline_cache_size_latest">Latest %1$d articles</string>
+    <string name="offline_feeds_section">Feeds to save offline</string>
     <string name="opml_import_button_text">Import from File</string>
     <string name="opml_export_button_text">Export to OPML</string>
     <string name="opml_import_progress_content_text_start">Starting import</string>
@@ -223,9 +231,6 @@
     <string name="settings_section_advanced">Advanced</string>
     <string name="settings_section_experimental">Experimental</string>
     <string name="settings_option_enable_audio_player">Audio player</string>
-    <string name="settings_clear_all_articles_confirm">Confirm</string>
-    <string name="settings_clear_all_articles_text">Are you sure you want to delete all read, unstarred articles from your device? This action cannot be undone.</string>
-    <string name="settings_clear_all_articles_button">Clear all articles</string>
     <string name="settings_support_button">Support</string>
     <string name="settings_donate_button">Donate</string>
     <string name="settings_article_list_title">Article List</string>

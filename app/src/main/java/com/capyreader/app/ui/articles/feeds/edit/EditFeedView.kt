@@ -93,7 +93,7 @@ fun EditFeedView(
             EditFeedFormEntry(
                 feedID = feed.id,
                 title = name,
-                folderTitles = folderNames
+                folderTitles = folderNames,
             )
         )
     }

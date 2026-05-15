@@ -8,10 +8,13 @@ data class SyncStatus(
 ) {
     enum class Key(val raw: String) {
         READ("read"),
-        STARRED("starred");
+        STARRED("starred"),
+        CACHE("cache");
 
         companion object {
             fun from(raw: String): Key? = entries.find { it.raw == raw }
+
+            val remoteSyncKeys = listOf(READ, STARRED)
         }
     }
 }

@@ -133,6 +133,13 @@ internal class FeedRecords(private val database: Database) {
         database.feedsQueries.toggleAllShowUnreadBadge(enabled = enabled)
     }
 
+    suspend fun updateOfflineEnabled(feedID: String, enabled: Boolean) = withIOContext {
+        database.feedsQueries.updateOfflineEnabled(
+            enabled = enabled,
+            feedID = feedID,
+        )
+    }
+
     suspend fun clearStickyFullContent() = withIOContext {
         database.feedsQueries.clearStickyFullContent()
     }
@@ -186,6 +193,7 @@ internal class FeedRecords(private val database: Database) {
         etag: String? = null,
         lastModified: String? = null,
         conditionalGetRefreshedAt: Long? = null,
+        offlineEnabled: Boolean = false,
         folderName: String? = "",
         expanded: Boolean? = false,
     ) = Feed(
@@ -205,5 +213,6 @@ internal class FeedRecords(private val database: Database) {
         priority = FeedPriority.parse(priority),
         showUnreadBadge = showUnreadBadge,
         isReadLater = readLater,
+        offlineEnabled = offlineEnabled,
     )
 }

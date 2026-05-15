@@ -1,0 +1,3 @@
+import kotlin.Boolean;
+
+ALTER TABLE feeds ADD COLUMN offline_enabled INTEGER AS Boolean NOT NULL DEFAULT 0;

@@ -26,7 +26,8 @@ FROM article_sync_statuses
 WHERE selected = 1;
 
 markAllSelected:
-UPDATE article_sync_statuses SET selected = 1;
+UPDATE article_sync_statuses SET selected = 1
+WHERE "key" IN :keys;
 
 resetAllSelected:
 UPDATE article_sync_statuses SET selected = 0;
@@ -52,3 +53,8 @@ SELECT article_id
 FROM article_sync_statuses
 WHERE "key" = :key
   AND selected = 0;
+
+deleteByKey:
+DELETE FROM article_sync_statuses
+WHERE article_id IN :articleIDs
+  AND "key" = :key;

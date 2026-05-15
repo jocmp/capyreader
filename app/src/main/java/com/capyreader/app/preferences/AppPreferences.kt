@@ -72,6 +72,9 @@ class AppPreferences(context: Context) {
     val enableStickyFullContent: Preference<Boolean>
         get() = preferenceStore.getBoolean("enable_sticky_full_content", false)
 
+    val refreshOnWiFiOnly: Preference<Boolean>
+        get() = preferenceStore.getBoolean("refresh_on_wifi_only", false)
+
     val paneExpansionIndex: Preference<Int>
         get() = preferenceStore.getInt("pane_expansion_index", DefaultPaneExpansionIndex)
 

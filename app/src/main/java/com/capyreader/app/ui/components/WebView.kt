@@ -26,6 +26,7 @@ import com.capyreader.app.ui.LocalTimeFormats
 import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
 import com.capyreader.app.ui.articles.displayFeedName
+import com.jocmp.capy.Account
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
 import com.jocmp.capy.common.DisplayTimeFormats
@@ -166,8 +167,13 @@ class WebViewState(
     }
 
     fun loadHtml(article: Article, showImages: Boolean, timeFormats: DisplayTimeFormats) {
-        val id = article.id
-        val hash = article.content.hashCode()
+        val renderArticle = article.offlineHTML
+            ?.takeIf { it.isNotBlank() }
+            ?.let { article.copy(contentHTML = it) }
+            ?: article
+
+        val id = renderArticle.id
+        val hash = renderArticle.content.hashCode()
 
         if (id == htmlId && hash == contentHash) {
             return
@@ -178,14 +184,14 @@ class WebViewState(
         contentHash = hash
 
         val client = webView.webViewClient as? AccompanistWebViewClient
-        client?.pageUrl = article.url?.toString()
+        client?.pageUrl = renderArticle.url?.toString()
 
         val html = renderer.render(
-            article,
+            renderArticle,
             hideImages = !showImages,
-            byline = article.byline(context = webView.context, formats = timeFormats),
+            byline = renderArticle.byline(context = webView.context, formats = timeFormats),
             colors = colors,
-            feedName = article.displayFeedName(webView.context),
+            feedName = renderArticle.displayFeedName(webView.context),
         )
 
         webView.loadDataWithBaseURL(
@@ -230,6 +236,7 @@ class WebViewState(
 fun rememberWebViewState(
     renderer: ArticleRenderer = koinInject(),
     httpClient: OkHttpClient = koinInject(),
+    account: Account = koinInject(),
     onNavigateToMedia: (media: Media) -> Unit,
     onRequestLinkDialog: (link: ShareLink) -> Unit,
     onRequestImageDialog: (imageUrl: String) -> Unit = {},
@@ -257,6 +264,10 @@ fun rememberWebViewState(
             assetLoader = WebViewAssetLoader.Builder()
                 .addPathHandler("/assets/", AssetsPathHandler(context))
                 .addPathHandler("/res/", ResourcesPathHandler(context))
+                .addPathHandler(
+                    "/offline-assets/",
+                    OfflineAssetPathHandler(account.offlineAssetsDir),
+                )
                 .build(),
             onOpenLink = onOpenLink,
             httpClient = httpClient,

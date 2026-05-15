@@ -17,6 +17,7 @@ import com.jocmp.capy.accounts.local.LocalAccountDelegate
 import com.jocmp.capy.accounts.miniflux.MinifluxAccountDelegate
 import com.jocmp.capy.accounts.reader.buildReaderDelegate
 import com.jocmp.capy.articles.MercuryParser
+import com.jocmp.capy.articles.OfflineAssetCache
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.sortedByName
@@ -48,6 +49,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import okhttp3.OkHttpClient
+import java.io.File
 import java.io.InputStream
 import java.net.URI
 import java.time.ZonedDateTime
@@ -115,6 +117,16 @@ data class Account(
     private val feedFinder: FeedFinder by lazy { DefaultFeedFinder(localHttpClient) }
 
     private val mercuryParser = MercuryParser(localHttpClient, userAgent, acceptLanguage)
+
+    val offlineAssetsDir: File = File(File(cacheDirectory), "offline_assets")
+
+    private val offlineAssetCache = OfflineAssetCache(
+        database = database,
+        mercuryParser = mercuryParser,
+        httpClient = localHttpClient,
+        storageDir = offlineAssetsDir,
+        syncStatusRecords = syncStatusRecords,
+    )
 
     val taggedFeeds = feedRecords.taggedFeeds().map {
         it.sortedByTitle()
@@ -235,11 +247,22 @@ data class Account(
                 articleRecords.deleteOrphanedStatuses()
             }
 
+            offlineAssetCache.enqueueCandidates(preferences.offlineCacheSize().limit)
+
             result
         } catch (e: Throwable) {
             CapyLog.error("refresh", e)
             Result.failure(e)
         }
+    }
+
+    suspend fun runOfflineCacheSync() {
+        offlineAssetCache.drain()
+        offlineAssetCache.evict(preferences.offlineCacheSize().limit)
+    }
+
+    suspend fun updateFeedOfflineEnabled(feedID: String, enabled: Boolean) {
+        feedRecords.updateOfflineEnabled(feedID = feedID, enabled = enabled)
     }
 
     suspend fun sendArticleStatus(): Result<Unit> = sendArticleStatusMutex.withLock {
@@ -399,7 +422,7 @@ data class Account(
         syncStatusRecords.insertStatuses(articleIDs = articleIDs, key = key, flag = flag)
     }
 
-    suspend fun fetchFullContent(article: Article): Result<String> {
+    suspend fun downloadFullContent(article: Article): Result<String> {
         return mercuryParser.fetch(article.url)
     }
 

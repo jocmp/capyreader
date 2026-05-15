@@ -33,6 +33,7 @@ import com.capyreader.app.ui.settings.panels.DisplaySettingsPanel
 import com.capyreader.app.ui.settings.panels.GeneralSettingsPanel
 import com.capyreader.app.ui.settings.panels.GesturesSettingPanel
 import com.capyreader.app.ui.settings.panels.NotificationsSettingsPanel
+import com.capyreader.app.ui.settings.panels.OfflineReadingSettingsPanel
 import com.capyreader.app.ui.settings.panels.SettingsPanel
 import com.capyreader.app.ui.settings.panels.SettingsViewModel
 import com.capyreader.app.ui.settings.panels.UnreadBadgesSettingsPanel
@@ -151,6 +152,7 @@ fun SettingsView(
                                     }
                                 )
                                 SettingsPanel.Gestures -> GesturesSettingPanel()
+                                SettingsPanel.OfflineReading -> OfflineReadingSettingsPanel()
                                 SettingsPanel.Account -> AccountSettingsPanel(onRemoveAccount = onRemoveAccount)
                                 SettingsPanel.About -> AboutSettingsPanel()
                                 SettingsPanel.ArticleList -> ArticleListSettingsPanel()

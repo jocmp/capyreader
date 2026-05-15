@@ -1,0 +1,3 @@
+UPDATE feeds SET offline_enabled = 0;
+
+DELETE FROM article_sync_statuses WHERE "key" = 'cache';

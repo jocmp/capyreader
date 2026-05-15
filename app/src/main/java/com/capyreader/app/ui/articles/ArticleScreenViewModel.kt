@@ -10,11 +10,13 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import com.capyreader.app.R
+import com.capyreader.app.common.isOnWifi
 import com.capyreader.app.common.toast
 import com.capyreader.app.notifications.NotificationHelper
 import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleListVerticalSwipe
+import com.capyreader.app.refresher.OfflineCacheWorker
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.feeds.AngleRefreshState
 import com.capyreader.app.ui.components.SearchState
@@ -66,6 +68,13 @@ class ArticleScreenViewModel(
     private var refreshJob: Job? = null
 
     private var fullContentJob: Job? = null
+
+    var refreshSkipReason by mutableStateOf<RefreshSkipReason?>(null)
+        private set
+
+    fun clearRefreshSkipReason() {
+        refreshSkipReason = null
+    }
 
     val filter = appPreferences.filter.stateIn(viewModelScope)
 
@@ -434,11 +443,20 @@ class ArticleScreenViewModel(
         refreshJob?.cancel()
 
         refreshJob = viewModelScope.launch(ioDispatcher) {
+            if (appPreferences.refreshOnWiFiOnly.get() && !application.isOnWifi()) {
+                CapyLog.info("refresh_skipped_mobile", mapOf("type" to "foreground"))
+                refreshSkipReason = RefreshSkipReason.Mobile
+                onComplete()
+                return@launch
+            }
+
             account.refresh(filter).onFailure { throwable ->
                 if (throwable is UnauthorizedError && _showUnauthorizedMessage == UnauthorizedMessageState.HIDE) {
                     _showUnauthorizedMessage = UnauthorizedMessageState.SHOW
                 }
             }
+
+            OfflineCacheWorker.enqueue(context)
 
             launchIO {
                 WidgetUpdater.update(context)
@@ -778,7 +796,7 @@ class ArticleScreenViewModel(
     }
 
     private suspend fun fetchFullContent(article: Article) {
-        account.fetchFullContent(article)
+        account.downloadFullContent(article)
             .fold(
                 onSuccess = { value ->
                     if (_article?.id == article.id) {

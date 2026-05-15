@@ -3,6 +3,7 @@ package com.jocmp.capy
 import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.common.TimeHelpers
+import com.jocmp.capy.preferences.OfflineCacheSize
 import com.jocmp.capy.preferences.Preference
 import com.jocmp.capy.preferences.PreferenceStore
 import com.jocmp.capy.preferences.getEnum
@@ -27,6 +28,16 @@ class AccountPreferences(
 
     val autoDelete: Preference<AutoDelete>
         get() = store.getEnum("auto_delete_articles", AutoDelete.default)
+
+    val offlineCacheLimit: Preference<Int>
+        get() = store.getInt("offline_cache_limit", OfflineCacheSize.default.limit)
+
+    fun offlineCacheSize(): OfflineCacheSize =
+        OfflineCacheSize.fromLimit(offlineCacheLimit.get())
+
+    fun setOfflineCacheSize(size: OfflineCacheSize) {
+        offlineCacheLimit.set(size.limit)
+    }
 
     val filterKeywords: Preference<Set<String>>
         get() = store.getStringSet("keyword_blocklist")
