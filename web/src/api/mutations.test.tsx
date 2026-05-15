@@ -4,6 +4,7 @@ import { act, renderHook, waitFor } from "@testing-library/react";
 import {
   QueryClient,
   QueryClientProvider,
+  QueryObserver,
 } from "@tanstack/react-query";
 import type { EntriesQuery, EntriesResponse, Entry } from "@/api/types";
 
@@ -96,6 +97,14 @@ describe("entry status mutations", () => {
     };
     queryClient.setQueryData(queryKeys.entries(unreadQuery), seed);
 
+    // Simulate an active list view so removeQueries({ type: "inactive" }) in
+    // onSettled does not evict the cache before we can assert on it.
+    const observer = new QueryObserver<EntriesResponse>(queryClient, {
+      queryKey: queryKeys.entries(unreadQuery),
+      enabled: false,
+    });
+    const unsubscribe = observer.subscribe(() => {});
+
     const { result } = renderHook(() => useUpdateEntryStatus(), {
       wrapper: Wrapper,
     });
@@ -111,6 +120,8 @@ describe("entry status mutations", () => {
     );
     expect(after?.entries.map((e) => e.id)).toEqual([7, 8]);
     expect(after?.entries.find((e) => e.id === 7)?.status).toBe("read");
+
+    unsubscribe();
   });
 
   it("useUpdateEntryStatus removes inactive entry caches when marking read", async () => {
