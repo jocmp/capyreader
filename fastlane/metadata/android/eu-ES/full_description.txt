@@ -1,0 +1,13 @@
+Bere izenkideak bezalaxe, Capy Reader RSS irakurgailu txiki bat da, irisgarritasunean eta erraztasunean oinarritua.
+
+Honako ezaugarriak ditu:
+
+• Sinkronizazioa Feedbin, FreshRSS bidez edo zuzenean zure gailuan
+• Irakurritako eta gogoko egindako artikuluen jarraipena
+• Artikulu-bilaketa
+• Titularren widget-a
+• Jakinarazpenak
+• Eduki osoko modua
+• Modu iluna
+• Pantaila handietarako euskarria
+• Gordetako jarioak inportatu eta esportatzea

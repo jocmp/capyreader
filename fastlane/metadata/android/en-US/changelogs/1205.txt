@@ -1,0 +1,6 @@
+• Add Spotlight widget for quick access to latest unread articles
+• Add "Read Later" feature for local feed
+  - You can access this via the "Add Link" share sheet action in other apps
+• Rework "mark read on scroll" to address some long standing bugs
+• Improve folder picker for Google Reader accounts
+• Update translations thanks to volunteers!

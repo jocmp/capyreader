@@ -205,7 +205,6 @@
     <string name="end_of_feed_text">Du har kommit ikapp!</string>
     <string name="settings_enable_high_contrast_dark_theme">Aktivera högkontrast vid mörkt tema</string>
     <string name="article_view_unstar">Ta bort sjärnmärkning</string>
-    <string name="refresh_on_start">Vid start</string>
     <string name="add_account_local_subtitle">På din enhet</string>
     <string name="settings_section_import">Importera</string>
     <string name="action_share">Dela</string>

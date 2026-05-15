@@ -16,7 +16,6 @@ import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleListVerticalSwipe
 import com.capyreader.app.refresher.RefreshInterval
-import com.capyreader.app.sync.Sync
 import com.capyreader.app.ui.articles.feeds.AngleRefreshState
 import com.capyreader.app.ui.components.SearchState
 import com.capyreader.app.ui.widget.WidgetUpdater
@@ -31,25 +30,29 @@ import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.articles.SidebarItem
-import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import com.jocmp.capy.common.launchUI
+import com.jocmp.capy.common.withIOContext
 import com.jocmp.capy.common.withUIContext
 import com.jocmp.capy.countToday
 import com.jocmp.capy.logging.CapyLog
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.time.OffsetDateTime
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.minutes
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ArticleScreenViewModel(
@@ -58,6 +61,7 @@ class ArticleScreenViewModel(
     private val application: Application,
     private val notificationHelper: NotificationHelper,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val syncFlushInterval: Duration? = SYNC_FLUSH_INTERVAL,
 ) : AndroidViewModel(application) {
     private var refreshJob: Job? = null
 
@@ -172,23 +176,33 @@ class ArticleScreenViewModel(
             ?.let { copyFeedCounts(it, latestCounts) }
     }
 
+    val currentFeed: Flow<Feed?> = combine(allFeeds, filter) { feeds, filter ->
+        if (filter is ArticleFilter.Feeds) {
+            feeds.find { it.id == filter.feedID }
+        } else {
+            null
+        }
+    }
+
     private val sidebar: Flow<List<SidebarItem>> = combine(
         readLaterFeed,
         savedSearches,
         folders,
         topLevelFeeds,
-    ) { readLater, searches, fldrs, fds ->
+        filter,
+    ) { readLater, searches, folders, feeds, filter ->
         SidebarItem.buildList(
+            status = filter.status,
             readLaterFeed = readLater,
             savedSearches = searches,
-            folders = fldrs,
-            feeds = fds,
+            folders = folders,
+            feeds = feeds,
         )
     }
 
-    private val _nextItem = MutableStateFlow<SidebarItem?>(null)
+    private val _sidebarItem = MutableStateFlow<SidebarItem?>(null)
 
-    private val nextItemListener: Flow<SidebarItem?> =
+    private val sidebarListener: Flow<SidebarItem?> =
         combine(
             listSwipeBottom,
             sidebar,
@@ -198,8 +212,37 @@ class ArticleScreenViewModel(
                 return@combine null
             }
 
-            sidebar.find { it.isSelected(filter) }?.next
+            val found = sidebar.find { it.isSelected(filter) }
+            if (found != null) return@combine found
+
+            val stale = _sidebarItem.value?.takeIf { it.isSelected(filter) }
+                ?: return@combine null
+
+            SidebarItem(
+                toFilter = stale.toFilter,
+                isSelected = stale.isSelected,
+                next = findFreshItem(stale, sidebar, filter.status),
+            )
         }
+
+    private fun findFreshItem(
+        stale: SidebarItem,
+        sidebar: List<SidebarItem>,
+        status: ArticleStatus,
+    ): SidebarItem? {
+        var search: SidebarItem? = stale.next
+
+        while (search != null) {
+            val searchFilter = search.toFilter(status)
+            val match = sidebar.find { it.isSelected(searchFilter) }
+            if (match != null) {
+                return match
+            }
+            search = search.next
+        }
+
+        return null
+    }
 
     val statusCount: Flow<Long> = filter.flatMapLatest { latestFilter ->
         account.countAllByStatus(countableStatus(latestFilter))
@@ -231,17 +274,26 @@ class ArticleScreenViewModel(
     val searchState: Flow<SearchState>
         get() = _searchState
 
-    val nextFilter: Flow<SidebarItem?>
-        get() = _nextItem
+    val nextFilter: Flow<SidebarItem?> = _sidebarItem.map { it?.next }
 
     init {
         viewModelScope.launch {
-            nextItemListener.collect {
-                _nextItem.value = it
+            sidebarListener.collect {
+                _sidebarItem.value = it
             }
         }
 
-        val skipInitialRefresh = appPreferences.refreshInterval.get() == RefreshInterval.MANUALLY_ONLY
+        if (syncFlushInterval != null) {
+            viewModelScope.launch {
+                while (true) {
+                    delay(syncFlushInterval)
+                    withIOContext { account.sendArticleStatus() }
+                }
+            }
+        }
+
+        val skipInitialRefresh =
+            appPreferences.refreshInterval.get() == RefreshInterval.MANUALLY_ONLY
 
         if (skipInitialRefresh) {
             refreshInitialized = true
@@ -294,20 +346,20 @@ class ArticleScreenViewModel(
     }
 
     fun markAllRead(
-        onArticlesCleared: () -> Unit,
-        range: MarkRead,
+        onArticlesCleared: () -> Unit = {},
+        range: MarkRead = MarkRead.All,
+        filter: ArticleFilter = latestFilter,
+        query: String? = _searchQuery.value,
     ) {
         viewModelScope.launchIO {
             val articleIDs = account.unreadArticleIDs(
-                filter = latestFilter,
+                filter = filter,
                 range = range,
                 sortOrder = sortOrder.value,
-                query = _searchQuery.value,
+                query = query,
             )
 
-            account.markAllRead(articleIDs).onFailure {
-                Sync.markReadAsync(articleIDs, context)
-            }
+            account.markAllRead(articleIDs)
 
             launchIO {
                 notificationHelper.dismissNotifications(articleIDs)
@@ -481,9 +533,7 @@ class ArticleScreenViewModel(
                 mapOf("count" to articleIDs.size)
             )
 
-            account.markAllRead(articleIDs).onFailure {
-                Sync.markReadAsync(articleIDs, context)
-            }
+            account.markAllRead(articleIDs)
 
             launchIO {
                 notificationHelper.dismissNotifications(articleIDs)
@@ -592,7 +642,7 @@ class ArticleScreenViewModel(
     }
 
     fun requestNextFeed() {
-        _nextItem.value?.let(::selectSidebarItem)
+        _sidebarItem.value?.next?.let(::selectSidebarItem)
     }
 
     private fun selectSidebarItem(item: SidebarItem) {
@@ -603,33 +653,20 @@ class ArticleScreenViewModel(
     private fun addStar(articleID: String) {
         viewModelScope.launchIO {
             account.addStar(articleID)
-                .onFailure {
-                    Sync.addStarAsync(articleID, context)
-                }
         }
     }
 
     private suspend fun removeStar(articleID: String) {
         account.removeStar(articleID)
-            .onFailure {
-                Sync.removeStarAsync(articleID, context)
-            }
     }
 
     private suspend fun markRead(articleID: String) {
         account.markRead(articleID)
-            .onFailure {
-                Sync.markReadAsync(listOf(articleID), context)
-            }
-
         notificationHelper.dismissNotifications(listOf(articleID))
     }
 
     private suspend fun markUnread(articleID: String) {
         account.markUnread(articleID)
-            .onFailure {
-                Sync.markUnreadAsync(articleID, context)
-            }
     }
 
     private fun resetToDefaultFilter() {
@@ -774,10 +811,16 @@ class ArticleScreenViewModel(
             )
     }
 
-    private fun openNextFeedOnAllRead(
+    private suspend fun openNextFeedOnAllRead(
         onArticlesCleared: () -> Unit,
     ) {
-        val nextItem = _nextItem.value
+        val current = _sidebarItem.value
+        val next = sidebar.first()
+
+        val nextItem = current?.let { stale ->
+            val matched = next.find { it.isSelected(stale.toFilter(latestFilter.status)) }
+            matched?.next ?: findFreshItem(stale, next, latestFilter.status)
+        }
 
         if (nextItem != null) {
             selectSidebarItem(nextItem)
@@ -866,6 +909,10 @@ class ArticleScreenViewModel(
         SHOW,
         LATER,
     }
+
+    companion object {
+        val SYNC_FLUSH_INTERVAL = 2.minutes
+    }
 }
 
 fun Context.showFullContentErrorToast(throwable: Throwable) {
@@ -881,5 +928,8 @@ fun Context.showFullContentErrorToast(throwable: Throwable) {
 }
 
 fun countableStatus(filter: ArticleFilter): ArticleStatus {
-    return UNREAD
+    return when (filter.status) {
+        ArticleStatus.STARRED -> ArticleStatus.STARRED
+        else -> UNREAD
+    }
 }

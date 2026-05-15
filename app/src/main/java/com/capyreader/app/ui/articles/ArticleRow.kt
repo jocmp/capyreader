@@ -59,6 +59,7 @@ import com.capyreader.app.preferences.AppTheme
 import com.capyreader.app.preferences.ThemeMode
 import com.capyreader.app.ui.articles.list.ArticleActionMenu
 import com.capyreader.app.ui.articles.list.ArticleListItem
+import com.capyreader.app.ui.LocalTimeFormats
 import com.capyreader.app.ui.articles.list.ArticleRowSwipeBox
 import com.capyreader.app.ui.fixtures.ArticleSample
 import com.capyreader.app.ui.fixtures.PreviewKoinApplication
@@ -184,6 +185,7 @@ fun ArticleRow(
                                 text = relativeTime(
                                     time = article.publishedAt,
                                     currentTime = currentTime,
+                                    formats = LocalTimeFormats.current,
                                 ),
                                 color = feedNameColor,
                                 maxLines = 1,

@@ -1,6 +1,7 @@
 package com.capyreader.app.ui.articles.feeds
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,10 +20,11 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,6 +36,7 @@ import com.capyreader.app.ui.articles.ArticleStatusIcon
 import com.capyreader.app.ui.articles.CountBadge
 import com.capyreader.app.ui.articles.ListTitle
 import com.capyreader.app.ui.articles.SavedSearchRow
+import com.capyreader.app.ui.articles.list.MarkAllReadMenu
 import com.capyreader.app.ui.fixtures.PreviewKoinApplication
 import com.capyreader.app.ui.navigationTitle
 import com.capyreader.app.ui.savedSearchNavTitle
@@ -63,7 +66,9 @@ fun FeedList(
     onRefresh: () -> Unit,
     onSelectFolder: (folder: Folder) -> Unit,
     onSelectFeed: (feed: Feed, folderTitle: String?) -> Unit,
+    onMarkAllRead: (filter: ArticleFilter) -> Unit,
     onFeedAdded: (feedID: String) -> Unit,
+    onBeforeFeedAdd: () -> Unit = {},
     onNavigateToSettings: () -> Unit,
 ) {
     val scrollState = rememberScrollState()
@@ -85,14 +90,7 @@ fun FeedList(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    painterResource(R.drawable.capy_icon_small),
-                    contentDescription = null,
-                    modifier = Modifier.padding(
-                        vertical = 18.dp,
-                        horizontal = 16.dp
-                    ),
-                )
+                CapyIcon()
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically
@@ -114,63 +112,103 @@ fun FeedList(
                     }
                     AddFeedButton(
                         iconOnly = true,
-                        onComplete = { onFeedAdded(it) }
+                        onComplete = { onFeedAdded(it) },
+                        onBeforeAdd = onBeforeFeedAdd,
                     )
                 }
             }
 
-            DrawerItem(
-                icon = { ArticleStatusIcon(status = filter.status) },
-                label = {
-                    ListTitle(
-                        stringResource(filter.status.navigationTitle),
-                    )
-                },
-                badge = { CountBadge(count = statusCount) },
-                selected = filter.hasArticlesSelected(),
-                onClick = {
-                    onFilterSelect()
-                }
-            )
+            Box {
+                val (showArticlesMenu, setShowArticlesMenu) = remember { mutableStateOf(false) }
 
-            DrawerItem(
-                icon = {
-                    Icon(
-                        Icons.Rounded.Today,
-                        contentDescription = null
-                    )
-                },
-                label = {
-                    ListTitle(
-                        stringResource(R.string.filter_today),
-                    )
-                },
-                badge = { CountBadge(count = todayCount) },
-                selected = filter.hasTodaySelected(),
-                onClick = {
-                    onSelectToday()
-                }
-            )
+                DrawerItem(
+                    icon = { ArticleStatusIcon(status = filter.status) },
+                    label = {
+                        ListTitle(
+                            stringResource(filter.status.navigationTitle),
+                        )
+                    },
+                    badge = { CountBadge(count = statusCount) },
+                    selected = filter.hasArticlesSelected(),
+                    onClick = { onFilterSelect() },
+                    onLongClick = { setShowArticlesMenu(true) },
+                )
 
-            if (readLaterFeed != null) {
+                MarkAllReadMenu(
+                    expanded = showArticlesMenu,
+                    onDismiss = { setShowArticlesMenu(false) },
+                    onMarkAllRead = {
+                        onMarkAllRead(ArticleFilter.Articles(articleStatus = filter.status))
+                    },
+                )
+            }
+
+            Box {
+                val (showTodayMenu, setShowTodayMenu) = remember { mutableStateOf(false) }
+
                 DrawerItem(
                     icon = {
                         Icon(
-                            Icons.Rounded.Bookmark,
+                            Icons.Rounded.Today,
                             contentDescription = null
                         )
                     },
                     label = {
                         ListTitle(
-                            stringResource(R.string.filter_read_later),
+                            stringResource(R.string.filter_today),
                         )
                     },
-                    badge = { CountBadge(count = readLaterFeed.count) },
-                    selected = filter.isFeedSelected(readLaterFeed),
-                    onClick = {
-                        onSelectFeed(readLaterFeed, null)
-                    }
+                    badge = { CountBadge(count = todayCount) },
+                    selected = filter.hasTodaySelected(),
+                    onClick = { onSelectToday() },
+                    onLongClick = { setShowTodayMenu(true) },
                 )
+
+                MarkAllReadMenu(
+                    expanded = showTodayMenu,
+                    onDismiss = { setShowTodayMenu(false) },
+                    onMarkAllRead = {
+                        onMarkAllRead(ArticleFilter.Today(filter.status))
+                    },
+                )
+            }
+
+            if (readLaterFeed != null) {
+                Box {
+                    val (showReadLaterMenu, setShowReadLaterMenu) = remember { mutableStateOf(false) }
+
+                    DrawerItem(
+                        icon = {
+                            Icon(
+                                Icons.Rounded.Bookmark,
+                                contentDescription = null
+                            )
+                        },
+                        label = {
+                            ListTitle(
+                                stringResource(R.string.filter_read_later),
+                            )
+                        },
+                        badge = { CountBadge(count = readLaterFeed.count) },
+                        selected = filter.isFeedSelected(readLaterFeed),
+                        onClick = { onSelectFeed(readLaterFeed, null) },
+                        onLongClick = { setShowReadLaterMenu(true) },
+                    )
+
+                    MarkAllReadMenu(
+                        expanded = showReadLaterMenu,
+                        onDismiss = { setShowReadLaterMenu(false) },
+                        onMarkAllRead = {
+                            onMarkAllRead(
+                                ArticleFilter.Feeds(
+                                    feedID = readLaterFeed.id,
+                                    folderTitle = null,
+                                    feedStatus = filter.status,
+                                )
+                            )
+                        },
+                    )
+                }
             }
 
             Spacer(Modifier.height(8.dp))
@@ -204,6 +242,7 @@ fun FeedList(
                             onFeedSelect = { feed ->
                                 onSelectFeed(feed, folder.title)
                             },
+                            onMarkAllRead = onMarkAllRead,
                             filter = filter,
                             source = source,
                         )
@@ -222,6 +261,15 @@ fun FeedList(
                             feed = feed,
                             onSelect = {
                                 onSelectFeed(it, null)
+                            },
+                            onMarkAllRead = {
+                                onMarkAllRead(
+                                    ArticleFilter.Feeds(
+                                        feedID = feed.id,
+                                        folderTitle = null,
+                                        feedStatus = filter.status,
+                                    )
+                                )
                             },
                             selected = filter.isFeedSelected(feed),
                             source = source,
@@ -271,6 +319,7 @@ fun FeedListPreview() {
                 filter = ArticleFilter.default(),
                 statusCount = 10,
                 todayCount = 5,
+                onMarkAllRead = {},
                 onFeedAdded = {},
                 onSelectSavedSearch = {},
                 refreshState = AngleRefreshState.STOPPED,

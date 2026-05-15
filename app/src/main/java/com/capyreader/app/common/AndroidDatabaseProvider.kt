@@ -13,7 +13,7 @@ class AndroidDatabaseProvider(private val context: Context) : DatabaseProvider {
             Database.Schema,
             context,
             databaseName(accountID),
-            windowSizeBytes = 100 * 1024 * 1024,
+            windowSizeBytes = 8 * 1024 * 1024,
             /**
              * - https://developer.android.com/topic/performance/sqlite-performance-best-practices#enable-write-ahead
              */

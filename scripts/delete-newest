@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+# Deletes the N newest articles (by published_at) from the on-device DB so a
+# subsequent refresh re-fetches them. Useful for exercising the sync path.
+#
+# Force-stops the app to release the DB, pulls it via run-as, deletes locally
+# with sqlite3, writes back via stdin into run-as, and clears WAL/SHM so the
+# app reopens cleanly.
+#
+# Usage:
+#   scripts/delete-newest                 # default count: 5
+#   scripts/delete-newest 20
+#   scripts/delete-newest 5 -p com.capyreader.app.nightly
+
+set -euo pipefail
+
+CANDIDATE_PACKAGES=(
+  com.capyreader.app.debug
+  com.capyreader.app.nightly
+  com.capyreader.app
+)
+
+count=5
+package=""
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -p|--package) package="$2"; shift 2 ;;
+    -h|--help)
+      sed -n '2,/^$/p' "$0" | sed 's/^# \?//'
+      exit 0
+      ;;
+    -*) echo "unknown option: $1" >&2; exit 2 ;;
+    *) count="$1"; shift ;;
+  esac
+done
+
+[[ "$count" =~ ^[0-9]+$ ]] || { echo "count must be a non-negative integer, got: $count" >&2; exit 2; }
+
+command -v adb >/dev/null 2>&1 || { echo "adb not found on PATH" >&2; exit 1; }
+command -v sqlite3 >/dev/null 2>&1 || { echo "sqlite3 not found on PATH" >&2; exit 1; }
+
+if [[ -z "$package" ]]; then
+  installed=$(adb shell pm list packages | tr -d '\r' | sed 's/^package://')
+  for candidate in "${CANDIDATE_PACKAGES[@]}"; do
+    if grep -qx "$candidate" <<<"$installed"; then
+      package="$candidate"
+      break
+    fi
+  done
+  [[ -n "$package" ]] || { echo "No capyreader build found. Tried: ${CANDIDATE_PACKAGES[*]}" >&2; exit 1; }
+fi
+
+remote_dir="/data/data/$package/databases"
+db_name=$(adb shell run-as "$package" ls "$remote_dir" \
+  | tr -d '\r' | tr ' ' '\n' \
+  | grep '^articles_' | grep -v -E -- '-(journal|wal|shm)$' \
+  | head -1)
+[[ -n "$db_name" ]] || { echo "No articles_* database found for $package" >&2; exit 1; }
+
+work_dir=$(mktemp -d)
+trap 'rm -rf "$work_dir"' EXIT
+local_db="$work_dir/$db_name"
+
+echo "Force-stopping $package..."
+adb shell am force-stop "$package"
+
+echo "Pulling $db_name..."
+adb exec-out run-as "$package" cat "$remote_dir/$db_name" > "$local_db"
+
+before=$(sqlite3 "$local_db" "SELECT COUNT(*) FROM articles;")
+sqlite3 "$local_db" <<SQL
+DELETE FROM articles
+WHERE id IN (
+  SELECT id FROM articles ORDER BY published_at DESC LIMIT $count
+);
+SQL
+after=$(sqlite3 "$local_db" "SELECT COUNT(*) FROM articles;")
+echo "Deleted $((before - after)) of $count requested (articles: $before -> $after)"
+
+echo "Writing DB back..."
+adb shell "run-as $package sh -c 'cat > $remote_dir/$db_name'" < "$local_db"
+
+echo "Clearing WAL/SHM..."
+adb shell "run-as $package sh -c 'rm -f $remote_dir/$db_name-wal $remote_dir/$db_name-shm'"
+
+echo "Done. Reopen the app and refresh to re-fetch."

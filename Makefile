@@ -14,11 +14,11 @@ check: ## Type-check JavaScript files
 
 .PHONY: bump-release-dev
 bump-release-dev: ## Bump GitHub version
-	./script/bumpver update --tag=dev --push
+	./scripts/bumpver update --tag=dev --push
 
 .PHONY: bump-release-production
 bump-release-production: ## Bump Google Play version
-	./script/bumpver update --tag=final
+	./scripts/bumpver update --tag=final
 
 .PHONY: changelog
 changelog: ## Prep next release notes
@@ -56,7 +56,7 @@ bench-reset: ## Delete bench data
 
 .PHONY: install-tailscale
 install-tailscale: ## Install Tailscale on emulator
-	./script/install-tailscale
+	./scripts/install-tailscale
 
 .PHONY: help
 help:

@@ -101,7 +101,6 @@
     <string name="opml_import_notification_cancel">Stopp</string>
     <string name="image_preview_menu_option_none">Ingen</string>
     <string name="image_preview_menu_option_small">Liten</string>
-    <string name="refresh_on_start">På oppstart</string>
     <string name="settings_remove_account_message_service">Er du sikker på at du vil logge ut?</string>
     <string name="settings_remove_account_confirm_service">Logg ut</string>
     <string name="settings_select_all">Velg alle</string>

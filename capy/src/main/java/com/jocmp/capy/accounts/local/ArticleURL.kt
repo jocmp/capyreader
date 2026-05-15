@@ -1,7 +1,7 @@
 package com.jocmp.capy.accounts.local
 
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
-import java.net.MalformedURLException
+import java.net.URI
 import java.net.URL
 
 internal object ArticleURL {
@@ -17,8 +17,8 @@ internal object ArticleURL {
         val articleURLParam = url.toHttpUrlOrNull()?.queryParameter("url") ?: return null
 
         return try {
-            URL(articleURLParam)
-        } catch (e: MalformedURLException) {
+            URI(articleURLParam).toURL()
+        } catch (_: Throwable) {
             null
         }
     }

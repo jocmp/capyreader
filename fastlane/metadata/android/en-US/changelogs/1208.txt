@@ -1,0 +1,7 @@
+• Rework sync engine for better offline support
+• Add custom parser for ilfattoquotidiano.it
+• Tweak bottom article toolbar to match Material 3
+• Fix Google Reader account option to support BazQux
+• Fix refresh bandwidth checks
+• Fix mark-read-on-scroll position on refresh
+• Update translations for Arabic, Basque, Bulgarian, German, Estonian, French, Galician, Greek, Hungarian, Indonesian, Italian, Latvian, Polish, Russian, Ukrainian, and Chinese thanks to volunteers!

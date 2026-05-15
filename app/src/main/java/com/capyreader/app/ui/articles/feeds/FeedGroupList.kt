@@ -1,9 +1,10 @@
 package com.capyreader.app.ui.articles.feeds
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.motionScheme
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -71,7 +72,7 @@ fun FeedGroupList(
         AnimatedVisibility(
             expanded,
             enter = expandVertically(expandFrom = Alignment.Top),
-            exit = shrinkVertically(animationSpec = tween()),
+            exit = shrinkVertically(animationSpec = motionScheme.fastSpatialSpec()),
         ) {
             Column {
                 content()

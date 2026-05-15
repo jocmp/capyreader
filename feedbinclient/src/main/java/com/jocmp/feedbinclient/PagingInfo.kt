@@ -2,7 +2,7 @@ package com.jocmp.feedbinclient
 
 import okhttp3.Headers
 import retrofit2.Response
-import java.net.URL
+import java.net.URI
 
 data class PagingInfo(
     val nextPage: Int? = null,
@@ -30,7 +30,7 @@ data class PagingInfo(
         }
 
         private fun query(url: String): Map<String, String> {
-            return URL(url).query
+            return URI(url).query
                 .split("&")
                 .associate { pair ->
                     val (key, value) = pair.split("=")

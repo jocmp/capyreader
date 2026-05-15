@@ -108,7 +108,6 @@
     <string name="settings_option_copy_version">Kopiraj verziju</string>
     <string name="settings_option_full_content_title">Lepljivi puni sadržaj</string>
     <string name="settings_option_full_content_subtitle">Zapamtite izbor za učitavanje celog sadržaja članka</string>
-    <string name="refresh_on_start">Na startu</string>
     <string name="empty_onboarding_title">Još nema Izvora</string>
     <string name="empty_onboarding_prompt">Započni sa dodavanjem Izvora</string>
     <string name="article_style_options">Font Opcije</string>

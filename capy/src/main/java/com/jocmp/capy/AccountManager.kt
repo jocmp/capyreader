@@ -17,8 +17,6 @@ class AccountManager(
     private val clientCertManager: ClientCertManager = ClientCertManager { builder, _ -> builder },
     private val userAgent: String,
     private val acceptLanguage: String,
-    private val extractUsername: String = "",
-    private val extractSecret: String = "",
 ) {
     fun findByID(
         id: String,
@@ -98,8 +96,6 @@ class AccountManager(
             clientCertManager = clientCertManager,
             userAgent = userAgent,
             acceptLanguage = acceptLanguage,
-            extractUsername = extractUsername,
-            extractSecret = extractSecret,
         )
     }
 

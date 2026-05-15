@@ -7,6 +7,7 @@ import com.jocmp.capy.InMemoryDataStore
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.RandomUUID
 import com.jocmp.capy.accounts.FakeFaviconPolicy
+import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.db.Database
 import io.mockk.mockk
 import org.junit.rules.TemporaryFolder
@@ -16,7 +17,8 @@ object AccountFixture {
         id: String = RandomUUID.generate(),
         parentFolder: TemporaryFolder,
         database: Database = InMemoryDatabaseProvider.build(id),
-        accountDelegate: AccountDelegate = mockk()
+        accountDelegate: AccountDelegate = mockk(),
+        source: Source = Source.LOCAL,
     ): Account {
         return Account(
             id = id,
@@ -24,6 +26,7 @@ object AccountFixture {
             database = database,
             cacheDirectory = parentFolder.newFile().toURI(),
             preferences = AccountPreferences(InMemoryDataStore()),
+            source = source,
             delegate = accountDelegate,
             faviconPolicy = FakeFaviconPolicy,
             userAgent = "TestUserAgent",

@@ -19,6 +19,8 @@ fun FeedActionMenu(
     onDismissMenuRequest: () -> Unit,
     feed: Feed,
     expanded: Boolean,
+    onMarkAllRead: () -> Unit = {},
+    showMarkAllRead: Boolean = true,
     source: Source = Source.LOCAL,
 ) {
     val actions = LocalFeedActions.current
@@ -64,6 +66,8 @@ fun FeedActionMenu(
             onToggleUnreadBadge = {
                 onToggleUnreadBadge()
             },
+            onMarkAllRead = onMarkAllRead,
+            showMarkAllRead = showMarkAllRead,
             showReloadIcon = source == Source.LOCAL,
         )
     }
@@ -79,11 +83,12 @@ fun FeedActionMenu(
         )
     }
 
-    EditFeedDialog(
-        isOpen = isEditDialogOpen,
-        feed = feed,
-        onDismiss = {
-            setEditDialogOpen(false)
-        },
-    )
+    if (isEditDialogOpen) {
+        EditFeedDialog(
+            feed = feed,
+            onDismiss = {
+                setEditDialogOpen(false)
+            },
+        )
+    }
 }

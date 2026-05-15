@@ -16,13 +16,14 @@ import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.capy.persistence.EnclosureRecords
 import com.jocmp.capy.persistence.FeedRecords
 import com.jocmp.capy.persistence.TaggingRecords
-import com.jocmp.feedbinclient.MercuryParser
 import com.jocmp.feedfinder.DefaultFeedFinder
 import com.jocmp.feedfinder.FeedFinder
 import com.jocmp.rssparser.model.RssItem
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
 import okhttp3.OkHttpClient
 import java.net.UnknownHostException
 import java.time.ZonedDateTime
@@ -33,16 +34,7 @@ internal class LocalAccountDelegate(
     private val httpClient: OkHttpClient,
     private val feedFinder: FeedFinder = DefaultFeedFinder(httpClient),
     private val preferences: AccountPreferences,
-    private val extractUsername: String = "",
-    private val extractSecret: String = "",
 ) : AccountDelegate {
-    private val mercuryParser
-        get() = MercuryParser(
-            username = extractUsername,
-            secret = extractSecret,
-            httpClient = httpClient,
-        )
-
     private val feedRecords = FeedRecords(database)
     private val articleRecords = ArticleRecords(database)
     private val taggingRecords = TaggingRecords(database)
@@ -57,51 +49,6 @@ internal class LocalAccountDelegate(
         preferences.touchLastRefreshedAt()
 
         return Result.success(Unit)
-    }
-
-    override suspend fun createPage(url: String): Result<Unit> {
-        val feedID = findOrCreateReadLaterFeed()
-        val page =
-            mercuryParser.parse(url) ?: return Result.failure(Throwable("Failed to fetch page"))
-        val updatedAt = nowUTC()
-
-        return database.transactionWithErrorHandling {
-            database.articlesQueries.create(
-                id =url,
-                feed_id = feedID,
-                title = page.title ?: url,
-                author = page.author,
-                content_html = page.content,
-                url = url,
-                summary = page.excerpt,
-                extracted_content_url = null,
-                image_url = page.lead_image_url,
-                published_at = updatedAt.toEpochSecond(),
-                enclosure_type = null,
-            )
-
-            articleRecords.createStatus(
-                articleID = url,
-                updatedAt = updatedAt,
-                read = false,
-            )
-        }
-    }
-
-    private fun findOrCreateReadLaterFeed(): String {
-        database.feedsQueries.upsert(
-            id = READ_LATER_FEED_URL,
-            subscription_id = READ_LATER_FEED_URL,
-            title = "Saved for Later",
-            feed_url = READ_LATER_FEED_URL,
-            site_url = null,
-            favicon_url = null,
-            priority = null,
-            itunes_image_url = null,
-            read_later = true,
-        )
-
-        return READ_LATER_FEED_URL
     }
 
     override suspend fun addFeed(
@@ -189,6 +136,10 @@ internal class LocalAccountDelegate(
         return Result.success(Unit)
     }
 
+    override suspend fun createPage(url: String): Result<Unit> {
+        throw UnsupportedOperationException()
+    }
+
 
     override suspend fun deletePage(articleID: String): Result<Unit> {
         database.articlesQueries.deletePageByID(articleID)
@@ -236,10 +187,13 @@ internal class LocalAccountDelegate(
     }
 
     private suspend fun refreshFeeds(feeds: List<Feed>, cutoffDate: ZonedDateTime?) {
+        val gate = Semaphore(MAX_CONCURRENT_FETCHES)
         coroutineScope {
             feeds.forEach { feed ->
                 launch {
-                    refreshFeed(feed, cutoffDate = cutoffDate)
+                    gate.withPermit {
+                        refreshFeed(feed, cutoffDate = cutoffDate)
+                    }
                 }
             }
         }
@@ -271,18 +225,44 @@ internal class LocalAccountDelegate(
 
     private suspend fun refreshFeed(feed: Feed, cutoffDate: ZonedDateTime?) {
         try {
-            feedFinder.fetch(feed.feedURL).onSuccess { channel ->
-                val itunesImageURL = channel.itunesChannelData?.image
+            val conditionalGet = feedRecords.findConditionalGet(feed.id)
 
-                if (itunesImageURL != null) {
-                    database.feedsQueries.updateItunesImage(
-                        itunesImageURL = itunesImageURL,
-                        feedID = feed.id,
-                    )
-                }
+            val result = feedFinder.fetch(
+                url = feed.feedURL,
+                conditionalGet = conditionalGet,
+            ).getOrElse { throw it }
 
-                saveArticles(channel.items, cutoffDate = cutoffDate, feed = feed)
+            val refreshedAt = nowUTC().toEpochSecond()
+            val channel = result.channel
+
+            if (channel == null) {
+                feedRecords.updateConditionalGet(
+                    feedID = feed.id,
+                    conditionalGet = conditionalGet,
+                    refreshedAt = refreshedAt,
+                )
+                CapyLog.debug("refresh_feed_skip", mapOf("id" to feed.id))
+                return
             }
+
+            val itunesImageURL = channel.itunesChannelData?.image
+
+            if (itunesImageURL != null) {
+                database.feedsQueries.updateItunesImage(
+                    itunesImageURL = itunesImageURL,
+                    feedID = feed.id,
+                )
+            }
+
+            saveArticles(channel.items, cutoffDate = cutoffDate, feed = feed)
+
+            feedRecords.updateConditionalGet(
+                feedID = feed.id,
+                conditionalGet = result.conditionalGet,
+                refreshedAt = refreshedAt,
+            )
+
+            CapyLog.debug("refresh_feed_complete", mapOf("id" to feed.id))
         } catch (e: Throwable) {
             CapyLog.error("refresh", e)
         }
@@ -311,7 +291,7 @@ internal class LocalAccountDelegate(
                     val enclosureType = parsedItem.enclosures.firstOrNull()?.type
 
                     database.articlesQueries.create(
-                        id =parsedItem.id,
+                        id = parsedItem.id,
                         feed_id = feed.id,
                         title = parsedItem.title,
                         author = item.author,
@@ -395,7 +375,8 @@ internal class LocalAccountDelegate(
         private fun tag(path: String) = "$TAG.$path"
 
         private const val TAG = "local"
-        private const val READ_LATER_FEED_URL = "https://pages.capyreader.com"
+
+        private const val MAX_CONCURRENT_FETCHES = 4
     }
 }
 

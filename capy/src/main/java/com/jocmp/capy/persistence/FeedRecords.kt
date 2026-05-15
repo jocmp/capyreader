@@ -7,6 +7,7 @@ import com.jocmp.capy.FeedPriority
 import com.jocmp.capy.Folder
 import com.jocmp.capy.common.withIOContext
 import com.jocmp.capy.db.Database
+import com.jocmp.rssparser.model.ConditionalGetInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
@@ -18,6 +19,37 @@ internal class FeedRecords(private val database: Database) {
 
     suspend fun findByFeedURL(feedURL: String): Feed? = withIOContext {
         database.feedsQueries.findByFeedURL(feedURL, mapper = ::feedMapper).executeAsOneOrNull()
+    }
+
+    suspend fun findConditionalGet(feedID: String): ConditionalGetInfo = withIOContext {
+        val feed = database.feedsQueries.findConditionalGet(feedID).executeAsOneOrNull()
+
+        ConditionalGetInfo(
+            etag = feed?.etag,
+            lastModified = feed?.last_modified,
+        )
+    }
+
+    /**
+     * Persists conditional-GET state after a successful refresh (200 or 304)
+     *
+     * - [ConditionalGetInfo.lastModified] is the server's HTTP `Last-Modified` header,
+     *   an opaque value for use in the next request as `If-Modified-Since`
+     * - [refreshedAt] reflects when the feed was last fetched from the client regardless
+     *   of whether the feed had changed. Used locally to compare
+     *   staleness of the stored etag/last-modified pair.
+     */
+    suspend fun updateConditionalGet(
+        feedID: String,
+        conditionalGet: ConditionalGetInfo,
+        refreshedAt: Long,
+    ) = withIOContext {
+        database.feedsQueries.updateConditionalGet(
+            etag = conditionalGet.etag,
+            last_modified = conditionalGet.lastModified,
+            refreshed_at = refreshedAt,
+            feedID = feedID,
+        )
     }
 
     suspend fun upsert(
@@ -151,6 +183,9 @@ internal class FeedRecords(private val database: Database) {
         showUnreadBadge: Boolean = true,
         itunesImageURL: String? = null,
         readLater: Boolean = false,
+        etag: String? = null,
+        lastModified: String? = null,
+        conditionalGetRefreshedAt: Long? = null,
         folderName: String? = "",
         expanded: Boolean? = false,
     ) = Feed(

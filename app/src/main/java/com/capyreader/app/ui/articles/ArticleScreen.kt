@@ -121,6 +121,7 @@ fun ArticleScreen(
     val readLaterFeed by viewModel.readLaterFeed.collectAsStateWithLifecycle(initialValue = null)
     val allFeeds by viewModel.allFeeds.collectAsStateWithLifecycle(initialValue = emptyList())
     val allFolders by viewModel.allFolders.collectAsStateWithLifecycle(initialValue = emptyList())
+    val currentFeed by viewModel.currentFeed.collectAsStateWithLifecycle(initialValue = null)
     val folders by viewModel.folders.collectAsStateWithLifecycle(initialValue = emptyList())
     val savedSearches by viewModel.savedSearches.collectAsStateWithLifecycle(initialValue = emptyList())
     val allSavedSearches by viewModel.allSavedSearches.collectAsStateWithLifecycle(initialValue = emptyList())
@@ -500,6 +501,7 @@ fun ArticleScreen(
                     filter = filter,
                     statusCount = statusCount,
                     todayCount = todayCount,
+                    onMarkAllRead = { viewModel.markAllRead(filter = it) },
                 )
             },
             listPane = {
@@ -529,12 +531,17 @@ fun ArticleScreen(
                             ArticleListTopBar(
                                 onRequestJumpToTop = { scrollToTop() },
                                 onNavigateToDrawer = { openDrawer() },
+                                onRemoveFolder = { folderTitle, completion ->
+                                    viewModel.removeFolder(folderTitle, completion)
+                                },
                                 scrollBehavior = scrollBehavior,
                                 search = search,
                                 filter = filter,
+                                currentFeed = currentFeed,
                                 feeds = allFeeds,
                                 savedSearches = savedSearches,
                                 folders = allFolders,
+                                source = viewModel.source,
                             )
                         },
                         snackbarHost = {
@@ -602,7 +609,6 @@ fun ArticleScreen(
                                             articles = articles,
                                             selectedArticleKey = article?.id,
                                             listState = listState,
-                                            refreshingAll = viewModel.refreshingAll,
                                             dimReadArticles = filter.status != ArticleStatus.STARRED,
                                             onMarkAllRead = { range ->
                                                 onMarkAllRead(range)

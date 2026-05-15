@@ -31,6 +31,7 @@ import com.capyreader.app.widthMaxSingleColumn
 import com.jocmp.capy.accounts.Source
 import org.koin.android.ext.koin.androidContext
 import org.koin.compose.KoinApplication
+import org.koin.dsl.koinConfiguration
 
 @Composable
 fun AddAccountView(
@@ -125,7 +126,7 @@ private fun AddAccountViewPreview() {
     val context = LocalContext.current
 
     KoinApplication(
-        application = {
+        configuration = koinConfiguration {
             androidContext(context)
             setupCommonModules()
         }
@@ -145,7 +146,7 @@ private fun AddAccountViewPreview_Tablet() {
     val context = LocalContext.current
 
     KoinApplication(
-        application = {
+        configuration = koinConfiguration {
             androidContext(context)
             setupCommonModules()
         }

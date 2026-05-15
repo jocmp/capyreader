@@ -39,8 +39,8 @@ class SidebarItemTest {
     }
 
     @Test
-    fun `next from articles with a saved search`() {
-        val filter = ArticleFilter.Articles(articleStatus = ArticleStatus.ALL)
+    fun `next from today with a saved search`() {
+        val filter = ArticleFilter.Today(ArticleStatus.ALL)
         val search = SavedSearch(id = "1", name = "My Search", query = null)
 
         val next = findNext(
@@ -77,8 +77,8 @@ class SidebarItemTest {
     }
 
     @Test
-    fun `next from article filter with a folder`() {
-        val filter = ArticleFilter.Articles(articleStatus = ArticleStatus.ALL)
+    fun `next from today with a folder`() {
+        val filter = ArticleFilter.Today(ArticleStatus.ALL)
         val folder = Folder(title = "This Is My Next Folder")
 
         val next = findNext(
@@ -91,8 +91,8 @@ class SidebarItemTest {
     }
 
     @Test
-    fun `next from article filter with a feed`() {
-        val filter = ArticleFilter.Articles(articleStatus = ArticleStatus.ALL)
+    fun `next from today with a feed`() {
+        val filter = ArticleFilter.Today(ArticleStatus.ALL)
         val feed = feedFixture.create()
 
         val next = findNext(
@@ -105,8 +105,8 @@ class SidebarItemTest {
     }
 
     @Test
-    fun `next from article filter that is empty`() {
-        val filter = ArticleFilter.Articles(articleStatus = ArticleStatus.ALL)
+    fun `next from today that is empty`() {
+        val filter = ArticleFilter.Today(ArticleStatus.ALL)
 
         val next = findNext(filter)
 
@@ -114,8 +114,8 @@ class SidebarItemTest {
     }
 
     @Test
-    fun `next from articles with a folder`() {
-        val filter = ArticleFilter.Articles(articleStatus = ArticleStatus.ALL)
+    fun `next from today with a named folder`() {
+        val filter = ArticleFilter.Today(ArticleStatus.ALL)
         val folder = Folder(title = "My Folder")
 
         val next = findNext(
@@ -351,8 +351,8 @@ class SidebarItemTest {
         )
 
         val filters = items.map { it.toFilter(ArticleStatus.ALL) }
-        assertIs<ArticleFilter.Today>(filters[0])
-        assertIs<ArticleFilter.Articles>(filters[1])
+        assertIs<ArticleFilter.Articles>(filters[0])
+        assertIs<ArticleFilter.Today>(filters[1])
         assertIs<ArticleFilter.SavedSearches>(filters[2])
         assertIs<ArticleFilter.Folders>(filters[3])
         val folderFeedFilter = filters[4]
@@ -368,14 +368,14 @@ class SidebarItemTest {
         val feed = feedFixture.create()
         val items = SidebarItem.buildList(feeds = listOf(feed))
 
-        val today = items[0]
-        assertTrue(today.isSelected(ArticleFilter.Today(ArticleStatus.ALL)))
-        assertNotNull(today.next)
-        assertTrue(today.next!!.isSelected(ArticleFilter.Articles(ArticleStatus.ALL)))
-        assertNotNull(today.next?.next)
-        assertTrue(today.next!!.next!!.isSelected(
+        val articles = items[0]
+        assertTrue(articles.isSelected(ArticleFilter.Articles(ArticleStatus.ALL)))
+        assertNotNull(articles.next)
+        assertTrue(articles.next!!.isSelected(ArticleFilter.Today(ArticleStatus.ALL)))
+        assertNotNull(articles.next?.next)
+        assertTrue(articles.next!!.next!!.isSelected(
             ArticleFilter.Feeds(feedID = feed.id, folderTitle = null, feedStatus = ArticleStatus.ALL)
         ))
-        assertNull(today.next?.next?.next)
+        assertNull(articles.next?.next?.next)
     }
 }

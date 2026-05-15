@@ -137,7 +137,6 @@
     <string name="settings_section_version">バージョン</string>
     <string name="settings_option_copy_version">バージョンをコピー</string>
     <string name="settings_option_full_content_subtitle">すべての記事内容を読み込むかどうかの選択を記憶</string>
-    <string name="refresh_on_start">起動時</string>
     <string name="empty_onboarding_title">まだフィードがありません</string>
     <string name="empty_onboarding_prompt">フィードを追加して始めましょう</string>
     <string name="article_style_options">フォントのスタイルオプション</string>

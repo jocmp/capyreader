@@ -1,7 +1,6 @@
 package com.capyreader.app.ui.articles.feeds
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Box
@@ -9,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.motionScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,6 +33,7 @@ fun FolderRow(
     folder: Folder,
     onFolderSelect: (folder: Folder) -> Unit,
     onFeedSelect: (feed: Feed) -> Unit,
+    onMarkAllRead: (filter: ArticleFilter) -> Unit,
     source: Source,
 ) {
     val actions = LocalFolderActions.current
@@ -74,13 +75,21 @@ fun FolderRow(
                 onRemoveRequest = { title, completion ->
                     actions.removeFolder(title, completion)
                 },
+                onMarkAllRead = {
+                    onMarkAllRead(
+                        ArticleFilter.Folders(
+                            folderTitle = folder.title,
+                            folderStatus = filter.status,
+                        )
+                    )
+                },
                 source = source,
             )
         }
         AnimatedVisibility(
             expanded,
             enter = expandVertically(expandFrom = Alignment.Top),
-            exit = shrinkVertically(animationSpec = tween()),
+            exit = shrinkVertically(animationSpec = motionScheme.fastSpatialSpec()),
         ) {
             Column {
                 folder.feeds.forEach { feed ->
@@ -88,6 +97,15 @@ fun FolderRow(
                         FeedRow(
                             feed = feed,
                             onSelect = { onFeedSelect(feed) },
+                            onMarkAllRead = {
+                                onMarkAllRead(
+                                    ArticleFilter.Feeds(
+                                        feedID = feed.id,
+                                        folderTitle = folder.title,
+                                        feedStatus = filter.status,
+                                    )
+                                )
+                            },
                             selected = filter.isFeedSelected(feed),
                             source = source,
                         )
@@ -113,6 +131,7 @@ fun FolderRowPreview() {
             folder = folder,
             onFolderSelect = {},
             onFeedSelect = {},
+            onMarkAllRead = {},
             filter = filter,
             source = Source.LOCAL,
         )

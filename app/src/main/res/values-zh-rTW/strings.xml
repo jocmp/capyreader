@@ -6,7 +6,7 @@
     <string name="settings_remove_account_confirm_service">登出</string>
     <string name="settings_remove_account_button_local">刪除帳戶</string>
     <string name="settings_remove_account_title_local">刪除帳戶</string>
-    <string name="settings_remove_account_message_local">您確定要刪除帳戶嗎？此操作不可撤銷。</string>
+    <string name="settings_remove_account_message_local">您確定要刪除帳戶嗎？此操作不可復原。</string>
     <string name="settings_remove_account_confirm_local">確認</string>
     <string name="account_settings_save_name">名稱已儲存</string>
     <string name="article_view_mark_as_read">標為已讀</string>
@@ -26,7 +26,7 @@
     <string name="add_feed_url_title">訂閱源或網站 URL</string>
     <string name="add_feed_submit">新增</string>
     <string name="add_feed_name_title">名稱</string>
-    <string name="add_feed_new_folder_title">新標籤</string>
+    <string name="add_feed_new_folder_title">新資料夾</string>
     <string name="add_feed_success">訂閱源已新增</string>
     <string name="feed_form_cancel">取消</string>
     <string name="filter_starred">已加星標</string>
@@ -39,7 +39,7 @@
     <string name="feed_action_unsubscribe_title">取消訂閱</string>
     <string name="feed_action_unsubscribe_confirm">取消訂閱</string>
     <string name="dialog_cancel">取消</string>
-    <string name="folder_action_delete_title">刪除標籤</string>
+    <string name="folder_action_delete_title">刪除資料夾</string>
     <string name="settings">開啟設定</string>
     <string name="settings_remove_account_message_service">您確定要登出嗎？</string>
     <string name="settings_remove_account_button_service">登出</string>
@@ -157,7 +157,6 @@
     <string name="settings_article_list_shorten_titles">縮短標題</string>
     <string name="settings_section_version">版本</string>
     <string name="settings_option_full_content_title">保持全文</string>
-    <string name="refresh_on_start">啟動時</string>
     <string name="article_style_options">字體樣式選項</string>
     <string name="font_option_vollkorn">Vollkorn</string>
     <string name="settings_article_list_feed_name">訂閱源名稱</string>
@@ -295,7 +294,7 @@
     <string name="audio_player_pause">暫停</string>
     <string name="freshrss_nav_headline_categories">類別</string>
     <string name="theme_sunset">日落</string>
-    <string name="freshrss_visibility_option_folder">類別</string>
+    <string name="freshrss_visibility_option_folder">資料夾</string>
     <string name="auth_fields_miniflux_api_token">API 權杖</string>
     <string name="auth_fields_miniflux_use_password">改為使用密碼</string>
     <string name="auth_fields_miniflux_use_api_token">改為使用 API 權杖</string>
@@ -336,4 +335,23 @@
     <string name="starred_exporter_success">匯出完成</string>
     <string name="starred_exporter_failure">匯出失敗</string>
     <string name="starred_export_button_text">匯出已加星標的文章</string>
+    <string name="folder_action_delete_confirm">刪除</string>
+    <string name="folder_name_title">名稱</string>
+    <string name="article_list_swipe_mark_all_read">標記全部為已讀</string>
+    <string name="actions_share_link_with_title">分享文字和連結</string>
+    <string name="widget_spotlight_empty">無未讀文章</string>
+    <string name="widget_spotlight_previous">上一個</string>
+    <string name="widget_spotlight_next">下一個</string>
+    <string name="freshrss_visibility">可見性</string>
+    <string name="widget_receiver_spotlight_title">亮點</string>
+    <string name="folder_action_edit_success">標籤已更新</string>
+    <string name="widget_spotlight_see_all">查看全部</string>
+    <string name="freshrss_visibility_option_main">主資訊流</string>
+    <string name="folder_action_delete_message">您確定要刪除標籤 \"%1$s\" 嗎？</string>
+    <string name="article_actions_save_for_later">儲存以稍後閱讀</string>
+    <string name="saved_for_later_success">已儲存供稍後閱讀</string>
+    <string name="filter_read_later">已儲存供稍後閱讀</string>
+    <string name="delete_folder_error">刪除資料夾時出現錯誤</string>
+    <string name="folder_action_edit_error">更新標籤時出現錯誤</string>
+    <string name="article_list_new_articles_pill">新文章</string>
 </resources>

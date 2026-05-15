@@ -9,7 +9,9 @@ import androidx.compose.ui.unit.dp
 
 internal object ArticleBarDefaults {
     val TopBarHeight = 64.dp
-    val BottomBarHeight = 60.dp
+    val FloatingToolbarHeight = 64.dp
+    val FloatingToolbarBottomGap = 12.dp
+    val BottomBarHeight = FloatingToolbarHeight + FloatingToolbarBottomGap
 
     val topBarOffset: Dp
         @Composable get() = WindowInsets.statusBars.asPaddingValues().calculateTopPadding() + TopBarHeight

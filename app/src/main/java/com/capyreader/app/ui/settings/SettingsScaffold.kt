@@ -1,6 +1,7 @@
 package com.capyreader.app.ui.settings
 
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
+import androidx.compose.material3.adaptive.navigation.BackNavigationBehavior
 import androidx.compose.material3.adaptive.navigation.NavigableListDetailPaneScaffold
 import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
 import androidx.compose.runtime.Composable
@@ -19,6 +20,7 @@ fun SettingsScaffold(
     NavigableListDetailPaneScaffold(
         modifier = Modifier.safeEdgePadding(),
         navigator = scaffoldNavigator,
+        defaultBackBehavior = BackNavigationBehavior.PopUntilContentChange,
         listPane = {
             CapyAnimatedPane {
                 listPane()

@@ -22,6 +22,7 @@ import com.jocmp.readerclient.Item.Link
 import com.jocmp.readerclient.Item.Origin
 import com.jocmp.readerclient.Item.Summary
 import com.jocmp.readerclient.ItemRef
+import com.jocmp.readerclient.taggedItemID
 import com.jocmp.readerclient.Stream
 import com.jocmp.readerclient.StreamItemIDsResult
 import com.jocmp.readerclient.StreamItemsContentsResult
@@ -331,7 +332,7 @@ class ReaderAccountDelegateTest {
                     unreadStarredItem,
                     readItem,
                     items.first()
-                ).map { it.hexID }, postToken = postToken
+                ).map { it.hexID.taggedItemID }, postToken = postToken
             )
         }.returns(Response.success(StreamItemsContentsResult(starredItems)))
 
@@ -385,7 +386,7 @@ class ReaderAccountDelegateTest {
 
         coEvery {
             googleReader.editTag(
-                ids = listOf(id),
+                ids = listOf(id.taggedItemID),
                 postToken = postToken,
                 addTag = Stream.Read().id,
             )
@@ -397,7 +398,7 @@ class ReaderAccountDelegateTest {
 
         coVerify {
             googleReader.editTag(
-                ids = listOf(id),
+                ids = listOf(id.taggedItemID),
                 postToken = postToken,
                 addTag = Stream.Read().id,
             )
@@ -410,7 +411,7 @@ class ReaderAccountDelegateTest {
 
         coEvery {
             googleReader.editTag(
-                ids = listOf(id),
+                ids = listOf(id.taggedItemID),
                 postToken = postToken,
                 removeTag = Stream.Read().id,
             )
@@ -422,7 +423,7 @@ class ReaderAccountDelegateTest {
 
         coVerify {
             googleReader.editTag(
-                ids = listOf(id),
+                ids = listOf(id.taggedItemID),
                 postToken = postToken,
                 removeTag = Stream.Read().id,
             )
@@ -435,7 +436,7 @@ class ReaderAccountDelegateTest {
 
         coEvery {
             googleReader.editTag(
-                ids = listOf(id),
+                ids = listOf(id.taggedItemID),
                 postToken = postToken,
                 addTag = Stream.Starred().id,
             )
@@ -447,7 +448,7 @@ class ReaderAccountDelegateTest {
 
         coVerify {
             googleReader.editTag(
-                ids = listOf(id),
+                ids = listOf(id.taggedItemID),
                 postToken = postToken,
                 addTag = Stream.Starred().id,
             )
@@ -460,7 +461,7 @@ class ReaderAccountDelegateTest {
 
         coEvery {
             googleReader.editTag(
-                ids = listOf(id),
+                ids = listOf(id.taggedItemID),
                 postToken = postToken,
                 removeTag = Stream.Starred().id,
             )
@@ -472,7 +473,7 @@ class ReaderAccountDelegateTest {
 
         coVerify {
             googleReader.editTag(
-                ids = listOf(id),
+                ids = listOf(id.taggedItemID),
                 postToken = postToken,
                 removeTag = Stream.Starred().id,
             )
@@ -486,7 +487,7 @@ class ReaderAccountDelegateTest {
 
         coEvery {
             googleReader.editTag(
-                ids = listOf(articleID),
+                ids = listOf(articleID.taggedItemID),
                 postToken = postToken,
                 addTag = savedSearchID,
             )
@@ -498,7 +499,7 @@ class ReaderAccountDelegateTest {
 
         coVerify {
             googleReader.editTag(
-                ids = listOf(articleID),
+                ids = listOf(articleID.taggedItemID),
                 postToken = postToken,
                 addTag = savedSearchID,
             )
@@ -523,7 +524,7 @@ class ReaderAccountDelegateTest {
 
         coEvery {
             googleReader.editTag(
-                ids = listOf(articleID),
+                ids = listOf(articleID.taggedItemID),
                 postToken = postToken,
                 removeTag = savedSearchID,
             )
@@ -535,7 +536,7 @@ class ReaderAccountDelegateTest {
 
         coVerify {
             googleReader.editTag(
-                ids = listOf(articleID),
+                ids = listOf(articleID.taggedItemID),
                 postToken = postToken,
                 removeTag = savedSearchID,
             )
@@ -573,7 +574,7 @@ class ReaderAccountDelegateTest {
 
         coEvery {
             googleReader.editTag(
-                ids = listOf(articleID),
+                ids = listOf(articleID.taggedItemID),
                 postToken = postToken,
                 addTag = savedSearchID,
             )
@@ -604,7 +605,7 @@ class ReaderAccountDelegateTest {
 
         coEvery {
             googleReader.editTag(
-                ids = listOf(articleID),
+                ids = listOf(articleID.taggedItemID),
                 postToken = postToken,
                 removeTag = savedSearchID,
             )
@@ -846,13 +847,13 @@ class ReaderAccountDelegateTest {
             ).build()
 
         coEvery {
-            googleReader.streamItemsContents(responseItems.map { it.hexID }, postToken = null)
+            googleReader.streamItemsContents(responseItems.map { it.hexID.taggedItemID }, postToken = null)
         }.returns(Response.error("".toResponseBody(), errorResponse))
 
         stubPostToken()
 
         coEvery {
-            googleReader.streamItemsContents(responseItems.map { it.hexID }, postToken = postToken)
+            googleReader.streamItemsContents(responseItems.map { it.hexID.taggedItemID }, postToken = postToken)
         }.returns(Response.success(StreamItemsContentsResult(responseItems)))
     }
 

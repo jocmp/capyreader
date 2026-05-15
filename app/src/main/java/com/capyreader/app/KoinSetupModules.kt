@@ -1,7 +1,6 @@
 package com.capyreader.app
 
 import com.capyreader.app.refresher.refresherModule
-import com.capyreader.app.sync.syncModule
 import com.capyreader.app.ui.accounts.loginModule
 import com.capyreader.app.ui.articles.articlesModule
 import com.capyreader.app.ui.settings.settingsModule
@@ -26,5 +25,4 @@ private val accountModules = listOf(
     settingsModule,
     articlesModule,
     refresherModule,
-    syncModule,
 )

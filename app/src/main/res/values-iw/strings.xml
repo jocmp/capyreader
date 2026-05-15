@@ -140,7 +140,6 @@
     <string name="settings_option_copy_version">העתק גרסה</string>
     <string name="settings_option_full_content_title">הצמד תוכן במלואו</string>
     <string name="settings_option_full_content_subtitle">זכור בחירה לטעון את תוכן המאמר במלואו</string>
-    <string name="refresh_on_start">בתחילה</string>
     <string name="empty_onboarding_title">אין פידים בנתיים</string>
     <string name="empty_onboarding_prompt">התחל על ידי הוספת פיד</string>
     <string name="article_list_empty">אין כאן כלום</string>

@@ -2,6 +2,7 @@ package com.jocmp.capy.articles
 
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
+import com.jocmp.capy.Countable
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.SavedSearch
@@ -13,6 +14,7 @@ class SidebarItem(
 ) {
     companion object {
         fun buildList(
+            status: ArticleStatus = ArticleStatus.ALL,
             readLaterFeed: Feed? = null,
             savedSearches: List<SavedSearch> = emptyList(),
             folders: List<Folder> = emptyList(),
@@ -20,25 +22,29 @@ class SidebarItem(
         ): List<SidebarItem> {
             val items = mutableListOf<SidebarItem>()
 
-            items += todayItem()
             items += articlesItem()
+            items += todayItem()
 
-            if (readLaterFeed != null) {
+            if (readLaterFeed != null && readLaterFeed.hasCount(status)) {
                 items += feedItem(feedID = readLaterFeed.id, folderTitle = null)
             }
 
-            savedSearches.forEach { items += savedSearchItem(savedSearchID = it.id) }
+            savedSearches.filter { it.hasCount(status) }
+                .forEach { items += savedSearchItem(savedSearchID = it.id) }
 
-            folders.forEach { folder ->
-                items += folderItem(folderTitle = folder.title)
-                if (folder.expanded) {
-                    folder.feeds.forEach { feed ->
-                        items += feedItem(feedID = feed.id, folderTitle = folder.title)
+            folders.filter { it.hasCount(status) }
+                .forEach { folder ->
+                    items += folderItem(folderTitle = folder.title)
+                    if (folder.expanded) {
+                        folder.feeds.filter { it.hasCount(status) }
+                            .forEach { feed ->
+                                items += feedItem(feedID = feed.id, folderTitle = folder.title)
+                            }
                     }
                 }
-            }
 
-            feeds.forEach { items += feedItem(feedID = it.id, folderTitle = null) }
+            feeds.filter { it.hasCount(status) }
+                .forEach { items += feedItem(feedID = it.id, folderTitle = null) }
 
             items.zipWithNext().forEach { (current, next) ->
                 current.next = next
@@ -66,6 +72,10 @@ class SidebarItem(
             toFilter = { ArticleFilter.Folders(folderTitle = folderTitle, folderStatus = it) },
             isSelected = { it is ArticleFilter.Folders && it.folderTitle == folderTitle },
         )
+
+        private fun Countable.hasCount(status: ArticleStatus): Boolean {
+            return status == ArticleStatus.ALL || count > 0
+        }
 
         private fun feedItem(feedID: String, folderTitle: String?) = SidebarItem(
             toFilter = { ArticleFilter.Feeds(feedID = feedID, folderTitle = folderTitle, feedStatus = it) },

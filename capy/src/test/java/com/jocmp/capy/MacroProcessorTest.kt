@@ -7,7 +7,6 @@ import kotlin.time.measureTime
 class MacroProcessorTest {
     @Test
     fun `benchmark MacroProcessor vs String format`() {
-        // Template with %s placeholders (like ReadYou uses)
         val formatTemplate = """
             <!DOCTYPE html>
             <html dir="auto">
@@ -167,7 +166,7 @@ class MacroProcessorTest {
             }
         }
 
-        // Benchmark String.format (ReadYou approach)
+        // Benchmark String.format
         val stringFormatTime = measureTime {
             repeat(iterations) {
                 String.format(formatTemplate, *formatArgs)

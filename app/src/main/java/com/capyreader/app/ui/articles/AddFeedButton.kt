@@ -23,6 +23,7 @@ import com.capyreader.app.R
 fun AddFeedButton(
     onComplete: (feedID: String) -> Unit,
     iconOnly: Boolean = false,
+    onBeforeAdd: () -> Unit = {},
 ) {
     val (isDialogOpen, setDialogOpen) = rememberSaveable { mutableStateOf(false) }
 
@@ -57,6 +58,7 @@ fun AddFeedButton(
     if (isDialogOpen) {
         AddFeedDialog(
             onCancel = { closeDialog() },
+            onBeforeAdd = onBeforeAdd,
             onComplete = { feedID ->
                 closeDialog()
                 onComplete(feedID)

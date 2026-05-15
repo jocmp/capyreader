@@ -362,30 +362,26 @@ internal class MinifluxAccountDelegate(
 
         val total = firstResult.total
 
+        saveEntries(firstResult.entries)
+
         val semaphore = Semaphore(MAX_CONCURRENT_FETCHES)
 
-        val remainingPages = (MAX_ENTRY_LIMIT until total step MAX_ENTRY_LIMIT)
+        (MAX_ENTRY_LIMIT until total step MAX_ENTRY_LIMIT)
             .map { offset ->
                 async {
                     semaphore.withPermit {
-                        miniflux.entries(
+                        val entries = miniflux.entries(
                             limit = MAX_ENTRY_LIMIT,
                             offset = offset,
                             order = "published_at",
                             direction = "desc",
                             changedAfter = changedAfter,
-                        ).body()?.entries
+                        ).body()?.entries ?: return@withPermit
+                        saveEntries(entries)
                     }
                 }
             }
             .awaitAll()
-
-        saveEntries(firstResult.entries)
-        remainingPages.forEach { entries ->
-            if (entries != null) {
-                saveEntries(entries)
-            }
-        }
     }
 
     private fun saveEntries(entries: List<Entry>) {
@@ -498,6 +494,6 @@ internal class MinifluxAccountDelegate(
 
     companion object {
         const val MAX_ENTRY_LIMIT = 250
-        private const val MAX_CONCURRENT_FETCHES = 8
+        private const val MAX_CONCURRENT_FETCHES = 4
     }
 }
