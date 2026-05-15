@@ -113,7 +113,7 @@ describe("entry status mutations", () => {
     expect(after?.entries.find((e) => e.id === 7)?.status).toBe("read");
   });
 
-  it("useUpdateEntryStatus does not invalidate the entries list when marking read", async () => {
+  it("useUpdateEntryStatus marks entries stale without refetching when marking read", async () => {
     const { queryClient, Wrapper } = makeWrapper();
     const invalidateSpy = vi.spyOn(queryClient, "invalidateQueries");
 
@@ -129,21 +129,29 @@ describe("entry status mutations", () => {
       expect(updateEntries).toHaveBeenCalled();
     });
 
-    const invalidatedKeys = invalidateSpy.mock.calls.map(
-      (call) => (call[0] as { queryKey: readonly unknown[] }).queryKey,
+    type InvalidateOpts = { queryKey: readonly unknown[]; refetchType?: string };
+    const invalidateCalls = invalidateSpy.mock.calls.map(
+      (call) => call[0] as InvalidateOpts,
     );
+    const entriesCall = invalidateCalls.find(
+      (opts) => Array.isArray(opts.queryKey) && opts.queryKey[0] === "entries",
+    );
+    // Entries are marked stale (invalidated) but with refetchType:"none" so the
+    // active list keeps its optimistic update during the current reading session.
+    expect(entriesCall).toBeDefined();
+    expect(entriesCall?.refetchType).toBe("none");
+    // Counters and the per-entry cache should still invalidate normally.
     expect(
-      invalidatedKeys.some((key) => Array.isArray(key) && key[0] === "entries"),
-    ).toBe(false);
-    // Counters and the per-entry cache should still invalidate.
-    expect(
-      invalidatedKeys.some(
-        (key) => Array.isArray(key) && key[0] === "counters",
+      invalidateCalls.some(
+        (opts) => Array.isArray(opts.queryKey) && opts.queryKey[0] === "counters",
       ),
     ).toBe(true);
     expect(
-      invalidatedKeys.some(
-        (key) => Array.isArray(key) && key[0] === "entry" && key[1] === 7,
+      invalidateCalls.some(
+        (opts) =>
+          Array.isArray(opts.queryKey) &&
+          opts.queryKey[0] === "entry" &&
+          opts.queryKey[1] === 7,
       ),
     ).toBe(true);
   });
