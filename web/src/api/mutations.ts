@@ -66,12 +66,16 @@ export function useUpdateEntryStatus() {
       }
     },
     onSettled: (_data, _err, vars) => {
-      // Skip ["entries"] invalidation only when marking read so the article
-      // stays visible in the Unread list during the reading session.
-      // When marking unread, invalidate so the Unread list picks up the article
-      // even if it was not already cached there.
       if (vars.status === "unread") {
+        // Marking unread: invalidate all entry caches so the Unread list picks
+        // up the article even if it was not already cached there.
         queryClient.invalidateQueries({ queryKey: ["entries"] });
+      } else {
+        // Marking read: evict inactive entry caches so stale read articles
+        // cannot appear when switching to the Unread view within the stale
+        // window. The active list keeps its optimistic update so the article
+        // stays visible during the current reading session.
+        queryClient.removeQueries({ queryKey: ["entries"], type: "inactive" });
       }
       queryClient.invalidateQueries({ queryKey: ["entry", vars.entryId] });
       queryClient.invalidateQueries({ queryKey: ["counters"] });
