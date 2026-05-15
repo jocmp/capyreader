@@ -113,7 +113,7 @@ describe("entry status mutations", () => {
     expect(after?.entries.find((e) => e.id === 7)?.status).toBe("read");
   });
 
-  it("useUpdateEntryStatus does not invalidate the entries list", async () => {
+  it("useUpdateEntryStatus does not invalidate the entries list when marking read", async () => {
     const { queryClient, Wrapper } = makeWrapper();
     const invalidateSpy = vi.spyOn(queryClient, "invalidateQueries");
 
@@ -145,6 +145,30 @@ describe("entry status mutations", () => {
       invalidatedKeys.some(
         (key) => Array.isArray(key) && key[0] === "entry" && key[1] === 7,
       ),
+    ).toBe(true);
+  });
+
+  it("useUpdateEntryStatus invalidates the entries list when marking unread so the Unread view picks up the article", async () => {
+    const { queryClient, Wrapper } = makeWrapper();
+    const invalidateSpy = vi.spyOn(queryClient, "invalidateQueries");
+
+    const { result } = renderHook(() => useUpdateEntryStatus(), {
+      wrapper: Wrapper,
+    });
+
+    await act(async () => {
+      await result.current.mutateAsync({ entryId: 7, status: "unread" });
+    });
+
+    await waitFor(() => {
+      expect(updateEntries).toHaveBeenCalled();
+    });
+
+    const invalidatedKeys = invalidateSpy.mock.calls.map(
+      (call) => (call[0] as { queryKey: readonly unknown[] }).queryKey,
+    );
+    expect(
+      invalidatedKeys.some((key) => Array.isArray(key) && key[0] === "entries"),
     ).toBe(true);
   });
 

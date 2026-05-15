@@ -66,11 +66,13 @@ export function useUpdateEntryStatus() {
       }
     },
     onSettled: (_data, _err, vars) => {
-      // Intentionally not invalidating ["entries"]: the optimistic update has
-      // already flipped this row's status in place, and we want it to stay
-      // visible in the Unread list during the reading session. The list only
-      // refreshes via "Mark above as read", the refresh button, or window
-      // focus.
+      // Skip ["entries"] invalidation only when marking read so the article
+      // stays visible in the Unread list during the reading session.
+      // When marking unread, invalidate so the Unread list picks up the article
+      // even if it was not already cached there.
+      if (vars.status === "unread") {
+        queryClient.invalidateQueries({ queryKey: ["entries"] });
+      }
       queryClient.invalidateQueries({ queryKey: ["entry", vars.entryId] });
       queryClient.invalidateQueries({ queryKey: ["counters"] });
     },
