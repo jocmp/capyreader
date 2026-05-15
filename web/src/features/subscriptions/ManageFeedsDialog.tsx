@@ -18,6 +18,7 @@ import {
   useDeleteFeed,
   useExportOpml,
   useImportOpml,
+  useUpdateFeed,
 } from "./mutations";
 import AddFeedDialog from "./AddFeedDialog";
 
@@ -35,12 +36,16 @@ export default function ManageFeedsDialog({
   const createCategory = useCreateCategory();
   const deleteCategory = useDeleteCategory();
   const deleteFeed = useDeleteFeed();
+  const updateFeed = useUpdateFeed();
   const importOpml = useImportOpml();
   const exportOpml = useExportOpml();
   const fileRef = useRef<HTMLInputElement>(null);
   const [newCategory, setNewCategory] = useState("");
   const [addFeedOpen, setAddFeedOpen] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
+  const [movingFeedIds, setMovingFeedIds] = useState<ReadonlySet<number>>(
+    () => new Set(),
+  );
   const [copiedFeedId, setCopiedFeedId] = useState<number | null>(null);
 
   useEffect(() => {
@@ -48,6 +53,27 @@ export default function ManageFeedsDialog({
     const timer = setTimeout(() => setCopiedFeedId(null), 1500);
     return () => clearTimeout(timer);
   }, [copiedFeedId]);
+
+  async function handleMoveFeed(feedId: number, categoryId: number) {
+    setStatus(null);
+    setMovingFeedIds((prev) => {
+      const next = new Set(prev);
+      next.add(feedId);
+      return next;
+    });
+    try {
+      await updateFeed.mutateAsync({ feedId, category_id: categoryId });
+    } catch (err) {
+      setStatus(err instanceof Error ? err.message : "Move failed.");
+    } finally {
+      setMovingFeedIds((prev) => {
+        if (!prev.has(feedId)) return prev;
+        const next = new Set(prev);
+        next.delete(feedId);
+        return next;
+      });
+    }
+  }
 
   async function handleCopyFeedUrl(feedId: number, url: string) {
     try {
@@ -227,7 +253,7 @@ export default function ManageFeedsDialog({
                           key={feed.id}
                           className="flex items-center justify-between gap-3 px-3 py-2"
                         >
-                          <div className="min-w-0">
+                          <div className="min-w-0 flex-1">
                             <p className="truncate text-sm font-medium">
                               {feed.title}
                             </p>
@@ -235,6 +261,24 @@ export default function ManageFeedsDialog({
                               {feed.feed_url}
                             </p>
                           </div>
+                          <select
+                            aria-label={`Move feed ${feed.title} to a different category`}
+                            value={feed.category.id}
+                            onChange={(e) => {
+                              const next = Number(e.target.value);
+                              if (next !== feed.category.id) {
+                                handleMoveFeed(feed.id, next);
+                              }
+                            }}
+                            disabled={movingFeedIds.has(feed.id)}
+                            className="h-8 rounded-md border border-input bg-background px-2 text-xs"
+                          >
+                            {(categoriesQ.data ?? []).map((option) => (
+                              <option key={option.id} value={option.id}>
+                                {option.title}
+                              </option>
+                            ))}
+                          </select>
                           <Button
                             variant="ghost"
                             size="icon"

@@ -66,7 +66,16 @@ export function useUpdateEntryStatus() {
       }
     },
     onSettled: (_data, _err, vars) => {
-      queryClient.invalidateQueries({ queryKey: ["entries"] });
+      if (vars.status === "unread") {
+        // Marking unread: invalidate all entry caches so the Unread list picks
+        // up the article even if it was not already cached there.
+        queryClient.invalidateQueries({ queryKey: ["entries"] });
+      } else {
+        // Marking read: evict inactive entry caches so stale Unread lists are
+        // not reused when switching views. The active list is left untouched so
+        // refetchOnWindowFocus cannot remove the article mid-session.
+        queryClient.removeQueries({ queryKey: ["entries"], type: "inactive" });
+      }
       queryClient.invalidateQueries({ queryKey: ["entry", vars.entryId] });
       queryClient.invalidateQueries({ queryKey: ["counters"] });
     },

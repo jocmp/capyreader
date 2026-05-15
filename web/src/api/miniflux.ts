@@ -161,6 +161,16 @@ export const minifluxApi = {
       body: JSON.stringify(params),
     }),
 
+  updateFeed: (
+    creds: MinifluxCredentials,
+    feedId: number,
+    params: { category_id?: number; title?: string },
+  ) =>
+    request<Feed>(creds, `/v1/feeds/${feedId}`, {
+      method: "PUT",
+      body: JSON.stringify(params),
+    }),
+
   deleteFeed: (creds: MinifluxCredentials, feedId: number) =>
     request<void>(creds, `/v1/feeds/${feedId}`, { method: "DELETE" }),
 
