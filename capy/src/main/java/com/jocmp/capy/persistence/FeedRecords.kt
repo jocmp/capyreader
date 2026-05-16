@@ -3,6 +3,7 @@ package com.jocmp.capy.persistence
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.jocmp.capy.Feed
+import com.jocmp.capy.FeedImportance
 import com.jocmp.capy.FeedPriority
 import com.jocmp.capy.Folder
 import com.jocmp.capy.common.withIOContext
@@ -122,6 +123,13 @@ internal class FeedRecords(private val database: Database) {
         database.feedsQueries.toggleAllNotifications(enabled = enabled)
     }
 
+    suspend fun updateImportance(feedID: String, importance: FeedImportance) = withIOContext {
+        database.feedsQueries.updateImportance(
+            importance = importance.storageValue,
+            feedID = feedID,
+        )
+    }
+
     suspend fun updateShowUnreadBadge(feedID: String, enabled: Boolean) = withIOContext {
         database.feedsQueries.updateShowUnreadBadge(
             enabled = enabled,
@@ -186,6 +194,7 @@ internal class FeedRecords(private val database: Database) {
         etag: String? = null,
         lastModified: String? = null,
         conditionalGetRefreshedAt: Long? = null,
+        importance: String? = null,
         folderName: String? = "",
         expanded: Boolean? = false,
     ) = Feed(
@@ -205,5 +214,6 @@ internal class FeedRecords(private val database: Database) {
         priority = FeedPriority.parse(priority),
         showUnreadBadge = showUnreadBadge,
         isReadLater = readLater,
+        importance = FeedImportance.parse(importance),
     )
 }

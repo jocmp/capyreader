@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Capy Lite</string>
+
+    <string name="login_title">Sign in</string>
+    <string name="login_username">Email or username</string>
+    <string name="login_password">Password</string>
+    <string name="login_server_url">Server URL</string>
+    <string name="login_submit">Sign in</string>
+    <string name="login_account_type">Account type</string>
+
+    <string name="importance_real_time">Real-time</string>
+    <string name="importance_daily">Daily</string>
+    <string name="importance_normal">Normal</string>
+    <string name="importance_weekly">Weekly</string>
+    <string name="importance_monthly">Monthly</string>
+    <string name="importance_yearly">Yearly</string>
+
+    <string name="feed_empty">No feeds yet</string>
+    <string name="article_empty">No articles in this feed</string>
+</resources>

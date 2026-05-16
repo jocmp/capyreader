@@ -21,4 +21,5 @@ data class Feed(
     val priority: FeedPriority? = null,
     val showUnreadBadge: Boolean = true,
     val isReadLater: Boolean = false,
+    val importance: FeedImportance = FeedImportance.NORMAL,
 ): Countable

@@ -31,6 +31,7 @@ rootProject.name = "Capy Reader"
 // }
 
 include(":app")
+include(":lite")
 include(":feedbinclient")
 include(":feedfinder")
 include(":capy")

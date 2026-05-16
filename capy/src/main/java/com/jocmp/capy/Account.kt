@@ -472,6 +472,10 @@ data class Account(
         feedRecords.updateShowUnreadBadge(feedID, enabled)
     }
 
+    suspend fun updateFeedImportance(feedID: String, importance: FeedImportance) {
+        feedRecords.updateImportance(feedID, importance)
+    }
+
     suspend fun toggleAllFeedUnreadBadges(enabled: Boolean) {
         feedRecords.toggleAllShowUnreadBadge(enabled)
     }

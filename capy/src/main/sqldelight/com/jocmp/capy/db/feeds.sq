@@ -113,6 +113,9 @@ UPDATE feeds SET enable_notifications = :enabled WHERE feeds.id = :feedID;
 toggleAllNotifications:
 UPDATE feeds SET enable_notifications = :enabled;
 
+updateImportance:
+UPDATE feeds SET importance = :importance WHERE id = :feedID;
+
 updateShowUnreadBadge:
 UPDATE feeds SET show_unread_badge = :enabled WHERE id = :feedID;
 
