@@ -23,12 +23,17 @@ data class Article(
     val enableStickyFullContent: Boolean = false,
     val openInBrowser: Boolean = false,
     val fullContent: FullContentState = FullContentState.NONE,
-    val content: String = contentHTML.ifBlank { summary },
+    val offlineHTML: String? = null,
+    val isAvailableOffline: Boolean = !offlineHTML.isNullOrBlank(),
+    val content: String = offlineHTML ?: contentHTML.ifBlank { summary },
     val enclosures: List<Enclosure> = emptyList(),
     val enclosureType: EnclosureType? = null,
     val isReadLater: Boolean = false,
 ) {
-    val defaultContent = contentHTML.ifBlank { summary }
+    val hasOfflineContent: Boolean
+        get() = isAvailableOffline
+
+    val defaultContent = offlineHTML?.takeIf { it.isNotBlank() } ?: contentHTML.ifBlank { summary }
 
     val parseFullContent = fullContent == FullContentState.LOADED
 

@@ -45,6 +45,7 @@ import com.capyreader.app.R
 import com.capyreader.app.common.RowItem
 import com.capyreader.app.notifications.Notifications
 import com.capyreader.app.preferences.AfterReadAllBehavior
+import com.capyreader.app.preferences.OfflineCacheLimit
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.CrashReporting
 import com.capyreader.app.ui.components.FormSection
@@ -100,6 +101,8 @@ fun GeneralSettingsPanel(
             enableStickyFullContent = viewModel.enableStickyFullContent,
             markReadOnScroll = viewModel.markReadOnScroll,
             updateMarkReadOnScroll = viewModel::updateMarkReadOnScroll,
+            offlineCacheLimit = viewModel.offlineCacheLimit,
+            updateOfflineCacheLimit = viewModel::updateOfflineCacheLimit,
         )
     }
 }
@@ -125,6 +128,8 @@ fun GeneralSettingsPanelView(
     confirmMarkAllRead: Boolean,
     markReadOnScroll: Boolean,
     updateMarkReadOnScroll: (enable: Boolean) -> Unit,
+    offlineCacheLimit: OfflineCacheLimit,
+    updateOfflineCacheLimit: (OfflineCacheLimit) -> Unit,
 ) {
     val (isClearArticlesDialogOpen, setClearArticlesDialogOpen) = remember { mutableStateOf(false) }
 
@@ -189,6 +194,13 @@ fun GeneralSettingsPanelView(
                     subtitle = stringResource(R.string.settings_option_full_content_subtitle)
                 )
             }
+            PreferenceSelect(
+                selected = offlineCacheLimit,
+                update = updateOfflineCacheLimit,
+                options = OfflineCacheLimit.entries,
+                label = R.string.settings_offline_cache_title,
+                optionText = { offlineCacheLimitLabel(it) },
+            )
         }
 
         FormSection(
@@ -370,7 +382,24 @@ private fun GeneralSettingsPanelPreview() {
                 updateAfterReadAll = {},
                 markReadOnScroll = false,
                 updateMarkReadOnScroll = {},
+                offlineCacheLimit = OfflineCacheLimit.default,
+                updateOfflineCacheLimit = {},
             )
         }
     }
 }
+
+@Composable
+private fun offlineCacheLimitLabel(limit: OfflineCacheLimit): String =
+    when (limit) {
+        OfflineCacheLimit.UNLIMITED ->
+            stringResource(R.string.settings_offline_cache_unlimited)
+        OfflineCacheLimit.MB_200 ->
+            stringResource(R.string.settings_offline_cache_size_megabytes, 200)
+        OfflineCacheLimit.MB_500 ->
+            stringResource(R.string.settings_offline_cache_size_megabytes, 500)
+        OfflineCacheLimit.GB_1 ->
+            stringResource(R.string.settings_offline_cache_size_gigabytes, 1.0f)
+        OfflineCacheLimit.GB_2 ->
+            stringResource(R.string.settings_offline_cache_size_gigabytes, 2.0f)
+    }

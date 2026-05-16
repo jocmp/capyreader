@@ -50,6 +50,13 @@ fun FeedActionMenu(
         }
     }
 
+    fun onToggleCacheOffline() {
+        onDismissMenuRequest()
+        scope.launchUI {
+            actions.toggleCacheOffline(feed.id, !feed.cacheOffline)
+        }
+    }
+
     DropdownMenu(
         expanded = expanded,
         onDismissRequest = onDismissMenuRequest,
@@ -65,6 +72,9 @@ fun FeedActionMenu(
             },
             onToggleUnreadBadge = {
                 onToggleUnreadBadge()
+            },
+            onToggleCacheOffline = {
+                onToggleCacheOffline()
             },
             onMarkAllRead = onMarkAllRead,
             showMarkAllRead = showMarkAllRead,

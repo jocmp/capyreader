@@ -1,5 +1,6 @@
 package com.capyreader.app.ui.articles
 
+import android.net.Uri
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -90,6 +91,7 @@ import com.capyreader.app.ui.provideLinkOpener
 import com.capyreader.app.ui.rememberDisplayTimeFormats
 import com.capyreader.app.ui.rememberLazyListState
 import com.capyreader.app.ui.rememberLocalConnectivity
+import com.jocmp.capy.Account
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
@@ -223,6 +225,7 @@ fun ArticleScreen(
         var media by rememberSaveable(saver = Media.Saver) { mutableStateOf(null) }
         val audioController: AudioPlayerController = koinInject()
         val audioEnclosure by audioController.currentAudio.collectAsState()
+        val offlineAccount = koinInject<Account>()
         val focusManager = LocalFocusManager.current
         val openUpdatePasswordDialog = {
             viewModel.dismissUnauthorizedMessage()
@@ -647,7 +650,12 @@ fun ArticleScreen(
                         },
                         onSelectMedia = { media = it },
                         onSelectAudio = { audio ->
-                            audioController.play(audio)
+                            val resolvedUrl = article?.let { current ->
+                                offlineAccount.offlineAsset(current.id, audio.url)
+                                    ?.file
+                                    ?.let { Uri.fromFile(it).toString() }
+                            } ?: audio.url
+                            audioController.play(audio.copy(url = resolvedUrl))
                         },
                         onPauseAudio = {
                             audioController.pause()
@@ -814,7 +822,10 @@ fun rememberFeedActions(viewModel: ArticleScreenViewModel): FeedActions {
             },
             reloadIcon = { feedID ->
                 viewModel.reloadFavicon(feedID)
-            }
+            },
+            toggleCacheOffline = { feedID, enabled ->
+                viewModel.toggleCacheOffline(feedID, enabled)
+            },
         )
     }
 }

@@ -29,6 +29,9 @@ class ArticleMapperTest {
             updatedAt = 1703960809,
             starred = false,
             read = false,
+            offlineHtml = null,
+            offlineCachedAt = null,
+            offlineAttemptedAt = null,
         )
 
         val expectedTime = ZonedDateTime.of(

@@ -356,6 +356,12 @@
     <string name="badge_style_simple">Simple</string>
     <string name="badge_style_exact">Exact</string>
     <string name="show_unread_badge">Show Unread Badge</string>
+    <string name="feed_action_cache_offline">Save for Offline</string>
+    <string name="settings_offline_cache_title">Offline cache limit</string>
+    <string name="settings_offline_cache_subtitle">%1$s on disk</string>
+    <string name="settings_offline_cache_unlimited">Unlimited</string>
+    <string name="settings_offline_cache_size_megabytes">%1$d MB</string>
+    <string name="settings_offline_cache_size_gigabytes">%1$.1f GB</string>
     <string name="article_actions_save_externally">Save</string>
     <string name="article_actions_save_externally_success">Saved</string>
     <string name="article_actions_save_externally_failure">Failed to save</string>

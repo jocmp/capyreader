@@ -15,6 +15,8 @@ import com.capyreader.app.notifications.NotificationHelper
 import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleListVerticalSwipe
+import com.capyreader.app.refresher.FeedRefresher
+import com.capyreader.app.refresher.OfflineDownloadWorker
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.feeds.AngleRefreshState
 import com.capyreader.app.ui.components.SearchState
@@ -60,6 +62,7 @@ class ArticleScreenViewModel(
     private val appPreferences: AppPreferences,
     private val application: Application,
     private val notificationHelper: NotificationHelper,
+    private val feedRefresher: FeedRefresher,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
     private val syncFlushInterval: Duration? = SYNC_FLUSH_INTERVAL,
 ) : AndroidViewModel(application) {
@@ -434,14 +437,10 @@ class ArticleScreenViewModel(
         refreshJob?.cancel()
 
         refreshJob = viewModelScope.launch(ioDispatcher) {
-            account.refresh(filter).onFailure { throwable ->
+            feedRefresher.refresh(filter).onFailure { throwable ->
                 if (throwable is UnauthorizedError && _showUnauthorizedMessage == UnauthorizedMessageState.HIDE) {
                     _showUnauthorizedMessage = UnauthorizedMessageState.SHOW
                 }
-            }
-
-            launchIO {
-                WidgetUpdater.update(context)
             }
 
             onComplete()
@@ -849,6 +848,15 @@ class ArticleScreenViewModel(
     fun toggleFeedUnreadBadge(feedID: String, enabled: Boolean) {
         viewModelScope.launchIO {
             account.toggleFeedUnreadBadge(feedID, enabled)
+        }
+    }
+
+    fun toggleCacheOffline(feedID: String, enabled: Boolean) {
+        viewModelScope.launchIO {
+            account.updateCacheOffline(feedID, enabled)
+            if (enabled) {
+                OfflineDownloadWorker.enqueue(application.applicationContext)
+            }
         }
     }
 

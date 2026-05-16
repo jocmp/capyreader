@@ -17,6 +17,8 @@ import com.jocmp.capy.accounts.local.LocalAccountDelegate
 import com.jocmp.capy.accounts.miniflux.MinifluxAccountDelegate
 import com.jocmp.capy.accounts.reader.buildReaderDelegate
 import com.jocmp.capy.articles.MercuryParser
+import com.jocmp.capy.offline.OfflineAssetStore
+import com.jocmp.capy.offline.OfflineDownloader
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.sortedByName
@@ -115,6 +117,42 @@ data class Account(
     private val feedFinder: FeedFinder by lazy { DefaultFeedFinder(localHttpClient) }
 
     private val mercuryParser = MercuryParser(localHttpClient, userAgent, acceptLanguage)
+
+    private val offlineAssetStore: OfflineAssetStore by lazy {
+        OfflineAssetStore(rootDir = java.io.File(cacheDirectory.path, "offline"))
+    }
+
+    suspend fun downloadOfflineQueue(
+        maxArticles: Int,
+        cacheLimitBytes: Long,
+        cacheBufferBytes: Long,
+        perAssetMaxBytes: Long,
+        retryAfterSeconds: Long,
+    ): Result<Int> = try {
+        val downloader = OfflineDownloader(
+            database = database,
+            mercuryParser = mercuryParser,
+            httpClient = localHttpClient,
+            assetStore = offlineAssetStore,
+            perAssetMaxBytes = perAssetMaxBytes,
+            retryAfterSeconds = retryAfterSeconds,
+        )
+        Result.success(downloader.run(maxArticles, cacheLimitBytes, cacheBufferBytes))
+    } catch (e: Throwable) {
+        CapyLog.error("offline_download", e)
+        Result.failure(e)
+    }
+
+    data class OfflineAsset(val file: java.io.File, val mimeType: String?)
+
+    fun offlineAsset(articleID: String, remoteUrl: String): OfflineAsset? {
+        val file = offlineAssetStore.fileFor(articleID, remoteUrl)
+        if (!file.exists()) return null
+        val row = database.offline_assetsQueries
+            .findByUrl(articleID = articleID, remoteURL = remoteUrl)
+            .executeAsOneOrNull()
+        return OfflineAsset(file = file, mimeType = row?.mime_type)
+    }
 
     val taggedFeeds = feedRecords.taggedFeeds().map {
         it.sortedByTitle()
@@ -466,6 +504,10 @@ data class Account(
 
     suspend fun updateOpenInBrowser(feedID: String, enabled: Boolean) {
         feedRecords.updateOpenInBrowser(feedID, enabled)
+    }
+
+    suspend fun updateCacheOffline(feedID: String, enabled: Boolean) {
+        feedRecords.updateCacheOffline(feedID, enabled)
     }
 
     suspend fun toggleFeedUnreadBadge(feedID: String, enabled: Boolean) {

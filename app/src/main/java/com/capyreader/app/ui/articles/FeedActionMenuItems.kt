@@ -27,6 +27,7 @@ fun FeedActionMenuItems(
     onReloadIcon: () -> Unit,
     onToggleOpenInBrowser: () -> Unit,
     onToggleUnreadBadge: () -> Unit,
+    onToggleCacheOffline: () -> Unit,
     onMarkAllRead: () -> Unit,
     showMarkAllRead: Boolean = true,
     showReloadIcon: Boolean = false,
@@ -91,6 +92,20 @@ fun FeedActionMenuItems(
         },
         onClick = onToggleOpenInBrowser
     )
+    val cacheOfflineIcon = @Composable {
+        if (feed.cacheOffline) {
+            Icon(Icons.Rounded.CheckBox, contentDescription = null)
+        } else {
+            Icon(Icons.Rounded.CheckBoxOutlineBlank, contentDescription = null)
+        }
+    }
+    DropdownMenuItem(
+        trailingIcon = cacheOfflineIcon,
+        text = {
+            Text(stringResource(R.string.feed_action_cache_offline))
+        },
+        onClick = onToggleCacheOffline,
+    )
     if (LocalBadgeStyle.current == BadgeStyle.SIMPLE) {
         val unreadBadgeIcon = @Composable {
             if (feed.showUnreadBadge) {
@@ -121,6 +136,7 @@ fun FeedActionMenuPreview(@PreviewParameter(FeedSample::class) feed: Feed) {
             onRemoveRequest = {},
             onToggleOpenInBrowser = {},
             onToggleUnreadBadge = {},
+            onToggleCacheOffline = {},
             onMarkAllRead = {},
         )
     }

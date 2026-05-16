@@ -13,6 +13,9 @@ JOIN articles ON articles.id = enclosures.article_id
 JOIN feeds ON feeds.id = articles.feed_id
 WHERE articles.id = :articleID;
 
+findUrlsByArticleID:
+SELECT url FROM enclosures WHERE article_id = :articleID;
+
 create:
 INSERT INTO enclosures(
      url,

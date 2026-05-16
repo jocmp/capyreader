@@ -26,6 +26,7 @@ import com.capyreader.app.ui.LocalTimeFormats
 import com.capyreader.app.ui.articles.detail.articleTemplateColors
 import com.capyreader.app.ui.articles.detail.byline
 import com.capyreader.app.ui.articles.displayFeedName
+import com.jocmp.capy.Account
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.ArticleRenderer
 import com.jocmp.capy.common.DisplayTimeFormats
@@ -59,12 +60,16 @@ class AccompanistWebViewClient(
     private val assetLoader: WebViewAssetLoader,
     private val onOpenLink: (url: Uri) -> Unit,
     private val httpClient: OkHttpClient,
+    private val account: Account,
 ) : WebViewClient(),
     KoinComponent {
     lateinit var state: WebViewState
         internal set
 
     var pageUrl: String? = null
+        internal set
+
+    var offlineArticleId: String? = null
         internal set
 
     override fun shouldInterceptRequest(
@@ -79,11 +84,45 @@ class AccompanistWebViewClient(
             return asset
         }
 
+        offlineAssetResponse(request)?.let { return it }
+
         if (!shouldProxyRequest(request)) {
             return null
         }
 
         return proxyRequest(request)
+    }
+
+    private fun offlineAssetResponse(request: WebResourceRequest): WebResourceResponse? {
+        val articleId = offlineArticleId ?: return null
+        val raw = request.url?.toString() ?: return null
+        if (!raw.startsWith("http")) return null
+        // Fragments (e.g. `#t=0.001` on a <video src>) are client-side only and
+        // don't appear in the cached asset key.
+        val url = raw.substringBefore('#')
+        val asset = account.offlineAsset(articleId, url) ?: return null
+        val mime = asset.mimeType ?: guessMimeFromUrl(url) ?: "application/octet-stream"
+        return WebResourceResponse(
+            mime,
+            null,
+            200,
+            "OK",
+            mapOf("Access-Control-Allow-Origin" to "*"),
+            asset.file.inputStream(),
+        )
+    }
+
+    private fun guessMimeFromUrl(url: String): String? {
+        val lower = url.substringBefore('?').lowercase()
+        return when {
+            lower.endsWith(".jpg") || lower.endsWith(".jpeg") -> "image/jpeg"
+            lower.endsWith(".png") -> "image/png"
+            lower.endsWith(".gif") -> "image/gif"
+            lower.endsWith(".webp") -> "image/webp"
+            lower.endsWith(".mp4") -> "video/mp4"
+            lower.endsWith(".webm") -> "video/webm"
+            else -> null
+        }
     }
 
     private fun shouldProxyRequest(request: WebResourceRequest) =
@@ -133,7 +172,11 @@ class AccompanistWebViewClient(
                 response.body.byteStream()
             )
         } catch (e: Exception) {
-            CapyLog.error("webview_intercept_request", e)
+            CapyLog.error(
+                event = "webview_intercept_request",
+                error = e,
+                data = mapOf("url" to request.url?.toString()),
+            )
             null
         }
     }
@@ -179,6 +222,7 @@ class WebViewState(
 
         val client = webView.webViewClient as? AccompanistWebViewClient
         client?.pageUrl = article.url?.toString()
+        client?.offlineArticleId = if (article.hasOfflineContent) article.id else null
 
         val html = renderer.render(
             article,
@@ -252,6 +296,7 @@ fun rememberWebViewState(
         null
     }
 
+    val account = koinInject<Account>()
     val client = remember {
         AccompanistWebViewClient(
             assetLoader = WebViewAssetLoader.Builder()
@@ -260,6 +305,7 @@ fun rememberWebViewState(
                 .build(),
             onOpenLink = onOpenLink,
             httpClient = httpClient,
+            account = account,
         )
     }
 
@@ -270,6 +316,13 @@ fun rememberWebViewState(
             onRequestImageDialog = onRequestImageDialog,
             onOpenAudioPlayer = onOpenAudioPlayer,
             onPauseAudio = onPauseAudio,
+            resolveOfflineUrl = { url ->
+                client.offlineArticleId?.let { articleId ->
+                    account.offlineAsset(articleId, url)?.file?.let { file ->
+                        Uri.fromFile(file).toString()
+                    }
+                }
+            },
         )
 
         val webView = WebView(context).apply {

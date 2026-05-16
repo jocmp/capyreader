@@ -9,4 +9,5 @@ data class FeedActions(
     val removeFeed: (feedID: String) -> Unit = {},
     val toggleUnreadBadge: (feedID: String, show: Boolean) -> Unit = { _, _ -> },
     val reloadIcon: (feedID: String) -> Unit = {},
+    val toggleCacheOffline: (feedID: String, enabled: Boolean) -> Unit = { _, _ -> },
 )

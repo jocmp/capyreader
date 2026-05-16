@@ -285,6 +285,36 @@ deletePageByID {
 findIDsByFeed:
 SELECT id FROM articles WHERE feed_id = :feedID;
 
+findOfflineCandidates:
+SELECT articles.id, articles.url, articles.content_html
+FROM articles
+JOIN feeds ON articles.feed_id = feeds.id
+WHERE feeds.cache_offline = 1
+  AND articles.offline_html IS NULL
+  AND articles.url IS NOT NULL
+  AND (articles.offline_attempted_at IS NULL OR articles.offline_attempted_at < :retryCutoff)
+ORDER BY articles.published_at DESC
+LIMIT :limit;
+
+setOfflineContent:
+UPDATE articles
+SET offline_html = :html,
+    offline_cached_at = :cachedAt,
+    offline_attempted_at = NULL
+WHERE id = :articleID;
+
+setOfflineAttempted:
+UPDATE articles
+SET offline_attempted_at = :attemptedAt
+WHERE id = :articleID;
+
+clearOfflineContent:
+UPDATE articles
+SET offline_html = NULL,
+    offline_cached_at = NULL,
+    offline_attempted_at = NULL
+WHERE id = :articleID;
+
 deleteArticlesByID {
   DELETE FROM article_statuses WHERE article_id IN :articleIDs;
   DELETE FROM saved_search_articles WHERE article_id IN :articleIDs;

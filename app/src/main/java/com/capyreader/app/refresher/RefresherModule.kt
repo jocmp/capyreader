@@ -7,4 +7,5 @@ val refresherModule = module {
     single { FeedRefresher(account = get(), get(), get()) }
     single { RefreshScheduler(get(), get()) }
     worker { RefreshFeedsWorker(get(), get()) }
+    worker { OfflineDownloadWorker(get(), get()) }
 }

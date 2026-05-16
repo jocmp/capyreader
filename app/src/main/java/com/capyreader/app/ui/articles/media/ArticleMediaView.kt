@@ -59,10 +59,10 @@ import com.capyreader.app.preferredMaxWidth
 import com.capyreader.app.ui.EdgeToEdgeHelper.isEdgeToEdgeAvailable
 import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.components.LoadingView
+import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.capyreader.app.ui.components.Swiper
 import com.capyreader.app.ui.components.rememberSwiperState
 import com.capyreader.app.ui.isCompact
-import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.capyreader.app.ui.theme.CapyTheme
 import com.capyreader.app.ui.theme.findStatusBarColor
 import com.capyreader.app.ui.theme.showAppearanceLightStatusBars
@@ -194,7 +194,12 @@ private fun ImagePage(
         if (!imageState.isImageDisplayed && !showError) {
             LoadingView()
         } else if (showError) {
-            ImageErrorView()
+            Box(
+                Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
+                ImageErrorView()
+            }
         }
     }
 }

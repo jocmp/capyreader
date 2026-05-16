@@ -1,0 +1,20 @@
+import kotlin.Boolean;
+
+ALTER TABLE feeds ADD COLUMN cache_offline INTEGER AS Boolean NOT NULL DEFAULT 0;
+
+ALTER TABLE articles ADD COLUMN offline_html TEXT;
+ALTER TABLE articles ADD COLUMN offline_cached_at INTEGER;
+ALTER TABLE articles ADD COLUMN offline_attempted_at INTEGER;
+
+CREATE TABLE offline_assets (
+  article_id TEXT NOT NULL,
+  remote_url TEXT NOT NULL,
+  local_path TEXT NOT NULL,
+  mime_type TEXT,
+  size_bytes INTEGER NOT NULL,
+  created_at INTEGER NOT NULL,
+  PRIMARY KEY (article_id, remote_url)
+);
+
+CREATE INDEX offline_assets_article_id ON offline_assets(article_id);
+CREATE INDEX articles_offline_cached_at ON articles(offline_cached_at);

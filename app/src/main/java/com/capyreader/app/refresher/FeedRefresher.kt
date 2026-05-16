@@ -4,6 +4,7 @@ import android.content.Context
 import com.capyreader.app.notifications.NotificationHelper
 import com.capyreader.app.ui.widget.WidgetUpdater
 import com.jocmp.capy.Account
+import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.common.TimeHelpers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -14,13 +15,15 @@ class FeedRefresher(
     private val appContext: Context,
     private val notificationHelper: NotificationHelper,
 ): KoinComponent {
-    suspend fun refresh() {
+    suspend fun refresh(filter: ArticleFilter = ArticleFilter.default()): Result<Unit> {
         val since = TimeHelpers.nowUTC()
 
         return withContext(Dispatchers.IO) {
-            account.refresh()
+            val result = account.refresh(filter)
             notificationHelper.notify(since = since)
             WidgetUpdater.update(appContext)
+            OfflineDownloadWorker.enqueue(appContext)
+            result
         }
     }
 }

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
+import com.capyreader.app.preferences.OfflineCacheLimit
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.refresher.RefreshScheduler
 import com.jocmp.capy.Account
@@ -46,6 +47,11 @@ class GeneralSettingsViewModel(
         private set
 
     var markReadOnScroll by mutableStateOf(appPreferences.articleListOptions.markReadOnScroll.get())
+        private set
+
+    var offlineCacheLimit by mutableStateOf(
+        OfflineCacheLimit.forBytes(appPreferences.offlineCacheLimitBytes.get())
+    )
         private set
 
     val filterKeywords = account
@@ -105,6 +111,11 @@ class GeneralSettingsViewModel(
                 account.clearStickyFullContent()
             }
         }
+    }
+
+    fun updateOfflineCacheLimit(limit: OfflineCacheLimit) {
+        appPreferences.offlineCacheLimitBytes.set(limit.bytes)
+        offlineCacheLimit = limit
     }
 
     fun clearAllArticles() {

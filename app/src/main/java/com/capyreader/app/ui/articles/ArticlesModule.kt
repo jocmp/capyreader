@@ -55,6 +55,7 @@ internal val articlesModule = module {
             appPreferences = appPreferences,
             notificationHelper = get(),
             application = get(),
+            feedRefresher = get(),
         )
     }
     viewModel {

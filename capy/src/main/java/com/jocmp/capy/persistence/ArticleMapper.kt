@@ -17,6 +17,9 @@ internal fun articleMapper(
     imageURL: String?,
     publishedAt: Long?,
     enclosureType: String?,
+    offlineHtml: String?,
+    offlineCachedAt: Long?,
+    offlineAttemptedAt: Long?,
     feedTitle: String?,
     faviconURL: String?,
     enableStickyContent: Boolean,
@@ -26,7 +29,9 @@ internal fun articleMapper(
     updatedAt: Long?,
     starred: Boolean,
     read: Boolean,
+    isAvailableOffline: Boolean = offlineHtml?.isNotBlank() == true,
 ): Article {
+    val offline = offlineHtml?.takeIf { it.isNotBlank() }
     return Article(
         id = id,
         feedID = feedID.toString(),
@@ -47,6 +52,8 @@ internal fun articleMapper(
         enableStickyFullContent = enableStickyContent,
         openInBrowser = openInBrowser,
         enclosureType = EnclosureType.from(enclosureType),
+        offlineHTML = offline,
+        isAvailableOffline = isAvailableOffline,
     )
 }
 
@@ -60,6 +67,7 @@ internal fun listMapper(
     imageURL: String?,
     publishedAt: Long?,
     enclosureType: String?,
+    isAvailableOffline: Boolean,
     feedTitle: String?,
     faviconURL: String?,
     openInBrowser: Boolean,
@@ -74,6 +82,7 @@ internal fun listMapper(
         author = author,
         contentHtml = "",
         extractedContentURL = null,
+        isAvailableOffline = isAvailableOffline,
         url = url,
         summary = if (!summary.isNullOrBlank()) {
             summary
@@ -85,6 +94,9 @@ internal fun listMapper(
         imageURL = imageURL,
         publishedAt = publishedAt,
         enclosureType = enclosureType,
+        offlineHtml = null,
+        offlineCachedAt = null,
+        offlineAttemptedAt = null,
         feedTitle = feedTitle,
         faviconURL = faviconURL,
         enableStickyContent = false,

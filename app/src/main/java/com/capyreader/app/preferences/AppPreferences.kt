@@ -19,6 +19,15 @@ import com.jocmp.capy.preferences.PreferenceStore
 import com.jocmp.capy.preferences.getEnum
 import kotlinx.serialization.json.Json
 
+private const val MB: Long = 1024L * 1024L
+internal const val DEFAULT_OFFLINE_CACHE_LIMIT_BYTES: Long = 500L * MB
+internal const val MIN_OFFLINE_CACHE_LIMIT_BYTES: Long = 200L * MB
+internal const val MAX_OFFLINE_CACHE_LIMIT_BYTES: Long = 2L * 1024L * MB
+internal const val OFFLINE_CACHE_BUFFER_BYTES: Long = 50L * MB
+internal const val OFFLINE_PER_ASSET_MAX_BYTES: Long = 100L * MB
+internal const val OFFLINE_CACHE_UNLIMITED: Long = 0L
+internal const val OFFLINE_RETRY_AFTER_SECONDS: Long = 24L * 60L * 60L
+
 class AppPreferences(context: Context) {
     private val preferenceStore: PreferenceStore = AndroidPreferenceStore(
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -81,6 +90,12 @@ class AppPreferences(context: Context) {
 
     val badgeStyle: Preference<BadgeStyle>
         get() = preferenceStore.getEnum("badge_style", BadgeStyle.default)
+
+    /**
+     * Disk cap for the offline article cache in bytes. 0 means unlimited.
+     */
+    val offlineCacheLimitBytes: Preference<Long>
+        get() = preferenceStore.getLong("offline_cache_limit_bytes", DEFAULT_OFFLINE_CACHE_LIMIT_BYTES)
 
     fun clearAll() {
         preferenceStore.clearAll()

@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.DownloadDone
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.Icon
@@ -57,21 +58,21 @@ import com.capyreader.app.R
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.preferences.AppTheme
 import com.capyreader.app.preferences.ThemeMode
+import com.capyreader.app.ui.LocalTimeFormats
 import com.capyreader.app.ui.articles.list.ArticleActionMenu
 import com.capyreader.app.ui.articles.list.ArticleListItem
-import com.capyreader.app.ui.LocalTimeFormats
 import com.capyreader.app.ui.articles.list.ArticleRowSwipeBox
+import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.capyreader.app.ui.fixtures.ArticleSample
 import com.capyreader.app.ui.fixtures.PreviewKoinApplication
-import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.capyreader.app.ui.theme.CapyTheme
 import com.capyreader.app.ui.theme.LocalAppTheme
 import com.jocmp.capy.Article
 import com.jocmp.capy.EnclosureType
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.articles.relativeTime
-import java.net.URL
 import kotlinx.coroutines.launch
+import java.net.URL
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
@@ -162,6 +163,15 @@ fun ArticleRow(
                             horizontalArrangement = Arrangement.spacedBy(2.dp),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
+                            if (article.hasOfflineContent) {
+                                Icon(
+                                    Icons.Rounded.DownloadDone,
+                                    contentDescription = null,
+                                    tint = feedNameColor,
+                                    modifier = Modifier
+                                        .width(12.dp.relative(options.fontScale))
+                                )
+                            }
                             if (article.starred) {
                                 Icon(
                                     Icons.Rounded.Star,

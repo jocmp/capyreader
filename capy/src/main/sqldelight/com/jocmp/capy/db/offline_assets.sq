@@ -1,0 +1,32 @@
+findByArticle:
+SELECT * FROM offline_assets WHERE article_id = :articleID;
+
+findByUrl:
+SELECT * FROM offline_assets WHERE article_id = :articleID AND remote_url = :remoteURL LIMIT 1;
+
+upsert:
+INSERT INTO offline_assets(article_id, remote_url, local_path, mime_type, size_bytes, created_at)
+VALUES (:articleID, :remoteURL, :localPath, :mimeType, :sizeBytes, :createdAt)
+ON CONFLICT(article_id, remote_url) DO UPDATE
+SET
+  local_path = excluded.local_path,
+  mime_type = excluded.mime_type,
+  size_bytes = excluded.size_bytes,
+  created_at = excluded.created_at;
+
+totalSizeBytes:
+SELECT COALESCE(SUM(size_bytes), 0) AS total_bytes FROM offline_assets;
+
+deleteByArticle:
+DELETE FROM offline_assets WHERE article_id = :articleID;
+
+deleteByArticles:
+DELETE FROM offline_assets WHERE article_id IN :articleIDs;
+
+oldestCachedArticles:
+SELECT articles.id, articles.published_at, COALESCE(SUM(offline_assets.size_bytes), 0) AS total_bytes
+FROM articles
+LEFT JOIN offline_assets ON offline_assets.article_id = articles.id
+WHERE articles.offline_html IS NOT NULL
+GROUP BY articles.id
+ORDER BY articles.published_at ASC;

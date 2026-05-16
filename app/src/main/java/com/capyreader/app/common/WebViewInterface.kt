@@ -12,6 +12,7 @@ class WebViewInterface(
     private val onRequestImageDialog: (imageUrl: String) -> Unit = {},
     private val onOpenAudioPlayer: (audio: AudioEnclosure) -> Unit = {},
     private val onPauseAudio: () -> Unit = {},
+    private val resolveOfflineUrl: (url: String) -> String? = { null },
 ) {
     var onRequestAudioState: () -> Unit = {}
     @JavascriptInterface
@@ -19,6 +20,10 @@ class WebViewInterface(
         try {
             val mediaItems = Json.decodeFromString<List<MediaItem>>(imagesJson)
                 .filter { optionalURL(it.url) != null }
+                .map { item ->
+                    val resolved = resolveOfflineUrl(item.url)
+                    if (resolved != null) item.copy(url = resolved) else item
+                }
 
             if (mediaItems.isNotEmpty()) {
                 val index = clickedIndex.coerceIn(0, mediaItems.size - 1)
