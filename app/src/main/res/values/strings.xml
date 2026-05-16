@@ -140,6 +140,8 @@
     <string name="notification_mark_as_read_action">Mark as read</string>
     <string name="settings_section_privacy">Privacy</string>
     <string name="settings_section_refresh">Last Updated</string>
+    <string name="settings_refresh_on_wifi_only">Refresh on Wi-Fi only</string>
+    <string name="refresh_skipped_mobile">Refresh skipped on mobile network</string>
     <string name="opml_import_button_text">Import from File</string>
     <string name="opml_export_button_text">Export to OPML</string>
     <string name="opml_import_progress_content_text_start">Starting import</string>
