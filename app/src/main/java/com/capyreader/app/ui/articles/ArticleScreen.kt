@@ -266,6 +266,19 @@ fun ArticleScreen(
             saver = ArticleFilter.Saver
         ) { mutableStateOf(null) }
 
+        LaunchedEffect(viewModel.refreshSkipReason) {
+            val reason = viewModel.refreshSkipReason ?: return@LaunchedEffect
+            val message = when (reason) {
+                RefreshSkipReason.Mobile -> context.getString(R.string.refresh_skipped_mobile)
+            }
+            snackbarHostState.showSnackbar(
+                message = message,
+                withDismissAction = true,
+                duration = SnackbarDuration.Short,
+            )
+            viewModel.clearRefreshSkipReason()
+        }
+
         LaunchedEffect(filter, articles.loadState.refresh) {
             val refreshComplete = articles.loadState.refresh is LoadState.NotLoading
             if (refreshComplete && filter != scrolledFilter) {

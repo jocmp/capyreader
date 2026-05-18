@@ -10,6 +10,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import com.capyreader.app.R
+import com.capyreader.app.common.isOnWifi
 import com.capyreader.app.common.toast
 import com.capyreader.app.notifications.NotificationHelper
 import com.capyreader.app.preferences.AfterReadAllBehavior
@@ -66,6 +67,13 @@ class ArticleScreenViewModel(
     private var refreshJob: Job? = null
 
     private var fullContentJob: Job? = null
+
+    var refreshSkipReason by mutableStateOf<RefreshSkipReason?>(null)
+        private set
+
+    fun clearRefreshSkipReason() {
+        refreshSkipReason = null
+    }
 
     val filter = appPreferences.filter.stateIn(viewModelScope)
 
@@ -434,6 +442,13 @@ class ArticleScreenViewModel(
         refreshJob?.cancel()
 
         refreshJob = viewModelScope.launch(ioDispatcher) {
+            if (appPreferences.refreshOnWiFiOnly.get() && !application.isOnWifi()) {
+                CapyLog.info("refresh_skipped_mobile", mapOf("type" to "foreground"))
+                refreshSkipReason = RefreshSkipReason.Mobile
+                onComplete()
+                return@launch
+            }
+
             account.refresh(filter).onFailure { throwable ->
                 if (throwable is UnauthorizedError && _showUnauthorizedMessage == UnauthorizedMessageState.HIDE) {
                     _showUnauthorizedMessage = UnauthorizedMessageState.SHOW

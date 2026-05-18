@@ -85,6 +85,8 @@ fun GeneralSettingsPanel(
             onNavigateToNotifications = onNavigateToNotifications,
             refreshInterval = viewModel.refreshInterval,
             updateRefreshInterval = viewModel::updateRefreshInterval,
+            refreshOnWiFiOnly = viewModel.refreshOnWiFiOnly,
+            updateRefreshOnWiFiOnly = viewModel::updateRefreshOnWiFiOnly,
             canOpenLinksInternally = viewModel.canOpenLinksInternally,
             updateOpenLinksInternally = viewModel::updateOpenLinksInternally,
             updateAutoDelete = viewModel::updateAutoDelete,
@@ -111,6 +113,8 @@ fun GeneralSettingsPanelView(
     onClearArticles: () -> Unit,
     refreshInterval: RefreshInterval,
     updateRefreshInterval: (RefreshInterval) -> Unit,
+    refreshOnWiFiOnly: Boolean,
+    updateRefreshOnWiFiOnly: (enabled: Boolean) -> Unit,
     canOpenLinksInternally: Boolean,
     updateOpenLinksInternally: (canOpenLinksInternally: Boolean) -> Unit,
     updateAutoDelete: (AutoDelete) -> Unit,
@@ -152,6 +156,13 @@ fun GeneralSettingsPanelView(
                     refreshInterval = refreshInterval,
                     updateRefreshInterval = updateRefreshInterval,
                 )
+                RowItem {
+                    TextSwitch(
+                        checked = refreshOnWiFiOnly,
+                        onCheckedChange = updateRefreshOnWiFiOnly,
+                        title = stringResource(R.string.settings_refresh_on_wifi_only),
+                    )
+                }
                 NotificationsListItem(
                     onNavigate = onNavigateToNotifications,
                     refreshInterval = refreshInterval,
@@ -354,6 +365,8 @@ private fun GeneralSettingsPanelPreview() {
                 source = Source.LOCAL,
                 refreshInterval = RefreshInterval.EVERY_HOUR,
                 updateRefreshInterval = {},
+                refreshOnWiFiOnly = false,
+                updateRefreshOnWiFiOnly = {},
                 canOpenLinksInternally = false,
                 onClearArticles = {},
                 updateOpenLinksInternally = {},

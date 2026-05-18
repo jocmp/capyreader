@@ -48,6 +48,14 @@ class GeneralSettingsViewModel(
     var markReadOnScroll by mutableStateOf(appPreferences.articleListOptions.markReadOnScroll.get())
         private set
 
+    var refreshOnWiFiOnly by mutableStateOf(appPreferences.refreshOnWiFiOnly.get())
+        private set
+
+    fun updateRefreshOnWiFiOnly(enabled: Boolean) {
+        appPreferences.refreshOnWiFiOnly.set(enabled)
+        refreshOnWiFiOnly = enabled
+    }
+
     val filterKeywords = account
         .preferences
         .filterKeywords
