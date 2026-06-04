@@ -353,4 +353,6 @@
     <string name="freshrss_visibility_option_main">Flux principal</string>
     <string name="widget_spotlight_see_all">Tout voir</string>
     <string name="article_list_new_articles_pill">Nouveaux articles</string>
+    <string name="settings_refresh_on_wifi_only">Actualiser en Wi-Fi uniquement</string>
+    <string name="refresh_skipped_mobile">Actualisation ignorée sur le réseau mobile</string>
 </resources>
