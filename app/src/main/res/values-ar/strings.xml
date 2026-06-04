@@ -356,4 +356,6 @@
     <string name="freshrss_visibility_option_main">التيار الرئيسي</string>
     <string name="widget_spotlight_see_all">أظهر الكل</string>
     <string name="article_list_new_articles_pill">مقالات جديدة</string>
+    <string name="settings_refresh_on_wifi_only">التحديث عبر شبكة Wi-Fi فقط</string>
+    <string name="refresh_skipped_mobile">تخطي التحديث عبر شبكة الجوّال</string>
 </resources>
