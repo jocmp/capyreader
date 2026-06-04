@@ -349,4 +349,6 @@
     <string name="freshrss_visibility_option_main">Cronoloxía principal</string>
     <string name="widget_spotlight_see_all">Ver todo</string>
     <string name="article_list_new_articles_pill">Novos artigos</string>
+    <string name="settings_refresh_on_wifi_only">Actualizar só con Wi-Fi</string>
+    <string name="refresh_skipped_mobile">Omítese a actualización usando rede móbil</string>
 </resources>
