@@ -355,4 +355,6 @@
     <string name="freshrss_visibility_option_main">Põhiline uudisvoog</string>
     <string name="widget_spotlight_see_all">Vaata kõiki</string>
     <string name="article_list_new_articles_pill">Uued artiklid</string>
+    <string name="settings_refresh_on_wifi_only">Uuenda andmeid vaid Wifi ühendusega</string>
+    <string name="refresh_skipped_mobile">Mobiilse andmeside puhul jääb andmete uuendamine vahele</string>
 </resources>
