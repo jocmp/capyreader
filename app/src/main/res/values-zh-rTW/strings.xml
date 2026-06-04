@@ -354,4 +354,6 @@
     <string name="delete_folder_error">刪除資料夾時出現錯誤</string>
     <string name="folder_action_edit_error">更新標籤時出現錯誤</string>
     <string name="article_list_new_articles_pill">新文章</string>
+    <string name="settings_refresh_on_wifi_only">僅在 Wi-Fi 上重新整理</string>
+    <string name="refresh_skipped_mobile">已在行動網路上略過重新整理</string>
 </resources>
