@@ -205,7 +205,7 @@
     <string name="settings_section_mark_all_as_read">Alles als gelesen markieren</string>
     <string name="settings_mark_read_on_scroll">Beim Scrollen als gelesen markieren</string>
     <string name="settings_section_browser">Browser</string>
-    <string name="reader_image_visibility_show_on_wifi">Bilder nur bei WLAN-Verbindung zeigen</string>
+    <string name="reader_image_visibility_show_on_wifi">Bilder nur bei einer Wi-Fi-Verbindung anzeigen</string>
     <string name="reader_image_visibility_always_hide">Bilder niemals anzeigen</string>
     <string name="reader_image_visibility_always_show">Bilder immer anzeigen</string>
     <string name="reader_image_visibility_label">Bilder</string>
@@ -349,4 +349,7 @@
     <string name="tag_action_edit_error">Fehler bei der Aktualisierung der Bezeichnung</string>
     <string name="tag_action_edit">Bezeichnung bearbeiten</string>
     <string name="widget_spotlight_see_all">Alle anzeigen</string>
+    <string name="article_list_new_articles_pill">Neue Artikel</string>
+    <string name="freshrss_visibility_option_main">Mainstream</string>
+    <string name="widget_receiver_spotlight_title">Spotlight</string>
 </resources>
