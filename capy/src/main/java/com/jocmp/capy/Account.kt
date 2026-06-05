@@ -16,7 +16,7 @@ import com.jocmp.capy.accounts.forAccount
 import com.jocmp.capy.accounts.local.LocalAccountDelegate
 import com.jocmp.capy.accounts.miniflux.MinifluxAccountDelegate
 import com.jocmp.capy.accounts.reader.buildReaderDelegate
-import com.jocmp.capy.articles.MercuryParser
+import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.sortedByName
@@ -114,7 +114,7 @@ data class Account(
 
     private val feedFinder: FeedFinder by lazy { DefaultFeedFinder(localHttpClient) }
 
-    private val mercuryParser = MercuryParser(localHttpClient, userAgent, acceptLanguage)
+    private val articleContent = ArticleContent(localHttpClient, userAgent, acceptLanguage)
 
     val taggedFeeds = feedRecords.taggedFeeds().map {
         it.sortedByTitle()
@@ -400,7 +400,7 @@ data class Account(
     }
 
     suspend fun fetchFullContent(article: Article): Result<String> {
-        return mercuryParser.fetch(article.url)
+        return articleContent.fetch(article.url)
     }
 
     suspend fun opmlDocument(): String {
