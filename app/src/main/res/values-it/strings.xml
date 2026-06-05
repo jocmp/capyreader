@@ -357,5 +357,5 @@
     <string name="freshrss_visibility_option_main">Flusso principale</string>
     <string name="article_list_new_articles_pill">Nuovi articoli</string>
     <string name="settings_refresh_on_wifi_only">Aggiorna solo tramite Wi-Fi</string>
-    <string name="refresh_skipped_mobile">Aggiornamento tornato sulla rete mobile</string>
+    <string name="refresh_skipped_mobile">Aggiornamento saltato sulla rete mobile</string>
 </resources>

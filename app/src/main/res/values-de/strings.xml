@@ -350,7 +350,7 @@
     <string name="tag_action_edit">Bezeichnung bearbeiten</string>
     <string name="widget_spotlight_see_all">Alle anzeigen</string>
     <string name="article_list_new_articles_pill">Neue Artikel</string>
-    <string name="freshrss_visibility_option_main">Mainstream</string>
+    <string name="freshrss_visibility_option_main">Haupt-Feeds</string>
     <string name="widget_receiver_spotlight_title">Spotlight</string>
     <string name="settings_refresh_on_wifi_only">Nur im WLAN aktualisieren</string>
     <string name="refresh_skipped_mobile">Aktualisierung im Mobilfunknetz übersprungen</string>
