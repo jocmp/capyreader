@@ -354,4 +354,6 @@
     <string name="article_list_swipe_mark_all_read">标记所有为已读</string>
     <string name="widget_spotlight_see_all">查看所有</string>
     <string name="article_list_new_articles_pill">新文章</string>
+    <string name="settings_refresh_on_wifi_only">仅在 Wi-Fi 下刷新</string>
+    <string name="refresh_skipped_mobile">在移动网络下跳过刷新</string>
 </resources>

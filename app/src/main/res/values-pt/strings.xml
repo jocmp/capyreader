@@ -7,11 +7,11 @@
     <string name="feed_action_unsubscribe_confirm">Desinscrever</string>
     <string name="edit_feed_submit">Gravar</string>
     <string name="dialog_cancel">Cancelar</string>
-    <string name="folder_action_delete_title">Apagar etiqueta</string>
+    <string name="folder_action_delete_title">Apagar Pasta</string>
     <string name="folder_action_edit">Renomear</string>
     <string name="add_feed_url_title">URL do Feed ou Site</string>
     <string name="add_feed_name_title">Nome</string>
-    <string name="add_feed_new_folder_title">Nova etiqueta</string>
+    <string name="add_feed_new_folder_title">Nova Pasta</string>
     <string name="add_feed_submit">Adicionar</string>
     <string name="filter_unread">Não lido</string>
     <string name="filter_all">Todos</string>
@@ -127,7 +127,7 @@
     <string name="notifications_channel_title_opml_import">Inscrições Importadas</string>
     <string name="notifications_channel_title_feed_update">Atualizações do Feed</string>
     <string name="settings_section_privacy">Privacidade</string>
-    <string name="settings_section_refresh">Atualizar</string>
+    <string name="settings_section_refresh">Última Atualização</string>
     <string name="opml_import_button_text">Importar de Ficheiro</string>
     <string name="settings_import_progress_placeholder">A importar inscrições…</string>
     <string name="settings_option_in_app_browser">Usar navegador nativo</string>
@@ -237,7 +237,7 @@
     <string name="feed_nav_drawer_title">Feeds</string>
     <string name="search_bar_placeholder">Pesquisar</string>
     <string name="delete_folder_error">Erro ao excluir etiqueta</string>
-    <string name="settings_options_reader_pin_top_toolbar">Fixar no topo a barra de ferramentas</string>
+    <string name="settings_options_reader_pin_top_toolbar">Fixar Barras de Ferramentas</string>
     <plurals name="refresh_hours">
         <item quantity="one">A cada hora</item>
         <item quantity="many">A cada %d horas</item>
@@ -308,4 +308,20 @@
     <string name="add_link_subscribe">Subscrever</string>
     <string name="add_link_feed_added">Feed adicionada</string>
     <string name="add_link_page_saved">Página guardada</string>
+    <string name="folder_action_delete_message">Tem a certeza que quer apagar a etiqueta \"%1$s\"?</string>
+    <string name="add_link_searching">À procura de feeds…</string>
+    <string name="settings_account_refresh_value">%1$s às %2$s</string>
+    <string name="settings_account_refresh_value_today">Hoje às %1$s</string>
+    <string name="settings_account_never_refreshed">Nunca</string>
+    <string name="settings_refresh_on_wifi_only">Atualizar apenas em Wi-Fi</string>
+    <string name="starred_export_button_text">Exportar Artigos Favoritos</string>
+    <string name="starred_exporter_success">Exportação terminada</string>
+    <string name="starred_exporter_failure">Exportação falhada</string>
+    <string name="article_list_swipe_mark_all_read">Marcar todos como lidos</string>
+    <string name="article_list_new_articles_pill">Novos artigos</string>
+    <string name="tag_action_delete_confirm">Apagar</string>
+    <string name="tag_name_title">Nome</string>
+    <string name="tag_action_edit_success">Etiqueta atualizada</string>
+    <string name="tag_action_edit_error">Erro ao atualizar etiqueta</string>
+    <string name="tag_action_edit">Editar Etiqueta</string>
 </resources>
