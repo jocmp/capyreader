@@ -1,9 +1,7 @@
-import com.android.build.gradle.internal.tasks.factory.dependsOn
 import java.util.Properties
 
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
     kotlin("plugin.serialization") version libs.versions.kotlin
     alias(libs.plugins.compose.compiler)
@@ -23,7 +21,7 @@ if (rootProject.file("secrets.properties").exists()) {
 
 android {
     namespace = "com.capyreader.app"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.capyreader.app"
@@ -126,6 +124,7 @@ dependencies {
     implementation(libs.androidx.adaptive)
     implementation(libs.androidx.adaptive.layout)
     implementation(libs.androidx.adaptive.navigation)
+    implementation(libs.androidx.adaptive.navigation3)
     implementation(libs.androidx.browser)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.compose)
@@ -207,4 +206,4 @@ tasks.register("useGMSDebugFile") {
     }
 }
 
-project.tasks.preBuild.dependsOn("useGMSDebugFile")
+tasks.named("preBuild") { dependsOn("useGMSDebugFile") }
