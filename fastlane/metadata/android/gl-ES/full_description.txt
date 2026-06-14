@@ -1,0 +1,13 @@
+Como o seu nome, Capy Reader é un pequeno lector RSS que intenta ser simple e accesible.
+
+Características principais:
+
+• Sincronización con Feedbin, FreshRSS, Miniflux ou de xeito local no dispositivo
+• Seguimento da lectura e artigos favoritos
+• Búsqueda de artigos
+• Widget cos titulares
+• Notificacións
+• Modo de contido completo
+• Modo escuro
+• Compatible con pantallas grandes
+• Importación e exportación das canles gardadas
