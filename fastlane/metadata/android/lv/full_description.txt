@@ -1,13 +1,13 @@
-Kā norāda nosaukums, Capy Reader — kompakts RSS lasītājs, kas koncentrējas uz lietošanas ērtumu un vienkāršību.
+Kā norāda nosaukums, Capy Reader ir mazs RSS lasītājs, kas vērš uzmanību uz lietošanas ērtumu un vienkāršību.
 
-Pāris galvenās funkcijas:
+Dažas no iespējām:
 
-• Iespēja izmantot Feedbin, FreshRSS vai ierīces kontu
-• Iespēja izsekot lasītos un atzīmētos rakstus
-• Ir rakstu meklētājs
-• Ir virsrakstu logrīks
-• Paziņojumi
-• Iespēja skatīt visu raksta saturu
-• Ir tumšais motīvs
-• Ir liela ekrāna atbalsts
-• Ievietot un izgūt jūsu saglabātās ziņu plūsmas
+• vienādošana ar Feedbin, FreshRSS vai tieši ierīcē;
+• sekošana izlasītajiem un atzīmētajiem rakstiem;
+• rakstu meklēšana;
+• virsrakstu logrīks;
+• paziņojumi;
+• visa satura skatīšana;
+• tumšais izskats;
+• lielu ekrānu atbalsts;
+• saglabāto barotņu ievietošana un izgūšana.
