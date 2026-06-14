@@ -351,4 +351,6 @@
     <string name="freshrss_visibility_option_main">Główny strumień</string>
     <string name="widget_spotlight_see_all">Pokaż wszystko</string>
     <string name="article_list_new_articles_pill">Nowe artykuły</string>
+    <string name="settings_refresh_on_wifi_only">Odśwież tylko przy użyciu Wi-Fi</string>
+    <string name="refresh_skipped_mobile">Odświeżanie pominięte w sieci komórkowej</string>
 </resources>

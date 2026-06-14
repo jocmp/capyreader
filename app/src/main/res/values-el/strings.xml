@@ -334,4 +334,20 @@
     <string name="auth_fields_miniflux_use_api_token">Χρήση API Token αντ \'αυτού</string>
     <string name="auth_fields_miniflux_use_password">Χρήση Κωδικού αντ \'αυτού</string>
     <string name="auth_fields_show_advanced">Προχωρημένες ρυθμίσεις</string>
+    <string name="settings_refresh_on_wifi_only">Ανανέωση στο Wi-Fi μόνο</string>
+    <string name="refresh_skipped_mobile">Η ανανέωση παραλείφθηκε στο δίκτυο κινητής</string>
+    <string name="auth_fields_hide_advanced">Απόκρυψη προηγμένων επιλογών</string>
+    <string name="freshrss_visibility">Ορατότητα</string>
+    <string name="settings_panel_unread_counts_title">Σήματα Μη Αναγνωσμένου</string>
+    <string name="settings_option_badge_style">Στυλ Σήματος</string>
+    <string name="badge_style_simple">Απλό</string>
+    <string name="badge_style_exact">Ακριβές</string>
+    <string name="show_unread_badge">Εμφάνιση Σήματος Μη Αναγνωσμένου</string>
+    <string name="article_actions_save_externally">Αποθήκευση</string>
+    <string name="article_actions_save_externally_success">Αποθηκεύτηκε</string>
+    <string name="article_actions_save_externally_failure">Αποτυχία αποθήκευσης</string>
+    <string name="article_actions_delete_page">Διαγραφή σελίδας</string>
+    <string name="article_actions_delete_page_title">Διαγραφή</string>
+    <string name="article_actions_delete_page_message">Σίγουρα θες να διαγράψεις αυτή τη σελίδα;</string>
+    <string name="article_actions_delete_page_confirm">Διαγραφή</string>
 </resources>

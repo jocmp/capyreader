@@ -287,7 +287,7 @@
     <string name="save_page_error">Nevarēja saglabāt lapu</string>
     <string name="freshrss_visibility">Redzamība</string>
     <string name="freshrss_visibility_option_important">Svarīgs</string>
-    <string name="freshrss_visibility_option_feed">Ziņu plūsma</string>
+    <string name="freshrss_visibility_option_feed">Barotne</string>
     <string name="settings_section_experimental">Eksperimentālie</string>
     <string name="audio_player_play">Atskaņot</string>
     <string name="freshrss_nav_headline_categories">Kategorijas</string>
@@ -333,7 +333,7 @@
     <string name="filter_read_later">Saglabāts vēlākam laikam</string>
     <string name="article_actions_save_for_later">Saglabāt vēlākam laikam</string>
     <string name="saved_for_later_success">Raksts saglabāts vēlākai lasīšanai</string>
-    <string name="folder_action_delete_title">Dzēst mapi</string>
+    <string name="folder_action_delete_title">Izzēst mapi</string>
     <string name="folder_action_edit">Pārsaukt</string>
     <string name="folder_action_delete_confirm">Dzēst</string>
     <string name="folder_name_title">Nosaukums</string>
@@ -344,9 +344,12 @@
     <string name="folder_action_delete_message">Vai tiešām vēlaties dzēst \"%1$s\" birku?</string>
     <string name="folder_action_edit_success">Birkas nosaukums atjaunināts</string>
     <string name="folder_action_edit_error">Kļūda, atjauninot birkas nosaukumu</string>
-    <string name="delete_folder_error">Kļūda, dzēšot mapi</string>
+    <string name="delete_folder_error">Kļūda mapes izdzēšanā</string>
     <string name="article_list_swipe_mark_all_read">Atzīmēt visus rakstus kā lasītus</string>
     <string name="actions_share_link_with_title">Dalīties ar raksta saiti un tā virsrakstu</string>
     <string name="widget_spotlight_empty">Nav nelasītu rakstu</string>
     <string name="widget_spotlight_see_all">Skatīt visus</string>
+    <string name="settings_refresh_on_wifi_only">Atsvaidzināt tikai Wi-Fi tīklā</string>
+    <string name="refresh_skipped_mobile">Atsvaidzināšana tiek izlaista mobilajā tīklā</string>
+    <string name="article_list_new_articles_pill">Jauni raksti</string>
 </resources>
