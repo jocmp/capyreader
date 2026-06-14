@@ -12,7 +12,6 @@ import coil3.svg.SvgDecoder
 import coil3.video.VideoFrameDecoder
 import com.capyreader.app.common.AndroidLogging
 import com.capyreader.app.preferences.AppPreferences
-import com.capyreader.app.refresher.RefreshScheduler
 import com.capyreader.app.ui.widget.HeadlinesWidgetReceiver
 import com.capyreader.app.ui.widget.SpotlightWidgetReceiver
 import com.google.android.material.color.DynamicColors
@@ -39,14 +38,9 @@ class MainApplication : Application(), SingletonImageLoader.Factory {
 
         if (get<AppPreferences>().isLoggedIn) {
             loadAccountModules()
-            initializeRefreshScheduler()
         }
 
         loadWidgetPreview()
-    }
-
-    private fun initializeRefreshScheduler() {
-        get<RefreshScheduler>().initialize()
     }
 
     override fun newImageLoader(context: PlatformContext): ImageLoader {

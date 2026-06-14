@@ -7,7 +7,8 @@ val loginModule = module {
     viewModel {
         AddAccountViewModel(
             accountManager = get(),
-            appPreferences = get()
+            appPreferences = get(),
+            refreshScheduler = get(),
         )
     }
     viewModel {
@@ -16,6 +17,7 @@ val loginModule = module {
             accountManager = get(),
             appPreferences = get(),
             clientCertManager = get(),
+            refreshScheduler = get(),
         )
     }
     viewModel {

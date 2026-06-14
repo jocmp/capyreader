@@ -6,6 +6,7 @@ import com.capyreader.app.common.AndroidClientCertManager
 import com.capyreader.app.common.AppFaviconPolicy
 import com.capyreader.app.common.SharedPreferenceStoreProvider
 import com.capyreader.app.preferences.AppPreferences
+import com.capyreader.app.refresher.RefreshScheduler
 import com.jocmp.capy.AccountManager
 import com.jocmp.capy.ClientCertManager
 import com.jocmp.capy.DatabaseProvider
@@ -36,6 +37,7 @@ internal val common = module {
         )
     }
     single { AppPreferences(get()) }
+    single { RefreshScheduler(get(), get()) }
 }
 
 private fun Locale.toAcceptLanguageTag(): String {
