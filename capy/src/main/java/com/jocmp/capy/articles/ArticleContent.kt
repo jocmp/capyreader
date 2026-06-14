@@ -11,7 +11,7 @@ import java.net.URL
 
 class ArticleContent(
     client: OkHttpClient,
-    userAgent: String,
+    userAgent: () -> String,
     acceptLanguage: String,
 ) {
     private val httpClient =

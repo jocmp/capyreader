@@ -22,7 +22,7 @@ class AccountManagerTest {
             cacheDirectory = rootFolder.newFolder().toURI(),
             databaseProvider = InMemoryDatabaseProvider,
             faviconPolicy = FakeFaviconPolicy,
-            userAgent = "TestUserAgent",
+            userAgent = { "TestUserAgent" },
             acceptLanguage = "en-US",
         )
     }

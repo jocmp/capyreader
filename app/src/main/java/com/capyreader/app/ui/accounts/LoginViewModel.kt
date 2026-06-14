@@ -11,6 +11,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.capyreader.app.loadAccountModules
 import com.capyreader.app.preferences.AppPreferences
+import com.capyreader.app.refresher.RefreshScheduler
 import com.capyreader.app.ui.Route
 import com.jocmp.capy.AccountManager
 import com.jocmp.capy.ClientCertManager
@@ -30,6 +31,7 @@ class LoginViewModel(
     private val accountManager: AccountManager,
     private val appPreferences: AppPreferences,
     private val clientCertManager: ClientCertManager,
+    private val refreshScheduler: RefreshScheduler,
 ) : ViewModel() {
     private var _username by mutableStateOf("")
     private var _password by mutableStateOf("")
@@ -158,6 +160,8 @@ class LoginViewModel(
         selectAccount(accountID)
 
         loadAccountModules()
+
+        refreshScheduler.initialize()
     }
 
     private fun selectAccount(id: String) {

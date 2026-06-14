@@ -29,7 +29,7 @@ object AccountFixture {
             source = source,
             delegate = accountDelegate,
             faviconPolicy = FakeFaviconPolicy,
-            userAgent = "TestUserAgent",
+            userAgent = { "TestUserAgent" },
             acceptLanguage = "en-US",
         )
     }

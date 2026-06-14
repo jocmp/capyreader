@@ -12,7 +12,7 @@ import java.net.URL
 class FaviconFinder(
     private val httpClient: OkHttpClient,
     private val faviconPolicy: FaviconPolicy,
-    private val userAgent: String = "",
+    private val userAgent: () -> String = { "" },
     private val acceptLanguage: String = "",
 ) {
     suspend fun find(url: URL): String? {

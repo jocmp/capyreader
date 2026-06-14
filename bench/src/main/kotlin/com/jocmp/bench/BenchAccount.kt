@@ -52,7 +52,7 @@ fun loadOrCreateAccount(benchDir: File, config: BenchConfig): Pair<AccountManage
         databaseProvider = databaseProvider,
         preferenceStoreProvider = preferenceStoreProvider,
         faviconPolicy = FaviconPolicy { true },
-        userAgent = "CapyBench/1.0",
+        userAgent = { "CapyBench/1.0" },
         acceptLanguage = "en-US",
     )
 

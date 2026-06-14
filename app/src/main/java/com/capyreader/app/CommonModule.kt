@@ -6,6 +6,7 @@ import com.capyreader.app.common.AndroidClientCertManager
 import com.capyreader.app.common.AppFaviconPolicy
 import com.capyreader.app.common.SharedPreferenceStoreProvider
 import com.capyreader.app.preferences.AppPreferences
+import com.capyreader.app.refresher.RefreshScheduler
 import com.jocmp.capy.AccountManager
 import com.jocmp.capy.ClientCertManager
 import com.jocmp.capy.DatabaseProvider
@@ -24,6 +25,7 @@ internal val common = module {
     single<DatabaseProvider> { AndroidDatabaseProvider(context = get()) }
     single<ClientCertManager> { AndroidClientCertManager(context = get()) }
     single {
+        val userAgent = lazy { WebSettings.getDefaultUserAgent(androidContext()) }
         AccountManager(
             rootFolder = androidContext().filesDir.toURI(),
             databaseProvider = get(),
@@ -31,11 +33,12 @@ internal val common = module {
             preferenceStoreProvider = get(),
             faviconPolicy = AppFaviconPolicy(get()),
             clientCertManager = get(),
-            userAgent = WebSettings.getDefaultUserAgent(androidContext()),
+            userAgent = { userAgent.value },
             acceptLanguage = Locale.getDefault().toAcceptLanguageTag(),
         )
     }
     single { AppPreferences(get()) }
+    single { RefreshScheduler(get(), get()) }
 }
 
 private fun Locale.toAcceptLanguageTag(): String {
