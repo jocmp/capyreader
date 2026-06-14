@@ -645,9 +645,24 @@ fun ArticleScreen(
                     val isAudioPlaying by audioController.isPlaying.collectAsState()
                     val currentAudio by audioController.currentAudio.collectAsState()
 
+                    val index = remember(article.id, articles.itemCount) {
+                        articles.itemSnapshotList.indexOfFirst { it?.id == article.id }
+                    }
+                    val previousArticleID =
+                        if (index > 0) articles.itemSnapshotList.getOrNull(index - 1)?.id else null
+                    val nextArticleID =
+                        if (index > -1) articles.itemSnapshotList.getOrNull(index + 1)?.id else null
+
+                    LaunchedEffect(index) {
+                        if (index > -1) {
+                            scrollToArticle(index)
+                        }
+                    }
+
                     ArticleView(
                         article = article,
-                        articles = articles,
+                        previousArticleID = previousArticleID,
+                        nextArticleID = nextArticleID,
                         onBackPressed = {
                             clearArticle()
                         },
@@ -667,9 +682,6 @@ fun ArticleScreen(
                         },
                         onSelectArticle = { articleID ->
                             setArticle(articleID)
-                        },
-                        onScrollToArticle = { index ->
-                            scrollToArticle(index)
                         },
                         currentAudioUrl = currentAudio?.url,
                         isAudioPlaying = isAudioPlaying,

@@ -57,6 +57,15 @@ internal val articlesModule = module {
             application = get(),
         )
     }
+    viewModel { (articleID: String) ->
+        ArticleViewModel(
+            articleID = articleID,
+            account = get(),
+            appPreferences = get(),
+            application = get(),
+            notificationHelper = get(),
+        )
+    }
     viewModel {
         EditFeedViewModel(
             account = get(),
