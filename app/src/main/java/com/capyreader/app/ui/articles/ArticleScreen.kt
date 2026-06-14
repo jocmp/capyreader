@@ -111,11 +111,13 @@ import org.koin.compose.koinInject
 @OptIn(ExperimentalMaterial3AdaptiveApi::class, ExperimentalMaterial3Api::class, FlowPreview::class)
 @Composable
 fun ArticleScreen(
+    onSelectArticle: (articleID: String) -> Unit,
+    onNavigateToSettings: () -> Unit,
     viewModel: ArticleScreenViewModel = koinViewModel(),
     appPreferences: AppPreferences = koinInject(),
+    selectedArticleID: String? = null,
     pendingArticleID: String? = null,
     onPendingArticleSelected: () -> Unit = {},
-    onNavigateToSettings: () -> Unit,
 ) {
     val currentFeed by viewModel.currentFeed.collectAsStateWithLifecycle(initialValue = null)
     val feeds by viewModel.topLevelFeeds.collectAsStateWithLifecycle(initialValue = emptyList())
@@ -142,8 +144,6 @@ fun ArticleScreen(
         ArticleListVerticalSwipe.MARK_ALL_READ -> true
     }
     val context = LocalContext.current
-
-    val canSaveExternally by viewModel.canSaveArticleExternally.collectAsStateWithLifecycle()
 
     val fullContent = rememberFullContent(viewModel)
     val articleActions = rememberArticleActions(viewModel)
@@ -172,8 +172,6 @@ fun ArticleScreen(
             range = range,
         )
     }
-
-    val article = viewModel.article
 
     val search = ArticleSearch(
         query = searchQuery,
@@ -214,13 +212,9 @@ fun ArticleScreen(
             mutableStateOf(false)
         }
         val coroutineScope = rememberCoroutineScope()
-        val scaffoldNavigator = rememberListDetailPaneScaffoldNavigator()
-        val showMultipleColumns = scaffoldNavigator.scaffoldDirective.maxHorizontalPartitions > 1
-        val paneExpansion = rememberArticlePaneExpansion()
         val isPullToRefreshing = viewModel.isPullToRefreshing
         val addFeedSuccessMessage = stringResource(R.string.add_feed_success)
         val scrollBehavior = pinnedScrollBehavior()
-        var media by rememberSaveable(saver = Media.Saver) { mutableStateOf(null) }
         val audioController: AudioPlayerController = koinInject()
         val audioEnclosure by audioController.currentAudio.collectAsState()
         val focusManager = LocalFocusManager.current
@@ -228,27 +222,7 @@ fun ArticleScreen(
             viewModel.dismissUnauthorizedMessage()
             setUpdatePasswordDialogOpen(true)
         }
-        suspend fun navigateToDetail() {
-            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
-            if (showMultipleColumns) {
-                paneExpansion.restore()
-            }
-        }
-
         val listState = articles.rememberLazyListState()
-
-        fun scrollToArticle(index: Int) {
-            coroutineScope.launch {
-                if (index > -1) {
-                    val visibleItemsInfo = listState.layoutInfo.visibleItemsInfo
-                    val isItemVisible = visibleItemsInfo.any { it.index == index }
-
-                    if (!isItemVisible) {
-                        listState.animateScrollToItem(index)
-                    }
-                }
-            }
-        }
 
         val resetScrollBehaviorOffset = resetScrollBehaviorListener(
             listState = listState,
@@ -299,7 +273,6 @@ fun ArticleScreen(
 
         suspend fun openNextStatus(action: suspend () -> Unit) {
             scope.launchIO { action() }
-            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
         }
 
         fun markAllRead(range: MarkRead) {
@@ -357,13 +330,6 @@ fun ArticleScreen(
             }
         }
 
-        fun clearArticle() {
-            coroutineScope.launchUI {
-                scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
-            }
-            viewModel.clearArticle()
-        }
-
         val toggleDrawer = {
             coroutineScope.launch {
                 if (drawerState.isOpen) {
@@ -404,28 +370,11 @@ fun ArticleScreen(
             }
         }
 
-        fun setArticle(articleID: String, onComplete: (article: Article) -> Unit = {}) {
-            viewModel.selectArticle(articleID, onComplete)
-        }
-
-        val linkOpener = LocalLinkOpener.current
-
         fun selectArticle(articleID: String) {
-            setArticle(articleID) { nextArticle ->
-                if (search.isActive) {
-                    focusManager.clearFocus()
-                }
-
-                val url = nextArticle.url
-                if (nextArticle.openInBrowser && url != null) {
-                    clearArticle()
-                    linkOpener.open(url.toString().toUri())
-                } else {
-                    coroutineScope.launch {
-                        navigateToDetail()
-                    }
-                }
+            if (search.isActive) {
+                focusManager.clearFocus()
             }
+            onSelectArticle(articleID)
         }
 
         val selectFilter = {
@@ -480,8 +429,6 @@ fun ArticleScreen(
 
         ArticleScaffold(
             drawerState = drawerState,
-            scaffoldNavigator = scaffoldNavigator,
-            paneExpansion = paneExpansion,
             drawerPane = {
                 FeedList(
                     source = viewModel.source,
@@ -513,7 +460,7 @@ fun ArticleScreen(
                     todayCount = todayCount,
                 )
             },
-            listPane = {
+            content = {
                 val keyboardManager = LocalSoftwareKeyboardController.current
                 val markReadPosition = LocalMarkAllReadButtonPosition.current
 
@@ -613,7 +560,7 @@ fun ArticleScreen(
                                     } else {
                                         ArticleList(
                                             articles = articles,
-                                            selectedArticleKey = article?.id,
+                                            selectedArticleKey = selectedArticleID,
                                             listState = listState,
                                             enableMarkReadOnScroll = viewModel.markReadOnScrollEnabled,
                                             dimReadArticles = filter.status != ArticleStatus.STARRED,
@@ -632,86 +579,7 @@ fun ArticleScreen(
                     }
                 }
             },
-            detailPane = {
-                if (article == null && showMultipleColumns) {
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier
-                            .fillMaxSize()
-                    ) {
-                        CapyPlaceholder()
-                    }
-                } else if (article != null) {
-                    val isAudioPlaying by audioController.isPlaying.collectAsState()
-                    val currentAudio by audioController.currentAudio.collectAsState()
-
-                    val index = remember(article.id, articles.itemCount) {
-                        articles.itemSnapshotList.indexOfFirst { it?.id == article.id }
-                    }
-                    val previousArticleID =
-                        if (index > 0) articles.itemSnapshotList.getOrNull(index - 1)?.id else null
-                    val nextArticleID =
-                        if (index > -1) articles.itemSnapshotList.getOrNull(index + 1)?.id else null
-
-                    LaunchedEffect(index) {
-                        if (index > -1) {
-                            scrollToArticle(index)
-                        }
-                    }
-
-                    ArticleView(
-                        article = article,
-                        previousArticleID = previousArticleID,
-                        nextArticleID = nextArticleID,
-                        onBackPressed = {
-                            clearArticle()
-                        },
-                        onToggleRead = viewModel::toggleArticleRead,
-                        onToggleStar = viewModel::toggleArticleStar,
-                        canSaveExternally = canSaveExternally,
-                        onDeletePage = {
-                            clearArticle()
-                            viewModel.deletePage(article.id)
-                        },
-                        onSelectMedia = { media = it },
-                        onSelectAudio = { audio ->
-                            audioController.play(audio)
-                        },
-                        onPauseAudio = {
-                            audioController.pause()
-                        },
-                        onSelectArticle = { articleID ->
-                            setArticle(articleID)
-                        },
-                        currentAudioUrl = currentAudio?.url,
-                        isAudioPlaying = isAudioPlaying,
-                        isFullscreen = paneExpansion.isFullscreen,
-                        onToggleFullscreen = { paneExpansion.toggleFullscreen() },
-                    )
-                }
-            }
         )
-
-        LaunchedEffect(scaffoldNavigator.currentDestination) {
-            val isOnList =
-                scaffoldNavigator.currentDestination?.pane != ListDetailPaneScaffoldRole.Detail
-            if (isOnList && article != null) {
-                viewModel.clearArticle()
-            }
-        }
-
-        AnimatedVisibility(
-            enter = fadeIn(),
-            exit = fadeOut(),
-            visible = media != null
-        ) {
-            ArticleMediaView(
-                onDismissRequest = {
-                    media = null
-                },
-                media = media
-            )
-        }
 
 
         if (isMarkAllReadDialogOpen) {
@@ -761,24 +629,16 @@ fun ArticleScreen(
             )
         }
 
-        BackHandler(media != null) {
-            media = null
-        }
-
-        BackHandler(media == null && article != null) {
-            paneExpansion.reset()
-            clearArticle()
-        }
-
-        BackHandler(media == null && search.isActive && article == null) {
+        BackHandler(search.isActive) {
             search.clear()
         }
 
+        // When a detail is open the list yields back to NavDisplay so it can pop the detail entry.
         ArticleListBackHandler(
             filter,
             onRequestFilter = selectFilter,
             onRequestFolder = selectFolder,
-            enabled = isFeedActive(media, article, search),
+            enabled = selectedArticleID == null && !search.isActive,
             isDrawerOpen = drawerState.isOpen,
             toggleDrawer = {
                 toggleDrawer()
@@ -787,12 +647,6 @@ fun ArticleScreen(
                 closeDrawer()
             }
         )
-
-        LayoutNavigationHandler(
-            enabled = article == null
-        ) {
-            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
-        }
     }
 }
 
@@ -896,16 +750,6 @@ fun canOpenNextFeed(
     range: MarkRead,
 ): Boolean {
     return range is MarkRead.All && filter !is ArticleFilter.Articles
-}
-
-fun isFeedActive(
-    media: Media?,
-    article: Article?,
-    search: ArticleSearch
-): Boolean {
-    return media == null &&
-            article == null &&
-            !search.isActive
 }
 
 @OptIn(FlowPreview::class)
