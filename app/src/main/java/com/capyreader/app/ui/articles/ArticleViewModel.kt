@@ -11,6 +11,7 @@ import com.capyreader.app.notifications.NotificationHelper
 import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.Account
 import com.jocmp.capy.Article
+import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
 import com.jocmp.capy.common.withUIContext
@@ -41,6 +42,8 @@ class ArticleViewModel(
     val canSaveArticleExternally = account.canSaveArticleExternally.stateIn(viewModelScope)
 
     val source = account.source
+
+    val savedSearches: Flow<List<SavedSearch>> = account.savedSearches
 
     init {
         loadArticle()
