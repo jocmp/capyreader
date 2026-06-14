@@ -50,7 +50,7 @@ class ArticleContentTest {
     fun setup() {
         extractor = ArticleContent(
             client = client,
-            userAgent = "TestUserAgent",
+            userAgent = { "TestUserAgent" },
             acceptLanguage = "en-US",
         )
     }

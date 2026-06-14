@@ -61,7 +61,7 @@ data class Account(
     val source: Source = Source.LOCAL,
     val faviconPolicy: FaviconPolicy,
     private val clientCertManager: ClientCertManager = ClientCertManager { builder, _ -> builder },
-    private val userAgent: String,
+    private val userAgent: () -> String,
     private val acceptLanguage: String,
     private val localHttpClient: OkHttpClient = LocalOkHttpClient.forAccount(path = cacheDirectory),
     val delegate: AccountDelegate = when (source) {

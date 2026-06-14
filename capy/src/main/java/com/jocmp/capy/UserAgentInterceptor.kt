@@ -19,13 +19,13 @@ class UserAgentInterceptor(private val userAgent: String = USER_AGENT) : Interce
 }
 
 class BrowserHeadersInterceptor(
-    private val userAgent: String,
+    private val userAgent: () -> String,
     private val acceptLanguage: String,
 ) : Interceptor {
     override fun intercept(chain: Chain): Response {
         val originalRequest = chain.request()
         val request = originalRequest.newBuilder()
-            .header("User-Agent", userAgent)
+            .header("User-Agent", userAgent())
             .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8")
             .header("Accept-Language", acceptLanguage)
             .header("Sec-Fetch-Dest", "document")

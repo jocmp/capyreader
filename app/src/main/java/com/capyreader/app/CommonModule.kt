@@ -25,6 +25,7 @@ internal val common = module {
     single<DatabaseProvider> { AndroidDatabaseProvider(context = get()) }
     single<ClientCertManager> { AndroidClientCertManager(context = get()) }
     single {
+        val userAgent = lazy { WebSettings.getDefaultUserAgent(androidContext()) }
         AccountManager(
             rootFolder = androidContext().filesDir.toURI(),
             databaseProvider = get(),
@@ -32,7 +33,7 @@ internal val common = module {
             preferenceStoreProvider = get(),
             faviconPolicy = AppFaviconPolicy(get()),
             clientCertManager = get(),
-            userAgent = WebSettings.getDefaultUserAgent(androidContext()),
+            userAgent = { userAgent.value },
             acceptLanguage = Locale.getDefault().toAcceptLanguageTag(),
         )
     }

@@ -15,7 +15,7 @@ class AccountManager(
     private val preferenceStoreProvider: PreferenceStoreProvider,
     private val faviconPolicy: FaviconPolicy,
     private val clientCertManager: ClientCertManager = ClientCertManager { builder, _ -> builder },
-    private val userAgent: String,
+    private val userAgent: () -> String,
     private val acceptLanguage: String,
 ) {
     fun findByID(
