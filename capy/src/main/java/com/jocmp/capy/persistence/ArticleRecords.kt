@@ -320,6 +320,29 @@ class ArticleRecords(
         return database.articlesQueries.filterUnreadStatuses(ids).executeAsList()
     }
 
+    /**
+     * The previous/next article id relative to [articleID] in the order/membership [filter] shows.
+     * [since] is the session cutoff (keeps this-session reads/unstars pinned), matching the list.
+     */
+    fun neighbors(
+        filter: ArticleFilter,
+        sortOrder: SortOrder,
+        since: java.time.OffsetDateTime?,
+        articleID: String,
+    ): Pair<String?, String?> {
+        return when (filter) {
+            is ArticleFilter.Articles -> byStatus.neighbors(
+                filter.articleStatus,
+                sortOrder = sortOrder,
+                since = since,
+                articleID = articleID,
+            )
+
+            // TODO: byFeed / bySavedSearch / byToday neighbor queries
+            else -> null to null
+        }
+    }
+
     fun unreadArticleIDs(
         filter: ArticleFilter,
         range: MarkRead,

@@ -41,8 +41,6 @@ fun ArticleDetailScreen(
     articleID: String,
     onBackPressed: () -> Unit,
     onSelectArticle: (id: String) -> Unit,
-    previousArticleID: String? = null,
-    nextArticleID: String? = null,
     viewModel: ArticleViewModel = koinViewModel(),
 ) {
     LaunchedEffect(articleID) {
@@ -109,8 +107,8 @@ fun ArticleDetailScreen(
         } else {
             ArticleView(
                 article = current,
-                previousArticleID = previousArticleID,
-                nextArticleID = nextArticleID,
+                previousArticleID = viewModel.previousArticleID,
+                nextArticleID = viewModel.nextArticleID,
                 onBackPressed = onBackPressed,
                 onToggleRead = viewModel::toggleArticleRead,
                 onToggleStar = viewModel::toggleArticleStar,
