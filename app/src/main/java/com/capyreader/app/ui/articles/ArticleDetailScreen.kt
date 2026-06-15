@@ -88,6 +88,8 @@ fun ArticleDetailScreen(
     val currentAudio by audioController.currentAudio.collectAsState()
     var media by rememberSaveable(saver = Media.Saver) { mutableStateOf(null) }
 
+    val paneExpansion = LocalArticlePaneExpansion.current
+
     CompositionLocalProvider(
         LocalFullContent provides fullContent,
         LocalArticleActions provides articleActions,
@@ -123,6 +125,8 @@ fun ArticleDetailScreen(
                 onSelectArticle = onSelectArticle,
                 currentAudioUrl = currentAudio?.url,
                 isAudioPlaying = isAudioPlaying,
+                isFullscreen = paneExpansion?.isFullscreen ?: false,
+                onToggleFullscreen = { paneExpansion?.toggleFullscreen() },
             )
 
             AnimatedVisibility(
