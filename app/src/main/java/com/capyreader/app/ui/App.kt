@@ -100,7 +100,10 @@ fun App(
                         )
                     }
                     entry<Route.ArticleDetail>(
-                        metadata = ListDetailSceneStrategy.detailPane()
+                        // Stable contentKey: next/previous swaps the article id without remounting
+                        // the reader, so the chrome persists and content transitions animate.
+                        clazzContentKey = { ARTICLE_DETAIL_CONTENT_KEY },
+                        metadata = ListDetailSceneStrategy.detailPane(),
                     ) { key ->
                         ArticleDetailScreen(
                             articleID = key.articleID,
@@ -113,6 +116,8 @@ fun App(
         }
     }
 }
+
+private const val ARTICLE_DETAIL_CONTENT_KEY = "article_detail"
 
 /**
  * Opens an article in the detail pane. If a detail is already on top (reader next/previous), the
