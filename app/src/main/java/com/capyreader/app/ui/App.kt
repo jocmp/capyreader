@@ -1,11 +1,10 @@
 package com.capyreader.app.ui
 
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -18,7 +17,6 @@ import androidx.compose.material3.adaptive.navigation3.rememberListDetailSceneSt
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -75,15 +73,11 @@ fun App(
         paneExpansionState = paneExpansion.state,
         paneExpansionDragHandle = { state ->
             val interactionSource = remember { MutableInteractionSource() }
-            // When collapsed to 0% the handle sits on the screen edge with half its touch target
-            // off-screen; inset it into the detail pane so it stays graspable to drag the list back.
-            val edgeInset by animateDpAsState(
-                targetValue = if (paneExpansion.isFullscreen) HandleEdgeInset else 0.dp,
-                label = "dragHandleInset",
-            )
             VerticalDragHandle(
+                // Always keep a fixed gap on the handle's start edge so it's never flush against the
+                // screen edge (notably when the pane is collapsed to 0%) and stays graspable.
                 modifier = Modifier
-                    .offset(x = edgeInset)
+                    .padding(start = HandleEdgeInset)
                     .paneExpansionDraggable(
                         state,
                         LocalMinimumInteractiveComponentSize.current,
