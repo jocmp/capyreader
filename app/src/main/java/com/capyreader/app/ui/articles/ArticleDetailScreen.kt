@@ -1,8 +1,5 @@
 package com.capyreader.app.ui.articles
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -12,7 +9,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,6 +37,7 @@ fun ArticleDetailScreen(
     articleID: String,
     onBackPressed: () -> Unit,
     onSelectArticle: (id: String) -> Unit,
+    onSelectMedia: (media: Media) -> Unit,
     viewModel: ArticleViewModel = koinViewModel(),
 ) {
     LaunchedEffect(articleID) {
@@ -86,7 +83,6 @@ fun ArticleDetailScreen(
     val audioController: AudioPlayerController = koinInject()
     val isAudioPlaying by audioController.isPlaying.collectAsState()
     val currentAudio by audioController.currentAudio.collectAsState()
-    var media by rememberSaveable(saver = Media.Saver) { mutableStateOf(null) }
 
     val paneExpansion = LocalArticlePaneExpansion.current
 
@@ -119,7 +115,7 @@ fun ArticleDetailScreen(
                     onBackPressed()
                     viewModel.deletePage(current.id)
                 },
-                onSelectMedia = { media = it },
+                onSelectMedia = onSelectMedia,
                 onSelectAudio = { audio -> audioController.play(audio) },
                 onPauseAudio = { audioController.pause() },
                 onSelectArticle = onSelectArticle,
@@ -128,17 +124,6 @@ fun ArticleDetailScreen(
                 isFullscreen = paneExpansion?.isFullscreen ?: false,
                 onToggleFullscreen = { paneExpansion?.toggleFullscreen() },
             )
-
-            AnimatedVisibility(
-                enter = fadeIn(),
-                exit = fadeOut(),
-                visible = media != null,
-            ) {
-                com.capyreader.app.ui.articles.media.ArticleMediaView(
-                    onDismissRequest = { media = null },
-                    media = media,
-                )
-            }
 
             labelSheetArticleID?.let { id ->
                 LabelBottomSheet(

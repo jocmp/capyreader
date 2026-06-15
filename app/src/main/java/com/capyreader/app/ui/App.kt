@@ -42,6 +42,8 @@ import com.capyreader.app.ui.articles.ArticleDetailScreen
 import com.capyreader.app.ui.articles.ArticleScreen
 import com.capyreader.app.ui.articles.LocalArticlePaneExpansion
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
+import com.capyreader.app.ui.articles.media.MediaSceneStrategy
+import com.capyreader.app.ui.articles.media.MediaScreen
 import com.capyreader.app.ui.articles.rememberArticlePaneExpansion
 import com.capyreader.app.ui.shared.materialSharedAxisXIn
 import com.capyreader.app.ui.shared.materialSharedAxisXOut
@@ -74,6 +76,7 @@ fun App(
         calculatePaneScaffoldDirective(windowAdaptiveInfo)
             .copy(horizontalPartitionSpacerSize = 0.dp)
     }
+    val mediaSceneStrategy = remember { MediaSceneStrategy() }
     val paneExpansion = rememberArticlePaneExpansion()
     val listDetailStrategy = rememberListDetailSceneStrategy<NavKey>(
         directive = directive,
@@ -81,10 +84,8 @@ fun App(
         paneExpansionDragHandle = { state ->
             val interactionSource = remember { MutableInteractionSource() }
             VerticalDragHandle(
-                // Always keep a fixed gap on the handle's start edge so it's never flush against the
-                // screen edge (notably when the pane is collapsed to 0%) and stays graspable.
                 modifier = Modifier
-                    .padding(start = HandleEdgeInset)
+                    .padding(horizontal = HandleEdgeInset)
                     .paneExpansionDraggable(
                         state,
                         LocalMinimumInteractiveComponentSize.current,
@@ -130,7 +131,7 @@ fun App(
                     rememberSaveableStateHolderNavEntryDecorator(),
                     rememberViewModelStoreNavEntryDecorator(),
                 ),
-                sceneStrategies = listOf(listDetailStrategy),
+                sceneStrategies = listOf(mediaSceneStrategy, listDetailStrategy),
                 entryProvider = entryProvider {
                     entry<Route.AddAccount> {
                         AddAccountScreen(
@@ -198,6 +199,15 @@ fun App(
                             articleID = key.articleID,
                             onBackPressed = { backStack.removeLastOrNull() },
                             onSelectArticle = { id -> backStack.openArticle(id) },
+                            onSelectMedia = { media -> backStack.add(Route.MediaViewer(media)) },
+                        )
+                    }
+                    entry<Route.MediaViewer>(
+                        metadata = MediaSceneStrategy.overlay(),
+                    ) { key ->
+                        MediaScreen(
+                            media = key.media,
+                            onDismiss = { backStack.removeLastOrNull() },
                         )
                     }
                 }
@@ -225,7 +235,6 @@ private fun sharedAxisXExit(forward: Boolean) =
         if (forward) -offset else offset
     })
 
-/** How far to inset the drag handle from the screen edge when the detail pane is fullscreen. */
 private val HandleEdgeInset = 16.dp
 
 /**
