@@ -1,5 +1,6 @@
 package com.capyreader.app.ui
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -9,7 +10,9 @@ import androidx.compose.material3.adaptive.layout.calculatePaneScaffoldDirective
 import androidx.compose.material3.adaptive.navigation3.ListDetailSceneStrategy
 import androidx.compose.material3.adaptive.navigation3.rememberListDetailSceneStrategy
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
@@ -34,12 +37,22 @@ import org.koin.core.parameter.parametersOf
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun App(
-    startDestination: Route,
+    startBackStack: List<NavKey>,
     appPreferences: AppPreferences,
+    deepLink: List<NavKey>? = null,
+    onDeepLinkConsumed: () -> Unit = {},
     pendingArticleID: String? = null,
     onPendingArticleSelected: () -> Unit = {},
 ) {
-    val backStack = rememberNavBackStack(startDestination)
+    val backStack = rememberNavBackStack(*startBackStack.toTypedArray())
+
+    // Warm-start deep links (onNewIntent): replace the back stack with the link's synthetic stack.
+    LaunchedEffect(deepLink) {
+        val target = deepLink ?: return@LaunchedEffect
+        onDeepLinkConsumed()
+        backStack.clear()
+        backStack.addAll(target)
+    }
 
     val windowAdaptiveInfo = currentWindowAdaptiveInfoV2()
     val directive = remember(windowAdaptiveInfo) {
@@ -88,7 +101,14 @@ fun App(
                     }
                     entry<Route.ArticleList>(
                         metadata = ListDetailSceneStrategy.listPane(
-                            detailPlaceholder = { CapyPlaceholder() }
+                            detailPlaceholder = {
+                                Box(
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentAlignment = Alignment.Center,
+                                ) {
+                                    CapyPlaceholder()
+                                }
+                            }
                         )
                     ) {
                         ArticleScreen(
