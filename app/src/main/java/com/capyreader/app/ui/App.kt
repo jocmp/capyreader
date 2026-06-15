@@ -5,6 +5,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.material3.MaterialTheme
@@ -12,7 +13,6 @@ import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Surface
 import androidx.compose.material3.VerticalDragHandle
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
 import androidx.compose.material3.adaptive.layout.calculatePaneScaffoldDirective
@@ -98,7 +98,7 @@ fun App(
 
     // Window-level drawer: hosting it above NavDisplay lets its scrim cover both panes (the list
     // entry publishes the content + drives open/close through LocalAppDrawer).
-    val drawerState = rememberDrawerState(DrawerValue.Closed)
+    val drawerState = remember { DrawerState(DrawerValue.Closed) }
     var drawerContent by remember { mutableStateOf<(@Composable () -> Unit)?>(null) }
     val drawerController = remember(drawerState) {
         AppDrawerController(state = drawerState, setContent = { drawerContent = it })
@@ -113,9 +113,7 @@ fun App(
               drawerState = drawerState,
               gesturesEnabled = drawerState.isOpen,
               drawerContent = {
-                  drawerContent?.let { content ->
-                      ModalDrawerSheet { content() }
-                  }
+                  ModalDrawerSheet { drawerContent?.invoke() }
               },
           ) {
           CompositionLocalProvider(
