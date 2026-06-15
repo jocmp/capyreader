@@ -7,7 +7,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.navigation3.runtime.NavKey
-import com.capyreader.app.notifications.NotificationHelper
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.App
 import com.capyreader.app.ui.DeepLink
@@ -18,13 +17,10 @@ import org.koin.android.ext.android.inject
 class MainActivity : BaseActivity() {
     val appPreferences by inject<AppPreferences>()
 
-    private var pendingArticleID by mutableStateOf<String?>(null)
-
     private var deepLink by mutableStateOf<List<NavKey>?>(null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        pendingArticleID = NotificationHelper.openFromIntent(intent, appPreferences = appPreferences)
         val startBackStack = DeepLink.parse(intent.data) ?: listOf(startDestination())
         applyListFilter(startBackStack)
 
@@ -34,8 +30,6 @@ class MainActivity : BaseActivity() {
                 appPreferences = appPreferences,
                 deepLink = deepLink,
                 onDeepLinkConsumed = { deepLink = null },
-                pendingArticleID = pendingArticleID,
-                onPendingArticleSelected = { pendingArticleID = null },
             )
         }
     }
@@ -46,7 +40,6 @@ class MainActivity : BaseActivity() {
             applyListFilter(parsed)
             deepLink = parsed
         }
-        pendingArticleID = NotificationHelper.openFromIntent(intent, appPreferences = appPreferences)
     }
 
     /**

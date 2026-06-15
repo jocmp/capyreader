@@ -116,8 +116,6 @@ fun ArticleScreen(
     viewModel: ArticleScreenViewModel = koinViewModel(),
     appPreferences: AppPreferences = koinInject(),
     selectedArticleID: String? = null,
-    pendingArticleID: String? = null,
-    onPendingArticleSelected: () -> Unit = {},
 ) {
     val currentFeed by viewModel.currentFeed.collectAsStateWithLifecycle(initialValue = null)
     val feeds by viewModel.topLevelFeeds.collectAsStateWithLifecycle(initialValue = emptyList())
@@ -419,12 +417,6 @@ fun ArticleScreen(
             } else {
                 closeDrawer()
             }
-        }
-
-        LaunchedEffect(pendingArticleID) {
-            val id = pendingArticleID ?: return@LaunchedEffect
-            onPendingArticleSelected()
-            selectArticle(id)
         }
 
         ArticleScaffold(

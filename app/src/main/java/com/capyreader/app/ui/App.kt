@@ -50,8 +50,6 @@ fun App(
     appPreferences: AppPreferences,
     deepLink: List<NavKey>? = null,
     onDeepLinkConsumed: () -> Unit = {},
-    pendingArticleID: String? = null,
-    onPendingArticleSelected: () -> Unit = {},
 ) {
     val backStack = rememberNavBackStack(*startBackStack.toTypedArray())
 
@@ -148,8 +146,6 @@ fun App(
                             onSelectArticle = { id -> backStack.openArticle(id) },
                             onNavigateToSettings = { backStack.add(Route.Settings) },
                             selectedArticleID = (backStack.lastOrNull() as? Route.ArticleDetail)?.articleID,
-                            pendingArticleID = pendingArticleID,
-                            onPendingArticleSelected = onPendingArticleSelected,
                         )
                     }
                     entry<Route.ArticleDetail>(

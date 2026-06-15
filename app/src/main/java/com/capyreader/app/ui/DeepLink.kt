@@ -21,6 +21,26 @@ import com.jocmp.capy.ArticleStatus
 object DeepLink {
     const val SCHEME = "capy"
 
+    /**
+     * `capy://article/<articleID>` (optionally `?feedID=`). The article id is a path segment, so
+     * [Uri.Builder.appendPath] percent-encodes it (article ids are URLs).
+     */
+    fun articleUri(articleID: String, feedID: String? = null): Uri =
+        Uri.Builder()
+            .scheme(SCHEME)
+            .authority("article")
+            .appendPath(articleID)
+            .apply { if (!feedID.isNullOrBlank()) appendQueryParameter("feedID", feedID) }
+            .build()
+
+    /** `capy://articles` (All) or `capy://articles/unread` (Unread). */
+    fun articlesUri(status: ArticleStatus): Uri =
+        Uri.Builder()
+            .scheme(SCHEME)
+            .authority("articles")
+            .apply { if (status == ArticleStatus.UNREAD) appendPath("unread") }
+            .build()
+
     fun parse(uri: Uri?): List<NavKey>? {
         if (uri?.scheme != SCHEME) return null
 
