@@ -338,8 +338,38 @@ class ArticleRecords(
                 articleID = articleID,
             )
 
-            // TODO: byFeed / bySavedSearch / byToday neighbor queries
-            else -> null to null
+            is ArticleFilter.Feeds -> byFeed.neighbors(
+                feedIDs = listOf(filter.feedID),
+                status = filter.feedStatus,
+                sortOrder = sortOrder,
+                since = since,
+                priority = FeedPriority.FEED,
+                articleID = articleID,
+            )
+
+            is ArticleFilter.Folders -> byFeed.neighbors(
+                feedIDs = folderFeedIDs(filter),
+                status = filter.status,
+                sortOrder = sortOrder,
+                since = since,
+                priority = FeedPriority.CATEGORY,
+                articleID = articleID,
+            )
+
+            is ArticleFilter.SavedSearches -> bySavedSearch.neighbors(
+                savedSearchID = filter.savedSearchID,
+                status = filter.status,
+                sortOrder = sortOrder,
+                since = since,
+                articleID = articleID,
+            )
+
+            is ArticleFilter.Today -> byToday.neighbors(
+                status = filter.status,
+                sortOrder = sortOrder,
+                since = since,
+                articleID = articleID,
+            )
         }
     }
 

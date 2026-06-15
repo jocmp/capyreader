@@ -85,6 +85,40 @@ class ByToday(private val database: Database) {
         )
     }
 
+    fun neighbors(
+        status: ArticleStatus,
+        sortOrder: SortOrder,
+        since: OffsetDateTime?,
+        articleID: String,
+    ): Pair<String?, String?> {
+        val (read, starred) = status.toStatusPair
+        val newestFirst = isNewestFirst(sortOrder)
+        val queries = database.articlesByStatusQueries
+        val publishedSince = mapTodayStartDate()
+
+        val previous = queries.articleBefore(
+            articleID = articleID,
+            read = read,
+            lastReadAt = mapLastRead(read, since),
+            starred = starred,
+            lastUnstarredAt = mapLastUnstarred(starred, since),
+            publishedSince = publishedSince,
+            newestFirst = newestFirst,
+        ).executeAsOneOrNull()
+
+        val next = queries.articleAfter(
+            articleID = articleID,
+            read = read,
+            lastReadAt = mapLastRead(read, since),
+            starred = starred,
+            lastUnstarredAt = mapLastUnstarred(starred, since),
+            publishedSince = publishedSince,
+            newestFirst = newestFirst,
+        ).executeAsOneOrNull()
+
+        return previous to next
+    }
+
     private fun mapTodayStartDate(): Long {
         return OffsetDateTime.now().minusHours(24).toEpochSecond()
     }

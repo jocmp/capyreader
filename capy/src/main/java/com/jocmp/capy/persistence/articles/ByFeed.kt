@@ -80,6 +80,45 @@ class ByFeed(private val database: Database) {
         )
     }
 
+    fun neighbors(
+        feedIDs: List<String>,
+        status: ArticleStatus,
+        sortOrder: SortOrder,
+        since: OffsetDateTime?,
+        priority: FeedPriority,
+        articleID: String,
+    ): Pair<String?, String?> {
+        val (read, starred) = status.toStatusPair
+        val newestFirst = isNewestFirst(sortOrder)
+        val queries = database.articlesByFeedQueries
+
+        val previous = queries.articleBefore(
+            articleID = articleID,
+            feedIDs = feedIDs,
+            read = read,
+            lastReadAt = mapLastRead(read, since),
+            starred = starred,
+            lastUnstarredAt = mapLastUnstarred(starred, since),
+            publishedSince = null,
+            priorities = priority.inclusivePriorities,
+            newestFirst = newestFirst,
+        ).executeAsOneOrNull()
+
+        val next = queries.articleAfter(
+            articleID = articleID,
+            feedIDs = feedIDs,
+            read = read,
+            lastReadAt = mapLastRead(read, since),
+            starred = starred,
+            lastUnstarredAt = mapLastUnstarred(starred, since),
+            publishedSince = null,
+            priorities = priority.inclusivePriorities,
+            newestFirst = newestFirst,
+        ).executeAsOneOrNull()
+
+        return previous to next
+    }
+
     fun count(
         feedIDs: List<String>,
         status: ArticleStatus,

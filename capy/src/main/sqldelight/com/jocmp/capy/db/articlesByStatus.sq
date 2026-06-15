@@ -105,6 +105,7 @@ JOIN articles AS anchor ON anchor.id = :articleID
 WHERE ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
 AND (feeds.priority IS NULL OR feeds.priority IN ('main', 'important'))
 AND ((article_statuses.starred = :starred AND article_statuses.last_unstarred_at IS NULL OR article_statuses.last_unstarred_at >= :lastUnstarredAt) OR :starred IS NULL)
+AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
 AND CASE WHEN :newestFirst
     THEN articles.published_at < anchor.published_at OR (articles.published_at = anchor.published_at AND articles.id < anchor.id)
     ELSE articles.published_at > anchor.published_at OR (articles.published_at = anchor.published_at AND articles.id > anchor.id)
@@ -125,6 +126,7 @@ JOIN articles AS anchor ON anchor.id = :articleID
 WHERE ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
 AND (feeds.priority IS NULL OR feeds.priority IN ('main', 'important'))
 AND ((article_statuses.starred = :starred AND article_statuses.last_unstarred_at IS NULL OR article_statuses.last_unstarred_at >= :lastUnstarredAt) OR :starred IS NULL)
+AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
 AND CASE WHEN :newestFirst
     THEN articles.published_at > anchor.published_at OR (articles.published_at = anchor.published_at AND articles.id > anchor.id)
     ELSE articles.published_at < anchor.published_at OR (articles.published_at = anchor.published_at AND articles.id < anchor.id)
