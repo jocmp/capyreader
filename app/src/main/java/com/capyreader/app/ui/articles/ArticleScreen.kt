@@ -22,6 +22,7 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -83,6 +84,7 @@ import com.capyreader.app.ui.articles.list.resetScrollBehaviorListener
 import com.capyreader.app.ui.articles.media.ArticleMediaView
 import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.collectChangesWithDefault
+import com.capyreader.app.ui.LocalAppDrawer
 import com.capyreader.app.ui.articles.list.SearchView
 import com.capyreader.app.ui.isCompact
 import com.capyreader.app.ui.components.ArticleSearch
@@ -152,7 +154,11 @@ fun ArticleScreen(
     val savedSearchActions = rememberSavedSearchActions(viewModel)
     val labelsActions = rememberLabelsActions(viewModel, allSavedSearches)
     val connectivity = rememberLocalConnectivity()
-    val drawerState = rememberDrawerState(DrawerValue.Closed)
+    // The drawer is hosted at the window level (see App / LocalAppDrawer) so its scrim covers both
+    // panes; this entry only publishes its content and drives open/close. Fall back to a local
+    // state when there's no host (previews).
+    val appDrawer = LocalAppDrawer.current
+    val drawerState = appDrawer?.state ?: rememberDrawerState(DrawerValue.Closed)
     val showOnboarding by viewModel.showOnboarding.collectAsState(false)
     val markAllReadButtonPosition by appPreferences
         .articleListOptions
@@ -435,10 +441,14 @@ fun ArticleScreen(
             }
         }
 
-        Box(modifier = Modifier.fillMaxSize()) {
-        ArticleScaffold(
-            drawerState = drawerState,
-            drawerPane = {
+        // Publish the drawer pane up to the window-level host. Keyed on the data so the lambda is
+        // recreated (and the drawer recomposes) only when its contents change; the callbacks it
+        // captures are behaviorally stable.
+        val drawerContent: @Composable () -> Unit = remember(
+            folders, feeds, readLaterFeed, savedSearches, filter,
+            statusCount, todayCount, refreshAllState,
+        ) {
+            {
                 FeedList(
                     source = viewModel.source,
                     folders = folders,
@@ -468,8 +478,17 @@ fun ArticleScreen(
                     statusCount = statusCount,
                     todayCount = todayCount,
                 )
-            },
-            content = {
+            }
+        }
+
+        LaunchedEffect(appDrawer, drawerContent) {
+            appDrawer?.setContent(drawerContent)
+        }
+        DisposableEffect(appDrawer) {
+            onDispose { appDrawer?.setContent(null) }
+        }
+
+        Box(modifier = Modifier.fillMaxSize()) {
                 val keyboardManager = LocalSoftwareKeyboardController.current
                 val markReadPosition = LocalMarkAllReadButtonPosition.current
 
@@ -587,8 +606,6 @@ fun ArticleScreen(
                         }
                     }
                 }
-            },
-        )
 
             AnimatedVisibility(
                 visible = search.isActive,

@@ -5,10 +5,14 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Surface
 import androidx.compose.material3.VerticalDragHandle
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
 import androidx.compose.material3.adaptive.layout.calculatePaneScaffoldDirective
@@ -17,7 +21,10 @@ import androidx.compose.material3.adaptive.navigation3.rememberListDetailSceneSt
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -88,12 +95,32 @@ fun App(
         },
     )
 
+    // Window-level drawer: hosting it above NavDisplay lets its scrim cover both panes (the list
+    // entry publishes the content + drives open/close through LocalAppDrawer).
+    val drawerState = rememberDrawerState(DrawerValue.Closed)
+    var drawerContent by remember { mutableStateOf<(@Composable () -> Unit)?>(null) }
+    val drawerController = remember(drawerState) {
+        AppDrawerController(state = drawerState, setContent = { drawerContent = it })
+    }
+
     CapyTheme(appPreferences) {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-          CompositionLocalProvider(LocalArticlePaneExpansion provides paneExpansion) {
+          ModalNavigationDrawer(
+              drawerState = drawerState,
+              gesturesEnabled = drawerState.isOpen,
+              drawerContent = {
+                  drawerContent?.let { content ->
+                      ModalDrawerSheet { content() }
+                  }
+              },
+          ) {
+          CompositionLocalProvider(
+              LocalArticlePaneExpansion provides paneExpansion,
+              LocalAppDrawer provides drawerController,
+          ) {
             NavDisplay(
                 backStack = backStack,
                 onBack = { backStack.removeLastOrNull() },
@@ -175,6 +202,7 @@ fun App(
                     }
                 }
             )
+          }
           }
         }
     }
