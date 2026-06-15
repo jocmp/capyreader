@@ -84,6 +84,7 @@ import com.capyreader.app.ui.articles.media.ArticleMediaView
 import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.articles.list.SearchView
+import com.capyreader.app.ui.isCompact
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.capyreader.app.ui.components.SearchState
@@ -233,6 +234,18 @@ fun ArticleScreen(
             coroutineScope.launch {
                 listState.scrollToItem(0)
                 resetScrollBehaviorOffset()
+            }
+        }
+
+        // In a two-pane layout the list stays beside the reader, so keep the selected article in
+        // view (e.g. when stepping next/previous) by scrolling to it when it isn't already visible.
+        val isCompact = isCompact()
+        LaunchedEffect(selectedArticleID, isCompact, articles.itemCount) {
+            if (isCompact) return@LaunchedEffect
+            val id = selectedArticleID ?: return@LaunchedEffect
+            val index = articles.itemSnapshotList.indexOfFirst { it?.id == id }
+            if (index > -1 && listState.layoutInfo.visibleItemsInfo.none { it.index == index }) {
+                listState.animateScrollToItem(index)
             }
         }
 
