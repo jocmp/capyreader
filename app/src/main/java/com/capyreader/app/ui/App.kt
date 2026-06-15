@@ -1,9 +1,12 @@
 package com.capyreader.app.ui
 
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.VerticalDragHandle
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
 import androidx.compose.material3.adaptive.layout.calculatePaneScaffoldDirective
@@ -59,7 +62,20 @@ fun App(
         calculatePaneScaffoldDirective(windowAdaptiveInfo)
             .copy(horizontalPartitionSpacerSize = 0.dp)
     }
-    val listDetailStrategy = rememberListDetailSceneStrategy<NavKey>(directive = directive)
+    val listDetailStrategy = rememberListDetailSceneStrategy<NavKey>(
+        directive = directive,
+        paneExpansionDragHandle = { state ->
+            val interactionSource = remember { MutableInteractionSource() }
+            VerticalDragHandle(
+                modifier = Modifier.paneExpansionDraggable(
+                    state,
+                    LocalMinimumInteractiveComponentSize.current,
+                    interactionSource,
+                ),
+                interactionSource = interactionSource,
+            )
+        },
+    )
 
     CapyTheme(appPreferences) {
         Surface(
