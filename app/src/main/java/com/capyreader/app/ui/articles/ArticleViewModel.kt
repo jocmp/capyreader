@@ -32,6 +32,7 @@ class ArticleViewModel(
     private val appPreferences: AppPreferences,
     private val application: Application,
     private val notificationHelper: NotificationHelper,
+    private val articleCutoff: ArticleSessionCutoff,
 ) : AndroidViewModel(application) {
 
     private var fullContentJob: Job? = null
@@ -40,6 +41,17 @@ class ArticleViewModel(
 
     var article by mutableStateOf<Article?>(null)
         private set
+
+    var previousArticleID by mutableStateOf<String?>(null)
+        private set
+
+    var nextArticleID by mutableStateOf<String?>(null)
+        private set
+
+    override fun onCleared() {
+        articleCutoff.clear()
+        super.onCleared()
+    }
 
     val canSaveArticleExternally = account.canSaveArticleExternally.stateIn(viewModelScope)
 
@@ -56,6 +68,9 @@ class ArticleViewModel(
             return
         }
         currentArticleID = articleID
+        // Stamp the session cutoff before marking anything read, so this-session reads stay
+        // pinned in the neighbor set (and the article we're opening can be navigated back to).
+        articleCutoff.startIfNeeded()
 
         viewModelScope.launchIO {
             val loaded = buildArticle(articleID) ?: return@launchIO
@@ -67,6 +82,17 @@ class ArticleViewModel(
                 fullContentJob?.cancel()
                 fullContentJob = viewModelScope.launchIO { fetchFullContent(loaded) }
             }
+        }
+
+        viewModelScope.launchIO {
+            val (previous, next) = account.neighbors(
+                filter = appPreferences.filter.get(),
+                sortOrder = appPreferences.articleListOptions.sortOrder.get(),
+                since = articleCutoff.value,
+                articleID = articleID,
+            )
+            previousArticleID = previous
+            nextArticleID = next
         }
     }
 

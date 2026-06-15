@@ -12,6 +12,7 @@ import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 internal val articlesModule = module {
+    single { ArticleSessionCutoff() }
     factory {
         AddFeedViewModel(
             account = get(),
@@ -63,6 +64,7 @@ internal val articlesModule = module {
             appPreferences = get(),
             application = get(),
             notificationHelper = get(),
+            articleCutoff = get(),
         )
     }
     viewModel {

@@ -95,3 +95,43 @@ AND (
              OR (articles.published_at = before_articles.published_at AND articles.id >= :beforeArticleID)
     END
 );
+
+articleAfter:
+SELECT articles.id
+FROM articles
+JOIN feeds ON articles.feed_id = feeds.id
+JOIN article_statuses ON articles.id = article_statuses.article_id
+JOIN articles AS anchor ON anchor.id = :articleID
+WHERE ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
+AND (feeds.priority IS NULL OR feeds.priority IN ('main', 'important'))
+AND ((article_statuses.starred = :starred AND article_statuses.last_unstarred_at IS NULL OR article_statuses.last_unstarred_at >= :lastUnstarredAt) OR :starred IS NULL)
+AND CASE WHEN :newestFirst
+    THEN articles.published_at < anchor.published_at OR (articles.published_at = anchor.published_at AND articles.id < anchor.id)
+    ELSE articles.published_at > anchor.published_at OR (articles.published_at = anchor.published_at AND articles.id > anchor.id)
+END
+ORDER BY
+    CASE WHEN :newestFirst THEN articles.published_at END DESC,
+    CASE WHEN :newestFirst THEN articles.id END DESC,
+    CASE WHEN :newestFirst THEN NULL ELSE articles.published_at END ASC,
+    CASE WHEN :newestFirst THEN NULL ELSE articles.id END ASC
+LIMIT 1;
+
+articleBefore:
+SELECT articles.id
+FROM articles
+JOIN feeds ON articles.feed_id = feeds.id
+JOIN article_statuses ON articles.id = article_statuses.article_id
+JOIN articles AS anchor ON anchor.id = :articleID
+WHERE ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
+AND (feeds.priority IS NULL OR feeds.priority IN ('main', 'important'))
+AND ((article_statuses.starred = :starred AND article_statuses.last_unstarred_at IS NULL OR article_statuses.last_unstarred_at >= :lastUnstarredAt) OR :starred IS NULL)
+AND CASE WHEN :newestFirst
+    THEN articles.published_at > anchor.published_at OR (articles.published_at = anchor.published_at AND articles.id > anchor.id)
+    ELSE articles.published_at < anchor.published_at OR (articles.published_at = anchor.published_at AND articles.id < anchor.id)
+END
+ORDER BY
+    CASE WHEN :newestFirst THEN articles.published_at END ASC,
+    CASE WHEN :newestFirst THEN articles.id END ASC,
+    CASE WHEN :newestFirst THEN NULL ELSE articles.published_at END DESC,
+    CASE WHEN :newestFirst THEN NULL ELSE articles.id END DESC
+LIMIT 1;

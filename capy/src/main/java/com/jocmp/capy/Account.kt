@@ -353,6 +353,24 @@ data class Account(
         )
     }
 
+    /**
+     * Previous/next article id relative to [articleID] for the reader's swipe navigation.
+     * Suspends onto IO so the (synchronous) query never runs on the main thread.
+     */
+    suspend fun neighbors(
+        filter: ArticleFilter,
+        sortOrder: SortOrder,
+        since: java.time.OffsetDateTime?,
+        articleID: String,
+    ): Pair<String?, String?> = withIOContext {
+        articleRecords.neighbors(
+            filter = filter,
+            sortOrder = sortOrder,
+            since = since,
+            articleID = articleID,
+        )
+    }
+
     fun countUnread(
         filter: ArticleFilter,
         query: String?,
