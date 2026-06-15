@@ -83,6 +83,7 @@ import com.capyreader.app.ui.articles.list.resetScrollBehaviorListener
 import com.capyreader.app.ui.articles.media.ArticleMediaView
 import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.collectChangesWithDefault
+import com.capyreader.app.ui.articles.list.SearchView
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.capyreader.app.ui.components.SearchState
@@ -159,6 +160,7 @@ fun ArticleScreen(
     val badgeStyle by appPreferences.badgeStyle.collectChangesWithDefault()
 
     val articles = viewModel.articles.collectAsLazyPagingItems()
+    val searchResults = viewModel.searchResults.collectAsLazyPagingItems()
 
     val onMarkAllRead = { range: MarkRead ->
         viewModel.markAllRead(
@@ -371,6 +373,7 @@ fun ArticleScreen(
         fun selectArticle(articleID: String) {
             if (search.isActive) {
                 focusManager.clearFocus()
+                search.clear()
             }
             onSelectArticle(articleID)
         }
@@ -419,6 +422,7 @@ fun ArticleScreen(
             }
         }
 
+        Box(modifier = Modifier.fillMaxSize()) {
         ArticleScaffold(
             drawerState = drawerState,
             drawerPane = {
@@ -573,6 +577,19 @@ fun ArticleScreen(
             },
         )
 
+            AnimatedVisibility(
+                visible = search.isActive,
+                enter = fadeIn(),
+                exit = fadeOut(),
+            ) {
+                SearchView(
+                    search = search,
+                    results = searchResults,
+                    selectedArticleID = selectedArticleID,
+                    onSelect = { selectArticle(it) },
+                )
+            }
+        }
 
         if (isMarkAllReadDialogOpen) {
             MarkAllReadDialog(

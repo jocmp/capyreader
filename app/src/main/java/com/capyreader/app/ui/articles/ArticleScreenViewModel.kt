@@ -9,6 +9,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import kotlinx.coroutines.flow.flowOf
 import com.capyreader.app.R
 import com.capyreader.app.common.isOnWifi
 import com.capyreader.app.common.toast
@@ -22,6 +23,7 @@ import com.capyreader.app.ui.widget.WidgetUpdater
 import com.jocmp.capy.Account
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
+import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.ArticleStatus.UNREAD
 import com.jocmp.capy.Feed
@@ -125,20 +127,28 @@ class ArticleScreenViewModel(
         account.countAllBySavedSearch(latestFilter.status)
     }
 
+    // The list pager is filter-only: it must stay in lockstep with the reader's neighbor query
+    // (which keys off the persisted filter), so search no longer participates here.
     val articles: Flow<PagingData<Article>> =
-        combine(
-            filter,
-            _searchQuery,
-            articlesSince,
-            sortOrder
-        ) { filter, query, since, sort ->
-            account.buildArticlePager(
-                filter = filter,
-                query = query,
-                sortOrder = sort,
-                since = since
-            ).flow
-        }.flatMapLatest { it }
+        combine(filter, articlesSince, sortOrder) { filter, since, sort ->
+            ArticlePagerKey(filter = filter, query = null, since = since, sort = sort)
+        }.flatMapLatest(::pagerFlow)
+
+    // Search has its own pager so it can filter freely without disturbing the list above.
+    val searchResults: Flow<PagingData<Article>> =
+        combine(_searchQuery, filter, articlesSince, sortOrder) { query, filter, since, sort ->
+            ArticlePagerKey(filter = filter, query = query, since = since, sort = sort)
+        }.flatMapLatest { key ->
+            if (key.query.isNullOrBlank()) flowOf(PagingData.empty()) else pagerFlow(key)
+        }
+
+    private fun pagerFlow(key: ArticlePagerKey): Flow<PagingData<Article>> =
+        account.buildArticlePager(
+            filter = key.filter,
+            query = key.query,
+            sortOrder = key.sort,
+            since = key.since,
+        ).flow
 
     val folders: Flow<List<Folder>> = combine(
         account.folders,
@@ -950,3 +960,11 @@ fun countableStatus(filter: ArticleFilter): ArticleStatus {
         else -> UNREAD
     }
 }
+
+/** Reactive inputs that, when any changes, rebuild an article [PagingData] flow. */
+private data class ArticlePagerKey(
+    val filter: ArticleFilter,
+    val query: String?,
+    val since: OffsetDateTime,
+    val sort: SortOrder,
+)
