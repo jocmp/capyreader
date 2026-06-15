@@ -13,6 +13,7 @@ import androidx.compose.material3.adaptive.layout.calculatePaneScaffoldDirective
 import androidx.compose.material3.adaptive.navigation3.ListDetailSceneStrategy
 import androidx.compose.material3.adaptive.navigation3.rememberListDetailSceneStrategy
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -30,7 +31,9 @@ import com.capyreader.app.ui.accounts.AddAccountScreen
 import com.capyreader.app.ui.accounts.LoginScreen
 import com.capyreader.app.ui.articles.ArticleDetailScreen
 import com.capyreader.app.ui.articles.ArticleScreen
+import com.capyreader.app.ui.articles.LocalArticlePaneExpansion
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
+import com.capyreader.app.ui.articles.rememberArticlePaneExpansion
 import com.capyreader.app.ui.settings.SettingsScreen
 import com.capyreader.app.ui.theme.CapyTheme
 import com.capyreader.app.unloadAccountModules
@@ -62,8 +65,10 @@ fun App(
         calculatePaneScaffoldDirective(windowAdaptiveInfo)
             .copy(horizontalPartitionSpacerSize = 0.dp)
     }
+    val paneExpansion = rememberArticlePaneExpansion()
     val listDetailStrategy = rememberListDetailSceneStrategy<NavKey>(
         directive = directive,
+        paneExpansionState = paneExpansion.state,
         paneExpansionDragHandle = { state ->
             val interactionSource = remember { MutableInteractionSource() }
             VerticalDragHandle(
@@ -82,6 +87,7 @@ fun App(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
+          CompositionLocalProvider(LocalArticlePaneExpansion provides paneExpansion) {
             NavDisplay(
                 backStack = backStack,
                 onBack = { backStack.removeLastOrNull() },
@@ -149,6 +155,7 @@ fun App(
                     }
                 }
             )
+          }
         }
     }
 }
