@@ -15,13 +15,19 @@ class ArticleSessionCutoff {
     var value: OffsetDateTime? = null
         private set
 
-    fun startIfNeeded() {
+    /** Written by the list when its session snapshot starts, so the reader's neighbors match it exactly. */
+    fun set(value: OffsetDateTime) {
+        this.value = value
+    }
+
+    /**
+     * Starts a session cutoff if one isn't already set — the fallback for cold deep links (no list
+     * session). Idempotent: it won't overwrite the list's cutoff, and repeated reader opens
+     * (next/previous) keep the same session start.
+     */
+    fun start() {
         if (value == null) {
             value = OffsetDateTime.now()
         }
-    }
-
-    fun clear() {
-        value = null
     }
 }

@@ -56,6 +56,7 @@ internal val articlesModule = module {
             appPreferences = appPreferences,
             notificationHelper = get(),
             application = get(),
+            articleCutoff = get(),
         )
     }
     viewModel {
