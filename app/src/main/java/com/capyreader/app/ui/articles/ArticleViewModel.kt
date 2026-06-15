@@ -23,11 +23,11 @@ import kotlinx.coroutines.launch
 
 /**
  * Backs a single [com.capyreader.app.ui.Route.ArticleDetail] entry. The [articleID] arrives as a
- * navigation argument (via Koin `parametersOf`), the article is resolved from the database on
- * [init], and this ViewModel owns its own full-content fetch/parse lifecycle.
+ * persistent reader surface. [load] swaps the displayed article (the entry uses a stable
+ * contentKey so this ViewModel survives next/previous navigation), and it owns its own
+ * full-content fetch/parse lifecycle.
  */
 class ArticleViewModel(
-    private val articleID: String,
     private val account: Account,
     private val appPreferences: AppPreferences,
     private val application: Application,
@@ -35,6 +35,8 @@ class ArticleViewModel(
 ) : AndroidViewModel(application) {
 
     private var fullContentJob: Job? = null
+
+    private var currentArticleID: String? = null
 
     var article by mutableStateOf<Article?>(null)
         private set
@@ -45,11 +47,16 @@ class ArticleViewModel(
 
     val savedSearches: Flow<List<SavedSearch>> = account.savedSearches
 
-    init {
-        loadArticle()
-    }
+    /**
+     * Loads [articleID] into the persistent reader surface. The previously loaded [article] is kept
+     * until the new one resolves so the reader chrome stays present while the content swaps.
+     */
+    fun load(articleID: String) {
+        if (currentArticleID == articleID) {
+            return
+        }
+        currentArticleID = articleID
 
-    private fun loadArticle() {
         viewModelScope.launchIO {
             val loaded = buildArticle(articleID) ?: return@launchIO
             article = loaded

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,7 +30,6 @@ import com.capyreader.app.ui.provideLinkOpener
 import com.capyreader.app.ui.rememberLocalConnectivity
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
-import org.koin.core.parameter.parametersOf
 
 /**
  * Content of the [com.capyreader.app.ui.Route.ArticleDetail] entry. Renders the reader for a single
@@ -43,8 +43,12 @@ fun ArticleDetailScreen(
     onSelectArticle: (id: String) -> Unit,
     previousArticleID: String? = null,
     nextArticleID: String? = null,
-    viewModel: ArticleViewModel = koinViewModel { parametersOf(articleID) },
+    viewModel: ArticleViewModel = koinViewModel(),
 ) {
+    LaunchedEffect(articleID) {
+        viewModel.load(articleID)
+    }
+
     val context = LocalContext.current
     val article = viewModel.article
     val canSaveExternally by viewModel.canSaveArticleExternally.collectAsStateWithLifecycle()

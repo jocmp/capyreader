@@ -57,9 +57,8 @@ internal val articlesModule = module {
             application = get(),
         )
     }
-    viewModel { (articleID: String) ->
+    viewModel {
         ArticleViewModel(
-            articleID = articleID,
             account = get(),
             appPreferences = get(),
             application = get(),
