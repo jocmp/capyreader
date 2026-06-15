@@ -1,6 +1,7 @@
 package com.capyreader.app.ui
 
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -37,6 +38,8 @@ import com.capyreader.app.ui.articles.ArticleScreen
 import com.capyreader.app.ui.articles.LocalArticlePaneExpansion
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
 import com.capyreader.app.ui.articles.rememberArticlePaneExpansion
+import com.capyreader.app.ui.shared.materialSharedAxisXIn
+import com.capyreader.app.ui.shared.materialSharedAxisXOut
 import com.capyreader.app.ui.settings.SettingsScreen
 import com.capyreader.app.ui.theme.CapyTheme
 import com.capyreader.app.unloadAccountModules
@@ -152,7 +155,23 @@ fun App(
                         // Stable contentKey: next/previous swaps the article id without remounting
                         // the reader, so the chrome persists and content transitions animate.
                         clazzContentKey = { ARTICLE_DETAIL_CONTENT_KEY },
-                        metadata = ListDetailSceneStrategy.detailPane(),
+                        // On phone (single pane) the list <-> detail navigation is a scene change;
+                        // animate it with the shared-axis-X motion the pane scaffold used originally
+                        // instead of the default cross-fade. On tablet both panes share one scene,
+                        // so this never fires there.
+                        metadata = ListDetailSceneStrategy.detailPane() +
+                            NavDisplay.transitionSpec {
+                                sharedAxisXEnter(forward = true) togetherWith
+                                    sharedAxisXExit(forward = true)
+                            } +
+                            NavDisplay.popTransitionSpec {
+                                sharedAxisXEnter(forward = false) togetherWith
+                                    sharedAxisXExit(forward = false)
+                            } +
+                            NavDisplay.predictivePopTransitionSpec {
+                                sharedAxisXEnter(forward = false) togetherWith
+                                    sharedAxisXExit(forward = false)
+                            },
                     ) { key ->
                         ArticleDetailScreen(
                             articleID = key.articleID,
@@ -168,6 +187,21 @@ fun App(
 }
 
 private const val ARTICLE_DETAIL_CONTENT_KEY = "article_detail"
+
+/** Matches the pane scaffold's original shared-axis offset (10% of the pane width). */
+private const val PANE_OFFSET_FACTOR = 0.10f
+
+private fun sharedAxisXEnter(forward: Boolean) =
+    materialSharedAxisXIn(initialOffsetX = { width ->
+        val offset = (width * PANE_OFFSET_FACTOR).toInt()
+        if (forward) offset else -offset
+    })
+
+private fun sharedAxisXExit(forward: Boolean) =
+    materialSharedAxisXOut(targetOffsetX = { width ->
+        val offset = (width * PANE_OFFSET_FACTOR).toInt()
+        if (forward) -offset else offset
+    })
 
 /** How far to inset the drag handle from the screen edge when the detail pane is fullscreen. */
 private val HandleEdgeInset = 16.dp
