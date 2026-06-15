@@ -73,6 +73,7 @@ class ByArticleStatus(private val database: Database) {
         sortOrder: SortOrder,
         since: OffsetDateTime?,
         articleID: String,
+        publishedSince: Long? = null,
     ): Pair<String?, String?> {
         val (read, starred) = status.toStatusPair
         val newestFirst = isNewestFirst(sortOrder)
@@ -84,6 +85,7 @@ class ByArticleStatus(private val database: Database) {
             lastReadAt = mapLastRead(read, since),
             starred = starred,
             lastUnstarredAt = mapLastUnstarred(starred, since),
+            publishedSince = publishedSince,
             newestFirst = newestFirst,
         ).executeAsOneOrNull()
 
@@ -93,6 +95,7 @@ class ByArticleStatus(private val database: Database) {
             lastReadAt = mapLastRead(read, since),
             starred = starred,
             lastUnstarredAt = mapLastUnstarred(starred, since),
+            publishedSince = publishedSince,
             newestFirst = newestFirst,
         ).executeAsOneOrNull()
 
