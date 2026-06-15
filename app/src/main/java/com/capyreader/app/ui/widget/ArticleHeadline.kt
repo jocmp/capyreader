@@ -2,12 +2,10 @@ package com.capyreader.app.ui.widget
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.net.toUri
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.LocalContext
@@ -31,7 +29,7 @@ import com.capyreader.app.MainActivity
 import com.capyreader.app.OpenArticleInBrowserActivity
 import com.capyreader.app.OpenArticleInBrowserActivity.Companion.ARTICLE_URL_KEY
 import com.capyreader.app.notifications.NotificationHelper.Companion.ARTICLE_ID_KEY
-import com.capyreader.app.notifications.NotificationHelper.Companion.FEED_ID_KEY
+import com.capyreader.app.ui.DeepLink
 import com.jocmp.capy.Article
 import com.jocmp.capy.articles.relativeTime
 import com.jocmp.capy.common.DisplayTimeFormats
@@ -114,24 +112,14 @@ private fun Context.openArticle(article: Article): Action {
         )
     } else {
         actionStartActivity(
-            Intent(this, MainActivity::class.java).apply {
-                putExtra(ARTICLE_ID_KEY, article.id)
-                putExtra(FEED_ID_KEY, article.feedID)
-                data = uniqueUri(article)
+            Intent(
+                Intent.ACTION_VIEW,
+                DeepLink.articleUri(articleID = article.id, feedID = article.feedID),
+                this,
+                MainActivity::class.java,
+            ).apply {
                 setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             })
-    }
-}
-
-
-private fun uniqueUri(article: Article): Uri {
-    val fallbackUri = "https://capyreader.com/${article.id}".toUri()
-    val url = article.url
-
-    return try {
-        url.toString().toUri()
-    } catch (e: Throwable) {
-        fallbackUri
     }
 }
 

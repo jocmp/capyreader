@@ -37,7 +37,8 @@ import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import com.capyreader.app.MainActivity
 import com.capyreader.app.R
-import com.capyreader.app.notifications.NotificationHelper.Companion.UNREAD_ONLY_KEY
+import com.capyreader.app.ui.DeepLink
+import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Article
 import java.time.LocalDateTime
 
@@ -100,8 +101,12 @@ fun HeadlinesLayout(articles: List<Article>) {
 
 private fun Context.openUnread() =
     actionStartActivity(
-        Intent(this, MainActivity::class.java).apply {
-            putExtra(UNREAD_ONLY_KEY, true)
+        Intent(
+            Intent.ACTION_VIEW,
+            DeepLink.articlesUri(ArticleStatus.UNREAD),
+            this,
+            MainActivity::class.java,
+        ).apply {
             setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         })
 
