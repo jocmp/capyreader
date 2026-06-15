@@ -61,6 +61,7 @@ class ArticleScreenViewModel(
     private val appPreferences: AppPreferences,
     private val application: Application,
     private val notificationHelper: NotificationHelper,
+    private val articleCutoff: ArticleSessionCutoff,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
     private val syncFlushInterval: Duration? = SYNC_FLUSH_INTERVAL,
 ) : AndroidViewModel(application) {
@@ -716,6 +717,8 @@ class ArticleScreenViewModel(
 
     private fun updateArticlesSince() {
         articlesSince.value = OffsetDateTime.now().plusSeconds(1)
+        // Share the list's session cutoff so the reader's neighbor pinning matches the list exactly.
+        articleCutoff.set(articlesSince.value)
     }
 
     private fun copyFolderCounts(

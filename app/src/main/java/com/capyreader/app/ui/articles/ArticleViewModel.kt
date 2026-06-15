@@ -48,11 +48,6 @@ class ArticleViewModel(
     var nextArticleID by mutableStateOf<String?>(null)
         private set
 
-    override fun onCleared() {
-        articleCutoff.clear()
-        super.onCleared()
-    }
-
     val canSaveArticleExternally = account.canSaveArticleExternally.stateIn(viewModelScope)
 
     val source = account.source
@@ -70,7 +65,7 @@ class ArticleViewModel(
         currentArticleID = articleID
         // Stamp the session cutoff before marking anything read, so this-session reads stay
         // pinned in the neighbor set (and the article we're opening can be navigated back to).
-        articleCutoff.startIfNeeded()
+        articleCutoff.start()
 
         viewModelScope.launchIO {
             val loaded = buildArticle(articleID) ?: return@launchIO
