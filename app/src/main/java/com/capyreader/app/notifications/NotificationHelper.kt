@@ -10,6 +10,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.capyreader.app.ArticleStatusBroadcastReceiver
 import com.capyreader.app.MainActivity
+import com.capyreader.app.OpenArticleInBrowserActivity
 import com.capyreader.app.R
 import com.capyreader.app.ui.DeepLink
 import com.jocmp.capy.Account
@@ -158,13 +159,23 @@ private fun NotificationManagerCompat.tryNotify(id: Int, notification: Notificat
 }
 
 private fun ArticleNotification.contentIntent(context: Context): PendingIntent {
-    val notifyIntent = Intent(
-        Intent.ACTION_VIEW,
-        DeepLink.articleUri(articleID = articleID, feedID = feedID),
-        context,
-        MainActivity::class.java,
-    ).apply {
-        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    val notifyIntent = if (openInBrowser && !url.isNullOrBlank()) {
+        // Feeds flagged "open in browser" route through the activity that opens the link and marks
+        // the article read, matching the in-app list tap and the widgets.
+        Intent(context, OpenArticleInBrowserActivity::class.java).apply {
+            putExtra(NotificationHelper.ARTICLE_ID_KEY, articleID)
+            putExtra(OpenArticleInBrowserActivity.ARTICLE_URL_KEY, url)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+    } else {
+        Intent(
+            Intent.ACTION_VIEW,
+            DeepLink.articleUri(articleID = articleID, feedID = feedID),
+            context,
+            MainActivity::class.java,
+        ).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
     }
 
     return PendingIntent.getActivity(

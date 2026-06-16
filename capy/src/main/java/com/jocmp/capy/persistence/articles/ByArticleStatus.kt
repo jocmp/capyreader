@@ -79,24 +79,27 @@ class ByArticleStatus(private val database: Database) {
         val newestFirst = isNewestFirst(sortOrder)
         val queries = database.articlesByStatusQueries
 
-        val previous = queries.articleBefore(
-            articleID = articleID,
-            read = read,
-            lastReadAt = mapLastRead(read, since),
-            starred = starred,
-            lastUnstarredAt = mapLastUnstarred(starred, since),
-            publishedSince = publishedSince,
-            newestFirst = newestFirst,
+        val findBefore =
+            if (newestFirst) queries::articleBeforeNewestFirst else queries::articleBeforeOldestFirst
+        val findAfter =
+            if (newestFirst) queries::articleAfterNewestFirst else queries::articleAfterOldestFirst
+
+        val previous = findBefore(
+            articleID,
+            read,
+            mapLastRead(read, since),
+            starred,
+            mapLastUnstarred(starred, since),
+            publishedSince,
         ).executeAsOneOrNull()
 
-        val next = queries.articleAfter(
-            articleID = articleID,
-            read = read,
-            lastReadAt = mapLastRead(read, since),
-            starred = starred,
-            lastUnstarredAt = mapLastUnstarred(starred, since),
-            publishedSince = publishedSince,
-            newestFirst = newestFirst,
+        val next = findAfter(
+            articleID,
+            read,
+            mapLastRead(read, since),
+            starred,
+            mapLastUnstarred(starred, since),
+            publishedSince,
         ).executeAsOneOrNull()
 
         return previous to next

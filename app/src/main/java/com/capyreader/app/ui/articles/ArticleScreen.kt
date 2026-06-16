@@ -16,8 +16,6 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
-import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
-import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -63,8 +61,6 @@ import com.capyreader.app.ui.LocalTimeFormats
 import com.capyreader.app.ui.LocalUnreadCount
 import com.capyreader.app.ui.articles.audio.AudioPlayerController
 import com.capyreader.app.ui.articles.audio.FloatingAudioPlayer
-import com.capyreader.app.ui.articles.detail.ArticleView
-import com.capyreader.app.ui.articles.detail.CapyPlaceholder
 import com.capyreader.app.ui.articles.feeds.AngleRefreshState
 import com.capyreader.app.ui.articles.feeds.FeedActions
 import com.capyreader.app.ui.articles.feeds.FeedList
@@ -147,7 +143,6 @@ fun ArticleScreen(
     }
     val context = LocalContext.current
 
-    val fullContent = rememberFullContent(viewModel)
     val articleActions = rememberArticleActions(viewModel)
     val folderActions = rememberFolderActions(viewModel)
     val feedActions = rememberFeedActions(viewModel)
@@ -194,7 +189,6 @@ fun ArticleScreen(
     var isMarkAllReadDialogOpen by remember { mutableStateOf(false) }
 
     CompositionLocalProvider(
-        LocalFullContent provides fullContent,
         LocalArticleActions provides articleActions,
         LocalFolderActions provides folderActions,
         LocalFeedActions provides feedActions,
@@ -389,12 +383,21 @@ fun ArticleScreen(
             }
         }
 
-        fun selectArticle(articleID: String) {
+        val linkOpener = LocalLinkOpener.current
+
+        fun selectArticle(article: Article) {
             if (search.isActive) {
                 focusManager.clearFocus()
                 search.clear()
             }
-            onSelectArticle(articleID)
+
+            // Feeds flagged "open in browser" skip the in-app reader, matching the widget behavior.
+            val url = article.url
+            if (article.openInBrowser && url != null) {
+                linkOpener.open(url.toString().toUri())
+            } else {
+                onSelectArticle(article.id)
+            }
         }
 
         val selectFilter = {
@@ -596,8 +599,8 @@ fun ArticleScreen(
                                             onMarkAllRead = { range ->
                                                 onMarkAllRead(range)
                                             },
-                                            onSelect = { articleID ->
-                                                selectArticle(articleID)
+                                            onSelect = { article ->
+                                                selectArticle(article)
                                             },
                                         )
                                     }
@@ -616,7 +619,7 @@ fun ArticleScreen(
                     search = search,
                     results = searchResults,
                     selectedArticleID = selectedArticleID,
-                    onSelect = { selectArticle(it) },
+                    onSelect = { article -> selectArticle(article) },
                 )
             }
         }
@@ -770,16 +773,6 @@ fun rememberSavedSearchActions(viewModel: ArticleScreenViewModel): SavedSearchAc
             toggleUnreadBadge = { id, show ->
                 viewModel.toggleSavedSearchUnreadBadge(id, show)
             },
-        )
-    }
-}
-
-@Composable
-fun rememberFullContent(viewModel: ArticleScreenViewModel): FullContentFetcher {
-    return remember {
-        FullContentFetcher(
-            fetch = viewModel::fetchFullContentAsync,
-            reset = viewModel::resetFullContent,
         )
     }
 }

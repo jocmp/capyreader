@@ -41,19 +41,23 @@ object DeepLink {
             .apply { if (status == ArticleStatus.UNREAD) appendPath("unread") }
             .build()
 
-    fun parse(uri: Uri?): List<NavKey>? {
+    /**
+     * [currentStatus] is the user's persisted list status; a feed deep link keeps it (rather than
+     * forcing unread) so the link doesn't silently narrow the list the user was browsing.
+     */
+    fun parse(uri: Uri?, currentStatus: ArticleStatus = ArticleStatus.UNREAD): List<NavKey>? {
         if (uri?.scheme != SCHEME) return null
 
         return when (uri.host) {
             "article" -> {
                 val articleID = uri.pathSegments.firstOrNull() ?: return null
                 val feedID = uri.getQueryParameter("feedID")
-                val list = if (feedID != null) {
+                val list = if (!feedID.isNullOrBlank()) {
                     Route.ArticleList(
                         ArticleFilter.Feeds(
                             feedID = feedID,
                             folderTitle = null,
-                            feedStatus = ArticleStatus.UNREAD,
+                            feedStatus = currentStatus,
                         )
                     )
                 } else {
