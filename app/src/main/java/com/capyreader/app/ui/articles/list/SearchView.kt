@@ -48,7 +48,7 @@ fun SearchView(
     search: ArticleSearch,
     results: LazyPagingItems<Article>,
     selectedArticleID: String?,
-    onSelect: (articleID: String) -> Unit,
+    onSelect: (article: Article) -> Unit,
 ) {
     val focusRequester = remember { FocusRequester() }
     val query = search.query.orEmpty()

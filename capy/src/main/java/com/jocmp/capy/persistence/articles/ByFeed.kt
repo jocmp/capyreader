@@ -92,28 +92,31 @@ class ByFeed(private val database: Database) {
         val newestFirst = isNewestFirst(sortOrder)
         val queries = database.articlesByFeedQueries
 
-        val previous = queries.articleBefore(
-            articleID = articleID,
-            feedIDs = feedIDs,
-            read = read,
-            lastReadAt = mapLastRead(read, since),
-            starred = starred,
-            lastUnstarredAt = mapLastUnstarred(starred, since),
-            publishedSince = null,
-            priorities = priority.inclusivePriorities,
-            newestFirst = newestFirst,
+        val findBefore =
+            if (newestFirst) queries::articleBeforeNewestFirst else queries::articleBeforeOldestFirst
+        val findAfter =
+            if (newestFirst) queries::articleAfterNewestFirst else queries::articleAfterOldestFirst
+
+        val previous = findBefore(
+            articleID,
+            feedIDs,
+            read,
+            mapLastRead(read, since),
+            starred,
+            mapLastUnstarred(starred, since),
+            null,
+            priority.inclusivePriorities,
         ).executeAsOneOrNull()
 
-        val next = queries.articleAfter(
-            articleID = articleID,
-            feedIDs = feedIDs,
-            read = read,
-            lastReadAt = mapLastRead(read, since),
-            starred = starred,
-            lastUnstarredAt = mapLastUnstarred(starred, since),
-            publishedSince = null,
-            priorities = priority.inclusivePriorities,
-            newestFirst = newestFirst,
+        val next = findAfter(
+            articleID,
+            feedIDs,
+            read,
+            mapLastRead(read, since),
+            starred,
+            mapLastUnstarred(starred, since),
+            null,
+            priority.inclusivePriorities,
         ).executeAsOneOrNull()
 
         return previous to next

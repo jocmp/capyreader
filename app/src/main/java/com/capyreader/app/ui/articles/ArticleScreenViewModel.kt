@@ -69,8 +69,6 @@ class ArticleScreenViewModel(
 ) : AndroidViewModel(application) {
     private var refreshJob: Job? = null
 
-    private var fullContentJob: Job? = null
-
     var refreshSkipReason by mutableStateOf<RefreshSkipReason?>(null)
         private set
 
@@ -86,8 +84,6 @@ class ArticleScreenViewModel(
     private val _searchQuery = MutableStateFlow("")
 
     private val _searchState = MutableStateFlow(SearchState.INACTIVE)
-
-    private var _article by mutableStateOf<Article?>(null)
 
     private val _refreshAllState = MutableStateFlow(AngleRefreshState.STOPPED)
 
@@ -283,9 +279,6 @@ class ArticleScreenViewModel(
 
     val showUnauthorizedMessage: Boolean
         get() = _showUnauthorizedMessage == UnauthorizedMessageState.SHOW
-
-    val article: Article?
-        get() = _article
 
     val searchQuery: Flow<String>
         get() = _searchQuery
@@ -568,65 +561,8 @@ class ArticleScreenViewModel(
         }
     }
 
-    fun selectArticle(articleID: String, onComplete: (article: Article) -> Unit = {}) {
-        if (_article?.id == articleID) {
-            return
-        }
-
-        viewModelScope.launchIO {
-            val article = buildArticle(articleID) ?: return@launchIO
-            _article = article
-
-            launchIO {
-                markRead(articleID)
-            }
-
-            launchUI {
-                onComplete(article)
-            }
-
-            if (article.fullContent == Article.FullContentState.LOADING) {
-                fullContentJob?.cancel()
-
-                fullContentJob = viewModelScope.launchIO { fetchFullContent(article) }
-            }
-        }
-    }
-
-    fun toggleArticleRead() {
-        _article?.let { article ->
-            viewModelScope.launch {
-                if (article.read) {
-                    markUnread(article.id)
-                } else {
-                    markRead(article.id)
-                }
-            }
-
-            _article = article.copy(read = !article.read)
-        }
-    }
-
-    fun toggleArticleStar() {
-        _article?.let { article ->
-            viewModelScope.launch {
-                if (article.starred) {
-                    removeStar(article.id)
-                } else {
-                    addStar(article.id)
-                }
-
-                _article = article.copy(starred = !article.starred)
-            }
-        }
-    }
-
     fun dismissUnauthorizedMessage() {
         _showUnauthorizedMessage = UnauthorizedMessageState.LATER
-    }
-
-    fun clearArticle() {
-        _article = null
     }
 
     fun startSearch() {
@@ -634,37 +570,29 @@ class ArticleScreenViewModel(
     }
 
     fun clearSearch() {
-        if (_searchQuery.value.isNotBlank()) {
-            clearArticle()
-        }
         _searchQuery.value = ""
         _searchState.value = SearchState.INACTIVE
         resetScrollHighWaterMark()
     }
 
     fun updateSearch(query: String) {
-        clearArticle()
         _searchQuery.value = query
         resetScrollHighWaterMark()
     }
 
     fun addStarAsync(articleID: String) {
-        toggleCurrentStarred(articleID)
         addStar(articleID)
     }
 
     fun removeStarAsync(articleID: String) = viewModelScope.launchIO {
-        toggleCurrentStarred(articleID)
         removeStar(articleID)
     }
 
     fun markReadAsync(articleID: String) = viewModelScope.launchIO {
-        toggleCurrentRead(articleID)
         markRead(articleID)
     }
 
     fun markUnreadAsync(articleID: String) = viewModelScope.launchIO {
-        toggleCurrentRead(articleID)
         markUnread(articleID)
     }
 
@@ -700,26 +628,9 @@ class ArticleScreenViewModel(
         updateFilter(ArticleFilter.default())
     }
 
-    private fun toggleCurrentStarred(articleID: String) {
-        _article?.let { article ->
-            if (articleID == article.id) {
-                _article = article.copy(starred = !article.starred)
-            }
-        }
-    }
-
-    private fun toggleCurrentRead(articleID: String) {
-        _article?.let { article ->
-            if (articleID == article.id) {
-                _article = article.copy(read = !article.read)
-            }
-        }
-    }
-
     private fun updateFilter(filter: ArticleFilter) {
         appPreferences.filter.set(filter)
 
-        clearArticle()
         resetScrollHighWaterMark()
 
         updateArticlesSince()
@@ -753,91 +664,6 @@ class ArticleScreenViewModel(
         counts: Map<String, Long>
     ): SavedSearch {
         return savedSearch.copy(count = counts.getOrDefault(savedSearch.id, 0))
-    }
-
-    private suspend fun buildArticle(articleID: String): Article? {
-        val article = account.findArticle(articleID = articleID) ?: return null
-
-        val fullContent = if (enableStickyFullContent && article.enableStickyFullContent) {
-            Article.FullContentState.LOADING
-        } else {
-            Article.FullContentState.NONE
-        }
-
-        val content = when (fullContent) {
-            Article.FullContentState.LOADING -> ""
-            else -> article.defaultContent
-        }
-
-        return article.copy(
-            read = true,
-            content = content,
-            fullContent = fullContent
-        )
-    }
-
-    fun fetchFullContentAsync(article: Article? = _article) {
-        article ?: return
-
-        viewModelScope.launchIO {
-            if (enableStickyFullContent && !account.isFullContentEnabled(feedID = article.feedID)) {
-                account.enableStickyContent(article.feedID)
-            }
-
-            _article = article.copy(fullContent = Article.FullContentState.LOADING)
-
-            _article?.let { fetchFullContent(it) }
-        }
-    }
-
-    fun resetFullContent() {
-        val article = _article ?: return
-
-        _article = article.copy(
-            content = article.defaultContent,
-            fullContent = Article.FullContentState.NONE
-        )
-
-        if (enableStickyFullContent) {
-            viewModelScope.launch {
-                account.disableStickyContent(article.feedID)
-            }
-        }
-    }
-
-    private suspend fun fetchFullContent(article: Article) {
-        account.fetchFullContent(article)
-            .fold(
-                onSuccess = { value ->
-                    if (_article?.id == article.id) {
-                        _article = article.copy(
-                            content = value,
-                            fullContent = Article.FullContentState.LOADED
-                        )
-                    }
-                },
-                onFailure = {
-                    if (_article?.id != article.id) {
-                        return
-                    }
-                    _article = article.copy(
-                        content = article.defaultContent,
-                        fullContent = Article.FullContentState.ERROR
-                    )
-
-                    CapyLog.warn(
-                        "full_content",
-                        mapOf(
-                            "error_type" to it::class.simpleName,
-                            "error_message" to it.message
-                        )
-                    )
-
-                    viewModelScope.launchUI {
-                        context.showFullContentErrorToast(it)
-                    }
-                }
-            )
     }
 
     private suspend fun openNextFeedOnAllRead(
@@ -896,8 +722,6 @@ class ArticleScreenViewModel(
     private val currentStatus: ArticleStatus
         get() = latestFilter.status
 
-    private val enableStickyFullContent: Boolean
-        get() = appPreferences.enableStickyFullContent.get()
     private val context: Context
         get() = application.applicationContext
 

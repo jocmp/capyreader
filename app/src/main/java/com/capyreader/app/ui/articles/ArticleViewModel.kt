@@ -241,6 +241,14 @@ class ArticleViewModel(
         account.removeStar(articleID)
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        // The reader left the back stack: end the session so the next open starts a fresh cutoff
+        // rather than reusing this session's (next/previous keep the same instance, so they don't
+        // trigger this).
+        articleCutoff.reset()
+    }
+
     private val enableStickyFullContent: Boolean
         get() = appPreferences.enableStickyFullContent.get()
 

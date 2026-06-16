@@ -11,7 +11,7 @@ import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.App
 import com.capyreader.app.ui.DeepLink
 import com.capyreader.app.ui.Route
-import org.koin.android.ext.android.get
+import com.jocmp.capy.ArticleStatus
 import org.koin.android.ext.android.inject
 
 class MainActivity : BaseActivity() {
@@ -21,7 +21,7 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val startBackStack = DeepLink.parse(intent.data) ?: listOf(startDestination())
+        val startBackStack = resolveBackStack(intent)
         applyListFilter(startBackStack)
 
         setContent {
@@ -36,7 +36,9 @@ class MainActivity : BaseActivity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        DeepLink.parse(intent.data)?.let { parsed ->
+        // A deep link must never bypass the add-account flow when no account is configured.
+        if (!hasAccount) return
+        DeepLink.parse(intent.data, currentStatus)?.let { parsed ->
             applyListFilter(parsed)
             deepLink = parsed
         }
@@ -52,15 +54,22 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun startDestination(): Route {
-        val appPreferences = get<AppPreferences>()
-
-        val accountID = appPreferences.accountID.get()
-
-        return if (accountID.isBlank()) {
-            Route.AddAccount
-        } else {
-            Route.ArticleList(appPreferences.filter.get())
+    /**
+     * Resolve the launch back stack. The account gate comes first: a deep link only applies once an
+     * account exists, otherwise we always land on the add-account flow.
+     */
+    private fun resolveBackStack(intent: Intent): List<NavKey> {
+        if (!hasAccount) {
+            return listOf(Route.AddAccount)
         }
+
+        return DeepLink.parse(intent.data, currentStatus)
+            ?: listOf(Route.ArticleList(appPreferences.filter.get()))
     }
+
+    private val hasAccount: Boolean
+        get() = appPreferences.accountID.get().isNotBlank()
+
+    private val currentStatus: ArticleStatus
+        get() = appPreferences.filter.get().status
 }
