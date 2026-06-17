@@ -1,0 +1,3 @@
+• Fix bug where app would hang on open
+• Add custom content parsers for dw.com, actualidad.rt.com, frandroid.com, tweaktown.com, motorsport.com and substack.com
+• Update translations for Greek, Latvian, Polish and Russian thanks to volunteers!
