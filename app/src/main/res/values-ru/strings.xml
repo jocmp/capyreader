@@ -357,4 +357,6 @@
     <string name="freshrss_visibility">Видимость</string>
     <string name="freshrss_visibility_option_main">Главный поток</string>
     <string name="article_list_new_articles_pill">Новые публикации</string>
+    <string name="settings_refresh_on_wifi_only">Обновлять только через Wi-Fi</string>
+    <string name="refresh_skipped_mobile">Обновление пропущено в мобильной сети</string>
 </resources>
