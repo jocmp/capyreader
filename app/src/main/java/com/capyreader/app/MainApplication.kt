@@ -56,13 +56,23 @@ class MainApplication : Application(), SingletonImageLoader.Factory {
 
     /**
      * [Docs](https://developer.android.com/develop/ui/compose/glance/generated-previews)
+     *
+     * On Android 17 the underlying `setWidgetPreview` binder call throws when the
+     * receiver isn't a registered AppWidget provider in the current profile (e.g. a
+     * private/work space), which would otherwise crash the app on launch.
+     * See https://issuetracker.google.com/issues/488125748
      */
     private fun loadWidgetPreview() {
         MainScope().launchUI {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
                 val manager = GlanceAppWidgetManager(applicationContext)
-                manager.setWidgetPreviews(HeadlinesWidgetReceiver::class)
-                manager.setWidgetPreviews(SpotlightWidgetReceiver::class)
+
+                try {
+                    manager.setWidgetPreviews(HeadlinesWidgetReceiver::class)
+                    manager.setWidgetPreviews(SpotlightWidgetReceiver::class)
+                } catch (e: IllegalArgumentException) {
+                    CapyLog.error("widget_preview", e)
+                }
             }
         }
     }
