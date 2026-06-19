@@ -72,7 +72,7 @@
     <string name="account_settings_save_name">Vārds saglabāts</string>
     <string name="article_view_star">Pievienot atzīmētiem</string>
     <string name="article_view_unstar">Noņemt no atzīmētiem</string>
-    <string name="refresh_manually_only">Tikai manuāli</string>
+    <string name="refresh_manually_only">Tikai pēc pašu izvēles</string>
     <string name="nav_headline_saved_searches">Meklējumi</string>
     <string name="add_feed_feed_not_error">Neizdevās atrast ziņu plūsmu</string>
     <string name="add_feed_save_error">Neizdevās saglabāt ziņu plūsmu</string>
@@ -88,7 +88,7 @@
     <string name="crash_reporting_checkbox_title">Ieslēgt lietotnes nobrukšanas ziņošanu</string>
     <string name="account_source_local">Vietējais (lokālais)</string>
     <string name="add_account_local_subtitle">Jūsu ierīcē</string>
-    <string name="add_account_reader_subtitle">Pašmitināts Google Reader API</string>
+    <string name="add_account_reader_subtitle">Pašizmitināts Google Reader API</string>
     <string name="add_account_feedbin_signup_prompt">Nav Feedbin konta?</string>
     <string name="add_account_feedbin_signup_link_text">Izveidojiet to šeit.</string>
     <string name="add_account_freshrss_signup_prompt">Jums nav pašizmitināta FreshRSS servera (instances)?</string>
@@ -287,7 +287,7 @@
     <string name="save_page_error">Nevarēja saglabāt lapu</string>
     <string name="freshrss_visibility">Redzamība</string>
     <string name="freshrss_visibility_option_important">Svarīgs</string>
-    <string name="freshrss_visibility_option_feed">Barotne</string>
+    <string name="freshrss_visibility_option_feed">Ziņu plūsma</string>
     <string name="settings_section_experimental">Eksperimentālie</string>
     <string name="audio_player_play">Atskaņot</string>
     <string name="freshrss_nav_headline_categories">Kategorijas</string>
@@ -350,6 +350,6 @@
     <string name="widget_spotlight_empty">Nav nelasītu rakstu</string>
     <string name="widget_spotlight_see_all">Skatīt visus</string>
     <string name="settings_refresh_on_wifi_only">Atsvaidzināt tikai Wi-Fi tīklā</string>
-    <string name="refresh_skipped_mobile">Atsvaidzināšana tiek izlaista mobilajā tīklā</string>
+    <string name="refresh_skipped_mobile">Neatsvaidzināt, ja izmanto mobilo tīklu</string>
     <string name="article_list_new_articles_pill">Jauni raksti</string>
 </resources>
