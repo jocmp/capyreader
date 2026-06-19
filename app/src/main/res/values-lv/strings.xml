@@ -72,7 +72,7 @@
     <string name="account_settings_save_name">Vārds saglabāts</string>
     <string name="article_view_star">Pievienot atzīmētiem</string>
     <string name="article_view_unstar">Noņemt no atzīmētiem</string>
-    <string name="refresh_manually_only">Tikai pēc pašu izvēles</string>
+    <string name="refresh_manually_only">Tikai pašrocīgi</string>
     <string name="nav_headline_saved_searches">Meklējumi</string>
     <string name="add_feed_feed_not_error">Neizdevās atrast ziņu plūsmu</string>
     <string name="add_feed_save_error">Neizdevās saglabāt ziņu plūsmu</string>
