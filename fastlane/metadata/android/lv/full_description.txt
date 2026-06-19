@@ -10,4 +10,4 @@ Dažas no iespējām:
 • visa satura skatīšana;
 • tumšais izskats;
 • lielu ekrānu atbalsts;
-• saglabāto barotņu ievietošana un izgūšana.
+• saglabāto ziņu plūsmu ievietošana un izgūšana.
