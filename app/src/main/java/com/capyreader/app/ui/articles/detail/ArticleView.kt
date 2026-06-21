@@ -29,7 +29,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
-import androidx.paging.compose.LazyPagingItems
 import com.capyreader.app.common.AudioEnclosure
 import com.capyreader.app.common.Media
 import com.capyreader.app.preferences.AppPreferences
@@ -50,13 +49,13 @@ import org.koin.compose.koinInject
 @Composable
 fun ArticleView(
     article: Article,
-    articles: LazyPagingItems<Article>,
+    previousArticleID: String? = null,
+    nextArticleID: String? = null,
     onBackPressed: () -> Unit,
     onToggleRead: () -> Unit,
     onToggleStar: () -> Unit,
     canSaveExternally: Boolean = false,
     onDeletePage: () -> Unit = {},
-    onScrollToArticle: (index: Int) -> Unit,
     onSelectArticle: (id: String) -> Unit,
     onSelectMedia: (media: Media) -> Unit,
     onSelectAudio: (audio: AudioEnclosure) -> Unit = {},
@@ -79,36 +78,15 @@ fun ArticleView(
         }
     }
 
-    val index = remember(
-        article.id,
-        articles.itemCount,
-    ) {
-        articles.itemSnapshotList.indexOfFirst { it?.id == article.id }
-    }
-
-    val previousIndex = index - 1
-    val nextIndex = index + 1
-
-    val hasPrevious = previousIndex > -1 && articles[index - 1] != null
-    val hasNext = nextIndex < articles.itemCount && articles[index + 1] != null
-
-    val previousArticleId = if (hasPrevious) articles[previousIndex]?.id else null
-    val nextArticleId = if (hasNext) articles[nextIndex]?.id else null
+    val hasPrevious = previousArticleID != null
+    val hasNext = nextArticleID != null
 
     fun selectPrevious() {
-        if (previousIndex < 0) return
-
-        articles[previousIndex]?.let {
-            onSelectArticle(it.id)
-        }
+        previousArticleID?.let(onSelectArticle)
     }
 
     fun selectNext() {
-        if (nextIndex >= articles.itemCount) return
-
-        articles[nextIndex]?.let {
-            onSelectArticle(it.id)
-        }
+        nextArticleID?.let(onSelectArticle)
     }
 
     val onSwipe = { swipe: ArticleVerticalSwipe ->
@@ -161,8 +139,8 @@ fun ArticleView(
                         ArticleTransition(
                             article = article,
                             enableHorizontalPager = enableHorizontalPager,
-                            previousArticleId = previousArticleId,
-                            nextArticleId = nextArticleId,
+                            previousArticleId = previousArticleID,
+                            nextArticleId = nextArticleID,
                         ) { targetArticle ->
                             ArticleReader(
                                 article = targetArticle,
@@ -209,13 +187,6 @@ fun ArticleView(
           }
         }
     }
-
-    LaunchedEffect(index) {
-        if (index > -1) {
-            onScrollToArticle(index)
-        }
-    }
-
 }
 
 @Composable
