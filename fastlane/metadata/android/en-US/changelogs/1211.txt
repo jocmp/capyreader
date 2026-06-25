@@ -1,0 +1,1 @@
+Fix crash for widgets on Android 17. Thanks for the bug reports here!
