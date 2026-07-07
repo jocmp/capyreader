@@ -9,6 +9,7 @@ import androidx.media3.common.ForwardingPlayer
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.database.StandaloneDatabaseProvider
+import androidx.media3.datasource.DefaultDataSource
 import androidx.media3.datasource.cache.CacheDataSource
 import androidx.media3.datasource.cache.LeastRecentlyUsedCacheEvictor
 import androidx.media3.datasource.cache.SimpleCache
@@ -59,8 +60,12 @@ class MediaPlaybackService : MediaSessionService() {
                 }
             }
 
+        // Route http(s) through the OkHttp cache pipeline, but handle local
+        // file:// URIs (synthesized read-aloud audio) with the built-in file source.
+        val dataSourceFactory = DefaultDataSource.Factory(this, cacheDataSourceFactory)
+
         val mediaSourceFactory = DefaultMediaSourceFactory(this)
-            .setDataSourceFactory(cacheDataSourceFactory)
+            .setDataSourceFactory(dataSourceFactory)
 
         val exoPlayer = ExoPlayer.Builder(this)
             .setMediaSourceFactory(mediaSourceFactory)
@@ -165,15 +170,13 @@ class MediaPlaybackService : MediaSessionService() {
         ): ListenableFuture<SessionResult> {
             val player = session.player
             when (customCommand.customAction) {
-                CUSTOM_COMMAND_SKIP_BACK -> {
-                    val newPosition = SkipCalculator.skipBack(player.currentPosition)
-                    player.seekTo(newPosition)
-                }
+                // Timeline-aware so notification skips cross chunk boundaries on
+                // read-aloud playlists; single-item podcasts behave as before.
+                CUSTOM_COMMAND_SKIP_BACK ->
+                    PlaylistTimeline.skip(player, -SkipCalculator.SKIP_DURATION_MS)
 
-                CUSTOM_COMMAND_SKIP_FORWARD -> {
-                    val newPosition = SkipCalculator.skipForward(player.currentPosition, player.duration)
-                    player.seekTo(newPosition)
-                }
+                CUSTOM_COMMAND_SKIP_FORWARD ->
+                    PlaylistTimeline.skip(player, SkipCalculator.SKIP_DURATION_MS)
             }
             return Futures.immediateFuture(SessionResult(SessionResult.RESULT_SUCCESS))
         }

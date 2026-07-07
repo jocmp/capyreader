@@ -358,6 +358,13 @@
     <string name="badge_style_simple">Simple</string>
     <string name="badge_style_exact">Exact</string>
     <string name="show_unread_badge">Show Unread Badge</string>
+    <string name="article_actions_read_aloud">Read aloud</string>
+    <string name="article_actions_read_aloud_stop">Stop reading</string>
+    <string name="read_aloud_speed">Speed</string>
+    <string name="read_aloud_pitch">Pitch</string>
+    <string name="read_aloud_pitch_low">Low</string>
+    <string name="read_aloud_pitch_normal">Normal</string>
+    <string name="read_aloud_pitch_high">High</string>
     <string name="article_actions_save_externally">Save</string>
     <string name="article_actions_save_externally_success">Saved</string>
     <string name="article_actions_save_externally_failure">Failed to save</string>

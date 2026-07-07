@@ -19,7 +19,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Label
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.FormatSize
+import androidx.compose.material.icons.outlined.Forward10
+import androidx.compose.material.icons.outlined.Pause
+import androidx.compose.material.icons.outlined.PlayArrow
+import androidx.compose.material.icons.outlined.RecordVoiceOver
+import androidx.compose.material.icons.outlined.Replay10
 import androidx.compose.material.icons.outlined.Save
+import androidx.compose.material.icons.outlined.Stop
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -63,6 +69,17 @@ fun ArticleTopBar(
     onDeletePage: () -> Unit = {},
     isFullscreen: Boolean = false,
     onToggleFullscreen: () -> Unit = {},
+    isReadingAloud: Boolean = false,
+    isReadAloudPlaying: Boolean = false,
+    onStartReadAloud: () -> Unit = {},
+    onPlayPauseReadAloud: () -> Unit = {},
+    onStopReadAloud: () -> Unit = {},
+    onSkipBackReadAloud: () -> Unit = {},
+    onSkipForwardReadAloud: () -> Unit = {},
+    readAloudSpeed: Float = 1.0f,
+    readAloudPitch: Float = 1.0f,
+    onSelectReadAloudSpeed: (Float) -> Unit = {},
+    onSelectReadAloudPitch: (Float) -> Unit = {},
     onClose: () -> Unit,
 ) {
     val containerColor = MaterialTheme.colorScheme.surface
@@ -160,6 +177,70 @@ fun ArticleTopBar(
                                 }
                             }
                         }
+                        if (isReadingAloud) {
+                            val skipBackLabel = stringResource(R.string.audio_player_skip_back)
+                            ToolbarTooltip(message = skipBackLabel) {
+                                IconButton(onClick = onSkipBackReadAloud) {
+                                    Icon(
+                                        Icons.Outlined.Replay10,
+                                        contentDescription = skipBackLabel,
+                                        modifier = Modifier.size(24.dp)
+                                    )
+                                }
+                            }
+                            val playPauseLabel = stringResource(
+                                if (isReadAloudPlaying) R.string.audio_player_pause
+                                else R.string.audio_player_play
+                            )
+                            ToolbarTooltip(message = playPauseLabel) {
+                                IconButton(onClick = onPlayPauseReadAloud) {
+                                    Icon(
+                                        if (isReadAloudPlaying) Icons.Outlined.Pause
+                                        else Icons.Outlined.PlayArrow,
+                                        contentDescription = playPauseLabel,
+                                        modifier = Modifier.size(24.dp)
+                                    )
+                                }
+                            }
+                            val skipForwardLabel = stringResource(R.string.audio_player_skip_forward)
+                            ToolbarTooltip(message = skipForwardLabel) {
+                                IconButton(onClick = onSkipForwardReadAloud) {
+                                    Icon(
+                                        Icons.Outlined.Forward10,
+                                        contentDescription = skipForwardLabel,
+                                        modifier = Modifier.size(24.dp)
+                                    )
+                                }
+                            }
+                            val stopLabel = stringResource(R.string.article_actions_read_aloud_stop)
+                            ToolbarTooltip(message = stopLabel) {
+                                IconButton(onClick = onStopReadAloud) {
+                                    Icon(
+                                        Icons.Outlined.Stop,
+                                        contentDescription = stopLabel,
+                                        modifier = Modifier.size(24.dp)
+                                    )
+                                }
+                            }
+                        } else {
+                            val readAloudLabel =
+                                stringResource(R.string.article_actions_read_aloud)
+                            ToolbarTooltip(message = readAloudLabel) {
+                                IconButton(onClick = onStartReadAloud) {
+                                    Icon(
+                                        Icons.Outlined.RecordVoiceOver,
+                                        contentDescription = readAloudLabel,
+                                        modifier = Modifier.size(24.dp)
+                                    )
+                                }
+                            }
+                        }
+                        ReadAloudSpeedMenu(
+                            speed = readAloudSpeed,
+                            pitch = readAloudPitch,
+                            onSelectSpeed = onSelectReadAloudSpeed,
+                            onSelectPitch = onSelectReadAloudPitch,
+                        )
                         ToolbarTooltip(
                             message = stringResource(R.string.article_style_options)
                         ) {

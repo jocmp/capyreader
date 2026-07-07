@@ -18,9 +18,11 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.Forward10
 import androidx.compose.material.icons.rounded.Headphones
 import androidx.compose.material.icons.rounded.Pause
 import androidx.compose.material.icons.rounded.PlayArrow
+import androidx.compose.material.icons.rounded.Replay10
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -65,6 +67,8 @@ fun FloatingAudioPlayer(
         duration = duration,
         onPlayPause = { if (isPlaying) controller.pause() else controller.resume() },
         onSeek = { controller.seekTo(it) },
+        onSkipBack = { controller.skipBack() },
+        onSkipForward = { controller.skipForward() },
         onDismiss = onDismiss,
         modifier = modifier,
     )
@@ -79,6 +83,8 @@ internal fun FloatingAudioPlayer(
     duration: Long,
     onPlayPause: () -> Unit,
     onSeek: (Long) -> Unit,
+    onSkipBack: () -> Unit = {},
+    onSkipForward: () -> Unit = {},
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -140,11 +146,27 @@ internal fun FloatingAudioPlayer(
                     )
                 }
 
+                IconButton(onClick = onSkipBack) {
+                    Icon(
+                        imageVector = Icons.Rounded.Replay10,
+                        contentDescription = stringResource(R.string.audio_player_skip_back),
+                        modifier = Modifier.size(28.dp),
+                    )
+                }
+
                 IconButton(onClick = onPlayPause) {
                     Icon(
                         imageVector = if (isPlaying) Icons.Rounded.Pause else Icons.Rounded.PlayArrow,
                         contentDescription = stringResource(if (isPlaying) R.string.audio_player_pause else R.string.audio_player_play),
                         modifier = Modifier.size(32.dp),
+                    )
+                }
+
+                IconButton(onClick = onSkipForward) {
+                    Icon(
+                        imageVector = Icons.Rounded.Forward10,
+                        contentDescription = stringResource(R.string.audio_player_skip_forward),
+                        modifier = Modifier.size(28.dp),
                     )
                 }
 

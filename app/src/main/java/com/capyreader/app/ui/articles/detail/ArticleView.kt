@@ -41,10 +41,12 @@ import com.capyreader.app.preferences.ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWS
 import com.capyreader.app.preferences.ArticleVerticalSwipe.PREVIOUS_ARTICLE
 import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.articles.LocalFullContent
+import com.capyreader.app.ui.articles.audio.AudioPlayerController
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.jocmp.capy.Article
+import androidx.compose.runtime.collectAsState
 import org.koin.compose.koinInject
 
 @Composable
@@ -131,6 +133,30 @@ fun ArticleView(
 
     val snackbarHostState = remember { SnackbarHostState() }
 
+    val audioController: AudioPlayerController = koinInject()
+    val readAloudArticleId by audioController.currentReadAloudArticleId.collectAsState()
+    val isReadingAloud = readAloudArticleId == article.id
+    val isReadAloudPlaying by audioController.isPlaying.collectAsState()
+    val readAloudSpeed by appPreferences.readerOptions.readAloudSpeed.collectChangesWithDefault()
+    val readAloudPitch by appPreferences.readerOptions.readAloudPitch.collectChangesWithDefault()
+
+    fun startReadAloud(speed: Float, pitch: Float) {
+        audioController.readAloud(
+            articleID = article.id,
+            title = article.title,
+            feedName = article.feedName,
+            artworkUrl = article.imageURL,
+            contentHTML = article.content,
+            speed = speed,
+            pitch = pitch,
+        )
+    }
+
+    // Stop reading aloud when navigating away to a different article.
+    LaunchedEffect(article.id) {
+        audioController.stopReadAloudIfNot(article.id)
+    }
+
     val contentPadding = rememberContentPadding(pinToolbars)
 
     CompositionLocalProvider(
@@ -187,6 +213,25 @@ fun ArticleView(
                 onDeletePage = onDeletePage,
                 isFullscreen = isFullscreen,
                 onToggleFullscreen = onToggleFullscreen,
+                isReadingAloud = isReadingAloud,
+                isReadAloudPlaying = isReadAloudPlaying,
+                onStartReadAloud = { startReadAloud(readAloudSpeed, readAloudPitch) },
+                onPlayPauseReadAloud = {
+                    if (isReadAloudPlaying) audioController.pause() else audioController.resume()
+                },
+                onStopReadAloud = { audioController.stopReadAloud() },
+                onSkipBackReadAloud = { audioController.skipBack() },
+                onSkipForwardReadAloud = { audioController.skipForward() },
+                readAloudSpeed = readAloudSpeed,
+                readAloudPitch = readAloudPitch,
+                onSelectReadAloudSpeed = { speed ->
+                    appPreferences.readerOptions.readAloudSpeed.set(speed)
+                    if (isReadingAloud) startReadAloud(speed, readAloudPitch)
+                },
+                onSelectReadAloudPitch = { pitch ->
+                    appPreferences.readerOptions.readAloudPitch.set(pitch)
+                    if (isReadingAloud) startReadAloud(readAloudSpeed, pitch)
+                },
                 onClose = onBackPressed,
             )
 

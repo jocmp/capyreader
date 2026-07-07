@@ -134,6 +134,12 @@ class AppPreferences(context: Context) {
 
         val titleFollowsBodyFont: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_title_follows_body_font", false)
+
+        val readAloudSpeed: Preference<Float>
+            get() = preferenceStore.getFloat("article_read_aloud_speed", 1.0f)
+
+        val readAloudPitch: Preference<Float>
+            get() = preferenceStore.getFloat("article_read_aloud_pitch", 1.0f)
     }
 
     class ArticleListOptions(private val preferenceStore: PreferenceStore) {
