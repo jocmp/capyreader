@@ -180,6 +180,7 @@ class AudioPlayerController(
         contentHTML: String,
         speed: Float,
         pitch: Float,
+        voiceName: String = "",
     ) {
         synthJob?.cancel()
         synthJob = mainScope.launch {
@@ -204,7 +205,7 @@ class AudioPlayerController(
                 mkdirs()
             }
 
-            val ready = withContext(Dispatchers.IO) { synthesizer.begin(speed, pitch) }
+            val ready = withContext(Dispatchers.IO) { synthesizer.begin(speed, pitch, voiceName) }
             if (!isActive || _currentReadAloudArticleId.value != articleID) return@launch
             if (!ready) {
                 dismiss()

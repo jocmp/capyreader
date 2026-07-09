@@ -365,6 +365,8 @@
     <string name="read_aloud_pitch_low">Low</string>
     <string name="read_aloud_pitch_normal">Normal</string>
     <string name="read_aloud_pitch_high">High</string>
+    <string name="read_aloud_voice">Voice</string>
+    <string name="read_aloud_voice_automatic">Automatic (best)</string>
     <string name="article_actions_save_externally">Save</string>
     <string name="article_actions_save_externally_success">Saved</string>
     <string name="article_actions_save_externally_failure">Failed to save</string>

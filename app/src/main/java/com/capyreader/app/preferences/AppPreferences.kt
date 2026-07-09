@@ -140,6 +140,10 @@ class AppPreferences(context: Context) {
 
         val readAloudPitch: Preference<Float>
             get() = preferenceStore.getFloat("article_read_aloud_pitch", 1.0f)
+
+        // Read-aloud voice by engine voice name; blank = automatic (best neural).
+        val readAloudVoice: Preference<String>
+            get() = preferenceStore.getString("article_read_aloud_voice")
     }
 
     class ArticleListOptions(private val preferenceStore: PreferenceStore) {

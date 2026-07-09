@@ -139,8 +139,9 @@ fun ArticleView(
     val isReadAloudPlaying by audioController.isPlaying.collectAsState()
     val readAloudSpeed by appPreferences.readerOptions.readAloudSpeed.collectChangesWithDefault()
     val readAloudPitch by appPreferences.readerOptions.readAloudPitch.collectChangesWithDefault()
+    val readAloudVoice by appPreferences.readerOptions.readAloudVoice.collectChangesWithDefault()
 
-    fun startReadAloud(speed: Float, pitch: Float) {
+    fun startReadAloud(speed: Float, pitch: Float, voice: String) {
         audioController.readAloud(
             articleID = article.id,
             title = article.title,
@@ -149,6 +150,7 @@ fun ArticleView(
             contentHTML = article.content,
             speed = speed,
             pitch = pitch,
+            voiceName = voice,
         )
     }
 
@@ -215,7 +217,7 @@ fun ArticleView(
                 onToggleFullscreen = onToggleFullscreen,
                 isReadingAloud = isReadingAloud,
                 isReadAloudPlaying = isReadAloudPlaying,
-                onStartReadAloud = { startReadAloud(readAloudSpeed, readAloudPitch) },
+                onStartReadAloud = { startReadAloud(readAloudSpeed, readAloudPitch, readAloudVoice) },
                 onPlayPauseReadAloud = {
                     if (isReadAloudPlaying) audioController.pause() else audioController.resume()
                 },
@@ -224,13 +226,18 @@ fun ArticleView(
                 onSkipForwardReadAloud = { audioController.skipForward() },
                 readAloudSpeed = readAloudSpeed,
                 readAloudPitch = readAloudPitch,
+                readAloudVoice = readAloudVoice,
                 onSelectReadAloudSpeed = { speed ->
                     appPreferences.readerOptions.readAloudSpeed.set(speed)
-                    if (isReadingAloud) startReadAloud(speed, readAloudPitch)
+                    if (isReadingAloud) startReadAloud(speed, readAloudPitch, readAloudVoice)
                 },
                 onSelectReadAloudPitch = { pitch ->
                     appPreferences.readerOptions.readAloudPitch.set(pitch)
-                    if (isReadingAloud) startReadAloud(readAloudSpeed, pitch)
+                    if (isReadingAloud) startReadAloud(readAloudSpeed, pitch, readAloudVoice)
+                },
+                onSelectReadAloudVoice = { voice ->
+                    appPreferences.readerOptions.readAloudVoice.set(voice)
+                    if (isReadingAloud) startReadAloud(readAloudSpeed, readAloudPitch, voice)
                 },
                 onClose = onBackPressed,
             )

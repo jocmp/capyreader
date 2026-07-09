@@ -78,8 +78,10 @@ fun ArticleTopBar(
     onSkipForwardReadAloud: () -> Unit = {},
     readAloudSpeed: Float = 1.0f,
     readAloudPitch: Float = 1.0f,
+    readAloudVoice: String = "",
     onSelectReadAloudSpeed: (Float) -> Unit = {},
     onSelectReadAloudPitch: (Float) -> Unit = {},
+    onSelectReadAloudVoice: (String) -> Unit = {},
     onClose: () -> Unit,
 ) {
     val containerColor = MaterialTheme.colorScheme.surface
@@ -238,8 +240,10 @@ fun ArticleTopBar(
                         ReadAloudSpeedMenu(
                             speed = readAloudSpeed,
                             pitch = readAloudPitch,
+                            voice = readAloudVoice,
                             onSelectSpeed = onSelectReadAloudSpeed,
                             onSelectPitch = onSelectReadAloudPitch,
+                            onSelectVoice = onSelectReadAloudVoice,
                         )
                         ToolbarTooltip(
                             message = stringResource(R.string.article_style_options)
