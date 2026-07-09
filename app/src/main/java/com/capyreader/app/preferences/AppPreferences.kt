@@ -123,6 +123,9 @@ class AppPreferences(context: Context) {
         val enableHorizontaPagination: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_enable_horizontal_pagination", false)
 
+        val volumeKeyPaging: Preference<Boolean>
+            get() = preferenceStore.getBoolean("article_volume_key_paging", false)
+
         val improveTalkback: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_improve_talkback", false)
 

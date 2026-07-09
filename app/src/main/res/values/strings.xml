@@ -282,6 +282,8 @@
     <string name="settings_gestures_enable_horizontal_pagination_title">Enable horizontal scroll</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Swipe left or right to navigate articles</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Tap bottom corners to navigate article content</string>
+    <string name="settings_gestures_volume_key_paging_title">Volume keys turn pages</string>
+    <string name="settings_gestures_volume_key_paging_subtitle">Volume down/up scrolls the article by a page, then moves to the next or previous article. Double-tap volume up to go back. Pauses while audio is playing.</string>
     <string name="settings_enable_high_contrast_dark_theme">Enable high contrast dark theme</string>
     <string name="settings_section_mark_all_as_read">Mark All As Read</string>
     <string name="settings_section_browser">Browser</string>

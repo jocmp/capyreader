@@ -37,6 +37,8 @@ fun GesturesSettingPanel(
         updateListSwipeBottom = viewModel::updateListSwipeBottom,
         updateHorizontalPagination = viewModel::updateHorizontalPagination,
         enableHorizontalPagination = viewModel.enableHorizontalPagination,
+        updateVolumeKeyPaging = viewModel::updateVolumeKeyPaging,
+        enableVolumeKeyPaging = viewModel.enableVolumeKeyPaging,
         backAction = viewModel.backAction,
         bottomSwipe = viewModel.readerBottomSwipe,
         enablePagingTapGesture = viewModel.enablePagingTapGesture,
@@ -60,6 +62,8 @@ private fun GesturesSettingsPanelView(
     updateListSwipeBottom: (swipe: ArticleListVerticalSwipe) -> Unit,
     updateHorizontalPagination: (enable: Boolean) -> Unit,
     enableHorizontalPagination: Boolean,
+    updateVolumeKeyPaging: (enabled: Boolean) -> Unit,
+    enableVolumeKeyPaging: Boolean,
     backAction: BackAction,
     bottomSwipe: ArticleVerticalSwipe,
     enablePagingTapGesture: Boolean,
@@ -113,6 +117,15 @@ private fun GesturesSettingsPanelView(
                         checked = enablePagingTapGesture,
                         title = stringResource(R.string.settings_gestures_reader_tap_to_page_title),
                         subtitle = stringResource(R.string.settings_gestures_reader_tap_to_page_subtitle)
+                    )
+                }
+
+                RowItem {
+                    TextSwitch(
+                        onCheckedChange = updateVolumeKeyPaging,
+                        checked = enableVolumeKeyPaging,
+                        title = stringResource(R.string.settings_gestures_volume_key_paging_title),
+                        subtitle = stringResource(R.string.settings_gestures_volume_key_paging_subtitle)
                     )
                 }
 
@@ -181,6 +194,8 @@ fun GesturesSettingsPanelPreview() {
             updateReaderBottomSwipe = {},
             updatePagingTapGesture = {},
             updateHorizontalPagination = {},
+            updateVolumeKeyPaging = {},
+            enableVolumeKeyPaging = false,
             updateListSwipeBottom = {},
             backAction = BackAction.OPEN_DRAWER,
             topSwipe = ArticleVerticalSwipe.PREVIOUS_ARTICLE,

@@ -30,8 +30,10 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.paging.compose.LazyPagingItems
+import androidx.compose.runtime.DisposableEffect
 import com.capyreader.app.common.AudioEnclosure
 import com.capyreader.app.common.Media
+import com.capyreader.app.common.VolumeKeyPager
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleVerticalSwipe
 import com.capyreader.app.preferences.ArticleVerticalSwipe.DISABLED
@@ -130,6 +132,31 @@ fun ArticleView(
     }
 
     val snackbarHostState = remember { SnackbarHostState() }
+
+    // Route hardware volume keys to page-scrolling this article. Yields to audio
+    // so the volume rocker still controls volume during playback, and at a scroll
+    // edge rolls to the adjacent article. Double-click volume-up acts as Back
+    // (handled in MainActivity via the back dispatcher).
+    val volumeKeyPaging by appPreferences.readerOptions.volumeKeyPaging.collectChangesWithDefault()
+    DisposableEffect(article.id, hasNext, hasPrevious, volumeKeyPaging, isAudioPlaying) {
+        VolumeKeyPager.currentArticleId = article.id
+        VolumeKeyPager.isEnabled = { volumeKeyPaging }
+        VolumeKeyPager.isAudioActive = { isAudioPlaying }
+        VolumeKeyPager.onAtBoundary = { forward ->
+            if (forward && hasNext) {
+                selectNext()
+            } else if (!forward && hasPrevious) {
+                selectPrevious()
+            }
+        }
+        onDispose {
+            if (VolumeKeyPager.currentArticleId == article.id) {
+                VolumeKeyPager.currentArticleId = null
+                VolumeKeyPager.onAtBoundary = null
+                VolumeKeyPager.isEnabled = { false }
+            }
+        }
+    }
 
     val contentPadding = rememberContentPadding(pinToolbars)
 

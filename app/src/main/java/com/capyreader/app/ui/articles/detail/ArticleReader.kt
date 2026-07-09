@@ -1,6 +1,7 @@
 package com.capyreader.app.ui.articles.detail
 
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -26,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import com.capyreader.app.R
 import com.capyreader.app.common.AudioEnclosure
 import com.capyreader.app.common.Media
+import com.capyreader.app.common.VolumeKeyPager
 import com.capyreader.app.common.rememberTalkbackPreference
 import com.capyreader.app.common.shareImage
 import com.capyreader.app.preferences.AppPreferences
@@ -44,6 +47,7 @@ import com.jocmp.capy.Article
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
 import com.jocmp.capy.common.withUIContext
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 import kotlin.math.roundToInt
 
@@ -174,6 +178,31 @@ fun ScrollableWebView(webViewState: WebViewState, article: Article, showImages: 
     }
 
     var lastScrollYPercent by rememberSaveable(article.id) { mutableFloatStateOf(0f) }
+
+    // Hardware volume keys page-scroll this article (EinkBro-style). Registers
+    // while this article's reader is on screen; the Activity drives it via
+    // VolumeKeyPager. Returns whether it could page in the requested direction —
+    // false at a scroll edge lets ArticleView roll to the adjacent article.
+    val pageScope = rememberCoroutineScope()
+    DisposableEffect(article.id, scrollState) {
+        VolumeKeyPager.registerScroller(article.id) { forward ->
+            val viewport = scrollState.viewportSize
+            val canScroll = if (forward) {
+                scrollState.value < scrollState.maxValue
+            } else {
+                scrollState.value > 0
+            }
+            if (canScroll && viewport > 0) {
+                // Overlap ~10% of the viewport so no line is skipped between pages.
+                val delta = viewport * 0.9f
+                pageScope.launch {
+                    scrollState.animateScrollBy(if (forward) delta else -delta)
+                }
+            }
+            canScroll
+        }
+        onDispose { VolumeKeyPager.unregisterScroller(article.id) }
+    }
 
     CornerTapGestureScroll(
         maxArticleHeight = maxHeight,

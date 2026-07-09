@@ -37,6 +37,9 @@ class GesturesSettingsViewModel(
     var enableHorizontalPagination by mutableStateOf(readerOptions.enableHorizontaPagination.get())
         private set
 
+    var enableVolumeKeyPaging by mutableStateOf(readerOptions.volumeKeyPaging.get())
+        private set
+
     var improveTalkback by mutableStateOf(readerOptions.improveTalkback.get())
         private set
 
@@ -83,6 +86,12 @@ class GesturesSettingsViewModel(
         enableHorizontalPagination = scroll
 
         readerOptions.enableHorizontaPagination.set(scroll)
+    }
+
+    fun updateVolumeKeyPaging(enabled: Boolean) {
+        enableVolumeKeyPaging = enabled
+
+        readerOptions.volumeKeyPaging.set(enabled)
     }
 
     fun updateRowSwipeEnd(swipe: RowSwipeOption) {

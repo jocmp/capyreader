@@ -4,6 +4,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -22,6 +23,7 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -82,6 +84,7 @@ import com.capyreader.app.ui.articles.list.SwipeUpActionBox
 import com.capyreader.app.ui.articles.list.resetScrollBehaviorListener
 import com.capyreader.app.ui.articles.media.ArticleMediaView
 import com.capyreader.app.ui.collectChangesWithCurrent
+import com.capyreader.app.common.VolumeKeyPager
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.LocalSnackbarHost
@@ -236,6 +239,31 @@ fun ArticleScreen(
         }
 
         val listState = articles.rememberLazyListState()
+
+        // Route hardware volume keys to page-scroll the article list when no
+        // reader is open (EinkBro-style). Independent of the reader's own paging
+        // so it survives a reader open/close, and yields to audio so the volume
+        // rocker still controls volume during podcast/read-aloud playback.
+        val volumeKeyPaging by appPreferences.readerOptions.volumeKeyPaging.collectChangesWithDefault()
+        val isAnyAudioPlaying by audioController.isPlaying.collectAsState()
+        DisposableEffect(listState, volumeKeyPaging, isAnyAudioPlaying) {
+            VolumeKeyPager.isListEnabled = { volumeKeyPaging }
+            VolumeKeyPager.isListAudioActive = { isAnyAudioPlaying }
+            VolumeKeyPager.registerListScroller { forward ->
+                val viewport = listState.layoutInfo.viewportSize.height
+                val canScroll =
+                    if (forward) listState.canScrollForward else listState.canScrollBackward
+                if (canScroll && viewport > 0) {
+                    // Overlap ~10% of the viewport so no row is skipped between pages.
+                    val delta = viewport * 0.9f
+                    coroutineScope.launch {
+                        listState.animateScrollBy(if (forward) delta else -delta)
+                    }
+                }
+                canScroll
+            }
+            onDispose { VolumeKeyPager.unregisterListScroller() }
+        }
 
         fun scrollToArticle(index: Int) {
             coroutineScope.launch {
