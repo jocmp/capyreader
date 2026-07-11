@@ -147,7 +147,7 @@ upsertUnread {
     last_read_at = excluded.last_read_at,
     read = excluded.read;
 
-    INSERT INTO excluded_statuses(
+    INSERT OR IGNORE INTO excluded_statuses(
         article_id,
         type
     )
@@ -186,7 +186,7 @@ upsertStarred {
     SET
     starred = excluded.starred;
 
-    INSERT INTO excluded_statuses(
+    INSERT OR IGNORE INTO excluded_statuses(
         article_id,
         type
     )
