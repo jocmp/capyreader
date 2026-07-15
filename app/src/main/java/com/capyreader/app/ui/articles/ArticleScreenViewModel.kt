@@ -299,9 +299,9 @@ class ArticleScreenViewModel(
             }
         }
 
-        val hasSyncedBefore = account.preferences.lastRefreshedAt.get() > 0
+        val skipInitialRefresh = account.preferences.lastRefreshedAt.get() > 0
 
-        if (hasSyncedBefore) {
+        if (skipInitialRefresh) {
             refreshInitialized = true
         } else {
             refreshAll()
