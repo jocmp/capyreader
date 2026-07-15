@@ -2,7 +2,7 @@ package com.jocmp.capy.accounts.local
 
 import com.jocmp.capy.Enclosure
 import com.jocmp.capy.common.optionalURL
-import com.jocmp.capy.common.strippedOfTitleHTML
+import com.jocmp.capy.common.stripTitleMarkup
 import com.jocmp.capy.common.unescapingHTMLCharacters
 import com.jocmp.rssparser.model.RssItem
 import org.jsoup.Jsoup
@@ -72,7 +72,7 @@ internal class ParsedItem(private val item: RssItem, private val siteURL: String
         }
 
     val title: String
-        get() = item.title.orEmpty().strippedOfTitleHTML
+        get() = item.title.orEmpty().stripTitleMarkup()
 
     val imageURL: String?
         get() = item.media?.thumbnailUrl ?: cleanedURL(item.image)?.toString()
