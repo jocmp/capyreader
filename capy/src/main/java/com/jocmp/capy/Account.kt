@@ -42,6 +42,7 @@ import com.jocmp.minifluxclient.Miniflux
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -255,12 +256,14 @@ data class Account(
             val starredToTrue = statuses.filter { it.key == SyncStatus.Key.STARRED && it.flag }
             val starredToFalse = statuses.filter { it.key == SyncStatus.Key.STARRED && !it.flag }
 
-            val errors = mutableListOf<Throwable>()
-
-            dispatch(readToTrue, SyncStatus.Key.READ, errors, delegate::markRead)
-            dispatch(readToFalse, SyncStatus.Key.READ, errors, delegate::markUnread)
-            dispatch(starredToTrue, SyncStatus.Key.STARRED, errors, delegate::addStar)
-            dispatch(starredToFalse, SyncStatus.Key.STARRED, errors, delegate::removeStar)
+            val errors = coroutineScope {
+                listOf(
+                    async { dispatch(readToTrue, SyncStatus.Key.READ, delegate::markRead) },
+                    async { dispatch(readToFalse, SyncStatus.Key.READ, delegate::markUnread) },
+                    async { dispatch(starredToTrue, SyncStatus.Key.STARRED, delegate::addStar) },
+                    async { dispatch(starredToFalse, SyncStatus.Key.STARRED, delegate::removeStar) },
+                ).awaitAll().filterNotNull()
+            }
 
             errors.firstOrNull()?.let { Result.failure(it) } ?: Result.success(Unit)
         }
@@ -269,21 +272,21 @@ data class Account(
     private suspend fun dispatch(
         statuses: List<SyncStatus>,
         key: SyncStatus.Key,
-        errors: MutableList<Throwable>,
         callDelegate: suspend (List<String>) -> Result<Unit>
-    ) {
-        if (statuses.isEmpty()) return
+    ): Throwable? {
+        if (statuses.isEmpty()) return null
 
         val articleIDs = statuses.map { it.articleID }
 
-        callDelegate(articleIDs).fold(
+        return callDelegate(articleIDs).fold(
             onSuccess = {
                 syncStatusRecords.deleteSelected(articleIDs, key)
+                null
             },
             onFailure = { error ->
                 syncStatusRecords.resetSelected(articleIDs, key)
-                errors.add(error)
                 CapyLog.error("send_article_status", error)
+                error
             }
         )
     }
