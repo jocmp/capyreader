@@ -9,6 +9,7 @@ import com.jocmp.capy.accounts.withErrorHandling
 import com.jocmp.capy.common.ContentFormatter
 import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.common.UnauthorizedError
+import com.jocmp.capy.common.strippedOfTitleHTML
 import com.jocmp.capy.common.toDateTime
 import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.db.Database
@@ -33,7 +34,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
 import okio.IOException
-import org.jsoup.Jsoup
 import retrofit2.Response
 import java.time.ZonedDateTime
 import com.jocmp.minifluxclient.Feed as MinifluxFeed
@@ -395,7 +395,7 @@ internal class MinifluxAccountDelegate(
                 database.articlesQueries.create(
                     id = articleID,
                     feed_id = entry.feed_id.toString(),
-                    title = Jsoup.parse(entry.title).text(),
+                    title = entry.title.strippedOfTitleHTML,
                     author = entry.author,
                     content_html = entry.content,
                     extracted_content_url = null,

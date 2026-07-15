@@ -2,10 +2,10 @@ package com.jocmp.capy.accounts.local
 
 import com.jocmp.capy.Enclosure
 import com.jocmp.capy.common.optionalURL
+import com.jocmp.capy.common.strippedOfTitleHTML
 import com.jocmp.capy.common.unescapingHTMLCharacters
 import com.jocmp.rssparser.model.RssItem
 import org.jsoup.Jsoup
-import org.jsoup.safety.Cleaner
 import org.jsoup.safety.Safelist
 import java.net.URI
 import java.net.URL
@@ -72,11 +72,7 @@ internal class ParsedItem(private val item: RssItem, private val siteURL: String
         }
 
     val title: String
-        get() {
-            val cleaner = Cleaner(Safelist.none())
-
-            return cleaner.clean(Jsoup.parse(item.title.orEmpty())).text()
-        }
+        get() = item.title.orEmpty().strippedOfTitleHTML
 
     val imageURL: String?
         get() = item.media?.thumbnailUrl ?: cleanedURL(item.image)?.toString()
