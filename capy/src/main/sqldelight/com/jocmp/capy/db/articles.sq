@@ -159,14 +159,16 @@ upsertUnread {
 
 updateStaleUnreads {
     UPDATE article_statuses SET read = 1
-    WHERE article_id NOT IN (SELECT article_id FROM excluded_statuses WHERE type = 'unread');
+    WHERE read = 0
+    AND article_id NOT IN (SELECT article_id FROM excluded_statuses WHERE type = 'unread');
 
     DELETE FROM excluded_statuses WHERE type = 'unread';
 }
 
 updateStaleStars {
     UPDATE article_statuses SET starred = 0
-    WHERE article_id NOT IN (SELECT article_id FROM excluded_statuses WHERE type = 'starred');
+    WHERE starred = 1
+    AND article_id NOT IN (SELECT article_id FROM excluded_statuses WHERE type = 'starred');
 
     DELETE FROM excluded_statuses WHERE type = 'starred';
 }

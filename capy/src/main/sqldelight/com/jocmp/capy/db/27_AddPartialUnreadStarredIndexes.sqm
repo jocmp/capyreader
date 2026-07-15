@@ -1,0 +1,5 @@
+-- Partial index for updateStaleUnreads
+CREATE INDEX article_statuses_unread_partial_index ON article_statuses(article_id) WHERE read = 0;
+
+-- Partial index for updateStaleStars
+CREATE INDEX article_statuses_starred_partial_index ON article_statuses(article_id) WHERE starred = 1;
