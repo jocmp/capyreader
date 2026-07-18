@@ -54,6 +54,7 @@ class ByToday(private val database: Database) {
         range: MarkRead,
         sortOrder: SortOrder,
         query: String?,
+        since: OffsetDateTime? = null,
     ): Query<String> {
         val (_, starred) = status.toStatusPair
         val (afterArticleID, beforeArticleID) = range.toPair
@@ -62,7 +63,7 @@ class ByToday(private val database: Database) {
             starred = starred,
             afterArticleID = afterArticleID,
             beforeArticleID = beforeArticleID,
-            publishedSince = mapTodayStartDate(since = null),
+            publishedSince = mapTodayStartDate(since),
             newestFirst = isNewestFirst(sortOrder),
             query = query,
         )

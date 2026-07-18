@@ -367,6 +367,7 @@ class ArticleScreenViewModel(
                 range = range,
                 sortOrder = sortOrder.value,
                 query = query,
+                since = articlesSince.value,
             )
 
             account.markAllRead(articleIDs)
@@ -544,6 +545,7 @@ class ArticleScreenViewModel(
                 range = range,
                 sortOrder = sortOrder.value,
                 query = _searchQuery.value,
+                since = articlesSince.value,
             )
 
             CapyLog.debug(

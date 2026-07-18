@@ -344,12 +344,14 @@ data class Account(
         range: MarkRead,
         sortOrder: SortOrder,
         query: String?,
+        since: java.time.OffsetDateTime? = null,
     ): List<String> {
         return articleRecords.unreadArticleIDs(
             filter = filter,
             range = range,
             sortOrder = sortOrder,
             query = query,
+            since = since,
         )
     }
 

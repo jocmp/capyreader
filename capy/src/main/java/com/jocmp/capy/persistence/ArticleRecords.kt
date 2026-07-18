@@ -378,6 +378,7 @@ class ArticleRecords(
         range: MarkRead,
         sortOrder: SortOrder,
         query: String?,
+        since: java.time.OffsetDateTime? = null,
     ): List<String> {
         val ids = when (filter) {
             is ArticleFilter.Articles -> byStatus.unreadArticleIDs(
@@ -420,6 +421,7 @@ class ArticleRecords(
                 range = range,
                 sortOrder = sortOrder,
                 query = query,
+                since = since,
             )
         }
 
