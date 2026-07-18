@@ -16,12 +16,11 @@ sealed class Route : NavKey {
     @Serializable
     data object Settings : Route()
 
-    @Serializable
-    data object Articles : Route()
-
     /**
-     * The article list, parameterized by its [filter]. Filter is navigation state;
-     * [com.capyreader.app.preferences.AppPreferences.filter] is demoted to a cold-boot seed.
+     * The article list. [filter] isn't read by the list entry itself — it's a one-way seed that
+     * [com.capyreader.app.MainActivity.applyListFilter] copies into
+     * [com.capyreader.app.preferences.AppPreferences.filter] at launch/deep-link time, which is
+     * the value the list and reader actually read reactively.
      */
     @Serializable
     data class ArticleList(val filter: ArticleFilter) : Route()
