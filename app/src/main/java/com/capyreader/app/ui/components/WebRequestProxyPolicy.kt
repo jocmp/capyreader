@@ -12,9 +12,14 @@ object WebRequestProxyPolicy {
             return false
         }
 
-        // XHR/fetch from null origin (loadDataWithBaseURL)
+        // XHR/fetch from null origin (loadDataWithBaseURL). Excludes image/video/audio Accept
+        // types so <img> sub-resources - which also carry Origin: null from the same
+        // null-baseURL page - aren't swept into this and proxied like a real XHR/fetch call.
         // Issue #1616
-        val isCorsRequest = origin == "null" && url.startsWith("http")
+        val isMediaAccept = accept?.let {
+            it.startsWith("image/") || it.startsWith("video/") || it.startsWith("audio/")
+        } == true
+        val isCorsRequest = origin == "null" && url.startsWith("http") && !isMediaAccept
 
         // iframe document load
         // Strips X-Frame-Options to allow embeds like Slashdot
@@ -23,24 +28,12 @@ object WebRequestProxyPolicy {
                 accept?.startsWith("text/html") == true &&
                 url.startsWith("http")
 
-        // Sub-resource requests that need a Referer header for CDNs
-        // Only proxy article sub-resources (null or absent origin from loadDataWithBaseURL),
-        // not iframe sub-resources which have their own origin (Issue #1878)
-        val isMediaRequest = pageUrl != null &&
-                !request.isForMainFrame &&
-               isMediaOrigin(origin) &&
-                accept?.startsWith("text/html") != true &&
-                url.startsWith("http")
+        // Image/media sub-resource proxying (Referer headers for CDNs, Issue #1878) is disabled:
+        // it forced every image through a synchronous OkHttp call in shouldInterceptRequest,
+        // serializing image loads on the WebView's request thread. It also happened to warm
+        // Coil's shared cache for the media viewer, which needs a non-blocking replacement.
 
-        return isCorsRequest || isIframeNavigation || isMediaRequest
-    }
-
-    // Skips if the origin is missing which is the case
-    // with Mercury Parser, or if it's a string of "null"
-    // which is the case with main frame images
-    // Issue #1315, Issue #1901
-    fun isMediaOrigin(origin: String?): Boolean {
-        return origin == null || origin == "null"
+        return isCorsRequest || isIframeNavigation
     }
 
     // Reddit embeds www.reddit.com/media?url=... as image srcs in feeds,
