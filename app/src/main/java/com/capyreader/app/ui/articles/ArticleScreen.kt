@@ -16,12 +16,11 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
-import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
-import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -62,8 +61,6 @@ import com.capyreader.app.ui.LocalTimeFormats
 import com.capyreader.app.ui.LocalUnreadCount
 import com.capyreader.app.ui.articles.audio.AudioPlayerController
 import com.capyreader.app.ui.articles.audio.FloatingAudioPlayer
-import com.capyreader.app.ui.articles.detail.ArticleView
-import com.capyreader.app.ui.articles.detail.CapyPlaceholder
 import com.capyreader.app.ui.articles.feeds.AngleRefreshState
 import com.capyreader.app.ui.articles.feeds.FeedActions
 import com.capyreader.app.ui.articles.feeds.FeedList
@@ -83,6 +80,9 @@ import com.capyreader.app.ui.articles.list.resetScrollBehaviorListener
 import com.capyreader.app.ui.articles.media.ArticleMediaView
 import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.collectChangesWithDefault
+import com.capyreader.app.ui.LocalAppDrawer
+import com.capyreader.app.ui.articles.list.SearchView
+import com.capyreader.app.ui.isCompact
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.capyreader.app.ui.components.SearchState
@@ -111,11 +111,11 @@ import org.koin.compose.koinInject
 @OptIn(ExperimentalMaterial3AdaptiveApi::class, ExperimentalMaterial3Api::class, FlowPreview::class)
 @Composable
 fun ArticleScreen(
+    onSelectArticle: (articleID: String) -> Unit,
+    onNavigateToSettings: () -> Unit,
     viewModel: ArticleScreenViewModel = koinViewModel(),
     appPreferences: AppPreferences = koinInject(),
-    pendingArticleID: String? = null,
-    onPendingArticleSelected: () -> Unit = {},
-    onNavigateToSettings: () -> Unit,
+    selectedArticleID: String? = null,
 ) {
     val currentFeed by viewModel.currentFeed.collectAsStateWithLifecycle(initialValue = null)
     val feeds by viewModel.topLevelFeeds.collectAsStateWithLifecycle(initialValue = emptyList())
@@ -143,16 +143,17 @@ fun ArticleScreen(
     }
     val context = LocalContext.current
 
-    val canSaveExternally by viewModel.canSaveArticleExternally.collectAsStateWithLifecycle()
-
-    val fullContent = rememberFullContent(viewModel)
     val articleActions = rememberArticleActions(viewModel)
     val folderActions = rememberFolderActions(viewModel)
     val feedActions = rememberFeedActions(viewModel)
     val savedSearchActions = rememberSavedSearchActions(viewModel)
     val labelsActions = rememberLabelsActions(viewModel, allSavedSearches)
     val connectivity = rememberLocalConnectivity()
-    val drawerState = rememberDrawerState(DrawerValue.Closed)
+    // The drawer is hosted at the window level (see App / LocalAppDrawer) so its scrim covers both
+    // panes; this entry only publishes its content and drives open/close. Fall back to a local
+    // state when there's no host (previews).
+    val appDrawer = LocalAppDrawer.current
+    val drawerState = appDrawer?.state ?: rememberDrawerState(DrawerValue.Closed)
     val showOnboarding by viewModel.showOnboarding.collectAsState(false)
     val markAllReadButtonPosition by appPreferences
         .articleListOptions
@@ -161,6 +162,7 @@ fun ArticleScreen(
     val badgeStyle by appPreferences.badgeStyle.collectChangesWithDefault()
 
     val articles = viewModel.articles.collectAsLazyPagingItems()
+    val searchResults = viewModel.searchResults.collectAsLazyPagingItems()
 
     val onMarkAllRead = { range: MarkRead ->
         viewModel.markAllRead(
@@ -172,8 +174,6 @@ fun ArticleScreen(
             range = range,
         )
     }
-
-    val article = viewModel.article
 
     val search = ArticleSearch(
         query = searchQuery,
@@ -189,7 +189,6 @@ fun ArticleScreen(
     var isMarkAllReadDialogOpen by remember { mutableStateOf(false) }
 
     CompositionLocalProvider(
-        LocalFullContent provides fullContent,
         LocalArticleActions provides articleActions,
         LocalFolderActions provides folderActions,
         LocalFeedActions provides feedActions,
@@ -214,13 +213,9 @@ fun ArticleScreen(
             mutableStateOf(false)
         }
         val coroutineScope = rememberCoroutineScope()
-        val scaffoldNavigator = rememberListDetailPaneScaffoldNavigator()
-        val showMultipleColumns = scaffoldNavigator.scaffoldDirective.maxHorizontalPartitions > 1
-        val paneExpansion = rememberArticlePaneExpansion()
         val isPullToRefreshing = viewModel.isPullToRefreshing
         val addFeedSuccessMessage = stringResource(R.string.add_feed_success)
         val scrollBehavior = pinnedScrollBehavior()
-        var media by rememberSaveable(saver = Media.Saver) { mutableStateOf(null) }
         val audioController: AudioPlayerController = koinInject()
         val audioEnclosure by audioController.currentAudio.collectAsState()
         val focusManager = LocalFocusManager.current
@@ -228,27 +223,7 @@ fun ArticleScreen(
             viewModel.dismissUnauthorizedMessage()
             setUpdatePasswordDialogOpen(true)
         }
-        suspend fun navigateToDetail() {
-            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
-            if (showMultipleColumns) {
-                paneExpansion.restore()
-            }
-        }
-
         val listState = articles.rememberLazyListState()
-
-        fun scrollToArticle(index: Int) {
-            coroutineScope.launch {
-                if (index > -1) {
-                    val visibleItemsInfo = listState.layoutInfo.visibleItemsInfo
-                    val isItemVisible = visibleItemsInfo.any { it.index == index }
-
-                    if (!isItemVisible) {
-                        listState.animateScrollToItem(index)
-                    }
-                }
-            }
-        }
 
         val resetScrollBehaviorOffset = resetScrollBehaviorListener(
             listState = listState,
@@ -259,6 +234,18 @@ fun ArticleScreen(
             coroutineScope.launch {
                 listState.scrollToItem(0)
                 resetScrollBehaviorOffset()
+            }
+        }
+
+        // In a two-pane layout the list stays beside the reader, so keep the selected article in
+        // view (e.g. when stepping next/previous) by scrolling to it when it isn't already visible.
+        val isCompact = isCompact()
+        LaunchedEffect(selectedArticleID, isCompact, articles.itemCount) {
+            if (isCompact) return@LaunchedEffect
+            val id = selectedArticleID ?: return@LaunchedEffect
+            val index = articles.itemSnapshotList.indexOfFirst { it?.id == id }
+            if (index > -1 && listState.layoutInfo.visibleItemsInfo.none { it.index == index }) {
+                listState.animateScrollToItem(index)
             }
         }
 
@@ -299,7 +286,6 @@ fun ArticleScreen(
 
         suspend fun openNextStatus(action: suspend () -> Unit) {
             scope.launchIO { action() }
-            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
         }
 
         fun markAllRead(range: MarkRead) {
@@ -357,13 +343,6 @@ fun ArticleScreen(
             }
         }
 
-        fun clearArticle() {
-            coroutineScope.launchUI {
-                scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
-            }
-            viewModel.clearArticle()
-        }
-
         val toggleDrawer = {
             coroutineScope.launch {
                 if (drawerState.isOpen) {
@@ -404,27 +383,20 @@ fun ArticleScreen(
             }
         }
 
-        fun setArticle(articleID: String, onComplete: (article: Article) -> Unit = {}) {
-            viewModel.selectArticle(articleID, onComplete)
-        }
-
         val linkOpener = LocalLinkOpener.current
 
-        fun selectArticle(articleID: String) {
-            setArticle(articleID) { nextArticle ->
-                if (search.isActive) {
-                    focusManager.clearFocus()
-                }
+        fun selectArticle(article: Article) {
+            if (search.isActive) {
+                focusManager.clearFocus()
+                search.clear()
+            }
 
-                val url = nextArticle.url
-                if (nextArticle.openInBrowser && url != null) {
-                    clearArticle()
-                    linkOpener.open(url.toString().toUri())
-                } else {
-                    coroutineScope.launch {
-                        navigateToDetail()
-                    }
-                }
+            // Feeds flagged "open in browser" skip the in-app reader, matching the widget behavior.
+            val url = article.url
+            if (article.openInBrowser && url != null) {
+                linkOpener.open(url.toString().toUri())
+            } else {
+                onSelectArticle(article.id)
             }
         }
 
@@ -472,17 +444,14 @@ fun ArticleScreen(
             }
         }
 
-        LaunchedEffect(pendingArticleID) {
-            val id = pendingArticleID ?: return@LaunchedEffect
-            onPendingArticleSelected()
-            selectArticle(id)
-        }
-
-        ArticleScaffold(
-            drawerState = drawerState,
-            scaffoldNavigator = scaffoldNavigator,
-            paneExpansion = paneExpansion,
-            drawerPane = {
+        // Publish the drawer pane up to the window-level host. Keyed on the data so the lambda is
+        // recreated (and the drawer recomposes) only when its contents change; the callbacks it
+        // captures are behaviorally stable.
+        val drawerContent: @Composable () -> Unit = remember(
+            folders, feeds, readLaterFeed, savedSearches, filter,
+            statusCount, todayCount, refreshAllState,
+        ) {
+            {
                 FeedList(
                     source = viewModel.source,
                     folders = folders,
@@ -512,8 +481,17 @@ fun ArticleScreen(
                     statusCount = statusCount,
                     todayCount = todayCount,
                 )
-            },
-            listPane = {
+            }
+        }
+
+        LaunchedEffect(appDrawer, drawerContent) {
+            appDrawer?.setContent(drawerContent)
+        }
+        DisposableEffect(appDrawer) {
+            onDispose { appDrawer?.setContent(null) }
+        }
+
+        Box(modifier = Modifier.fillMaxSize()) {
                 val keyboardManager = LocalSoftwareKeyboardController.current
                 val markReadPosition = LocalMarkAllReadButtonPosition.current
 
@@ -613,7 +591,7 @@ fun ArticleScreen(
                                     } else {
                                         ArticleList(
                                             articles = articles,
-                                            selectedArticleKey = article?.id,
+                                            selectedArticleKey = selectedArticleID,
                                             listState = listState,
                                             enableMarkReadOnScroll = viewModel.markReadOnScrollEnabled,
                                             dimReadArticles = filter.status != ArticleStatus.STARRED,
@@ -621,8 +599,8 @@ fun ArticleScreen(
                                             onMarkAllRead = { range ->
                                                 onMarkAllRead(range)
                                             },
-                                            onSelect = { articleID ->
-                                                selectArticle(articleID)
+                                            onSelect = { article ->
+                                                selectArticle(article)
                                             },
                                         )
                                     }
@@ -631,76 +609,20 @@ fun ArticleScreen(
                         }
                     }
                 }
-            },
-            detailPane = {
-                if (article == null && showMultipleColumns) {
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier
-                            .fillMaxSize()
-                    ) {
-                        CapyPlaceholder()
-                    }
-                } else if (article != null) {
-                    val isAudioPlaying by audioController.isPlaying.collectAsState()
-                    val currentAudio by audioController.currentAudio.collectAsState()
 
-                    ArticleView(
-                        article = article,
-                        articles = articles,
-                        onBackPressed = {
-                            clearArticle()
-                        },
-                        onToggleRead = viewModel::toggleArticleRead,
-                        onToggleStar = viewModel::toggleArticleStar,
-                        canSaveExternally = canSaveExternally,
-                        onDeletePage = {
-                            clearArticle()
-                            viewModel.deletePage(article.id)
-                        },
-                        onSelectMedia = { media = it },
-                        onSelectAudio = { audio ->
-                            audioController.play(audio)
-                        },
-                        onPauseAudio = {
-                            audioController.pause()
-                        },
-                        onSelectArticle = { articleID ->
-                            setArticle(articleID)
-                        },
-                        onScrollToArticle = { index ->
-                            scrollToArticle(index)
-                        },
-                        currentAudioUrl = currentAudio?.url,
-                        isAudioPlaying = isAudioPlaying,
-                        isFullscreen = paneExpansion.isFullscreen,
-                        onToggleFullscreen = { paneExpansion.toggleFullscreen() },
-                    )
-                }
-            }
-        )
-
-        LaunchedEffect(scaffoldNavigator.currentDestination) {
-            val isOnList =
-                scaffoldNavigator.currentDestination?.pane != ListDetailPaneScaffoldRole.Detail
-            if (isOnList && article != null) {
-                viewModel.clearArticle()
+            AnimatedVisibility(
+                visible = search.isActive,
+                enter = fadeIn(),
+                exit = fadeOut(),
+            ) {
+                SearchView(
+                    search = search,
+                    results = searchResults,
+                    selectedArticleID = selectedArticleID,
+                    onSelect = { article -> selectArticle(article) },
+                )
             }
         }
-
-        AnimatedVisibility(
-            enter = fadeIn(),
-            exit = fadeOut(),
-            visible = media != null
-        ) {
-            ArticleMediaView(
-                onDismissRequest = {
-                    media = null
-                },
-                media = media
-            )
-        }
-
 
         if (isMarkAllReadDialogOpen) {
             MarkAllReadDialog(
@@ -749,24 +671,16 @@ fun ArticleScreen(
             )
         }
 
-        BackHandler(media != null) {
-            media = null
-        }
-
-        BackHandler(media == null && article != null) {
-            paneExpansion.reset()
-            clearArticle()
-        }
-
-        BackHandler(media == null && search.isActive && article == null) {
+        BackHandler(search.isActive) {
             search.clear()
         }
 
+        // When a detail is open the list yields back to NavDisplay so it can pop the detail entry.
         ArticleListBackHandler(
             filter,
             onRequestFilter = selectFilter,
             onRequestFolder = selectFolder,
-            enabled = isFeedActive(media, article, search),
+            enabled = selectedArticleID == null && !search.isActive,
             isDrawerOpen = drawerState.isOpen,
             toggleDrawer = {
                 toggleDrawer()
@@ -775,12 +689,6 @@ fun ArticleScreen(
                 closeDrawer()
             }
         )
-
-        LayoutNavigationHandler(
-            enabled = article == null
-        ) {
-            scaffoldNavigator.navigateTo(ListDetailPaneScaffoldRole.List)
-        }
     }
 }
 
@@ -869,31 +777,11 @@ fun rememberSavedSearchActions(viewModel: ArticleScreenViewModel): SavedSearchAc
     }
 }
 
-@Composable
-fun rememberFullContent(viewModel: ArticleScreenViewModel): FullContentFetcher {
-    return remember {
-        FullContentFetcher(
-            fetch = viewModel::fetchFullContentAsync,
-            reset = viewModel::resetFullContent,
-        )
-    }
-}
-
 fun canOpenNextFeed(
     filter: ArticleFilter,
     range: MarkRead,
 ): Boolean {
     return range is MarkRead.All && filter !is ArticleFilter.Articles
-}
-
-fun isFeedActive(
-    media: Media?,
-    article: Article?,
-    search: ArticleSearch
-): Boolean {
-    return media == null &&
-            article == null &&
-            !search.isActive
 }
 
 @OptIn(FlowPreview::class)

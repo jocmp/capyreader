@@ -75,6 +75,45 @@ class BySavedSearch(private val database: Database) {
         )
     }
 
+    fun neighbors(
+        savedSearchID: String,
+        status: ArticleStatus,
+        sortOrder: SortOrder,
+        since: OffsetDateTime?,
+        articleID: String,
+    ): Pair<String?, String?> {
+        val (read, starred) = status.toStatusPair
+        val newestFirst = isNewestFirst(sortOrder)
+        val queries = database.articlesBySavedSearchQueries
+
+        val findBefore =
+            if (newestFirst) queries::articleBeforeNewestFirst else queries::articleBeforeOldestFirst
+        val findAfter =
+            if (newestFirst) queries::articleAfterNewestFirst else queries::articleAfterOldestFirst
+
+        val previous = findBefore(
+            articleID,
+            savedSearchID,
+            read,
+            mapLastRead(read, since),
+            starred,
+            mapLastUnstarred(starred, since),
+            null,
+        ).executeAsOneOrNull()
+
+        val next = findAfter(
+            articleID,
+            savedSearchID,
+            read,
+            mapLastRead(read, since),
+            starred,
+            mapLastUnstarred(starred, since),
+            null,
+        ).executeAsOneOrNull()
+
+        return previous to next
+    }
+
     fun count(
         savedSearchID: String,
         status: ArticleStatus,
