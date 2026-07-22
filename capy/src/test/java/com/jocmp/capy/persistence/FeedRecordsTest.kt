@@ -83,16 +83,18 @@ class FeedRecordsTest {
         val records = FeedRecords(database)
         val feed = FeedFixture(database, records = records).create()
 
+        val lastModified = "Tue, 21 Jul 2026 03:47:50 GMT"
+
         records.updateConditionalGet(
             feedID = feed.id,
-            conditionalGet = ConditionalGetInfo(etag = "abc123", lastModified = "yesterday"),
+            conditionalGet = ConditionalGetInfo(etag = "abc123", lastModified = lastModified),
             refreshedAt = nowUTC().toEpochSecond(),
         )
 
         val result = records.findConditionalGet(feed.id)
 
         assertEquals(expected = "abc123", actual = result.etag)
-        assertEquals(expected = "yesterday", actual = result.lastModified)
+        assertEquals(expected = lastModified, actual = result.lastModified)
     }
 
     @Test
@@ -102,7 +104,7 @@ class FeedRecordsTest {
 
         records.updateConditionalGet(
             feedID = feed.id,
-            conditionalGet = ConditionalGetInfo(etag = "abc123", lastModified = "yesterday"),
+            conditionalGet = ConditionalGetInfo(etag = "abc123", lastModified = "Tue, 21 Jul 2026 03:47:50 GMT"),
             refreshedAt = nowUTC().minusDays(9).toEpochSecond(),
         )
 
