@@ -28,12 +28,25 @@ object WebRequestProxyPolicy {
                 accept?.startsWith("text/html") == true &&
                 url.startsWith("http")
 
-        // Image/media sub-resource proxying (Referer headers for CDNs, Issue #1878) is disabled:
-        // it forced every image through a synchronous OkHttp call in shouldInterceptRequest,
-        // serializing image loads on the WebView's request thread. It also happened to warm
-        // Coil's shared cache for the media viewer, which needs a non-blocking replacement.
+        // Images load natively (fast, async, parallel) by default. Only a retry - marked by
+        // media.js after a real <img> load failure, e.g. a CDN needing a Referer header
+        // (Issue #1878) - goes through this proxy. Proxying every image up front serialized
+        // them all through this synchronous call, which is what previously made pagination slow.
+        return isCorsRequest || isIframeNavigation || retriedMediaFetch(url)
+    }
 
-        return isCorsRequest || isIframeNavigation
+    const val RETRY_QUERY_PARAM = "__capy_retry"
+
+    private fun retriedMediaFetch(url: String): Boolean {
+        return try {
+            URI(url).query
+                ?.split("&")
+                ?.firstOrNull { it.startsWith("$RETRY_QUERY_PARAM=") }
+                ?.substringAfter("=")
+                ?.toBoolean() == true
+        } catch (_: Exception) {
+            false
+        }
     }
 
     // Reddit embeds www.reddit.com/media?url=... as image srcs in feeds,
