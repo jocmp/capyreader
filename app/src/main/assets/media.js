@@ -129,9 +129,9 @@ function setupImageLoadHandler(img) {
   img.onload = () => img.classList.add("loaded");
   img.onerror = () => retryImage(img);
 
-  // These handlers attach at window.onload, after every initial image has
-  // already settled, so a failed image never fires onerror here. A complete
-  // image with no decoded pixels is a failed load - retry it.
+  // Cached images and fast failures settle before these handlers attach, so
+  // neither callback would ever fire for them. A complete image with no
+  // decoded pixels is a failed load - retry it.
   if (img.complete) {
     if (img.naturalWidth === 0) {
       retryImage(img);
@@ -367,9 +367,20 @@ function longPress(element, callback) {
   element.addEventListener("touchcancel", stop);
 }
 
-window.addEventListener("DOMContentLoaded", () => {
+/**
+ * Wires up all media behavior once the DOM is parsed. Called by the inline
+ * script that ArticleRenderer appends after the article body, so it always
+ * runs against the final content - including full-content extraction, which
+ * awaits Mercury before calling this.
+ */
+function initMedia() {
   cleanEmbeds();
-});
+  addImageClickListeners();
+  addImageLoadListeners();
+  observeImages();
+  configureVideoTags();
+  Android.requestAudioState();
+}
 
 /**
  * @param {MessageEvent} event
@@ -453,11 +464,3 @@ function resetAudioPlayState() {
   playButtons.forEach((btn) => btn.classList.remove("playing"));
 }
 
-window.onload = () => {
-  addImageClickListeners();
-  addImageLoadListeners();
-  observeImages();
-  addEmbedListeners();
-  configureVideoTags();
-  Android.requestAudioState();
-};
