@@ -57,8 +57,9 @@ class ArticleViewModel(
     /**
      * Loads [articleID] into the persistent reader surface. The previously loaded [article] is kept
      * until the new one resolves so the reader chrome stays present while the content swaps.
+     * [searchQuery] scopes the neighbor query to the search results the article was opened from.
      */
-    fun load(articleID: String) {
+    fun load(articleID: String, searchQuery: String? = null) {
         if (currentArticleID == articleID) {
             return
         }
@@ -85,6 +86,7 @@ class ArticleViewModel(
                 sortOrder = appPreferences.articleListOptions.sortOrder.get(),
                 since = articleCutoff.value,
                 articleID = articleID,
+                query = searchQuery,
             )
             previousArticleID = previous
             nextArticleID = next

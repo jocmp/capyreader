@@ -74,6 +74,7 @@ class ByArticleStatus(private val database: Database) {
         since: OffsetDateTime?,
         articleID: String,
         publishedSince: Long? = null,
+        query: String? = null,
     ): Pair<String?, String?> {
         val (read, starred) = status.toStatusPair
         val newestFirst = isNewestFirst(sortOrder)
@@ -91,6 +92,7 @@ class ByArticleStatus(private val database: Database) {
             starred,
             mapLastUnstarred(starred, since),
             publishedSince,
+            query,
         ).executeAsOneOrNull()
 
         val next = findAfter(
@@ -100,6 +102,7 @@ class ByArticleStatus(private val database: Database) {
             starred,
             mapLastUnstarred(starred, since),
             publishedSince,
+            query,
         ).executeAsOneOrNull()
 
         return previous to next

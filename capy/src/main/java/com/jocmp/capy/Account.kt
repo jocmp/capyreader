@@ -364,12 +364,14 @@ data class Account(
         sortOrder: SortOrder,
         since: java.time.OffsetDateTime?,
         articleID: String,
+        query: String? = null,
     ): Pair<String?, String?> = withIOContext {
         articleRecords.neighbors(
             filter = filter,
             sortOrder = sortOrder,
             since = since,
             articleID = articleID,
+            query = query,
         )
     }
 

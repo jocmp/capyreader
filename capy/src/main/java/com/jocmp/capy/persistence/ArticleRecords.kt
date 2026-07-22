@@ -329,6 +329,7 @@ class ArticleRecords(
         sortOrder: SortOrder,
         since: java.time.OffsetDateTime?,
         articleID: String,
+        query: String? = null,
     ): Pair<String?, String?> {
         return when (filter) {
             is ArticleFilter.Articles -> byStatus.neighbors(
@@ -336,6 +337,7 @@ class ArticleRecords(
                 sortOrder = sortOrder,
                 since = since,
                 articleID = articleID,
+                query = query,
             )
 
             is ArticleFilter.Feeds -> byFeed.neighbors(
@@ -345,6 +347,7 @@ class ArticleRecords(
                 since = since,
                 priority = FeedPriority.FEED,
                 articleID = articleID,
+                query = query,
             )
 
             is ArticleFilter.Folders -> byFeed.neighbors(
@@ -354,6 +357,7 @@ class ArticleRecords(
                 since = since,
                 priority = FeedPriority.CATEGORY,
                 articleID = articleID,
+                query = query,
             )
 
             is ArticleFilter.SavedSearches -> bySavedSearch.neighbors(
@@ -362,6 +366,7 @@ class ArticleRecords(
                 sortOrder = sortOrder,
                 since = since,
                 articleID = articleID,
+                query = query,
             )
 
             is ArticleFilter.Today -> byToday.neighbors(
@@ -369,6 +374,7 @@ class ArticleRecords(
                 sortOrder = sortOrder,
                 since = since,
                 articleID = articleID,
+                query = query,
             )
         }
     }

@@ -91,6 +91,7 @@ class ByToday(private val database: Database) {
         sortOrder: SortOrder,
         since: OffsetDateTime?,
         articleID: String,
+        query: String? = null,
     ): Pair<String?, String?> {
         val (read, starred) = status.toStatusPair
         val newestFirst = isNewestFirst(sortOrder)
@@ -109,6 +110,7 @@ class ByToday(private val database: Database) {
             starred,
             mapLastUnstarred(starred, since),
             publishedSince,
+            query,
         ).executeAsOneOrNull()
 
         val next = findAfter(
@@ -118,6 +120,7 @@ class ByToday(private val database: Database) {
             starred,
             mapLastUnstarred(starred, since),
             publishedSince,
+            query,
         ).executeAsOneOrNull()
 
         return previous to next
