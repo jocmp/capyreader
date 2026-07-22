@@ -25,9 +25,13 @@ sealed class Route : NavKey {
     @Serializable
     data class ArticleList(val filter: ArticleFilter) : Route()
 
-    /** A single article opened in the reader. Resolved from [articleID] by the detail ViewModel. */
+    /**
+     * A single article opened in the reader. Resolved from [articleID] by the detail ViewModel.
+     * [searchQuery] is set when the article was opened from search results, so the reader's
+     * next/previous neighbors walk the search results rather than the underlying list.
+     */
     @Serializable
-    data class ArticleDetail(val articleID: String) : Route()
+    data class ArticleDetail(val articleID: String, val searchQuery: String? = null) : Route()
 
     /**
      * Full-screen image viewer, rendered as an overlay above the list/detail panes (see

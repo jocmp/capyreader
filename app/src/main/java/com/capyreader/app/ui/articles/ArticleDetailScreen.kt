@@ -35,13 +35,14 @@ import org.koin.compose.koinInject
 @Composable
 fun ArticleDetailScreen(
     articleID: String,
+    searchQuery: String?,
     onBackPressed: () -> Unit,
     onSelectArticle: (id: String) -> Unit,
     onSelectMedia: (media: Media) -> Unit,
     viewModel: ArticleViewModel = koinViewModel(),
 ) {
     LaunchedEffect(articleID) {
-        viewModel.load(articleID)
+        viewModel.load(articleID, searchQuery = searchQuery)
     }
 
     val context = LocalContext.current

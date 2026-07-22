@@ -40,7 +40,8 @@ import com.jocmp.capy.Article
 /**
  * Full-surface search overlay. It owns its own results pager so the list (and therefore the
  * reader's neighbor query) underneath keeps the base filter untouched. Shown while
- * [ArticleSearch.isActive]; selecting a result closes it via the caller's [onSelect].
+ * [ArticleSearch.isActive]; search stays active when a result is selected so two-pane
+ * layouts keep the results visible next to the reader.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,6 +49,7 @@ fun SearchView(
     search: ArticleSearch,
     results: LazyPagingItems<Article>,
     selectedArticleID: String?,
+    dimReadArticles: Boolean,
     onSelect: (article: Article) -> Unit,
 ) {
     val focusRequester = remember { FocusRequester() }
@@ -118,7 +120,7 @@ fun SearchView(
                         articles = results,
                         selectedArticleKey = selectedArticleID,
                         listState = rememberLazyListState(),
-                        dimReadArticles = false,
+                        dimReadArticles = dimReadArticles,
                         onSelect = onSelect,
                     )
                 }
@@ -127,6 +129,8 @@ fun SearchView(
     }
 
     LaunchedEffect(Unit) {
-        focusRequester.requestFocus()
+        if (query.isBlank()) {
+            focusRequester.requestFocus()
+        }
     }
 }

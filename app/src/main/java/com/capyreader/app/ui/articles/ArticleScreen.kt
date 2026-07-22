@@ -111,7 +111,7 @@ import org.koin.compose.koinInject
 @OptIn(ExperimentalMaterial3AdaptiveApi::class, ExperimentalMaterial3Api::class, FlowPreview::class)
 @Composable
 fun ArticleScreen(
-    onSelectArticle: (articleID: String) -> Unit,
+    onSelectArticle: (articleID: String, searchQuery: String?) -> Unit,
     onNavigateToSettings: () -> Unit,
     viewModel: ArticleScreenViewModel = koinViewModel(),
     appPreferences: AppPreferences = koinInject(),
@@ -388,7 +388,6 @@ fun ArticleScreen(
         fun selectArticle(article: Article) {
             if (search.isActive) {
                 focusManager.clearFocus()
-                search.clear()
             }
 
             // Feeds flagged "open in browser" skip the in-app reader, matching the widget behavior.
@@ -396,7 +395,8 @@ fun ArticleScreen(
             if (article.openInBrowser && url != null) {
                 linkOpener.open(url.toString().toUri())
             } else {
-                onSelectArticle(article.id)
+                val searchQuery = search.query.takeIf { search.isActive && !it.isNullOrBlank() }
+                onSelectArticle(article.id, searchQuery)
             }
         }
 
@@ -619,6 +619,7 @@ fun ArticleScreen(
                     search = search,
                     results = searchResults,
                     selectedArticleID = selectedArticleID,
+                    dimReadArticles = filter.status != ArticleStatus.STARRED,
                     onSelect = { article -> selectArticle(article) },
                 )
             }

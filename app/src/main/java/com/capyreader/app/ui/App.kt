@@ -166,7 +166,9 @@ fun App(
                         )
                     ) {
                         ArticleScreen(
-                            onSelectArticle = { id -> backStack.openArticle(id) },
+                            onSelectArticle = { id, searchQuery ->
+                                backStack.openArticle(id, searchQuery)
+                            },
                             onNavigateToSettings = { backStack.add(Route.Settings) },
                             selectedArticleID = (backStack.lastOrNull() as? Route.ArticleDetail)?.articleID,
                         )
@@ -195,8 +197,10 @@ fun App(
                     ) { key ->
                         ArticleDetailScreen(
                             articleID = key.articleID,
+                            searchQuery = key.searchQuery,
                             onBackPressed = { backStack.removeLastOrNull() },
-                            onSelectArticle = { id -> backStack.openArticle(id) },
+                            // Next/previous keeps the search context the article was opened with.
+                            onSelectArticle = { id -> backStack.openArticle(id, key.searchQuery) },
                             onSelectMedia = { media -> backStack.add(Route.MediaViewer(media)) },
                         )
                     }
@@ -239,11 +243,11 @@ private val HandleEdgeInset = 16.dp
  * Opens an article in the detail pane. If a detail is already on top (reader next/previous), the
  * top entry is replaced so the back stack stays [list, detail] rather than growing per article.
  */
-private fun NavBackStack<NavKey>.openArticle(articleID: String) {
+private fun NavBackStack<NavKey>.openArticle(articleID: String, searchQuery: String? = null) {
     if (lastOrNull() is Route.ArticleDetail) {
-        this[lastIndex] = Route.ArticleDetail(articleID)
+        this[lastIndex] = Route.ArticleDetail(articleID, searchQuery)
     } else {
-        add(Route.ArticleDetail(articleID))
+        add(Route.ArticleDetail(articleID, searchQuery))
     }
 }
 

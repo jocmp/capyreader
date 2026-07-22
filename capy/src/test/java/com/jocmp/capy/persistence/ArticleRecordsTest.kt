@@ -728,16 +728,62 @@ class ArticleRecordsTest {
         )
     }
 
+    @Test
+    fun neighbors_withSearchQuery_skipsNonMatchingArticles() {
+        val feed = FeedFixture(database).create()
+        val start = nowUTC()
+        val newest = articleFixture.create(
+            feed = feed,
+            title = "samsung event",
+            publishedAt = start.toEpochSecond(),
+        )
+        val middle = articleFixture.create(
+            feed = feed,
+            title = "pixel roundup",
+            publishedAt = start.minusDays(1).toEpochSecond(),
+        )
+        val oldest = articleFixture.create(
+            feed = feed,
+            title = "samsung recap",
+            publishedAt = start.minusDays(2).toEpochSecond(),
+        )
+        val feedFilter = ArticleFilter.Feeds(
+            feedID = feed.id,
+            folderTitle = null,
+            feedStatus = ArticleStatus.ALL,
+        )
+        val statusFilter = ArticleFilter.Articles(ArticleStatus.ALL)
+
+        // The query matches the newest and oldest titles but not the middle one,
+        // so neighbors hop over the middle article in both directions.
+        listOf(feedFilter, statusFilter).forEach { filter ->
+            assertEquals(
+                expected = null to oldest.id,
+                actual = neighbors(filter, SortOrder.NEWEST_FIRST, newest.id, query = "samsung"),
+            )
+            assertEquals(
+                expected = newest.id to null,
+                actual = neighbors(filter, SortOrder.NEWEST_FIRST, oldest.id, query = "samsung"),
+            )
+            assertEquals(
+                expected = newest.id to oldest.id,
+                actual = neighbors(filter, SortOrder.NEWEST_FIRST, middle.id, query = "samsung"),
+            )
+        }
+    }
+
     private fun neighbors(
         filter: ArticleFilter,
         sortOrder: SortOrder,
         articleID: String,
+        query: String? = null,
     ): Pair<String?, String?> =
         articleRecords.neighbors(
             filter = filter,
             sortOrder = sortOrder,
             since = null,
             articleID = articleID,
+            query = query,
         )
 
     /** Three articles in [feed], newest to oldest, one day apart. */

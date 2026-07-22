@@ -81,6 +81,7 @@ class BySavedSearch(private val database: Database) {
         sortOrder: SortOrder,
         since: OffsetDateTime?,
         articleID: String,
+        query: String? = null,
     ): Pair<String?, String?> {
         val (read, starred) = status.toStatusPair
         val newestFirst = isNewestFirst(sortOrder)
@@ -99,6 +100,7 @@ class BySavedSearch(private val database: Database) {
             starred,
             mapLastUnstarred(starred, since),
             null,
+            query,
         ).executeAsOneOrNull()
 
         val next = findAfter(
@@ -109,6 +111,7 @@ class BySavedSearch(private val database: Database) {
             starred,
             mapLastUnstarred(starred, since),
             null,
+            query,
         ).executeAsOneOrNull()
 
         return previous to next
