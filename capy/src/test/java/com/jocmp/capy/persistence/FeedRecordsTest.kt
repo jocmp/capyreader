@@ -2,9 +2,11 @@ package com.jocmp.capy.persistence
 
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.awaitRepeated
+import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.ArticleFixture
 import com.jocmp.capy.fixtures.FeedFixture
+import com.jocmp.rssparser.model.ConditionalGetInfo
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import kotlin.test.Test
@@ -74,5 +76,38 @@ class FeedRecordsTest {
             expected = setOf(false),
             actual = updated.map { it.enableStickyFullContent }.toSet()
         )
+    }
+
+    @Test
+    fun findConditionalGet_returnsStoredValue() = runTest {
+        val records = FeedRecords(database)
+        val feed = FeedFixture(database, records = records).create()
+
+        records.updateConditionalGet(
+            feedID = feed.id,
+            conditionalGet = ConditionalGetInfo(etag = "abc123", lastModified = "yesterday"),
+            refreshedAt = nowUTC().toEpochSecond(),
+        )
+
+        val result = records.findConditionalGet(feed.id)
+
+        assertEquals(expected = "abc123", actual = result.etag)
+        assertEquals(expected = "yesterday", actual = result.lastModified)
+    }
+
+    @Test
+    fun findConditionalGet_expiresAfter8Days() = runTest {
+        val records = FeedRecords(database)
+        val feed = FeedFixture(database, records = records).create()
+
+        records.updateConditionalGet(
+            feedID = feed.id,
+            conditionalGet = ConditionalGetInfo(etag = "abc123", lastModified = "yesterday"),
+            refreshedAt = nowUTC().minusDays(9).toEpochSecond(),
+        )
+
+        val result = records.findConditionalGet(feed.id)
+
+        assertTrue(result.isEmpty)
     }
 }
