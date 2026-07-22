@@ -199,7 +199,6 @@ fun App(
                             articleID = key.articleID,
                             searchQuery = key.searchQuery,
                             onBackPressed = { backStack.removeLastOrNull() },
-                            // Next/previous keeps the search context the article was opened with.
                             onSelectArticle = { id -> backStack.openArticle(id, key.searchQuery) },
                             onSelectMedia = { media -> backStack.add(Route.MediaViewer(media)) },
                         )

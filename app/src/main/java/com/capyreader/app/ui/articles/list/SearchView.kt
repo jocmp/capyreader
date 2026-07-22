@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import com.capyreader.app.R
 import com.capyreader.app.ui.articles.ArticleList
+import com.capyreader.app.ui.articles.ScrollToSelectedArticleEffect
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.SearchTextField
 import com.jocmp.capy.Article
@@ -54,6 +55,13 @@ fun SearchView(
 ) {
     val focusRequester = remember { FocusRequester() }
     val query = search.query.orEmpty()
+    val listState = rememberLazyListState()
+
+    ScrollToSelectedArticleEffect(
+        selectedArticleKey = selectedArticleID,
+        articles = results,
+        listState = listState,
+    )
 
     Surface(
         modifier = Modifier
@@ -119,7 +127,7 @@ fun SearchView(
                     ArticleList(
                         articles = results,
                         selectedArticleKey = selectedArticleID,
-                        listState = rememberLazyListState(),
+                        listState = listState,
                         dimReadArticles = dimReadArticles,
                         onSelect = onSelect,
                     )
