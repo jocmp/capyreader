@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import com.capyreader.app.R
 import com.capyreader.app.ui.articles.ArticleList
+import com.capyreader.app.ui.articles.ScrollToSelectedArticleEffect
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.SearchTextField
 import com.jocmp.capy.Article
@@ -40,7 +41,8 @@ import com.jocmp.capy.Article
 /**
  * Full-surface search overlay. It owns its own results pager so the list (and therefore the
  * reader's neighbor query) underneath keeps the base filter untouched. Shown while
- * [ArticleSearch.isActive]; selecting a result closes it via the caller's [onSelect].
+ * [ArticleSearch.isActive]; search stays active when a result is selected so two-pane
+ * layouts keep the results visible next to the reader.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,10 +50,18 @@ fun SearchView(
     search: ArticleSearch,
     results: LazyPagingItems<Article>,
     selectedArticleID: String?,
+    dimReadArticles: Boolean,
     onSelect: (article: Article) -> Unit,
 ) {
     val focusRequester = remember { FocusRequester() }
     val query = search.query.orEmpty()
+    val listState = rememberLazyListState()
+
+    ScrollToSelectedArticleEffect(
+        selectedArticleKey = selectedArticleID,
+        articles = results,
+        listState = listState,
+    )
 
     Surface(
         modifier = Modifier
@@ -117,8 +127,8 @@ fun SearchView(
                     ArticleList(
                         articles = results,
                         selectedArticleKey = selectedArticleID,
-                        listState = rememberLazyListState(),
-                        dimReadArticles = false,
+                        listState = listState,
+                        dimReadArticles = dimReadArticles,
                         onSelect = onSelect,
                     )
                 }
@@ -127,6 +137,8 @@ fun SearchView(
     }
 
     LaunchedEffect(Unit) {
-        focusRequester.requestFocus()
+        if (query.isBlank()) {
+            focusRequester.requestFocus()
+        }
     }
 }

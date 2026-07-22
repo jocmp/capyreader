@@ -87,6 +87,7 @@ class ByFeed(private val database: Database) {
         since: OffsetDateTime?,
         priority: FeedPriority,
         articleID: String,
+        query: String? = null,
     ): Pair<String?, String?> {
         val (read, starred) = status.toStatusPair
         val newestFirst = isNewestFirst(sortOrder)
@@ -106,6 +107,7 @@ class ByFeed(private val database: Database) {
             mapLastUnstarred(starred, since),
             null,
             priority.inclusivePriorities,
+            query,
         ).executeAsOneOrNull()
 
         val next = findAfter(
@@ -117,6 +119,7 @@ class ByFeed(private val database: Database) {
             mapLastUnstarred(starred, since),
             null,
             priority.inclusivePriorities,
+            query,
         ).executeAsOneOrNull()
 
         return previous to next
