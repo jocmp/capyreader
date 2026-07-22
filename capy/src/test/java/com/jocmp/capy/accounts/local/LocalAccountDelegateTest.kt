@@ -213,14 +213,14 @@ class LocalAccountDelegateTest {
         val feedID = channel.link!!
         FeedFixture(database).create(feedID = feedID, feedURL = feedID)
 
+        val mockNow = ZonedDateTime.parse("2024-12-25T09:00:00-00:00")
         val feedRecords = FeedRecords(database)
         feedRecords.updateConditionalGet(
             feedID = feedID,
             conditionalGet = ConditionalGetInfo(etag = "abc", lastModified = "Mon, 01 Jan 2024 00:00:00 GMT"),
-            refreshedAt = 1_000L,
+            refreshedAt = mockNow.minusDays(1).toEpochSecond(),
         )
 
-        val mockNow = ZonedDateTime.parse("2024-12-25T09:00:00-00:00")
         mockkObject(TimeHelpers)
         every { TimeHelpers.nowUTC() }.returns(mockNow)
 
@@ -261,7 +261,7 @@ class LocalAccountDelegateTest {
         FeedRecords(database).updateConditionalGet(
             feedID = feedID,
             conditionalGet = stored,
-            refreshedAt = 1_000L,
+            refreshedAt = TimeHelpers.nowUTC().minusDays(1).toEpochSecond(),
         )
 
         val captured = slot<ConditionalGetInfo>()

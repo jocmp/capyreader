@@ -41,6 +41,15 @@ class ParsedItemTest {
     }
 
     @Test
+    fun title_withUnclosedTagLikeText() {
+        val title = "On The <dl>"
+        val item = RssItem.Builder().title(title).build()
+        val parsedItem = ParsedItem(item, siteURL = "")
+
+        assertEquals(expected = title, actual = parsedItem.title)
+    }
+
+    @Test
     fun title_withNestedHTMLAndNonAsciiText() {
         val title = "<![CDATA[ 分析：美國五角大樓將騰訊列入涉軍名單的影響及信號 ]]>"
 

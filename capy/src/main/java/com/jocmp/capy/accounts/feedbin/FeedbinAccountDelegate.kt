@@ -11,6 +11,7 @@ import com.jocmp.capy.accounts.withErrorHandling
 import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.host
+import com.jocmp.capy.common.stripTitleMarkup
 import com.jocmp.capy.common.toDateTime
 import com.jocmp.capy.common.toDateTimeFromSeconds
 import com.jocmp.capy.common.transactionWithErrorHandling
@@ -39,7 +40,6 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import okio.IOException
-import org.jsoup.Jsoup
 import java.time.ZonedDateTime
 
 internal class FeedbinAccountDelegate(
@@ -458,7 +458,7 @@ internal class FeedbinAccountDelegate(
                 database.articlesQueries.create(
                     id = articleID,
                     feed_id = entry.feed_id.toString(),
-                    title = entry.title?.let { Jsoup.parse(it).text() },
+                    title = entry.title?.stripTitleMarkup(),
                     author = entry.author,
                     content_html = entry.content,
                     extracted_content_url = entry.extracted_content_url,

@@ -41,13 +41,17 @@ class SyncStatusRecords(
     fun deleteSelected(articleIDs: List<String>, key: SyncStatus.Key) {
         if (articleIDs.isEmpty()) return
 
-        queries.deleteSelectedByID(articleIDs = articleIDs.toList(), key = key.raw)
+        articleIDs.chunked(MAX_IDS_PER_QUERY).forEach { batchIDs ->
+            queries.deleteSelectedByID(articleIDs = batchIDs, key = key.raw)
+        }
     }
 
     fun resetSelected(articleIDs: List<String>, key: SyncStatus.Key) {
         if (articleIDs.isEmpty()) return
 
-        queries.resetSelectedByID(articleIDs = articleIDs.toList(), key = key.raw)
+        articleIDs.chunked(MAX_IDS_PER_QUERY).forEach { batchIDs ->
+            queries.resetSelectedByID(articleIDs = batchIDs, key = key.raw)
+        }
     }
 
     fun pendingCount(): Long {
@@ -56,6 +60,10 @@ class SyncStatusRecords(
 
     fun pendingArticleIDs(key: SyncStatus.Key): List<String> {
         return queries.selectPendingByKey(key.raw).executeAsList()
+    }
+
+    companion object {
+        private const val MAX_IDS_PER_QUERY = 500
     }
 }
 

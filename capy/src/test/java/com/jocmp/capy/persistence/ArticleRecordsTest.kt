@@ -415,7 +415,7 @@ class ArticleRecordsTest {
         val missingBefore = articleRecords.findMissingArticles()
         assertEquals(expected = 2, actual = missingBefore.size)
 
-        articleRecords.deleteOrphanedStatuses()
+        articleRecords.deleteOrphanedStatuses(before = nowUTC().minusDays(90))
 
         val missingAfter = articleRecords.findMissingArticles()
         assertContentEquals(expected = missingAfter, listOf(recentOrphanedArticle.id))

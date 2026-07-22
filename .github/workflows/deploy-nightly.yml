@@ -19,6 +19,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4.2.1
         with:
+          ref: nightly
           ssh-key: ${{ secrets.RELEASE_SSH_KEY }}
           fetch-depth: 0
 

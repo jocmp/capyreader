@@ -147,9 +147,9 @@ class ArticleRecords(
         }
     }
 
-    fun deleteOrphanedStatuses(now: ZonedDateTime = nowUTC()) {
+    fun deleteOrphanedStatuses(before: ZonedDateTime) {
         database.transactionWithErrorHandling {
-            val cutoffDate = now.minusDays(180).toEpochSecond()
+            val cutoffDate = before.toEpochSecond()
 
             database.articlesQueries.deleteOrphanedStatuses(cutoffDate = cutoffDate)
         }
