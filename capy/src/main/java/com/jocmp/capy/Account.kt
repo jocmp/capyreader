@@ -344,12 +344,32 @@ data class Account(
         range: MarkRead,
         sortOrder: SortOrder,
         query: String?,
+        since: java.time.OffsetDateTime? = null,
     ): List<String> {
         return articleRecords.unreadArticleIDs(
             filter = filter,
             range = range,
             sortOrder = sortOrder,
             query = query,
+            since = since,
+        )
+    }
+
+    /**
+     * Previous/next article id relative to [articleID] for the reader's swipe navigation.
+     * Suspends onto IO so the (synchronous) query never runs on the main thread.
+     */
+    suspend fun neighbors(
+        filter: ArticleFilter,
+        sortOrder: SortOrder,
+        since: java.time.OffsetDateTime?,
+        articleID: String,
+    ): Pair<String?, String?> = withIOContext {
+        articleRecords.neighbors(
+            filter = filter,
+            sortOrder = sortOrder,
+            since = since,
+            articleID = articleID,
         )
     }
 

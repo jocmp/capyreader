@@ -12,9 +12,14 @@ object WebRequestProxyPolicy {
             return false
         }
 
-        // XHR/fetch from null origin (loadDataWithBaseURL)
+        // XHR/fetch from null origin (loadDataWithBaseURL). Excludes image/video/audio Accept
+        // types so <img> sub-resources - which also carry Origin: null from the same
+        // null-baseURL page - aren't swept into this and proxied like a real XHR/fetch call.
         // Issue #1616
-        val isCorsRequest = origin == "null" && url.startsWith("http")
+        val isMediaAccept = accept?.let {
+            it.startsWith("image/") || it.startsWith("video/") || it.startsWith("audio/")
+        } == true
+        val isCorsRequest = origin == "null" && url.startsWith("http") && !isMediaAccept
 
         // iframe document load
         // Strips X-Frame-Options to allow embeds like Slashdot
@@ -23,24 +28,25 @@ object WebRequestProxyPolicy {
                 accept?.startsWith("text/html") == true &&
                 url.startsWith("http")
 
-        // Sub-resource requests that need a Referer header for CDNs
-        // Only proxy article sub-resources (null or absent origin from loadDataWithBaseURL),
-        // not iframe sub-resources which have their own origin (Issue #1878)
-        val isMediaRequest = pageUrl != null &&
-                !request.isForMainFrame &&
-               isMediaOrigin(origin) &&
-                accept?.startsWith("text/html") != true &&
-                url.startsWith("http")
-
-        return isCorsRequest || isIframeNavigation || isMediaRequest
+        // Images load natively (fast, async, parallel) by default. Only a retry - marked by
+        // media.js after a real <img> load failure, e.g. a CDN needing a Referer header
+        // (Issue #1878) - goes through this proxy. Proxying every image up front serialized
+        // them all through this synchronous call, which is what previously made pagination slow.
+        return isCorsRequest || isIframeNavigation || retriedMediaFetch(url)
     }
 
-    // Skips if the origin is missing which is the case
-    // with Mercury Parser, or if it's a string of "null"
-    // which is the case with main frame images
-    // Issue #1315, Issue #1901
-    fun isMediaOrigin(origin: String?): Boolean {
-        return origin == null || origin == "null"
+    const val RETRY_QUERY_PARAM = "__capy_retry"
+
+    private fun retriedMediaFetch(url: String): Boolean {
+        return try {
+            URI(url).query
+                ?.split("&")
+                ?.firstOrNull { it.startsWith("$RETRY_QUERY_PARAM=") }
+                ?.substringAfter("=")
+                ?.toBoolean() == true
+        } catch (_: Exception) {
+            false
+        }
     }
 
     // Reddit embeds www.reddit.com/media?url=... as image srcs in feeds,

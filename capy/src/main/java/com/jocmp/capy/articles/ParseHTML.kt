@@ -17,10 +17,11 @@ fun parseHtml(
 
     return """
       <script>
-        (async () => {
+        document.addEventListener("DOMContentLoaded", async () => {
           const input = ${scriptSafeJson(json)};
-          displayFullContent(input);
-        })();
+          await displayFullContent(input);
+          initMedia();
+        });
       </script>
     """.trimIndent()
 }
@@ -34,9 +35,10 @@ fun postProcessScript(article: Article, hideImages: Boolean): String {
 
     return """
       <script>
-        (function() {
+        document.addEventListener("DOMContentLoaded", () => {
           postProcessContent("$baseUrl", $hideImages);
-        })();
+          initMedia();
+        });
       </script>
     """.trimIndent()
 }

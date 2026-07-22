@@ -1,6 +1,5 @@
 
 STYLE_OUT =  ./dist/stylesheet.css
-STYLE_RES ?= ../app/src/main/assets/stylesheet.css
 TEMPLATE_OUT = ./dist/template.html
 TEMPLATE_RES ?= ../app/src/main/res/raw/template.html
 MERCURY_JS_RES = ../app/src/main/assets/mercury-parser.js
@@ -9,16 +8,13 @@ SHELL:=/usr/bin/env bash
 
 .PHONY: clean
 
-build: $(TEMPLATE_RES) $(STYLE_RES) $(MERCURY_JS_RES)
+build: $(TEMPLATE_RES) $(MERCURY_JS_RES)
 
 $(STYLE_OUT): style/stylesheet.scss
 	@echo "Style..."
 	bundle exec ruby ./script/generate-android-style
 
-$(STYLE_RES): $(STYLE_OUT)
-	cp $(STYLE_OUT) $(STYLE_RES)
-
-$(TEMPLATE_OUT): ./views/template.liquid
+$(TEMPLATE_OUT): ./views/template.liquid $(STYLE_OUT)
 	@echo "Template..."
 	ruby ./script/generate-android-template
 

@@ -39,7 +39,7 @@ import java.time.LocalDateTime
 @Composable
 fun ArticleList(
     articles: LazyPagingItems<Article>,
-    onSelect: (articleID: String) -> Unit,
+    onSelect: (article: Article) -> Unit,
     selectedArticleKey: String?,
     listState: LazyListState,
     onMarkAllRead: (range: MarkRead) -> Unit = {},
@@ -77,7 +77,7 @@ fun ArticleList(
                                     index = index,
                                     selected = selectedArticleKey == item.id,
                                     onSelect = {
-                                        onSelect(it)
+                                        onSelect(item)
                                     },
                                     onMarkAllRead = onMarkAllRead,
                                     currentTime = currentTime,

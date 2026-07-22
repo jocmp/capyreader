@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.net.toUri
 import androidx.glance.Button
 import androidx.glance.ColorFilter
 import androidx.glance.GlanceModifier
@@ -45,8 +44,8 @@ import com.capyreader.app.OpenArticleInBrowserActivity
 import com.capyreader.app.OpenArticleInBrowserActivity.Companion.ARTICLE_URL_KEY
 import com.capyreader.app.R
 import com.capyreader.app.notifications.NotificationHelper.Companion.ARTICLE_ID_KEY
-import com.capyreader.app.notifications.NotificationHelper.Companion.FEED_ID_KEY
-import com.capyreader.app.notifications.NotificationHelper.Companion.SHOW_ALL_KEY
+import com.capyreader.app.ui.DeepLink
+import com.jocmp.capy.ArticleStatus
 
 @Composable
 fun SpotlightLayout(
@@ -198,8 +197,12 @@ private fun EmptyState(context: Context) {
 
 private fun Context.openAll() =
     actionStartActivity(
-        Intent(this, MainActivity::class.java).apply {
-            putExtra(SHOW_ALL_KEY, true)
+        Intent(
+            Intent.ACTION_VIEW,
+            DeepLink.articlesUri(ArticleStatus.ALL),
+            this,
+            MainActivity::class.java,
+        ).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
     )
@@ -214,10 +217,12 @@ private fun Context.openArticle(entry: SpotlightEntry): Action {
         )
     } else {
         actionStartActivity(
-            Intent(this, MainActivity::class.java).apply {
-                putExtra(ARTICLE_ID_KEY, entry.id)
-                putExtra(FEED_ID_KEY, entry.feedID)
-                data = entry.articleURL?.toUri()
+            Intent(
+                Intent.ACTION_VIEW,
+                DeepLink.articleUri(articleID = entry.id, feedID = entry.feedID),
+                this,
+                MainActivity::class.java,
+            ).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
         )

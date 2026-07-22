@@ -5,14 +5,11 @@ import android.security.KeyChain
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.toRoute
 import com.capyreader.app.loadAccountModules
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.refresher.RefreshScheduler
-import com.capyreader.app.ui.Route
 import com.jocmp.capy.AccountManager
 import com.jocmp.capy.ClientCertManager
 import com.jocmp.capy.accounts.Credentials
@@ -27,7 +24,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class LoginViewModel(
-    handle: SavedStateHandle,
+    private val routeSource: Source,
     private val accountManager: AccountManager,
     private val appPreferences: AppPreferences,
     private val clientCertManager: ClientCertManager,
@@ -39,7 +36,6 @@ class LoginViewModel(
     private var _clientCertAlias by mutableStateOf("")
     private var _result by mutableStateOf<Async<Unit>>(Async.Uninitialized)
     private var _useApiToken by mutableStateOf(false)
-    private val routeSource = handle.toRoute<Route.Login>().source
 
     val source: Source
         get() = if (routeSource == Source.MINIFLUX && _useApiToken) {

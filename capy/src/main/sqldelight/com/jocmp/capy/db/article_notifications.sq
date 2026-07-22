@@ -3,9 +3,11 @@ SELECT
     article_id,
     articles.title,
     articles.summary,
+    articles.url,
     feeds.id AS feed_id,
     feeds.title AS feed_title,
-    feeds.favicon_url AS feed_favicon_url
+    feeds.favicon_url AS feed_favicon_url,
+    feeds.open_articles_in_browser
 FROM article_notifications
 JOIN articles ON article_notifications.article_id = articles.id
 JOIN feeds ON articles.feed_id = feeds.id

@@ -6,21 +6,16 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.capyreader.app.ArticleStatusBroadcastReceiver
 import com.capyreader.app.MainActivity
+import com.capyreader.app.OpenArticleInBrowserActivity
 import com.capyreader.app.R
-import com.capyreader.app.notifications.NotificationHelper.Companion.ARTICLE_ID_KEY
-import com.capyreader.app.notifications.NotificationHelper.Companion.FEED_ID_KEY
-import com.capyreader.app.preferences.AppPreferences
+import com.capyreader.app.ui.DeepLink
 import com.jocmp.capy.Account
-import com.jocmp.capy.ArticleFilter
-import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.ArticleNotification
 import com.jocmp.capy.logging.CapyLog
-import com.jocmp.capy.preferences.getAndSet
 import java.time.ZonedDateTime
 
 class NotificationHelper(
@@ -136,9 +131,6 @@ class NotificationHelper(
 
     companion object {
         const val ARTICLE_ID_KEY = "article_id"
-        const val FEED_ID_KEY = "feed_id"
-        const val UNREAD_ONLY_KEY = "unread_only"
-        const val SHOW_ALL_KEY = "show_all"
 
         private const val ARTICLE_REFRESH_GROUP = "article_refresh"
 
@@ -155,45 +147,6 @@ class NotificationHelper(
                 putExtra(ArticleStatusBroadcastReceiver.ARTICLE_ID, articleID)
             }
         }
-
-        fun openFromIntent(intent: Intent, appPreferences: AppPreferences): String? {
-            val openFromShowMore = intent.getBooleanExtra(UNREAD_ONLY_KEY, false)
-            val openShowAll = intent.getBooleanExtra(SHOW_ALL_KEY, false)
-            val articleID = intent.getStringExtra(ARTICLE_ID_KEY)
-            val feedID = intent.getStringExtra(FEED_ID_KEY)
-
-            if (openFromShowMore) {
-                intent.replaceExtras(Bundle())
-
-                appPreferences.filter.set(
-                    ArticleFilter.Articles(articleStatus = ArticleStatus.UNREAD)
-                )
-
-                return null
-            } else if (openShowAll) {
-                intent.replaceExtras(Bundle())
-
-                appPreferences.filter.set(
-                    ArticleFilter.Articles(articleStatus = ArticleStatus.ALL)
-                )
-
-                return null
-            } else if (articleID != null && feedID != null) {
-                intent.replaceExtras(Bundle())
-
-                appPreferences.filter.getAndSet { currentFilter ->
-                    ArticleFilter.Feeds(
-                        feedID,
-                        feedStatus = currentFilter.status,
-                        folderTitle = null
-                    )
-                }
-
-                return articleID
-            }
-
-            return null
-        }
     }
 }
 
@@ -206,10 +159,23 @@ private fun NotificationManagerCompat.tryNotify(id: Int, notification: Notificat
 }
 
 private fun ArticleNotification.contentIntent(context: Context): PendingIntent {
-    val notifyIntent = Intent(context, MainActivity::class.java).apply {
-        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        putExtra(ARTICLE_ID_KEY, articleID)
-        putExtra(FEED_ID_KEY, feedID)
+    val notifyIntent = if (openInBrowser && !url.isNullOrBlank()) {
+        // Feeds flagged "open in browser" route through the activity that opens the link and marks
+        // the article read, matching the in-app list tap and the widgets.
+        Intent(context, OpenArticleInBrowserActivity::class.java).apply {
+            putExtra(NotificationHelper.ARTICLE_ID_KEY, articleID)
+            putExtra(OpenArticleInBrowserActivity.ARTICLE_URL_KEY, url)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+    } else {
+        Intent(
+            Intent.ACTION_VIEW,
+            DeepLink.articleUri(articleID = articleID, feedID = feedID),
+            context,
+            MainActivity::class.java,
+        ).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
     }
 
     return PendingIntent.getActivity(

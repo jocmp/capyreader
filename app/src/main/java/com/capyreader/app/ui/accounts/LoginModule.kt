@@ -1,5 +1,6 @@
 package com.capyreader.app.ui.accounts
 
+import com.jocmp.capy.accounts.Source
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -11,9 +12,9 @@ val loginModule = module {
             refreshScheduler = get(),
         )
     }
-    viewModel {
+    viewModel { (source: Source) ->
         LoginViewModel(
-            handle = get(),
+            routeSource = source,
             accountManager = get(),
             appPreferences = get(),
             clientCertManager = get(),

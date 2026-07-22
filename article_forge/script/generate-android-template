@@ -2,11 +2,14 @@
 
 require "fileutils"
 
+STYLESHEET_LINK = %(<link rel="stylesheet" href="/assets/stylesheet.css">)
+
 def main
   filename = "template"
 
   file_content = File.read("./views/#{filename}.liquid")
   file_content = file_content.gsub("    {{debug_script}}\n", "")
+  file_content = inline_stylesheet(file_content)
   file_content = file_content.gsub('src="/', 'src="https://appassets.androidplatform.net/')
   file_content = file_content.gsub('href="/', 'href="https://appassets.androidplatform.net/')
 
@@ -16,9 +19,24 @@ def main
   File.write("dist/#{File.basename("#{filename}.html")}", file_content)
 end
 
+# The dev server serves the stylesheet as a live-compiled link, but the app
+# template inlines it so article rendering never waits on a second fetch
+# through the WebView's request interceptor.
+def inline_stylesheet(html)
+  raise "Stylesheet link not found in template" unless html.include?(STYLESHEET_LINK)
+
+  css = File.read("./dist/stylesheet.css").strip
+
+  html.sub(STYLESHEET_LINK) { "<style>#{css}</style>" }
+end
+
 def assert_clean(html)
   if html.include?("{{debug_script}}")
     raise "Debug tag detected"
+  end
+
+  if html.include?("stylesheet.css")
+    raise "Stylesheet link detected"
   end
 end
 

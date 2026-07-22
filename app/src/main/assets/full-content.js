@@ -45,6 +45,8 @@ async function displayFullContent(article) {
  * @param {string | null} article.url
  */
 async function parseWithParser(article) {
+  await loadMercury();
+
   const result = await Mercury.parse(article.url, { html: article.html });
 
   return {
@@ -53,3 +55,29 @@ async function parseWithParser(article) {
   };
 }
 
+/** @type {Promise<void> | null} */
+let mercuryLoading = null;
+
+/**
+ * Mercury is nearly 1MB of JavaScript. Loading it eagerly in the template head
+ * taxes every article render with its parse and eval cost, so it's injected
+ * on demand the first time full content is requested.
+ */
+function loadMercury() {
+  if (typeof Mercury !== "undefined") {
+    return Promise.resolve();
+  }
+
+  if (!mercuryLoading) {
+    mercuryLoading = new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src =
+        "https://appassets.androidplatform.net/assets/mercury-parser.js";
+      script.onload = () => resolve();
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+
+  return mercuryLoading;
+}
