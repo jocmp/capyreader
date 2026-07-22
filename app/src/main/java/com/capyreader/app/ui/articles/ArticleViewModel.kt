@@ -1,0 +1,257 @@
+package com.capyreader.app.ui.articles
+
+import android.app.Application
+import android.content.Context
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
+import com.capyreader.app.notifications.NotificationHelper
+import com.capyreader.app.preferences.AppPreferences
+import com.jocmp.capy.Account
+import com.jocmp.capy.Article
+import com.jocmp.capy.SavedSearch
+import com.jocmp.capy.common.launchIO
+import com.jocmp.capy.common.launchUI
+import com.jocmp.capy.common.withUIContext
+import com.jocmp.capy.logging.CapyLog
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.launch
+
+/**
+ * Backs a single [com.capyreader.app.ui.Route.ArticleDetail] entry. The [articleID] arrives as a
+ * persistent reader surface. [load] swaps the displayed article (the entry uses a stable
+ * contentKey so this ViewModel survives next/previous navigation), and it owns its own
+ * full-content fetch/parse lifecycle.
+ */
+class ArticleViewModel(
+    private val account: Account,
+    private val appPreferences: AppPreferences,
+    private val application: Application,
+    private val notificationHelper: NotificationHelper,
+    private val articleCutoff: ArticleSessionCutoff,
+) : AndroidViewModel(application) {
+
+    private var fullContentJob: Job? = null
+
+    private var currentArticleID: String? = null
+
+    var article by mutableStateOf<Article?>(null)
+        private set
+
+    var previousArticleID by mutableStateOf<String?>(null)
+        private set
+
+    var nextArticleID by mutableStateOf<String?>(null)
+        private set
+
+    val canSaveArticleExternally = account.canSaveArticleExternally.stateIn(viewModelScope)
+
+    val source = account.source
+
+    val savedSearches: Flow<List<SavedSearch>> = account.savedSearches
+
+    /**
+     * Loads [articleID] into the persistent reader surface. The previously loaded [article] is kept
+     * until the new one resolves so the reader chrome stays present while the content swaps.
+     */
+    fun load(articleID: String) {
+        if (currentArticleID == articleID) {
+            return
+        }
+        currentArticleID = articleID
+        // Stamp the session cutoff before marking anything read, so this-session reads stay
+        // pinned in the neighbor set (and the article we're opening can be navigated back to).
+        articleCutoff.start()
+
+        viewModelScope.launchIO {
+            val loaded = buildArticle(articleID) ?: return@launchIO
+            article = loaded
+
+            launchIO { markRead(articleID) }
+
+            if (loaded.fullContent == Article.FullContentState.LOADING) {
+                fullContentJob?.cancel()
+                fullContentJob = viewModelScope.launchIO { fetchFullContent(loaded) }
+            }
+        }
+
+        viewModelScope.launchIO {
+            val (previous, next) = account.neighbors(
+                filter = appPreferences.filter.get(),
+                sortOrder = appPreferences.articleListOptions.sortOrder.get(),
+                since = articleCutoff.value,
+                articleID = articleID,
+            )
+            previousArticleID = previous
+            nextArticleID = next
+        }
+    }
+
+    fun toggleArticleRead() {
+        val current = article ?: return
+
+        viewModelScope.launch {
+            if (current.read) markUnread(current.id) else markRead(current.id)
+        }
+
+        article = current.copy(read = !current.read)
+    }
+
+    fun toggleArticleStar() {
+        val current = article ?: return
+
+        viewModelScope.launch {
+            if (current.starred) removeStar(current.id) else addStar(current.id)
+        }
+
+        article = current.copy(starred = !current.starred)
+    }
+
+    fun fetchFullContentAsync(target: Article? = article) {
+        target ?: return
+
+        viewModelScope.launchIO {
+            if (enableStickyFullContent && !account.isFullContentEnabled(feedID = target.feedID)) {
+                account.enableStickyContent(target.feedID)
+            }
+
+            article = target.copy(fullContent = Article.FullContentState.LOADING)
+            article?.let { fetchFullContent(it) }
+        }
+    }
+
+    fun resetFullContent() {
+        val current = article ?: return
+
+        article = current.copy(
+            content = current.defaultContent,
+            fullContent = Article.FullContentState.NONE
+        )
+
+        if (enableStickyFullContent) {
+            viewModelScope.launch { account.disableStickyContent(current.feedID) }
+        }
+    }
+
+    fun deletePage(articleID: String) {
+        viewModelScope.launchIO { account.deletePage(articleID) }
+    }
+
+    fun saveArticleExternallyAsync(articleID: String, onComplete: (Result<Unit>) -> Unit) {
+        viewModelScope.launchIO {
+            val result = account.saveArticleExternally(articleID)
+            withUIContext { onComplete(result) }
+        }
+    }
+
+    fun getArticleLabels(articleID: String?): Flow<List<String>> {
+        articleID ?: return emptyFlow()
+        return account.getArticleSavedSearches(articleID)
+    }
+
+    fun addLabelAsync(articleID: String, savedSearchID: String) {
+        viewModelScope.launchIO { account.addSavedSearch(articleID, savedSearchID) }
+    }
+
+    fun removeLabelAsync(articleID: String, savedSearchID: String) {
+        viewModelScope.launchIO { account.removeSavedSearch(articleID, savedSearchID) }
+    }
+
+    suspend fun createLabel(articleID: String, name: String): Result<String> {
+        return account.createSavedSearch(name).fold(
+            onSuccess = { labelID ->
+                account.addSavedSearch(articleID, labelID).fold(
+                    onSuccess = { Result.success(labelID) },
+                    onFailure = { Result.failure(it) }
+                )
+            },
+            onFailure = { Result.failure(it) }
+        )
+    }
+
+    private suspend fun buildArticle(articleID: String): Article? {
+        val found = account.findArticle(articleID = articleID) ?: return null
+
+        val fullContent = if (enableStickyFullContent && found.enableStickyFullContent) {
+            Article.FullContentState.LOADING
+        } else {
+            Article.FullContentState.NONE
+        }
+
+        val content = when (fullContent) {
+            Article.FullContentState.LOADING -> ""
+            else -> found.defaultContent
+        }
+
+        return found.copy(
+            read = true,
+            content = content,
+            fullContent = fullContent
+        )
+    }
+
+    private suspend fun fetchFullContent(article: Article) {
+        account.fetchFullContent(article).fold(
+            onSuccess = { value ->
+                if (this.article?.id == article.id) {
+                    this.article = article.copy(
+                        content = value,
+                        fullContent = Article.FullContentState.LOADED
+                    )
+                }
+            },
+            onFailure = {
+                if (this.article?.id != article.id) return
+                this.article = article.copy(
+                    content = article.defaultContent,
+                    fullContent = Article.FullContentState.ERROR
+                )
+
+                CapyLog.warn(
+                    "full_content",
+                    mapOf(
+                        "error_type" to it::class.simpleName,
+                        "error_message" to it.message
+                    )
+                )
+
+                viewModelScope.launchUI { context.showFullContentErrorToast(it) }
+            }
+        )
+    }
+
+    private suspend fun markRead(articleID: String) {
+        account.markRead(articleID)
+        notificationHelper.dismissNotifications(listOf(articleID))
+    }
+
+    private suspend fun markUnread(articleID: String) {
+        account.markUnread(articleID)
+    }
+
+    private fun addStar(articleID: String) {
+        viewModelScope.launchIO { account.addStar(articleID) }
+    }
+
+    private suspend fun removeStar(articleID: String) {
+        account.removeStar(articleID)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        // The reader left the back stack: end the session so the next open starts a fresh cutoff
+        // rather than reusing this session's (next/previous keep the same instance, so they don't
+        // trigger this).
+        articleCutoff.reset()
+    }
+
+    private val enableStickyFullContent: Boolean
+        get() = appPreferences.enableStickyFullContent.get()
+
+    private val context: Context
+        get() = application.applicationContext
+}

@@ -1,5 +1,7 @@
 function configureVideoTags() {
   [...document.getElementsByTagName("video")].forEach((v) => {
+    setupVideoErrorHandler(v);
+
     v.setAttribute("preload", "auto");
     v.setAttribute("playsinline", "true");
     v.setAttribute("controls", "true");
@@ -10,6 +12,50 @@ function configureVideoTags() {
       v.play();
     }
   });
+}
+
+/**
+ * @param {HTMLVideoElement} video
+ */
+function retryVideo(video) {
+  if (video.dataset.capyRetried) {
+    return;
+  }
+  video.dataset.capyRetried = "true";
+
+  const sources = [video, ...video.querySelectorAll("source")];
+  let marked = false;
+
+  sources.forEach((el) => {
+    const src = retryUrl(el.getAttribute("src") || "");
+    if (src !== null) {
+      el.setAttribute("src", src);
+      marked = true;
+    }
+  });
+
+  if (marked) {
+    video.load();
+  }
+}
+
+/**
+ * @param {HTMLVideoElement} video
+ */
+function setupVideoErrorHandler(video) {
+  const onFailure = () => retryVideo(video);
+
+  video.addEventListener("error", onFailure);
+  video.querySelectorAll("source").forEach((source) => {
+    source.addEventListener("error", onFailure);
+  });
+
+  const exhaustedSources =
+    video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE;
+
+  if (video.error || exhaustedSources) {
+    onFailure();
+  }
 }
 
 function addImageClickListeners() {
@@ -37,6 +83,42 @@ function addImageClickListeners() {
 }
 
 /**
+ * Reload a failed media element with a marker query param that routes the
+ * request through the native proxy, which adds the Referer header some CDNs
+ * require. One attempt only.
+ * @param {string} src
+ * @returns {string | null} the marked URL, or null if the src isn't retryable
+ */
+function retryUrl(src) {
+  if (!src || !src.startsWith("http")) {
+    return null;
+  }
+
+  try {
+    const url = new URL(src);
+    url.searchParams.set("__capy_retry", "true");
+    return url.toString();
+  } catch (e) {
+    return null;
+  }
+}
+
+/**
+ * @param {HTMLImageElement} img
+ */
+function retryImage(img) {
+  const marked = img.dataset.capyRetried ? null : retryUrl(img.src);
+
+  if (marked === null) {
+    img.classList.add("loaded");
+    return;
+  }
+
+  img.dataset.capyRetried = "true";
+  img.src = marked;
+}
+
+/**
  * @param {HTMLImageElement} img
  */
 function setupImageLoadHandler(img) {
@@ -45,11 +127,17 @@ function setupImageLoadHandler(img) {
   }
 
   img.onload = () => img.classList.add("loaded");
-  img.onerror = () => img.classList.add("loaded");
+  img.onerror = () => retryImage(img);
 
-  // Check after attaching - catches race condition
+  // Cached images and fast failures settle before these handlers attach, so
+  // neither callback would ever fire for them. A complete image with no
+  // decoded pixels is a failed load - retry it.
   if (img.complete) {
-    img.classList.add("loaded");
+    if (img.naturalWidth === 0) {
+      retryImage(img);
+    } else {
+      img.classList.add("loaded");
+    }
   }
 }
 
@@ -279,9 +367,20 @@ function longPress(element, callback) {
   element.addEventListener("touchcancel", stop);
 }
 
-window.addEventListener("DOMContentLoaded", () => {
+/**
+ * Wires up all media behavior once the DOM is parsed. Called by the inline
+ * script that ArticleRenderer appends after the article body, so it always
+ * runs against the final content - including full-content extraction, which
+ * awaits Mercury before calling this.
+ */
+function initMedia() {
   cleanEmbeds();
-});
+  addImageClickListeners();
+  addImageLoadListeners();
+  observeImages();
+  configureVideoTags();
+  Android.requestAudioState();
+}
 
 /**
  * @param {MessageEvent} event
@@ -365,11 +464,3 @@ function resetAudioPlayState() {
   playButtons.forEach((btn) => btn.classList.remove("playing"));
 }
 
-window.onload = () => {
-  addImageClickListeners();
-  addImageLoadListeners();
-  observeImages();
-  addEmbedListeners();
-  configureVideoTags();
-  Android.requestAudioState();
-};

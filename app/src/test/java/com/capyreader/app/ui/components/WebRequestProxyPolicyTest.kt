@@ -33,7 +33,7 @@ class WebRequestProxyPolicyTest {
 
     @Test
     fun shouldProxy_mediaRequestWithNullOriginString() {
-        assertTrue(
+        assertFalse(
             shouldProxy(
                 "https://cdn.example.com/image.jpg",
                 FakeWebResourceRequest(accept = "image/webp,image/apng,*/*;q=0.8", origin = "null"),
@@ -44,10 +44,32 @@ class WebRequestProxyPolicyTest {
 
     @Test
     fun shouldProxy_mediaRequestWithAbsentOrigin() {
-        assertTrue(
+        assertFalse(
             shouldProxy(
                 "https://cdn.example.com/image.jpg",
                 FakeWebResourceRequest(accept = "image/webp,image/apng,*/*;q=0.8", origin = null),
+                pageUrl = "https://example.com/article",
+            )
+        )
+    }
+
+    @Test
+    fun shouldProxy_retriedMediaRequest() {
+        assertTrue(
+            shouldProxy(
+                "https://cdn.example.com/image.jpg?__capy_retry=true",
+                FakeWebResourceRequest(accept = "image/webp,image/apng,*/*;q=0.8", origin = "null"),
+                pageUrl = "https://example.com/article",
+            )
+        )
+    }
+
+    @Test
+    fun shouldProxy_retriedMediaRequestRequiresTrueValue() {
+        assertFalse(
+            shouldProxy(
+                "https://cdn.example.com/image.jpg?__capy_retry=false",
+                FakeWebResourceRequest(accept = "image/webp,image/apng,*/*;q=0.8", origin = "null"),
                 pageUrl = "https://example.com/article",
             )
         )

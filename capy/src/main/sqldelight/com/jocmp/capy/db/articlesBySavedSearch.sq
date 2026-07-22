@@ -98,3 +98,64 @@ AND (
              OR (articles.published_at = before_articles.published_at AND articles.id >= :beforeArticleID)
     END
 );
+
+-- Split by sort order so the ORDER BY hits an index instead of sorting via CASE; see articlesByFeed.sq.
+articleAfterNewestFirst:
+SELECT articles.id
+FROM articles
+JOIN feeds ON articles.feed_id = feeds.id
+JOIN article_statuses ON articles.id = article_statuses.article_id
+JOIN saved_search_articles ON articles.id = saved_search_articles.article_id
+JOIN articles AS anchor ON anchor.id = :articleID
+WHERE saved_search_id = :savedSearchID
+AND ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
+AND ((article_statuses.starred = :starred AND article_statuses.last_unstarred_at IS NULL OR article_statuses.last_unstarred_at >= :lastUnstarredAt) OR :starred IS NULL)
+AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
+AND (articles.published_at < anchor.published_at OR (articles.published_at = anchor.published_at AND articles.id < anchor.id))
+ORDER BY articles.published_at DESC, articles.id DESC
+LIMIT 1;
+
+articleAfterOldestFirst:
+SELECT articles.id
+FROM articles
+JOIN feeds ON articles.feed_id = feeds.id
+JOIN article_statuses ON articles.id = article_statuses.article_id
+JOIN saved_search_articles ON articles.id = saved_search_articles.article_id
+JOIN articles AS anchor ON anchor.id = :articleID
+WHERE saved_search_id = :savedSearchID
+AND ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
+AND ((article_statuses.starred = :starred AND article_statuses.last_unstarred_at IS NULL OR article_statuses.last_unstarred_at >= :lastUnstarredAt) OR :starred IS NULL)
+AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
+AND (articles.published_at > anchor.published_at OR (articles.published_at = anchor.published_at AND articles.id > anchor.id))
+ORDER BY articles.published_at ASC, articles.id ASC
+LIMIT 1;
+
+articleBeforeNewestFirst:
+SELECT articles.id
+FROM articles
+JOIN feeds ON articles.feed_id = feeds.id
+JOIN article_statuses ON articles.id = article_statuses.article_id
+JOIN saved_search_articles ON articles.id = saved_search_articles.article_id
+JOIN articles AS anchor ON anchor.id = :articleID
+WHERE saved_search_id = :savedSearchID
+AND ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
+AND ((article_statuses.starred = :starred AND article_statuses.last_unstarred_at IS NULL OR article_statuses.last_unstarred_at >= :lastUnstarredAt) OR :starred IS NULL)
+AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
+AND (articles.published_at > anchor.published_at OR (articles.published_at = anchor.published_at AND articles.id > anchor.id))
+ORDER BY articles.published_at ASC, articles.id ASC
+LIMIT 1;
+
+articleBeforeOldestFirst:
+SELECT articles.id
+FROM articles
+JOIN feeds ON articles.feed_id = feeds.id
+JOIN article_statuses ON articles.id = article_statuses.article_id
+JOIN saved_search_articles ON articles.id = saved_search_articles.article_id
+JOIN articles AS anchor ON anchor.id = :articleID
+WHERE saved_search_id = :savedSearchID
+AND ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
+AND ((article_statuses.starred = :starred AND article_statuses.last_unstarred_at IS NULL OR article_statuses.last_unstarred_at >= :lastUnstarredAt) OR :starred IS NULL)
+AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
+AND (articles.published_at < anchor.published_at OR (articles.published_at = anchor.published_at AND articles.id < anchor.id))
+ORDER BY articles.published_at DESC, articles.id DESC
+LIMIT 1;

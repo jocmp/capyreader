@@ -96,7 +96,7 @@ class AccompanistWebViewClient(
     private fun proxyRequest(request: WebResourceRequest): WebResourceResponse? {
         return try {
             val okHttpRequest = Request.Builder()
-                .url(request.url.toString())
+                .url(request.url.withoutRetryMarker().toString())
                 .apply {
                     request
                         .requestHeaders
@@ -136,6 +136,22 @@ class AccompanistWebViewClient(
             CapyLog.error("webview_intercept_request", e)
             null
         }
+    }
+
+    /** Strips the media.js retry marker so the upstream fetch hits the real image URL. */
+    private fun Uri.withoutRetryMarker(): Uri {
+        if (getQueryParameter(WebRequestProxyPolicy.RETRY_QUERY_PARAM) == null) {
+            return this
+        }
+
+        val builder = buildUpon().clearQuery()
+        queryParameterNames
+            .filterNot { it == WebRequestProxyPolicy.RETRY_QUERY_PARAM }
+            .forEach { name ->
+                getQueryParameters(name).forEach { builder.appendQueryParameter(name, it) }
+            }
+
+        return builder.build()
     }
 
     override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
