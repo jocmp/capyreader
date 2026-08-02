@@ -5,7 +5,11 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.DrawerValue
@@ -465,7 +469,6 @@ fun ArticleScreen(
                     },
                     onFilterSelect = selectFilter,
                     onSelectToday = { selectToday() },
-                    onSelectStatus = { selectStatus(it) },
                     refreshState = refreshAllState,
                     onRefresh = {
                         refreshAll()
@@ -541,13 +544,24 @@ fun ArticleScreen(
                             }
                         },
                         bottomBar = {
-                            audioEnclosure?.let { audio ->
-                                FloatingAudioPlayer(
-                                    audio = audio,
-                                    controller = audioController,
-                                    onDismiss = {
-                                        audioController.dismiss()
-                                    },
+                            Column {
+                                audioEnclosure?.let { audio ->
+                                    FloatingAudioPlayer(
+                                        audio = audio,
+                                        controller = audioController,
+                                        onDismiss = {
+                                            audioController.dismiss()
+                                        },
+                                        // The status bar below is bottom-most, so it owns the
+                                        // navigation bar inset the player would otherwise pad for
+                                        modifier = Modifier
+                                            .consumeWindowInsets(WindowInsets.navigationBars),
+                                    )
+                                }
+
+                                ArticleStatusBottomBar(
+                                    status = filter.status,
+                                    onSelectStatus = { selectStatus(it) },
                                 )
                             }
                         }
