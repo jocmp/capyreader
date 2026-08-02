@@ -503,6 +503,21 @@ class ArticleScreenViewModel(
         }
     }
 
+    fun clampScrollHighWaterMark(itemCount: Int) {
+        val lastIndex = itemCount - 1
+
+        if (_scrollHighWaterMark <= lastIndex) {
+            return
+        }
+
+        CapyLog.debug(
+            "scroll_high_water_mark:clamp",
+            mapOf("previous" to _scrollHighWaterMark, "new" to lastIndex)
+        )
+
+        _scrollHighWaterMark = lastIndex
+    }
+
     fun resetScrollHighWaterMark() {
         CapyLog.debug(
             "scroll_high_water_mark:reset",

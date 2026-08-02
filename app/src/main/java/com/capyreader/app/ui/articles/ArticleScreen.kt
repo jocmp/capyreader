@@ -293,6 +293,7 @@ fun ArticleScreen(
             articles = articles,
             scrollHighWaterMark = viewModel.scrollHighWaterMark,
             updateScrollHighWaterMark = viewModel::updateScrollHighWaterMark,
+            clampScrollHighWaterMark = viewModel::clampScrollHighWaterMark,
             markReadOnScroll = viewModel::markReadOnScroll,
             resetScrollBehaviorOffset = resetScrollBehaviorOffset,
         )
@@ -903,6 +904,7 @@ private fun MarkReadOnScroll(
     articles: LazyPagingItems<Article>,
     scrollHighWaterMark: Int,
     updateScrollHighWaterMark: (Int) -> Unit,
+    clampScrollHighWaterMark: (Int) -> Unit,
     markReadOnScroll: (String) -> Unit,
     resetScrollBehaviorOffset: () -> Unit,
 ) {
@@ -921,6 +923,12 @@ private fun MarkReadOnScroll(
                     listState.scrollToItem(0)
                     resetScrollBehaviorOffset()
                 }
+        }
+
+        LaunchedEffect(listState) {
+            snapshotFlow { articles.itemCount }
+                .distinctUntilChanged()
+                .collect(clampScrollHighWaterMark)
         }
 
         LaunchedEffect(listState) {
