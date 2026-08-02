@@ -374,6 +374,52 @@ class ArticleRecordsTest {
     }
 
     @Test
+    fun markAllUnread_withDuplicateIDs() = runTest {
+        val articleIDs = 3.repeated { RandomUUID.generate() }
+        val readArticle = articleFixture.create(read = false)
+
+        articleIDs.forEach { id ->
+            articleFixture.create(id = id, read = true)
+        }
+
+        articleRecords.markAllUnread(articleIDs + articleIDs.first())
+
+        val articles = articleIDs.map { articleRecords.find(it)!! }
+
+        assertTrue(articles.none { it.read })
+        assertTrue(articleRecords.find(readArticle.id)!!.read)
+    }
+
+    @Test
+    fun markAllStarred_withDuplicateIDs() = runTest {
+        val articleIDs = 3.repeated { RandomUUID.generate() }
+
+        articleIDs.forEach { id ->
+            articleFixture.create(id = id)
+        }
+
+        articleRecords.markAllStarred(articleIDs + articleIDs.first())
+
+        val articles = articleIDs.map { articleRecords.find(it)!! }
+
+        assertTrue(articles.all { it.starred })
+    }
+
+    @Test
+    fun upsertUnread_ignoresRepeatedMarkers() = runTest {
+        val article = articleFixture.create(read = true)
+        val updatedAt = nowUTC().toEpochSecond()
+
+        database.transaction {
+            database.articlesQueries.upsertUnread(articleID = article.id, updatedAt = updatedAt)
+            database.articlesQueries.upsertUnread(articleID = article.id, updatedAt = updatedAt)
+            database.articlesQueries.updateStaleUnreads()
+        }
+
+        assertFalse(articleRecords.find(article.id)!!.read)
+    }
+
+    @Test
     fun deleteOldArticles() = runTest {
         val oldPublishedAt = nowUTC().minusMonths(4).toEpochSecond()
         val articleRecords = ArticleRecords(database)

@@ -159,7 +159,7 @@ class ArticleRecords(
         val updated = updatedAt.toEpochSecond()
 
         database.transactionWithErrorHandling {
-            articleIDs.forEach { articleID ->
+            articleIDs.distinct().forEach { articleID ->
                 database.articlesQueries.upsertUnread(
                     articleID = articleID,
                     updatedAt = updated
@@ -174,7 +174,7 @@ class ArticleRecords(
         val updated = updatedAt.toEpochSecond()
 
         database.transactionWithErrorHandling {
-            articleIDs.forEach { articleID ->
+            articleIDs.distinct().forEach { articleID ->
                 database.articlesQueries.upsertStarred(
                     articleID = articleID,
                     updatedAt = updated
