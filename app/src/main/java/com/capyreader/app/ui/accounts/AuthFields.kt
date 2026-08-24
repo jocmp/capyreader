@@ -19,14 +19,17 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.RemoveCircleOutline
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -70,6 +73,11 @@ fun AuthFields(
     onClearClientCert: () -> Unit = {},
     clientCertAlias: String = "",
     setApiTokenPreference: (Boolean) -> Unit = {},
+    customHeaders: List<Pair<String, String>> = emptyList(),
+    onAddCustomHeader: () -> Unit = {},
+    onRemoveCustomHeader: (Int) -> Unit = {},
+    onUpdateCustomHeaderName: (Int, String) -> Unit = { _, _ -> },
+    onUpdateCustomHeaderValue: (Int, String) -> Unit = { _, _ -> },
 ) {
     val hasApiToken = source == Source.MINIFLUX_TOKEN
     val showApiTokenToggle = source == Source.MINIFLUX || hasApiToken
@@ -80,7 +88,7 @@ fun AuthFields(
     }
 
     val (showAdvanced, setShowAdvanced) = rememberSaveable {
-        mutableStateOf(clientCertAlias.isNotBlank())
+        mutableStateOf(clientCertAlias.isNotBlank() || customHeaders.isNotEmpty())
     }
 
     val passwordTransformation = if (hasApiToken || showPassword) {
@@ -199,11 +207,21 @@ fun AuthFields(
                         expanded = showAdvanced,
                         onToggle = { setShowAdvanced(!showAdvanced) },
                     ) {
-                        CertificateField(
-                            onChooseClientCert = onChooseClientCert,
-                            onClearClientCert = onClearClientCert,
-                            certAlias = clientCertAlias,
-                        )
+                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                            CertificateField(
+                                onChooseClientCert = onChooseClientCert,
+                                onClearClientCert = onClearClientCert,
+                                certAlias = clientCertAlias,
+                            )
+                            HorizontalDivider()
+                            CustomHeadersSection(
+                                headers = customHeaders,
+                                onAdd = onAddCustomHeader,
+                                onRemove = onRemoveCustomHeader,
+                                onUpdateName = onUpdateCustomHeaderName,
+                                onUpdateValue = onUpdateCustomHeaderValue,
+                            )
+                        }
                     }
                 }
             }
@@ -269,6 +287,59 @@ fun CertificateField(
                 }
             }
     )
+}
+
+@Composable
+private fun CustomHeadersSection(
+    headers: List<Pair<String, String>>,
+    onAdd: () -> Unit,
+    onRemove: (Int) -> Unit,
+    onUpdateName: (Int, String) -> Unit,
+    onUpdateValue: (Int, String) -> Unit,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text(
+            text = stringResource(R.string.auth_fields_custom_headers),
+            style = typography.labelMedium,
+            color = colorScheme.onSurfaceVariant,
+        )
+        headers.forEachIndexed { index, (name, value) ->
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                TextField(
+                    value = name,
+                    onValueChange = { onUpdateName(index, it) },
+                    label = { Text(stringResource(R.string.auth_fields_header_name)) },
+                    singleLine = true,
+                    modifier = Modifier.weight(1f),
+                )
+                TextField(
+                    value = value,
+                    onValueChange = { onUpdateValue(index, it) },
+                    label = { Text(stringResource(R.string.auth_fields_header_value)) },
+                    singleLine = true,
+                    modifier = Modifier.weight(1f),
+                )
+                IconButton(onClick = { onRemove(index) }) {
+                    Icon(
+                        imageVector = Icons.Filled.RemoveCircleOutline,
+                        contentDescription = stringResource(R.string.auth_fields_remove_header),
+                    )
+                }
+            }
+        }
+        TextButton(
+            onClick = onAdd,
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Add,
+                contentDescription = null,
+            )
+            Text(stringResource(R.string.auth_fields_add_header))
+        }
+    }
 }
 
 @Composable
