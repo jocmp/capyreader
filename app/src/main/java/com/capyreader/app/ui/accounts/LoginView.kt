@@ -57,6 +57,11 @@ fun LoginView(
     loading: Boolean = false,
     errorMessage: String? = null,
     onUseApiTokenChange: (Boolean) -> Unit = {},
+    customHeaders: List<Pair<String, String>> = emptyList(),
+    onAddCustomHeader: () -> Unit = {},
+    onRemoveCustomHeader: (Int) -> Unit = {},
+    onUpdateCustomHeaderName: (Int, String) -> Unit = { _, _ -> },
+    onUpdateCustomHeaderValue: (Int, String) -> Unit = { _, _ -> },
 ) {
     Scaffold(
         topBar = {
@@ -124,6 +129,11 @@ fun LoginView(
                             onClearClientCert = onClearClientCert,
                             clientCertAlias = clientCertAlias,
                             setApiTokenPreference = onUseApiTokenChange,
+                            customHeaders = customHeaders,
+                            onAddCustomHeader = onAddCustomHeader,
+                            onRemoveCustomHeader = onRemoveCustomHeader,
+                            onUpdateCustomHeaderName = onUpdateCustomHeaderName,
+                            onUpdateCustomHeaderValue = onUpdateCustomHeaderValue,
                         )
                     }
                 }

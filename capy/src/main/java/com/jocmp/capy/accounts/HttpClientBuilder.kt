@@ -38,3 +38,10 @@ fun OkHttpClient.Builder.clientCertAlias(
     }
     return this
 }
+
+fun OkHttpClient.Builder.customHeaders(headers: Map<String, String>): OkHttpClient.Builder {
+    if (headers.isNotEmpty()) {
+        addInterceptor(CustomHeadersInterceptor(headers))
+    }
+    return this
+}
