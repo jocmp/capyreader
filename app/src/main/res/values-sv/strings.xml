@@ -80,8 +80,8 @@
     <string name="nav_headline_folders">Etiketter</string>
     <string name="relative_time_just_now">Just nu</string>
     <plurals name="refresh_hours">
-        <item quantity="one">Varje timma</item>
-        <item quantity="other">Var %d:e timma</item>
+        <item quantity="one">Varje timme</item>
+        <item quantity="other">Var %d:e timme</item>
     </plurals>
     <string name="crash_reporting_checkbox_title">Aktivera felrapportering</string>
     <string name="add_account_feedbin_signup_link_text">Skapa ett här.</string>
