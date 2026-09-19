@@ -30,7 +30,7 @@
         <item quantity="other">Κάθε %d ώρες</item>
     </plurals>
     <string name="refresh_feeds_menu_label">Ανανέωση Ροών</string>
-    <string name="nav_headline_folders">Ετικέτες</string>
+    <string name="nav_headline_folders">Φάκελοι</string>
     <string name="nav_headline_saved_searches">Αναζητήσεις</string>
     <string name="nav_headline_feeds">Ροές</string>
     <string name="nav_add_feed">Προσθήκη Ροής</string>
@@ -127,7 +127,7 @@
     <string name="theme_menu_option_light">Φωτεινό</string>
     <string name="theme_menu_option_dark">Σκοτεινό</string>
     <string name="theme_menu_option_system_default">Προεπιλογή συστήματος</string>
-    <string name="edit_feed_folders">Ετικέτες</string>
+    <string name="edit_feed_folders">Φάκελοι</string>
     <string name="settings_option_in_app_browser">Χρήση περιηγητή εντός εφαρμογής</string>
     <string name="opml_import_notification_cancel">Διακοπή</string>
     <string name="image_preview_menu_option_none">Καμία</string>
@@ -206,7 +206,7 @@
     <string name="action_share">Κοινοποίηση</string>
     <string name="crash_log_export_item_title">Κοινοποίηση καταγραφής σφαλμάτων</string>
     <string name="crash_log_export_item_subtitle">Αποθηκεύει αρχεία καταγραφής σε ένα αρχείο για να τα κοινοποιήσεις με τον προγραμματιστή</string>
-    <string name="edit_feed_folders_section">Ετικέτες</string>
+    <string name="edit_feed_folders_section">Φάκελοι</string>
     <string name="edit_feed_notifications_title">Ενεργοποίηση ειδοποιήσεων</string>
     <string name="notifications_permissions_disabled_call_to_action">Ρυθμίσεις</string>
     <string name="notifications_permission_disabled_title">Η άδεια ειδοποιήσεων είναι ανενεργή</string>
@@ -233,7 +233,7 @@
     <string name="search_bar_placeholder">Αναζήτηση</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Πάτα τις κάτω γωνίες για να πλοηγηθείς στο περιεχόμενο του άρθρου</string>
     <string name="settings_enable_high_contrast_dark_theme">Ενεργοποίηση σκοτεινού θέματος υψηλής αντίθεσης</string>
-    <string name="settings_section_mark_all_as_read">Επισήμανση Όλων ως Αναγνωσμένα</string>
+    <string name="settings_section_mark_all_as_read">Επισήμανση Όλων Ως Αναγνωσμένα</string>
     <string name="settings_section_browser">Περιηγητής</string>
     <string name="reader_image_visibility_show_on_wifi">Εμφάνιση εικόνων μόνο στο Wi-Fi</string>
     <string name="reader_image_visibility_always_hide">Αποκλεισμός εικόνων</string>
@@ -350,4 +350,5 @@
     <string name="article_actions_delete_page_title">Διαγραφή</string>
     <string name="article_actions_delete_page_message">Σίγουρα θες να διαγράψεις αυτή τη σελίδα;</string>
     <string name="article_actions_delete_page_confirm">Διαγραφή</string>
+    <string name="freshrss_visibility_option_main">Κύρια Ροή</string>
 </resources>
