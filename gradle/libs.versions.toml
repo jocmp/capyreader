@@ -60,6 +60,7 @@ coil-video = { module = "io.coil-kt.coil3:coil-video", version.ref = "coil" }
 converter-scalars = { module = "com.squareup.retrofit2:converter-scalars", version.ref = "retrofit" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics", version = "20.0.5" }
 jsoup = { module = "org.jsoup:jsoup", version = "1.22.1" }
+mercury-parser = { module = "com.jocmp:mercury-parser", version = "0.1.1" }
 koin-android = { module = "io.insert-koin:koin-android" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose" }
 koin-androidx-workmanager = { module = "io.insert-koin:koin-androidx-workmanager" }

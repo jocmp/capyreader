@@ -37,6 +37,7 @@ dependencies {
     implementation(project(":minifluxclient"))
     implementation(project(":rssparser"))
     implementation(project(":readerclient"))
+    implementation(libs.mercury.parser)
     testImplementation(kotlin("test"))
     testImplementation(libs.sqldelight.sqlite.driver)
     testImplementation(libs.tests.junit)

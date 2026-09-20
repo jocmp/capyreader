@@ -197,7 +197,7 @@ class ArticleViewModel(
     }
 
     private suspend fun fetchFullContent(article: Article) {
-        fullContentUnavailable().fold(
+        account.fetchFullContent(article).fold(
             onSuccess = { value ->
                 if (this.article?.id == article.id) {
                     this.article = article.copy(
@@ -251,15 +251,9 @@ class ArticleViewModel(
         articleCutoff.reset()
     }
 
-    private fun fullContentUnavailable(): Result<String> {
-        return Result.failure(FullContentUnavailableError())
-    }
-
     private val enableStickyFullContent: Boolean
         get() = appPreferences.enableStickyFullContent.get()
 
     private val context: Context
         get() = application.applicationContext
 }
-
-class FullContentUnavailableError : Exception("Full content is not available in the native reader yet")
