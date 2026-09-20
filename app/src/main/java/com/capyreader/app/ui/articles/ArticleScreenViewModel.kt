@@ -9,6 +9,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import kotlinx.coroutines.flow.flowOf
 import com.capyreader.app.R
 import com.capyreader.app.common.isOnWifi
@@ -129,6 +130,7 @@ class ArticleScreenViewModel(
         combine(filter, articlesSince, sortOrder) { filter, since, sort ->
             ArticlePagerKey(filter = filter, query = null, since = since, sort = sort)
         }.flatMapLatest(::pagerFlow)
+            .cachedIn(viewModelScope)
 
     // Search has its own pager so it can filter freely without disturbing the list above.
     val searchResults: Flow<PagingData<Article>> =
@@ -136,7 +138,7 @@ class ArticleScreenViewModel(
             ArticlePagerKey(filter = filter, query = query, since = since, sort = sort)
         }.flatMapLatest { key ->
             if (key.query.isNullOrBlank()) flowOf(PagingData.empty()) else pagerFlow(key)
-        }
+        }.cachedIn(viewModelScope)
 
     private fun pagerFlow(key: ArticlePagerKey): Flow<PagingData<Article>> =
         account.buildArticlePager(

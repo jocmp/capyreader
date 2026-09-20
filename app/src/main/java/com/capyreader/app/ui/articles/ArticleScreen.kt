@@ -579,7 +579,9 @@ fun ArticleScreen(
                                         onSwipeUp()
                                     },
                                 ) {
-                                    if (isRefreshInitialized && articles.itemCount == 0) {
+                                    val listLoaded = articles.loadState.refresh is LoadState.NotLoading
+
+                                    if (isRefreshInitialized && listLoaded && articles.itemCount == 0) {
                                         ArticleListEmptyView()
                                     } else {
                                         ArticleList(
